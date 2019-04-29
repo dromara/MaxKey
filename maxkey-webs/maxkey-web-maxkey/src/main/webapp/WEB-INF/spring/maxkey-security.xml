@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:sec="http://www.springframework.org/schema/security"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="
+	        http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context.xsd
+	        http://www.springframework.org/schema/util     
+	        http://www.springframework.org/schema/util/spring-util.xsd
+	        http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd
+			http://www.springframework.org/schema/security 
+			http://www.springframework.org/schema/security/spring-security.xsd">
+			
+    <!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
+ 		 @Controller and @Service. Make sure to set the correct base-package-->
+ 
+ 	<!-- domain bean  -->
+ 	<context:component-scan base-package="org.maxkey.domain" />
+ 	
+ 	<!-- domain bean  -->
+ 	<context:component-scan base-package="org.maxkey.domain.apps" />
+ 	
+ 	<!-- domain bean  -->
+ 	<context:component-scan base-package="org.maxkey.domain.userinfo" />
+ 	
+ 	<!-- Social Sign On Endpoint-->
+	<context:component-scan base-package="org.maxkey.web.authentication.support.socialsignon" />
+	
+	<!-- oauth.provider-->
+	<context:component-scan base-package="org.maxkey.web.oauth.approval.controller" /> 
+	<!-- oauth.provider userinfo-->
+	<context:component-scan base-package="org.maxkey.web.oauth.userinfo.controller" /> 
+	
+	<!-- SAML V2.0 EndPoint -->
+	<context:component-scan base-package="org.maxkey.saml20.provider.endpoint" />
+	
+	<!-- MetaData V2.0 EndPoint -->
+	<context:component-scan base-package="org.maxkey.saml20.metadata.endpoint" />
+
+	<context:component-scan base-package="org.maxkey.web.authorize.endpoint" />
+	
+	<context:component-scan base-package="org.maxkey.web.endpoint" />
+	
+	<!-- REST API interface -->
+	<context:component-scan base-package="org.maxkey.api.v1.contorller" />
+	
+	<!-- Business  Contorller -->
+	<context:component-scan base-package="org.maxkey.web.contorller" />
+
+	<!-- Static resources -->
+	<!-- js images css -->
+	<mvc:resources mapping="/jquery/**" location="/jquery/" />
+	<mvc:resources mapping="/images/**" location="/images/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
+	
+	<sec:http pattern="/jquery/**" security="none" /> 
+	<sec:http pattern="/images/**" security="none" /> 
+	<sec:http pattern="/css/**" security="none" /> 
+	<sec:http pattern="/js/**" security="none" /> 
+	
+	<sec:http pattern="/metadata/saml20/**" security="none" /> 
+	
+	<sec:http pattern="/api/oauth/v20/me" security="none" /> 
+	<sec:http pattern="/api/connect/v10/userinfo" security="none" />
+	
+	<!-- cas api  -->
+	<sec:http pattern="/authz/cas/validate" security="none" />
+	<sec:http pattern="/authz/cas/serviceValidate" security="none" />
+	<sec:http pattern="/authz/cas/proxyValidate" security="none" />
+	<sec:http pattern="/authz/cas/proxy" security="none" />
+	<sec:http pattern="/authz/cas/p3/serviceValidate" security="none" />
+	<sec:http pattern="/authz/cas/p3/proxyValidate" security="none" />
+	
+	
+	
+	<!-- enable autowire -->
+    <context:annotation-config />
+    
+    <!-- language select must remove -->
+	<mvc:annotation-driven />
+    
+	<!-- XML bean Marshaller define  -->
+	<bean id="Jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<list>
+				<value>org.maxkey.domain.xml.UserInfoXML</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- MarshallingHttpMessageConverter -->
+	<bean id="marshallingHttpMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+		<property name="marshaller" ref="Jaxb2Marshaller" />
+		<property name="unmarshaller" ref="Jaxb2Marshaller" />
+		<property name="supportedMediaTypes">
+			<list>
+				<value>application/xml;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!--MappingJacksonHttpMessageConverter  -->
+	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- REST Client -->
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<property name="messageConverters">
+			<list>
+				<ref bean="marshallingHttpMessageConverter" />
+				<ref bean="mappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- AnnotationMethodHandlerAdapter -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<util:list id="beanList">
+				<ref bean="marshallingHttpMessageConverter" />
+				<ref bean="mappingJacksonHttpMessageConverter" />
+			</util:list>
+		</property>
+	</bean>
+	
+	
+	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="localeChangeInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- web Controller InterceptorAdapter  -->
+	<mvc:interceptors>
+		<!-- web Controller InterceptorAdapter for platform permission  -->
+		<mvc:interceptor>
+			<!-- for index -->
+			<mvc:mapping path="/index/*" />
+			<!-- for System -->
+			<mvc:mapping path="/menus/*" />
+			<mvc:mapping path="/roles/*" />
+			<mvc:mapping path="/logs/*" />
+			<mvc:mapping path="/userinfo/*" />
+			<mvc:mapping path="/relyingparty/*" />
+			<mvc:mapping path="/sysconfig/*" />
+			
+			<mvc:mapping path="/roles/*"/>
+			<mvc:mapping path="/applications/*"/>
+			<mvc:mapping path="/approles/*"/>
+			
+			<mvc:mapping path="/users/*" />
+			<mvc:mapping path="/enterprises/*" />
+			<mvc:mapping path="/employees/*" />
+			<mvc:mapping path="/authInfo/*" />
+			<mvc:mapping path="/usercenter/*"/>
+			<bean class="org.maxkey.web.interceptor.PermissionAdapter" />
+		</mvc:interceptor>	
+		<!-- web Controller InterceptorAdapter for platform log  -->
+		<mvc:interceptor>
+			<mvc:mapping path="/users/*" /> 
+			<mvc:mapping path="/userinfo/*" />
+			<mvc:mapping path="/enterprises/*" />
+			<mvc:mapping path="/employees/*" />
+			<mvc:mapping path="/authInfo/*" />
+			<mvc:mapping path="/usercenter/*"/>
+			<mvc:mapping path="/retrievePassword/*"/>
+			<mvc:mapping path="/roles/*"/>
+			<mvc:mapping path="/applications/*"/>
+			<mvc:mapping path="/approles/*"/>
+			<bean class="org.maxkey.web.interceptor.LogAdapter" />
+		</mvc:interceptor>
+		<!-- web Controller sso Adapter -->
+		<mvc:interceptor>
+			<mvc:mapping path="/authz/basic/*" />
+			<mvc:mapping path="/authz/ltpa/*" />
+			<mvc:mapping path="/authz/desktop/*" />
+			<mvc:mapping path="/authz/formbased/*" />
+			<mvc:mapping path="/authz/tokenbased/*"/>
+			<mvc:mapping path="/authz/saml20/idpinit/*"/>
+			<mvc:mapping path="/authz/cas/login"/>
+			<mvc:mapping path="/authz/cas/granting"/>
+			<bean class="org.maxkey.web.interceptor.PreLoginAppAdapter" />
+		</mvc:interceptor>
+		<!-- web Controller sso Adapter -->
+		<mvc:interceptor>
+			<mvc:mapping path="/authz/basic/*" />
+			<mvc:mapping path="/authz/ltpa/*" />
+			<mvc:mapping path="/authz/desktop/*" />
+			<mvc:mapping path="/authz/formbased/*" />
+			<mvc:mapping path="/authz/tokenbased/*"/>
+			<mvc:mapping path="/authz/saml20/idpinit/*"/>
+			<mvc:mapping path="/authz/cas/granting"/>
+			<bean class="org.maxkey.web.interceptor.LoginAppHistoryAdapter" />
+		</mvc:interceptor>
+
+		
+		 <ref bean="localeChangeInterceptor" />
+	</mvc:interceptors>
+     
+	<!-- View Resolver -->
+	
+	<bean id="viewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/views/" p:suffix=".jsp" p:order="2" />
+	
+	<!-- upload file support -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	<property name="maxUploadSize" value="4194304" />  
+    </bean> 
+    
+	<!-- Follow is config for Spring security -->
+
+	<!-- Login  -->
+	<http use-expressions="false"  disable-url-rewriting="false" xmlns="http://www.springframework.org/schema/security" >
+		<!--<csrf disabled="true"/>-->
+		<headers>
+			<frame-options policy="SAMEORIGIN" />
+		</headers> 
+		<access-denied-handler error-page="/login"/>
+		<intercept-url pattern="/index" access="ROLE_USER" />
+		<intercept-url pattern="/forwardindex" access="ROLE_USER" />
+   		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY,ROLE_USER" />
+		<form-login authentication-failure-url="/login" 
+					default-target-url="/forwardindex" 
+					login-page="/login" 
+					login-processing-url="/logon.do"
+					username-parameter="j_username"
+					password-parameter="j_password"
+					authentication-success-handler-ref="savedRequestSuccessHandler"/>
+					
+		<logout  logout-url="/logout.do"  logout-success-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID"  />
+		
+		<session-management invalid-session-url="/login" />
+		
+		<anonymous />
+	</http>
+		
+
+   	<bean id="savedRequestSuccessHandler" class="org.maxkey.web.authentication.SavedRequestAwareAuthenticationSuccessHandler"> </bean>
+	
+	<!-- spring authentication provider -->
+	<authentication-manager alias="authenticationProvider"  xmlns="http://www.springframework.org/schema/security"/>
+
+	<!-- LDAP Realm 
+	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.ldap.LdapAuthenticationRealm">
+		<constructor-arg ref="jdbcTemplate"/>
+		<property name="ldapServers">
+			<list>
+				<bean id="ldapServer1" class="org.maxkey.web.authentication.realm.ldap.LdapServer">
+					<property name="ldapUtils">
+						<bean id="ldapUtils" class="org.maxkey.ldap.LdapUtils">
+							<property name="providerUrl" value="ldap://localhost:389"></property>
+							<property name="principal" value="cn=root"></property>
+							<property name="credentials" value="rootroot"></property>
+							<property name="baseDN" value="dc=connsec,dc=com"></property>
+						</bean>
+					</property>
+					<property name="filterAttribute" value="uid"></property>
+				</bean>	
+			</list>
+		</property>
+	</bean> -->
+	
+	<!-- Active Directory  Realm 
+	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.activedirectory.ActiveDirectoryAuthenticationRealm">
+		<constructor-arg ref="jdbcTemplate"/>
+		<property name="activeDirectoryServers">
+			<list>
+				<bean id="activeDirectory1" class="org.maxkey.web.authentication.realm.activedirectory.ActiveDirectoryServer">
+					<property name="activeDirectoryUtils">
+						<bean id="ldapUtils" class="org.maxkey.ldap.ActiveDirectoryUtils">
+							<property name="providerUrl" value="ldap://localhost:389"></property>
+							<property name="principal" value="cn=root"></property>
+							<property name="credentials" value="rootroot"></property>
+							<property name="domain" value="connsec"></property>
+						</bean>
+					</property>
+				</bean>	
+			</list>
+		</property>
+	</bean> -->
+	
+	<!-- Radius Server  Realm  
+	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.radius.RadiusServerAuthenticationRealm">
+		<constructor-arg ref="jdbcTemplate"/>
+		<property name="jradiusServers">
+			<list>
+				<bean id="radiusServer1" class="org.maxkey.web.authentication.realm.radius.RadiusServer">
+					<property name="inetAddress" value="localhost"/>
+					<property name="secret" value="test1234"/>
+				</bean>	
+			</list>
+		</property>
+	</bean>-->
+	
+	<!-- Default Realm-->
+	<!-- realm use jdbc -->
+	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.jdbc.JdbcAuthenticationRealm">
+		<constructor-arg ref="jdbcTemplate"/>
+	</bean>
+	
+		
+	<!-- Authentication providers -->
+    <bean id="realmAuthenticationProvider" class="org.maxkey.web.authentication.RealmAuthenticationProvider" >
+    </bean>
+    
+	<authentication-manager alias="authenticationManager" xmlns="http://www.springframework.org/schema/security">
+		<authentication-provider ref= "realmAuthenticationProvider"/>  
+	</authentication-manager>
+    
+	<mvc:annotation-driven />
+
+	<mvc:default-servlet-handler />
+
+</beans>

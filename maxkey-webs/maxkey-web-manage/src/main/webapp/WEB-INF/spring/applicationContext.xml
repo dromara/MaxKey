@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="
+	        http://www.springframework.org/schema/beans     
+	        http://www.springframework.org/schema/beans/spring-beans.xsd
+	        http://www.springframework.org/schema/context 
+	        http://www.springframework.org/schema/context/spring-context.xsd
+	        http://www.springframework.org/schema/tx 
+	        http://www.springframework.org/schema/tx/spring-tx.xsd
+	        http://www.springframework.org/schema/util     
+	        http://www.springframework.org/schema/util/spring-util.xsd
+	        http://www.springframework.org/schema/mvc 
+	        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
+    	
+    <!-- Application properties configs  -->
+	<bean  id="propertySourcesPlaceholderConfigurer"  class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+	  <property name="locations">
+	    <list>
+	   	  <value>classpath:config/applicationConfig.properties</value>
+	    </list>
+	  </property>
+	  <property name="ignoreUnresolvablePlaceholders" value="true"/>
+	</bean>
+	
+	
+	<!-- LocaleResolver -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieName" value="localelanguage"/>
+		<property name="cookieMaxAge" value="604800" />
+		<!-- auto select language by brower remove -->
+		<!--<property name="defaultLocale" value="en" />  -->
+	</bean>
+	
+	<!-- Locale Change Interceptor and Resolver definition -->
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="language" />
+	</bean>
+
+	<!-- jdbc localeI18n -->
+	<bean id="localeI18n" class="com.connsec.web.i18n.LocaleI18n">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<!-- dataSoruce Config -->
+	<bean id="dataSoruceConfig" class="com.connsec.config.DataSoruceConfig">      
+	    <property name="driverClass" value="${config.datasource.driverclass}"/>      
+	    <property name="url" value="${config.datasource.url}"/>      
+	    <property name="username" value="${config.datasource.username}"/>      
+	    <property name="password" value="${config.datasource.password}"/>  
+	    <property name="database" value="${config.datasource.database}"/> 
+	    <property name="encrypt" value="true"/>
+	</bean> 
+	
+	<!-- Character Encoding  Config -->
+	<bean id="characterEncodingConfig" class="com.connsec.config.CharacterEncodingConfig">      
+	    <property name="encoding" value="${config.characterencoding.encoding}"/>      
+	    <property name="fromCharSet" value="${config.characterencoding.fromcharset}"/>      
+	    <property name="toCharSet" value="${config.characterencoding.tocharset}"/>
+	</bean> 
+	
+	<!-- Character Encoding  Config -->
+	<bean id="emailConfig" class="com.connsec.config.EmailConfig">      
+	    <property name="username" value="${config.email.username}"/>      
+	    <property name="password" value="${config.email.password}"/>      
+	    <property name="smtpHost" value="${config.email.smtpHost}"/>
+	    <property name="port" value="${config.email.port}"/>
+	    <property name="senderMail" value="${config.email.senderMail}"/>
+	    <property name="ssl" value="${config.email.ssl}"/>
+	</bean> 
+
+	<!-- Login  Config -->
+	<bean id="loginConfig" class="com.connsec.config.LoginConfig">      
+	    <property name="captcha" value="${config.login.captcha}"/>
+	    <property name="defaultUri" value="${config.login.default.uri}"/>
+	</bean> 
+	
+	<!-- Application  Config -->
+	 <bean id="applicationConfig" class="com.connsec.config.ApplicationConfig">      
+	    <property name="dataSoruceConfig" ref="dataSoruceConfig"/> 
+	    <property name="characterEncodingConfig" ref="characterEncodingConfig"/> 
+	    <property name="emailConfig" ref="emailConfig"/> 
+	    <property name="loginConfig" ref="loginConfig"/>
+	    <property name="domainName" value="${config.web.domain.name}"/>
+	    <property name="anonymousAccessUrls">
+		   <list>
+		    <value>null</value>
+		   </list>
+		</property>
+	</bean> 	
+	
+	<bean id="remeberMeService" class="com.connsec.web.authentication.support.rememberme.JdbcRemeberMeService">
+		<constructor-arg ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- Authentication Password Encoder Config -->
+	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+		<constructor-arg value="256" />   
+		<property name="encodeHashAsBase64" value="true" />
+	</bean>   
+	
+	<bean id="tfaOTPAuthn" class="com.connsec.otp.impl.TimeBasedOTPAuthn">
+		<constructor-arg ref="jdbcTemplate" /> 
+	</bean>
+	
+	<bean id="passwordReciprocal" class="com.connsec.crypto.PasswordReciprocal"></bean>
+	
+	<!-- Provisioning DispatcherService -->
+	<bean id="dispatcherService" class="com.connsec.connector.prepare.DispatcherService">
+		<constructor-arg ref="jdbcTemplate"/>
+	</bean>
+	
+	<!-- Captcha Producer  Config -->
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+                <bean class="com.google.code.kaptcha.util.Config">
+                        <constructor-arg type="java.util.Properties">
+                                <props>
+                                        <prop key="kaptcha.image.width">70</prop> 
+                                        <prop key="kaptcha.image.height">25</prop>
+                                        <prop key="kaptcha.border">no</prop>
+                                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>
+                                        <prop key="kaptcha.textproducer.font.size">23</prop>
+                                        <prop key="kaptcha.textproducer.char.string">0123456789</prop>
+                                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                                        <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
+                                        <!-- <prop key="kaptcha.noise.color">white</prop>
+                                          -->
+                                </props>
+                        </constructor-arg>
+                </bean>
+        </property>
+	</bean>
+
+	<bean id="keyStoreLoader" class="com.connsec.keystore.KeyStoreLoader">
+    	<property name="entityName" value="${config.saml.v20.idp.issuing.entity.id}" />
+		<property name="keystorePassword" value="${config.saml.v20.idp.keystore.password}" /> 
+		<property name="keystoreFile" value="${config.saml.v20.idp.keystore}"/>
+		
+	</bean>
+	
+	<bean id="spKeyStoreLoader" class="com.connsec.keystore.KeyStoreLoader">
+    	<property name="entityName" value="${config.saml.v20.sp.issuing.entity.id}" />
+		<property name="keystorePassword" value="${config.saml.v20.sp.keystore.password}" /> 
+		<property name="keystoreFile" value="${config.saml.v20.sp.keystore}"/>
+	</bean>
+	
+	<bean id="spIssuingEntityName" class="java.lang.String" >
+		<constructor-arg value="${config.saml.v20.sp.issuing.entity.id}"/>
+	</bean>
+	
+	<bean id="oidcProviderMetadata" class="com.connsec.config.oidc.OIDCProviderMetadataDetails">
+		<property name="issuer" value="${config.oidc.metadata.issuer}" />
+		<property name="authorizationEndpoint" value="${config.oidc.metadata.authorizationEndpoint}" />
+		<property name="tokenEndpoint" value="${config.oidc.metadata.tokenEndpoint}" />
+		<property name="userinfoEndpoint" value="${config.oidc.metadata.userinfoEndpoint}" />
+	</bean>
+	
+	<bean id="jwkSetKeyStore" class="com.connsec.crypto.jose.keystore.JWKSetKeyStore">
+		<property name="location" value="classpath:config/keystore.jwks" />
+	</bean>
+	
+	<bean id="jwtSignerValidationService" class="com.connsec.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService">
+		<constructor-arg name="keyStore" ref="jwkSetKeyStore" />
+		<property name="defaultSignerKeyId" value="connsec_rsa" />
+ 		<property name="defaultSigningAlgorithmName" value="RS256" />
+	</bean>
+	
+	<bean id="jwtLoginService" class="com.connsec.web.authentication.support.jwt.JwtLoginService">
+		<property name="jwtSignerValidationService" ref="jwtSignerValidationService" />
+ 		<property name="jwtProviderMetadata"  ref="oidcProviderMetadata" />
+	</bean>
+	
+	<import resource="applicationContext-database.xml"/>
+	
+	<import resource="applicationContext-security.xml"/>
+	
+	<import resource="applicationContext-task.xml"/>
+	
+</beans>

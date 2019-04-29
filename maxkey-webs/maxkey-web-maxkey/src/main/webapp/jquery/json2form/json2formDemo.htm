@@ -1,0 +1,149 @@
+<html>
+	<head>
+		<title>Json2form Demo</title>
+		<script src="jquery-1.4.4.min.js" type="text/javascript"></script>
+		<script src="json2form.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function(){ 
+				var objdata ={
+					txt:'文字输入',
+					pwd:'密码输入',
+					hd:'隐藏',
+					are:'多行文字json2form',
+					btn:'按钮',
+					rt:'重置按钮',
+					sb:'提交按钮',
+					rad:'男',
+					chk:'chk1',
+					chk:['美国','中国'],
+					sl:['法国','日本'],
+					label:{
+						txt:'自定义文本框标签',
+						sl :'自定义下拉列表标签'
+					},
+					init:{
+						chk444:[{"value":"comm","display":"一般资源"},{"value":"system","display":"系统"},{"value":"page","display":"页面"},{"value":"url","display":"链接"},{"value":"model","display":"模块"},{"value":"data","display":"数据"}],
+						chk555:[{"value":"comm","display":"一般资源"},{"value":"system","display":"系统"},{"value":"page","display":"页面"},{"value":"url","display":"链接"},{"value":"model","display":"模块"},{"value":"data","display":"数据"}],
+						slinit:[{"value":"comm","display":"一般资源"},{"value":"system","display":"系统"},{"value":"page","display":"页面"},{"value":"url","display":"链接"},{"value":"model","display":"模块"},{"value":"data","display":"数据"}]
+					}
+				};
+				
+				$("#json2form").json2form({data:objdata});
+				$("#json2form").json2form({data:objdata});
+			});
+		</script>
+		<style type="text/css">   
+			table, td {   
+				border:1px solid #cccccc;   
+				border-collapse:collapse;  
+			}   
+		</style>
+	</head>
+	<body>
+		<div align="center">
+			<form id="json2form" name="json2form">
+				<table>
+					<tr>
+						<td colspan="2"  bgcolor="#FFFFFF"><div align="center"><strong>Aduby json2formDemo</strong></div></td>
+					</tr>
+					<tr>
+						<td>1. text(文本框)</td>
+						<td>
+							<label for="txt">1 text(文本框)</label>
+							<input type="text" id="txt" name="txt" value="输入内容" />
+						</td>
+					</tr>
+					<tr>
+						<td>2. password(密码框)</td>
+						<td>
+							<input type="password" id="pwd" name="pwd" value="值" />
+						</td>
+					</tr>
+					<tr>
+						<td>3. hidden(隐藏域)</td>
+						<td>
+							<input type="hidden" id="hd" name="hd" value="值"/>
+				 
+						</td>
+					</tr>
+					<tr>
+						<td>4. checkbox(复选框)</td>
+						<td>
+							<input type="checkbox" id="chk1" name="chk" value="中国"  checked="checked" />中国<label for="chk1"></label>
+							<input type="checkbox" id="chk2" name="chk" value="美国" />美国<label for="chk2"></label>
+						</td>
+					</tr>
+					<tr>
+						<td>5. checkbox(动态复选框)</td>
+						<td>
+							<input type="checkbox" id="chk444" name="chk444" value="动态复选框" />
+						</td>
+					</tr>
+					<tr>
+						<td>6. radion(单选按钮)</td>
+						<td>
+							<input type="radio" id="rd1" name="rad" value="男" checked="checked" />男
+							<input type="radio" id="rd2" name="rad" value="女" />女
+						</td>
+					</tr>
+					<tr>
+						<td>7. radion(动态单选按钮)</td>
+						<td>
+							<input type="radio" id="chk555" name="chk555" value="动态单选按钮" />
+						</td>
+					</tr>
+					<tr>
+						<td>8. file(文件)</td>
+						<td>
+							<input  type="file" id="fl" name="file" value="呵呵" size="20" />
+						</td>
+					</tr>
+					<tr>
+						<td>9. textare(文本域)</td>
+						<td>
+							多行文本输入框。<br>
+							<textarea id="are" name="are" cols="10" rows="10" ></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>10. select(下拉列表框)</td>
+						<td>
+							用户选择的下拉列表。<br>
+							<label for="sl">下拉列表</label><br>
+						   <select id="sl" name="sl" multiple="multiple" >
+								<option id="op1" value="美国" selected="selected">美国</option>
+								<option id="op2" value="中国">中国</option>
+								<option id="op3" value="日本">日本</option>
+								<option id="op4" value="法国">法国</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>11. select(动态下拉列表框)</td>
+						<td>
+							<select id="slinit" name="slinit"  ><option  value="null">动态下拉列表框</option> </select>
+						</td>
+					</tr>
+					<tr>
+						<td>12.  button(普通按钮)</td>
+						<td>
+							<input  type="button" id="btn" name="btn" value="普通按钮">
+						</td>
+					</tr>
+					<tr>
+						<td>13. reset(重置按钮)</td>
+						<td>
+							<input  type="reset" id="rt" name="rt" value="重置按钮" />
+						</td>
+					</tr>
+					<tr>
+						<td>14. submit(提交按钮)</td>
+						<td>
+							<input type="submit" id="sb" name="sb"  value="提交按钮" />
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+</html>

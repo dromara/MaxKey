@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.UserExtraMapper">
+
+	<sql id="where_statement">
+		<if test="id != null and id != ''">
+			AND id  =  #{id}
+		</if>
+		<if test="attribute != null and attribute != ''">
+			AND ATTRIBUTE  LIKE  '%${name}%'
+		</if>
+		<if test="userTypeId != null and userTypeId != ''">
+			AND USERTYPEID  =  #{userTypeId}
+		</if>
+	</sql>
+	
+	<insert id="insert" parameterType="UserExtra">
+		INSERT INTO USEREXTRA(
+			ID,
+			USERTYPEID,
+			USERTYPENAME,
+			ATTRIBUTENAME,
+			ATTRIBUTE,
+			ATTRIBUTETYPE,
+			DEFAULTVALUE,
+			SORTORDER,
+			DESCRIPTION,
+			STATUS
+		)VALUES(
+			#{id},
+			#{userTypeId},
+			#{userTypeName},
+			#{attributeName},
+			#{attribute},
+			#{attributeType},
+			#{defaultValue},
+			#{sortOrder},
+			#{description},
+			#{status}
+		)
+	</insert>
+	
+	<update id="update" parameterType="UserExtra" >
+    	UPDATE USEREXTRA SET
+    		ATTRIBUTENAME	=	#{attributeName},
+    		ATTRIBUTE		=	#{attribute},
+			ATTRIBUTETYPE	=	#{attributeType},
+			DEFAULTVALUE	=	#{defaultValue},
+			SORTORDER		=	#{sortOrder},
+			DESCRIPTION		=	#{description},
+			STATUS			=	#{status}
+			
+		WHERE 
+			ID	=	#{id}
+    </update>
+	
+	<select id="query" parameterType="UserExtra" resultType="UserExtra">
+    	SELECT 
+			*
+    	FROM 
+    		USEREXTRA
+    	WHERE 	
+    		STATUS	!=	9
+    	<include refid="where_statement"/>
+    	ORDER BY SORTORDER 
+    </select>
+    
+	<select id="load" parameterType="UserExtra" resultType="UserExtra">
+    	SELECT 
+			*
+    	FROM 
+    		USEREXTRA
+    	WHERE 	
+    		STATUS	!=	9
+    		<include refid="where_statement"/>
+    </select>
+    
+   	<select id="get" parameterType="string" resultType="UserExtra">
+    	SELECT 
+			*
+    	FROM 
+    		USEREXTRA
+    	WHERE 	
+    		ID	=	#{value}
+    		AND STATUS	!=	9
+    </select> 
+    
+    <select id="grid" parameterType="UserExtra" resultType="UserExtra">
+		SELECT
+			*
+		FROM
+			USEREXTRA
+		WHERE
+			STATUS	!=	9
+		<include refid="where_statement"/>
+		ORDER BY SORTORDER 
+	</select>
+	
+	<select id="count" parameterType="UserExtra" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*) 
+		FROM
+			USEREXTRA
+		WHERE
+			 STATUS	!=	9
+		<include refid="where_statement"/>
+		
+	</select>
+	
+	<delete id="remove" parameterType="string" >
+    	DELETE FROM USEREXTRA WHERE ID=#{value}
+    </delete>
+    
+   	<delete id="batchDelete" parameterType="java.util.List">
+		DELETE FROM USEREXTRA WHERE ID IN
+		<foreach collection="list"  item="item" index="index"   open="(" separator="," close=")">  
+        	#{item}   
+     	</foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,12 @@
+{
+  "keys": [
+    {
+      "e": "AQAB",
+      "n": "h5xtDWLssoj5-WLCKPYPUDJlM5pnL4pS8-wMt9sVA57QVRVFdpWHi1dbDCugCApjvmD-giO5yjF5mQSTAF6a14FvktozVw_dDTEzrjG5FgT6WpMzMZd6JpiwQLOtEbV7oBkKYWm1vh1C67-xTlhKgQUNLVNDg4RqRcKFxZd5JPc",
+      "kty": "RSA",
+      "use": "sig",
+      "alg": "RS256",
+      "kid": "connsec_rsa"
+    }
+  ]
+}

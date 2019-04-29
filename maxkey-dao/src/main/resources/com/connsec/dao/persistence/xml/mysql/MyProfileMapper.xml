@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.MyProfileMapper">
+
+	<update id="updateBasic" parameterType="UserInfo" >
+    	UPDATE USERINFO SET
+    		DISPLAYNAME 	=	#{displayName},
+			NICKNAME 		=	#{nickName},
+			NAMEZHSPELL		=	#{nameZHSpell},
+			NAMEZHSHORTSPELL=	#{nameZHShortSpell},
+			GIVENNAME 		=	#{givenName},
+			MIDDLENAME 		=	#{middleName},
+			FAMILYNAME 		=	#{familyName},
+			HONORIFICPREFIX =	#{honorificPrefix},
+			HONORIFICSUFFIX =	#{honorificSuffix},
+			FORMATTEDNAME	=	#{formattedName} ,
+			MARRIED			=	#{married},
+			GENDER			=	#{gender},
+			BIRTHDATE		=	#{birthDate},
+			<if test="picture != null">
+			PICTURE			=	#{picture},
+			</if>
+			IDTYPE			=	#{idType},
+			IDCARDNO 		=	#{idCardNo},
+			WEBSITE			=	#{webSite},
+
+			LOCALE			=	#{locale},
+			TIMEZONE		=	#{timeZone},
+			PREFERREDLANGUAGE=	#{preferredLanguage},
+
+			MODIFIEDBY		=	#{modifiedBy},
+			MODIFIEDDATE	=	current_timestamp		
+		WHERE 
+			ID	=	#{id}
+    </update>
+ 
+
+    
+    <update id="updateCompany" parameterType="UserInfo" >
+    	UPDATE USERINFO SET
+    		WINDOWSACCOUNT	=	#{windowsAccount},
+    		
+			WORKCOUNTRY		=	#{workCountry},
+			WORKREGION		=	#{workRegion},
+			WORKLOCALITY	=	#{workLocality},
+			WORKSTREETADDRESS=	#{workStreetAddress},
+			WORKADDRESSFORMATTED=	#{workAddressFormatted},
+			WORKEMAIL		=	#{workEmail},
+			WORKPHONENUMBER	=	#{workPhoneNumber},
+			WORKPOSTALCODE	=	#{workPostalCode},
+			WORKFAX			=	#{workFax},
+			
+			MODIFIEDBY		=	#{modifiedBy},
+			MODIFIEDDATE	=	current_timestamp		
+		WHERE 
+			ID	=	#{id}
+    </update>
+	
+	 <update id="updateHome" parameterType="UserInfo" >
+    	UPDATE USERINFO SET
+			HOMECOUNTRY		=	#{homeCountry},
+			HOMEREGION		=	#{homeRegion},
+			HOMELOCALITY	=	#{homeLocality},
+			HOMESTREETADDRESS=	#{homeStreetAddress},
+			HOMEADDRESSFORMATTED=	#{homeAddressFormatted},
+			HOMEEMAIL		=	#{homeEmail},
+			HOMEPHONENUMBER=	#{homePhoneNumber},
+			HOMEPOSTALCODE	=	#{homePostalCode},
+			HOMEFAX			=	#{homeFax},
+		
+			QQ				=	#{qq},
+			WEIXIN			=	#{weixin},
+			SINAWEIBO		=	#{sinaweibo},
+			YIXIN			=	#{yixin},
+			FACEBOOK		=	#{facebook},
+			SKYPE			=	#{skype},
+			MSN				=	#{msn},
+			GTALK			=	#{gtalk},
+			YAHOO			=	#{yahoo},
+			LINE			=	#{line},
+			AIM				=	#{aim},
+			DEFINEIM		=	#{defineIm},
+			
+			MODIFIEDBY		=	#{modifiedBy},
+			MODIFIEDDATE	=	current_timestamp		
+		WHERE 
+			ID	=	#{id}
+    </update>
+        
+    <update id="updateExtra" parameterType="UserInfo" >
+    	UPDATE USERINFO SET
+			EXTRAATTRIBUTE	=	#{extraAttribute},
+			
+			MODIFIEDBY		=	#{modifiedBy},
+			MODIFIEDDATE	=	current_timestamp		
+		WHERE 
+			ID	=	#{id}
+    </update>
+	
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.RoleNavMapper" >
+	<sql id="sql_condition">
+		WHERE	1	=	1
+    	<if test="id != null">
+			AND	ID	=	#{id}
+		</if>
+		<if test="name != null  and name != '' ">
+			AND NAME like '#${name}#'
+		</if>
+		<if test="status != null  and status != '' ">
+			AND	STATUS	=	#{status}
+		</if>
+		<if test="status == null">
+			<![CDATA[AND	STATUS	<> '2']]>
+		</if>
+	</sql>
+
+    <delete id="deleteRoleNav" parameterType="string">
+    	DELETE FROM ROLE_NAV WHERE ROLEID = #{value}
+    </delete>
+    
+    <insert id="insertRoleNav" parameterType="java.util.List">
+     	INSERT INTO 
+	   		ROLE_NAV 
+	   	(
+	   		ID,
+			ROLEID,
+			NAVID
+		)
+    	VALUES	
+    	<foreach collection="list" item="item" index="index"  separator=",">
+    	(
+    		#{item.id},
+			#{item.roleId},
+			#{item.navId}
+		)
+		</foreach>
+     </insert>
+     
+         
+    <select id="queryNavs" parameterType="string" resultType="Navigations">
+    	SELECT DISTINCT N.* FROM ROLE_NAV RN,NAVIGATIONS N 
+    	WHERE RN.NAVID = N.ID 
+	    	AND N.STATUS = 1 
+	    	AND RN.ROLEID = #{value} 
+	    	ORDER BY  PID, SORTORDER 
+    </select>  
+    
+     
+</mapper>

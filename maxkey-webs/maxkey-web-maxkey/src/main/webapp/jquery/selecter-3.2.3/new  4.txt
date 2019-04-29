@@ -1,0 +1,12 @@
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
+
+  <div class="unsupported-browser">
+    <div class="container clearfix">
+      <a href="https://help.github.com/articles/supported-browsers" class="button">Learn more</a>
+      <h5>Please note that GitHub no longer supports Internet Explorer versions 7 or 8.</h5>
+      <p>We recommend upgrading to the latest <a href="https://ie.microsoft.com/">Internet Explorer</a>, <a href="https://chrome.google.com">Google Chrome</a>, or <a href="https://mozilla.org/firefox/">Firefox</a>.</p>
+      <p>If you are using IE 9 or later, make sure you <a href="http://windows.microsoft.com/en-US/windows7/webpages-look-incorrect-in-Internet-Explorer">turn off "Compatibility View"</a>.</p>
+    </div>
+  </div>

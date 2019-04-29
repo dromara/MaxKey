@@ -1,0 +1,43 @@
+package org.maxkey.dao.persistence;
+
+import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
+import org.maxkey.domain.UserInfo;
+
+
+/**
+ * @author Crystal.Sea
+ *
+ */
+public interface UserInfoMapper  extends IJpaBaseMapper<UserInfo>{
+	
+	//login query
+	
+	public UserInfo loadByAppIdAndUsername(UserInfo userInfo);
+	
+	public int logisticDeleteAllByCid(String cid);
+	
+	public void locked(UserInfo userInfo);
+
+	public void unlock(UserInfo userInfo);
+
+	public void updateBadPWDCount(UserInfo userInfo);
+	
+	public int changePassword(UserInfo userInfo);
+	
+	public int changeAppLoginPassword(UserInfo userInfo);
+	
+	public int updateProtectedApps(UserInfo userInfo);
+	
+	public int changeSharedSecret(UserInfo userInfo);
+	
+	public int changePasswordQuestion(UserInfo userInfo);
+	
+	public int changeAuthnType(UserInfo userInfo);
+	
+	public int changeEmail(UserInfo userInfo);
+	
+	public int changeMobile(UserInfo userInfo);
+	
+	
+	
+}

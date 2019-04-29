@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.ReportMapper" >
+
+	<select id="analysisDay" parameterType="String" resultType="Map">
+    	SELECT 
+    		COUNT(ID) REPORTCOUNT, HOUR(LOGINTIME) REPORTHOUR 
+    	FROM SECDB.LOGIN_HISTORY 
+    	WHERE 
+    		DATE(LOGINTIME) = DATE(#{value}) 
+    	GROUP BY REPORTHOUR
+    </select>
+    
+    <select id="analysisMonth" parameterType="String" resultType="Map">
+    	SELECT
+    		REPORTCOUNT,
+    		REPORTYEAR,
+    		REPORTMONTH,
+       		REPORTDAY
+    	FROM
+			REPORT_LOGIN_DAY
+			
+		WHERE 
+			REPORTYEAR=YEAR(#{value})
+            AND  REPORTMONTH=MONTH(#{value})
+            
+		ORDER BY REPORTYEAR ,REPORTMONTH,REPORTDAY
+    </select>
+    
+    <select id="analysisYear" parameterType="Integer" resultType="Map">
+    	SELECT 
+    		REPORTCOUNT,
+    		REPORTYEAR,
+    		REPORTMONTH 
+    	FROM 
+			REPORT_LOGIN_MONTH  
+		WHERE 
+			REPORTYEAR=#{value}
+		GROUP BY REPORTYEAR ,REPORTMONTH
+    </select>
+    
+    <select id="analysisYears" parameterType="Integer" resultType="Map">
+    	SELECT 
+    		SUM(REPORTCOUNT) REPORTCOUNT,
+    		REPORTYEAR
+    	FROM 
+			REPORT_LOGIN_MONTH  
+		GROUP BY REPORTYEAR 
+    </select>
+    
+    <select id="analysisBrowser" parameterType="Map" resultType="Map">
+    	SELECT COUNT(ID)REPORTCOUNT,BROWSER 
+    	FROM LOGIN_HISTORY 
+    	WHERE 
+    		LOGINTIME BETWEEN 	#{startDate} AND	#{endDate}
+    	GROUP BY BROWSER ORDER BY REPORTCOUNT DESC
+    </select>
+    
+	<select id="analysisApp" parameterType="Map" resultType="Map">
+    	SELECT COUNT(ID) REPORTCOUNT,APPNAME 
+    	FROM LOGIN_APPS_HISTORY 
+    	WHERE 
+    		LOGINTIME BETWEEN 	#{startDate} AND	#{endDate}
+    	GROUP BY APPNAME ORDER BY REPORTCOUNT DESC
+    </select>
+
+</mapper>

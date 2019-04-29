@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.connsec.saml.PostBindingAdapterTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2019-03-05T13:23:45" hostname="WIN7U-20160730R" time="0.639">
+  <properties/>
+  <testcase name="testExtractSAMLResponseMessage" classname="com.connsec.saml.PostBindingAdapterTest" time="0.577"/>
+  <testcase name="testSendSAMLMessage" classname="com.connsec.saml.PostBindingAdapterTest" time="0.035"/>
+  <testcase name="testAfterPropertiesSet" classname="com.connsec.saml.PostBindingAdapterTest" time="0.015"/>
+  <testcase name="testExtractSAMLRequestMessage" classname="com.connsec.saml.PostBindingAdapterTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

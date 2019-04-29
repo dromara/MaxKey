@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.ProvisioningEntryMapper">
+	<sql id="sql_condition">
+		WHERE	1	=	1
+    	<if test="id != null">
+			AND	ID	=	#{id}
+		</if>
+		<if test="provisioningId != null  and provisioningId != '' ">
+			AND PROVISIONINGID =	#{provisioningId}
+		</if>
+		<if test="provisioningName != null  and provisioningName != '' ">
+			AND PROVISIONINGNAME =	#{provisioningName}
+		</if>
+		<if test="entryId != null and entryId != ''">
+			AND ENTRYID = #{entryId}
+		</if>
+		<if test="entryName != null  and entryName != '' ">
+			AND ENTRYNAME = #{entryName}
+		</if>
+		<if test="entryType != null  and entryType != '' ">
+			AND ENTRYTYPE like '%${entryType}%'
+		</if>
+		
+	</sql>
+	
+
+	<select id="grid" parameterType="ProvisioningEntry" resultType="ProvisioningEntry">
+    	SELECT 
+			*
+    	FROM PROVISIONING_ENTRY 
+    	<include refid="sql_condition"/>
+    </select>
+    
+   <select  id="count"  parameterType="ProvisioningEntry"  resultType="java.lang.Integer">
+    	SELECT COUNT(1) FROM PROVISIONING_ENTRY
+    	<include refid="sql_condition"/>
+    </select>
+    
+    <select id="query" parameterType="ProvisioningEntry" resultType="ProvisioningEntry">
+		SELECT
+			*
+		FROM
+			PROVISIONING_ENTRY
+		<include refid="sql_condition"/>
+	</select>
+    
+	<select id="get" parameterType="string" resultType="ProvisioningEntry">
+    	SELECT 
+			*
+    	FROM 
+    		PROVISIONING_ENTRY
+    	WHERE 	
+    		ID	=	#{value}
+    </select>
+    
+</mapper>

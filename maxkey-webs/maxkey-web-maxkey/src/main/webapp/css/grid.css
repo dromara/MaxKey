@@ -1,0 +1,133 @@
+.jqgridclass {
+	background: #eee;
+}
+
+.ui-jqgrid{
+	border: 1px solid #ddd;
+}
+.ui-jqgrid > .ui-jqgrid-view{
+	font-size: 12px;
+}
+.ui-jqgrid .ui-jqgrid-htable th {
+	height: 32px;
+	background: #fff;
+	
+}
+
+
+.ui-jqgrid .ui-jqgrid-htable th.ui-th-column div{
+	background: #fff;
+	color: #333;
+}
+.ui-jqgrid .jqgrid-rownum{
+	background: #fff;
+}
+.ui-jqgrid-sortable {
+	text-align: center;
+	color: #333;
+	margin: 0;
+	padding: 0;
+}  /*修改列名的字体大小*/
+.ui-jqgrid-jquery-ui.ui-jqgrid .ui-jqgrid-bdiv tr.ui-row-ltr > td{
+	border-color: #ddd;
+}
+.ui-jqgrid .ui-jqgrid-bdiv tr.ui-row-ltr > td {
+	height: 32px;
+	line-height: 32px;
+	border-right: solid 1px #ddd;
+	
+}  /*修改表格内容字体*/
+.ui-jqgrid .ui-jqgrid-htable th.ui-th-column {
+	line-height: 32px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-align: center;
+	border-top: 0px none;
+	border-bottom: 0px none;
+} /*改变表头的样式*/
+.ui-jqgrid .ui-jqgrid-bdiv{
+	overflow:visible;
+}
+	
+.ui-jqgrid .ui-jqgrid-hdiv {
+	overflow-x:visible;
+	height: 34px;
+	background: #fff;
+}	
+.ui-jqgrid .ui-jqgrid-htable th div {
+	height: 32px;
+	
+}
+
+.ui-jqgrid-btable .ui-state-highlight{
+	border:#CDE5F6;
+	background: #CDE5F6;
+}
+
+.ui-jqgrid-hdiv th {
+	height: 32px;
+	background: #fff;
+}
+
+
+.ui-jqgrid .ui-pg-table {
+	margin-top: 0px;
+}
+
+
+
+.ui-jqgrid .ui-jqgrid-pager {
+	border-left: 0 none !important;
+	border-right: 0 none !important;
+	border-bottom: 0 none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	position: relative;
+	height: 32px;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size: 11px;
+	background: #fff;
+}
+
+#pg_list_pager{
+	border: 1px solid #d8dcdf;
+}
+
+.ui-jqgrid .ui-pg-input{
+	min-height: 28px;
+	width: 50px;
+	font-size: 1em;
+}
+
+.ui-jqgrid .ui-pg-table .ui-pg-selbox {
+	font-size: 1em;
+	border: 1px solid #ccc;
+    line-height: 18px;
+    display: block;
+    height: 31px;
+    width: 45px;
+    text-align: center;
+    margin: 0;
+}
+
+.ui-jqgrid .ui-pager-control .ui-pg-button{
+	height: 28px;
+}
+
+.ui-jqgrid #jqgh_list_cb #cb_list{
+	margin-top: 10px;
+}
+
+.ui-jqgrid #jqgh_list2_cb #cb_list2{
+	margin-top: 10px;
+}
+
+
+.ui-jqgrid .loading {
+    background: url(../images/loading_img.gif);
+    border-style: none;
+    background-repeat: no-repeat;
+    width:78px;
+    height:74px;
+}

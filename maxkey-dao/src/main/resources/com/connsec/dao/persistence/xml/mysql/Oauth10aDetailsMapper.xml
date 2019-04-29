@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.Oauth10aDetailsMapper">
+
+	<insert id="insert" parameterType="OAuth10aDetails">
+		INSERT INTO OAUTH10A_CLIENT_DETAILS(
+			CLIENT_ID,
+			CLIENT_SECRET,
+			SCOPE,
+			AUTHORIZED_GRANT_TYPES,
+			WEB_SERVER_REDIRECT_URI,
+			AUTHORITIES,
+			APPROVALPROMPT
+		)VALUES(
+			#{clientId},
+			#{clientSecret},
+			#{scope},
+			#{authorizedGrantTypes},
+			#{registeredRedirectUris},
+			#{authorities},
+			#{approvalPrompt}
+		)
+	</insert>
+	
+	<update id="update" parameterType="OAuth10aDetails" >
+    	UPDATE OAUTH10A_CLIENT_DETAILS SET
+    		CLIENT_SECRET			=	#{clientSecret},
+			SCOPE					=	#{scope},
+			AUTHORIZED_GRANT_TYPES	=	#{authorizedGrantTypes},
+			WEB_SERVER_REDIRECT_URI	=	#{registeredRedirectUris},
+			AUTHORITIES				=	#{authorities},
+			APPROVALPROMPT			=	#{approvalPrompt}
+		WHERE 
+			CLIENT_ID	=	#{clientId}
+    </update>
+	
+	<select id="get" parameterType="string" resultType="OAuth10aDetails">
+    	SELECT 
+    		OCD.CLIENT_ID AS CLIENTID,
+    		OCD.CLIENT_SECRET AS CLIENTSECRET,
+    		OCD.SCOPE,
+    		OCD.AUTHORIZED_GRANT_TYPES AS AUTHORIZEDGRANTTYPES,
+    		OCD.WEB_SERVER_REDIRECT_URI AS REGISTEREDREDIRECTURIS,
+    		OCD.AUTHORITIES,
+    		OCD.APPROVALPROMPT,
+			APP.*
+    	FROM 
+    		OAUTH10A_CLIENT_DETAILS OCD,
+    		APPLICATIONS APP
+    	WHERE 	
+    		APP.ID				=	#{value}
+    		AND OCD.CLIENT_ID	=	#{value}
+    		AND OCD.CLIENT_ID	=	APP.ID
+    		AND APP.STATUS	=	1
+    </select>
+	
+	<delete id="remove" parameterType="string" >
+    	DELETE FROM OAUTH10A_CLIENT_DETAILS WHERE CLIENT_ID=#{value}
+    </delete>
+</mapper>

@@ -1,0 +1,59 @@
+#tableform{
+	border: 1px solid #e9eeed;
+	cellspacing:0;
+}
+
+#j_username,#j_password,#tfa_j_username,#tfa_j_password{
+	width	:230px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#j_captcha{
+	width	:160px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#tfa_j_otp_captcha{
+	width	:100px;
+	/*width	:230px;*/
+	font-size: 14px;
+	font-weight: bold;	
+}
+
+#tfa_j_otp_captcha_button{
+	width	:130px;
+	height: 34px;
+	font-size: 14px;
+	font-weight: bold;	
+}
+
+#j_captchaimg{
+	width:70px;
+	height: 33px;
+	vertical-align: top;
+}
+
+#switch_commonLogin,#switch_tfaLogin{
+	width	:49%;
+}
+
+#div_tfaLogin{
+	display: none;
+}
+
+.login_button{
+	width:80%;
+}
+#register{
+	font-size: 14px;
+	font-weight: bold;
+	height: 33px;
+	color: white;
+	background-color: #4D4E54;
+}
+#register a{
+	font-weight: bold;
+	color: white;
+}

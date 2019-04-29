@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.IpAddrFilterMapper">
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			AND	ID	=	#{id}
+		</if> 
+		<if test="ipAddr != null and ipAddr != ''">
+			AND IPADDR LIKE '%${ipAddr}%'
+		</if>
+		<if test="filter != null and filter != ''">
+			AND FILTER = #{filter}
+		</if>
+    </sql>
+    
+	<insert id="insert" parameterType="IpAddrFilter">
+		INSERT INTO IPADDRFILTER(
+			ID,
+			IPADDR,
+			FILTER,
+			CREATEDBY,
+			CREATEDDATE,
+			
+			STATUS
+		)VALUES(
+			#{id},
+			#{ipAddr},
+			#{filter},
+			
+			#{createdBy},
+			#{createdDate} ,
+			
+			#{status}
+		)
+	</insert>
+	
+	<update id="update" parameterType="IpAddrFilter" >
+    	UPDATE IPADDRFILTER SET
+			IPADDR				=	#{ipAddr},
+			FILTER				=	#{filter},
+			
+			MODIFIEDBY			=	#{modifiedBy},
+			MODIFIEDDATE		=	#{modifiedDate},
+			
+			STATUS				=	#{status}
+		WHERE 
+			ID	=	#{id}
+    </update>
+	
+	<select id="query" parameterType="IpAddrFilter" resultType="IpAddrFilter">
+		SELECT
+			*
+		FROM
+			IPADDRFILTER
+		WHERE
+			 (1=1)	
+		<include refid="where_statement"/>
+		
+	</select>
+	
+	<select id="grid" parameterType="IpAddrFilter" resultType="IpAddrFilter">
+		SELECT
+			*
+		FROM
+			IPADDRFILTER
+		WHERE
+			 (1=1)	
+		<include refid="where_statement"/>
+	</select>
+	
+	<select id="count" parameterType="IpAddrFilter" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*) 
+		FROM
+			IPADDRFILTER
+		WHERE
+			 (1=1)	
+		<include refid="where_statement"/>
+	</select>
+	
+	<select id="get" parameterType="string" resultType="IpAddrFilter">
+    	SELECT 
+    		*
+    	FROM 
+    		IPADDRFILTER
+    	WHERE 	
+    		ID				= 	#{value}
+    		AND STATUS	=	1
+    </select>
+    
+    <delete id="delete" parameterType="IpAddrFilter" >
+    	DELETE FROM IPADDRFILTER WHERE ID=#{id}
+    </delete>
+    
+	<delete id="batchDelete" parameterType="java.util.List">
+    	DELETE FROM IPADDRFILTER WHERE ID IN
+    		<foreach item="item" collection="list" open="(" separator="," close=")">
+				#{item}
+    		</foreach>
+    </delete>
+</mapper>

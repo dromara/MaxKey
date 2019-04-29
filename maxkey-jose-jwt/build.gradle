@@ -1,0 +1,9 @@
+description = "maxkey-jose-jwt"
+
+dependencies {
+   compile fileTree(dir: '../maxkey-lib/java/', include: '*.jar')
+   compile fileTree(dir: '../maxkey-lib/common/', include: '*.jar')
+   compile fileTree(dir: '../maxkey-lib/apache/', include: '*.jar')
+   compile fileTree(dir: '../maxkey-lib/opensaml/', include: '*.jar')
+   compile fileTree(dir: '../maxkey-lib/other/', include: '*.jar')
+}

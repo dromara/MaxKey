@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name></display-name>
+  <!-- 
+  	<filter>
+	   	<filter-name>authenticationFilter</filter-name>
+	   	<filter-class>com.connsec.web.authn.AuthenticationFilter</filter-class>
+	   	<init-param>
+	    	<param-name>clientId</param-name>
+	    	<param-value>b32834accb544ea7a9a09dcae4a36403</param-value>
+	   	</init-param>
+	   	<init-param>
+	    	<param-name>clientSecret</param-name>
+	    	<param-value>E9UO53P3JH52aQAcnLP2FlLv8olKIB7u</param-value>
+	   	</init-param>
+	   	<init-param>
+	    	<param-name>callBackUri</param-name>
+	    	<param-value>http://oauth.demo.connsec.com:8080/oauthdemo/oauth20callback.jsp</param-value>
+	   	</init-param>
+	   	<init-param>
+	    	<param-name>enable</param-name>
+	    	<param-value>true</param-value>
+	   	</init-param>
+	</filter>
+	
+	<filter-mapping>
+  		<filter-name>authenticationFilter</filter-name>
+   		<url-pattern>/oauth20callback.jsp</url-pattern>
+	</filter-mapping>
+	
+	 -->
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

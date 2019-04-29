@@ -1,0 +1,8 @@
+/* See bug 466075 about the pseudo-selector ":org-eclipse-mylyn-tasks-ui" */
+
+/* See org.eclipse.ui.themes/css/dark/e4-dark_globalstyle.css for additional
+* Mylyn Theme settings */
+DatePickerPanel {
+background-color: #3c4349;
+color: #d8dcdf;
+}

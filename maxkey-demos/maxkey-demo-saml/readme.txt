@@ -1,0 +1,1 @@
+run on jdk 1.6 and tomcat 6 , 7

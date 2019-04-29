@@ -1,0 +1,14 @@
+# Compiled class file
+#.gitignore
+*.class
+*/bin/*
+bin/*
+*/build/*
+build/*
+
+# Log file
+*.log
+*.log.*
+*/logs/*
+*/jdk/*
+jdk/*

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.DesktopDetailsMapper">
+
+	<insert id="insert" parameterType="DesktopDetails">
+		INSERT INTO DESKTOP_DETAILS(
+			ID,
+			PROGRAMPATH,
+			PARAMETER,
+			
+			USERNAMETYPE,
+			PREUSERNAME,
+			USERNAMEPARAMETER,
+			
+			PASSWORDTYPE,
+			PREPASSWORD,
+			PASSWORDPARAMETER,
+			
+			SUBMITTYPE,
+			SUBMITKEY,
+			PRESUBMIT
+		)VALUES(
+			#{id},
+			#{programPath},
+			#{parameter},
+			
+			#{usernameType},
+			#{preUsername},
+			#{usernameParameter},
+			
+			#{passwordType} ,
+			#{prePassword} ,
+			#{passwordParameter},
+			
+			#{submitType},
+			#{submitKey},
+			#{preSubmit}
+		)
+	</insert>
+	
+	<update id="update" parameterType="DesktopDetails" >
+    	UPDATE DESKTOP_DETAILS SET
+    		PROGRAMPATH			=	#{programPath},
+			PARAMETER			=	#{parameter},
+			
+			USERNAMETYPE		=	#{usernameType},
+			PREUSERNAME			=	#{preUsername},
+			USERNAMEPARAMETER	=	#{usernameParameter},
+			
+			PASSWORDTYPE		=	#{passwordType},
+			PREPASSWORD			=	#{prePassword},
+			PASSWORDPARAMETER	=	#{passwordParameter},
+			
+			SUBMITTYPE			=	#{submitType},
+			SUBMITKEY			=	#{submitKey},
+			PRESUBMIT			=	#{preSubmit}
+		WHERE 
+			ID	=	#{id}
+    </update>
+	
+	<select id="get" parameterType="string" resultType="DesktopDetails">
+    	SELECT 
+			*
+    	FROM 
+    		DESKTOP_DETAILS DD,
+    		APPLICATIONS APP
+    	WHERE 	
+    		APP.ID	=	#{value}
+    		AND DD.ID	=	#{value}
+    		AND DD.ID	=	APP.ID
+    		AND STATUS	=	1
+    </select>
+	
+	<delete id="remove" parameterType="string" >
+    	DELETE FROM DESKTOP_DETAILS WHERE ID=#{value}
+    </delete>
+</mapper>

@@ -1,0 +1,26 @@
+
+description = "maxkey-protocol-tokenbased"
+
+
+dependencies {
+	//local jars
+	compile fileTree(dir: '../maxkey-lib/spring/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/spring-security/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/apache/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/db/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/tiles/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/common/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/opensaml/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/xml/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/json/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/log/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/java/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/other/', include: '*.jar')
+	
+	compile project(":maxkey-core")
+	compile project(":maxkey-dao")
+   	compile project(":maxkey-jose-jwt")
+   	compile project(":maxkey-client-sdk")
+   	compile project(":maxkey-protocols:maxkey-protocol-authorize")
+   
+}

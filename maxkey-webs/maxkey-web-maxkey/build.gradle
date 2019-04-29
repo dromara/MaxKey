@@ -1,0 +1,76 @@
+
+description = "maxkey-web-maxkey"
+
+// Apply the java plugin to add support for Java
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'com.bmuschko.tomcat-base'
+apply plugin: 'com.bmuschko.tomcat'
+
+buildscript {
+  repositories {
+  jcenter()
+  }
+  dependencies {
+  	classpath "com.bmuschko:gradle-tomcat-plugin:2.2.3"
+  }
+}
+dependencies {
+	def tomcatVersion = '7.0.59'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+         
+	//local jars
+	compile fileTree(dir: '../maxkey-lib/spring/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/apache/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/db/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/common/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/opensaml/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/xml/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/json/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/log/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/java/', include: '*.jar')
+	compile fileTree(dir: '../maxkey-lib/other/', include: '*.jar')
+	
+	compile project(":maxkey-core")
+	compile project(":maxkey-dao")
+   	compile project(":maxkey-jose-jwt")
+   	compile project(":maxkey-client-sdk")
+   	
+   	compile project(":maxkey-authentications")
+	
+   	compile project(":maxkey-protocols:maxkey-protocol-authorize")
+   	compile project(":maxkey-protocols:maxkey-protocol-cas")
+	compile project(":maxkey-protocols:maxkey-protocol-desktop")
+	compile project(":maxkey-protocols:maxkey-protocol-extendapi")
+	compile project(":maxkey-protocols:maxkey-protocol-formbased")
+	compile project(":maxkey-protocols:maxkey-protocol-ltpa")
+	compile project(":maxkey-protocols:maxkey-protocol-tokenbased")
+   	compile project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
+   	compile project(":maxkey-protocols:maxkey-protocol-saml-2.0")
+  
+   	
+   
+}
+
+//For Eclipse IDE only
+eclipse {
+
+	wtp {
+		component {
+      
+      	//define context path, default to project folder name
+      	contextPath = '/maxkey'
+      
+		}	
+    
+	}
+}
+
+tomcat {
+    httpPort = 80
+    contextPath = '/maxkey'
+
+}

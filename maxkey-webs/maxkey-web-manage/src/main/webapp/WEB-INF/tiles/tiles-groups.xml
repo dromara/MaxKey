@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC 
+		"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+		
+<tiles-definitions>
+
+	<!-- open -->
+
+	<definition name="groups/groupsList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/groups/groupsList.jsp" />
+	</definition>
+	
+	<definition name="groups/groupAdd" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/groups/groupAdd.jsp" />
+	</definition>
+	
+	<definition name="groups/groupUpdate" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/groups/groupUpdate.jsp" />
+	</definition>
+	
+	<definition name="groups/selectGroupsList" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/groups/selectGroupsList.jsp" />
+	</definition>
+	
+	<definition name="groupuser/groupUsersList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/groupuser/groupUsersList.jsp" />
+	</definition>
+	
+	<definition name="groupuser/addGroupUsersList" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/groupuser/addGroupUsersList.jsp" />
+	</definition>
+	
+	<definition name="groupapp/groupAppsList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/groupapp/groupAppsList.jsp" />
+	</definition>
+	
+	<definition name="groupapp/addGroupAppsList" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/groupapp/addGroupAppsList.jsp" />
+	</definition>
+	
+</tiles-definitions>

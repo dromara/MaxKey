@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.connsec.saml.SignatureSecurityPolicyRuleTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2019-03-05T13:23:46" hostname="WIN7U-20160730R" time="0.193">
+  <properties/>
+  <testcase name="testInvalidMessageSignature" classname="com.connsec.saml.SignatureSecurityPolicyRuleTest" time="0.14"/>
+  <testcase name="testTruestEngineThrowsException" classname="com.connsec.saml.SignatureSecurityPolicyRuleTest" time="0.007"/>
+  <testcase name="testInboundMessageIsNotSigned" classname="com.connsec.saml.SignatureSecurityPolicyRuleTest" time="0.005"/>
+  <testcase name="testInboundMessageIsNotSignable" classname="com.connsec.saml.SignatureSecurityPolicyRuleTest" time="0.008"/>
+  <testcase name="testEvaluate" classname="com.connsec.saml.SignatureSecurityPolicyRuleTest" time="0.01"/>
+  <testcase name="testAfterPropertiesSet" classname="com.connsec.saml.SignatureSecurityPolicyRuleTest" time="0.008"/>
+  <testcase name="testValidatorThrowsValdiationException" classname="com.connsec.saml.SignatureSecurityPolicyRuleTest" time="0.01"/>
+  <system-out><![CDATA[[com.connsec.saml.binding.SignatureSecurityPolicyRule:DEBUG {} 74] evaluating signature of messageContext
+[com.connsec.saml.binding.SignatureSecurityPolicyRule:DEBUG {} 95] Inbound issuer is the issuer
+[com.connsec.saml.binding.SignatureSecurityPolicyRule:DEBUG {} 74] evaluating signature of messageContext
+[com.connsec.saml.binding.SignatureSecurityPolicyRule:DEBUG {} 74] evaluating signature of messageContext
+[com.connsec.saml.binding.SignatureSecurityPolicyRule:DEBUG {} 74] evaluating signature of messageContext
+[com.connsec.saml.binding.SignatureSecurityPolicyRule:DEBUG {} 74] evaluating signature of messageContext
+[com.connsec.saml.binding.SignatureSecurityPolicyRule:DEBUG {} 95] Inbound issuer is the issuer
+[com.connsec.saml.binding.SignatureSecurityPolicyRule:DEBUG {} 74] evaluating signature of messageContext
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

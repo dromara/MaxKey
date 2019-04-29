@@ -1,0 +1,32 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+ <link rel="stylesheet" href="passwordStrength.css" type="text/css">
+<script type="text/javascript" src="jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="passwordStrength.js"></script>
+<script>
+$(document).ready(function(){
+	$('input[name="password"]').passwordStrength();
+	$('input[name="password2"]').passwordStrength({targetDiv: '#passwordtree',classes : Array('tree10','tree20','tree30','tree40')});
+	$('input[name="password3"]').passwordStrength({targetDiv: '#password5',classes : Array('five10','five20','five30','five40','five50')});
+
+});
+</script>
+
+</head>
+
+<body>
+<input type="password" name="password"/>
+<div id="password" class="ten0"> </div>
+<br>
+<input type="text" name="password2"/>
+<div id="passwordtree" class="tree0"></div>
+<br>
+
+<input type="text" name="password3"/>
+<div id="password5" class="five0"></div>
+</body>
+</html>

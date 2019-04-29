@@ -1,0 +1,50 @@
+/*******************************************************************************
+* Copyright (c) 2014, 2018 Lars Vogel and others.
+*
+* This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License 2.0
+* which accompanies this distribution, and is available at
+* https://www.eclipse.org/legal/epl-2.0/
+*
+* SPDX-License-Identifier: EPL-2.0
+*
+* Contributors:
+*     Lars Vogel <Lars.Vogel@gmail.com> - initial API and implementation
+*     Andrea Guarinoni <andrea.guarinoni@gmail.com> - intial color schema definition
+*******************************************************************************/
+
+/* ############################## JDT syntax highlighting ############################## */
+
+
+
+
+BulletListBlock > StyledText {
+background-color: #394146;
+color: #b3bbc1;
+}
+
+FormatterPreferenceSectionComposite {
+background-color:#49535a;
+color:#ebedef;
+swt-titlebar-color: #c7cdd1;
+}
+
+#BreadcrumbComposite > Composite,
+#BreadcrumbItemComposite,
+#BreadcrumbItemDetailComposite,
+#BreadcrumbItemDetailTextComposite,
+#BreadcrumbItemDetailImageComposite,
+#BreadcrumbItemDetailTextLabel,
+#BreadcrumbItemDetailImageLabel,
+#BreadcrumbItemDropDownToolBar
+{
+/*
+* Bug 465666
+*
+* Note: as we can't change the arrow to black, we configure
+* the background with the lighter color used for the background
+* of toolbars and make the foreground color brighter too.
+*/
+background-color:#49535a;
+color: white;
+}

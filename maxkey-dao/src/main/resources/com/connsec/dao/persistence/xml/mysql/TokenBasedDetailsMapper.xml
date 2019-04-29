@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.TokenBasedDetailsMapper">
+
+	<insert id="insert" parameterType="TokenBasedDetails">
+		INSERT INTO TOKEN_BASED_DETAILS(
+			ID,
+			REDIRECTURI,
+			COOKIENAME,
+			ALGORITHM,
+			ALGORITHMKEY,
+			EXPIRES,
+			UID,
+			USERNAME,
+			EMAIL,
+			WINDOWSACCOUNT,
+			EMPLOYEENUMBER,
+			DEPARTMENTID,
+			DEPARTMENT
+		)VALUES(
+			#{id},
+			#{redirectUri},
+			#{cookieName},
+			#{algorithm},
+			#{algorithmKey},
+			#{expires},
+			#{uid},
+			#{username} ,
+			#{email} ,
+			#{windowsAccount},
+			#{employeeNumber},
+			#{departmentId},
+			#{department}
+		)
+	</insert>
+	
+	<update id="update" parameterType="TokenBasedDetails" >
+    	UPDATE TOKEN_BASED_DETAILS SET
+    		REDIRECTURI		=	#{redirectUri},
+    		COOKIENAME		=	#{cookieName},
+			ALGORITHM		=	#{algorithm},
+			ALGORITHMKEY	=	#{algorithmKey},
+			EXPIRES			=	#{expires},
+			UID				=	#{uid},
+			USERNAME		=	#{username},
+			EMAIL			=	#{email},
+			WINDOWSACCOUNT	=	#{windowsAccount},
+			EMPLOYEENUMBER	=	#{employeeNumber},
+			DEPARTMENTID	=	#{departmentId},
+			DEPARTMENT		=	#{department}
+			
+		WHERE 
+			ID	=	#{id}
+    </update>
+	
+	<select id="get" parameterType="string" resultType="TokenBasedDetails">
+    	SELECT 
+			*
+    	FROM 
+    		TOKEN_BASED_DETAILS TBD,
+    		APPLICATIONS APP
+    	WHERE 	
+    		APP.ID	=	#{value}
+    		AND TBD.ID	=	#{value}
+    		AND TBD.ID	=	APP.ID
+    		AND STATUS	=	1
+    </select>
+	
+	<delete id="remove" parameterType="string" >
+    	DELETE FROM TOKEN_BASED_DETAILS WHERE ID=#{value}
+    </delete>
+</mapper>

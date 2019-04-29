@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.ProvisioningEventMapper">
+	<sql id="sql_condition">
+		WHERE	1	=	1
+    	<if test="id != null">
+			AND	ID	=	#{id}
+		</if>
+		<if test="requestTime != null  and requestTime != '' ">
+			AND REQUESTTIME like '%${requestTime}%'
+		</if>
+		<if test="startDate != null  and startDate != '' ">
+			AND REQUESTTIME  BETWEEN 	#{startDate} AND	#{endDate}
+		</if>
+		<if test="provisioningId != null  and provisioningId != '' ">
+			AND provisioningId =  #{provisioningId}
+		</if>
+		<if test="entryId != null  and entryId != '' ">
+			AND ENTRYID like ${entryId}
+		</if>
+		<if test="entryName != null  and entryName != '' ">
+			AND ENTRYNAME like '%${entryName}%'
+		</if>
+		<if test="entryType != 0  and entryType != '' ">
+			AND ENTRYTYPE = ${entryType}
+		</if>
+		<if test="action != 0  and action != '' ">
+			AND ACTION = ${action}
+		</if>
+	</sql>
+	
+
+	<select id="grid" parameterType="ProvisioningEvent" resultType="ProvisioningEvent">
+    	SELECT 
+			*
+    	FROM PROVISIONING_EVENT 
+    	<include refid="sql_condition"/>
+    	ORDER BY PROVISIONINGTIME DESC
+    </select>
+    
+   <select  id="count"  parameterType="ProvisioningEvent"  resultType="java.lang.Integer">
+    	SELECT COUNT(1) FROM PROVISIONING_EVENT
+    	<include refid="sql_condition"/>
+    </select>
+    
+    
+	<select id="get" parameterType="string" resultType="ProvisioningEvent">
+    	SELECT 
+			*
+    	FROM 
+    		PROVISIONING_EVENT
+    	WHERE 	
+    		ID	=	#{value}
+    </select>
+    
+</mapper>

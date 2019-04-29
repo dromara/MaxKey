@@ -1,0 +1,44 @@
+/*
+ * in the user guide at https://docs.gradle.org
+ */
+rootProject.name = 'MaxKey'
+
+//Common
+include 'maxkey-client-sdk'
+include 'maxkey-core'
+include 'maxkey-dao'
+include 'maxkey-jose-jwt'
+
+//Protocol
+//include 'maxkey-protocols'
+include 'maxkey-protocols:maxkey-protocol-oauth-2.0'
+include 'maxkey-protocols:maxkey-protocol-saml-2.0'
+
+include 'maxkey-protocols:maxkey-protocol-simulate'
+include 'maxkey-protocols:maxkey-protocol-authorize'
+include 'maxkey-protocols:maxkey-protocol-desktop'
+include 'maxkey-protocols:maxkey-protocol-extendapi'
+include 'maxkey-protocols:maxkey-protocol-formbased'
+include 'maxkey-protocols:maxkey-protocol-ltpa'
+include 'maxkey-protocols:maxkey-protocol-tokenbased'
+include 'maxkey-protocols:maxkey-protocol-cas'
+
+
+include 'maxkey-authentications'
+
+//include 'maxkey-webs'
+include 'maxkey-webs:maxkey-web-kerberos'
+include 'maxkey-webs:maxkey-web-maxkey'
+//IM
+include 'maxkey-webs:maxkey-web-manage'
+//Wiki
+include 'maxkey-webs:maxkey-web-wiki'
+
+//demo
+//include 'maxkey-demos'
+include 'maxkey-demos:maxkey-demo-cas'
+include 'maxkey-demos:maxkey-demo-ltpa'
+include 'maxkey-demos:maxkey-demo-oauth'
+include 'maxkey-demos:maxkey-demo-saml'
+include 'maxkey-demos:maxkey-demo-tokenbase'
+include 'maxkey-demos:maxkey-demo-jwt'

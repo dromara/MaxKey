@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="
+	        http://www.springframework.org/schema/beans     
+	        http://www.springframework.org/schema/beans/spring-beans.xsd
+	        http://www.springframework.org/schema/context 
+	        http://www.springframework.org/schema/context/spring-context.xsd
+	        http://www.springframework.org/schema/tx 
+	        http://www.springframework.org/schema/tx/spring-tx.xsd
+	        http://www.springframework.org/schema/util     
+	        http://www.springframework.org/schema/util/spring-util.xsd
+	        http://www.springframework.org/schema/mvc 
+	        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	
+	<bean id="socialSignOnWeibo" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+		<property name="provider" value="${config.socialsignon.sinaweibo.provider}"/>
+		<property name="providerName" value="${config.socialsignon.sinaweibo.provider.name}"/>
+		<property name="icon" value="${config.socialsignon.sinaweibo.icon}"/>
+		<property name="clientId" value="${config.socialsignon.sinaweibo.client.id}"/>
+		<property name="clientSecret" value="${config.socialsignon.sinaweibo.client.secret}"/>
+		<property name="authorizeUrl" value="${config.socialsignon.sinaweibo.authorize.url}"/>
+		<property name="accessTokenUrl" value="${config.socialsignon.sinaweibo.accesstoken.url}"/>
+		<property name="accessTokenMethod" value="${config.socialsignon.sinaweibo.accesstoken.method}"/>
+		<property name="scope" value="${config.socialsignon.sinaweibo.scope}"/>
+		<property name="verifierCode" value="${config.socialsignon.sinaweibo.verifier.code}"/>
+		<property name="accountUrl" value="${config.socialsignon.sinaweibo.account.url}"/>
+		<property name="accountId" value="${config.socialsignon.sinaweibo.account.id}"/>
+		<property name="sortOrder" value="${config.socialsignon.sinaweibo.sortorder}"/>
+	</bean>
+	
+	<bean id="socialSignOnGoogle" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+		<property name="provider" value="${config.socialsignon.google.provider}"/>
+		<property name="providerName" value="${config.socialsignon.google.provider.name}"/>
+		<property name="icon" value="${config.socialsignon.google.icon}"/>
+		<property name="clientId" value="${config.socialsignon.google.client.id}"/>
+		<property name="clientSecret" value="${config.socialsignon.google.client.secret}"/>
+		<property name="authorizeUrl" value="${config.socialsignon.google.authorize.url}"/>
+		<property name="accessTokenUrl" value="${config.socialsignon.google.accesstoken.url}"/>
+		<property name="accessTokenMethod" value="${config.socialsignon.google.accesstoken.method}"/>
+		<property name="scope" value="${config.socialsignon.google.scope}"/>
+		<property name="verifierCode" value="${config.socialsignon.google.verifier.code}"/>
+		<property name="accountUrl" value="${config.socialsignon.google.account.url}"/>
+		<property name="accountId" value="${config.socialsignon.google.account.id}"/>
+		<property name="sortOrder" value="${config.socialsignon.google.sortorder}"/>
+	</bean>
+	
+	<bean id="socialSignOnQQ" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+		<property name="provider" value="${config.socialsignon.qq.provider}"/>
+		<property name="providerName" value="${config.socialsignon.qq.provider.name}"/>
+		<property name="icon" value="${config.socialsignon.qq.icon}"/>
+		<property name="clientId" value="${config.socialsignon.qq.client.id}"/>
+		<property name="clientSecret" value="${config.socialsignon.qq.client.secret}"/>
+		<property name="authorizeUrl" value="${config.socialsignon.qq.authorize.url}"/>
+		<property name="accessTokenUrl" value="${config.socialsignon.qq.accesstoken.url}"/>
+		<property name="accessTokenMethod" value="${config.socialsignon.qq.accesstoken.method}"/>
+		<property name="scope" value="${config.socialsignon.qq.scope}"/>
+		<property name="verifierCode" value="${config.socialsignon.qq.verifier.code}"/>
+		<property name="accountUrl" value="${config.socialsignon.qq.account.url}"/>
+		<property name="accountId" value="${config.socialsignon.qq.account.id}"/>
+		<property name="sortOrder" value="${config.socialsignon.qq.sortorder}"/>
+	</bean>
+
+	<bean id="socialSignOnLive" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+		<property name="provider" value="${config.socialsignon.live.provider}"/>
+		<property name="providerName" value="${config.socialsignon.live.provider.name}"/>
+		<property name="icon" value="${config.socialsignon.live.icon}"/>
+		<property name="clientId" value="${config.socialsignon.live.client.id}"/>
+		<property name="clientSecret" value="${config.socialsignon.live.client.secret}"/>
+		<property name="authorizeUrl" value="${config.socialsignon.live.authorize.url}"/>
+		<property name="accessTokenUrl" value="${config.socialsignon.live.accesstoken.url}"/>
+		<property name="accessTokenMethod" value="${config.socialsignon.live.accesstoken.method}"/>
+		<property name="scope" value="${config.socialsignon.live.scope}"/>
+		<property name="verifierCode" value="${config.socialsignon.live.verifier.code}"/>
+		<property name="accountUrl" value="${config.socialsignon.live.account.url}"/>
+		<property name="accountId" value="${config.socialsignon.live.account.id}"/>
+		<property name="sortOrder" value="${config.socialsignon.live.sortorder}"/>
+	</bean>
+
+	<bean id="socialSignOnFacebook" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+		<property name="provider" value="${config.socialsignon.facebook.provider}"/>
+		<property name="providerName" value="${config.socialsignon.facebook.provider.name}"/>
+		<property name="icon" value="${config.socialsignon.facebook.icon}"/>
+		<property name="clientId" value="${config.socialsignon.facebook.client.id}"/>
+		<property name="clientSecret" value="${config.socialsignon.facebook.client.secret}"/>
+		<property name="authorizeUrl" value="${config.socialsignon.facebook.authorize.url}"/>
+		<property name="accessTokenUrl" value="${config.socialsignon.facebook.accesstoken.url}"/>
+		<property name="accessTokenMethod" value="${config.socialsignon.facebook.accesstoken.method}"/>
+		<property name="scope" value="${config.socialsignon.facebook.scope}"/>
+		<property name="verifierCode" value="${config.socialsignon.facebook.verifier.code}"/>
+		<property name="accountUrl" value="${config.socialsignon.facebook.account.url}"/>
+		<property name="accountId" value="${config.socialsignon.facebook.account.id}"/>
+		<property name="sortOrder" value="${config.socialsignon.facebook.sortorder}"/>
+	</bean>		
+	
+	<bean id="socialSignOnProviderService" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService">
+		<property name="socialSignOnProviders" >
+			<list>
+				<ref bean="socialSignOnWeibo" />
+				<ref bean="socialSignOnQQ"/>
+				<ref bean="socialSignOnGoogle"/>
+				<ref bean="socialSignOnLive"/>
+				<ref bean="socialSignOnFacebook"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<bean id="socialSignOnUserTokenService" class="org.maxkey.authn.support.socialsignon.service.JdbcSocialSignOnUserTokenService">
+		<constructor-arg ref="jdbcTemplate"/>
+	</bean>
+	
+</beans>

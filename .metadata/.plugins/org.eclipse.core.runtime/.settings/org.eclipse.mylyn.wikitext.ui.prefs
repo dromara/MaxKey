@@ -1,0 +1,10 @@
+block-bc=font-family\: monospace; color\: \#569cd6;
+block-h1=font-size\: 120%; font-weight\: bold; color\: \#118bbd;
+block-h2=font-size\: 110%; font-weight\: bold; color\: \#118bbd;
+block-h3=font-size\: 105%; font-weight\: bold; color\: \#118bbd;
+block-h4=font-weight\: bold; color\: \#118bbd;
+block-h5=font-size\: 90%; font-weight\: bold; color\: \#118bbd;
+block-h6=font-size\: 80%; font-weight\: bold; color\: \#118bbd;
+eclipse.preferences.version=1
+overriddenByCSS=,block-bc,block-h1,block-h2,block-h3,block-h4,block-h5,block-h6,phrase-code,
+phrase-code=font-family\: monospace; color\: \#6d72f6;

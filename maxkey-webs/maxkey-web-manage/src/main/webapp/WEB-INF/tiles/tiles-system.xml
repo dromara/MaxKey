@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC 
+		"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+		
+<tiles-definitions>
+
+	<!-- for admin -->
+	<definition name="userinfo/userInfoList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/userinfo/userInfoList.jsp" />
+	</definition>
+	
+	<!-- for t admin -->
+	<definition name="users/usersList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/users/usersList.jsp" />
+	</definition>
+	
+	<definition name="users/selectUserTypeList" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/users/selectUserTypeList.jsp" />
+	</definition>
+	
+	<definition name="users/userAdd" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/users/userAdd.jsp" />
+	</definition>
+	
+	<definition name="users/userUpdate" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/users/userUpdate.jsp" />
+	</definition>
+	
+	<definition name="users/changePassword" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/users/changePassword.jsp" />
+	</definition>
+	
+	<definition name="roles/rolesList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/roles/rolesList.jsp" />
+	</definition>
+	
+	<definition name="roles/selectRolesList" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/roles/selectRolesList.jsp" />
+	</definition>
+	
+	<definition name="roles/roleAdd" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/roles/roleAdd.jsp" />
+	</definition>
+	
+	<definition name="roles/roleUpdate" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/roles/roleUpdate.jsp" />
+	</definition>
+	
+	<definition name="rolenav/roleNavList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/rolenav/roleNavList.jsp" />
+	</definition>
+	
+	<definition name="roleuser/roleUserInfoList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/roleuser/roleUserInfoList.jsp" />
+	</definition>
+	
+	<definition name="roleuser/addRoleUsersList" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/roleuser/addRoleUsersList.jsp" />
+	</definition>
+	
+	<definition name="userextra/userExtraList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/userextra/userExtraList.jsp" />
+	</definition>
+	
+	<definition name="userextra/userExtraAdd" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/userextra/userExtraAdd.jsp" />
+	</definition>
+	
+	<definition name="userextra/userExtraUpdate" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/userextra/userExtraUpdate.jsp" />
+	</definition>
+	
+	<definition name="usertype/userTypeList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/usertype/userTypeList.jsp" />
+	</definition>
+	
+	<definition name="usertype/selectUserTypeList" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/usertype/selectUserTypeList.jsp" />
+	</definition>
+	
+	<definition name="usertype/userTypeAdd" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/usertype/userTypeAdd.jsp" />
+	</definition>
+	
+	<definition name="usertype/userTypeUpdate" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/usertype/userTypeUpdate.jsp" />
+	</definition>
+	
+	<definition name="logs/logsList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/logs/logsList.jsp" />
+	</definition>
+	
+	<definition name="logs/loginHistoryList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/logs/loginHistoryList.jsp" />
+	</definition>
+	
+	<definition name="logs/loginAppsHistoryList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/logs/loginAppsHistoryList.jsp" />
+	</definition>
+	
+	<definition name="logs/provisioningEventList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/logs/provisioningEventList.jsp" />
+	</definition>
+	
+	<definition name="config/passwordpolicy/passwordpolicy" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/config/passwordpolicy/passwordpolicy.jsp" />
+	</definition>
+	
+	<definition name="config/saml20/metadata/metadata" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/config/saml20/metadata/metadata.jsp" />
+	</definition>
+	
+	<definition name="config/ipaddrfilter/ipaddrfilterList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/config/ipaddrfilter/ipaddrfilterList.jsp" />
+	</definition>
+	
+	<definition name="config/ipaddrfilter/ipaddrfilterAdd" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/config/ipaddrfilter/ipaddrfilterAdd.jsp" />
+	</definition>
+	
+	<definition name="config/ipaddrfilter/ipaddrfilterUpdate" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/config/ipaddrfilter/ipaddrfilterUpdate.jsp" />
+	</definition>
+	
+	<definition name="company/companyUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/company/companyUpdate.jsp" />
+	</definition>
+	
+	<definition name="orgs/orgsList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/orgs/orgsList.jsp" />
+	</definition>
+	
+	<definition name="provisioning/provisioningList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/provisioning/provisioningList.jsp" />
+	</definition>
+	
+	<definition name="provisioning/selectProvisioningList" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/provisioning/selectProvisioningList.jsp" />
+	</definition>
+	
+	<definition name="provisioning/provisioningAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/provisioning/provisioningAdd.jsp" />
+	</definition>
+	
+	<definition name="provisioning/provisioningUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/provisioning/provisioningUpdate.jsp" />
+	</definition>
+	
+	<definition name="provisioning/account/list" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/provisioning/accountList.jsp" />
+	</definition>
+	
+	<definition name="provisioning/account/accountAdd" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/provisioning/accountAdd.jsp" />
+	</definition>
+	
+	<definition name="app/accounts/list" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/appaccounts/appAccountsList.jsp" />
+	</definition>
+	
+	<definition name="app/accounts/appAccountsAddSelect" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/appaccounts/appAccountsAddSelect.jsp" />
+	</definition>
+	
+	<definition name="app/accounts/appAccountsAdd" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/appaccounts/appAccountsAdd.jsp" />
+	</definition>
+	
+	<definition name="app/accounts/appAccountsUpdate" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/appaccounts/appAccountsUpdate.jsp" />
+	</definition>
+	
+	
+	<definition name="report/login/day" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/report/loginDay.jsp" />
+	</definition>
+	<definition name="report/login/month" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/report/loginMonth.jsp" />
+	</definition>
+	<definition name="report/login/year" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/report/loginYear.jsp" />
+	</definition>
+	<definition name="report/login/browser" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/report/loginBrowser.jsp" />
+	</definition>
+	<definition name="report/login/app" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/report/loginApp.jsp" />
+	</definition>
+	
+	<definition name="resources/resourcesList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/resources/resourcesList.jsp" />
+	</definition>
+	
+	<definition name="groupres/groupResList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/groupres/groupResList.jsp" />
+	</definition>
+</tiles-definitions>

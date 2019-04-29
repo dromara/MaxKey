@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.RolesMapper" >
+	<sql id="sql_condition">
+		WHERE	1	=	1
+    	<if test="id != null">
+			AND	ID	=	#{id}
+		</if>
+		<if test="name != null  and name != '' ">
+			AND NAME like '%${name}%'
+		</if>
+		<if test="status != null  and status != '' ">
+			AND	STATUS	=	#{status}
+		</if>
+		<if test="status == null">
+			<![CDATA[AND	STATUS	<> '2']]>
+		</if>
+	</sql>
+	
+    <select id="grid" parameterType="Roles" resultType="Roles">
+    	SELECT 
+			ID,
+			NAME ,
+			STATUS ,
+			
+			CREATEDBY,
+			CREATEDDATE,
+			MODIFIEDBY,
+			MODIFIEDDATE
+			
+    	FROM ROLES 
+    	<include refid="sql_condition"/>
+    </select>
+    
+   <select  id="count"  parameterType="Roles"  resultType="java.lang.Integer">
+    	SELECT COUNT(1) FROM ROLES
+    	<include refid="sql_condition"/>
+    </select>
+    
+     <select id="query" parameterType="Roles" resultType="Roles">
+    	SELECT 
+			ID,
+			NAME ,
+			STATUS ,
+			
+			CREATEDBY,
+			CREATEDDATE,
+			MODIFIEDBY,
+			MODIFIEDDATE
+    	FROM ROLES 
+    	<include refid="sql_condition"/>
+    </select>
+    
+    <select id="get" parameterType="string" resultType="Roles">
+    	SELECT 
+			ID,
+			NAME ,
+			STATUS ,
+			
+			CREATEDBY,
+			CREATEDDATE,
+			MODIFIEDBY,
+			MODIFIEDDATE
+    	FROM ROLES 
+    	WHERE 	
+    		ID	=	#{value}
+    </select>
+    
+     <insert id="insert" parameterType="Roles">
+     	INSERT INTO 
+	   		ROLES 
+	   	(  
+	   		ID,
+			NAME ,
+			STATUS ,
+			CREATEDBY
+		)
+    	VALUES	
+    	(  
+    		#{id},
+			#{name },
+			#{status },
+			#{createdBy}
+		)
+     </insert>
+     
+
+    
+    <update id="update" parameterType="Roles" >
+    	UPDATE ROLES SET
+			NAME		=	#{name},
+			STATUS 		=	#{status},
+			MODIFIEDBY	=	#{modifiedBy},
+			MODIFIEDDATE	=	#{modifiedDate}
+    	WHERE ID	=	#{id}
+    </update>
+    
+    <update id="logisticDelete" parameterType="Roles" >
+    	UPDATE ROLES SET
+    		STATUS	=	'2'  
+    	WHERE	1	=	1
+    	<if test="id != null">
+			AND	ID	=	#{id}
+		</if>
+		<if test="name != name">
+			ADN	NAME	=	#{name}
+		</if>
+    </update>
+    
+    <delete id="delete" parameterType="Roles" >
+    	DELETE FROM ROLES WHERE ID=#{id}
+    </delete>
+    
+    <update id="logisticBatchDelete" parameterType="java.util.List">
+    	UPDATE ROLES SET STATUS='2' WHERE ID IN
+    		<foreach item="item" collection="list" open="(" separator="," close=")">
+				#{item}
+    		</foreach>
+    </update>
+    
+    <delete id="batchDelete" parameterType="java.util.List">
+    	DELETE FROM ROLES WHERE ID IN
+    		<foreach item="item" collection="list" open="(" separator="," close=")">
+				#{item}
+    		</foreach>
+    </delete>
+
+</mapper>

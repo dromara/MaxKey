@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:sec="http://www.springframework.org/schema/security"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/security 
+			http://www.springframework.org/schema/security/spring-security.xsd
+			http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context.xsd">
+			
+	<mvc:annotation-driven />
+	<!-- enable autowire -->
+    <context:annotation-config />
+
+	<mvc:default-servlet-handler />
+	
+	<context:property-placeholder location="/WEB-INF/kerberos.properties"/>
+	
+	<context:component-scan base-package="com.connsec.web.contorller" />
+	
+	<!-- css -->
+	<mvc:resources mapping="/css/**" location="/css/" />
+	
+	<bean id="kerberosTokenConfig" class="com.connsec.web.KerberosTokenConfig" >
+		<property name="tokenPostLocation" 	value="${config.kerberos.token.post.location}" />
+		<property name="validity" 			value="${config.kerberos.validity}" />
+		<property name="userDomain" 		value="${config.kerberos.userdomain}" />
+		<property name="crypto" 			value="${config.kerberos.crypto}" />	
+		<property name="diagnose" 			value="${config.kerberos.diagnose}" />		
+	</bean>
+	
+	<bean id="kerberosConfig" class="com.connsec.web.KerberosConfig" >
+		<property name="keyTabLocation" 	value="${config.kerberos.keytab.location}" />
+		<property name="krbConfLocation" 	value="${config.kerberos.conf.location}" />
+		<property name="servicePrincipal" 	value="${config.kerberos.prinicipal}" />
+		<property name="debug" 				value="${config.kerberos.debug}" />
+	</bean>
+	
+	<bean id="kerberosServiceAuthenticationProvider"  class="org.springframework.security.kerberos.authentication.KerberosServiceAuthenticationProvider">
+		<property name="ticketValidator">
+			<bean class="org.springframework.security.kerberos.authentication.sun.SunJaasKerberosTicketValidator">
+				<property name="servicePrincipal" 	value="#{kerberosConfig.servicePrincipal}" />
+				<!-- Setting keyTabLocation to a classpath resource will most likely not work in a Java EE application Server -->
+				<property name="keyTabLocation" 	value="#{kerberosConfig.keyTabLocation}" />
+				<property name="debug" 				value="${config.kerberos.debug}" />
+			</bean>
+		</property>
+		<property name="userDetailsService" ref="dummyUserDetailsService" />
+	</bean>
+	
+	<!-- This bean definition enables a very detailed Kerberos logging -->
+	<bean  class="org.springframework.security.kerberos.authentication.sun.GlobalSunJaasKerberosConfig">
+		<property name="krbConfLocation" 	value="#{kerberosConfig.krbConfLocation}"/>
+		<property name="debug" 				value="#{kerberosConfig.debug}" />
+	</bean>
+	
+	<!--Just returns the User authenticated by Kerberos and gives him the ROLE_USER-->
+	<bean id="dummyUserDetailsService"  class="org.springframework.security.kerberos.dummy.DummyUserDetailsService" />
+	
+	<bean id="spnegoEntryPoint"  class="org.springframework.security.kerberos.web.authentication.SpnegoEntryPoint" >
+		<constructor-arg value=""></constructor-arg>
+	</bean>
+	
+	<bean id="viewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" p:order="2" />
+	
+	<!-- This configuration uses SPNEGO by default -->
+	<http pattern="/authn/**"   entry-point-ref="spnegoEntryPoint"  xmlns="http://www.springframework.org/schema/security">
+		<intercept-url pattern="/authn" access="IS_AUTHENTICATED_FULLY" />
+		<custom-filter ref="spnegoAuthenticationProcessingFilter"  position="BASIC_AUTH_FILTER" />
+	</http>
+	
+	<http xmlns="http://www.springframework.org/schema/security" >
+   		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+   		<form-login login-page="/login.jsp" authentication-failure-url="/login.jsp?login_error=1"/>
+	</http>
+
+	<authentication-manager alias="kerberosAuthenticationManager" xmlns="http://www.springframework.org/schema/security">
+		<authentication-provider ref="kerberosServiceAuthenticationProvider" /> <!-- Used with SPNEGO -->
+		<authentication-provider user-service-ref="dummyUserDetailsService"/> 
+	</authentication-manager>
+
+	<bean id="spnegoAuthenticationProcessingFilter" class="org.springframework.security.kerberos.web.authentication.SpnegoAuthenticationProcessingFilter">
+		<property name="authenticationManager" ref="kerberosAuthenticationManager" />
+	</bean>	
+	
+
+</beans>

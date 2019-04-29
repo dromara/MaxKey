@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC 
+		"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+		
+<tiles-definitions>
+	
+	<definition name="apps/appsList" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/appsList.jsp" />
+	</definition>
+	
+	<definition name="apps/selectAppsList" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/selectAppsList.jsp" />
+	</definition>
+	
+	<definition name="apps/basic/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/appUpdate.jsp" />
+	</definition>
+	
+	<definition name="apps/basic/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/tokenbased/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/tokenbased/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/tokenbased/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/tokenbased/appUpdate.jsp" />
+	</definition>
+	
+	<definition name="apps/ltpa/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/ltpa/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/ltpa/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/ltpa/appUpdate.jsp" />
+	</definition>
+	
+	<definition name="apps/cas/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/cas/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/cas/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/cas/appUpdate.jsp" />
+	</definition>
+	
+	<definition name="apps/cookiebased/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/cookiebased/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/cookiebased/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/cookiebased/appUpdate.jsp" />
+	</definition>
+	
+	<definition name="apps/oauth20/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/oauth20/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/oauth20/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/oauth20/appUpdate.jsp" />
+	</definition>
+	
+	<definition name="apps/oauth10a/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/oauth10a/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/oauth10a/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/oauth10a/appUpdate.jsp" />
+	</definition>
+	
+	<definition name="apps/saml20/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/saml20/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/saml20/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/saml20/appUpdate.jsp" />
+	</definition>
+	
+	<definition name="apps/saml11/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/saml11/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/saml11/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/saml11/appUpdate.jsp" />
+	</definition>
+	
+	<definition name="apps/formbased/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/formbased/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/formbased/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/formbased/appUpdate.jsp" />
+	</definition>
+	
+	<definition name="apps/desktop/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/desktop/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/desktop/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/desktop/appUpdate.jsp" />
+	</definition>
+	
+	<definition name="apps/extendapi/appAdd" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/extendapi/appAdd.jsp" />
+	</definition>
+	
+	<definition name="apps/extendapi/appUpdate" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/apps/extendapi/appUpdate.jsp" />
+	</definition>
+	
+	
+	<definition name="app/category/list" extends="base.definition">
+		<put-attribute name="content" value="/WEB-INF/views/appcategory/appCategoryList.jsp" />
+	</definition>
+	
+	<definition name="app/category/categoryAdd" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/appcategory/appCategoryAdd.jsp" />
+	</definition>
+	
+	<definition name="app/category/categoryUpdate" extends="window.definition">
+		<put-attribute name="content" value="/WEB-INF/views/appcategory/appCategoryUpdate.jsp" />
+	</definition>
+	
+</tiles-definitions>

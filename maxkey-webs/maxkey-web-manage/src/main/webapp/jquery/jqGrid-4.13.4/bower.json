@@ -1,0 +1,54 @@
+{
+  "name": "free-jqgrid",
+  "description": "grid as jQuery plugin - fork of jqGrid before licensing change",
+  "version": "4.13.5-pre",
+  "main": [
+    "js/jquery.jqgrid.min.js",
+    "js/jquery.jqgrid.src.js",
+    "js/jquery.jqgrid.min.map",
+	"css/ui.jqgrid.min.css",
+    "css/ui.jqgrid.css",
+	"css/ui.jqgrid.min.css.map"
+  ],
+  "keywords": [
+    "grid",
+    "table",
+    "jqGrid",
+    "jQuery",
+    "grid",
+    "TreeGrid",
+    "Subgrid",
+    "sorting",
+    "paging",
+    "editing",
+    "grouping",
+    "searching"
+  ],
+  "authors": [
+    "Oleg Kiriljuk",
+    "other contributors to jqGrid before publishing version 4.7.1"
+  ],
+  "homepage": "https://github.com/free-jqgrid/jqGrid.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/free-jqgrid/jqGrid.git"
+  },
+  "dependencies": {
+    "jquery": ">=1.7.2"
+  },
+  "license": [
+    "MIT",
+    "GPL-2.0"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "gradlew.bat",
+    "gradle/wrapper",
+    ".gradle",
+    "gradlew"
+  ]
+}

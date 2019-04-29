@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+	http://www.springframework.org/schema/security 
+	http://www.springframework.org/schema/security/spring-security-3.1.xsd
+	http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<http entry-point-ref="samlAuthenticationEntryPoint" >
+		
+		<custom-filter position="PRE_AUTH_FILTER" ref="samlSolicitedFilter" />
+		
+		<anonymous />
+		<logout logout-success-url="/user.jsp"/>		
+		<intercept-url pattern="/admin.jsp" access="ROLE_ADMIN" />
+		<intercept-url pattern="/user.jsp" access="ROLE_USER" />
+		<intercept-url pattern="/index.jsp" access="ROLE_ANONYMOUS,ROLE_ADMIN,ROLE_USER" />
+		<intercept-url pattern="${ASSERTION_CONSUMER_URI}" access="ROLE_ANONYMOUS,ROLE_ADMIN,ROLE_USER" /> <!-- necessary? -->
+		<intercept-url pattern="/**" access="ROLE_ADMIN,ROLE_USER" />
+
+	</http>
+	
+	<authentication-manager  alias="authenticationManager">
+		<authentication-provider ref="samlAuthenticationProvider"/>
+	</authentication-manager>
+
+	<beans:bean id="samlAuthenticationProvider" class="com.connsec.spring.SAMLResponseAuthenticationProvider">
+		<beans:constructor-arg ref="assertionConsumer"/>
+	</beans:bean>
+	
+
+	<beans:bean id="authenticationFailureHandler" class="com.connsec.spring.RealAuthenticationFailureHandler">
+		
+		<beans:constructor-arg>
+			<beans:bean class="org.springframework.security.web.savedrequest.HttpSessionRequestCache"/>
+		</beans:constructor-arg>
+		
+	</beans:bean>
+
+	<beans:bean id="samlSolicitedFilter" class="com.connsec.spring.SAMLResponseAuthenticationProcessingFilter">
+		<beans:constructor-arg value="${ASSERTION_CONSUMER_URI}"/>
+		<beans:property name="filterProcessesUrl" value="${ASSERTION_CONSUMER_URI}"/>
+		<beans:property name="bindingAdapter" ref="bindingAdpater"/>
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		
+		<beans:property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
+
+	</beans:bean>
+	
+
+	<beans:bean id="samlAuthenticationEntryPoint" class="com.connsec.spring.SAMLAuthenticationEntryPoint">
+	
+		<beans:constructor-arg ref="timeService"/>
+		<beans:constructor-arg ref="idService"/>
+		<beans:constructor-arg value="${ISSUING_ENTITY_ID}"/>
+	
+		<beans:property name="singleSignOnServiceURL" value="${IDP_SSO_SERVICE_URL}"/>
+		<beans:property name="assertionConsumerServiceURL" value="${ASSERTION_CONSUMER_URL}"/>
+		
+		<beans:property name="credentialResolver" ref="keyStoreCredentialResolverDelegate"/>
+		
+		<beans:property name="bindingAdapter" ref="bindingAdpater"></beans:property>
+		
+	</beans:bean>
+	
+</beans:beans>

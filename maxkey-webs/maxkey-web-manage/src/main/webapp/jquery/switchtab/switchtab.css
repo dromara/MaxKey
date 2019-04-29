@@ -1,0 +1,30 @@
+
+.switch_tab{
+	list-style: none;
+	border: 0;
+	cellspacing:0;
+}
+
+.switch_tab_class{
+	float:left;
+	height:36px;
+	text-align: center;
+	display: inline-block;
+}
+
+.switch_tab_class a{
+	text-decoration: none;
+	display: inline-block;
+	height: 14px;
+	color: #333;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 8px 0;
+	vertical-align: central;
+}
+
+.switch_tab_current{
+	background-color: #f8f8f8;
+	border-right: 1px solid #e3e3e3;
+	border-bottom: 1px solid #e3e3e3;
+}

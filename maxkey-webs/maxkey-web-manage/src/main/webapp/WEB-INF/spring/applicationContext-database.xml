@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx" 
+		xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+	     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+	     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- dataSource define begin -->
+	<!-- c3p0 configuration -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close" >      
+	    <property name="driverClass" value="#{dataSoruceConfig.driverClass}"/>      
+	    <property name="jdbcUrl" value="#{dataSoruceConfig.url}"/>      
+	    <property name="user" value="#{dataSoruceConfig.username}"/>      
+	    <property name="password" value="#{dataSoruceConfig.password}"/>      
+	</bean> 
+	
+	<!-- JNDI data source  configuration -->
+	<!-- jndiName is jndi name -->
+	<!-- if you don,t want use prefix 'java:comp/env/' set resourceRef to true,default is false -->
+    <!-- 
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">  
+        <property name="jndiName" value="jndi_connsecdb" />
+        <property name="resourceRef" value="true" />  
+    </bean>  -->
+	<!-- dataSource define end -->
+	
+	 <!-- Declare a transaction manager -->
+ 	<!-- transaction manager, use JtaTransactionManager for global tx-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean> 
+    
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+		<property name="dataSource" ref="dataSource"></property>  
+	</bean> 
+	
+	
+	<!-- Enable annotation style of managing transactions 
+	<tx:annotation-driven transaction-manager="transactionManager" />-->
+    
+    <!-- enable component scanning (beware that this does not enable mapper scanning!) -->    
+    <context:component-scan base-package="com.connsec.dao.service" />
+    
+     <context:component-scan base-package="com.connsec.dao.service.system" />
+
+    <!-- enable autowire -->
+    <context:annotation-config />
+
+    <!-- enable transaction demarcation with annotations 
+    <tx:annotation-driven />-->
+
+
+	<!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+	<bean id="sqlSessionFactory" class="com.connsec.db.mybatis.MyBatisSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="transactionFactory">
+			<bean class="org.apache.ibatis.transaction.managed.ManagedTransactionFactory" />
+		</property>
+		<property name="typeAliasesPackage" 
+        		  value="
+	        			com.connsec.domain,
+	        			com.connsec.domain.apps,
+	        			com.connsec.domain.system,
+        			" />
+		<property name="timeout" value="30" />
+		<property name="mapperLocations" value="classpath*:com/connsec/dao/persistence/xml/#{dataSoruceConfig.database}/*.xml" />
+		<property name="interceptors">
+			<list>
+				<ref bean="StatementHandlerInterceptor"/>  
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="StatementHandlerInterceptor" class="com.connsec.db.mybatis.StatementHandlerInterceptor">
+		<!--  dialect need bean dialect
+		<property name="dialect">
+			<bean id="dialect" class="com.connsec.db.mybatis.dialect.MySQLDialect"/>
+		</property>
+		-->
+		<!-- from database type -->
+		<property name="dialectString" value="#{dataSoruceConfig.dialect}"/>
+		
+	</bean>
+
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	
+
+    <!-- scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" 
+        		  value="
+        		  		com.connsec.dao.persistence,
+        		  		" />
+    </bean>
+
+</beans>

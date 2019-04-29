@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+############################################################################
+#                ConnSec Cloud Identity and Access Management
+#                            Version 2.0 GA
+
+#          Copyright (c) 2002-2014 ConnSec SoftWare, Inc.
+#              We're focus on Cloud Identity and Security
+#                     http://www.connsec.com
+############################################################################ 
+ -->
+
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="
+	        http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- This file has been left blank -->
+	<!-- See WEB-INF spring package -->		
+		
+</beans>

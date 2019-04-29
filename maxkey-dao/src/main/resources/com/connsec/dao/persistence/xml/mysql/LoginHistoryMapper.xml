@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.LoginHistoryMapper" >
+
+	<sql id="dao_where_statement">
+    	<if test="id != null and id != ''">
+			AND	ID	=	#{id}
+		</if> 
+		<if test="uid != null and uid != ''">
+			AND	UID	=	#{uid}
+		</if> 
+		<if test="username != null and username != '' ">
+			AND LOWER(USERNAME) LIKE LOWER(CONCAT('%',#{username},'%'))
+		</if>
+		<if test="message != null and message != '' ">
+			AND LOWER(MESSAGE) LIKE LOWER(CONCAT('%',#{message},'%'))
+		</if>
+		<if test="displayName != null and displayName != '' ">
+			AND LOWER(DISPLAYNAME) LIKE LOWER(CONCAT('%',#{displayName},'%'))
+		</if>
+
+		<if test="startDate != null and startDate != ''">
+			AND	LOGINTIME	>=	#{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			AND	 #{endDate}	>=	LOGINTIME
+		</if>
+		<if test="sessionId != null and sessionId != ''">
+			AND	SESSIONID	=	#{sessionId}
+		</if> 
+		<if test="loginType != null and loginType != ''">
+			AND	LOGINTYPE	=	#{loginType}
+		</if>
+		<if test="sourceIp != null and sourceIp != ''">
+			AND	SOURCEIP	=	#{sourceIp}
+		</if>
+    </sql>
+	
+    <select id="query" parameterType="LoginHistory" resultType="LoginHistory">
+    	SELECT 
+			ID,
+	   		SESSIONID,
+			UID,
+			USERNAME,
+			DISPLAYNAME,
+			LOGINTYPE,
+			MESSAGE,
+			CODE,
+			PROVIDER,
+			SOURCEIP,
+			BROWSER,
+			PLATFORM,
+			APPLICATION,
+			LOGINURL,
+			DATE_FORMAT(LOGINTIME, '%Y-%m-%d  %H:%i:%s') AS LOGINTIME
+    	FROM LOGIN_HISTORY 
+    	WHERE	1	=	1
+    	<include refid="dao_where_statement"/>
+    </select>
+    
+     <select id="grid" parameterType="LoginHistory" resultType="LoginHistory">
+    	SELECT 
+			ID,
+	   		SESSIONID,
+			UID,
+			USERNAME,
+			DISPLAYNAME,
+			LOGINTYPE,
+			MESSAGE,
+			CODE,
+			PROVIDER,
+			SOURCEIP,
+			BROWSER,
+			PLATFORM,
+			APPLICATION,
+			LOGINURL,
+			DATE_FORMAT(LOGINTIME, '%Y-%m-%d  %H:%i:%s') AS LOGINTIME,
+			DATE_FORMAT(LOGOUTTIME, '%Y-%m-%d  %H:%i:%s') AS LOGOUTTIME
+    	FROM LOGIN_HISTORY 
+    	WHERE	1	=	1
+    	<include refid="dao_where_statement"/>
+    	
+    	ORDER BY LOGINTIME DESC
+    </select>
+    
+     <insert id="insert" parameterType="LoginHistory">
+     	INSERT INTO 
+	   		LOGIN_HISTORY 
+	   	(  
+	   		ID,
+	   		SESSIONID,
+			UID,
+			USERNAME,
+			DISPLAYNAME,
+			LOGINTYPE,
+			MESSAGE,
+			CODE,
+			PROVIDER,
+			SOURCEIP,
+			BROWSER,
+			PLATFORM,
+			APPLICATION,
+			LOGINURL
+		)
+    	VALUES	
+    	(  
+    		#{id},
+    		#{sessionId},
+			#{uid},
+			#{username},
+			#{displayName},
+			#{loginType},
+			#{message},
+			#{code},
+			#{provider},
+			#{sourceIp},
+			#{browser},
+			#{platform},
+			#{application},
+			#{loginUrl}
+		)
+     </insert>
+     
+    <select  id="count" resultType="java.lang.Integer">
+    	SELECT COUNT(*) FROM LOGIN_HISTORY
+    	WHERE	1	=	1
+    	<include refid="dao_where_statement"/>
+    </select>
+    
+    <update id="logout" parameterType="java.lang.String" >
+    	UPDATE LOGIN_HISTORY SET
+			LOGOUTTIME			=	current_timestamp() 
+		WHERE
+			SESSIONID	=	#{value}
+    </update>
+</mapper>

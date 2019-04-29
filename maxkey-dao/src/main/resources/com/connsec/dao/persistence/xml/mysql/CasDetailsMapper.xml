@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.CasDetailsMapper">
+
+	<insert id="insert" parameterType="CasDetails">
+		INSERT INTO CAS_DETAILS(
+			ID,
+			SERVICE,
+			VALIDATION			
+		)VALUES(
+			#{id},
+			#{service},
+			#{validation}			
+		)
+	</insert>
+	
+	<update id="update" parameterType="CasDetails" >
+    	UPDATE CAS_DETAILS SET
+    		SERVICE		=	#{service},
+			VALIDATION	=	#{validation}
+			
+		WHERE 
+			ID	=	#{id}
+    </update>
+	
+	<select id="get" parameterType="string" resultType="CasDetails">
+    	SELECT 
+			*
+    	FROM 
+    		CAS_DETAILS CD,
+    		APPLICATIONS APP
+    	WHERE 	
+    		APP.ID	=	#{value}
+    		AND CD.ID	=	#{value}
+    		AND CD.ID	=	APP.ID
+    		AND STATUS	=	1
+    </select>
+    
+    <select id="query" parameterType="CasDetails" resultType="CasDetails">
+    	SELECT 
+			*
+    	FROM 
+    		CAS_DETAILS CD,
+    		APPLICATIONS APP
+    	WHERE 	
+    		1	=	1
+    		<if test="id != null and id != ''">
+	    		AND APP.ID	=	#{value}
+	    		AND CD.ID	=	#{value}
+    		</if>
+    		<if test="service != null and service != ''">
+	    		AND CD.SERVICE	=	#{service}
+    		</if>
+    		AND CD.ID	=	APP.ID
+    		AND STATUS	=	1
+    </select>
+	
+	<delete id="remove" parameterType="string" >
+    	DELETE FROM CAS_DETAILS WHERE ID=#{value}
+    </delete>
+</mapper>

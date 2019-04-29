@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.connsec.dao.persistence.GroupAppMapper">
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			AND	ID	=	#{id}
+		</if> 
+		<if test="name != null and name != ''">
+			AND NAME LIKE  '%${name}%'
+		</if>
+		<if test="protocol != null and protocol != ''">
+			AND PROTOCOL = #{protocol}
+		</if>
+		<if test="category != null and category != ''">
+			AND CATEGORY = #{category}
+		</if>
+    </sql>
+	
+	<!-- AppGroup -->
+	<select id="gridAppsInGroup" parameterType="GroupApp" resultType="Applications">
+		SELECT
+			*
+		FROM
+			APPLICATIONS
+		WHERE
+			 1	=	1
+			AND  ID IN(
+				SELECT 
+					APPID
+				FROM
+					GROUP_APP
+				WHERE 
+					GROUPID	=	#{groupId}
+					
+				)
+		<include refid="where_statement"/>
+	</select>
+	
+	<select id="countAppsInGroup" parameterType="GroupApp" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			APPLICATIONS
+		WHERE
+			 1	=	1
+			AND  ID IN(
+				SELECT 
+					APPID
+				FROM
+					GROUP_APP
+				WHERE 
+					GROUPID	=	#{groupId}
+					
+				)
+		<include refid="where_statement"/>
+	</select>
+	
+		<select id="gridAppsNotInGroup" parameterType="GroupApp" resultType="Applications">
+		SELECT
+			*
+		FROM
+			APPLICATIONS
+		WHERE
+			 1	=	1
+			AND  ID NOT IN(
+				SELECT 
+					APPID
+				FROM
+					GROUP_APP
+				WHERE 
+					GROUPID	=	#{groupId}
+					
+				)
+		<include refid="where_statement"/>
+	</select>
+	
+	<select id="countAppsNotInGroup" parameterType="GroupApp" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			APPLICATIONS
+		WHERE
+			 1	=	1
+			AND  ID  NOT IN(
+				SELECT 
+					APPID
+				FROM
+					GROUP_APP
+				WHERE 
+					GROUPID	=	#{groupId}
+					
+				)
+		<include refid="where_statement"/>
+	</select>
+	
+	<insert id="insert" parameterType="GroupApp">
+     	INSERT INTO 
+	   		GROUP_APP 
+	   	(
+	   		ID,
+			GROUPID,
+			APPID
+		)
+    	VALUES	
+    	(
+    		#{id},
+			#{groupId},
+			#{appId}
+		)
+     </insert>
+    
+    <delete id="delete" parameterType="GroupApp">
+    	DELETE FROM GROUP_APP WHERE GROUPID = #{groupId} AND APPID	= #{appId} 
+    </delete>
+    
+</mapper>

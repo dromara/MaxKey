@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="
+	        http://www.springframework.org/schema/beans     
+	        http://www.springframework.org/schema/beans/spring-beans.xsd
+	        http://www.springframework.org/schema/context 
+	        http://www.springframework.org/schema/context/spring-context.xsd
+	        http://www.springframework.org/schema/tx 
+	        http://www.springframework.org/schema/tx/spring-tx.xsd
+	        http://www.springframework.org/schema/util     
+	        http://www.springframework.org/schema/util/spring-util.xsd
+	        http://www.springframework.org/schema/mvc 
+	        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
+    <!-- Application properties configs  -->
+	<bean id="propertySourcesPlaceholderConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+	  <property name="locations">
+	    <list>
+	   	  <value>classpath:config/applicationConfig.properties</value>
+	   	  <value>classpath:config/applicationLogin.properties</value>
+	   	  <value>classpath:config/applicationSaml.properties</value>
+	   	  <value>classpath:config/applicationSocialSignOn.properties</value>
+	    </list>
+	  </property>
+	  <property name="ignoreUnresolvablePlaceholders" value="true"/>
+	</bean>
+	
+	
+	<!-- LocaleResolver -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieDomain" value="#{applicationConfig.subDomainName}"/>
+		<property name="cookieName" value="single_sign_on_lang"/>
+		<property name="cookieMaxAge" value="604800" />
+		<!-- auto select language by brower remove -->
+		<!--<property name="defaultLocale" value="en" />  -->
+	</bean>
+	
+	<!-- Locale Change Interceptor and Resolver definition -->
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="language" />
+	</bean>
+
+	<!-- jdbc localeI18n -->
+	<bean id="localeI18n" class="org.maxkey.web.i18n.LocaleI18n">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	
+	<!-- dataSoruce Config -->
+	<bean id="dataSoruceConfig" class="org.maxkey.config.DataSoruceConfig">      
+	    <property name="driverClass" value="${config.datasource.driverclass}"/>      
+	    <property name="url" value="${config.datasource.url}"/>      
+	    <property name="username" value="${config.datasource.username}"/>      
+	    <property name="password" value="${config.datasource.password}"/>  
+	    <property name="database" value="${config.datasource.database}"/> 
+	    <property name="encrypt" value="true"/>
+	</bean> 
+	
+	<!-- Character Encoding  Config -->
+	<bean id="characterEncodingConfig" class="org.maxkey.config.CharacterEncodingConfig">      
+	    <property name="encoding" value="${config.characterencoding.encoding}"/>      
+	    <property name="fromCharSet" value="${config.characterencoding.fromcharset}"/>      
+	    <property name="toCharSet" value="${config.characterencoding.tocharset}"/>
+	</bean> 
+	
+	<!-- Character Encoding  Config -->
+	<bean id="emailConfig" class="org.maxkey.config.EmailConfig">      
+	    <property name="username" value="${config.email.username}"/>      
+	    <property name="password" value="${config.email.password}"/>      
+	    <property name="smtpHost" value="${config.email.smtpHost}"/>
+	    <property name="port" value="${config.email.port}"/>
+	    <property name="senderMail" value="${config.email.senderMail}"/>
+	    <property name="ssl" value="${config.email.ssl}"/>
+	</bean> 
+	
+	<!-- Login  Config -->
+	<bean id="loginConfig" class="org.maxkey.config.LoginConfig">      
+	    <property name="captcha" value="${config.login.captcha}"/>
+	    <property name="oneTimePwd" value="${config.login.onetimepwd}"/>
+	    <property name="socialSignOn" value="${config.login.socialsignon}"/>
+	    <property name="kerberos" value="${config.login.kerberos}"/>
+	    <property name="wsFederation" value="${config.login.wsfederation}"/>
+	    <property name="remeberMe" value="${config.login.remeberme}"/>
+	    <property name="defaultUri" value="${config.login.default.uri}"/>
+	</bean> 
+	
+	<!-- Application  Config -->
+	 <bean id="applicationConfig" class="org.maxkey.config.ApplicationConfig">      
+	    <property name="dataSoruceConfig" ref="dataSoruceConfig"/> 
+	    <property name="characterEncodingConfig" ref="characterEncodingConfig"/> 
+	    <property name="emailConfig" ref="emailConfig"/> 
+	    <property name="loginConfig" ref="loginConfig"/>
+	    <property name="domainName" value="${config.domain.name}"/>
+	    <property name="serverPrefix" value="${config.server.prefix}"/>
+	    <property name="manageUri" value="${config.manage.uri}"/> 
+	    <property name="whiteList" value="${config.ipaddress.whitelist}"/> 
+  		<property name="anonymousAccessUrls">
+		   <list>
+		    <value>null</value>
+		   </list>
+		</property>
+	</bean> 	
+	
+	<bean id="remeberMeService" class="org.maxkey.authn.support.rememberme.JdbcRemeberMeService">
+		<constructor-arg ref="jdbcTemplate"/>
+		<property name="validity" value="${config.login.remeberme.validity}"/>
+	</bean>
+
+	
+	<!-- Authentication Password Encoder Config -->
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder">
+		<constructor-arg value="256" />   
+		<property name="encodeHashAsBase64" value="true" />
+	</bean>   
+	
+	<bean id="timeBasedKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
+		<property name="type" value="totp" />
+		<property name="digits" value="6" />
+		<property name="issuer" value="ConnSec" />
+		<property name="domain" value="connsec.com" />
+		<property name="period" value="30" />
+		
+	</bean>
+	
+	<bean id="counterBasedKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
+		<property name="type" value="hotp" />
+		<property name="digits" value="6" />
+		<property name="issuer" value="ConnSec" />
+		<property name="domain" value="connsec.com" />
+		<property name="counter" value="0" />
+	</bean>
+	
+	<bean id="hotpKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
+		<property name="type" value="hotp" />
+		<property name="digits" value="6" />
+		<property name="issuer" value="ConnSec" />
+		<property name="domain" value="connsec.com" />
+		<property name="counter" value="0" />
+	</bean>
+	
+	
+	<bean id="tfaOTPAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOTPAuthn">
+		<constructor-arg ref="jdbcTemplate" /> 
+	</bean>
+	
+	<bean id="passwordReciprocal" class="org.maxkey.crypto.password.PasswordReciprocal"></bean>
+	
+	
+	<bean id="cacheFactory"  class="org.maxkey.cache.CacheFactory">
+		<property name="cache">
+			   <list>
+			   		<bean class="org.maxkey.web.filter.ipaddress.IpAddressCache">
+			   			<property name="jdbcIpAddressService">
+			   				<bean class="org.maxkey.web.filter.ipaddress.JdbcIpAddressService">
+			   					<constructor-arg ref="jdbcTemplate"/>
+			   				</bean>
+			   			</property>
+			   			<property name="interval"  value="60" />
+			   		</bean>
+			   </list>
+		</property>
+	</bean>
+	
+	<!-- Captcha Producer  Config -->
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+                <bean class="com.google.code.kaptcha.util.Config">
+                        <constructor-arg type="java.util.Properties">
+                                <props>
+                                        <prop key="kaptcha.image.width">70</prop> 
+                                        <prop key="kaptcha.image.height">25</prop>
+                                        <prop key="kaptcha.border">no</prop>
+                                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>
+                                        <prop key="kaptcha.textproducer.font.size">23</prop>
+                                        <prop key="kaptcha.textproducer.char.string">0123456789</prop>
+                                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                                        <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
+                                        <!-- <prop key="kaptcha.noise.color">white</prop>
+                                          -->
+                                </props>
+                        </constructor-arg>
+                </bean>
+        </property>
+	</bean>
+		
+ 	<!-- Datastore configuration  -->
+ 	<import resource="maxkey-database.xml"/>
+ 	
+ 	<!-- Single Sign On for application -->
+ 	<import resource="maxkey-cas.xml"/>
+ 	
+ 	<import resource="maxkey-saml.xml"/>
+ 	
+ 	<import resource="maxkey-oauth2.0.xml"/>
+
+ 	<!-- Basic Authn  -->
+ 	<import resource="maxkey-security.xml"/>
+ 	
+ 	<import resource="maxkey-support.xml"/>
+ 	
+ 	<!-- Scheduler task  -->
+ 	<import resource="maxkey-task.xml"/>
+
+</beans>

@@ -1,0 +1,11 @@
+description = "maxkey-client-sdk"
+
+dependencies {
+   	compile fileTree(dir: '../maxkey-lib/log/', include: '*slf4j*.jar')
+   	compile fileTree(dir: '../maxkey-lib/log/', include: 'log4j*.jar')
+   	compile fileTree(dir: '../maxkey-lib/apache/', include: 'commons-logging*.jar')
+   	compile fileTree(dir: '../maxkey-lib/apache/', include: 'commons-codec*.jar')
+   	compile fileTree(dir: '../maxkey-lib/json/', include: 'gson*.jar')
+   	compile fileTree(dir: '../maxkey-lib/java/', include: '*.jar')
+   	
+}

@@ -1,0 +1,471 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" /> 
+    	
+		<title>Selecter&nbsp;&nbsp;/&nbsp;&nbsp;Formstone&nbsp;&nbsp;/&nbsp;&nbsp;Ben Plum</title>
+		
+		<link rel="shortcut icon" href="http://www.benplum.com/favicon.ico" type="image/x-icon" />
+		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,900" rel="stylesheet" type="text/css" media="all" />
+		<link href="http://www.benplum.com/css/site.css" rel="stylesheet" type="text/css" media="all" />
+		
+		<!--[if LTE IE 8]>
+			<script src="http://www.benplum.com/js/html5.js"></script>
+		<![endif]-->
+		
+		<link rel="stylesheet" href="jquery.fs.selecter.css" type="text/css" media="all" />
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.pack.js"></script>
+		<script src="jquery.fs.selecter.js"></script>
+			</head>
+	<body class="gridlock">
+		<style>
+	.create_click { display: none; }
+	
+	.selecter.custom { max-width: 500px; }
+  .selecter.custom .selecter-selected { border-width: 2px; }
+	.selecter.custom .selecter-options { border-width: 0 2px 2px; padding: 1%; }
+	.selecter.custom .selecter-item { border-radius: 3px !important; border: none; margin: 0 0 1%; }
+	.selecter.custom .selecter-item:last-child { margin: 0; }
+</style>
+		<div id="pronto">
+<article class="project_details lab_details">
+	<header class="bordered_bottom page_header">
+		<div class="row">
+			<div class="desktop-12 tablet-6 mobile-3">
+				<h1>Selecter</h1>
+			</div>
+			<div class="desktop-8 tablet-4 mobile-3">
+				<h4>A jQuery plugin for replacing default select elements. </h4>
+				<p>
+  Replace those boring default select elements with something a little nicer. Selecter also integrates with <a href="http://www.benplum.com/formstone/scroller/">Scroller</a>, giving you complete control of your project's UI. Oh, and they play nice with that shiny new responsive layout (try resizing this window). 
+</p>			</div>
+			<div class="desktop-3 desktop-push-1 tablet-2 mobile-3">
+								<a href="https://github.com/benplum/Selecter" class="button large right" target="_blank">Download on GitHub</a>
+							</div>
+					</div>
+	</header>
+	<div class="bordered_bottom project_info">
+		<div class="row">
+			<div class="desktop-8 tablet-6 mobile-3">
+								<div class="project_section">
+					<h2><span class="icon-wrench"></span>Configuration</h2>
+					<div class="option_table_wrapper">
+	<table class="option_table">
+		<thead>
+			<tr>
+				<th class="option">Option</th>
+				<th class="default">Default</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>callback</code></td>
+				<td><code>function() {}</code></td>
+				<td>Function fired when user makes a selection</td>
+			</tr>
+			<tr>
+				<td><code>cover</code></td>
+				<td><code>false</code></td>
+				<td>Set option list to cover handle</td>
+			</tr>
+			<tr>
+				<td><code>customClass</code></td>
+				<td><code>""</code></td>
+				<td>Class added to Selecter element</td>
+			</tr>
+            <tr>
+				<td><code>defaultLabel</code></td>
+				<td><code>false</code></td>
+				<td>Text to display on initialization</td>
+			</tr>
+            <tr>
+				<td><code>links</code></td>
+				<td><code>false</code></td>
+				<td>Options act as jump-links and open in a new window</td>
+			</tr>
+			<tr>
+				<td><code>externalLinks</code></td>
+				<td><code>false</code></td>
+				<td>Options act as jump-links and open in the same window</td>
+			</tr>
+            <tr>
+				<td><code>trimOptions</code></td>
+				<td><code>false</code></td>
+				<td>Number of charachters to display; Automatically truncates</td>
+			</tr>
+		</tbody>
+	</table>
+</div>					<hr />
+				</div>
+								
+								<div class="project_section">	
+					<h2><span class="icon-cog"></span>Methods</h2>
+					<div class="option_table_wrapper">
+	<table class="option_table">
+		<thead>
+			<tr>
+				<th class="option">Method</th>
+				<th class="default">Params</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+          	<tr>
+				<td><code>defaults</code></td>
+				<td><code>{}</code></td>
+				<td>Set default options</td>
+			</tr>
+          	<tr>
+				<td><code>enable</code></td>
+				<td><code></code></td>
+				<td>Enable the field</td>
+			</tr>
+			<tr>
+				<td><code>disable</code></td>
+				<td><code></code></td>
+				<td>Disable the field</td>
+			</tr>
+          	<tr>
+				<td><code>destroy</code></td>
+				<td><code></code></td>
+				<td>Remove all traces of Selecter</td>
+			</tr>
+		</tbody>
+	</table>
+</div>					<hr />
+				</div>
+								
+								
+								
+								<div class="project_section">
+					<h2><span class="icon-beaker"></span>Examples</h2>
+					<h3>Basic</h3>
+<p>The most basic method is simply applying the Selecter plugin:</p>
+
+<pre><code class="language-javascript">$("select").selecter();</code></pre>
+
+<h5>Demo</h5>
+<form action="#" method="GET">
+  <select name="selecter_basic" class="selecter_basic" data-selecter-options='{"defaultLabel":"DEFAULT"}'>
+		<option value="1">One</option>
+		<option value="2">Two</option>
+		<option value="3">Three</option>
+		<option value="4">Four</option>
+		<option value="5">Five</option>
+		<option value="6">Six</option>
+		<option value="7">Seven</option>
+		<option value="8">Eight</option>
+		<option value="9">Nine</option>
+		<option value="10">Ten</option>
+	</select>
+</form>
+
+<hr />
+
+<h3>Option Groups</h3>
+<p>Selecter automatically detects optgroup tags, allowing you to style groups:</p>
+
+<pre><code class="language-javascript">$("select").selecter();</code></pre>
+
+<h5>Demo</h5>
+<form action="#" method="GET">
+	<select name="selecter_basic" class="selecter_basic">
+		<optgroup label="Group One">
+			<option value="1">One</option>
+			<option value="2">Two</option>
+			<option value="3">Three</option>
+		</optgroup>
+		<optgroup label="Group One">
+			<option value="4">Four</option>
+			<option value="5">Five</option>
+			<option value="6">Six</option>
+			<option value="7">Seven</option>
+		</optgroup>
+		<optgroup label="Group Three">
+			<option value="8">Eight</option>
+			<option value="9">Nine</option>
+			<option value="10">Ten</option>
+		</optgroup>
+	</select>
+</form>
+
+<hr />
+
+<h3>Multiple</h3>
+<p>Selecter will also automatically detect mutiple select elements:</p>
+
+<pre><code class="language-javascript">$("select").selecter();</code></pre>
+
+<h5>Demo</h5>
+<form action="#" method="GET">
+	<select name="selecter_multiple" class="selecter_multiple" multiple="multiple">
+		<option value="1">One</option>
+		<option value="2">Two</option>
+		<option value="3">Three</option>
+		<option value="4">Four</option>
+		<option value="5">Five</option>
+		<option value="6">Six</option>
+		<option value="7">Seven</option>
+		<option value="8">Eight</option>
+		<option value="9">Nine</option>
+		<option value="10">Ten</option>
+	</select>
+</form>
+
+<hr />
+
+<h3>Default Label</h3>
+<p>The default label will be displayed on initiallization instead of the selected element.</p>
+
+<pre><code class="language-javascript">$("select").selecter({
+	defaultLabel: "Select An Item"
+});</code></pre>
+
+<h5>Demo</h5>
+<form action="#" method="GET">
+	<select name="selecter_label" class="selecter_label">
+		<option value="1">One</option>
+		<option value="2">Two</option>
+		<option value="3">Three</option>
+		<option value="4">Four</option>
+		<option value="5">Five</option>
+	</select>
+</form>
+
+<hr />
+
+<h3>Links</h3>
+<p>The options can also be links, think "jump navigation":</p>
+
+<pre><code class="language-javascript">$("select").selecter({
+	links: true
+});</code></pre>
+
+<h5>Demo</h5>
+<form action="#" method="GET">
+	<select name="selecter_links" class="selecter_links">
+		<option value="http://google.com">Google Search</option>
+		<option value="http://boingboing.com">BoingBoing</option>
+		<option value="http://cnn.com">CNN News</option>
+	</select>
+</form>
+
+<hr />
+
+<h3>External Links</h3>
+<p>The links can also open in a new window or tab:</p>
+
+<pre><code class="language-javascript">$("select").selecter({
+	externalLinks: true
+});</code></pre>
+
+<h5>Demo</h5>
+<form action="#" method="GET">
+	<select name="selecter_links_external" class="selecter_links_external">
+		<option value="http://google.com">Google Search</option>
+		<option value="http://boingboing.com">BoingBoing</option>
+		<option value="http://cnn.com">CNN News</option>
+	</select>
+</form>
+
+<hr />
+
+<h3>Cover</h3>
+<p>The options list can cover the handle, sort of Safari-style:</p>
+
+<pre><code class="language-javascript">$("select").selecter({
+	cover: true
+});</code></pre>
+
+<h5>Demo</h5>
+<form action="#" method="GET">
+	<select name="selecter_cover" class="selecter_cover">
+		<option value="1">One</option>
+		<option value="2">Two</option>
+		<option value="3">Three</option>
+		<option value="4">Four</option>
+		<option value="5">Five</option>
+	</select>
+</form>
+
+<hr />
+
+<h3>Mobile</h3>
+<p>The mobile pop-up has been removed as of version 1.9.3, instead Selecter allows the mobile 
+browser to handle all interactions. This ensures a better experience for the user and simplifies 
+mobile development, making Selecter the perfect way to style a select element consistently  
+across all browsers.</p>
+
+<hr />
+
+<h3>Class</h3>
+<p>Define a custom CSS class to have multiple visually distinct Selecters on the same page:</p>
+
+<pre><code class="language-javascript">$("select").selecter({
+	customClass: "custom"
+});</code></pre>
+
+<h5>Demo</h5>
+<form action="#" method="GET">
+	<select name="selecter_custom" class="selecter_custom">
+		<option value="1">One</option>
+		<option value="2">Two</option>
+		<option value="3">Three</option>
+		<option value="4">Four</option>
+		<option value="5">Five</option>
+	</select>
+</form>
+
+<hr />
+
+<h3>Callback</h3>
+<p>The function passed as a callback will receive the newly selected value as the first parameter:</p>
+
+<pre><code class="language-javascript">$("select").selecter({
+	callback: selectCallback
+});
+
+function selectCallback(value, index) {
+    alert("OPTION SELECTED: " + value + ", INDEX: " + index);
+}</code></pre>
+
+<h5>Demo</h5>
+<form action="#" method="GET">
+	<select name="selecter_callback" class="selecter_callback">
+		<option value="1">One</option>
+		<option value="2">Two</option>
+		<option value="3">Three</option>
+		<option value="4">Four</option>
+		<option value="5">Five</option>
+	</select>
+</form>
+
+<hr />
+
+<h3>Disabling</h3>
+<p>Selecter will automatically detect disabled fields, but you can always manually trigger the disable or enable event:</p>
+
+<pre><code class="language-javascript">$("select").selecter("disable");
+
+$("select").selecter("enable");</code></pre>
+
+<h5>Demo</h5>
+<a href="#" class="button small enable_selecter">Enable</a>
+<a href="#" class="button small disable_selecter" style="display: none;">Disable</a>
+<br class="clear" />
+<form action="#" method="GET">
+	<select name="selecter_disabled" class="selecter_disabled" disabled="disabled">
+		<option value="1">One</option>
+		<option value="2">Two</option>
+		<option value="3">Three</option>
+		<option value="4">Four</option>
+		<option value="5">Five</option>
+	</select>
+</form>					<hr />
+				</div>
+								
+								
+								<div class="project_section">
+					<h2><span class="icon-cogs"></span>Compatibility</h2>
+					<ul>
+	<li>Requires jQuery 1.7+ </li>
+	<li>Tested in Firefox, Chrome, Safari, IE8+ </li>
+</ul>					<hr />
+				</div>
+								
+				<div class="project_section">
+					<h2><span class="icon-file"></span>License</h2>
+					<p>Released under the MIT License. Feel free to use it in personal and commercial projects.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bordered_bottom project_donate">
+		<div class="row">
+			<div class="desktop-8 tablet-6 mobile-3">
+				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+					<input type="hidden" name="cmd" value="_s-xclick" />
+					<input type="hidden" name="hosted_button_id" value="WMZH2UDAT56TY" />
+					<span class="icon-coffee icon">Coffee</span>
+					<p>Caffeine fuels the mind, why not <input type="submit" name="submit" value="buy me a cup" />?</p>
+					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row project_comments">
+		<div class="desktop-8 tablet-6 mobile-3">
+			<div id="disqus_thread"></div>
+		</div>
+	</div>
+</article><br />
+		</div>
+
+
+
+
+<script>
+  	$(document).ready(function() {
+    	$(".selecter_basic, .selecter_multiple").selecter();
+		
+    	$(".selecter_label").selecter({
+			defaultLabel: "Select An Item"
+		});
+    
+		$(".selecter_links").selecter({
+          defaultLabel: "Jump Sites",
+			links: true
+		});
+      
+      $(".selecter_links_external").selecter({
+          defaultLabel: "Jump Sites",
+			externalLinks: true
+		});
+		
+		$(".selecter_cover").selecter({
+			cover: true
+		});
+      
+		$(".selecter_custom").selecter({
+			customClass: "custom"
+		});
+		
+		$(".selecter_callback").selecter({
+			callback: selectCallback
+		});
+    
+      	$(".selecter_disabled").selecter({});
+    	$(".enable_selecter, .disable_selecter").on("click", toggleEnabled);
+    
+      
+    	$(window).one("pronto.load", function() {
+      		$("select").selecter("destroy");
+        	$(".enable_selecter, .disable_selecter").off("click");
+    	});
+	});
+  
+	function selectCallback(value, index) {
+        alert("SELECTED VALUE: " + value + ", INDEX: " + index);
+	}
+  
+  function toggleEnabled() {
+    if ($(".selecter_disabled").is(":disabled")) {
+    	$(".selecter_disabled").selecter("enable");
+      $(".enable_selecter").hide();
+      $(".disable_selecter").show();
+    } else {
+      $(".selecter_disabled").selecter("disable");
+      $(".enable_selecter").show();
+      $(".disable_selecter").hide();
+    }
+    return false;
+  }
+</script>
+	</body>
+</html>

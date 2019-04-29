@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta name="keywords" content="" />
+		<meta name="description" content="" /> 
+    	
+		<title>Selecter&nbsp;&nbsp;/&nbsp;&nbsp;Formstone&nbsp;&nbsp;/&nbsp;&nbsp;Ben Plum</title>
+		
+		<link rel="stylesheet" href="jquery.fs.selecter.css" type="text/css" media="all" />
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.pack.js"></script>
+		<script src="jquery.fs.selecter.js"></script>
+			</head>
+	<body class="gridlock">
+		<style>
+	.create_click { display: none; }
+	
+	.selecter.custom { max-width: 500px; }
+  .selecter.custom .selecter-selected { border-width: 2px; }
+	.selecter.custom .selecter-options { border-width: 0 2px 2px; padding: 1%; }
+	.selecter.custom .selecter-item { border-radius: 3px !important; border: none; margin: 0 0 1%; }
+	.selecter.custom .selecter-item:last-child { margin: 0; }
+</style>
+		<div id="pronto">
+<article class="project_details lab_details">
+
+
+<hr />
+
+<h3>Callback</h3>
+<p>The function passed as a callback will receive the newly selected value as the first parameter:</p>
+
+<pre><code class="language-javascript">$("select").selecter({
+	callback: selectCallback
+});
+
+function selectCallback(value, index) {
+    alert("OPTION SELECTED: " + value + ", INDEX: " + index);
+}</code></pre>
+
+<h5>Demo</h5>
+<form action="#" method="GET">
+	<select name="selecter_callback" class="selecter_callback">
+		<option value="1">One</option>
+		<option value="2">Two</option>
+		<option value="3">Three</option>
+		<option value="4">Four</option>
+		<option value="5">Five</option>
+	</select>
+	
+<a href="#" class="button small selecter_callback_value">get selecter_callback_value</a>	
+</form>
+
+<hr />
+
+<h3>Disabling</h3>
+<p>Selecter will automatically detect disabled fields, but you can always manually trigger the disable or enable event:</p>
+
+<pre><code class="language-javascript">$("select").selecter("disable");
+
+$("select").selecter("enable");</code></pre>
+
+<h5>Demo</h5>
+<a href="#" class="button small enable_selecter">Enable</a>
+<a href="#" class="button small disable_selecter" style="display: none;">Disable</a>
+<br class="clear" />
+<form action="#" method="GET">
+	<select name="selecter_disabled" class="selecter_disabled" disabled="disabled">
+		<option value="1">One</option>
+		<option value="2">Two</option>
+		<option value="3">Three</option>
+		<option value="4">Four</option>
+		<option value="5">Five</option>
+	</select>
+</form>					<hr />
+				</div>
+
+<script>
+  	$(document).ready(function() {
+		
+		$(".selecter_callback").selecter({
+			callback: selectCallback
+		});
+		$(".selecter_callback_value").on("click", function(){
+			alert($(".selecter_callback").val());
+		});
+		
+		
+    
+      	$(".selecter_disabled").selecter({});
+    	$(".enable_selecter, .disable_selecter").on("click", toggleEnabled);
+    
+      
+    	$(window).one("pronto.load", function() {
+      		$("select").selecter("destroy");
+        	$(".enable_selecter, .disable_selecter").off("click");
+    	});
+	});
+  
+	function selectCallback(value, index) {
+        alert("SELECTED VALUE: " + value + ", INDEX: " + index);
+	}
+  
+  function toggleEnabled() {
+    if ($(".selecter_disabled").is(":disabled")) {
+    	$(".selecter_disabled").selecter("enable");
+      $(".enable_selecter").hide();
+      $(".disable_selecter").show();
+    } else {
+      $(".selecter_disabled").selecter("disable");
+      $(".enable_selecter").show();
+      $(".disable_selecter").hide();
+    }
+    return false;
+  }
+</script>
+	</body>
+</html>
