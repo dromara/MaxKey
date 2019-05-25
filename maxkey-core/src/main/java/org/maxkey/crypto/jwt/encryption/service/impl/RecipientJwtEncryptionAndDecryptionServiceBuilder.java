@@ -24,9 +24,9 @@ import com.nimbusds.jose.jwk.JWKSet;
 public class RecipientJwtEncryptionAndDecryptionServiceBuilder {
 	final static Logger logger = Logger.getLogger(RecipientJwtEncryptionAndDecryptionServiceBuilder.class);
 	
-	private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
-	private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
-	private RestTemplate restTemplate = new RestTemplate(httpFactory);
+	//private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
+	//private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+	//private RestTemplate restTemplate = new RestTemplate(httpFactory);
 	
 	/**
 	 * 
@@ -39,7 +39,7 @@ public class RecipientJwtEncryptionAndDecryptionServiceBuilder {
 		
 		logger.debug("jwksUri : "+jwksUri);
 		
-		String jsonString = restTemplate.getForObject(jwksUri, String.class);
+		String jsonString ="";//= restTemplate.getForObject(jwksUri, String.class);
 		
 		logger.debug("jwks json String : "+jsonString);
 		JwtEncryptionAndDecryptionService recipientJwtEncryptionAndDecryptionService;

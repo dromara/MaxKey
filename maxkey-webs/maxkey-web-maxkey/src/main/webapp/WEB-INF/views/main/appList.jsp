@@ -7,7 +7,10 @@
 <%@ taglib prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib prefix="fn"     	 	uri="http://java.sun.com/jsp/jstl/functions" %>
 
-
+<jsp:include page="../layout/header.jsp"></jsp:include>
+<jsp:include page="../layout/common.css.jsp"></jsp:include>
+<jsp:include page="../layout/common.js.jsp"></jsp:include>
+<jsp:include page="../layout/top.jsp"></jsp:include>
 <%if(WebContext.getUserInfo().getGridList()==0) {%>
 <table  class="datatable">
 	<c:forEach begin="1" end="${(fn:length(appList)+4)/5}" var="num">
@@ -89,3 +92,6 @@
 	</c:forEach>
 </table>
 <%} %>
+<div id="footer">
+	<jsp:include page="../layout/footer.jsp"></jsp:include>
+</div>

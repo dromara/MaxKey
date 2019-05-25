@@ -17,26 +17,7 @@
 		</if>
     </sql>
 	
-    <select id="query" parameterType="Navigations" resultType="Navigations">
-    	SELECT 
-			ID,
-			NAME ,
-			URL ,
-			TARGET,
-			TYPE,
-			PID,
-			PNAME,
-			SORTORDER,
-			VISIBLE,
-			XPATH,
-			STATUS,
-			HASCHILD,
-			DESCRIPTION
-    	FROM NAVIGATIONS 
-    	WHERE	1	=	1
-    	<include refid="dao_where_statement"/>
-    	ORDER BY  PID, SORTORDER 
-    </select>
+   
     
      <select id="grid" parameterType="Navigations" resultType="Navigations">
     	SELECT 
@@ -58,41 +39,7 @@
     	<include refid="dao_where_statement"/>
     </select>
     
-     <insert id="insert" parameterType="Navigations">
-     	INSERT INTO 
-	   		NAVIGATIONS 
-	   	(  
-	   		ID,
-			NAME ,
-			URL ,
-			TARGET,
-			TYPE,
-			PID,
-			PNAME,
-			SORTORDER,
-			VISIBLE,
-			XPATH,
-			STATUS,
-			HASCHILD,
-			DESCRIPTION
-		)
-    	VALUES	
-    	(  
-    		#{id},
-			#{name},
-			#{url},
-			#{target},
-			#{type},
-			#{pId},
-			#{pName},
-			#{sortOrder},
-			#{visible},
-			#{xPath},
-			#{status},
-			#{hasChild},
-			#{description}
-		)
-     </insert>
+     
      
     <select  id="count" resultType="java.lang.Integer">
     	SELECT COUNT(*) FROM NAVIGATIONS
@@ -100,25 +47,7 @@
     	<include refid="dao_where_statement"/>
     </select>
     
-    <update id="update" parameterType="Navigations" >
-    	UPDATE NAVIGATIONS SET
-			NAME			=	#{name},
-			URL 			=	#{url},
-			TARGET			=	#{target},
-			TYPE			=	#{type},
-			PID				=	#{pId},
-			PNAME			=	#{pName},
-			SORTORDER		=	#{sortOrder},
-			VISIBLE			=	#{visible},
-			XPATH			=	#{xPath},
-			STATUS			=	#{status},
-			HASCHILD		=	#{hasChild},
-			DESCRIPTION		=	#{description}
-    	WHERE 1 = 1 
-    	<if test="id != null and id != ''">
-			AND	ID	=	#{id}
-		</if> 
-    </update>
+   
     
     <update id="logisticDelete" parameterType="Navigations" >
     	UPDATE NAVIGATIONS SET STATUS	=	'2'  
@@ -145,21 +74,7 @@
      	</foreach>
     </update>
     
-    <delete id="delete" parameterType="Navigations" >
-    	DELETE FROM NAVIGATIONS WHERE 1 = 1 	AND
-			(
-				ID	=	#{id} 
-				OR  PID =	#{id} 
-				OR  XPATH  LIKE 	'%${id}%' 
-			)
-    </delete>
+   
     
-    <delete id="batchDelete" parameterType="java.util.List">
-		DELETE FROM NAVIGATIONS WHERE ID IN
-		<foreach collection="ids" item="selectId"  open="(" separator="," close=")">  
-        	#{selectId}   
-     	</foreach>
-    </delete>
-  
 
 </mapper>

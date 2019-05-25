@@ -5,17 +5,17 @@
 <html>
   <head>
       <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <title><s:Locale code="global.stimeout.tip"/></title>
+      <title><s:Locale code="global.session.timeout.tip"/></title>
   </head>
 <body>
 
 <div id="content">
-	<h2><s:Locale code="global.stimeout.tip"/></h2>
+	<h2><s:Locale code="global.session.timeout.tip"/></h2>
 
 	<p>
-		<s:Locale code="global.stimeout.prefix"/>
+		<s:Locale code="global.session.timeout.prefix"/>
 		<a href="${reloginUrl}">
-			<s:Locale code="global.stimeout.suffix"/>
+			<s:Locale code="global.session.timeout.suffix"/>
 		</a>.
 	</p>
 </div>

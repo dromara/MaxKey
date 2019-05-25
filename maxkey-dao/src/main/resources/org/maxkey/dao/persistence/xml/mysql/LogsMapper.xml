@@ -30,26 +30,7 @@
 		</if>
     </sql>
 	
-    <select id="query" parameterType="Logs" resultType="Logs">
-    	SELECT 
-			ID,
-			TID,
-			TNAME,
-			SERVICENAME ,
-			CODE,
-			MESSAGE ,
-			CONTENT,
-			OPERATETYPE,
-			MESSAGETYPE,
-			USERNAME,
-			CREATEDDATE,
-			CREATEDBY
-    	FROM LOGS 
-    	WHERE	1	=	1
-    	<include refid="where_statement"/>
-    	
-    	ORDER BY CREATEDDATE DESC
-    </select>
+  
     
      <select id="grid" parameterType="Logs" resultType="Logs">
     	SELECT 
@@ -72,38 +53,7 @@
     	ORDER BY CREATEDDATE DESC
     </select>
     
-     <insert id="insert" parameterType="Logs">
-     	INSERT INTO 
-	   		LOGS 
-	   	(  
-	   		ID,
-	   		TID,
-	   		TNAME,
-			SERVICENAME ,
-			CODE,
-			MESSAGE ,
-			CONTENT,
-			OPERATETYPE,
-			MESSAGETYPE,
-			USERNAME,
-			CREATEDBY
-		)
-    	VALUES	
-    	(  
-    		#{id},
-    		#{tid},
-    		#{tname},
-			#{serviceName},
-			#{code },
-			#{message },
-			#{content},
-			#{operateType},
-			#{messageType},
-			#{username},
-			#{createdBy}
-		)
-     </insert>
-     
+    
     <select  id="count" resultType="java.lang.Integer">
     	SELECT COUNT(*) FROM LOGS
     	WHERE	1	=	1

@@ -3,7 +3,7 @@ package org.maxkey.config;
 import org.apache.commons.logging.LogFactory;
 import org.apache.mybatis.jpa.dialect.Dialect;
 import org.maxkey.crypto.Base64Utils;
-import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.crypto.password.PasswordReciprocal;
 
 /**
  * 数据源配置
@@ -82,13 +82,14 @@ public class DataSoruceConfig {
 		String decodePassword="";
 		LogFactory.getLog(DataSoruceConfig.class).debug("password is "+password);
 		if(encrypt){
-			decodePassword = ReciprocalUtils.decoder(password);
+			decodePassword = PasswordReciprocal.getInstance().decoder(password);
 		}else{
 			decodePassword= password;
 		}
-		LogFactory.getLog(DataSoruceConfig.class).debug("password is "+password+" , decodePassword is "+Base64Utils.encode(decodePassword));
+		LogFactory.getLog(DataSoruceConfig.class).debug("password is "+password+" , decodePassword is "+decodePassword);
 		return decodePassword;
 	}
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}

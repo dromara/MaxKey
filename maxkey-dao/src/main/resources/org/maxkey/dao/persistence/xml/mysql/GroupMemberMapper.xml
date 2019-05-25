@@ -265,25 +265,5 @@
 		</if>
 	</select>
 	
-	<insert id="insert" parameterType="GroupMember">
-     	INSERT INTO 
-	   		GROUP_MEMBER 
-	   	(
-	   		ID,
-			GROUPID,
-			MEMBERID,
-			TYPE
-		)
-    	VALUES	
-    	(
-    		#{id},
-			#{groupId},
-			#{memberId},
-			#{type}
-		)
-     </insert>
-    
-    <delete id="delete" parameterType="GroupMember">
-    	DELETE FROM GROUP_MEMBER WHERE GROUPID = #{groupId} AND MEMBERID	= #{memberId} 
-    </delete>
+	
 </mapper>

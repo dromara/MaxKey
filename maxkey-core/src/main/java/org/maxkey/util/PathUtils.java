@@ -41,7 +41,8 @@ public class PathUtils {
 			classPath=classPath.substring(5, classPath.length());
 		}
 		
-		classPath=classPath.substring(0,classPath.indexOf("/com/connsec/util/PathUtils.properties"));
+		_logger.info("PathUtils  Class Path  : " + classPath);
+		classPath=classPath.substring(0,classPath.indexOf("/org/maxkey/util/PathUtils.properties"));
 		if(classPath.indexOf(WEB_INFO)==-1) {
 			appPath=classPath.substring(0,classPath.lastIndexOf("/"));
 		}else {

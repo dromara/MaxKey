@@ -17,6 +17,10 @@
 						http://www.springframework.org/schema/security 
 						http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
+	<!-- SAML V2.0 EndPoint -->
+	<context:component-scan base-package="org.maxkey.saml20.provider.endpoint" />
+	<!-- MetaData V2.0 EndPoint -->
+	<context:component-scan base-package="org.maxkey.saml20.metadata.endpoint" />
 	
 	<bean id="samlBootstrapInitializer" class="org.opensaml.DefaultBootstrap" init-method="bootstrap"/>
 	

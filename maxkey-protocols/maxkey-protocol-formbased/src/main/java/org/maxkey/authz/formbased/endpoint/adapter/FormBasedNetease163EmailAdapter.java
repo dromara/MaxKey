@@ -1,4 +1,4 @@
-package org.maxkey.authz.form.endpoint.adapter;
+package org.maxkey.authz.formbased.endpoint.adapter;
 
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.BOOLEAN;

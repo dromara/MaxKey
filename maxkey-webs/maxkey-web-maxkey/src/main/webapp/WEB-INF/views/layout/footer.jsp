@@ -8,7 +8,7 @@
 		        <TR>
 		          <TD align="center" valign="middle" class="footer  ">
 		          	<s:Locale code="global.text.copyright"/> &copy; <s:Locale code="global.text.copyright.content"/><br>
-		          	<a href="http://www.connsec.com" target="_blank">www.connsec.com</a><br>
+		          	<a href="https://github.com/shimingxy/MaxKey/" target="_blank">https://github.com/shimingxy/MaxKey/</a><br>
 		          </TD>
 		        </TR>
 		    </table> 

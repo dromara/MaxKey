@@ -143,7 +143,7 @@ public abstract class AbstractAuthenticationRealm{
 		return true;
 	}
 	
-	public UserInfo loadUserInfo(String username,String j_password) {
+	public UserInfo loadUserInfo(String username,String password) {
 		List<UserInfo> listUserInfo=jdbcTemplate.query(
 				DEFAULT_USERINFO_SELECT_STATEMENT,
 				new UserInfoRowMapper(),
@@ -156,7 +156,7 @@ public abstract class AbstractAuthenticationRealm{
 		return userInfo;
 	}
 
-	public abstract boolean passwordMatches(UserInfo userInfo,String j_password);
+	public abstract boolean passwordMatches(UserInfo userInfo,String password);
 	
 
 	public static boolean isAuthenticated(){

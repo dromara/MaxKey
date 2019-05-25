@@ -17,25 +17,7 @@
 		</if>
 	</sql>
 	
-    <insert id="insert" parameterType="RoleUser">
-     	INSERT INTO 
-	   		ROLE_USER 
-	   	(
-	   		ID,
-			ROLEID,
-			UID
-		)
-    	VALUES	
-    	(
-    		#{id},
-			#{roleId},
-			#{uid}
-		)
-     </insert>
     
-    <delete id="delete" parameterType="RoleUser">
-    	DELETE FROM ROLE_USER WHERE ROLEID = #{roleId} AND UID	= #{uid} 
-    </delete>
     
     <select id="gridAllUserInfoInRole" parameterType="RoleUser" resultType="UserInfo">
     	SELECT

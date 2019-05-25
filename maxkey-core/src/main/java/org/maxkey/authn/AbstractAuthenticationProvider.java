@@ -42,10 +42,10 @@ public abstract class AbstractAuthenticationProvider{
   	@Qualifier("tfaOTPAuthn")
     protected AbstractOTPAuthn tfaOTPAuthn;
 
-    @Autowired
+   /* @Autowired
    	@Qualifier("jwtLoginService")
     JwtLoginService jwtLoginService;
-    
+    */
 	protected abstract String getProviderName();
     
     protected abstract Authentication doInternalAuthenticate(Authentication authentication);
@@ -61,14 +61,13 @@ public abstract class AbstractAuthenticationProvider{
      * @see org.springframework.security.authentication.AuthenticationProvider#authenticate(org.springframework.security.core.Authentication)
      */
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
-        _logger.debug("Trying to authenticate user '{}' via {}", username, getProviderName());
+        _logger.debug("Trying to authenticate user '{}' via {}", authentication.getPrincipal(), getProviderName());
    
         try {
             authentication = doInternalAuthenticate(authentication);
         } catch (AuthenticationException e) {
         	e.printStackTrace();
-            _logger.error("Failed to authenticate user {} via {}: {}", new Object[]{username, getProviderName(), e.getMessage()});
+            _logger.error("Failed to authenticate user {} via {}: {}", new Object[]{authentication.getPrincipal(), getProviderName(), e.getMessage()});
             throw e;
         } catch (Exception e) {
         	e.printStackTrace();
@@ -81,7 +80,7 @@ public abstract class AbstractAuthenticationProvider{
         }
         
         // user authenticated
-        _logger.debug("'{}' authenticated successfully by {}.", username, getProviderName());
+        _logger.debug("'{0}' authenticated successfully by {}.", authentication.getPrincipal(), getProviderName());
         
         UserInfo userInfo=WebContext.getUserInfo();
         WebContext.setAttribute(WebConstants.CURRENT_USER_SESSION_ID, WebContext.getSession().getId());
@@ -115,11 +114,11 @@ public abstract class AbstractAuthenticationProvider{
      * @param sessionId
      */
     protected void jwtTokenValid(String j_jwtToken){
-    	if(j_jwtToken!=null && ! j_jwtToken.equals("")){
+    	/*if(j_jwtToken!=null && ! j_jwtToken.equals("")){
     		if(jwtLoginService.jwtTokenValidation(j_jwtToken)){
     			return;
     		}
-        }
+        }*/
     	String message=WebContext.getI18nValue("login.error.session");
     	_logger.debug("login session valid error.");
     	throw new BadCredentialsException(message);

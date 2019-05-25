@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: maxkey-protocol-extendapi
-Implementation-Version: 3.0.0.RELEASE
-Implementation-Date: 2019-03-05T21:26:16.770+08:00[GMT+08:00]
-Created-By: com.connsec.maxkey
-Implementation-Vendor: http://www.connsec.com
-

@@ -24,6 +24,11 @@
 			http://www.springframework.org/schema/security 
 			http://www.springframework.org/schema/security/spring-security.xsd">
 
+	<!-- oauth.provider-->
+	<context:component-scan base-package="org.maxkey.web.oauth.approval.controller" /> 
+	<!-- oauth.provider userinfo-->
+	<context:component-scan base-package="org.maxkey.web.oauth.userinfo.controller" />
+	
 	<!-- OpenID Connect 1.0  -->
 	<!-- 
 	 * Self-issued Provider Metadata

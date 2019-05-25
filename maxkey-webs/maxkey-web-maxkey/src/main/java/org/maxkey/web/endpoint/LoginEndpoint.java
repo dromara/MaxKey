@@ -5,6 +5,10 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.RealmAuthenticationProvider;
+import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
@@ -13,6 +17,7 @@ import org.maxkey.authn.support.wsfederation.WsFederationConstants;
 import org.maxkey.authn.support.wsfederation.WsFederationService;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.dao.service.UserInfoService;
+import org.maxkey.domain.Registration;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebConstants;
@@ -26,6 +31,7 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,9 +72,13 @@ public class LoginEndpoint {
 	WsFederationService wsFederationService;
 	
 	@Autowired
+	@Qualifier("authenticationProvider")
+	RealmAuthenticationProvider authenticationProvider ;
+	/*
+	@Autowired
 	@Qualifier("jwtLoginService")
 	JwtLoginService jwtLoginService;
-	
+	*/
 	/**
 	 * init login
 	 * @return
@@ -122,7 +132,7 @@ public class LoginEndpoint {
 			}
 			modelAndView.addObject("isCaptcha", applicationConfig.getLoginConfig().isCaptcha());
 			modelAndView.addObject("sessionid", WebContext.getSession().getId());
-			modelAndView.addObject("jwtToken",jwtLoginService.buildLoginJwt());
+			//modelAndView.addObject("jwtToken",jwtLoginService.buildLoginJwt());
 			//load Social Sign On Providers
 			if(applicationConfig.getLoginConfig().isSocialSignOn()){
 				modelAndView.addObject("ssopList", socialSignOnProviderService.getSocialSignOnProviders());
@@ -147,7 +157,22 @@ public class LoginEndpoint {
 		}
 		return modelAndView;
 	}
+ 	
+ 	@RequestMapping(value={"/logon.do"})
+	@ResponseBody
+	public ModelAndView logon(@ModelAttribute("authentication") BasicAuthentication authentication) {
+ 		ModelAndView modelAndView = new ModelAndView();
+ 		boolean isAuthenticated=false;
+ 		
+ 		authenticationProvider.authenticate(authentication);
  
+ 		if(isAuthenticated){
+			modelAndView.setViewName("index");
+		}else{
+			modelAndView.setViewName("login");
+		}
+		return modelAndView;
+ 	}
 	
  	
  	@RequestMapping("/login/{username}")

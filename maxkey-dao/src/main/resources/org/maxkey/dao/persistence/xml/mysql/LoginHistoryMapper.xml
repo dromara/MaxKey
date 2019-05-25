@@ -36,27 +36,7 @@
 		</if>
     </sql>
 	
-    <select id="query" parameterType="LoginHistory" resultType="LoginHistory">
-    	SELECT 
-			ID,
-	   		SESSIONID,
-			UID,
-			USERNAME,
-			DISPLAYNAME,
-			LOGINTYPE,
-			MESSAGE,
-			CODE,
-			PROVIDER,
-			SOURCEIP,
-			BROWSER,
-			PLATFORM,
-			APPLICATION,
-			LOGINURL,
-			DATE_FORMAT(LOGINTIME, '%Y-%m-%d  %H:%i:%s') AS LOGINTIME
-    	FROM LOGIN_HISTORY 
-    	WHERE	1	=	1
-    	<include refid="dao_where_statement"/>
-    </select>
+   
     
      <select id="grid" parameterType="LoginHistory" resultType="LoginHistory">
     	SELECT 
@@ -83,43 +63,7 @@
     	ORDER BY LOGINTIME DESC
     </select>
     
-     <insert id="insert" parameterType="LoginHistory">
-     	INSERT INTO 
-	   		LOGIN_HISTORY 
-	   	(  
-	   		ID,
-	   		SESSIONID,
-			UID,
-			USERNAME,
-			DISPLAYNAME,
-			LOGINTYPE,
-			MESSAGE,
-			CODE,
-			PROVIDER,
-			SOURCEIP,
-			BROWSER,
-			PLATFORM,
-			APPLICATION,
-			LOGINURL
-		)
-    	VALUES	
-    	(  
-    		#{id},
-    		#{sessionId},
-			#{uid},
-			#{username},
-			#{displayName},
-			#{loginType},
-			#{message},
-			#{code},
-			#{provider},
-			#{sourceIp},
-			#{browser},
-			#{platform},
-			#{application},
-			#{loginUrl}
-		)
-     </insert>
+    
      
     <select  id="count" resultType="java.lang.Integer">
     	SELECT COUNT(*) FROM LOGIN_HISTORY

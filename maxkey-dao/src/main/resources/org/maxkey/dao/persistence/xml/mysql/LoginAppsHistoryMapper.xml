@@ -59,27 +59,5 @@
     	<include refid="dao_where_statement"/>
     </select>
     
-    <insert id="insert" parameterType="LoginAppsHistory">
-    	INSERT INTO
-    		LOGIN_APPS_HISTORY
-    	(
-    		ID, 
-    		SESSIONID, 
-    		APPID,
-    		APPNAME,
-    		UID,
-    		USERNAME,
-    		DISPLAYNAME
-    		) 
-    	VALUES
-    	(	
-    		#{id}, 
-    		#{sessionId},
-    		#{appId},
-    		#{appName},
-    		#{uid},
-    		#{username},
-    		#{displayName}
-    	)
-    </insert>
+    
 </mapper>

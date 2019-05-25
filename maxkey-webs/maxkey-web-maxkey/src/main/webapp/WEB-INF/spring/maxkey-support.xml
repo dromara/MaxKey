@@ -30,5 +30,8 @@
  	<import resource="maxkey-support-wsfederation.xml"/>
  	
  	<import resource="maxkey-support-cas.xml"/>
+ 	<!--  
+ 	<import resource="maxkey-support-jwt.xml"/>
+ 	-->
 
 </beans>

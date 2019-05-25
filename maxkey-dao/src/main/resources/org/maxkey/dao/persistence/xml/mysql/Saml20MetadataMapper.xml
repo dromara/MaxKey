@@ -2,57 +2,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.connsec.dao.persistence.Saml20MetadataMapper">
 
-	<insert id="insert" parameterType="Saml20Metadata">
-		INSERT INTO SAML_V20_METADATA(
-			ID,
-			ORGNAME,
-			ORGDISPLAYNAME,
-			ORGURL,
-			CONTACTTYPE,
-			COMPANY,
-			GIVENNAME,
-			SURNAME,
-			EMAILADDRESS,
-			TELEPHONENUMBER
-			
-		)VALUES(
-			#{id},
-			#{orgName},
-			#{orgDisplayName},
-			#{orgURL},
-			#{contactType},
-			#{company},
-			#{givenName},
-			#{surName},
-			#{emailAddress},
-			#{telephoneNumber}
-		)
-	</insert>
-	
-	<update id="update" parameterType="Saml20Metadata" >
-    	UPDATE SAML_V20_METADATA SET
-    		ORGNAME			=	#{orgName},
-			ORGDISPLAYNAME	=	#{orgDisplayName},
-			ORGURL			=	#{orgURL},
-			CONTACTTYPE		=	#{contactType},
-			COMPANY			=	#{company},
-			GIVENNAME		=	#{givenName},
-			SURNAME			=	#{surName},
-			EMAILADDRESS	=	#{emailAddress},
-			TELEPHONENUMBER	=	#{telephoneNumber}
-		WHERE 
-			ID	=	#{id}
-    </update>
-	
-	<select id="get" parameterType="string" resultType="Saml20Metadata">
-    	SELECT 
-    		*
-    	FROM 
-    		SAML_V20_METADATA
-    		
-    	<if test="value != null and value != ''">
-			WHERE 	ID	=	#{value}
-		</if> 
-    </select>
 	
 </mapper>

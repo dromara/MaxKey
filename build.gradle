@@ -4,9 +4,17 @@
 
 defaultTasks "clean", "build"
 
+
+ext {
+	jackson2Version      = "2.9.8"
+	log4jVersion         = "2.11.2"
+	springVersion        = "5.1.6.RELEASE"
+	springSecurityVersion= "5.1.5.RELEASE"
+	hibernateVersion	 = "5.4.2.Final"
+}
+
 // Apply the java plugin to add support for Java
 //apply plugin: 'java'
-
 allprojects {
     apply plugin: "java"
     apply plugin: "eclipse"
@@ -36,6 +44,8 @@ allprojects {
 	        }
 	    }*/
 	}
+
+    
 }
 
 
@@ -45,13 +55,22 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     mavenCentral()
     jcenter()
-
     
 }
+
 subprojects {  
-    apply plugin: 'java'  
-	
-    repositories {  
+
+	sourceSets {
+	    main {
+	        java {
+	            srcDir 'src/main/java' // 指定源码目录
+	        }
+	        resources {
+	            srcDir 'src/main/resources' //资源目录
+	        }
+	   	 }
+	}
+   repositories {  
        	mavenLocal()
         mavenCentral()
         jcenter()
@@ -62,19 +81,16 @@ subprojects {
         maven { url "https://repo.spring.io/snapshot" }
     }  
   
-
-
-    dependencies {  
-    	 testCompile 'junit:junit:4.11' 
+	dependencies {  
+		 testCompile 'junit:junit:4.11' 
     	 compileOnly 'junit:junit:4.11'  
     	 testCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     	 compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
          compileOnly group: 'javax.servlet', name: 'jstl', version: '1.2'
          compileOnly group: 'javax.servlet', name: 'jsp-api', version: '2.0' 
-    	
-    }  
-  
-  
+    }
+    
+      
     jar {  
 
 	    def currentTime = java.time.ZonedDateTime.now()
@@ -86,7 +102,7 @@ subprojects {
 	                	"Implementation-Version": project.version)
 	    }
 	}
-    
+    /*
     task checkenv<<{
 	     //项目名
 	     println project.name
@@ -104,7 +120,7 @@ subprojects {
 	     println project.version
 	     //项目的ant对象
 	     println project.ant
-	}
+	}*/
 
     task copyjar2Release(type: Copy) {
 		into "$rootDir/build/jars/"
@@ -132,9 +148,9 @@ subprojects {
 	}
 
 	//task buildRelease(dependsOn:['build','war','copyjar2Release','copyWar2Release','copyotherWar2Release','copydemoWar2Release']) << {
-	task buildRelease(dependsOn:['copyjar2Release','copyWar2Release','copyotherWar2Release','copydemoWar2Release']) << {
-	    println 'Build MaxKey '+project.name +' complete .'
-	}
+	//task buildRelease(dependsOn:['copyjar2Release','copyWar2Release','copyotherWar2Release','copydemoWar2Release']) << {
+	//    println 'Build MaxKey '+project.name +' complete .'
+	//}
 }  
 
 

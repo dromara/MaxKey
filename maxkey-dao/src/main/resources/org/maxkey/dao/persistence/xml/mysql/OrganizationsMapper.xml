@@ -18,14 +18,7 @@
 
     </sql>
 	
-    <select id="query" parameterType="Organizations" resultType="Organizations">
-    	SELECT 
-			*
-    	FROM ORGANIZATIONS 
-    	WHERE	1	=	1
-    	<include refid="dao_where_statement"/>
-    	ORDER BY  PID, SORTORDER 
-    </select>
+    
     
      <select id="grid" parameterType="Organizations" resultType="Organizations">
     	SELECT 
@@ -35,117 +28,14 @@
     	<include refid="dao_where_statement"/>
     </select>
     
-     <insert id="insert" parameterType="Organizations">
-     	INSERT INTO 
-	   		ORGANIZATIONS 
-	   	(  
-	   		ID ,
-	   		CODE,
-		  	NAME ,
-		  	FULLNAME,
-		  	PID ,
-		  	PNAME ,
-		  	TYPE ,
-		  	XPATH ,
-		  	XNAMEPATH ,
-		  	LEVEL ,
-		  	SORTORDER ,
-		  	HASCHILD,
-		  	
-		  	DIVISION ,
-		  	COUNTRY ,
-		  	REGION,
-		  	LOCALITY ,
-		  	STREET,
-		  	ADDRESS,
-		  	CONTACT,
-  			POSTALCODE,
-		  	PHONE,
-		  	FAX ,
-		  	EMAIL,
-		  	
-		  	DESCRIPTION ,
-		  	STATUS ,
-		  	CREATEDBY,
-		  	CREATEDDATE
-		)
-    	VALUES	
-    	(  
-    		#{id},
-    		#{code},
-			#{name},
-			#{fullName},
-			#{pId},
-			#{pName},
-			#{type},
-			#{xPath},
-			#{xNamePath},
-			#{level},
-			#{sortOrder},
-			#{hasChild},
-			
-			#{division},
-			#{country},
-			#{region},
-			#{locality},
-			#{street},
-			#{address},
-			#{contact},
-			#{postalCode},
-			#{phone},
-			#{fax},
-			#{email},
-			
-			#{description},
-			#{status},
-			#{createdBy},
-			current_timestamp
-		)
-     </insert>
-     
+  
     <select  id="count" resultType="java.lang.Integer">
     	SELECT COUNT(*) FROM ORGANIZATIONS
     	WHERE	1	=	1
     	<include refid="dao_where_statement"/>
     </select>
     
-    <update id="update" parameterType="Organizations" >
-    	UPDATE ORGANIZATIONS SET
-    		CODE			=	#{code},
-		  	NAME 			=	#{name},
-		  	FULLNAME		=	#{fullName},
-		  	PID 			=	#{pId},
-		  	PNAME 			=	#{pName},
-		  	TYPE 			=	#{type},
-		  	XPATH 			=	#{xPath},
-		  	XNAMEPATH 		=	#{xNamePath},
-		  	LEVEL 			=	#{level},
-		  	SORTORDER 		=	#{sortOrder},
-		  	HASCHILD		=	#{hasChild},
-		  	
-		  	DIVISION 		=	#{division},
-		  	COUNTRY 		=	#{country},
-		  	REGION			=	#{region},
-		  	LOCALITY 		=	#{locality},
-		  	STREET			=	#{street},
-		  	ADDRESS			=	#{address},
-		  	CONTACT			=	#{contact},
-  			POSTALCODE		=	#{postalCode},
-		  	PHONE			=	#{phone},
-		  	FAX 			=	#{fax},
-		  	EMAIL			=	#{email},
-		  	
-		  	DESCRIPTION 	=	#{description},
-		  	STATUS 			=	#{status},
-			MODIFIEDBY		=	#{modifiedBy},
-			MODIFIEDDATE 	=	current_timestamp
-			
-    	WHERE 1 = 1 
-    	<if test="id != null and id != ''">
-			AND	ID	=	#{id}
-		</if> 
-    </update>
-    
+  
     <update id="logisticDelete" parameterType="Organizations" >
     	UPDATE ORGANIZATIONS SET STATUS	=	'2'  
     		WHERE	1	=	1
@@ -170,15 +60,6 @@
         	#{selectId}   
      	</foreach>
     </update>
-    
-    <delete id="delete" parameterType="Organizations" >
-    	DELETE FROM ORGANIZATIONS WHERE 1 = 1 	AND
-			(
-				ID	=	#{id} 
-				OR  PID =	#{id} 
-				OR  XPATH  LIKE 	'%${id}%' 
-			)
-    </delete>
     
   
 </mapper>

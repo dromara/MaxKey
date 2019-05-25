@@ -95,7 +95,8 @@ public class RedisConnectionFactory {
 	}
 
 	public void  close(Jedis conn){
-		jedisPool.returnResource(conn);
+		//jedisPool.returnResource(conn);
+		conn.close();
 	}
 	
 	public String getHostname() {

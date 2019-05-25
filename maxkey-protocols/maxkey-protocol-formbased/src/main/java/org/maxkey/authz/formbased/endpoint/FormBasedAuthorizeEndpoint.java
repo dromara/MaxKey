@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.maxkey.authz.form.endpoint;
+package org.maxkey.authz.formbased.endpoint;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.authz.form.endpoint.adapter.FormBasedDefaultAdapter;
+import org.maxkey.authz.formbased.endpoint.adapter.FormBasedDefaultAdapter;
 import org.maxkey.constants.BOOLEAN;
 import org.maxkey.dao.service.FormBasedDetailsService;
 import org.maxkey.domain.Accounts;

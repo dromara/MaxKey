@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.connsec.dao.persistence.ApplicationsMapper">
+<mapper namespace="org.maxkey.dao.persistence.ApplicationsMapper">
 
 	<sql id="where_statement">
 		<if test="id != null and id != ''">
@@ -23,143 +23,6 @@
 		</if>
 	</sql>
 	
-	<insert id="insert" parameterType="Applications">
-		INSERT INTO APPLICATIONS(
-			ID,
-			NAME,
-			ICON,
-			LOGINURL,
-			PROTOCOL,
-			CATEGORY,
-			SECRET,
-			DESCRIPTION,
-			VENDOR,
-			VENDORURL,
-			
-			CREDENTIAL,
-			SHAREDUSERNAME,
-			SHAREDPASSWORD,
-			SYSTEMUSERATTR,
-			
-			ISEXTENDATTR,
-			EXTENDATTR,
-			
-			ISSIGNATURE,
-			
-			ISADAPTER,
-			ADAPTER,
-			
-			PRINCIPAL,
-			CREDENTIALS,
-			
-			VISIBLE,
-			
-			SORTORDER,
-			
-			CREATEDBY,
-			CREATEDDATE,
-			
-			STATUS
-		)VALUES(
-			#{id},
-			#{name},
-			#{icon},
-			#{loginUrl},
-			#{protocol},
-			#{category},
-			#{secret},
-			#{description},
-			#{vendor} ,
-			#{vendorUrl},
-			
-			#{credential},
-			#{sharedUsername},
-			#{sharedPassword},
-			#{systemUserAttr},
-			
-			#{isExtendAttr},
-			#{extendAttr},
-			
-			#{isSignature},
-			
-			#{isAdapter},
-			#{adapter},
-			
-			#{principal},
-			#{credentials},
-			
-			#{visible},
-			
-			#{sortOrder},
-			
-			#{createdBy},
-			#{createdDate} ,
-			
-			#{status}
-		)
-	</insert>
-	
-	<update id="update" parameterType="Applications" >
-    	UPDATE APPLICATIONS SET
-    		NAME			=	#{name},
-    		<if test="icon != null">
-			ICON			=	#{icon},
-			</if>
-			LOGINURL		=	#{loginUrl},
-			PROTOCOL		=	#{protocol},
-			CATEGORY		=	#{category},
-			SECRET 			=	#{secret},
-			DESCRIPTION		=	#{description},
-			VENDOR			=	#{vendor},
-			VENDORURL		=	#{vendorUrl},
-			
-			CREDENTIAL			=	#{credential},
-			SHAREDUSERNAME		=	#{sharedUsername},
-			SHAREDPASSWORD		=	#{sharedPassword},
-			SYSTEMUSERATTR		=	#{systemUserAttr},
-			
-			ISEXTENDATTR		=	#{isExtendAttr},
-			EXTENDATTR			=	#{extendAttr},
-			
-			ISSIGNATURE			=	#{isSignature},
-			
-			<if test="adapter != null">
-			ISADAPTER			=	#{isAdapter},
-			ADAPTER				=	#{adapter},
-			</if>
-			PRINCIPAL		=	#{principal},
-			CREDENTIALS		=	#{credentials},
-			VISIBLE				=	#{visible},
-			SORTORDER			=	#{sortOrder},
-			
-			MODIFIEDBY		=	#{modifiedBy},
-			MODIFIEDDATE	=	#{modifiedDate},
-			
-			STATUS			=	#{status}
-    	WHERE 
-			ID	=	#{id}
-    </update>
-	
-	<select id="query" parameterType="Applications" resultType="Applications">
-		SELECT
-			*
-		FROM
-			APPLICATIONS
-		WHERE
-			 (1=1)	
-			<include refid="where_statement"/>
-		ORDER BY SORTORDER 
-		
-	</select>
-	
-	<select id="get" parameterType="string" resultType="Applications">
-		SELECT
-			*
-		FROM
-			APPLICATIONS
-		WHERE
-			ID = #{value}
-	</select>
 	
 	<select id="grid" parameterType="Applications" resultType="Applications">
 		SELECT
@@ -183,18 +46,5 @@
 		
 	</select>
 	
-	<select id="load" parameterType="Applications" resultType="Applications">
-		SELECT
-			*
-		FROM
-			APPLICATIONS
-		WHERE
-			 (1=1)	
-			<include refid="where_statement"/>
-	</select>
-	
-	<delete id="remove" parameterType="string" >
-    	DELETE FROM APPLICATIONS WHERE ID=#{value}
-    </delete>
 	
 </mapper>

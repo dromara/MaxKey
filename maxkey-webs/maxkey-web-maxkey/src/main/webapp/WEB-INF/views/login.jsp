@@ -205,7 +205,7 @@ $(function(){
 			<td>
 				<div id="div_commonLogin" >
 					<form id="loginForm" name="loginForm" action="<s:Base />/logon.do" method="post">
-						<input type="hidden" name="j_auth_type" value="common"/>
+						<input type="hidden" name="j_auth_type" value="basic"/>
 						<table  class="login_form_table">
 							<%if (session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION) != null ) { %>
 							<tr>
@@ -237,7 +237,7 @@ $(function(){
 										<tr>
 											<td style="width:50%">
 												<span class="form_checkbox_label">
-													<input type='checkbox' id="remeberMe" name="j_remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
+													<input type='checkbox' id="remeberMe" name="j_remeberme"  class="checkbox"   tabindex="4"  value="remeberMe" />
 													<s:Locale code="login.text.remeberme"/>
 												</span>
 											</td>
@@ -254,7 +254,7 @@ $(function(){
 							</tr>
 							<tr   style="display:none">
 								<td>jwtToken：</td>
-								<td><input type='text' id="jwtToken" name="j_jwttoken" value="${jwtToken}" /></td>
+								<td><input type='text' id="jwtToken" name="j_jwt_token" value="${jwtToken}" /></td>
 								
 							</tr>
 							<tr >
@@ -287,7 +287,7 @@ $(function(){
 							</tr>
 							<c:if test="${'true'==isOneTimePwd}">
 							<tr>
-								<td><s:Locale code="当前时间"/>：</td>
+								<td><s:Locale code="login.text.currenttime"/>：</td>
 								<td>
 									<input readonly type='text' id="currentTime" name="currentTime"  tabindex="3"  value="" />
 								</td>
@@ -314,7 +314,7 @@ $(function(){
 										<tr>
 											<td style="width:50%">
 												<span class="form_checkbox_label">
-													<input type='checkbox' id="tfa_remeberMe" name="j_remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
+													<input type='checkbox' id="tfa_remeberMe" name="j_remeberme"  class="checkbox"   tabindex="4"  value="remeberMe" />
 													<s:Locale code="login.text.remeberme"/>
 												</span>
 											</td>
@@ -331,7 +331,7 @@ $(function(){
 							</tr>
 							<tr   style="display:none">
 								<td>jwtToken：</td>
-								<td><input type='text' id="jwtToken" name="j_jwttoken" value="${jwtToken}" /></td>
+								<td><input type='text' id="jwtToken" name="j_jwt_token" value="${jwtToken}" /></td>
 								
 							</tr>
 							<tr >
@@ -350,7 +350,14 @@ $(function(){
 					<tr >
 						<td ><s:Locale code="global.change.language"/> :</td>
 						<td >
-							<div > <a href="<s:BasePath />/login?language=en">English</a>|<a href="<s:BasePath />/login?language=zh_CN">Chinese</a>/ Locale : ${pageContext.response.locale}</div>
+							<div > 
+								<a href="<s:BasePath />/login?language=en">
+									<s:Locale code="global.change.language.en"/>
+								</a>|
+								<a href="<s:BasePath />/login?language=zh_CN">
+									<s:Locale code="global.change.language.zh"/>
+								</a>/ Locale : ${pageContext.response.locale}
+							</div>
 						</td>
 					</tr>
 					<tr>

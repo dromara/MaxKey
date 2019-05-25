@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.connsec.spring.UserTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-03-05T13:23:56" hostname="WIN7U-20160730R" time="0.028">
-  <properties/>
-  <testcase name="testHashCode" classname="com.connsec.spring.UserTest" time="0.02"/>
-  <testcase name="testEquals" classname="com.connsec.spring.UserTest" time="0.007"/>
-  <testcase name="testNotEquals" classname="com.connsec.spring.UserTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

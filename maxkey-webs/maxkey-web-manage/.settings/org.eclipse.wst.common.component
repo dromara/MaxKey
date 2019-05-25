@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project-modules id="moduleCoreId" project-version="2.0">
+<project-modules id="moduleCoreId" project-version="1.5.0">
 	<wb-module deploy-name="maxkey-web-manage">
 		<property name="context-root" value="manage"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
 		<wb-resource deploy-path="/" source-path="src/main/webapp"/>
-		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-core/maxkey-core">
-			<dependency-type>uses</dependency-type>
-		</dependent-module>
-		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-jose-jwt/maxkey-jose-jwt">
-			<dependency-type>uses</dependency-type>
-		</dependent-module>
-		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-dao/maxkey-dao">
-			<dependency-type>uses</dependency-type>
-		</dependent-module>
-		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-client-sdk/maxkey-client-sdk">
-			<dependency-type>uses</dependency-type>
-		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-protocol-oauth-2.0/maxkey-protocol-oauth-2.0">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
@@ -24,6 +12,18 @@
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-protocol-saml-2.0/maxkey-protocol-saml-2.0">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-dao/maxkey-dao">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-core/maxkey-core">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-jose-jwt/maxkey-jose-jwt">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-client-sdk/maxkey-client-sdk">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 	</wb-module>

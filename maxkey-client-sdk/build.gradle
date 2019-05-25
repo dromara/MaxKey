@@ -7,5 +7,4 @@ dependencies {
    	compile fileTree(dir: '../maxkey-lib/apache/', include: 'commons-codec*.jar')
    	compile fileTree(dir: '../maxkey-lib/json/', include: 'gson*.jar')
    	compile fileTree(dir: '../maxkey-lib/java/', include: '*.jar')
-   	
 }

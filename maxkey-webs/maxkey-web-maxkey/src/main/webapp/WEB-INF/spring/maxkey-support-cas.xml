@@ -2,7 +2,6 @@
 <beans 	xmlns="http://www.springframework.org/schema/beans"
 		xmlns:context="http://www.springframework.org/schema/context"
 		xmlns:mvc="http://www.springframework.org/schema/mvc"
-		xmlns:sec="http://www.springframework.org/schema/security"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:p="http://www.springframework.org/schema/p"
 		xmlns:util="http://www.springframework.org/schema/util"
@@ -14,9 +13,7 @@
 	        http://www.springframework.org/schema/util     
 	        http://www.springframework.org/schema/util/spring-util.xsd
 	        http://www.springframework.org/schema/mvc 
-			http://www.springframework.org/schema/mvc/spring-mvc.xsd
-			http://www.springframework.org/schema/security 
-			http://www.springframework.org/schema/security/spring-security.xsd">
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
  
 	<!-- CAS  Support Start -->
 	<context:component-scan base-package="org.maxkey.authn.support.cas" />
@@ -38,13 +35,13 @@
 	        </bean>
 	    </property>
 	</bean>
-
+<!--
 	<http pattern="/logon/cas/**"  xmlns="http://www.springframework.org/schema/security">
 		<http-basic entry-point-ref="casEntryPoint" />
 		<custom-filter   ref="casAuthenticationFilter"    	before="BASIC_AUTH_FILTER"/> 
 		<custom-filter   ref="casTicketValidationFilter"    after="BASIC_AUTH_FILTER"/> 
 	</http>
-	
+-->	
 	<bean id="casEntryPoint" class="org.maxkey.authn.support.cas.CasEntryPoint"></bean>
 	
 	<!-- CAS  Support End -->

@@ -2,7 +2,6 @@
 <beans 	xmlns="http://www.springframework.org/schema/beans"
 		xmlns:context="http://www.springframework.org/schema/context"
 		xmlns:mvc="http://www.springframework.org/schema/mvc"
-		xmlns:sec="http://www.springframework.org/schema/security"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:p="http://www.springframework.org/schema/p"
 		xmlns:util="http://www.springframework.org/schema/util"
@@ -14,53 +13,10 @@
 	        http://www.springframework.org/schema/util     
 	        http://www.springframework.org/schema/util/spring-util.xsd
 	        http://www.springframework.org/schema/mvc 
-			http://www.springframework.org/schema/mvc/spring-mvc.xsd
-			http://www.springframework.org/schema/security 
-			http://www.springframework.org/schema/security/spring-security.xsd">
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 			
-    <!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
- 		 @Controller and @Service. Make sure to set the correct base-package-->
- 
- 	<!-- domain bean  -->
- 	<context:component-scan base-package="org.maxkey.domain" />
- 	
- 	<!-- domain bean  -->
- 	<context:component-scan base-package="org.maxkey.domain.apps" />
- 	
- 	<!-- domain bean  -->
- 	<context:component-scan base-package="org.maxkey.domain.userinfo" />
- 	
- 	<!-- Social Sign On Endpoint-->
-	<context:component-scan base-package="org.maxkey.web.authentication.support.socialsignon" />
-	
-	<!-- oauth.provider-->
-	<context:component-scan base-package="org.maxkey.web.oauth.approval.controller" /> 
-	<!-- oauth.provider userinfo-->
-	<context:component-scan base-package="org.maxkey.web.oauth.userinfo.controller" /> 
-	
-	<!-- SAML V2.0 EndPoint -->
-	<context:component-scan base-package="org.maxkey.saml20.provider.endpoint" />
-	
-	<!-- MetaData V2.0 EndPoint -->
-	<context:component-scan base-package="org.maxkey.saml20.metadata.endpoint" />
-
-	<context:component-scan base-package="org.maxkey.web.authorize.endpoint" />
-	
-	<context:component-scan base-package="org.maxkey.web.endpoint" />
-	
-	<!-- REST API interface -->
-	<context:component-scan base-package="org.maxkey.api.v1.contorller" />
-	
-	<!-- Business  Contorller -->
-	<context:component-scan base-package="org.maxkey.web.contorller" />
-
-	<!-- Static resources -->
-	<!-- js images css -->
-	<mvc:resources mapping="/jquery/**" location="/jquery/" />
-	<mvc:resources mapping="/images/**" location="/images/" />
-	<mvc:resources mapping="/css/**" location="/css/" />
-	<mvc:resources mapping="/js/**" location="/js/" />
-	
+    
+	<!--
 	<sec:http pattern="/jquery/**" security="none" /> 
 	<sec:http pattern="/images/**" security="none" /> 
 	<sec:http pattern="/css/**" security="none" /> 
@@ -71,14 +27,14 @@
 	<sec:http pattern="/api/oauth/v20/me" security="none" /> 
 	<sec:http pattern="/api/connect/v10/userinfo" security="none" />
 	
-	<!-- cas api  -->
+	 cas api  
 	<sec:http pattern="/authz/cas/validate" security="none" />
 	<sec:http pattern="/authz/cas/serviceValidate" security="none" />
 	<sec:http pattern="/authz/cas/proxyValidate" security="none" />
 	<sec:http pattern="/authz/cas/proxy" security="none" />
 	<sec:http pattern="/authz/cas/p3/serviceValidate" security="none" />
 	<sec:http pattern="/authz/cas/p3/proxyValidate" security="none" />
-	
+	-->
 	
 	
 	<!-- enable autowire -->
@@ -86,65 +42,7 @@
     
     <!-- language select must remove -->
 	<mvc:annotation-driven />
-    
-	<!-- XML bean Marshaller define  -->
-	<bean id="Jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
-		<property name="classesToBeBound">
-			<list>
-				<value>org.maxkey.domain.xml.UserInfoXML</value>
-			</list>
-		</property>
-	</bean>
-	
-	<!-- MarshallingHttpMessageConverter -->
-	<bean id="marshallingHttpMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
-		<property name="marshaller" ref="Jaxb2Marshaller" />
-		<property name="unmarshaller" ref="Jaxb2Marshaller" />
-		<property name="supportedMediaTypes">
-			<list>
-				<value>application/xml;charset=UTF-8</value>
-			</list>
-		</property>
-	</bean>
-	
-	<!--MappingJacksonHttpMessageConverter  -->
-	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-		<property name="supportedMediaTypes">
-			<list>
-				<value>application/json;charset=UTF-8</value>
-			</list>
-		</property>
-	</bean>
-
-	<!-- REST Client -->
-	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-		<property name="messageConverters">
-			<list>
-				<ref bean="marshallingHttpMessageConverter" />
-				<ref bean="mappingJacksonHttpMessageConverter" />
-			</list>
-		</property>
-	</bean>
-	
-	<!-- AnnotationMethodHandlerAdapter -->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-		<property name="messageConverters">
-			<util:list id="beanList">
-				<ref bean="marshallingHttpMessageConverter" />
-				<ref bean="mappingJacksonHttpMessageConverter" />
-			</util:list>
-		</property>
-	</bean>
-	
-	
-	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
-		<property name="interceptors">
-			<list>
-				<ref bean="localeChangeInterceptor" />
-			</list>
-		</property>
-	</bean>
-
+  
 	<!-- web Controller InterceptorAdapter  -->
 	<mvc:interceptors>
 		<!-- web Controller InterceptorAdapter for platform permission  -->
@@ -212,20 +110,90 @@
 		 <ref bean="localeChangeInterceptor" />
 	</mvc:interceptors>
      
-	<!-- View Resolver -->
+     	<bean id="remeberMeService" class="org.maxkey.authn.support.rememberme.JdbcRemeberMeService">
+		<constructor-arg ref="jdbcTemplate"/>
+		<property name="validity" value="${config.login.remeberme.validity}"/>
+	</bean>
+
+	<!-- Authentication Password Encoder Config -->
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>   
 	
-	<bean id="viewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/views/" p:suffix=".jsp" p:order="2" />
+	<bean id="timeBasedKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
+		<property name="type" value="totp" />
+		<property name="digits" value="6" />
+		<property name="issuer" value="ConnSec" />
+		<property name="domain" value="connsec.com" />
+		<property name="period" value="30" />
+		
+	</bean>
 	
-	<!-- upload file support -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-    	<property name="maxUploadSize" value="4194304" />  
-    </bean> 
+	<bean id="counterBasedKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
+		<property name="type" value="hotp" />
+		<property name="digits" value="6" />
+		<property name="issuer" value="maxkey" />
+		<property name="domain" value="maxkey.org" />
+		<property name="counter" value="0" />
+	</bean>
+	
+	<bean id="hotpKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
+		<property name="type" value="hotp" />
+		<property name="digits" value="6" />
+		<property name="issuer" value="maxkey" />
+		<property name="domain" value="maxkey.org" />
+		<property name="counter" value="0" />
+	</bean>
+	
+	
+	<bean id="tfaOTPAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOTPAuthn">
+		<constructor-arg ref="jdbcTemplate" /> 
+	</bean>
+	
+	<bean id="passwordReciprocal" class="org.maxkey.crypto.password.PasswordReciprocal"></bean>
+	
+	
+	<bean id="cacheFactory"  class="org.maxkey.cache.CacheFactory">
+		<property name="cache">
+			   <list>
+			   		<bean class="org.maxkey.web.filter.ipaddress.IpAddressCache">
+			   			<property name="jdbcIpAddressService">
+			   				<bean class="org.maxkey.web.filter.ipaddress.JdbcIpAddressService">
+			   					<constructor-arg ref="jdbcTemplate"/>
+			   				</bean>
+			   			</property>
+			   			<property name="interval"  value="1200" />
+			   		</bean>
+			   </list>
+		</property>
+	</bean>
+	
+	<!-- Captcha Producer  Config -->
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+                <bean class="com.google.code.kaptcha.util.Config">
+                        <constructor-arg type="java.util.Properties">
+                                <props>
+                                        <prop key="kaptcha.image.width">70</prop> 
+                                        <prop key="kaptcha.image.height">25</prop>
+                                        <prop key="kaptcha.border">no</prop>
+                                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>
+                                        <prop key="kaptcha.textproducer.font.size">23</prop>
+                                        <prop key="kaptcha.textproducer.char.string">0123456789</prop>
+                                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                                        <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
+                                        <!-- <prop key="kaptcha.noise.color">white</prop>
+                                          -->
+                                </props>
+                        </constructor-arg>
+                </bean>
+        </property>
+	</bean>
+	
     
 	<!-- Follow is config for Spring security -->
-
-	<!-- Login  -->
+	<!--<csrf disabled="true"/>-->
+	<!-- Login  
 	<http use-expressions="false"  disable-url-rewriting="false" xmlns="http://www.springframework.org/schema/security" >
-		<!--<csrf disabled="true"/>-->
+		
 		<headers>
 			<frame-options policy="SAMEORIGIN" />
 		</headers> 
@@ -247,13 +215,13 @@
 		
 		<anonymous />
 	</http>
-		
+	-->	
 
-   	<bean id="savedRequestSuccessHandler" class="org.maxkey.web.authentication.SavedRequestAwareAuthenticationSuccessHandler"> </bean>
+   	<bean id="savedRequestSuccessHandler" class="org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler"> </bean>
 	
-	<!-- spring authentication provider -->
+	<!-- spring authentication provider 
 	<authentication-manager alias="authenticationProvider"  xmlns="http://www.springframework.org/schema/security"/>
-
+-->
 	<!-- LDAP Realm 
 	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.ldap.LdapAuthenticationRealm">
 		<constructor-arg ref="jdbcTemplate"/>
@@ -308,19 +276,19 @@
 	
 	<!-- Default Realm-->
 	<!-- realm use jdbc -->
-	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.jdbc.JdbcAuthenticationRealm">
+	<bean id="authenticationRealm" class="org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm">
 		<constructor-arg ref="jdbcTemplate"/>
 	</bean>
 	
 		
 	<!-- Authentication providers -->
-    <bean id="realmAuthenticationProvider" class="org.maxkey.web.authentication.RealmAuthenticationProvider" >
+    <bean id="authenticationProvider" class="org.maxkey.authn.RealmAuthenticationProvider" >
     </bean>
-    
+    <!--
 	<authentication-manager alias="authenticationManager" xmlns="http://www.springframework.org/schema/security">
 		<authentication-provider ref= "realmAuthenticationProvider"/>  
 	</authentication-manager>
-    
+    -->
 	<mvc:annotation-driven />
 
 	<mvc:default-servlet-handler />

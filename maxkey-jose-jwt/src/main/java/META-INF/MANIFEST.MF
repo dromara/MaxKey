@@ -3,13 +3,3 @@ Archiver-Version: Plexus Archiver
 Created-By: Apache Maven
 Built-By: vd
 Build-Jdk: 1.7.0_72
-
-net.minidev
-	json-smart-2.3
-	asm-1.0.2
-	
-Java Concurrency in Practice
-	net.jcip.annotations
-	
-nimbus
-	nimbus-jose-jwt version 7.1

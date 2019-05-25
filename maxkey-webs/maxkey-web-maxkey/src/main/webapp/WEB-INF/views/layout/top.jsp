@@ -14,7 +14,7 @@
 		<div style="margin-top:25px;margin-right:10px;float:right;">
 			<table style="height: 31px;">
 				<tr>
-					<td>
+					<td><%System.out.println(WebContext.getUserInfo()); %>
 						<s:Locale code="global.text.welcome"/>：<%=WebContext.getUserInfo()==null?"":WebContext.getUserInfo().getDisplayName()%>(<%=WebContext.getUserInfo()==null?"":WebContext.getUserInfo().getUsername()%>)&nbsp;&nbsp;
 					</td>
 					<%if(WebContext.getUserInfo().getGridList()==0) {%>
@@ -32,24 +32,20 @@
 						<img src='<s:Base/>/images/list_sel.png'  style="width=:31px;height:31px;border:0;">
 					</td>
 					<%} %>
-					<authz:authorize ifAllGranted="SUPER_ADMIN,IDENTITY_MANAGER">
+					
 					<td id="manage" nowrap>
 						<a target="_blank"  href="<s:Base/>/authz/manage">
 							<div  style="float:right;" >&nbsp;&nbsp;<s:Locale code="global.text.manage"/>&nbsp;&nbsp;</div>
 						</a>
 					</td>
-					</authz:authorize>
+		
 					<td class="ui-widget-header" >
-						<a  href="<s:Base/>/logout">
+						<a  href="<s:Base/>/logout?reLoginUrl=login">
 							<div  style="float:right;" >&nbsp;&nbsp;<s:Locale code="global.text.logout"/>&nbsp;&nbsp;</div>
 						</a>
 					</td>
 				</tr>
 			</table>
-			
-			
 		</div>
-		
 	</div>
 </div>
-
