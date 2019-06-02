@@ -1,3 +1,20 @@
+<%@page session="false" %>
+<%@taglib prefix="c" 		uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="s" 		uri="http://www.connsec.com/tags" %> 
+<!DOCTYPE HTML >
+<html>
+	<head>
+		<jsp:include page="layout/header.jsp"></jsp:include>
+		<jsp:include page="layout/common.css.jsp"></jsp:include>
+		<jsp:include page="layout/common.js.jsp"></jsp:include>
+      	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      	<title><s:Locale code="login.password.initial.change.tip" /></title>
+  </head>
+<body>
+<div id="top">
+	<jsp:include page="layout/nologintop.jsp"></jsp:include>
+</div>
+<div id="content">
 <div class="container">
 <table width="100%">
   <tr>
@@ -8,7 +25,7 @@
 	  <table   class="datatable" >
 			<tbody>
 			<tr>
-				<th  colspan="2"><s:Locale code="login.initial.password.tip" /></th>
+				<th  colspan="2"><s:Locale code="login.password.initial.change.tip" /></th>
 			</tr>
 			<tr>
 				<th><s:Locale code="userinfo.displayName" /> :</th>
@@ -25,7 +42,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="access.security.newPassword" />:</th>
+				<th><s:Locale code="login.password.newPassword" />:</th>
 				<td>
 					<input type="password" id="newPassword" name="newPassword" class=" required" title="" value=""/>
 					<b class="orange">*</b>
@@ -33,7 +50,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="access.security.confirmPassword" />:</th>
+				<th><s:Locale code="login.password.confirmPassword" />:</th>
 				<td nowrap>
 					<input type="password" id="confirmPassword" name="confirmPassword" class="{ required: true, equalTo: '#newPassword' }" title="" value=""/>
 					<b class="orange">*</b>
@@ -54,4 +71,9 @@
   </tr>
 </table>
 </div>
-
+</div>
+<div id="footer">
+	<jsp:include page="layout/footer.jsp"></jsp:include>
+</div>
+</body>
+</html>

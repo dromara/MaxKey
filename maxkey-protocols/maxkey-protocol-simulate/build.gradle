@@ -1,8 +1,0 @@
-description = "maxkey-protocol-simulate"
-
-apply plugin: 'war'
-apply plugin: 'eclipse-wtp'
-
-dependencies {
-   
-}

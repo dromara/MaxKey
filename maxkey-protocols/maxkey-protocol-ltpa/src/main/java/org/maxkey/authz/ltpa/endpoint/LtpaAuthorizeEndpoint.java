@@ -13,6 +13,7 @@ import org.maxkey.authz.ltpa.endpoint.adapter.LtpaDefaultAdapter;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.constants.BOOLEAN;
 import org.maxkey.dao.service.TokenBasedDetailsService;
+import org.maxkey.domain.apps.Applications;
 import org.maxkey.domain.apps.TokenBasedDetails;
 import org.maxkey.util.Instance;
 import org.maxkey.web.WebContext;
@@ -50,6 +51,9 @@ public class LtpaAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		TokenBasedDetails ltpaDetails=tokenBasedDetailsService.get(id);
 		_logger.debug(""+ltpaDetails);
 		String cookieValue="";
+		Applications  application= getApplication(id);
+		ltpaDetails.setAdapter(application.getAdapter());
+		ltpaDetails.setIsAdapter(application.getIsAdapter());
 		
 		AbstractAuthorizeAdapter adapter;
 		

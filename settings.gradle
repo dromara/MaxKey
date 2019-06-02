@@ -14,7 +14,6 @@ include 'maxkey-jose-jwt'
 include 'maxkey-protocols:maxkey-protocol-oauth-2.0'
 include 'maxkey-protocols:maxkey-protocol-saml-2.0'
 
-include 'maxkey-protocols:maxkey-protocol-simulate'
 include 'maxkey-protocols:maxkey-protocol-authorize'
 include 'maxkey-protocols:maxkey-protocol-desktop'
 include 'maxkey-protocols:maxkey-protocol-extendapi'

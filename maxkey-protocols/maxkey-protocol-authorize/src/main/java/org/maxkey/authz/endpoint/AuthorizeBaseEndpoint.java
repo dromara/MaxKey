@@ -49,9 +49,10 @@ public class AuthorizeBaseEndpoint {
 		return application;
 	}
 	
-	protected Accounts getAppAccounts(Applications application){
+	protected Accounts getAppAccounts(Applications app){
 		Accounts appAccount=new Accounts();
 		UserInfo userInfo=WebContext.getUserInfo();
+		Applications  application= getApplication(app.getId());
 		if(application.getCredential()==Applications.CREDENTIALS.USER_DEFINED){
 			
 			appAccount=accountsService.load(new Accounts(userInfo.getId(),application.getId()));

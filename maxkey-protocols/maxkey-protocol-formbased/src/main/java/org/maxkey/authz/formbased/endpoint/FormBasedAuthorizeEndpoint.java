@@ -11,6 +11,7 @@ import org.maxkey.authz.formbased.endpoint.adapter.FormBasedDefaultAdapter;
 import org.maxkey.constants.BOOLEAN;
 import org.maxkey.dao.service.FormBasedDetailsService;
 import org.maxkey.domain.Accounts;
+import org.maxkey.domain.apps.Applications;
 import org.maxkey.domain.apps.FormBasedDetails;
 import org.maxkey.util.Instance;
 import org.maxkey.web.WebContext;
@@ -41,12 +42,14 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			@PathVariable("id") String id){
 		FormBasedDetails formBasedDetails=formBasedDetailsService.get(id);
 		_logger.debug(""+formBasedDetails);
-		
+		Applications  application= getApplication(id);
+		formBasedDetails.setAdapter(application.getAdapter());
+		formBasedDetails.setIsAdapter(application.getIsAdapter());
 		ModelAndView modelAndView=null;
 		
 		Accounts appUser=getAppAccounts(formBasedDetails);
 		
-		
+		_logger.debug("Accounts "+appUser);
 		if(appUser	==	null){
 			return generateInitCredentialModelAndView(id,"/authorize/formbased/"+id);
 			
