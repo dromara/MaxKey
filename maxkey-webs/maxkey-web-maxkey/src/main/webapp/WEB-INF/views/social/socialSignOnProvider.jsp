@@ -6,6 +6,17 @@
 <%@ taglib 	prefix="s" 		uri="http://sso.maxkey.org/tags" %>
 <%@ taglib prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib prefix="fn"     	 	uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE HTML >
+<html>
+<head>
+	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<jsp:include page="../layout/common.css.jsp"></jsp:include>
+	<jsp:include page="../layout/common.js.jsp"></jsp:include>
+</head>
+<body>
+<jsp:include page="../layout/top.jsp"></jsp:include>
+<jsp:include page="../layout/nav_primary.jsp"></jsp:include>
+
 <%if(WebContext.getUserInfo().getGridList()==0) {%>
 <table  class="datatable">
 	<c:forEach begin="1" end="${(fn:length(listSocialSignOnProvider)+3)/4}" var="num">
@@ -19,10 +30,10 @@
 	  				</td></tr>
 	  				<tr><td  style="text-align: center;border-spacing: 0;border-collapse: collapse;border: 0px;">${socialSignOnProvider.providerName}<div>
 	  					<c:if test="${false==socialSignOnProvider.userBind}">
-	  						<a  href="<s:Base/>/logon/oauth20/bind/${socialSignOnProvider.provider}"><s:Locale code="access.security.social.authnLink.link" /></a>
+	  						<a  href="<s:Base/>/logon/oauth20/bind/${socialSignOnProvider.provider}"><s:Locale code="login.social.link" /></a>
 						</c:if>
 						<c:if test="${true==socialSignOnProvider.userBind}">
-	  						<a  href="<s:Base/>/logon/oauth20//unbind/${socialSignOnProvider.provider}"><s:Locale code="access.security.social.authnLink.unlink" /></a>
+	  						<a  href="<s:Base/>/logon/oauth20//unbind/${socialSignOnProvider.provider}"><s:Locale code="login.social.unlink" /></a>
 	  					</c:if>
 	  				</div></td></tr>
 	  				</table>
@@ -37,9 +48,9 @@
 <table  class="datatable">
 	<tr>
 			<td>
-				<s:Locale code="access.security.social.icon"/>
+				<s:Locale code="login.social.icon"/>
 			</td>
-			<td><s:Locale code="access.security.social.providerName"/></td>
+			<td><s:Locale code="login.social.provider"/></td>
 			<td><s:Locale code="button.text.action"/></td>
 		</tr>
 	<c:forEach items="${listSocialSignOnProvider}" var="socialSignOnProvider">
@@ -51,10 +62,10 @@
 			<td  style="text-align: center;">${socialSignOnProvider.providerName}</td>
 			<td  style="text-align: center;">
 				<c:if test="${false==socialSignOnProvider.userBind}">
- 						<a  href="<s:Base/>/logon/oauth20/bind/${socialSignOnProvider.provider}"><s:Locale code="access.security.social.authnLink.link" /></a>
+ 						<a  href="<s:Base/>/logon/oauth20/bind/${socialSignOnProvider.provider}"><s:Locale code="login.social.link" /></a>
 				</c:if>
 				<c:if test="${true==socialSignOnProvider.userBind}">
- 						<a  href="<s:Base/>/logon/oauth20//unbind/${socialSignOnProvider.provider}"><s:Locale code="access.security.social.authnLink.unlink" /></a>
+ 						<a  href="<s:Base/>/logon/oauth20//unbind/${socialSignOnProvider.provider}"><s:Locale code="login.social.unlink" /></a>
  				</c:if>
 			</td>
 		</tr>
@@ -62,3 +73,8 @@
 	</c:forEach>
 </table>
 <%} %>
+<div id="footer">
+	<jsp:include page="../layout/footer.jsp"></jsp:include>
+</div>
+<body>
+</html>

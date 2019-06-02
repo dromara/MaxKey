@@ -189,7 +189,13 @@ button,input{
 	font-weight: bold;	
 }
 
-#manage a,#logout a{
+#changepassword{
+	width: 65px;
+	background-color: #f28018;
+	font-weight: bold;	
+}
+
+#manage a,#logout a,#changepassword a{
 	  color: #fff;
 }
 

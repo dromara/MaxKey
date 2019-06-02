@@ -217,11 +217,11 @@ $(function(){
 							<%}%>
 							<tr>
 								<td><s:Locale code="login.text.username"/>：</td>
-								<td><input type='text' id='j_username'  name='j_username' value="" tabindex="1"/></td>
+								<td><input type='text' id='j_username'  name='j_username' value="admin" tabindex="1"/></td>
 							</tr>
 							<tr>
 								<td><s:Locale code="login.text.password"/>：</td>
-								<td><input type='password' id='j_password'  name='j_password' value=""  tabindex="2"/></td>
+								<td><input type='password' id='j_password'  name='j_password' value="admin"  tabindex="2"/></td>
 							</tr>
 							<c:if test="${'true'==isCaptcha}"> 
 							<tr>

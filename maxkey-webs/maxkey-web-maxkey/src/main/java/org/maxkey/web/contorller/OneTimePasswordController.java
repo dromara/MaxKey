@@ -27,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-@RequestMapping(value = { "/otp" })
+@RequestMapping(value = { "/safe/otp" })
 public class OneTimePasswordController {
 	final static Logger _logger = LoggerFactory.getLogger(OneTimePasswordController.class);
 
@@ -78,7 +78,7 @@ public class OneTimePasswordController {
 		userInfo.setSharedSecret(sharedSecret);
 		userInfoService.changeSharedSecret(userInfo);
 		WebContext.setUserInfo(userInfo);
-		return WebContext.redirect("/otp/timebased");
+		return WebContext.redirect("/safe/otp/timebased");
 	}
 	
 
@@ -112,7 +112,7 @@ public class OneTimePasswordController {
 		userInfo.setSharedCounter("0");
 		userInfoService.changeSharedSecret(userInfo);
 		WebContext.setUserInfo(userInfo);
-		return WebContext.redirect("/otp/counterbased");
+		return WebContext.redirect("/safe/otp/counterbased");
 	}
 
 	@RequestMapping(value={"/hotp"})
@@ -144,7 +144,7 @@ public class OneTimePasswordController {
 		userInfo.setSharedCounter("0");
 		userInfoService.changeSharedSecret(userInfo);
 		WebContext.setUserInfo(userInfo);
-		return WebContext.redirect("/otp/hotp");
+		return WebContext.redirect("/safe/otp/hotp");
 	}
 	
 	

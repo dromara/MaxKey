@@ -1,7 +1,17 @@
 <%@ page   language="java"  import="java.util.*"   pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring"  uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt"     uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib 	prefix="s" 		uri="hhttp://sso.maxkey.org/tags" %>
+<%@ taglib 	prefix="s" 		uri="http://sso.maxkey.org/tags" %>
+<!DOCTYPE HTML >
+<html>
+<head>
+	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<jsp:include page="../layout/common.css.jsp"></jsp:include>
+	<jsp:include page="../layout/common.js.jsp"></jsp:include>
+</head>
+<body>
+<jsp:include page="../layout/top.jsp"></jsp:include>
+<jsp:include page="../layout/nav_primary.jsp"></jsp:include>
 
 <table width="100%">
   <tr>
@@ -12,7 +22,7 @@
 	  <table   class="datatable" >
 			<tbody>
 			<tr>
-				<th  colspan="2"><s:Locale code="access.security.applogin.protectionSetting" /></th>
+				<th  colspan="2"><s:Locale code="login.password.applogin.changepassword" /></th>
 			</tr>
 			<tr>
 				<th><s:Locale code="userinfo.displayName" /> :</th>
@@ -29,7 +39,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="access.security.oldPassword" /> :</th>
+				<th><s:Locale code="login.password.oldPassword" /> :</th>
 				<td>
 					<input type="password" id="oldPassword" name="oldPassword" class="required" title="" value=""/>
 					<b class="orange">*</b>
@@ -37,7 +47,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="access.security.newPassword" />:</th>
+				<th><s:Locale code="login.password.newPassword" />:</th>
 				<td>
 					<input type="password" id="newPassword" name="newPassword" class=" required" title="" value=""/>
 					<b class="orange">*</b>
@@ -45,7 +55,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="access.security.confirmPassword" />:</th>
+				<th><s:Locale code="login.password.confirmPassword" />:</th>
 				<td nowrap>
 					<input type="password" id="confirmPassword" name="confirmPassword" class="{ required: true, equalTo: '#newPassword' }" title="" value=""/>
 					<b class="orange">*</b>
@@ -65,3 +75,8 @@
 </td>
   </tr>
 </table>
+<div id="footer">
+	<jsp:include page="../layout/footer.jsp"></jsp:include>
+</div>
+<body>
+</html>

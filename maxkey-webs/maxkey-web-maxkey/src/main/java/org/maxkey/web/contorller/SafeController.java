@@ -145,73 +145,21 @@ public class SafeController {
 	@ResponseBody
 	@RequestMapping(value="/setting") 
 	public Message setting(
-			@RequestParam("authnType") String authnType) {
+			@RequestParam("authnType") String authnType,
+			@RequestParam("mobile") String mobile,
+			@RequestParam("mobileVerify") String mobileVerify,
+			@RequestParam("email") String email,
+			@RequestParam("emailVerify") String emailVerify) {
 		UserInfo userInfo =WebContext.getUserInfo();
 		userInfo.setAuthnType(Integer.parseInt(authnType));
-		
 		userInfoService.changeAuthnType(userInfo);
 		
-		return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
-		
-	}
-	
-	@RequestMapping(value="/forward/question") 
-	public ModelAndView fowardQuestion() {
-			ModelAndView modelAndView=new ModelAndView("safe/question");
-			modelAndView.addObject("model", WebContext.getUserInfo());
-			return modelAndView;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/question") 
-	public Message question(
-			@RequestParam("passwordQuestion") String passwordQuestion,
-			@RequestParam("passwordAnswer")   String passwordAnswer) {
-		UserInfo userInfo =WebContext.getUserInfo();
-		userInfo.setPasswordQuestion(userInfo.getPasswordQuestion());
-		userInfo.setPasswordAnswer(userInfo.getPasswordAnswer());
-		userInfoService.changePasswordQuestion(userInfo);
-		return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
-		
-	}
-	
-	@RequestMapping(value="/forward/mobile") 
-	public ModelAndView fowardMobile() {
-			ModelAndView modelAndView=new ModelAndView("safe/mobile");
-			modelAndView.addObject("model", WebContext.getUserInfo());
-			return modelAndView;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/mobile") 
-	public Message mobile(
-			@RequestParam("mobile") String mobile,
-			@RequestParam("verify") String verify) {
-		
-		UserInfo userInfo =WebContext.getUserInfo();
 		userInfo.setMobile(mobile);
 		userInfoService.changeMobile(userInfo);
-		return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 		
-	}
-	
-	@RequestMapping(value="/forward/email") 
-	public ModelAndView fowardEmail() {
-			ModelAndView modelAndView=new ModelAndView("safe/email");
-			modelAndView.addObject("model", WebContext.getUserInfo());
-			return modelAndView;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/email") 
-	public Message email(
-			@RequestParam("email") String email,
-			@RequestParam("verify") String verify) {
-		
-		UserInfo userInfo =WebContext.getUserInfo();
 		userInfo.setEmail(email);
 		userInfoService.changeEmail(userInfo);
-
+		
 		return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 		
 	}

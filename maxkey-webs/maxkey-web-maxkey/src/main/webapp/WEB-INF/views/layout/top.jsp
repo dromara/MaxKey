@@ -32,7 +32,11 @@
 						<img src='<s:Base/>/images/list_sel.png'  style="width=:31px;height:31px;border:0;">
 					</td>
 					<%} %>
-					
+					<td id="changepassword" nowrap>
+						<a  href="<s:Base/>/safe/forward/changePasswod">
+							<div  style="float:right;" >&nbsp;&nbsp;<s:Locale code="login.password.changepassword"/>&nbsp;&nbsp;</div>
+						</a>
+					</td>
 					<td id="manage" nowrap>
 						<a target="_blank"  href="<s:Base/>/authz/manage">
 							<div  style="float:right;" >&nbsp;&nbsp;<s:Locale code="global.text.manage"/>&nbsp;&nbsp;</div>

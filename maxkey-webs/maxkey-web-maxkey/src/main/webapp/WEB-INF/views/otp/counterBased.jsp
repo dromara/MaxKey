@@ -30,37 +30,37 @@
 							</td>
 						</tr>
 						<tr>
-							<th><s:Locale code="access.security.otp.sharedSecret" />(BASE32) :</th>
+							<th><s:Locale code="login.counter.sharedSecret" />(BASE32) :</th>
 							<td>
 							<input readonly type="text" class="required" title="" value="${sharedSecret}"/>
 							</td>
 						</tr>
 						<tr>
-							<th><s:Locale code="access.security.otp.sharedSecret" />(HEX) :</th>
+							<th><s:Locale code="login.counter.sharedSecret" />(HEX) :</th>
 							<td>
 								<input readonly type="text" class="required" title="" value="${hexSharedSecret}"/>
 							</td>
 						</tr>
 						<tr>
-							<th><s:Locale code="access.security.otp.period" />:</th>
+							<th><s:Locale code="login.counter.period" />:</th>
 							<td>
 								<input readonly type="text" class="required" title="" value="${format.period}"/>
 							</td>
 						</tr>
 						<tr>
-							<th><s:Locale code="access.security.otp.digits" />:</th>
+							<th><s:Locale code="login.counter.digits" />:</th>
 							<td>
 								<input readonly type="text" class="required" title="" value="${format.digits}"/>
 							</td>
 						</tr>
 						<tr>
-							<th><s:Locale code="access.security.otp.crypto" />:</th>
+							<th><s:Locale code="login.counter.crypto" />:</th>
 							<td>
 								<input readonly type="text" class="required" title="" value="${format.crypto}"/>
 							</td>
 						</tr>
 						<tr>
-							<th><s:Locale code="access.security.otp.counter" />:</th>
+							<th><s:Locale code="login.counter.counter" />:</th>
 							<td>
 								<input readonly type="text" class="required" title="" value="${format.counter}"/>
 							</td>

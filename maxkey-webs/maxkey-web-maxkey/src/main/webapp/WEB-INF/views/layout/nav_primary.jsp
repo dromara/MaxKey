@@ -1,77 +1,105 @@
-<%@ page   language="java"     import="java.util.*"   pageEncoding="UTF-8"%>
-<%@ page   language="java"     import="org.maxkey.web.*" %>
-<%@ page   language="java"     import="org.maxkey.domain.*"%>
-<%@ page   language="java"     import="org.maxkey.domain.userinfo.*"%>
-<%@ taglib prefix="s"  uri="http://sso.maxkey.org/tags" %>
-<div id="nav_primay_content" class="menuprimary">
-<div class="menucontainer">
+<%@ page   language="java"     	import="java.util.*"   pageEncoding="UTF-8"%>
+<%@ page   language="java"     	import="org.maxkey.web.*" %>
+<%@ page   language="java"     	import="org.maxkey.domain.*"%>
+<%@ page   language="java"     	import="org.maxkey.domain.userinfo.*"%>
+<%@ taglib prefix="s"  			uri="http://sso.maxkey.org/tags" %>
+<div id="nav_primary" >
+<div id="nav_primary"  class="menuprimary">
 	<ul >
+		<li  id="nav_primay_10"  class="nav_primay_level primaryleft"  xpath="">
+			<a   href="<s:Base/>/appList">我的应用</a>
+		</li>
+		<li  id="nav_primay_11"  class="nav_primay_level primaryleft"  xpath="">
+			<a   href="<s:Base/>/appConfigList">应用配置</a>
+		</li>
+		<li  id="nav_primay_12"  class="nav_primay_level primaryleft"  xpath="">
+			<a   href="<s:Base/>/socialsignon/list">认证关联</a>
+		</li>
+		<li  id="nav_primay_13"  class="nav_primay_level primaryleft"  xpath="">
+			<a   href="<s:Base/>/safe/forward/setting">安全设置</a>
+			<div id="nav_child_1301"  class="nav_second_child">
+				<ul>
+					<li id="nav_second_1301" class="nav_second_level">
+						<a   href="<s:Base/>/safe/forward/setting">安全设置</a>
+					</li>
+				</ul>
+				<ul>
+					<li id="nav_second_1302" class="nav_second_level">
+						<a   href="<s:Base/>/safe/forward/changeAppLoginPasswod">应用登录密码</a>
+					</li>
+				</ul>
+				<ul>
+					<li id="nav_second_1303" class="nav_second_level">
+						<a   href="<s:Base/>/safe/otp/timebased">时间令牌</a>
+					</li>
+				</ul>
+			</div>
+		</li>
+		
+		<li  id="nav_primay_14"  class="nav_primay_level primaryleft"  xpath="">
+			<a  href="<s:Base/>/profile/forwardBasic">我的资料</a>
+			<div id="nav_child_1401"  class="nav_second_child">
+				<ul>
+					<li id="nav_second_1401" class="nav_second_level">
+						<a   href="<s:Base/>/profile/forwardBasic">基本资料</a>
+					</li>
+				</ul>
+				<ul>
+					<li id="nav_second_1402" class="nav_second_level">
+						<a   href="<s:Base/>/profile/forwardCompany">组织信息</a>
+					</li>
+				</ul>
+				<ul>
+					<li id="nav_second_1403" class="nav_second_level">
+						<a   href="<s:Base/>/profile/forwardHome">个人资料</a>
+					</li>
+				</ul>
+				<ul>
+					<li id="nav_second_1404" class="nav_second_level">
+						<a   href="<s:Base/>/profile/forwardExtra">扩展信息</a>
+					</li>
+				</ul>
+			</div>
+		</li>
+		<li  id="nav_primay_15"  class="nav_primay_level primaryleft"  xpath="">
+			<a   href="<s:Base/>/logs/loginHistoryList">日志审计</a>
+			<div id="nav_child_1501"  class="nav_second_child">
+				<ul>
+					<li id="nav_second_1501" class="nav_second_level">
+						<a   href="<s:Base/>/logs/loginHistoryList">登录日志</a>
+					</li>
+				</ul>
+				<ul>
+					<li id="nav_second_1502" class="nav_second_level">
+						<a   href="<s:Base/>/logs/loginAppHistoryList">访问日志</a>
+					</li>
+				</ul>
+				<ul>
+					<li id="nav_second_1503" class="nav_second_level">
+						<a   href="<s:Base/>/logs/list">操作日志</a>
+					</li>
+				</ul>
+			</div>
+		</li>
 <%
 	String menuId=request.getParameter("mnid")==null?"":request.getParameter("mnid").toString();
-String selectMenuId=menuId;
-if(WebContext.getNavigations()!=null){
-	List<Navigations> listNavs=WebContext.getNavigations();//100000000000 
-	StringBuffer navsStr=new StringBuffer("");
-	int navCount=0;
-	for (Navigations nav : listNavs){
-		if(nav.getpId().equals("110000000000")){
-			//bulid child menu
-			StringBuffer childNavStr=new StringBuffer("");
-			for (Navigations childNav : listNavs){
-				if(nav.getId().equals(childNav.getpId())){
-					if(menuId.equals(childNav.getId())){selectMenuId=nav.getId();}
-					String childNavName=WebContext.getI18nValue("navs."+childNav.getId());
-					if(childNavName == null){childNavName	=	childNav.getName();}
-					childNavStr.append("\n\t\t\t<li id='nav_second_").append(childNav.getId()).append("' ").append(" class='nav_second_level' ").append(" xpath='").append(childNav.getxPath()).append("'>");;
-					childNavStr.append("<a href='").append(request.getContextPath()).append("/").append(childNav.getUrl()).append("?mnid=").append(childNav.getId()).append("'>");
-					childNavStr.append(childNavName);
-					childNavStr.append("</a>");
-					childNavStr.append("</li>");	
-				}
-			}
-			//childNavStr.append("</ul>");
-			//end of child menu
-			//bulid primary menu
-			String navName=WebContext.getI18nValue("navs."+nav.getId());
-			if(navName == null){navName	=	nav.getName();}
-			navsStr.append("<li  id='nav_primay_").append(nav.getId());
-			if(navCount ++ ==0){
-				navsStr.append("' class='nav_primay_level primaryleft' ");
-			}else{
-				navsStr.append("' class='nav_primay_level' ");
-			}
-			navsStr.append(" xpath='").append(nav.getxPath()).append("'>");
-			navsStr.append("<a ").append((selectMenuId.equals(nav.getId())?"class='selected'":"")).append(" href='").append(request.getContextPath()).append("/").append(nav.getUrl()).append("?mnid=").append(nav.getId()).append("'>");
-			navsStr.append(navName);
-			navsStr.append("</a>");
-			//end of primary menu
-			//append child menu div
-			navsStr.append("\n\t<div id='nav_child_").append(nav.getId()).append("' class='nav_second_child'>");
-			navsStr.append("\n\t\t<ul>");
-			if(childNavStr.length()>10){
-				navsStr.append(childNavStr);
-			}
-			navsStr.append("</ul>");
-			navsStr.append("</div>\n");
-			
-			navsStr.append("</li>\n");	
-		}
-	}
-	out.println(navsStr);	
-}
 %>
-
 	</ul>
 </div>
 </div>
+<div id="nav_second"  style="clear: left"><div class='menusecond'></div><br style='clear: left' /></div>
 <script>
 	$(function(){
 		function displaySecondNavs(menuId){
-			$("#nav_second").html("<div class='menusecond'>"+$("#"+menuId+" .nav_second_child").html()+"</div><br style='clear: left' />");
+			if($("#"+menuId+" .nav_second_child").html()){
+				$("#nav_second").html("<div class='menusecond'>"+$("#"+menuId+" .nav_second_child").html()+"</div><br style='clear: left' />");
+			}else{
+				$("#nav_second").html("");
+			}
 		}
-		$("#nav_primay_content ul li").mouseover(function(){
+		$(".menuprimary ul li").mouseover(function(){
 			displaySecondNavs(this.id);
 		});
-		<%if(menuId.length()>5){%>displaySecondNavs("nav_primay_<%=selectMenuId%>");<%}%>
+		
 	});
 </script>
