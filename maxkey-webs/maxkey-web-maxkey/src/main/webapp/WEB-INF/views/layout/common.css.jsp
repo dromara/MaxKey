@@ -1,5 +1,5 @@
 <%@ page   language="java"     import="java.util.*"   pageEncoding="UTF-8"%>
-<%@ taglib prefix="s"  uri="http://www.connsec.com/tags" %>
+<%@ taglib prefix="s"  uri="http://sso.maxkey.org/tags" %>
 	<%-- common css begin --%>
 	<%-- if browser is not msie 6.0,follow styles over ie 6.0 style --%>
 	<link type="text/css" rel="stylesheet"  href="<s:Base/>/css/base.css"/>

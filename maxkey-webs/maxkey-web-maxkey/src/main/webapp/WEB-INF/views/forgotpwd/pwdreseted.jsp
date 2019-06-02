@@ -2,7 +2,7 @@
 <%@ taglib prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib prefix="fn"     	 	uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring"  	uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="s" 			uri="http://www.connsec.com/tags" %> 
+<%@ taglib prefix="s" 			uri="http://sso.maxkey.org/tags" %> 
 
 <div class="container">	
   <c:if test="${0 == pwdreseted}">

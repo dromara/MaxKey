@@ -4,7 +4,7 @@
 <%@ page 	import="org.maxkey.authz.oauth2.common.exceptions.UnapprovedClientAuthenticationException" %>
 <%@ page    import="org.springframework.security.web.WebAttributes" %>
 <%@ taglib 	prefix="c" 		uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib  prefix="s"  uri="http://www.connsec.com/tags" %>
+<%@ taglib  prefix="s"  uri="http://sso.maxkey.org/tags" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <jsp:include page="../layout/header.jsp"></jsp:include>

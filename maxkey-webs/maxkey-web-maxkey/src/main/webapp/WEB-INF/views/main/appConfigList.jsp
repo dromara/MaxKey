@@ -1,11 +1,11 @@
 <%@ page   language="java"  import="java.util.*"   pageEncoding="UTF-8"%>
 <%@ page   import="org.maxkey.domain.*"%> 
 <%@ page   import="org.maxkey.web.*"%>
-<%@ taglib prefix="spring"  uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="fmt"     uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib 	prefix="s" uri="http://www.connsec.com/tags" %>
-<%@ taglib prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
-<%@ taglib prefix="fn"     	 	uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib 	prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib 	prefix="fmt"    uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib 	prefix="s" 		uri="http://sso.maxkey.org/tags" %>
+<%@ taglib 	prefix="c"      uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib 	prefix="fn"     uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript">	
 $(function () {
 	$(".configUser").on("click",function(){

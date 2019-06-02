@@ -8,7 +8,7 @@
 <%@ taglib prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib prefix="fn"     	 	uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring"  	uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="s" 			uri="http://www.connsec.com/tags" %> 
+<%@ taglib prefix="s" 			uri="http://sso.maxkey.org/tags" %> 
 <%if(WebContext.getUserInfo() != null) {%>
 	<authz:authorize access="hasRole('ROLE_USER')"><script type="text/javascript"> 
 			window.top.location.href="<s:Base />/forwardindex";

@@ -1,5 +1,5 @@
 <%@ page    language="java"     import="java.util.*"   pageEncoding="UTF-8"%>
-<%@ taglib  prefix="s"  uri="http://www.connsec.com/tags" %>
+<%@ taglib  prefix="s"  uri="http://sso.maxkey.org/tags" %>
 	<%-- javascript js begin  --%>
 	<%-- jquery base --%>
 	<script type="text/javascript" src="<s:Base/>/jquery/jquery-1.11.2.min.js"></script>

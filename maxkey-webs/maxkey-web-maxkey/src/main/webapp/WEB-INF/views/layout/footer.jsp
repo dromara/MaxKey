@@ -1,5 +1,5 @@
 <%@ page   language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="s" 	uri="http://www.connsec.com/tags" %> 
+<%@ taglib prefix="s" 	uri="http://sso.maxkey.org/tags" %> 
 
      <%-- footer --%>
  	<div class="footer" >

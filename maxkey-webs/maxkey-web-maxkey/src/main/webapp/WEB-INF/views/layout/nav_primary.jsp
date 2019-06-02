@@ -2,7 +2,7 @@
 <%@ page   language="java"     import="org.maxkey.web.*" %>
 <%@ page   language="java"     import="org.maxkey.domain.*"%>
 <%@ page   language="java"     import="org.maxkey.domain.userinfo.*"%>
-<%@ taglib prefix="s"  uri="http://www.connsec.com/tags" %>
+<%@ taglib prefix="s"  uri="http://sso.maxkey.org/tags" %>
 <div id="nav_primay_content" class="menuprimary">
 <div class="menucontainer">
 	<ul >

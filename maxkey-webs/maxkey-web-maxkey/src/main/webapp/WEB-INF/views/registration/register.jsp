@@ -1,6 +1,6 @@
-<%@ page 	language="java"   import="java.util.*" 	pageEncoding="UTF-8"%>
-<%@ taglib 	prefix="s" uri="http://www.connsec.com/tags" %>
-<%@ taglib 	prefix="fmt"      uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page 	language="java"   	import="java.util.*" 	pageEncoding="UTF-8"%>
+<%@ taglib 	prefix="s" 			uri="http://sso.maxkey.org/tags" %>
+<%@ taglib 	prefix="fmt"      	uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
 String path = request.getContextPath();

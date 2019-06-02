@@ -178,8 +178,8 @@
   	<!--used jsp Tag -->
    <jsp-config>
       <taglib>
-         <taglib-uri>http://www.connsec.com/tags</taglib-uri>
-         <taglib-location>/WEB-INF/tags/connsecTag.tld</taglib-location>
+         <taglib-uri>http://sso.maxkey.org/tags</taglib-uri>
+         <taglib-location>/WEB-INF/tags/maxkeyTag.tld</taglib-location>
       </taglib>
       <taglib>
          <taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>
