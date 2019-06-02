@@ -11,8 +11,8 @@ import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.token.endpoint.adapter.TokenBasedDefaultAdapter;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.constants.BOOLEAN;
-import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.dao.service.TokenBasedDetailsService;
+import org.maxkey.domain.apps.Applications;
 import org.maxkey.domain.apps.TokenBasedDetails;
 import org.maxkey.util.Instance;
 import org.maxkey.web.WebContext;
@@ -47,21 +47,14 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			@PathVariable("id") String id){
 		ModelAndView modelAndView=new ModelAndView();
 		
-		TokenBasedDetails tokenBasedDetails=null;
-		if(id.equals("manage")){
-			tokenBasedDetails=new TokenBasedDetails();
-			tokenBasedDetails.setId("manage");
-			tokenBasedDetails.setName("Manage App");
-			tokenBasedDetails.setProtocol(PROTOCOLS.TOKENBASED);
-			tokenBasedDetails.setIsAdapter(1);
-			tokenBasedDetails.setAdapter("com.connsec.web.authorize.endpoint.adapter.TokenBasedJWTAdapter");
-			tokenBasedDetails.setRedirectUri(applicationConfig.getManageUri());
-			tokenBasedDetails.setExpires("2");
-		}else{
-			tokenBasedDetails=tokenBasedDetailsService.get(id);
-		}
 		
+		TokenBasedDetails tokenBasedDetails=null;
+		tokenBasedDetails=tokenBasedDetailsService.get(id);
 		_logger.debug(""+tokenBasedDetails);
+		
+		Applications  application= getApplication(id);
+		tokenBasedDetails.setAdapter(application.getAdapter());
+		tokenBasedDetails.setIsAdapter(application.getIsAdapter());
 		
 		AbstractAuthorizeAdapter adapter;
 		if(BOOLEAN.isTrue(tokenBasedDetails.getIsAdapter())){

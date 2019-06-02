@@ -27,10 +27,8 @@
 	 
     <loggers>  
     	<Logger name="org.springframework" level="INFO"></Logger>
-    	<Logger name="org.springframework.web.servlet.tags" level="TRACE"></Logger>
     	<Logger name="org.apache.logging" level="INFO"></Logger>
     	<Logger name="org.maxkey" level="DEBUG"></Logger>
-    	<Logger name="org.apache.mybatis.jpa" level="DEBUG"></Logger>
     	
     	
         <root level="INFO">  

@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -62,12 +61,12 @@ public class AssertionEndpoint {
 		ArrayList<GrantedAuthority> grantedAuthority = new ArrayList<GrantedAuthority>();
 		grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-		UsernamePasswordAuthenticationToken authToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+		UsernamePasswordAuthenticationToken authToken = (UsernamePasswordAuthenticationToken)WebContext.getAuthentication();
 
 		for(GrantedAuthority anthGrantedAuthority: authToken.getAuthorities()){
 			grantedAuthority.add(anthGrantedAuthority);
 		}
-		
+		//TODO:
 		String userName =authToken.getPrincipal().toString();
 		DateTime authnInstant = new DateTime(request.getSession().getCreationTime());
 

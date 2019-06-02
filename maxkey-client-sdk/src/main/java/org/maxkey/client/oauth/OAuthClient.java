@@ -17,12 +17,13 @@ import org.maxkey.client.utils.Preconditions;
 public class OAuthClient {
 	
 	private   static  Log log  =  LogFactory.getLog(OAuthClient. class );
+	private static final String DEFAULT_WEB_URL = "http://sso.maxkey.org/maxkey";
 	
-	public static String OAUTH_V20_USERINFO_URI="http://login.connsec.com/maxkey/api/oauth/v20/me";
+	public static String OAUTH_V20_USERINFO_URI=DEFAULT_WEB_URL+"/api/oauth/v20/me";
 	
-	public static String OAUTH_V10A_USERINFO_URI="http://login.connsec.com/maxkey/api/oauth/v10a/me";
+	public static String OAUTH_V10A_USERINFO_URI=DEFAULT_WEB_URL+"/api/oauth/v10a/me";
 	
-	public static String OPENID_CONNECT_V10A_USERINFO_URI="http://login.connsec.com/maxkey/api/connect/v10/userinfo";
+	public static String OPENID_CONNECT_V10A_USERINFO_URI=DEFAULT_WEB_URL+"/api/connect/v10/userinfo";
 	
 	//action method
 	private HttpVerb method = HttpVerb.GET;

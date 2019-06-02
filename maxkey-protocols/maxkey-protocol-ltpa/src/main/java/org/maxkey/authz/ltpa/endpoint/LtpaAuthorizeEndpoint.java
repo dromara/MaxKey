@@ -83,7 +83,10 @@ public class LtpaAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		cookie.setMaxAge(maxAge);
 		
 		cookie.setPath("/");
-		cookie.setDomain("."+applicationConfig.getSubDomainName());
+		//
+		//cookie.setDomain("."+applicationConfig.getSubDomainName());
+		//tomcat 8.5
+		cookie.setDomain(applicationConfig.getSubDomainName());
 		
 		_logger.debug("Sub Domain Name : "+"."+applicationConfig.getSubDomainName());
 		response.addCookie(cookie);

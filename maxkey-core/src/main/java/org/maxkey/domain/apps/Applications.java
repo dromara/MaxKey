@@ -3,12 +3,18 @@ package org.maxkey.domain.apps;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 import org.maxkey.constants.BOOLEAN;
 import org.maxkey.domain.Accounts;
 import org.springframework.web.multipart.MultipartFile;
 
-
+@Table(name = "APPLICATIONS")  
 public class Applications extends JpaBaseDomain implements Serializable{
 	
 	/**
@@ -30,7 +36,9 @@ public class Applications extends JpaBaseDomain implements Serializable{
 		public static final int INTRANET=3;
 	}
 	
-	
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
 	protected String id;
 	/**
 	 * 

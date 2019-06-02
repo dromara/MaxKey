@@ -35,6 +35,7 @@ import org.maxkey.authz.oauth2.provider.TokenRequest;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestValidator;
 import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
 import org.maxkey.util.StringGenerator;
+import org.maxkey.web.WebContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -81,18 +82,21 @@ public class TokenEndpoint extends AbstractEndpoint {
 	 * @throws HttpRequestMethodNotSupportedException
 	 */
 	@RequestMapping(value = "/oauth/v20/token", method=RequestMethod.GET)
-	public ResponseEntity<OAuth2AccessToken> getAccessToken(Principal principal, @RequestParam
+	public ResponseEntity<OAuth2AccessToken> getAccessToken(@RequestParam
 	Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
 		if (!allowedRequestMethods.contains(HttpMethod.GET)) {
 			throw new HttpRequestMethodNotSupportedException("GET");
 		}
-		return postAccessToken(principal, parameters);
+		return postAccessToken(parameters);
 	}
 	
+	
 	@RequestMapping(value = "/oauth/v20/token", method=RequestMethod.POST)
-	public ResponseEntity<OAuth2AccessToken> postAccessToken(Principal principal, @RequestParam
+	public ResponseEntity<OAuth2AccessToken> postAccessToken(@RequestParam
 	Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
-
+		// TokenEndpointAuthenticationFilter
+		Principal principal=(Principal)WebContext.getAuthentication().getPrincipal();
+		
 		if (!(principal instanceof Authentication)) {
 			throw new InsufficientAuthenticationException(
 					"There is no client authentication. Try adding an appropriate authentication filter.");
@@ -161,7 +165,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 		if (!client.isAuthenticated()) {
 			throw new InsufficientAuthenticationException("The client is not authenticated.");
 		}
-		String clientId = client.getName();
+		String clientId = client.getPrincipal().toString();
 		if (client instanceof OAuth2Authentication) {
 			// Might be a client and user combined authentication
 			clientId = ((OAuth2Authentication) client).getOAuth2Request().getClientId();

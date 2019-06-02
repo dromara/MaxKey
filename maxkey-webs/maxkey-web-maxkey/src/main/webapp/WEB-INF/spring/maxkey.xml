@@ -76,7 +76,7 @@
 	    <property name="emailConfig" ref="emailConfig"/> 
 	    <property name="loginConfig" ref="loginConfig"/>
 	    <property name="domainName" value="${config.domain.name}"/>
-	    <property name="serverPrefix" value="${config.server.prefix}"/>
+	    <property name="serverPrefix" value="${config.server.maxkey.uri}"/>
 	    <property name="manageUri" value="${config.manage.uri}"/> 
 	    <property name="whiteList" value="${config.ipaddress.whitelist}"/> 
   		<property name="anonymousAccessUrls">
@@ -86,19 +86,6 @@
 		</property>
 	</bean> 	
 	
- 	<!-- Datastore configuration  -->
- 	<import resource="maxkey-persistence.xml"/>
-
- 	<import resource="maxkey-support.xml"/>
- 	
- 	<import resource="maxkey-protocol.xml"/>
- 	
- 	<!-- Scheduler task  -->
- 	<import resource="maxkey-task.xml"/>
-
-	<!-- Basic Authn  -->
- 	<import resource="maxkey-security.xml"/>
- 	
 	<!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
  	 @Controller and @Service. Make sure to set the correct base-package-->
  
@@ -106,109 +93,24 @@
  	<context:component-scan base-package="org.maxkey.domain" />
  	<context:component-scan base-package="org.maxkey.domain.apps" />
  	<context:component-scan base-package="org.maxkey.domain.userinfo" />
- 	
-	<context:component-scan base-package="org.maxkey.web.authorize.endpoint" />
-	<context:component-scan base-package="org.maxkey.web.endpoint" />
 	<!-- REST API interface -->
 	<context:component-scan base-package="org.maxkey.api.v1.contorller" />
+	
 	<!-- Business  Contorller -->
+	<context:component-scan base-package="org.maxkey.web.endpoint" />
 	<context:component-scan base-package="org.maxkey.web.contorller" />
-
-	<!-- Static resources -->
-	<!-- js images css -->
-	<mvc:resources mapping="/jquery/**" location="/jquery/" />
-	<mvc:resources mapping="/images/**" location="/images/" />
-	<mvc:resources mapping="/css/**" location="/css/" />
-	<mvc:resources mapping="/js/**" location="/js/" />
 	
-	<!-- LocaleResolver -->
-	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-		<property name="cookieDomain" value="#{applicationConfig.subDomainName}"/>
-		<property name="cookieName" value="single_sign_on_lang"/>
-		<property name="cookieMaxAge" value="604800" />
-		<!-- auto select language by brower remove -->
-		<!--<property name="defaultLocale" value="en" />  -->
-	</bean>
-	
-	<!-- 消息处理，可以直接使用properties的key值，返回的是对应的value值 -->
-    <bean id="messageSource"
-          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basenames">
-            <list>
-            	<value>classpath:messages/message</value>
-            </list>
-        </property>
-        <!-- 必须设置成false，否则hibernate原有的校验信息无法返回value值-->
-        <property name="useCodeAsDefaultMessage" value="false"/>
-    </bean>
-
-	<!-- Locale Change Interceptor and Resolver definition -->
-	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-		<property name="paramName" value="language" />
-	</bean>
-	
-	<!-- XML bean Marshaller define  -->
-	<bean id="Jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
-		<property name="classesToBeBound">
-			<list>
-				<value>org.maxkey.domain.xml.UserInfoXML</value>
-			</list>
-		</property>
-	</bean>
-	
-	<!-- MarshallingHttpMessageConverter -->
-	<bean id="marshallingHttpMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
-		<property name="marshaller" ref="Jaxb2Marshaller" />
-		<property name="unmarshaller" ref="Jaxb2Marshaller" />
-		<property name="supportedMediaTypes">
-			<list>
-				<value>application/xml;charset=UTF-8</value>
-			</list>
-		</property>
-	</bean>
-	
-	<!--MappingJacksonHttpMessageConverter  -->
-	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-		<property name="supportedMediaTypes">
-			<list>
-				<value>application/json;charset=UTF-8</value>
-			</list>
-		</property>
-	</bean>
-
-	<!-- REST Client -->
-	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-		<property name="messageConverters">
-			<list>
-				<ref bean="marshallingHttpMessageConverter" />
-				<ref bean="mappingJacksonHttpMessageConverter" />
-			</list>
-		</property>
-	</bean>
-	
-	<!-- AnnotationMethodHandlerAdapter -->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-		<property name="messageConverters">
-			<util:list id="beanList">
-				<ref bean="marshallingHttpMessageConverter" />
-				<ref bean="mappingJacksonHttpMessageConverter" />
-			</util:list>
-		</property>
-	</bean>
-	
-	<bean id="handlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
-		<property name="interceptors">
-			<list>
-				<ref bean="localeChangeInterceptor" />
-			</list>
-		</property>
-	</bean>
-
-	<!-- View Resolver -->
-	<bean id="viewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/views/" p:suffix=".jsp" p:order="2" />
-	
-	<!-- upload file support -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-    	<property name="maxUploadSize" value="4194304" />  
-    </bean> 
+ 	<!-- persistence configuration  -->
+ 	<import resource="maxkey-persistence.xml"/>
+	<!-- authn support -->
+ 	<import resource="maxkey-support.xml"/>
+ 	<!-- single sign on protocol -->
+ 	<import resource="maxkey-protocol.xml"/>
+ 	<!-- Scheduler task  -->
+ 	<import resource="maxkey-task.xml"/>
+	<!-- Basic Authn  for user login -->
+ 	<import resource="maxkey-security.xml"/>
+ 	<!-- web mvc  configuration -->
+ 	<import resource="maxkey-web.xml"/>
+ 	
 </beans>

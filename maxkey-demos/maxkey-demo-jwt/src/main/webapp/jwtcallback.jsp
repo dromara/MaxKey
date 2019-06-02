@@ -14,12 +14,11 @@
 <%@ page language="java" import="com.google.gson.*" %>
 
 
-
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 String token=request.getParameter("jwt");
-System.out.println(token);
+System.out.println("jwt "+token);
 SignedJWT signedJWT=null;
 
 //JWKSetKeyStore jwkSetKeyStore=new JWKSetKeyStore();
@@ -27,15 +26,17 @@ SignedJWT signedJWT=null;
 File jwksFile=new File(PathUtils.getInstance().getClassPath()+"jwk.jwks");
 JWKSet jwkSet=JWKSet.load(jwksFile);
 
-RSASSAVerifier rsaSSAVerifier = new RSASSAVerifier(((RSAKey) jwkSet.getKeyByKeyId("connsec_rsa")).toRSAPublicKey());
+RSASSAVerifier rsaSSAVerifier = new RSASSAVerifier(((RSAKey) jwkSet.getKeyByKeyId("maxkey_rsa")).toRSAPublicKey());
 try {
 
     signedJWT = SignedJWT.parse(token);
 } catch (java.text.ParseException e) {
     // Invalid signed JWT encoding
 }
-;
-ReadOnlyJWTClaimsSet jwtClaims =signedJWT.getJWTClaimsSet();
+
+System.out.println("signedJWT "+signedJWT);
+
+JWTClaimsSet jwtClaims =signedJWT.getJWTClaimsSet();
  
 %>
 

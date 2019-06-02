@@ -15,12 +15,13 @@
 	        http://www.springframework.org/schema/mvc 
 			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
  
-		<!-- 
+		<context:component-scan base-package="org.maxkey.authz.cas.endpoint" />
+			
 		<bean id="casTicketServices" class="org.maxkey.authz.cas.endpoint.ticket.service.InMemoryTicketServices" />
-		 -->
-		 
+		
+		 <!-- 
 		<bean id="casTicketServices" class="org.maxkey.authz.cas.endpoint.ticket.service.RedisTicketServices" >
 			<property name="connectionFactory" ref="redisConnectionFactory"/>
 		</bean>
-		
+		 -->
 </beans>

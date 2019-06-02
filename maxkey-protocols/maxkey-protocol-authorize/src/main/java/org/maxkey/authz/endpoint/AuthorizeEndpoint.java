@@ -6,9 +6,7 @@ package org.maxkey.authz.endpoint;
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
-import org.maxkey.client.oauth.builder.ServiceBuilder;
-import org.maxkey.client.oauth.builder.api.ConnsecApi20;
-import org.maxkey.client.oauth.oauth.OAuthService;
+import org.maxkey.client.utils.HttpEncoder;
 import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.dao.service.CasDetailsService;
 import org.maxkey.domain.apps.Applications;
@@ -28,7 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
-
+	private static final String OAUTH_V20_AUTHORIZATION_URL = "%s/oauth/v20/authorize?client_id=%s&response_type=code&redirect_uri=%s&approval_prompt=auto";
+	
 	@Autowired
 	@Qualifier("oauth20JdbcClientDetailsService")
 	private ClientDetailsService clientDetailsService;
@@ -44,65 +43,38 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 		
 		ModelAndView modelAndView=null;
 		
-		Applications  application=getApp(id);
+		Applications  application=getApplication(id);
 		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, id);
 		
 		if(application.getProtocol().equalsIgnoreCase(PROTOCOLS.EXTEND_API)){
-			
 			modelAndView=WebContext.forward("/authz/api/"+id);
-			
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.FORMBASED)){
-			
 			 modelAndView=WebContext.forward("/authz/formbased/"+id);
-			 
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.OAUTH20)){
 			ClientDetails  clientDetails =clientDetailsService.loadClientByClientId(application.getId());
-			OAuthService service = new ServiceBuilder()
-	        .provider(ConnsecApi20.class)
-	        .apiKey(application.getId())
-	        .apiSecret(application.getSecret())
-	        .callback(clientDetails.getRegisteredRedirectUri().toArray()[0].toString())
-	        .build();
 			_logger.debug(""+clientDetails);
+			String authorizationUrl = String.format(OAUTH_V20_AUTHORIZATION_URL, 
+							applicationConfig.getServerPrefix(),
+							clientDetails.getClientId(), 
+							HttpEncoder.encode(clientDetails.getRegisteredRedirectUri().toArray()[0].toString())
+					);
 			
-			String authorizationUrl = service.getAuthorizationUrl(null);
+			_logger.debug("authorizationUrl "+authorizationUrl);
+			
 			modelAndView=WebContext.redirect(authorizationUrl);
-			 
-		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.OAUTH10A)){
-			/*
-			 * Application must get request_token for authn
-			 */
-			modelAndView=WebContext.forward("/authz/oauth10a/"+id);
-			
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.OPEN_ID_CONNECT)){
-			
 			// modelAndView=new ModelAndView("openid connect");
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.SAML20)){
-			
 			 modelAndView=WebContext.forward("/authz/saml20/idpinit/"+application.getId());
-			 
-		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.SAML11)){
-			
-			modelAndView=WebContext.forward("/authz/saml11/idpinit/"+application.getId());
-			 
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.TOKENBASED)){
-			
 			modelAndView=WebContext.forward("/authorize/tokenbased/"+id);
-			
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.LTPA)){
-			
 			modelAndView=WebContext.forward("/authz/ltpa/"+id);
-			
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.CAS)){
-			
 			modelAndView=WebContext.forward("/authz/cas/"+id);
-			
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.DESKTOP)){
-			
 			modelAndView=WebContext.forward("/authz/desktop/"+id);
-			
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.BASIC)){
-			
 			modelAndView=WebContext.redirect(application.getLoginUrl());
 		}
 		
@@ -115,7 +87,7 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 	public ModelAndView authorizeOAuth10a(
 			@PathVariable("id") String id){
 		
-		 String redirec_uri=getApp(id).getLoginUrl();
+		 String redirec_uri=getApplication(id).getLoginUrl();
 		return WebContext.redirect(redirec_uri);
 		
 	}

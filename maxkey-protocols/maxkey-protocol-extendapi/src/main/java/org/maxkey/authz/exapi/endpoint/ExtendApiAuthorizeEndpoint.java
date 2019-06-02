@@ -30,7 +30,7 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	@RequestMapping("/authz/api/{id}")
 	public ModelAndView authorize(HttpServletRequest request,@PathVariable("id") String id){
 		
-		Applications apps=getApp(id);
+		Applications apps=getApplication(id);
 		_logger.debug(""+apps);
 		
 		if(BOOLEAN.isTrue(apps.getIsAdapter())){
@@ -53,7 +53,7 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 					modelAndView);
 			return modelAndView;
 		}else{
-			String redirec_uri=getApp(id).getLoginUrl();
+			String redirec_uri=getApplication(id).getLoginUrl();
 			return WebContext.redirect(redirec_uri);
 		}
 		

@@ -74,7 +74,7 @@ public class AppListController{
 		UserApplications userApplications=new UserApplications();
 		userApplications.setUsername(WebContext.getUserInfo().getUsername());
 		
-		List<UserApplications> appList=myAppsListService.query(userApplications);
+		List<UserApplications> appList=myAppsListService.queryMyApps(userApplications);
 		for (UserApplications app : appList){
 			WebContext.setAttribute(app.getId(), app.getIcon());
 		}

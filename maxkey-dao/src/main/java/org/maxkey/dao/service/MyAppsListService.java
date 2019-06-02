@@ -1,5 +1,7 @@
 package org.maxkey.dao.service;
 
+import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.dao.persistence.MyAppsListMapper;
 import org.maxkey.domain.apps.UserApplications;
@@ -12,6 +14,9 @@ public class MyAppsListService  extends JpaBaseService<UserApplications>{
 		super(MyAppsListMapper.class);
 	}
 
+	public List<UserApplications> queryMyApps(UserApplications userApplications){
+		return getMapper().queryMyApps(userApplications);
+	}
 	/* (non-Javadoc)
 	 * @see com.connsec.db.service.BaseService#getMapper()
 	 */

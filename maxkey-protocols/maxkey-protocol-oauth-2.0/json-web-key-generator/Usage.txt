@@ -1,0 +1,18 @@
+Usage
+Invoking the utility without arguments will print its usage message
+
+usage java -jar json-web-key-generator.jar -t keyType [options]
+ -a arg   Algorithm (optional)
+ -c arg   Key Curve, required for EC key type. Must be one of P-256,
+            P-384, P-521
+ -i arg   Key ID (optional)
+ -p         Display public key separately
+ -s arg   Key Size in bits, required for RSA and OCT key types. Must be
+            an integer divisible by 8
+ -S         Wrap the generated key in a KeySet
+ -t arg   Key Type, one of RSA, oct, EC
+ -u arg   Usage, one of enc, sig (optional)
+Example
+To generate a 2048-bit RSA public  private key pair, with a specified key ID and use, and wrapped in a standard JWK set
+
+java -jar json-web-key-generator.jar -t RSA -s 2048 -i 1 -u sig -S

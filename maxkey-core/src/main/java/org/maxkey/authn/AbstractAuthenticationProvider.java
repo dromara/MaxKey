@@ -80,12 +80,23 @@ public abstract class AbstractAuthenticationProvider{
         }
         
         // user authenticated
-        _logger.debug("'{0}' authenticated successfully by {}.", authentication.getPrincipal(), getProviderName());
+        _logger.debug("'{}' authenticated successfully by {}.", authentication.getPrincipal(), getProviderName());
         
         UserInfo userInfo=WebContext.getUserInfo();
+        Object password_set_type=WebContext.getSession().getAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
+        //登录完成后切换SESSION
+        _logger.debug("Login  Session {}.", WebContext.getSession().getId());
+        WebContext.getSession().invalidate(); 
         WebContext.setAttribute(WebConstants.CURRENT_USER_SESSION_ID, WebContext.getSession().getId());
+        _logger.debug("Login Success Session {}.", WebContext.getSession().getId());
+        
         authenticationRealm.insertLoginHistory(userInfo,LOGINTYPE.LOCAL,"","xe00000004","success");
         
+        //认证设置
+	    WebContext.setAuthentication(authentication);
+	    WebContext.setUserInfo(userInfo);
+	    WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,password_set_type);
+	    
         // create new authentication response containing the user and it's authorities
         UsernamePasswordAuthenticationToken simpleUserAuthentication = new UsernamePasswordAuthenticationToken(userInfo.getUsername(), authentication.getCredentials(), authentication.getAuthorities());
         return simpleUserAuthentication;

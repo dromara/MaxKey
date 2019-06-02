@@ -42,6 +42,7 @@ import org.maxkey.authz.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.implicit.ImplicitTokenRequest;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestValidator;
 import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.web.WebContext;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -82,7 +83,7 @@ import org.springframework.web.util.UriTemplate;
 @SessionAttributes("authorizationRequest")
 public class AuthorizationEndpoint extends AbstractEndpoint {
 
-	private AuthorizationCodeServices authorizationCodeServices = new InMemoryAuthorizationCodeServices();
+	
 
 	private RedirectResolver redirectResolver = new DefaultRedirectResolver();
 
@@ -92,7 +93,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 	private OAuth2RequestValidator oauth2RequestValidator = new DefaultOAuth2RequestValidator();
 
-	private String userApprovalPage = "forward:/oauth/v20/confirm_access";
+	private String userApprovalPage = "forward:/oauth/v20/approval_confirm";
 
 	private String errorPage = "forward:/oauth/error";
 	
@@ -108,8 +109,8 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 	@RequestMapping(value = "/oauth/v20/authorize", method = RequestMethod.GET)
 	public ModelAndView authorize(Map<String, Object> model, @RequestParam Map<String, String> parameters,
-			SessionStatus sessionStatus, Principal principal) {
-
+			SessionStatus sessionStatus) {
+		 Principal principal=(Principal)WebContext.getAuthentication().getPrincipal();
 		// Pull out the authorization request first, using the OAuth2RequestFactory. All further logic should
 		// query off of the authorization request instead of referring back to the parameters map. The contents of the
 		// parameters map will be stored without change in the AuthorizationRequest object once it is created.
@@ -187,8 +188,8 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 	@RequestMapping(value = "/oauth/v20/authorize", method = RequestMethod.POST, params = OAuth2Utils.USER_OAUTH_APPROVAL)
 	public View approveOrDeny(@RequestParam Map<String, String> approvalParameters, Map<String, ?> model,
-			SessionStatus sessionStatus, Principal principal) {
-
+			SessionStatus sessionStatus) {
+		Principal principal=(Principal)WebContext.getAuthentication().getPrincipal();
 		if (!(principal instanceof Authentication)) {
 			sessionStatus.setComplete();
 			throw new InsufficientAuthenticationException(

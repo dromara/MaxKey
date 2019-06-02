@@ -53,4 +53,6 @@ public class WebConstants {
 	
 	public static final String CURRENT_SINGLESIGNON_URI				=	"current_singlesignon_uri";
 	
+	public static final String AUTHENTICATION						=	"current_authentication";
+	
 }

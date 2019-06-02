@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 OAuthService service = (OAuthService)request.getSession().getAttribute("oauthv20service");
 
 if(service==null){
-	String callback="http://oauth.demo.connsec.com:8080/oauthdemo/oidc10callback.jsp";
+	String callback="http://oauthdemo.maxkey.org:8080/oauthdemo/oidc10callback.jsp";
 	service = new ServiceBuilder()
      .provider(ConnsecApi20.class)
      .apiKey("ae20330a-ef0b-4dad-9f10-d5e3485ca2ad")

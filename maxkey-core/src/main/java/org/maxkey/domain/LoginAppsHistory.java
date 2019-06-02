@@ -1,21 +1,39 @@
 package org.maxkey.domain;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 
 /**
  * @author Crystal.Sea
  *
  */
+
+@Table(name = "LOGIN_APPS_HISTORY")  
 public class LoginAppsHistory extends JpaBaseDomain {
 	
 	private static final long serialVersionUID = 5085201575292304749L;
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
 	String id;
+	@Column
 	private String sessionId;
+	@Column
 	private String appId;
+	@Column
 	private String appName;
+	@Column
 	private String uid;
+	@Column
 	private String username;
+	@Column
 	private String displayName;
+	@Column
 	private String loginTime;
 	
 	

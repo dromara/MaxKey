@@ -3,7 +3,7 @@
  */
 package org.maxkey.authz.endpoint;
 
-import org.maxkey.constants.PROTOCOLS;
+import org.maxkey.config.ApplicationConfig;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.dao.service.AccountsService;
 import org.maxkey.dao.service.ApplicationsService;
@@ -28,38 +28,24 @@ public class AuthorizeBaseEndpoint {
 	@Qualifier("applicationsService")
 	protected ApplicationsService applicationsService;
 	
+	@Autowired 
+  	@Qualifier("applicationConfig")
+  	protected ApplicationConfig applicationConfig;
+	
 	@Autowired
-	AccountsService appAccountsService;
+	AccountsService accountsService;
 	
 	
-	protected Applications getApp(String id){
-		Applications  application=null;
-		if(id.equals("manage")){
-			application =new Applications();
-			application.setId("manage");
-			application.setName("Manage App");
-			application.setProtocol(PROTOCOLS.TOKENBASED);
-			application.setIsAdapter(1);
-			application.setAdapter("com.connsec.web.authorize.endpoint.adapter.TokenBasedJWTAdapter");
-		}else{
-			application=applicationsService.get(id);
+	protected Applications getApplication(String id){
+		Applications  application=(Applications)WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
+		//session中为空或者id不一致重新加载
+		if(application==null||!application.getId().equalsIgnoreCase(id)) {
+			application=applicationsService.get(id);		
 		}
-		
 		if(application	==	null){
 			_logger.error("Applications for id "+id + "  is null");
 		}
 		WebContext.setAttribute(AuthorizeBaseEndpoint.class.getName(), application);
-		return application;
-	}
-	
-	protected Applications getSessionApplication(String id){
-		Object object= WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
-		Applications  application=null;
-		if(object	!=	null){
-			application	=	(Applications)object;
-		}else{
-			application	=	getApp(id);
-		}
 		return application;
 	}
 	
@@ -68,7 +54,7 @@ public class AuthorizeBaseEndpoint {
 		UserInfo userInfo=WebContext.getUserInfo();
 		if(application.getCredential()==Applications.CREDENTIALS.USER_DEFINED){
 			
-			appAccount=appAccountsService.load(new Accounts(userInfo.getId(),application.getId()));
+			appAccount=accountsService.load(new Accounts(userInfo.getId(),application.getId()));
 			if(appAccount!=null){
 				appAccount.setRelatedPassword(ReciprocalUtils.decoder(appAccount.getRelatedPassword()));
 			}

@@ -147,11 +147,15 @@ public final class WebContext {
 	    }
 	    return true;
 	  }
+
+	public static void setAuthentication(Authentication authentication) {
+		setAttribute(WebConstants.AUTHENTICATION,authentication);
+	}
 	
-	public static Authentication getAuthentication(){
-	      UsernamePasswordAuthenticationToken authentication =(UsernamePasswordAuthenticationToken)SecurityContextHolder.getContext().getAuthentication();
-	      return authentication;
-	  }
+	public static Authentication getAuthentication() {
+		Authentication authentication = (Authentication)getAttribute(WebConstants.AUTHENTICATION);
+		return authentication;
+	}
 	  
 	  public static boolean isAuthenticated(){
 	    if (getUserInfo() != null) {

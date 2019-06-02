@@ -3,6 +3,12 @@ package org.maxkey.domain;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.maxkey.util.StringUtils;
@@ -12,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Crystal.Sea
  * 
  */
+@Table(name = "USERINFO")  
 public class UserInfo extends JpaBaseDomain {
 
 	/**
@@ -19,8 +26,11 @@ public class UserInfo extends JpaBaseDomain {
 	 */
 	private static final long serialVersionUID = 6402443942083382236L;
 	//
-
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
 	String id;
+	@Column
 	protected String 	username;
 	protected String 	password;
 	protected String 	decipherable;

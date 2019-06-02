@@ -2,6 +2,12 @@ package org.maxkey.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 import org.hibernate.validator.constraints.Length;
 
@@ -15,22 +21,33 @@ import org.hibernate.validator.constraints.Length;
    STATUS	            char(1)                        null
    constraint PK_ROLES primary key clustered (ID)
  */
-public class Accounts extends JpaBaseDomain implements Serializable{
 
+@Table(name = "ACCOUNTS")  
+public class Accounts extends JpaBaseDomain implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6829592256223630307L;
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
 	private String id;
+	@Column
 	private String uid;
+	@Column
 	private String username;
+	@Column
 	private String displayName;
+	@Column
 	private String appId;
+	@Column
 	private String appName;
 	
 	@Length(max=60)
+	@Column
 	private String relatedUsername;
+	@Column
 	private String relatedPassword;
 	
 	public Accounts(){

@@ -114,9 +114,6 @@
 		<constructor-arg ref="jdbcTemplate"/>
 		<property name="validity" value="${config.login.remeberme.validity}"/>
 	</bean>
-
-	<!-- Authentication Password Encoder Config -->
-	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>   
 	
 	<bean id="timeBasedKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
 		<property name="type" value="totp" />
@@ -147,6 +144,9 @@
 	<bean id="tfaOTPAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOTPAuthn">
 		<constructor-arg ref="jdbcTemplate" /> 
 	</bean>
+	
+	<!-- Authentication Password Encoder Config -->
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>   
 	
 	<bean id="passwordReciprocal" class="org.maxkey.crypto.password.PasswordReciprocal"></bean>
 	

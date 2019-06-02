@@ -1,14 +1,25 @@
 package org.maxkey.domain.apps;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Table(name = "CAS_DETAILS")  
 public class CasDetails extends Applications {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4272290765948322084L;
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
+	private String id;
+	@Column
 	private String service;
-	
+	@Column
 	private String validation;
 	
 	/**

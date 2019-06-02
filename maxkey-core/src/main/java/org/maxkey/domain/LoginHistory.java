@@ -2,6 +2,9 @@ package org.maxkey.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Table;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 
 
@@ -9,32 +12,42 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  * @author Crystal.Sea
  *
  */
+@Table(name = "LOGIN_HISTORY")  
 public class LoginHistory  extends JpaBaseDomain  implements Serializable{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1321470643357719383L;
-	
+	@Column
 	String sessionId;
+	@Column
 	String uid;
+	@Column
 	String username;
+	@Column
 	String displayName;
-	
+	@Column
 	String loginType;
+	@Column
 	String message;
-	
+	@Column
 	String code;
-	
+	@Column
 	String provider;
-	
+	@Column
 	String sourceIp;
+	@Column
 	String browser;
+	@Column
 	String platform;
+	@Column
 	String application;
+	@Column
 	String loginUrl;
-	
+	@Column
 	String loginTime;
+	@Column
 	String logoutTime;
 	
 	

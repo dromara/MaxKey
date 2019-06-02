@@ -1,8 +1,10 @@
 package org.maxkey.authn;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class BasicAuthentication implements Authentication{
 	/**
@@ -17,10 +19,13 @@ public class BasicAuthentication implements Authentication{
     String j_remeberme;
     String j_auth_type;
     String j_jwt_token;
-    
+    ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;
     
 	public BasicAuthentication() {
+		grantedAuthority = new ArrayList<GrantedAuthority>();
+		grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
+		grantedAuthority.add(new SimpleGrantedAuthority("ORDINARY_USER"));
 	}
 
 	@Override
@@ -30,7 +35,7 @@ public class BasicAuthentication implements Authentication{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return grantedAuthority;
 	}
 
 	@Override
@@ -121,6 +126,14 @@ public class BasicAuthentication implements Authentication{
 
 	public void setJ_jwt_token(String j_jwt_token) {
 		this.j_jwt_token = j_jwt_token;
+	}
+	
+	public ArrayList<GrantedAuthority> getGrantedAuthority() {
+		return grantedAuthority;
+	}
+
+	public void setGrantedAuthority(ArrayList<GrantedAuthority> grantedAuthority) {
+		this.grantedAuthority = grantedAuthority;
 	}
 
 	@Override

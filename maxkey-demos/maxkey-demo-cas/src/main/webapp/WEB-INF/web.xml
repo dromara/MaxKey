@@ -1,75 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  <display-name></display-name>
-  <listener>
-    <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
-  </listener>
-  <filter>
-    <filter-name>CAS Single Sign Out Filter</filter-name>
-    <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>CAS Single Sign Out Filter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <filter>
-    <filter-name>CAS Filter</filter-name>
-    <filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
-    <!-- cas server login url -->
-    <init-param>
-      <param-name>casServerLoginUrl</param-name>
-      <param-value>>http://login.connsec.com/maxkey/authz/cas/</param-value>
-    </init-param>
-    <!-- cas client url,  in end of url / is required-->
-    <init-param>
-      <param-name>serverName</param-name>
-      <param-value>http://cas.demo.connsec.com/</param-value>
-    </init-param>
-  </filter>
-  <filter-mapping>
-    <filter-name>CAS Filter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  
-  <!--  Cas10TicketValidationFilter
-  		Cas20ProxyReceivingTicketValidationFilter
-   -->
-  <filter>
-    <filter-name>CAS Validation Filter</filter-name>
-    <filter-class>org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
-   <!-- cas server login url -->
-    <init-param>
-      <param-name>casServerUrlPrefix</param-name>
-      <param-value>http://login.connsec.com/maxkey/authz/cas/</param-value>
-    </init-param>
-     <!-- cas client url -->
-    <init-param>
-      <param-name>serverName</param-name>
-      <param-value>http://cas.demo.connsec.com/</param-value>
-    </init-param>
-  </filter>
-  <filter-mapping>
-    <filter-name>CAS Validation Filter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <filter>
-    <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
-    <filter-class>
-	                org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <filter>
-    <filter-name>CAS Assertion Thread Local Filter</filter-name>
-    <filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>CAS Assertion Thread Local Filter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name></display-name>
+	<listener>
+		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+	</listener>
+	<filter>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<url-pattern>/index.jsp</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>CAS Filter</filter-name>
+		<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
+		<!-- cas server login url -->
+		<init-param>
+			<param-name>casServerLoginUrl</param-name>
+			<param-value>>http://sso.maxkey.org/maxkey/authz/cas/</param-value>
+		</init-param>
+		<!-- cas client url, in end of url / is required -->
+		<init-param>
+			<param-name>serverName</param-name>
+			<param-value>http://casdemo.maxkey.org/</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Filter</filter-name>
+		<url-pattern>/index.jsp</url-pattern>
+	</filter-mapping>
+
+	<!-- Cas10TicketValidationFilter Cas20ProxyReceivingTicketValidationFilter -->
+	<filter>
+		<filter-name>CAS Validation Filter</filter-name>
+		<filter-class>org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
+		<!-- cas server login url -->
+		<init-param>
+			<param-name>casServerUrlPrefix</param-name>
+			<param-value>http://sso.maxkey.org/maxkey/authz/cas/</param-value>
+		</init-param>
+		<!-- cas client url -->
+		<init-param>
+			<param-name>serverName</param-name>
+			<param-value>http://casdemo.maxkey.org/</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Validation Filter</filter-name>
+		<url-pattern>/index.jsp</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+		<filter-class>
+			org.jasig.cas.client.util.HttpServletRequestWrapperFilter
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+		<url-pattern>/index.jsp</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>CAS Assertion Thread Local Filter</filter-name>
+		<filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Assertion Thread Local Filter</filter-name>
+		<url-pattern>/index.jsp</url-pattern>
+	</filter-mapping>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
 </web-app>

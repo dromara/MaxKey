@@ -9,7 +9,7 @@ import org.maxkey.client.utils.Preconditions;
 
 public class ConnsecApi20 extends DefaultApi20 {
 	//approval_prompt:force or auto
-	private static final String DEFAULT_WEB_URL = "http://login.connsec.com/maxkey";
+	private static final String DEFAULT_WEB_URL = "http://sso.maxkey.org/maxkey";
 	
 	private static final String AUTHORIZATION_URL = "%s/oauth/v20/authorize?client_id=%s&response_type=code&redirect_uri=%s&approval_prompt=auto";
     

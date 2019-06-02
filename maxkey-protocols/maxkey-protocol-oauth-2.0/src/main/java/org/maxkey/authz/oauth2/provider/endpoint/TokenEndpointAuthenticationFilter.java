@@ -32,11 +32,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.OAuth2Request;
 import org.maxkey.authz.oauth2.provider.OAuth2RequestFactory;
+import org.maxkey.web.WebContext;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -45,9 +47,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 
 /**
  * <p>
@@ -74,11 +78,16 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 	private static final Log logger = LogFactory.getLog(TokenEndpointAuthenticationFilter.class);
 
 	private AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
-
-
-	private final AuthenticationManager authenticationManager;
+	boolean allowOnlyPost;
 	
-	private final OAuth2RequestFactory oAuth2RequestFactory;
+	private  AuthenticationManager authenticationManager;
+	
+	private  OAuth2RequestFactory oAuth2RequestFactory;
+
+	public TokenEndpointAuthenticationFilter() {
+
+	}
+
 
 	/**
 	 * @param authenticationManager an AuthenticationManager for the incoming request
@@ -102,49 +111,29 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
 			ServletException {
-
+		logger.debug("Authentication TokenEndpoint ");
+		if(authenticationManager==null) {
+			authenticationManager=(AuthenticationManager)WebContext.getBean("oauth20ClientAuthenticationManager");
+		}
+		if(oAuth2RequestFactory==null) {
+			oAuth2RequestFactory=(OAuth2RequestFactory)WebContext.getBean("oAuth2RequestFactory");
+		}
+		
 		final boolean debug = logger.isDebugEnabled();
 		final HttpServletRequest request = (HttpServletRequest) req;
 		final HttpServletResponse response = (HttpServletResponse) res;
 
 		try {
-			Authentication credentials = extractCredentials(request);
-
-			if (credentials != null) {
-
-				if (debug) {
-					logger.debug("Authentication credentials found for '" + credentials.getName() + "'");
-				}
-
-				Authentication authResult = authenticationManager.authenticate(credentials);
-
-				if (debug) {
-					logger.debug("Authentication success: " + authResult.getName());
-				}
-
-				Authentication clientAuth = SecurityContextHolder.getContext().getAuthentication();
-				if (clientAuth == null) {
-					throw new BadCredentialsException(
-							"No client authentication found. Remember to put a filter upstream of the TokenEndpointAuthenticationFilter.");
-				}
-				
-				Map<String, String> map = getSingleValueMap(request);
-				map.put(OAuth2Utils.CLIENT_ID, clientAuth.getName());
-				AuthorizationRequest authorizationRequest = oAuth2RequestFactory.createAuthorizationRequest(map);
-
-				authorizationRequest.setScope(getScope(request));
-				if (clientAuth.isAuthenticated()) {
-					// Ensure the OAuth2Authentication is authenticated
-					authorizationRequest.setApproved(true);
-				}
-
-				OAuth2Request storedOAuth2Request = oAuth2RequestFactory.createOAuth2Request(authorizationRequest);
-				
-				SecurityContextHolder.getContext().setAuthentication(
-						new OAuth2Authentication(storedOAuth2Request, authResult));
-
-				onSuccessfulAuthentication(request, response, authResult);
-
+			String grantType = request.getParameter("grant_type");
+			if (grantType != null && grantType.equals("password")) {
+				usernamepassword(request,response);
+			}else {
+				Authentication authentication=ClientCredentials(request,response);
+				BasicAuthentication auth =new BasicAuthentication();
+				auth.setJ_username(((User)authentication.getPrincipal()).getUsername());
+				 auth.setAuthenticated(true);
+				UsernamePasswordAuthenticationToken simpleUserAuthentication = new UsernamePasswordAuthenticationToken(auth, authentication.getCredentials(), authentication.getAuthorities());
+				WebContext.setAuthentication(simpleUserAuthentication);
 			}
 
 		}
@@ -163,6 +152,86 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
+	public void usernamepassword(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
+	logger.debug("Authentication TokenEndpoint ");
+	
+	try {
+		Authentication credentials = extractCredentials(request);
+	
+		if (credentials != null) {
+			logger.debug("Authentication credentials found for '" + credentials.getName() + "'");
+	
+			Authentication authResult = authenticationManager.authenticate(credentials);
+	
+			logger.debug("Authentication success: " + authResult.getName());
+	
+			Authentication clientAuth = SecurityContextHolder.getContext().getAuthentication();
+			if (clientAuth == null) {
+				throw new BadCredentialsException(
+						"No client authentication found. Remember to put a filter upstream of the TokenEndpointAuthenticationFilter.");
+			}
+			
+			Map<String, String> map = getSingleValueMap(request);
+			map.put(OAuth2Utils.CLIENT_ID, clientAuth.getName());
+			AuthorizationRequest authorizationRequest = oAuth2RequestFactory.createAuthorizationRequest(map);
+	
+			authorizationRequest.setScope(getScope(request));
+			if (clientAuth.isAuthenticated()) {
+				// Ensure the OAuth2Authentication is authenticated
+				authorizationRequest.setApproved(true);
+			}
+	
+			OAuth2Request storedOAuth2Request = oAuth2RequestFactory.createOAuth2Request(authorizationRequest);
+			
+			WebContext.setAuthentication(new OAuth2Authentication(storedOAuth2Request, authResult));
+	
+			onSuccessfulAuthentication(request, response, authResult);
+	
+		}
+	
+	}
+		catch (AuthenticationException failed) {
+			SecurityContextHolder.clearContext();
+		
+				logger.debug("Authentication request for failed: " + failed);
+		
+			onUnsuccessfulAuthentication(request, response, failed);
+		
+			return;
+		}
+	}
+	
+	public Authentication ClientCredentials(HttpServletRequest request, HttpServletResponse response)
+				throws AuthenticationException, IOException, ServletException {
+
+			if (allowOnlyPost && !"POST".equalsIgnoreCase(request.getMethod())) {
+				throw new HttpRequestMethodNotSupportedException(request.getMethod(), new String[] { "POST" });
+			}
+
+			String clientId = request.getParameter("client_id");
+			String clientSecret = request.getParameter("client_secret");
+
+			// If the request is already authenticated we can assume that this
+			// filter is not needed
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if (authentication != null && authentication.isAuthenticated()) {
+				return authentication;
+			}
+
+			if (clientId == null) {
+				throw new BadCredentialsException("No client credentials presented");
+			}
+
+			if (clientSecret == null) {
+				clientSecret = "";
+			}
+
+			clientId = clientId.trim();
+			UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(clientId,clientSecret);
+
+			return this.authenticationManager.authenticate(authRequest);
+		}
+	 
 	private Map<String, String> getSingleValueMap(HttpServletRequest request) {
 		Map<String, String> map = new HashMap<String, String>();
 		Map<String, String[]> parameters = request.getParameterMap();
@@ -208,6 +277,43 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 	}
 
 	public void destroy() {
+	}
+	
+	
+	
+	protected static class ClientCredentialsRequestMatcher implements RequestMatcher {
+
+		private String path;
+
+		public ClientCredentialsRequestMatcher(String path) {
+			this.path = path;
+
+		}
+
+		@Override
+		public boolean matches(HttpServletRequest request) {
+			String uri = request.getRequestURI();
+			int pathParamIndex = uri.indexOf(';');
+
+			if (pathParamIndex > 0) {
+				// strip everything after the first semi-colon
+				uri = uri.substring(0, pathParamIndex);
+			}
+
+			String clientId = request.getParameter("client_id");
+
+			if (clientId == null) {
+				// Give basic auth a chance to work instead (it's preferred anyway)
+				return false;
+			}
+
+			if ("".equals(request.getContextPath())) {
+				return uri.endsWith(path);
+			}
+
+			return uri.endsWith(request.getContextPath() + path);
+		}
+
 	}
 
 }

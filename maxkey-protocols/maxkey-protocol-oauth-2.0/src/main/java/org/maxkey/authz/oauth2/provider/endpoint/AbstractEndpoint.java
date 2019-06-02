@@ -16,13 +16,26 @@
 package org.maxkey.authz.oauth2.provider.endpoint;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
+import org.maxkey.authz.oauth2.provider.CompositeTokenGranter;
 import org.maxkey.authz.oauth2.provider.OAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.TokenGranter;
+import org.maxkey.authz.oauth2.provider.client.ClientCredentialsTokenGranter;
+import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;
+import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeTokenGranter;
+import org.maxkey.authz.oauth2.provider.code.InMemoryAuthorizationCodeServices;
+import org.maxkey.authz.oauth2.provider.implicit.ImplicitTokenGranter;
+import org.maxkey.authz.oauth2.provider.refresh.RefreshTokenGranter;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestFactory;
+import org.maxkey.authz.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.Assert;
 
 /**
@@ -34,14 +47,46 @@ public class AbstractEndpoint implements InitializingBean {
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	private TokenGranter tokenGranter;
-
+	
+	@Autowired
+  	@Qualifier("oauth20AuthorizationCodeServices")
+	protected AuthorizationCodeServices authorizationCodeServices = new InMemoryAuthorizationCodeServices();
+	
+	@Autowired
+  	@Qualifier("oauth20TokenServices")
+	AuthorizationServerTokenServices tokenServices ;
+	
+	@Autowired
+  	@Qualifier("oauth20JdbcClientDetailsService")
 	private ClientDetailsService clientDetailsService;
-
+	@Autowired
+  	@Qualifier("oAuth2RequestFactory")
 	private OAuth2RequestFactory oAuth2RequestFactory;
-
+	
+	@Autowired
+  	@Qualifier("oAuth2RequestFactory")
 	private OAuth2RequestFactory defaultOAuth2RequestFactory;
 
 	public void afterPropertiesSet() throws Exception {
+		if (tokenGranter == null) {
+			//ClientDetailsService clientDetails = clientDetailsService();
+			//AuthorizationServerTokenServices tokenServices = tokenServices();
+			//AuthorizationCodeServices authorizationCodeServices = authorizationCodeServices();
+			//OAuth2RequestFactory requestFactory = requestFactory();
+
+			List<TokenGranter> tokenGranters = new ArrayList<TokenGranter>();
+			tokenGranters.add(new AuthorizationCodeTokenGranter(tokenServices, authorizationCodeServices,
+					clientDetailsService, oAuth2RequestFactory));
+			tokenGranters.add(new RefreshTokenGranter(tokenServices, clientDetailsService, oAuth2RequestFactory));
+			ImplicitTokenGranter implicit = new ImplicitTokenGranter(tokenServices, clientDetailsService, oAuth2RequestFactory);
+			tokenGranters.add(implicit);
+			tokenGranters.add(new ClientCredentialsTokenGranter(tokenServices, clientDetailsService, oAuth2RequestFactory));
+			/*if (authenticationManager != null) {
+				tokenGranters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager, tokenServices,
+						clientDetails, requestFactory));
+			}*/
+			tokenGranter = new CompositeTokenGranter(tokenGranters);
+		}
 		Assert.state(tokenGranter != null, "TokenGranter must be provided");
 		Assert.state(clientDetailsService != null, "ClientDetailsService must be provided");
 		defaultOAuth2RequestFactory = new DefaultOAuth2RequestFactory(getClientDetailsService());

@@ -3,11 +3,17 @@
  */
 package org.maxkey.domain.apps;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author Crystal.Sea
  *
  */
+@Table(name = "TOKEN_BASED_DETAILS") 
 public class TokenBasedDetails  extends Applications {
 
 	/**
@@ -15,23 +21,39 @@ public class TokenBasedDetails  extends Applications {
 	 */
 	private static final long serialVersionUID = -1717427271305620545L;
 
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
+	protected String id;
 	/**
 	 * 
 	 */
+	@Column
 	private String redirectUri;
 	//
+	@Column
 	private String cookieName;
+	@Column
 	private String algorithm;
+	@Column
 	private String algorithmKey;
+	@Column
 	private String expires;
 	
 	//
+	@Column
 	private int uid;
+	@Column
 	private int username;
+	@Column
 	private int email;
+	@Column
 	private int windowsAccount;
+	@Column
 	private int employeeNumber;
+	@Column
 	private int departmentId;
+	@Column
 	private int department;
 	
 	

@@ -1,20 +1,33 @@
 package org.maxkey.domain.apps;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author Crystal.Sea
  *
  */
+@Table(name = "FORM_BASED_DETAILS")  
 public class FormBasedDetails  extends Applications {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 563313247706861431L;
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
+	protected String id;
 	
-	
+	@Column
 	private String redirectUri;
+	@Column
 	private String usernameMapping;
+	@Column
 	private String passwordMapping;
+	@Column
 	private String authorizeView;
 
 
@@ -78,6 +91,16 @@ public class FormBasedDetails  extends Applications {
 
 	public void setAuthorizeView(String authorizeView) {
 		this.authorizeView = authorizeView;
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 

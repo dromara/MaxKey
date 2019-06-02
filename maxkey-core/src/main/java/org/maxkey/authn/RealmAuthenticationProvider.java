@@ -52,6 +52,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     	authenticationRealm.passwordPolicyValid(userInfo);
     	
     	authenticationRealm.passwordMatches(userInfo, auth.getJ_password());
+    	authenticationRealm.grantAuthority(userInfo);
     	/**
     	 *  put userInfo to current session context
     	 */
@@ -63,9 +64,11 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 		    	_logger.debug("do Remeber Me");
 		    }
 	    }
+
+	    auth.setAuthenticated(true);
 	    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =new UsernamePasswordAuthenticationToken(
-				userInfo,
-				auth.getJ_password(),
+	    		auth,
+				"PASSWORD",
 				authenticationRealm.grantAuthorityAndNavs(userInfo));
 	    usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetails(WebContext.getRequest()));
 	    

@@ -91,7 +91,6 @@ public class CasAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		CasDetails casDetails=(CasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
 		ServiceTicketImpl serviceTicket=new ServiceTicketImpl(WebContext.getAuthentication(),casDetails);
 		
-		//InMemoryTicketServices
 		String ticket=ticketServices.createTicket(serviceTicket);
 		
 		return WebContext.redirect(casDetails.getService()+"?"+CasConstants.PARAMETER.TICKET+"="+ticket);

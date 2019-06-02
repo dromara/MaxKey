@@ -108,6 +108,16 @@
 	<filter-mapping>  
 	    <filter-name>ipAddressFilter</filter-name>  
 	    <url-pattern>/*</url-pattern>  
+	</filter-mapping> 
+	
+	
+	<filter>  
+		<filter-name>OAuth20TokenEndpointAuthenticationFilter</filter-name>  
+    	<filter-class>org.maxkey.authz.oauth2.provider.endpoint.TokenEndpointAuthenticationFilter</filter-class>   
+	</filter>  
+	<filter-mapping>  
+	    <filter-name>OAuth20TokenEndpointAuthenticationFilter</filter-name>  
+	    <url-pattern>/oauth/v20/token</url-pattern>  
 	</filter-mapping>  
 		
     <!-- DispatcherServlet Spring MVC -->

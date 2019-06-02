@@ -69,7 +69,7 @@ public  abstract  class AbstractRemeberMeService {
 			cookie.setMaxAge(maxAge);
 			
 			//cookie.setPath("/");
-			cookie.setDomain("."+applicationConfig.getDomainName());
+			cookie.setDomain(applicationConfig.getDomainName());
 			response.addCookie(cookie);
 			request.getSession().removeAttribute(WebConstants.REMEBER_ME_SESSION);
 		}
@@ -126,7 +126,7 @@ public  abstract  class AbstractRemeberMeService {
 		cookie.setMaxAge(maxAge);
 		
 		//cookie.setPath("/");
-		cookie.setDomain("."+applicationConfig.getDomainName());
+		cookie.setDomain(applicationConfig.getDomainName());
 		response.addCookie(cookie);
 		return true;
  	}
@@ -135,7 +135,7 @@ public  abstract  class AbstractRemeberMeService {
 		Cookie cookie= new Cookie(WebConstants.REMEBER_ME_COOKIE,null);
  		cookie.setMaxAge(0);
 		
-		cookie.setDomain("."+applicationConfig.getDomainName());
+		cookie.setDomain(applicationConfig.getDomainName());
 		response.addCookie(cookie);
 		
 		remove(WebContext.getUserInfo().getUsername());

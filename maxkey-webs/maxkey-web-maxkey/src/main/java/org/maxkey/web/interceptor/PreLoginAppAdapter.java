@@ -23,19 +23,19 @@ public class PreLoginAppAdapter extends HandlerInterceptorAdapter {
 		 UserInfo userInfo=WebContext.getUserInfo();
 		 String redirect_uri=request.getRequestURL().toString();
 		 String appId=getAppIdFromRequestURI(request);
-		 
+		 _logger.debug("preHandle app Id "+appId);
 		 Object singlesignon_uri=WebContext.getAttribute(WebConstants.CURRENT_SINGLESIGNON_URI);
 		 if(singlesignon_uri!=null&&singlesignon_uri.equals(redirect_uri)){
 			 return true;
 		 }
-		 if(userInfo.getProtectedAppsMap().get(appId)!=null){
+		 /*if(userInfo.getProtectedAppsMap().get(appId)!=null){
 			
 			 request.setAttribute("redirect_uri",redirect_uri);
 			 _logger.debug(""+redirect_uri);
 			 RequestDispatcher dispatcher = request.getRequestDispatcher("/authorize/protected/forward");
 			 dispatcher.forward(request, response);
 			 return false;
-		 }
+		 }*/
 		
 		 return true;
 	}

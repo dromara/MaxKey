@@ -17,7 +17,6 @@
  
 	<!-- Single Sign On for application -->
 	<context:component-scan base-package="org.maxkey.authz.endpoint" />
- 	<context:component-scan base-package="org.maxkey.authz.cas.endpoint" />
  	<context:component-scan base-package="org.maxkey.authz.desktop.endpoint" />
  	<context:component-scan base-package="org.maxkey.authz.exapi.endpoint" />
  	<context:component-scan base-package="org.maxkey.authz.formbased.endpoint" />
@@ -25,10 +24,10 @@
  	<context:component-scan base-package="org.maxkey.authz.token.endpoint" />
 
  	<import resource="maxkey-protocol-cas.xml"/>
- 	<!--
+ 	
  	<import resource="maxkey-protocol-saml.xml"/>
  	
  	<import resource="maxkey-protocol-oauth2.0.xml"/>
-	-->
+	
 		
 </beans>
