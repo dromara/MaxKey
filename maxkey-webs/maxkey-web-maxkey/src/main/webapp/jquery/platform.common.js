@@ -1,6 +1,23 @@
 /*
  * crystal.sea
  */
+
+/* for datagrid  queryParams*/
+function dataGridQueryParams(params) {
+	var postData={};
+	if($("#basic_search_form")){//o.length>0
+		postData=$("#basic_search_form").serializeObject();
+	}
+	
+	if($("#advanced_search")){//o.length>0
+		postData=$.extend(postData,$("#advanced_search_form").serializeObject()||{});
+	}
+	
+	params=$.extend(params,postData);
+	
+    return params;
+}
+
  //jquery begin
 $(function(){
 
@@ -59,8 +76,6 @@ $(function(){
 	$.unmask=function(){
 		$.unblockUI();
 	};
-	
-	$("select").selecter({});
 	
 	//define message
 	$.extend($.platform.messages, {
@@ -260,14 +275,9 @@ $(function(){
 		if (typeof(beforeSearch) == "function"){
 			beforeSearch();///before Search action
 		}
-		var postData=$("#basic_search_form").serializeObject();
-		
-		if($("#advanced_search").length>0){//o.length>0
-			postData=$.extend(postData,$("#advanced_search_form").serializeObject()||{});
-		}
 		
 		//query for grid list
-		$("#list").jqGrid('setGridParam',{postData: postData}).trigger("reloadGrid");
+		 $('#datagrid').bootstrapTable('refresh',  {});
 		
 		if (typeof(afterSearch) == "function"){
 			afterSearch();//call back 

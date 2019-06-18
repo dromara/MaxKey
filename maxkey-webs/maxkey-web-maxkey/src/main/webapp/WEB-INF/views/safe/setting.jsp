@@ -7,20 +7,19 @@
 <html>
 <head>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
-	<jsp:include page="../layout/common.css.jsp"></jsp:include>
-	<jsp:include page="../layout/common.js.jsp"></jsp:include>
+	<jsp:include page="../layout/common.cssjs.jsp"></jsp:include>
 </head>
 <body>
 <jsp:include page="../layout/top.jsp"></jsp:include>
 <jsp:include page="../layout/nav_primary.jsp"></jsp:include>
-
+<div class="container">
 <table width="100%">
   <tr>
     <td>
 
 <form id="actionForm"  method="post" type="label" autoclose="true"  action="<s:Base/>/safe/setting"> 
 
-	  <table  class="datatable" >
+	  <table  class="table table-bordered" >
 			<tbody>
 			<tr>
 				<th  colspan="2">authnSetting</th>
@@ -28,21 +27,21 @@
 			<tr>
 				<th><s:Locale code="userinfo.displayName" /> :</th>
 				<td style="width:700px">
-					<input readonly type="text" id="displayName" name="displayName" class="required" title="" value="${model.displayName}"/>
+					<input  class="form-control"  readonly type="text" id="displayName" name="displayName" class="required" title="" value="${model.displayName}"/>
 					
 				</td>
 			</tr>
 			<tr>
 				<th><s:Locale code="userinfo.username" /> :</th>
 				<td>
-					<input readonly type="text" id="username" name="username" class="required" title="" value="${model.username}"/>
+					<input  class="form-control"  readonly type="text" id="username" name="username" class="required" title="" value="${model.username}"/>
 					
 				</td>
 			</tr>
 			<tr>
 				<th><s:Locale code="userinfo.authnType" />:</th>
 				<td nowrap>
-					<select name="authnType" id="authnType">
+					<select  class="form-control"  name="authnType" id="authnType">
 						<option value="1"  <c:if test="${0==model.authnType}">selected</c:if>  ><s:Locale code="button.text.select" /></option>
 						<option value="1"  <c:if test="${1==model.authnType}">selected</c:if>  ><s:Locale code="userinfo.authnType.authnType.1" /></option>
 						<!-- 
@@ -65,35 +64,35 @@
 			<tr>
 				<th><s:Locale code="userinfo.mobile" /> :</th>
 				<td>
-					<input type="text" id="mobile" name="mobile" class=" required" title="" value="${model.mobile}"/>
+					<input   class="form-control" type="text" id="mobile" name="mobile" class=" required" title="" value="${model.mobile}"/>
 					<label for="mobile"></label>
 				</td>
 			</tr>
 			<tr style="display:none;">
 				<th>Verify Code :</th>
 				<td>
-					<input type="text" id="mobileVerify" name="mobileVerify" class="required" title="" value="1"  style="width:200px" /><input class="button" style="width:100px"  type="button"    id="getMobileVerifyBtn" value="get Verify"/>
+					<input  class="form-control"  type="text" id="mobileVerify" name="mobileVerify" class="required" title="" value="1"  style="width:200px" /><input class="button" style="width:100px"  type="button"    id="getMobileVerifyBtn" value="get Verify"/>
 					<label for="verify"></label>
 				</td>
 			</tr>
 			<tr>
 				<th><s:Locale code="userinfo.email" /> :</th>
 				<td>
-					<input type="text" id="email" name="email" class="required" title="" value="${model.email}"/>
+					<input  class="form-control"  type="text" id="email" name="email" class="required" title="" value="${model.email}"/>
 					<label for="eamil"></label>
 				</td>
 			</tr>
 			<tr style="display:none;">
 				<th>Verify Code :</th>
 				<td>
-					<input type="text" id="emailVerify" name="emailVerify" class="required" title="" value="Verify"  style="width:200px" /><input class="button" style="width:100px"  type="button"    id="getEmailVerifyBtn" value="get Verify"/>
+					<input   class="form-control" type="text" id="emailVerify" name="emailVerify" class="required" title="" value="Verify"  style="width:200px" /><input class="button" style="width:100px"  type="button"    id="getEmailVerifyBtn" value="get Verify"/>
 					<label for="verify"></label>
 				</td>
 			</tr>	
 			<tr>
 				<td colspan="2"  class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
-		    		<input class="button" style="width:100px"  type="button"    id="submitBtn" value="<s:Locale code="button.text.save" />"/>
+		    		<input class="button btn btn-primary" style="width:100px"  type="button"    id="submitBtn" value="<s:Locale code="button.text.save" />"/>
 					
 				</td>
 			</tr>
@@ -103,6 +102,7 @@
 </td>
   </tr>
 </table>
+</div>
 <div id="footer">
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </div>

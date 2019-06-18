@@ -4,14 +4,18 @@
 <%@ page 	import="org.maxkey.web.*"%>
 <%@ taglib  prefix="s"   		uri="http://sso.maxkey.org/tags" %>
 <%@ taglib  prefix="c"			uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib  prefix="spring"  	uri="http://www.springframework.org/tags" %>
+<!DOCTYPE HTML >
+<html>
+<head>
+	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<jsp:include page="../layout/common.cssjs.jsp"></jsp:include>
+	<script type="text/javascript" src="<s:Base/>/jquery/jsonformatter.js"></script>
+</head>
+<body>
+<jsp:include page="../layout/top.jsp"></jsp:include>
+<jsp:include page="../layout/nav_primary.jsp"></jsp:include>
 
-<script type="text/javascript" src="<s:Base/>/resources/My97DatePicker/WdatePicker.js"></script>
-<script type="text/javascript" src="<s:Base/>/jquery/jsonformatter.js"></script>
-<script type="text/javascript">
-
-
-</script>
+<div class="container">
 	<div id="tool_box">
 		<table  class="datatable">
 			<tr>
@@ -20,9 +24,9 @@
 				</td>
 				<td  width="375px">
 					<form id="basic_search_form">
-				 			<input name="appName" type="text" style ="width:150px">
-				 			<input class="button primary"  id="searchBtn" type="button" size="50" value="<s:Locale code="button.text.search"/>">
-				 			<input class="button"  id="advancedSearchExpandBtn" type="button" size="50"  value="<s:Locale code="button.text.expandsearch"/>" expandValue="<s:Locale code="button.text.expandsearch"/>"  collapseValue="<s:Locale code="button.text.collapsesearch"/>">
+				 			<input  class="form-control"  name="appName" type="text" style ="width:150px;float:left;">
+				 			<input class="button btn btn-primary mr-3"  id="searchBtn" type="button" size="50" value="<s:Locale code="button.text.search"/>">
+				 			<input class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<s:Locale code="button.text.expandsearch"/>" expandValue="<s:Locale code="button.text.expandsearch"/>"  collapseValue="<s:Locale code="button.text.collapsesearch"/>">
 					 	</form>
 				</td>
 				<td colspan="2"> 
@@ -40,26 +44,48 @@
 			 <tr>
 	 				<td width="120px"><s:Locale code="common.text.startdate"/></td>
 		 			<td width="360px">
-		 				<input class="datetimepicker"  name="startDate" type="text" >
+		 				<input  class="form-control datetimepicker"  name="startDate" type="text" >
 		 			</td>
 		 			<td width="120px"><s:Locale code="common.text.enddate"/></td>
 		 			<td width="360px">
-						<input style="width:70%" class="datetimepicker"   type="text" id="endDate" name="endDate"  title="" value=""/>
+						<input  class="form-control datetimepicker"  style="width:70%" type="text" id="endDate" name="endDate"  title="" value=""/>
 			 		</td>
 			 </tr>
 			</table>
  		</form>
  	</div>
- 	
-<div class="mainwrap" id="main">
-	<s:Grid id="list" url="/logs/loginAppsHistory/grid" multiselect="false">	
-		<s:Column width="0" field="id" title="id" hidden="true"/>
-		<s:Column width="20" field="sessionId" title="loginhistory.sessionId"/>
-		<s:Column width="10" field="uid" title="loginhistory.uid"  hidden="true"/>
-		<s:Column width="15" field="username" title="userinfo.username"/>
-		<s:Column width="15" field="displayName" title="userinfo.displayName"/>
-		<s:Column width="10" field="appId" title="apps.appId"  hidden="true"/>
-		<s:Column width="10" field="appName" title="apps.name"/>		
-		<s:Column width="15" field="loginTime" title="loginhistory.logintime" />
-	</s:Grid>
+
+<div  class="mainwrap" id="main">
+		<table 	data-url="<s:Base />/logs/loginAppsHistory/grid"
+				id="datagrid"
+				data-toggle="table"
+				data-classes="table table-bordered table-hover table-striped"
+				data-pagination="true"
+				data-total-field="records"
+				data-page-list="[10, 25, 50, 100]"
+				data-search="false"
+				data-locale="zh-CN"
+				data-query-params="dataGridQueryParams"
+				data-query-params-type="pageSize"
+				data-side-pagination="server">
+			<thead>
+				<tr>
+					<th data-sortable="true" data-field="id"  data-visible="false"><s:Locale code="log.loginappshistory.id" /></th>
+					<th data-field="sessionId" ><s:Locale code="log.loginappshistory.sessionId" /></th>
+					<th data-field="uid"   data-visible="false"><s:Locale	code="log.loginappshistory.uid" /></th>
+					<th data-field="username" ><s:Locale	code="log.loginappshistory.username" /></th>
+					<th data-field="displayName" ><s:Locale	code="log.loginappshistory.displayName" /></th>
+					<th data-field="appId"   data-visible="false"><s:Locale	code="log.loginappshistory.appId" /></th>
+					<th data-field="appName" ><s:Locale	code="log.loginappshistory.appName" /></th>
+					<th data-field="loginTime" ><s:Locale	code="log.loginappshistory.loginTime" /></th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	
 </div>
+<div id="footer">
+	<jsp:include page="../layout/footer.jsp"></jsp:include>
+</div>
+</body>
+</html>

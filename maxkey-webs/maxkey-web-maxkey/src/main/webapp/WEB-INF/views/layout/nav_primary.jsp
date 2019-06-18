@@ -6,11 +6,8 @@
 <div id="nav_primary" >
 <div id="nav_primary"  class="menuprimary">
 	<ul >
-		<li  id="nav_primay_10"  class="nav_primay_level primaryleft"  xpath="">
-			<a   href="<s:Base/>/appList">我的应用</a>
-		</li>
 		<li  id="nav_primay_11"  class="nav_primay_level primaryleft"  xpath="">
-			<a   href="<s:Base/>/appConfigList">应用配置</a>
+			<a   href="<s:Base/>/appList">我的应用</a>
 		</li>
 		<li  id="nav_primay_12"  class="nav_primay_level primaryleft"  xpath="">
 			<a   href="<s:Base/>/socialsignon/list">认证关联</a>
@@ -25,11 +22,21 @@
 				</ul>
 				<ul>
 					<li id="nav_second_1302" class="nav_second_level">
-						<a   href="<s:Base/>/safe/forward/changeAppLoginPasswod">应用登录密码</a>
+						<a   href="<s:Base/>/safe/forward/changePasswod">密码修改</a>
 					</li>
 				</ul>
 				<ul>
 					<li id="nav_second_1303" class="nav_second_level">
+						<a   href="<s:Base/>/safe/forward/changeAppLoginPasswod">应用登录密码</a>
+					</li>
+				</ul>
+				<ul>
+					<li id="nav_second_1304" class="nav_second_level">
+						<a   href="<s:Base/>/appConfigList">应用配置</a>
+					</li>
+				</ul>
+				<ul>
+					<li id="nav_second_1305" class="nav_second_level">
 						<a   href="<s:Base/>/safe/otp/timebased">时间令牌</a>
 					</li>
 				</ul>
@@ -37,29 +44,7 @@
 		</li>
 		
 		<li  id="nav_primay_14"  class="nav_primay_level primaryleft"  xpath="">
-			<a  href="<s:Base/>/profile/forwardBasic">我的资料</a>
-			<div id="nav_child_1401"  class="nav_second_child">
-				<ul>
-					<li id="nav_second_1401" class="nav_second_level">
-						<a   href="<s:Base/>/profile/forwardBasic">基本资料</a>
-					</li>
-				</ul>
-				<ul>
-					<li id="nav_second_1402" class="nav_second_level">
-						<a   href="<s:Base/>/profile/forwardCompany">组织信息</a>
-					</li>
-				</ul>
-				<ul>
-					<li id="nav_second_1403" class="nav_second_level">
-						<a   href="<s:Base/>/profile/forwardHome">个人资料</a>
-					</li>
-				</ul>
-				<ul>
-					<li id="nav_second_1404" class="nav_second_level">
-						<a   href="<s:Base/>/profile/forwardExtra">扩展信息</a>
-					</li>
-				</ul>
-			</div>
+			<a  href="<s:Base/>/profile/myProfile">我的资料</a>
 		</li>
 		<li  id="nav_primay_15"  class="nav_primay_level primaryleft"  xpath="">
 			<a   href="<s:Base/>/logs/loginHistoryList">日志审计</a>

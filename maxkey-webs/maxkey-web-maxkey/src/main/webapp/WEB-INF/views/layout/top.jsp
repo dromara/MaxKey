@@ -8,11 +8,11 @@
 	<div class="container">
 		<div style="float:left;margin-left:20px;margin-top: 5px;"><IMG SRC="<s:Base/>/images/logo.jpg" style="width:55px;heigth:55px"></div>
 		<div style="margin-top:15px;margin-left:10px;float:left">
-			<div style="letter-spacing:2px;font-size:28px;font-weight:bolder;"><s:Locale code="global.access.application"/></div>
+			<div style="letter-spacing:2px;font-size:28px;font-weight:bolder;"><s:Locale code="global.application"/></div>
 			
 		</div>
 		<div style="margin-top:25px;margin-right:10px;float:right;">
-			<table style="height: 31px;">
+			<table  style="height: 31px;">
 				<tr>
 					<td><%System.out.println(WebContext.getUserInfo()); %>
 						<s:Locale code="global.text.welcome"/>：<%=WebContext.getUserInfo()==null?"":WebContext.getUserInfo().getDisplayName()%>(<%=WebContext.getUserInfo()==null?"":WebContext.getUserInfo().getUsername()%>)&nbsp;&nbsp;
@@ -43,7 +43,7 @@
 						</a>
 					</td>
 		
-					<td class="ui-widget-header" >
+					<td id="logout" class="ui-widget-header" >
 						<a  href="<s:Base/>/logout?reLoginUrl=login">
 							<div  style="float:right;" >&nbsp;&nbsp;<s:Locale code="global.text.logout"/>&nbsp;&nbsp;</div>
 						</a>

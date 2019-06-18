@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+        
+        #fixed {
+            position: fixed;
+            bottom: 0;
+            left: 20%;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="test">title('hello world')</button>
+    <script src="../lib/jquery-1.10.2.js"></script>
+    <script src="../dist/dialog.js"></script>
+
+    <script>
+        var d = dialog({
+            title: 'loading..'
+        });
+
+        d.show();
+
+        $('#test').on('click', function() {
+            d.title('hello world');
+        });
+    </script>
+</body>
+
+</html>

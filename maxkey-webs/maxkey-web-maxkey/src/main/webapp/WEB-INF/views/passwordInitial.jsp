@@ -5,8 +5,7 @@
 <html>
 	<head>
 		<jsp:include page="layout/header.jsp"></jsp:include>
-		<jsp:include page="layout/common.css.jsp"></jsp:include>
-		<jsp:include page="layout/common.js.jsp"></jsp:include>
+		<jsp:include page="../layout/common.cssjs.jsp"></jsp:include>
       	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
       	<title><s:Locale code="login.password.initial.change.tip" /></title>
   </head>

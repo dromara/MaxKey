@@ -30,7 +30,6 @@ public class Navigations extends JpaBaseDomain  implements java.io.Serializable 
 	private String pName;
 	private String xPath;
 	private String hasChild;
-	private int sortOrder;
 	private int  visible;
 	
 	
@@ -126,13 +125,6 @@ public class Navigations extends JpaBaseDomain  implements java.io.Serializable 
 		this.hasChild = hasChild;
 	}
 
-	public int getSortOrder() {
-		return sortOrder;
-	}
-
-	public void setSortOrder(int sortOrder) {
-		this.sortOrder = sortOrder;
-	}
 
 	public int getVisible() {
 		return visible;

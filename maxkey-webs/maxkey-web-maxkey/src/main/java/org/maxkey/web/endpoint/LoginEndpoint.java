@@ -95,7 +95,7 @@ public class LoginEndpoint {
 			@RequestParam(value=WsFederationConstants.WRESULT,required=false) String wsFederationWResult) {
  		
 		_logger.debug("LoginController /login.");
-		ModelAndView modelAndView = new ModelAndView();
+		ModelAndView modelAndView = new ModelAndView("login");
 		
 		boolean isAuthenticated= WebContext.isAuthenticated();
 		//for RemeberMe login
@@ -150,28 +150,24 @@ public class LoginEndpoint {
 		}else {
 			WebContext.setAttribute(WebConstants.SPRING_PROCESS_SAVED_REQUEST, firstSavedRequest);
 		}
+		
 		if(isAuthenticated){
-			modelAndView.setViewName("index");
-		}else{
-			modelAndView.setViewName("login");
+			return  WebContext.redirect("/forwardindex");
 		}
+		
 		return modelAndView;
 	}
  	
  	@RequestMapping(value={"/logon.do"})
-	@ResponseBody
 	public ModelAndView logon(@ModelAttribute("authentication") BasicAuthentication authentication) {
- 		ModelAndView modelAndView = new ModelAndView();
- 		boolean isAuthenticated=false;
  		
  		authenticationProvider.authenticate(authentication);
  
- 		if(isAuthenticated){
-			modelAndView.setViewName("index");
+ 		if(WebContext.isAuthenticated()){
+ 			return WebContext.redirect("/forwardindex");
 		}else{
-			modelAndView.setViewName("login");
+			return WebContext.redirect("/login");
 		}
-		return modelAndView;
  	}
 	
  	

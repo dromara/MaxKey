@@ -10,19 +10,11 @@
 <%@ taglib prefix="spring"  	uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="s" 			uri="http://sso.maxkey.org/tags" %> 
 <%if(WebContext.getUserInfo() != null) {%>
-	<authz:authorize access="hasRole('ROLE_USER')"><script type="text/javascript"> 
-			window.top.location.href="<s:Base />/forwardindex";
-	</script></authz:authorize>
+	<script type="text/javascript">window.top.location.href="<s:Base />/forwardindex";
 <%}%>
 <head>
 <jsp:include page="layout/header.jsp"></jsp:include>
-<jsp:include page="layout/common.css.jsp"></jsp:include>
-<jsp:include page="layout/common.js.jsp"></jsp:include>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-<title><s:Locale code="global.access.application"/></title>
-<link rel="shortcut icon" type="image/x-icon" href="<s:Base />/images/favicon.ico"/>
-<base href="<s:BasePath/>"/>
+<jsp:include page="layout/common.cssjs.jsp"></jsp:include>
 <c:if test="${'true'==isKerberos}"> 
 	<s:Browser version="MSIE">
 		<script type="text/javascript"> 
@@ -217,16 +209,16 @@ $(function(){
 							<%}%>
 							<tr>
 								<td><s:Locale code="login.text.username"/>：</td>
-								<td><input type='text' id='j_username'  name='j_username' value="admin" tabindex="1"/></td>
+								<td><input class="form-control" type='text' id='j_username'  name='j_username' value="admin" tabindex="1"/></td>
 							</tr>
 							<tr>
 								<td><s:Locale code="login.text.password"/>：</td>
-								<td><input type='password' id='j_password'  name='j_password' value="admin"  tabindex="2"/></td>
+								<td><input class="form-control"  type='password' id='j_password'  name='j_password' value="admin"  tabindex="2"/></td>
 							</tr>
 							<c:if test="${'true'==isCaptcha}"> 
 							<tr>
 								<td><s:Locale code="login.text.captcha"/>：</td>
-								<td><input type='text' id="j_captcha" name="j_captcha"  tabindex="3"  value="" /><img id="j_captchaimg" src="<c:url value="/captcha"/>" /></td>
+								<td><input class="form-control"  type='text' id="j_captcha" name="j_captcha"  tabindex="3"  value="" /><img id="j_captchaimg" src="<c:url value="/captcha"/>" /></td>
 								
 							</tr>
 							</c:if>
@@ -249,16 +241,11 @@ $(function(){
 							</c:if>
 							<tr   style="display:none">
 								<td>sessionid：</td>
-								<td><input type='text' id="sessionid" name="j_sessionid" value="${sessionid}" /></td>
-								
-							</tr>
-							<tr   style="display:none">
-								<td>jwtToken：</td>
-								<td><input type='text' id="jwtToken" name="j_jwt_token" value="${jwtToken}" /></td>
+								<td><input  class="form-control"  type='text' id="sessionid" name="j_sessionid" value="${sessionid}" /></td>
 								
 							</tr>
 							<tr >
-								<td colspan="2"><input id="loginSubmit" type="button"  tabindex="5" class="button primary login_button"  value="<s:Locale code="login.button.login"/>"/></td>
+								<td colspan="2"><input id="loginSubmit" type="button"  tabindex="5"  style="width: 230px;" class="button btn btn-lg btn-primary btn-block"  value="<s:Locale code="login.button.login"/>"/></td>
 								
 							</tr>
 						</table>
@@ -279,24 +266,24 @@ $(function(){
 							<%} %>
 							<tr>
 								<td><s:Locale code="login.text.username"/>：</td>
-								<td><input type='text' id='tfa_j_username'  name='j_username' value="" tabindex="1"/></td>
+								<td><input class="form-control"  type='text' id='tfa_j_username'  name='j_username' value="" tabindex="1"/></td>
 							</tr>
 							<tr> 
 								<td><s:Locale code="login.text.password"/>：</td>
-								<td><input type='password' id='tfa_j_password'  name='j_password' value=""  tabindex="2" /></td>
+								<td><input class="form-control"  type='password' id='tfa_j_password'  name='j_password' value=""  tabindex="2" /></td>
 							</tr>
 							<c:if test="${'true'==isOneTimePwd}">
 							<tr>
 								<td><s:Locale code="login.text.currenttime"/>：</td>
 								<td>
-									<input readonly type='text' id="currentTime" name="currentTime"  tabindex="3"  value="" />
+									<input class="form-control"  readonly type='text' id="currentTime" name="currentTime"  tabindex="3"  value="" />
 								</td>
 							</tr>
 							<tr>
 								<td><s:Locale code="login.text.captcha"/>：</td>
 								<td>
-									<input type='text' id="tfa_j_otp_captcha" name="j_otp_captcha"  tabindex="3"  value=""  />
-									<input id="tfa_j_otp_captcha_button" type="button"  tabindex="5" class="button"  value="获取动态验证码"/>
+									<input class="form-control"  type='text' id="tfa_j_otp_captcha" name="j_otp_captcha"  tabindex="3"  value=""  />
+									<input class="form-control"  id="tfa_j_otp_captcha_button" type="button"  tabindex="5" class="button"  value="获取动态验证码"/>
 									
 								</td>
 							</tr>
@@ -326,16 +313,11 @@ $(function(){
 							</c:if>
 							<tr   style="display:none">
 								<td>sessionid：</td>
-								<td><input type='text' id="tfa_sessionid" name="j_sessionid" value="${sessionid}" /></td>
-								
-							</tr>
-							<tr   style="display:none">
-								<td>jwtToken：</td>
-								<td><input type='text' id="jwtToken" name="j_jwt_token" value="${jwtToken}" /></td>
+								<td><input class="form-control"  type='text' id="tfa_sessionid" name="j_sessionid" value="${sessionid}" /></td>
 								
 							</tr>
 							<tr >
-								<td colspan="2"><input id="tfa_loginSubmit" type="button"  tabindex="5" class="button primary login_button"  value="<s:Locale code="login.button.login"/>"/></td>
+								<td colspan="2"><input id="tfa_loginSubmit" type="button" style="width: 230px;" tabindex="5" class="button btn btn-lg btn-primary btn-block"  value="<s:Locale code="login.button.login"/>"/></td>
 								
 							</tr>
 						</table>

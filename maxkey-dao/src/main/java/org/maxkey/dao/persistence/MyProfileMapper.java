@@ -10,12 +10,6 @@ import org.maxkey.domain.UserInfo;
  */
 public interface MyProfileMapper  extends IJpaBaseMapper<UserInfo>{
 	
-	public int updateBasic(UserInfo userInfo);
-	
-	public int updateHome(UserInfo userInfo);
-	
-	public int updateExtra(UserInfo userInfo);
-	
-	public int updateCompany(UserInfo userInfo);
+	public int updateProfile(UserInfo userInfo);
 	
 }

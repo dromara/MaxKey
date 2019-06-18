@@ -76,37 +76,6 @@ public class IndexEndpoint {
 		
 	}
 	
-	@RequestMapping(value={"/layout/top"})
-	public ModelAndView top() {
-		_logger.debug("IndexEndpoint /layout/top.");
-		return  new ModelAndView("layout/top");
-	}
-	
-	@RequestMapping(value={"/layout/nologintop"})
-	public ModelAndView nologintop() {
-		_logger.debug("IndexEndpoint /layout/nologintop.");
-		return  new ModelAndView("layout/nologintop");
-	}
-	
-	
-	@RequestMapping(value={"/layout/left"})
-	public ModelAndView left() {
-		_logger.debug("IndexEndpoint /layout/left.");
-        return  new ModelAndView("layout/left");
-	}
-	
-	@RequestMapping(value={"/layout/main"})
-	public ModelAndView main() {
-		_logger.debug("IndexEndpoint /layout/main.");
-		return  new ModelAndView("layout/main");
-	}
-	
-	@RequestMapping(value={"/layout/bottom"})
-	public ModelAndView bottom() {
-		_logger.debug("IndexEndpoint /layout/bottom.");
-		return  new ModelAndView("layout/bottom");
-	}
-	
 	@RequestMapping(value={"/accessdeny"})
 	public ModelAndView accessdeny() {
 		_logger.debug("exception/accessdeny.");

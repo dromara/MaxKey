@@ -223,14 +223,6 @@ public class Applications extends JpaBaseDomain implements Serializable{
 
 
 
-	public int getSortOrder() {
-		return sortOrder;
-	}
-
-	public void setSortOrder(int sortOrder) {
-		this.sortOrder = sortOrder;
-	}
-
 	/**
 	 * @param secret the secret to set
 	 */

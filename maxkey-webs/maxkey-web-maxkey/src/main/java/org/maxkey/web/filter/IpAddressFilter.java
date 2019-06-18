@@ -47,7 +47,7 @@ public class IpAddressFilter implements Filter {
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		HttpSession session = httpServletRequest.getSession();
 		String ipAddress=WebContext.getRequestIpAddress(httpServletRequest);
-		_logger.debug("IpAddress "+ipAddress);
+		_logger.trace("IpAddress "+ipAddress);
 		//黑名单地址
 		if(IpAddressCache.ipAddressBlackListMap.containsKey(ipAddress)){
 			IpAddrFilter ipAddrFilter=IpAddressCache.ipAddressBlackListMap.get(ipAddress);

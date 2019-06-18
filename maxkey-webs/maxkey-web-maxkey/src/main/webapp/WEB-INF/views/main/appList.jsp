@@ -10,15 +10,14 @@
 <html>
 <head>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
-	<jsp:include page="../layout/common.css.jsp"></jsp:include>
-	<jsp:include page="../layout/common.js.jsp"></jsp:include>
+	<jsp:include page="../layout/common.cssjs.jsp"></jsp:include>
 </head>
 <body>
 <jsp:include page="../layout/top.jsp"></jsp:include>
 <jsp:include page="../layout/nav_primary.jsp"></jsp:include>
-
+<div class="container">
 <%if(WebContext.getUserInfo().getGridList()==0) {%>
-<table  class="datatable">
+<table  class="table">
 	<c:forEach begin="1" end="${(fn:length(appList)+4)/5}" var="num">
 		<tr>
 			<c:forEach items="${appList}" var="app" begin="${(num-1)*5}" end="${5*num-1}">
@@ -47,7 +46,7 @@
 	</c:forEach>
 </table>
 <%}else{%>
-<table  class="datatable">
+<table  class="table">
 	<tr>
 			<td>
 				<s:Locale code="apps.icon"/>
@@ -98,6 +97,7 @@
 	</c:forEach>
 </table>
 <%} %>
+</div>
 <div id="footer">
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </div>

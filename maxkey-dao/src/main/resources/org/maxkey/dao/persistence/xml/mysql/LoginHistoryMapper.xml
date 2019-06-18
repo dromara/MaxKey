@@ -38,7 +38,7 @@
 	
    
     
-     <select id="grid" parameterType="LoginHistory" resultType="LoginHistory">
+     <select id="queryPageResults" parameterType="LoginHistory" resultType="LoginHistory">
     	SELECT 
 			ID,
 	   		SESSIONID,
@@ -61,14 +61,6 @@
     	<include refid="dao_where_statement"/>
     	
     	ORDER BY LOGINTIME DESC
-    </select>
-    
-    
-     
-    <select  id="count" resultType="java.lang.Integer">
-    	SELECT COUNT(*) FROM LOGIN_HISTORY
-    	WHERE	1	=	1
-    	<include refid="dao_where_statement"/>
     </select>
     
     <update id="logout" parameterType="java.lang.String" >

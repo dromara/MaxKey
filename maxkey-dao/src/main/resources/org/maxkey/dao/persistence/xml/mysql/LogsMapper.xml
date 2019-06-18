@@ -30,9 +30,8 @@
 		</if>
     </sql>
 	
-  
     
-     <select id="grid" parameterType="Logs" resultType="Logs">
+     <select id="queryPageResults" parameterType="Logs" resultType="Logs">
     	SELECT 
 			ID,
 			TID,
@@ -52,11 +51,5 @@
     	
     	ORDER BY CREATEDDATE DESC
     </select>
-    
-    
-    <select  id="count" resultType="java.lang.Integer">
-    	SELECT COUNT(*) FROM LOGS
-    	WHERE	1	=	1
-    	<include refid="where_statement"/>
-    </select>
+  
 </mapper>

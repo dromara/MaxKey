@@ -33,7 +33,7 @@
 		
     </sql>
     
-     <select id="grid" parameterType="LoginAppsHistory" resultType="LoginAppsHistory">
+     <select id="queryPageResults" parameterType="LoginAppsHistory" resultType="LoginAppsHistory">
     	SELECT 
 			ID,
 			SESSIONID,
@@ -50,14 +50,6 @@
     	
     	ORDER BY LOGINTIME DESC
     </select>
-    
   
-     
-    <select  id="count" resultType="java.lang.Integer">
-    	SELECT COUNT(*) FROM LOGIN_APPS_HISTORY
-    	WHERE	1	=	1
-    	<include refid="dao_where_statement"/>
-    </select>
-    
     
 </mapper>

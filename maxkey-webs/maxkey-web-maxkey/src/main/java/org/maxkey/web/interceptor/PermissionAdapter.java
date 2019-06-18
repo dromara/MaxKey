@@ -42,7 +42,7 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 _logger.debug("PermissionAdapter preHandle");
 		 //加载定义的功能菜单地址
-		if(navigationsMap==null){
+		/*if(navigationsMap==null){
 			List<Navigations>   navigationsList=((NavigationsService)WebContext.getBean("navigationsService")).query(null);
 			navigationsMap=new  ConcurrentHashMap<String ,String >();
 			for(Navigations nav : navigationsList){

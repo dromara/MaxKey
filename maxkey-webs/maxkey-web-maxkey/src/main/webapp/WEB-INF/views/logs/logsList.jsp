@@ -4,46 +4,76 @@
 <%@ page 	import="org.maxkey.web.*"%>
 <%@ taglib  prefix="s"   		uri="http://sso.maxkey.org/tags" %>
 <%@ taglib  prefix="c"			uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring"  	uri="http://www.springframework.org/tags" %>
-
-<script type="text/javascript">
-	function viewformatter (value, options, rData){
-		return "<a href='javascript:void(0);' selid='"+rData["id"]+"' class='viewJsonObject' title='view more' >view more</a>";
-	}
-				
-	$(".viewJsonObject").on("click",function(){
-			var content=$("#list").getRowData($(this).attr("selid")+"")["content"]; 
-			var jsonHtml='<textarea name="jsondata" id="formatteddata" rows="20" cols="70">';
-				jsonHtml+=FormatJSON(eval("("+content+")"));
-				jsonHtml+='</textarea>';
-			$.alert({
-				title		: 	"JSON Data View",
-				type		:	null,
-			    content		: 	jsonHtml,
-			    okVal		:	null,
-			    cancelVal	:	$.platform.messages.alert.no,
-			    ok			: 	null,
-			    cancel		: 	function (){}
+<!DOCTYPE HTML >
+<html>
+<head>
+	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<jsp:include page="../layout/common.cssjs.jsp"></jsp:include>
+	<script type="text/javascript" src="<s:Base/>/jquery/jsonformatter.js"></script>
+	<script type="text/javascript">
+		function viewformatter (value, options, rData){
+			return "<a href='javascript:void(0);' selid='"+rData["id"]+"' class='viewJsonObject' title='view more' >view more</a>";
+		}
+					
+		$(".viewJsonObject").on("click",function(){
+				var content=$("#list").getRowData($(this).attr("selid")+"")["content"]; 
+				var jsonHtml='<textarea name="jsondata" id="formatteddata" rows="20" cols="70">';
+					jsonHtml+=FormatJSON(eval("("+content+")"));
+					jsonHtml+='</textarea>';
+				$.alert({
+					title		: 	"JSON Data View",
+					type		:	null,
+				    content		: 	jsonHtml,
+				    okVal		:	null,
+				    cancelVal	:	$.platform.messages.alert.no,
+				    ok			: 	null,
+				    cancel		: 	function (){}
+				});
 			});
-		});
+	
+	</script>
+</head>
+<body>
+<jsp:include page="../layout/top.jsp"></jsp:include>
+<jsp:include page="../layout/nav_primary.jsp"></jsp:include>
 
-</script>
+<div class="container">
 
 <div class="mainwrap" id="main">
 	
-	<s:Grid id="list" url="/logs/grid" multiselect="false">	
-		<s:Column width="0" field="id" title="id" hidden="true"/>
-		<s:Column width="100" field="serviceName" title="logs.servicename"/>
-		<s:Column width="100" field="message" title="logs.message"/>
-		<s:Column width="100" field="view" title="logs.content" formatter="viewformatter"/>
-		<s:Column width="100" field="messageType" title="logs.messagetype"/>				
-		<s:Column width="100" field="operateType" title="logs.operatetype" />
-		<s:Column width="100" field="username" title="userinfo.username" />
-		<s:Column width="100" field="tname" title="company.shortname" /> 
-		<s:Column width="0" field="createdBy" title="common.text.createdby" hidden="true"/>
-		<s:Column width="0" field="createdDate" title="common.text.createddate" hidden="true"/>
-		<s:Column width="0" field="modifiedBy" title="common.text.modifiedby" hidden="true"/>
-		<s:Column width="0" field="modifiedDate" title="common.text.modifieddate" hidden="true"/>
-	</s:Grid>
+	<table  data-url="<s:Base />/logs/grid"
+			id="datagrid"
+			data-toggle="table"
+			data-classes="table table-bordered table-hover table-striped"
+			data-pagination="true"
+			data-total-field="records"
+			data-page-list="[10, 25, 50, 100]"
+			data-search="false"
+			data-locale="zh-CN"
+			data-query-params="dataGridQueryParams"
+			data-query-params-type="pageSize"
+			data-side-pagination="server">
+		<thead>
+			<tr>
+				<th data-sortable="true" data-field="id"   data-visible="false">id</th>
+				<th data-field="serviceName"><s:Locale code="log.operate.servicename"/></th>
+				<th data-field="message"><s:Locale code="log.operate.message"/></th>
+				<th data-field="view"><s:Locale code="log.operate.content"/></th>
+				<th data-field="messageType"><s:Locale code="log.operate.messageType"/></th>
+				<th data-field="operateType"><s:Locale code="log.operate.operateType"/></th>
+				<th data-field="username"><s:Locale code="log.operate.username"/></th>
+				<th data-field="createdBy"><s:Locale code="common.text.createdby"/></th>
+				<th data-field="createdDate"><s:Locale code="common.text.createddate"/></th>
+				<th data-field="modifiedBy"><s:Locale code="common.text.modifiedby"/></th>
+				<th data-field="modifiedDate"><s:Locale code="common.text.modifieddate"/></th>
+			</tr>
+		</thead>
+	</table>
 	
 </div>
+</div>
+<div id="footer">
+	<jsp:include page="../layout/footer.jsp"></jsp:include>
+</div>
+</body>
+</html>

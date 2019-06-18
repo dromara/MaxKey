@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.maxkey.dao.persistence.MyProfileMapper">
 
-	<update id="updateBasic" parameterType="UserInfo" >
+	<update id="updateProfile" parameterType="UserInfo" >
     	UPDATE USERINFO SET
     		DISPLAYNAME 	=	#{displayName},
 			NICKNAME 		=	#{nickName},
@@ -28,17 +28,7 @@
 			TIMEZONE		=	#{timeZone},
 			PREFERREDLANGUAGE=	#{preferredLanguage},
 
-			MODIFIEDBY		=	#{modifiedBy},
-			MODIFIEDDATE	=	current_timestamp		
-		WHERE 
-			ID	=	#{id}
-    </update>
- 
-
-    
-    <update id="updateCompany" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
-    		WINDOWSACCOUNT	=	#{windowsAccount},
+			WINDOWSACCOUNT	=	#{windowsAccount},
     		
 			WORKCOUNTRY		=	#{workCountry},
 			WORKREGION		=	#{workRegion},
@@ -50,14 +40,6 @@
 			WORKPOSTALCODE	=	#{workPostalCode},
 			WORKFAX			=	#{workFax},
 			
-			MODIFIEDBY		=	#{modifiedBy},
-			MODIFIEDDATE	=	current_timestamp		
-		WHERE 
-			ID	=	#{id}
-    </update>
-	
-	 <update id="updateHome" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
 			HOMECOUNTRY		=	#{homeCountry},
 			HOMEREGION		=	#{homeRegion},
 			HOMELOCALITY	=	#{homeLocality},
@@ -67,28 +49,7 @@
 			HOMEPHONENUMBER=	#{homePhoneNumber},
 			HOMEPOSTALCODE	=	#{homePostalCode},
 			HOMEFAX			=	#{homeFax},
-		
-			QQ				=	#{qq},
-			WEIXIN			=	#{weixin},
-			SINAWEIBO		=	#{sinaweibo},
-			YIXIN			=	#{yixin},
-			FACEBOOK		=	#{facebook},
-			SKYPE			=	#{skype},
-			MSN				=	#{msn},
-			GTALK			=	#{gtalk},
-			YAHOO			=	#{yahoo},
-			LINE			=	#{line},
-			AIM				=	#{aim},
-			DEFINEIM		=	#{defineIm},
 			
-			MODIFIEDBY		=	#{modifiedBy},
-			MODIFIEDDATE	=	current_timestamp		
-		WHERE 
-			ID	=	#{id}
-    </update>
-        
-    <update id="updateExtra" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
 			EXTRAATTRIBUTE	=	#{extraAttribute},
 			
 			MODIFIEDBY		=	#{modifiedBy},
@@ -96,5 +57,6 @@
 		WHERE 
 			ID	=	#{id}
     </update>
+ 
 	
 </mapper>

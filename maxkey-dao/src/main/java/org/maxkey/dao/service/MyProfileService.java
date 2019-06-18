@@ -30,27 +30,9 @@ public class MyProfileService extends JpaBaseService<UserInfo> {
 	}
 	
 
-	public int updateBasic(UserInfo userInfo){
+	public int updateProfile(UserInfo userInfo){
 		
-		return getMapper().updateBasic(userInfo);
+		return getMapper().updateProfile(userInfo);
 	}
-	
-	public int updateCompany(UserInfo userInfo){
-		
-		return getMapper().updateCompany(userInfo);
-	}
-	
-	
-	public int updateHome(UserInfo userInfo){
-	
-		return getMapper().updateHome(userInfo);
-	}
-	
-	public int updateExtra(UserInfo userInfo){
-		
-		return getMapper().updateExtra(userInfo);
-	}
-	
-
 	
 }

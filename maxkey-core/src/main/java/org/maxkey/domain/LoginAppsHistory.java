@@ -36,7 +36,8 @@ public class LoginAppsHistory extends JpaBaseDomain {
 	@Column
 	private String loginTime;
 	
-	
+	String startDate;
+	String endDate;
 	
 	/**
 	 * 
@@ -169,6 +170,26 @@ public class LoginAppsHistory extends JpaBaseDomain {
 	 */
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 

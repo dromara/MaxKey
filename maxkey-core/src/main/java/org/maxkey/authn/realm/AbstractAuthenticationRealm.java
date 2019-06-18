@@ -263,7 +263,6 @@ public abstract class AbstractAuthenticationRealm{
 				navigation.setpName(rs.getString("PNAME"));
 				navigation.setxPath(rs.getString("XPATH"));
 				navigation.setHasChild(rs.getString("HASCHILD"));
-				navigation.setSortOrder(rs.getInt("SORTORDER"));
 				navigation.setVisible(rs.getInt("VISIBLE"));
 				return navigation;
 			}

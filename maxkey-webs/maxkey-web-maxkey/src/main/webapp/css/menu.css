@@ -34,11 +34,11 @@
 	display: block;
 	background: #414141; /*background of menu items (default state)*/
 	color: white;
-	padding: 8px 20px;
+	padding: 10px 20px;
 	border-right: 1px solid white;
 	color: #2d2b2b;
 	text-decoration: none;
-	height: 25px;
+	height: 40px;
 	font-size: 13px;
 }
 
