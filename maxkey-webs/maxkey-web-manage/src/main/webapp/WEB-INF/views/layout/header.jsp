@@ -1,5 +1,5 @@
 <%@ page   language="java"     import="java.util.*"   pageEncoding="UTF-8"%>
-<%@ taglib prefix="s"  uri="http://www.connsec.com/tags" %>
+<%@ taglib prefix="s"  uri="http://sso.maxkey.org/tags" %>
     <title><s:Locale code="global.application"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="pragma" content="no-cache">

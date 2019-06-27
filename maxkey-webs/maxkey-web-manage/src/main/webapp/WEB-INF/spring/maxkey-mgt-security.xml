@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="
+	        http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context.xsd
+	        http://www.springframework.org/schema/util     
+	        http://www.springframework.org/schema/util/spring-util.xsd
+	        http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+			
+	<!-- enable autowire -->
+    <context:annotation-config />
+    <!-- language select must remove -->
+	<mvc:annotation-driven />
+  
+	 <!-- 
+	 * Self-issued Provider Metadata
+	 *
+	 * http://openid.net/specs/openid-connect-core-1_0.html#SelfIssued 
+	 * -->
+	<bean id="oidcProviderMetadata" class="org.maxkey.config.oidc.OIDCProviderMetadataDetails">
+		<property name="issuer" value="${config.oidc.metadata.issuer}" />
+		<property name="authorizationEndpoint" value="${config.oidc.metadata.authorizationEndpoint}" />
+		<property name="tokenEndpoint" value="${config.oidc.metadata.tokenEndpoint}" />
+		<property name="userinfoEndpoint" value="${config.oidc.metadata.userinfoEndpoint}" />
+	</bean>
+	
+	<bean id="jwkSetKeyStore" class="org.maxkey.crypto.jose.keystore.JWKSetKeyStore">
+		<property name="location" value="classpath:config/keystore.jwks" />
+	</bean>
+	
+	<bean id="jwtSignerValidationService" class="org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService">
+		<constructor-arg name="keyStore" ref="jwkSetKeyStore" />
+		<property name="defaultSignerKeyId" value="connsec_rsa" />
+ 		<property name="defaultSigningAlgorithmName" value="RS256" />
+	</bean>
+
+	<bean id="jwtEncryptionService" class="org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService">
+		<constructor-arg name="keyStore" ref="jwkSetKeyStore" />
+		<property name="defaultAlgorithm" value="RSA1_5" />
+		<property name="defaultDecryptionKeyId" value="connsec_rsa" />
+		<property name="defaultEncryptionKeyId" value="connsec_rsa" />
+	</bean>
+
+	<bean id="jwtLoginService" class="org.maxkey.authn.support.jwt.JwtLoginService">
+		<property name="jwtSignerValidationService" ref="jwtSignerValidationService" />
+ 		<property name="jwtProviderMetadata"  ref="oidcProviderMetadata" />
+	</bean>
+		
+	<!-- web Controller InterceptorAdapter  -->
+	<mvc:interceptors>
+		<!-- web Controller InterceptorAdapter for platform permission  -->
+		<mvc:interceptor>
+			<!-- for index -->
+			<mvc:mapping path="/index/*" />
+			<!-- for System -->
+			<mvc:mapping path="/menus/*" />
+			<mvc:mapping path="/roles/*" />
+			<mvc:mapping path="/logs/*" />
+			<mvc:mapping path="/userinfo/*" />
+			<mvc:mapping path="/relyingparty/*" />
+			<mvc:mapping path="/sysconfig/*" />
+			
+			<mvc:mapping path="/roles/*"/>
+			<mvc:mapping path="/applications/*"/>
+			<mvc:mapping path="/approles/*"/>
+			
+			<mvc:mapping path="/users/*" />
+			<mvc:mapping path="/enterprises/*" />
+			<mvc:mapping path="/employees/*" />
+			<mvc:mapping path="/authInfo/*" />
+			<mvc:mapping path="/usercenter/*"/>
+			<bean class="org.maxkey.web.interceptor.PermissionAdapter" />
+		</mvc:interceptor>	
+		<!-- web Controller InterceptorAdapter for platform log  -->
+		<mvc:interceptor>
+			<mvc:mapping path="/users/*" /> 
+			<mvc:mapping path="/userinfo/*" />
+			<mvc:mapping path="/enterprises/*" />
+			<mvc:mapping path="/employees/*" />
+			<mvc:mapping path="/authInfo/*" />
+			<mvc:mapping path="/usercenter/*"/>
+			<mvc:mapping path="/retrievePassword/*"/>
+			<mvc:mapping path="/roles/*"/>
+			<mvc:mapping path="/applications/*"/>
+			<mvc:mapping path="/approles/*"/>
+			<bean class="org.maxkey.web.interceptor.LogAdapter" />
+		</mvc:interceptor>
+		
+		 <ref bean="localeChangeInterceptor" />
+	</mvc:interceptors>
+     
+     	<bean id="remeberMeService" class="org.maxkey.authn.support.rememberme.JdbcRemeberMeService">
+		<constructor-arg ref="jdbcTemplate"/>
+		<property name="validity" value="${config.login.remeberme.validity}"/>
+	</bean>
+	
+	<bean id="timeBasedKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
+		<property name="type" value="totp" />
+		<property name="digits" value="6" />
+		<property name="issuer" value="ConnSec" />
+		<property name="domain" value="connsec.com" />
+		<property name="period" value="30" />
+		
+	</bean>
+	
+	<bean id="counterBasedKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
+		<property name="type" value="hotp" />
+		<property name="digits" value="6" />
+		<property name="issuer" value="maxkey" />
+		<property name="domain" value="maxkey.org" />
+		<property name="counter" value="0" />
+	</bean>
+	
+	<bean id="hotpKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
+		<property name="type" value="hotp" />
+		<property name="digits" value="6" />
+		<property name="issuer" value="maxkey" />
+		<property name="domain" value="maxkey.org" />
+		<property name="counter" value="0" />
+	</bean>
+	
+	
+	<bean id="tfaOTPAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOTPAuthn">
+		<constructor-arg ref="jdbcTemplate" /> 
+	</bean>
+	
+	<!-- Authentication Password Encoder Config -->
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>   
+	
+	<bean id="passwordReciprocal" class="org.maxkey.crypto.password.PasswordReciprocal"></bean>
+	
+	<!-- Captcha Producer  Config -->
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+                <bean class="com.google.code.kaptcha.util.Config">
+                        <constructor-arg type="java.util.Properties">
+                                <props>
+                                        <prop key="kaptcha.image.width">70</prop> 
+                                        <prop key="kaptcha.image.height">25</prop>
+                                        <prop key="kaptcha.border">no</prop>
+                                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>
+                                        <prop key="kaptcha.textproducer.font.size">23</prop>
+                                        <prop key="kaptcha.textproducer.char.string">0123456789</prop>
+                                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                                        <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
+                                        <!-- <prop key="kaptcha.noise.color">white</prop>
+                                          -->
+                                </props>
+                        </constructor-arg>
+                </bean>
+        </property>
+	</bean>
+	
+    
+	<!-- Follow is config for Spring security -->
+	<!--<csrf disabled="true"/>-->
+	<!-- Login  
+	<http use-expressions="false"  disable-url-rewriting="false" xmlns="http://www.springframework.org/schema/security" >
+		
+		<headers>
+			<frame-options policy="SAMEORIGIN" />
+		</headers> 
+		<access-denied-handler error-page="/login"/>
+		<intercept-url pattern="/index" access="ROLE_USER" />
+		<intercept-url pattern="/forwardindex" access="ROLE_USER" />
+   		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY,ROLE_USER" />
+		<form-login authentication-failure-url="/login" 
+					default-target-url="/forwardindex" 
+					login-page="/login" 
+					login-processing-url="/logon.do"
+					username-parameter="j_username"
+					password-parameter="j_password"
+					authentication-success-handler-ref="savedRequestSuccessHandler"/>
+					
+		<logout  logout-url="/logout.do"  logout-success-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID"  />
+		
+		<session-management invalid-session-url="/login" />
+		
+		<anonymous />
+	</http>
+	-->	
+
+   	<bean id="savedRequestSuccessHandler" class="org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler"> </bean>
+	
+	<!-- spring authentication provider 
+	<authentication-manager alias="authenticationProvider"  xmlns="http://www.springframework.org/schema/security"/>
+-->
+	<!-- LDAP Realm 
+	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.ldap.LdapAuthenticationRealm">
+		<constructor-arg ref="jdbcTemplate"/>
+		<property name="ldapServers">
+			<list>
+				<bean id="ldapServer1" class="org.maxkey.web.authentication.realm.ldap.LdapServer">
+					<property name="ldapUtils">
+						<bean id="ldapUtils" class="org.maxkey.ldap.LdapUtils">
+							<property name="providerUrl" value="ldap://localhost:389"></property>
+							<property name="principal" value="cn=root"></property>
+							<property name="credentials" value="rootroot"></property>
+							<property name="baseDN" value="dc=connsec,dc=com"></property>
+						</bean>
+					</property>
+					<property name="filterAttribute" value="uid"></property>
+				</bean>	
+			</list>
+		</property>
+	</bean> -->
+	
+	<!-- Active Directory  Realm 
+	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.activedirectory.ActiveDirectoryAuthenticationRealm">
+		<constructor-arg ref="jdbcTemplate"/>
+		<property name="activeDirectoryServers">
+			<list>
+				<bean id="activeDirectory1" class="org.maxkey.web.authentication.realm.activedirectory.ActiveDirectoryServer">
+					<property name="activeDirectoryUtils">
+						<bean id="ldapUtils" class="org.maxkey.ldap.ActiveDirectoryUtils">
+							<property name="providerUrl" value="ldap://localhost:389"></property>
+							<property name="principal" value="cn=root"></property>
+							<property name="credentials" value="rootroot"></property>
+							<property name="domain" value="connsec"></property>
+						</bean>
+					</property>
+				</bean>	
+			</list>
+		</property>
+	</bean> -->
+	
+	<!-- Radius Server  Realm  
+	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.radius.RadiusServerAuthenticationRealm">
+		<constructor-arg ref="jdbcTemplate"/>
+		<property name="jradiusServers">
+			<list>
+				<bean id="radiusServer1" class="org.maxkey.web.authentication.realm.radius.RadiusServer">
+					<property name="inetAddress" value="localhost"/>
+					<property name="secret" value="test1234"/>
+				</bean>	
+			</list>
+		</property>
+	</bean>-->
+	
+	<!-- Default Realm-->
+	<!-- realm use jdbc -->
+	<bean id="authenticationRealm" class="org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm">
+		<constructor-arg ref="jdbcTemplate"/>
+	</bean>
+	
+		
+	<!-- Authentication providers -->
+    <bean id="authenticationProvider" class="org.maxkey.authn.RealmAuthenticationProvider" >
+    </bean>
+    <!--
+	<authentication-manager alias="authenticationManager" xmlns="http://www.springframework.org/schema/security">
+		<authentication-provider ref= "realmAuthenticationProvider"/>  
+	</authentication-manager>
+    -->
+	<mvc:annotation-driven />
+
+	<mvc:default-servlet-handler />
+
+</beans>

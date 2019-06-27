@@ -26,8 +26,8 @@ public class GroupPrivilegesController {
 	final static Logger _logger = LoggerFactory.getLogger(GroupPrivilegesController.class);
 	
 	@Autowired
-	@Qualifier("groupAppService")
-	GroupPrivilegesService groupAppService;
+	@Qualifier("groupPrivilegesService")
+	GroupPrivilegesService groupPrivilegesService;
 
 	
 	@RequestMapping(value={"/list"})
@@ -40,7 +40,7 @@ public class GroupPrivilegesController {
 	public JpaPageResults<Applications> queryAppsInGroupGrid(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
 		
 		JpaPageResults<Applications> jqGridApp;
-		jqGridApp= groupAppService.gridAppsInGroup(groupApp);
+		jqGridApp= groupPrivilegesService.gridAppsInGroup(groupApp);
 
 		if(jqGridApp!=null&&jqGridApp.getRows()!=null){
 			for (Applications app : jqGridApp.getRows()){
@@ -65,7 +65,7 @@ public class GroupPrivilegesController {
 
 		JpaPageResults<Applications> jqGridApp;
 		
-		jqGridApp= groupAppService.gridAppsNotInGroupGrid(groupApp);
+		jqGridApp= groupPrivilegesService.gridAppsNotInGroupGrid(groupApp);
 
 		if(jqGridApp!=null&&jqGridApp.getRows()!=null){
 			for (Applications app : jqGridApp.getRows()){
@@ -94,7 +94,7 @@ public class GroupPrivilegesController {
 			for (int i = 0; i < arrAppIds.length; i++) {
 				GroupPrivileges newGroupApp = new GroupPrivileges(groupId, arrAppIds[i]);
 				newGroupApp.setId(newGroupApp.generateId());
-				result = groupAppService.insert(newGroupApp);
+				result = groupPrivilegesService.insert(newGroupApp);
 			}
 			if(!result) {
 				return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_ERROR),MessageType.error);
@@ -120,7 +120,7 @@ public class GroupPrivilegesController {
 			
 			for (int i = 0; i < arrAppIds.length; i++) {
 				GroupPrivileges newGroupApp = new GroupPrivileges(groupId, arrAppIds[i]);
-				result = groupAppService.delete(newGroupApp);
+				result = groupPrivilegesService.delete(newGroupApp);
 			}
 			if(!result) {
 				return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_ERROR),MessageType.error);

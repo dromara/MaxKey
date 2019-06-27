@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.maxkey.dao.persistence.UserInfoMapper">
-
 	
-   
-	
-	<select id="grid" parameterType="UserInfo" resultType="UserInfo">
+	<select id="queryPageResults" parameterType="UserInfo" resultType="UserInfo">
 		SELECT
 			ID,
 			USERNAME,
@@ -65,34 +62,6 @@
 		</if>
 		ORDER BY SORTORDER 
 	</select>
-	
-	<select id="count" parameterType="UserInfo" resultType="java.lang.Integer">
-		SELECT
-			COUNT(ID) 
-		FROM
-			USERINFO
-		WHERE
-			 (1=1)	
-		<if test="username != null and username != ''">
-			AND USERNAME = #{username}
-		</if>
-		<if test="employeeNumber != null and employeeNumber != ''">
-			AND EMPLOYEENUMBER = #{employeeNumber}
-		</if>
-		<if test="userType != null and userType != ''">
-			AND USERTYPE = #{userType}
-		</if>
-		<if test="displayName != null and displayName != ''">
-			AND DISPLAYNAME   LIKE  '%${displayName}%'
-		</if>
-		<if test="departmentId != null and departmentId != ''">
-			AND DEPARTMENTID = #{departmentId}
-		</if>
-		
-	</select>
-	
-	
-	
 	
     <update id="locked" parameterType="UserInfo" >
     	UPDATE USERINFO SET

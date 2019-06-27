@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+
+<body>
+    <script src="../lib/jquery-1.10.2.js"></script>
+    <script src="../dist/dialog.js"></script>
+    <script>
+        var d = dialog({
+            content: 'hello world'
+        });
+
+        d.show();
+
+        $(document).on('contextmenu', function(event) {
+            d.open && d.show(event);
+            return !d.open;
+        });
+    </script>
+</body>
+
+</html>

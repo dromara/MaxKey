@@ -1,0 +1,11 @@
+.faq-link {
+  cursor: pointer;
+  padding: 15px;
+  background: #212529;
+  color: #adb5bd
+}
+
+.faq-item.active>.faq-link {
+  background-color: #d9480f;
+  color: #f8f9fa;
+}

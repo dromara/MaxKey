@@ -1,8 +1,8 @@
 <%@ page   contentType="text/html; charset=UTF-8" language="java"  %>
 <%@ page   import="org.maxkey.domain.*"%> 
 <%@ page   import="org.maxkey.web.*"%>
-<%@ taglib prefix="c" 			uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s"  	uri="http://www.connsec.com/tags" %>
+<%@ taglib prefix="c" 	uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s"  	uri="http://sso.maxkey.org/tags" %>
 
 <div id="topBar"  > 
 	<div class="container">

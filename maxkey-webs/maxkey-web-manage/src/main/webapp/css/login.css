@@ -3,8 +3,7 @@
 	cellspacing:0;
 }
 
-#j_username,#j_password,#tfa_j_username,#tfa_j_password{
-	width	:230px;
+#j_username,#j_password,#tfa_j_username,#tfa_j_password,#currentTime{
 	font-size: 14px;
 	font-weight: bold;
 }
@@ -30,7 +29,7 @@
 }
 
 #j_captchaimg{
-	width:70px;
+	width:100px;
 	height: 33px;
 	vertical-align: top;
 }
@@ -56,4 +55,10 @@
 #register a{
 	font-weight: bold;
 	color: white;
+}
+
+.login_error_message{
+	height:37px;
+	background-color: #FFE5E5;
+	font-weight: bold;
 }

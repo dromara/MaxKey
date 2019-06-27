@@ -46,7 +46,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-@RequestMapping(value = { "/users" })
+@RequestMapping(value = { "/userinfo" })
 public class UserInfoController {
 	final static Logger _logger = LoggerFactory.getLogger(UserInfoController.class);
 	
@@ -84,7 +84,7 @@ public class UserInfoController {
 	
 	@RequestMapping(value={"/list"})
 	public ModelAndView usersList(){
-		return new ModelAndView("users/usersList");
+		return new ModelAndView("userinfo/usersList");
 	}
 	
 	@RequestMapping(value={"/usersSelect/{uid}/{username}"})

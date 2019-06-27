@@ -58,7 +58,7 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 		
 		UserInfo userInfo =WebContext.getUserInfo();//取得登录用户
 		
-		if(userInfo==null||WebContext.getRoles()==null){//判断用户和角色，判断用户是否登录用户
+		if(userInfo==null){//判断用户和角色，判断用户是否登录用户
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
 			dispatcher.forward(request, response);
 			return false;
@@ -76,20 +76,7 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 		}
 		
 		boolean hasNavAccess=true;
-		//菜单权限匹配
-		if(navigationsMap.containsKey(accessURI)){//判断当前访问URL地址是否需要进行权限校验
-			hasNavAccess=false;
-			for(Navigations nav : WebContext.getNavigations()){//获取当前登录用户拥有URL访问列表
-				String haveURL=nav.getUrl();
-				if(haveURL==null)continue;
-				if(!haveURL.endsWith("/")){haveURL="/"+haveURL+"/";}
-				if(haveURL.endsWith(accessURI)){
-					hasNavAccess=true;
-				}
-			}
-			_logger.debug("Access URI : "+accessURI+" , hasNavAccess "+hasNavAccess);
-			if(hasNavAccess)return true;
-		}
+
 		
 		/*	
 		boolean preHandler = super.preHandle(request, response, handler);

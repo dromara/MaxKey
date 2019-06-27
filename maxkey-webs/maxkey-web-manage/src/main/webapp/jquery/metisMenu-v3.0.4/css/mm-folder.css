@@ -1,0 +1,37 @@
+.metisFolder {
+  padding-left: 0;
+}
+.metisFolder, .metisFolder ul {
+  list-style: none;
+}
+.metisFolder li {
+  position: relative;
+}
+.metisFolder li a {
+  display: block;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #333;
+  text-decoration: none;
+  outline: 0 none;
+}
+.metisFolder ul:before {
+  position: absolute;
+  border-left: 1px dotted #333;
+  content: "";
+  width: 30px;
+  top: 25px;
+  left: 5px;
+  bottom: 17px;
+}
+.metisFolder ul > li:before {
+  position: absolute;
+  border-top: 1px dotted #333;
+  content: "";
+  width: 30px;
+  top: 13px;
+  left: -33px;
+}
+li.active > a > span.fa-folder-o:before {
+  content: "\f115" !important;
+}

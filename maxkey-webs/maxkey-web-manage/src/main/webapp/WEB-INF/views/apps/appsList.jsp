@@ -1,16 +1,11 @@
-<%@ page 	language="java"   import="java.util.*" 	pageEncoding="UTF-8"%>
-<%@ taglib 	prefix="s" uri="http://www.connsec.com/tags" %>
-<%@ taglib 	prefix="fmt"      uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page 	import="org.maxkey.constants.*"%>
-
-<style>
-<!--
-	.ui-jqgrid tr.jqgrow td {
-		line-height: 10px;
-	}
--->
-</style>
-
+<%@ page   language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib prefix="s" 			uri="http://sso.maxkey.org/tags" %> 
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<jsp:include page="../../layout/header.jsp"></jsp:include>
+	<jsp:include page="../../layout/common.cssjs.jsp"></jsp:include>
 <script type="text/javascript">				
 	function iconFormatter(value, options, rData){
   			return "<img width='30' height='30' border='0px' src='<s:Base/>/image/"+rData["id"]+"'/>";
@@ -114,7 +109,43 @@
 	      
 	});
 </script>
-	<div id="tool_box">
+</head>
+<body> 
+<div class="app header-default side-nav-dark">
+<div class="layout">
+	<div class="header navbar">
+		<jsp:include page="../../layout/top.jsp"></jsp:include>
+	</div>
+	
+	<div class="col-md-3 sidebar-nav side-nav" >
+ 		<jsp:include page="../../layout/sidenav.jsp"></jsp:include>
+	</div>
+	<div class="page-container">
+	
+	<div class="main-content">
+					<div class="container-fluid">
+
+						<div class="breadcrumb-wrapper row">
+							<div class="col-12 col-lg-3 col-md-6">
+								<h4 class="page-title">Dashboard 2</h4>
+							</div>
+							<div class="col-12 col-lg-9 col-md-6">
+								<ol class="breadcrumb float-right">
+									<li><a href="index.html">Dashboard</a></li>
+									<li class="active">/ Dashboard 2</li>
+								</ol>
+							</div>
+						</div>
+
+					</div>
+
+
+					<div class="col-12 grid-margin">
+						<div class="card">
+							<div class="card-header border-bottom">
+								<h4 class="card-title">Horizontal Two column</h4>
+							</div>
+							<div class="card-body">
 		
 			<table   class="datatable">
  				<tr>
@@ -198,3 +229,57 @@
 				<s:Column width="0" field="modifiedDate" title="common.text.modifieddate" hidden="true"/>
 			</s:Grid>
 		</div>
+		
+		<table  data-url="<s:Base />/apps/grid"
+			id="datagrid"
+			data-toggle="table"
+			data-classes="table table-bordered table-hover table-striped"
+			data-pagination="true"
+			data-total-field="records"
+			data-page-list="[10, 25, 50, 100]"
+			data-search="false"
+			data-locale="zh-CN"
+			data-query-params="dataGridQueryParams"
+			data-query-params-type="pageSize"
+			data-side-pagination="server">
+		<thead>
+			<tr>
+				<th data-sortable="true" data-field="id"   data-visible="false"><s:Locale code="log.loginhistory.id"/></th>
+				<th data-field="sessionId"><s:Locale code="apps.icon"/></th>
+				<th data-field="username"><s:Locale code="apps.name"/></th>
+				<th data-field="displayName"><s:Locale code="log.loginhistory.displayName"/></th>
+				<th data-field="provider"><s:Locale code="log.loginhistory.provider"/></th>
+				<th data-field="message"><s:Locale code="log.loginhistory.message"/></th>
+				<th data-field="loginType"><s:Locale code="log.loginhistory.loginType"/></th>
+				<th data-field="sourceIp"><s:Locale code="log.loginhistory.sourceIp"/></th>
+				<th data-field="browser"><s:Locale code="log.loginhistory.browser"/></th>
+				<th data-field="loginTime"><s:Locale code="log.loginhistory.loginTime"/></th>
+				<th data-field="logoutTime"><s:Locale code="log.loginhistory.logoutTime"/></th>
+				<th data-field="platform"><s:Locale code="log.loginhistory.platform"/></th>
+				<th data-field="application"><s:Locale code="log.loginhistory.application"/></th>
+				<th data-field="loginUrl"><s:Locale code="log.loginhistory.loginUrl"/></th>
+				<th data-field="code"><s:Locale code="log.loginhistory.code"/></th>
+				<th data-field="rpUserInfo"><s:Locale code="log.loginhistory.rpUserInfo"/></th>
+	
+			</tr>
+		</thead>
+	</table>
+	
+	
+</div>
+					</div>
+					<footer class="content-footer">
+		<jsp:include page="../../layout/footer.jsp"></jsp:include>
+	</footer>
+
+	</div>
+	
+	</div>
+</div>
+
+<div id="preloader">
+<div class="loader" id="loader-1"></div>
+</div>
+
+</body>
+</html>

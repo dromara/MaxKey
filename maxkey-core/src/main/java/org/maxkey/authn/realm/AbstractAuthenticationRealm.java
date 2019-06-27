@@ -16,9 +16,8 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.constants.LOGINTYPE;
 import org.maxkey.constants.PASSWORDSETTYPE;
 import org.maxkey.constants.STATUS;
-import org.maxkey.domain.Navigations;
+import org.maxkey.domain.Groups;
 import org.maxkey.domain.PasswordPolicy;
-import org.maxkey.domain.Roles;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.persistence.db.PasswordPolicyRowMapper;
 import org.maxkey.persistence.db.UserInfoRowMapper;
@@ -60,9 +59,7 @@ public abstract class AbstractAuthenticationRealm{
 	
 	private static final String HISTORY_LOGOUT_UPDATE_STATEMENT = "UPDATE LOGIN_HISTORY SET LOGOUTTIME = ?  WHERE  SESSIONID = ?";
 	
-	private static final String NAVIGATIONS_SELECT_STATEMENT = "SELECT DISTINCT N.* FROM ROLE_NAV RN, NAVIGATIONS N WHERE  RN.ROLEID IN(SELECT R.ID FROM ROLES R WHERE ( R.ID='ORDINARY_USER' OR R.ID IN(SELECT ROLEID FROM  USERINFO U, ROLE_USER RU WHERE U.ID = ? AND U.ID = RU.UID AND U.STATUS = 1)) AND R.STATUS = 1) AND RN.NAVID=N.ID AND N.STATUS = 1 ORDER BY PID, SORTORDER";
-	
-	private static final String ROLES_SELECT_STATEMENT = "SELECT DISTINCT R.ID,R.NAME FROM USERINFO U,ROLES R,ROLE_USER RU WHERE U.ID = ?  AND U.ID=RU.UID AND RU.ROLEID=R.ID AND	 R.STATUS<>'2'";
+	private static final String GROUPS_SELECT_STATEMENT = "SELECT DISTINCT G.ID,G.NAME FROM USERINFO U,GROUPS G,GROUP_MEMBER GM WHERE U.ID = ?  AND U.ID=GM.MEMBERID AND GM.GROUPID=G.ID ";
 	
 	private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "SELECT * FROM	USERINFO WHERE USERNAME = ?";
 	
@@ -249,59 +246,18 @@ public abstract class AbstractAuthenticationRealm{
 		}
 	}
 	
-	
-	public List<Navigations> queryNavs(UserInfo userInfo){
-		List<Navigations> listNavigations=jdbcTemplate.query(NAVIGATIONS_SELECT_STATEMENT, new RowMapper<Navigations>() {
-			public Navigations mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Navigations navigation=new Navigations();
-				navigation.setId(rs.getString("ID"));
-				navigation.setName(rs.getString("NAME"));
-				navigation.setUrl(rs.getString("URL"));
-				navigation.setType(rs.getString("TYPE"));
-				navigation.setTarget(rs.getString("TARGET"));
-				navigation.setpId(rs.getString("PID"));
-				navigation.setpName(rs.getString("PNAME"));
-				navigation.setxPath(rs.getString("XPATH"));
-				navigation.setHasChild(rs.getString("HASCHILD"));
-				navigation.setVisible(rs.getInt("VISIBLE"));
-				return navigation;
+	public List<Groups> queryGroups(UserInfo userInfo) {
+		List<Groups> listGroups=jdbcTemplate.query(GROUPS_SELECT_STATEMENT, new RowMapper<Groups>() {
+			public Groups mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Groups group=new Groups(rs.getString("ID"),rs.getString("NAME"),0);
+
+				return group;
 			}
 		},userInfo.getId());
 		
-		_logger.debug("list Navigations "+listNavigations);
-		
-		return listNavigations;
+		_logger.debug("list Groups  "+listGroups);
+		return listGroups;
 	}
-	
-	public List<Roles> queryRoles(UserInfo userInfo) {
-		List<Roles> listRoles=jdbcTemplate.query(ROLES_SELECT_STATEMENT, new RowMapper<Roles>() {
-			public Roles mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Roles role=new Roles();
-				role.setId(rs.getString("ID"));
-				role.setName(rs.getString("NAME"));
-				return role;
-			}
-		},userInfo.getId());
-		
-		_logger.debug("list Roles  "+listRoles);
-		return listRoles;
-	}
-	
-	
-    
-    /**
-     * Granted Authority And Navs by userInfo
-     * @param userInfo
-     * @return ArrayList<GrantedAuthority> 
-     */
-	public ArrayList<GrantedAuthority> grantAuthorityAndNavs(UserInfo userInfo){
-    	//call grantAuthority
-		ArrayList<GrantedAuthority> grantedAuthority = grantAuthority(userInfo);
-		//call grantNavs
-		grantNavs(userInfo);
-		
-		return grantedAuthority;
-    }
     
     /**
      * grant Authority by userinfo
@@ -310,35 +266,19 @@ public abstract class AbstractAuthenticationRealm{
      */
 	public ArrayList<GrantedAuthority> grantAuthority(UserInfo userInfo){
     	//query roles for user
-    	List<Roles> listRoles=queryRoles(userInfo);
+		List<Groups> listGroups=queryGroups(userInfo);
     	
     	//set role for spring security
 		ArrayList<GrantedAuthority> grantedAuthority = new ArrayList<GrantedAuthority>();
 		grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
-		grantedAuthority.add(new SimpleGrantedAuthority("ORDINARY_USER"));
-		for(Roles role :listRoles){
-			grantedAuthority.add(new SimpleGrantedAuthority(role.getId()));
+		for(Groups group :listGroups){
+			grantedAuthority.add(new SimpleGrantedAuthority(group.getId()));
 		}
 		_logger.debug("Authority : "+grantedAuthority);
 		
-		WebContext.setRoles(listRoles);
 		return grantedAuthority;
     }
-    
-
-    /**
-     * grant Navs by userinfo
-     * @param userInfo
-     * @return List<Menus>
-     */
-	public List<Navigations> grantNavs(UserInfo userInfo){
-    	//query menus for user
-    	List<Navigations> listNavs =queryNavs(userInfo);
-		WebContext.setNavigations(listNavs);
-		return listNavs;
-    }
-    
-
+ 
 	   /**
      * login log write to log db
      * @param uid

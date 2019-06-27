@@ -26,6 +26,13 @@ public class Groups extends JpaBaseDomain implements Serializable{
 		this.id = id;
 	}
 
+	public Groups(String id, String name, int isdefault) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.isdefault = isdefault;
+	}
+
 	public String getName(){
 		return name;
 	}
@@ -34,6 +41,14 @@ public class Groups extends JpaBaseDomain implements Serializable{
 		this.name = name;
 	}
 	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public int getIsdefault(){
 		return isdefault;

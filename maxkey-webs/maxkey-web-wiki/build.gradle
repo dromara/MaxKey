@@ -9,7 +9,7 @@ eclipse {
 		component {
       
       	//define context path, default to project folder name
-      	contextPath = 'wiki'
+      	contextPath = 'maxkey-wiki'
       
 		}	
     

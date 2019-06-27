@@ -1,5 +1,10 @@
 package org.maxkey.domain;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
@@ -11,66 +16,79 @@ import org.maxkey.exception.PasswordPolicyException;
  *
  */
 
-
+@Table(name = "PASSWORD_POLICY")  
 public class PasswordPolicy extends JpaBaseDomain implements java.io.Serializable {
 	
 	private static final long serialVersionUID = -4797776994287829182L;
-	
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
 	String id;
 	/**
 	 * minimum password lengths
 	 */
 	@NotNull
+	@Column
 	private int minLength;
 	/**
 	 * maximum password lengths
 	 */
 	@NotNull
+	@Column
 	private int maxLength;
 	/**
 	 * least lowercase letter
 	 */
 	@NotNull
+	@Column
 	private int lowerCase;
 	/**
 	 * least  uppercase letter
 	 */
 	@NotNull
+	@Column
 	private int upperCase;
 	/**
 	 * inclusion of numerical digits
 	 */
 	@NotNull
+	@Column
 	private int digits;
 	/**
 	 * inclusion of special characters
 	 */
 	@NotNull
+	@Column
 	private int specialChar;
 	/**
 	 * correct password attempts
 	 */
 	@NotNull
+	@Column
 	private int attempts;
 	/**
 	 * attempts lock Duration
 	 */
 	@NotNull
+	@Column
 	private int duration;
 	/**
 	 * require users to change passwords periodically
 	 */
+	@Column
 	private int expiration;
 	
 	/**
 	 * 0   no
 	 * 1   yes
 	 */
+	@Column
 	private int username;
 	
 	/**
 	 * not include password list
 	 */
+	@Column
 	private String simplePasswords;
 
 

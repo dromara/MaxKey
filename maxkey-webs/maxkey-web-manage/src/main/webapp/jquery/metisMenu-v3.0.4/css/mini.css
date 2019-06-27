@@ -1,0 +1,55 @@
+.wrap {
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+}
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  border-right: 1px solid #b5b5b5;
+}
+.nav-mini {
+  width: 50px;
+}
+.nav-mini ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  background: #fbfbfb;
+}
+.nav-mini li {
+  position: relative;
+}
+.nav-mini li, .nav-mini a {
+  display: block;
+}
+.nav-mini a {
+  padding: 10px 5px;
+  text-decoration: none;
+  color: #808080;
+}
+.nav-mini a .title {
+  display: none;
+}
+.nav-mini .metismenu .collapse, .nav-mini .metismenu .collapsing {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 160px;
+}
+.nav-mini .metismenu .collapse .collapse, .nav-mini .metismenu .collapse .collapsing {
+  left: 0;
+  top: auto;
+}
+.nav-mini .metismenu > li {
+  border-bottom: 1px solid #b5b5b5;
+}
+.nav-mini .metismenu > li > a {
+  text-align: center;
+}
+.content {
+  padding-left: 60px;
+  background: #fff;
+}

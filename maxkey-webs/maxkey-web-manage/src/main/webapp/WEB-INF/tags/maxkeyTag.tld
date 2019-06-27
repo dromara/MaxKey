@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+                        "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>
+	<tlibversion>2.0</tlibversion>
+	<jspversion>1.2</jspversion>
+	<shortname>platformTag</shortname>
+	<uri>www.connsec.com</uri>
+	<tag>
+		<name>Base</name>
+		<tagclass>org.maxkey.web.tag.BaseTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+	<tag>
+		<name>BasePath</name>
+		<tagclass>org.maxkey.web.tag.BasePathTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+	<tag>
+		<name>GenId</name>
+		<tagclass>org.maxkey.web.tag.GenIdTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+	<tag>
+		<name>Message</name>
+		<tagclass>org.maxkey.web.tag.MessageTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+	<tag>
+		<name>Date</name>
+		<tagclass>org.maxkey.web.tag.DateTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>name</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>format</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>Browser</name>
+		<tagclass>org.maxkey.web.tag.BrowserTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>version</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>Username</name>
+		<tagclass>org.maxkey.web.tag.UsernameTag</tagclass>
+		<bodycontent>empty</bodycontent>
+	</tag>
+	
+	<tag>
+		<description>Retrieves the message with the given code, or text if code isn't resolvable.
+		The HTML escaping flag participates in a page-wide or application-wide setting
+		(i.e. by HtmlEscapeTag or a "defaultHtmlEscape" context-param in web.xml).</description>
+		<name>Locale</name>
+		<tag-class>org.maxkey.web.tag.LocaleTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>A MessageSourceResolvable argument (direct or through JSP EL).
+			Fits nicely when used in conjunction with Spring's own validation error classes
+			which all implement the MessageSourceResolvable interface. For example, this
+			allows you to iterate over all of the errors in a form, passing each error
+			(using a runtime expression) as the value of this 'message' attribute, thus
+			effecting the easy display of such error messages.</description>
+			<name>message</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The code (key) to use when looking up the message.
+			If code is not provided, the text attribute will be used.</description>
+			<name>code</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Set optional message arguments for this tag, as a (comma-)
+			delimited String (each String argument can contain JSP EL), an Object array
+			(used as argument array), or a single Object (used as single argument).
+			You can additionally use nested spring:argument tags.</description>
+			<name>arguments</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The separator character to be used for splitting the
+			arguments string value; defaults to a 'comma' (',').</description>
+			<name>argumentSeparator</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Default text to output when a message for the given code
+			could not be found. If both text and code are not set, the tag will
+			output null.</description>
+			<name>text</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The string to use when binding the result to the page,
+			request, session or application scope. If not specified, the result
+			gets outputted to the writer (i.e. typically directly to the JSP).</description>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The scope to use when exporting the result to a variable.
+			This attribute is only used when var is also set. Possible values are
+			page, request, session and application.</description>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Set HTML escaping for this tag, as boolean value.
+			Overrides the default HTML escaping setting for the current page.</description>
+			<name>htmlEscape</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Set JavaScript escaping for this tag, as boolean value.
+			Default is 'false'.</description>
+			<name>javaScriptEscape</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>PathVariable</name>
+		<tagclass>org.maxkey.web.tag.PathVariableTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>index</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>Parameter</name>
+		<tagclass>org.maxkey.web.tag.ParameterTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>Grid</name>
+		<tagclass>org.maxkey.web.tag.GridTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>url</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>multiselect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onSelect</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>resize</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rowLimit</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rowList</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>	
+	
+	<tag>
+		<name>Column</name>
+		<tagclass>org.maxkey.web.tag.ColumnTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<attribute>
+			<name>field</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>hidden</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sortable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>formatter</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>	
+	
+	<tag>
+		<name>Dialog</name>
+		<tagclass>org.maxkey.web.tag.DialogTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>url</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>text</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+
+	<tag>
+		<name>Tree</name>
+		<tagclass>org.maxkey.web.tag.TreeTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>url</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>rootId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onClick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onDblClick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>checkbox</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

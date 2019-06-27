@@ -1,18 +1,15 @@
-<!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml">
 <%@ page   language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<%@ page   import="org.springframework.security.core.AuthenticationException" %>
-<%@ page   import="org.springframework.security.web.WebAttributes" %>
-<%@ page   import="org.maxkey.authz.oauth2.common.exceptions.UnapprovedClientAuthenticationException" %>
 <%@ page   import="org.maxkey.web.WebContext"%>
 <%@ taglib prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@ taglib prefix="fn"     	 	uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring"  	uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="s" 			uri="http://sso.maxkey.org/tags" %> 
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
 <%if(WebContext.getUserInfo() != null) {%>
 	<script type="text/javascript">window.top.location.href="<s:Base />/forwardindex";
 <%}%>
-<head>
 <jsp:include page="layout/header.jsp"></jsp:include>
 <jsp:include page="layout/common.cssjs.jsp"></jsp:include>
 <c:if test="${'true'==isKerberos}"> 

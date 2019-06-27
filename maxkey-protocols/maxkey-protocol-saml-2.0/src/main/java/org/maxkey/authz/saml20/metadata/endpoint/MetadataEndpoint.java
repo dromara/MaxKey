@@ -7,7 +7,6 @@ import org.apache.commons.lang.Validate;
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.authz.saml20.metadata.MetadataGenerator;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
-import org.maxkey.dao.service.Saml20MetadataService;
 import org.maxkey.domain.Saml20Metadata;
 import org.maxkey.web.WebContext;
 import org.opensaml.common.xml.SAMLConstants;
@@ -48,9 +47,6 @@ public class MetadataEndpoint {
 	private String issuerEntityName;
 	
 	@Autowired
-	private Saml20MetadataService saml20MetadataService;
-	
-	@Autowired
 	@Qualifier("saml20Metadata")	
 	private Saml20Metadata saml20Metadata;
 	
@@ -59,10 +55,6 @@ public class MetadataEndpoint {
 	@RequestMapping(value = "/{appid}",produces = "application/xml")
 	public ModelAndView  metadata(HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("appid") String appId) {
-		
-		if(saml20Metadata==null){
-			saml20Metadata=saml20MetadataService.get(null);
-		}
 		
 		if(signingCredential==null){
 	        TrustResolver trustResolver = new TrustResolver();

@@ -3,6 +3,8 @@ package org.maxkey.web.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.config.ApplicationConfig;
@@ -17,6 +19,7 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,6 +45,10 @@ public class LoginEndpoint {
 	@Autowired
 	@Qualifier("jwtLoginService")
 	JwtLoginService jwtLoginService;
+	
+	@Autowired
+	@Qualifier("authenticationProvider")
+	RealmAuthenticationProvider authenticationProvider ;
 	
 	/**
 	 * init login
@@ -79,7 +86,6 @@ public class LoginEndpoint {
 			
 			modelAndView.addObject("isCaptcha", applicationConfig.getLoginConfig().isCaptcha());
 			modelAndView.addObject("sessionid", WebContext.getSession().getId());
-			modelAndView.addObject("jwtToken",jwtLoginService.buildLoginJwt());
 		}
 		//save  first protected url 
 		SavedRequest  firstSavedRequest = (SavedRequest)WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
@@ -96,4 +102,16 @@ public class LoginEndpoint {
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
+ 	
+ 	@RequestMapping(value={"/logon.do"})
+	public ModelAndView logon(@ModelAttribute("authentication") BasicAuthentication authentication) {
+ 		
+ 		authenticationProvider.authenticate(authentication);
+ 
+ 		if(WebContext.isAuthenticated()){
+ 			return WebContext.redirect("/main");
+		}else{
+			return WebContext.redirect("/login");
+		}
+ 	}
 }

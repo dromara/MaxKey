@@ -10,7 +10,6 @@ import org.maxkey.constants.STATUS;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.dao.service.RegistrationService;
-import org.maxkey.dao.service.RoleUserService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.Registration;
 import org.maxkey.domain.UserInfo;
@@ -49,10 +48,6 @@ public class RegistrationController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	@Autowired
-	@Qualifier("roleUserService")
-	RoleUserService roleUserService;
 	
 	
 	@RequestMapping(value={"/forward"})
@@ -149,9 +144,7 @@ public class RegistrationController {
 				userInfo.setPassword(password);
 				userInfo.setPasswordLastSetTime(DateUtils.format(new Date(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
 				userInfoService.insert(userInfo);
-	
-				roleUserService.insertTenantAdmin(userInfo.getId());
-				
+
 				registrationService.remove(id);
 				org.mybatis.spring.SqlSessionUtils.getSqlSession((org.apache.ibatis.session.SqlSessionFactory)WebContext.getBean("sqlSessionFactory")).commit(true);
 				modelAndView.addObject("activate", 1);

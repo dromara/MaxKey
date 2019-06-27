@@ -69,7 +69,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 	    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =new UsernamePasswordAuthenticationToken(
 	    		auth,
 				"PASSWORD",
-				authenticationRealm.grantAuthorityAndNavs(userInfo));
+				authenticationRealm.grantAuthority(userInfo));
 	    usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetails(WebContext.getRequest()));
 	    
     	return usernamePasswordAuthenticationToken;

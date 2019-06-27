@@ -1,10 +1,12 @@
-<%@ page 	language="java"   import="java.util.*" 	pageEncoding="UTF-8"%>
-<%@ taglib 	prefix="spring"   uri="http://www.springframework.org/tags" %>
-<%@ taglib 	prefix="s" uri="http://www.connsec.com/tags" %>
-<%@ taglib 	prefix="fmt"      uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib  prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
-
-		<script type="text/javascript">
+<%@ page   language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib prefix="s" 			uri="http://sso.maxkey.org/tags" %> 
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<jsp:include page="../../layout/header.jsp"></jsp:include>
+	<jsp:include page="../../layout/common.cssjs.jsp"></jsp:include>
+	<script type="text/javascript">
 			function beforeAction() {
 				$("label[for='maxLength']").html("");
 				$("label[for='specialChar']").html("");
@@ -29,92 +31,170 @@
 				return true;
 			}
 		</script>
-  </head>
-  
+</head>
+<body> 
+<div class="app header-default side-nav-dark">
+<div class="layout">
+	<div class="header navbar">
+		<jsp:include page="../../layout/top.jsp"></jsp:include>
+	</div>
+	
+	<div class="col-md-3 sidebar-nav side-nav" >
+ 		<jsp:include page="../../layout/sidenav.jsp"></jsp:include>
+	</div>
+	<div class="page-container">
+	
+	<div class="main-content">
+					<div class="container-fluid">
 
-			<form method="post" type="label" validate="true" action="<s:Base/>/config/passwordpolicy/update" id="actionForm" >
-				  <table width="980px"  class="datatable" >
-					<tbody>
-					<tr>
-						<th  width="170px" nowrap><s:Locale code="passwordpolicy.minlength" />：</th>
-						<td  width="310px" nowrap>
-						   
-						   		<input id="id" name="id" type="hidden" value="${model.id}"/>
-						   		<input type="text" id="minLength" name="minLength" class="int {required: true,digits:true,min:3}" title="" value="${model.minLength}" maxlength="2"/>
-						  
-							<b class="orange">*</b><label for="minLength"></label>
-						</td>
-						<th  width="170px"  nowrap><s:Locale code="passwordpolicy.maxlength" />：</th>
-						<td  width="310px" nowrap><input type="text" id="maxLength" name="maxLength" class="int {required: true,digits:true,range:[3,20]}" title="" value="${model.maxLength}" maxlength="2"/>
-							<b class="orange">*</b><label for="maxLength"></label>
-						</td>
-					</tr>
-					<tr>
-						<th><s:Locale code="passwordpolicy.lowercase" />：</th>
-						<td nowrap>	
-							<span class="intspan"><input type="text" id="lowerCase" name="lowerCase" class="int {required: true,digits:true}" title="" value="${model.lowerCase}" maxlength="2"/></span>
-							<b class="orange">*</b><label for="lowerCase"></label>
-						</td>
-						<th><s:Locale code="passwordpolicy.uppercase" />：</th>
-						<td nowrap>	
-							<span class="intspan"><input type="text" id="upperCase" name="upperCase" class="int {required: true,digits:true}" title="" value="${model.upperCase}" maxlength="2"/></span>
-							<b class="orange">*</b><label for="upperCase"></label>
-						</td>
-					</tr>
-					<tr>
-						<th><s:Locale code="passwordpolicy.digits" />：</th>
-						<td nowrap>	
-							<span class="intspan"><input type="text" id="digits" name="digits" class="int {required: true,digits:true}" title="" value="${model.digits}" maxlength="2"/></span>
-							<b class="orange">*</b><label for="digits"></label>
-						</td>
-						<th><s:Locale code="passwordpolicy.specialchar" />：</th>
-						<td nowrap>	
-							<span class="intspan"><input type="text" id="specialChar" name="specialChar" class="int {required: true,digits:true}" title="" value="${model.specialChar}" maxlength="2"/></span>
-							<b class="orange">*</b><label for="specialChar"></label>
-						</td>
-					</tr>
-					<tr>
-						<th><s:Locale code="passwordpolicy.attempts" />：</th>
-						<td nowrap>	
-							<span class="intspan"><input type="text" id="attempts" name="attempts" class="int {required: true,digits:true}" title="" value="${model.attempts}" maxlength="2"/></span>
-							<b class="orange">*</b><label for="attempts"></label>
-						</td>
-						<th><s:Locale code="passwordpolicy.duration" />(Unit:Hour)：</th>
-						<td nowrap>	
-							<span class="intspan"><input type="text" id="duration" name="duration" class="int {required: true,digits:true}" title="" value="${model.duration}"/></span>
-							<b class="orange">*</b><label for="duration"></label>
-						</td>
-					</tr>
-					<tr>
-						
-						<th><s:Locale code="passwordpolicy.expiration" />(Unit:Day)：</th>
-						<td nowrap>	
-							<span class="intspan"><input type="text" id="expiration" name="expiration" class="int {required: true,digits:true}" title="" value="${model.expiration}" maxlength="2"/></span>
-							<b class="orange">*</b><label for="expiration"></label>
-						</td>
-						<th><s:Locale code="passwordpolicy.username" />：</th>
-						<td nowrap>	
-								<select  id="username" name="username"  class="select_t">
-									<option  <c:if test="${1==model.username}">selected</c:if>  value="1"><s:Locale code="common.text.status.3"/></option>
-									<option  <c:if test="${0==model.username}">selected</c:if>  value="0"><s:Locale code="common.text.status.4"/></option>
-								</select>
-								<label for="username"></label>
-							</td>
-					</tr>
-					<tr>
-						<th><s:Locale code="passwordpolicy.simplepasswords" />：</th>
-						<td nowrap colspan="3">	
-							<span class="intspan">
-								<textarea id="simplePasswords" name="simplePasswords" rows="6" cols="80">${model.simplePasswords}</textarea>
-							</span>
-							<b class="orange">*</b><label for="simplePasswords"></label>
-						</td>
-						
-					</tr>
-				
-					</tbody>
-				  </table>
-			<div class="btm btm_btn">
-				<input class="button"  type="button"    id="submitBtn" value="<s:Locale code="button.text.save" />"/>
-			</div>
-		</form>
+						<div class="breadcrumb-wrapper row">
+							<div class="col-12 col-lg-3 col-md-6">
+								<h4 class="page-title">Dashboard 2</h4>
+							</div>
+							<div class="col-12 col-lg-9 col-md-6">
+								<ol class="breadcrumb float-right">
+									<li><a href="index.html">Dashboard</a></li>
+									<li class="active">/ Dashboard 2</li>
+								</ol>
+							</div>
+						</div>
+
+					</div>
+
+
+					<div class="col-12 grid-margin">
+						<div class="card">
+							<div class="card-header border-bottom">
+								<h4 class="card-title">Horizontal Two column</h4>
+							</div>
+							<div class="card-body">
+								<form  method="post" type="label" validate="true" action="<s:Base/>/config/passwordpolicy/update" id="actionForm" >
+									<p class="card-description">Personal info</p>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.minlength" />：</label>
+												<div class="col-sm-9">
+													<input id="id" name="id" type="hidden" value="${model.id}"/>
+						   							<input  class="form-control" type="text" id="minLength" name="minLength"  value="${model.minLength}" />
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.maxlength" />：</label>
+												<div class="col-sm-9">
+													<input  class="form-control" type="text" id="maxLength" name="maxLength" value="${model.maxLength}" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.lowercase" />：</label>
+												<div class="col-sm-9">
+													<input  class="form-control" type="text" id="lowerCase" name="lowerCase"  value="${model.lowerCase}" />
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.uppercase" />：</label>
+												<div class="col-sm-9">
+													<input  class="form-control" type="text" id="upperCase" name="upperCase" value="${model.upperCase}" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.digits" />：</label>
+												<div class="col-sm-9">
+													<input  class="form-control" type="text" id="digits" name="digits" value="${model.digits}"/>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3"><s:Locale code="passwordpolicy.specialchar" />：</label>
+												<div class="col-sm-9">
+													<input   class="form-control" type="text" id="specialChar" name="specialChar"  value="${model.specialChar}" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.attempts" />：</label>
+												<div class="col-sm-9">
+													<input  class="form-control" type="text" id="attempts" name="attempts" value="${model.attempts}" />
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.duration" />(Unit:Hour)：</label>
+												<div class="col-sm-9">
+													<input  class="form-control" type="text" id="duration" name="duration" value="${model.duration}"/>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.expiration" />(Unit:Day)：</label>
+												<div class="col-sm-9">
+													<input  class="form-control" type="text" id="expiration" name="expiration"  value="${model.expiration}" />
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.username" />：</label>
+												<div class="col-sm-9">
+													<select  class="form-control"   id="username" name="username"  >
+														<option  <c:if test="${1==model.username}">selected</c:if>  value="1"><s:Locale code="common.text.status.3"/></option>
+														<option  <c:if test="${0==model.username}">selected</c:if>  value="0"><s:Locale code="common.text.status.4"/></option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group m-b-20">
+												<label   style="float: left;" for="simplePasswords"><s:Locale code="passwordpolicy.simplepasswords" />：</label>
+												<textarea id="simplePasswords" name="simplePasswords"  class="form-control" >${model.simplePasswords}</textarea>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-3">
+											<button type="submit" class="button btn-primary btn btn-common btn-block mr-3"    id="submitBtn" ><s:Locale code="button.text.save" /></button>
+										</div>
+									</div>
+									
+								</form>
+							</div>
+						</div>
+					</div>
+					<footer class="content-footer">
+		<jsp:include page="../../layout/footer.jsp"></jsp:include>
+	</footer>
+
+	</div>
+	
+	</div>
+</div>
+
+<div id="preloader">
+<div class="loader" id="loader-1"></div>
+</div>
+
+</body>
+</html>

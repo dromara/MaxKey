@@ -35,7 +35,7 @@ public class PasswordPolicyController {
 		 */
 		@RequestMapping(value={"/forward"})
 		public ModelAndView sysConfig(){
-			PasswordPolicy passwordPolicy = passwordPolicyService.get("");
+			PasswordPolicy passwordPolicy = passwordPolicyService.get("1");
 			return new ModelAndView("config/passwordpolicy/passwordpolicy","model",passwordPolicy);
 		}
 		

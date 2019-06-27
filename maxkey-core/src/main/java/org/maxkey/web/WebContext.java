@@ -1,7 +1,6 @@
 package org.maxkey.web;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.config.ApplicationConfig;
-import org.maxkey.domain.Navigations;
-import org.maxkey.domain.Roles;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringGenerator;
@@ -53,58 +50,6 @@ public final class WebContext {
 	public static UserInfo getUserInfo() {
 		return ((UserInfo)getAttribute(WebConstants.CURRENT_USER));
 	}
-	
-
-	/**
-	 * set current login user's can access menus list to session
-	 * @see WebConstants.CURRENT_USER_MENUS
-	 * @param listMenus
-	 */
-	public static void setNavigations(List<Navigations> listNavigations) {
-		 setAttribute(WebConstants.CURRENT_USER_NAVIGATIONS,listNavigations);
-	}
-	
-	/**
-	 * get current login user's can access menus list from session
-	 * @see WebConstants.CURRENT_USER_MENUS
-	 * @return List<Menus>
-	 */
-	@SuppressWarnings("unchecked")
-	public static List<Navigations> getNavigations() {
-		List<Navigations> listNavigations=null;
-		if(getAttribute(WebConstants.CURRENT_USER_NAVIGATIONS)==null){
-			UserInfo userInfo =getUserInfo();
-			if(userInfo!=null){
-				//MenusService menusService = (MenusService)getBean("menusService");
-				//listMenus=menusService.getMenusByUserId(userInfo.getId());
-				setNavigations(listNavigations);
-			}
-		}else{
-			listNavigations = (List<Navigations>)getAttribute(WebConstants.CURRENT_USER_NAVIGATIONS);
-		}
-		return listNavigations;
-	}
-	
-	/**
-	 * set current login user's roles to session
-	 * @see WebConstants.CURRENT_USER_SYSTEM_ROLES
-	 * @param listRoles
-	 */
-	public static void setRoles(List<Roles> listRoles) {
-		 setAttribute(WebConstants.CURRENT_USER_SYSTEM_ROLES,listRoles);
-	}
-	
-	
-	/**
-	 * get current login user has Roles from session
-	 * @see WebConstants.CURRENT_USER_SYSTEM_ROLES
-	 * @return List<Roles>
-	 */
-	@SuppressWarnings("unchecked")
-	public static List<Roles> getRoles() {
-		List<Roles> list = (List<Roles>)getAttribute(WebConstants.CURRENT_USER_SYSTEM_ROLES);
-		return list;
-	}
  	
 	
 	/**
@@ -138,7 +83,7 @@ public final class WebContext {
 	    UserInfo loadeduserInfo = authenticationRealm.loadUserInfo(username,"");
 	    if (loadeduserInfo != null)
 	    {
-	      ArrayList<GrantedAuthority> grantedAuthority = authenticationRealm.grantAuthorityAndNavs(loadeduserInfo);
+	      ArrayList<GrantedAuthority> grantedAuthority = authenticationRealm.grantAuthority(loadeduserInfo);
 	      setUserInfo(loadeduserInfo);
 	      UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loadeduserInfo.getUsername(), loadeduserInfo.getPassword(), grantedAuthority);
 	      
