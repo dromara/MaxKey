@@ -9,11 +9,12 @@ include 'maxkey-core'
 include 'maxkey-dao'
 include 'maxkey-jose-jwt'
 
+include 'maxkey-authentications'
+
 //Protocol
 //include 'maxkey-protocols'
 include 'maxkey-protocols:maxkey-protocol-oauth-2.0'
 include 'maxkey-protocols:maxkey-protocol-saml-2.0'
-
 include 'maxkey-protocols:maxkey-protocol-authorize'
 include 'maxkey-protocols:maxkey-protocol-desktop'
 include 'maxkey-protocols:maxkey-protocol-extendapi'
@@ -22,12 +23,9 @@ include 'maxkey-protocols:maxkey-protocol-ltpa'
 include 'maxkey-protocols:maxkey-protocol-tokenbased'
 include 'maxkey-protocols:maxkey-protocol-cas'
 
-
-include 'maxkey-authentications'
-
 //include 'maxkey-webs'
-include 'maxkey-webs:maxkey-web-maxkey'
+include 'maxkey-web-maxkey'
 //IM
-include 'maxkey-webs:maxkey-web-manage'
+include 'maxkey-web-manage'
 
 
