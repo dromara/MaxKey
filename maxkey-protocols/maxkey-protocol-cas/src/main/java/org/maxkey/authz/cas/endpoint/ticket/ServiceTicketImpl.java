@@ -5,7 +5,6 @@ import org.maxkey.domain.apps.CasDetails;
 import org.springframework.security.core.Authentication;
 
 import javax.persistence.Column;
-import javax.persistence.Lob;
 
 /**
  * Domain object representing a Service Ticket. A service ticket grants specific
@@ -25,7 +24,7 @@ public class ServiceTicketImpl extends AbstractTicket {
     /**
      * The service this ticket is valid for.
      */
-    @Lob
+
     @Column(name = "SERVICE", nullable = false, length = Integer.MAX_VALUE)
     private Service service;
 

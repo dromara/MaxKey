@@ -14,7 +14,8 @@ package org.maxkey.authz.oauth2.common;
 
 import java.io.Serializable;
 
-import org.codehaus.jackson.annotate.JsonValue;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 
 /**
  * @author Dave Syer

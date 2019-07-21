@@ -55,36 +55,36 @@
 							<div class="card-body">
 							
 	<div id="tool_box">
-		<table  class="datatable">
+		<table   class="table table-bordered">
 			<tr>
 				<td  width="120px">
 			 		 <s:Locale code="userinfo.username"/>:
 				</td>
 				<td  width="375px">
 					<form id="basic_search_form">
-				 			<input name="username" type="text" style ="width:150px">
-				 			<input class="button primary"  id="searchBtn" type="button" size="50" value="<s:Locale code="button.text.search"/>">
-				 			<input class="button"  id="advancedSearchExpandBtn" type="button" size="50"  value="<s:Locale code="button.text.expandsearch"/>" expandValue="<s:Locale code="button.text.expandsearch"/>"  collapseValue="<s:Locale code="button.text.collapsesearch"/>">
+				 			<input  class="form-control"  name="username" type="text" style ="width:150px;float:left;">
+				 			<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<s:Locale code="button.text.search"/>">
+				 			<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<s:Locale code="button.text.expandsearch"/>" expandValue="<s:Locale code="button.text.expandsearch"/>"  collapseValue="<s:Locale code="button.text.collapsesearch"/>">
 					 	</form>
 				</td>
 				<td colspan="2"> 
 					 <div id="tool_box_right">
-					 	<input class="button window" id="changepwdBtn" type="button" value="<s:Locale code="button.text.changepassword"/>" 
+					 	<input class="button btn btn-warning mr-3 window" id="changepwdBtn" type="button" value="<s:Locale code="button.text.changepassword"/>" 
 						 		    wurl="<s:Base/>/users/forwardChangePassword" wwidth="600px" wheight="250px" />
 						 		    
-						 <input class="button" id="addBtn" type="button" value="<s:Locale code="button.text.add"/>" 
+						 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<s:Locale code="button.text.add"/>" 
 						 		    wurl="<s:Base/>/users/forwardSelectUserType"
 						 		    wwidth="960"
 						 		    wheight="600"
 					 		    	target="window">	    	
 					 		    	
-					 	<input class="button"  id="modifyBtn" type="button" value="<s:Locale code="button.text.edit"/>" 
+					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<s:Locale code="button.text.edit"/>" 
 					 				wurl="<s:Base/>/users/forwardUpdate"
 					 				wwidth="960"
 						 		    wheight="600"
 					 		    	target="window"> 
 					 		    	
-					 	<input class="button"  id="deleteBtn" type="button" value="<s:Locale code="button.text.delete"/>"
+					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<s:Locale code="button.text.delete"/>"
 					 				wurl="<s:Base/>/users/delete" />
 					</div>
 				</td>
@@ -96,29 +96,30 @@
  	
  	<div id="advanced_search">
  		<form id="advanced_search_form">
- 			<table   class="datatable">
+ 			<table    class="table table-bordered">
 	 			<tr>
 	 				<td width="120px"><s:Locale code="userinfo.displayName"/></td>
 		 			<td width="360px">
-		 				<input name="displayName" type="text" >
+		 				<input  class="form-control"  name="displayName" type="text" >
 		 			</td>
-		 			<td width="120px"><s:Locale code="userinfo.department"/></td>
+		 			<td width="120px"><s:Locale code="userinfo.employeeNumber"/></td>
 		 			<td width="360px">
-			 			<input type="text" style="display:none;" id="departmentId" name="departmentId"  title="" value=""/>
-						<input style="width:70%"  type="text" id="department" name="department"  title="" value=""/>
-			 			<s:Dialog text="button.text.select" title="department" url="/orgs/orgsSelect/deptId/department" width="300" height="400" />
-			 		</td>
+						<input class="form-control"  type="text" id="employeeNumber" name="employeeNumber"  title="" value=""/>
+			 			</td>
+		 			
 			 </tr>
 			 <tr>
-					<td width="120px"><s:Locale code="userinfo.employeeNumber"/></td>
+					<td width="120px"><s:Locale code="userinfo.department"/></td>
 		 			<td width="360px">
-						<input type="text" id="employeeNumber" name="employeeNumber"  title="" value=""/>
-			 			</td>
+			 			<input  class="form-control"  type="text" style="display:none;" id="departmentId" name="departmentId"  title="" value=""/>
+						<input  class="form-control"  style="width:70%;;float:left;"  type="text" id="department" name="department"  title="" value=""/>
+			 			<input class="window button btn btn-secondary mr-3 "  type="button"  size="50" value="<s:Locale code="button.text.select"/>" title="department" wurl="/orgs/orgsSelect/deptId/department" wwidth="300" wheight="400" />
+			 		</td>
 	 				<td width="120px"><s:Locale code="userinfo.userType"/></td>
 		 			<td width="360px">
-		 				<input class="userTypeId" name="userType" type="text" style="display:none;"  >
-		 				<input class="userTypeName" name="userTypeName" type="text" style="width:70%"  >
-		 				<s:Dialog text="button.text.select" title="UserType" url="/usertype//selectUserTypeList" width="700" height="500" />
+		 				<input class="form-control"  class="userTypeId" name="userType" type="text" style="display:none;"  >
+		 				<input class="form-control"  class="userTypeName" name="userTypeName" type="text" style="width:70%;;float:left;"  >
+		 				<input class="window button btn btn-secondary mr-3 " type="button"   size="50" value="<s:Locale code="button.text.select"/>" title="UserType" wurl="/usertype//selectUserTypeList" wwidth="700" wheight="500" />
 		 			</td>
 		 			
 			 </tr>

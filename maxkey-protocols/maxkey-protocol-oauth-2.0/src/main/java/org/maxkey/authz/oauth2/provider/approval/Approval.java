@@ -19,11 +19,12 @@ package org.maxkey.authz.oauth2.provider.approval;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.maxkey.authz.oauth2.common.util.JsonDateDeserializer;
 import org.maxkey.authz.oauth2.common.util.JsonDateSerializer;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author Dave Syer

@@ -10,9 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.maxkey.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Crystal.Sea

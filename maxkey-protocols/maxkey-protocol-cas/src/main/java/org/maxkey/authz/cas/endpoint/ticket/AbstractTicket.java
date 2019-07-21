@@ -7,8 +7,6 @@ import org.springframework.util.Assert;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.MappedSuperclass;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
@@ -28,7 +26,6 @@ import java.time.ZonedDateTime;
  * @author Scott Battaglia
  * @since 3.0.0
  */
-@MappedSuperclass
 public abstract class AbstractTicket implements Ticket {
 
     private static final long serialVersionUID = -8506442397878267555L;

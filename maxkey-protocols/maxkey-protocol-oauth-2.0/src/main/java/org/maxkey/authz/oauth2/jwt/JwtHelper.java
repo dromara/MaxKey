@@ -23,12 +23,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.CharBuffer;
 
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.JsonToken;
 import org.maxkey.authz.oauth2.jwt.crypto.sign.SignatureVerifier;
 import org.maxkey.authz.oauth2.jwt.crypto.sign.Signer;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 
 /**
  * @author Luke Taylor

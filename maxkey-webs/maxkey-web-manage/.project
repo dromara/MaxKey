@@ -3,6 +3,13 @@
 	<name>maxkey-web-manage</name>
 	<comment>maxkey-web-manage</comment>
 	<projects>
+		<project>maxkey-protocol-oauth-2.0</project>
+		<project>maxkey-protocol-authorize</project>
+		<project>maxkey-protocol-saml-2.0</project>
+		<project>maxkey-dao</project>
+		<project>maxkey-core</project>
+		<project>maxkey-jose-jwt</project>
+		<project>maxkey-client-sdk</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

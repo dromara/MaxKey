@@ -26,18 +26,8 @@ include 'maxkey-protocols:maxkey-protocol-cas'
 include 'maxkey-authentications'
 
 //include 'maxkey-webs'
-include 'maxkey-webs:maxkey-web-kerberos'
 include 'maxkey-webs:maxkey-web-maxkey'
 //IM
 include 'maxkey-webs:maxkey-web-manage'
-//Wiki
-include 'maxkey-webs:maxkey-web-wiki'
 
-//demo
-//include 'maxkey-demos'
-include 'maxkey-demos:maxkey-demo-cas'
-include 'maxkey-demos:maxkey-demo-ltpa'
-include 'maxkey-demos:maxkey-demo-oauth'
-include 'maxkey-demos:maxkey-demo-saml'
-include 'maxkey-demos:maxkey-demo-tokenbase'
-include 'maxkey-demos:maxkey-demo-jwt'
+
