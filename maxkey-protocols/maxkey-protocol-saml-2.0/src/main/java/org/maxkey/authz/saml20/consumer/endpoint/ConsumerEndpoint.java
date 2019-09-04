@@ -76,7 +76,7 @@ public class ConsumerEndpoint {
 	private String assertionConsumerServiceURL;
 	
 	@Autowired
-	@Qualifier("bindingAdpater")
+	@Qualifier("extractRedirectBindingAdapter")
 	private ExtractBindingAdapter extractBindingAdapter;
 
 	@Autowired

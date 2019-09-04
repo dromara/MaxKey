@@ -19,10 +19,6 @@
  */
 package org.maxkey.crypto.jose;
 
-import javax.persistence.Basic;
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
-
 import com.google.common.base.Strings;
 import com.nimbusds.jose.JWEAlgorithm;
 
@@ -33,7 +29,7 @@ import com.nimbusds.jose.JWEAlgorithm;
  * @author jricher
  *
  */
-@Embeddable
+
 public class JWEAlgorithmEmbed {
 
 	public static final JWEAlgorithmEmbed NONE = getForAlgorithmName("none");
@@ -62,7 +58,7 @@ public class JWEAlgorithmEmbed {
 	 * Get the name of this algorithm, return null if no algorithm set.
 	 * @return
 	 */
-	@Basic
+
 	public String getAlgorithmName() {
 		if (algorithm != null) {
 			return algorithm.getName();
@@ -95,7 +91,6 @@ public class JWEAlgorithmEmbed {
 	/**
 	 * @return the algorithm
 	 */
-	@Transient
 	public JWEAlgorithm getAlgorithm() {
 		return algorithm;
 	}

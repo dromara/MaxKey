@@ -67,9 +67,9 @@ public class LoginEndpoint {
 	@Qualifier("userInfoService")
 	UserInfoService userInfoService;
 	
-	@Autowired
+	/*@Autowired
 	@Qualifier("wsFederationService")
-	WsFederationService wsFederationService;
+	WsFederationService wsFederationService;*/
 	
 	@Autowired
 	@Qualifier("authenticationProvider")
@@ -117,7 +117,7 @@ public class LoginEndpoint {
 			if(applicationConfig.getLoginConfig().isWsFederation()&&
 					StringUtils.isNotEmpty(wsFederationWA) && 
 					wsFederationWA.equalsIgnoreCase(WsFederationConstants.WSIGNIN)){
-				isAuthenticated=wsFederationService.login(wsFederationWA,wsFederationWResult,request);
+				//isAuthenticated=wsFederationService.login(wsFederationWA,wsFederationWResult,request);
 			}
 		}
 				

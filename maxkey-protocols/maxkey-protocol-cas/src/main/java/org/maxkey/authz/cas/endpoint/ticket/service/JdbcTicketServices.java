@@ -7,7 +7,7 @@ import java.sql.Types;
 import javax.sql.DataSource;
 
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
-import org.maxkey.authz.oauth2.common.util.SerializationUtils;
+import org.maxkey.util.SerializationUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

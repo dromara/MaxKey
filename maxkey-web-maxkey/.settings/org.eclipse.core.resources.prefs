@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/resources/templates/views/authorize/formbased_netease_163email_sso_submint.ftl=UTF-8
+encoding//src/main/resources/templates/views/authorize/formbased_redirect_post_submint.ftl=UTF-8
+encoding//src/main/resources/templates/views/profile/myProfile.ftl=UTF-8
 encoding/<project>=UTF-8

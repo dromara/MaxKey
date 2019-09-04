@@ -19,9 +19,6 @@
  */
 package org.maxkey.crypto.jose;
 
-import javax.persistence.Basic;
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
 
 import com.google.common.base.Strings;
 import com.nimbusds.jose.EncryptionMethod;
@@ -30,7 +27,7 @@ import com.nimbusds.jose.EncryptionMethod;
  * @author jricher
  *
  */
-@Embeddable
+
 public class JWEEncryptionMethodEmbed {
 
 	public static final JWEEncryptionMethodEmbed NONE  = getForAlgorithmName("none");
@@ -59,7 +56,7 @@ public class JWEEncryptionMethodEmbed {
 	 * Get the name of this algorithm, return null if no algorithm set.
 	 * @return
 	 */
-	@Basic
+
 	public String getAlgorithmName() {
 		if (algorithm != null) {
 			return algorithm.getName();
@@ -92,7 +89,7 @@ public class JWEEncryptionMethodEmbed {
 	/**
 	 * @return the algorithm
 	 */
-	@Transient
+
 	public EncryptionMethod getAlgorithm() {
 		return algorithm;
 	}

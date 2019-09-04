@@ -54,7 +54,7 @@ public class OneTimePasswordController {
 
 	@RequestMapping(value={"/timebased"})
 	public ModelAndView timebased(){
-		ModelAndView modelAndView=new ModelAndView("otp/timeBased");
+		ModelAndView modelAndView=new ModelAndView("safe/timeBased");
 		UserInfo userInfo=WebContext.getUserInfo();
 		String sharedSecret=passwordReciprocal.decoder(userInfo.getSharedSecret());
 		timeBasedKeyUriFormat.setSecret(sharedSecret);
@@ -84,7 +84,7 @@ public class OneTimePasswordController {
 
 	@RequestMapping(value={"/counterbased"})
 	public ModelAndView counterbased(){
-		ModelAndView modelAndView=new ModelAndView("otp/counterBased");
+		ModelAndView modelAndView=new ModelAndView("safe/counterBased");
 		UserInfo userInfo=WebContext.getUserInfo();
 		String sharedSecret=passwordReciprocal.decoder(userInfo.getSharedSecret());
 		counterBasedKeyUriFormat.setSecret(sharedSecret);
@@ -117,7 +117,7 @@ public class OneTimePasswordController {
 
 	@RequestMapping(value={"/hotp"})
 	public ModelAndView hotp(){
-		ModelAndView modelAndView=new ModelAndView("otp/hotp");
+		ModelAndView modelAndView=new ModelAndView("safe/hotp");
 		UserInfo userInfo=WebContext.getUserInfo();
 		String sharedSecret=passwordReciprocal.decoder(userInfo.getSharedSecret());
 		hotpKeyUriFormat.setSecret(sharedSecret);

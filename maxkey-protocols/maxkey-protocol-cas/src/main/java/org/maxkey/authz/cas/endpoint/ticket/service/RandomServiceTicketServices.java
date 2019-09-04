@@ -3,7 +3,6 @@ package org.maxkey.authz.cas.endpoint.ticket.service;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.maxkey.authz.cas.endpoint.ticket.generator.DefaultUniqueTicketIdGenerator;
-import org.maxkey.authz.oauth2.common.exceptions.InvalidGrantException;
 
 
 public abstract class RandomServiceTicketServices implements TicketServices {
@@ -39,11 +38,10 @@ public abstract class RandomServiceTicketServices implements TicketServices {
 		return ticketId;
 	}
 
-	public Ticket consumeTicket(String ticketId)
-			throws InvalidGrantException {
+	public Ticket consumeTicket(String ticketId) throws Exception{
 		Ticket  ticket = this.remove(ticketId);
 		if (ticket == null) {
-			throw new InvalidGrantException("Invalid authorization code: " + ticketId);
+			throw new Exception("Invalid authorization code: " + ticketId);
 		}
 		return ticket;
 	}

@@ -179,7 +179,13 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
 		
 		
-		Ticket storedTicket=ticketServices.consumeTicket(ticket);
+		Ticket storedTicket=null;
+		try {
+			storedTicket = ticketServices.consumeTicket(ticket);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
@@ -276,7 +282,12 @@ Response on ticket validation failure:
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
 		
 		
-		Ticket storedTicket=ticketServices.consumeTicket(ticket);
+		Ticket storedTicket=null;
+		try {
+			storedTicket = ticketServices.consumeTicket(ticket);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){

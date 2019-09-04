@@ -41,7 +41,10 @@ import javax.security.auth.x500.X500Principal;
 
 import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.asn1.DERObjectIdentifier;
+import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.X509Name;
+import org.bouncycastle.cert.X509v3CertificateBuilder;
+import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
 import org.bouncycastle.jce.PKCS10CertificationRequest;
 import org.bouncycastle.jce.PrincipalUtil;
 import org.bouncycastle.jce.X509Principal;
@@ -590,10 +593,14 @@ public final class X509CertUtils {
 			int iValidity, PublicKey publicKey, PrivateKey privateKey,
 			SignatureType signatureType) throws CryptoException {
 		// Holds certificate attributes
+		
+		
+
 		Hashtable<DERObjectIdentifier, String> attrs = new Hashtable<DERObjectIdentifier, String>();
 		Vector<DERObjectIdentifier> vOrder = new Vector<DERObjectIdentifier>();
 
 		// Load certificate attributes
+		/*
 		if (sCommonName != null) {
 			attrs.put(X509Name.CN, sCommonName);
 			vOrder.add(0, X509Name.CN);
@@ -627,7 +634,7 @@ public final class X509CertUtils {
 		if (sEmailAddress != null) {
 			attrs.put(X509Name.E, sEmailAddress);
 			vOrder.add(0, X509Name.E);
-		}
+		}*/
 
 		// Get an X509 Version 1 Certificate generator
 		X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
@@ -654,6 +661,14 @@ public final class X509CertUtils {
 		// Set the serial number
 		certGen.setSerialNumber(generateX509SerialNumber());
 
+		X509v3CertificateBuilder builder = new JcaX509v3CertificateBuilder(
+				new X500Name("issueDn"), 
+				generateX509SerialNumber(), 
+				new Date(System.currentTimeMillis()), 
+				new Date(System.currentTimeMillis()+ ((long) iValidity * 24 * 60 * 60 * 1000)), 
+				new X500Name("subjectDn"),
+				publicKey);
+		
 		try {
 			// Generate an X.509 certificate, based on the current issuer and
 			// subject

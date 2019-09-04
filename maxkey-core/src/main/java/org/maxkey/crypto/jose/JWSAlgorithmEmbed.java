@@ -19,10 +19,6 @@
  */
 package org.maxkey.crypto.jose;
 
-import javax.persistence.Basic;
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
-
 import com.google.common.base.Strings;
 import com.nimbusds.jose.JWSAlgorithm;
 
@@ -33,7 +29,7 @@ import com.nimbusds.jose.JWSAlgorithm;
  * @author jricher
  *
  */
-@Embeddable
+
 public class JWSAlgorithmEmbed {
 
 	public static final JWSAlgorithmEmbed NONE = getForAlgorithmName("none");
@@ -67,7 +63,7 @@ public class JWSAlgorithmEmbed {
 	 * Get the name of this algorithm, return null if no algorithm set.
 	 * @return
 	 */
-	@Basic
+
 	public String getAlgorithmName() {
 		if (algorithm != null) {
 			return algorithm.getName();
@@ -92,7 +88,7 @@ public class JWSAlgorithmEmbed {
 	/**
 	 * @return the algorithm
 	 */
-	@Transient
+
 	public JWSAlgorithm getAlgorithm() {
 		return algorithm;
 	}

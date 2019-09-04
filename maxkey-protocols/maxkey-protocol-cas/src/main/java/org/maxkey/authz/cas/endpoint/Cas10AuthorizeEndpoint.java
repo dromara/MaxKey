@@ -80,7 +80,13 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
 			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew
 			 ){
-		Ticket storedTicket=ticketServices.consumeTicket(ticket);
+		Ticket storedTicket=null;
+		try {
+			storedTicket = ticketServices.consumeTicket(ticket);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(storedTicket!=null){
 			return new Service10ResponseBuilder().success()

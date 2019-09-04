@@ -79,11 +79,6 @@ public class AppListController{
 			WebContext.setAttribute(app.getId(), app.getIcon());
 		}
 		
-		if(appList.size()%5>0){
-			for(int i=0;i<=appList.size()%5;i++){
-				appList.add(new UserApplications());
-			}
-		}
 		return appList;
 	}
 

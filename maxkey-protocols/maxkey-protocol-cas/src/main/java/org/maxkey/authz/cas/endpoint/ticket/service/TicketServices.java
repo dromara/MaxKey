@@ -1,7 +1,6 @@
 package org.maxkey.authz.cas.endpoint.ticket.service;
 
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
-import org.maxkey.authz.oauth2.common.exceptions.InvalidGrantException;
 
 public interface TicketServices {
 
@@ -21,6 +20,6 @@ public interface TicketServices {
 	 * @throws InvalidGrantException If the authorization code is invalid or expired.
 	 */
 	Ticket consumeTicket(String ticketId)
-			throws InvalidGrantException;
+			throws Exception;
 
 }
