@@ -18,13 +18,6 @@
 	        http://www.springframework.org/schema/mvc 
 	        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<!-- Static resources -->
-	<!-- js images css -->
-	<mvc:resources mapping="/jquery/**" location="/jquery/" />
-	<mvc:resources mapping="/images/**" location="/images/" />
-	<mvc:resources mapping="/css/**" location="/css/" />
-	<mvc:resources mapping="/js/**" location="/js/" />
-	
 	<!-- LocaleResolver -->
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
 		<property name="cookieDomain" value="#{applicationConfig.subDomainName}"/>

@@ -32,7 +32,7 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 	@Qualifier("applicationConfig")
 	private ApplicationConfig applicationConfig;
 	
-	static ConcurrentHashMap<String ,String >navigationsMap=null;
+	static  ConcurrentHashMap<String ,String >navigationsMap=null;
 	/*
 	 * 请求前处理
 	 *  (non-Javadoc)
@@ -42,9 +42,9 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 _logger.debug("PermissionAdapter preHandle");
 		 //加载定义的功能菜单地址
-		if(navigationsMap==null){
+		/*if(navigationsMap==null){
 			List<Navigations>   navigationsList=((NavigationsService)WebContext.getBean("navigationsService")).query(null);
-			navigationsMap=new ConcurrentHashMap<String ,String >();
+			navigationsMap=new  ConcurrentHashMap<String ,String >();
 			for(Navigations nav : navigationsList){
 				if(nav.getUrl()==null)continue;
 				if(nav.getUrl().endsWith("/")){
@@ -58,7 +58,7 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 		
 		UserInfo userInfo =WebContext.getUserInfo();//取得登录用户
 		
-		if(userInfo==null){//判断用户和角色，判断用户是否登录用户
+		if(userInfo==null||WebContext.getRoles()==null){//判断用户和角色，判断用户是否登录用户
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
 			dispatcher.forward(request, response);
 			return false;
@@ -76,7 +76,20 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 		}
 		
 		boolean hasNavAccess=true;
-
+		//菜单权限匹配
+		if(navigationsMap.containsKey(accessURI)){//判断当前访问URL地址是否需要进行权限校验
+			hasNavAccess=false;
+			for(Navigations nav : WebContext.getNavigations()){//获取当前登录用户拥有URL访问列表
+				String haveURL=nav.getUrl();
+				if(haveURL==null)continue;
+				if(!haveURL.endsWith("/")){haveURL="/"+haveURL+"/";}
+				if(haveURL.endsWith(accessURI)){
+					hasNavAccess=true;
+				}
+			}
+			_logger.debug("Access URI : "+accessURI+" , hasNavAccess "+hasNavAccess);
+			if(hasNavAccess)return true;
+		}
 		
 		/*	
 		boolean preHandler = super.preHandle(request, response, handler);

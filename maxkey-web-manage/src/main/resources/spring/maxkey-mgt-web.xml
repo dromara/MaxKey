@@ -22,13 +22,6 @@
     <!-- language select must remove -->
 	<mvc:annotation-driven />
 	
-	<!-- Static resources -->
-	<!-- js images css -->
-	<mvc:resources mapping="/jquery/**" location="/jquery/" />
-	<mvc:resources mapping="/images/**" location="/images/" />
-	<mvc:resources mapping="/css/**" location="/css/" />
-	<mvc:resources mapping="/js/**" location="/js/" />
-	
 	<!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
  	 @Controller and @Service. Make sure to set the correct base-package-->
  
@@ -42,6 +35,11 @@
 	<context:component-scan base-package="org.maxkey.web.endpoint" />
 	<context:component-scan base-package="org.maxkey.web.contorller" />
 	<context:component-scan base-package="org.maxkey.web.apps.contorller" />
+	<context:component-scan base-package="org.maxkey.web.endpoint" />
+	<context:component-scan base-package="org.maxkey.authn" />
+	<context:component-scan base-package="org.maxkey.dao" />
+	<context:component-scan base-package="org.maxkey.web" />
+	<context:component-scan base-package="org.maxkey.web.tag" />
 	
 	<!-- LocaleResolver -->
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
@@ -126,9 +124,6 @@
 		</property>
 	</bean>
 
-	<!-- View Resolver -->
-	<bean id="viewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/views/" p:suffix=".jsp" p:order="2" />
-	
 	<!-- upload file support -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     	<property name="maxUploadSize" value="4194304" />  
