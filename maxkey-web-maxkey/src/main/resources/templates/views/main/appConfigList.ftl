@@ -1,11 +1,3 @@
-<%@ page   language="java"  import="java.util.*"   pageEncoding="UTF-8"%>
-<%@ page   import="org.maxkey.domain.*"%> 
-<%@ page   import="org.maxkey.web.*"%>
-<%@ taglib 	prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib 	prefix="fmt"    uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib 	prefix="s" 		uri="http://sso.maxkey.org/tags" %>
-<%@ taglib 	prefix="c"      uri="http://java.sun.com/jsp/jstl/core"  %>
-<%@ taglib 	prefix="fn"     uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript">	
 $(function () {
 	$(".configUser").on("click",function(){
@@ -19,7 +11,7 @@ $(function () {
 </script>
 <%if(WebContext.getUserInfo().getGridList()==0) {%>
 <table class="datatable">
-	<c:forEach begin="1" end="${(fn:length(appList)+4)/5}" var="num">
+	<c:forEach begin="1" end="${(length(appList)+4)/5}" var="num">
 		<tr>
 			<c:forEach items="${appList}" var="app" begin="${(num-1)*5}" end="${5*num-1}">
 			<td align="left" nowrap  style="width:20%">
