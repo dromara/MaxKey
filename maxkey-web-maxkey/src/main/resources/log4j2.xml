@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>  
-<configuration status="INFO">  
+<configuration status="INFO"  monitorInterval="300">  
     <appenders>  
     	
         <Console name="consolePrint" target="SYSTEM_OUT">  
             <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss,SSS} [%t] %-5level %logger{36} - %msg%n" />  
         </Console>
    
-		<!-- 输出到文件，按天或者超过250MB分割  每天进行归档yyyy-MM-dd -->
-		<RollingFile name="RollingFile" fileName="${catalina.home}/logs/maxkey.log"    filePattern="${catalina.home}/logs/$${date:yyyy-MM-dd}/maxkey-%d{yyyy-MM-dd}-%i.log.gz">
+		<!-- 输出到文件，按天或者超过128MB分割  每天进行归档yyyy-MM-dd -->
+		<RollingFile name="RollingFile" fileName="logs/maxkey.log"    filePattern="logs/$${date:yyyyMMdd}/maxkey-%d{yyyy-MM-dd}-%i.log.gz">
 		    <!-- 需要记录的级别 -->
 		 	<!-- <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" /> -->
 		     <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n" />
 		     <Policies>
 		          <OnStartupTriggeringPolicy />
 		          <TimeBasedTriggeringPolicy />
-		          <SizeBasedTriggeringPolicy size="250 MB" />
+		          <SizeBasedTriggeringPolicy size="128 MB" />
+		          <DefaultRolloverStrategy max="100"/>
 		     </Policies>
 		</RollingFile>
 	 </appenders>  
