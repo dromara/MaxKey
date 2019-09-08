@@ -1,15 +1,9 @@
-<%@ page 	contentType="text/html; charset=UTF-8"%>
-<%@ page 	import="org.maxkey.domain.*"%> 
-<%@ page 	import="java.util.Map,java.util.LinkedHashMap"%>
-<%@ page 	import="org.maxkey.web.*"%>
-<%@ taglib  prefix="s"   		uri="http://sso.maxkey.org/tags" %>
-<%@ taglib  prefix="c"			uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML >
 <html>
 <head>
-	<jsp:include page="../layout/header.jsp"></jsp:include>
-	<jsp:include page="../layout/common.cssjs.jsp"></jsp:include>
-	<script type="text/javascript" src="<s:Base/>/jquery/jsonformatter.js"></script>
+	<#include  "../layout/header.ftl"/>
+	<#include  "../layout/common.cssjs.ftl"/>
+	<script type="text/javascript" src="<@base/>/static/jquery/jsonformatter.js"></script>
 	<script type="text/javascript">
 		function viewformatter (value, options, rData){
 			return "<a href='javascript:void(0);' selid='"+rData["id"]+"' class='viewJsonObject' title='view more' >view more</a>";
@@ -34,14 +28,14 @@
 	</script>
 </head>
 <body>
-<jsp:include page="../layout/top.jsp"></jsp:include>
-<jsp:include page="../layout/nav_primary.jsp"></jsp:include>
+<#include  "../layout/top.ftl"/>
+<#include  "../layout/nav_primary.ftl"/>
 
 <div class="container">
 
 <div class="mainwrap" id="main">
 	
-	<table  data-url="<s:Base />/logs/grid"
+	<table  data-url="<@base />/logs/grid"
 			id="datagrid"
 			data-toggle="table"
 			data-classes="table table-bordered table-hover table-striped"
@@ -56,16 +50,16 @@
 		<thead>
 			<tr>
 				<th data-sortable="true" data-field="id"   data-visible="false">id</th>
-				<th data-field="serviceName"><s:Locale code="log.operate.servicename"/></th>
-				<th data-field="message"><s:Locale code="log.operate.message"/></th>
-				<th data-field="view"><s:Locale code="log.operate.content"/></th>
-				<th data-field="messageType"><s:Locale code="log.operate.messageType"/></th>
-				<th data-field="operateType"><s:Locale code="log.operate.operateType"/></th>
-				<th data-field="username"><s:Locale code="log.operate.username"/></th>
-				<th data-field="createdBy"><s:Locale code="common.text.createdby"/></th>
-				<th data-field="createdDate"><s:Locale code="common.text.createddate"/></th>
-				<th data-field="modifiedBy"><s:Locale code="common.text.modifiedby"/></th>
-				<th data-field="modifiedDate"><s:Locale code="common.text.modifieddate"/></th>
+				<th data-field="serviceName"><@locale code="log.operate.servicename"/></th>
+				<th data-field="message"><@locale code="log.operate.message"/></th>
+				<th data-field="view"><@locale code="log.operate.content"/></th>
+				<th data-field="messageType"><@locale code="log.operate.messageType"/></th>
+				<th data-field="operateType"><@locale code="log.operate.operateType"/></th>
+				<th data-field="username"><@locale code="log.operate.username"/></th>
+				<th data-field="createdBy"><@locale code="common.text.createdby"/></th>
+				<th data-field="createdDate"><@locale code="common.text.createddate"/></th>
+				<th data-field="modifiedBy"><@locale code="common.text.modifiedby"/></th>
+				<th data-field="modifiedDate"><@locale code="common.text.modifieddate"/></th>
 			</tr>
 		</thead>
 	</table>
@@ -73,7 +67,7 @@
 </div>
 </div>
 <div id="footer">
-	<jsp:include page="../layout/footer.jsp"></jsp:include>
+	<#include   "../layout/footer.ftl"/>
 </div>
 </body>
 </html>
