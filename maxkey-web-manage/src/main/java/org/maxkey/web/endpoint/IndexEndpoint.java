@@ -36,4 +36,10 @@ public class IndexEndpoint {
 		_logger.debug("exception/accessdeny.");
 		return  new ModelAndView("exception/accessdeny");
 	}
+	
+//	@RequestMapping(value={"/error"})
+//	public ModelAndView error() {
+//		_logger.debug("exception/error.");
+//		return  new ModelAndView("exception/error");
+//	}
 }
