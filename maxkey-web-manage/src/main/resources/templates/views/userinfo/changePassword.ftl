@@ -7,12 +7,12 @@
   <tr>
     <td>
 
-<form id="actionForm"  method="post" type="label" autoclose="true"  action="<s:Base/>/users/changePassword"> 
+<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/users/changePassword"> 
 
 	  <table   class="datatable" >
 			<tbody>
 			<tr>
-				<th><s:Locale code="userinfo.displayName" /> :</th>
+				<th><@locale code="userinfo.displayName" /> :</th>
 				<td>
 					<input readonly type="hidden" id="id" name="id" class="required" title="" value="${model.id}"/>
 					<input readonly type="text" id="displayName" name="displayName" class="required" title="" value="${model.displayName}"/>
@@ -20,14 +20,14 @@
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="userinfo.username" /> :</th>
+				<th><@locale code="userinfo.username" /> :</th>
 				<td>
 					<input readonly type="text" id="username" name="username" class="required" title="" value="${model.username}"/>
 					
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="access.security.newPassword" />:</th>
+				<th><@locale code="login.password.newPassword" />:</th>
 				<td>
 					<input type="password" id="password" name="password" class="required" title="" value=""/>
 					<b class="orange">*</b>
@@ -35,7 +35,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="access.security.confirmPassword" />:</th>
+				<th><@locale code="login.password.confirmPassword" />:</th>
 				<td nowrap>
 					<input type="password" id="confirmPassword" name="confirmPassword" class="{ required: true, equalTo: '#newPassword' }" title="" value=""/>
 					<b class="orange">*</b>
@@ -45,7 +45,7 @@
 			<tr>
 				<td colspan="2"  class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
-		    		<input class="button" style="width:100px"  type="button"    id="submitBtn" value="<s:Locale code="button.text.save" />"/>
+		    		<input class="button" style="width:100px"  type="button"    id="submitBtn" value="<@locale code="button.text.save" />"/>
 					
 				</td>
 			</tr>

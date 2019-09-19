@@ -20,9 +20,9 @@ import com.google.code.kaptcha.Producer;
 /**
  * @author Crystal.Sea
  *
- */
+ */ 
 @Controller
-@RequestMapping(value = "/captcha")
+@RequestMapping(value = "/captcha") 
 public class CaptchaEndpoint {
 	private static final Logger _logger = LoggerFactory.getLogger(CaptchaEndpoint.class);
 	

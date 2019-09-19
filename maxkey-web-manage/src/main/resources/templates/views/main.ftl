@@ -1,22 +1,19 @@
-<%@ page   language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
-<%@ taglib prefix="s" 			uri="http://sso.maxkey.org/tags" %> 
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<jsp:include page="layout/header.jsp"></jsp:include>
-	<jsp:include page="layout/common.cssjs.jsp"></jsp:include>
+	<#include  "layout/header.ftl"/>
+	<#include  "layout/common.cssjs.ftl"/>
 	
 </head>
 <body> 
 <div class="app header-default side-nav-dark">
 <div class="layout">
 	<div class="header navbar">
-		<jsp:include page="layout/top.jsp"></jsp:include>
+		<#include  "layout/top.ftl"/>
 	</div>
 	
 	<div class="col-md-3 sidebar-nav side-nav" >
- 		<jsp:include page="layout/sidenav.jsp"></jsp:include>
+		<#include  "layout/sidenav.ftl"/>
 	</div>
  <div class="swlink">Collect from <a href="http://www.scnoob.com/" title="网站模板">网站模板</a></div>
 
@@ -379,7 +376,7 @@ Request Inquiry
 
 
 	<footer class="content-footer">
-		<jsp:include page="layout/footer.jsp"></jsp:include>
+		<#include  "layout/footer.ftl"/>
 	</footer>
 
 </div>

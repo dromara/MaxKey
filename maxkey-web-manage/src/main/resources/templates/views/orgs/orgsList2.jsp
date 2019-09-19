@@ -62,7 +62,7 @@ $(function () {
 		
 		
 	$("#deleteBtn").click(function(){
-		$.post('<@base/>/orgs/delete',{ id:$("#id").val(),_method:"delete"}, function(data) {
+		$.post('<s:Base/>/orgs/delete',{ id:$("#id").val(),_method:"delete"}, function(data) {
 			$.fn.zTree.getZTreeObj("orgsTree").removeNode($.fn.zTree.getZTreeObj("orgsTree").getSelectedNodes()[0]);
  				$.alert({content:data.message});
 		});

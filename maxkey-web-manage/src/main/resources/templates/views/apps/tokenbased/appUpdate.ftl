@@ -1,14 +1,9 @@
-<%@ page 	language="java"   import="java.util.*" 	pageEncoding="UTF-8"%>
-<%@ taglib 	prefix="spring"   uri="http://www.springframework.org/tags" %>
-<%@ taglib 	prefix="s" uri="http://www.connsec.com/tags" %>
-<%@ taglib 	prefix="fmt"      uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib  prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
 <script type="text/javascript">
 <!--
 $(function(){	
 
 	$("#algorithm").change(function(){
-		$.post("<s:Base/>/apps/generate/secret/"+$(this).val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
+		$.post("<@base/>/apps/generate/secret/"+$(this).val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
 			$("#algorithmKey").val(data+"");
 			$("#algorithmKey_text").html(data+"");
 			$("#secret").val(data+"");
@@ -21,7 +16,7 @@ $(function(){
 	}); 
 	
 	$("#generateSecret").on("click",function(){
-		$.post("<s:Base/>/apps/generate/secret/"+$("#algorithm").val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
+		$.post("<@base/>/apps/generate/secret/"+$("#algorithm").val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
 			$("#algorithmKey").val(data+"");
 			$("#algorithmKey_text").html(data+"");
 			$("#secret").val(data+"");
@@ -32,8 +27,8 @@ $(function(){
 //-->
 </script>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
-			action="<s:Base/>/apps/tokenbased/update"  
-			forward="<s:Base/>/apps/list"
+			action="<@base/>/apps/tokenbased/update"  
+			forward="<@base/>/apps/list"
 			enctype="multipart/form-data">		 
   	        <!-- content -->    
   	      	<!--table-->

@@ -1,50 +1,126 @@
-<%@ page   contentType="text/html; charset=UTF-8" import="java.util.Map,java.util.LinkedHashMap" %>
-<%@ taglib prefix="s"	uri="http://www.connsec.com/tags" %>
-<%@ taglib prefix="spring"		uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c"			uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../layout/header.ftl"/>
+	<#include  "../layout/common.cssjs.ftl"/>
 
-<script type="text/javascript">	
+</head>
+<body> 
+<div class="app header-default side-nav-dark">
+<div class="layout">
+	<div class="header navbar">
+		<#include  "../layout/top.ftl"/>
+	</div>
 	
+	<div class="col-md-3 sidebar-nav side-nav" >
+ 		<#include  "../layout/sidenav.ftl"/>
+	</div>
+	<div class="page-container">
 	
-	$(function () {
-	
-	});
-</script>
+	<div class="main-content">
+					<div class="container-fluid">
 
-	<div id="tool_box">
-	 		<table   class="datatable">
+						<div class="breadcrumb-wrapper row">
+							<div class="col-12 col-lg-3 col-md-6">
+								<h4 class="page-title">Dashboard 2</h4>
+							</div>
+							<div class="col-12 col-lg-9 col-md-6">
+								<ol class="breadcrumb float-right">
+									<li><a href="index.html">Dashboard</a></li>
+									<li class="active">/ Dashboard 2</li>
+								</ol>
+							</div>
+						</div>
+
+					</div>
+
+
+					<div class="col-12 grid-margin">
+						<div class="card">
+							<div class="card-body">
+		
+			<table  class="table table-bordered">
  				<tr>
-		 			<td width="120px"><s:Locale code="group.name"/>:</td>
-		 			<td width="374px">
+		 			<td width="120px"><@locale code="group.name"/>:</td>
+		 			<td width="375px">
 		 				<form id="basic_search_form">
-				 			<input type="text" name="name" style ="width:150px">
-				 			<input class="button primary"  id="searchBtn" type="button" size="50" value="<s:Locale code="button.text.search"/>">
-				 		</form>
+			 				<input class="form-control" type="text" name="name"  style ="width:150px;float:left;">
+			 				<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+				 			<!--<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+					 		-->
+					 	</form>
 		 			</td>
-				 	<td colspan="2"> <div id="tool_box_right">
-						<input class="button"   id="addBtn" type="button" value="<s:Locale code="button.text.add"/>"  target="window"
-				 		   	 	wurl="<s:Base/>/groups/forwardAdd" wheight="150px" >
-					 	<input class="button"   id="modifyBtn" type="button" value="<s:Locale code="button.text.edit"/>"  target="window"
-					 			wurl="<s:Base/>/groups/forwardUpdate" wheight="150px" > 
-					 		    
-					 	<input class="button"   id="deleteBtn" type="button" value="<s:Locale code="button.text.delete"/>"
-					 			wurl="<s:Base/>/groups/delete" />
-				 	</div>
-				 	</td>
-				</tr>
-			
-			</table>
+		 			<td colspan="2">
+		 				<div id="tool_box_right">
+		 					 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
+						 		    wurl="<@base/>/users/forwardSelectUserType"
+						 		    wwidth="960"
+						 		    wheight="600"
+					 		    	target="window">	    	
+					 		    	
+					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
+					 				wurl="<@base/>/users/forwardUpdate"
+					 				wwidth="960"
+						 		    wheight="600"
+					 		    	target="window"> 
+					 		    	
+					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
+					 				wurl="<@base/>/users/delete" />
+						</div>
+		 			</td>
+		 		</tr>
+		 	</table>
+		
+		 		
  	</div>
  	
-	<div class="mainwrap" id="main">
-		<s:Grid id="list" url="/groups/grid" multiselect="false" resize="true">	
-			<s:Column width="0" field="id" title="id" hidden="true"/>
-			<s:Column width="50" field="name" title="group.name"/>
-			<s:Column width="50" field="description" title="common.text.description"/>
-			<s:Column width="0" field="createdBy" title="common.text.createdby" hidden="true"/>
-			<s:Column width="0" field="createdDate" title="common.text.createddate" hidden="true"/>
-			<s:Column width="0" field="modifiedBy" title="common.text.modifiedby" hidden="true"/>
-			<s:Column width="0" field="modifiedDate" title="common.text.modifieddate" hidden="true"/>
-		</s:Grid>
-			
+ 	<div id="advanced_search">
+ 		<form id="advanced_search_form">
+	 		
+	 	</form>
+ 	</div>
+		<table  data-url="<@base/>/groups/grid"
+			id="datagrid"
+			data-toggle="table"
+			data-classes="table table-bordered table-hover table-striped"
+			data-pagination="true"
+			data-total-field="records"
+			data-page-list="[10, 25, 50, 100]"
+			data-search="false"
+			data-locale="zh-CN"
+			data-query-params="dataGridQueryParams"
+			data-query-params-type="pageSize"
+			data-side-pagination="server">
+		<thead>
+			<tr>
+				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
+				
+				<th data-field="name"><@locale code="group.name"/></th>
+				<th data-field="description"><@locale code="common.text.description"/></th>
+				<th data-field="createdBy"><@locale code="common.text.createdby"/></th>
+				<th data-field="createdDate"><@locale code="common.text.createddate"/></th>
+				<th data-field="modifiedBy"><@locale code="common.text.modifiedby"/></th>
+				<th data-field="modifiedDate"><@locale code="common.text.modifieddate"/></th>
+	
+			</tr>
+		</thead>
+	</table>
+	
+	
+</div>
+					</div>
+					<footer class="content-footer">
+		<#include  "../layout/footer.ftl"/>
+	</footer>
+
 	</div>
+	
+	</div>
+</div>
+
+<div id="preloader">
+<div class="loader" id="loader-1"></div>
+</div>
+
+</body>
+</html>

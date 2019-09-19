@@ -1,16 +1,9 @@
-<%@ page 	language="java"   import="java.util.*" 	pageEncoding="UTF-8"%>
-<%@ taglib 	prefix="spring"   uri="http://www.springframework.org/tags" %>
-<%@ taglib 	prefix="s" uri="http://www.connsec.com/tags" %>
-<%@ taglib 	prefix="fmt"      uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib  prefix="c"        uri="http://java.sun.com/jsp/jstl/core"  %>
-<%@ taglib  prefix="fn" 	  uri="http://java.sun.com/jsp/jstl/functions" %>
-
 <script type="text/javascript">
 <!--
 $(function(){	
 
 	$("#generateSecret").on("click",function(){
-		$.post("<s:Base/>/apps/generate/secret/oauth20", {_method:"post",currTime:(new Date()).getTime()}, function(data) {
+		$.post("<@base/>/apps/generate/secret/oauth20", {_method:"post",currTime:(new Date()).getTime()}, function(data) {
 			$("#clientSecret").val(data+"");
 			$("#clientSecret_text").html(data+"");
 			$("#secret").val(data+"");
@@ -21,8 +14,8 @@ $(function(){
 //-->
 </script>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
-			action="<s:Base/>/apps/oauth20/update"
-			forward="<s:Base/>/apps/list"
+			action="<@base/>/apps/oauth20/update"
+			forward="<@base/>/apps/list"
 			enctype="multipart/form-data">		 
   	        <!-- content -->    
   	      	<!--table-->
@@ -37,16 +30,16 @@ $(function(){
 				<tbody>
 				
 				<tr>
-					<td colspan=4><s:Locale code="apps.oauth.v2.0.info" /></td>
+					<td colspan=4><@locale code="apps.oauth.v2.0.info" /></td>
 				</tr>
 				<tr>
-					<th style="width:15%;"><s:Locale code="apps.oauth.v2.0.clientId" />：</th>
+					<th style="width:15%;"><@locale code="apps.oauth.v2.0.clientId" />：</th>
 					<td style="width:35%;">
 						<span id="clientId_text">${model.clientId}</span>
 						<input type="hidden" id="clientId" name="clientId"  title="" value="${model.clientId}"/>
 						
 					</td>
-					<th style="width:15%;"><s:Locale code="apps.oauth.v2.0.clientSecret" />：</th>
+					<th style="width:15%;"><@locale code="apps.oauth.v2.0.clientSecret" />：</th>
 					<td style="width:35%;">
 						<span id="clientSecret_text">${model.clientSecret}</span>
 						<input type="hidden" id="clientSecret" name="clientSecret"  title="" value="${model.clientSecret}"/>
@@ -54,7 +47,7 @@ $(function(){
 					</td>
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.oauth.scope" />：</th>
+					<th><@locale code="apps.oauth.scope" />：</th>
 					<td  colspan="3">
 						<table  class="hidetable"  style="width:100%;">
 							<tr>
@@ -73,7 +66,7 @@ $(function(){
 					</td>
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.oauth.GrantTypes" />：</th>
+					<th><@locale code="apps.oauth.GrantTypes" />：</th>
 					<td colspan="3">
 						<table  class="hidetable"  style="width:100%;">
 							<tr>
@@ -90,26 +83,26 @@ $(function(){
 					</td>
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.oauth.registeredRedirectUris" />：</th>
+					<th><@locale code="apps.oauth.registeredRedirectUris" />：</th>
 					<td colspan=3>
 						<textarea  id="registeredRedirectUris" name="registeredRedirectUris" rows="4" cols="60">${model.registeredRedirectUris}</textarea>
 						<b class="orange">*</b><label for="registeredRedirectUris"></label>
 					</td>
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.oauth.accessTokenValiditySeconds" />：</th>
+					<th><@locale code="apps.oauth.accessTokenValiditySeconds" />：</th>
 					<td >
 						<input type="text" id="accessTokenValiditySeconds" name="accessTokenValiditySeconds"  title="" value="${model.accessTokenValiditySeconds}"/>
 						<b class="orange">*</b><label for="accessTokenValiditySeconds"></label>
 					</td>
-					<th><s:Locale code="apps.oauth.refreshTokenValiditySeconds" />：</th>
+					<th><@locale code="apps.oauth.refreshTokenValiditySeconds" />：</th>
 					<td>
 						<input type="text" id="refreshTokenValiditySeconds" name="refreshTokenValiditySeconds"  title="" value="${model.refreshTokenValiditySeconds}"/>
 						<b class="orange">*</b><label for="refreshTokenValiditySeconds"></label>
 					</td>
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.connect.idTokenSigningAlgorithm" />：</th>
+					<th><@locale code="apps.connect.idTokenSigningAlgorithm" />：</th>
 					<td >
 						<select  id="idTokenSigningAlgorithm" name="idTokenSigningAlgorithm" >
 							<option value="none"   <c:if test="${'none' ==model.idTokenSigningAlgorithm}">selected</c:if>>No digital signature</option>
@@ -124,7 +117,7 @@ $(function(){
 							<option value="ES512"  <c:if test="${'ES512'==model.idTokenSigningAlgorithm}">selected</c:if>>ECDSA using P-512 curve and SHA-512 hash algorithm</option>
 						</select>
 					</td>
-					<th><s:Locale code="apps.connect.userInfoSigningAlgorithm" />：</th>
+					<th><@locale code="apps.connect.userInfoSigningAlgorithm" />：</th>
 					<td >
 						<select  id="userInfoSigningAlgorithm" name="userInfoSigningAlgorithm" >
 							<option value="none"   <c:if test="${'none' ==model.userInfoSigningAlgorithm}">selected</c:if>>No digital signature</option>
@@ -141,13 +134,13 @@ $(function(){
 					</td>
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.connect.jwksUri" />：</th>
+					<th><@locale code="apps.connect.jwksUri" />：</th>
 					<td colspan =3>
 						<input type="text" id="jwksUri" name="jwksUri"  title="" value="${model.jwksUri}"/>
 					</td>
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.connect.idTokenEncryptedAlgorithm" />：</th>
+					<th><@locale code="apps.connect.idTokenEncryptedAlgorithm" />：</th>
 					<td >
 						<select  id="idTokenEncryptedAlgorithm" name="idTokenEncryptedAlgorithm" >
 							<option value="none" <c:if test="${'none'==model.idTokenEncryptedAlgorithm}">selected</c:if> >No encryption</option>
@@ -162,7 +155,7 @@ $(function(){
 						
 						</select>
 					</td>
-					<th><s:Locale code="apps.connect.userInfoEncryptedAlgorithm" />：</th>
+					<th><@locale code="apps.connect.userInfoEncryptedAlgorithm" />：</th>
 					<td >
 						<select  id="userInfoEncryptedAlgorithm" name="userInfoEncryptedAlgorithm" >
 							<option value="none" <c:if test="${'none'==model.userInfoEncryptedAlgorithm}">selected</c:if> >No encryption</option>
@@ -180,7 +173,7 @@ $(function(){
 				</tr>
 				
 				<tr>
-					<th><s:Locale code="apps.connect.idTokenEncryptionMethod" />：</th>
+					<th><@locale code="apps.connect.idTokenEncryptionMethod" />：</th>
 					<td >
 						<select  id="idTokenEncryptionMethod" name="idTokenEncryptionMethod" >
 							<option value="none" <c:if test="${'none'==model.idTokenEncryptionMethod}">selected</c:if>>No encryption</option>
@@ -190,7 +183,7 @@ $(function(){
 							<option value="A256GCM" <c:if test="${'A256GCM'==model.idTokenEncryptionMethod}">selected</c:if>>AES GCM using 256 bit keys</option>
 					</select>
 					</td>
-					<th><s:Locale code="apps.connect.userInfoEncryptionMethod" />：</th>
+					<th><@locale code="apps.connect.userInfoEncryptionMethod" />：</th>
 					<td >
 						<select  id="userInfoEncryptionMethod" name="userInfoEncryptionMethod" >
 							<option value="none" <c:if test="${'none'==model.userInfoEncryptionMethod}">selected</c:if>>No encryption</option>
@@ -202,27 +195,27 @@ $(function(){
 					</td>
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.oauth.approvalPrompt" />：</th>
+					<th><@locale code="apps.oauth.approvalPrompt" />：</th>
 					<td >
 						<select  id="approvalPrompt" name="approvalPrompt" >
 							<option value="force"  <c:if test="${null==model.approvalPrompt}">selected</c:if>>
-								<s:Locale code="apps.oauth.approvalPrompt.force" /></option>
+								<@locale code="apps.oauth.approvalPrompt.force" /></option>
 							<option value="auto"  <c:if test="${'auto'==model.approvalPrompt}">selected</c:if>>
-								<s:Locale code="apps.oauth.approvalPrompt.auto" /></option>
+								<@locale code="apps.oauth.approvalPrompt.auto" /></option>
 						</select>
 					</td>
-					<th><s:Locale code="apps.isAdapter" />：</th>
+					<th><@locale code="apps.isAdapter" />：</th>
 					<td >
 						<select  id="isAdapter" name="isAdapter" >
 							<option value="0"  <c:if test="${0==model.isAdapter}">selected</c:if> >
-								<s:Locale code="apps.isAdapter.no" /></option>
+								<@locale code="apps.isAdapter.no" /></option>
 							<option value="1"  <c:if test="${1==model.isAdapter}">selected</c:if> >
-								<s:Locale code="apps.isAdapter.yes" /></option>
+								<@locale code="apps.isAdapter.yes" /></option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.adapter" />：</th>
+					<th><@locale code="apps.adapter" />：</th>
 					<td colspan =3>
 						<input type="text" id="adapter" name="adapter"  title="" value="${model.adapter}"/>
 					</td>
@@ -233,6 +226,6 @@ $(function(){
 				</tr>
 				</tbody>
 				</table>
-    		<input class="button" id="submitBtn" type="submit" value="<s:Locale code="button.text.save" />"/>
-			<input class="button" id="backBtn" type="button" value="<s:Locale code="button.text.cancel" />"/>	  
+    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
+			<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
 </form>

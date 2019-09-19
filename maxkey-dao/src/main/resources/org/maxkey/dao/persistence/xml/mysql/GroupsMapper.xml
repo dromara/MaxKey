@@ -13,7 +13,7 @@
     
 	
 	
-	<select id="grid" parameterType="Groups" resultType="Groups">
+	<select id="queryPageResults" parameterType="Groups" resultType="Groups">
 		SELECT
 			*
 		FROM
@@ -22,17 +22,6 @@
 			 (1=1)	
 		<include refid="where_statement"/>
 	</select>
-	
-	<select id="count" parameterType="Groups" resultType="java.lang.Integer">
-		SELECT
-			COUNT(*) 
-		FROM
-			GROUPS
-		WHERE
-			 (1=1)	
-		<include refid="where_statement"/>
-	</select>
-	
 	
 	
 	<update id="logisticDelete" parameterType="Groups" >

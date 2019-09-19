@@ -21,6 +21,8 @@ import org.maxkey.util.PathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -28,8 +30,11 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * @author Crystal.Sea
  *
  */
-public class InitWebContext extends HttpServlet {
-    private static final Logger _logger = LoggerFactory.getLogger(InitWebContext.class);
+public class InitApplicationContext extends HttpServlet {
+    private static final Logger _logger = LoggerFactory.getLogger(InitApplicationContext.class);
+    
+    ApplicationContext   applicationContext;
+    
    /**
     * 
     */
@@ -62,8 +67,12 @@ public class InitWebContext extends HttpServlet {
    /**
     * 
     */
-   public InitWebContext() {
-      
+   public InitApplicationContext() {
+	   this.applicationContext=WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
+   }
+   
+   public InitApplicationContext(ConfigurableApplicationContext  applicationContext) {
+	   this.applicationContext=applicationContext;
    }
    
    public void  loadCaches(){
@@ -71,8 +80,8 @@ public class InitWebContext extends HttpServlet {
        _logger.info("Load Caches ");
        
 	   try {
-			if(WebApplicationContextUtils.getWebApplicationContext(this.getServletContext()).containsBean("cacheFactory")){
-				CacheFactory cacheFactory=WebApplicationContextUtils.getWebApplicationContext(this.getServletContext()).getBean("cacheFactory", CacheFactory.class);
+			if(applicationContext.containsBean("cacheFactory")){
+				CacheFactory cacheFactory=applicationContext.getBean("cacheFactory", CacheFactory.class);
 				cacheFactory.start();
 			}
 		} catch (BeansException e) {
@@ -82,11 +91,11 @@ public class InitWebContext extends HttpServlet {
 	   
    }
    public void listDataBaseVariables(){
-	   if(WebApplicationContextUtils.getWebApplicationContext(this.getServletContext()).containsBean("dataSource")){
+	   if(applicationContext.containsBean("dataSource")){
 	      try {
 	         _logger.info("----------------------------------------------------------------------------------------------------");
 	         _logger.info("List DatabaseMetaData Variables ");
-	         Connection connection = ((javax.sql.DataSource)WebApplicationContextUtils.getWebApplicationContext(this.getServletContext()).getBean("dataSource")).getConnection();
+	         Connection connection = ((javax.sql.DataSource)applicationContext.getBean("dataSource")).getConnection();
 	      
 	         java.sql.DatabaseMetaData databaseMetaData = connection.getMetaData();
 	         _logger.info("DatabaseProductName   :   "   +   databaseMetaData.getDatabaseProductName());  
@@ -113,10 +122,10 @@ public class InitWebContext extends HttpServlet {
    
    //propertySourcesPlaceholderConfigurer
    public void listProperties(){
-	   if(WebApplicationContextUtils.getWebApplicationContext(this.getServletContext()).containsBean("propertySourcesPlaceholderConfigurer")){
+	   if(applicationContext.containsBean("propertySourcesPlaceholderConfigurer")){
 	         _logger.info("----------------------------------------------------------------------------------------------------");
 	         _logger.info("List Properties Variables ");
-	         PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = ((PropertySourcesPlaceholderConfigurer)WebApplicationContextUtils.getWebApplicationContext(this.getServletContext()).getBean("propertySourcesPlaceholderConfigurer"));
+	         PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = ((PropertySourcesPlaceholderConfigurer)applicationContext.getBean("propertySourcesPlaceholderConfigurer"));
 	         Properties properties=(Properties)propertySourcesPlaceholderConfigurer.getAppliedPropertySources().get(PropertySourcesPlaceholderConfigurer.LOCAL_PROPERTIES_PROPERTY_SOURCE_NAME).getSource();
 	         Set<Object> keyValue = properties.keySet();
 	         SortedSet<String> keyValueSet=new TreeSet<String>();
@@ -158,8 +167,7 @@ public class InitWebContext extends HttpServlet {
       _logger.info("+                        MaxKey Version 1.0 GA");
       _logger.info("");
       _logger.info("+                    Copyright (c) 2018-2019 Maxkey .");
-      _logger.info("+               We're focus on Identity and Access Management ");
-      _logger.info("+                     https://github.com/shimingxy/MaxKey");
+      _logger.info("+                    https://github.com/shimingxy/MaxKey");
       _logger.info("----------------------------------------------------------------------------------------------------");
    }
 

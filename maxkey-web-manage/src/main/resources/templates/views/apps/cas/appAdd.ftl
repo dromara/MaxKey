@@ -1,8 +1,3 @@
-<%@ page 	language="java"   import="java.util.*" 	pageEncoding="UTF-8"%>
-<%@ taglib 	prefix="spring"   uri="http://www.springframework.org/tags" %>
-<%@ taglib 	prefix="s" uri="http://www.connsec.com/tags" %>
-<%@ taglib 	prefix="fmt"      uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page 	import="org.maxkey.constants.*"%>
 <script type="text/javascript">
 <!--
 $(function(){	
@@ -18,8 +13,8 @@ $(function(){
 //-->
 </script>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
-			action="<s:Base/>/apps/cas/add"  
-			forward="<s:Base/>/apps/list"
+			action="<@base/>/apps/cas/add"  
+			forward="<@base/>/apps/list"
 			enctype="multipart/form-data">		 
   	        <!-- content -->    
   	      	<!--table-->
@@ -33,17 +28,17 @@ $(function(){
 						<table width="960"  class="datatable" >
 						<tbody>
 							<tr>
-								<td colspan=4><s:Locale code="apps.cas.info"/></td>
+								<td colspan=4><@locale code="apps.cas.info"/></td>
 							</tr>
 							<tr>
-								<th style="width:15%;"><s:Locale code="apps.cas.service"/>：</th>
+								<th style="width:15%;"><@locale code="apps.cas.service"/>：</th>
 								<td  colspan=3>
 									<input type="text" id="service" name="service"  title="" value=""/>
 									<b class="orange">*</b><label for="service"></label>
 								</td>
 							</tr>
 							<tr>
-								<th style="width:15%;"><s:Locale code="apps.cas.validation"/>：</th>
+								<th style="width:15%;"><@locale code="apps.cas.validation"/>：</th>
 								<td  colspan=3>
 									<input type="text" id="validation" name="validation"  title="" value=""/>
 									<b class="orange">*</b><label for="validation"></label>
@@ -58,6 +53,6 @@ $(function(){
 			   
 
 			<input class="button"  id="status" type="hidden" name="status"  value="1"/>
-    		<input class="button"  id="submitBtn" type="submit" value="<s:Locale code="button.text.save" />"/>
-			<input class="button"  id="backBtn" type="button" value="<s:Locale code="button.text.cancel" />"/>	  
+    		<input class="button"  id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
+			<input class="button"  id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
 </form>

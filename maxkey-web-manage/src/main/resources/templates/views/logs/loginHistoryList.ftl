@@ -107,31 +107,40 @@
 			</table>
  		</form>
  	</div>
- 	<table 	data-url="<@base />/logs/loginAppsHistory/grid"
-				id="datagrid"
-				data-toggle="table"
-				data-classes="table table-bordered table-hover table-striped"
-				data-pagination="true"
-				data-total-field="records"
-				data-page-list="[10, 25, 50, 100]"
-				data-search="false"
-				data-locale="zh-CN"
-				data-query-params="dataGridQueryParams"
-				data-query-params-type="pageSize"
-				data-side-pagination="server">
-			<thead>
-				<tr>
-					<th data-sortable="true" data-field="id"  data-visible="false"><@locale code="log.loginappshistory.id" /></th>
-					<th data-field="sessionId" ><@locale code="log.loginappshistory.sessionId" /></th>
-					<th data-field="uid"   data-visible="false"><@locale	code="log.loginappshistory.uid" /></th>
-					<th data-field="username" ><@locale	code="log.loginappshistory.username" /></th>
-					<th data-field="displayName" ><@locale	code="log.loginappshistory.displayName" /></th>
-					<th data-field="appId"   data-visible="false"><@locale	code="log.loginappshistory.appId" /></th>
-					<th data-field="appName" ><@locale	code="log.loginappshistory.appName" /></th>
-					<th data-field="loginTime" ><@locale  code="log.loginappshistory.loginTime" /></th>
-				</tr>
-			</thead>
-		</table>
+ 	<table  data-url="<@base />/logs/loginHistory/grid"
+			id="datagrid"
+			data-toggle="table"
+			data-classes="table table-bordered table-hover table-striped"
+			data-pagination="true"
+			data-total-field="records"
+			data-page-list="[10, 25, 50, 100]"
+			data-search="false"
+			data-locale="zh-CN"
+			data-query-params="dataGridQueryParams"
+			data-query-params-type="pageSize"
+			data-side-pagination="server">
+		<thead>
+			<tr>
+				<th data-sortable="true" data-field="id"   data-visible="false"><@locale code="log.loginhistory.id"/></th>
+				<th data-field="sessionId"><@locale code="log.loginhistory.sessionId"/></th>
+				<th data-field="username"><@locale code="log.loginhistory.username"/></th>
+				<th data-field="displayName"><@locale code="log.loginhistory.displayName"/></th>
+				<th data-field="provider"><@locale code="log.loginhistory.provider"/></th>
+				<th data-field="message"><@locale code="log.loginhistory.message"/></th>
+				<th data-field="loginType"><@locale code="log.loginhistory.loginType"/></th>
+				<th data-field="sourceIp"><@locale code="log.loginhistory.sourceIp"/></th>
+				<th data-field="browser"><@locale code="log.loginhistory.browser"/></th>
+				<th data-field="loginTime"><@locale code="log.loginhistory.loginTime"/></th>
+				<th data-field="logoutTime"><@locale code="log.loginhistory.logoutTime"/></th>
+				<th data-field="platform"><@locale code="log.loginhistory.platform"/></th>
+				<th data-field="application"><@locale code="log.loginhistory.application"/></th>
+				<th data-field="loginUrl"><@locale code="log.loginhistory.loginUrl"/></th>
+				<th data-field="code"><@locale code="log.loginhistory.code"/></th>
+				<th data-field="rpUserInfo"><@locale code="log.loginhistory.rpUserInfo"/></th>
+	
+			</tr>
+		</thead>
+	</table>
 </div>
 	
 </div>

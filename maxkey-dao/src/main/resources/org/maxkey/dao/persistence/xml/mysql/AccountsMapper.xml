@@ -19,24 +19,14 @@
     
 	
 	
-	<select id="grid" parameterType="Accounts" resultType="Accounts">
+	<select id="queryPageResults" parameterType="Accounts" resultType="Accounts">
 		SELECT
 			*
 		FROM
-			APP_ACCOUNTS
+			ACCOUNTS
 		WHERE
 			 (1=1)	
 		<include refid="where_statement"/>
 	</select>
 	
-	<select id="count" parameterType="Accounts" resultType="java.lang.Integer">
-		SELECT
-			COUNT(*) 
-		FROM
-			APP_ACCOUNTS
-		WHERE
-			 (1=1)	
-		<include refid="where_statement"/>
-	</select>
-
 </mapper>

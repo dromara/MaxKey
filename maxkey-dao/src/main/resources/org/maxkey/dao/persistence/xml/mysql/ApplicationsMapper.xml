@@ -24,7 +24,7 @@
 	</sql>
 	
 	
-	<select id="grid" parameterType="Applications" resultType="Applications">
+	<select id="queryPageResults" parameterType="Applications" resultType="Applications">
 		SELECT
 			*
 		FROM
@@ -33,17 +33,6 @@
 			 (1=1)	
 		<include refid="where_statement"/>
 		ORDER BY SORTORDER 
-	</select>
-	
-	<select id="count" parameterType="Applications" resultType="java.lang.Integer">
-		SELECT
-			COUNT(*) 
-		FROM
-			APPLICATIONS
-		WHERE
-			 (1=1)	
-		<include refid="where_statement"/>
-		
 	</select>
 	
 	

@@ -1,13 +1,8 @@
-<%@ page 	language="java"   import="java.util.*" 	pageEncoding="UTF-8"%>
-<%@ taglib 	prefix="spring"   uri="http://www.springframework.org/tags" %>
-<%@ taglib 	prefix="s" uri="http://www.connsec.com/tags" %>
-<%@ taglib 	prefix="fmt"      uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib  prefix="c"       	uri="http://java.sun.com/jsp/jstl/core"  %>
 <script type="text/javascript">
 <!--
 $(function(){	
 	$("#generateSecret").on("click",function(){
-		$.post("<s:Base/>/apps/generate/secret/oauth20", {_method:"post",currTime:(new Date()).getTime()}, function(data) {
+		$.post("<@base/>/apps/generate/secret/oauth20", {_method:"post",currTime:(new Date()).getTime()}, function(data) {
 			$("#secret").val(data+"");
 			$("#secret_text").html(data+"");
 		}); 
@@ -65,8 +60,8 @@ $(function(){
 //-->
 </script>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
-			action="<s:Base/>/apps/desktop/update"  
-			forward="<s:Base/>/apps/list"
+			action="<@base/>/apps/desktop/update"  
+			forward="<@base/>/apps/list"
 			enctype="multipart/form-data">		 
   	        <!-- content -->    
   	      	<!--table-->
@@ -80,10 +75,10 @@ $(function(){
 			   <table width="960"   class="datatable" >
 				<tbody>
 				<tr>
-					<td colspan=4><s:Locale code="apps.desktop.info" /></td>
+					<td colspan=4><@locale code="apps.desktop.info" /></td>
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.desktop.programPath" />：</th>
+					<th><@locale code="apps.desktop.programPath" />：</th>
 					<td colspan="3">
 						<textarea  id="programPath" name="programPath" rows="4" cols="60">${model.programPath}</textarea>
 						<b class="orange">*</b><label for="programPath"></label>
@@ -91,7 +86,7 @@ $(function(){
 					
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.desktop.parameter" />：</th>
+					<th><@locale code="apps.desktop.parameter" />：</th>
 					<td colspan="3">
 						<textarea  id="parameter" name="parameter" rows="4" cols="60">${model.parameter}</textarea>
 						
@@ -99,7 +94,7 @@ $(function(){
 					</td>
 				</tr>
 				<tr>
-					<th ><s:Locale code="apps.desktop.usernameType" />：</th>
+					<th ><@locale code="apps.desktop.usernameType" />：</th>
 					<td >
 						<select  id="usernameType" name="usernameType" >
 							<option value="SIMULATION"  <c:if test="${'SIMULATION'==model.usernameType}">selected</c:if> >SIMULATION</option>
@@ -108,14 +103,14 @@ $(function(){
 						<b class="orange">*</b><label for="usernameType"></label>
 					</td>
 					<th  class="usernameParameter" <c:if test="${'SIMULATION'==model.usernameType}">style="display:none"</c:if> >
-						<s:Locale code="apps.desktop.usernameParameter" />：</th>
+						<@locale code="apps.desktop.usernameParameter" />：</th>
 					<td  class="usernameParameter" <c:if test="${'SIMULATION'==model.usernameType}">style="display:none"</c:if> >
 						<input type="text" id="usernameParameter" name="usernameParameter"  title="" value="${model.usernameParameter}"/>
 						<b class="orange">*</b><label for="usernameParameter"></label>
 					</td>
 					
 					<th class="preUsername" <c:if test="${'PARAMETER'==model.usernameType}">style="display:none"</c:if> >
-						<s:Locale code="apps.desktop.preUsername" />：</th>
+						<@locale code="apps.desktop.preUsername" />：</th>
 					<td class="preUsername" <c:if test="${'PARAMETER'==model.usernameType}">style="display:none"</c:if> >
 						<input type="text" id="preUsername" name="preUsername"  title="" value="${model.preUsername}"/>
 						<b class="orange">*</b><label for="preUsername"></label>
@@ -123,7 +118,7 @@ $(function(){
 					
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.desktop.passwordType" />：</th>
+					<th><@locale code="apps.desktop.passwordType" />：</th>
 					<td >
 						<select  id="passwordType" name="passwordType" >
 							<option value="SIMULATION"   <c:if test="${'SIMULATION'==model.passwordType}">selected</c:if> >SIMULATION</option>
@@ -132,14 +127,14 @@ $(function(){
 						<b class="orange">*</b><label for="passwordType"></label>
 					</td>
 					<th   class="passwordParameter" <c:if test="${'SIMULATION'==model.passwordType}">style="display:none"</c:if>  >
-						<s:Locale code="apps.desktop.passwordParameter" />：</th>
+						<@locale code="apps.desktop.passwordParameter" />：</th>
 					<td   class="passwordParameter" <c:if test="${'SIMULATION'==model.passwordType}">style="display:none"</c:if> >
 						<input type="text" id="passwordParameter" name="passwordParameter"  title="" value="${model.passwordParameter}"/>
 						<b class="orange">*</b><label for="passwordParameter"></label>
 					</td>
 					
 					<th  class="prePassword" <c:if test="${'PARAMETER'==model.passwordType}">style="display:none"</c:if> >
-						<s:Locale code="apps.desktop.prePassword" />：</th>
+						<@locale code="apps.desktop.prePassword" />：</th>
 					<td  class="prePassword" <c:if test="${'PARAMETER'==model.passwordType}">style="display:none"</c:if> >
 						<input type="text" id="prePassword" name="prePassword"  title="" value="${model.prePassword}"/>
 						<b class="orange">*</b><label for="prePassword"></label>
@@ -148,7 +143,7 @@ $(function(){
 				</tr>
 				
 				<tr>
-					<th><s:Locale code="apps.desktop.submitType" />：</th>
+					<th><@locale code="apps.desktop.submitType" />：</th>
 					<td >
 						<select  id="submitType" name="submitType" >
 							<option value="Enter" <c:if test="${'Enter'==model.submitType}">selected</c:if>  >Enter</option>
@@ -159,7 +154,7 @@ $(function(){
 						<b class="orange">*</b><label for="submitType"></label>
 					</td>
 					<th  class="preSubmit"  <c:if test="${'None'==model.submitType}">style="display:none"</c:if> >
-						<s:Locale code="apps.desktop.preSubmit" />：</th>
+						<@locale code="apps.desktop.preSubmit" />：</th>
 					<td  class="preSubmit"  <c:if test="${'None'==model.submitType}">style="display:none"</c:if> >
 						<input type="text" id="preSubmit" name="preSubmit"  title="" value="${model.preSubmit}"/>
 						<b class="orange">*</b><label for="preSubmit"></label>
@@ -167,50 +162,50 @@ $(function(){
 					
 				</tr>
 				<tr>
-					<th style="width:15%;"><s:Locale code="apps.credential" />：</th>
+					<th style="width:15%;"><@locale code="apps.credential" />：</th>
 					<td style="width:35%;">
 						<input type="radio" id="credential-user-defined" name="credential" class="credential" value="3"  <c:if test="${3==model.credential}">checked</c:if> />
-						<s:Locale code="apps.credential.user-defined" />
+						<@locale code="apps.credential.user-defined" />
 						<input type="radio" id="credential-shared" name="credential" class="credential" value="2"  <c:if test="${2==model.credential}">checked</c:if> />
-						<s:Locale code="apps.credential.shared" />
+						<@locale code="apps.credential.shared" />
 						<input type="radio" id="credential-system" name="credential" class="credential" value="1"  <c:if test="${1==model.credential}">checked</c:if> />
-						<s:Locale code="apps.credential.system" />
+						<@locale code="apps.credential.system" />
 						<b class="orange">*</b><label for="credential"></label>
 					</td>
-					<th style="width:15%;"><s:Locale code="apps.isAdapter" />：</th>
+					<th style="width:15%;"><@locale code="apps.isAdapter" />：</th>
 					<td style="width:35%;">
 						<select  id="isAdapter" name="isAdapter" >
-							<option value="0"  <c:if test="${0==model.isAdapter}">selected</c:if> ><s:Locale code="apps.isAdapter.no" /></option>
-							<option value="1"  <c:if test="${1==model.isAdapter}">selected</c:if> ><s:Locale code="apps.isAdapter.yes" /></option>
+							<option value="0"  <c:if test="${0==model.isAdapter}">selected</c:if> ><@locale code="apps.isAdapter.no" /></option>
+							<option value="1"  <c:if test="${1==model.isAdapter}">selected</c:if> ><@locale code="apps.isAdapter.yes" /></option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th><s:Locale code="apps.adapter" />：</th>
+					<th><@locale code="apps.adapter" />：</th>
 					<td colspan =3>
 						<input type="text" id="adapter" name="adapter"  title="" value="${model.adapter}"/>
 					</td>
 				</tr>
 				<tr id="systemconfigure"  <c:if test="${1!=model.credential}"> style="display:none"</c:if> >
-					<th><s:Locale code="apps.credential.system" />：</th>
+					<th><@locale code="apps.credential.system" />：</th>
 					<td colspan="3">
 						<select id="systemUserAttr" name="systemUserAttr">
-							<option value="uid"   <c:if test="${'uid'==model.systemUserAttr}">selected</c:if> ><s:Locale code="userinfo.uid" /></option>
-							<option value="employeeNumber" <c:if test="${'employeeNumber'==model.systemUserAttr}">selected</c:if> ><s:Locale code="userinfo.employeeNumber" /></option>
-							<option value="username" <c:if test="${'username'==model.systemUserAttr}">selected</c:if> ><s:Locale code="userinfo.username" /></option>
-							<option value="email" <c:if test="${'email'==model.systemUserAttr}">selected</c:if> ><s:Locale code="userinfo.email" /></option>
-							<option value="windowsaccount" <c:if test="${'windowsaccount'==model.systemUserAttr}">selected</c:if> ><s:Locale code="userinfo.windowsAccount" /></option>
+							<option value="uid"   <c:if test="${'uid'==model.systemUserAttr}">selected</c:if> ><@locale code="userinfo.uid" /></option>
+							<option value="employeeNumber" <c:if test="${'employeeNumber'==model.systemUserAttr}">selected</c:if> ><@locale code="userinfo.employeeNumber" /></option>
+							<option value="username" <c:if test="${'username'==model.systemUserAttr}">selected</c:if> ><@locale code="userinfo.username" /></option>
+							<option value="email" <c:if test="${'email'==model.systemUserAttr}">selected</c:if> ><@locale code="userinfo.email" /></option>
+							<option value="windowsaccount" <c:if test="${'windowsaccount'==model.systemUserAttr}">selected</c:if> ><@locale code="userinfo.windowsAccount" /></option>
 						</select>
 						<b class="orange">*</b><label for="systemUserAttr"></label>
 					</td>
 				</tr>
 				<tr id="sharedconfigure"  <c:if test="${2!=model.credential}"> style="display:none"</c:if>>
-					<th><s:Locale code="apps.credential.shared.sharedUsername" />：</th>
+					<th><@locale code="apps.credential.shared.sharedUsername" />：</th>
 					<td>
 						<input type="text" id="sharedUsername" name="sharedUsername" value="${model.sharedUsername}" />
 						<b class="orange">*</b><label for="sharedUsername"></label>
 					</td>
-					<th  ><s:Locale code="apps.credential.shared.sharedPassword" />：</th>
+					<th  ><@locale code="apps.credential.shared.sharedPassword" />：</th>
 					<td>
 						<input type="text" id="sharedPassword" name="sharedPassword" value="${model.sharedPassword}" />
 						<b class="orange">*</b><label for="sharedPassword"></label>
@@ -222,6 +217,6 @@ $(function(){
 				</tr>
 				</tbody>
 				</table>
-    		<input class="button" id="submitBtn" type="submit" value="<s:Locale code="button.text.save" />"/>
-			<input class="button" id="backBtn" type="button" value="<s:Locale code="button.text.cancel" />"/>	  
+    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
+			<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
 </form>
