@@ -1,18 +1,14 @@
 package org.maxkey.web.tag;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.support.RequestContext;
-import org.springframework.web.servlet.tags.RequestContextAwareTag;
-
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
@@ -27,6 +23,7 @@ import freemarker.template.TemplateModel;
 
 @FreemarkerTag("locale")
 public class LocaleTagDirective implements TemplateDirectiveModel {
+	private static final Logger _logger = LoggerFactory.getLogger(LocaleTagDirective.class);
 	@Autowired
     private HttpServletRequest request;
 	
@@ -38,7 +35,13 @@ public class LocaleTagDirective implements TemplateDirectiveModel {
 			if(params.get("code")==null) {
 				env.getOut().append(RequestContextUtils.getLocale(request).getLanguage());
 			}else {
-				env.getOut().append(webApplicationContext.getMessage(params.get("code").toString(), null, RequestContextUtils.getLocale(request)));
+				_logger.trace("message code "+params.get("code"));
+				try {
+					env.getOut().append(webApplicationContext.getMessage(params.get("code").toString(), null, RequestContextUtils.getLocale(request)));
+			
+				}catch(Exception e) {
+					_logger.error("message code "+params.get("code"),e);
+				}
 			}
 	}
 

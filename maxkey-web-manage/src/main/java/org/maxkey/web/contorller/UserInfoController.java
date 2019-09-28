@@ -71,9 +71,9 @@ public class UserInfoController {
 		
 	}
 	
-	@RequestMapping(value={"/forwardSelectUserType"})
+	@RequestMapping(value={"/forwardAdd"})
 	public ModelAndView forwardSelectUserType(){
-		ModelAndView modelAndView=new ModelAndView("users/selectUserTypeList");
+		ModelAndView modelAndView=new ModelAndView("/userinfo/userAdd");
 		//List<UserType> userTypeList=userTypeService.query(null);
 		//modelAndView.addObject("userTypeList", userTypeList);
 		return modelAndView;
@@ -84,14 +84,14 @@ public class UserInfoController {
 	
 	@RequestMapping(value={"/list"})
 	public ModelAndView usersList(){
-		return new ModelAndView("userinfo/usersList");
+		return new ModelAndView("/userinfo/usersList");
 	}
 	
 	@RequestMapping(value={"/usersSelect/{uid}/{username}"})
 	public ModelAndView usersSelect(
 			@PathVariable("uid") String uid,
 			@PathVariable("username") String username){
-		ModelAndView modelAndView= new ModelAndView("users/usersSelect");
+		ModelAndView modelAndView= new ModelAndView("/userinfo/usersSelect");
 		modelAndView.addObject("uid", uid);
 		modelAndView.addObject("username", username);
 		return modelAndView;
@@ -123,7 +123,7 @@ public class UserInfoController {
 	
 	@RequestMapping(value={"/forwardUpdate/{id}"})
 	public ModelAndView forwardUpdateUsers(@PathVariable("id")String id){
-		ModelAndView modelAndView=new ModelAndView("users/userUpdate");
+		ModelAndView modelAndView=new ModelAndView("/userinfo/userUpdate");
 		UserInfo userInfo=new UserInfo();
 		userInfo.setId(id);
 		userInfo=userInfoService.load(userInfo);
@@ -233,7 +233,7 @@ public class UserInfoController {
 	
 	@RequestMapping(value={"/forwardChangePassword/{id}"})
 	public ModelAndView forwardChangePassword(@PathVariable("id")String id){
-		ModelAndView modelAndView=new ModelAndView("users/changePassword");
+		ModelAndView modelAndView=new ModelAndView("/userinfo/changePassword");
 		UserInfo userInfo=new UserInfo();
 		userInfo.setId(id);
 		userInfo=userInfoService.load(userInfo);

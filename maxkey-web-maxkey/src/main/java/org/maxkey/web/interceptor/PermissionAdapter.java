@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.config.ApplicationConfig;
-import org.maxkey.dao.service.NavigationsService;
 import org.maxkey.domain.Navigations;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebContext;

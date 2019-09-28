@@ -110,7 +110,7 @@
 			<th data-field="username"><@locale code="account.username"/></th>
 			<th data-field="displayName"><@locale code="account.displayName"/></th>
 			<th data-field="appName"><@locale code="account.appName"/></th>
-			<th data-field="appId"><@locale code="account.appId"/></th>
+			<th data-field="appId"   data-visible="false"><@locale code="account.appId"/></th>
 			<th data-field="relatedUsername"><@locale code="account.relatedUsername"/></th>
 			</tr>
 		</thead>

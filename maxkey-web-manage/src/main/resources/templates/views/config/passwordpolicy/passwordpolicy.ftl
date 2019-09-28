@@ -62,15 +62,14 @@
 					<div class="col-12 grid-margin">
 						<div class="card">
 							<div class="card-header border-bottom">
-								<h4 class="card-title">Horizontal Two column</h4>
+								<h4 class="card-title"><@locale code="login.passwordpolicy"/></h4>
 							</div>
 							<div class="card-body">
-								<form  method="post" type="label" validate="true" action="<s:Base/>/config/passwordpolicy/update" id="actionForm" >
-									<p class="card-description">Personal info</p>
+								<form  method="post" type="label" validate="true" action="<@base/>/config/passwordpolicy/update" id="actionForm" >
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.minlength" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.minlength" />：</label>
 												<div class="col-sm-9">
 													<input id="id" name="id" type="hidden" value="${model.id}"/>
 						   							<input  class="form-control" type="text" id="minLength" name="minLength"  value="${model.minLength}" />
@@ -79,7 +78,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.maxlength" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.maxlength" />：</label>
 												<div class="col-sm-9">
 													<input  class="form-control" type="text" id="maxLength" name="maxLength" value="${model.maxLength}" />
 												</div>
@@ -89,7 +88,7 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.lowercase" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.lowercase" />：</label>
 												<div class="col-sm-9">
 													<input  class="form-control" type="text" id="lowerCase" name="lowerCase"  value="${model.lowerCase}" />
 												</div>
@@ -97,7 +96,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.uppercase" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.uppercase" />：</label>
 												<div class="col-sm-9">
 													<input  class="form-control" type="text" id="upperCase" name="upperCase" value="${model.upperCase}" />
 												</div>
@@ -107,7 +106,7 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.digits" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.digits" />：</label>
 												<div class="col-sm-9">
 													<input  class="form-control" type="text" id="digits" name="digits" value="${model.digits}"/>
 												</div>
@@ -115,7 +114,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3"><s:Locale code="passwordpolicy.specialchar" />：</label>
+												<label class="col-sm-3"><@locale code="login.passwordpolicy.specialchar" />：</label>
 												<div class="col-sm-9">
 													<input   class="form-control" type="text" id="specialChar" name="specialChar"  value="${model.specialChar}" />
 												</div>
@@ -125,7 +124,7 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.attempts" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.attempts" />：</label>
 												<div class="col-sm-9">
 													<input  class="form-control" type="text" id="attempts" name="attempts" value="${model.attempts}" />
 												</div>
@@ -133,7 +132,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.duration" />(Unit:Hour)：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.duration" />(Unit:Hour)：</label>
 												<div class="col-sm-9">
 													<input  class="form-control" type="text" id="duration" name="duration" value="${model.duration}"/>
 												</div>
@@ -143,7 +142,7 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.expiration" />(Unit:Day)：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.expiration" />(Unit:Day)：</label>
 												<div class="col-sm-9">
 													<input  class="form-control" type="text" id="expiration" name="expiration"  value="${model.expiration}" />
 												</div>
@@ -151,11 +150,11 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><s:Locale code="passwordpolicy.username" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.username" />：</label>
 												<div class="col-sm-9">
 													<select  class="form-control"   id="username" name="username"  >
-														<option  <c:if test="${1==model.username}">selected</c:if>  value="1"><s:Locale code="common.text.status.3"/></option>
-														<option  <c:if test="${0==model.username}">selected</c:if>  value="0"><s:Locale code="common.text.status.4"/></option>
+														<option  <#if 1==model.username>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
+														<option  <#if 0==model.username>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
 													</select>
 												</div>
 											</div>
@@ -165,14 +164,14 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group m-b-20">
-												<label   style="float: left;" for="simplePasswords"><s:Locale code="passwordpolicy.simplepasswords" />：</label>
+												<label   style="float: left;" for="simplePasswords"><@locale code="login.passwordpolicy.simplepasswords" />：</label>
 												<textarea id="simplePasswords" name="simplePasswords"  class="form-control" >${model.simplePasswords}</textarea>
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-3">
-											<button type="submit" class="button btn-primary btn btn-common btn-block mr-3"    id="submitBtn" ><s:Locale code="button.text.save" /></button>
+											<button type="submit" class="button btn-primary btn btn-common btn-block mr-3"    id="submitBtn" ><@locale code="button.text.save" /></button>
 										</div>
 									</div>
 									
