@@ -11,26 +11,40 @@
 </style>
 
 <script type="text/javascript">
+	function genderFormatter(value, row, index){
+   		if(value==1){
+   			return '<@locale code="userinfo.gender.female" />';
+   		}else{
+   			return '<@locale code="userinfo.gender.male" />';
+   		}
+	};
 
-function onClick(event, treeId, treeNode) {
-	//alert(treeNode.name+"|"+treeNode.id);
-	$("#departmentId", window.parent.document).val(treeNode.id);
-	$("#department", window.parent.document).val(treeNode.name);
-	$.closeWindow();
- 			
-}
+	function onClick(event, treeId, treeNode) {
+		  $("#deptId").val(treeNode.id);
+		  $("#list").setGridParam({ postData: { deptId: treeNode.id} });
+   		  $("#list").trigger('reloadGrid', [{page:1}]);
+  			
+	}
+				
+	$(function () {	
+		$("#winClose").on("click",function(){
+			var seldata=$.dataGridSelRowsData("#datagrid"); 
+			console.log(seldata[0].id+" - "+seldata[0].fullName);
+			$(".username", window.parent.document).val(seldata[0].username);
+			$(".displayName", window.parent.document).val(seldata[0].displayName);
+			$(".uid", window.parent.document).val(seldata[0].id);
+			$.closeWindow();
+		});
 
-$(function () {
-
-			var treeSettings={
-				element  :  "orgsTree",
-				rootId  :  "1",
-			 	checkbox  :  null,
-			 	onClick  :  onClick,
-			 	onDblClick  :  null,
-			 	url  :  "<@base/>/orgs/tree"
-			};
-			
+		var treeSettings={
+			element  :  "orgsTree",
+			rootId  :  "1",
+		 	checkbox  :  null,
+		 	onClick  :  onClick,
+		 	onDblClick  :  null,
+		 	url  :  "<@base/>/orgs/tree"
+		};
+		
 		function singlePath(newNode) {
 			if (newNode === curExpandNode) return;
 			if (curExpandNode && curExpandNode.open==true) {
@@ -137,16 +151,51 @@ $(function () {
 	    	);//end tree
 	
 });
-</script>
+	</script>
 </head>
-<body>	 
-<!-- content -->  
-<table border="0" cellpadding="0" cellspacing="0"  width="100%" class="th_atleft">
+<body>
+ <div>
+ 	<input class="button" id="winClose" type="button" value="winClose">
+ </div>
+     <!-- content -->  
+  <table class="datatable"   width="100%" >
    <tr>
       <td valign="top"  class="td_1" style="vertical-align: top;">
-         <div id="orgsTree" class="ztree"></div>
+      	<div id="orgsTree" class="ztree"></div>
+         
       </td>
-   </tr>
-</table>
+      <td  valign="top"  class="td_1" style="vertical-align: top;">
+	 	<table  data-url="<@base/>/userinfo/grid"
+				id="datagrid"
+				data-toggle="table"
+				data-classes="table table-bordered table-hover table-striped"
+				data-click-to-select="true"
+				data-pagination="true"
+				data-total-field="records"
+				data-page-list="[10, 25, 50, 100]"
+				data-search="false"
+				data-locale="zh-CN"
+				data-query-params="dataGridQueryParams"
+				data-query-params-type="pageSize"
+				data-side-pagination="server">
+			<thead>
+				<tr>
+				<th data-checkbox="true"></th>
+				<th data-sortable="true" data-field="id"   data-visible="false"><@locale code="userinfo.id"/></th>
+				<th data-field="username"><@locale code="userinfo.username"/></th>
+				<th data-field="displayName"><@locale code="userinfo.displayName"/></th>
+				<th data-field="employeeNumber"><@locale code="userinfo.employeeNumber"/></th>
+				<th data-field="organization"><@locale code="userinfo.organization"/></th>
+				<th data-field="department"><@locale code="userinfo.department"/></th>
+				<th data-field="jobTitle"><@locale code="userinfo.jobTitle"/></th>
+				<th data-field="mobile"  data-visible="false"><@locale code="userinfo.mobile"/></th>
+				<th data-field="email"   data-visible="false"><@locale code="userinfo.email"/></th>
+				<th data-field="gender" data-formatter="genderFormatter" ><@locale code="userinfo.gender"/></th>
+				</tr>
+			</thead>
+		</table>
+	     </td>
+	   </tr>
+	</table>
 </body>
 </html>

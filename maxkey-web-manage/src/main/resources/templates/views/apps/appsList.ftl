@@ -4,8 +4,8 @@
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
 <script type="text/javascript">				
-	function iconFormatter(value, options, rData){
-  			return "<img width='30' height='30' border='0px' src='<@base/>/image/"+rData["id"]+"'/>";
+	function iconFormatter(value, row, index){
+  			return "<img width='30' height='30' border='0px' src='<@base/>/image/"+value+"'/>";
 	};
 	
 	function vendorFormatter(value, options, rData){
@@ -120,26 +120,23 @@
 	<div class="page-container">
 	
 	<div class="main-content">
-					<div class="container-fluid">
-
-						<div class="breadcrumb-wrapper row">
-							<div class="col-12 col-lg-3 col-md-6">
-								<h4 class="page-title">Dashboard 2</h4>
-							</div>
-							<div class="col-12 col-lg-9 col-md-6">
-								<ol class="breadcrumb float-right">
-									<li><a href="index.html">Dashboard</a></li>
-									<li class="active">/ Dashboard 2</li>
-								</ol>
-							</div>
-						</div>
-
-					</div>
-
-
-					<div class="col-12 grid-margin">
-						<div class="card">
-							<div class="card-body">
+		<div class="container-fluid">
+			<div class="breadcrumb-wrapper row">
+				<div class="col-12 col-lg-3 col-md-6">
+					<h4 class="page-title">Dashboard 2</h4>
+				</div>
+				<div class="col-12 col-lg-9 col-md-6">
+					<ol class="breadcrumb float-right">
+						<li><a href="index.html">Dashboard</a></li>
+						<li class="active">/ Dashboard 2</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="col-12 grid-margin">
+				<div class="card">
+					<div class="card-body">
 		
 			<table  class="table table-bordered">
  				<tr>
@@ -184,7 +181,7 @@
 	 			<tr>
 		 			<td width="120px"><@locale code="apps.protocol"/></td>
 		 			<td width="374px">
-		 				<select name="protocol" class="select_protocol">
+		 				<select name="protocol" class="form-control">
 		 					<option value=""  selected>Select</option>
 		 					<option value="<%=PROTOCOLS.FORMBASED%>"><%=PROTOCOLS.FORMBASED%></option>
 		 					<option value="<%=PROTOCOLS.OPEN_ID_CONNECT%>"><%=PROTOCOLS.OPEN_ID_CONNECT%></option>
@@ -200,32 +197,34 @@
 		 			</td>
 		 			<td width="120px"><@locale code="apps.vendor"/></td>
 		 			<td width="374px">
-		 				<input   id="vendor" name="vendor" type="text" size="50" value="">
+		 				<input   id="vendor" name="vendor" class="form-control" type="text"  value="">
 	 			</tr>
 	 		</table>
 	 	</form>
  	</div>
 		<table  data-url="<@base/>/apps/grid"
 			id="datagrid"
-			data-toggle="table"
-			data-classes="table table-bordered table-hover table-striped"
-			data-pagination="true"
-			data-total-field="records"
-			data-page-list="[10, 25, 50, 100]"
-			data-search="false"
-			data-locale="zh-CN"
-			data-query-params="dataGridQueryParams"
-			data-query-params-type="pageSize"
-			data-side-pagination="server">
+				data-toggle="table"
+				data-classes="table table-bordered table-hover table-striped"
+				data-click-to-select="true"
+				data-pagination="true"
+				data-total-field="records"
+				data-page-list="[10, 25, 50, 100]"
+				data-search="false"
+				data-locale="zh-CN"
+				data-query-params="dataGridQueryParams"
+				data-query-params-type="pageSize"
+				data-side-pagination="server">
 		<thead>
 			<tr>
+				<th data-checkbox="true"></th>
 				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
-				<th data-field="sessionId"><@locale code="apps.icon"/></th>
+				<th data-field="id" data-formatter="iconFormatter"><@locale code="apps.icon"/></th>
 				<th data-field="name"><@locale code="apps.name"/></th>
 				<th data-field="protocol"><@locale code="apps.protocol"/></th>
 				<th data-field="category"><@locale code="apps.category"/></th>
 				<th data-field="vendor"><@locale code="apps.vendor"/></th>
-				<th data-field="loginUrl"><@locale code="log.loginhistory.loginUrl"/></th>
+				<th data-field="loginUrl" data-visible="false"><@locale code="log.loginhistory.loginUrl"/></th>
 	
 			</tr>
 		</thead>

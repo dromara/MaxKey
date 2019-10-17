@@ -54,19 +54,13 @@
 				<td colspan="2"> 
 					 <div id="tool_box_right">	    
 						 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
-						 		    wurl="<@base/>/users/forwardSelectUserType"
+						 		    wurl="<@base/>/app/accounts/forwardAdd"
 						 		    wwidth="960"
 						 		    wheight="600"
-					 		    	target="window">	    	
-					 		    	
-					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
-					 				wurl="<@base/>/users/forwardUpdate"
-					 				wwidth="960"
-						 		    wheight="600"
-					 		    	target="window"> 
+					 		    	target="window">	   
 					 		    	
 					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
-					 				wurl="<@base/>/users/delete" />
+					 				wurl="<@base/>/app/accounts/delete" />
 					</div>
 				</td>
 			</tr>
@@ -96,6 +90,7 @@
 			id="datagrid"
 			data-toggle="table"
 			data-classes="table table-bordered table-hover table-striped"
+			data-click-to-select="true"
 			data-pagination="true"
 			data-total-field="records"
 			data-page-list="[10, 25, 50, 100]"
@@ -106,12 +101,13 @@
 			data-side-pagination="server">
 		<thead>
 			<tr>
-			<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
-			<th data-field="username"><@locale code="account.username"/></th>
-			<th data-field="displayName"><@locale code="account.displayName"/></th>
-			<th data-field="appName"><@locale code="account.appName"/></th>
-			<th data-field="appId"   data-visible="false"><@locale code="account.appId"/></th>
-			<th data-field="relatedUsername"><@locale code="account.relatedUsername"/></th>
+				<th data-checkbox="true"></th>
+				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
+				<th data-field="username"><@locale code="account.username"/></th>
+				<th data-field="displayName"><@locale code="account.displayName"/></th>
+				<th data-field="appName"><@locale code="account.appName"/></th>
+				<th data-field="appId"   data-visible="false"><@locale code="account.appId"/></th>
+				<th data-field="relatedUsername"><@locale code="account.relatedUsername"/></th>
 			</tr>
 		</thead>
 	</table>

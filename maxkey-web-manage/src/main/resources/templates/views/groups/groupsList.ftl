@@ -18,26 +18,23 @@
 	<div class="page-container">
 	
 	<div class="main-content">
-					<div class="container-fluid">
-
-						<div class="breadcrumb-wrapper row">
-							<div class="col-12 col-lg-3 col-md-6">
-								<h4 class="page-title">Dashboard 2</h4>
-							</div>
-							<div class="col-12 col-lg-9 col-md-6">
-								<ol class="breadcrumb float-right">
-									<li><a href="index.html">Dashboard</a></li>
-									<li class="active">/ Dashboard 2</li>
-								</ol>
-							</div>
-						</div>
-
-					</div>
-
-
-					<div class="col-12 grid-margin">
-						<div class="card">
-							<div class="card-body">
+		<div class="container-fluid">
+			<div class="breadcrumb-wrapper row">
+				<div class="col-12 col-lg-3 col-md-6">
+					<h4 class="page-title">Dashboard 2</h4>
+				</div>
+				<div class="col-12 col-lg-9 col-md-6">
+					<ol class="breadcrumb float-right">
+						<li><a href="index.html">Dashboard</a></li>
+						<li class="active">/ Dashboard 2</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="col-12 grid-margin">
+				<div class="card">
+					<div class="card-body">
 		
 			<table  class="table table-bordered">
  				<tr>
@@ -53,19 +50,19 @@
 		 			<td colspan="2">
 		 				<div id="tool_box_right">
 		 					 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
-						 		    wurl="<@base/>/users/forwardSelectUserType"
-						 		    wwidth="960"
-						 		    wheight="600"
+						 		    wurl="<@base/>/groups/forwardAdd"
+						 		    wwidth="400"
+						 		    wheight="300"
 					 		    	target="window">	    	
 					 		    	
 					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
-					 				wurl="<@base/>/users/forwardUpdate"
-					 				wwidth="960"
-						 		    wheight="600"
+					 				wurl="<@base/>/groups/forwardUpdate"
+					 				wwidth="400"
+						 		    wheight="300"
 					 		    	target="window"> 
 					 		    	
 					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
-					 				wurl="<@base/>/users/delete" />
+					 				wurl="<@base/>/groups/delete" />
 						</div>
 		 			</td>
 		 		</tr>
@@ -81,20 +78,21 @@
  	</div>
 		<table  data-url="<@base/>/groups/grid"
 			id="datagrid"
-			data-toggle="table"
-			data-classes="table table-bordered table-hover table-striped"
-			data-pagination="true"
-			data-total-field="records"
-			data-page-list="[10, 25, 50, 100]"
-			data-search="false"
-			data-locale="zh-CN"
-			data-query-params="dataGridQueryParams"
-			data-query-params-type="pageSize"
-			data-side-pagination="server">
+				data-toggle="table"
+				data-classes="table table-bordered table-hover table-striped"
+				data-click-to-select="true"
+				data-pagination="true"
+				data-total-field="records"
+				data-page-list="[10, 25, 50, 100]"
+				data-search="false"
+				data-locale="zh-CN"
+				data-query-params="dataGridQueryParams"
+				data-query-params-type="pageSize"
+				data-side-pagination="server">
 		<thead>
 			<tr>
+				<th data-checkbox="true"></th>
 				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
-				
 				<th data-field="name"><@locale code="group.name"/></th>
 				<th data-field="description"><@locale code="common.text.description"/></th>
 				<th data-field="createdBy"><@locale code="common.text.createdby"/></th>
@@ -109,7 +107,7 @@
 	
 </div>
 					</div>
-					<footer class="content-footer">
+	<footer class="content-footer">
 		<#include  "../layout/footer.ftl"/>
 	</footer>
 

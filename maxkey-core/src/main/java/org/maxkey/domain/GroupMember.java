@@ -2,6 +2,12 @@ package org.maxkey.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 /*
    ID                   varchar(40)                    not null,
@@ -9,17 +15,24 @@ import java.io.Serializable;
    UID	                varchar(40)	                   null
    constraint PK_ROLES primary key clustered (ID)
  */
+@Table(name = "GROUP_MEMBER")  
 public class GroupMember extends UserInfo implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8059639972590554760L;
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
+	String id;
+	@Column
 	private String groupId;
 	private String groupName;
-	
+	@Column
 	private String memberId;
 	private String memberName;
+	@Column
 	private String type;//User or Group
 	
 
@@ -51,6 +64,16 @@ public class GroupMember extends UserInfo implements Serializable{
 		this.memberId = memberId;
 		this.memberName = memberName;
 		this.type = type;
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 

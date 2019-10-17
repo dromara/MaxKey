@@ -64,8 +64,8 @@ public class AccountsController {
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd(@ModelAttribute("appAccounts") Accounts appAccounts) {
 		ModelAndView modelAndView=new ModelAndView("/accounts/appAccountsAdd");
-		Applications  app= applicationsService.get(appAccounts.getAppId());
-		appAccounts.setAppName(app.getName());
+		//Applications  app= applicationsService.get(appAccounts.getAppId());
+		//appAccounts.setAppName(app.getName());
 		modelAndView.addObject("model",appAccounts);
 		return modelAndView;
 	}

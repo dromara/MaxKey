@@ -19,25 +19,18 @@
      	</a>
    	</li>
    	<li>
-     	<a class="has-arrow" href="#">
+     	<a class="" href="<@base />/apps/list/">
       		<span class="fa fa-fw fa-github fa-lg"></span>
        		应用管理
      	</a>
-     	<ul>
-     		<li>
-	         <a href="<@base />/apps/list/">
-	           <span class="fa fa-fw fa-code-fork"></span>
-	         	应用管理	
-	         </a>
-	       </li>
-	       <li>
-	         <a href="<@base />/app/accounts/list">
-	           <span class="fa fa-fw fa-code-fork"></span>
-	         	账号映射	
-	         </a>
-	       </li>
-	    </ul>
    	</li>
+   	
+ 	<li>
+     	<a class="" href="<@base />/app/accounts/list">
+      		<span class="fa fa-fw fa-github fa-lg"></span>
+       		账号管理
+     	</a>
+   	</li>  	
    	<li>
      	<a class="has-arrow" href="#">
       		<span class="fa fa-fw fa-github fa-lg"></span>
@@ -57,7 +50,7 @@
 	         </a>
 	       </li>
 	       <li>
-	         <a href="<@base />/groupApp/list">
+	         <a href="<@base />/groupPrivileges/list">
 	           <span class="fa fa-fw fa-code-fork"></span>
 	         	 权限管理	
 	         </a>
@@ -101,44 +94,6 @@
 	         <a href="<@base />/logs/list">
 	           <span class="fa fa-fw fa-code-fork"></span>
 	         	  操作日志
-	         </a>
-	       </li>
-	    </ul>
-   	</li>
-   	<li>
-     	<a class="has-arrow" href="#">
-      		<span class="fa fa-fw fa-github fa-lg"></span>
-       		统计报表
-     	</a>
-     	<ul>
-	       <li>
-	         <a href="<@base />/report/login/day">
-	           <span class="fa fa-fw fa-code-fork"></span>
-	         	  日报表
-	         </a>
-	       </li>
-	       <li>
-	         <a href="<@base />/report/login/month">
-	           <span class="fa fa-fw fa-code-fork"></span>
-	         	 月报表
-	         </a>
-	       </li>
-	       <li>
-	         <a href="<@base />/report/login/year">
-	           <span class="fa fa-fw fa-code-fork"></span>
-	         	  年报表
-	         </a>
-	       </li>
-	       <li>
-	         <a href="<@base />/report/login/app">
-	           <span class="fa fa-fw fa-code-fork"></span>
-	         	  应用登录报表
-	         </a>
-	       </li>
-	       <li>
-	         <a href="<@base />/report/login/browser">
-	           <span class="fa fa-fw fa-code-fork"></span>
-	         	 浏览器报表
 	         </a>
 	       </li>
 	    </ul>

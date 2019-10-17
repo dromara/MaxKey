@@ -36,7 +36,7 @@
 									<input id='j_password' name='j_password' class="form-control" type="password" required=""	placeholder="<@locale code="login.text.password"/>">
 								</div>
 								<div class="form-group">
-									<input id="j_captcha" name="j_captcha" class="form-control" value="" type="text" required="" placeholder="<@locale code="login.text.captcha"/>" style="float: left; width: 70%;"> 
+									<input id="j_captcha" name="j_captcha" class="form-control" value="" type="text" required="" placeholder="<@locale code="login.text.captcha"/>"> 
 									<img id="j_captchaimg" src="<@base/>/captcha" />
 								</div>
 								<div class="form-group text-center m-t-20">

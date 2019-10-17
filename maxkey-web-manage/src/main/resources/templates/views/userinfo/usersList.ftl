@@ -4,17 +4,144 @@
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
 	<script type="text/javascript">	
-		function onSelectRow(id){		
-	   		$("#changepwdBtn").attr("wurl","<@base/>/users/forwardChangePassword/"+$.gridRowData("#list",id).id);
-	   	}
-	   	
-	   	function genderFormatter(value, options, rData){
-	   		if(value==1){
-	   			return '<@locale code="userinfo.gender.female" />';
-	   		}else{
-	   			return '<@locale code="userinfo.gender.male" />';
-	   		}
+	function genderFormatter(value, row, index){
+   		if(value==1){
+   			return '<@locale code="userinfo.gender.female" />';
+   		}else{
+   			return '<@locale code="userinfo.gender.male" />';
+   		}
+	};
+		
+function onClick (event, treeId, treeNode) {
+	$("#departmentId").val(treeNode.data.id)
+	$.cookie("select_org_id", treeNode.data.id, { path: '/' });
+	$.cookie("select_org_name", treeNode.data.name,{ path: '/' });
+	$("#searchBtn").click();
+	 
+}
+	
+$(function () {
+		
+			var treeSettings={
+				element  :  "orgsTree",
+				rootId  :  "1",
+			 	checkbox  :  null,
+			 	onClick  :  onClick,
+			 	onDblClick  :  null,
+			 	url  :  "<@base/>/orgs/tree"
+			};
+			
+		function singlePath(newNode) {
+			if (newNode === curExpandNode) return;
+			if (curExpandNode && curExpandNode.open==true) {
+				var zTree = $.fn.zTree.getZTreeObj(treeSettings.element);
+				if (newNode.parentTId === curExpandNode.parentTId) {
+					zTree.expandNode(curExpandNode, false);
+				} else {
+					var newParents = [];
+					while (newNode) {
+						newNode = newNode.getParentNode();
+						if (newNode === curExpandNode) {
+							newParents = null;
+							break;
+						} else if (newNode) {
+							newParents.push(newNode);
+						}
+					}
+					if (newParents!=null) {
+						var oldNode = curExpandNode;
+						var oldParents = [];
+						while (oldNode) {
+							oldNode = oldNode.getParentNode();
+							if (oldNode) {
+								oldParents.push(oldNode);
+							}
+						}
+						if (newParents.length>0) {
+							for (var i = Math.min(newParents.length, oldParents.length)-1; i>=0; i--) {
+								if (newParents[i] !== oldParents[i]) {
+									zTree.expandNode(oldParents[i], false);
+									break;
+								}
+							}
+						} else {
+							zTree.expandNode(oldParents[oldParents.length-1], false);
+						}
+					}
+				}
+			}
+			curExpandNode = newNode;
 		};
+
+
+		function beforeExpand(treeId, treeNode) {
+			var pNode = curExpandNode ? curExpandNode.getParentNode():null;
+			var treeNodeP = treeNode.parentTId ? treeNode.getParentNode():null;
+			var zTree = $.fn.zTree.getZTreeObj(""+treeSettings.element);
+			for(var i=0, l=!treeNodeP ? 0:treeNodeP.children.length; i<l; i++ ) {
+				if (treeNode !== treeNodeP.children[i]) {
+					zTree.expandNode(treeNodeP.children[i], false);
+				}
+			}
+			while (pNode) {
+				if (pNode === treeNode) {
+					break;
+				}
+				pNode = pNode.getParentNode();
+			}
+			if (!pNode) {
+				singlePath(treeNode);
+			}
+
+		};
+		
+	    $.fn.zTree.init(
+	    		$("#"+treeSettings.element), //element
+	    		{//json object 
+					check	: 	{
+						enable		: 	treeSettings.checkbox
+					},
+					async	: 	{
+						enable		: 	true,
+						url			:	treeSettings.url,
+						autoParam	:	["id", "name=n", "level=lv"],
+						otherParam	:	{"otherParam":"zTreeAsyncTest",id:treeSettings.rootId},
+						dataFilter	: 	function (treeId, parentNode, childNodes) {
+											if (!childNodes) return null;
+											for (var i=0, l=childNodes.length; i<l; i++) {
+												childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+											}
+											return childNodes;
+										}
+					},
+					data			: 	{
+						simpleData	: 	{
+							enable	: 	true
+						}
+					},
+					callback: {
+						onClick			: 	treeSettings.onClick,
+						onDblClick		: 	treeSettings.onDblClick,
+						beforeAsync		: 	function(treeId, treeNode){
+							$.loading();
+						},
+						onAsyncSuccess	: 	function(event, treeId, treeNode, msg){
+							$.unloading();
+						},
+						//beforeExpand	: 	beforeExpand,
+						onExpand		: 	function onExpand(event, treeId, treeNode) {
+							curExpandNode = treeNode;
+						}
+					}
+	    		}
+	    	);//end tree
+	    	
+	$("#changepwdBtn").on("click",function(){	
+			$("#changepwdBtnHidden").attr("wurl","<@base/>/userinfo/forwardChangePassword/"+$.dataGridSelRowsData("#datagrid")[0].id);
+		   	$("#changepwdBtnHidden").click();	
+	});
+	
+});
 	</script>
 </head>
 <body> 
@@ -59,14 +186,18 @@
 				</td>
 				<td  width="375px">
 					<form id="basic_search_form">
+						<input  class="form-control"   id="departmentId"  name="departmentId" type="hidden">
 				 			<input  class="form-control"  name="username" type="text" style ="width:150px;float:left;">
+				 			
+				 			
 				 			<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
 				 			<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
 					 	</form>
 				</td>
 				<td colspan="2"> 
 					 <div id="tool_box_right">
-					 	<input class="button btn btn-warning mr-3 window" id="changepwdBtn" type="button" value="<@locale code="login.password.changepassword"/>" 
+					 	<input class="button btn btn-warning mr-3" id="changepwdBtn" type="button" value="<@locale code="login.password.changepassword"/>" />
+						<input class="button btn btn-warning mr-3 window" id="changepwdBtnHidden" type="hidden" value="<@locale code="login.password.changepassword"/>" 
 						 		    wurl="<@base/>/userinfo/forwardChangePassword" wwidth="600px" wheight="250px" />
 						 		    
 						 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
@@ -104,52 +235,48 @@
 						<input class="form-control"  type="text" id="employeeNumber" name="employeeNumber"  title="" value=""/>
 			 			</td>
 			 </tr>
-			 <tr>
-					<td width="120px"><@locale code="userinfo.department"/></td>
-		 			<td width="360px">
-			 			<input  class="form-control"  type="text" style="display:none;" id="departmentId" name="departmentId"  title="" value=""/>
-						<input  class="form-control"  style="width:70%;;float:left;"  type="text" id="department" name="department"  title="" value=""/>
-			 			<input class="window button btn btn-secondary mr-3 "  type="button"  size="50" value="<@locale code="button.text.select"/>" title="department" wurl="/orgs/orgsSelect/deptId/department" wwidth="300" wheight="400" />
-			 		</td>
-	 				<td width="120px"><@locale code="userinfo.userType"/></td>
-		 			<td width="360px">
-		 				<input class="form-control"  class="userTypeId" name="userType" type="text" style="display:none;"  >
-		 				<input class="form-control"  class="userTypeName" name="userTypeName" type="text" style="float:left;"  >
-		 				
-		 			</td>
-		 			
-			 </tr>
 			</table>
  		</form>
  	</div>
- 	<table  data-url="<@base/>/userinfo/grid"
-			id="datagrid"
-			data-toggle="table"
-			data-classes="table table-bordered table-hover table-striped"
-			data-pagination="true"
-			data-total-field="records"
-			data-page-list="[10, 25, 50, 100]"
-			data-search="false"
-			data-locale="zh-CN"
-			data-query-params="dataGridQueryParams"
-			data-query-params-type="pageSize"
-			data-side-pagination="server">
-		<thead>
-			<tr>
-			<th data-sortable="true" data-field="id"   data-visible="false"><@locale code="userinfo.id"/></th>
-			<th data-field="id"><@locale code="apps.icon"/></th>
-			<th data-field="icon"><@locale code="apps.icon"/></th>
-			<th data-field="username"><@locale code="userinfo.username"/></th>
-			<th data-field="displayName"><@locale code="userinfo.displayName"/></th>
-			<th data-field="employeeNumber"><@locale code="userinfo.employeeNumber"/></th>
-			<th data-field="organization"><@locale code="userinfo.organization"/></th>
-			<th data-field="department"><@locale code="userinfo.department"/></th>
-			<th data-field="jobTitle"><@locale code="userinfo.jobTitle"/></th>
-			<th data-field="mobile"><@locale code="userinfo.mobile"/></th>
-			<th data-field="email"><@locale code="userinfo.email"/></th>
-			<th data-field="gender"><@locale code="userinfo.gender"/></th>
-			</tr>
-		</thead>
+ 	     <!-- content -->  
+ <table class="datatable"   width="100%" >
+   <tr>
+      <td valign="top"  class="td_1" style="vertical-align: top;">
+      	<div id="orgsTree" class="ztree"></div>
+         
+      </td>
+      <td  valign="top"  class="td_1" style="vertical-align: top;">
+	 	<table  data-url="<@base/>/userinfo/grid"
+				id="datagrid"
+				data-toggle="table"
+				data-classes="table table-bordered table-hover table-striped"
+				data-click-to-select="true"
+				data-pagination="true"
+				data-total-field="records"
+				data-page-list="[10, 25, 50, 100]"
+				data-search="false"
+				data-locale="zh-CN"
+				data-query-params="dataGridQueryParams"
+				data-query-params-type="pageSize"
+				data-side-pagination="server">
+			<thead>
+				<tr>
+				<th data-checkbox="true"></th>
+				<th data-sortable="true" data-field="id"   data-visible="false"><@locale code="userinfo.id"/></th>
+				<th data-field="username"><@locale code="userinfo.username"/></th>
+				<th data-field="displayName"><@locale code="userinfo.displayName"/></th>
+				<th data-field="employeeNumber"><@locale code="userinfo.employeeNumber"/></th>
+				<th data-field="organization"><@locale code="userinfo.organization"/></th>
+				<th data-field="department"><@locale code="userinfo.department"/></th>
+				<th data-field="jobTitle"><@locale code="userinfo.jobTitle"/></th>
+				<th data-field="mobile"  data-visible="false"><@locale code="userinfo.mobile"/></th>
+				<th data-field="email"   data-visible="false"><@locale code="userinfo.email"/></th>
+				<th data-field="gender" data-formatter="genderFormatter" ><@locale code="userinfo.gender"/></th>
+				</tr>
+			</thead>
+		</table>
+	     </td>
+	   </tr>
 	</table>
 </div>
 	

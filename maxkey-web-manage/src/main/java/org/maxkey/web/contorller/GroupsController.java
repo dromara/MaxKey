@@ -119,7 +119,7 @@ public class GroupsController {
 	public Message delete(@ModelAttribute("group") Groups group) {
 		_logger.debug("-delete  group :" + group);
 		
-		if (groupsService.delete(group)) {
+		if (groupsService.remove(group.getId())) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

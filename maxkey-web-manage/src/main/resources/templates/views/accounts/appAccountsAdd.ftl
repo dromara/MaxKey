@@ -1,69 +1,85 @@
-<%@ page 	language="java"   import="java.util.*" 	pageEncoding="UTF-8"%>
-<%@ taglib 	prefix="spring"   uri="http://www.springframework.org/tags" %>
-<%@ taglib 	prefix="s" uri="http://www.connsec.com/tags" %>
-<%@ taglib 	prefix="fmt"      uri="http://java.sun.com/jsp/jstl/fmt"%>
-<script type="text/javascript">	
-$(function () {
-	$("iframe", window.parent.document).attr("height",300); 
-});
-</script>
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../layout/header.ftl"/>
+	<#include  "../layout/common.cssjs.ftl"/>
+<style   type="text/css">
+  .table th, .table td {
+    padding: .2rem;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
 
-<form id="actionForm"  method="post" type="label" autoclose="true"  action="<s:Base/>/app/accounts/add">
-	<table border="0" cellpadding="0" cellspacing="0" class="datatable">
+<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/app/accounts/add">
+	<table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
 		<tbody>
 			<tr style="display:none">
-				<th><s:Locale code="userinfo.id" />：</th>
+				<th><@locale code="userinfo.id" />：</th>
 				<td nowrap>
-					<span class="intspan"><input type="text" id="id" name="id" readonly class="int required" title="" value="${model.id}"/></span>
-					<b class="orange">*</b><label for="userTypeId"></label>
+					<input type="text" id="id" name="id" readonly  class="form-control" title="" value="${model.id!}"/>
+	
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="userinfo.username" />：</th>
+				<th><@locale code="userinfo.username" />：</th>
 				<td nowrap>
-					<span class="intspan"><input readonly type="text" id="username" name="username" class="int required" title="" value="${model.username}"/></span>
-					<b class="orange">*</b><label for="username"></label>
+					<input readonly type="text" id="username" name="username"  class="form-control username" title="" value="${model.username!}"/>
+					<input class="button btn btn-primary mr-3 window"  type="button"    id="selectUserinfoBtn" value="<@locale code="button.text.select" />"
+					 wurl="<@base/>/userinfo/select"
+						 		    wwidth="800"
+						 		    wheight="500"
+					 		    	target="window"/>
+
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="userinfo.displayName" />：</th>
+				<th><@locale code="userinfo.displayName" />：</th>
 				<td nowrap>
-					<span class="intspan"><input readonly  type="text" id="displayName" name="displayName" class="int required" title="" value="${model.displayName}"/></span>
-					<b class="orange">*</b><label for="displayName"></label>
+					<input readonly  type="text" id="displayName" name="displayName"  class="form-control displayName"  title="" value="${model.displayName!}"/>
+			
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="apps.name" />：</th>
+				<th><@locale code="apps.name" />：</th>
 				<td nowrap>
-					<span class="intspan"><input readonly  type="text" id="appName" name="appName" class="int required" title="" value="${model.appName}"/></span>
-					<b class="orange">*</b><label for="appName"></label>
+					<input readonly  type="text" id="appName" name="appName"  class="form-control appName" title="" value="${model.appName!}"/>
+					<input class="button btn btn-primary mr-3 window"  type="button"    id="selectAppsubmitBtn" value="<@locale code="button.text.select" />"
+					  wurl="<@base/>/apps/select"
+						 		    wwidth="800"
+						 		    wheight="500"
+					 		    	target="window"/>
+					
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="userinfo.appaccouts.relatedUsername" />：</th>
+				<th><@locale code="account.relatedUsername" />：</th>
 				<td nowrap>
-					<span class="intspan"><input type="text" id="relatedUsername" name="relatedUsername" class="int required" title="" value="${model.relatedUsername}"/></span>
-					<b class="orange">*</b><label for="relatedUsername"></label>
+					<input type="text" id="relatedUsername" name="relatedUsername"  class="form-control" title="" value="${model.relatedUsername!}"/>
+
 				</td>
 			</tr>
 			<tr>
-				<th><s:Locale code="userinfo.appaccouts.relatedPassword" />：</th>
+				<th><@locale code="account.relatedPassword" />：</th>
 				<td nowrap>
-					<span class="intspan"><input type="password" id="relatedPassword" name="relatedPassword" class="int required" title="" value="${model.relatedPassword}"/></span>
-					<b class="orange">*</b><label for="relatedPassword"></label>
+					<input type="password" id="relatedPassword" name="relatedPassword"  class="form-control" title="" value="${model.relatedPassword!}"/>
+		
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2"  class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
 					<input id="status" type="hidden" name="status"  value="1"/>
-					<input type="hidden" id="uid" name="uid" class="int required" title="" value="${model.uid}"/>
-					<input type="hidden" id="appId" name="appId" class="int required" title="" value="${model.appId}"/>
-			   		<input class="button"  type="button"    id="submitBtn" value="<s:Locale code="button.text.save" />"/>
-					<input class="button"  type="button"    id="closeBtn" value="<s:Locale code="button.text.cancel" /> "/>	
+					<input type="hidden" id="uid" name="uid" class="uid" title="" value="${model.uid!}"/>
+					<input type="hidden" id="appId" name="appId" class="appId" title="" value="${model.appId!}"/>
+			   		<input class="button btn btn-primary mr-3"  type="button"    id="submitBtn" value="<@locale code="button.text.save" />"/>
+					<input class="button"  type="button"    id="closeBtn" value="<@locale code="button.text.cancel" /> "/>	
 					
 				</td>
 			</tr>
 		</tbody>
 	</table>
 </form>
+</body>
+</html>

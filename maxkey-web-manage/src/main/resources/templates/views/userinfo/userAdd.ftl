@@ -6,8 +6,12 @@
 <script type="text/javascript">
    <!--
       $(function(){	
+      	$("#departmentId").val($.cookie("select_org_id"));
+		$("#department").val($.cookie("select_org_name"));
+		
       	$("#picture").on("click",function(){
       		$("#pictureFile").click();
+      			
       	});
       });
       //-->
@@ -24,7 +28,7 @@
 <form  
 	method="post"
 	type="alert"  
-	action="<@base/>/users/add" 
+	action="<@base/>/userinfo/add" 
 	autoclose="true" 
 	enctype="multipart/form-data">
 	 <div class="" style="width:100%;">
@@ -492,7 +496,7 @@
 			<div >
 				<div >
 					<input id="_method" type="hidden" name="_method"  value="post"/>
-					<input id="submitBtn" class="button btn btn-primary mr-3" type="button" value="<@locale code="button.text.save" />"/>
+					<input id="submitBtn" class="button btn btn-primary mr-3" type="submit" value="<@locale code="button.text.save" />"/>
 				</div>
 			</div>
 	 </div> 

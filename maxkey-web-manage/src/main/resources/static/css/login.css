@@ -8,15 +8,15 @@
 	border:0;
 }
 #j_username,#j_password,#tfa_j_username,#tfa_j_password,#currentTime{
-	width	:230px;
 	font-size: 14px;
 	font-weight: bold;
 }
 
 #j_captcha{
-	width	:160px;
+	width	:70%;
 	font-size: 14px;
 	font-weight: bold;
+	float: left; 
 }
 
 #tfa_j_otp_captcha{

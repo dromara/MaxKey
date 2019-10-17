@@ -17,27 +17,52 @@ public class Organizations extends JpaBaseDomain implements Serializable{
 	@Column
 	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
 	private String id;
-  private String code;
-  private String name;
-  private String fullName;
-  private String pId;
-  private String pName;
-  private String type;
-  private String xPath;
-  private String xNamePath;
-  private String level;
-  private String hasChild;
-  private String division;
-  private String country;
-  private String region;
-  private String locality;
-  private String street;
-  private String address;
-  private String contact;
-  private String postalCode;
-  private String phone;
-  private String fax;
-  private String email;
+	@Column
+	private String code;
+	@Column
+	private String name;
+	@Column
+	private String fullName;
+	@Column
+	private String pId;
+	@Column
+	private String pName;
+	@Column
+	private String type;
+	@Column
+	private String xPath;
+	@Column
+	private String xNamePath;
+	@Column
+	private String level;
+	@Column
+	private String hasChild;
+	@Column
+	private String division;
+	@Column
+	private String country;
+	@Column
+	private String region;
+	@Column
+	private String locality;
+	@Column
+	private String street;
+	@Column
+	private String address;
+	@Column
+	private String contact;
+	@Column
+	private String postalCode;
+	@Column
+	private String phone;
+	@Column
+	private String fax;
+	@Column
+	private String email;
+	@Column
+	private String sortOrder;
+	@Column
+	private String description;
 	  
 	/**
 	 * 
@@ -222,6 +247,33 @@ public class Organizations extends JpaBaseDomain implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	
+	public String getSortOrder() {
+		return sortOrder;
+	}
+
+	public void setSortOrder(String sortOrder) {
+		this.sortOrder = sortOrder;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
+	public String toString() {
+		return "Organizations [id=" + id + ", code=" + code + ", name=" + name + ", fullName=" + fullName + ", pId="
+				+ pId + ", pName=" + pName + ", type=" + type + ", xPath=" + xPath + ", xNamePath=" + xNamePath
+				+ ", level=" + level + ", hasChild=" + hasChild + ", division=" + division + ", country=" + country
+				+ ", region=" + region + ", locality=" + locality + ", street=" + street + ", address=" + address
+				+ ", contact=" + contact + ", postalCode=" + postalCode + ", phone=" + phone + ", fax=" + fax
+				+ ", email=" + email + ", sortOrder=" + sortOrder + ", description=" + description + "]";
 	}
 
 }

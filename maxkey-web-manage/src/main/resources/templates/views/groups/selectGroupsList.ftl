@@ -1,21 +1,29 @@
-<%@ page   contentType="text/html; charset=UTF-8" import="java.util.Map,java.util.LinkedHashMap" %>
-<%@ taglib prefix="s"	uri="http://www.connsec.com/tags" %>
-<%@ taglib prefix="spring"		uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c"			uri="http://java.sun.com/jsp/jstl/core"%>
-
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../layout/header.ftl"/>
+	<#include  "../layout/common.cssjs.ftl"/>
+<style   type="text/css">
+  .table th, .table td {
+    padding: .2rem;
+    vertical-align: middle;
+  }
+</style>
 <script type="text/javascript">	
 	
 	$(function () {
 		$("#selectBtn").on("click",function(){
-			var seldata=$.gridRowData("#list",$.gridSel("#list")); 
-			$(".groupId", window.parent.document).val(seldata.id);
-			$(".groupName", window.parent.document).val(seldata.name);
+			var seldata=$.dataGridSelRowsData("#datagrid"); 
+			console.log(seldata[0].id+" - "+seldata[0].name);
+			$(".groupId", window.parent.document).val(seldata[0].id);
+			$(".groupName", window.parent.document).val(seldata[0].name);
 			$.closeWindow();
 		 			
 		});
 	});
 </script>
-
+</head>
+<body>
 	<div id="tool_box">
 	 		<table   class="datatable">
  				<tr>
@@ -23,12 +31,12 @@
 		 			<td width="374px">
 		 				<form id="basic_search_form">
 				 			<input type="text" name="name" style ="width:150px">
-				 			<input class="button primary"  id="searchBtn" type="button" size="50" value="<s:Locale code="button.text.search"/>">
+				 			<input class="button primary"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
 				 		</form>
 		 			</td>
 				 	<td colspan="2"> 
 					 	<div id="tool_box_right" style="width: auto;">
-							<input class="button"   id="selectBtn" type="button" value="<s:Locale code="button.text.select"/>" >
+							<input class="button"   id="selectBtn" type="button" value="<@locale code="button.text.select"/>" >
 						</div>
 				 	</td>
 				</tr>
@@ -37,14 +45,35 @@
  	</div>
  	
 	<div class="mainwrap" id="main">
-		<s:Grid id="list" url="/groups/grid" multiselect="false" resize="false"  rowLimit="10">	
-			<s:Column width="0" field="id" title="id" hidden="true"/>
-			<s:Column width="300" field="name" title="group.name"/>
-			<s:Column width="355" field="description" title="common.text.description"/>
-			<s:Column width="0" field="createdBy" title="common.text.createdby" hidden="true"/>
-			<s:Column width="0" field="createdDate" title="common.text.createddate" hidden="true"/>
-			<s:Column width="0" field="modifiedBy" title="common.text.modifiedby" hidden="true"/>
-			<s:Column width="0" field="modifiedDate" title="common.text.modifieddate" hidden="true"/>
-		</s:Grid>
+		<table  data-url="<@base/>/groups/grid"
+			id="datagrid"
+				data-toggle="table"
+				data-classes="table table-bordered table-hover table-striped"
+				data-click-to-select="true"
+				data-pagination="true"
+				data-total-field="records"
+				data-page-list="[10, 25, 50, 100]"
+				data-search="false"
+				data-locale="zh-CN"
+				data-query-params="dataGridQueryParams"
+				data-query-params-type="pageSize"
+				data-side-pagination="server">
+		<thead>
+			<tr>
+				<th data-checkbox="true"></th>
+				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
+				<th data-field="name"><@locale code="group.name"/></th>
+				<th data-field="description"><@locale code="common.text.description"/></th>
+				<th data-field="createdBy"><@locale code="common.text.createdby"/></th>
+				<th data-field="createdDate"><@locale code="common.text.createddate"/></th>
+				<th data-field="modifiedBy"><@locale code="common.text.modifiedby"/></th>
+				<th data-field="modifiedDate"><@locale code="common.text.modifieddate"/></th>
+	
+			</tr>
+		</thead>
+	</table>
 			
 	</div>
+	
+</body>
+</html>

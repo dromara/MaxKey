@@ -66,13 +66,14 @@ public class GroupMemberController {
 	}
 	
 	
-	@RequestMapping(value = { "/gridUserMemberInGroup" })
+	@RequestMapping(value = { "/queryMemberInGroup" })
 	@ResponseBody
-	public JpaPageResults<UserInfo> gridUserMemberInGroup(@ModelAttribute("groups")  GroupMember groupMember) {
+	public JpaPageResults<GroupMember> queryMemberInGroup(@ModelAttribute("groupMember")  GroupMember groupMember) {
+		_logger.debug("groupMember : "+groupMember);
 		if(groupMember.getGroupId()==null||groupMember.getGroupId().equals("")||groupMember.getGroupId().equals("ALL_USER_GROUP")){
-			return groupMemberService.gridAllMemberInGroup(groupMember);
+			return groupMemberService.queryPageResults("allMemberInGroup",groupMember);
 		}else{
-			return groupMemberService.gridMemberInGroup(groupMember);
+			return groupMemberService.queryPageResults("memberInGroup",groupMember);
 		}
 	}
 	
@@ -85,10 +86,10 @@ public class GroupMemberController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = { "/gridUserMemberNotInGroup" })
+	@RequestMapping(value = { "/queryMemberNotInGroup" })
 	@ResponseBody
-	public JpaPageResults<UserInfo> queryUserMemberNotInGroupGrid(@ModelAttribute("groupMember")  GroupMember groupMember) {
-			return groupMemberService.gridMemberNotInGroup(groupMember);
+	public JpaPageResults<GroupMember> queryMemberNotInGroupGrid(@ModelAttribute("groupMember")  GroupMember groupMember) {
+			return groupMemberService.queryPageResults("memberNotInGroup",groupMember);
 	}
 	
 	
@@ -124,23 +125,17 @@ public class GroupMemberController {
 	@RequestMapping(value = {"/delete"})
 	@ResponseBody
 	public Message deleteGroupMember(@ModelAttribute("groupMember") GroupMember groupMember) {
-		if (groupMember == null || groupMember.getGroupId() == null) {
+		_logger.debug("groupMember : "+groupMember);
+		
+		if (groupMember == null || groupMember.getId() == null) {
 			return  new Message("传入参数为空",MessageType.error);
 		}
-		String groupId = groupMember.getGroupId();
-		
-		
 		boolean result = true;
-		String memberIds = groupMember.getMemberId();
-		String memberNames = groupMember.getMemberName();
-		if (memberIds != null) {
-			String[] arrMemberIds = memberIds.split(",");
-			String[] arrMemberNames = memberNames.split(",");
-			
+		String groupMemberIds = groupMember.getId();
+		if (groupMemberIds != null) {
+			String[] arrMemberIds = groupMemberIds.split(",");
 			for (int i = 0; i < arrMemberIds.length; i++) {
-				GroupMember newGroupMember = new GroupMember(groupId,groupMember.getGroupName(), arrMemberIds[i], arrMemberNames[i],"USER");
-				newGroupMember.setId(newGroupMember.generateId());
-				result = groupMemberService.delete(newGroupMember);
+				groupMemberService.remove(arrMemberIds[i]);
 			}
 			if(!result) {
 				return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_ERROR),MessageType.error);

@@ -2,7 +2,12 @@ package org.maxkey.domain;
 
 import java.io.Serializable;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.maxkey.domain.apps.Applications;
 
 
@@ -12,15 +17,20 @@ import org.maxkey.domain.apps.Applications;
    MENUID                varchar(40)	                   null
    constraint PK_ROLES primary key clustered (ID)
  */
+@Table(name = "GROUP_APP")  
 public class GroupPrivileges extends Applications implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8634166407201007340L;
-	@NotEmpty
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
+	String id;
+	@Column
 	private String groupId;
-	@NotEmpty
+	@Column
 	private String appId;
 	
 	public GroupPrivileges(){
@@ -62,6 +72,16 @@ public class GroupPrivileges extends Applications implements Serializable{
 	 */
 	public void setAppId(String appId) {
 		this.appId = appId;
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 

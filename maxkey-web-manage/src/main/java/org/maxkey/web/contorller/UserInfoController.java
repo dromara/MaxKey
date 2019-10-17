@@ -4,7 +4,6 @@ import java.beans.PropertyEditorSupport;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -14,7 +13,6 @@ import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
@@ -87,13 +85,9 @@ public class UserInfoController {
 		return new ModelAndView("/userinfo/usersList");
 	}
 	
-	@RequestMapping(value={"/usersSelect/{uid}/{username}"})
-	public ModelAndView usersSelect(
-			@PathVariable("uid") String uid,
-			@PathVariable("username") String username){
-		ModelAndView modelAndView= new ModelAndView("/userinfo/usersSelect");
-		modelAndView.addObject("uid", uid);
-		modelAndView.addObject("username", username);
+	@RequestMapping(value={"/select"})
+	public ModelAndView usersSelect(){
+		ModelAndView modelAndView= new ModelAndView("/userinfo/userinfoSelect");
 		return modelAndView;
 	}
 	
@@ -124,12 +118,10 @@ public class UserInfoController {
 	@RequestMapping(value={"/forwardUpdate/{id}"})
 	public ModelAndView forwardUpdateUsers(@PathVariable("id")String id){
 		ModelAndView modelAndView=new ModelAndView("/userinfo/userUpdate");
-		UserInfo userInfo=new UserInfo();
-		userInfo.setId(id);
-		userInfo=userInfoService.load(userInfo);
-		WebContext.getSession().setAttribute(userInfo.getId(), userInfo.getPicture());
-		
-		
+		UserInfo userInfo=userInfoService.get(id);
+		if(userInfo.getPicture()!=null){
+			WebContext.getSession().setAttribute(userInfo.getId(), userInfo.getPicture());
+		}
 		
 		modelAndView.addObject("model", userInfo);
 		return modelAndView;
@@ -234,9 +226,7 @@ public class UserInfoController {
 	@RequestMapping(value={"/forwardChangePassword/{id}"})
 	public ModelAndView forwardChangePassword(@PathVariable("id")String id){
 		ModelAndView modelAndView=new ModelAndView("/userinfo/changePassword");
-		UserInfo userInfo=new UserInfo();
-		userInfo.setId(id);
-		userInfo=userInfoService.load(userInfo);
+		UserInfo userInfo=userInfoService.get(id);
 		
 		modelAndView.addObject("model", userInfo);
 		return modelAndView;

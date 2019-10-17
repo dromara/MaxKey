@@ -339,15 +339,14 @@ $(function(){
 				beforeUpdate(this);
 			}
 			
-			var selectId=null;
-			if($("#list2").length>0){//get grid list selected ids
-					selectId=$("#list2").jqGrid("getGridParam", "selrow");
-					var rowData = $("#list2").jqGrid("getRowData", selectId);
-					selectId=rowData.id;	
-			}else if($("#list").length>0){//get grid list selected ids
-					selectId=$("#list").jqGrid("getGridParam", "selrow");
-					var rowData = $("#list").jqGrid("getRowData", selectId);
-					selectId=rowData.id;
+			var selectId="";
+			if($("#datagrid").length>0){//get grid list selected ids
+				var selRows = $('#datagrid').bootstrapTable('getSelections');
+				for (var i=0;i<selRows.length; i++){
+					selectId=selectId+","+selRows[i].id;
+					break;
+				}
+				selectId=selectId.substring(1);
 			}
 			
 			if(selectId == null || selectId == "") {
@@ -416,33 +415,14 @@ $(function(){
 		if (typeof(beforeDelete) == "function"){
 			beforeDelete(this);//before function
 		}
-		var selectIds=null;
-		if($("#list2").length>0){//get grid list selected ids
-			if(list2_gridSettings.multiselect==true){
-				selectIds = $("#list2").jqGrid("getGridParam", "selarrrow");
-				for (var i = 0; i < selectIds.length; i++){
-					var rowData = $("#list2").jqGrid("getRowData", selectIds[i]);
-					selectIds[i]=rowData.id;
-				}
-			}else{
-				selectIds=$("#list2").jqGrid("getGridParam", "selrow");
-				var rowData = $("#list2").jqGrid("getRowData", selectIds);
-				selectIds=rowData.id;
-			}			
-		}else if($("#list").length>0){//get grid list selected ids
-			if(list_gridSettings.multiselect==true){
-				selectIds = $("#list").jqGrid("getGridParam", "selarrrow");
-				for (var i = 0; i < selectIds.length; i++){
-					var rowData = $("#list").jqGrid("getRowData", selectIds[i]);
-					selectIds[i]=rowData.id;
-				}
-			}else{
-				selectIds=$("#list").jqGrid("getGridParam", "selrow");
-				var rowData = $("#list").jqGrid("getRowData", selectIds);
-				selectIds=rowData.id;
+		var selectIds="";
+		if($("#datagrid").length>0){//get grid list selected ids
+			var selRows = $('#datagrid').bootstrapTable('getSelections');
+			for (var i=0;i<selRows.length; i++){
+				selectIds=selectIds+","+selRows[i].id;
 			}
+			selectIds=selectIds.substring(1);
 		}
-		
 		if(selectIds == null || selectIds == "") {
 			$.alert({content:$.platform.messages.select.alertText});
 			return;
@@ -460,11 +440,7 @@ $(function(){
 					//alert delete result
 					$.alert({content:data.message,type:$.platform.messages.messageType[data.messageType]});
 					//refresh grid list
-					if($("#list2").length>0){
-						$("#list2").jqGrid('setGridParam').trigger("reloadGrid");
-					}else if($("#list").length>0){
-						$("#list").jqGrid('setGridParam').trigger("reloadGrid");
-					}
+					
 			 	}); 
 		    }
 		});
@@ -476,9 +452,7 @@ $(function(){
 		if($("#actionForm").attr("autoclose")) {
 			// try to refresh parent grid list
 			if($.dialog.parent) {
-				try {
-					$.dialog.parent.$("#list").jqGrid('setGridParam').trigger("reloadGrid");
-				}catch(e){}
+				
 				$.dialog.close();
 				return;
 			}
@@ -595,277 +569,12 @@ $(function(){
 		});	
 	};
 
-	//define grid
-	$.platform.gridRefesh={};
-	$.extend($.platform.gridRefesh, {
-		gridRefesh:{
-			mask		:	true,//is unmask
-			grid		:	"list",//grid list id
-			subGrid		:	null,//grid's sub id
-			callback	:	null//callbak 
-		}
-	});
 	
-	//$.window open,refresh callback
-	$.windowGridRefresh=function(){
-		var settings=$.extend({
-			mask		:	true,//is unmask
-			grid		:	"list",//grid list id
-			subGrid		:	null,//grid's sub id
-			callback	:	null//callbak 
-		},  $.platform.gridRefesh || {});
-		settings.subGrid=null;
-		$.gridRefresh(settings);
-	};
-	//$.window open,refresh sub callback
-	$.windowSubGridRefresh=function(){
-		var settings=$.extend({
-			mask		:	true,//is unmask
-			grid		:	"list",//grid list id
-			subGrid		:	null,//grid's sub id
-			callback	:	null//callbak 
-		},  $.platform.gridRefesh || {});
-		$.gridRefresh(settings);
+	$.dataGridSelRowsData=function(dataGridElement){
+		return $(dataGridElement).bootstrapTable('getSelections');
 	};
 	
-	 //grid refresh
-	$.gridRefresh=function (settings){
-		var settings=$.extend({
-			mask		:	false,//mask
-			grid		:	"list",//grid list id
-			subGrid		:	null,//grid's sub id
-			callback	:	null//callbak
-		},  settings || {});
-		
-		if(settings.subGrid){//sub grid refresh
-			$("#"+settings.subGrid+" .ui-icon-refresh").click();
-			//$("#"+settings.subGrid).jqGrid('setGridParam').trigger("reloadGrid");
-		}else{//refresh grid
-			$("#"+settings.grid).jqGrid('setGridParam').trigger("reloadGrid");
-		}
-		
-		if(settings.mask==true){//unmask
-			$.unmask();
-		}
-		if(settings.callback){//callback
-			settings.callback();
-		}
-	};
 	
-	$.gridRowData=function(listId,rowId){
-		return $(listId).jqGrid("getRowData",rowId);
-	};
-	
-	$.gridSel=function (listId){
-		var selectIds=null;
-		var gridIds="";
-		if(typeof($(listId))=="object"){//get grid list selected ids
-			//alert("typeof"+(typeof($(listId))=="object"));
-			if($(listId).jqGrid("getGridParam", "multiselect")){
-				selectIds = $(listId).jqGrid("getGridParam", "selarrrow");
-			}else{
-				selectIds=$(listId).jqGrid("getGridParam", "selrow");
-			}
-			gridIds=selectIds;
-			if(gridIds ==	null ||	gridIds	==	""){
-				$.alert({content:$.platform.messages.select.alertText});
-				return null;
-			}else{
-				return gridIds;
-			}
-			
-		}
-	};
-	
-	$.gridSelIds=function (listId){
-		var selectIds=null;
-		var gridIds="";
-		if(typeof($(listId))=="object"){//get grid list selected ids
-			//alert("typeof"+(typeof($(listId))=="object"));
-			if($(listId).jqGrid("getGridParam", "multiselect")){
-				selectIds = $(listId).jqGrid("getGridParam", "selarrrow");
-				for (var i = 0; i < selectIds.length; i++){
-					var rowData = $(listId).jqGrid("getRowData", selectIds[i]);
-					if(i==0){gridIds=rowData.id;}else{gridIds=gridIds+","+rowData.id;}
-				}
-			}else{
-				selectIds=$(listId).jqGrid("getGridParam", "selrow");
-				var rowData = $(listId).jqGrid("getRowData", selectIds);
-				gridIds=rowData.id;
-			}
-			
-			if(gridIds ==	null ||	gridIds	==	""){
-				$.alert({content:$.platform.messages.select.alertText});
-				return null;
-			}else{
-				return gridIds;
-			}
-			
-		}
-	};
-	
-	$.grid=function (gridSettings){
-		var columnNameWidth="";
-		if(gridSettings.resize==true){
-			var cumulativeWidth=0; 
-			var cumulativeVisible=0; 
-			for (var i=0;i<gridSettings.colModel.length;i++){
-				
-				var col = gridSettings.colModel[i];
-				if(col["hidden"]==false){
-					cumulativeVisible++;
-					var colWidth=0;
-					if(cumulativeVisible<gridSettings.visibleColumnCount){
-						colWidth=Math.round((col["width"]/gridSettings.visibleColumnWidth)*gridSettings.columnWidth);
-						cumulativeWidth+=colWidth;
-					}else{
-						colWidth=gridSettings.columnWidth-cumulativeWidth;
-					}
-					gridSettings.colModel[i]["width"]=colWidth;	
-					columnNameWidth+=col["name"]+":"+colWidth+"/";
-				}
-			}
-		}else{
-			gridSettings["width"]=gridSettings.visibleColumnWidth+"px";
-		}
-		
-		var postData={};
-		if(typeof($("#basic_search_form"))=="object"){
-			postData=$("#basic_search_form").serializeObject();
-		}
-		
-		var settings=$.extend({
-			url			:	$("#"+gridSettings.element).attr("url"),//ajax post data url   
-			datatype	: 	"json",//type json
-			mtype		: 	'POST',//ajax method POST
-			loadtext	:	"",//loading text
-			//loadtext	:	$.platform.messages.grid.loadtext,
-			height		: 	320,
-			jsonReader	: 	{ repeatitems : false, id: "0" },
-			pager		: 	jQuery("#"+gridSettings.element+"_pager"),//pager id
-			rowNum		:	10,//rowNum 
-			rowList		:	[10,50,100],
-			width		: 	"990px",
-			multiselect	: 	true && (typeof (gridSettings.subGirdSettings) == 'object' ? false : true),   //check box and multi select
-			altRows		:	true,
-			altclass	:	"jqgridclass",
-			postData	:	postData,
-			hoverrows	: 	true,
-			subGrid		:	typeof (gridSettings.subGirdSettings) == 'object'||false,//is has subGirdSettings parameter
-			rownumbers	: 	true,//row numbers display
-			viewrecords	: 	true,
-			onPaging    :   function(but){ 
-				//$("#queryBtn").click();
-				$("#"+gridSettings.element+"_pager").show();
-				//alert($("#"+gridSettings.element).getGridParam("page")+"==="+but+"==="+$("#"+gridSettings.element).jqGrid("getGridParam", "page"));
-				//$(".norecords").hide();
-				//$("#"+gridSettings.element).jqGrid('setGridParam',{postData: $.extend($("#searchForm").serializeObject(),$("#adSearchForm").serializeObject())}).trigger("reloadGrid");
-			},
-			ondblClickRow	:	function(subgrid_id, row_id) {//double click event
-		    	if(typeof (gridSettings.subGirdSettings) == 'object'){
-		    		$("#"+gridSettings.element).toggleSubGridRow(subgrid_id);
-		    		$.platform.gridRefesh.subGrid=subgrid_id;
-		    	}
-			},
-			onSelectRow		:	function(id){//select row
-				$.platform.gridRefesh.subGrid=gridSettings.element+"_"+id;
-			},
-			subGridRowExpanded: function(subgrid_id, row_id) {//Expanded current select row
-				$("#"+gridSettings.element).setSelection(row_id);
-				var subgrid_table_id, pager_id;
-				$.platform.gridRefesh.subGrid=subgrid_id;
-				subgrid_table_id = subgrid_id+"_t";
-				pager_id = "p_"+subgrid_table_id;
-				for (var col in gridSettings.subGirdSettings.colModel){//no index attr,name=index
-					if(gridSettings.subGirdSettings.colModel[col]["index"]){
-					}else{
-						gridSettings.subGirdSettings.colModel[col]["index"]=gridSettings.subGirdSettings.colModel[col]["name"];
-					}
-				}
-				var subGirdSettings=$.extend({  
-					datatype	: 	"json",
-					mtype		: 	'POST',
-					loadtext	:	"",
-					//loadtext	:	$.platform.messages.grid.loadtext,
-					height		: 	160,
-					jsonReader	: 	{ repeatitems : false, id: "0" },
-					pager		: 	pager_id,
-					rowNum		:	5,
-					rowList		:	[5],
-					width		: 	"98%",
-					multiselect	: 	false,   //check box and multi select
-					altRows		:	true,
-					altclass	:	"jqgridclass",
-					postData	:	$("#"+gridSettings.element).jqGrid('getRowData',row_id),
-					hoverrows	: 	true,
-					rownumbers	: 	true,
-					viewrecords	: 	true,
-					loadComplete: 	function(){
-						var sub_records = $("#"+subgrid_table_id).getGridParam('records');
-						if(sub_records == 0 || sub_records == null){
-							if($(".subnorecords").html() == null){
-								$("#"+subgrid_table_id).parent().append("<div class=\"subnorecords\" align=\"center\">"+$.platform.messages.grid.loadnodata+"</div>");
-							}
-							$("#"+pager_id).hide();
-							$(".subnorecords").show();
-						}else{
-							$("#"+pager_id).show();
-							$(".subnorecords").hide();
-						}
-						$("#"+subgrid_table_id).trigger("resize");
-						if($.browser.version=="7.0"||$.browser.version=="8.0"){//msie 7.0/8.0
-							$("#"+subgrid_table_id+" .ui-jqgrid-hdiv").width($("#"+subgrid_table_id+" .ui-jqgrid-hbox").width());
-						}
-	
-					}
-				}, gridSettings.subGirdSettings || {});
-
-				$("#"+gridSettings.element).setGridHeight('auto'); //click '+'，set list height auto
-				$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
-				$("#"+subgrid_table_id).jqGrid(subGirdSettings).navGrid("#"+pager_id,{edit:false,add:false,del:false,search:false });
-			},
-			subGridRowColapsed: function(subgrid_id, row_id) {//close sub grid
-				var list_records = $("#"+gridSettings.element).getGridParam('records');
-				if(($("table[id*=list_]").length > 1 && list_records != null && list_records > 5)
-						|| (list_records != null && list_records > 10 && $("#"+gridSettings.element).getGridParam('rowNum') > 10)
-						|| $("table[id*=list_]").length > 2) {
-					$("#"+gridSettings.element).setGridHeight('auto');
-				} else {
-					$("#"+gridSettings.element).setGridHeight('495'); //restore list height
-				}
-				$.platform.gridRefesh.subGrid=null;
-				// this function is called before removing the data
-				//var subgrid_table_id;
-				//subgrid_table_id = subgrid_id+"_t";
-				//jQuery("#"+subgrid_table_id).remove();
-			},
-			loadComplete: 	function(){//load Complete
-				var re_records = $("#"+gridSettings.element).getGridParam('records');
-				if(re_records != null && re_records > 0){
-					$("#"+gridSettings.element).setGridHeight(""+(35*$("#"+gridSettings.element).getGridParam('rowNum')));
-				}else{
-					
-				}
-
-				$("#gbox_"+gridSettings.element).attr("gridWidth",gridSettings.visibleColumnWidth);
-				$("#gbox_"+gridSettings.element).attr("columnNameWidth",columnNameWidth);
-
-				if($("#list").height()>$(".ui-jqgrid .ui-jqgrid-bdiv").height()){
-					$(".ui-jqgrid .ui-jqgrid-bdiv").height($("#list").height()+20);
-				}
-				
-				$(".forward").on("click",function(){
-					var settings={
-							url		:	$(this).attr("url"),//current element url
-							href	:	$(this).attr("href")//current element href
-						};
-					$.forward(settings);
-				});
-			}
-		}, gridSettings || {});
-	
-		$("#"+gridSettings.element).jqGrid(settings).navGrid("#"+gridSettings.element+"_pager",{edit:false,add:false,del:false,search:false });
-	};
 	
 	var curExpandNode = null;
 	

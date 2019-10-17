@@ -13,7 +13,7 @@
     
 
     <!-- GROUP_MEMBER  User Member-->
-    <select id="gridAllUserMemberInGroup" parameterType="GroupMember" resultType="UserInfo">
+    <select id="allMemberInGroup" parameterType="GroupMember" resultType="GroupMember">
 		    SELECT	DISTINCT
 					U.ID,
 					U.USERNAME,
@@ -57,17 +57,9 @@
 			WHERE	1	=	1
 	</select>
 	
-    <select id="countAllUserMemberInGroup" parameterType="GroupMember" resultType="java.lang.Integer">
-		    SELECT	DISTINCT
-					COUNT(U.ID)
-				FROM
-					USERINFO U
-			WHERE	1	=	1
-	</select>		
-	
-    <select id="gridUserMemberInGroup" parameterType="GroupMember" resultType="UserInfo">
+    <select id="memberInGroup" parameterType="GroupMember" resultType="GroupMember">
 			SELECT	DISTINCT
-				U.ID,
+				GM.ID,
 				U.USERNAME,
 				U.USERTYPE,
 				U.WINDOWSACCOUNT,
@@ -121,27 +113,8 @@
 				AND	GM.MEMBERID	=	U.ID
 	</select>
 	
-	<select id="countUserMemberInGroup" parameterType="GroupMember" resultType="java.lang.Integer">
-			SELECT
-				COUNT(U.ID)
-			FROM
-				USERINFO U,
-				GROUPS G,
-				GROUP_MEMBER GM
-			WHERE	1	=	1
-				<if test="groupId != null and groupId != ''">
-					AND GM.GROUPID = #{groupId}
-					AND G.ID = #{groupId}
-				</if>
-				<if test="groupName != null and groupName != ''">
-					AND G.NAME = #{groupName}
-				</if>
-				AND	GM.TYPE		=	'USER'
-				AND	GM.GROUPID	=	G.ID	
-				AND	GM.MEMBERID	=	U.ID
-	</select>
 	
-	<select id="gridUserMemberNotInGroup" parameterType="GroupMember" resultType="UserInfo">
+	<select id="memberNotInGroup" parameterType="GroupMember" resultType="GroupMember">
 		SELECT	DISTINCT
 			U.ID,
 			U.USERNAME,
@@ -199,30 +172,9 @@
 			)
 	</select>
 	
-	<select id="countUserMemberNotInGroup" parameterType="GroupMember" resultType="java.lang.Integer">
-		SELECT
-			COUNT(U.ID)
-		FROM
-			USERINFO U
-		WHERE
-			U.ID NOT IN(
-       			 SELECT GM.MEMBERID 
-       			 FROM 	GROUPS G,GROUP_MEMBER GM
-			     WHERE  1  =  1
-			     <if test="groupId != null and groupId != ''">
-					AND GM.GROUPID = #{groupId}
-					AND G.ID = #{groupId}
-				</if>
-				<if test="groupName != null and groupName != ''">
-					AND G.NAME = #{groupName}
-				</if>
-					AND	GM.TYPE		=	'USER'
-			     	AND GM.GROUPID	=	G.ID
-			)
-	</select>
 	
 	<!-- GROUP_MEMBER  Group Member-->
-	<select id="gridGroupMemberInGroup" parameterType="GroupMember" resultType="Groups">
+	<select id="groupMemberInGroup" parameterType="GroupMember" resultType="Groups">
 		SELECT	DISTINCT
 			IG.*
 		FROM
@@ -242,28 +194,6 @@
 			AND G.NAME = #{groupName}
 		</if>
 	</select>
-	
-	<select id="countGroupMemberInGroup" parameterType="GroupMember" resultType="java.lang.Integer">
-		SELECT
-			COUNT(G.ID)
-		FROM
-			GROUPS IG,
-			GROUPS G,
-			GROUP_MEMBER GM
-		WHERE
-			 1	=	1
-			AND GM.GROUPID	=	G.ID	
-			AND	GM.MEMBERID	=	IG.ID
-			AND	GM.TYPE		=	'GROUP'
-		<if test="groupId != null and groupId != ''">
-			AND GM.GROUPID = #{groupId}
-			AND G.ID = #{groupId}
-		</if>
-		
-		<if test="groupName != null and groupName != ''">
-			AND G.NAME = #{groupName}
-		</if>
-	</select>
-	
+
 	
 </mapper>

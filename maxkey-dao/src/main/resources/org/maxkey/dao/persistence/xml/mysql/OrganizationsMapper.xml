@@ -20,17 +20,10 @@
 	
     
     
-     <select id="grid" parameterType="Organizations" resultType="Organizations">
+     <select id="queryPageResults" parameterType="Organizations" resultType="Organizations">
     	SELECT 
 			*
     	FROM ORGANIZATIONS 
-    	WHERE	1	=	1
-    	<include refid="dao_where_statement"/>
-    </select>
-    
-  
-    <select  id="count" resultType="java.lang.Integer">
-    	SELECT COUNT(*) FROM ORGANIZATIONS
     	WHERE	1	=	1
     	<include refid="dao_where_statement"/>
     </select>

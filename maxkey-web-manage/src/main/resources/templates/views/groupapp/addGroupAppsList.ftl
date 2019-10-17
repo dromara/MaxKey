@@ -1,29 +1,41 @@
-		<script type="text/javascript">	
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../layout/header.ftl"/>
+	<#include  "../layout/common.cssjs.ftl"/>
+<style   type="text/css">
+  .table th, .table td {
+    padding: .2rem;
+    vertical-align: middle;
+  }
+</style>
+<script type="text/javascript">	
 			function afterSubmit(data){
-				$("#list").trigger('reloadGrid');
+				//$("#list").trigger('reloadGrid');
 			}
 			
-			function iconFormatter(value, options, rData){
-  				return "<img width='30' height='30' border='0px'  src='<s:Base/>/image/"+value+"'/>";
+			function iconFormatter(value, row, index){
+  			return "<img width='30' height='30' border='0px' src='<@base/>/image/"+value+"'/>";
 			};
 		   	
 			$(function () {
 				$("#addGroupAppsBtn").on("click",function(){
-					var selectIds =$.gridRowData("#list",$.gridSelIds("#list")).id;
-					if(selectIds == null || selectIds == "") {
-						$.alert({content:$.platform.messages.select.alertText});
-						return false;
+					var selectIds = "";
+					var seldata=$.dataGridSelRowsData("#datagrid"); 
+					for(var arrayIndex in seldata){
+						selectIds=seldata[arrayIndex].id+","+selectIds;
 					}
 					$("#appId").val(selectIds);
-					$("#actionForm").attr("action","<s:Base/>/groupApp/insert");
+					$("#actionForm").attr("action","<@base/>/groupPrivileges/insert");
 					$("#submitBtn").click();
 				});
 			
 			});
 		</script>
-
+</head>
+<body>
 <div style="display:none">
-	<form id="actionForm" method="post" action="<s:Base/>/groupApp/insert">
+	<form id="actionForm" method="post" action="<@base/>/groupPrivileges/insert">
 		<table>
 			<tr><td></td><td><input type="text" id="groupId" name="groupId" value="${groupId}"/></td></tr>
 			<tr><td></td><td><input type="text" id="appId" name="appId" value=""/></td></tr>
@@ -35,16 +47,16 @@
 	<div id="tool_box">
 	 		<table   class="datatable">
  				<tr>
-		 			<td width="120px"><s:Locale code="app.name"/>:</td>
+		 			<td width="120px"><@locale code="app.name"/>:</td>
 		 			<td width="374px" nowrap>
 		 				<form id="basic_search_form">
 				 			<input type="text" name="name" style ="width:150px">
-				 			<input class="button primary"  id="searchBtn" type="button" size="50" value="<s:Locale code="button.text.search"/>">		
+				 			<input class="button primary"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">		
 				 		</form>
 		 			</td>
 				 	<td colspan="2"> 
 					 	<div>
-							<input class="button" id="addGroupAppsBtn" type="button" value="<s:Locale code="button.text.add" />">
+							<input class="button" id="addGroupAppsBtn" type="button" value="<@locale code="button.text.add" />">
 					 	</div>
 				 	</td>
 				</tr>
@@ -55,11 +67,11 @@
 		<form id="advanced_search_form">
  		<table   class="datatable">
 	 			<tr>
-		 			<td width="120px"><s:Locale code="apps.name"/></td>
+		 			<td width="120px"><@locale code="apps.name"/></td>
 		 			<td width="360px">
 		 				
 		 			</td>
-		 			<td width="120px"><s:Locale code="apps.protocol"/></td>
+		 			<td width="120px"><@locale code="apps.protocol"/></td>
 		 			<td width="360px">
 		 				<select name="protocol" class="select_protocol">
 		 					<option value=""  selected>Select</option>
@@ -83,11 +95,33 @@
  	</div>
 
 	<div class="mainwrap" id="main">
-		<s:Grid id="list" url="/groupApp/appsNotInGroupGrid?groupId=${groupId}" multiselect="true" resize="false" rowLimit="10" rowList="[10]">	
-			<s:Column width="0" field="id" title="id" hidden="true"/>
-			<s:Column width="100" field="id" title="apps.icon" formatter="iconFormatter"/>
-			<s:Column width="275" field="name" title="apps.name"/>
-			<s:Column width="250" field="protocol" title="apps.protocol"/>
-		</s:Grid>
+	<table  data-url="<@base/>/groupPrivileges/queryAppsNotInGroup?groupId=${groupId}"
+			id="datagrid"
+				data-toggle="table"
+				data-classes="table table-bordered table-hover table-striped"
+				data-click-to-select="true"
+				data-pagination="true"
+				data-total-field="records"
+				data-page-list="[10, 25, 50, 100]"
+				data-search="false"
+				data-locale="zh-CN"
+				data-query-params="dataGridQueryParams"
+				data-query-params-type="pageSize"
+				data-side-pagination="server">
+		<thead>
+			<tr>
+				<th data-checkbox="true"></th>
+				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
+				<th data-field="id" data-formatter="iconFormatter"><@locale code="apps.icon"/></th>
+				<th data-field="name"><@locale code="apps.name"/></th>
+				<th data-field="protocol"><@locale code="apps.protocol"/></th>
+				<th data-field="category"><@locale code="apps.category"/></th>
+				<th data-field="vendor"><@locale code="apps.vendor"/></th>
+				<th data-field="loginUrl" data-visible="false"><@locale code="log.loginhistory.loginUrl"/></th>
 	
+			</tr>
+		</thead>
+	</table>
 	</div>
+</body>
+</html>

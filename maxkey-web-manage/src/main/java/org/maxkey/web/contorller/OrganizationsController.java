@@ -3,6 +3,7 @@ package org.maxkey.web.contorller;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.dao.service.OrganizationsService;
 import org.maxkey.domain.Organizations;
 import org.maxkey.web.WebContext;
@@ -24,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping({"/orgs"})
-public class OrganizationsController{
+public class OrganizationsController {
   static final Logger _logger = LoggerFactory.getLogger(OrganizationsController.class);
 
   
@@ -36,35 +37,19 @@ public class OrganizationsController{
   @RequestMapping({"/tree"})
   public List<HashMap<String, Object>> organizationsTree(@RequestParam(value = "id", required = false) String id) {
     _logger.debug("organizationsTree id :" + id);
-    Organizations org = new Organizations();
-    List<Organizations> organizationsList = this.organizationsService.query(org);
-    
-    Organizations rootOrganization = new Organizations();
-    rootOrganization.setId("1");
-    rootOrganization.setName("");
-    rootOrganization.setFullName("");
-    rootOrganization.setpName("Root");
-    rootOrganization.setxPath("/1");
-    rootOrganization.setxNamePath("/" );
-    rootOrganization.setpId("-1");
-    
+    Organizations queryOrg = new Organizations();
+    List<Organizations> organizationsList = this.organizationsService.query(queryOrg);
     TreeNodeList treeNodeList = new TreeNodeList();
-    TreeNode rootTreeNode = new TreeNode("1", "");
-    rootTreeNode.setAttr("data", rootOrganization);
-    rootTreeNode.setPId(rootOrganization.getpId());
-    rootTreeNode.setAttr("open", Boolean.valueOf(true));
-    treeNodeList.addTreeNode(rootTreeNode.getAttr());
     
-    for (Organizations organization : organizationsList) {
-      TreeNode treeNode = new TreeNode(organization.getId(), organization.getName());
-      if (organization.getHasChild() != null && organization.getHasChild().equals(Character.valueOf('Y'))) {
+    for (Organizations org : organizationsList) {
+      TreeNode treeNode = new TreeNode(org.getId(), org.getName());
+      if (org.getHasChild() != null && org.getHasChild().startsWith("Y")) {
         treeNode.setHasChild();
       }
-
       
-      treeNode.setAttr("data", organization);
-      treeNode.setPId(organization.getpId());
-      if (organization.getId().equals("1")) {
+      treeNode.setAttr("data", org);
+      treeNode.setPId(org.getpId());
+      if (org.getId().equals("1")) {
         treeNode.setAttr("open", Boolean.valueOf(true));
       } else {
         treeNode.setAttr("open", Boolean.valueOf(false));
@@ -78,10 +63,17 @@ public class OrganizationsController{
 
 
   
-  @RequestMapping({"/list"})
-  public ModelAndView orgsTreeList() { return new ModelAndView("orgs/orgsList"); }
+	@RequestMapping({ "/list" })
+	public ModelAndView orgsTreeList() {
+		return new ModelAndView("orgs/orgsList");
+	}
 
+	@RequestMapping(value = { "/pageresults" })
+	@ResponseBody
+	public JpaPageResults<Organizations> pageResults(@ModelAttribute("orgs") Organizations orgs) {
+		return organizationsService.queryPageResults(orgs);
 
+	}
 
   
   @RequestMapping({"/orgsSelect/{deptId}/{department}"})
@@ -93,20 +85,26 @@ public class OrganizationsController{
   }
 
 
-
+	@RequestMapping(value = { "/forwardAdd" })
+	public ModelAndView forwardAdd(@ModelAttribute("org") Organizations org) {
+		ModelAndView modelAndView=new ModelAndView("/orgs/orgsAdd");
+		org =organizationsService.get(org.getId());
+		modelAndView.addObject("model",org);
+		return modelAndView;
+	}
 
 
 
   
   @ResponseBody
   @RequestMapping({"/add"})
-  public Message insert(@ModelAttribute("organization") Organizations organization) {
-    _logger.debug("-Add  :" + organization);
-    if (null == organization.getId() || organization.getId().equals("")) {
-      organization.generateId();
+  public Message insert(@ModelAttribute("org") Organizations org) {
+    _logger.debug("-Add  :" + org);
+    if (null == org.getId() || org.getId().equals("")) {
+    	org.generateId();
     }
     
-    if (this.organizationsService.insert(organization)) {
+    if (this.organizationsService.insert(org)) {
       return new Message(WebContext.getI18nValue("message.action.insert.success"), MessageType.success);
     }
     
@@ -122,9 +120,9 @@ public class OrganizationsController{
   
   @ResponseBody
   @RequestMapping({"/query"})
-  public Message query(@ModelAttribute("organization") Organizations organization) {
-    _logger.debug("-query  :" + organization);
-    if (this.organizationsService.load(organization) != null) {
+  public Message query(@ModelAttribute("org") Organizations org) {
+    _logger.debug("-query  :" + org);
+    if (this.organizationsService.load(org) != null) {
       return new Message(WebContext.getI18nValue("message.action.insert.success"), MessageType.success);
     }
     
@@ -134,15 +132,22 @@ public class OrganizationsController{
 
 
 
-
+	@RequestMapping(value = { "/forwardUpdate/{id}" })
+	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
+		ModelAndView modelAndView=new ModelAndView("/orgs/orgsUpdate");
+		Organizations org =organizationsService.get(id);
+		
+		modelAndView.addObject("model",org);
+		return modelAndView;
+	}
 
 
   
   @ResponseBody
   @RequestMapping({"/update"})
-  public Message update(@ModelAttribute("organization") Organizations organization) {
-    _logger.debug("-update  organization :" + organization);
-    if (this.organizationsService.update(organization)) {
+  public Message update(@ModelAttribute("org") Organizations org) {
+    _logger.debug("-update  organization :" + org);
+    if (this.organizationsService.update(org)) {
       return new Message(WebContext.getI18nValue("message.action.update.success"), MessageType.success);
     }
     
@@ -155,12 +160,11 @@ public class OrganizationsController{
 
 
 
-  
   @ResponseBody
   @RequestMapping({"/delete"})
-  public Message delete(@ModelAttribute("organization") Organizations organization) {
-    _logger.debug("-delete  organization :" + organization);
-    if (this.organizationsService.delete(organization)) {
+  public Message delete(@ModelAttribute("org") Organizations org) {
+    _logger.debug("-delete  organization :" + org);
+    if (this.organizationsService.remove(org.getId())) {
       return new Message(WebContext.getI18nValue("message.action.delete.success"), MessageType.success);
     }
     
@@ -172,4 +176,11 @@ public class OrganizationsController{
   
   @RequestMapping({"/orgUsersList"})
   public ModelAndView orgUsersList() { return new ModelAndView("orgs/orgUsersList"); }
+
+
+
+
+
+
+
 }

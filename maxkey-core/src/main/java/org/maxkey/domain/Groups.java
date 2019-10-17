@@ -2,6 +2,10 @@ package org.maxkey.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
@@ -14,17 +18,27 @@ public class Groups extends JpaBaseDomain implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 4660258495864814777L;
-
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
 	String id;
 	
 	@Length(max=60)
+	@Column
 	private String name;
+	@Column
 	private int isdefault;
+	@Column
 	String description;
+	@Column
 	String createdBy;
+	@Column
 	String createdDate;
+	@Column
 	String modifiedBy;
+	@Column
 	String modifiedDate;
+	@Column
 	String status;
 	
 	public Groups() {}

@@ -1,8 +1,8 @@
-<%@ page   contentType="text/html; charset=UTF-8" import="java.util.Map,java.util.LinkedHashMap" %>
-<%@ taglib prefix="s"	uri="http://www.connsec.com/tags" %>
-<%@ taglib prefix="spring"		uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c"			uri="http://java.sun.com/jsp/jstl/core"%>
-
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../layout/header.ftl"/>
+	<#include  "../layout/common.cssjs.ftl"/>
 <script type="text/javascript">	
 	
 	function afterSubmit(data){
@@ -13,7 +13,7 @@
 	$(function () {
 		$("#insertGroupUserBtn").on("click",function(){		
 			var settings={
-							url		:	"<s:Base/>/groupMember/addGroupAppsList/"+$("#groupId").val(),//window url
+							url		:	"<@base/>/groupMember/addGroupAppsList/"+$("#groupId").val(),//window url
 							title	:	"New",//title
 							width	:	"700",//width
 							height	:	"500"//height
@@ -21,57 +21,63 @@
 					$.window(settings);//open window
 			
 		});
-		
-		$("#deleteGroupAppsBtn").on("click",function(){			
-			var list2selectIds = $("#list").jqGrid("getGridParam", "selarrrow");
-			if(list2selectIds == null || list2selectIds == "") {
-				$.alert({content:$.platform.messages.select.alertText});
-				return false;
-			}
-			var memberName="";
-			var memberId="";
-			for(var i=0;i<list2selectIds.length;i++){
-				memberName+=$("#list").jqGrid("getRowData",list2selectIds[i]).username+",";
-				memberId+=$("#list").jqGrid("getRowData",list2selectIds[i]).id+",";
-			}
-			
-			$("#memberId").val(memberId);
-			$("#memberName").val(memberName);
-			$("#submitBtn").click();
-		});
 	
 	});
 </script>
-<div style="display:none">
-	<form id="actionForm" method="post" action="<s:Base/>/groupMember/delete">
-		<table>
-			<tr><td></td><td><input type="text"  class="groupId" name="groupId" value=""/></td></tr>
-			<tr><td></td><td><input type="text"  class="groupName" name="groupName" value=""/></td></tr>
-			<tr><td></td><td><input type="text" id="memberId" name="memberId" value=""/></td></tr>
-			<tr><td></td><td><input type="text" id="memberName" name="memberName" value=""/></td></tr>
-			<tr><td colspan="2"><input id="submitBtn" type="button" value="submit"></input></td></tr>
-		</table>
-	</form>
-</div>
+</head>
+<body> 
+<div class="app header-default side-nav-dark">
+<div class="layout">
+	<div class="header navbar">
+		<#include  "../layout/top.ftl"/>
+	</div>
+	
+	<div class="col-md-3 sidebar-nav side-nav" >
+ 		<#include  "../layout/sidenav.ftl"/>
+	</div>
+	<div class="page-container">
+	
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="breadcrumb-wrapper row">
+				<div class="col-12 col-lg-3 col-md-6">
+					<h4 class="page-title">Dashboard 2</h4>
+				</div>
+				<div class="col-12 col-lg-9 col-md-6">
+					<ol class="breadcrumb float-right">
+						<li><a href="index.html">Dashboard</a></li>
+						<li class="active">/ Dashboard 2</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="col-12 grid-margin">
+				<div class="card">
+					<div class="card-body">
 
 	<div id="tool_box">
 	 		<table   class="datatable">
  				<tr>
-		 			<td width="120px"><s:Locale code="group.name"/>:</td>
+		 			<td width="120px"><@locale code="group.name"/>:</td>
 		 			<td width="374px">
 		 				<form id="basic_search_form">
 				 			<input class="groupId" id="groupId" name="groupId" value="" type="hidden" >
-				 			<input class="groupName"   style="width:200px"   id="groupName" name="groupName" type="text" >
-				 			<s:Dialog text="button.text.select" title="Groups" url="/groups/selectGroupsList" width="700" height="500" />
-				 			
-				 			<input class="button primary"  id="searchBtn" type="button" size="50" value="<s:Locale code="button.text.search"/>">
+				 			<input class="groupName"   style="width:200px" value=""    id="groupName" name="groupName" type="text" >
+				 			<input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.select"/>" 
+						 		    wurl="<@base/>/groups/selectGroupsList"
+						 		    wwidth="700"
+						 		    wheight="500"
+					 		    	target="window">
+				 			<input class="button primary"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
 				 		</form>
 		 			</td>
 				 	<td colspan="2"> <div id="tool_box_right">
-				 		<input class="button"  id="advancedSearchExpandBtn" type="button" size="50"  value="<s:Locale code="button.text.expandsearch"/>" expandValue="<s:Locale code="button.text.expandsearch"/>"  collapseValue="<s:Locale code="button.text.collapsesearch"/>">
+				 		<input class="button"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
 				 		
-						<input class="button"  id="insertGroupUserBtn" type="button" value="<s:Locale code="button.text.add.member"/>">
-						<input class="button"  id="deleteGroupAppsBtn" type="button" value="<s:Locale code="button.text.delete.member"/>">
+						<input class="button"  id="insertGroupUserBtn" type="button" value="<@locale code="button.text.add.member"/>">
+						<input class="button"  id="deleteBtn" type="button" value="<@locale code="button.text.delete.member"/>"
+							wurl="<@base/>/groupMember/delete"/>
 				 	</div>
 				 	</td>
 				</tr>
@@ -83,34 +89,69 @@
  			<form id="advanced_search_form">
 		 		<table  class="datatable">
 		 			<tr>
-			 			<td width="120px"><s:Locale code="apps.protocol"/></td>
+			 			<td width="120px"><@locale code="apps.protocol"/></td>
 			 			<td width="360px">
 			 			</td>
-			 			<td width="120px"><s:Locale code="apps.protocol"/></td>
+			 			<td width="120px"><@locale code="apps.protocol"/></td>
 			 			<td width="360px">
 			 			</td>
 			 		</tr>
 			 		<tr>
-			 			<td width="120px"><s:Locale code="apps.protocol"/></td>
+			 			<td width="120px"><@locale code="apps.protocol"/></td>
 			 			<td width="360px">
 			 			</td>
-			 			<td width="120px"><s:Locale code="apps.protocol"/></td>
+			 			<td width="120px"><@locale code="apps.protocol"/></td>
 			 			<td width="360px">
 			 			</td>
 			 		</tr>
 			 	</table>
 		 	</form>
 		 </div>
-		<div class="mainwrap" id="main">
-			<s:Grid id="list" url="/groupMember/gridUserMemberInGroup" multiselect="true" resize="true">	
-				<s:Column width="0" field="id" title="id" hidden="true"/>
-				<s:Column width="200" field="username" title="userinfo.username"/>
-				<s:Column width="200" field="displayName" title="userinfo.displayName" />
-				<s:Column width="100" field="department" title="userinfo.department"/>
-				<s:Column width="100" field="email" title="userinfo.email"/>
-				<s:Column width="0" field="createdBy" title="common.text.createdby" hidden="true"/>
-				<s:Column width="0" field="createdDate" title="common.text.createddate" hidden="true"/>
-				<s:Column width="0" field="modifiedBy" title="common.text.modifiedby" hidden="true"/>
-				<s:Column width="0" field="modifiedDate" title="common.text.modifieddate" hidden="true"/>
-			</s:Grid>
+		<div class="mainwrap" id="main">			
+			
+		<table  data-url="<@base/>/groupMember/queryMemberInGroup"
+			id="datagrid"
+				data-toggle="table"
+				data-classes="table table-bordered table-hover table-striped"
+				data-click-to-select="true"
+				data-pagination="true"
+				data-total-field="records"
+				data-page-list="[10, 25, 50, 100]"
+				data-search="false"
+				data-locale="zh-CN"
+				data-query-params="dataGridQueryParams"
+				data-query-params-type="pageSize"
+				data-side-pagination="server">
+		<thead>
+			<tr>
+				<th data-checkbox="true"></th>
+				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
+				<th data-field="username"><@locale code="userinfo.username"/></th>
+				<th data-field="displayName"><@locale code="userinfo.displayName"/></th>
+				<th data-field="createdBy"><@locale code="common.text.createdby"/></th>
+				<th data-field="createdDate"><@locale code="common.text.createddate"/></th>
+				<th data-field="modifiedBy"><@locale code="common.text.modifiedby"/></th>
+				<th data-field="modifiedDate"><@locale code="common.text.modifieddate"/></th>
+	
+			</tr>
+		</thead>
+	</table>
+	
 		</div>
+</div>
+					</div>
+					<footer class="content-footer">
+		<#include  "../layout/footer.ftl"/>
+	</footer>
+
+	</div>
+	
+	</div>
+</div>
+
+<div id="preloader">
+<div class="loader" id="loader-1"></div>
+</div>
+
+</body>
+</html>

@@ -35,12 +35,13 @@ public class GroupPrivilegesController {
 		return new ModelAndView("groupapp/groupAppsList");
 	}
 	
-	@RequestMapping(value = { "/gridAppsInGroup" })
+	@RequestMapping(value = { "/queryAppsInGroup" })
 	@ResponseBody
-	public JpaPageResults<Applications> queryAppsInGroupGrid(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
+	public JpaPageResults<GroupPrivileges> queryAppsInGroup(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
 		
-		JpaPageResults<Applications> jqGridApp;
-		jqGridApp= groupPrivilegesService.gridAppsInGroup(groupApp);
+		JpaPageResults<GroupPrivileges> jqGridApp;
+		
+		jqGridApp= groupPrivilegesService.queryPageResults("appsInGroup",groupApp);
 
 		if(jqGridApp!=null&&jqGridApp.getRows()!=null){
 			for (Applications app : jqGridApp.getRows()){
@@ -59,13 +60,12 @@ public class GroupPrivilegesController {
 	}
 	
 	
-	@RequestMapping(value = { "/appsNotInGroupGrid" })
+	@RequestMapping(value = { "/queryAppsNotInGroup" })
 	@ResponseBody
-	public JpaPageResults<Applications> queryAppsNotInGroupGrid(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
-
-		JpaPageResults<Applications> jqGridApp;
+	public JpaPageResults<GroupPrivileges> queryAppsNotInGroup(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
+		JpaPageResults<GroupPrivileges> jqGridApp;
 		
-		jqGridApp= groupPrivilegesService.gridAppsNotInGroupGrid(groupApp);
+		jqGridApp= groupPrivilegesService.queryPageResults("appsNotInGroup",groupApp);
 
 		if(jqGridApp!=null&&jqGridApp.getRows()!=null){
 			for (Applications app : jqGridApp.getRows()){
@@ -107,20 +107,18 @@ public class GroupPrivilegesController {
 	@RequestMapping(value = {"/delete"})
 	@ResponseBody
 	public Message deleteGroupApp(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
-		if (groupApp == null || groupApp.getGroupId() == null) {
+		if (groupApp == null || groupApp.getId() == null) {
 			return  new Message("传入参数为空",MessageType.error);
 		}
-		String groupId = groupApp.getGroupId();
+		String privilegesIds = groupApp.getId();
 		
 		
 		boolean result = true;
-		String appIds = groupApp.getAppId();
-		if (appIds != null) {
-			String[] arrAppIds = appIds.split(",");
+		if (privilegesIds != null) {
+			String[] arrPrivilegesIds = privilegesIds.split(",");
 			
-			for (int i = 0; i < arrAppIds.length; i++) {
-				GroupPrivileges newGroupApp = new GroupPrivileges(groupId, arrAppIds[i]);
-				result = groupPrivilegesService.delete(newGroupApp);
+			for (int i = 0; i < arrPrivilegesIds.length; i++) {
+				result = groupPrivilegesService.remove(arrPrivilegesIds[i]);
 			}
 			if(!result) {
 				return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_ERROR),MessageType.error);

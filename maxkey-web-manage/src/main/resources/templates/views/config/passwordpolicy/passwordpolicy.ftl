@@ -42,29 +42,26 @@
 	<div class="page-container">
 	
 	<div class="main-content">
-					<div class="container-fluid">
-
-						<div class="breadcrumb-wrapper row">
-							<div class="col-12 col-lg-3 col-md-6">
-								<h4 class="page-title">Dashboard 2</h4>
-							</div>
-							<div class="col-12 col-lg-9 col-md-6">
-								<ol class="breadcrumb float-right">
-									<li><a href="index.html">Dashboard</a></li>
-									<li class="active">/ Dashboard 2</li>
-								</ol>
-							</div>
-						</div>
-
+		<div class="container-fluid">
+			<div class="breadcrumb-wrapper row">
+				<div class="col-12 col-lg-3 col-md-6">
+					<h4 class="page-title">Dashboard 2</h4>
+				</div>
+				<div class="col-12 col-lg-9 col-md-6">
+					<ol class="breadcrumb float-right">
+						<li><a href="index.html">Dashboard</a></li>
+						<li class="active">/ Dashboard 2</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="col-12 grid-margin">
+				<div class="card">
+					<div class="card-header border-bottom">
+						<h4 class="card-title"><@locale code="login.passwordpolicy"/></h4>
 					</div>
-
-
-					<div class="col-12 grid-margin">
-						<div class="card">
-							<div class="card-header border-bottom">
-								<h4 class="card-title"><@locale code="login.passwordpolicy"/></h4>
-							</div>
-							<div class="card-body">
+					<div class="card-body">
 								<form  method="post" type="label" validate="true" action="<@base/>/config/passwordpolicy/update" id="actionForm" >
 									<div class="row">
 										<div class="col-md-6">

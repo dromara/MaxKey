@@ -33,49 +33,81 @@ public class UserInfo extends JpaBaseDomain {
 	String id;
 	@Column
 	protected String 	username;
+	@Column
 	protected String 	password;
+	@Column
 	protected String 	decipherable;
+	@Column
 	protected String 	sharedSecret; 
+	@Column
 	protected String 	sharedCounter; 
 	/**
 	 * "Employee", "Supplier","Dealer","Contractor",Partner,Customer "Intern",
       "Temp", "External", and "Unknown"
 	 */
+	@Column
 	protected String 	userType;	
+	@Column
 	protected String 	windowsAccount;
 	
 	//for user name
+	@Column
 	protected String 	displayName;
+	@Column
 	protected String 	nickName;	
+	@Column
 	protected String 	nameZHSpell;
+	@Column
 	protected String 	nameZHShortSpell;
+	@Column
 	protected String 	givenName;
+	@Column
 	protected String 	middleName;
+	@Column
 	protected String 	familyName;
+	@Column
 	protected String 	honorificPrefix;
+	@Column
 	protected String 	honorificSuffix;
+	@Column
 	protected String 	formattedName;
 	
+	@Column
 	protected int 		married;
+	@Column
 	protected int 		gender;
+	@Column
 	protected String 	birthDate;
 	@JsonIgnore
+	@Column
 	protected byte[]  	picture;	
 	@JsonIgnore
 	protected MultipartFile pictureFile;
+	@Column
 	protected int 		idType;
+	@Column
 	protected String 	idCardNo;
+	@Column
 	protected String 	webSite;
+	@Column
 	protected String 	startWorkDate;
 	
 	//for security
+	@Column
 	protected int 		authnType;
+	@Column
 	protected String 	email;
+
 	protected int 		emailVerified;
+	@Column
 	protected String 	mobile;
+
 	protected int 		mobileVerified;
+
 	protected String 	passwordQuestion;
+
 	protected String 	passwordAnswer;
+	@Column
 	//for apps login protected
 	protected int 		appLoginAuthnType;
 	protected String 	appLoginPassword;  
@@ -94,59 +126,83 @@ public class UserInfo extends JpaBaseDomain {
 	protected int 	 	passwordSetType;
 	protected Integer   loginCount;
 	
-	
+	@Column
 	protected String 	locale;
+	@Column
 	protected String 	timeZone;
+	@Column
 	protected String 	preferredLanguage;
 	
 	//for work 
+	@Column
 	protected String 	workCountry;
+	@Column
 	protected String 	workRegion;//province;
+	@Column
 	protected String 	workLocality;//city;
+	@Column
 	protected String 	workStreetAddress;
+	@Column
 	protected String 	workAddressFormatted;
+	@Column
 	protected String 	workEmail;
+	@Column
 	protected String 	workPhoneNumber;
+	@Column
 	protected String 	workPostalCode;
+	@Column
 	protected String 	workFax;	
 	//for home
+	@Column
 	protected String 	homeCountry;
+	@Column
 	protected String 	homeRegion;//province;
+	@Column
 	protected String 	homeLocality;//city;
+	@Column
 	protected String 	homeStreetAddress;
+	@Column
 	protected String 	homeAddressFormatted;
+	@Column
 	protected String 	homeEmail;
+	@Column
 	protected String 	homePhoneNumber;
+	@Column
 	protected String 	homePostalCode;
+	@Column
 	protected String 	homeFax;
 	//for company
+	@Column
 	protected String 	employeeNumber;
+	@Column
 	protected String 	costCenter;
+	@Column
 	protected String 	organization;
+	@Column
 	protected String 	division;
+	@Column
 	protected String 	departmentId;
+	@Column
 	protected String 	department;
+	@Column
 	protected String 	jobTitle;
+	@Column
 	protected String 	jobLevel;
+	@Column
 	protected String 	managerId;
+	@Column
 	protected String 	manager;
+	@Column
 	protected String 	assistantId;
+	@Column
 	protected String 	assistant;
+	@Column
 	protected String 	entryDate;
+	@Column
 	protected String 	quitDate;
 
 	//for social contact
-	protected String 	qq;
-	protected String 	weixin;
-	protected String 	sinaweibo;
-	protected String 	yixin;
-	protected String 	facebook;
-	protected String 	skype;
-	protected String 	msn;
-	protected String 	gtalk;
-	protected String 	yahoo;
-	protected String 	line;
-	protected String 	aim;
+	@Column
 	protected String 	defineIm;
 	protected int 		weixinFollow;
 	
@@ -167,13 +223,17 @@ public class UserInfo extends JpaBaseDomain {
 
 	protected int 		gridList;
 	
-	String createdBy;;
+	@Column
+	String createdBy;
+	@Column
 	String createdDate;
+	@Column
 	String modifiedBy;
+	@Column
 	String modifiedDate;
-	
+	@Column
 	int status;
-	
+	@Column
 	String description ;
 	
 	
@@ -1025,94 +1085,7 @@ public class UserInfo extends JpaBaseDomain {
 		this.gridList = gridList;
 	}
 
-	public String getQq() {
-		return qq;
-	}
-
-	public void setQq(String qq) {
-		this.qq = qq;
-	}
-
-	public String getWeixin() {
-		return weixin;
-	}
-
-	public void setWeixin(String weixin) {
-		this.weixin = weixin;
-	}
-
-	public String getSinaweibo() {
-		return sinaweibo;
-	}
-
-	public void setSinaweibo(String sinaweibo) {
-		this.sinaweibo = sinaweibo;
-	}
-
-	public String getYixin() {
-		return yixin;
-	}
-
-	public void setYixin(String yixin) {
-		this.yixin = yixin;
-	}
-
-	public String getFacebook() {
-		return facebook;
-	}
-
-	public void setFacebook(String facebook) {
-		this.facebook = facebook;
-	}
-
-	public String getSkype() {
-		return skype;
-	}
-
-	public void setSkype(String skype) {
-		this.skype = skype;
-	}
-
-	public String getMsn() {
-		return msn;
-	}
-
-	public void setMsn(String msn) {
-		this.msn = msn;
-	}
-
-	public String getGtalk() {
-		return gtalk;
-	}
-
-	public void setGtalk(String gtalk) {
-		this.gtalk = gtalk;
-	}
-
-	public String getYahoo() {
-		return yahoo;
-	}
-
-	public void setYahoo(String yahoo) {
-		this.yahoo = yahoo;
-	}
-
-	public String getLine() {
-		return line;
-	}
-
-	public void setLine(String line) {
-		this.line = line;
-	}
-
-	public String getAim() {
-		return aim;
-	}
-
-	public void setAim(String aim) {
-		this.aim = aim;
-	}
-
+	
 	public String getDefineIm() {
 		return defineIm;
 	}
