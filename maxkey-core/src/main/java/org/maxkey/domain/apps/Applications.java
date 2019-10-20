@@ -106,7 +106,7 @@ public class Applications extends JpaBaseDomain implements Serializable{
 
 	protected Accounts appUser;
 	
-	protected int sortOrder;
+	protected int sortIndex;
 	
 	protected String description;
 	
@@ -242,8 +242,13 @@ public class Applications extends JpaBaseDomain implements Serializable{
 	}
 
 
+	public int getSortIndex() {
+		return sortIndex;
+	}
 
-
+	public void setSortIndex(int sortIndex) {
+		this.sortIndex = sortIndex;
+	}
 
 	/**
 	 * @param icon the icon to set

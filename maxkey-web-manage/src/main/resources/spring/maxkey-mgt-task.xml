@@ -19,7 +19,7 @@
 			http://www.springframework.org/schema/security/spring-security.xsd">
  
  	<!-- Scheduler Task  Start -->		
-	<!-- Day login report -->
+	<!-- Day login report
 	<bean id="loginDayReport" class="org.maxkey.tasks.report.LoginDayReport">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
@@ -31,9 +31,7 @@
 	</bean>
 	
 	<bean id="triggerJobDetailLoginDayReport" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		 <property name="jobDetail" ref="jobDetailLoginDayReport" />
     	 <property name="cronExpression" value="59 59 23 * * ?" /> 
-    	 <!-- <property name="cronExpression" value="40 * * * * ?" />-->
 	</bean>
 	
 	
@@ -41,12 +39,12 @@
 	    <property name="triggers">
 	        <list>
 	        	<ref bean="triggerJobDetailLoginDayReport" />
-	        	<!-- 
+ 
 	            <ref bean="cronTrigger" />
-	            <ref bean="simpleTrigger" /> -->
+	            <ref bean="simpleTrigger" /> 
 	        </list>
 	    </property>
-	</bean>	
+	</bean>	-->
 	
 	<!-- Scheduler Task End -->
 

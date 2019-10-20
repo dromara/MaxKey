@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `secdb` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `secdb`;
+CREATE DATABASE  IF NOT EXISTS `maxkey` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `maxkey`;
 -- MySQL dump 10.13  Distrib 5.6.23, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: secdb

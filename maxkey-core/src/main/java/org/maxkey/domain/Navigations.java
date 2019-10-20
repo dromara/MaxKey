@@ -149,7 +149,7 @@ public class Navigations extends JpaBaseDomain  implements java.io.Serializable 
 		return "Navigations [name=" + name + ", url=" + url + ", type=" + type
 				+ ", target=" + target + ", pId=" + pId + ", pName=" + pName
 				+ ", xPath=" + xPath + ", hasChild=" + hasChild
-				+ ", sortOrder=" + sortOrder + ", visible=" + visible
+				+", visible=" + visible
 				+ ", childNavs=" + childNavs + "]";
 	}
 

@@ -47,7 +47,7 @@
 	<div id="tool_box">
 	 		<table   class="datatable">
  				<tr>
-		 			<td width="120px"><@locale code="app.name"/>:</td>
+		 			<td width="120px"><@locale code="apps.name"/>:</td>
 		 			<td width="374px" nowrap>
 		 				<form id="basic_search_form">
 				 			<input type="text" name="name" style ="width:150px">
@@ -104,6 +104,7 @@
 				data-total-field="records"
 				data-page-list="[10, 25, 50, 100]"
 				data-search="false"
+				data-sort-name="name"
 				data-locale="zh-CN"
 				data-query-params="dataGridQueryParams"
 				data-query-params-type="pageSize"

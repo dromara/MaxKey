@@ -64,7 +64,7 @@ public class OAuth20Details  extends Applications {
 		this.setIcon(application.getIcon());
 		this.clientId=application.getId();
 		
-		this.setSortOrder(application.getSortOrder());
+		this.setSortIndex(application.getSortIndex());
 		this.setVendor(application.getVendor());
 		this.setVendorUrl(application.getVendorUrl());
 		
