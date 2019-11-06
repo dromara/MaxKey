@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.domain.apps.Apps;
 
 
 /*
@@ -18,7 +18,7 @@ import org.maxkey.domain.apps.Applications;
    constraint PK_ROLES primary key clustered (ID)
  */
 @Table(name = "GROUP_APP")  
-public class GroupPrivileges extends Applications implements Serializable{
+public class GroupPrivileges extends Apps implements Serializable{
 
 	/**
 	 * 

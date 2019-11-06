@@ -4,12 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.dao.service.LoginAppsHistoryService;
-import org.maxkey.dao.service.LoginHistoryService;
-import org.maxkey.dao.service.LogsService;
-import org.maxkey.domain.LoginAppsHistory;
-import org.maxkey.domain.LoginHistory;
-import org.maxkey.domain.Logs;
+import org.maxkey.dao.service.HistoryLoginAppsService;
+import org.maxkey.dao.service.HistoryLoginService;
+import org.maxkey.dao.service.HistoryLogsService;
+import org.maxkey.domain.HistoryLoginApps;
+import org.maxkey.domain.HistoryLogin;
+import org.maxkey.domain.HistoryLogs;
 import org.maxkey.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +35,13 @@ public class LogsController {
 final static Logger _logger = LoggerFactory.getLogger(LogsController.class);
 	
 	@Autowired
-	LoginHistoryService loginHistoryService;
+	HistoryLoginService loginHistoryService;
 	
 	@Autowired
-  	protected LoginAppsHistoryService loginAppsHistoryService;
+  	protected HistoryLoginAppsService loginAppsHistoryService;
 	
 	@Autowired
-	LogsService logsService;
+	HistoryLogsService logsService;
 	
 	/**
 	 * 查询操作日志
@@ -50,7 +50,7 @@ final static Logger _logger = LoggerFactory.getLogger(LogsController.class);
 	 */
 	@RequestMapping(value={"/grid"})
 	@ResponseBody
-	public JpaPageResults<Logs> logsDataGrid(@ModelAttribute("logs") Logs logs){
+	public JpaPageResults<HistoryLogs> logsDataGrid(@ModelAttribute("logs") HistoryLogs logs){
 		_logger.debug("logs/datagrid/ logsGrid() "+logs);
 		return logsService.queryPageResults(logs);
 	}
@@ -67,12 +67,12 @@ final static Logger _logger = LoggerFactory.getLogger(LogsController.class);
 	}
 	
 	/**
-	 * @param LoginHistory
+	 * @param HistoryLogin
 	 * @return
 	 */
 	@RequestMapping(value={"/loginHistory/grid"})
 	@ResponseBody
-	public JpaPageResults<LoginHistory> logAuthsGrid(@ModelAttribute("loginHistory") LoginHistory loginHistory){
+	public JpaPageResults<HistoryLogin> logAuthsGrid(@ModelAttribute("loginHistory") HistoryLogin loginHistory){
 		_logger.debug("logs/loginHistory/datagrid/ logsGrid() "+loginHistory);
 		return loginHistoryService.queryPageResults(loginHistory);
 	}
@@ -91,7 +91,7 @@ final static Logger _logger = LoggerFactory.getLogger(LogsController.class);
 	 */
 	@RequestMapping(value={"/loginAppsHistory/grid"})
 	@ResponseBody
-	public JpaPageResults<LoginAppsHistory> loginAppsHistoryGrid(@ModelAttribute("loginAppsHistory") LoginAppsHistory loginAppsHistory){
+	public JpaPageResults<HistoryLoginApps> loginAppsHistoryGrid(@ModelAttribute("loginAppsHistory") HistoryLoginApps loginAppsHistory){
 		_logger.debug("logs/loginAppsHistory/datagrid/ logsGrid() "+loginAppsHistory);
 		loginAppsHistory.setId(null);
 		return loginAppsHistoryService.queryPageResults(loginAppsHistory);

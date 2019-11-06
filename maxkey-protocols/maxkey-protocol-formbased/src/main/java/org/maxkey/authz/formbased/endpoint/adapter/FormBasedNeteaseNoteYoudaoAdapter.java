@@ -5,7 +5,7 @@ import java.util.Date;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.crypto.DigestUtils;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.FormBasedDetails;
+import org.maxkey.domain.apps.AppsFormBasedDetails;
 import org.springframework.web.servlet.ModelAndView;
 
 public class FormBasedNeteaseNoteYoudaoAdapter extends AbstractAuthorizeAdapter {
@@ -24,7 +24,7 @@ public class FormBasedNeteaseNoteYoudaoAdapter extends AbstractAuthorizeAdapter 
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/formbased_netease_noteyoudao_sso_submint");
-		FormBasedDetails details=(FormBasedDetails)app;
+		AppsFormBasedDetails details=(AppsFormBasedDetails)app;
 		modelAndView.addObject("username", details.getAppUser().getRelatedUsername());
 		modelAndView.addObject("password",  DigestUtils.md5Hex(details.getAppUser().getRelatedPassword()));
 		modelAndView.addObject("currentTime",  (new Date()).getTime());

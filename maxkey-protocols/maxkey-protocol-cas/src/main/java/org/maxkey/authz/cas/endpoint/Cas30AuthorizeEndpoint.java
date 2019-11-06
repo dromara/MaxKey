@@ -14,7 +14,7 @@ import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.constants.BOOLEAN;
-import org.maxkey.dao.service.CasDetailsService;
+import org.maxkey.dao.service.AppsCasDetailsService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.Instance;
@@ -36,7 +36,7 @@ public class Cas30AuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
 	final static Logger _logger = LoggerFactory.getLogger(Cas30AuthorizeEndpoint.class);
 	@Autowired
-	CasDetailsService casDetailsService;
+	AppsCasDetailsService casDetailsService;
 	
 	@Autowired
 	ApplicationConfig applicationConfig;

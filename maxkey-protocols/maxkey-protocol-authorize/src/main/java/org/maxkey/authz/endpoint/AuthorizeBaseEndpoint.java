@@ -6,10 +6,10 @@ package org.maxkey.authz.endpoint;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.dao.service.AccountsService;
-import org.maxkey.dao.service.ApplicationsService;
+import org.maxkey.dao.service.AppsService;
 import org.maxkey.domain.Accounts;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +25,8 @@ public class AuthorizeBaseEndpoint {
 	final static Logger _logger = LoggerFactory.getLogger(AuthorizeBaseEndpoint.class);
 	
 	@Autowired
-	@Qualifier("applicationsService")
-	protected ApplicationsService applicationsService;
+	@Qualifier("appsService")
+	protected AppsService appsService;
 	
 	@Autowired 
   	@Qualifier("applicationConfig")
@@ -36,58 +36,58 @@ public class AuthorizeBaseEndpoint {
 	AccountsService accountsService;
 	
 	
-	protected Applications getApplication(String id){
-		Applications  application=(Applications)WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
+	protected Apps getApp(String id){
+		Apps  app=(Apps)WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
 		//session中为空或者id不一致重新加载
-		if(application==null||!application.getId().equalsIgnoreCase(id)) {
-			application=applicationsService.get(id);		
+		if(app==null||!app.getId().equalsIgnoreCase(id)) {
+			app=appsService.get(id);		
 		}
-		if(application	==	null){
+		if(app	==	null){
 			_logger.error("Applications for id "+id + "  is null");
 		}
-		WebContext.setAttribute(AuthorizeBaseEndpoint.class.getName(), application);
-		return application;
+		WebContext.setAttribute(AuthorizeBaseEndpoint.class.getName(), app);
+		return app;
 	}
 	
-	protected Accounts getAppAccounts(Applications app){
-		Accounts appAccount=new Accounts();
+	protected Accounts getAccounts(Apps app){
+		Accounts account=new Accounts();
 		UserInfo userInfo=WebContext.getUserInfo();
-		Applications  application= getApplication(app.getId());
-		if(application.getCredential()==Applications.CREDENTIALS.USER_DEFINED){
+		Apps  application= getApp(app.getId());
+		if(application.getCredential()==Apps.CREDENTIALS.USER_DEFINED){
 			
-			appAccount=accountsService.load(new Accounts(userInfo.getId(),application.getId()));
-			if(appAccount!=null){
-				appAccount.setRelatedPassword(ReciprocalUtils.decoder(appAccount.getRelatedPassword()));
+			account=accountsService.load(new Accounts(userInfo.getId(),application.getId()));
+			if(account!=null){
+				account.setRelatedPassword(ReciprocalUtils.decoder(account.getRelatedPassword()));
 			}
-		}else if(application.getCredential()==Applications.CREDENTIALS.SHARED){
+		}else if(application.getCredential()==Apps.CREDENTIALS.SHARED){
 			
-			appAccount.setRelatedUsername(application.getSharedUsername());
-			appAccount.setRelatedPassword(ReciprocalUtils.decoder(application.getSharedPassword()));
+			account.setRelatedUsername(application.getSharedUsername());
+			account.setRelatedPassword(ReciprocalUtils.decoder(application.getSharedPassword()));
 			
-		}else if(application.getCredential()==Applications.CREDENTIALS.SYSTEM){
+		}else if(application.getCredential()==Apps.CREDENTIALS.SYSTEM){
 			
 			if(application.getSystemUserAttr().equalsIgnoreCase("uid")){
-				appAccount.setUsername(userInfo.getId());
+				account.setUsername(userInfo.getId());
 			}else if(application.getSystemUserAttr().equalsIgnoreCase("username")){
-				appAccount.setUsername(userInfo.getUsername());
+				account.setUsername(userInfo.getUsername());
 			}else if(application.getSystemUserAttr().equalsIgnoreCase("employeeNumber")){
-				appAccount.setUsername(userInfo.getEmployeeNumber());
+				account.setUsername(userInfo.getEmployeeNumber());
 			}else if(application.getSystemUserAttr().equalsIgnoreCase("email")){
-				appAccount.setUsername(userInfo.getEmail());
+				account.setUsername(userInfo.getEmail());
 			}else if(application.getSystemUserAttr().equalsIgnoreCase("windowsAccount")){
-				appAccount.setUsername(userInfo.getWindowsAccount());
+				account.setUsername(userInfo.getWindowsAccount());
 			}
 			//decoder database stored encode password
-			appAccount.setRelatedPassword(ReciprocalUtils.decoder(WebContext.getUserInfo().getDecipherable()));
+			account.setRelatedPassword(ReciprocalUtils.decoder(WebContext.getUserInfo().getDecipherable()));
 			
 			
-		}else if(application.getCredential()==Applications.CREDENTIALS.NONE){
+		}else if(application.getCredential()==Apps.CREDENTIALS.NONE){
 			
-			appAccount.setUsername(userInfo.getUsername());
-			appAccount.setRelatedPassword(userInfo.getUsername());
+			account.setUsername(userInfo.getUsername());
+			account.setRelatedPassword(userInfo.getUsername());
 			
 		}
-		return appAccount;
+		return account;
 	}
 	
 	public ModelAndView generateInitCredentialModelAndView(String appId,String redirect_uri){

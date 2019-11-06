@@ -6,8 +6,8 @@ import org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.domain.apps.Applications;
-import org.maxkey.domain.apps.OAuth20Details;
+import org.maxkey.domain.apps.Apps;
+import org.maxkey.domain.apps.AppsOAuth20Details;
 import org.maxkey.domain.apps.oauth2.provider.client.BaseClientDetails;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
@@ -35,7 +35,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd() {
 		ModelAndView modelAndView=new ModelAndView("apps/oauth20/appAdd");
-		OAuth20Details oauth20Details=new OAuth20Details();
+		AppsOAuth20Details oauth20Details=new AppsOAuth20Details();
 		oauth20Details.setId(oauth20Details.generateId());
 		oauth20Details.setSecret(ReciprocalUtils.generateKey(""));
 		oauth20Details.setClientId(oauth20Details.getId());
@@ -47,7 +47,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	
 	
 	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("oauth20Details") OAuth20Details oauth20Details) {
+	public ModelAndView insert(@ModelAttribute("oauth20Details") AppsOAuth20Details oauth20Details ) {
 		_logger.debug("-Add  :" + oauth20Details);
 		
 		transform(oauth20Details);
@@ -55,7 +55,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
 		
 		oauth20JdbcClientDetailsService.addClientDetails(oauth20Details.clientDetailsRowMapper());
-		if (applicationsService.insert(oauth20Details)) {
+		if (appsService.insertApp(oauth20Details)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -68,9 +68,9 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/oauth20/appUpdate");
 		BaseClientDetails baseClientDetails=(BaseClientDetails)oauth20JdbcClientDetailsService.loadClientByClientId(id);
-		Applications application=applicationsService.get(id);//
+		Apps application=appsService.get(id);//
 		decoderSecret(application);
-		OAuth20Details oauth20Details=new OAuth20Details(application,baseClientDetails);
+		AppsOAuth20Details oauth20Details=new AppsOAuth20Details(application,baseClientDetails);
 		oauth20Details.setSecret(application.getSecret());
 		oauth20Details.setClientSecret(application.getSecret());
 		_logger.debug("forwardUpdate "+oauth20Details);
@@ -84,7 +84,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	 * @return
 	 */
 	@RequestMapping(value={"/update"})  
-	public ModelAndView update(@ModelAttribute("oauth20Details") OAuth20Details oauth20Details) {
+	public ModelAndView update( @ModelAttribute("oauth20Details") AppsOAuth20Details oauth20Details) {
 		//
 		_logger.debug("-update  application :" + oauth20Details);
 		_logger.debug("-update  oauth20Details use oauth20JdbcClientDetails" );
@@ -93,7 +93,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
 		oauth20JdbcClientDetailsService.updateClientDetails(oauth20Details.clientDetailsRowMapper());
 		oauth20JdbcClientDetailsService.updateClientSecret(oauth20Details.getClientId(), oauth20Details.getClientSecret());
-		if (applicationsService.update(oauth20Details)) {
+		if (appsService.updateApp(oauth20Details)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 		} else {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
@@ -107,7 +107,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
 		oauth20JdbcClientDetailsService.removeClientDetails(id);
-		if (applicationsService.remove(id)) {
+		if (appsService.remove(id)) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

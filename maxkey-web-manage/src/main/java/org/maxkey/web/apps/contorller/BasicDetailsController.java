@@ -5,7 +5,7 @@ import java.util.List;
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -28,7 +28,7 @@ public class BasicDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd() {
 		ModelAndView modelAndView=new ModelAndView("apps/basic/appAdd");
-		Applications appDetails =new Applications();
+		Apps appDetails =new Apps();
 		appDetails.setId(appDetails.generateId());
 		appDetails.setProtocol(PROTOCOLS.BASIC);
 		appDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.DES));
@@ -38,12 +38,12 @@ public class BasicDetailsController  extends BaseAppContorller {
 	
 	
 	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("appDetails") Applications appDetails ) {
+	public ModelAndView insert(@ModelAttribute("appDetails") Apps appDetails ) {
 		_logger.debug("-Add  :" + appDetails);
 
 		transform(appDetails);
 		
-		if (applicationsService.insert(appDetails)) {
+		if (appsService.insert(appDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -55,7 +55,7 @@ public class BasicDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/basic/appUpdate");
-		Applications appDetails=applicationsService.get(id);
+		Apps appDetails=appsService.get(id);
 		super.decoderSecret(appDetails);
 		WebContext.setAttribute(appDetails.getId(), appDetails.getIcon());
 		modelAndView.addObject("model",appDetails);
@@ -68,12 +68,12 @@ public class BasicDetailsController  extends BaseAppContorller {
 	 * @return
 	 */
 	@RequestMapping(value={"/update"})  
-	public ModelAndView update(@ModelAttribute("appDetails") Applications appDetails) {
+	public ModelAndView update(@ModelAttribute("appDetails") Apps appDetails) {
 		//
 		_logger.debug("-update  application :" + appDetails);
 		transform(appDetails);
 
-		if (applicationsService.update(appDetails)) {
+		if (appsService.update(appDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -87,7 +87,7 @@ public class BasicDetailsController  extends BaseAppContorller {
 	@RequestMapping(value={"/delete/{id}"})
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
-		if (applicationsService.remove(id)) {
+		if (appsService.remove(id)) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

@@ -1,7 +1,7 @@
 package org.maxkey.authz.cas.endpoint.ticket;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.maxkey.domain.apps.CasDetails;
+import org.maxkey.domain.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 
 import javax.persistence.Column;
@@ -55,7 +55,7 @@ public class ServiceTicketImpl extends AbstractTicket {
     /**
      * Instantiates a new service ticket impl.
      */
-    public ServiceTicketImpl(Authentication authentication,CasDetails casDetails) {
+    public ServiceTicketImpl(Authentication authentication,AppsCasDetails casDetails) {
         // exists for JPA purposes
     	this.authentication=authentication;
     	this.casDetails=casDetails;

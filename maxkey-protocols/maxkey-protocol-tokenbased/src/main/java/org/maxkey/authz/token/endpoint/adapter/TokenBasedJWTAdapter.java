@@ -9,8 +9,8 @@ import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.config.oidc.OIDCProviderMetadata;
 import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.Applications;
-import org.maxkey.domain.apps.TokenBasedDetails;
+import org.maxkey.domain.apps.Apps;
+import org.maxkey.domain.apps.AppsTokenBasedDetails;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class TokenBasedJWTAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(TokenBasedJWTAdapter.class);
 	@Override
 	public String generateInfo(UserInfo userInfo,Object app) {
-		TokenBasedDetails details=(TokenBasedDetails)app;
+		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 	
 		
 		JwtSigningAndValidationService jwtSignerService= (JwtSigningAndValidationService)WebContext.getBean("jwtSignerValidationService");
@@ -84,7 +84,7 @@ public class TokenBasedJWTAdapter extends AbstractAuthorizeAdapter {
 	}
 
 	@Override
-	public String sign(String data, Applications app) {
+	public String sign(String data, Apps app) {
 		
 		return data;
 	}
@@ -92,7 +92,7 @@ public class TokenBasedJWTAdapter extends AbstractAuthorizeAdapter {
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/tokenbased_jwt_sso_submint");
-		TokenBasedDetails details=(TokenBasedDetails)app;
+		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 		modelAndView.addObject("action", details.getRedirectUri());
 		_logger.debug("jwt Token data : "+data);
 		

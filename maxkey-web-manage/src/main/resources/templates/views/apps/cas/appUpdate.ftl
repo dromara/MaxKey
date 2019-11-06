@@ -1,3 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../../layout/header.ftl"/>
+	<#include  "../../layout/common.cssjs.ftl"/>
+<style   type="text/css">
+  .table th, .table td {
+    padding: .2rem;
+    vertical-align: middle;
+  }
+</style>
+
 <script type="text/javascript">
 <!--
 $(function(){	
@@ -22,6 +34,8 @@ $(function(){
 });
 //-->
 </script>
+</head>
+<body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
 			action="<@base/>/apps/cas/update"  
 			forward="<@base/>/apps/list"
@@ -31,38 +45,42 @@ $(function(){
   	      	<table   class="datatable" >
 				<tbody>
 				<tr>
-					<td ><jsp:include page="../appUpdateCommon.jsp"/></td>
+					<td ><#include  "../appUpdateCommon.ftl"/></td>
 				</tr>
 				<tr>
 					<td>
-				 			<table width="960"  class="datatable" >
+				 			<table width="960"   class="table table-bordered"  >
 								<tbody>
-								
 								<tr>
 									<th colspan=4><@locale code="apps.cas.info"/></th>
 								</tr>
 								<tr>
 									<th style="width:15%;"><@locale code="apps.cas.service"/>：</th>
 									<td  colspan=3>
-										<input type="text" id="service" name="service"  title="" value="${model.service}"/>
-										<b class="orange">*</b><label for="service"></label>
+										<input type="text" class="form-control" id="service" name="service"  title="" value="${model.service}"/>
 									</td>
 								</tr>
 								<tr>
 									<th style="width:15%;"><@locale code="apps.cas.validation"/>：</th>
 									<td  colspan=3>
-										<input type="text" id="redirectUri" name="validation"  title="" value="${model.validation}"/>
-										<b class="orange">*</b><label for="validation"></label>
+										<input type="text" class="form-control" id="redirectUri" name="validation"  title="" value="${model.validation}"/>
+							
 									</td>
 								</tr>
+								<tr>
+									<td  colspan=4>
+										<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
+										<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
+									</td>
+								</tr>
+								
 								</tbody>
 							  </table>
 			  </td>
 				</tr>
 				</tbody>
 				</table>
-			  
-  	      
-    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
-			<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
+    		
 </form>
+</body>
+</html>

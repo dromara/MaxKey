@@ -11,7 +11,7 @@ import org.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml20.BindingAdapter;
 import org.maxkey.authz.saml20.provider.xml.AuthnResponseGenerator;
-import org.maxkey.domain.apps.SAML20Details;
+import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.web.WebContext;
 import org.opensaml.saml2.core.Response;
 import org.opensaml.saml2.metadata.Endpoint;
@@ -47,7 +47,7 @@ public class AssertionEndpoint {
 		logger.debug("saml20 assertion start.");
 		bindingAdapter = (BindingAdapter) request.getSession().getAttribute("samlv20Adapter");
 		logger.debug("saml20 assertion get session samlv20Adapter "+bindingAdapter);
-		SAML20Details saml20Details = bindingAdapter.getSaml20Details();
+		AppsSAML20Details saml20Details = bindingAdapter.getSaml20Details();
 
 		AuthnRequestInfo authnRequestInfo = bindingAdapter.getAuthnRequestInfo();
 		

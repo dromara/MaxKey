@@ -11,9 +11,9 @@ import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.token.endpoint.adapter.TokenBasedDefaultAdapter;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.constants.BOOLEAN;
-import org.maxkey.dao.service.TokenBasedDetailsService;
-import org.maxkey.domain.apps.Applications;
-import org.maxkey.domain.apps.TokenBasedDetails;
+import org.maxkey.dao.service.AppsTokenBasedDetailsService;
+import org.maxkey.domain.apps.Apps;
+import org.maxkey.domain.apps.AppsTokenBasedDetails;
 import org.maxkey.util.Instance;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
 	final static Logger _logger = LoggerFactory.getLogger(TokenBasedAuthorizeEndpoint.class);
 	@Autowired
-	TokenBasedDetailsService tokenBasedDetailsService;
+	AppsTokenBasedDetailsService tokenBasedDetailsService;
 	
 	TokenBasedDefaultAdapter defaultTokenBasedAdapter=new TokenBasedDefaultAdapter();
 	
@@ -48,11 +48,11 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		ModelAndView modelAndView=new ModelAndView();
 		
 		
-		TokenBasedDetails tokenBasedDetails=null;
+		AppsTokenBasedDetails tokenBasedDetails=null;
 		tokenBasedDetails=tokenBasedDetailsService.get(id);
 		_logger.debug(""+tokenBasedDetails);
 		
-		Applications  application= getApplication(id);
+		Apps  application= getApp(id);
 		tokenBasedDetails.setAdapter(application.getAdapter());
 		tokenBasedDetails.setIsAdapter(application.getIsAdapter());
 		

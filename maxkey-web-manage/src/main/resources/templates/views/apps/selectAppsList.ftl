@@ -29,8 +29,7 @@
 </head>
 <body>	
 	<div id="tool_box">
-		
-			<table   class="datatable">
+			<table    class="table table-bordered" >
  				<tr>
 		 			<td width="120px"><@locale code="apps.name"/>:</td>
 		 			<td  width="374px" nowrap>

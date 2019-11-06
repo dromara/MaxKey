@@ -14,8 +14,8 @@ import org.maxkey.crypto.cert.NameUtil;
 import org.maxkey.crypto.cert.X509CertUtils;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
-import org.maxkey.dao.service.Saml20DetailsService;
-import org.maxkey.domain.apps.SAML20Details;
+import org.maxkey.dao.service.AppsSaml20DetailsService;
+import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -44,12 +44,12 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	private KeyStoreLoader idpKeyStoreLoader;
 	
 	@Autowired
-	Saml20DetailsService saml20DetailsService;
+	AppsSaml20DetailsService saml20DetailsService;
 	
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd() {
 		ModelAndView modelAndView=new ModelAndView("apps/saml20/appAdd");
-		SAML20Details saml20Details=new SAML20Details();
+		AppsSAML20Details saml20Details=new AppsSAML20Details();
 		saml20Details.setSecret(ReciprocalUtils.generateKey(""));
 		saml20Details.setProtocol(PROTOCOLS.SAML20);
 		modelAndView.addObject("model",saml20Details);
@@ -59,7 +59,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	
 	
 	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("saml20Details") SAML20Details saml20Details) {
+	public ModelAndView insert(@ModelAttribute("saml20Details") AppsSAML20Details saml20Details) {
 		_logger.debug("-Add  :" + saml20Details);
 
 		try {
@@ -68,7 +68,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 			e.printStackTrace();
 		}
 		saml20DetailsService.insert(saml20Details);
-		if (applicationsService.insert(saml20Details)) {
+		if (appsService.insert(saml20Details)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -80,7 +80,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/saml20/appUpdate");
-		SAML20Details saml20Details=saml20DetailsService.get(id);
+		AppsSAML20Details saml20Details=saml20DetailsService.getAppDetails(id);
 		decoderSecret(saml20Details);
 		WebContext.setAttribute(saml20Details.getId(), saml20Details.getIcon());
 		modelAndView.addObject("model",saml20Details);
@@ -92,7 +92,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	 * @return
 	 */
 	@RequestMapping(value={"/update"})  
-	public ModelAndView update(@ModelAttribute("saml20Details") SAML20Details saml20Details) {
+	public ModelAndView update(@ModelAttribute("saml20Details") AppsSAML20Details saml20Details) {
 		//
 		_logger.debug("-update  application :" + saml20Details);
 	   _logger.debug("");
@@ -102,7 +102,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 			e.printStackTrace();
 		}
 		saml20DetailsService.update(saml20Details);
-		if (applicationsService.update(saml20Details)) {
+		if (appsService.update(saml20Details)) {
 			 new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -116,7 +116,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	@RequestMapping(value={"/delete/{id}"})
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
-		if (saml20DetailsService.remove(id)&&applicationsService.remove(id)) {
+		if (saml20DetailsService.remove(id)&&appsService.remove(id)) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -124,7 +124,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		}
 	}
 	
-	protected SAML20Details transform(SAML20Details samlDetails) throws Exception{
+	protected AppsSAML20Details transform(AppsSAML20Details samlDetails) throws Exception{
 		
 		super.transform(samlDetails);
 		

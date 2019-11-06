@@ -91,7 +91,7 @@
 			<mvc:mapping path="/roles/*"/>
 			<mvc:mapping path="/applications/*"/>
 			<mvc:mapping path="/approles/*"/>
-			<bean class="org.maxkey.web.interceptor.LogAdapter" />
+			<bean class="org.maxkey.web.interceptor.HistoryLogsAdapter" />
 		</mvc:interceptor>
 		
 		 <ref bean="localeChangeInterceptor" />

@@ -9,7 +9,7 @@ import org.maxkey.crypto.cert.CertSigner;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public abstract class AbstractAuthorizeAdapter {
 	
 	public abstract String generateInfo(UserInfo userInfo,Object app);
 	
-	public String  sign(String data,Applications app){
+	public String  sign(String data,Apps app){
 		if(BOOLEAN.isTrue(app.getIsSignature())){
 			KeyStoreLoader keyStoreLoader=(KeyStoreLoader)WebContext.getBean("keyStoreLoader");
 			try {	

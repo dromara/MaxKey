@@ -1,24 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../../layout/header.ftl"/>
+	<#include  "../../layout/common.cssjs.ftl"/>
+<style   type="text/css">
+  .table th, .table td {
+    padding: .2rem;
+    vertical-align: middle;
+  }
+</style>
 <script type="text/javascript">
 <!--
 $(function(){	
 });
 //-->
 </script>
-
+</head>
+<body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
 			action="<@base/>/apps/oauth20/add"
 			forward="<@base/>/apps/list"  
 			enctype="multipart/form-data">		 
   	        <!-- content -->    
   	      	<!--table-->
-			<table width="960"  class="datatable" >
+			<table width="960"   class="table table-bordered" >
 				<tbody>
 				<tr>
-					<td ><jsp:include page="../appAddCommon.jsp"/></td>
+					<td ><#include  "../appAddCommon.ftl"/></td>
 				</tr>
 				<tr>
 					<td>
-			   <table width="960"  class="datatable" >
+			   <table width="960"   class="table table-bordered" >
 				<tbody>
 				
 				<tr>
@@ -27,13 +39,13 @@ $(function(){
 				<tr>
 					<th style="width:15%;"><@locale code="apps.oauth.v2.0.clientId" />：</th>
 					<td style="width:35%;">${model.clientId}
-						<input type="hidden" id="clientId" name="clientId"  title="" value="${model.clientId}"/>
+						<input type="hidden" class="form-control" id="clientId" name="clientId"  title="" value="${model.clientId}"/>
 						
 					</td>
 					<th style="width:15%;"><@locale code="apps.oauth.v2.0.clientSecret" />：</th>
 					<td style="width:35%;">
 						<span id="clientSecret_text">${model.clientSecret}</span>
-						<input type="hidden" id="clientSecret" name="clientSecret"  title="" value="${model.clientSecret}"/>
+						<input type="hidden" class="form-control" id="clientSecret" name="clientSecret"  title="" value="${model.clientSecret}"/>
 						
 					</td>
 				</tr>
@@ -75,26 +87,29 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.oauth.registeredRedirectUris" />：</th>
 					<td colspan=3>
-						<textarea  id="registeredRedirectUris" name="registeredRedirectUris" rows="4" cols="60"></textarea>
+						<textarea  class="form-control"  id="registeredRedirectUris" name="registeredRedirectUris" rows="4" cols="60"></textarea>
 						<b class="orange">*</b><label for="registeredRedirectUris"></label>
 					</td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.oauth.accessTokenValiditySeconds" />：</th>
 					<td >
-						<input type="text" id="accessTokenValiditySeconds" name="accessTokenValiditySeconds"  title="" value="180"/>
+						<input type="text"  class="form-control" id="accessTokenValiditySeconds" name="accessTokenValiditySeconds"  title="" value="180"/>
 						<b class="orange">*</b><label for="accessTokenValiditySeconds"></label>
 					</td>
 					<th><@locale code="apps.oauth.refreshTokenValiditySeconds" />：</th>
 					<td>
-						<input type="text" id="refreshTokenValiditySeconds" name="refreshTokenValiditySeconds"  title="" value="180"/>
+						<input type="text" class="form-control"  id="refreshTokenValiditySeconds" name="refreshTokenValiditySeconds"  title="" value="180"/>
 						<b class="orange">*</b><label for="refreshTokenValiditySeconds"></label>
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.connect.idTokenSigningAlgorithm" />：</th>
+					<td colspan=4><@locale code="apps.oauth.connect.info" /></td>
+				</tr>
+				<tr>
+					<th><@locale code="apps.oauth.connect.idTokenSigningAlgorithm" />：</th>
 					<td >
-						<select  id="idTokenSigningAlgorithm" name="idTokenSigningAlgorithm" >
+						<select  id="idTokenSigningAlgorithm" name="idTokenSigningAlgorithm"   class="form-control" >
 							<option value="none"    selected>No digital signature</option>
 							<option value="HS256"  >HMAC using SHA-256 hash algorithm</option>
 							<option value="HS384"  >HMAC using SHA-384 hash algorithm</option>
@@ -107,9 +122,9 @@ $(function(){
 							<option value="ES512"  >ECDSA using P-512 curve and SHA-512 hash algorithm</option>
 						</select>
 					</td>
-					<th><@locale code="apps.connect.userInfoSigningAlgorithm" />：</th>
+					<th><@locale code="apps.oauth.connect.userInfoSigningAlgorithm" />：</th>
 					<td >
-						<select  id="userInfoSigningAlgorithm" name="userInfoSigningAlgorithm" >
+						<select  id="userInfoSigningAlgorithm" name="userInfoSigningAlgorithm"  class="form-control" >
 							<option value="none"    selected>No digital signature</option>
 							<option value="HS256"  >HMAC using SHA-256 hash algorithm</option>
 							<option value="HS384"  >HMAC using SHA-384 hash algorithm</option>
@@ -124,15 +139,15 @@ $(function(){
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.connect.jwksUri" />：</th>
+					<th><@locale code="apps.oauth.connect.jwksUri" />：</th>
 					<td colspan =3>
-						<input type="text" id="jwksUri" name="jwksUri"  title="" value="${model.jwksUri}"/>
+						<input type="text" class="form-control"  id="jwksUri" name="jwksUri"  title="" value="${model.jwksUri!}"/>
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.connect.idTokenEncryptedAlgorithm" />：</th>
+					<th><@locale code="apps.oauth.connect.idTokenEncryptedAlgorithm" />：</th>
 					<td >
-						<select  id="idTokenEncryptedAlgorithm" name="idTokenEncryptedAlgorithm" >
+						<select  id="idTokenEncryptedAlgorithm" name="idTokenEncryptedAlgorithm"  class="form-control" >
 							<option value="none" selected >No encryption</option>
 							<option value="RSA1_5" >RSAES-PKCS1-V1_5</option>
 							<option value="RSA-OAEP" >RSAES using Optimal Asymmetric Encryption Padding (OAEP)</option>
@@ -145,9 +160,9 @@ $(function(){
 						
 						</select>
 					</td>
-					<th><@locale code="apps.connect.userInfoEncryptedAlgorithm" />：</th>
+					<th><@locale code="apps.oauth.connect.userInfoEncryptedAlgorithm" />：</th>
 					<td >
-						<select  id="userInfoEncryptedAlgorithm" name="userInfoEncryptedAlgorithm" >
+						<select  id="userInfoEncryptedAlgorithm" name="userInfoEncryptedAlgorithm" class="form-control"  >
 							<option value="none" selected >No encryption</option>
 							<option value="RSA1_5" >RSAES-PKCS1-V1_5</option>
 							<option value="RSA-OAEP" >RSAES using Optimal Asymmetric Encryption Padding (OAEP)</option>
@@ -163,9 +178,9 @@ $(function(){
 				</tr>
 				
 				<tr>
-					<th><@locale code="apps.connect.idTokenEncryptionMethod" />：</th>
+					<th><@locale code="apps.oauth.connect.idTokenEncryptionMethod" />：</th>
 					<td >
-						<select  id="idTokenEncryptionMethod" name="idTokenEncryptionMethod" >
+						<select  id="idTokenEncryptionMethod" name="idTokenEncryptionMethod"  class="form-control" >
 							<option value="none" selected>No encryption</option>
 							<option value="A128CBC+HS256" >Composite Authenticated Encryption algorithm using AES in Cipher Block Chaining (CBC) mode with PKCS #5 padding with an integrity calculation using HMAC SHA-256, using a 256 bit CMK (and 128 bit CEK)</option>
 							<option value="A256CBC+HS512" >Composite Authenticated Encryption algorithm using AES in CBC mode with PKCS #5 padding with an integrity calculation using HMAC SHA-512, using a 512 bit CMK (and 256 bit CEK)</option>
@@ -173,9 +188,9 @@ $(function(){
 							<option value="A256GCM" >AES GCM using 256 bit keys</option>
 					</select>
 					</td>
-					<th><@locale code="apps.connect.userInfoEncryptionMethod" />：</th>
+					<th><@locale code="apps.oauth.connect.userInfoEncryptionMethod" />：</th>
 					<td >
-						<select  id="userInfoEncryptionMethod" name="userInfoEncryptionMethod" >
+						<select  id="userInfoEncryptionMethod" name="userInfoEncryptionMethod"  class="form-control" >
 							<option value="none" selected>No encryption</option>
 							<option value="A128CBC+HS256" >Composite Authenticated Encryption algorithm using AES in Cipher Block Chaining (CBC) mode with PKCS #5 padding with an integrity calculation using HMAC SHA-256, using a 256 bit CMK (and 128 bit CEK)</option>
 							<option value="A256CBC+HS512" >Composite Authenticated Encryption algorithm using AES in CBC mode with PKCS #5 padding with an integrity calculation using HMAC SHA-512, using a 512 bit CMK (and 256 bit CEK)</option>
@@ -187,7 +202,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.oauth.approvalPrompt" />：</th>
 					<td >
-						<select  id="approvalPrompt" name="approvalPrompt" >
+						<select  id="approvalPrompt" name="approvalPrompt"  class="form-control" >
 							<option value="force" selected>
 								<@locale code="apps.oauth.approvalPrompt.force" /></option>
 							<option value="auto"  >
@@ -196,7 +211,7 @@ $(function(){
 					</td>
 					<th><@locale code="apps.isAdapter" />：</th>
 					<td >
-						<select  id="isAdapter" name="isAdapter" >
+						<select  id="isAdapter" name="isAdapter"  class="form-control" >
 							<option value="0"  selected>
 								<@locale code="apps.isAdapter.no" /></option>
 							<option value="1">
@@ -207,7 +222,14 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.adapter" />：</th>
 					<td colspan =3>
-						<input type="text" id="adapter" name="adapter"  title="" value=""/>
+						<input type="text" class="form-control"  id="adapter" name="adapter"  title="" value=""/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan =4>
+						<input  id="status" type="hidden" name="status"  value="1"/>
+			    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
+						<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	 
 					</td>
 				</tr>
 				</tbody>
@@ -215,9 +237,7 @@ $(function(){
   	      </td>
 				</tr>
 				</tbody>
-				</table>
-		    <input id="_method" type="hidden" name="_method"  value="post"/>
-			<input  id="status" type="hidden" name="status"  value="1"/>
-    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
-			<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
+				</table>	  
 </form>
+</body>
+</html>

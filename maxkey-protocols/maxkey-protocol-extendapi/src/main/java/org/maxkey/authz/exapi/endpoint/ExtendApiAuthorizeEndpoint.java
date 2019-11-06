@@ -9,7 +9,7 @@ import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.BOOLEAN;
 import org.maxkey.domain.Accounts;
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.util.Instance;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -30,11 +30,11 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	@RequestMapping("/authz/api/{id}")
 	public ModelAndView authorize(HttpServletRequest request,@PathVariable("id") String id){
 		
-		Applications apps=getApplication(id);
+		Apps apps=getApp(id);
 		_logger.debug(""+apps);
 		
 		if(BOOLEAN.isTrue(apps.getIsAdapter())){
-			Accounts appUser=getAppAccounts(apps);
+			Accounts appUser=getAccounts(apps);
 			
 			if(appUser	==	null){
 				return generateInitCredentialModelAndView(id,"/authorize/api/"+id);
@@ -53,7 +53,7 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 					modelAndView);
 			return modelAndView;
 		}else{
-			String redirec_uri=getApplication(id).getLoginUrl();
+			String redirec_uri=getApp(id).getLoginUrl();
 			return WebContext.redirect(redirec_uri);
 		}
 		

@@ -68,8 +68,8 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.minlength" />：</label>
 												<div class="col-sm-9">
-													<input id="id" name="id" type="hidden" value="${model.id}"/>
-						   							<input  class="form-control" type="text" id="minLength" name="minLength"  value="${model.minLength}" />
+													<input id="id" name="id" type="hidden" value="${model.id!}"/>
+						   							<input  class="form-control" type="text" id="minLength" name="minLength"  value="${model.minLength!}" />
 												</div>
 											</div>
 										</div>
@@ -77,7 +77,7 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.maxlength" />：</label>
 												<div class="col-sm-9">
-													<input  class="form-control" type="text" id="maxLength" name="maxLength" value="${model.maxLength}" />
+													<input  class="form-control" type="text" id="maxLength" name="maxLength" value="${model.maxLength!}" />
 												</div>
 											</div>
 										</div>
@@ -87,7 +87,7 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.lowercase" />：</label>
 												<div class="col-sm-9">
-													<input  class="form-control" type="text" id="lowerCase" name="lowerCase"  value="${model.lowerCase}" />
+													<input  class="form-control" type="text" id="lowerCase" name="lowerCase"  value="${model.lowerCase!}" />
 												</div>
 											</div>
 										</div>
@@ -95,7 +95,7 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.uppercase" />：</label>
 												<div class="col-sm-9">
-													<input  class="form-control" type="text" id="upperCase" name="upperCase" value="${model.upperCase}" />
+													<input  class="form-control" type="text" id="upperCase" name="upperCase" value="${model.upperCase!}" />
 												</div>
 											</div>
 										</div>
@@ -105,7 +105,7 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.digits" />：</label>
 												<div class="col-sm-9">
-													<input  class="form-control" type="text" id="digits" name="digits" value="${model.digits}"/>
+													<input  class="form-control" type="text" id="digits" name="digits" value="${model.digits!}"/>
 												</div>
 											</div>
 										</div>
@@ -113,7 +113,7 @@
 											<div class="form-group row">
 												<label class="col-sm-3"><@locale code="login.passwordpolicy.specialchar" />：</label>
 												<div class="col-sm-9">
-													<input   class="form-control" type="text" id="specialChar" name="specialChar"  value="${model.specialChar}" />
+													<input   class="form-control" type="text" id="specialChar" name="specialChar"  value="${model.specialChar!}" />
 												</div>
 											</div>
 										</div>
@@ -131,7 +131,7 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.duration" />(Unit:Hour)：</label>
 												<div class="col-sm-9">
-													<input  class="form-control" type="text" id="duration" name="duration" value="${model.duration}"/>
+													<input  class="form-control" type="text" id="duration" name="duration" value="${model.duration!}"/>
 												</div>
 											</div>
 										</div>
@@ -141,7 +141,7 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.expiration" />(Unit:Day)：</label>
 												<div class="col-sm-9">
-													<input  class="form-control" type="text" id="expiration" name="expiration"  value="${model.expiration}" />
+													<input  class="form-control" type="text" id="expiration" name="expiration"  value="${model.expiration!}" />
 												</div>
 											</div>
 										</div>
@@ -162,7 +162,7 @@
 										<div class="col-md-12">
 											<div class="form-group m-b-20">
 												<label   style="float: left;" for="simplePasswords"><@locale code="login.passwordpolicy.simplepasswords" />：</label>
-												<textarea id="simplePasswords" name="simplePasswords"  class="form-control" >${model.simplePasswords}</textarea>
+												<textarea id="simplePasswords" name="simplePasswords"  class="form-control" >${model.simplePasswords!}</textarea>
 											</div>
 										</div>
 									</div>

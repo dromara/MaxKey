@@ -5,7 +5,7 @@ import java.util.Date;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.BOOLEAN;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.TokenBasedDetails;
+import org.maxkey.domain.apps.AppsTokenBasedDetails;
 import org.maxkey.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ public class TokenBasedSimpleAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(TokenBasedSimpleAdapter.class);
 	@Override
 	public String generateInfo(UserInfo userInfo,Object app) {
-		TokenBasedDetails details=(TokenBasedDetails)app;
+		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 	
 		String tokenUsername="";
 		
@@ -55,7 +55,7 @@ public class TokenBasedSimpleAdapter extends AbstractAuthorizeAdapter {
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/tokenbased_sso_submint");
-		TokenBasedDetails details=(TokenBasedDetails)app;
+		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 		modelAndView.addObject("action", details.getRedirectUri());
 		
 		modelAndView.addObject("token",data);

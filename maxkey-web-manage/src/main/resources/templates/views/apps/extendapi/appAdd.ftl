@@ -1,3 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../../layout/header.ftl"/>
+	<#include  "../../layout/common.cssjs.ftl"/>
+<style   type="text/css">
+  .table th, .table td {
+    padding: .2rem;
+    vertical-align: middle;
+  }
+</style>
+
 <script type="text/javascript">
 <!--
 $(function(){		
@@ -51,6 +63,8 @@ $(function(){
 });
 //-->
 </script>
+</head>
+<body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
    action="<s:Base/>/apps/extendapi/add"  
    forward="<s:Base/>/apps/list"
@@ -60,7 +74,7 @@ $(function(){
 			<table class="datatable" >
 				<tbody>
 				<tr>
-					<td ><jsp:include page="../appAddCommon.jsp"/></td>
+					<td ><#include  "../appAddCommon.ftl"/></td>
 				</tr>
 				<tr>
 					<td>
@@ -79,14 +93,14 @@ $(function(){
 					</td>
 				</tr>
 				<tr>
-					<th  style="width:15%;"><@locale code="apps.formbased.credential"/>：</th>
+					<th  style="width:15%;"><@locale code="apps.credential"/>：</th>
 					<td  style="width:35%;">
 						<input type="radio" id="credential-user-defined" name="credential" class="credential" value="3"  checked />
-						<@locale code="apps.formbased.credential.user-defined"/>
+						<@locale code="apps.credential.user-defined"/>
 						<input type="radio" id="credential-shared" name="credential" class="credential"  value="2" />
-						<@locale code="apps.formbased.credential.shared"/>
+						<@locale code="apps.credential.shared"/>
 						<input type="radio" id="credential-system" name="credential" class="credential"  value="1"  />
-						<@locale code="apps.formbased.credential.system"/>
+						<@locale code="apps.credential.system"/>
 						<b class="orange">*</b><label for="credential"></label>
 					</td>
 					<th  style="width:15%;"><@locale code="apps.isAdapter"/>：</th>
@@ -104,7 +118,7 @@ $(function(){
 					</td>
 				</tr>
 				<tr id="systemconfigure"  style="display:none">
-					<th><@locale code="apps.formbased.systemUserAttr"/>：</th>
+					<th><@locale code="apps.systemUserAttr"/>：</th>
 					<td colspan="3">
 						<select id="systemUserAttr" name="systemUserAttr">
 							<option value="uid">
@@ -146,13 +160,19 @@ $(function(){
 				</tbody>
 				<tbody id="extendAttrBody">
 				</tbody>
+				<tr>
+								<td colspan =4>
+									<input class="button"  id="status" type="hidden" name="status"  value="1"/>
+						    		<input class="button"  id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
+									<input class="button"  id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	
+								</td>
+							</tr>
+							</tbody>
 			  </table>
 			  </td>
 				</tr>
 				</tbody>
-				</table>
-
-			<input  id="status" type="hidden" name="status"  value="1"/>
-    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
-			<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
+				</table>  
 </form>
+</body>
+</html>

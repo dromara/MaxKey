@@ -34,7 +34,6 @@ dependencies {
 	compile project(":maxkey-protocols:maxkey-protocol-desktop")
 	compile project(":maxkey-protocols:maxkey-protocol-extendapi")
 	compile project(":maxkey-protocols:maxkey-protocol-formbased")
-	compile project(":maxkey-protocols:maxkey-protocol-ltpa")
 	compile project(":maxkey-protocols:maxkey-protocol-tokenbased")
    	compile project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
    	compile project(":maxkey-protocols:maxkey-protocol-saml-2.0")

@@ -25,7 +25,7 @@
 			<tr>
 				<th><@locale code="userinfo.username" />：</th>
 				<td nowrap>
-					<input readonly type="text" id="username" name="username"  class="form-control username" title="" value="${model.username!}"/>
+					<input readonly type="text" id="username" name="username"  class="form-control username" title="" value="${model.username!}" style="float:left;width:70%;"/>
 					<input class="button btn btn-primary mr-3 window"  type="button"    id="selectUserinfoBtn" value="<@locale code="button.text.select" />"
 					 wurl="<@base/>/userinfo/select"
 						 		    wwidth="800"
@@ -44,7 +44,7 @@
 			<tr>
 				<th><@locale code="apps.name" />：</th>
 				<td nowrap>
-					<input readonly  type="text" id="appName" name="appName"  class="form-control appName" title="" value="${model.appName!}"/>
+					<input readonly  type="text" id="appName" name="appName"  class="form-control appName" title="" value="${model.appName!}"  style="float:left;width:70%;"/>
 					<input class="button btn btn-primary mr-3 window"  type="button"    id="selectAppsubmitBtn" value="<@locale code="button.text.select" />"
 					  wurl="<@base/>/apps/select"
 						 		    wwidth="800"

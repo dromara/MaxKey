@@ -6,13 +6,13 @@ import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.dao.service.AccountsService;
-import org.maxkey.dao.service.ApplicationsService;
+import org.maxkey.dao.service.AppsService;
 import org.maxkey.dao.service.MyAppsListService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.Accounts;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.Applications;
-import org.maxkey.domain.apps.UserApplications;
+import org.maxkey.domain.apps.Apps;
+import org.maxkey.domain.apps.UserApps;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -44,7 +44,7 @@ public class AppListController{
 	AccountsService appUsersService;
 	
 	@Autowired
-	ApplicationsService applicationsService;
+	AppsService applicationsService;
 	
 	@RequestMapping(value={"/appList"})
 	public ModelAndView appList(@RequestParam(value="gridList",required = false) String gridList) {
@@ -70,12 +70,12 @@ public class AppListController{
 	}
 	
 	
-	private List<UserApplications>  queryAccessableApps(){
-		UserApplications userApplications=new UserApplications();
+	private List<UserApps>  queryAccessableApps(){
+		UserApps userApplications=new UserApps();
 		userApplications.setUsername(WebContext.getUserInfo().getUsername());
 		
-		List<UserApplications> appList=myAppsListService.queryMyApps(userApplications);
-		for (UserApplications app : appList){
+		List<UserApps> appList=myAppsListService.queryMyApps(userApplications);
+		for (UserApps app : appList){
 			WebContext.setAttribute(app.getId(), app.getIcon());
 		}
 		
@@ -162,7 +162,7 @@ public class AppListController{
 		
 		Accounts appUsers=new Accounts();
 		UserInfo userInfo=WebContext.getUserInfo();
-		if(credential==Applications.CREDENTIALS.USER_DEFINED){
+		if(credential==Apps.CREDENTIALS.USER_DEFINED){
 			appUsers=appUsersService.load(new Accounts(userInfo.getId(),appId));
 			if(protocol.equalsIgnoreCase(PROTOCOLS.DESKTOP)||
 					protocol.equalsIgnoreCase(PROTOCOLS.FORMBASED)||
@@ -172,8 +172,7 @@ public class AppListController{
 				
 				modelAndView.addObject("username",true);
 				modelAndView.addObject("password",true);
-			}else if(protocol.equalsIgnoreCase(PROTOCOLS.SAML11)||
-					protocol.equalsIgnoreCase(PROTOCOLS.SAML20)
+			}else if(protocol.equalsIgnoreCase(PROTOCOLS.SAML20)
 					){
 				modelAndView.addObject("username",true);
 				modelAndView.addObject("password",false);
@@ -211,14 +210,14 @@ public class AppListController{
 			@RequestParam("identity_password") String identity_password
 			){
 		
-		Applications  app=applicationsService.get(appId);
+		Apps  app=applicationsService.get(appId);
 		UserInfo userInfo=WebContext.getUserInfo();
 		
 		Accounts appUsers=new Accounts();
 		appUsers.setAppId(appId);
 		appUsers.setUid(userInfo.getId());
 		
-		if(identity_password!=null&&!identity_password.equals("")&&credential==Applications.CREDENTIALS.USER_DEFINED){
+		if(identity_password!=null&&!identity_password.equals("")&&credential==Apps.CREDENTIALS.USER_DEFINED){
 			appUsers=appUsersService.load(new Accounts(userInfo.getId(),appId));
 			if(appUsers==null){
 				appUsers=new Accounts();

@@ -4,7 +4,7 @@ import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.BOOLEAN;
 import org.maxkey.crypto.DigestUtils;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.FormBasedDetails;
+import org.maxkey.domain.apps.AppsFormBasedDetails;
 import org.maxkey.web.WebContext;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,7 +24,7 @@ public class FormBasedRedirectAdapter extends AbstractAuthorizeAdapter {
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/formbased_redirect_submint");
-		FormBasedDetails details=(FormBasedDetails)app;
+		AppsFormBasedDetails details=(AppsFormBasedDetails)app;
 		
 		modelAndView.addObject("id", details.getId());
 		modelAndView.addObject("action", details.getRedirectUri());

@@ -1,3 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../../layout/header.ftl"/>
+	<#include  "../../layout/common.cssjs.ftl"/>
+<style   type="text/css">
+  .table th, .table td {
+    padding: .2rem;
+    vertical-align: middle;
+  }
+</style>
 
 <script type="text/javascript">
 <!--
@@ -15,12 +26,12 @@ $(function(){
 	var attrIndex = 0;
 		
 	function addExtendAttr(attribute,attributeValue){
-		var html = '<tr  id="extendTr_' + attrIndex + '"><th><@locale code="common.text.parameter"/>：';   
+		var html = '<tr  id="extendTr_' + attrIndex + '"><th><@locale code="apps.formbased.parameter"/>：';   
 		 html += '<input  class="button delExtendTr"  type="button" name="delExtendTr" attrTrId="extendTr_'+attrIndex+'" value="<@locale code="button.text.delete" />"/>';
 		html += '</th><td>';   
-		html += '<input type="text" id="attribute_' + attrIndex + '" name="attribute" class="int" title="" value="'+attribute+'"/>';   
-        html += '</span></td><th><@locale code="common.text.parameter.value"/>：</th>	<td><span class="intspan">';
-        html += '<input type="text" id="attributeValue_' + attrIndex + '" name="attributeValue" class="int" title="" value="'+attributeValue+'"/>';
+		html += '<input type="text" id="attribute_' + attrIndex + '" name="attribute" class="form-control" title="" value="'+attribute+'"/>';   
+        html += '</span></td><th><@locale code="apps.formbased.parameter.value"/>：</th>	<td><span class="intspan">';
+        html += '<input type="text" id="attributeValue_' + attrIndex + '" name="attributeValue"class="form-control"  title="" value="'+attributeValue+'"/>';
         html += '</span>';
        
         html += '</td></tr>'; 
@@ -52,20 +63,22 @@ $(function(){
 });
 //-->
 </script>
+</head>
+<body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
-			action="<s:Base/>/apps/formbased/add"
-			forward="<s:Base/>/apps/list"  
+			action="<@base/>/apps/formbased/add"
+			forward="<@base/>/apps/list"  
 			enctype="multipart/form-data">		 
   	        <!-- content -->    
   	      	<!--table-->
-			<table class="datatable" >
+			<table  class="table table-bordered" >
 				<tbody>
 				<tr>
-					<td ><jsp:include page="../appAddCommon.jsp"/></td>
+					<td ><#include  "../appAddCommon.ftl"/></td>
 				</tr>
 				<tr>
 					<td>
-			   <table class="datatable" >
+			   <table class="datatable" width="100%" >
 				<tbody>
 				
 				<tr>
@@ -74,7 +87,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.formbased.redirectUri"/>：</th>
 					<td colspan="3">
-						<input type="text" id="redirectUri" name="redirectUri"  title="" value=""/>
+						<input type="text"  class="form-control"  id="redirectUri" name="redirectUri"  title="" value=""/>
 						<b class="orange">*</b><label for="redirectUri"></label>
 					</td>
 					
@@ -82,30 +95,30 @@ $(function(){
 				<tr>
 					<th style="width:15%;"><@locale code="apps.formbased.usernameMapping"/>：</th>
 					<td style="width:35%;">
-						<input type="text" id="usernameMapping" name="usernameMapping"  title="" value="username"/>
+						<input type="text"  class="form-control"  id="usernameMapping" name="usernameMapping"  title="" value="username"/>
 						<b class="orange">*</b><label for="usernameMapping"></label>
 					</td>
 					<th style="width:15%;"><@locale code="apps.formbased.passwordMapping"/>：</th>
 					<td style="width:35%;">
-						<input type="text" id="passwordMapping" name="passwordMapping"  title="" value="password"/>
+						<input type="text"  class="form-control" id="passwordMapping" name="passwordMapping"  title="" value="password"/>
 						<b class="orange">*</b><label for="passwordMapping"></label>
 					</td>
 				</tr>
 				
 				<tr>
-					<th width="140px"><@locale code="apps.formbased.credential"/>：</th>
+					<th width="140px"><@locale code="apps.credential"/>：</th>
 					<td>
 						<input type="radio" id="credential-user-defined" name="credential" class="credential" value="3"  checked />
-						<@locale code="apps.formbased.credential.user-defined"/>
+						<@locale code="apps.credential.user-defined"/>
 						<input type="radio" id="credential-shared" name="credential" class="credential"  value="2" />
-						<@locale code="apps.formbased.credential.shared"/>
+						<@locale code="apps.credential.shared"/>
 						<input type="radio" id="credential-system" name="credential" class="credential"  value="1"  />
-						<@locale code="apps.formbased.credential.system"/>
+						<@locale code="apps.credential.system"/>
 						<b class="orange">*</b><label for="credential"></label>
 					</td>
 					<th><@locale code="apps.isAdapter"/>：</th>
 					<td>
-						<select  id="isAdapter" name="isAdapter" >
+						<select  id="isAdapter" name="isAdapter"  class="form-control" >
 							<option value="0"  selected><@locale code="apps.isAdapter.no"/></option>
 							<option value="1"><@locale code="apps.isAdapter.yes"/></option>
 						</select>
@@ -114,19 +127,19 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.adapter"/>：</th>
 					<td colspan =3>
-						<input type="text" id="adapter" name="adapter"  title="" value=""/>
+						<input type="text"  class="form-control"  id="adapter" name="adapter"  title="" value=""/>
 					</td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.formbased.authorizeView"/>：</th>
 					<td colspan =3>
-						<input type="text" id="authorizeView" name="authorizeView"  title="" value=""/>
+						<input type="text"  class="form-control"  id="authorizeView" name="authorizeView"  title="" value=""/>
 					</td>
 				</tr>
 				<tr id="systemconfigure"  style="display:none">
-					<th><@locale code="apps.formbased.systemUserAttr"/>：</th>
+					<th><@locale code="apps.systemUserAttr"/>：</th>
 					<td colspan="3">
-						<select id="systemUserAttr" name="systemUserAttr">
+						<select id="systemUserAttr" name="systemUserAttr"  class="form-control" >
 							<option value="uid">
 								<@locale code="userinfo.uid"/></option>
 							<option value="employeeNumber">
@@ -142,37 +155,47 @@ $(function(){
 					</td>
 				</tr>
 				<tr id="sharedconfigure"  style="display:none">
-					<th><@locale code="apps.formbased.sharedUsername"/>：</th>
+					<th><@locale code="apps.credential.sharedUsername"/>：</th>
 					<td>
-						<input type="text" id="sharedUsername" name="sharedUsername" value="" />
+						<input type="text" id="sharedUsername"  class="form-control"  name="sharedUsername" value="" />
 						<b class="orange">*</b><label for="sharedUsername"></label>
 					</td>
-					<th><@locale code="apps.formbased.sharedPassword"/>：</th>
+					<th><@locale code="apps.credential.sharedPassword"/>：</th>
 					<td>
-						<input type="text" id="sharedPassword" name="sharedPassword" value="" />
+						<input type="text" id="sharedPassword"  class="form-control"  name="sharedPassword" value="" />
 						<b class="orange">*</b><label for="sharedPassword"></label>
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.formbased.extendAttr"/>：</th>
+					<th><@locale code="apps.extendAttr"/>：</th>
 					<td colspan="3">
 						<input type="checkbox" id="isExtendAttr" name="isExtendAttr" value="1"/>
-						<@locale code="apps.formbased.isExtendAttr"/>
+						<@locale code="apps.isExtendAttr"/>
 						<span  id="showExtendAttr" style="display:none">
-							<input  class="button"  type="button"  value='<@locale code="button.text.add.parameter"/>' id="addExtendAttr"/>
+							<input  class="button"  type="button"  value='<@locale code="button.text.add"/>' id="addExtendAttr"/>
 						</span>
 					</td>
 				</tr>
 				</tbody>
 				<tbody id="extendAttrBody">
 				</tbody>
+				<tbody >
+					<tr>
+						<td colspan =4>
+							<input  id="status" type="hidden" name="status"  value="1"/>
+				    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
+							<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
+						</td>
+					</tr>
+				</tbody>
 			  </table>
 			  </td>
 				</tr>
+				
 				</tbody>
 				</table>
 
-			<input  id="status" type="hidden" name="status"  value="1"/>
-    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
-			<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
+			
 </form>
+</body>
+</html>

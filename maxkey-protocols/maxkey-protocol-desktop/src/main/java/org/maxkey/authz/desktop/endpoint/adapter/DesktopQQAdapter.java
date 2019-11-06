@@ -5,8 +5,8 @@ import java.util.HashMap;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.crypto.HexUtils;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.Applications;
-import org.maxkey.domain.apps.DesktopDetails;
+import org.maxkey.domain.apps.Apps;
+import org.maxkey.domain.apps.AppsDesktopDetails;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;
 import org.slf4j.Logger;
@@ -17,14 +17,14 @@ public class DesktopQQAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(DesktopQQAdapter.class);
 	@Override
 	public String generateInfo(UserInfo userInfo,Object app) {
-		DesktopDetails details=(DesktopDetails)app;
+		AppsDesktopDetails details=(AppsDesktopDetails)app;
 		String parameter=details.getParameter()==null?"":details.getParameter();
 		
-		if(details.getUsernameType().equalsIgnoreCase(DesktopDetails.ParameterType.PARAMETER)){
+		if(details.getUsernameType().equalsIgnoreCase(AppsDesktopDetails.ParameterType.PARAMETER)){
 			parameter = parameter+ " "+details.getUsernameParameter();
 			parameter = parameter+ " "+ details.getAppUser().getRelatedUsername();
 		}
-		if(details.getPasswordType().equalsIgnoreCase(DesktopDetails.ParameterType.PARAMETER)){
+		if(details.getPasswordType().equalsIgnoreCase(AppsDesktopDetails.ParameterType.PARAMETER)){
 			parameter = parameter+ " "+details.getPasswordParameter();
 			parameter = parameter+ " "+ details.getAppUser().getRelatedPassword();
 		}
@@ -64,7 +64,7 @@ public class DesktopQQAdapter extends AbstractAuthorizeAdapter {
 	 * @see com.connsec.web.authorize.endpoint.adapter.AbstractAuthorizeAdapter#sign(java.lang.String, com.connsec.domain.apps.Applications)
 	 */
 	@Override
-	public String sign(String data, Applications app) {
+	public String sign(String data, Apps app) {
 		String signData=super.sign(data, app);
 		return signData;
 	}
@@ -72,7 +72,7 @@ public class DesktopQQAdapter extends AbstractAuthorizeAdapter {
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/desktop_qq_sso_execute");
-		DesktopDetails details=(DesktopDetails)app;
+		AppsDesktopDetails details=(AppsDesktopDetails)app;
 		modelAndView.addObject("username", details.getAppUser().getRelatedUsername());
 		modelAndView.addObject("password", details.getAppUser().getRelatedPassword());
 		modelAndView.addObject("encoderParam", data);

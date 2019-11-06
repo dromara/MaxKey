@@ -5,8 +5,8 @@ import java.util.List;
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.dao.service.TokenBasedDetailsService;
-import org.maxkey.domain.apps.TokenBasedDetails;
+import org.maxkey.dao.service.AppsTokenBasedDetailsService;
+import org.maxkey.domain.apps.AppsTokenBasedDetails;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -27,13 +27,13 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	final static Logger _logger = LoggerFactory.getLogger(TokenBasedDetailsController.class);
 	
 	@Autowired
-	TokenBasedDetailsService tokenBasedDetailsService;
+	AppsTokenBasedDetailsService tokenBasedDetailsService;
 	
 	
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd() {
 		ModelAndView modelAndView=new ModelAndView("apps/tokenbased/appAdd");
-		TokenBasedDetails tokenBasedDetails =new TokenBasedDetails();
+		AppsTokenBasedDetails tokenBasedDetails =new AppsTokenBasedDetails();
 		tokenBasedDetails.setProtocol(PROTOCOLS.TOKENBASED);
 		tokenBasedDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.AES));
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
@@ -43,14 +43,14 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	
 	
 	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("tokenBasedDetails") TokenBasedDetails tokenBasedDetails) {
+	public ModelAndView insert(@ModelAttribute("tokenBasedDetails") AppsTokenBasedDetails tokenBasedDetails) {
 		_logger.debug("-Add  :" + tokenBasedDetails);
 		
 		transform(tokenBasedDetails);
 		
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
 		
-		if (tokenBasedDetailsService.insert(tokenBasedDetails)&&applicationsService.insert(tokenBasedDetails)) {
+		if (tokenBasedDetailsService.insert(tokenBasedDetails)&&appsService.insert(tokenBasedDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -62,7 +62,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/tokenbased/appUpdate");
-		TokenBasedDetails tokenBasedDetails=tokenBasedDetailsService.get(id);
+		AppsTokenBasedDetails tokenBasedDetails=tokenBasedDetailsService.getAppDetails(id);
 		decoderSecret(tokenBasedDetails);
 		String algorithmKey=passwordReciprocal.decoder(tokenBasedDetails.getAlgorithmKey());
 		tokenBasedDetails.setAlgorithmKey(algorithmKey);
@@ -77,12 +77,12 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	 * @return
 	 */
 	@RequestMapping(value={"/update"})  
-	public ModelAndView update(@ModelAttribute("tokenBasedDetails") TokenBasedDetails tokenBasedDetails) {
+	public ModelAndView update(@ModelAttribute("tokenBasedDetails") AppsTokenBasedDetails tokenBasedDetails) {
 		//
 		_logger.debug("-update  application :" + tokenBasedDetails);
 		transform(tokenBasedDetails);
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
-		if (tokenBasedDetailsService.update(tokenBasedDetails)&&applicationsService.update(tokenBasedDetails)) {
+		if (tokenBasedDetailsService.update(tokenBasedDetails)&&appsService.update(tokenBasedDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -96,7 +96,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	@RequestMapping(value={"/delete/{id}"})
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
-		if (tokenBasedDetailsService.remove(id)&&applicationsService.remove(id)) {
+		if (tokenBasedDetailsService.remove(id)&&appsService.remove(id)) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

@@ -23,6 +23,10 @@ $(function(){
 
 	//document forward
 	$.forward=function(config){
+		if(config.target){
+			window.open(config.url,"_blank")
+			return;
+		}
 		if(config.url){//to url
 			document.location.href=config.url;
 		}else if(config.href){//to href

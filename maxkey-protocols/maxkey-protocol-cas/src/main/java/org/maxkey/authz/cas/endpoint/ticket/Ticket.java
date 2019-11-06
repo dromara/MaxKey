@@ -3,7 +3,7 @@ package org.maxkey.authz.cas.endpoint.ticket;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-import org.maxkey.domain.apps.CasDetails;
+import org.maxkey.domain.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 
 /**
@@ -78,7 +78,7 @@ public interface Ticket extends Serializable, Comparable<Ticket> {
 
     ZonedDateTime getPreviousTimeUsed();
     
-    CasDetails getCasDetails(); 
+    AppsCasDetails getCasDetails(); 
 
     
 }

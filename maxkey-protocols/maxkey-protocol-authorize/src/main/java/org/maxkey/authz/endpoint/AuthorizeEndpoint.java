@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.client.utils.HttpEncoder;
 import org.maxkey.constants.PROTOCOLS;
-import org.maxkey.dao.service.CasDetailsService;
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.dao.service.AppsCasDetailsService;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -33,7 +33,7 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 	private ClientDetailsService clientDetailsService;
 	
 	@Autowired
-	CasDetailsService casDetailsService;
+	AppsCasDetailsService casDetailsService;
 	
 	//all single sign on url
 	@RequestMapping("/authz/{id}")
@@ -43,7 +43,7 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 		
 		ModelAndView modelAndView=null;
 		
-		Applications  application=getApplication(id);
+		Apps  application=getApp(id);
 		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, id);
 		
 		if(application.getProtocol().equalsIgnoreCase(PROTOCOLS.EXTEND_API)){
@@ -68,8 +68,6 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 			 modelAndView=WebContext.forward("/authz/saml20/idpinit/"+application.getId());
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.TOKENBASED)){
 			modelAndView=WebContext.forward("/authorize/tokenbased/"+id);
-		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.LTPA)){
-			modelAndView=WebContext.forward("/authz/ltpa/"+id);
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.CAS)){
 			modelAndView=WebContext.forward("/authz/cas/"+id);
 		}else if (application.getProtocol().equalsIgnoreCase(PROTOCOLS.DESKTOP)){
@@ -87,7 +85,7 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 	public ModelAndView authorizeOAuth10a(
 			@PathVariable("id") String id){
 		
-		 String redirec_uri=getApplication(id).getLoginUrl();
+		 String redirec_uri=getApp(id).getLoginUrl();
 		return WebContext.redirect(redirec_uri);
 		
 	}

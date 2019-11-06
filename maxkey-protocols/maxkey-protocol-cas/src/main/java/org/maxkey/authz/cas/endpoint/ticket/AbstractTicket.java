@@ -1,7 +1,7 @@
 package org.maxkey.authz.cas.endpoint.ticket;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.maxkey.domain.apps.CasDetails;
+import org.maxkey.domain.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.Assert;
 
@@ -55,7 +55,7 @@ public abstract class AbstractTicket implements Ticket {
 
     protected Authentication authentication;
     
-    protected CasDetails casDetails;
+    protected AppsCasDetails casDetails;
     /**
      * Instantiates a new abstract ticket.
      */
@@ -131,7 +131,7 @@ public abstract class AbstractTicket implements Ticket {
     }
 
 	@Override
-	public CasDetails getCasDetails() {
+	public AppsCasDetails getCasDetails() {
 		// TODO Auto-generated method stub
 		return this.casDetails;
 	}

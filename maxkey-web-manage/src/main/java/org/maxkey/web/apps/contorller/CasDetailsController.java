@@ -1,12 +1,10 @@
 package org.maxkey.web.apps.contorller;
 
-import java.util.List;
-
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.dao.service.CasDetailsService;
-import org.maxkey.domain.apps.CasDetails;
+import org.maxkey.dao.service.AppsCasDetailsService;
+import org.maxkey.domain.apps.AppsCasDetails;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -27,12 +25,12 @@ public class CasDetailsController  extends BaseAppContorller {
 	final static Logger _logger = LoggerFactory.getLogger(CasDetailsController.class);
 	
 	@Autowired
-	CasDetailsService casDetailsService;
+	AppsCasDetailsService casDetailsService;
 	
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd() {
 		ModelAndView modelAndView=new ModelAndView("apps/cas/appAdd");
-		CasDetails casDetails =new CasDetails();
+		AppsCasDetails casDetails =new AppsCasDetails();
 		casDetails.setId(casDetails.generateId());
 		casDetails.setProtocol(PROTOCOLS.CAS);
 		casDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.DES));
@@ -42,12 +40,12 @@ public class CasDetailsController  extends BaseAppContorller {
 	
 	
 	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("casDetails") CasDetails casDetails) {
+	public ModelAndView insert(@ModelAttribute("casDetails") AppsCasDetails casDetails) {
 		_logger.debug("-Add  :" + casDetails);
 
 		transform(casDetails);
 		
-		if (casDetailsService.insert(casDetails)&&applicationsService.insert(casDetails)) {
+		if (casDetailsService.insert(casDetails)&&appsService.insertApp(casDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -59,7 +57,7 @@ public class CasDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/cas/appUpdate");
-		CasDetails casDetails=casDetailsService.get(id);
+		AppsCasDetails casDetails=casDetailsService.getAppDetails(id);
 		super.decoderSecret(casDetails);
 		WebContext.setAttribute(casDetails.getId(), casDetails.getIcon());
 
@@ -73,12 +71,12 @@ public class CasDetailsController  extends BaseAppContorller {
 	 * @return
 	 */
 	@RequestMapping(value={"/update"})  
-	public ModelAndView update(@ModelAttribute("casDetails") CasDetails casDetails) {
+	public ModelAndView update(@ModelAttribute("casDetails") AppsCasDetails casDetails) {
 		//
 		_logger.debug("-update  application :" + casDetails);
 		transform(casDetails);
 
-		if (casDetailsService.update(casDetails)&&applicationsService.update(casDetails)) {
+		if (casDetailsService.update(casDetails)&&appsService.updateApp(casDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -92,7 +90,7 @@ public class CasDetailsController  extends BaseAppContorller {
 	@RequestMapping(value={"/delete/{id}"})
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
-		if (casDetailsService.remove(id)&&applicationsService.remove(id)) {
+		if (casDetailsService.remove(id)&&appsService.remove(id)) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

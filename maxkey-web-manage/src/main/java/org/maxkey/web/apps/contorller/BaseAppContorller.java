@@ -8,9 +8,9 @@ import java.io.IOException;
 import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
-import org.maxkey.dao.service.ApplicationsService;
+import org.maxkey.dao.service.AppsService;
 import org.maxkey.domain.ExtraAttrs;
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,21 +26,20 @@ public class BaseAppContorller {
 	final static Logger _logger = LoggerFactory.getLogger(BaseAppContorller.class);
 	
 	@Autowired
-	@Qualifier("applicationsService")
-	protected ApplicationsService applicationsService;
+	@Qualifier("appsService")
+	protected AppsService appsService;
 
 	
 	@Autowired
 	@Qualifier("passwordReciprocal")
 	protected PasswordReciprocal passwordReciprocal;
 	
-
-
-	public void setApplicationsService(ApplicationsService applicationsService) {
-		this.applicationsService = applicationsService;
-	}
 	
-	protected void transform(Applications application) {
+	public void setAppsService(AppsService appsService) {
+		this.appsService = appsService;
+	}
+
+	protected void transform(Apps application) {
 		
 		encodeSharedPassword(application);
 		
@@ -70,8 +69,8 @@ public class BaseAppContorller {
 		
 	}
 	
-	protected void encodeSharedPassword(Applications application){
-		if(application.getCredential()!=Applications.CREDENTIALS.SHARED){
+	protected void encodeSharedPassword(Apps application){
+		if(application.getCredential()!=Apps.CREDENTIALS.SHARED){
 			if(application.getProtocol().equals(PROTOCOLS.DESKTOP)||application.getProtocol().equals(PROTOCOLS.FORMBASED)){
 				if(StringUtils.isNotEmpty(application.getSharedPassword())){
 					application.setSharedPassword(ReciprocalUtils.encode(application.getSharedPassword()));
@@ -80,8 +79,8 @@ public class BaseAppContorller {
 		}
 	}
 	
-	protected void decoderSharedPassword(Applications application){
-		if(application.getCredential()!=Applications.CREDENTIALS.SHARED){
+	protected void decoderSharedPassword(Apps application){
+		if(application.getCredential()!=Apps.CREDENTIALS.SHARED){
 			if(application.getProtocol().equals(PROTOCOLS.DESKTOP)||application.getProtocol().equals(PROTOCOLS.FORMBASED)){
 				if(StringUtils.isNotEmpty(application.getSharedPassword())){
 					application.setSharedPassword(ReciprocalUtils.decoder(application.getSharedPassword()));
@@ -90,7 +89,7 @@ public class BaseAppContorller {
 		}
 	}
 	
-	protected void encoding(Applications application){
+	protected void encoding(Apps application){
 		
 		//application.setName(WebContext.encoding(application.getName()));
 		if(null!=application.getDescription()){
@@ -100,7 +99,7 @@ public class BaseAppContorller {
 	}
 	
 	
-	protected void encodeSecret(Applications application){
+	protected void encodeSecret(Apps application){
 		if(application.getSecret()!=null&&!application.getSecret().equals("")){
 			//
 			String encodeSecret=passwordReciprocal.encode(application.getSecret());
@@ -108,14 +107,14 @@ public class BaseAppContorller {
 		}
 	}
 	
-	protected void decoderSecret(Applications application){
+	protected void decoderSecret(Apps application){
 		if(application.getSecret()!=null&&!application.getSecret().equals("")){
 			String decodeSecret=passwordReciprocal.decoder(application.getSecret());
 			application.setSecret(decodeSecret);
 		}
 	}
 	
-	protected void convertExtendAttr(Applications application) {
+	protected void convertExtendAttr(Apps application) {
 		if(application.getAttribute()!=null){
 			String []attributes=application.getAttribute().split(",");
 			String []attributeValue=application.getAttributeValue().split(",");

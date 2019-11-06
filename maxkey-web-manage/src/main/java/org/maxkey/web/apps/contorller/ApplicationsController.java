@@ -4,7 +4,7 @@ package org.maxkey.web.apps.contorller;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -36,10 +36,10 @@ public class ApplicationsController extends BaseAppContorller {
 	
 	@RequestMapping(value = { "/grid" })
 	@ResponseBody
-	public JpaPageResults<Applications> queryDataGrid(@ModelAttribute("applications") Applications applications) {
-		JpaPageResults<Applications> jqGridApp=applicationsService.queryPageResults(applications);
+	public JpaPageResults<Apps> queryDataGrid(@ModelAttribute("applications") Apps applications) {
+		JpaPageResults<Apps> jqGridApp=appsService.queryPageResults(applications);
 		if(jqGridApp!=null&&jqGridApp.getRows()!=null){
-			for (Applications app : jqGridApp.getRows()){
+			for (Apps app : jqGridApp.getRows()){
 				WebContext.setAttribute(app.getId(), app.getIcon());
 			}
 		}
@@ -54,12 +54,12 @@ public class ApplicationsController extends BaseAppContorller {
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"})
-	public Message insert(@ModelAttribute("application") Applications application) {
+	public Message insert(@ModelAttribute("application") Apps application) {
 		_logger.debug("-Add  :" + application);
 		
 		transform(application);
 		
-		if (applicationsService.insert(application)) {
+		if (appsService.insert(application)) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -75,9 +75,9 @@ public class ApplicationsController extends BaseAppContorller {
 	 */
 	@ResponseBody
 	@RequestMapping(value={"/query"}) 
-	public Message query(@ModelAttribute("application") Applications application) {
+	public Message query(@ModelAttribute("application") Apps application) {
 		_logger.debug("-query  :" + application);
-		if (applicationsService.load(application)!=null) {
+		if (appsService.load(application)!=null) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -93,9 +93,9 @@ public class ApplicationsController extends BaseAppContorller {
 	 */
 	@ResponseBody
 	@RequestMapping(value={"/update"})  
-	public Message update(@ModelAttribute("application") Applications application) {
+	public Message update(@ModelAttribute("application") Apps application) {
 		_logger.debug("-update  application :" + application);
-		if (applicationsService.update(application)) {
+		if (appsService.update(application)) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -107,9 +107,9 @@ public class ApplicationsController extends BaseAppContorller {
 
 	@ResponseBody
 	@RequestMapping(value={"/delete"})
-	public Message delete(@ModelAttribute("application") Applications application) {
+	public Message delete(@ModelAttribute("application") Apps application) {
 		_logger.debug("-delete  application :" + application);
-		if (applicationsService.delete(application)) {
+		if (appsService.delete(application)) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

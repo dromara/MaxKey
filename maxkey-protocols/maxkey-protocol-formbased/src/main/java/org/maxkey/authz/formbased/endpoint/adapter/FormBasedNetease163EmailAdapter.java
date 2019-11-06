@@ -3,7 +3,7 @@ package org.maxkey.authz.formbased.endpoint.adapter;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.BOOLEAN;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.FormBasedDetails;
+import org.maxkey.domain.apps.AppsFormBasedDetails;
 import org.springframework.web.servlet.ModelAndView;
 
 public class FormBasedNetease163EmailAdapter extends AbstractAuthorizeAdapter {
@@ -22,7 +22,7 @@ public class FormBasedNetease163EmailAdapter extends AbstractAuthorizeAdapter {
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/formbased_netease_163email_sso_submint");
-		FormBasedDetails details=(FormBasedDetails)app;
+		AppsFormBasedDetails details=(AppsFormBasedDetails)app;
 		modelAndView.addObject("username", details.getAppUser().getRelatedUsername().substring(details.getAppUser().getRelatedUsername().indexOf("@")));
 		modelAndView.addObject("email", details.getAppUser().getRelatedUsername());
 		modelAndView.addObject("password",  details.getAppUser().getRelatedPassword());

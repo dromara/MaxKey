@@ -15,70 +15,45 @@
 			return value==""?"":value;
 		}
 	};
-	
-	function parserProtocolPath(protocol){
-		if(protocol=="<%=PROTOCOLS.FORMBASED%>"){
-			protocolPath="formbased";
-		}else if(protocol=="<%=PROTOCOLS.TOKENBASED%>"){
-			protocolPath="tokenbased";
-		}else if(protocol=="<%=PROTOCOLS.OAUTH10A%>"){
-			protocolPath="oauth10a";
-		}else if(protocol=="<%=PROTOCOLS.OAUTH20%>"){
-			protocolPath="oauth20";
-		}else if(protocol=="<%=PROTOCOLS.SAML11%>"){
-			protocolPath="saml11";
-		}else if(protocol=="<%=PROTOCOLS.SAML20%>"){
-			protocolPath="saml20";
-		}else if(protocol=="<%=PROTOCOLS.DESKTOP%>"){
-			protocolPath="desktop";
-		}else if(protocol=="<%=PROTOCOLS.BASIC%>"){
-			protocolPath="basic";
-		}else if(protocol=="<%=PROTOCOLS.EXTEND_API%>"){
-			protocolPath="extendapi";
-		}else if(protocol=="<%=PROTOCOLS.LTPA%>"){
-			protocolPath="ltpa";
-		}else if(protocol=="<%=PROTOCOLS.CAS%>"){
-			protocolPath="cas";
-		}
-		return protocolPath;
-	};
+	var protocolArray = new Array();	
+	protocolArray["OAuth_v2.0"]="oauth20";
+	protocolArray["SAML_v2.0"]="saml20";
+	protocolArray["Token_Based"]="tokenbased";
+	protocolArray["Form_Based"]="formbased";
+	protocolArray["Extend_API"]="extendapi";
+	protocolArray["CAS"]="cas";
+	protocolArray["Basic"]="basic";
+	protocolArray["Desktop"]="desktop";
 	
 	$(function () {
 		$("#modifyApps").on("click",function(){
-			var selectIds = $("#list").jqGrid("getGridParam", "selrow");
-			if(selectIds == null || selectIds == "") {
-				$.alert({content:$.platform.messages.select.alertText});
-				return false;
-			}
-			var selData= $("#list").jqGrid("getRowData",selectIds);
+			var seldata=$.dataGridSelRowsData("#datagrid"); 
+			if(!seldata.length){
+				$.alert({content:$.platform.messages.select.alertText}); 
+				return; 
+			} 
 			
-			$.forward({url:"<@base/>/apps/"+parserProtocolPath(selData["protocol"])+"/forwardUpdate/"+selData["id"]});
+			$.forward({url:"<@base/>/apps/"+protocolArray[seldata[0]["protocol"]]+"/forwardUpdate/"+seldata[0]["id"],target:"_blank"});
 		});
 		
 			//delete and batch delete button
 		$("#deleteApps").click(function(){
-			var selectIds = $("#list").jqGrid("getGridParam", "selrow");
-			if($("#list")){//get grid list selected ids
-				if(selectIds == null || selectIds == "") {
-					$.alert({content:$.platform.messages.select.alertText}); 
-					return; 
-				}
-				
-			}
-			var selData= $("#list").getRowData(selectIds+"");
+			var seldata=$.dataGridSelRowsData("#datagrid"); 
+			if(!seldata.length){
+				$.alert({content:$.platform.messages.select.alertText}); 
+				return; 
+			} 
 			var _this=this;
 			$.conform({//conform action
 			    content		:	$.platform.messages.del.conformText,
 			    callback	: 	function () {
 					//delete action post to url with ids
-					var deleteUrl="<@base/>/apps/"+parserProtocolPath(selData["protocol"])+"/delete/"+selData["id"];
+					var deleteUrl="<@base/>/apps/"+protocolArray[seldata[0]["protocol"]]+"/delete/"+seldata[0]["id"];
 					$.post(deleteUrl, {_method:"delete",currTime:(new Date()).getTime()}, function(data) {
 						//alert delete result
 						$.alert({content:data.message,type:$.platform.messages.messageType[data.messageType]});
 						//refresh grid list
-						if($("#list")){
-							$("#list").jqGrid('setGridParam').trigger("reloadGrid");
-						}
+						$("#searchBtn").click();
 				 	}); 
 			    }
 			});
@@ -87,22 +62,23 @@
 		
 		$( "#addApps" ).click(function() {
 	          var menu = $("#menu").show().position({
-	            my: "left top",
-	            at: "left bottom",
+	            my: "top",
+	            at: "bottom",
 	            of: this
 	          });
-	          $( document ).on( "click", function() {
-	           	 menu.hide();
-	          });
+	         
 	          return false;
 	        });
 	        
-	        
-	    $(".select-menu-item").mouseover(function() {
-           	$( this ).addClass( 'select-menu-item-selected' );
-     	 }).mouseout(function() {
-           	$( this ).removeClass( 'select-menu-item-selected' );
-	    });
+	  $( document ).click( function() {
+	       	  $("#menu").hide();
+	  }); 
+	    
+	  $(".select-menu-item").mouseover(function() {
+	  	$( this ).addClass( 'select-menu-item-selected' );
+	 }).mouseout(function() {
+	   	$( this ).removeClass( 'select-menu-item-selected' );
+	});
 	      
 	});
 </script>
@@ -155,15 +131,14 @@
 								<@locale code="button.text.add"/>
 							</a>
 							<div id="menu" class="select-menu-modal " style="width: 150px;">
-							     <div class="select-menu-item"><a href="<@base/>/apps/formbased/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.formbased" /></div></a></div>
-							     <div class="select-menu-item"><a href="<@base/>/apps/desktop/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.desktop" /></div></a></div>
-							     <div class="select-menu-item"><a href="<@base/>/apps/tokenbased/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.tokenbased" /></div></a></div>
-							     <div class="select-menu-item"><a href="<@base/>/apps/oauth20/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.oauth2.0" /></div></a></div>
-							     <div class="select-menu-item"><a href="<@base/>/apps/saml20/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.saml2.0" /></div></a></div>
-							     <div class="select-menu-item"><a href="<@base/>/apps/ltpa/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.ltpa" /></div></a></div>
-							     <div class="select-menu-item"><a href="<@base/>/apps/cas/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.cas" /></div></a></div>
-						 		 <div class="select-menu-item"><a href="<@base/>/apps/extendapi/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.extendapi" /></div></a></div>
-						 		 <div class="select-menu-item"><a href="<@base/>/apps/basic/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.basic" /></div></a></div>
+							     <div class="select-menu-item"><a target="_blank" href="<@base/>/apps/formbased/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.formbased" /></div></a></div>
+							     <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/desktop/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.desktop" /></div></a></div>
+							     <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/tokenbased/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.tokenbased" /></div></a></div>
+							     <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/oauth20/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.oauth2.0" /></div></a></div>
+							     <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/saml20/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.saml2.0" /></div></a></div>
+							     <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/cas/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.cas" /></div></a></div>
+						 		 <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/extendapi/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.extendapi" /></div></a></div>
+						 		 <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/basic/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.basic" /></div></a></div>
 							</div>
 						 	<input class="button btn btn-info mr-3 " id="modifyApps" type="button" value="<@locale code="button.text.edit"/>" />
 						 	<input class="button btn btn-danger mr-3 "   id="deleteApps" type="button" value="<@locale code="button.text.delete"/>" />
@@ -185,9 +160,7 @@
 		 					<option value=""  selected>Select</option>
 		 					<option value="<%=PROTOCOLS.FORMBASED%>"><%=PROTOCOLS.FORMBASED%></option>
 		 					<option value="<%=PROTOCOLS.OPEN_ID_CONNECT%>"><%=PROTOCOLS.OPEN_ID_CONNECT%></option>
-		 					<option value="<%=PROTOCOLS.OAUTH10A%>"><%=PROTOCOLS.OAUTH10A%></option>
 		 					<option value="<%=PROTOCOLS.OAUTH20%>"><%=PROTOCOLS.OAUTH20%></option>
-		 					<option value="<%=PROTOCOLS.SAML11%>"><%=PROTOCOLS.SAML11%></option>
 		 					<option value="<%=PROTOCOLS.SAML20%>"><%=PROTOCOLS.SAML20%></option>
 		 					<option value="<%=PROTOCOLS.TOKENBASED%>"><%=PROTOCOLS.TOKENBASED%></option>
 		 					<option value="<%=PROTOCOLS.DESKTOP%>"><%=PROTOCOLS.DESKTOP%></option>

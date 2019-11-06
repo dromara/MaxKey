@@ -5,8 +5,8 @@ import java.util.List;
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.domain.apps.Applications;
-import org.maxkey.domain.apps.ExtendApiDetails;
+import org.maxkey.domain.apps.Apps;
+import org.maxkey.domain.apps.AppsExtendApiDetails;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -30,7 +30,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd() {
 		ModelAndView modelAndView=new ModelAndView("apps/extendapi/appAdd");
-		ExtendApiDetails extendApiDetails=new ExtendApiDetails();
+		AppsExtendApiDetails extendApiDetails=new AppsExtendApiDetails();
 		extendApiDetails.setId(extendApiDetails.generateId());
 		extendApiDetails.setProtocol(PROTOCOLS.EXTEND_API);
 		extendApiDetails.setSecret(ReciprocalUtils.generateKey(""));
@@ -40,12 +40,12 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 	}
 	
 	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("extendApiDetails") ExtendApiDetails extendApiDetails) {
+	public ModelAndView insert(@ModelAttribute("extendApiDetails") AppsExtendApiDetails extendApiDetails) {
 		_logger.debug("-Add  :" + extendApiDetails);
 		
 		transform(extendApiDetails);
 		
-		if (applicationsService.insert(extendApiDetails)) {
+		if (appsService.insert(extendApiDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -57,9 +57,9 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/extendapi/appUpdate");
-		Applications application= applicationsService.get(id);
+		Apps application= appsService.get(id);
 		super.decoderSecret(application);
-		ExtendApiDetails extendApiDetails=new ExtendApiDetails();
+		AppsExtendApiDetails extendApiDetails=new AppsExtendApiDetails();
 		BeanUtils.copyProperties(application, extendApiDetails);
 		
 		WebContext.setAttribute(extendApiDetails.getId(), extendApiDetails.getIcon());
@@ -74,11 +74,11 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 	 * @return
 	 */
 	@RequestMapping(value={"/update"})  
-	public ModelAndView update(@ModelAttribute("extendApiDetails") ExtendApiDetails extendApiDetails) {
+	public ModelAndView update(@ModelAttribute("extendApiDetails") AppsExtendApiDetails extendApiDetails) {
 		_logger.debug("-update  extendApiDetails :" + extendApiDetails);
 		transform(extendApiDetails);
 		
-		if (applicationsService.update(extendApiDetails)) {
+		if (appsService.update(extendApiDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -92,7 +92,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 	@RequestMapping(value={"/delete/{id}"})
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
-		if (applicationsService.remove(id)) {
+		if (appsService.remove(id)) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

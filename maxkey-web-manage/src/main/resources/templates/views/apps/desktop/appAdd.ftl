@@ -1,3 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../../layout/header.ftl"/>
+	<#include  "../../layout/common.cssjs.ftl"/>
+<style   type="text/css">
+  .table th, .table td {
+    padding: .2rem;
+    vertical-align: middle;
+  }
+</style>
 <script type="text/javascript">
 <!--
 $(function(){	
@@ -54,20 +65,22 @@ $(function(){
 });
 //-->
 </script>
+</head>
+<body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
 			action="<@base/>/apps/desktop/add"  
 			forward="<@base/>/apps/list"
 			enctype="multipart/form-data">		 
   	        <!-- content -->    
   	      	<!--table-->
-			<table width="960"  class="datatable" >
+			<table width="960"  class="table table-bordered" >
 				<tbody>
 				<tr>
-					<td ><jsp:include page="../appAddCommon.jsp"/></td>
+					<td ><#include  "../appAddCommon.ftl"/></td>
 				</tr>
 				<tr>
 					<td>
-			   <table width="960"   class="datatable" >
+			   <table width="960"   class="table table-bordered" >
 				<tbody>
 				<tr>
 					<td colspan=4><@locale code="apps.desktop.info" /></td>
@@ -75,7 +88,7 @@ $(function(){
 				<tr>
 					<th ><@locale code="apps.desktop.programPath" />：</th>
 					<td colspan="3">
-						<textarea  id="programPath" name="programPath" rows="4" cols="60"></textarea>
+						<textarea  id="programPath" name="programPath" rows="4" cols="60" class="form-control" ></textarea>
 						<b class="orange">*</b><label for="programPath"></label>
 					</td>
 					
@@ -83,7 +96,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.desktop.parameter" />：</th>
 					<td colspan="3">
-						<textarea  id="parameter" name="parameter" rows="4" cols="60"></textarea>
+						<textarea  id="parameter" name="parameter" rows="4" cols="60" class="form-control" ></textarea>
 						
 						<b class="orange">*</b><label for="parameter"></label>
 					</td>
@@ -91,7 +104,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.desktop.usernameType" />：</th>
 					<td >
-						<select  id="usernameType" name="usernameType" >
+						<select  id="usernameType" name="usernameType" class="form-control" >
 							<option value="SIMULATION" selected>SIMULATION</option>
 							<option value="PARAMETER">PARAMETER</option>
 						</select>
@@ -99,13 +112,13 @@ $(function(){
 					</td>
 					<th class="usernameParameter"  style="display:none"><@locale code="apps.desktop.usernameParameter" />：</th>
 					<td class="usernameParameter"  style="display:none">
-						<input type="text" id="usernameParameter" name="usernameParameter"  title="" value="username"/>
+						<input type="text" id="usernameParameter" name="usernameParameter"  title="" value="username" class="form-control" />
 						<b class="orange">*</b><label for="usernameParameter"></label>
 					</td>
 					
 					<th class="preUsername"><@locale code="apps.desktop.preUsername" />：</th>
 					<td class="preUsername">
-						<input type="text" id="preUsername" name="preUsername"  title="" value=""/>
+						<input type="text" id="preUsername" name="preUsername"  title="" value="" class="form-control" />
 						<b class="orange">*</b><label for="preUsername"></label>
 					</td>
 					
@@ -113,7 +126,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.desktop.passwordType" />：</th>
 					<td >
-						<select  id="passwordType" name="passwordType" >
+						<select  id="passwordType" name="passwordType" class="form-control" >
 							<option value="SIMULATION" selected>SIMULATION</option>
 							<option value="PARAMETER">PARAMETER</option>
 						</select>
@@ -121,13 +134,13 @@ $(function(){
 					</td>
 					<th   class="passwordParameter" style="display:none"><@locale code="apps.desktop.passwordParameter" />：</th>
 					<td   class="passwordParameter" style="display:none">
-						<input type="text" id="passwordParameter" name="passwordParameter"  title="" value="password"/>
+						<input type="text" id="passwordParameter" name="passwordParameter"  title="" value="password" class="form-control" />
 						<b class="orange">*</b><label for="passwordParameter"></label>
 					</td>
 					
 					<th  class="prePassword" ><@locale code="apps.desktop.prePassword" />：</th>
 					<td  class="prePassword"  >
-						<input type="text" id="prePassword" name="prePassword"  title="" value=""/>
+						<input type="text" id="prePassword" name="prePassword"  title="" value="" class="form-control" />
 						<b class="orange">*</b><label for="prePassword"></label>
 					</td>
 					
@@ -135,17 +148,17 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.desktop.submitType" />：</th>
 					<td >
-						<select  id="submitType" name="submitType" >
+						<select  id="submitType" name="submitType" class="form-control" >
 							<option value="Enter" selected>Enter</option>
 							<option value="Key">Key</option>
 							<option value="None">None</option>
 						</select>
-						<input  style="display:none" type="text" id="submitKey" name="submitKey" size="3"  title="" value=""/>
+						<input  style="display:none" type="text" id="submitKey" class="form-control"  name="submitKey" size="3"  title="" value=""/>
 						<b class="orange">*</b><label for="submitType"></label>
 					</td>
 					<th  class="preSubmit"><@locale code="apps.desktop.preSubmit" />：</th>
 					<td  class="preSubmit">
-						<input type="text" id="preSubmit" name="preSubmit"  title="" value=""/>
+						<input type="text" id="preSubmit" name="preSubmit" class="form-control" title="" value=""/>
 						<b class="orange">*</b><label for="preSubmit"></label>
 					</td>
 					
@@ -153,17 +166,17 @@ $(function(){
 				<tr>
 					<th style="width:15%;"><@locale code="apps.credential" />：</th>
 					<td style="width:35%;">
-						<input type="radio" id="credential-user-defined" name="credential" class="credential" value="3"  checked />
+						<input type="radio" id="credential-user-defined" name="credential" class="credential form-control" value="3"  checked  style="float:left;width: 30px;"/>
 						<@locale code="apps.credential.user-defined" />
-						<input type="radio" id="credential-shared" name="credential" class="credential"  value="2" />
+						<input type="radio" id="credential-shared" name="credential" class="credential form-control"  value="2" style="float:left;width: 30px;"/>
 						<@locale code="apps.credential.shared" />
-						<input type="radio" id="credential-system" name="credential" class="credential"  value="1"  />
+						<input type="radio" id="credential-system" name="credential" class="credential form-control"  value="1" style="float:left;width: 30px;" />
 						<@locale code="apps.credential.system" />
 						<b class="orange">*</b><label for="credential"></label>
 					</td>
 					<th style="width:15%;"><@locale code="apps.isAdapter" />：</th>
 					<td style="width:35%;" >
-						<select  id="isAdapter" name="isAdapter" >
+						<select  id="isAdapter" name="isAdapter" class="form-control" >
 							<option value="0"  selected><@locale code="apps.isAdapter.no" /></option>
 							<option value="1"><@locale code="apps.isAdapter.yes" /></option>
 						</select>
@@ -172,13 +185,13 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.adapter" />：</th>
 					<td colspan =3>
-						<input type="text" id="adapter" name="adapter"  title="" value=""/>
+						<input type="text" class="form-control"  id="adapter" name="adapter"  title="" value=""/>
 					</td>
 				</tr>
 				<tr id="systemconfigure"  style="display:none">
-					<th><@locale code="apps.credential.system" />：</th>
+					<th><@locale code="apps.credential" />：</th>
 					<td colspan="3">
-						<select id="systemUserAttr" name="systemUserAttr">
+						<select id="systemUserAttr" name="systemUserAttr" class="form-control" >
 							<option value="uid"><@locale code="userinfo.uid" /></option>
 							<option value="employeeNumber"><@locale code="userinfo.employeeNumber" /></option>
 							<option value="username"  selected><@locale code="userinfo.username" /></option>
@@ -189,14 +202,14 @@ $(function(){
 					</td>
 				</tr>
 				<tr id="sharedconfigure"  style="display:none">
-					<th><@locale code="apps.credential.shared.sharedUsername" />：</th>
+					<th><@locale code="apps.credential.sharedUsername" />：</th>
 					<td  >
-						<input type="text" id="sharedUsername" name="sharedUsername" value="" />
+						<input type="text" id="sharedUsername" name="sharedUsername" value="" class="form-control" />
 						<b class="orange">*</b><label for="sharedUsername"></label>
 					</td>
-					<th  ><@locale code="apps.credential.shared.sharedPassword" />：</th>
+					<th  ><@locale code="apps.credential.sharedPassword" />：</th>
 					<td  >
-						<input type="text" id="sharedPassword" name="sharedPassword" value="" />
+						<input type="text" id="sharedPassword" name="sharedPassword" value="" class="form-control" />
 						<b class="orange">*</b><label for="sharedPassword"></label>
 					</td>
 				</tr>
@@ -211,3 +224,5 @@ $(function(){
     		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
 			<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
 </form>
+</body>
+</html>

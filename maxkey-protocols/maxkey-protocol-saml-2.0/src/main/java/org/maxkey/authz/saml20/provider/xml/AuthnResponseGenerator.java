@@ -11,7 +11,7 @@ import org.maxkey.authz.saml.service.IDService;
 import org.maxkey.authz.saml.service.TimeService;
 import org.maxkey.authz.saml20.xml.IssuerGenerator;
 import org.maxkey.constants.BOOLEAN;
-import org.maxkey.domain.apps.SAML20Details;
+import org.maxkey.domain.apps.AppsSAML20Details;
 import org.opensaml.Configuration;
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.EncryptedAssertion;
@@ -55,7 +55,7 @@ public class AuthnResponseGenerator {
 	}
 
 
-	public Response generateAuthnResponse(  SAML20Details saml20Details,
+	public Response generateAuthnResponse(  AppsSAML20Details saml20Details,
 											AuthnRequestInfo authnRequestInfo,
 											String nameIdValue,
 											String clientAddress,

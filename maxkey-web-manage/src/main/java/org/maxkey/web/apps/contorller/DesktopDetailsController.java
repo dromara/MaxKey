@@ -5,8 +5,8 @@ import java.util.List;
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.dao.service.DesktopDetailsService;
-import org.maxkey.domain.apps.DesktopDetails;
+import org.maxkey.dao.service.AppsDesktopDetailsService;
+import org.maxkey.domain.apps.AppsDesktopDetails;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -27,12 +27,12 @@ public class DesktopDetailsController  extends BaseAppContorller {
 	final static Logger _logger = LoggerFactory.getLogger(DesktopDetailsController.class);
 	
 	@Autowired
-	DesktopDetailsService desktopDetailsService;
+	AppsDesktopDetailsService desktopDetailsService;
 	
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd() {
 		ModelAndView modelAndView=new ModelAndView("apps/desktop/appAdd");
-		DesktopDetails desktopDetails=new DesktopDetails();
+		AppsDesktopDetails desktopDetails=new AppsDesktopDetails();
 		desktopDetails.setId(desktopDetails.generateId());
 		desktopDetails.setProtocol(PROTOCOLS.DESKTOP);
 		desktopDetails.setSecret(ReciprocalUtils.generateKey(""));
@@ -44,12 +44,12 @@ public class DesktopDetailsController  extends BaseAppContorller {
 	
 
 	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("desktopDetails") DesktopDetails desktopDetails) {
+	public ModelAndView insert(@ModelAttribute("desktopDetails") AppsDesktopDetails desktopDetails) {
 		_logger.debug("-Add  :" + desktopDetails);
 		
 		transform(desktopDetails);
 		desktopDetailsService.insert(desktopDetails);
-		if (applicationsService.insert(desktopDetails)) {
+		if (appsService.insert(desktopDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -61,7 +61,7 @@ public class DesktopDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/desktop/appUpdate");
-		DesktopDetails desktopDetails=desktopDetailsService.get(id);
+		AppsDesktopDetails desktopDetails=desktopDetailsService.getAppDetails(id);
 		decoderSecret(desktopDetails);
 		decoderSharedPassword(desktopDetails);
 		WebContext.setAttribute(desktopDetails.getId(), desktopDetails.getIcon());
@@ -76,12 +76,12 @@ public class DesktopDetailsController  extends BaseAppContorller {
 	 */
 
 	@RequestMapping(value={"/update"})  
-	public ModelAndView update(@ModelAttribute("desktopDetails") DesktopDetails desktopDetails) {
+	public ModelAndView update(@ModelAttribute("desktopDetails") AppsDesktopDetails desktopDetails) {
 		//
 		_logger.debug("-update  application :" + desktopDetails);
 		transform(desktopDetails);
 
-		if (desktopDetailsService.update(desktopDetails)&&applicationsService.update(desktopDetails)) {
+		if (desktopDetailsService.update(desktopDetails)&&appsService.update(desktopDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -94,7 +94,7 @@ public class DesktopDetailsController  extends BaseAppContorller {
 	@RequestMapping(value={"/delete/{id}"})
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
-		if (desktopDetailsService.remove(id)&&applicationsService.remove(id)) {
+		if (desktopDetailsService.remove(id)&&appsService.remove(id)) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

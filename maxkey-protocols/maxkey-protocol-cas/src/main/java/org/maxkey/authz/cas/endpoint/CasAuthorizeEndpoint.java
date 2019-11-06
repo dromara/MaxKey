@@ -13,8 +13,8 @@ import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
 import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.config.ApplicationConfig;
-import org.maxkey.dao.service.CasDetailsService;
-import org.maxkey.domain.apps.CasDetails;
+import org.maxkey.dao.service.AppsCasDetailsService;
+import org.maxkey.domain.apps.AppsCasDetails;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class CasAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(CasAuthorizeEndpoint.class);
 
 	@Autowired
-	CasDetailsService casDetailsService;
+	AppsCasDetailsService casDetailsService;
 	
 	@Autowired
 	ApplicationConfig applicationConfig;
@@ -52,10 +52,10 @@ public class CasAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			HttpServletResponse response,
 			@RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService){
 		
-		CasDetails casDetails=new CasDetails();
+		AppsCasDetails casDetails=new AppsCasDetails();
 		casDetails.setService(casService);
 		
-		List<CasDetails> casDetailsList=casDetailsService.query(casDetails);
+		List<AppsCasDetails> casDetailsList=casDetailsService.query(casDetails);
 		
 		casDetails=(casDetailsList!=null && casDetailsList.size()==1)?casDetailsList.get(0):null;
 		
@@ -69,12 +69,12 @@ public class CasAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			HttpServletResponse response,
 			@PathVariable("id") String id){
 		
-		CasDetails casDetails=casDetailsService.get(id);
+		AppsCasDetails casDetails=casDetailsService.get(id);
 		
 		return buildCasModelAndView(casDetails);
 	}
 	
-	private  ModelAndView buildCasModelAndView(CasDetails casDetails){
+	private  ModelAndView buildCasModelAndView(AppsCasDetails casDetails){
 		
 		_logger.debug(""+casDetails);
 
@@ -88,7 +88,7 @@ public class CasAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			HttpServletRequest request,
 			HttpServletResponse response){
 		
-		CasDetails casDetails=(CasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
+		AppsCasDetails casDetails=(AppsCasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
 		ServiceTicketImpl serviceTicket=new ServiceTicketImpl(WebContext.getAuthentication(),casDetails);
 		
 		String ticket=ticketServices.createTicket(serviceTicket);

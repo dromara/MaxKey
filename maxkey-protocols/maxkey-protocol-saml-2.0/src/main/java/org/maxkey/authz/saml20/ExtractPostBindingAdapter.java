@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
-import org.maxkey.domain.apps.SAML20Details;
+import org.maxkey.domain.apps.AppsSAML20Details;
 import org.opensaml.common.binding.BasicSAMLMessageContext;
 import org.opensaml.common.binding.SAMLMessageContext;
 import org.opensaml.common.binding.decoding.SAMLMessageDecoder;
@@ -35,7 +35,7 @@ public class ExtractPostBindingAdapter implements ExtractBindingAdapter, Initial
 	protected KeyStoreLoader keyStoreLoader;
 	protected CredentialResolver credentialResolver;
 	
-	protected SAML20Details  saml20Detail;
+	protected AppsSAML20Details  saml20Detail;
 	
 	
 	public ExtractPostBindingAdapter() {
@@ -119,11 +119,11 @@ public class ExtractPostBindingAdapter implements ExtractBindingAdapter, Initial
 	}
 
 	@Override
-	public void setSaml20Detail(SAML20Details saml20Detail) {
+	public void setSaml20Detail(AppsSAML20Details saml20Detail) {
 		this.saml20Detail=saml20Detail;
 	}
 
-	public SAML20Details getSaml20Detail() {
+	public AppsSAML20Details getSaml20Detail() {
 		return saml20Detail;
 	}
 

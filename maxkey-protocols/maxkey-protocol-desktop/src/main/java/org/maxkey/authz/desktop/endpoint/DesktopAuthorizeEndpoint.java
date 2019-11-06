@@ -9,9 +9,9 @@ import org.maxkey.authz.desktop.endpoint.adapter.DesktopDefaultAdapter;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.BOOLEAN;
-import org.maxkey.dao.service.DesktopDetailsService;
+import org.maxkey.dao.service.AppsDesktopDetailsService;
 import org.maxkey.domain.Accounts;
-import org.maxkey.domain.apps.DesktopDetails;
+import org.maxkey.domain.apps.AppsDesktopDetails;
 import org.maxkey.util.Instance;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class DesktopAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(DesktopAuthorizeEndpoint.class);
 	
 	@Autowired
-	DesktopDetailsService desktopDetailsService;
+	AppsDesktopDetailsService desktopDetailsService;
 	
 	DesktopDefaultAdapter defaultDesktopAdapter=new DesktopDefaultAdapter();
 	
@@ -39,10 +39,10 @@ public class DesktopAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	public ModelAndView authorize(
 			HttpServletRequest request,
 			@PathVariable("id") String id){
-		DesktopDetails desktopDetails=desktopDetailsService.get(id);
+		AppsDesktopDetails desktopDetails=desktopDetailsService.get(id);
 		_logger.debug(""+desktopDetails);
 		
-		Accounts appUser=getAppAccounts(desktopDetails);
+		Accounts appUser=getAccounts(desktopDetails);
 		if(appUser	==	null){
 			return generateInitCredentialModelAndView(id,"/authorize/desktop/"+id);
 			

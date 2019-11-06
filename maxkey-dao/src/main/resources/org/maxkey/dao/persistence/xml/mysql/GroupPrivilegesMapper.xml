@@ -22,11 +22,11 @@
 		SELECT
 			*
 		FROM
-			APPLICATIONS APPS,
-			GROUP_APP    GA
+			APPS APPS,
+			GROUP_PRIVILEGES    GP
 		WHERE
-			GA.APPID=APPS.ID
-			AND GA.GROUPID	=	#{groupId}
+			GP.APPID=APPS.ID
+			AND GP.GROUPID	=	#{groupId}
 		<include refid="where_statement"/>
 	</select>
 	
@@ -34,14 +34,14 @@
 		SELECT
 			*
 		FROM
-			APPLICATIONS APPS
+			APPS APPS
 		WHERE
 			 1	=	1
 			AND  APPS.ID NOT IN(
 				SELECT 
 					APPID
 				FROM
-					GROUP_APP
+					GROUP_PRIVILEGES
 				WHERE 
 					GROUPID	=	#{groupId}
 			)

@@ -1,4 +1,14 @@
-
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../../layout/header.ftl"/>
+	<#include  "../../layout/common.cssjs.ftl"/>
+<style   type="text/css">
+  .table th, .table td {
+    padding: .2rem;
+    vertical-align: middle;
+  }
+</style>
 <script type="text/javascript">
 <!--
 $(function(){	
@@ -22,12 +32,12 @@ $(function(){
 	var attrIndex = 0;
 	
 	function addExtendAttr(attribute,attributeValue){
-		var html = '<tr  id="extendTr_' + attrIndex + '"><th><@locale code="common.text.parameter"/>：';   
+		var html = '<tr  id="extendTr_' + attrIndex + '"><th><@locale code="apps.formbased.parameter"/>：';   
 		 html += '<input  class="button delExtendTr"  type="button" name="delExtendTr"  attrTrId="extendTr_'+attrIndex+'" value="<@locale code="button.text.delete" />"/>';
 		html += '</th><td>';   
-		html += '<input type="text" id="attribute_' + attrIndex + '" name="attribute" class="int" title="" value="'+attribute+'"/>';   
-        html += '</span></td><th><@locale code="common.text.parameter.value"/>：</th>	<td><span class="intspan">';
-        html += '<input type="text" id="attributeValue_' + attrIndex + '" name="attributeValue" class="int" title="" value="'+attributeValue+'"/>';
+		html += '<input type="text" class="form-control" id="attribute_' + attrIndex + '" name="attribute" class="int" title="" value="'+attribute+'"/>';   
+        html += '</span></td><th><@locale code="apps.formbased.parameter.value"/>：</th>	<td><span class="intspan">';
+        html += '<input type="text"  class="form-control" id="attributeValue_' + attrIndex + '" name="attributeValue" class="int" title="" value="'+attributeValue+'"/>';
         html += '</span>';
        
         html += '</td></tr>'; 
@@ -35,12 +45,12 @@ $(function(){
 		attrIndex++;
 	}
 	
-	<c:if test="${1==model.isExtendAttr}">
+	<#if 1==model.isExtendAttr>
 	var extendAttrJson = eval("("+'${model.extendAttr}'+")");
 	for(extendAttrIndex in extendAttrJson){
 		addExtendAttr(extendAttrJson[extendAttrIndex].attr,extendAttrJson[extendAttrIndex].value);
 	};
-	</c:if>
+	</#if>
 	$("#addExtendAttr").on('click',function(){
 		addExtendAttr("","");
 	});	
@@ -64,20 +74,22 @@ $(function(){
 });
 //-->
 </script>
+</head>
+<body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
-			action="<s:Base/>/apps/formbased/update"
-			forward="<s:Base/>/apps/list"  
+			action="<@base/>/apps/formbased/update"
+			forward="<@base/>/apps/list"  
 			enctype="multipart/form-data">		 
   	        <!-- content -->    
   	      	<!--table-->
-			<table   class="datatable" >
+			<table   class="table table-bordered" >
 				<tbody>
 				<tr>
-					<td ><jsp:include page="../appUpdateCommon.jsp"/></td>
+					<td ><#include  "../appUpdateCommon.ftl"/></td>
 				</tr>
 				<tr>
 					<td>
-			   <table  class="datatable">
+			   <table  class="table table-bordered" >
 				<tbody>
 				
 				<tr>
@@ -86,102 +98,108 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.formbased.redirectUri"/>：</th>
 					<td colspan="3">
-						<input type="text" id="redirectUri" name="redirectUri"  title="" value="${model.redirectUri}"/>
-						<b class="orange">*</b><label for="redirectUri"></label>
+						<input type="text" class="form-control" id="redirectUri" name="redirectUri"  title="" value="${model.redirectUri}"/>
 					</td>
 					
 				</tr>
+				
 				<tr>
 					<th style="width:15%;"><@locale code="apps.formbased.usernameMapping"/>：</th>
 					<td style="width:35%;">
-						<input type="text" id="usernameMapping" name="usernameMapping"  title="" value="${model.usernameMapping}"/>
-						<b class="orange">*</b><label for="submit"></label>
+						<input type="text" class="form-control" id="usernameMapping" name="usernameMapping"  title="" value="${model.usernameMapping}"/>
 					</td>
 					<th style="width:15%;"><@locale code="apps.formbased.passwordMapping"/>：</th>
 					<td style="width:35%;">
-						<input type="text" id="passwordMapping" name="passwordMapping"  title="" value="${model.passwordMapping}"/>
-						<b class="orange">*</b><label for="algorithmKey"></label>
+						<input type="text" class="form-control" id="passwordMapping" name="passwordMapping"  title="" value="${model.passwordMapping}"/>
+	
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.formbased.credential"/>：</th>
+					<th><@locale code="apps.credential"/>：</th>
 					<td >
-							<input type="radio" id="credential1" name="credential" class="credential" value="3"  <c:if test="${3==model.credential}">checked</c:if> />
-							<@locale code="apps.formbased.credential.user-defined"/>
-							<input type="radio" id="credential3" name="credential" class="credential" value="2"  <c:if test="${2==model.credential}">checked</c:if> />
-							<@locale code="apps.formbased.credential.shared"/>
-							<input type="radio" id="credential2" name="credential" class="credential" value="1"  <c:if test="${1==model.credential}">checked</c:if> />
-							<@locale code="apps.formbased.credential.system"/>
-						<b class="orange">*</b><label for="credential"></label>
+							<input type="radio" id="credential1" name="credential" class="credential" value="3"  <#if 3==model.credential>checked</#if> />
+							<@locale code="apps.credential.user-defined"/>
+							<input type="radio" id="credential3" name="credential" class="credential" value="2"  <#if 2==model.credential>checked</#if> />
+							<@locale code="apps.credential.shared"/>
+							<input type="radio" id="credential2" name="credential" class="credential" value="1"  <#if 1==model.credential>checked</#if> />
+							<@locale code="apps.credential.system"/>
+						
 					</td>
 					<th><@locale code="apps.isAdapter"/>：</th>
 					<td  >
-						<select  id="isAdapter" name="isAdapter" >
-							<option value="0"  <c:if test="${0==model.isAdapter}">selected</c:if> ><@locale code="apps.isAdapter.no"/></option>
-							<option value="1"  <c:if test="${1==model.isAdapter}">selected</c:if> ><@locale code="apps.isAdapter.yes"/></option>
+						<select  id="isAdapter" name="isAdapter"  class="form-control">
+							<option value="0"  <#if 0==model.isAdapter>selected</#if> ><@locale code="apps.isAdapter.no"/></option>
+							<option value="1"  <#if 1==model.isAdapter>selected</#if> ><@locale code="apps.isAdapter.yes"/></option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.adapter"/>：</th>
 					<td colspan =3>
-						<input type="text" id="adapter" name="adapter"  title="" value="${model.adapter}"/>
+						<input type="text" class="form-control" id="adapter" name="adapter"  title="" value="${model.adapter!}"/>
 					</td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.formbased.authorizeView"/>：</th>
 					<td colspan =3>
-						<input type="text" id="authorizeView" name="authorizeView"  title="" value="${model.authorizeView}"/>
+						<input type="text" class="form-control" id="authorizeView" name="authorizeView"  title="" value="${model.authorizeView!}"/>
 					</td>
 				</tr>
-				<tr id="systemconfigure"  <c:if test="${1!=model.credential}"> style="display:none"</c:if> >
-					<th><@locale code="apps.formbased.systemUserAttr"/>：</th>
+				<tr id="systemconfigure"  <#if 1!=model.credential> style="display:none"</#if> >
+					<th><@locale code="apps.systemUserAttr"/>：</th>
 					<td colspan="3">
-						<select id="systemUserAttr" name="systemUserAttr">
-							<option value="uid"   <c:if test="${'uid'==model.systemUserAttr}">selected</c:if> >
+						<select id="systemUserAttr" name="systemUserAttr" class="form-control">
+							<option value="uid"   <#if 'uid'==model.systemUserAttr>selected</#if> >
 								<@locale code="userinfo.uid"/></option>
-							<option value="employeeNumber" <c:if test="${'employeeNumber'==model.systemUserAttr}">selected</c:if> >
+							<option value="employeeNumber" <#if 'employeeNumber'==model.systemUserAttr>selected</#if> >
 								<@locale code="userinfo.employeeNumber"/></option>
-							<option value="username" <c:if test="${'username'==model.systemUserAttr}">selected</c:if> >
+							<option value="username" <#if 'username'==model.systemUserAttr>selected</#if> >
 								<@locale code="userinfo.username"/></option>
-							<option value="email" <c:if test="${'email'==model.systemUserAttr}">selected</c:if> >
+							<option value="email" <#if 'email'==model.systemUserAttr>selected</#if> >
 								<@locale code="userinfo.email"/></option>
-							<option value="windowsaccount" <c:if test="${'windowsaccount'==model.systemUserAttr}">selected</c:if> >
+							<option value="windowsaccount" <#if 'windowsaccount'==model.systemUserAttr>selected</#if> >
 								<@locale code="userinfo.windowsAccount"/></option>
 						</select>
-						<b class="orange">*</b><label for="systemUserAttr"></label>
 					</td>
 				</tr>
-				<tr id="sharedconfigure"  <c:if test="${2!=model.credential}"> style="display:none"</c:if>>
-					<th><@locale code="apps.formbased.sharedUsername"/>：</th>
+				<tr id="sharedconfigure"  <#if 2!=model.credential> style="display:none"</#if>>
+					<th><@locale code="apps.credential.sharedUsername"/>：</th>
 					<td>
-						<input type="text" id="sharedUsername" name="sharedUsername" value="${model.sharedUsername}" />
-						<b class="orange">*</b><label for="sharedUsername"></label>
+						<input type="text" class="form-control" id="sharedUsername" name="sharedUsername" value="${model.sharedUsername}" />
+			
 					</td>
-					<th><@locale code="apps.formbased.sharedPassword"/>：</th>
+					<th><@locale code="apps.credential.sharedPassword"/>：</th>
 					<td>
-						<input type="text" id="sharedPassword" name="sharedPassword" value="${model.sharedPassword}" />
-						<b class="orange">*</b><label for="sharedPassword"></label>
+						<input type="text"  class="form-control" id="sharedPassword" name="sharedPassword" value="${model.sharedPassword}" />
+
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.formbased.extendAttr"/>：</th>
+					<th><@locale code="apps.extendAttr"/>：</th>
 					<td colspan="3">
-						<input type="checkbox" id="isExtendAttr" name="isExtendAttr" value="1"  <c:if test="${1==model.isExtendAttr}">checked</c:if>  />
-						<@locale code="apps.formbased.isExtendAttr"/>
-						<span  id="showExtendAttr"  <c:if test="${0==model.isExtendAttr}">style="display:none"</c:if>>
-							<input class="button" type="button"  value='<@locale code="button.text.add.parameter"/>' id="addExtendAttr"/>
+						<input type="checkbox" id="isExtendAttr" name="isExtendAttr" value="1"  <#if 1==model.isExtendAttr>checked</#if>  />
+						<@locale code="apps.isExtendAttr"/>
+						<span  id="showExtendAttr"  <#if 0==model.isExtendAttr>style="display:none"</#if>>
+							<input class="button" type="button"  value='<@locale code="button.text.add"/>' id="addExtendAttr"/>
 						</span>
 					</td>
 				</tr>
 				</tbody>
 				<tbody id="extendAttrBody">
 				</tbody>
+				<tbody >
+					<tr>
+						<td colspan =4>
+				    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
+							<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
+						</td>
+					</tr>
+				</tbody>
 			  </table>
   	       </td>
 				</tr>
 				</tbody>
-				</table>
-    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
-			<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
+				</table>	  
 </form>
+</body>
+</html>

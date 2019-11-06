@@ -4,11 +4,11 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.dao.service.AccountsService;
-import org.maxkey.dao.service.ApplicationsService;
+import org.maxkey.dao.service.AppsService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.Accounts;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -34,8 +34,8 @@ public class AccountsController {
 	AccountsService accountsService;
 	
 	@Autowired
-	@Qualifier("applicationsService")
-	protected ApplicationsService applicationsService;
+	@Qualifier("appsService")
+	protected AppsService appsService;
 	
 	@Autowired
 	@Qualifier("userInfoService")
@@ -64,7 +64,7 @@ public class AccountsController {
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd(@ModelAttribute("appAccounts") Accounts appAccounts) {
 		ModelAndView modelAndView=new ModelAndView("/accounts/appAccountsAdd");
-		//Applications  app= applicationsService.get(appAccounts.getAppId());
+		//Applications  app= appsService.get(appAccounts.getAppId());
 		//appAccounts.setAppName(app.getName());
 		modelAndView.addObject("model",appAccounts);
 		return modelAndView;

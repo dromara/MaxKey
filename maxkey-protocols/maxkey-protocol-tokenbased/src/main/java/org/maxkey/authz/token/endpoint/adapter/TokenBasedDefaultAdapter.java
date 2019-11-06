@@ -6,7 +6,7 @@ import java.util.HashMap;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.BOOLEAN;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.TokenBasedDetails;
+import org.maxkey.domain.apps.AppsTokenBasedDetails;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;
@@ -18,7 +18,7 @@ public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(TokenBasedDefaultAdapter.class);
 	@Override
 	public String generateInfo(UserInfo userInfo,Object app) {
-		TokenBasedDetails details=(TokenBasedDetails)app;
+		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 		HashMap<String,String> beanMap=new HashMap<String,String>();
 		
 		beanMap.put("randomId",(new StringGenerator()).uuidGenerate());
@@ -77,7 +77,7 @@ public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/tokenbased_sso_submint");
-		TokenBasedDetails details=(TokenBasedDetails)app;
+		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 		modelAndView.addObject("action", details.getRedirectUri());
 		
 		modelAndView.addObject("token",data );

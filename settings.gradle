@@ -19,7 +19,6 @@ include 'maxkey-protocols:maxkey-protocol-authorize'
 include 'maxkey-protocols:maxkey-protocol-desktop'
 include 'maxkey-protocols:maxkey-protocol-extendapi'
 include 'maxkey-protocols:maxkey-protocol-formbased'
-include 'maxkey-protocols:maxkey-protocol-ltpa'
 include 'maxkey-protocols:maxkey-protocol-tokenbased'
 include 'maxkey-protocols:maxkey-protocol-cas'
 

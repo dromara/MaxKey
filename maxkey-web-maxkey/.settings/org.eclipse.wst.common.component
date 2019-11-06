@@ -35,9 +35,6 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-protocol-formbased/maxkey-protocol-formbased">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
-		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-protocol-ltpa/maxkey-protocol-ltpa">
-			<dependency-type>uses</dependency-type>
-		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/maxkey-protocol-tokenbased/maxkey-protocol-tokenbased">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>

@@ -9,10 +9,10 @@ import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.formbased.endpoint.adapter.FormBasedDefaultAdapter;
 import org.maxkey.constants.BOOLEAN;
-import org.maxkey.dao.service.FormBasedDetailsService;
+import org.maxkey.dao.service.AppsFormBasedDetailsService;
 import org.maxkey.domain.Accounts;
-import org.maxkey.domain.apps.Applications;
-import org.maxkey.domain.apps.FormBasedDetails;
+import org.maxkey.domain.apps.Apps;
+import org.maxkey.domain.apps.AppsFormBasedDetails;
 import org.maxkey.util.Instance;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -32,7 +32,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(FormBasedAuthorizeEndpoint.class);
 	
 	@Autowired
-	FormBasedDetailsService formBasedDetailsService;
+	AppsFormBasedDetailsService formBasedDetailsService;
 	
 	FormBasedDefaultAdapter defaultFormBasedAdapter=new FormBasedDefaultAdapter();
 	
@@ -40,14 +40,14 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	public ModelAndView authorize(
 			HttpServletRequest request,
 			@PathVariable("id") String id){
-		FormBasedDetails formBasedDetails=formBasedDetailsService.get(id);
+		AppsFormBasedDetails formBasedDetails=formBasedDetailsService.get(id);
 		_logger.debug(""+formBasedDetails);
-		Applications  application= getApplication(id);
+		Apps  application= getApp(id);
 		formBasedDetails.setAdapter(application.getAdapter());
 		formBasedDetails.setIsAdapter(application.getIsAdapter());
 		ModelAndView modelAndView=null;
 		
-		Accounts appUser=getAppAccounts(formBasedDetails);
+		Accounts appUser=getAccounts(formBasedDetails);
 		
 		_logger.debug("Accounts "+appUser);
 		if(appUser	==	null){

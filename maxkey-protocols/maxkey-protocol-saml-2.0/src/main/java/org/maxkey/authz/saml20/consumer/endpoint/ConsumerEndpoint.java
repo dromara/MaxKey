@@ -25,8 +25,8 @@ import org.maxkey.authz.saml20.provider.xml.AuthnResponseGenerator;
 import org.maxkey.authz.saml20.xml.SAML2ValidatorSuite;
 import org.maxkey.constants.LOGINTYPE;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
-import org.maxkey.dao.service.Saml20DetailsService;
-import org.maxkey.domain.apps.SAML20Details;
+import org.maxkey.dao.service.AppsSaml20DetailsService;
+import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.web.WebContext;
 import org.opensaml.common.binding.SAMLMessageContext;
 import org.opensaml.common.binding.security.IssueInstantRule;
@@ -80,7 +80,7 @@ public class ConsumerEndpoint {
 	private ExtractBindingAdapter extractBindingAdapter;
 
 	@Autowired
-	private Saml20DetailsService saml20DetailsService;
+	private AppsSaml20DetailsService saml20DetailsService;
 
 	@Autowired
 	@Qualifier("issueInstantRule")
@@ -200,7 +200,7 @@ public class ConsumerEndpoint {
 	 */
 	private void initCredential(String spId) throws Exception {
 		// 1. 获取 sp keyStore
-		SAML20Details saml20Details = saml20DetailsService.get(spId);
+		AppsSAML20Details saml20Details = saml20DetailsService.get(spId);
 		if (saml20Details == null) {
 			// TODO
 			logger.error("spid[" + spId + "] not exists");

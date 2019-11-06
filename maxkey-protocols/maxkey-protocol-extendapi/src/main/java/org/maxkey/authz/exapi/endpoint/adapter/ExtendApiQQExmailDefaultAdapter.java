@@ -8,7 +8,7 @@ import org.maxkey.client.oauth.model.Token;
 import org.maxkey.client.utils.JsonUtils;
 import org.maxkey.domain.ExtraAttrs;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class ExtendApiQQExmailDefaultAdapter extends AbstractAuthorizeAdapter {
 
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
-		Applications details=(Applications)app;
+		Apps details=(Apps)app;
 		//extraAttrs from Applications
 		ExtraAttrs extraAttrs=null;
 		if(details.getIsExtendAttr()==1){

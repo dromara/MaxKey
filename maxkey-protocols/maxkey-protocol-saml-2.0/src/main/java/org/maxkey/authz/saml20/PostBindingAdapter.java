@@ -11,7 +11,7 @@ import org.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
-import org.maxkey.domain.apps.SAML20Details;
+import org.maxkey.domain.apps.AppsSAML20Details;
 import org.opensaml.common.SignableSAMLObject;
 import org.opensaml.common.binding.BasicSAMLMessageContext;
 import org.opensaml.common.binding.decoding.SAMLMessageDecoder;
@@ -209,7 +209,7 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 	}
 
 	@Override
-	public SAML20Details getSaml20Details() {
+	public AppsSAML20Details getSaml20Details() {
 		return extractBindingAdapter.getSaml20Detail();
 	}
 }

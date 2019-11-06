@@ -12,9 +12,9 @@ import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.ltpa.endpoint.adapter.LtpaDefaultAdapter;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.constants.BOOLEAN;
-import org.maxkey.dao.service.TokenBasedDetailsService;
-import org.maxkey.domain.apps.Applications;
-import org.maxkey.domain.apps.TokenBasedDetails;
+import org.maxkey.dao.service.AppsTokenBasedDetailsService;
+import org.maxkey.domain.apps.Apps;
+import org.maxkey.domain.apps.AppsTokenBasedDetails;
 import org.maxkey.util.Instance;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class LtpaAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
 	final static Logger _logger = LoggerFactory.getLogger(LtpaAuthorizeEndpoint.class);
 	@Autowired
-	TokenBasedDetailsService tokenBasedDetailsService;
+	AppsTokenBasedDetailsService tokenBasedDetailsService;
 	
 	@Autowired
 	ApplicationConfig applicationConfig;
@@ -48,10 +48,10 @@ public class LtpaAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			@PathVariable("id") String id){
 		
 		
-		TokenBasedDetails ltpaDetails=tokenBasedDetailsService.get(id);
+		AppsTokenBasedDetails ltpaDetails=tokenBasedDetailsService.get(id);
 		_logger.debug(""+ltpaDetails);
 		String cookieValue="";
-		Applications  application= getApplication(id);
+		Apps  application= getApp(id);
 		ltpaDetails.setAdapter(application.getAdapter());
 		ltpaDetails.setIsAdapter(application.getIsAdapter());
 		

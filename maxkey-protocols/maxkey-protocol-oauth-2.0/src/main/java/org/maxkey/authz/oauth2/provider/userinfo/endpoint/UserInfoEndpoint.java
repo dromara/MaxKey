@@ -17,10 +17,10 @@ import org.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionServic
 import org.maxkey.crypto.jwt.encryption.service.impl.RecipientJwtEncryptionAndDecryptionServiceBuilder;
 import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
 import org.maxkey.crypto.jwt.signer.service.impl.SymmetricSigningAndValidationServiceBuilder;
-import org.maxkey.dao.service.ApplicationsService;
+import org.maxkey.dao.service.AppsService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
 import org.maxkey.util.Instance;
 import org.maxkey.util.JsonUtils;
@@ -65,7 +65,7 @@ public class UserInfoEndpoint {
 	
 	@Autowired
 	@Qualifier("applicationsService")
-	protected ApplicationsService applicationsService;
+	protected AppsService applicationsService;
 	
 	@Autowired
 	@Qualifier("jwtSignerValidationService")
@@ -100,7 +100,7 @@ public class UserInfoEndpoint {
 				 
 				 String client_id= oAuth2Authentication.getOAuth2Request().getClientId();
 				 UserInfo userInfo=queryUserInfo(principal);
-				 Applications app=applicationsService.get(client_id);
+				 Apps app=applicationsService.get(client_id);
 				 
 				 String userJson="";
 				 

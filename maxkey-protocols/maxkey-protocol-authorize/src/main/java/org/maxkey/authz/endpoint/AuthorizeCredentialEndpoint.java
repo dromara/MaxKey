@@ -55,7 +55,7 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 			appUser.setDisplayName(userInfo.getDisplayName());
 			
 			appUser.setAppId(appId);
-			appUser.setAppName(getApplication(appId).getName());
+			appUser.setAppName(getApp(appId).getName());
 			
 			appUser.setRelatedUsername(identity_username);
 			appUser.setRelatedPassword(ReciprocalUtils.encode(identity_password));

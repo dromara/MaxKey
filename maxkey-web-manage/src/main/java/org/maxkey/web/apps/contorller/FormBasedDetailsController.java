@@ -5,8 +5,8 @@ import java.util.List;
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.dao.service.FormBasedDetailsService;
-import org.maxkey.domain.apps.FormBasedDetails;
+import org.maxkey.dao.service.AppsFormBasedDetailsService;
+import org.maxkey.domain.apps.AppsFormBasedDetails;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -27,13 +27,13 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 	final static Logger _logger = LoggerFactory.getLogger(FormBasedDetailsController.class);
 	
 	@Autowired
-	FormBasedDetailsService formBasedDetailsService;
+	AppsFormBasedDetailsService formBasedDetailsService;
 	
 	
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd() {
 		ModelAndView modelAndView=new ModelAndView("apps/formbased/appAdd");
-		FormBasedDetails formBasedDetails=new FormBasedDetails();
+		AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
 		formBasedDetails.setId(formBasedDetails.generateId());
 		formBasedDetails.setProtocol(PROTOCOLS.FORMBASED);
 		formBasedDetails.setSecret(ReciprocalUtils.generateKey(""));
@@ -45,12 +45,12 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 	
 
 	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("formBasedDetails") FormBasedDetails formBasedDetails) {
+	public ModelAndView insert(@ModelAttribute("formBasedDetails") AppsFormBasedDetails formBasedDetails) {
 		_logger.debug("-Add  :" + formBasedDetails);
 		
 		transform(formBasedDetails);
 		
-		if (formBasedDetailsService.insert(formBasedDetails)&&applicationsService.insert(formBasedDetails)) {
+		if (formBasedDetailsService.insert(formBasedDetails)&&appsService.insert(formBasedDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -62,7 +62,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/formbased/appUpdate");
-		FormBasedDetails formBasedDetails=formBasedDetailsService.get(id);
+		AppsFormBasedDetails formBasedDetails=formBasedDetailsService.getAppDetails(id);
 		decoderSecret(formBasedDetails);
 		decoderSharedPassword(formBasedDetails);
 		WebContext.setAttribute(formBasedDetails.getId(), formBasedDetails.getIcon());
@@ -76,11 +76,11 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 	 * @return
 	 */
 	@RequestMapping(value={"/update"})  
-	public ModelAndView update(@ModelAttribute("formBasedDetails") FormBasedDetails formBasedDetails) {
+	public ModelAndView update(@ModelAttribute("formBasedDetails") AppsFormBasedDetails formBasedDetails) {
 		//
 		_logger.debug("-update  application :" + formBasedDetails);
 		transform(formBasedDetails);
-		if (formBasedDetailsService.update(formBasedDetails)&&applicationsService.update(formBasedDetails)) {
+		if (formBasedDetailsService.update(formBasedDetails)&&appsService.update(formBasedDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -94,7 +94,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 	@RequestMapping(value={"/delete/{id}"})
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
-		if (formBasedDetailsService.remove(id)&&applicationsService.remove(id)) {
+		if (formBasedDetailsService.remove(id)&&appsService.remove(id)) {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

@@ -4,7 +4,7 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.dao.service.GroupPrivilegesService;
 import org.maxkey.domain.GroupPrivileges;
-import org.maxkey.domain.apps.Applications;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -44,7 +44,7 @@ public class GroupPrivilegesController {
 		jqGridApp= groupPrivilegesService.queryPageResults("appsInGroup",groupApp);
 
 		if(jqGridApp!=null&&jqGridApp.getRows()!=null){
-			for (Applications app : jqGridApp.getRows()){
+			for (Apps app : jqGridApp.getRows()){
 				WebContext.setAttribute(app.getId(), app.getIcon());
 			}
 		}
@@ -68,7 +68,7 @@ public class GroupPrivilegesController {
 		jqGridApp= groupPrivilegesService.queryPageResults("appsNotInGroup",groupApp);
 
 		if(jqGridApp!=null&&jqGridApp.getRows()!=null){
-			for (Applications app : jqGridApp.getRows()){
+			for (Apps app : jqGridApp.getRows()){
 				WebContext.setAttribute(app.getId(), app.getIcon());
 			}
 		}

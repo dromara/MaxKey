@@ -10,8 +10,8 @@ import org.maxkey.authz.saml20.BindingAdapter;
 import org.maxkey.authz.saml20.ExtractBindingAdapter;
 import org.maxkey.authz.saml20.xml.SAML2ValidatorSuite;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
-import org.maxkey.dao.service.Saml20DetailsService;
-import org.maxkey.domain.apps.SAML20Details;
+import org.maxkey.dao.service.AppsSaml20DetailsService;
+import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.web.WebContext;
 import org.opensaml.common.binding.SAMLMessageContext;
 import org.opensaml.saml2.core.AuthnRequest;
@@ -55,7 +55,7 @@ public class SingleSignOnEndpoint {
 	private SAML2ValidatorSuite validatorSuite;
 
 	@Autowired
-	private Saml20DetailsService saml20DetailsService;
+	private AppsSaml20DetailsService saml20DetailsService;
 
 	@RequestMapping(value = "/authz/saml20/{appid}", method=RequestMethod.POST)
 	public ModelAndView authorizePost(
@@ -89,7 +89,7 @@ public class SingleSignOnEndpoint {
 	}
 
 	public void extractSaml20Detail(ExtractBindingAdapter extractBindingAdapter,String samlId) throws Exception{
-		SAML20Details  saml20Details  = saml20DetailsService.get(samlId);
+		AppsSAML20Details  saml20Details  = saml20DetailsService.get(samlId);
 		
 		if (saml20Details == null) {
 			logger.error("Request SAML APPID [" + samlId + "] is not exist .");

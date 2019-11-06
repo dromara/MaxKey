@@ -1,3 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../../layout/header.ftl"/>
+	<#include  "../../layout/common.cssjs.ftl"/>
+<style   type="text/css">
+  .table th, .table td {
+    padding: .2rem;
+    vertical-align: middle;
+  }
+</style>
 <script type="text/javascript">
 <!--
 $(function(){	
@@ -6,6 +17,8 @@ $(function(){
 });
 //-->
 </script>
+</head>
+<body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
 			action="<@base/>/apps/saml20/add"
 			forward="<@base/>/apps/list"
@@ -15,7 +28,7 @@ $(function(){
 			<table width="960"  class="datatable" >
 				<tbody>
 				<tr>
-					<td ><jsp:include page="../appAddCommon.jsp"/></td>
+					<td ><#include  "../appAddCommon.ftl"/></td>
 				</tr>
 				<tr>
 					<td>
@@ -28,7 +41,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.saml.entityId" />：</th>
 					<td colspan =3>
-						<input type="text" id="entityId" name="entityId"  title="" value=""/>
+						<input type="text" class="form-control"   id="entityId" name="entityId"  title="" value=""/>
 						<b class="orange">*</b><label for="entityId"></label>
 					</td>
 					
@@ -38,7 +51,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.saml.issuer" />：</th>
 					<td colspan =3>
-						<input type="text" id="issuer" name="issuer"  title="" value=""/>
+						<input type="text" class="form-control"   id="issuer" name="issuer"  title="" value=""/>
 						<b class="orange">*</b><label for="issuer"></label>
 					</td>
 					
@@ -46,7 +59,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.saml.spAcsUrl" />：</th>
 					<td colspan =3>
-						<input type="text" id="spAcsUrl" name="spAcsUrl"  title="" value=""/>
+						<input type="text" class="form-control"   id="spAcsUrl" name="spAcsUrl"  title="" value=""/>
 						<b class="orange">*</b><label for="spAcsUrl"></label>
 					</td>
 				</tr>
@@ -54,14 +67,14 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.saml.audience" />：</th>
 					<td colspan =3>
-						<input type="text" id="audience" name="audience"  title="" value=""/>
+						<input type="text" class="form-control"   id="audience" name="audience"  title="" value=""/>
 					</td>
 				</tr>
 				<tr>
 					
 					<th><@locale code="apps.saml.nameidFormat" />：</th>
 					<td>
-						<select  id="nameidFormat" name="nameidFormat" >
+						<select  id="nameidFormat" name="nameidFormat"  class="form-control"  >
 							<option value="persistent" selected>persistent</option>
 							<option value="transient">transient</option>
 							<option value="emailAddress">emailAddress</option>
@@ -75,7 +88,7 @@ $(function(){
 					</td>
 					<th><@locale code="apps.saml.nameIdConvert" />：</th>
 					<td>
-						<select  id="nameIdConvert" name="nameIdConvert" >
+						<select  id="nameIdConvert" name="nameIdConvert"  class="form-control"  >
 							<option value="0" selected>
 								<@locale code="apps.saml.nameIdConvert.original" /></option>
 							<option value="1">
@@ -90,7 +103,7 @@ $(function(){
 				<tr>
 					<th style="width:15%;"><@locale code="apps.saml.binding" />：</th>
 					<td style="width:35%;">
-						<select  id="binding" name="binding" >
+						<select  id="binding" name="binding" class="form-control"   >
 							<option value="Redirect-Post"  selected>Redirect-Post</option>
 							<option value="Post-Post" >Post-Post</option>
 							<option value="IdpInit-Post" >IdpInit-Post</option>
@@ -102,14 +115,14 @@ $(function(){
 					</td>
 					<th style="width:15%;"><@locale code="apps.saml.validityInterval" />：</th>
 					<td style="width:35%;">
-						<input type="text" id="validityInterval" name="validityInterval"  title="" value="15"/>
+						<input type="text" class="form-control"   id="validityInterval" name="validityInterval"  title="" value="15"/>
 					</td>
 					
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.fileType" />：</th>
 					<td>
-						<select  id="fileType" name="fileType" >
+						<select  id="fileType" name="fileType"  class="form-control"  >
 							<option value="certificate" selected><@locale code="apps.saml.fileType.certificate" /></option>
 							<option value="metadata"><@locale code="apps.saml.fileType.metadata" /></option>
 						</select>
@@ -117,7 +130,7 @@ $(function(){
 					</td>
 					<th><@locale code="apps.saml.certMetaFile" />：</th>
 					<td>
-						<input id="certMetaFile" type="file" name="certMetaFile" />
+						<input class="form-control"   id="certMetaFile" type="file" name="certMetaFile" />
 						<b class="orange">*</b><label for="certMetaFile"></label>
 					</td>
 				</tr>
@@ -125,7 +138,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.saml.encrypted" />：</th>
 					<td >
-						<select  id="encrypted" name="encrypted" >
+						<select  id="encrypted" name="encrypted"  class="form-control"  >
 							<option value="0"  selected>
 								<@locale code="apps.saml.encrypted.no" /></option>
 							<option value="1">
@@ -134,7 +147,7 @@ $(function(){
 					</td>
 					<th><@locale code="apps.isAdapter" />：</th>
 					<td>
-						<select  id="isAdapter" name="isAdapter" >
+						<select  id="isAdapter" name="isAdapter"  class="form-control"  >
 							<option value="0"  selected><@locale code="apps.isAdapter.no" /></option>
 							<option value="1"><@locale code="apps.isAdapter.yes" /></option>
 						</select>
@@ -143,7 +156,14 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.adapter" />：</th>
 					<td colspan =3>
-						<input type="text" id="adapter" name="adapter"  title="" value=""/>
+						<input type="text" class="form-control"   id="adapter" name="adapter"  title="" value=""/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan =4>
+						<input  id="status" type="hidden" name="status"  value="1"/>
+			    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
+						<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	 
 					</td>
 				</tr>
 				</tbody>
@@ -152,7 +172,7 @@ $(function(){
 				</tr>
 				</tbody>
 				</table>
-			<input  id="status" type="hidden" name="status"  value="1"/>
-    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
-			<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
+			 
 </form>
+</body>
+</html>

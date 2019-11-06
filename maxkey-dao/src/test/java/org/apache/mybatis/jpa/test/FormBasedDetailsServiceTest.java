@@ -8,8 +8,8 @@ import java.util.List;
 import org.apache.mybatis.jpa.util.WebContext;
 import org.junit.Before;
 import org.junit.Test;
-import org.maxkey.dao.service.FormBasedDetailsService;
-import org.maxkey.domain.apps.FormBasedDetails;
+import org.maxkey.dao.service.AppsFormBasedDetailsService;
+import org.maxkey.domain.apps.AppsFormBasedDetails;
 import org.maxkey.util.PathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +22,10 @@ public class FormBasedDetailsServiceTest {
 	
 	public static ApplicationContext context;
 	
-	public static FormBasedDetailsService service;
+	public static AppsFormBasedDetailsService service;
 	
-	public FormBasedDetailsService getservice() {
-		service=(FormBasedDetailsService)WebContext.getBean("formBasedDetailsService");
+	public AppsFormBasedDetailsService getservice() {
+		service=(AppsFormBasedDetailsService)WebContext.getBean("formBasedDetailsService");
 		return service;
 	}
 	
@@ -33,7 +33,7 @@ public class FormBasedDetailsServiceTest {
 	public void insert() throws Exception{
 		_logger.info("insert...");
 		
-		FormBasedDetails formBasedDetails=new FormBasedDetails();
+		AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
 		
 		service.insert(formBasedDetails);
 		
@@ -45,7 +45,7 @@ public class FormBasedDetailsServiceTest {
 	@Test
 	public void get() throws Exception{
 		_logger.info("get...");
-		FormBasedDetails formBasedDetails=service.get("850379a1-7923-4f6b-90be-d363b2dfd2ca");
+		AppsFormBasedDetails formBasedDetails=service.get("850379a1-7923-4f6b-90be-d363b2dfd2ca");
 		
 		 _logger.info("formBasedDetails "+formBasedDetails);
 
@@ -56,7 +56,7 @@ public class FormBasedDetailsServiceTest {
 	public void remove() throws Exception{
 		
 		_logger.info("remove...");
-		FormBasedDetails formBasedDetails=new FormBasedDetails();
+		AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
 		formBasedDetails.setId("921d3377-937a-4578-b1e2-92fb23b5e512");
 		service.remove(formBasedDetails.getId());
 		
@@ -77,7 +77,7 @@ public class FormBasedDetailsServiceTest {
 	public void queryPageResults() throws Exception{
 		
 		_logger.info("queryPageResults...");
-		FormBasedDetails formBasedDetails=new FormBasedDetails();
+		AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
 		 //student.setId("af04d610-6092-481e-9558-30bd63ef783c");
 		// student.setStdGender("M");
 		 //student.setStdMajor(政治");
@@ -90,7 +90,7 @@ public class FormBasedDetailsServiceTest {
 	public void queryPageResultsByMapperId() throws Exception{
 
 		_logger.info("queryPageResults by mapperId...");
-		 FormBasedDetails formBasedDetails=new FormBasedDetails();
+		 AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
 		// student.setStdGender("M");
 		 //student.setStdMajor(政治");
 		// student.setPageResults(10);

@@ -10,8 +10,8 @@ import org.maxkey.authz.saml20.BindingAdapter;
 import org.maxkey.authz.saml20.ExtractBindingAdapter;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
-import org.maxkey.dao.service.Saml20DetailsService;
-import org.maxkey.domain.apps.SAML20Details;
+import org.maxkey.dao.service.AppsSaml20DetailsService;
+import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +52,7 @@ public class IdpInitEndpoint {
 	private KeyStoreLoader keyStoreLoader;
 
 	@Autowired
-	private Saml20DetailsService saml20DetailsService;
+	private AppsSaml20DetailsService saml20DetailsService;
 	
 	/**
 	 * 
@@ -70,7 +70,7 @@ public class IdpInitEndpoint {
 				HttpServletResponse response,
 				@PathVariable("appid") String appId)throws Exception {
 		logger.debug("SAML IDP init , app id is "+appId);
-		SAML20Details saml20Details = saml20DetailsService.get(appId);
+		AppsSAML20Details saml20Details = saml20DetailsService.get(appId);
 		
 		if (saml20Details == null) {
 			logger.error("samlId[" + appId + "] Error .");
