@@ -69,7 +69,7 @@ public class CasAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			HttpServletResponse response,
 			@PathVariable("id") String id){
 		
-		AppsCasDetails casDetails=casDetailsService.get(id);
+		AppsCasDetails casDetails=casDetailsService.getAppDetails(id);
 		
 		return buildCasModelAndView(casDetails);
 	}

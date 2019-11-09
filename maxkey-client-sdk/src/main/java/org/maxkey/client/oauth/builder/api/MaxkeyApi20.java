@@ -7,7 +7,7 @@ import org.maxkey.client.oauth.model.OAuthConfig;
 import org.maxkey.client.utils.HttpEncoder;
 import org.maxkey.client.utils.Preconditions;
 
-public class ConnsecApi20 extends DefaultApi20 {
+public class MaxkeyApi20 extends DefaultApi20 {
 	//approval_prompt:force or auto
 	private static final String DEFAULT_WEB_URL = "http://sso.maxkey.org/maxkey";
 	
@@ -15,7 +15,7 @@ public class ConnsecApi20 extends DefaultApi20 {
     
 	private static final String SCOPED_AUTHORIZE_URL = String.format("%s&scope=%%s", AUTHORIZATION_URL);
     
-    public ConnsecApi20() {
+    public MaxkeyApi20() {
    
 	}
 

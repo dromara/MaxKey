@@ -187,7 +187,7 @@ $(function(){
 				<div id="div_commonLogin" >
 					<form id="loginForm" name="loginForm" action="<@base />/logon.do" method="post">
 						<input type="hidden" name="j_auth_type" value="basic"/>
-						<table  class="login_form_table">
+						<table  class="table login_form_table">
 							<tr>
 								<td><@locale code="login.text.username"/>：</td>
 								<td><input class="form-control" type='text' id='j_username'  name='j_username' value="admin" tabindex="1"/></td>
@@ -199,7 +199,7 @@ $(function(){
 							<#if true==isCaptcha> 
 							<tr>
 								<td><@locale code="login.text.captcha"/>：</td>
-								<td><input class="form-control"  type='text' id="j_captcha" name="j_captcha"  tabindex="3"  value="" /><img id="j_captchaimg" src="<@base/>/captcha"/></td>
+								<td><input class="form-control"  type='text' id="j_captcha" name="j_captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" src="<@base/>/captcha"/></td>
 								
 							</tr>
 							</#if>
@@ -226,7 +226,7 @@ $(function(){
 								
 							</tr>
 							<tr >
-								<td colspan="2"><input id="loginSubmit" type="button"  tabindex="5"  style="width: 230px;" class="button btn btn-lg btn-primary btn-block"  value="<@locale code="login.button.login"/>"/></td>
+								<td colspan="2"><input id="loginSubmit" type="button"  tabindex="5"  style="width: 100%;" class="button btn btn-lg btn-primary btn-block"  value="<@locale code="login.button.login"/>"/></td>
 								
 							</tr>
 						</table>
@@ -255,7 +255,7 @@ $(function(){
 							<tr>
 								<td><@locale code="login.text.captcha"/>：</td>
 								<td>
-									<input class="form-control"  type='text' id="tfa_j_otp_captcha" name="j_otp_captcha"  tabindex="3"  value=""  />
+									<input class="form-control"  type='text' id="tfa_j_otp_captcha" name="j_otp_captcha"  tabindex="3"  value=""   style="float: left;"/>
 									<input class="form-control"  id="tfa_j_otp_captcha_button" type="button"  tabindex="5" class="button"  value="获取动态验证码"/>
 									
 								</td>
@@ -290,7 +290,7 @@ $(function(){
 								
 							</tr>
 							<tr >
-								<td colspan="2"><input id="tfa_loginSubmit" type="button" style="width: 230px;" tabindex="5" class="button btn btn-lg btn-primary btn-block"  value="<@locale code="login.button.login"/>"/></td>
+								<td colspan="2"><input id="tfa_loginSubmit" type="button" style="width: 100%;" tabindex="5" class="button btn btn-lg btn-primary btn-block"  value="<@locale code="login.button.login"/>"/></td>
 								
 							</tr>
 						</table>

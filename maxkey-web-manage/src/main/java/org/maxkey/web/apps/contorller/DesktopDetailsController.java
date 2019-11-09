@@ -49,7 +49,7 @@ public class DesktopDetailsController  extends BaseAppContorller {
 		
 		transform(desktopDetails);
 		desktopDetailsService.insert(desktopDetails);
-		if (appsService.insert(desktopDetails)) {
+		if (appsService.insertApp(desktopDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -81,7 +81,7 @@ public class DesktopDetailsController  extends BaseAppContorller {
 		_logger.debug("-update  application :" + desktopDetails);
 		transform(desktopDetails);
 
-		if (desktopDetailsService.update(desktopDetails)&&appsService.update(desktopDetails)) {
+		if (desktopDetailsService.update(desktopDetails)&&appsService.updateApp(desktopDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {

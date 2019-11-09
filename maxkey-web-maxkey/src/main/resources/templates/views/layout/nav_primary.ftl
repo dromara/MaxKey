@@ -42,21 +42,21 @@
 			<a  href="<@base/>/profile/myProfile">我的资料</a>
 		</li>
 		<li  id="nav_primay_15"  class="nav_primay_level primaryleft"  xpath="">
-			<a   href="<@base/>/logs/loginHistoryList">日志审计</a>
+			<a   href="<@base/>/historys/login">日志审计</a>
 			<div id="nav_child_1501"  class="nav_second_child">
 				<ul>
 					<li id="nav_second_1501" class="nav_second_level">
-						<a   href="<@base/>/logs/loginHistoryList">登录日志</a>
+						<a   href="<@base/>/historys/login">登录日志</a>
 					</li>
 				</ul>
 				<ul>
 					<li id="nav_second_1502" class="nav_second_level">
-						<a   href="<@base/>/logs/loginAppHistoryList">访问日志</a>
+						<a   href="<@base/>/historys/loginApps">访问日志</a>
 					</li>
 				</ul>
 				<ul>
 					<li id="nav_second_1503" class="nav_second_level">
-						<a   href="<@base/>/logs/list">操作日志</a>
+						<a   href="<@base/>/historys/logs">操作日志</a>
 					</li>
 				</ul>
 			</div>

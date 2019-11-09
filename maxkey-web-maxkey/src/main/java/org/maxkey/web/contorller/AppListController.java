@@ -44,7 +44,7 @@ public class AppListController{
 	AccountsService appUsersService;
 	
 	@Autowired
-	AppsService applicationsService;
+	AppsService appsService;
 	
 	@RequestMapping(value={"/appList"})
 	public ModelAndView appList(@RequestParam(value="gridList",required = false) String gridList) {
@@ -210,7 +210,7 @@ public class AppListController{
 			@RequestParam("identity_password") String identity_password
 			){
 		
-		Apps  app=applicationsService.get(appId);
+		Apps  app=appsService.get(appId);
 		UserInfo userInfo=WebContext.getUserInfo();
 		
 		Accounts appUsers=new Accounts();

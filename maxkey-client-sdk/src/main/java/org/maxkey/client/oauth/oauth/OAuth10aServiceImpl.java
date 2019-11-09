@@ -45,7 +45,7 @@ public class OAuth10aServiceImpl implements OAuthService
    */
   public OAuth10aServiceImpl(String clientId, String clientSecret,String redirectUri)
   {
-    this.api = new ConnsecApi10a();
+    this.api = new MaxkeyApi10a();
     this.config =new OAuthConfig(clientId,clientSecret,redirectUri);
   }
 

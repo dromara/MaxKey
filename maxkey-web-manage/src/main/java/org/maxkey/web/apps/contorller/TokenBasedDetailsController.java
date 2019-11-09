@@ -50,7 +50,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
 		
-		if (tokenBasedDetailsService.insert(tokenBasedDetails)&&appsService.insert(tokenBasedDetails)) {
+		if (tokenBasedDetailsService.insert(tokenBasedDetails)&&appsService.insertApp(tokenBasedDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -82,7 +82,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		_logger.debug("-update  application :" + tokenBasedDetails);
 		transform(tokenBasedDetails);
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
-		if (tokenBasedDetailsService.update(tokenBasedDetails)&&appsService.update(tokenBasedDetails)) {
+		if (tokenBasedDetailsService.update(tokenBasedDetails)&&appsService.updateApp(tokenBasedDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {

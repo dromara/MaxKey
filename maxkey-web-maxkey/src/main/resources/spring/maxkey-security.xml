@@ -80,7 +80,7 @@
 			<mvc:mapping path="/roles/*"/>
 			<mvc:mapping path="/applications/*"/>
 			<mvc:mapping path="/approles/*"/>
-			<bean class="org.maxkey.web.interceptor.LogAdapter" />
+			<bean class="org.maxkey.web.interceptor.HistoryLogsAdapter" />
 		</mvc:interceptor>
 		<!-- web Controller sso Adapter -->
 		<mvc:interceptor>
@@ -103,7 +103,7 @@
 			<mvc:mapping path="/authz/tokenbased/*"/>
 			<mvc:mapping path="/authz/saml20/idpinit/*"/>
 			<mvc:mapping path="/authz/cas/granting"/>
-			<bean class="org.maxkey.web.interceptor.LoginAppHistoryAdapter" />
+			<bean class="org.maxkey.web.interceptor.HistoryLoginAppAdapter" />
 		</mvc:interceptor>
 
 		

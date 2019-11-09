@@ -10,7 +10,7 @@ import org.maxkey.client.oauth.model.OAuthConfig;
 /**
  * OAuth 2.0 api.
  */
-public class ConnsecPasswordApi20 extends DefaultApi20 {
+public class MaxkeyPasswordApi20 extends DefaultApi20 {
 
 	private String accessTokenUrl;
 	private String grantType = "password";
@@ -19,7 +19,7 @@ public class ConnsecPasswordApi20 extends DefaultApi20 {
 
 	private static final String AUTHORIZE_PARAM = "&client_id=%s&client_secret=%s&username=%s&password=%s";
 
-	public ConnsecPasswordApi20(String accessTokenUrl) {
+	public MaxkeyPasswordApi20(String accessTokenUrl) {
 		super();
 		this.accessTokenUrl = accessTokenUrl;
 	}

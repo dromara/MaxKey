@@ -5,7 +5,7 @@ import java.util.*;
 import org.maxkey.client.http.HttpVerb;
 import org.maxkey.client.http.Response;
 import org.maxkey.client.oauth.builder.ServiceBuilder;
-import org.maxkey.client.oauth.builder.api.ConnsecApi10a;
+import org.maxkey.client.oauth.builder.api.MaxkeyApi10a;
 import org.maxkey.client.oauth.model.OAuthRequest;
 import org.maxkey.client.oauth.model.Token;
 import org.maxkey.client.oauth.model.Verifier;
@@ -19,7 +19,7 @@ public class Connsec10aVerifierExample
 	  public static void main(String[] args)
 	  {
 	    OAuthService service = new ServiceBuilder()
-	                                .provider(ConnsecApi10a.class)
+	                                .provider(MaxkeyApi10a.class)
 	                                .apiKey("tonr-consumer-key")
 	                                .apiSecret("SHHHHH!!!!!!!!!!")
 	                                .callback(PROTECTED_RESOURCE_URL)

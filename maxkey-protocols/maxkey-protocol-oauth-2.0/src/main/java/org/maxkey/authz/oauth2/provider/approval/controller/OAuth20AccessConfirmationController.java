@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
@@ -51,8 +52,7 @@ public class OAuth20AccessConfirmationController {
 		for(Object key:model.keySet()){
 			modelRequest.put(key.toString(), model.get(key).toString());
 		}
-		Principal principal=(Principal)WebContext.getAuthentication().getPrincipal();
-		
+		String principal=((BasicAuthentication)WebContext.getAuthentication().getPrincipal()).getJ_username();
 		 //Map<String, Object> model
 		AuthorizationRequest clientAuth = (AuthorizationRequest) WebContext.getAttribute("authorizationRequest");
 		ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
@@ -63,7 +63,8 @@ public class OAuth20AccessConfirmationController {
 		for (String scope : clientAuth.getScope()) {
 			scopes.put(OAuth2Utils.SCOPE_PREFIX + scope, "false");
 		}
-		for (Approval approval : approvalStore.getApprovals(principal.getName(), client.getClientId())) {
+		
+		for (Approval approval : approvalStore.getApprovals(principal, client.getClientId())) {
 			if (clientAuth.getScope().contains(approval.getScope())) {
 				scopes.put(OAuth2Utils.SCOPE_PREFIX + approval.getScope(),
 						approval.getStatus() == ApprovalStatus.APPROVED ? "true" : "false");

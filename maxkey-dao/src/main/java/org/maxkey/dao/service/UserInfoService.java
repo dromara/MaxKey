@@ -75,6 +75,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		return false;
 	}
 
+	public UserInfo loadByUsername(String username) {
+		return getMapper().loadByUsername(username);
+	}
 	
 	public UserInfo loadByAppIdAndUsername(String appId,String username){
 		try {

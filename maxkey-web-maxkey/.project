@@ -4,7 +4,6 @@
 	<comment>maxkey-web-maxkey</comment>
 	<projects>
 		<project>maxkey-protocol-desktop</project>
-		<project>maxkey-protocol-ltpa</project>
 		<project>maxkey-protocol-tokenbased</project>
 		<project>maxkey-client-sdk</project>
 		<project>maxkey-jose-jwt</project>

@@ -17,7 +17,7 @@ import org.maxkey.domain.apps.Apps;
    MENUID                varchar(40)	                   null
    constraint PK_ROLES primary key clustered (ID)
  */
-@Table(name = "GROUP_APP")  
+@Table(name = "GROUP_PRIVILEGES")  
 public class GroupPrivileges extends Apps implements Serializable{
 
 	/**

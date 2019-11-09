@@ -50,7 +50,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 		
 		transform(formBasedDetails);
 		
-		if (formBasedDetailsService.insert(formBasedDetails)&&appsService.insert(formBasedDetails)) {
+		if (formBasedDetailsService.insert(formBasedDetails)&&appsService.insertApp(formBasedDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -80,7 +80,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 		//
 		_logger.debug("-update  application :" + formBasedDetails);
 		transform(formBasedDetails);
-		if (formBasedDetailsService.update(formBasedDetails)&&appsService.update(formBasedDetails)) {
+		if (formBasedDetailsService.update(formBasedDetails)&&appsService.updateApp(formBasedDetails)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {

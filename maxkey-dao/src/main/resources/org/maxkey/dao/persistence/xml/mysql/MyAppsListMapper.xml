@@ -6,10 +6,10 @@
 		SELECT DISTINCT
 			APP.*
 		FROM
-			APPLICATIONS APP,GROUP_APP GA
+			APPS APP,GROUP_PRIVILEGES GP
 		WHERE
-			APP.ID=GA.APPID
-			AND GA.GROUPID IN(
+			APP.ID=GP.APPID
+			AND GP.GROUPID IN(
 				SELECT 
 					G.ID
 				FROM  
@@ -34,7 +34,7 @@
 		<if test="name != null and name != ''">
 			AND NAME 	= 	#{name}
 		</if>
-		ORDER BY SORTORDER 
+		ORDER BY SORTINDEX
 	</select>
 
 </mapper>

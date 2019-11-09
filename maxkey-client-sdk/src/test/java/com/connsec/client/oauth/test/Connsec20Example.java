@@ -5,7 +5,7 @@ import java.util.*;
 import org.maxkey.client.http.HttpVerb;
 import org.maxkey.client.http.Response;
 import org.maxkey.client.oauth.builder.ServiceBuilder;
-import org.maxkey.client.oauth.builder.api.ConnsecApi20;
+import org.maxkey.client.oauth.builder.api.MaxkeyApi20;
 import org.maxkey.client.oauth.model.OAuthRequest;
 import org.maxkey.client.oauth.model.Token;
 import org.maxkey.client.oauth.model.Verifier;
@@ -23,7 +23,7 @@ public class Connsec20Example
     String apiKey = "your_api_key";
     String apiSecret = "your_api_secret";
     OAuthService service = new ServiceBuilder()
-        .provider(ConnsecApi20.class)
+        .provider(MaxkeyApi20.class)
         .apiKey(apiKey)
         .apiSecret(apiSecret)
         .callback("http://www.dajie.com/oauth/sina")

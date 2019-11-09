@@ -64,8 +64,8 @@ public class UserInfoEndpoint {
 	private UserInfoService userInfoService;
 	
 	@Autowired
-	@Qualifier("applicationsService")
-	protected AppsService applicationsService;
+	@Qualifier("appsService")
+	protected AppsService appsService;
 	
 	@Autowired
 	@Qualifier("jwtSignerValidationService")
@@ -100,7 +100,7 @@ public class UserInfoEndpoint {
 				 
 				 String client_id= oAuth2Authentication.getOAuth2Request().getClientId();
 				 UserInfo userInfo=queryUserInfo(principal);
-				 Apps app=applicationsService.get(client_id);
+				 Apps app=appsService.get(client_id);
 				 
 				 String userJson="";
 				 
@@ -281,9 +281,7 @@ public class UserInfoEndpoint {
 	
 	public  UserInfo queryUserInfo(String uid){
 		_logger.debug("uid : "+uid);
-		UserInfo queryUserInfo=new UserInfo();
-		queryUserInfo.setUsername(uid);
-		UserInfo userInfo = (UserInfo) userInfoService.load(queryUserInfo);
+		UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(uid);
 		return userInfo;
 	}
 

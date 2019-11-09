@@ -68,7 +68,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 			e.printStackTrace();
 		}
 		saml20DetailsService.insert(saml20Details);
-		if (appsService.insert(saml20Details)) {
+		if (appsService.insertApp(saml20Details)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -102,7 +102,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 			e.printStackTrace();
 		}
 		saml20DetailsService.update(saml20Details);
-		if (appsService.update(saml20Details)) {
+		if (appsService.updateApp(saml20Details)) {
 			 new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {

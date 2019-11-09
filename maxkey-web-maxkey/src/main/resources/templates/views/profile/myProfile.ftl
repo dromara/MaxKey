@@ -55,8 +55,8 @@
 					</td>
 					<th rowspan="4"><@locale code="userinfo.picture" />：</th>
 					<td rowspan="4">
-						<#if null == model.picture >
-							<img id="picture" width="150px" height="150px" src="<@base/>/images/uploadimage.jpg" />
+						<#if  model.picture? default("")=="" >
+							<img id="picture" width="150px" height="150px" src="<@base/>/static/images/uploadimage.jpg" />
 						<#else>
 							<img id="picture" width="150px" height="150px" src="<@base/>/image/${model.id}" />
 						</#if>

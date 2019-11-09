@@ -5,10 +5,16 @@
 
 .login_form_table{
 	width:358px;
-	border:0;
 }
+
+.login_form_table td, .login_form_table th {
+    padding: .2rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
 #j_username,#j_password,#tfa_j_username,#tfa_j_password,#currentTime{
-	width	:230px;
+	width	:250px;
 	font-size: 14px;
 	font-weight: bold;
 }
@@ -20,7 +26,7 @@
 }
 
 #tfa_j_otp_captcha{
-	width	:100px;
+	width	:120px;
 	/*width	:230px;*/
 	font-size: 14px;
 	font-weight: bold;	

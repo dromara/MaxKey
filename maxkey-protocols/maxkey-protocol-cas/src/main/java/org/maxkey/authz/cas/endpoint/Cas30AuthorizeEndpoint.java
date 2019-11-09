@@ -6,6 +6,7 @@ package org.maxkey.authz.cas.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
@@ -70,14 +71,12 @@ public class Cas30AuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
-			String principal=storedTicket.getAuthentication().getPrincipal().toString();
+			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getJ_username();
 			serviceResponseBuilder.success().setUser(principal);
 			
 			if(BOOLEAN.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
-				UserInfo queryUserInfo=new UserInfo();
-				queryUserInfo.setUsername(principal);
-				UserInfo userInfo = (UserInfo) userInfoService.load(queryUserInfo);
+				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
 				adapter.generateInfo(userInfo, serviceResponseBuilder);
 			}
 		}else{
@@ -112,14 +111,12 @@ public class Cas30AuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
-			String principal=storedTicket.getAuthentication().getPrincipal().toString();
+			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getJ_username();
 			serviceResponseBuilder.success().setUser(principal);
 			
 			if(BOOLEAN.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
-				UserInfo queryUserInfo=new UserInfo();
-				queryUserInfo.setUsername(principal);
-				UserInfo userInfo = (UserInfo) userInfoService.load(queryUserInfo);
+				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
 				adapter.generateInfo(userInfo, serviceResponseBuilder);
 			}
 		}else{

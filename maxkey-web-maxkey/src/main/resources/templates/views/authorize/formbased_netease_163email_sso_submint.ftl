@@ -10,7 +10,7 @@
   
   	<script type="text/javascript">
 			$(function(){
-				<c:if test="${true	== isExtendAttr}">
+				<#if  isExtendAttr >
 					var attrIndex = 0;
 	
 					function addExtendAttr(attribute,attributeValue){
@@ -22,11 +22,11 @@
 						attrIndex++;
 					}
 					
-					var extendAttrJson = eval("("+'${extendAttr}'+")");
+					var extendAttrJson = eval("("+'${extendAttr!""}'+")");
 					$.each(extendAttrJson,function(key,val){
 						addExtendAttr(key,val);
 					});
-				</c:if>
+				</#if>
 				
 				$("#loginForm").submit();
 

@@ -3,7 +3,7 @@ package org.maxkey.client.oauth.oauth;
 import org.maxkey.client.http.HttpVerb;
 import org.maxkey.client.http.Response;
 import org.maxkey.client.oauth.builder.ServiceBuilder;
-import org.maxkey.client.oauth.builder.api.ConnsecPasswordApi20;
+import org.maxkey.client.oauth.builder.api.MaxkeyPasswordApi20;
 import org.maxkey.client.oauth.model.OAuthConfig;
 import org.maxkey.client.oauth.model.OAuthRequest;
 import org.maxkey.client.oauth.model.Token;
@@ -16,13 +16,13 @@ public class OAuthPasswordService {
 
 	private OAuthConfig config;
 	
-	private ConnsecPasswordApi20 passwordApi20;
+	private MaxkeyPasswordApi20 passwordApi20;
 
 	public OAuthPasswordService() {
 		super();
 	}
 
-	public OAuthPasswordService(OAuthConfig config,ConnsecPasswordApi20 passwordApi20) {
+	public OAuthPasswordService(OAuthConfig config,MaxkeyPasswordApi20 passwordApi20) {
 		super();
 		this.passwordApi20=passwordApi20;
 		this.config = config;
@@ -59,11 +59,11 @@ public class OAuthPasswordService {
 		this.config = config;
 	}
 
-	public ConnsecPasswordApi20 getPasswordApi20() {
+	public MaxkeyPasswordApi20 getPasswordApi20() {
 		return passwordApi20;
 	}
 
-	public void setPasswordApi20(ConnsecPasswordApi20 passwordApi20) {
+	public void setPasswordApi20(MaxkeyPasswordApi20 passwordApi20) {
 		this.passwordApi20 = passwordApi20;
 	}
 

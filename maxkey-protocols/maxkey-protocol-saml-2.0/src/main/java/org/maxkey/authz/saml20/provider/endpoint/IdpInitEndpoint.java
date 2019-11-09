@@ -70,7 +70,7 @@ public class IdpInitEndpoint {
 				HttpServletResponse response,
 				@PathVariable("appid") String appId)throws Exception {
 		logger.debug("SAML IDP init , app id is "+appId);
-		AppsSAML20Details saml20Details = saml20DetailsService.get(appId);
+		AppsSAML20Details saml20Details = saml20DetailsService.getAppDetails(appId);
 		
 		if (saml20Details == null) {
 			logger.error("samlId[" + appId + "] Error .");

@@ -16,6 +16,8 @@ public interface UserInfoMapper  extends IJpaBaseMapper<UserInfo>{
 	
 	public int logisticDeleteAllByCid(String cid);
 	
+	public UserInfo loadByUsername(String username);
+	
 	public void locked(UserInfo userInfo);
 
 	public void unlock(UserInfo userInfo);

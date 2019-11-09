@@ -39,7 +39,7 @@ public class DesktopAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	public ModelAndView authorize(
 			HttpServletRequest request,
 			@PathVariable("id") String id){
-		AppsDesktopDetails desktopDetails=desktopDetailsService.get(id);
+		AppsDesktopDetails desktopDetails=desktopDetailsService.getAppDetails(id);
 		_logger.debug(""+desktopDetails);
 		
 		Accounts appUser=getAccounts(desktopDetails);

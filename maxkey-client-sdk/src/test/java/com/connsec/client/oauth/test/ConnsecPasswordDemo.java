@@ -1,7 +1,7 @@
 package com.connsec.client.oauth.test;
 
 import org.maxkey.client.http.Response;
-import org.maxkey.client.oauth.builder.api.ConnsecPasswordApi20;
+import org.maxkey.client.oauth.builder.api.MaxkeyPasswordApi20;
 import org.maxkey.client.oauth.model.OAuthConfig;
 import org.maxkey.client.oauth.model.Token;
 import org.maxkey.client.oauth.oauth.OAuthPasswordService;
@@ -23,7 +23,7 @@ public class ConnsecPasswordDemo {
 		String approvalprompt = "auto";
 		OAuthConfig oauthServiceConfig=new OAuthConfig(clientId,clientSerect,callback);
 	
-		ConnsecPasswordApi20	ConnsecPasswordApi20=new ConnsecPasswordApi20(accessTokenUrl);
+		MaxkeyPasswordApi20	ConnsecPasswordApi20=new MaxkeyPasswordApi20(accessTokenUrl);
 		
 		OAuthPasswordService oAuthPasswordService=new OAuthPasswordService(oauthServiceConfig,ConnsecPasswordApi20);
 		Token accessToken = null;

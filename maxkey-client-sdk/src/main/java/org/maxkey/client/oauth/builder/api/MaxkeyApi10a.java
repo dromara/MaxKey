@@ -2,12 +2,12 @@ package org.maxkey.client.oauth.builder.api;
 
 import org.maxkey.client.oauth.model.Token;
 
-public class ConnsecApi10a extends DefaultApi10a
+public class MaxkeyApi10a extends DefaultApi10a
 {
 	private static final String DEFAULT_WEB_URL = "http://sso.maxkey.org/maxkey";
 	private static final String AUTHORIZATION_URL = DEFAULT_WEB_URL+"/oauth/v10a/authz?oauth_token=%s";
   
-  public ConnsecApi10a() {
+  public MaxkeyApi10a() {
 	  
   }
 

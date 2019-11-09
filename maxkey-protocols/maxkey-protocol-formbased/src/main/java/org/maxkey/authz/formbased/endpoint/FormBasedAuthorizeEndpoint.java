@@ -40,7 +40,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	public ModelAndView authorize(
 			HttpServletRequest request,
 			@PathVariable("id") String id){
-		AppsFormBasedDetails formBasedDetails=formBasedDetailsService.get(id);
+		AppsFormBasedDetails formBasedDetails=formBasedDetailsService.getAppDetails(id);
 		_logger.debug(""+formBasedDetails);
 		Apps  application= getApp(id);
 		formBasedDetails.setAdapter(application.getAdapter());

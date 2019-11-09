@@ -3,6 +3,7 @@
  */
 package org.maxkey.authz.token.endpoint;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -76,13 +77,43 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 				encryptTokenData, 
 				tokenBasedDetails);
 		
-		modelAndView=adapter.authorize(
-				WebContext.getUserInfo(), 
-				tokenBasedDetails, 
-				signTokenData, 
-				modelAndView);
-		
-		return modelAndView;
+		if(tokenBasedDetails.getTokenType().equalsIgnoreCase("POST")) {
+			modelAndView=adapter.authorize(
+					WebContext.getUserInfo(), 
+					tokenBasedDetails, 
+					signTokenData, 
+					modelAndView);
+			
+			return modelAndView;
+		}else {
+			
+			String cookieValue="";
+			cookieValue=signTokenData;
+			
+			_logger.debug("Cookie Name : "+tokenBasedDetails.getCookieName());
+			
+			Cookie cookie= new Cookie(tokenBasedDetails.getCookieName(),cookieValue);
+			
+			Integer maxAge=Integer.parseInt(tokenBasedDetails.getExpires())*60;
+			_logger.debug("Cookie Max Age :"+maxAge+" seconds.");
+			cookie.setMaxAge(maxAge);
+			
+			cookie.setPath("/");
+			//
+			//cookie.setDomain("."+applicationConfig.getSubDomainName());
+			//tomcat 8.5
+			cookie.setDomain(applicationConfig.getSubDomainName());
+			
+			_logger.debug("Sub Domain Name : "+"."+applicationConfig.getSubDomainName());
+			response.addCookie(cookie);
+			
+			if(tokenBasedDetails.getRedirectUri().indexOf(applicationConfig.getSubDomainName())>-1){
+				return WebContext.redirect(tokenBasedDetails.getRedirectUri());
+			}else{
+				_logger.error(tokenBasedDetails.getRedirectUri()+" not in domain "+applicationConfig.getSubDomainName());
+				return null;
+			}
+		}
 		
 	}
 

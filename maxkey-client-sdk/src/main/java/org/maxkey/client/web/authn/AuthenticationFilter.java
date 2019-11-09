@@ -15,7 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.client.oauth.OAuthClient;
 import org.maxkey.client.oauth.builder.ServiceBuilder;
-import org.maxkey.client.oauth.builder.api.ConnsecApi20;
+import org.maxkey.client.oauth.builder.api.MaxkeyApi20;
 import org.maxkey.client.oauth.domain.UserInfo;
 import org.maxkey.client.oauth.model.Token;
 import org.maxkey.client.oauth.model.Verifier;
@@ -88,7 +88,7 @@ public class AuthenticationFilter implements Filter {
 		log.debug("enable : "+enable);
 		
 		service = new ServiceBuilder()
-	        .provider(ConnsecApi20.class)
+	        .provider(MaxkeyApi20.class)
 	        .apiKey(this.clientId)
 	        .apiSecret(this.clientSecret)
 	        .callback(this.callBackUri)

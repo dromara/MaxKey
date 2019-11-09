@@ -35,7 +35,7 @@ public class OAuth20ServiceImpl implements OAuthService
    */
   public OAuth20ServiceImpl(String clientId, String clientSecret,String redirectUri)
   {
-	  this.api=new ConnsecApi20();
+	  this.api=new MaxkeyApi20();
 	  this.config =new OAuthConfig(clientId,clientSecret,redirectUri);
 	 
   }
