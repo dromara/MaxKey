@@ -21,6 +21,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidClientException;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidRequestException;
@@ -41,13 +45,20 @@ import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.implicit.ImplicitTokenRequest;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestValidator;
+import org.maxkey.client.utils.HttpEncoder;
+import org.maxkey.config.ApplicationConfig;
 import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
 import org.maxkey.web.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,6 +72,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriTemplate;
+import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 
 /**
  * <p>
@@ -82,9 +94,18 @@ import org.springframework.web.util.UriTemplate;
 @Controller
 @SessionAttributes("authorizationRequest")
 public class AuthorizationEndpoint extends AbstractEndpoint {
-
+	final static Logger _logger = LoggerFactory.getLogger(AuthorizationEndpoint.class);
 	
-
+	private static final String OAUTH_V20_AUTHORIZATION_URL = "%s/oauth/v20/authorize?client_id=%s&response_type=code&redirect_uri=%s&approval_prompt=auto";
+	
+	@Autowired
+	@Qualifier("oauth20JdbcClientDetailsService")
+	private ClientDetailsService clientDetailsService;
+	
+	@Autowired 
+  	@Qualifier("applicationConfig")
+  	protected ApplicationConfig applicationConfig;
+	
 	private RedirectResolver redirectResolver = new DefaultRedirectResolver();
 
 	private UserApprovalHandler userApprovalHandler = new DefaultUserApprovalHandler();
@@ -488,5 +509,21 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		this.oauth2RequestValidator = oauth2RequestValidator;
 	}
 
-	
+	@RequestMapping("/authz/oauthv20/{id}")
+	public ModelAndView authorize(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@PathVariable("id") String id){
+		ClientDetails  clientDetails =clientDetailsService.loadClientByClientId(id);
+		_logger.debug(""+clientDetails);
+		String authorizationUrl = String.format(OAUTH_V20_AUTHORIZATION_URL, 
+						applicationConfig.getServerPrefix(),
+						clientDetails.getClientId(), 
+						HttpEncoder.encode(clientDetails.getRegisteredRedirectUri().toArray()[0].toString())
+				);
+		
+		_logger.debug("authorizationUrl "+authorizationUrl);
+		
+		return WebContext.redirect(authorizationUrl);
+	}
 }

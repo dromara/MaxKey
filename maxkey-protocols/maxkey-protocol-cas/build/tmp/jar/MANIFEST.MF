@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Implementation-Title: maxkey-protocol-cas
+Implementation-Version: 1.0.0.RELEASE
+Implementation-Date: 2019-11-10T12:35:40.160+08:00[Asia/Shanghai]
+Created-By: org.maxkey
+Implementation-Vendor: https://github.com/shimingxy/MaxKey
+

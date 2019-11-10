@@ -25,7 +25,7 @@ public class FormBasedDetailsServiceTest {
 	public static AppsFormBasedDetailsService service;
 	
 	public AppsFormBasedDetailsService getservice() {
-		service=(AppsFormBasedDetailsService)WebContext.getBean("formBasedDetailsService");
+		service=(AppsFormBasedDetailsService)WebContext.getBean("appsFormBasedDetailsService");
 		return service;
 	}
 	

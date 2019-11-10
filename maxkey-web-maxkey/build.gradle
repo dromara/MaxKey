@@ -3,7 +3,7 @@ description = "maxkey-web-maxkey"
 
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
-apply plugin: 'war'
+//apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'com.bmuschko.tomcat-base'
 apply plugin: 'com.bmuschko.tomcat'

@@ -124,6 +124,7 @@ subprojects {
         mavenCentral()
         jcenter()
         maven { url "https://maven.eveoh.nl/content/repositories/releases" }
+        maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases"}
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "http://repo.spring.io/plugins-release" }
         maven { url "https://repo.spring.io/milestone" }
@@ -319,7 +320,8 @@ subprojects {
 	    }
 	}
     
-  /*  task checkenv<<{
+    task checkenv{
+		println 'check env for project '
 	     //项目名
 	     println project.name
 	     //项目相对路径
@@ -329,16 +331,18 @@ subprojects {
 	     //项目的绝对路径
 	     println project.projectDir
 	     //项目的build文件绝对路径
-	     println project.buildDir
+	     println "buildDir " +project.buildDir
 	     //项目所在的group
 	     println project.group
 	     //项目的版本号
 	     println project.version
 	     //项目的ant对象
 	     println project.ant
-	}*/
+		 
+	}
 
     task copyjar2Release(type: Copy) {
+		println "$buildDir/libs/ to $rootDir/build/jars/"
 		into "$rootDir/build/jars/"
 	    from "$buildDir/libs/"
 	    include '*.jar'
@@ -361,10 +365,9 @@ subprojects {
 	    from "$buildDir/libs/"
 	}
 
-	//task buildRelease(dependsOn:['build','war','copyjar2Release','copyWar2Release','copyotherWar2Release','copydemoWar2Release']) << {
-	//task buildRelease(dependsOn:['copyjar2Release','copyWar2Release','copyotherWar2Release','copydemoWar2Release']) << {
-	//    println 'Build MaxKey '+project.name +' complete .'
-	//}
+	task buildRelease(dependsOn:['build','jar','copyjar2Release'])  {
+	   println 'Build MaxKey '+project.name +' complete .'
+	}
 }  
 
 

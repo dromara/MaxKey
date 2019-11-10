@@ -41,7 +41,7 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	@Autowired
 	ApplicationConfig applicationConfig;
 	
-	@RequestMapping("/authorize/tokenbased/{id}")
+	@RequestMapping("/authz/tokenbased/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,
 			HttpServletResponse response,

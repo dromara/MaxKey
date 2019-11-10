@@ -1,6 +1,6 @@
 description = "maxkey-web-manage"
 
-apply plugin: 'war'
+//apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 
 dependencies {

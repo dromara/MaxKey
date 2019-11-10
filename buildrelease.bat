@@ -14,7 +14,6 @@ call %GRADLE_HOME%/bin/gradle war
 
 call %GRADLE_HOME%/bin/gradle buildRelease
 
-call %GRADLE_HOME%/bin/gradle buildReleaseGear
 
 cd build
 rd /q /s libs
