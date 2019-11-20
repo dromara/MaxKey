@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.servlet.ServletException;
 
+import org.apache.ibatis.io.VFS;
+import org.apache.mybatis.jpa.SpringBootVFS;
 import org.maxkey.web.InitApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,18 +14,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class MaxKeyApplication extends SpringBootServletInitializer {
 	private static final Logger _logger = LoggerFactory.getLogger(MaxKeyApplication.class);
 
-	@Bean
-	MaxKeyConfig MaxKeyConfig() {
-		return new MaxKeyConfig();
-	}
-	
 	public static void main(String[] args) {
+		 VFS.addImplClass(SpringBootVFS.class);
 		ConfigurableApplicationContext  applicationContext =SpringApplication.run(MaxKeyApplication.class, args);
 		InitApplicationContext initWebContext=new InitApplicationContext(applicationContext);
 		try {

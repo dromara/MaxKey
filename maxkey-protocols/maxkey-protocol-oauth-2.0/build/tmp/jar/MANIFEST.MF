@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: maxkey-protocol-oauth-2.0
 Implementation-Version: 1.0.0.RELEASE
-Implementation-Date: 2019-11-10T12:35:40.204+08:00[Asia/Shanghai]
+Implementation-Date: 2019-11-12T23:06:23.644+08:00[Asia/Shanghai]
 Created-By: org.maxkey
 Implementation-Vendor: https://github.com/shimingxy/MaxKey
 

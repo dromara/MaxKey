@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PathUtils {
-	private final Logger _logger = LoggerFactory.getLogger(getClass());
+	private final  Logger _logger = LoggerFactory.getLogger(PathUtils.class);
 	private static PathUtils instance = null;
 	private String classPath;
 	private String appPath;
@@ -23,6 +23,7 @@ public class PathUtils {
 	public PathUtils() {
 		try {
 			classPath = java.net.URLDecoder.decode(PathUtils.class.getResource("PathUtils.properties").getFile(),"UTF-8");
+			_logger.debug("PathUtils() PathUtils " +classPath);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

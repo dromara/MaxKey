@@ -18,3 +18,4 @@ jdk/*
 */org/apache/mybatis/jpa/*
 org/apache/mybatis/jpa/*
 /.gradle/
+/build/
