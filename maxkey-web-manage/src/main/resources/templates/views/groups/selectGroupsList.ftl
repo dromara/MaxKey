@@ -27,16 +27,16 @@
 	<div id="tool_box">
 	 		<table   class="datatable">
  				<tr>
-		 			<td width="120px"><s:Locale code="group.name"/>:</td>
+		 			<td width="120px"><@locale code="group.name"/>:</td>
 		 			<td width="374px">
 		 				<form id="basic_search_form">
-				 			<input type="text" name="name" style ="width:150px">
-				 			<input class="button primary"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+				 			<input class="form-control" type="text" name="name" style ="width:150px;float: left;">
+				 			<input class="button btn btn-success mr-3"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
 				 		</form>
 		 			</td>
 				 	<td colspan="2"> 
 					 	<div id="tool_box_right" style="width: auto;">
-							<input class="button"   id="selectBtn" type="button" value="<@locale code="button.text.select"/>" >
+							<input  class="button btn btn-primary mr-3"   id="selectBtn" type="button" value="<@locale code="button.text.select"/>" >
 						</div>
 				 	</td>
 				</tr>

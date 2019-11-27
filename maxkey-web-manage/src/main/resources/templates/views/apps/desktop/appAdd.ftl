@@ -221,8 +221,8 @@ $(function(){
 				</tbody>
 				</table>
 			<input  id="status" type="hidden" name="status"  value="1"/>
-    		<input class="button" id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
-			<input class="button" id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	  
+    		<input class="button btn btn-primary mr-3"  id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
+			<input class="button btn btn-secondary mr-3"  id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>		  
 </form>
 </body>
 </html>

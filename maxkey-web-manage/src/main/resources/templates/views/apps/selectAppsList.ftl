@@ -34,8 +34,8 @@
 		 			<td width="120px"><@locale code="apps.name"/>:</td>
 		 			<td  width="374px" nowrap>
 		 				<form id="basic_search_form">
-			 				<input type="text" name="name" style ="width:150px">
-			 				<input class="button primary"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+			 				<input type="text" class="form-control" name="name" style ="width:150px;float: left;">
+			 				<input class="button button btn btn-primary mr-3"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
 		 					
 		 				 </form>
 		 			</td>

@@ -17,8 +17,7 @@
 			<tr>
 				<th><@locale code="group.name" />：</th>
 				<td nowrap>
-					<span class="intspan"><input type="text" id="name" name="name" class="form-control" title="" value=""/></span>
-					<b class="orange">*</b><label for="name"></label>
+					<input type="text" id="name" name="name" class="form-control" title="" value=""/>
 				</td>
 			</tr>
 			<tr>
@@ -26,7 +25,7 @@
 					<input id="_method" type="hidden" name="_method"  value="post"/>
 					<input  id="status" type="hidden" name="status"  value="1"/>
 		    		<input class="button btn btn-primary mr-3"  id="submitBtn" type="button" value="<@locale code="button.text.save" />">
-	  				<input class="button"  id="closeBtn"   type="button" value="<@locale code="button.text.cancel" />"> 
+	  				<input class="button btn btn-secondary mr-3"  id="closeBtn"   type="button" value="<@locale code="button.text.cancel" />"> 
 				</td>
 			</tr>
 		</tbody>

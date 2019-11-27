@@ -155,7 +155,7 @@
 </head>
 <body>
  <div>
- 	<input class="button" id="winClose" type="button" value="winClose">
+ 	<input class="button btn btn-primary mr-3"  style="float: right;" id="winClose" type="button" value="<@locale code="button.text.select" />" >
  </div>
      <!-- content -->  
   <table class="datatable"   width="100%" >

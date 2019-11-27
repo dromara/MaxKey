@@ -155,7 +155,7 @@ $(function () {
 							</div>
 							<div class="col-12 col-lg-9 col-md-6">
 								<ol class="breadcrumb float-right">
-									<li><a href="index.html">Dashboard</a></li>
+									<li><a href="<@base/>/main">Dashboard</a></li>
 									<li class="active">/ Dashboard 2</li>
 								</ol>
 							</div>

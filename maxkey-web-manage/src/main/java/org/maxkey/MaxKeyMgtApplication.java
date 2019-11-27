@@ -1,6 +1,7 @@
 package org.maxkey;
 
 
+import java.io.File;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -33,9 +34,10 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 	}
 	
 	public static void main(String[] args) {
-		
 		ConfigurableApplicationContext  applicationContext =SpringApplication.run(MaxKeyMgtApplication.class, args);
 		InitApplicationContext initWebContext=new InitApplicationContext(applicationContext);
+		
+		
 		try {
 			initWebContext.init(null);
 		} catch (ServletException e) {

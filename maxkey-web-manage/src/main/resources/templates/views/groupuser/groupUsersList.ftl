@@ -45,7 +45,7 @@
 				</div>
 				<div class="col-12 col-lg-9 col-md-6">
 					<ol class="breadcrumb float-right">
-						<li><a href="index.html">Dashboard</a></li>
+						<li><a href="<@base/>/main">Dashboard</a></li>
 						<li class="active">/ Dashboard 2</li>
 					</ol>
 				</div>
@@ -60,23 +60,24 @@
 	 		<table   class="datatable">
  				<tr>
 		 			<td width="120px"><@locale code="group.name"/>:</td>
-		 			<td width="374px">
-		 				<form id="basic_search_form">
+		 			<td width="450px">
+		 				<form id="basic_search_form" style="width:100%">
 				 			<input class="groupId" id="groupId" name="groupId" value="" type="hidden" >
-				 			<input class="groupName"   style="width:200px" value=""    id="groupName" name="groupName" type="text" >
-				 			<input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.select"/>" 
+				 			<input class="form-control groupName"    style="width:200px;float: left;" value=""    id="groupName" name="groupName" type="text" >
+				 			<input class="button btn btn-success mr-3" style="float: left;" id="addBtn" type="button" value="<@locale code="button.text.select"/>" 
 						 		    wurl="<@base/>/groups/selectGroupsList"
 						 		    wwidth="700"
 						 		    wheight="500"
 					 		    	target="window">
-				 			<input class="button primary"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+				 			<input   class="button btn btn-primary mr-3"  style="float: left;"   id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+				 			<input class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+				 		
 				 		</form>
 		 			</td>
-				 	<td colspan="2"> <div id="tool_box_right">
-				 		<input class="button"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+				 	<td colspan="2"> <div id="tool_box_right"  style="width:400px">
 				 		
-						<input class="button"  id="insertGroupUserBtn" type="button" value="<@locale code="button.text.add.member"/>">
-						<input class="button"  id="deleteBtn" type="button" value="<@locale code="button.text.delete.member"/>"
+						<input class="button btn btn-success mr-3"  id="insertGroupUserBtn" type="button" value="<@locale code="button.text.add.member"/>">
+						<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete.member"/>"
 							wurl="<@base/>/groupMember/delete"/>
 				 	</div>
 				 	</td>

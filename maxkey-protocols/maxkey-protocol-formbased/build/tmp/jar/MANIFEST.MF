@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: maxkey-protocol-formbased
 Implementation-Version: 1.0.0.RELEASE
-Implementation-Date: 2019-11-12T23:06:23.630+08:00[Asia/Shanghai]
+Implementation-Date: 2019-11-27T22:38:18.742+08:00[Asia/Shanghai]
 Created-By: org.maxkey
 Implementation-Vendor: https://github.com/shimingxy/MaxKey
 

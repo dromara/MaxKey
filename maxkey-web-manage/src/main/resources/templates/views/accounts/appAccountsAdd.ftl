@@ -37,7 +37,7 @@
 			<tr>
 				<th><@locale code="userinfo.displayName" />：</th>
 				<td nowrap>
-					<input readonly  type="text" id="displayName" name="displayName"  class="form-control displayName"  title="" value="${model.displayName!}"/>
+					<input readonly  type="text" id="displayName" name="displayName"  class="form-control displayName"  title="" value="${model.displayName!}" style="width:70%;"/>
 			
 				</td>
 			</tr>
@@ -56,14 +56,14 @@
 			<tr>
 				<th><@locale code="account.relatedUsername" />：</th>
 				<td nowrap>
-					<input type="text" id="relatedUsername" name="relatedUsername"  class="form-control" title="" value="${model.relatedUsername!}"/>
+					<input type="text" id="relatedUsername" name="relatedUsername"  class="form-control" title="" value="${model.relatedUsername!}"  style="width:70%;"/>
 
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="account.relatedPassword" />：</th>
 				<td nowrap>
-					<input type="password" id="relatedPassword" name="relatedPassword"  class="form-control" title="" value="${model.relatedPassword!}"/>
+					<input type="password" id="relatedPassword" name="relatedPassword"  class="form-control" title="" value="${model.relatedPassword!}"  style="width:70%;"/>
 		
 				</td>
 			</tr>
@@ -74,7 +74,7 @@
 					<input type="hidden" id="uid" name="uid" class="uid" title="" value="${model.uid!}"/>
 					<input type="hidden" id="appId" name="appId" class="appId" title="" value="${model.appId!}"/>
 			   		<input class="button btn btn-primary mr-3"  type="button"    id="submitBtn" value="<@locale code="button.text.save" />"/>
-					<input class="button"  type="button"    id="closeBtn" value="<@locale code="button.text.cancel" /> "/>	
+					<input class="button btn btn-secondary mr-3"  type="button"    id="closeBtn" value="<@locale code="button.text.cancel" /> "/>	
 					
 				</td>
 			</tr>

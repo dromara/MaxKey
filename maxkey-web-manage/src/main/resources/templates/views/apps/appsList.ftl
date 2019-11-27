@@ -103,7 +103,7 @@
 				</div>
 				<div class="col-12 col-lg-9 col-md-6">
 					<ol class="breadcrumb float-right">
-						<li><a href="index.html">Dashboard</a></li>
+						<li><a href="<@base/>/main">Dashboard</a></li>
 						<li class="active">/ Dashboard 2</li>
 					</ol>
 				</div>
@@ -126,22 +126,23 @@
 		 			</td>
 		 			<td colspan="2">
 		 				<div id="tool_box_right">
-							<a  class="button btn btn-success mr-3" id="addApps" style="width: 70px;">
-								<span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s" style="margin-top: 10px;float: left;"></span>
-								<@locale code="button.text.add"/>
-							</a>
-							<div id="menu" class="select-menu-modal " style="width: 150px;">
-							     <div class="select-menu-item"><a target="_blank" href="<@base/>/apps/formbased/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.formbased" /></div></a></div>
-							     <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/desktop/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.desktop" /></div></a></div>
-							     <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/tokenbased/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.tokenbased" /></div></a></div>
-							     <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/oauth20/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.oauth2.0" /></div></a></div>
-							     <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/saml20/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.saml2.0" /></div></a></div>
-							     <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/cas/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.cas" /></div></a></div>
-						 		 <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/extendapi/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.extendapi" /></div></a></div>
-						 		 <div class="select-menu-item"><a target="_blank"  href="<@base/>/apps/basic/forwardAdd"><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<@locale code="apps.protocol.basic" /></div></a></div>
+							<div class="dropdown" style="width: 110px;float: left;">
+							 	<button class="btn btn-success dropdown-toggle  mr-3 " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							     	<@locale code="button.text.add"/>
+							  	</button>
+								 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/formbased/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.formbased" /></a>
+								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/desktop/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.desktop" /></a>
+								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/tokenbased/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.tokenbased" /></a>
+								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/oauth20/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.oauth2.0" /></a>
+								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/saml20/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.saml2.0" /></a>
+								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/cas/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.cas" /></a>
+							 		 <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/extendapi/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.extendapi" /></a>
+							 		 <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/basic/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.basic" /></a>
+								  </div>
 							</div>
-						 	<input class="button btn btn-info mr-3 " id="modifyApps" type="button" value="<@locale code="button.text.edit"/>" />
-						 	<input class="button btn btn-danger mr-3 "   id="deleteApps" type="button" value="<@locale code="button.text.delete"/>" />
+						 	<input style="float: left;" class="button btn btn-info mr-3 " id="modifyApps" type="button" value="<@locale code="button.text.edit"/>" />
+						 	<input style="float: left;" class="button btn btn-danger mr-3 "   id="deleteApps" type="button" value="<@locale code="button.text.delete"/>" />
 				 		</div>
 		 			</td>
 		 		</tr>
