@@ -36,7 +36,7 @@
 						</a>
 					</td>
 					<td id="manage" nowrap>
-						<a target="_blank"  href="<@base/>/authz/manage">
+						<a target="_blank"  href="<@base/>/authz/maxkey_mgt">
 							<div  style="float:right;" >&nbsp;&nbsp;<@locale code="global.text.manage"/>&nbsp;&nbsp;</div>
 						</a>
 					</td>

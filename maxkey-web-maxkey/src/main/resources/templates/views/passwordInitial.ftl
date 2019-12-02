@@ -18,7 +18,7 @@
 
 <form  method="post" type="label" autoclose="true"  action="<@base/>/safe/changeInitPassword"> 
 
-	  <table   class="datatable" >
+	  <table   class="table table-bordered"  >
 			<tbody>
 			<tr>
 				<th  colspan="2"><@locale code="login.password.initial.change.tip" /></th>
@@ -26,37 +26,33 @@
 			<tr>
 				<th><@locale code="userinfo.displayName" /> :</th>
 				<td>
-					<input readonly type="text" id="displayName" name="displayName" class="required" title="" value="${model.displayName}"/>
+					<input readonly type="text" id="displayName" name="displayName" class="form-control" title="" value="${model.displayName}"/>
 					
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="userinfo.username" /> :</th>
 				<td>
-					<input readonly type="text" id="username" name="username" class="required" title="" value="${model.username}"/>
+					<input readonly type="text" id="username" name="username" class="form-control" title="" value="${model.username}"/>
 					
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="login.password.newPassword" />:</th>
 				<td>
-					<input type="password" id="newPassword" name="newPassword" class=" required" title="" value=""/>
-					<b class="orange">*</b>
-					<label for="newPassword"></label>
+					<input type="password" id="newPassword" name="newPassword" class="form-control" title="" value=""/>
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="login.password.confirmPassword" />:</th>
 				<td nowrap>
-					<input type="password" id="confirmPassword" name="confirmPassword" class="{ required: true, equalTo: '#newPassword' }" title="" value=""/>
-					<b class="orange">*</b>
-					<label for="confirmPassword"></label>
+					<input type="password" id="confirmPassword" name="confirmPassword" class="form-control" title="" value=""/>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2"  class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
-		    		<input class="button" style="width:100px"  type="submit"    id="submitBtn" value=" code="button.text.save" />"/>
+		    		<input class="button btn btn-lg btn-primaryk" style="width:100px"  type="submit"    id="submitBtn" value=" code="button.text.save" />"/>
 					
 				</td>
 			</tr>

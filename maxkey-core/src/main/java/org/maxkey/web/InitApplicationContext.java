@@ -93,27 +93,27 @@ public class InitApplicationContext extends HttpServlet {
    public void listDataBaseVariables(){
 	   if(applicationContext.containsBean("dataSource")){
 	      try {
-	         _logger.info("----------------------------------------------------------------------------------------------------");
-	         _logger.info("List DatabaseMetaData Variables ");
+	         _logger.debug("----------------------------------------------------------------------------------------------------");
+	         _logger.debug("List DatabaseMetaData Variables ");
 	         Connection connection = ((javax.sql.DataSource)applicationContext.getBean("dataSource")).getConnection();
 	      
 	         java.sql.DatabaseMetaData databaseMetaData = connection.getMetaData();
-	         _logger.info("DatabaseProductName   :   "   +   databaseMetaData.getDatabaseProductName());  
-	         _logger.info("DatabaseProductVersion:   "   +   databaseMetaData.getDatabaseProductVersion()); 
-	         _logger.info("DatabaseMajorVersion  :   "   +   databaseMetaData.getDatabaseMajorVersion());  
-	         _logger.info("DatabaseMinorVersion  :   "   +   databaseMetaData.getDatabaseMinorVersion()); 
-	         _logger.info("supportsTransactions  :   "   +   databaseMetaData.supportsTransactions());  
-	         _logger.info("DefaultTransaction    :   "   +   databaseMetaData.getDefaultTransactionIsolation());
-	         _logger.info("MaxConnections        :   "   +   databaseMetaData.getMaxConnections()); 
-	         _logger.info("");
-	         _logger.info("JDBCMajorVersion      :   "   +   databaseMetaData.getJDBCMajorVersion());  
-	         _logger.info("JDBCMinorVersion      :   "   +   databaseMetaData.getJDBCMinorVersion());  
-	         _logger.info("DriverName            :   "   +   databaseMetaData.getDriverName());  
-	         _logger.info("DriverVersion         :   "   +   databaseMetaData.getDriverVersion());  
-	         _logger.info("");
-	         _logger.info("DBMS  URL             :   "   +   databaseMetaData.getURL());  
-	         _logger.info("UserName              :   "   +   databaseMetaData.getUserName());  
-	        _logger.info("----------------------------------------------------------------------------------------------------");
+	         _logger.debug("DatabaseProductName   :   "   +   databaseMetaData.getDatabaseProductName());  
+	         _logger.debug("DatabaseProductVersion:   "   +   databaseMetaData.getDatabaseProductVersion()); 
+	         _logger.debug("DatabaseMajorVersion  :   "   +   databaseMetaData.getDatabaseMajorVersion());  
+	         _logger.debug("DatabaseMinorVersion  :   "   +   databaseMetaData.getDatabaseMinorVersion()); 
+	         _logger.debug("supportsTransactions  :   "   +   databaseMetaData.supportsTransactions());  
+	         _logger.debug("DefaultTransaction    :   "   +   databaseMetaData.getDefaultTransactionIsolation());
+	         _logger.debug("MaxConnections        :   "   +   databaseMetaData.getMaxConnections()); 
+	         _logger.debug("");
+	         _logger.debug("JDBCMajorVersion      :   "   +   databaseMetaData.getJDBCMajorVersion());  
+	         _logger.debug("JDBCMinorVersion      :   "   +   databaseMetaData.getJDBCMinorVersion());  
+	         _logger.debug("DriverName            :   "   +   databaseMetaData.getDriverName());  
+	         _logger.debug("DriverVersion         :   "   +   databaseMetaData.getDriverVersion());  
+	         _logger.debug("");
+	         _logger.debug("DBMS  URL             :   "   +   databaseMetaData.getURL());  
+	         _logger.debug("UserName              :   "   +   databaseMetaData.getUserName());  
+	        _logger.debug("----------------------------------------------------------------------------------------------------");
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      }  
@@ -123,8 +123,8 @@ public class InitApplicationContext extends HttpServlet {
    //propertySourcesPlaceholderConfigurer
    public void listProperties(){
 	   if(applicationContext.containsBean("propertySourcesPlaceholderConfigurer")){
-	         _logger.info("----------------------------------------------------------------------------------------------------");
-	         _logger.info("List Properties Variables ");
+	         _logger.debug("----------------------------------------------------------------------------------------------------");
+	         _logger.debug("List Properties Variables ");
 	         PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = ((PropertySourcesPlaceholderConfigurer)applicationContext.getBean("propertySourcesPlaceholderConfigurer"));
 	         Properties properties=(Properties)propertySourcesPlaceholderConfigurer.getAppliedPropertySources().get(PropertySourcesPlaceholderConfigurer.LOCAL_PROPERTIES_PROPERTY_SOURCE_NAME).getSource();
 	         Set<Object> keyValue = properties.keySet();
@@ -137,15 +137,15 @@ public class InitApplicationContext extends HttpServlet {
 	         //out
 	         for (Iterator<String> it = keyValueSet.iterator(); it.hasNext();){
 		         String key = (String) it.next();
-		         _logger.info(key + "   =   " + properties.get(key));
+		         _logger.debug(key + "   =   " + properties.get(key));
 	         }
-	        _logger.info("----------------------------------------------------------------------------------------------------");
+	        _logger.debug("----------------------------------------------------------------------------------------------------");
 	   }
    }
    
 	public void listEnvVars() {
-		_logger.info("----------------------------------------------------------------------------------------------------");
-		_logger.info("List Environment Variables ");
+		_logger.debug("----------------------------------------------------------------------------------------------------");
+		_logger.debug("List Environment Variables ");
 		Map<String, String> map = System.getenv();
 		SortedSet<String> keyValueSet = new TreeSet<String>();
 		for (Iterator<String> itr = map.keySet().iterator(); itr.hasNext();) {
@@ -155,10 +155,10 @@ public class InitApplicationContext extends HttpServlet {
 		// out
 		for (Iterator<String> it = keyValueSet.iterator(); it.hasNext();) {
 			String key = (String) it.next();
-			_logger.info(key + "   =   " + map.get(key));
+			_logger.debug(key + "   =   " + map.get(key));
 		}
-		_logger.info("APP_HOME" + "   =   " + PathUtils.getInstance().getAppPath());
-		_logger.info("----------------------------------------------------------------------------------------------------");
+		_logger.debug("APP_HOME" + "   =   " + PathUtils.getInstance().getAppPath());
+		_logger.debug("----------------------------------------------------------------------------------------------------");
 	}
    
    public void showLicense(){

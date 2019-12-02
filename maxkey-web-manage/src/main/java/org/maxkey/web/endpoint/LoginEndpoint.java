@@ -99,6 +99,9 @@ public class LoginEndpoint {
 		}else {
 			WebContext.setAttribute(WebConstants.SPRING_PROCESS_SAVED_REQUEST, firstSavedRequest);
 		}
+		if(WebContext.isAuthenticated()){
+ 			return WebContext.redirect("/main");
+		}
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
@@ -106,11 +109,10 @@ public class LoginEndpoint {
  	@RequestMapping(value={"/logon.do"})
 	public ModelAndView logon(@ModelAttribute("authentication") BasicAuthentication authentication) {
  		
- 		authenticationProvider.authenticate(authentication);
- 
  		if(WebContext.isAuthenticated()){
  			return WebContext.redirect("/main");
 		}else{
+			authenticationProvider.authenticate(authentication);
 			return WebContext.redirect("/login");
 		}
  	}

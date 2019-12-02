@@ -38,15 +38,15 @@
 	
 	<bean id="jwtSignerValidationService" class="org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService">
 		<constructor-arg name="keyStore" ref="jwkSetKeyStore" />
-		<property name="defaultSignerKeyId" value="connsec_rsa" />
+		<property name="defaultSignerKeyId" value="maxkey_rsa" />
  		<property name="defaultSigningAlgorithmName" value="RS256" />
 	</bean>
 
 	<bean id="jwtEncryptionService" class="org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService">
 		<constructor-arg name="keyStore" ref="jwkSetKeyStore" />
 		<property name="defaultAlgorithm" value="RSA1_5" />
-		<property name="defaultDecryptionKeyId" value="connsec_rsa" />
-		<property name="defaultEncryptionKeyId" value="connsec_rsa" />
+		<property name="defaultDecryptionKeyId" value="maxkey_rsa" />
+		<property name="defaultEncryptionKeyId" value="maxkey_rsa" />
 	</bean>
 
 	<bean id="jwtLoginService" class="org.maxkey.authn.support.jwt.JwtLoginService">
@@ -105,8 +105,8 @@
 	<bean id="timeBasedKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
 		<property name="type" value="totp" />
 		<property name="digits" value="6" />
-		<property name="issuer" value="ConnSec" />
-		<property name="domain" value="connsec.com" />
+		<property name="issuer" value="maxkey" />
+		<property name="domain" value="maxkey.org" />
 		<property name="period" value="30" />
 		
 	</bean>
