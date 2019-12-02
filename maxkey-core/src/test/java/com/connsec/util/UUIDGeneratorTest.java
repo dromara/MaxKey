@@ -3,7 +3,7 @@ package com.connsec.util;
 import java.util.Date;
 //import java.util.UUID;
 
-import org.apache.tsik.uuid.UUID;
+import org.maxkey.uuid.UUID;
 import org.junit.Test;
 import org.maxkey.util.UUIDGenerator;
 
