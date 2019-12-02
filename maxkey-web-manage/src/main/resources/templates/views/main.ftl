@@ -21,8 +21,6 @@
 	<div class="col-md-3 sidebar-nav side-nav" >
 		<#include  "layout/sidenav.ftl"/>
 	</div>
- <div class="swlink">Collect from <a href="http://www.scnoob.com/" title="网站模板">网站模板</a></div>
-
 <div class="page-container">
 
 <div class="main-content">
@@ -30,12 +28,12 @@
 
 <div class="breadcrumb-wrapper row">
 <div class="col-12 col-lg-3 col-md-6">
-<h4 class="page-title">Dashboard 2</h4>
+<h4 class="page-title"><@locale code="navs.home"/></h4>
 </div>
 <div class="col-12 col-lg-9 col-md-6">
 <ol class="breadcrumb float-right">
-<li><a href="<@base/>/main">Dashboard</a></li>
-<li class="active"> / Dashboard 2</li>
+<li><a href="<@base/>/main"><@locale code="navs.system"/></a></li>
+<li class="active"> / <@locale code="navs.home"/></li>
 </ol>
 </div>
 </div>

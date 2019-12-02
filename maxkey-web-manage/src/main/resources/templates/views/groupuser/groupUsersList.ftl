@@ -41,12 +41,13 @@
 		<div class="container-fluid">
 			<div class="breadcrumb-wrapper row">
 				<div class="col-12 col-lg-3 col-md-6">
-					<h4 class="page-title">Dashboard 2</h4>
+					<h4 class="page-title"><@locale code="navs.groups.member"/></h4>
 				</div>
 				<div class="col-12 col-lg-9 col-md-6">
 					<ol class="breadcrumb float-right">
-						<li><a href="<@base/>/main">Dashboard</a></li>
-						<li class="active">/ Dashboard 2</li>
+						<li><a href="<@base/>/main"><@locale code="navs.home"/></a></li>
+						<li class="inactive" >/ <@locale code="navs.groups"/></li>
+						<li class="active">/ <@locale code="navs.groups.member"/></li>
 					</ol>
 				</div>
 			</div>

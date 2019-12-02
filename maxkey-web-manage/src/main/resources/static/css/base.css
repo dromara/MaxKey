@@ -197,6 +197,9 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
     color: #8a8a8a;
     cursor: pointer;
 }
+.breadcrumb-wrapper .breadcrumb .inactive {
+    color: #8a8a8a;
+}
 .breadcrumb-wrapper .breadcrumb .active {
     color: #e22a6f;
 }
