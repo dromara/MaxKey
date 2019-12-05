@@ -300,7 +300,7 @@ subprojects {
     	 compile fileTree(dir: "${rootDir}/maxkey-lib/", include: '*/*.jar')
     	 
     	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.29'
-    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '9.0.29'
+    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '8.5.2'
     	 
     	 //compile group: 'org.eclipse.jdt.core.compiler', name: 'ecj', version: '4.6.1'
     	 //compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'

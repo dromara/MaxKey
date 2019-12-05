@@ -1,11 +1,8 @@
 # Compiled class file
 #.gitignore
 *.class
-bin/*
 */bin/*
-
-/.gradle/
-.gradle/*
+bin/*
 /.gradle/*
 
 # Log file
@@ -13,14 +10,13 @@ bin/*
 *.log.*
 */logs/*
 
-jdk/*
+
 */jdk/*
 
+*/.settings/*
 
-
-org/apache/mybatis/jpa/*
 */org/apache/mybatis/jpa/*
 
-/build/
-build/*
 */build/*
+build/*
+maxkey*/build/libs/*
