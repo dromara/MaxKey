@@ -125,10 +125,10 @@ $(function(){
 								<td colspan =3>
 									<select id="selectAdapter" name="selectAdapter"   class="form-control">
 										<option value="">No Adapter</option>
-										<option value="com.connsec.web.authorize.endpoint.adapter.TokenBasedDefaultAdapter" <#if "com.connsec.web.authorize.endpoint.adapter.TokenBasedDefaultAdapter"==model.adapter!>selected</#if>>DefaultAdapter</option>
-										<option value="com.connsec.web.authorize.endpoint.adapter.TokenBasedSimpleAdapter"  <#if  "com.connsec.web.authorize.endpoint.adapter.TokenBasedSimpleAdapter"==model.adapter!>selected</#if> >SimpleAdapter</option>
-										<option value="com.connsec.web.authorize.endpoint.adapter.TokenBasedJWTAdapter" 	<#if  "com.connsec.web.authorize.endpoint.adapter.TokenBasedJWTAdapter"==model.adapter!>selected</#if>>JWTAdapter</option>
-										<option value="com.connsec.web.authorize.endpoint.adapter.TokenBasedJWTHS256Adapter" <#if  "com.connsec.web.authorize.endpoint.adapter.TokenBasedJWTHS256Adapter"==model.adapter!>selected</#if>>JWTHS256Adapter</option>
+										<option value="org.maxkey.authz.token.endpoint.adapter.TokenBasedDefaultAdapter" <#if "org.maxkey.authz.token.endpoint.adapter.TokenBasedDefaultAdapter"==model.adapter!>selected</#if>>DefaultAdapter</option>
+										<option value="org.maxkey.authz.token.endpoint.adapter.TokenBasedSimpleAdapter"  <#if  "org.maxkey.authz.token.endpoint.adapter.TokenBasedSimpleAdapter"==model.adapter!>selected</#if> >SimpleAdapter</option>
+										<option value="org.maxkey.authz.token.endpoint.adapter.TokenBasedJWTAdapter" 	<#if  "org.maxkey.authz.token.endpoint.adapter.TokenBasedJWTAdapter"==model.adapter!>selected</#if>>JWTAdapter</option>
+										<option value="org.maxkey.authz.token.endpoint.adapter.TokenBasedJWTHS256Adapter" <#if  "org.maxkey.authz.token.endpoint.adapter.TokenBasedJWTHS256Adapter"==model.adapter!>selected</#if>>JWTHS256Adapter</option>
 									</select>
 								</td>
 							</tr>

@@ -1,10 +1,10 @@
 # Compiled class file
 #.gitignore
 *.class
-*/bin/*
 bin/*
-*/build/*
-build/*
+*/bin/*
+
+/.gradle/
 .gradle/*
 /.gradle/*
 
@@ -12,10 +12,15 @@ build/*
 *.log
 *.log.*
 */logs/*
-*/jdk/*
-jdk/*
 
-*/org/apache/mybatis/jpa/*
+jdk/*
+*/jdk/*
+
+
+
 org/apache/mybatis/jpa/*
-/.gradle/
+*/org/apache/mybatis/jpa/*
+
 /build/
+build/*
+*/build/*

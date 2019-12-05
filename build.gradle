@@ -8,9 +8,9 @@ defaultTasks "clean", "build"
 ext {
 	jackson2Version      = "2.9.8"
 	log4jVersion         = "2.12.0"
-	springVersion        = "5.1.9.RELEASE"
-	springBootVersion    = "2.1.9.RELEASE"
-	springSecurityVersion= "5.2.0.RELEASE"
+	springVersion        = "5.2.2.RELEASE"
+	springBootVersion    = "2.2.1.RELEASE"
+	springSecurityVersion= "5.2.1.RELEASE"
 	hibernateVersion	 = "5.4.2.Final"
 	slf4jVersion	 	 = "1.7.26"
 	jacksonVersion		 = "2.9.9"
@@ -299,8 +299,8 @@ subprojects {
     	 //local jars
     	 compile fileTree(dir: "${rootDir}/maxkey-lib/", include: '*/*.jar')
     	 
-    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '8.5.47'
-    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '8.5.2'
+    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.29'
+    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '9.0.29'
     	 
     	 //compile group: 'org.eclipse.jdt.core.compiler', name: 'ecj', version: '4.6.1'
     	 //compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
