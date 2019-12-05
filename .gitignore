@@ -22,4 +22,4 @@ bin/*
 */build/*
 build/*
 /build
-maxkey*/build/libs/*
+/maxkey*/build/libs/*
