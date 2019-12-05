@@ -4,6 +4,7 @@
 */bin/*
 bin/*
 /bin
+/*/*/bin/*
 /.gradle/*
 
 # Log file
@@ -22,4 +23,9 @@ bin/*
 */build/*
 build/*
 /build
-/maxkey*/build/libs/*
+/*/*/build/*/*
+/*/build/*/*
+*/META-INF/MANIFEST.MF
+/*/*/.gitignore
+/*/.gitignore
+/.gradle/
