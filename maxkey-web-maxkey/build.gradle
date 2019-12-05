@@ -16,12 +16,7 @@ buildscript {
   	classpath "com.bmuschko:gradle-tomcat-plugin:2.2.3"
   }
 }
-dependencies {
-	def tomcatVersion = '7.0.59'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
-           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
-         	
+dependencies {         	
 	compile project(":maxkey-core")
 	compile project(":maxkey-dao")
    	compile project(":maxkey-jose-jwt")
