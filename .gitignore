@@ -3,20 +3,23 @@
 *.class
 */bin/*
 bin/*
+/bin
 /.gradle/*
 
 # Log file
 *.log
 *.log.*
 */logs/*
-
+/log
 
 */jdk/*
 
 */.settings/*
+/.settings
 
 */org/apache/mybatis/jpa/*
 
 */build/*
 build/*
+/build
 maxkey*/build/libs/*
