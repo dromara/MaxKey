@@ -1,4 +1,4 @@
-# <img src="https://avatars1.githubusercontent.com/u/1563377?s=180&v=4" width="45px">MaxKey
+# <img src="https://github.com/shimingxy/MaxKey/blob/master/logo.jpg?raw=true" width="45px">MaxKey
 **MaxKey(马克思的钥匙)**，寓意是最大钥匙，是基于开放用户安全身份认证系统（User Security Access System）,包含用户认证、单点登录、资源管理、权限管理等。
 
 什么是**单点登录(Single Sign On）**，简称为**SSO**？
