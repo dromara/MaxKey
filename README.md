@@ -47,9 +47,10 @@ MaxKey管理
 ![mahua](https://github.com/shimingxy/MaxKey/blob/master/maxkey_mgt_apps.png)
 
 ------------
-百度下载
+百度网盘下载链接
+提取码: agpx 
 
-链接: https://pan.baidu.com/s/13tqB_kGonNoe-pfcnkUJ0A 提取码: agpx 
+https://pan.baidu.com/s/13tqB_kGonNoe-pfcnkUJ0A 
 ------------
 
 
