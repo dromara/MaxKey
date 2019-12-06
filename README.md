@@ -29,7 +29,7 @@
 7. 两种认证机制并存，各应用系统可保留原有认证机制，同时集成认证中心的认证；应用具有高度独立性，不依赖认证中心，又可用使用认证中心的认证，实现单点登录。
 
 ------------
-- **MaxKey认证
+**MaxKey认证
 登录界面
 
 ![mahua](https://github.com/shimingxy/MaxKey/blob/master/maxkey_login.png)
@@ -37,7 +37,7 @@
 
 ![mahua](https://github.com/shimingxy/MaxKey/blob/master/maxkey_index.png)
 
-- **MaxKey管理
+**MaxKey管理
 用户管理界面
 
 ![mahua](https://github.com/shimingxy/MaxKey/blob/master/maxkey_mgt_users.png)
@@ -47,7 +47,7 @@
 ![mahua](https://github.com/shimingxy/MaxKey/blob/master/maxkey_mgt_apps.png)
 
 ------------
-百度网盘下载链接
+**度网盘下载链接
 
 提取码: agpx 
 
