@@ -14,27 +14,27 @@
 
 | 序号    | 协议   |  支持层度  |
 | --------| :-----  | :----:  |
-| 1       | **OAuth 2.0/OpenID Connect**   |  高  |
-| 2       | **SAML 2.0**   				   |  高  |
-| 3       | **JWT**  					   |  高  |
-| 4       | **CAS**						   |  高  |
-| 5       | **FormBased**				   |  中  |
-| 6       | **TokenBased(Post/Cookie)**	   |  中  |
-| 7       | **ExtendApi**				   |  低  |
-| 8       | **ext**						   |  低  |
+| 1       | OAuth 2.0/OpenID Connect   |  高  |
+| 2       | SAML 2.0   				   |  高  |
+| 3       | JWT  					   |  高  |
+| 4       | CAS						   |  高  |
+| 5       | FormBased				   |  中  |
+| 6       | TokenBased(Post/Cookie)	   |  中  |
+| 7       | ExtendApi				   |  低  |
+| 8       | ext						   |  低  |
 
 2. 登录支持
 
 | 序号    | 登录方式   | 
 | --------| :-----  |
-| 1       | **动态验证码**   	| 
-| 2       | **双因素认证**   	| 
-| 3       | **Google Authenticator**   	|
-| 4       | **微信**  			| 
-| 5       | **新浪微博**		|  
-| 6       | **Google**			| 
-| 7       | **Facebook**	    | 
-| 8       | **其他社交账号**	| 
+| 1       | 动态验证码   	| 
+| 2       | 双因素认证   	| 
+| 3       | Google Authenticator   	|
+| 4       | 微信  			| 
+| 5       | 新浪微博		|  
+| 6       | Google			| 
+| 7       | Facebook	    | 
+| 8       | 其他社交账号	| 
 
 3. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
 
