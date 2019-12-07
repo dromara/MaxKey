@@ -1,4 +1,5 @@
 # <img src="https://github.com/shimingxy/MaxKey/blob/master/logo.jpg?raw=true" width="45px">MaxKey
+
 **MaxKey(马克思的钥匙)**，寓意是最大钥匙，是基于开放用户安全身份认证系统（User Security Access System）,包含用户认证、单点登录、资源管理、权限管理等。
 
 什么是**单点登录(Single Sign On）**，简称为**SSO**？
@@ -11,14 +12,16 @@
 
 1.  提供基于标准化的开放协议，实现与应用系统之间的单点登录，主要认证协议：
 
-- **OAuth 2.0/OpenID Connect**
-- **SAML 2.0**
-- **CAS**
-- **JWT**
-- **FormBased**
-- **TokenBased(Post/Cookie)**
-- **ExtendApi**
-- **ext**
+| 序号    | 协议   |  支持层度  |
+| --------| :-----  | :----:  |
+| 1       | **OAuth 2.0/OpenID Connect**   |  高  |
+| 2       | **SAML 2.0**   				   |  高  |
+| 3       | **JWT**  					   |  高  |
+| 4       | **CAS**						   |  高  |
+| 5       | **FormBased**				   |  中  |
+| 6       | **TokenBased(Post/Cookie)**	   |  中  |
+| 7       | **ExtendApi**				   |  低  |
+| 8       | **ext**						   |  低  |
 
 2.  提供简单、可靠和安全的用户认证和单点登录，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
 
