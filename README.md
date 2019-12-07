@@ -1,6 +1,6 @@
 # <img src="https://github.com/shimingxy/MaxKey/blob/master/logo.jpg?raw=true" width="45px">MaxKey
 
-**MaxKey(马克思的钥匙)**，寓意是最大钥匙，是基于开放用户安全身份认证系统（User Security Access System）,包含用户认证、单点登录、资源管理、权限管理等。
+**MaxKey(马克思的钥匙)**，寓意是最大钥匙，是基于开放用户安全身份认证系统（User Security Access System）,提供简单、可靠和安全的用户认证和单点登录，包含用户认证、单点登录、资源管理、权限管理等。
 
 什么是**单点登录(Single Sign On）**，简称为**SSO**？
 
@@ -36,17 +36,15 @@
 | 7       | **Facebook**	    | 
 | 8       | **其他社交账号**	| 
 
-3. 提供简单、可靠和安全的用户认证和单点登录，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
+3. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
 
-4. 提供标准的认证接口以便于其他应用集成SSO。
+4. 认证中心具有平台无关性、环境多样性，支持Web、手机、移动设备等, 如Apple iOS，Andriod等，将认证能力从B/S到移动应用全面覆盖。
 
-5. 认证中心具有平台无关性、环境多样性，支持Web、手机、移动设备等, 如Apple iOS，Andriod等，将认证能力从B/S到移动应用全面覆盖。
+5. 多种认证机制并存，各应用系统可保留原有认证机制，同时集成认证中心的认证；应用具有高度独立性，不依赖认证中心，又可用使用认证中心的认证，实现单点登录。
 
-6. 多种认证机制并存，各应用系统可保留原有认证机制，同时集成认证中心的认证；应用具有高度独立性，不依赖认证中心，又可用使用认证中心的认证，实现单点登录。
+6. 基于Java平台开发，采用Spring、Spring Boot、MyBatis、bootstrap等开源技术，支持微服务，扩展性强。  
 
-7. 基于Java平台开发，采用Spring、Spring Boot、MyBatis、bootstrap等开源技术，支持微服务，扩展性强。  
-
-8. 许可证 Apache License, Version 2.0，开源免费。 
+7. 许可证 Apache License, Version 2.0，开源免费。 
 
 ------------
 # 界面
