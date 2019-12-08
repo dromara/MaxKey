@@ -150,7 +150,6 @@ subprojects {
          compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
          compile group: 'org.apache.commons', name: 'commons-csv', version: '1.7'
          compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.6.0'
-         //compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
          compile group: 'commons-dbutils', name: 'commons-dbutils', version: '1.7'
          compile group: 'org.apache.commons', name: 'commons-digester3', version: '3.2'
          compile group: 'commons-digester', name: 'commons-digester', version: '2.1'
@@ -170,8 +169,8 @@ subprojects {
          compile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
          compile group: 'velocity', name: 'velocity-dep', version: '1.4'
          compile group: 'org.freemarker', name: 'freemarker', version: '2.3.28'
-         //compile group: 'org.apache.commons', name: 'not-yet-commons-ssl', version: '0.3.9'
-                  
+         compile group: 'org.apache.commons', name: 'not-yet-commons-ssl', version: '0.3.9'
+  
          compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: "${log4jVersion}"
          compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: "${log4jVersion}"
 		 compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: "${log4jVersion}"
@@ -257,11 +256,10 @@ subprojects {
          
          compile group: 'redis.clients', name: 'jedis', version: '3.0.1'
          compile group: 'org.ehcache', name: 'ehcache', version: '3.5.3'
-         compile group: 'org.mybatis', name: 'mybatis', version: '3.5.1'
-         compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.1'
-         compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.47'
-         compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.4'
-         compile group: 'com.mchange', name: 'mchange-commons-java', version: '0.2.16'
+         compile group: 'org.mybatis', name: 'mybatis', version: '3.5.3'
+         compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.3'
+         compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.48'
+		 compile group: 'com.alibaba', name: 'druid', version: '1.1.21'
          compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.17.Final'
          compile group: 'org.hibernate', name: 'hibernate-validator-cdi', version: '6.0.17.Final'
          compile group: 'org.hibernate.validator', name: 'hibernate-validator-annotation-processor', version: '6.0.17.Final'
@@ -285,7 +283,11 @@ subprojects {
          //compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.2'
 		 //compile group: 'xalan', name: 'serializer', version: '2.7.2'
 		 //compile group: 'xalan', name: 'xalan', version: '2.7.2'
-		 //compile group: 'xml-apis', name: 'xml-apis', version: '1.4.01'
+		 //compile group: 'xml-apis', name: 'xml-apis', version: '2.0.2'
+		 compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+		 compile group: 'javax.xml.bind', name: 'jaxb-core', version: '2.3.0.1'
+		 compile group: 'javax.xml.bind', name: 'jaxb-impl', version: '2.3.0.1'
+		 compile group: 'javax.xml.bind', name: 'jaxb-xjc', version: '2.3.0.1'
 		 compile group: 'xml-resolver', name: 'xml-resolver', version: '1.2'
 		 compile group: 'org.apache.santuario', name: 'xmlsec', version: '1.5.8'
 		 compile group: 'org.ogce', name: 'xpp3', version: '1.1.6'
@@ -297,15 +299,10 @@ subprojects {
          testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
          
     	 //local jars
-    	 compile fileTree(dir: "${rootDir}/maxkey-lib/", include: '*/*.jar')
+    	 compile fileTree(dir: "${rootDir}/maxkey-lib/", include: '*.jar')
     	 
     	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.29'
     	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '8.5.2'
-    	 
-    	 //compile group: 'org.eclipse.jdt.core.compiler', name: 'ecj', version: '4.6.1'
-    	 //compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
-    	 //compile group: 'el-impl', name: 'el-impl', version: '1.0'
-    	 
     	 
     	 
     }
