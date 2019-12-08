@@ -1,7 +1,5 @@
 package org.maxkey;
 
-
-import java.io.File;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -26,7 +24,6 @@ import org.springframework.context.annotation.ImportResource;
 )
 public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 	private static final Logger _logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
-	
 
 	@Bean
 	MaxKeyMgtConfig MaxKeyMgtConfig() {
@@ -34,6 +31,8 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 	}
 	
 	public static void main(String[] args) {
+		System.out.println("MaxKeyMgtApplication");
+
 		ConfigurableApplicationContext  applicationContext =SpringApplication.run(MaxKeyMgtApplication.class, args);
 		InitApplicationContext initWebContext=new InitApplicationContext(applicationContext);
 		

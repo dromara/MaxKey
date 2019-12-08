@@ -1,12 +1,22 @@
 description = "maxkey-web-manage"
 
+// Apply the java plugin to add support for Java
+apply plugin: 'java'
 //apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
+apply plugin: 'com.bmuschko.tomcat-base'
+apply plugin: 'com.bmuschko.tomcat'
+
+buildscript {
+  repositories {
+  jcenter()
+  }
+  dependencies {
+  	classpath "com.bmuschko:gradle-tomcat-plugin:2.2.3"
+  }
+}
 
 dependencies {
-	//local jars
-	compile fileTree(dir: '../maxkey-lib/', include: '*/*.jar')
-	
 	compile project(":maxkey-core")
    	compile project(":maxkey-jose-jwt")
    	compile project(":maxkey-dao")
