@@ -46,10 +46,11 @@ public class SafeController {
 			@RequestParam("newPassword") String newPassword,
 			@RequestParam("confirmPassword") String confirmPassword) {
 		
-			changeUserPassword(oldPassword,newPassword,confirmPassword);
-			
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
-		
+			if(changeUserPassword(oldPassword,newPassword,confirmPassword)) {
+				return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
+			}else {
+				return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+			}	
 	}
 
 	@RequestMapping(value="/changeExpiredPassword") 
@@ -91,9 +92,11 @@ public class SafeController {
 									String newPassword,
 									String confirmPassword){
 		UserInfo userInfo =WebContext.getUserInfo();
+		_logger.debug("decipherable : "+userInfo.getDecipherable());
+		_logger.debug("decipherable : "+PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
 		if(newPassword.equals(confirmPassword)){
 			if(oldPassword==null || 
-					userInfo.getPassword().equals(passwordEncoder.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(),oldPassword)))){
+					passwordEncoder.matches(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(),oldPassword), userInfo.getPassword())){
 				userInfo.setPassword(newPassword);
 				userInfoService.changePassword(userInfo);
 				//TODO syncProvisioningService.changePassword(userInfo);

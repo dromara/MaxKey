@@ -10,6 +10,8 @@ import org.maxkey.domain.UserInfo;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserInfoService extends JpaBaseService<UserInfo> {
+	final static Logger _logger = LoggerFactory.getLogger(UserInfoService.class);
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -107,6 +110,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 			}
 			String password = passwordEncoder.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
 			userInfo.setDecipherable(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
+			_logger.debug("decipherable : "+userInfo.getDecipherable());
 			userInfo.setPassword(password);
 			userInfo.setPasswordLastSetTime(DateUtils.getCurrentDateTimeAsString());
 			

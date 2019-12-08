@@ -4,15 +4,17 @@
 		<li  id="nav_primay_11"  class="nav_primay_level primaryleft"  xpath="">
 			<a   href="<@base/>/appList">我的应用</a>
 		</li>
-		<li  id="nav_primay_12"  class="nav_primay_level primaryleft"  xpath="">
-			<a   href="<@base/>/socialsignon/list">认证关联</a>
-		</li>
 		<li  id="nav_primay_13"  class="nav_primay_level primaryleft"  xpath="">
 			<a   href="<@base/>/safe/forward/setting">安全设置</a>
 			<div id="nav_child_1301"  class="nav_second_child">
 				<ul>
 					<li id="nav_second_1301" class="nav_second_level">
 						<a   href="<@base/>/safe/forward/setting">安全设置</a>
+					</li>
+				</ul>
+				<ul>
+					<li id="nav_second_1301" class="nav_second_level">
+						<a   href="<@base/>/socialsignon/list">认证关联</a>
 					</li>
 				</ul>
 				<ul>
