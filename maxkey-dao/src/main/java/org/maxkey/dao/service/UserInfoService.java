@@ -3,6 +3,7 @@ package org.maxkey.dao.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.constants.STATUS;
+import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.dao.persistence.UserInfoMapper;
 import org.maxkey.domain.ChangePassword;
@@ -109,7 +110,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 				
 			}
 			String password = passwordEncoder.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
-			userInfo.setDecipherable(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
+			userInfo.setDecipherable(ReciprocalUtils.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword())));
 			_logger.debug("decipherable : "+userInfo.getDecipherable());
 			userInfo.setPassword(password);
 			userInfo.setPasswordLastSetTime(DateUtils.getCurrentDateTimeAsString());

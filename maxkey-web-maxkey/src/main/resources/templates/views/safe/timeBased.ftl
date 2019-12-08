@@ -14,7 +14,8 @@
 				<td colspan="2"><@locale code="login.totp.title" /></td>
 			</tr>
 			<tr>
-				<td> <img id="captchaimg" src="<@base/>/image/${id}" /></td>
+				<td> <img id="captchaimg" src="<@base/>/image/${id}" /><br>
+				支持<b>Google Authenticator等</b></td>
 				<td   style="width:75%;">
 					<table  class="table"   style="width:100%;">
 						<tr>

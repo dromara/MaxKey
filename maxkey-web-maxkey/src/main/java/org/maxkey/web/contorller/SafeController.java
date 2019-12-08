@@ -93,7 +93,7 @@ public class SafeController {
 									String confirmPassword){
 		UserInfo userInfo =WebContext.getUserInfo();
 		_logger.debug("decipherable old : "+userInfo.getDecipherable());
-		_logger.debug("decipherable new : "+PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
+		_logger.debug("decipherable new : "+ReciprocalUtils.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), newPassword)));
 		if(newPassword.equals(confirmPassword)){
 			if(oldPassword==null || 
 					passwordEncoder.matches(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(),oldPassword), userInfo.getPassword())){
@@ -123,7 +123,8 @@ public class SafeController {
 			@RequestParam("confirmPassword") String confirmPassword) {
 		
 		UserInfo userInfo =WebContext.getUserInfo();
-		_logger.debug("App Login Password : "+ReciprocalUtils.decoder(userInfo.getAppLoginPassword()));
+		_logger.debug("App Login Password : "+userInfo.getAppLoginPassword());
+		_logger.debug("App Login new Password : "+ReciprocalUtils.encode(newPassword));
 		if(newPassword.equals(confirmPassword)){
 			if(StringUtils.isNullOrBlank(userInfo.getAppLoginPassword())||userInfo.getAppLoginPassword().equals(ReciprocalUtils.encode(oldPassword))){
 				userInfo.setAppLoginPassword(ReciprocalUtils.encode(newPassword));
