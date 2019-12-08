@@ -92,8 +92,8 @@ public class SafeController {
 									String newPassword,
 									String confirmPassword){
 		UserInfo userInfo =WebContext.getUserInfo();
-		_logger.debug("decipherable : "+userInfo.getDecipherable());
-		_logger.debug("decipherable : "+PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
+		_logger.debug("decipherable old : "+userInfo.getDecipherable());
+		_logger.debug("decipherable new : "+PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
 		if(newPassword.equals(confirmPassword)){
 			if(oldPassword==null || 
 					passwordEncoder.matches(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(),oldPassword), userInfo.getPassword())){
