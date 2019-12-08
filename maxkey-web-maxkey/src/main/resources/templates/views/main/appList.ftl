@@ -48,7 +48,7 @@
 				<@locale code="apps.icon"/>
 			</td>
 			<td><@locale code="apps.name"/></td>
-			<td><@locale code="apps.protocol"/></td>
+			<!--<td><@locale code="apps.protocol"/></td>-->
 			<td><@locale code="apps.category"/></td>
 			<td>
 				<@locale code="button.text.action"/>
@@ -69,7 +69,7 @@
 				</#if>
 			</td>
 			<td>${app.name}</td>
-			<td>${app.protocol}</td>
+			<!--<td>${app.protocol}</td>-->
 			<td>${app.category}</td>
 			<td>
 				<#if app.protocol ?contains("Desktop")>
