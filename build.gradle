@@ -11,9 +11,11 @@ ext {
 	springVersion        = "5.2.2.RELEASE"
 	springBootVersion    = "2.2.1.RELEASE"
 	springSecurityVersion= "5.2.1.RELEASE"
-	hibernateVersion	 = "5.4.2.Final"
+	hibernateVersion	 = "6.0.17.Final"
 	slf4jVersion	 	 = "1.7.26"
 	jacksonVersion		 = "2.9.9"
+	bouncycastleVersion	 = "1.60"
+	httpcomponentsVersion= "4.5.6"
 }
 
 configurations.all {
@@ -140,8 +142,8 @@ subprojects {
     	 compileOnly 'junit:junit:4.11'  
     	 testCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     	 compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
-         compileOnly group: 'javax.servlet', name: 'jstl', version: '1.2'
-         compileOnly group: 'javax.servlet', name: 'jsp-api', version: '2.0' 
+         //compileOnly group: 'javax.servlet', name: 'jstl', version: '1.2'
+         //compileOnly group: 'javax.servlet', name: 'jsp-api', version: '2.0' 
          
          compile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.4.0.Final'
          
@@ -161,10 +163,10 @@ subprojects {
          compile group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
          compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
          compile group: 'org.apache.commons', name: 'commons-email', version: '1.5'
-         compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.6'
-         compile group: 'org.apache.httpcomponents', name: 'fluent-hc', version: '4.5.6'
-         compile group: 'org.apache.httpcomponents', name: 'httpclient-cache', version: '4.5.6'
-         compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.6'
+         compile group: 'org.apache.httpcomponents', name: 'httpclient', version: "${httpcomponentsVersion}"
+         compile group: 'org.apache.httpcomponents', name: 'fluent-hc', version: "${httpcomponentsVersion}"
+         compile group: 'org.apache.httpcomponents', name: 'httpclient-cache', version: "${httpcomponentsVersion}"
+         compile group: 'org.apache.httpcomponents', name: 'httpmime', version: "${httpcomponentsVersion}"
          compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.10'
          compile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
          compile group: 'velocity', name: 'velocity-dep', version: '1.4'
@@ -232,10 +234,13 @@ subprojects {
          compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
          compile group: 'javax.xml', name: 'jsr173', version: '1.0'
 		 compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+		 compile group: 'javax.xml.bind', name: 'jaxb-core', version: '2.3.0.1'
+		 compile group: 'javax.xml.bind', name: 'jaxb-impl', version: '2.3.0.1'
+		 compile group: 'javax.xml.bind', name: 'jaxb-xjc', version: '2.3.0.1'
          
-         compile group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: '1.60'
-         compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
-         compile group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: '1.60'
+         compile group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: "${bouncycastleVersion}"
+         compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: "${bouncycastleVersion}"
+         compile group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: "${bouncycastleVersion}"
          compile group: 'com.google.crypto.tink', name: 'tink', version: '1.2.2'
          
          compile group: 'com.jhlabs', name: 'filters', version: '2.0.235-1'
@@ -260,9 +265,9 @@ subprojects {
          compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.3'
          compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.48'
 		 compile group: 'com.alibaba', name: 'druid', version: '1.1.21'
-         compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.17.Final'
-         compile group: 'org.hibernate', name: 'hibernate-validator-cdi', version: '6.0.17.Final'
-         compile group: 'org.hibernate.validator', name: 'hibernate-validator-annotation-processor', version: '6.0.17.Final'
+         compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: "${hibernateVersion}"
+         compile group: 'org.hibernate', name: 'hibernate-validator-cdi', version: "${hibernateVersion}"
+         compile group: 'org.hibernate.validator', name: 'hibernate-validator-annotation-processor', version: "${hibernateVersion}"
         
          
          compile group: 'net.jradius', name: 'jradius-core', version: '1.1.5'
@@ -281,10 +286,6 @@ subprojects {
          compile group: 'org.aspectj', name: 'aspectjtools', version: '1.9.4'
          compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
 		 compile group: 'xalan', name: 'serializer', version: '2.7.2'
-		 compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
-		 compile group: 'javax.xml.bind', name: 'jaxb-core', version: '2.3.0.1'
-		 compile group: 'javax.xml.bind', name: 'jaxb-impl', version: '2.3.0.1'
-		 compile group: 'javax.xml.bind', name: 'jaxb-xjc', version: '2.3.0.1'
 		 compile group: 'xml-resolver', name: 'xml-resolver', version: '1.2'
 		 compile group: 'org.apache.santuario', name: 'xmlsec', version: '1.5.8'
 		 compile group: 'org.ogce', name: 'xpp3', version: '1.1.6'
