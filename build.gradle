@@ -346,6 +346,11 @@ subprojects {
 	    include '*.jar'
 	}
 	
+	task copyDepJars(type: Copy){
+		from configurations.runtime
+		into "$rootDir/build/depjars"
+	}
+	
 	task copydemoWar2Release(type: Copy) {
 		into "$rootDir/build/demowar/"
 	    from "$buildDir/libs/"
@@ -363,7 +368,7 @@ subprojects {
 	    from "$buildDir/libs/"
 	}
 
-	task buildRelease(dependsOn:['build','jar','copyjar2Release'])  {
+	task buildRelease(dependsOn:['build','jar','copyjar2Release','copyDepJars'])  {
 	   println 'Build MaxKey '+project.name +' complete .'
 	}
 }  
