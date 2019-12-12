@@ -338,15 +338,15 @@ subprojects {
 	}
 
     task copyjar2Release(type: Copy) {
-		println "$buildDir/libs/ to $rootDir/build/jars/"
-		into "$rootDir/build/jars/"
+		println "$buildDir/libs/ to $rootDir/build/maxkey-jars/"
+		into "$rootDir/build/maxkey-jars/"
 	    from "$buildDir/libs/"
 	    include '*.jar'
 	}
 	
 	task copyDepJars(type: Copy){
 		from configurations.runtime
-		into "$rootDir/build/depjars"
+		into "$rootDir/build/maxkey-depjars"
 	}
 	
 	task copydemoWar2Release(type: Copy) {
@@ -356,7 +356,7 @@ subprojects {
 	}
 	
 	task copyWar2Release(type: Copy) {
-		into "$rootDir/build/"
+		into "$rootDir/build/maxkey-war"
 	    from "$buildDir/libs/"
 	    include '*web*.war'
 	}
