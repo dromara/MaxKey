@@ -21,9 +21,9 @@
 	<!-- dataSource configuration -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"  destroy-method="close" >      
 	   <!--  <property name="driverClass" value="#{dataSoruceConfig.driverClass}"/>     -->  
-	    <property name="url" value="#{dataSoruceConfig.url}"/>      
-	    <property name="username" value="#{dataSoruceConfig.username}"/>      
-	    <property name="password" value="#{dataSoruceConfig.password}"/>      
+	    <property name="url" value="${config.datasource.url}"/>      
+	    <property name="username" value="${config.datasource.username}"/>      
+	    <property name="password" value="${config.datasource.password}"/>       
 	</bean> 
 
 </beans>
