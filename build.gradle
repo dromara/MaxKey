@@ -142,10 +142,6 @@ subprojects {
     	 compileOnly 'junit:junit:4.11'  
     	 testCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     	 compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
-         //compileOnly group: 'javax.servlet', name: 'jstl', version: '1.2'
-         //compileOnly group: 'javax.servlet', name: 'jsp-api', version: '2.0' 
-         
-         compile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.4.0.Final'
          
          compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
          compile group: 'commons-codec', name: 'commons-codec', version: '1.12'
@@ -181,7 +177,9 @@ subprojects {
 		 compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: "${log4jVersion}"
 		 compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: "${log4jVersion}"
          compile group: 'org.slf4j', name: 'slf4j-api', version: "${slf4jVersion}"
-         
+		 
+         compile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.4.0.Final'
+		 
          compile group: 'org.springframework', name: 'spring-aop', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-aspects', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-beans', version: "${springVersion}"
