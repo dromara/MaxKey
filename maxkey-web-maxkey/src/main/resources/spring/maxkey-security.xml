@@ -13,29 +13,7 @@
 	        http://www.springframework.org/schema/util     
 	        http://www.springframework.org/schema/util/spring-util.xsd
 	        http://www.springframework.org/schema/mvc 
-			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-			
-    
-	<!--
-	<sec:http pattern="/jquery/**" security="none" /> 
-	<sec:http pattern="/images/**" security="none" /> 
-	<sec:http pattern="/css/**" security="none" /> 
-	<sec:http pattern="/js/**" security="none" /> 
-	
-	<sec:http pattern="/metadata/saml20/**" security="none" /> 
-	
-	<sec:http pattern="/api/oauth/v20/me" security="none" /> 
-	<sec:http pattern="/api/connect/v10/userinfo" security="none" />
-	
-	 cas api  
-	<sec:http pattern="/authz/cas/validate" security="none" />
-	<sec:http pattern="/authz/cas/serviceValidate" security="none" />
-	<sec:http pattern="/authz/cas/proxyValidate" security="none" />
-	<sec:http pattern="/authz/cas/proxy" security="none" />
-	<sec:http pattern="/authz/cas/p3/serviceValidate" security="none" />
-	<sec:http pattern="/authz/cas/p3/proxyValidate" security="none" />
-	-->
-	
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd">	
 	
 	<!-- enable autowire -->
     <context:annotation-config />
@@ -107,10 +85,10 @@
 		</mvc:interceptor>
 
 		
-		 <ref bean="localeChangeInterceptor" />
+		<ref bean="localeChangeInterceptor" />
 	</mvc:interceptors>
      
-     	<bean id="remeberMeService" class="org.maxkey.authn.support.rememberme.JdbcRemeberMeService">
+	<bean id="remeberMeService" class="org.maxkey.authn.support.rememberme.JdbcRemeberMeService">
 		<constructor-arg ref="jdbcTemplate"/>
 		<property name="validity" value="${config.login.remeberme.validity}"/>
 	</bean>

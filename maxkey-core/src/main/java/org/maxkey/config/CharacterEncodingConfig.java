@@ -5,26 +5,35 @@ package org.maxkey.config;
 
 import java.io.UnsupportedEncodingException;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
 /**
  * 字符集转换及转换配置
  * @author Crystal.Sea
  *
  */
+@Configuration
+@PropertySource("classpath:/config/applicationConfig.properties")
 public class CharacterEncodingConfig {
 	
 	/**
 	 * 源字符集
 	 */
+	@Value("${config.characterencoding.charset.from}")
 	String fromCharSet;
 	
 	/**
 	 * 目标字符集
 	 */
+	@Value("${config.characterencoding.charset.to}")
 	String toCharSet;
 	
 	/**
 	 * 转换标志
 	 */
+	@Value("${config.characterencoding.encoding}")
 	boolean encoding	=	false;
 
 	

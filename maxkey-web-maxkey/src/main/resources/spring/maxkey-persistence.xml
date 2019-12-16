@@ -71,7 +71,7 @@
 	        			org.maxkey.domain.apps,
         			" />
 		<property name="timeout" value="30" />
-		<property name="mapperLocations" value="classpath*:org/maxkey/dao/persistence/xml/#{dataSoruceConfig.database}/*.xml" />
+		<property name="mapperLocations" value="classpath*:/org/maxkey/dao/persistence/xml/#{dataSoruceConfig.database}/*.xml" />
 		<property name="interceptors">
 			<list>
 				<ref bean="StatementHandlerInterceptor"/>  

@@ -1,18 +1,24 @@
 package org.maxkey.config;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
+@Configuration
+@PropertySource("classpath:/config/applicationConfig.properties")
 public class EmailConfig {
 
+	@Value("${config.email.username}")
 	private String username;
-
+	@Value("${config.email.password}")
 	private String password;
-
+	@Value("${config.email.smtpHost}")
 	private String smtpHost;
-	
+	@Value("${config.email.senderMail}")
 	private String senderMail;
-	
+	@Value("${config.email.port}")
 	private Integer port;
-	
+	@Value("${config.email.ssl}")
 	private boolean ssl;
 	
 	

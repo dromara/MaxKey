@@ -1,10 +1,11 @@
 package org.maxkey.config;
 
-import java.util.ArrayList;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
 /**
  * 全局应用程序配置
@@ -21,38 +22,52 @@ import org.slf4j.LoggerFactory;
  * @author Crystal.Sea
  * 
  */
+@Component
+@PropertySource("classpath:/config/applicationConfig.properties")
 public class ApplicationConfig {
 	private static final Logger _logger = LoggerFactory.getLogger(ApplicationConfig.class);
+	@Autowired
 	DataSoruceConfig dataSoruceConfig;
-	
+	@Autowired
 	EmailConfig emailConfig;
-	
+	@Autowired
 	CharacterEncodingConfig characterEncodingConfig;
-
-	
+	@Autowired
 	LoginConfig loginConfig;
 	
+	@Value("${config.server.domain}")
 	String domainName;
 	
+	@Value("${config.server.subdomain}")
 	String subDomainName;
 	
+	@Value("${config.server.name}")
 	String serverName;
 	
+	@Value("${config.server.prefix.uri}")
 	String serverPrefix;
+	
+	@Value("${config.server.default.uri}")
+	String defaultUri;
+	
+	@Value("${config.server.manage.uri}")
+	String manageUri;
+	
+	/*
 	//is enable whiteList for ipAddress filter
 	boolean whiteList;
 	
 	//All user have permission Access URL
 	public  ConcurrentHashMap<String,String> anonymousAccessUrls;
+	*/
 	
-	String manageUri;
 	
 	
 	
 	public ApplicationConfig() {
 		super();
 		
-		anonymousAccessUrls=new ConcurrentHashMap<String,String>();
+		/*anonymousAccessUrls=new ConcurrentHashMap<String,String>();
 		anonymousAccessUrls.put("/index/", "/index/");
 		anonymousAccessUrls.put("/index/top","/index/top/");
 		anonymousAccessUrls.put("/index/left/","/index/left/");
@@ -68,6 +83,7 @@ public class ApplicationConfig {
 		anonymousAccessUrls.put("/approles/appRolesGrid/","/approles/appRolesGrid/");
 		
 		_logger.debug("Anonymous Access Urls : \n"+anonymousAccessUrls);
+		*/
 		
 	}
 	
@@ -147,7 +163,7 @@ public class ApplicationConfig {
 	public void setSubDomainName(String subDomainName) {
 		this.subDomainName = subDomainName;
 	}
-	
+	/*
 	public ConcurrentHashMap<String, String> getAnonymousAccessUrls() {
 		return anonymousAccessUrls;
 	}
@@ -158,7 +174,7 @@ public class ApplicationConfig {
 			this.anonymousAccessUrls.put(anonymousAccessUrl,anonymousAccessUrl);
 		}
 	}
-
+*/
 	/**
 	 * @return the emailConfig
 	 */
@@ -182,12 +198,21 @@ public class ApplicationConfig {
 		this.manageUri = manageUri;
 	}
 
+	public String getDefaultUri() {
+		return defaultUri;
+	}
+
+	public void setDefaultUri(String defaultUri) {
+		this.defaultUri = defaultUri;
+	}
+	
+/*
 	public boolean isWhiteList() {
 		return whiteList;
 	}
 
 	public void setWhiteList(boolean whiteList) {
 		this.whiteList = whiteList;
-	}
+	}*/
 	
 }

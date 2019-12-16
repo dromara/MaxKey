@@ -1,6 +1,5 @@
 package org.maxkey.web.interceptor;
 
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -8,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.config.ApplicationConfig;
-import org.maxkey.domain.Navigations;
-import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,70 +37,31 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 _logger.debug("PermissionAdapter preHandle");
-		 //加载定义的功能菜单地址
-		/*if(navigationsMap==null){
-			List<Navigations>   navigationsList=((NavigationsService)WebContext.getBean("navigationsService")).query(null);
-			navigationsMap=new  ConcurrentHashMap<String ,String >();
-			for(Navigations nav : navigationsList){
-				if(nav.getUrl()==null)continue;
-				if(nav.getUrl().endsWith("/")){
-					navigationsMap.put("/"+nav.getUrl(), nav.getId());
-				}else{
-					navigationsMap.put("/"+nav.getUrl()+"/", nav.getId());
-				}
-			}
-			_logger.debug("navigationsMap : "+navigationsMap);
-		}
-		
-		UserInfo userInfo =WebContext.getUserInfo();//取得登录用户
-		
-		if(userInfo==null||WebContext.getRoles()==null){//判断用户和角色，判断用户是否登录用户
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
-			dispatcher.forward(request, response);
-			return false;
-		}
-		
-		//取得当前访问地址 Access URL
-		String accessURI=request.getRequestURI().substring(request.getContextPath().length());
-		if(!accessURI.endsWith("/")){
-			accessURI=accessURI+"/";
-		}
-		//定义匿名可以访问URL地址
-		if(applicationConfig.getAnonymousAccessUrls().containsKey(accessURI)){
-			_logger.debug("Access URI : "+accessURI+" , AnonymousAccessUrls .");
-			return true;
-		}
-		
-		boolean hasNavAccess=true;
-		//菜单权限匹配
-		if(navigationsMap.containsKey(accessURI)){//判断当前访问URL地址是否需要进行权限校验
-			hasNavAccess=false;
-			for(Navigations nav : WebContext.getNavigations()){//获取当前登录用户拥有URL访问列表
-				String haveURL=nav.getUrl();
-				if(haveURL==null)continue;
-				if(!haveURL.endsWith("/")){haveURL="/"+haveURL+"/";}
-				if(haveURL.endsWith(accessURI)){
-					hasNavAccess=true;
-				}
-			}
-			_logger.debug("Access URI : "+accessURI+" , hasNavAccess "+hasNavAccess);
-			if(hasNavAccess)return true;
-		}
-		
-		/*	
-		boolean preHandler = super.preHandle(request, response, handler);
-		
-		if(preHandler) {
-			preHandler = false;
-			
-			
-			if(!preHandler){//无权限转向
-				log.debug("You do not have permission to access "+accessUrl);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/accessdeny");
+			//判断用户是否登录
+			if(WebContext.getAuthentication()==null||WebContext.getAuthentication().getAuthorities()==null){//判断用户和角色，判断用户是否登录用户
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
 				dispatcher.forward(request, response);
 				return false;
 			}
-		}*/
-		return true;
+			
+			
+			boolean hasAccess=true;
+			
+			
+			/*	
+			boolean preHandler = super.preHandle(request, response, handler);
+			
+			if(preHandler) {
+				preHandler = false;
+				
+				
+				if(!preHandler){//无权限转向
+					log.debug("You do not have permission to access "+accessUrl);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/accessdeny");
+					dispatcher.forward(request, response);
+					return false;
+				}
+			}*/
+			return hasAccess;
 	}
 }

@@ -27,8 +27,10 @@ public class IpAddressFilter implements Filter {
 	private static final Logger _logger = LoggerFactory.getLogger(IpAddressFilter.class);
 	
 	@Autowired
-	 @Qualifier("applicationConfig")
-	 private ApplicationConfig applicationConfig;
+	@Qualifier("applicationConfig")
+	private ApplicationConfig applicationConfig;
+	
+	boolean whiteList=false;
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -59,7 +61,7 @@ public class IpAddressFilter implements Filter {
 
 		}
 		//白名单地址
-		if(applicationConfig.isWhiteList()&&!IpAddressCache.ipAddressWhiteListMap.containsKey(ipAddress)){
+		if(whiteList&&!IpAddressCache.ipAddressWhiteListMap.containsKey(ipAddress)){
 			_logger.info("You IpAddress not in White List  "+ipAddress);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/accessdeny");
 			dispatcher.forward(request, response);

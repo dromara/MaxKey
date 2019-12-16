@@ -21,7 +21,7 @@
 	<!-- LocaleResolver -->
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
 		<property name="cookieDomain" value="#{applicationConfig.subDomainName}"/>
-		<property name="cookieName" value="single_sign_on_lang"/>
+		<property name="cookieName" value="maxkey_lang"/>
 		<property name="cookieMaxAge" value="604800" />
 		<!-- auto select language by brower remove -->
 		<!--<property name="defaultLocale" value="en" />  -->

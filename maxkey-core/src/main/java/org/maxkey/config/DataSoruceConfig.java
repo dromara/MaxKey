@@ -2,8 +2,10 @@ package org.maxkey.config;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.mybatis.jpa.dialect.Dialect;
-import org.maxkey.crypto.Base64Utils;
 import org.maxkey.crypto.password.PasswordReciprocal;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * 数据源配置
@@ -20,32 +22,40 @@ import org.maxkey.crypto.password.PasswordReciprocal;
  * @author Crystal.Sea
  *
  */
+@Configuration
+@PropertySource("classpath:/config/applicationConfig.properties")
 public class DataSoruceConfig {
 	
 	/**
 	 * 数据库类型
 	 */
+	@Value("${config.datasource.database:mysql}")
 	String database;
 	/**
 	 * jdbc驱动类
 	 */
+	@Value("${config.datasource.driverclass:com.mysql.jdbc.Driver}")
 	String driverClass;
 	/**
 	 * jdbc连接地址
 	 */
+	@Value("${config.datasource.url:jdbc:mysql://localhost/maxkey?autoReconnect=true&characterEncoding=UTF-8}")
 	String url;
 	/**
 	 * 数据库用户名
 	 */
+	@Value("${config.datasource.username:root}")
 	String username;
 	/**
 	 * 数据库密码
 	 */
+	@Value("${config.datasource.password:maxkey}")
 	String password;
 	
 	/**
 	 * 数据库密码是否加密
 	 */
+	@Value("${config.datasource.password.encrypt}")
 	boolean encrypt=false;
 	
 	/**
@@ -107,7 +117,6 @@ public class DataSoruceConfig {
 	 * @param database the database to set
 	 */
 	public void setDatabase(String database) {
-		this.dialect=Dialect.getDialectMap().get(database);
 		this.database = database;
 
 	}
@@ -143,6 +152,9 @@ public class DataSoruceConfig {
 	 * @return the dialect
 	 */
 	public String getDialect() {
+		if(this.dialect==null) {
+			this.dialect=Dialect.getDialectMap().get(database);
+		}
 		return dialect;
 	}
 

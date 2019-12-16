@@ -1,20 +1,25 @@
 package org.maxkey.config;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+@Configuration
+@PropertySource("classpath:/config/applicationLogin.properties")
 public class LoginConfig {
-	
+	@Value("${config.login.captcha}")
 	boolean captcha;
-	
+	@Value("${config.login.onetimepwd}")
 	boolean oneTimePwd;
-	
+	@Value("${config.login.socialsignon}")
 	boolean socialSignOn;
-	
-	
+	@Value("${config.login.kerberos}")
 	boolean kerberos;
-	
+	@Value("${config.login.remeberme}")
 	boolean remeberMe;
-	
+	@Value("${config.login.wsfederation}")
 	boolean wsFederation;
-	
+	@Value("${config.login.default.uri}")
 	String defaultUri;
 
 	
