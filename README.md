@@ -51,18 +51,18 @@
 **MaxKey认证**
 
 登录界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/maxkey_login.png)
+![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_login.png)
 
 主界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/maxkey_index.png)
+![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_index.png)
 
 **MaxKey管理**
 
 用户管理界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/maxkey_mgt_users.png)
+![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_mgt_users.png)
 
 应用管理界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/maxkey_mgt_apps.png)
+![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_mgt_apps.png)
 
 ------------
 # 下载
