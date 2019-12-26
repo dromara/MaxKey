@@ -38,7 +38,7 @@ public class ApplicationConfig {
 	@Value("${config.server.domain}")
 	String domainName;
 	
-	@Value("${config.server.subdomain}")
+	@Value("${config.server.domain.sub}")
 	String subDomainName;
 	
 	@Value("${config.server.name}")
@@ -151,6 +151,7 @@ public class ApplicationConfig {
 		String []domainSubStrings=domainName.split("\\.");
 		if(domainSubStrings.length>=3){
 			this.subDomainName=domainSubStrings[domainSubStrings.length-2]+"."+domainSubStrings[domainSubStrings.length-1];
+			_logger.debug("subDomainName "+subDomainName);
 		}else{
 			this.subDomainName=domainName;
 		}
