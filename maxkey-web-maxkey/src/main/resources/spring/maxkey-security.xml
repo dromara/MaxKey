@@ -28,36 +28,20 @@
 			<!-- for index -->
 			<mvc:mapping path="/index/*" />
 			<!-- for System -->
-			<mvc:mapping path="/menus/*" />
-			<mvc:mapping path="/roles/*" />
 			<mvc:mapping path="/logs/*" />
 			<mvc:mapping path="/userinfo/*" />
 			<mvc:mapping path="/relyingparty/*" />
 			<mvc:mapping path="/sysconfig/*" />
-			
-			<mvc:mapping path="/roles/*"/>
-			<mvc:mapping path="/applications/*"/>
-			<mvc:mapping path="/approles/*"/>
-			
 			<mvc:mapping path="/users/*" />
-			<mvc:mapping path="/enterprises/*" />
 			<mvc:mapping path="/employees/*" />
-			<mvc:mapping path="/authInfo/*" />
-			<mvc:mapping path="/usercenter/*"/>
 			<bean class="org.maxkey.web.interceptor.PermissionAdapter" />
 		</mvc:interceptor>	
 		<!-- web Controller InterceptorAdapter for platform log  -->
 		<mvc:interceptor>
 			<mvc:mapping path="/users/*" /> 
 			<mvc:mapping path="/userinfo/*" />
-			<mvc:mapping path="/enterprises/*" />
-			<mvc:mapping path="/employees/*" />
 			<mvc:mapping path="/authInfo/*" />
-			<mvc:mapping path="/usercenter/*"/>
 			<mvc:mapping path="/retrievePassword/*"/>
-			<mvc:mapping path="/roles/*"/>
-			<mvc:mapping path="/applications/*"/>
-			<mvc:mapping path="/approles/*"/>
 			<bean class="org.maxkey.web.interceptor.HistoryLogsAdapter" />
 		</mvc:interceptor>
 		<!-- web Controller sso Adapter -->
