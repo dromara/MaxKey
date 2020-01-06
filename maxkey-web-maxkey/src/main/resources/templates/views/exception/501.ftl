@@ -1,5 +1,5 @@
 <html>
 	<body>
-		<h1>Error!</h1>
+		<h1>Not Implemented !</h1>
 	</body>
 </html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<body>
-		<h1>REQUEST NOT_FOUND !</h1>
+		<h1> INTERNAL_SERVER_ERROR!</h1>
 	</body>
 </html>

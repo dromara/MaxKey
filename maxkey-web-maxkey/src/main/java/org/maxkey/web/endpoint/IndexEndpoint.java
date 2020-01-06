@@ -75,10 +75,4 @@ public class IndexEndpoint {
 		return  new ModelAndView("index");
 		
 	}
-	
-	@RequestMapping(value={"/accessdeny"})
-	public ModelAndView accessdeny() {
-		_logger.debug("exception/accessdeny.");
-		return  new ModelAndView("exception/accessdeny");
-	}
 }
