@@ -147,7 +147,7 @@ subprojects {
          compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.10'
          compile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
          compile group: 'velocity', name: 'velocity-dep', version: '1.4'
-         compile group: 'org.freemarker', name: 'freemarker', version: '2.3.28'
+         compile group: 'org.freemarker', name: 'freemarker', version: '2.3.29'
          compile group: 'org.apache.commons', name: 'not-yet-commons-ssl', version: '0.3.9'
 		//logs
          compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: "${log4jVersion}"

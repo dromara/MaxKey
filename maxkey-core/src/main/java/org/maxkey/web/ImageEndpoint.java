@@ -1,4 +1,4 @@
-package org.maxkey.web.endpoint;
+package org.maxkey.web;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -52,7 +52,7 @@ public class ImageEndpoint {
             response.setContentType("image/jpeg");
             // create the text for the image
             String capText = captchaProducer.createText();
-            _logger.debug("Sesssion id " + request.getSession().getId() + " , Captcha Text is " + capText);
+            _logger.trace("Sesssion id " + request.getSession().getId() + " , Captcha Text is " + capText);
             // store the text in the session
             request.getSession().setAttribute(WebConstants.KAPTCHA_SESSION_KEY, capText);
             // create the image with the text

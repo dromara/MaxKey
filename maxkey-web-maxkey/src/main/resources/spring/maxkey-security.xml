@@ -25,15 +25,14 @@
 	<mvc:interceptors>
 		<!-- web Controller InterceptorAdapter for platform permission  -->
 		<mvc:interceptor>
-			<!-- for index -->
-			<mvc:mapping path="/index/*" />
-			<!-- for System -->
-			<mvc:mapping path="/logs/*" />
-			<mvc:mapping path="/userinfo/*" />
-			<mvc:mapping path="/relyingparty/*" />
-			<mvc:mapping path="/sysconfig/*" />
-			<mvc:mapping path="/users/*" />
-			<mvc:mapping path="/employees/*" />
+			<!-- for permission -->
+			<mvc:mapping path="/index*/**" />
+			<mvc:mapping path="/logs*/**" />
+			<mvc:mapping path="/userinfo*/**" />
+			<mvc:mapping path="/profile*/**" />
+			<mvc:mapping path="/safe*/**" />
+			<mvc:mapping path="/historys*/**" />
+			<mvc:mapping path="/appList*/**" />
 			<bean class="org.maxkey.web.interceptor.PermissionAdapter" />
 		</mvc:interceptor>	
 		<!-- web Controller InterceptorAdapter for platform log  -->
@@ -77,31 +76,14 @@
 		<property name="validity" value="${config.login.remeberme.validity}"/>
 	</bean>
 	
-	<bean id="timeBasedKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
+	<bean id="keyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
 		<property name="type" value="totp" />
 		<property name="digits" value="6" />
-		<property name="issuer" value="ConnSec" />
-		<property name="domain" value="connsec.com" />
+		<property name="issuer" value="MaxKey" />
+		<property name="domain" value="MaxKey.org" />
 		<property name="period" value="30" />
 		
 	</bean>
-	
-	<bean id="counterBasedKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
-		<property name="type" value="hotp" />
-		<property name="digits" value="6" />
-		<property name="issuer" value="maxkey" />
-		<property name="domain" value="maxkey.org" />
-		<property name="counter" value="0" />
-	</bean>
-	
-	<bean id="hotpKeyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
-		<property name="type" value="hotp" />
-		<property name="digits" value="6" />
-		<property name="issuer" value="maxkey" />
-		<property name="domain" value="maxkey.org" />
-		<property name="counter" value="0" />
-	</bean>
-	
 	
 	<bean id="tfaOTPAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOTPAuthn">
 		<constructor-arg ref="jdbcTemplate" /> 
@@ -150,40 +132,8 @@
         </property>
 	</bean>
 	
-    
-	<!-- Follow is config for Spring security -->
-	<!--<csrf disabled="true"/>-->
-	<!-- Login  
-	<http use-expressions="false"  disable-url-rewriting="false" xmlns="http://www.springframework.org/schema/security" >
-		
-		<headers>
-			<frame-options policy="SAMEORIGIN" />
-		</headers> 
-		<access-denied-handler error-page="/login"/>
-		<intercept-url pattern="/index" access="ROLE_USER" />
-		<intercept-url pattern="/forwardindex" access="ROLE_USER" />
-   		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY,ROLE_USER" />
-		<form-login authentication-failure-url="/login" 
-					default-target-url="/forwardindex" 
-					login-page="/login" 
-					login-processing-url="/logon.do"
-					username-parameter="j_username"
-					password-parameter="j_password"
-					authentication-success-handler-ref="savedRequestSuccessHandler"/>
-					
-		<logout  logout-url="/logout.do"  logout-success-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID"  />
-		
-		<session-management invalid-session-url="/login" />
-		
-		<anonymous />
-	</http>
-	-->	
-
    	<bean id="savedRequestSuccessHandler" class="org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler"> </bean>
-	
-	<!-- spring authentication provider 
-	<authentication-manager alias="authenticationProvider"  xmlns="http://www.springframework.org/schema/security"/>
--->
+
 	<!-- LDAP Realm 
 	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.ldap.LdapAuthenticationRealm">
 		<constructor-arg ref="jdbcTemplate"/>
@@ -246,11 +196,7 @@
 	<!-- Authentication providers -->
     <bean id="authenticationProvider" class="org.maxkey.authn.RealmAuthenticationProvider" >
     </bean>
-    <!--
-	<authentication-manager alias="authenticationManager" xmlns="http://www.springframework.org/schema/security">
-		<authentication-provider ref= "realmAuthenticationProvider"/>  
-	</authentication-manager>
-    -->
+   
 	<mvc:annotation-driven />
 
 	<mvc:default-servlet-handler />

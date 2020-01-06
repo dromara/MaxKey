@@ -3,8 +3,6 @@ package org.maxkey.web.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;

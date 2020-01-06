@@ -36,10 +36,11 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		 _logger.debug("PermissionAdapter preHandle");
+		 _logger.trace("PermissionAdapter preHandle");
 		
 		//判断用户是否登录
 		if(WebContext.getAuthentication()==null||WebContext.getAuthentication().getAuthorities()==null){//判断用户和角色，判断用户是否登录用户
+			_logger.trace("No Authentication ... forward to /login");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
 			dispatcher.forward(request, response);
 			return false;

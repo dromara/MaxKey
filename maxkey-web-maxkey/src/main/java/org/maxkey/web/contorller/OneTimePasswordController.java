@@ -12,7 +12,7 @@ import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.RQCodeUtils;
 import org.maxkey.web.WebContext;
-import org.maxkey.web.endpoint.ImageEndpoint;
+import org.maxkey.web.ImageEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,34 +36,25 @@ public class OneTimePasswordController {
 	private UserInfoService userInfoService;
 	
 	@Autowired
-	@Qualifier("timeBasedKeyUriFormat")
-	KeyUriFormat timeBasedKeyUriFormat;
-	
-	@Autowired
-	@Qualifier("counterBasedKeyUriFormat")
-	KeyUriFormat counterBasedKeyUriFormat;
-	
-	@Autowired
-	@Qualifier("hotpKeyUriFormat")
-	KeyUriFormat hotpKeyUriFormat;
+	@Qualifier("keyUriFormat")
+	KeyUriFormat keyUriFormat;
 
 	@Autowired
 	@Qualifier("passwordReciprocal")
 	PasswordReciprocal passwordReciprocal;
 	
-
 	@RequestMapping(value={"/timebased"})
 	public ModelAndView timebased(){
 		ModelAndView modelAndView=new ModelAndView("safe/timeBased");
 		UserInfo userInfo=WebContext.getUserInfo();
 		String sharedSecret=passwordReciprocal.decoder(userInfo.getSharedSecret());
-		timeBasedKeyUriFormat.setSecret(sharedSecret);
-		String otpauth=timeBasedKeyUriFormat.format(userInfo.getUsername());
+		keyUriFormat.setSecret(sharedSecret);
+		String otpauth=keyUriFormat.format(userInfo.getUsername());
 		byte[] byteSharedSecret=Base32Utils.decode(sharedSecret);
 		String hexSharedSecret=Hex.encodeHexString(byteSharedSecret);
 		modelAndView.addObject("id", genRQCode(otpauth));
 		modelAndView.addObject("userInfo", userInfo);
-		modelAndView.addObject("format", timeBasedKeyUriFormat);
+		modelAndView.addObject("format", keyUriFormat);
 		modelAndView.addObject("sharedSecret", sharedSecret);
 		modelAndView.addObject("hexSharedSecret", hexSharedSecret);
 		return modelAndView;
@@ -72,7 +63,7 @@ public class OneTimePasswordController {
 	@RequestMapping(value={"gen/timebased"})
 	public ModelAndView gentimebased(){
 		UserInfo userInfo=WebContext.getUserInfo();
-		byte[] byteSharedSecret=OTPSecret.generate(timeBasedKeyUriFormat.getCrypto());
+		byte[] byteSharedSecret=OTPSecret.generate(keyUriFormat.getCrypto());
 		String sharedSecret=Base32Utils.encode(byteSharedSecret);
 		sharedSecret=passwordReciprocal.encode(sharedSecret);
 		userInfo.setSharedSecret(sharedSecret);
@@ -87,15 +78,15 @@ public class OneTimePasswordController {
 		ModelAndView modelAndView=new ModelAndView("safe/counterBased");
 		UserInfo userInfo=WebContext.getUserInfo();
 		String sharedSecret=passwordReciprocal.decoder(userInfo.getSharedSecret());
-		counterBasedKeyUriFormat.setSecret(sharedSecret);
-		counterBasedKeyUriFormat.setCounter(Long.parseLong(userInfo.getSharedCounter()));
-		String otpauth=counterBasedKeyUriFormat.format(userInfo.getUsername());
+		keyUriFormat.setSecret(sharedSecret);
+		keyUriFormat.setCounter(Long.parseLong(userInfo.getSharedCounter()));
+		String otpauth=keyUriFormat.format(userInfo.getUsername());
 	
 		byte[] byteSharedSecret=Base32Utils.decode(sharedSecret);
 		String hexSharedSecret=Hex.encodeHexString(byteSharedSecret);
 		modelAndView.addObject("id", genRQCode(otpauth));
 		modelAndView.addObject("userInfo", userInfo);
-		modelAndView.addObject("format", counterBasedKeyUriFormat);
+		modelAndView.addObject("format", keyUriFormat);
 		modelAndView.addObject("sharedSecret", sharedSecret);
 		modelAndView.addObject("hexSharedSecret", hexSharedSecret);
 		return modelAndView;
@@ -105,7 +96,7 @@ public class OneTimePasswordController {
 	@RequestMapping(value={"gen/counterbased"})
 	public ModelAndView gencounterbased(){
 		UserInfo userInfo=WebContext.getUserInfo();
-		byte[] byteSharedSecret=OTPSecret.generate(counterBasedKeyUriFormat.getCrypto());
+		byte[] byteSharedSecret=OTPSecret.generate(keyUriFormat.getCrypto());
 		String sharedSecret=Base32Utils.encode(byteSharedSecret);
 		sharedSecret=passwordReciprocal.encode(sharedSecret);
 		userInfo.setSharedSecret(sharedSecret);
@@ -120,14 +111,14 @@ public class OneTimePasswordController {
 		ModelAndView modelAndView=new ModelAndView("safe/hotp");
 		UserInfo userInfo=WebContext.getUserInfo();
 		String sharedSecret=passwordReciprocal.decoder(userInfo.getSharedSecret());
-		hotpKeyUriFormat.setSecret(sharedSecret);
-		hotpKeyUriFormat.setCounter(Long.parseLong(userInfo.getSharedCounter()));
-		String otpauth=hotpKeyUriFormat.format(userInfo.getUsername());
+		keyUriFormat.setSecret(sharedSecret);
+		keyUriFormat.setCounter(Long.parseLong(userInfo.getSharedCounter()));
+		String otpauth=keyUriFormat.format(userInfo.getUsername());
 		byte[] byteSharedSecret=Base32Utils.decode(sharedSecret);
 		String hexSharedSecret=Hex.encodeHexString(byteSharedSecret);
 		modelAndView.addObject("id", genRQCode(otpauth));
 		modelAndView.addObject("userInfo", userInfo);
-		modelAndView.addObject("format", hotpKeyUriFormat);
+		modelAndView.addObject("format", keyUriFormat);
 		modelAndView.addObject("sharedSecret", sharedSecret);
 		modelAndView.addObject("hexSharedSecret", hexSharedSecret);
 		return modelAndView;
@@ -137,7 +128,7 @@ public class OneTimePasswordController {
 	@RequestMapping(value={"gen/hotp"})
 	public ModelAndView genhotp(){
 		UserInfo userInfo=WebContext.getUserInfo();
-		byte[] byteSharedSecret=OTPSecret.generate(hotpKeyUriFormat.getCrypto());
+		byte[] byteSharedSecret=OTPSecret.generate(keyUriFormat.getCrypto());
 		String sharedSecret=Base32Utils.encode(byteSharedSecret);
 		sharedSecret=passwordReciprocal.encode(sharedSecret);
 		userInfo.setSharedSecret(sharedSecret);

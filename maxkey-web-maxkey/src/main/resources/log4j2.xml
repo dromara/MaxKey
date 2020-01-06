@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>  
-<configuration status="INFO"  monitorInterval="300">  
+<!--DOCTYPE log4j:configuration SYSTEM "log4j.dtd" -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+	 status="INFO"  monitorInterval="300"
+>  
     <appenders>  
     	
         <Console name="consolePrint" target="SYSTEM_OUT">  
@@ -31,4 +34,4 @@
             <appender-ref ref="RollingFile" /> 
         </root>  
     </loggers>  
-</configuration>
+</log4j:configuration>

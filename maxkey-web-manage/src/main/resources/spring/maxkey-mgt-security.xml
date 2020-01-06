@@ -58,25 +58,18 @@
 	<mvc:interceptors>
 		<!-- web Controller InterceptorAdapter for platform permission  -->
 		<mvc:interceptor>
-			<!-- for index -->
-			<mvc:mapping path="/index/*" />
-			<!-- for System -->
-			<mvc:mapping path="/menus/*" />
-			<mvc:mapping path="/roles/*" />
-			<mvc:mapping path="/logs/*" />
-			<mvc:mapping path="/userinfo/*" />
-			<mvc:mapping path="/relyingparty/*" />
-			<mvc:mapping path="/sysconfig/*" />
+			<mvc:mapping path="/main*/**" />
+			<mvc:mapping path="/main*/**" />
+			<mvc:mapping path="/orgs*/**" />
+			<mvc:mapping path="/userinfo*/**" />
+			<mvc:mapping path="/apps*/**" />
+			<mvc:mapping path="/app*/**" />
+			<mvc:mapping path="/groups*/**" />
+			<mvc:mapping path="/groupMember*/**" />
+			<mvc:mapping path="/groupPrivileges*/**" />
+			<mvc:mapping path="/config*/**" />
+			<mvc:mapping path="/logs*/**" />
 			
-			<mvc:mapping path="/roles/*"/>
-			<mvc:mapping path="/applications/*"/>
-			<mvc:mapping path="/approles/*"/>
-			
-			<mvc:mapping path="/users/*" />
-			<mvc:mapping path="/enterprises/*" />
-			<mvc:mapping path="/employees/*" />
-			<mvc:mapping path="/authInfo/*" />
-			<mvc:mapping path="/usercenter/*"/>
 			<bean class="org.maxkey.web.interceptor.PermissionAdapter" />
 		</mvc:interceptor>	
 		<!-- web Controller InterceptorAdapter for platform log  -->
