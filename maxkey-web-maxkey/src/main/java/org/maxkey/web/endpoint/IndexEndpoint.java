@@ -31,13 +31,13 @@ public class IndexEndpoint {
 		_logger.debug("IndexEndpoint /forwardindex.");
 		ModelAndView modelAndView=new ModelAndView();
 		Integer passwordSetType=(Integer)WebContext.getSession().getAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
-		if(passwordSetType==PASSWORDSETTYPE.PASSWORD_NORMAL){
+		if(passwordSetType==null || passwordSetType==PASSWORDSETTYPE.PASSWORD_NORMAL){
 			if(applicationConfig.getLoginConfig().getDefaultUri()!=null&&
 					!applicationConfig.getLoginConfig().getDefaultUri().equals("")){
 				if(applicationConfig.getLoginConfig().getDefaultUri().startsWith("http")){
 					return  WebContext.redirect(applicationConfig.getLoginConfig().getDefaultUri());
 				}
-				return  WebContext.forward(applicationConfig.getLoginConfig().getDefaultUri());
+				return  WebContext.redirect(applicationConfig.getLoginConfig().getDefaultUri());
 			}
 			modelAndView.setViewName("index");
 			return  modelAndView;

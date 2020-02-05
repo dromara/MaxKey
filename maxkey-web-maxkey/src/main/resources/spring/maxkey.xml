@@ -25,7 +25,6 @@
 	   	  <value>classpath:config/applicationConfig.properties</value>
 	   	  <value>classpath:config/applicationLogin.properties</value>
 	   	  <value>classpath:config/applicationSaml.properties</value>
-	   	  <value>classpath:config/applicationSocialSignOn.properties</value>
 	    </list>
 	  </property>
 	  <property name="ignoreUnresolvablePlaceholders" value="true"/>

@@ -81,12 +81,22 @@ public class OAuthApi20 extends DefaultApi20
 	@Override
 	public String getAuthorizationUrl(OAuthConfig config){
 	    // Append scope if present
-	    if (config.hasScope()){
-	      return String.format(authorizeUrl+scope, config.getApiKey(), HttpEncoder.encode(config.getCallback()), HttpEncoder.encode(config.getScope()));
-	    }
-	    else{
-	      return String.format(authorizeUrl, config.getApiKey(), HttpEncoder.encode(config.getCallback()));
-	    }
+		//dingtalk
+		if(authorizeUrl.indexOf("oapi.dingtalk.com")>-1) {
+			if (config.hasScope()){
+			      return String.format(authorizeUrl+scope, config.getApiKey(), config.getCallback(), HttpEncoder.encode(config.getScope()));
+			    }
+			    else{
+			      return String.format(authorizeUrl, config.getApiKey(), config.getCallback());
+			    }
+		}else {
+			if (config.hasScope()){
+		      return String.format(authorizeUrl+scope, config.getApiKey(), HttpEncoder.encode(config.getCallback()), HttpEncoder.encode(config.getScope()));
+		    }
+		    else{
+		      return String.format(authorizeUrl, config.getApiKey(), HttpEncoder.encode(config.getCallback()));
+		    }
+		}
 	}
 
 	public String getAuthorizeUrl() {

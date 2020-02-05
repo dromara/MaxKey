@@ -1,12 +1,12 @@
 package org.maxkey.web;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.LogFactory;
+import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.domain.UserInfo;
@@ -16,8 +16,6 @@ import org.maxkey.web.message.Message;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -83,11 +81,18 @@ public final class WebContext {
 	    UserInfo loadeduserInfo = authenticationRealm.loadUserInfo(username,"");
 	    if (loadeduserInfo != null)
 	    {
-	      ArrayList<GrantedAuthority> grantedAuthority = authenticationRealm.grantAuthority(loadeduserInfo);
 	      setUserInfo(loadeduserInfo);
-	      UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loadeduserInfo.getUsername(), loadeduserInfo.getPassword(), grantedAuthority);
+	      BasicAuthentication authentication =new BasicAuthentication();
+	      authentication.setJ_username(loadeduserInfo.getUsername());
+	      UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =new UsernamePasswordAuthenticationToken(
+	    		  authentication,
+					"PASSWORD",
+					authenticationRealm.grantAuthority(loadeduserInfo));
 	      
-	      SecurityContextHolder.getContext().setAuthentication(authentication);
+	      authentication.setAuthenticated(true);
+	      WebContext.setAuthentication(usernamePasswordAuthenticationToken);
+		  WebContext.setUserInfo(loadeduserInfo);
+		  
 	      authenticationRealm.insertLoginHistory(loadeduserInfo, type, provider, code, message);
 	    }
 	    return true;

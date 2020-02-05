@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnUserToken;
 import org.maxkey.constants.LOGINTYPE;
-import org.maxkey.util.JsonUtils;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +20,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import me.zhyd.oauth.utils.AuthStateUtils;
 
 /**
  * @author Crystal.Sea
@@ -38,7 +39,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
     
     public  ModelAndView socialSignOnAuthorize(String provider){
     	_logger.debug("SocialSignOn provider : "+provider);
-    	String authorizationUrl=buildOAuthService(provider).getAuthorizationUrl(null);
+    	String authorizationUrl=buildAuthRequest(provider).authorize(AuthStateUtils.createState());
 		_logger.debug("authorize SocialSignOn : "+authorizationUrl);
 		return WebContext.redirect(authorizationUrl);
     }
@@ -89,8 +90,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	public ModelAndView callback(@PathVariable String provider
 			) {
 		this.provider=provider;
-		this.getAccessToken();
-		this.getAccountId();
+		this.authCallback();
 		_logger.debug(this.accountId);
 		SocialSignOnUserToken socialSignOnUserToken =new SocialSignOnUserToken();
 		socialSignOnUserToken.setProvider(provider);
@@ -121,8 +121,8 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		socialSignOnUserToken.setSocialUserInfo(accountJsonString);
 		socialSignOnUserToken.setUid(WebContext.getUserInfo().getId());
 		socialSignOnUserToken.setUsername(WebContext.getUserInfo().getUsername());
-		socialSignOnUserToken.setAccessToken(JsonUtils.object2Json(accessToken));
-		socialSignOnUserToken.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
+		//socialSignOnUserToken.setAccessToken(JsonUtils.object2Json(accessToken));
+		//socialSignOnUserToken.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
 		_logger.debug("Social Bind : "+socialSignOnUserToken);
 		this.socialSignOnUserTokenService.delete(socialSignOnUserToken);
 		this.socialSignOnUserTokenService.insert(socialSignOnUserToken);
@@ -139,9 +139,9 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 			_logger.debug("Social Sign On from "+socialSignOnUserToken.getProvider()+" mapping to user "+socialSignOnUserToken.getUsername());
 			
 			if(WebContext.setAuthentication(socialSignOnUserToken.getUsername(), LOGINTYPE.SOCIALSIGNON,this.socialSignOnProvider.getProviderName(),"xe00000004","success")){
-				socialSignOnUserToken.setAccessToken(JsonUtils.object2Json(this.accessToken));
+				//socialSignOnUserToken.setAccessToken(JsonUtils.object2Json(this.accessToken));
 				socialSignOnUserToken.setSocialUserInfo(accountJsonString);
-				socialSignOnUserToken.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
+				//socialSignOnUserToken.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
 				
 				this.socialSignOnUserTokenService.update(socialSignOnUserToken);
 			}

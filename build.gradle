@@ -202,6 +202,10 @@ subprojects {
          compile group: 'org.opensaml', name: 'openws', version: '1.5.4'
          compile group: 'org.opensaml', name: 'xmltooling', version: '1.4.4'
          
+         compile group: 'cn.hutool', name: 'hutool-core', version: '5.1.2'
+         compile group: 'cn.hutool', name: 'hutool-http', version: '5.1.2'
+         implementation 'me.zhyd.oauth:JustAuth:1.13.2'
+         
          compile group: 'org.javassist', name: 'javassist', version: '3.23.0-GA'
          compile group: 'org.owasp.esapi', name: 'esapi', version: '2.2.0.0'
          compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
@@ -232,6 +236,7 @@ subprojects {
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonVersion}"
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"
          compile group: 'com.fasterxml', name: 'classmate', version: '1.5.0'
+		 compile group: 'com.alibaba', name: 'fastjson', version: '1.2.62'
          
          compile group: 'org.reactivestreams', name: 'reactive-streams', version: '1.0.2'
          compile group: 'io.projectreactor', name: 'reactor-core', version: '3.2.10.RELEASE'
