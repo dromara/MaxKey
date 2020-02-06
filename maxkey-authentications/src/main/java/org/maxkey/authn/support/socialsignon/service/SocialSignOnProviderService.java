@@ -46,7 +46,7 @@ public class SocialSignOnProviderService{
 			authRequest = new AuthTwitterRequest(authConfig);
 		}else if(provider.equalsIgnoreCase("google")) {
 			authRequest = new AuthGoogleRequest(authConfig);
-		}else if(provider.equalsIgnoreCase("Windows")) {
+		}else if(provider.equalsIgnoreCase("microsoft")) {
 			authRequest = new AuthMicrosoftRequest(authConfig);
 		}else if(provider.equalsIgnoreCase("Linkedin")) {
 			authRequest = new AuthLinkedinRequest(authConfig);
@@ -72,7 +72,7 @@ public class SocialSignOnProviderService{
 			return ((AuthUser)authResponse.getData()).getUuid();
 		}else if(provider.equalsIgnoreCase("google")) {
 			return ((AuthUser)authResponse.getData()).getUuid();
-		}else if(provider.equalsIgnoreCase("Windows")) {
+		}else if(provider.equalsIgnoreCase("microsoft")) {
 			return ((AuthUser)authResponse.getData()).getUuid();
 		}else if(provider.equalsIgnoreCase("Linkedin")) {
 			return ((AuthUser)authResponse.getData()).getUuid();

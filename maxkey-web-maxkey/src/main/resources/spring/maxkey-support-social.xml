@@ -49,13 +49,13 @@
 		<property name="sortOrder" value="${config.socialsignon.qq.sortorder}"/>
 	</bean>
 
-	<bean id="socialSignOnLive" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
-		<property name="provider" value="${config.socialsignon.live.provider}"/>
-		<property name="providerName" value="${config.socialsignon.live.provider.name}"/>
-		<property name="icon" value="${config.socialsignon.live.icon}"/>
-		<property name="clientId" value="${config.socialsignon.live.client.id}"/>
-		<property name="clientSecret" value="${config.socialsignon.live.client.secret}"/>
-		<property name="sortOrder" value="${config.socialsignon.live.sortorder}"/>
+	<bean id="socialSignOnMicrosoft" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+		<property name="provider" value="${config.socialsignon.microsoft.provider}"/>
+		<property name="providerName" value="${config.socialsignon.microsoft.provider.name}"/>
+		<property name="icon" value="${config.socialsignon.microsoft.icon}"/>
+		<property name="clientId" value="${config.socialsignon.microsoft.client.id}"/>
+		<property name="clientSecret" value="${config.socialsignon.microsoft.client.secret}"/>
+		<property name="sortOrder" value="${config.socialsignon.microsoft.sortorder}"/>
 	</bean>
 
 	<bean id="socialSignOnFacebook" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
@@ -81,7 +81,7 @@
 				<ref bean="socialSignOnWeibo" />
 				<ref bean="socialSignOnQQ"/>
 				<ref bean="socialSignOnGoogle"/>
-				<ref bean="socialSignOnLive"/>
+				<ref bean="socialSignOnMicrosoft"/>
 				<ref bean="socialSignOnFacebook"/>
 				<ref bean="socialSignOndingtalk"/>
 				
