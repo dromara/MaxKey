@@ -11,7 +11,7 @@ import org.maxkey.client.oauth.model.Token;
 import org.maxkey.client.oauth.model.Verifier;
 import org.maxkey.client.oauth.oauth.OAuthService;
 
-public class Connsec20Example
+public class MaxKey20Example
 {
   private static final String NETWORK_NAME = "SinaWeibo";
   private static final String PROTECTED_RESOURCE_URL = "https://api.weibo.com/2/account/get_uid.json";

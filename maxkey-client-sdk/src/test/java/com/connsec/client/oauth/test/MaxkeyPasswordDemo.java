@@ -6,7 +6,7 @@ import org.maxkey.client.oauth.model.OAuthConfig;
 import org.maxkey.client.oauth.model.Token;
 import org.maxkey.client.oauth.oauth.OAuthPasswordService;
 
-public class ConnsecPasswordDemo {
+public class MaxkeyPasswordDemo {
 
 	/**
 	 * @param args
