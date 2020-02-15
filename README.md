@@ -21,7 +21,7 @@
 | 5       | FormBased				   |  中  |
 | 6       | TokenBased(Post/Cookie)	   |  中  |
 | 7       | ExtendApi				   |  低  |
-| 8       | ext						   |  低  |
+| 8       | EXT						   |  低  |
 
 2. 登录支持
 
@@ -30,12 +30,9 @@
 | 1       | 动态验证码   	| 
 | 2       | 双因素认证   	| 
 | 3       | Google Authenticator   	|
-| 4       | 微信/QQ  		| 
-| 5       | 微博			|  
-| 6       | 钉钉			|
-| 7       | Google			| 
-| 8       | Facebook	    | 
-| 9       | 其他社交账号	| 
+| 4       | Kerberos/Spengo/AD域|
+| 5       | 社交账号 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
+
 
 3. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
 

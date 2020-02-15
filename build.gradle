@@ -256,10 +256,6 @@ subprojects {
          compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: "${hibernateVersion}"
          compile group: 'org.hibernate', name: 'hibernate-validator-cdi', version: "${hibernateVersion}"
          compile group: 'org.hibernate.validator', name: 'hibernate-validator-annotation-processor', version: "${hibernateVersion}"
-        
-         //jradius
-         compile group: 'net.jradius', name: 'jradius-core', version: '1.1.5'
-         compile group: 'net.jradius', name: 'jradius-dictionary', version: '1.1.5'
          
          compile group: 'joda-time', name: 'joda-time', version: '2.10'
          compile group: 'org.yaml', name: 'snakeyaml', version: '1.24'
