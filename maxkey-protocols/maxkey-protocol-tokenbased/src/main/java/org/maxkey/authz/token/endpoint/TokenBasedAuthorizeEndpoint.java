@@ -102,15 +102,15 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			//
 			//cookie.setDomain("."+applicationConfig.getSubDomainName());
 			//tomcat 8.5
-			cookie.setDomain(applicationConfig.getSubDomainName());
+			cookie.setDomain(applicationConfig.getDomainName());
 			
-			_logger.debug("Sub Domain Name : "+"."+applicationConfig.getSubDomainName());
+			_logger.debug("Sub Domain Name : "+"."+applicationConfig.getDomainName());
 			response.addCookie(cookie);
 			
-			if(tokenBasedDetails.getRedirectUri().indexOf(applicationConfig.getSubDomainName())>-1){
+			if(tokenBasedDetails.getRedirectUri().indexOf(applicationConfig.getDomainName())>-1){
 				return WebContext.redirect(tokenBasedDetails.getRedirectUri());
 			}else{
-				_logger.error(tokenBasedDetails.getRedirectUri()+" not in domain "+applicationConfig.getSubDomainName());
+				_logger.error(tokenBasedDetails.getRedirectUri()+" not in domain "+applicationConfig.getDomainName());
 				return null;
 			}
 		}
