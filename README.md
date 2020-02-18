@@ -65,9 +65,12 @@
 ------------
 # 下载
 
-百度网盘链接，提取码: **agpx**
+百度网盘链接，
+| 版本    | 日期   |  下载地址  |  提取码  |
+| v 1.0 GA   | 2019/12/06   |  https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ  |  **g17z**  |
+| v 1.2 GA   | 2020/02/18   |  https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA  |  **6bda**  |
+提取码: 
 
-https://pan.baidu.com/s/13tqB_kGonNoe-pfcnkUJ0A 
 
 ------------
 
