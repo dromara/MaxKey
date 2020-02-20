@@ -204,7 +204,7 @@ subprojects {
          
          compile group: 'cn.hutool', name: 'hutool-core', version: '5.1.2'
          compile group: 'cn.hutool', name: 'hutool-http', version: '5.1.2'
-         implementation 'me.zhyd.oauth:JustAuth:1.13.2'
+         compile group: 'me.zhyd.oauth', name: 'JustAuth', version: '1.13.2'
          
          compile group: 'org.javassist', name: 'javassist', version: '3.23.0-GA'
          compile group: 'org.owasp.esapi', name: 'esapi', version: '2.2.0.0'
