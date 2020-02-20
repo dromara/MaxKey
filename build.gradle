@@ -197,7 +197,7 @@ subprojects {
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:  "${springBootVersion}"
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version:  "${springBootVersion}"
          testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:  "${springBootVersion}"
-         //saml
+         //saml 
          compile group: 'org.opensaml', name: 'opensaml', version: '2.6.4'
          compile group: 'org.opensaml', name: 'openws', version: '1.5.4'
          compile group: 'org.opensaml', name: 'xmltooling', version: '1.4.4'
