@@ -52,7 +52,7 @@ public class MetadataEndpoint {
 	
 	private Credential signingCredential;
 
-	@RequestMapping(value = "/{appid}",produces = "application/xml")
+	@RequestMapping(value = "/{appid}.xml",produces = "application/xml")
 	public ModelAndView  metadata(HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("appid") String appId) {
 		
