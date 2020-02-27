@@ -4,12 +4,9 @@ package org.maxkey.authz.saml20.metadata;
 import org.opensaml.DefaultBootstrap;
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
-import org.opensaml.Configuration;
-
 import org.opensaml.util.storage.MapBasedStorageService;
 import org.opensaml.util.storage.ReplayCache;
 
-import org.opensaml.common.SAMLObjectBuilder;
 import org.opensaml.common.binding.security.IssueInstantRule;
 import org.opensaml.common.binding.security.MessageReplayRule;
 import org.opensaml.xml.ConfigurationException;
@@ -63,7 +60,11 @@ import org.opensaml.saml2.metadata.SurName;
 import org.opensaml.saml2.metadata.TelephoneNumber;
 import org.opensaml.saml2.metadata.impl.CompanyBuilder;
 import org.opensaml.saml2.metadata.impl.EmailAddressBuilder;
+import org.opensaml.saml2.metadata.impl.EntityDescriptorBuilder;
 import org.opensaml.saml2.metadata.impl.GivenNameBuilder;
+import org.opensaml.saml2.metadata.impl.KeyDescriptorBuilder;
+import org.opensaml.saml2.metadata.impl.ManageNameIDServiceBuilder;
+import org.opensaml.saml2.metadata.impl.NameIDFormatBuilder;
 import org.opensaml.saml2.metadata.impl.OrganizationBuilder;
 import org.opensaml.saml2.metadata.impl.OrganizationDisplayNameBuilder;
 import org.opensaml.saml2.metadata.impl.OrganizationNameBuilder;
@@ -78,6 +79,33 @@ import java.security.KeyStore;
 public class MetadataGenerator {
 	private final static Logger logger = LoggerFactory.getLogger(MetadataGenerator.class);
 
+	/** Parser manager used to parse XML. */
+	protected static BasicParserPool parser;
+
+	/** XMLObject builder factory. */
+	protected static XMLObjectBuilderFactory builderFactory;
+
+	/** XMLObject marshaller factory. */
+	protected static MarshallerFactory marshallerFactory;
+
+	/** XMLObject unmarshaller factory. */
+	protected static UnmarshallerFactory unmarshallerFactory;
+
+	/** Constructor. */
+	public MetadataGenerator() {
+		try {
+			parser = new BasicParserPool();
+			parser.setNamespaceAware(true);
+			DefaultBootstrap.bootstrap();
+			builderFactory = org.opensaml.xml.Configuration.getBuilderFactory();
+			marshallerFactory = org.opensaml.xml.Configuration.getMarshallerFactory();
+			unmarshallerFactory = org.opensaml.xml.Configuration.getUnmarshallerFactory();
+		} catch (ConfigurationException e) {
+			e.printStackTrace();
+		}
+
+	}
+		
    public static void main(String args[]) {
 	   MetadataGenerator metadataGenerator=new  MetadataGenerator();
 	   
@@ -87,10 +115,6 @@ public class MetadataGenerator {
    
    public  void samlmtest(){
 	    try {
-	         // OpenSAML 2.5.3
-	       
-	         XMLObjectBuilderFactory builderFactory = Configuration.getBuilderFactory();     
-	         
 	         KeyStoreLoader keyStoreLoader=new  KeyStoreLoader();
 	         keyStoreLoader.setKeystorePassword("secret");
 	         keyStoreLoader.setKeystoreFile("D:/JavaIDE/cert/idp-keystore.jks");
@@ -126,11 +150,11 @@ public class MetadataGenerator {
 	 		
 	        IDPSSODescriptor descriptor = buildIDPSSODescriptor();
 
-	        descriptor.getSingleSignOnServices().add(getSingleSignOnService("http://www.qoros.com/sso",null));
+	        descriptor.getSingleSignOnServices().add(getSingleSignOnService("http://sso.maxkey.org/sso",null));
 	        
-	        descriptor.getSingleSignOnServices().add(getSingleSignOnService("http://www.qoros.com/sso",SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI));
+	        descriptor.getSingleSignOnServices().add(getSingleSignOnService("http://sso.maxkey.org/sso",SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI));
 	        
-	        descriptor.getSingleLogoutServices().add(getSingleLogoutService("http://www.qoros.com/slo",null));
+	        descriptor.getSingleLogoutServices().add(getSingleLogoutService("http://sso.maxkey.org/slo",null));
 	             
 	        descriptor.getKeyDescriptors().add(generateEncryptionKeyDescriptor(signingCredential));  
 	         
@@ -141,9 +165,9 @@ public class MetadataGenerator {
 	        descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.EMAIL)); 
 	        descriptor.getNameIDFormats().add(generateNameIDFormat(NameIDType.ENTITY));
 	         
-            descriptor.getContactPersons().add(getContactPerson("qoros","shi","ming","shimh@connsec.com","18724229876",null));
+            descriptor.getContactPersons().add(getContactPerson("maxkey","shi","ming","shimingxy@163.com","18724229876",null));
              
-            descriptor.setOrganization(getOrganization("qoros","qorosc","http://www.qoros.com"));
+            descriptor.setOrganization(getOrganization("maxkey","maxkey","http://sso.maxkey.org"));
 
             String entityId="http://www.test.com";
             
@@ -163,51 +187,43 @@ public class MetadataGenerator {
    
    
    public IDPSSODescriptor buildIDPSSODescriptor(){
-	   
-	   QName qname = new QName(SAMLConstants.SAML20MD_NS, IDPSSODescriptor.DEFAULT_ELEMENT_LOCAL_NAME, SAMLConstants.SAML20MD_PREFIX);
-       IDPSSODescriptor idpSSODescriptor = (IDPSSODescriptor) buildXMLObject(qname);
+	   IDPSSODescriptor idpSSODescriptor = (IDPSSODescriptor) buildXMLObject(IDPSSODescriptor.DEFAULT_ELEMENT_NAME);
        idpSSODescriptor.addSupportedProtocol(SAMLConstants.SAML20P_NS); 
-       
        return idpSSODescriptor;
    }
    
    public EntityDescriptor buildEntityDescriptor(String entityId,RoleDescriptor roleDescriptor){
-	   
-	   SAMLObjectBuilder<EntityDescriptor> builder = (SAMLObjectBuilder<EntityDescriptor>) builderFactory.getBuilder(EntityDescriptor.DEFAULT_ELEMENT_NAME);
-       EntityDescriptor entityDescriptor = builder.buildObject();
+       EntityDescriptor entityDescriptor = new EntityDescriptorBuilder().buildObject();
        entityDescriptor.setEntityID(entityId);
        entityDescriptor.getRoleDescriptors().add(roleDescriptor);
        
        return entityDescriptor;
    }
    
-   public Document marshallerMetadata(EntityDescriptor entityDescriptor){
-	   Document document = null;
-	   try{
-		   DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
-	       
-	       DocumentBuilder documentBuilder = factory.newDocumentBuilder();  
-	       
-	       document = documentBuilder.newDocument();  
-	       
-	       Marshaller marshaller = marshallerFactory.getMarshaller(entityDescriptor);  
-	       marshaller.marshall(entityDescriptor, document);  
-	   }catch (Exception e) {
-           e.printStackTrace();
-	   }
-	   
-       return document;
-       
-   }
+	public Document marshallerMetadata(EntityDescriptor entityDescriptor) {
+		Document document = null;
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+			DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+
+			document = documentBuilder.newDocument();
+
+			Marshaller marshaller = marshallerFactory.getMarshaller(entityDescriptor);
+			marshaller.marshall(entityDescriptor, document);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return document;
+
+	}
    
    public ManageNameIDService getManageNameIDService(String url){
-	   QName manageNameIDServiceQName = new QName(SAMLConstants.SAML20MD_NS, ManageNameIDService.DEFAULT_ELEMENT_LOCAL_NAME,
-               SAMLConstants.SAML20MD_PREFIX);
-	   ManageNameIDService manageNameIDService= (ManageNameIDService) buildXMLObject(manageNameIDServiceQName);
+	   ManageNameIDService manageNameIDService=new ManageNameIDServiceBuilder().buildObject();
 	   manageNameIDService.setLocation(url);
 	   manageNameIDService.setBinding(SAMLConstants.SAML2_POST_BINDING_URI);
-	   
-	   return null;
+	   return manageNameIDService;
    }
    
    public Organization getOrganization(String name,String displayName,String url){
@@ -235,11 +251,7 @@ public class MetadataGenerator {
    }
    
    public ContactPerson getContactPerson(String companyName,String givenName,String surName,String emailAddress,String telephoneNumber,ContactPersonTypeEnumeration contactPersonType){
-	   
-	 QName contactQName = new QName(SAMLConstants.SAML20MD_NS, ContactPerson.DEFAULT_ELEMENT_LOCAL_NAME,
-               SAMLConstants.SAML20MD_PREFIX);
-
-  	 ContactPerson contactPerson= (ContactPerson) buildXMLObject(contactQName);
+  	 ContactPerson contactPerson= (ContactPerson) buildXMLObject(ContactPerson.DEFAULT_ELEMENT_NAME);
   	 
   	 contactPerson.setType(contactPersonType);
   	 
@@ -266,8 +278,7 @@ public class MetadataGenerator {
   	 return contactPerson;
    }
    public SingleSignOnService getSingleSignOnService(String location,String binding){
-	   QName ssoQName = new QName(SAMLConstants.SAML20MD_NS, SingleSignOnService.DEFAULT_ELEMENT_LOCAL_NAME,SAMLConstants.SAML20MD_PREFIX);
-	   SingleSignOnService singleSignOnService=(SingleSignOnService) buildXMLObject(ssoQName);
+	   SingleSignOnService singleSignOnService=(SingleSignOnService) buildXMLObject(SingleSignOnService.DEFAULT_ELEMENT_NAME);
 	   if(binding==null){
 		   binding=SAMLConstants.SAML2_POST_BINDING_URI;
 	   }
@@ -278,8 +289,7 @@ public class MetadataGenerator {
    }
    
    public SingleLogoutService getSingleLogoutService(String location,String binding){
-	   QName sloQName = new QName(SAMLConstants.SAML20MD_NS, SingleLogoutService.DEFAULT_ELEMENT_LOCAL_NAME,SAMLConstants.SAML20MD_PREFIX);
-	   SingleLogoutService singleLogoutService=(SingleLogoutService) buildXMLObject(sloQName);
+	   SingleLogoutService singleLogoutService=(SingleLogoutService) buildXMLObject(SingleLogoutService.DEFAULT_ELEMENT_NAME);
 	   if(binding==null){
 		   binding=SAMLConstants.SAML2_REDIRECT_BINDING_URI;
 	   }
@@ -289,7 +299,7 @@ public class MetadataGenerator {
    }
    
    public NameIDFormat generateNameIDFormat(String nameIDType){
-	   NameIDFormat nameIDFormat =((SAMLObjectBuilder<NameIDFormat>) builderFactory.getBuilder(NameIDFormat.DEFAULT_ELEMENT_NAME)).buildObject();  
+	   NameIDFormat nameIDFormat =new NameIDFormatBuilder().buildObject();  
        nameIDFormat.setFormat(nameIDType);  
        return nameIDFormat;
    }
@@ -303,7 +313,7 @@ public class MetadataGenerator {
    }
    
    public KeyDescriptor generateSignKeyDescriptor(Credential signingCredential){
-	   KeyDescriptor signKeyDescriptor = ((SAMLObjectBuilder<KeyDescriptor>) builderFactory.getBuilder(KeyDescriptor.DEFAULT_ELEMENT_NAME)).buildObject();
+	   KeyDescriptor signKeyDescriptor = new KeyDescriptorBuilder().buildObject();
        
        signKeyDescriptor.setUse(UsageType.SIGNING);  //Set usage  
        
@@ -311,21 +321,22 @@ public class MetadataGenerator {
        try {  
         signKeyDescriptor.setKeyInfo(getKeyInfoGenerator().generate(signingCredential));  
        } catch (SecurityException e) {  
-        log.error(e.getMessage(), e);  
+    	   logger.error(e.getMessage(), e);  
        }  
        
        return signKeyDescriptor;
    }
    
    public KeyDescriptor generateEncryptionKeyDescriptor(Credential signingCredential){
-	   KeyDescriptor encryptionKeyDescriptor = ((SAMLObjectBuilder<KeyDescriptor>) builderFactory.getBuilder(KeyDescriptor.DEFAULT_ELEMENT_NAME)).buildObject();
+	   KeyDescriptor encryptionKeyDescriptor =  new KeyDescriptorBuilder().buildObject();
+	  
 	   encryptionKeyDescriptor.setUse(UsageType.ENCRYPTION); 
 	   
 	   // Generating key info. The element will contain the public key. The key is used to by the IDP to encrypt data  
 	   try {  
 		   encryptionKeyDescriptor.setKeyInfo(getKeyInfoGenerator().generate(signingCredential));  
 	   } catch (SecurityException e) {  
-	    log.error(e.getMessage(), e);  
+		   logger.error(e.getMessage(), e);  
 	   }  
 	   
 	   return encryptionKeyDescriptor;
@@ -340,18 +351,18 @@ public class MetadataGenerator {
    }
    
    
-   protected static  XMLObject unmarshallElement( Document doc) {
+   public static  XMLObject unmarshallElement( Document doc) {
        try {
            Element samlElement = doc.getDocumentElement();
 
            Unmarshaller unmarshaller = org.opensaml.xml.Configuration.getUnmarshallerFactory().getUnmarshaller(samlElement);
            if (unmarshaller == null) {
-               ;//fail("Unable to retrieve unmarshaller by DOM Element");
+        	   logger.error("Unable to retrieve unmarshaller by DOM Element");
            }
 
            return unmarshaller.unmarshall(samlElement);
        }catch (UnmarshallingException e) {
-           //fail("Unmarshalling failed when parsing element file " + elementFile + ": " + e);
+    	   logger.error("Unmarshalling failed when parsing doc : " , e);
        }
 
        return null;
@@ -361,52 +372,23 @@ public class MetadataGenerator {
    public static Element marshallerElement( XMLObject xmlObject) {
        Marshaller marshaller = marshallerFactory.getMarshaller(xmlObject);
        if(marshaller == null){
-           //fail("Unable to locate marshaller for " + xmlObject.getElementQName() + " can not perform equality check assertion");
+           logger.error("Unable to locate marshaller for " + xmlObject.getElementQName() + " can not perform equality check assertion");
        }
        
        Element generatedDOM=null;
        try {
            generatedDOM = marshaller.marshall(xmlObject, parser.newDocument());
-           if(log.isDebugEnabled()) {
-               log.debug("Marshalled DOM was " + XMLHelper.nodeToString(generatedDOM));
+           if(logger.isDebugEnabled()) {
+        	   logger.debug("Marshalled DOM was " + XMLHelper.nodeToString(generatedDOM));
            }
           // assertXMLEqual(failMessage, expectedDOM, generatedDOM.getOwnerDocument());
        } catch (Exception e) {
-           log.error("Marshalling failed with the following error:", e);
-          // fail("Marshalling failed with the following error: " + e);
+    	   logger.error("Marshalling failed with the following error:", e);
        }
        return generatedDOM;
    }
    
    
-   /** Parser manager used to parse XML. */
-   protected static BasicParserPool parser;
-   
-   /** XMLObject builder factory. */
-   protected static XMLObjectBuilderFactory builderFactory;
 
-   /** XMLObject marshaller factory. */
-   protected static MarshallerFactory marshallerFactory;
-
-   /** XMLObject unmarshaller factory. */
-   protected static UnmarshallerFactory unmarshallerFactory;
-   
-   /** Class logger. */
-   private static Logger log = LoggerFactory.getLogger(MetadataGenerator.class);
-   
-   /** Constructor. */
-   public MetadataGenerator(){
-       
-       parser = new BasicParserPool();
-       parser.setNamespaceAware(true);
-       try {
-		DefaultBootstrap.bootstrap();
-	} catch (ConfigurationException e) {
-		e.printStackTrace();
-	}
-       builderFactory = org.opensaml.xml.Configuration.getBuilderFactory();
-       marshallerFactory = org.opensaml.xml.Configuration.getMarshallerFactory();
-       unmarshallerFactory = org.opensaml.xml.Configuration.getUnmarshallerFactory();
-   }
 
 }

@@ -39,12 +39,10 @@ import org.w3c.dom.Element;
  * 
  */
 public class MetadataDescriptorUtil {
-
+	private final static Logger logger = LoggerFactory.getLogger(MetadataDescriptorUtil.class);
+	
 	private static MetadataDescriptorUtil instance = null;
-
-	private final static Logger logger = LoggerFactory
-			.getLogger(MetadataDescriptorUtil.class);
-
+	
 	/**
 	 * 
 	 */
@@ -78,8 +76,7 @@ public class MetadataDescriptorUtil {
 			// validation
 			filesystemMetadataProvider.setParserPool(new BasicParserPool());
 			filesystemMetadataProvider.initialize();
-			EntityDescriptor entityDescriptor = (EntityDescriptorImpl) filesystemMetadataProvider
-					.getMetadata();
+			EntityDescriptor entityDescriptor = (EntityDescriptorImpl) filesystemMetadataProvider.getMetadata();
 			return entityDescriptor;
 		} catch (MetadataProviderException e) {
 			logger.error("元数据解析出错", e);
@@ -96,10 +93,8 @@ public class MetadataDescriptorUtil {
 			Document inMetadataDoc = basicParserPool.parse(inputStream);
 			Element metadataRoot = inMetadataDoc.getDocumentElement();
 
-			UnmarshallerFactory unmarshallerFactory = Configuration
-					.getUnmarshallerFactory();
-			Unmarshaller unmarshaller = unmarshallerFactory
-					.getUnmarshaller(metadataRoot);
+			UnmarshallerFactory unmarshallerFactory = Configuration.getUnmarshallerFactory();
+			Unmarshaller unmarshaller = unmarshallerFactory.getUnmarshaller(metadataRoot);
 
 			// unmarshaller.unmarshall(arg0)
 			// Unmarshall using the document root element, an EntitiesDescriptor
@@ -128,14 +123,12 @@ public class MetadataDescriptorUtil {
 	public EntityDescriptor getEntityDescriptor(Element elementMetadata)
 			throws Exception {
 		try {
-			DOMMetadataProvider dOMMetadataProvider = new DOMMetadataProvider(
-					elementMetadata);
+			DOMMetadataProvider dOMMetadataProvider = new DOMMetadataProvider(elementMetadata);
 			dOMMetadataProvider.setRequireValidMetadata(true); // Enable
 																// validation
 			dOMMetadataProvider.setParserPool(new BasicParserPool());
 			dOMMetadataProvider.initialize();
-			EntityDescriptor entityDescriptor = (EntityDescriptorImpl) dOMMetadataProvider
-					.getMetadata();
+			EntityDescriptor entityDescriptor = (EntityDescriptorImpl) dOMMetadataProvider.getMetadata();
 			return entityDescriptor;
 		} catch (MetadataProviderException e) {
 			logger.error("元数据解析出错", e);
@@ -157,8 +150,7 @@ public class MetadataDescriptorUtil {
 		File file = new File("d:\\SAMLSP-00D90000000hf9n.xml");
 		org.opensaml.DefaultBootstrap.bootstrap();
 		
-		EntityDescriptor entityDescriptor = MetadataDescriptorUtil.getInstance()
-				.getEntityDescriptor(file);
+		EntityDescriptor entityDescriptor = MetadataDescriptorUtil.getInstance().getEntityDescriptor(file);
 
 		// System.out.println("2 : "+entityDescriptor.getRoleDescriptors());
 
@@ -193,11 +185,9 @@ public class MetadataDescriptorUtil {
 		// //two
 		InputStream in = new FileInputStream(file);
 
-		EntityDescriptor entityDescriptor1 = MetadataDescriptorUtil.getInstance()
-				.getEntityDescriptor(in);
+		EntityDescriptor entityDescriptor1 = MetadataDescriptorUtil.getInstance().getEntityDescriptor(in);
 
-		SPSSODescriptor sPSSODescriptor = entityDescriptor1
-				.getSPSSODescriptor(SAMLConstants.SAML20P_NS);
+		SPSSODescriptor sPSSODescriptor = entityDescriptor1.getSPSSODescriptor(SAMLConstants.SAML20P_NS);
 
 		 System.out.println("ok :"+sPSSODescriptor.getAssertionConsumerServices().get(0).getLocation());
 
