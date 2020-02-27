@@ -1,11 +1,12 @@
 
-package org.maxkey.authz.saml20;
+package org.maxkey.authz.saml20.binding.impl;
 
 import java.security.KeyStore;
 
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.maxkey.authz.saml.common.TrustResolver;
+import org.maxkey.authz.saml20.binding.ExtractBindingAdapter;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.domain.apps.AppsSAML20Details;
 import org.opensaml.common.binding.BasicSAMLMessageContext;
@@ -18,10 +19,13 @@ import org.opensaml.ws.security.SecurityPolicyResolver;
 import org.opensaml.ws.transport.http.HttpServletRequestAdapter;
 import org.opensaml.xml.security.SecurityException;
 import org.opensaml.xml.security.credential.CredentialResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 
 public class ExtractPostBindingAdapter implements ExtractBindingAdapter, InitializingBean{
-
+	private final static Logger logger = LoggerFactory.getLogger(ExtractPostBindingAdapter.class);
+	
 	static final String SAML_REQUEST_POST_PARAM_NAME = "SAMLRequest";
 	static final String SAML_RESPONSE_POST_PARAM_NAME = "SAMLResponse";
 
@@ -65,7 +69,9 @@ public class ExtractPostBindingAdapter implements ExtractBindingAdapter, Initial
 
 	
 
+	
 	@Override
+	@SuppressWarnings("rawtypes")
 	public SAMLMessageContext extractSAMLMessageContext(HttpServletRequest request) throws MessageDecodingException, SecurityException {
 		
 		BasicSAMLMessageContext messageContext = new BasicSAMLMessageContext();
@@ -75,7 +81,7 @@ public class ExtractPostBindingAdapter implements ExtractBindingAdapter, Initial
 		messageContext.setSecurityPolicyResolver(securityPolicyResolver);
 
 		decoder.decode(messageContext);
-		
+		logger.debug("decode successed ");
 		return	messageContext;
 
 	}

@@ -157,25 +157,21 @@ public class MetadataDescriptorUtil {
 		// System.out.println("3 : "+idpEntityDescriptor.);
 		// System.out.println("+"+ entityDescriptor.getOrganization());
 
-		List<RoleDescriptor> listRoleDescriptor = entityDescriptor
-				.getRoleDescriptors();
+		List<RoleDescriptor> listRoleDescriptor = entityDescriptor.getRoleDescriptors();
 		for (RoleDescriptor roleDescriptor : listRoleDescriptor) {
 
 			// SPSSODescriptor
 			// sPSSODescriptor1=idpEntityDescriptor.getSPSSODescriptor(SAMLConstants.SAML20P_NS);
-			if (roleDescriptor instanceof org.opensaml.saml2.metadata.impl.IDPSSODescriptorImpl) {
+			if (roleDescriptor instanceof IDPSSODescriptorImpl) {
 				IDPSSODescriptor iDPSSODescriptor = (IDPSSODescriptorImpl) roleDescriptor;
-				// System.out.println("3 : "+sPSSODescriptor1.getAssertionConsumerServices().get(0).getLocation());
-
-				// System.out.println("4 : "+sPSSODescriptor1.getAssertionConsumerServices().get(0).getBinding());
-
+				 System.out.println("3 : "+iDPSSODescriptor.getSingleSignOnServices().get(0).getLocation());
 				// System.out.println("- : "+iDPSSODescriptor.getNameIDFormats().get(0).getFormat());
 
 				// System.out.println("- : "+iDPSSODescriptor.getKeyDescriptors().get(0).getKeyInfo().getX509Datas().get(0));
 			} else {
 				SPSSODescriptor sPSSODescriptor = (SPSSODescriptorImpl) roleDescriptor;
 
-				// System.out.println("- : "+sPSSODescriptor.getAssertionConsumerServices().get(0).getLocation());
+				 System.out.println("- : "+sPSSODescriptor.getAssertionConsumerServices().get(0).getLocation());
 
 				// System.out.println("- : "+sPSSODescriptor.getAssertionConsumerServices().get(0).getBinding());
 			}

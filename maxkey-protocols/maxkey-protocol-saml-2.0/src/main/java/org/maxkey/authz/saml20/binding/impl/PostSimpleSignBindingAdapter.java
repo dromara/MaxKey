@@ -1,5 +1,5 @@
 
-package org.maxkey.authz.saml20;
+package org.maxkey.authz.saml20.binding.impl;
 
 import org.opensaml.saml2.binding.encoding.HTTPPostSimpleSignEncoder;
 import org.opensaml.ws.security.SecurityPolicyResolver;

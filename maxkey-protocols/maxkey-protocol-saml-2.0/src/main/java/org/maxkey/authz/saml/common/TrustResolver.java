@@ -32,8 +32,7 @@ public class TrustResolver {
 		Map<String, String> passwords = new HashMap<String, String>();
 		passwords.put(key, password);
 
-		keyStoreCredentialResolver = new KeyStoreCredentialResolver(
-				trustKeyStore, passwords);
+		keyStoreCredentialResolver = new KeyStoreCredentialResolver(trustKeyStore, passwords);
 		
 		return keyStoreCredentialResolver;
 	}
@@ -60,13 +59,11 @@ public class TrustResolver {
 		}
 		securityPolicyDelegate.addSecurityPolicy(issueInstantRule);
 		securityPolicyDelegate.addSecurityPolicy(messageReplayRule);
-		staticSecurityPolicyResolver = new StaticSecurityPolicyResolver(
-				securityPolicyDelegate);
+		staticSecurityPolicyResolver = new StaticSecurityPolicyResolver(securityPolicyDelegate);
 	}
 	
 	public void initPolicyRule(){
-		signatureSecurityPolicyRule = new SignatureSecurityPolicyRule(
-				keyStoreCredentialResolver, new SAMLSignatureProfileValidator());
+		signatureSecurityPolicyRule = new SignatureSecurityPolicyRule(keyStoreCredentialResolver, new SAMLSignatureProfileValidator());
 		signatureSecurityPolicyRule.loadTrustEngine();
 	}
 
@@ -80,8 +77,7 @@ public class TrustResolver {
 		securityPolicyDelegate.addSecurityPolicy(issueInstantRule);
 		securityPolicyDelegate.addSecurityPolicy(messageReplayRule);
 
-		staticSecurityPolicyResolver = new StaticSecurityPolicyResolver(
-				securityPolicyDelegate);
+		staticSecurityPolicyResolver = new StaticSecurityPolicyResolver(securityPolicyDelegate);
 	}
 
 	public KeyStoreCredentialResolver getKeyStoreCredentialResolver() {

@@ -36,6 +36,7 @@ public class WebServicePostEncoder extends HTTPPostEncoder {
 		super(engine, templateId);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public VelocityContext encodeMsgContext(MessageContext messageContext)
 			throws MessageEncodingException {
 
@@ -66,6 +67,7 @@ public class WebServicePostEncoder extends HTTPPostEncoder {
 	 * @throws MessageEncodingException
 	 *             thrown if there is a problem encoding the message
 	 */
+	@SuppressWarnings("rawtypes")
 	protected VelocityContext encodeMsgContext(SAMLMessageContext messageContext)
 			throws MessageEncodingException {
 
@@ -83,6 +85,7 @@ public class WebServicePostEncoder extends HTTPPostEncoder {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	protected void populateVelocityContext(VelocityContext velocityContext,
 			SAMLMessageContext messageContext) throws MessageEncodingException {
 
@@ -185,6 +188,7 @@ public class WebServicePostEncoder extends HTTPPostEncoder {
 	 * 
 	 * @return the form control data string for signature computation
 	 */
+	@SuppressWarnings("rawtypes")
 	protected String buildFormDataToSign(VelocityContext velocityContext,
 			SAMLMessageContext messageContext, String sigAlgURI) {
 		StringBuilder builder = new StringBuilder();

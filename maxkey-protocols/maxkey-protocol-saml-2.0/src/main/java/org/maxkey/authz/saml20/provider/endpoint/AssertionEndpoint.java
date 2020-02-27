@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
 import org.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.maxkey.authz.saml.common.EndpointGenerator;
-import org.maxkey.authz.saml20.BindingAdapter;
+import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.provider.xml.AuthnResponseGenerator;
 import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.web.WebContext;

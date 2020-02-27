@@ -1,5 +1,5 @@
 
-package org.maxkey.authz.saml20;
+package org.maxkey.authz.saml20.binding;
 
 import java.security.KeyStore;
 
@@ -21,6 +21,7 @@ import org.opensaml.xml.security.credential.CredentialResolver;
  */
 public interface ExtractBindingAdapter {
 
+	@SuppressWarnings("rawtypes")
 	public SAMLMessageContext extractSAMLMessageContext(HttpServletRequest request) throws MessageDecodingException, SecurityException;
 
 	public String extractSAMLMessage(HttpServletRequest request);

@@ -113,7 +113,8 @@ public class MetadataGenerator {
    }
    
    
-   public  void samlmtest(){
+   @SuppressWarnings({ "unchecked", "rawtypes" })
+public  void samlmtest(){
 	    try {
 	         KeyStoreLoader keyStoreLoader=new  KeyStoreLoader();
 	         keyStoreLoader.setKeystorePassword("secret");
@@ -342,7 +343,8 @@ public class MetadataGenerator {
 	   return encryptionKeyDescriptor;
    }
    
-   public static XMLObject buildXMLObject(QName objectQName){
+   @SuppressWarnings("rawtypes")
+public static XMLObject buildXMLObject(QName objectQName){
        XMLObjectBuilder builder = builderFactory.getBuilder(objectQName);
        if(builder == null){
           ; //fail("Unable to retrieve builder for object QName " + objectQName);

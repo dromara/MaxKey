@@ -9,7 +9,6 @@ import java.util.Enumeration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.ResourceUtils;
 
 
@@ -45,7 +44,6 @@ public class KeyStoreLoader implements InitializingBean{
 	/**
 	 * @param keystoreFile the keystoreFile to set
 	 */
-	@Required
 	public void setKeystoreFile(String keystoreFile) {
 		this.keystoreFile = keystoreFile;
 	}
@@ -55,7 +53,6 @@ public class KeyStoreLoader implements InitializingBean{
 	/**
 	 * @param keystorePassword the keystorePassword to set
 	 */
-	@Required
 	public void setKeystorePassword(String keystorePassword) {
 		this.keystorePassword = keystorePassword;
 	}

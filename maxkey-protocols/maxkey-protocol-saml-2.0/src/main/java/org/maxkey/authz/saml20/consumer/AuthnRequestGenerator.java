@@ -5,15 +5,11 @@ package org.maxkey.authz.saml20.consumer;
 import org.maxkey.authz.saml.service.IDService;
 import org.maxkey.authz.saml.service.TimeService;
 import org.maxkey.authz.saml20.xml.IssuerGenerator;
-import org.opensaml.Configuration;
 import org.opensaml.saml2.core.AuthnRequest;
 import org.opensaml.saml2.core.impl.AuthnRequestBuilder;
-import org.opensaml.xml.XMLObjectBuilderFactory;
 
 
 public class AuthnRequestGenerator {
-
-	private XMLObjectBuilderFactory builderFactory = Configuration.getBuilderFactory();
 	
 	private final String issuingEntityName;
 	private final TimeService timeService; 
@@ -30,10 +26,7 @@ public class AuthnRequestGenerator {
 	}
 
 	public AuthnRequest generateAuthnRequest(String destination, String responseLocation) {
-		
-		AuthnRequestBuilder authnRequestBuilder = (AuthnRequestBuilder) builderFactory.getBuilder(AuthnRequest.DEFAULT_ELEMENT_NAME);
-		
-		AuthnRequest authnRequest = authnRequestBuilder.buildObject();
+		AuthnRequest authnRequest = new AuthnRequestBuilder().buildObject();
 		
 		authnRequest.setAssertionConsumerServiceURL(responseLocation);
 		authnRequest.setID(idService.generateID());

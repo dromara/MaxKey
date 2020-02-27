@@ -1,10 +1,9 @@
-package org.maxkey.authz.saml20;
+package org.maxkey.authz.saml20.binding.decoder;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.common.binding.decoding.BaseSAMLMessageDecoder;
-import org.opensaml.saml2.binding.decoding.HTTPPostDecoder;
+import org.opensaml.saml2.binding.decoding.HTTPRedirectDeflateDecoder;
 import org.opensaml.ws.message.decoder.MessageDecodingException;
 import org.opensaml.ws.transport.InTransport;
 import org.opensaml.ws.transport.http.HttpServletRequestAdapter;
@@ -13,18 +12,16 @@ import org.opensaml.xml.util.DatatypeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OpenHTTPPostDecoder extends HTTPPostDecoder {
-
-	/** Class logger. */
-	private final Logger log = LoggerFactory.getLogger(BaseSAMLMessageDecoder.class);
+public class OpenHTTPRedirectDecoder extends HTTPRedirectDeflateDecoder {
+	private final Logger log = LoggerFactory.getLogger(OpenHTTPRedirectDecoder.class);
 
 	private String receiverEndpoint;
 
-	public OpenHTTPPostDecoder() {
+	public OpenHTTPRedirectDecoder() {
 		super();
 	}
 
-	public OpenHTTPPostDecoder(ParserPool pool) {
+	public OpenHTTPRedirectDecoder(ParserPool pool) {
 		super(pool);
 	}
 
@@ -42,9 +39,10 @@ public class OpenHTTPPostDecoder extends HTTPPostDecoder {
 	 *             thrown if there is a problem decoding and processing the
 	 *             message Destination or receiver endpoint information
 	 */
+	
 	@Override
-	protected void checkEndpointURI(SAMLMessageContext messageContext)
-			throws SecurityException, MessageDecodingException {
+	@SuppressWarnings("rawtypes")
+	protected void checkEndpointURI(SAMLMessageContext messageContext)throws SecurityException, MessageDecodingException {
 
 		log.debug("Checking SAML message intended destination endpoint against receiver endpoint");
 
@@ -99,8 +97,8 @@ public class OpenHTTPPostDecoder extends HTTPPostDecoder {
 	}
 
 	@Override
-	protected String getActualReceiverEndpointURI(
-			SAMLMessageContext messageContext) throws MessageDecodingException {
+	@SuppressWarnings("rawtypes")
+	protected String getActualReceiverEndpointURI(SAMLMessageContext messageContext) throws MessageDecodingException {
 		InTransport inTransport = messageContext.getInboundMessageTransport();
 		if (!(inTransport instanceof HttpServletRequestAdapter)) {
 			throw new MessageDecodingException(

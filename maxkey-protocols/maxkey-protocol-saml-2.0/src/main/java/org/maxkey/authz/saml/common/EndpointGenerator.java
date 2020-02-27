@@ -5,26 +5,18 @@ package org.maxkey.authz.saml.common;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang.StringUtils;
-import org.opensaml.Configuration;
-import org.opensaml.common.SAMLObjectBuilder;
+import org.opensaml.saml2.metadata.AssertionConsumerService;
 import org.opensaml.saml2.metadata.Endpoint;
-import org.opensaml.xml.XMLObjectBuilderFactory;
+import org.opensaml.saml2.metadata.impl.AssertionConsumerServiceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EndpointGenerator {
-
 	private final static Logger logger = LoggerFactory.getLogger(EndpointGenerator.class);
-	
-	private XMLObjectBuilderFactory builderFactory = Configuration.getBuilderFactory();
 	
 	public Endpoint generateEndpoint( String location) {
 		logger.debug("end point location: {}", location);
-		
-		QName service=org.opensaml.saml2.metadata.AssertionConsumerService.DEFAULT_ELEMENT_NAME;
-
-		SAMLObjectBuilder<Endpoint> endpointBuilder = (SAMLObjectBuilder<Endpoint>) builderFactory.getBuilder(service);
-		Endpoint samlEndpoint = endpointBuilder.buildObject();
+		Endpoint samlEndpoint = new AssertionConsumerServiceBuilder().buildObject();
 		
         samlEndpoint.setLocation(location);
         
@@ -35,12 +27,11 @@ public class EndpointGenerator {
 		logger.debug("end point service: {}", service);
 		logger.debug("end point location: {}", location);
 		logger.debug("end point responseLocation: {}", responseLocation);
-		
+		Endpoint samlEndpoint;
 		if(null==service){
-			service=org.opensaml.saml2.metadata.AssertionConsumerService.DEFAULT_ELEMENT_NAME;
+			service =  AssertionConsumerService.DEFAULT_ELEMENT_NAME;
 		}
-		SAMLObjectBuilder<Endpoint> endpointBuilder = (SAMLObjectBuilder<Endpoint>) builderFactory.getBuilder(service);
-		Endpoint samlEndpoint = endpointBuilder.buildObject();
+		samlEndpoint = new AssertionConsumerServiceBuilder().buildObject(service);
 		
         samlEndpoint.setLocation(location);
         

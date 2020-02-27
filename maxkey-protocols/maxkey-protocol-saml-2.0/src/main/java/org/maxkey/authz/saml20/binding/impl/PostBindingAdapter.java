@@ -1,5 +1,5 @@
 
-package org.maxkey.authz.saml20;
+package org.maxkey.authz.saml20.binding.impl;
 
 import java.security.KeyStore;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +9,8 @@ import org.apache.commons.lang.Validate;
 import org.apache.velocity.app.VelocityEngine;
 import org.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.maxkey.authz.saml.common.TrustResolver;
+import org.maxkey.authz.saml20.binding.BindingAdapter;
+import org.maxkey.authz.saml20.binding.ExtractBindingAdapter;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
 import org.maxkey.domain.apps.AppsSAML20Details;
@@ -32,7 +34,6 @@ import org.opensaml.xml.security.criteria.UsageCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Required;
 
 public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 	private final static Logger logger = LoggerFactory.getLogger(PostBindingAdapter.class);
@@ -73,12 +74,12 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 	}
 
 
-	@Required
 	public void setVelocityEngine(VelocityEngine velocityEngine) {
 		this.velocityEngine = velocityEngine;
 	}
 	
 	@Override
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void sendSAMLMessage(SignableSAMLObject samlMessage,
 								Endpoint endpoint, 
 								HttpServletRequest request,

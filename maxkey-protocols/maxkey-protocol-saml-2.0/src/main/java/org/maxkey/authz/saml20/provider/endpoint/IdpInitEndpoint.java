@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authz.saml.common.AuthnRequestInfo;
-import org.maxkey.authz.saml20.BindingAdapter;
-import org.maxkey.authz.saml20.ExtractBindingAdapter;
+import org.maxkey.authz.saml20.binding.BindingAdapter;
+import org.maxkey.authz.saml20.binding.ExtractBindingAdapter;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
 import org.maxkey.dao.service.AppsSaml20DetailsService;

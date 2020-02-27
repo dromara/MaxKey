@@ -42,21 +42,31 @@
 	
 	<bean id="mapBasedStorageService" class="org.opensaml.util.storage.MapBasedStorageService"/>
 	
+	<bean id="replayCache" class="org.opensaml.util.storage.ReplayCache">
+		<constructor-arg ref="mapBasedStorageService"/>
+		<constructor-arg value="${config.saml.v20.replay.cache.life.in.millis}"></constructor-arg>
+	</bean> 
+	
+	<bean id="messageReplayRule" class="org.opensaml.common.binding.security.MessageReplayRule">
+		<constructor-arg ref="replayCache"/>
+	</bean>
+		
 	<bean id="samlParserPool"  class="org.opensaml.xml.parse.BasicParserPool" >
 			<property name="maxPoolSize" value="${config.saml.v20.max.parser.pool.size}" /> 
 	</bean>
 	
-	<bean id="OpenHTTPPostSimpleSignDecoder" class="org.maxkey.authz.saml20.OpenHTTPPostSimpleSignDecoder">
+	<!-- Decoder -->
+	<bean id="openHTTPPostSimpleSignDecoder" class="org.maxkey.authz.saml20.binding.decoder.OpenHTTPPostSimpleSignDecoder">
 			<constructor-arg ref="samlParserPool"/>
 			<property name="receiverEndpoint" value="${config.saml.v20.idp.receiver.endpoint}" />
 	</bean>
 	
-	<bean id="openHTTPPostDecoder" class="org.maxkey.authz.saml20.OpenHTTPPostDecoder">
+	<bean id="openHTTPPostDecoder" class="org.maxkey.authz.saml20.binding.decoder.OpenHTTPPostDecoder">
 			<constructor-arg ref="samlParserPool"/>
 			<property name="receiverEndpoint" value="${config.saml.v20.idp.receiver.endpoint}" />
 	</bean>
 	
-	<bean id="openHTTPRedirectDecoder" class="org.maxkey.authz.saml20.OpenHTTPRedirectDecoder">
+	<bean id="openHTTPRedirectDecoder" class="org.maxkey.authz.saml20.binding.decoder.OpenHTTPRedirectDecoder">
 			<constructor-arg ref="samlParserPool"/>
 			<property name="receiverEndpoint" value="${config.saml.v20.idp.receiver.endpoint}" />
 	</bean>
@@ -69,19 +79,9 @@
 		
 	</bean>
 	
-	
-	<bean id="replayCache" class="org.opensaml.util.storage.ReplayCache">
-		<constructor-arg ref="mapBasedStorageService"/>
-		<constructor-arg value="${config.saml.v20.replay.cache.life.in.millis}"></constructor-arg>
-	</bean> 
-	
-	<bean id="messageReplayRule" class="org.opensaml.common.binding.security.MessageReplayRule">
-		<constructor-arg ref="replayCache"/>
-	</bean>
-	
-	
+	<!-- Binding  -->
 	<!-- ExtractPostBindingAdapter  -->
-	<bean id="extractPostBindingAdapter" class="org.maxkey.authz.saml20.ExtractPostBindingAdapter">
+	<bean id="extractPostBindingAdapter" class="org.maxkey.authz.saml20.binding.impl.ExtractPostBindingAdapter">
 		<constructor-arg ref="openHTTPPostDecoder"/>
 		<property name="keyStoreLoader" ref="keyStoreLoader" />
 		<property name="issueInstantRule" ref="issueInstantRule" />
@@ -89,7 +89,7 @@
 	</bean>
 	
 	<!-- ExtractRedirectBindingAdapter  -->
-	<bean id="extractRedirectBindingAdapter" class="org.maxkey.authz.saml20.ExtractRedirectBindingAdapter">
+	<bean id="extractRedirectBindingAdapter" class="org.maxkey.authz.saml20.binding.impl.ExtractRedirectBindingAdapter">
 		<constructor-arg ref="openHTTPRedirectDecoder"/>
 		<property name="keyStoreLoader" ref="keyStoreLoader" />
 		<property name="issueInstantRule" ref="issueInstantRule" />
@@ -97,13 +97,13 @@
 	</bean>
 	
 	<!-- PostBindingAdapter -->
-	<bean id="postSimpleSignBindingAdapter" class="org.maxkey.authz.saml20.PostSimpleSignBindingAdapter">
+	<bean id="postSimpleSignBindingAdapter" class="org.maxkey.authz.saml20.binding.impl.PostSimpleSignBindingAdapter">
 		<property name="velocityEngine" ref="velocityEngine" />
 		<property name="issuerEntityName" value="${config.saml.v20.idp.issuer}"/>
 	</bean>
 	
 	<!-- PostBindingAdapter -->
-	<bean id="postBindingAdapter" class="org.maxkey.authz.saml20.PostBindingAdapter">
+	<bean id="postBindingAdapter" class="org.maxkey.authz.saml20.binding.impl.PostBindingAdapter">
 		<property name="velocityEngine" ref="velocityEngine" />
 		<property name="issuerEntityName" ref="issuerEntityName"/>
 	</bean>
@@ -126,7 +126,6 @@
 		<property name="keystoreFile" value="${config.saml.v20.idp.keystore}"/>
 		
 	</bean>
-
 	
 	<bean id="spKeyStoreLoader" class="org.maxkey.crypto.keystore.KeyStoreLoader">
     	<property name="entityName" value="${config.saml.v20.sp.issuing.entity.id}" />
@@ -138,6 +137,7 @@
 		<constructor-arg value="${config.saml.v20.sp.issuing.entity.id}"/>
 	</bean>
 	
+	<!-- Metadata -->
 	<bean id="saml20Metadata" class="org.maxkey.domain.Saml20Metadata">
     	<property name="orgName" value="${config.saml.v20.metadata.orgName}" />
 		<property name="orgDisplayName" value="${config.saml.v20.metadata.orgDisplayName}" /> 

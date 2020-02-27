@@ -1,10 +1,9 @@
-package org.maxkey.authz.saml20;
+package org.maxkey.authz.saml20.binding.decoder;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.common.binding.decoding.BaseSAMLMessageDecoder;
-import org.opensaml.saml2.binding.decoding.HTTPRedirectDeflateDecoder;
+import org.opensaml.saml2.binding.decoding.HTTPPostSimpleSignDecoder;
 import org.opensaml.ws.message.decoder.MessageDecodingException;
 import org.opensaml.ws.transport.InTransport;
 import org.opensaml.ws.transport.http.HttpServletRequestAdapter;
@@ -13,18 +12,16 @@ import org.opensaml.xml.util.DatatypeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OpenHTTPRedirectDecoder extends HTTPRedirectDeflateDecoder {
-
-	/** Class logger. */
-	private final Logger log = LoggerFactory.getLogger(BaseSAMLMessageDecoder.class);
+public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
+	private final Logger log = LoggerFactory.getLogger(OpenHTTPPostSimpleSignDecoder.class);
 
 	private String receiverEndpoint;
 
-	public OpenHTTPRedirectDecoder() {
+	public OpenHTTPPostSimpleSignDecoder() {
 		super();
 	}
 
-	public OpenHTTPRedirectDecoder(ParserPool pool) {
+	public OpenHTTPPostSimpleSignDecoder(ParserPool pool) {
 		super(pool);
 	}
 
@@ -42,7 +39,9 @@ public class OpenHTTPRedirectDecoder extends HTTPRedirectDeflateDecoder {
 	 *             thrown if there is a problem decoding and processing the
 	 *             message Destination or receiver endpoint information
 	 */
+	
 	@Override
+	@SuppressWarnings("rawtypes")
 	protected void checkEndpointURI(SAMLMessageContext messageContext)
 			throws SecurityException, MessageDecodingException {
 
@@ -56,58 +55,48 @@ public class OpenHTTPRedirectDecoder extends HTTPRedirectDeflateDecoder {
 		if (messageDestination == null) {
 			if (bindingRequires) {
 				log.error("SAML message intended destination endpoint URI required by binding was empty");
-				throw new SecurityException(
-						"SAML message intended destination (required by binding) was not present");
+				throw new SecurityException("SAML message intended destination (required by binding) was not present");
 			} else {
 				log.debug("SAML message intended destination endpoint in message was empty, not required by binding, skipping");
 				return;
 			}
 		}
 
-		String receiverEndpoint = DatatypeHelper
-				.safeTrimOrNullString(getActualReceiverEndpointURI(messageContext));
+		String receiverEndpoint = DatatypeHelper.safeTrimOrNullString(getActualReceiverEndpointURI(messageContext));
 
-		log.debug("Intended message destination endpoint: {}",
-				messageDestination);
+		log.debug("Intended message destination endpoint: {}",messageDestination);
 		log.debug("Actual message receiver endpoint: {}", receiverEndpoint);
 
 		// 协议头统一（http或https，需要和destination统一）
 		if (messageDestination.indexOf("/") != -1
 				&& receiverEndpoint.indexOf("/") != -1) {
-			if (!messageDestination.substring(0,
-					messageDestination.indexOf("/"))
-					.equalsIgnoreCase(
-							receiverEndpoint.substring(0,
-									receiverEndpoint.indexOf("/")))) {
-				receiverEndpoint = messageDestination.substring(0,
-						messageDestination.indexOf("/"))
-						+ receiverEndpoint.substring(receiverEndpoint
-								.indexOf("/"));
+			if (!messageDestination.substring(0,messageDestination.indexOf("/"))
+					.equalsIgnoreCase(receiverEndpoint.substring(0,receiverEndpoint.indexOf("/")))) {
+				
+				receiverEndpoint = messageDestination.substring(0,messageDestination.indexOf("/"))
+						+ receiverEndpoint.substring(receiverEndpoint.indexOf("/"));
 			}
 		}
 		boolean matched = compareEndpointURIs(messageDestination,
 				receiverEndpoint);
 		if (!matched) {
-			log.error(
-					"SAML message intended destination endpoint '{}' did not match the recipient endpoint '{}'",
+			log.error("SAML message intended destination endpoint '{}' did not match the recipient endpoint '{}'",
 					messageDestination, receiverEndpoint);
-			throw new SecurityException(
-					"SAML message intended destination endpoint did not match recipient endpoint");
+			throw new SecurityException("SAML message intended destination endpoint did not match recipient endpoint");
 		} else {
 			log.debug("SAML message intended destination endpoint matched recipient endpoint");
 		}
 	}
 
 	@Override
+	@SuppressWarnings("rawtypes")
 	protected String getActualReceiverEndpointURI(
 			SAMLMessageContext messageContext) throws MessageDecodingException {
 		InTransport inTransport = messageContext.getInboundMessageTransport();
 		if (!(inTransport instanceof HttpServletRequestAdapter)) {
-			throw new MessageDecodingException(
-					"Message context InTransport instance was an unsupported type");
+			throw new MessageDecodingException("Message context InTransport instance was an unsupported type");
 		}
-		HttpServletRequest httpRequest = ((HttpServletRequestAdapter) inTransport)
-				.getWrappedRequest();
+		HttpServletRequest httpRequest = ((HttpServletRequestAdapter) inTransport).getWrappedRequest();
 
 		StringBuffer urlBuilder = httpRequest.getRequestURL();
 

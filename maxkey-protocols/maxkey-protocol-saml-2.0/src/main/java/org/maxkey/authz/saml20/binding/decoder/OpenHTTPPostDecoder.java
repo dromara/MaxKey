@@ -1,10 +1,9 @@
-package org.maxkey.authz.saml20;
+package org.maxkey.authz.saml20.binding.decoder;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.common.binding.decoding.BaseSAMLMessageDecoder;
-import org.opensaml.saml2.binding.decoding.HTTPPostSimpleSignDecoder;
+import org.opensaml.saml2.binding.decoding.HTTPPostDecoder;
 import org.opensaml.ws.message.decoder.MessageDecodingException;
 import org.opensaml.ws.transport.InTransport;
 import org.opensaml.ws.transport.http.HttpServletRequestAdapter;
@@ -13,18 +12,16 @@ import org.opensaml.xml.util.DatatypeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
-
-	/** Class logger. */
-	private final Logger log = LoggerFactory.getLogger(BaseSAMLMessageDecoder.class);
+public class OpenHTTPPostDecoder extends HTTPPostDecoder {
+	private final Logger log = LoggerFactory.getLogger(OpenHTTPPostDecoder.class);
 
 	private String receiverEndpoint;
 
-	public OpenHTTPPostSimpleSignDecoder() {
+	public OpenHTTPPostDecoder() {
 		super();
 	}
 
-	public OpenHTTPPostSimpleSignDecoder(ParserPool pool) {
+	public OpenHTTPPostDecoder(ParserPool pool) {
 		super(pool);
 	}
 
@@ -42,6 +39,7 @@ public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
 	 *             thrown if there is a problem decoding and processing the
 	 *             message Destination or receiver endpoint information
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	protected void checkEndpointURI(SAMLMessageContext messageContext)
 			throws SecurityException, MessageDecodingException {
@@ -99,8 +97,9 @@ public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
 	}
 
 	@Override
+	@SuppressWarnings("rawtypes")
 	protected String getActualReceiverEndpointURI(
-			SAMLMessageContext messageContext) throws MessageDecodingException {
+			 SAMLMessageContext messageContext) throws MessageDecodingException {
 		InTransport inTransport = messageContext.getInboundMessageTransport();
 		if (!(inTransport instanceof HttpServletRequestAdapter)) {
 			throw new MessageDecodingException(

@@ -17,7 +17,7 @@ import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.authz.saml.service.IDService;
 import org.maxkey.authz.saml.service.TimeService;
-import org.maxkey.authz.saml20.ExtractBindingAdapter;
+import org.maxkey.authz.saml20.binding.ExtractBindingAdapter;
 import org.maxkey.authz.saml20.consumer.AuthnRequestGenerator;
 import org.maxkey.authz.saml20.consumer.spring.IdentityProviderAuthenticationException;
 import org.maxkey.authz.saml20.consumer.spring.ServiceProviderAuthenticationException;
@@ -174,13 +174,11 @@ public class ConsumerEndpoint {
 
 	public void afterPropertiesSet() throws Exception {
 
-		authnRequestGenerator = new AuthnRequestGenerator(
-				keyStoreLoader.getEntityName(), timeService, idService);
+		authnRequestGenerator = new AuthnRequestGenerator(keyStoreLoader.getEntityName(), timeService, idService);
 		endpointGenerator = new EndpointGenerator();
 
 		CriteriaSet criteriaSet = new CriteriaSet();
-		criteriaSet.add(new EntityIDCriteria(keyStoreLoader
-				.getEntityName()));
+		criteriaSet.add(new EntityIDCriteria(keyStoreLoader.getEntityName()));
 		criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
 
 		try {
@@ -210,17 +208,13 @@ public class ConsumerEndpoint {
 		InputStream keyStoreStream = new ByteArrayInputStream(keyStoreBytes);
 
 		try {
-			KeyStore keyStore = KeyStore.getInstance(keyStoreLoader
-					.getKeystoreType());
-			keyStore.load(keyStoreStream, keyStoreLoader.getKeystorePassword()
-					.toCharArray());
+			KeyStore keyStore = KeyStore.getInstance(keyStoreLoader.getKeystoreType());
+			keyStore.load(keyStoreStream, keyStoreLoader.getKeystorePassword().toCharArray());
 
 			Map<String, String> passwords = new HashMap<String, String>();
-			for (Enumeration<String> en = keyStore.aliases(); en
-					.hasMoreElements();) {
+			for (Enumeration<String> en = keyStore.aliases(); en.hasMoreElements();) {
 				String aliase = en.nextElement();
-				if (aliase.equalsIgnoreCase(keyStoreLoader
-						.getEntityName())) {
+				if (aliase.equalsIgnoreCase(keyStoreLoader.getEntityName())) {
 					passwords.put(aliase, keyStoreLoader.getKeystorePassword());
 				}
 			}

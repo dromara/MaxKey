@@ -1,4 +1,4 @@
-package org.maxkey.authz.saml20;
+package org.maxkey.authz.saml20.binding.impl;
 
 import java.security.KeyStore;
 
@@ -31,7 +31,8 @@ public class ExtractRedirectBindingAdapter extends ExtractPostBindingAdapter{
 					keyStoreLoader.getEntityName(),
 					keyStoreLoader.getKeystorePassword(), 
 					issueInstantRule,
-					messageReplayRule,"Redirect");
+					messageReplayRule,
+					"Redirect");
 		credentialResolver = (CredentialResolver)trustResolver.getKeyStoreCredentialResolver();
 		this.securityPolicyResolver = trustResolver.getStaticSecurityPolicyResolver();
 	}
