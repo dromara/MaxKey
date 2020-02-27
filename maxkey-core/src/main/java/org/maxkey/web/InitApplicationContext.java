@@ -164,10 +164,11 @@ public class InitApplicationContext extends HttpServlet {
    public void showLicense(){
       _logger.info("----------------------------------------------------------------------------------------------------");
       _logger.info("+                      Single   Sign   On ( SSO ) ");
-      _logger.info("+                        MaxKey Version 1.0 GA");
+      _logger.info("+                        MaxKey Version 1.2 GA");
       _logger.info("");
-      _logger.info("+                    Copyright (c) 2018-2019 Maxkey .");
-      _logger.info("+                    https://github.com/shimingxy/MaxKey");
+      _logger.info("+                      Apache License 2.0");
+      _logger.info("+                      https://github.com/shimingxy/MaxKey");
+      _logger.info("+                      email:shimingxy@163.com");
       _logger.info("----------------------------------------------------------------------------------------------------");
    }
 
