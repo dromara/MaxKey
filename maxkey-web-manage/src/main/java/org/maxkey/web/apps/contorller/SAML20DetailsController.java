@@ -46,6 +46,9 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	@Autowired
 	AppsSaml20DetailsService saml20DetailsService;
 	
+	@Autowired
+	String maxKeyURI;
+	
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd() {
 		ModelAndView modelAndView=new ModelAndView("apps/saml20/appAdd");
@@ -84,6 +87,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		decoderSecret(saml20Details);
 		WebContext.setAttribute(saml20Details.getId(), saml20Details.getIcon());
 		modelAndView.addObject("model",saml20Details);
+		modelAndView.addObject("maxKeyURI",maxKeyURI);
 		return modelAndView;
 	}
 	/**

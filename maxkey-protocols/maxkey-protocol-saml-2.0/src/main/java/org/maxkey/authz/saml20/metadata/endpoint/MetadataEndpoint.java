@@ -86,11 +86,11 @@ public class MetadataEndpoint {
 			
 	        IDPSSODescriptor descriptor = metadataGenerator.buildIDPSSODescriptor();
 	
-	        descriptor.getSingleSignOnServices().add(metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath()+"/saml/v20/authorize/"+appId,null));
+	        descriptor.getSingleSignOnServices().add(metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath()+"/saml/v20/authz/"+appId,null));
 	        
-	        descriptor.getSingleSignOnServices().add(metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath()+"/saml/v20/authorize/"+appId,SAMLConstants.SAML2_REDIRECT_BINDING_URI));
+	        descriptor.getSingleSignOnServices().add(metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath()+"/saml/v20/authz/"+appId,SAMLConstants.SAML2_REDIRECT_BINDING_URI));
 	        
-	        descriptor.getSingleSignOnServices().add(metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath()+"/saml/v20/authorize/"+appId,SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI));
+	        descriptor.getSingleSignOnServices().add(metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath()+"/saml/v20/authz/"+appId,SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI));
 	        
 	        descriptor.getSingleLogoutServices().add(metadataGenerator.getSingleLogoutService(WebContext.getHttpContextPath()+"/logout",null));
 	        

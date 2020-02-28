@@ -55,6 +55,8 @@ $(function(){
 					<td  colspan =3>
 						<input type="text" class="form-control"  id="entityId" name="entityId"  title="" value="${model.entityId}"/>
 					</td>
+					
+					
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.spAcsUrl" />：</th>
@@ -70,8 +72,11 @@ $(function(){
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.audience" />：</th>
-					<td  colspan =3>
+					<td  colspan =2>
 						<input type="text" class="form-control"  id="audience" name="audience"  title="" value="${model.audience}"/>
+					</td>
+					<td  >
+						<a target="_blank" href="${maxKeyURI}/metadata/saml20/${model.id}.xml"> SAML MetaData</a>
 					</td>
 				</tr>
 				<tr>

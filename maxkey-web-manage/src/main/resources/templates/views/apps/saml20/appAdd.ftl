@@ -12,8 +12,7 @@
 <script type="text/javascript">
 <!--
 $(function(){	
-	$("#protocol_text").html("<%=PROTOCOLS.SAML20%>");
-	$("#protocol").val("<%=PROTOCOLS.SAML20%>");	
+	
 });
 //-->
 </script>

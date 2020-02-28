@@ -75,7 +75,6 @@ public class AssertionGenerator {
 		
 		AttributeStatement attributeStatement =attributeStatementGenerator.generateAttributeStatement(authorities, attributeMap);
 		assertion.getAttributeStatements().add(attributeStatement);
-
 		assertion.setID(idService.generateID());
 		assertion.setIssueInstant(timeService.getCurrentDateTime());
 

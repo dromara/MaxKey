@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
+import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml20.binding.BindingAdapter;
@@ -48,7 +49,7 @@ public class AssertionEndpoint {
 		bindingAdapter = (BindingAdapter) request.getSession().getAttribute("samlv20Adapter");
 		logger.debug("saml20 assertion get session samlv20Adapter "+bindingAdapter);
 		AppsSAML20Details saml20Details = bindingAdapter.getSaml20Details();
-
+		logger.debug("saml20Details "+saml20Details.getExtendAttr());
 		AuthnRequestInfo authnRequestInfo = bindingAdapter.getAuthnRequestInfo();
 		
 		if (authnRequestInfo == null) {
@@ -67,7 +68,10 @@ public class AssertionEndpoint {
 			grantedAuthority.add(anthGrantedAuthority);
 		}
 		//TODO:
-		String userName =authToken.getPrincipal().toString();
+		//String userName ="shimingxy@qq.com";
+		String userName =((BasicAuthentication )authToken.getPrincipal()).getJ_username();
+		//aly
+		//String userName ="admin@1729982683323703.onaliyun.com";
 		DateTime authnInstant = new DateTime(request.getSession().getCreationTime());
 
 		String remoteAddress=WebContext.getRequestIpAddress(request);

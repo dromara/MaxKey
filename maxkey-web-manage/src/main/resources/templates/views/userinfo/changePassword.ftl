@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/users/changePassword"> 
+<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/userinfo/changePassword"> 
 
 	  <table   class="table table-bordered" >
 			<tbody>

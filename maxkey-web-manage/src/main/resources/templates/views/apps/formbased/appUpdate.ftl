@@ -32,15 +32,18 @@ $(function(){
 	var attrIndex = 0;
 	
 	function addExtendAttr(attribute,attributeValue){
-		var html = '<tr  id="extendTr_' + attrIndex + '"><th><@locale code="apps.formbased.parameter"/>：';   
-		 html += '<input  class="button delExtendTr"  type="button" name="delExtendTr"  attrTrId="extendTr_'+attrIndex+'" value="<@locale code="button.text.delete" />"/>';
-		html += '</th><td>';   
-		html += '<input type="text" class="form-control" id="attribute_' + attrIndex + '" name="attribute" class="int" title="" value="'+attribute+'"/>';   
-        html += '</span></td><th><@locale code="apps.formbased.parameter.value"/>：</th>	<td><span class="intspan">';
-        html += '<input type="text"  class="form-control" id="attributeValue_' + attrIndex + '" name="attributeValue" class="int" title="" value="'+attributeValue+'"/>';
-        html += '</span>';
+		var html =	'<tr  id="extendTr_' + attrIndex + '">';   
+		html += 		'<th><@locale code="apps.formbased.parameter"/>：'; 
+		html += 			'<input  class="button delExtendTr"  type="button" name="delExtendTr"  attrTrId="extendTr_'+attrIndex+'" value="<@locale code="button.text.delete" />"/>';
+		html +=			'</th>';   
+		html +=			'<td>';   
+		html += 			'<input type="text" class="form-control" id="attribute_' + attrIndex + '" name="attribute" class="int" title="" value="'+attribute+'"/>';   
+        html += 		'</span></td>';
+        html += 		'<th><@locale code="apps.formbased.parameter.value"/>：</th>	<td><span class="intspan">';
+        html += 			'<input type="text"  class="form-control" id="attributeValue_' + attrIndex + '" name="attributeValue" class="int" title="" value="'+attributeValue+'"/>';
+        html += 		'</span></td>';
        
-        html += '</td></tr>'; 
+        html += '</tr>'; 
 		$('#extendAttrBody').append(html);
 		attrIndex++;
 	}

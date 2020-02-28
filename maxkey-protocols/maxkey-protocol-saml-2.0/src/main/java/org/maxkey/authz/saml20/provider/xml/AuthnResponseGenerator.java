@@ -26,8 +26,18 @@ import org.opensaml.xml.encryption.EncryptionConstants;
 import org.opensaml.xml.encryption.EncryptionException;
 import org.opensaml.xml.encryption.EncryptionParameters;
 import org.opensaml.xml.encryption.KeyEncryptionParameters;
+import org.opensaml.xml.io.Marshaller;
+import org.opensaml.xml.io.MarshallerFactory;
+import org.opensaml.xml.io.MarshallingException;
+import org.opensaml.xml.security.BasicSecurityConfiguration;
+import org.opensaml.xml.security.credential.BasicCredential;
 import org.opensaml.xml.security.credential.Credential;
 import org.opensaml.xml.security.keyinfo.KeyInfoGeneratorFactory;
+import org.opensaml.xml.signature.Signature;
+import org.opensaml.xml.signature.SignatureConstants;
+import org.opensaml.xml.signature.SignatureException;
+import org.opensaml.xml.signature.Signer;
+import org.opensaml.xml.signature.impl.SignatureBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -87,6 +97,10 @@ public class AuthnResponseGenerator {
 											authnInstant);
 		
 		try{
+			
+			logger.debug("authResponse.isSigned "+authResponse.isSigned());
+			
+			//assertion.setSignature(newSignature);
 			if(BOOLEAN.isTrue(saml20Details.getEncrypted())) {
 				// Assume this contains a recipient's RSA public
 				logger.info("begin to encrypt assertion");
@@ -107,12 +121,40 @@ public class AuthnResponseGenerator {
 				encrypter.setKeyPlacement(KeyPlacement.PEER);
 				EncryptedAssertion encryptedAssertion = encrypter.encrypt(assertion);
 				authResponse.getEncryptedAssertions().add(encryptedAssertion);
-			} else {
-				authResponse.getAssertions().add(assertion);
-			}
+			} 
+			
+			SignatureBuilder signatureBuilder = (SignatureBuilder) builderFactory.getBuilder(Signature.DEFAULT_ELEMENT_NAME);
+	        BasicCredential basicCredential = new BasicCredential();
+	        basicCredential.setPrivateKey(signingCredential.getPrivateKey());
+	        
+	        Signature signature = signatureBuilder.buildObject();
+	        signature.setCanonicalizationAlgorithm(SignatureConstants.ALGO_ID_C14N_EXCL_OMIT_COMMENTS);
+	        signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA256);
+	        
+	        signature.setSigningCredential(basicCredential);
+	        KeyInfoGeneratorFactory keyInfoGeneratorFactory = Configuration
+					.getGlobalSecurityConfiguration()
+					.getKeyInfoGeneratorManager().getDefaultManager()
+					.getFactory(signingCredential);
+	        
+	        signature.setKeyInfo(keyInfoGeneratorFactory.newInstance().generate(signingCredential));
+	        BasicSecurityConfiguration config = (BasicSecurityConfiguration) Configuration.getGlobalSecurityConfiguration();
+	        config.registerSignatureAlgorithmURI("RSA", SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA256);
+	        config.setSignatureReferenceDigestMethod(SignatureConstants.ALGO_ID_DIGEST_SHA256);
+			assertion.setSignature(signature);
+
+			Configuration.getMarshallerFactory().getMarshaller(assertion).marshall(assertion);
+            Signer.signObject(signature);
+            
+			logger.debug("assertion.isSigned "+assertion.isSigned());;
+			authResponse.getAssertions().add(assertion);
+			
 		}
 		catch (EncryptionException e) {
 			logger.info("Unable to encrypt assertion .");
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
@@ -120,7 +162,7 @@ public class AuthnResponseGenerator {
 		authResponse.setID(idService.generateID());
 		authResponse.setIssueInstant(timeService.getCurrentDateTime());
 		authResponse.setInResponseTo(inResponseTo);
-		authResponse.getAssertions().add(assertion);
+		//authResponse.getAssertions().add(assertion);
 		authResponse.setDestination(assertionConsumerURL);
 		authResponse.setStatus(statusGenerator.generateStatus(StatusCode.SUCCESS_URI));
 		return authResponse;
