@@ -62,18 +62,13 @@ public class AttributeStatementGenerator {
 		 BindingAdapter bindingAdapter = (BindingAdapter) WebContext.getSession().getAttribute("samlv20Adapter");
 		AppsSAML20Details saml20Details = bindingAdapter.getSaml20Details();
 		logger.debug("ExtendAttr "+saml20Details.getExtendAttr());
-		ExtraAttrs extraAttrs=new ExtraAttrs(saml20Details.getExtendAttr());
-		for(ExtraAttr extraAttr : extraAttrs.getExtraAttrs()) {
-			logger.debug("Attribute : "+extraAttr.getAttr()+" , Vale : "+extraAttr.getValue()+" , Type : "+extraAttr.getType());
-			attributeStatement.getAttributes().add(builderAttribute(extraAttr.getAttr(),extraAttr.getValue(),extraAttr.getType()));
+		if(saml20Details.getIsExtendAttr()==1) {
+			ExtraAttrs extraAttrs=new ExtraAttrs(saml20Details.getExtendAttr());
+			for(ExtraAttr extraAttr : extraAttrs.getExtraAttrs()) {
+				logger.debug("Attribute : "+extraAttr.getAttr()+" , Vale : "+extraAttr.getValue()+" , Type : "+extraAttr.getType());
+				attributeStatement.getAttributes().add(builderAttribute(extraAttr.getAttr(),extraAttr.getValue(),extraAttr.getType()));
+			}
 		}
-		//tencent
-		//attributeStatement.getAttributes().add(builderAttribute("https://cloud.tencent.com/SAML/Attributes/Role","qcs::cam::uin/100013138092:roleName/cloud.tencent_maxkey,qcs::cam::uin/100013138092:saml-provider/maxkey",Attribute.UNSPECIFIED));
-		//attributeStatement.getAttributes().add(builderAttribute("https://cloud.tencent.com/SAML/Attributes/RoleSessionName","maxkey",Attribute.UNSPECIFIED));
-		//aliyun
-		//attributeStatement.getAttributes().add(builderAttribute("https://www.aliyun.com/SAML-Role/Attributes/RoleSessionName","2037230828547234327",Attribute.UNSPECIFIED));
-		//attributeStatement.getAttributes().add(builderAttribute("https://www.aliyun.com/SAML-Role/Attributes/Role","acs:ram::1729982683323703:role/maxkey,acs:ram::1729982683323703:saml-provider/maxkey",Attribute.UNSPECIFIED));
-		//attributeStatement.getAttributes().add(builderAttribute("https://www.aliyun.com/SAML-Role/Attributes/SessionDuration","1800",Attribute.UNSPECIFIED));
 		
 		return attributeStatement;
 	}
