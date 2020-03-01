@@ -51,6 +51,7 @@
 			<mvc:mapping path="/authz/formbased/*" />
 			<mvc:mapping path="/authz/tokenbased/*"/>
 			<mvc:mapping path="/authz/saml20/idpinit/*"/>
+			<mvc:mapping path="/authz/saml20/assertion"/>
 			<mvc:mapping path="/authz/cas/login"/>
 			<mvc:mapping path="/authz/cas/granting"/>
 			<bean class="org.maxkey.web.interceptor.PreLoginAppAdapter" />
@@ -63,6 +64,7 @@
 			<mvc:mapping path="/authz/formbased/*" />
 			<mvc:mapping path="/authz/tokenbased/*"/>
 			<mvc:mapping path="/authz/saml20/idpinit/*"/>
+			<mvc:mapping path="/authz/saml20/assertion"/>
 			<mvc:mapping path="/authz/cas/granting"/>
 			<bean class="org.maxkey.web.interceptor.HistoryLoginAppAdapter" />
 		</mvc:interceptor>
