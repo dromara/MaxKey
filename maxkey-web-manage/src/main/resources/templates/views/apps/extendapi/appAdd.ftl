@@ -89,7 +89,7 @@ $(function(){
 					<td colspan="3">
 						<select  class="form-control" id="systemUserAttr" name="systemUserAttr">
 							<option value="uid">
-								<@locale code="userinfo.uid"/></option>
+								<@locale code="userinfo.id"/></option>
 							<option value="employeeNumber">
 								<@locale code="userinfo.employeeNumber"/></option>
 							<option value="username"  selected>
@@ -103,12 +103,12 @@ $(function(){
 					</td>
 				</tr>
 				<tr id="sharedconfigure"  style="display:none">
-					<th><@locale code="apps.formbased.sharedUsername"/>：</th>
+					<th><@locale code="apps.credential.sharedUsername"/>：</th>
 					<td>
 						<input  class="form-control" type="text" id="sharedUsername" name="sharedUsername" value="" />
 						<b class="orange">*</b><label for="sharedUsername"></label>
 					</td>
-					<th><@locale code="apps.formbased.sharedPassword"/>：</th>
+					<th><@locale code="apps.credential.sharedPassword"/>：</th>
 					<td>
 						<input  class="form-control" type="text" id="sharedPassword" name="sharedPassword" value="" />
 						<b class="orange">*</b><label for="sharedPassword"></label>

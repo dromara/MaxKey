@@ -78,14 +78,14 @@ $(function(){
 			enctype="multipart/form-data">		 
   	        <!-- content -->    
   	      	<!--table-->
-			<table width="960" class="datatable" >
+			<table   class="table table-bordered" >
 				<tbody>
 				<tr>
 					<td ><#include  "../appUpdateCommon.ftl"/></td>
 				</tr>
 				<tr>
 					<td>
-			   <table width="960"   class="datatable" >
+			  <table   class="table table-bordered" >
 				<tbody>
 				<tr>
 					<td colspan=4><@locale code="apps.desktop.info" /></td>
@@ -202,7 +202,7 @@ $(function(){
 					<th><@locale code="apps.credential.system" />：</th>
 					<td colspan="3">
 						<select id="systemUserAttr" name="systemUserAttr" class="form-control">
-							<option value="uid"   <#if 'uid'==model.systemUserAttr>selected</#if> ><@locale code="userinfo.uid" /></option>
+							<option value="uid"   <#if 'uid'==model.systemUserAttr>selected</#if> ><@locale code="userinfo.id" /></option>
 							<option value="employeeNumber" <#if 'employeeNumber'==model.systemUserAttr>selected</#if> ><@locale code="userinfo.employeeNumber" /></option>
 							<option value="username" <#if 'username'==model.systemUserAttr>selected</#if> ><@locale code="userinfo.username" /></option>
 							<option value="email" <#if 'email'==model.systemUserAttr>selected</#if> ><@locale code="userinfo.email" /></option>

@@ -190,7 +190,7 @@ $(function(){
 					<th><@locale code="apps.credential" />：</th>
 					<td colspan="3">
 						<select id="systemUserAttr" name="systemUserAttr" class="form-control" >
-							<option value="uid"><@locale code="userinfo.uid" /></option>
+							<option value="uid"><@locale code="userinfo.id" /></option>
 							<option value="employeeNumber"><@locale code="userinfo.employeeNumber" /></option>
 							<option value="username"  selected><@locale code="userinfo.username" /></option>
 							<option value="email"><@locale code="userinfo.email" /></option>

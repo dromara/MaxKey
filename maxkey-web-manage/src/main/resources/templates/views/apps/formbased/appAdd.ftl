@@ -13,40 +13,6 @@
 <script type="text/javascript">
 <!--
 $(function(){		
-	$("#isExtendAttr").on('click',function(){
-		if(this.checked){
-				$("#showExtendAttr").show();
-			} else {
-				$("#showExtendAttr").hide();
-				$('#extendAttrBody').empty();
-			}
-			
-	});
-	
-	var attrIndex = 0;
-		
-	function addExtendAttr(attribute,attributeValue){
-		var html = '<tr  id="extendTr_' + attrIndex + '"><th><@locale code="apps.formbased.parameter"/>：';   
-		 html += '<input  class="button delExtendTr"  type="button" name="delExtendTr" attrTrId="extendTr_'+attrIndex+'" value="<@locale code="button.text.delete" />"/>';
-		html += '</th><td>';   
-		html += '<input type="text" id="attribute_' + attrIndex + '" name="attribute" class="form-control" title="" value="'+attribute+'"/>';   
-        html += '</span></td><th><@locale code="apps.formbased.parameter.value"/>：</th>	<td><span class="intspan">';
-        html += '<input type="text" id="attributeValue_' + attrIndex + '" name="attributeValue"class="form-control"  title="" value="'+attributeValue+'"/>';
-        html += '</span>';
-       
-        html += '</td></tr>'; 
-		$('#extendAttrBody').append(html);
-		attrIndex++;
-	}
-	
-	$("#addExtendAttr").on('click',function(){
-		addExtendAttr("","");
-	});	
-				
-	$("#extendAttrBody").delegate(".delExtendTr",'click',function(){
-		$("#"+$(this).attr("attrTrId")).remove();
-	});
-	
 	$(".credential").on("click",function(){
 		if($(this).val()=="3"){
 			$("#sharedconfigure").hide();
@@ -141,7 +107,7 @@ $(function(){
 					<td colspan="3">
 						<select id="systemUserAttr" name="systemUserAttr"  class="form-control" >
 							<option value="uid">
-								<@locale code="userinfo.uid"/></option>
+								<@locale code="userinfo.id"/></option>
 							<option value="employeeNumber">
 								<@locale code="userinfo.employeeNumber"/></option>
 							<option value="username"  selected>
@@ -176,8 +142,6 @@ $(function(){
 						</span>
 					</td>
 				</tr>
-				</tbody>
-				<tbody id="extendAttrBody">
 				</tbody>
 				<tbody >
 					<tr>

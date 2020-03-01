@@ -42,7 +42,7 @@ $(function(){
 			enctype="multipart/form-data">		 
   	        <!-- content -->    
   	      	<!--table-->
-  	      	<table   class="datatable" >
+  	      	<table   class="table table-bordered" >
 				<tbody>
 				<tr>
 					<td ><#include  "../appUpdateCommon.ftl"/></td>
