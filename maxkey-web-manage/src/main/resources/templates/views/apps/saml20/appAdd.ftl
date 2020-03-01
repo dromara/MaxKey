@@ -24,14 +24,14 @@ $(function(){
 			enctype="multipart/form-data">		 
   	        <!-- content -->    
   	      	<!--table-->
-			<table width="960"  class="datatable" >
+			<table   class="table table-bordered" >
 				<tbody>
 				<tr>
 					<td ><#include  "../appAddCommon.ftl"/></td>
 				</tr>
 				<tr>
 					<td>
-			   <table width="960"  class="datatable" >
+			   <table   class="table table-bordered" >
 				<tbody>
 				
 				<tr>
