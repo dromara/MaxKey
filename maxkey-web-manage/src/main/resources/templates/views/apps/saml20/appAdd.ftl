@@ -128,9 +128,14 @@ $(function(){
 						<b class="orange">*</b><label for="fileType"></label>
 					</td>
 					<th><@locale code="apps.saml.certMetaFile" />：</th>
-					<td>
-						<input class="form-control"   id="certMetaFile" type="file" name="certMetaFile" />
-						<b class="orange">*</b><label for="certMetaFile"></label>
+					<td nowrap >
+						<div style="float: left;">
+							<img id="certMetaFileImg"  height="40" width="80" alt="upload certificate or metadata file" src="<@base />/static/images/cert.png">
+						</div>
+						<div style="float: left; width: 250px;">
+							<input class="form-control"   id="certMetaFile" type="file" name="certMetaFile" />
+							<b class="orange">*</b><label for="certMetaFile"></label>
+						</div>
 					</td>
 				</tr>
 				

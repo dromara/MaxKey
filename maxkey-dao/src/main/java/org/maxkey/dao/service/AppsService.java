@@ -28,4 +28,8 @@ public class AppsService  extends JpaBaseService<Apps>{
 		return ((AppsMapper)super.getMapper()).updateApp(app)>0;
 	};
 	
+	public boolean updateExtendAttr(Apps app) {
+		return ((AppsMapper)super.getMapper()).updateExtendAttr(app)>0;
+	}
+	
 }

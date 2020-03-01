@@ -99,8 +99,6 @@ public class Apps extends JpaBaseDomain implements Serializable{
 	 */
 	private int isExtendAttr;
 	private String extendAttr;
-	private String attribute;
-	private String attributeValue;
 	
 	/**
 	 * Signature
@@ -492,54 +490,6 @@ public class Apps extends JpaBaseDomain implements Serializable{
 		this.extendAttr = extendAttr;
 	}
 
-
-
-
-
-	/**
-	 * @return the attribute
-	 */
-	public String getAttribute() {
-		return attribute;
-	}
-
-
-
-
-
-	/**
-	 * @param attribute the attribute to set
-	 */
-	public void setAttribute(String attribute) {
-		this.attribute = attribute;
-	}
-
-
-
-
-
-	/**
-	 * @return the attributeValue
-	 */
-	public String getAttributeValue() {
-		return attributeValue;
-	}
-
-
-
-
-
-	/**
-	 * @param attributeValue the attributeValue to set
-	 */
-	public void setAttributeValue(String attributeValue) {
-		this.attributeValue = attributeValue;
-	}
-
-
-
-
-
 	public int getVisible() {
 		return visible;
 	}
@@ -665,8 +615,7 @@ public class Apps extends JpaBaseDomain implements Serializable{
 				+ ", credential=" + credential + ", sharedUsername="
 				+ sharedUsername + ", sharedPassword=" + sharedPassword
 				+ ", systemUserAttr=" + systemUserAttr + ", isExtendAttr="
-				+ isExtendAttr + ", extendAttr=" + extendAttr + ", attribute="
-				+ attribute + ", attributeValue=" + attributeValue
+				+ isExtendAttr + ", extendAttr=" + extendAttr 
 				+ ", isSignature=" + isSignature
 				+ "]";
 	}

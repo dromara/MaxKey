@@ -40,6 +40,13 @@ public class ExtraAttrs {
 		this.extraAttrs.add(new ExtraAttr(attr,value));
 	}
 	
+	public void put(String attr,String type,String value) {
+		if(extraAttrs==null){
+			extraAttrs=new ArrayList<ExtraAttr>();
+		}
+		this.extraAttrs.add(new ExtraAttr(attr,type,value));
+	}
+	
 	public String get(String attr) {
 		String value=null;
 		if(extraAttrs!=null&& extraAttrs.size()!=0){

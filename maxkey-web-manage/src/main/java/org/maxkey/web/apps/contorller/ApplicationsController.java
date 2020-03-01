@@ -4,6 +4,8 @@ package org.maxkey.web.apps.contorller;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.domain.ExtraAttr;
+import org.maxkey.domain.ExtraAttrs;
 import org.maxkey.domain.apps.Apps;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
@@ -66,6 +68,35 @@ public class ApplicationsController extends BaseAppContorller {
 			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.error);
 		}
 		
+	}
+	
+	@RequestMapping(value = { "/forwardAppsExtendAttr/{id}" })
+	public ModelAndView forwardExtendAttr(@PathVariable("id") String id) {
+		ModelAndView modelAndView=new ModelAndView("apps/appsExtendAttr");
+		modelAndView.addObject("model",appsService.get(id));
+		return modelAndView;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = { "/updateExtendAttr" })
+	public Message updateExtendAttr(@ModelAttribute("application") Apps application,@ModelAttribute("extraAttrs") ExtraAttr extraAttr) {
+		if(extraAttr.getAttr()!=null){
+			String []attributes=extraAttr.getAttr().split(",");
+			String []attributeType=extraAttr.getType().split(",");
+			String []attributeValue=extraAttr.getValue().split(",");
+			ExtraAttrs extraAttrs=new ExtraAttrs();
+			for(int i=0;i<attributes.length;i++){
+				extraAttrs.put(attributes[i],attributeType[i], attributeValue[i]);
+			}
+			application.setExtendAttr(extraAttrs.toJsonString());
+		}
+		
+		if (appsService.updateExtendAttr(application)) {
+			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
+			
+		} else {
+			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_ERROR),MessageType.error);
+		}
 	}
 	
 	/**

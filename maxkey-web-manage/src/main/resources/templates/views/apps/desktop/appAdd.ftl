@@ -60,8 +60,6 @@ $(function(){
 			$("#systemconfigure").hide();
 		}
 	});
-	$("#protocol_text").html("<%=PROTOCOLS.DESKTOP%>");
-	$("#protocol").val("<%=PROTOCOLS.DESKTOP%>");	
 });
 //-->
 </script>

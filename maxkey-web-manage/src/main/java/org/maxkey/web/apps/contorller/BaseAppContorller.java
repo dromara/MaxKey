@@ -9,7 +9,6 @@ import org.maxkey.constants.PROTOCOLS;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.dao.service.AppsService;
-import org.maxkey.domain.ExtraAttrs;
 import org.maxkey.domain.apps.Apps;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
@@ -49,12 +48,7 @@ public class BaseAppContorller {
 		 * string field encoding
 		 */
 		encoding(application);
-		
-		/*
-		 * convertExtendAttr
-		 * 
-		 */
-		convertExtendAttr(application);
+
 		/*
 		 * upload iconFile MultipartFile  to icon Bytes
 		 */
@@ -113,17 +107,4 @@ public class BaseAppContorller {
 			application.setSecret(decodeSecret);
 		}
 	}
-	
-	protected void convertExtendAttr(Apps application) {
-		if(application.getAttribute()!=null){
-			String []attributes=application.getAttribute().split(",");
-			String []attributeValue=application.getAttributeValue().split(",");
-			ExtraAttrs extraAttrs=new ExtraAttrs();
-			for(int i=0;i<attributes.length;i++){
-				extraAttrs.put(attributes[i], attributeValue[i]);
-			}
-			application.setExtendAttr(extraAttrs.toJsonString());
-		}
-	}
-
 }

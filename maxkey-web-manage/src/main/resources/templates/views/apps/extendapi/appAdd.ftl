@@ -13,40 +13,7 @@
 <script type="text/javascript">
 <!--
 $(function(){		
-	$("#isExtendAttr").on('click',function(){
-		if(this.checked){
-				$("#showExtendAttr").show();
-			} else {
-				$("#showExtendAttr").hide();
-				$('#extendAttrBody').empty();
-			}
-			
-	});
-	
-	var attrIndex = 0;
-		
-	function addExtendAttr(attribute,attributeValue){
-		var html = '<tr  id="extendTr_' + attrIndex + '"><th><@locale code="common.text.parameter"/>：';   
-		 html += '<input  class="button delExtendTr"  type="button" name="delExtendTr" attrTrId="extendTr_'+attrIndex+'" value="<@locale code="button.text.delete" />"/>';
-		html += '</th><td>';   
-		html += '<input type="text" id="attribute_' + attrIndex + '" name="attribute" class="int" title="" value="'+attribute+'"/>';   
-        html += '</span></td><th><@locale code="common.text.parameter.value"/>：</th>	<td><span class="intspan">';
-        html += '<input type="text" id="attributeValue_' + attrIndex + '" name="attributeValue" class="int" title="" value="'+attributeValue+'"/>';
-        html += '</span>';
-       
-        html += '</td></tr>'; 
-		$('#extendAttrBody').append(html);
-		attrIndex++;
-	}
-	
-	$("#addExtendAttr").on('click',function(){
-		addExtendAttr("","");
-	});	
-				
-	$("#extendAttrBody").delegate(".delExtendTr",'click',function(){
-		$("#"+$(this).attr("attrTrId")).remove();
-	});
-	
+
 	$(".credential").on("click",function(){
 		if($(this).val()=="3"){
 			$("#sharedconfigure").hide();
@@ -71,24 +38,24 @@ $(function(){
    enctype="multipart/form-data">
    <!-- content -->    
    <!--table-->
-			<table class="datatable" >
+			<table  class="table table-bordered" >
 				<tbody>
 				<tr>
 					<td ><#include  "../appAddCommon.ftl"/></td>
 				</tr>
 				<tr>
 					<td>
-			   <table class="datatable" >
+			   <table  class="table table-bordered" >
 				<tbody>
 				<tr>
 					<th  ><@locale code="apps.principal"/>：</th>
 					<td  >
-						<input type="text" id="principal" name="principal"  title="" value=""/>
+						<input  class="form-control" type="text" id="principal" name="principal"  title="" value=""/>
 						<b class="orange">*</b><label for="principal"></label>
 					</td>
 					<th  ><@locale code="apps.credentials"/>：</th>
 					<td  >
-						<input type="text" id="credentials" name="credentials"  title="" value=""/>
+						<input class="form-control" type="text" id="credentials" name="credentials"  title="" value=""/>
 						<b class="orange">*</b><label for="credentials"></label>
 					</td>
 				</tr>
@@ -105,7 +72,7 @@ $(function(){
 					</td>
 					<th  style="width:15%;"><@locale code="apps.isAdapter"/>：</th>
 					<td  style="width:35%;">
-						<select  id="isAdapter" name="isAdapter" >
+						<select  class="form-control"  id="isAdapter" name="isAdapter" >
 							<option value="0"  selected><@locale code="apps.isAdapter.no"/></option>
 							<option value="1"><@locale code="apps.isAdapter.yes"/></option>
 						</select>
@@ -114,13 +81,13 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.adapter"/>：</th>
 					<td colspan =3>
-						<input type="text" id="adapter" name="adapter"  title="" value=""/>
+						<input  class="form-control" type="text" id="adapter" name="adapter"  title="" value=""/>
 					</td>
 				</tr>
 				<tr id="systemconfigure"  style="display:none">
 					<th><@locale code="apps.systemUserAttr"/>：</th>
 					<td colspan="3">
-						<select id="systemUserAttr" name="systemUserAttr">
+						<select  class="form-control" id="systemUserAttr" name="systemUserAttr">
 							<option value="uid">
 								<@locale code="userinfo.uid"/></option>
 							<option value="employeeNumber">
@@ -138,27 +105,15 @@ $(function(){
 				<tr id="sharedconfigure"  style="display:none">
 					<th><@locale code="apps.formbased.sharedUsername"/>：</th>
 					<td>
-						<input type="text" id="sharedUsername" name="sharedUsername" value="" />
+						<input  class="form-control" type="text" id="sharedUsername" name="sharedUsername" value="" />
 						<b class="orange">*</b><label for="sharedUsername"></label>
 					</td>
 					<th><@locale code="apps.formbased.sharedPassword"/>：</th>
 					<td>
-						<input type="text" id="sharedPassword" name="sharedPassword" value="" />
+						<input  class="form-control" type="text" id="sharedPassword" name="sharedPassword" value="" />
 						<b class="orange">*</b><label for="sharedPassword"></label>
 					</td>
 				</tr>
-				<tr>
-					<th><@locale code="apps.formbased.extendAttr"/>：</th>
-					<td colspan="3">
-						<input type="checkbox" id="isExtendAttr" name="isExtendAttr" value="1"/>
-						<@locale code="apps.formbased.isExtendAttr"/>
-						<span  id="showExtendAttr" style="display:none">
-							<input  class="button"  type="button"  value='<@locale code="button.text.add.parameter"/>' id="addExtendAttr"/>
-						</span>
-					</td>
-				</tr>
-				</tbody>
-				<tbody id="extendAttrBody">
 				</tbody>
 				<tr>
 								<td colspan =4>

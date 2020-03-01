@@ -13,6 +13,10 @@ public class ExtraAttr {
 	String type;
 	String value;
 	
+	public ExtraAttr() {
+		super();
+	}
+	
 	public ExtraAttr(String attr, String value) {
 		super();
 		this.attr = attr;

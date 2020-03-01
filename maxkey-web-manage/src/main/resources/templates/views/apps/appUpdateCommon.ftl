@@ -83,8 +83,19 @@
 				<option value="3"  <#if 3==model.visible!>selected</#if> ><@locale code="apps.visible.intranet"/></option>
 			</select>
          </td>
-         <th><@locale code="common.text.description"/>：</th>
+         <th><@locale code="apps.extendAttr"/></th>
          <td>
+         	<input class="button btn btn-success mr-3 window" style="float: left;" id="addExtendAttrBtn" type="button" 
+         			value="<@locale code="button.text.select"/>" 
+		 		    wurl="<@base/>/apps/forwardAppsExtendAttr/${model.id!}"
+		 		    wwidth="900"
+		 		    wheight="650"
+	 		    	target="window">
+		 </td>
+	 </tr>
+	 <tr>
+         <th><@locale code="common.text.description"/>：</th>
+         <td colspan =3>
             <input  type="text"  class="form-control" id="description" name="description"  title="" value="${model.description!}"/>
          </td>
       </tr>

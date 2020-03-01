@@ -19,46 +19,6 @@ $(function(){
 		}); 
 	});
 	
-	$("#isExtendAttr").on('click',function(){
-		if(this.checked){
-				$("#showExtendAttr").show();
-			} else {
-				$("#showExtendAttr").hide();
-				$('#extendAttrBody').empty();
-			}
-			
-	});
-	
-	var attrIndex = 0;
-	
-	function addExtendAttr(attribute,attributeValue){
-		var html = '<tr  id="extendTr_' + attrIndex + '"><th><@locale code="apps.extendAttr.parameter"/>：';   
-		 html += '<input  class="button delExtendTr" class="form-control"  type="button" name="delExtendTr"  attrTrId="extendTr_'+attrIndex+'" value="<@locale code="button.text.delete" />"/>';
-		html += '</th><td>';   
-		html += '<input type="text" id="attribute_' + attrIndex + '" class="form-control" name="attribute" class="int" title="" value="'+attribute+'"/>';   
-        html += '</span></td><th><@locale code="apps.extendAttr.parameter.value"/>：</th>	<td><span class="intspan">';
-        html += '<input type="text" id="attributeValue_' + attrIndex + '" class="form-control" name="attributeValue" class="int" title="" value="'+attributeValue+'"/>';
-        html += '</span>';
-       
-        html += '</td></tr>'; 
-		$('#extendAttrBody').append(html);
-		attrIndex++;
-	}
-	
-	<#if  1==model.isExtendAttr >
-	var extendAttrJson = eval("("+'${model.extendAttr}'+")");
-	for(extendAttrIndex in extendAttrJson){
-		addExtendAttr(extendAttrJson[extendAttrIndex].attr,extendAttrJson[extendAttrIndex].value);
-	};
-	</#if>
-	$("#addExtendAttr").on('click',function(){
-		addExtendAttr("","");
-	});	
-				
-	$("#extendAttrBody").delegate(".delExtendTr",'click',function(){
-		$("#"+$(this).attr("attrTrId")).remove();
-	});
-	
 	$("input[name='credential']").on("click",function(){
 		if($(this).val()=="3"){
 			$("#sharedconfigure").hide();
@@ -157,18 +117,7 @@ $(function(){
 						
 					</td>
 				</tr>
-				<tr>
-					<th><@locale code="apps.extendAttr"/>：</th>
-					<td colspan="3">
-						<input type="checkbox" id="isExtendAttr" name="isExtendAttr" value="1"  <#if  1==model.isExtendAttr >checked</#if>  />
-						<@locale code="apps.isExtendAttr"/>
-						<span  id="showExtendAttr"  <#if  0==model.isExtendAttr >style="display:none"</#if>>
-							<input class="button" type="button"  value='<@locale code="button.text.add"/>' id="addExtendAttr"/>
-						</span>
-					</td>
-				</tr>
-				</tbody>
-				<tbody id="extendAttrBody">
+				
 				</tbody>
 			  </table>
   	       </td>

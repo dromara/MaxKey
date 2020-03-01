@@ -134,7 +134,7 @@ $(function(){
 					</td>
 					<th><@locale code="apps.saml.certMetaFile" />：</th>
 					<td>
-						<img id="certMetaFileImg"  height="32" alt="upload certificate or metadata file" src="<s:Base/>/images/cert.png">
+						<img id="certMetaFileImg"  height="40" width="80" alt="upload certificate or metadata file" src="<@base />/static/images/cert.png">
 						<b class="orange">*</b><label for="certMetaFile"></label>
 					</td>
 				</tr>
