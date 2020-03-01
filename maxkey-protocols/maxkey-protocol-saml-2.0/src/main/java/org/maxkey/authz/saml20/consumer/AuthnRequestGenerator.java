@@ -22,7 +22,7 @@ public class AuthnRequestGenerator {
 		this.timeService = timeService;
 		this.idService = idService;
 		
-		issuerGenerator = new IssuerGenerator(issuingEntityName);
+		issuerGenerator = new IssuerGenerator(this.issuingEntityName);
 	}
 
 	public AuthnRequest generateAuthnRequest(String destination, String responseLocation) {

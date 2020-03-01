@@ -1,16 +1,16 @@
 package org.maxkey.authz.saml20.provider.xml;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.maxkey.authz.saml20.binding.BindingAdapter;
+import org.maxkey.constants.BOOLEAN;
 import org.maxkey.domain.ExtraAttr;
 import org.maxkey.domain.ExtraAttrs;
 import org.maxkey.domain.apps.AppsSAML20Details;
-import org.maxkey.web.WebContext;
 import org.opensaml.Configuration;
 import org.opensaml.saml2.core.Attribute;
 import org.opensaml.saml2.core.AttributeStatement;
@@ -29,40 +29,35 @@ public class AttributeStatementGenerator {
 	
 	private final XMLObjectBuilderFactory builderFactory = Configuration.getBuilderFactory();
 
-	public AttributeStatement generateAttributeStatement(Collection<GrantedAuthority> authorities) {
-		return generateAttributeStatement(authorities, null);
+	public AttributeStatement generateAttributeStatement(AppsSAML20Details saml20Details,ArrayList<GrantedAuthority> grantedAuthoritys) {
+		return generateAttributeStatement(saml20Details, grantedAuthoritys,null);
 
 	}
 
 	public AttributeStatement generateAttributeStatement(
-					Collection<GrantedAuthority> authorities, 
+					AppsSAML20Details saml20Details,
+					ArrayList<GrantedAuthority> grantedAuthoritys,
 					HashMap<String,String>attributeMap) {
 
 		AttributeStatementBuilder attributeStatementBuilder = (AttributeStatementBuilder) builderFactory.getBuilder(AttributeStatement.DEFAULT_ELEMENT_NAME);
 		AttributeStatement attributeStatement = attributeStatementBuilder.buildObject();
-		if(null!=authorities){
-			Attribute attributeGrantedAuthority=builderGrantedAuthority(authorities);
-			attributeStatement.getAttributes().add(attributeGrantedAuthority);
-		}
+		
+		Attribute attributeGrantedAuthority=builderGrantedAuthority(grantedAuthoritys);
+		attributeStatement.getAttributes().add(attributeGrantedAuthority);
 		
 		if(null!=attributeMap){
 			Iterator<Entry<String, String>> iterator = attributeMap.entrySet().iterator();
 			while (iterator.hasNext()) {
 				Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator.next();
-				
 				String key = entry.getKey();
 				String value = entry.getValue();
-				
 				Attribute attribute=builderAttribute(key,value,Attribute.BASIC);
-				
 				attributeStatement.getAttributes().add(attribute);
-				
 			}
 		}
-		 BindingAdapter bindingAdapter = (BindingAdapter) WebContext.getSession().getAttribute("samlv20Adapter");
-		AppsSAML20Details saml20Details = bindingAdapter.getSaml20Details();
+		
 		logger.debug("ExtendAttr "+saml20Details.getExtendAttr());
-		if(saml20Details.getIsExtendAttr()==1) {
+		if(BOOLEAN.isTrue(saml20Details.getIsExtendAttr())) {
 			ExtraAttrs extraAttrs=new ExtraAttrs(saml20Details.getExtendAttr());
 			for(ExtraAttr extraAttr : extraAttrs.getExtraAttrs()) {
 				logger.debug("Attribute : "+extraAttr.getAttr()+" , Vale : "+extraAttr.getValue()+" , Type : "+extraAttr.getType());
@@ -79,37 +74,34 @@ public class AttributeStatementGenerator {
 		attribute.setName(attributeName);
 
 		// urn:oasis:names:tc:SAML:2.0:attrname-format:basic
+		if(nameFormat==null || nameFormat.equals("")) {
+			nameFormat=Attribute.BASIC;
+		}
+		
 		attribute.setNameFormat(nameFormat);
-
-		// Response/Assertion/AttributeStatement/Attribute/AttributeValue
-		XSStringBuilder stringBuilder = (XSStringBuilder) builderFactory.getBuilder(XSString.TYPE_NAME);
-		XSString stringValue = stringBuilder.buildObject(AttributeValue.DEFAULT_ELEMENT_NAME, XSString.TYPE_NAME);
-		stringValue.setValue(value);
-
-		attribute.getAttributeValues().add(stringValue);
+		if(value!=null) {	
+			attribute.getAttributeValues().add(builderAttributeValue(value));
+		}
 		
 		return attribute;
 	}
 	
 	public Attribute   builderGrantedAuthority(Collection<GrantedAuthority> authorities){
 		// Response/Assertion/AttributeStatement/Attribute
-		AttributeBuilder attributeBuilder = (AttributeBuilder) builderFactory.getBuilder(Attribute.DEFAULT_ELEMENT_NAME);
-		Attribute attribute = attributeBuilder.buildObject();
-		attribute.setName("GrantedAuthority");
-
-		// urn:oasis:names:tc:SAML:2.0:attrname-format:basic
-		attribute.setNameFormat(Attribute.BASIC);
-
+		Attribute attribute = builderAttribute("GrantedAuthority",null,null);
 		for (GrantedAuthority grantedAuthority : authorities) {
 			// this was convoluted to figure out
 			// Response/Assertion/AttributeStatement/Attribute/AttributeValue
-			XSStringBuilder stringBuilder = (XSStringBuilder) Configuration.getBuilderFactory().getBuilder(XSString.TYPE_NAME);
-			XSString stringValue = stringBuilder.buildObject(AttributeValue.DEFAULT_ELEMENT_NAME, XSString.TYPE_NAME);
-			stringValue.setValue(grantedAuthority.getAuthority());
-			attribute.getAttributeValues().add(stringValue);
+			attribute.getAttributeValues().add(builderAttributeValue(grantedAuthority.getAuthority()));
 
 		}
 		return attribute;
+	}
+	
+	public  XSString builderAttributeValue(String value) {
+		XSString xsStringValue = new XSStringBuilder().buildObject(AttributeValue.DEFAULT_ELEMENT_NAME, XSString.TYPE_NAME);
+		xsStringValue.setValue(value);
+		return xsStringValue;
 	}
 	
 	

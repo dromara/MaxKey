@@ -67,6 +67,10 @@ public class BasicAuthentication implements Authentication{
 	public String getJ_username() {
 		return j_username;
 	}
+	
+	public String getUsername() {
+		return j_username;
+	}
 
 	public void setJ_username(String j_username) {
 		this.j_username = j_username;
@@ -81,6 +85,9 @@ public class BasicAuthentication implements Authentication{
 	}
 
 	public String getJ_sessionid() {
+		return j_sessionid;
+	}
+	public String getSessionid() {
 		return j_sessionid;
 	}
 

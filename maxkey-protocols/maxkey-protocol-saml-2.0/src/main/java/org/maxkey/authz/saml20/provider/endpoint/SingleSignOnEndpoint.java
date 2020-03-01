@@ -62,6 +62,7 @@ public class SingleSignOnEndpoint {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@PathVariable("appid") String appId)throws Exception {
+		logger.debug("SAML Authorize Redirect do POST , app id is  "+appId);
 		return extractSAMLRequest(extractPostBindingAdapter,appId,request);
 	}
 	
@@ -70,7 +71,7 @@ public class SingleSignOnEndpoint {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@PathVariable("appid") String appId)throws Exception {
-		
+		logger.debug("SAML Authorize Redirect do GET , app id is  "+appId);
 		return extractSAMLRequest(extractRedirectBindingAdapter,appId,request);
 	}
 	

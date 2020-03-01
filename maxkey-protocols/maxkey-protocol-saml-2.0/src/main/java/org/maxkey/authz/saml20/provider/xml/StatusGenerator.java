@@ -1,20 +1,15 @@
 
 package org.maxkey.authz.saml20.provider.xml;
 
-import org.opensaml.Configuration;
-
 import org.opensaml.saml2.core.Status;
 import org.opensaml.saml2.core.StatusCode;
 import org.opensaml.saml2.core.StatusMessage;
 import org.opensaml.saml2.core.impl.StatusBuilder;
 import org.opensaml.saml2.core.impl.StatusCodeBuilder;
 import org.opensaml.saml2.core.impl.StatusMessageBuilder;
-import org.opensaml.xml.XMLObjectBuilderFactory;
 
 public class StatusGenerator {
 
-	private final XMLObjectBuilderFactory builderFactory = Configuration.getBuilderFactory();
-	
 	
 	public Status generateStatus( String value ) {
 		Status status =  builderStatus();
@@ -45,23 +40,19 @@ public class StatusGenerator {
 	}
 	
 	public Status builderStatus(){
-		StatusBuilder builder = (StatusBuilder) builderFactory.getBuilder(Status.DEFAULT_ELEMENT_NAME);
-		Status status =  (Status) builder.buildObject();
+		Status status =  (Status) new StatusBuilder().buildObject();
 		return status;
 	}
 	
 	public StatusCode builderStatusCode(String value){
-		StatusCodeBuilder codeBuilder = (StatusCodeBuilder) builderFactory.getBuilder(StatusCode.DEFAULT_ELEMENT_NAME);
-		
-		StatusCode statusCode = (StatusCode) codeBuilder.buildObject();
+		StatusCode statusCode = (StatusCode) new StatusCodeBuilder().buildObject();
 		statusCode.setValue(value);
 		
 		return statusCode;
 	}
 	
 	public StatusMessage builderStatusMessage(String message){
-		StatusMessageBuilder statusMessageBuilder = (StatusMessageBuilder) builderFactory.getBuilder(StatusMessage.DEFAULT_ELEMENT_NAME);
-		StatusMessage statusMessage = statusMessageBuilder.buildObject();
+		StatusMessage statusMessage = new StatusMessageBuilder().buildObject();
 		
 		statusMessage.setMessage(message);
 		

@@ -3,6 +3,7 @@ package org.maxkey.authz.saml20.provider.xml;
 
 
 import org.maxkey.authz.saml.service.TimeService;
+import org.maxkey.web.WebContext;
 import org.opensaml.saml2.core.NameID;
 import org.opensaml.saml2.core.NameIDType;
 import org.opensaml.saml2.core.Subject;
@@ -25,14 +26,14 @@ public class SubjectGenerator {
 
 	public Subject generateSubject( 
 							String assertionConsumerURL, 
-							String nameIdValue,
 							String inResponseTo, 
-							int validInSeconds, 
-							String clientAddress) {
+							int validInSeconds) {
 		
-		
+		String nameIdValue =WebContext.getUserInfo().getUsername();
 		NameID nameID =builderNameID(nameIdValue,assertionConsumerURL);
 		Subject subject =builderSubject(nameID);
+		
+		String clientAddress=WebContext.getRequestIpAddress(WebContext.getRequest());
 		SubjectConfirmation subjectConfirmation =builderSubjectConfirmation(
 								assertionConsumerURL,
 								inResponseTo,

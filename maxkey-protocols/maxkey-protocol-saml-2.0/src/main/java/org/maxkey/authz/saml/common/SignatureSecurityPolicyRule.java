@@ -69,8 +69,9 @@ public class SignatureSecurityPolicyRule  implements InitializingBean, SecurityP
 		}
 		
 		SignableSAMLObject samlMessage = (SignableSAMLObject) messageContext.getInboundMessage();
-		
+		//TODO:POST NEED Signed,but some is not
 		if( !samlMessage.isSigned()) {
+			logger.debug("evaluating signature POST NEED Signed,but some is not.");
 			throw new SecurityPolicyException("InboundMessage was not signed.");
 		}
 				

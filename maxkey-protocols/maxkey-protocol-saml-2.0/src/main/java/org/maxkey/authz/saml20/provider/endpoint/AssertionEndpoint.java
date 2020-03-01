@@ -1,19 +1,15 @@
 package org.maxkey.authz.saml20.provider.endpoint;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.joda.time.DateTime;
-import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.provider.xml.AuthnResponseGenerator;
 import org.maxkey.domain.apps.AppsSAML20Details;
-import org.maxkey.web.WebContext;
 import org.opensaml.saml2.core.Response;
 import org.opensaml.saml2.metadata.Endpoint;
 import org.opensaml.ws.message.encoder.MessageEncodingException;
@@ -21,9 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -59,34 +52,13 @@ public class AssertionEndpoint {
 
 		logger.debug("AuthnRequestInfo: {}", authnRequestInfo);
 
-		ArrayList<GrantedAuthority> grantedAuthority = new ArrayList<GrantedAuthority>();
-		grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
-
-		UsernamePasswordAuthenticationToken authToken = (UsernamePasswordAuthenticationToken)WebContext.getAuthentication();
-
-		for(GrantedAuthority anthGrantedAuthority: authToken.getAuthorities()){
-			grantedAuthority.add(anthGrantedAuthority);
-		}
-		//TODO:
-		//String userName ="shimingxy@qq.com";
-		String userName =((BasicAuthentication )authToken.getPrincipal()).getJ_username();
-		//aly
-		//String userName ="admin@1729982683323703.onaliyun.com";
-		DateTime authnInstant = new DateTime(request.getSession().getCreationTime());
-
-		String remoteAddress=WebContext.getRequestIpAddress(request);
 		HashMap <String,String>attributeMap=new HashMap<String,String>();
 		//saml20Details
 		Response authResponse = authnResponseGenerator.generateAuthnResponse(
 				saml20Details,
 				authnRequestInfo,
-				userName,
-				remoteAddress,
-				authnInstant,
-				grantedAuthority,
 				attributeMap,
-				bindingAdapter.getSigningCredential(),
-				bindingAdapter.getSpSigningCredential());
+				bindingAdapter);
 		
 		Endpoint endpoint = endpointGenerator.generateEndpoint(saml20Details.getSpAcsUrl());
 
