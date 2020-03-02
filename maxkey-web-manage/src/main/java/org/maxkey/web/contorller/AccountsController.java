@@ -7,8 +7,6 @@ import org.maxkey.dao.service.AccountsService;
 import org.maxkey.dao.service.AppsService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.Accounts;
-import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.Apps;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;

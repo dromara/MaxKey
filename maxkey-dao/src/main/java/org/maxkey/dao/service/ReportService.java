@@ -11,30 +11,39 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReportService  extends JpaBaseService<JpaBaseDomain>{
 
+	public Integer analysisDay(String reportParameter) {
+		return getMapper().analysisDay(reportParameter);
+	};
 	
-	public List<Map<String,Object>> analysisDay(String reportDate){
-		return getMapper().analysisDay(reportDate);
+	public Integer analysisNewUsers(String reportParameter) {
+		return getMapper().analysisNewUsers(reportParameter);
+	};
+	
+	public Integer analysisOnlineUsers(String reportParameter) {
+		return getMapper().analysisOnlineUsers(reportParameter);
+	};
+	
+	public Integer analysisActiveUsers(String reportParameter) {
+		return getMapper().analysisActiveUsers(reportParameter);
+	};
+	
+	public List<Map<String,Object>> analysisDayHour(String reportParameter){
+		return getMapper().analysisDayHour(reportParameter);
 	}
 	
-	public List<Map<String,Object>> analysisMonth(String reportDate){
-		return getMapper().analysisMonth(reportDate);
+	public List<Map<String,Object>> analysisMonth(String reportParameter){
+		return getMapper().analysisMonth(reportParameter);
 	}
 	
-	public List<Map<String,Object>> analysisYear(Integer reportYear){
-		return getMapper().analysisYear(reportYear);
+	
+	public List<Map<String,Object>> analysisBrowser(Map<String,Object> reportParameter){
+		return getMapper().analysisBrowser(reportParameter);
 	}
 	
-	public List<Map<String,Object>> analysisBrowser(Map<String,Object> reportDate){
-		return getMapper().analysisBrowser(reportDate);
+	public List<Map<String,Object>> analysisApp(Map<String,Object> reportParameter){
+		return getMapper().analysisApp(reportParameter);
 	}
 	
-	public List<Map<String,Object>> analysisApp(Map<String,Object> reportDate){
-		return getMapper().analysisApp(reportDate);
-	}
-	
-	public List<Map<String,Object>> analysisYears(){
-		return getMapper().analysisYears();
-	}
 	
 	
 	public ReportService() {

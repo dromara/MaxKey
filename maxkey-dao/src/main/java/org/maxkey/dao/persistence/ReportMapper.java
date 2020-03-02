@@ -16,17 +16,18 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  */
 public  interface ReportMapper extends IJpaBaseMapper<JpaBaseDomain> {
 	
-	public List<Map<String,Object>> analysisDay(String reportDate);
+	public Integer analysisDay(String reportParameter);
+	public Integer analysisNewUsers(String reportParameter);
+	public Integer analysisOnlineUsers(String reportParameter);
+	public Integer analysisActiveUsers(String reportParameter);
 	
-	public List<Map<String,Object>> analysisMonth(String reportDate);
+	public List<Map<String,Object>> analysisDayHour(String reportParameter);
 	
-	public List<Map<String,Object>> analysisYear(Integer reportYear);
+	public List<Map<String,Object>> analysisMonth(String reportParameter);
 	
-	public List<Map<String,Object>> analysisBrowser(Map<String,Object> reportDate);
+	public List<Map<String,Object>> analysisBrowser(Map<String,Object> reportParameter);
 	
-	public List<Map<String,Object>> analysisApp(Map<String,Object> reportDate);
-	
-	public List<Map<String,Object>> analysisYears();
+	public List<Map<String,Object>> analysisApp(Map<String,Object> reportParameter );
 	
 	
 }
