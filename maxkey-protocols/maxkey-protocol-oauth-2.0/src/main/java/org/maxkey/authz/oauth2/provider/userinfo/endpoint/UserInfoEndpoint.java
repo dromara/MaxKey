@@ -44,6 +44,7 @@ import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jwt.EncryptedJWT;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.JWTClaimsSet.Builder;
 import com.nimbusds.jwt.SignedJWT;
 
 @Controller
@@ -144,20 +145,20 @@ public class UserInfoEndpoint {
 			 
 			 UserInfo userInfo=queryUserInfo(principal);
 			 String userJson="";
-			 HashMap<String, Object> claimsFields = new HashMap<String, Object>();
+			 Builder jwtClaimsSetBuilder= new JWTClaimsSet.Builder();
 			 
-		 	claimsFields.put("sub", userInfo.getId());
+			 jwtClaimsSetBuilder.claim("sub", userInfo.getId());
 		 	
 		 	if(scopes.contains("profile")){
-				claimsFields.put("name", userInfo.getUsername());
-				claimsFields.put("preferred_username", userInfo.getDisplayName());
-				claimsFields.put("given_name", userInfo.getGivenName());
-				claimsFields.put("family_name", userInfo.getFamilyName());
-				claimsFields.put("middle_name", userInfo.getMiddleName());
-				claimsFields.put("nickname", userInfo.getNickName());
-				claimsFields.put("profile", "profile");
-				claimsFields.put("picture", "picture");
-				claimsFields.put("website", userInfo.getWebSite());
+		 		jwtClaimsSetBuilder.claim("name", userInfo.getUsername());
+		 		jwtClaimsSetBuilder.claim("preferred_username", userInfo.getDisplayName());
+		 		jwtClaimsSetBuilder.claim("given_name", userInfo.getGivenName());
+		 		jwtClaimsSetBuilder.claim("family_name", userInfo.getFamilyName());
+		 		jwtClaimsSetBuilder.claim("middle_name", userInfo.getMiddleName());
+		 		jwtClaimsSetBuilder.claim("nickname", userInfo.getNickName());
+		 		jwtClaimsSetBuilder.claim("profile", "profile");
+		 		jwtClaimsSetBuilder.claim("picture", "picture");
+		 		jwtClaimsSetBuilder.claim("website", userInfo.getWebSite());
 				
 				String gender;
 				 switch(userInfo.getGender()){
@@ -168,21 +169,21 @@ public class UserInfoEndpoint {
 				 	default:
 				 		gender="unknown";
 				 }
-				claimsFields.put("gender", gender);
-				claimsFields.put("zoneinfo", userInfo.getTimeZone());
-				claimsFields.put("locale", userInfo.getLocale());
-				claimsFields.put("updated_time", userInfo.getModifiedDate());
-				claimsFields.put("birthdate", userInfo.getBirthDate());
+				jwtClaimsSetBuilder.claim("gender", gender);
+				jwtClaimsSetBuilder.claim("zoneinfo", userInfo.getTimeZone());
+				jwtClaimsSetBuilder.claim("locale", userInfo.getLocale());
+				jwtClaimsSetBuilder.claim("updated_time", userInfo.getModifiedDate());
+				jwtClaimsSetBuilder.claim("birthdate", userInfo.getBirthDate());
 		 	}
 		 	
 		 	if(scopes.contains("email")){
-		 		claimsFields.put("email", userInfo.getWorkEmail());
-		 		claimsFields.put("email_verified", false);
+		 		jwtClaimsSetBuilder.claim("email", userInfo.getWorkEmail());
+		 		jwtClaimsSetBuilder.claim("email_verified", false);
 		 	}
 		 	
 			if(scopes.contains("phone")){
-				claimsFields.put("phone_number", userInfo.getWorkPhoneNumber());
-				claimsFields.put("phone_number_verified", false);
+				jwtClaimsSetBuilder.claim("phone_number", userInfo.getWorkPhoneNumber());
+				jwtClaimsSetBuilder.claim("phone_number_verified", false);
 			}
 			
 			if(scopes.contains("address")){
@@ -194,18 +195,16 @@ public class UserInfoEndpoint {
 				addressFields.put("formatted", userInfo.getWorkAddressFormatted());
 				addressFields.put("postal_code", userInfo.getWorkPostalCode());
 				
-				claimsFields.put("address", addressFields);
+				jwtClaimsSetBuilder.claim("address", addressFields);
 			}
 			
-			JWTClaimsSet userInfoJWTClaims = new JWTClaimsSet.Builder()
+			jwtClaimsSetBuilder
 					.jwtID(UUID.randomUUID().toString())// set a random NONCE in the middle of it
 					.audience(Arrays.asList(clientDetails.getClientId()))
 					.issueTime(new Date())
-					.expirationTime(new Date(new Date().getTime()+clientDetails.getAccessTokenValiditySeconds()*1000))
-					.claim(claimsFields)
-					.build();
-	
+					.expirationTime(new Date(new Date().getTime()+clientDetails.getAccessTokenValiditySeconds()*1000));
 			
+			JWTClaimsSet userInfoJWTClaims = jwtClaimsSetBuilder.build();
 			JWT userInfoJWT=null;
 			JWSAlgorithm signingAlg = jwtSignerValidationService.getDefaultSigningAlgorithm();
 			if (clientDetails.getUserInfoEncryptedAlgorithm() != null && !clientDetails.getUserInfoEncryptedAlgorithm().equals("none")
@@ -232,7 +231,7 @@ public class UserInfoEndpoint {
 				if (clientDetails.getUserInfoSigningAlgorithm()==null||clientDetails.getUserInfoSigningAlgorithm().equals("none")) {
 					// unsigned ID token
 					//userInfoJWT = new PlainJWT(userInfoJWTClaims);
-					userJson=JsonUtils.gson2Json(claimsFields);
+					userJson=JsonUtils.gson2Json(jwtClaimsSetBuilder.getClaims());
 				} else {
 					// signed ID token
 					if (signingAlg.equals(JWSAlgorithm.HS256)

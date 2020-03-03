@@ -4,5 +4,4 @@ dependencies {
 	//local jars
 	compile fileTree(dir: '../maxkey-lib/', include: '*/*.jar')
 	
-   	compile project(":maxkey-jose-jwt")
 }

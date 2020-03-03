@@ -202,6 +202,11 @@ subprojects {
          compile group: 'org.opensaml', name: 'openws', version: '1.5.4'
          compile group: 'org.opensaml', name: 'xmltooling', version: '1.4.4'
          
+         compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '8.8'
+         compile group: 'net.jcip', name: 'jcip-annotations', version: '1.0'
+         compile group: 'net.minidev', name: 'json-smart', version: '2.3'
+         compile group: 'net.minidev', name: 'asm', version: '1.0.2'
+         
          compile group: 'cn.hutool', name: 'hutool-core', version: '5.1.2'
          compile group: 'cn.hutool', name: 'hutool-http', version: '5.1.2'
          compile group: 'me.zhyd.oauth', name: 'JustAuth', version: '1.13.2'

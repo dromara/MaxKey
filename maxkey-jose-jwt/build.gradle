@@ -1,7 +1,0 @@
-description = "maxkey-jose-jwt"
-
-dependencies {
-   compile fileTree(dir: '../maxkey-lib/', include: '*/tink-1.2.2.jar')
-   compile fileTree(dir: '../maxkey-lib/', include: '*/bcp*jdk15on-150.jar')
-   compile fileTree(dir: '../maxkey-lib/', include: '*/asm-5.0.3.jar')
-}

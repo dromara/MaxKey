@@ -8,7 +8,6 @@ dependencies {
 	
 	compile project(":maxkey-core")
 	compile project(":maxkey-dao")
-   	compile project(":maxkey-jose-jwt")
    	compile project(":maxkey-client-sdk")
    	compile project(":maxkey-protocols:maxkey-protocol-authorize")
    
