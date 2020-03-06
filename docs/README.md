@@ -71,7 +71,7 @@
 
 百度网盘下载
 | 版本    | 日期   |  下载地址  |  提取码  |
-| --------| :-----  | :----  | :----:  |
+| --------| -----  | ----  | ----  |
 | v 1.0 GA   | 2019/12/06   |  <a href="https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ" target="_blank">https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ</a>  |  **g17z**  |
 | v 1.2 GA   | 2020/02/18   |  <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA</a>  |  **6bda**  |
 
