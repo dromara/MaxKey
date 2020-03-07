@@ -96,7 +96,7 @@ HMACSHA256(
 
 每当用户想要访问受保护的路由或资源时，用户代理通常应使用授权<b>Authorization</b>在<b>Bearer</b>承载模式标头中发送JWT 。标头的内容应如下所示：
 <pre class="prettyprint">
-Authorization: Bearer <token>
+Authorization: Bearer [token]
 </pre>
 在某些情况下，这可以是无状态授权机制。服务器的受保护路由将在<b>Authorization</b>标头中检查有效的JWT ，如果存在，则将允许用户访问受保护的资源。如果JWT包含必要的数据，则可以减少查询数据库中某些操作的需求，尽管这种情况并非总是如此。
 
