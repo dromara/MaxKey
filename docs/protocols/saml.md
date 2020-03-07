@@ -44,7 +44,7 @@ IDP和SP预先完成证书的互信配置，SAML认证基于断言，断言基�
 
 重要注意:SAML SSO解决方案仅适用于Web应用程序.
 
-    <h5>Tips：</h5>
+    Tips：
 
 如果您想对SAML 2.0开放标准进行扩展阅读，请参看：官方技术说明<a href="https://wiki.oasis-open.org/security/FrontPage"  title="https://wiki.oasis-open.org/security/FrontPage" target="_blank" rel="nofollow">SAML标准（英文） </a> | <a href="http://en.wikipedia.org/wiki/Security_Assertion_Markup_Language"  title="http://en.wikipedia.org/wiki/Security_Assertion_Markup_Language" target="_blank" rel="nofollow">SAML维基百科（中文）</a> 
 
