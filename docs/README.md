@@ -13,7 +13,7 @@
 
 
 1.  标准化认证协议：
-<table border="0" class="table table-striped">
+<table border="0" class="table table-striped table-bordered ">
 	<tbody>
 		<tr class="a">
 			<th>序号</th>
@@ -65,7 +65,7 @@
 </table>
 
 2. 登录支持
-<table border="0" class="table table-striped">
+<table border="0" class="table table-striped table-bordered ">
 	<tbody>
 		<tr class="a">
 			<th>序号</th>
@@ -127,7 +127,7 @@
 # 下载
 
 百度网盘下载
-<table border="0" class="table table-striped">
+<table border="0" class="table table-striped table-bordered ">
 	<tbody>
 		<tr class="a">
 			<th>版本</th>
