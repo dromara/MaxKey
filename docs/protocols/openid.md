@@ -62,20 +62,31 @@ OAuth2中还有口令模式和“应有访问模式”的方式来获取Access T
 和OAuth认证流程类似
 
 RP发送一个认证请求给OP，其中附带client_id；
+
 OP对EU进行身份认证；
+
 OP返回响应，发送授权码给RP；
+
 RP使用授权码向OP索要ID-Token和Access-Token，RP验证无误后返回给RP；
+
 RP使用Access-Token发送一个请求到UserInfo EndPoint； UserInfo EndPoint返回EU的Claims。
+
+
 <h4>4.2.1 基于Authorization Code的认证请求</h4>
 RP使用OAuth2的Authorization-Code的方式来完成用户身份认证，所有的Token都是通过OP的Token EndPoint（OAuth2中定义）来发放的。构建一个OIDC的Authentication Request需要提供如下的参数：
 
 scope：必须。OIDC的请求必须包含值为“openid”的scope的参数。
-response_type：必选。同OAuth2。
-client_id：必选。同OAuth2。
-redirect_uri：必选。同OAuth2。
-state：推荐。同OAuth2。防止CSRF, XSRF。
-示例如下：
 
+response_type：必选。同OAuth2。
+
+client_id：必选。同OAuth2。
+
+redirect_uri：必选。同OAuth2。
+
+state：推荐。同OAuth2。防止CSRF, XSRF。
+
+示例如下：
+<pre><code class="http hljs">
 GET /authorize?
     response_type=code
     &scope=openid%20profile%20email
@@ -83,16 +94,18 @@ GET /authorize?
     &state=af0ifjsldkj
     &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
   Host: server.example.com
+</pre> 
 <h4>4.2.2 基于Authorization Code的认证请求的响应</h4>
 在OP接收到认证请求之后，需要对请求参数做严格的验证，具体的规则参见http://openid.net/specs/openid-connect-core-1_0.html#AuthRequestValidation，验证通过后引导EU进行身份认证并且同意授权。在这一切都完成后，会重定向到RP指定的回调地址(redirect_uri)，并且把code和state参数传递过去。比如：
-
+<pre><code class="http hljs">
   HTTP/1.1 302 Found
   Location: https://client.example.org/cb?
     code=SplxlOBeZQQYbYS6WxSbIA
     &state=af0ifjsldkj
+</pre>
 <h4>4.2.3 获取ID Token</h4>
 RP使用上一步获得的code来请求Token EndPoint，这一步桶OAuth2，就不再展开细说了。然后Token EndPoint会返回响应的Token，其中除了OAuth2规定的部分数据外，还会附加一个id_token的字段。id_token字段就是上面提到的ID Token。例如：
-
+<pre><code class="json hljs">
   HTTP/1.1 200 OK
   Content-Type: application/json
   Cache-Control: no-store
@@ -114,21 +127,33 @@ RP使用上一步获得的code来请求Token EndPoint，这一步桶OAuth2，就
      K5hoDalrcvRYLSrQAZZKflyuVCyixEoV9GfNQC3_osjzw2PAithfubEEBLuVVk4
      XUVrWOLrLl0nx7RkKU8NXNHq-rvKMzqg"
   }
+  </pre>
 其中看起来一堆乱码的部分就是JWT格式的ID-Token。在RP拿到这些信息之后，需要对id_token以及access_token进行验证（具体的规则参见http://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation和http://openid.net/specs/openid-connect-core-1_0.html#ImplicitTokenValidation）。至此，可以说用户身份认证就可以完成了，后续可以根据UserInfo EndPoint获取更完整的信息。
 
 <h4>4.2.4 安全令牌 ID-Token</h4>
 上面提到过OIDC对OAuth2最主要的扩展就是提供了ID-Token。下面我们就来看看ID-Token的主要构成：
 
 iss = Issuer Identifier：必须。提供认证信息者的唯一标识。一般是Url的host+path部分；
+
 sub = Subject Identifier：必须。iss提供的EU的唯一标识；最长为255个ASCII个字符；
+
 aud = Audience(s)：必须。标识ID-Token的受众。必须包含OAuth2的client_id；
+
 exp = Expiration time：必须。ID-Token的过期时间；
+
 iat = Issued At Time：必须。JWT的构建的时间。
+
 auth_time = AuthenticationTime：EU完成认证的时间。如果RP发送认证请求的时候携带max_age的参数，则此Claim是必须的。
+
 nonce：RP发送请求的时候提供的随机字符串，用来减缓重放攻击，也可以来关联ID-Token和RP本身的Session信息。
+
 acr = Authentication Context Class Reference：可选。表示一个认证上下文引用值，可以用来标识认证上下文类。
+
 amr = Authentication Methods References：可选。表示一组认证方法。
+
 azp = Authorized party：可选。结合aud使用。只有在被认证的一方和受众（aud）不一致时才使用此值，一般情况下很少使用。
+
+<pre><code class="json hljs">
 {
    "iss": "https://server.example.com",
    "sub": "24400320",
@@ -139,6 +164,7 @@ azp = Authorized party：可选。结合aud使用。只有在被认证的一方�
    "auth_time": 1311280969,
    "acr": "urn:mace:incommon:iap:silver"
   }
+  </pre>
 另外ID Token必须使用JWT(JSON Web Token)进行签名和JWE(JSON Web Encryption)加密，从而提供认证的完整性、不可否认性以及可选的保密性。关于JWT的更多内容，请参看JSON Web Token - 在Web应用间安全地传递信息
 
 <h3>4.3 默认模式流程</h3>
@@ -160,12 +186,13 @@ UserInfo Endpoint
 可能有的读者发现了，ID-Token只有sub是和EU相关的，这在一般情况下是不够的，必须还需要EU的用户名，头像等其他的资料，OIDC提供了一组公共的cliams，来提供更多用户的信息，这就是——UserIndo EndPoin。
 
 在RP得到Access Token后可以请求此资源，然后获得一组EU相关的Claims，这些信息可以说是ID-Token的扩展，ID-Token中只需包含EU的唯一标识sub即可（避免ID Token过于庞大和暴露用户敏感信息），然后在通过此接口获取完整的EU的信息。此资源必须部署在TLS之上，例如：
-
+<pre><code class="http hljs">
   GET /userinfo HTTP/1.1
   Host: server.example.com
   Authorization: Bearer SlAV32hkKG
+</pre>
 成功之后响应如下：
-
+<pre><code class="json hljs">
   HTTP/1.1 200 OK
   Content-Type: application/json
 
@@ -178,4 +205,5 @@ UserInfo Endpoint
    "email": "janedoe@example.com",
    "picture": "http://example.com/janedoe/me.jpg"
   }
+  </pre>
 其中sub代表EU的唯一标识，这个claim是必须的，其他的都是可选的。
