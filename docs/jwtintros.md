@@ -1,10 +1,10 @@
-<h2>什么是JSON Web令牌？</h2>
+<h2>JSON Web Token介绍</h2>
 
 JSON Web Token （JWT）是一个开放标准（<a href="https://tools.ietf.org/html/rfc7519" target="_blank">RFC 7519</a>），它定义了一种紧凑且自包含的方式，用于在各方之间安全地将信息作为JSON对象传输。由于此信息是经过数字签名的，因此可以被验证和信任。可以使用秘密（使用<b>HMAC</b>算法）或使用<b>RSA</b>或<b>ECDSA</b>的公用/专用密钥对对JWT进行签名。
 
 尽管可以对JWT进行加密以在各方之间提供保密性，但我们将重点关注已签名的令牌。签名的令牌可以验证其中包含的声明的完整性，而加密的令牌则将这些声明隐藏在其他方的面前。当使用公钥/私钥对对令牌进行签名时，签名还证明只有持有私钥的一方才是对其进行签名的一方。
 
-<h2>什么时候应该使用JSON Web令牌？</h2>
+<h2>什么时候使用JSON Web Token</h2>
 
 以下是JSON Web令牌有用的一些情况：
 
@@ -12,9 +12,9 @@ JSON Web Token （JWT）是一个开放标准（<a href="https://tools.ietf.org/
 
 <b>信息交换：</b>JSON Web令牌是在各方之间安全地传输信息的好方法。因为可以对JWT进行签名（例如，使用公钥/私钥对），所以您可以确定发件人是他们所说的人。此外，由于签名是使用标头和有效负载计算的，因此您还可以验证内容是否遭到篡改。
 
-<h2>JSON Web令牌结构是什么？</h2>
+<h2>JSON Web Token结构</h2>
 
-JSON Web令牌以紧凑的形式由三部分组成，这些部分由点（.）分隔，分别是：
+JSON Web Token以紧凑的形式由三部分组成，这些部分由点（.）分隔，分别是：
 
 Header(标头)
 
@@ -76,19 +76,17 @@ HMACSHA256(
   
 签名用于验证消息在此过程中没有更改，并且对于使用私钥进行签名的令牌，它还可以验证JWT的发送者是它所说的真实身份。
 
-<b>放在一起</b>
+<b>结合一起</b>
 
 输出是三个由点分隔的Base64-URL字符串，可以在HTML和HTTP环境中轻松传递这些字符串，与基于XML的标准（例如SAML）相比，它更紧凑。
 
 下面显示了一个JWT，它已对先前的标头和有效负载进行了编码，并用一个秘密进行了签名。 编码的JWT
 <img src="{{ "/images/jwt/encoded-jwt3.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
-如果您想使用JWT并将这些概念付诸实践，则可以使用jwt.io Debugger解码，验证和生成JWT。
+如果您想使用JWT并将这些概念付诸实践，则可以使用jwt.io Debugger解码，验证和生成JWT。<a href="http://jwt.io/" target="_blank" >JWT.io调试器</a>
 <img src="{{ "/images/jwt/legacy-app-auth-5.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 
-<a href="http://jwt.io/" target="_blank" >JWT.io调试器</a>
-
-<h2>JSON Web令牌如何工作？</h2>
+<h2>JSON Web Token工作机制</h2>
 
 在身份验证中，当用户使用其凭据成功登录时，将返回JSON Web令牌。由于令牌是凭据，因此必须格外小心以防止安全问题。通常，令牌的保留时间不应超过要求的时间。
 
@@ -111,7 +109,7 @@ JSON Web令牌如何工作
 该应用程序使用访问令牌来访问受保护的资源（例如API）。
 请注意，使用签名的令牌，令牌中包含的所有信息都会暴露给用户或其他方，即使他们无法更改它。这意味着您不应将机密信息放入令牌中。
 
-<h2>我们为什么要使用JSON Web令牌？</h2>
+<h2>如何使用JSON Web Token</h2>
 
 让我们谈谈与Simple Web Tokens（SWT）和Security Assertion Markup Language Tokens安全性声明标记语言令牌（SAML）相比，JSON Web Tokens（JWT）的优势。
 
