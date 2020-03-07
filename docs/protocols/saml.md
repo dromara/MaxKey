@@ -1,4 +1,4 @@
-  	<h2>1、SAML 介绍</h2>
+<h2>1、SAML 介绍</h2>
  	
 SAML即安全断言标记语言，英文全称是Security Assertion Markup Language。它是一个基于XML的标准，用于在不同的安全域(security domain)之间用户身份验证和授权数据交换。在SAML标准定义了身份提供者(identity provider)和服务提供者(service provider)，这两者构成了前面所说的不同的安全域。 SAML是OASIS组织安全服务技术委员会(Security Services Technical Committee)的产品。官方技术说明可参看OASIS Security Services (SAML) TC.
     
@@ -13,10 +13,10 @@ IDP认证中心提供了一个基于SAML的单点登录（SSO）服务，作为�
 
 通过SAML实现IDP 与其他合作伙伴的联邦身份认证。
 
-    <h5>流程说明图</h5>
-    <<img src="{{ "/images/saml/saml1.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+<h5>流程说明图</h5>
+<img src="{{ "/images/saml/saml1.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
-    <h3>SAML实现联邦身份认证各方职责</h3>
+<h3>SAML实现联邦身份认证各方职责</h3>
 	
 <table border="0" class="table table-striped table-bordered ">
     <thead>
@@ -46,7 +46,7 @@ IDP和SP预先完成证书的互信配置，SAML认证基于断言，断言基�
 
     <h5>Tips：</h5>
 
-		如果您想对SAML 2.0开放标准进行扩展阅读，请参看：官方技术说明<a href="https://wiki.oasis-open.org/security/FrontPage"  title="https://wiki.oasis-open.org/security/FrontPage" target="_blank" rel="nofollow">SAML标准（英文） </a> | <a href="http://en.wikipedia.org/wiki/Security_Assertion_Markup_Language"  title="http://en.wikipedia.org/wiki/Security_Assertion_Markup_Language" target="_blank" rel="nofollow">SAML维基百科（中文）</a> 
+如果您想对SAML 2.0开放标准进行扩展阅读，请参看：官方技术说明<a href="https://wiki.oasis-open.org/security/FrontPage"  title="https://wiki.oasis-open.org/security/FrontPage" target="_blank" rel="nofollow">SAML标准（英文） </a> | <a href="http://en.wikipedia.org/wiki/Security_Assertion_Markup_Language"  title="http://en.wikipedia.org/wiki/Security_Assertion_Markup_Language" target="_blank" rel="nofollow">SAML维基百科（中文）</a> 
 
 <h2>2、SP-Init SSO流程	</h2>
 <img src="{{ "/images/saml/saml2.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
