@@ -17,11 +17,11 @@ CAS的目标是允许用户访问多个应用程序只提供一次用户凭据�
 
 <h2>2、CAS体系结构</h2>
 CAS 体系包含两个部分： CAS Server 和 CAS Client。CAS Server 需要独立部署，主要负责对用户的认证工作；CAS Client 负责处理对客户端受保护资源的访问请求，需要登录时，重定向到 CAS Server。
-<img src="{{ "/images/cas/1.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+<img src="{{ "/images/cas/1.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 <h2>3、CAS原理</h2>
 CAS 最基本的协议过程：
-<img src="{{ "/images/cas/2.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+<img src="{{ "/images/cas/2.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
  
 SSO单点登录访问流程主要有以下步骤：
 
