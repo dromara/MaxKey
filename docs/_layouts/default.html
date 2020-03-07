@@ -5,14 +5,17 @@
 
   <div class="container-fluid">
     {% include header.html %}
-
-    <div class="post p2 p-responsive wrap" role="main">
-      <div class="measure">
-        {{ content }}
-      </div>
-    </div>
-  </div>
-  <hr/>
+      <div class="row-fluid">
+			<header id="leftColumn" class="span2">
+				<nav class="well sidebar-nav">
+				 </nav>
+			</header>
+			<main id="bodyColumn"  class="span10" >
+				{{ content }}
+			</main>
+		</div>
+	</div>
+	<hr/>
   {% include footer.html %}
 	
 </body>
