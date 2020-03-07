@@ -36,6 +36,7 @@ Tips：
 <h2>4.运行流程</h2>
 
 <img src="{{ "/images/oauth2/flow.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+
 （A）用户打开客户端以后，客户端要求用户给予授权。
 
 （B）用户同意给予客户端授权。
@@ -62,6 +63,7 @@ Tips：
 
 授权码模式（authorization code）是功能最完整、流程最严密的授权模式。
 <img src="{{ "/images/oauth2/code.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+
 （1）用户访问客户端，后者将前者导向认证服务器，假设用户给予授权，认证服务器将用户导向客户端事先指定的"重定向URI"（redirection URI），同时附上一个授权码。
 
 （2）客户端收到授权码，附上早先的"重定向URI"，向认证服务器申请令牌：GET /oauth/token?response_type=code&client_id=test&redirect_uri=重定向页面链接。请求成功返回code授权码，一般有效时间是10分钟。
@@ -73,6 +75,7 @@ Tips：
 
 适用于公开的浏览器单页应用
 <img src="{{ "/images/oauth2/implicit.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+
 Access Token直接从授权服务器返回(只有前端渠道)
 
 不支持refresh tokens
@@ -84,6 +87,7 @@ Access Token直接从授权服务器返回(只有前端渠道)
 
 <h3>5.3.用户名密码 Resource Owner Credentials</h3>
 <img src="{{ "/images/oauth2/resource.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+
 使用用户名密码登录的应用，例如桌面App
 
 使用用户名/密码作为授权方式从授权服务器上获取access token
@@ -95,6 +99,7 @@ Access Token直接从授权服务器返回(只有前端渠道)
 
 <h3>5.4.客户端凭证 Client Credentials</h3>
 <img src="{{ "/images/oauth2/client.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+
 适用于服务器见通信场景，机密客户代表它自己或者一个用户
 
 只有后端渠道，使用客户凭证获取一个access token
