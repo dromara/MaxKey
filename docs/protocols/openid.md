@@ -21,7 +21,7 @@ OAuth是Authorization，即授权，在已知用户身份合法的情况下，�
 OpenID Connect是“认证”和“授权”的结合，因为其基于OAuth协议，所以OpenID-Connect协议中也包含了client_id、client_secret还有redirect_uri等字段标识。这些信息被保存在“身份认证服务器”，以确保特定的客户端收到的信息只来自于合法的应用平台。这样做是目的是为了防止client_id泄露而造成的恶意网站发起的OIDC流程。
 
 举个例子。某个用户使用Facebook应用“What online quiz best describes you?” ，该应用可以通过Facebook账号登录，则你可以在应用中发起请求到“身份认证服务器”（也就是Facebook的服务器）请求登录。这时你会看到如下界面，询问是否授权。
-<img src="{{ "/images/openid/1.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+<img src="{{ "/images/openid/1.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 在OAuth中，这些授权被称为scope。OpenID-Connect也有自己特殊的scope--openid ,它必须在第一次请求“身份鉴别服务器”（Identity Provider,简称IDP）时发送过去。
 
@@ -56,7 +56,7 @@ OAuth2中还有口令模式和“应有访问模式”的方式来获取Access T
 "口令模式"是需要用户提供账号和口令给RP的，既然都已经有用户名和口令了，就不需要在获取什么用户身份了。至于“应有访问模式”，这种方式不需要用户参与，也就无需要认证和获取用户身份了。这也能反映授权和认证的差异，以及只使用OAuth2来做身份认证的事情是远远不够的，也是不合适的。
 
 <h3>4.2 授权码模式流程</h3>
-<img src="{{ "/images/openid/2.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+<img src="{{ "/images/openid/2.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 授权码模式流程
 和OAuth认证流程类似
@@ -168,7 +168,7 @@ azp = Authorized party：可选。结合aud使用。只有在被认证的一方�
 另外ID Token必须使用JWT(JSON Web Token)进行签名和JWE(JSON Web Encryption)加密，从而提供认证的完整性、不可否认性以及可选的保密性。关于JWT的更多内容，请参看JSON Web Token - 在Web应用间安全地传递信息
 
 <h3>4.3 默认模式流程</h3>
-<img src="{{ "/images/openid/3.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+<img src="{{ "/images/openid/3.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 默认模式流程
 默认流程和OAuth中的类似，只不过也是添加了ID-Token的相关内容。
@@ -203,7 +203,7 @@ UserInfo Endpoint
    "family_name": "Doe",
    "preferred_username": "j.doe",
    "email": "janedoe@example.com",
-   "picture": "http://example.com/janedoe/me.jpg"
+   "picture": "http://example.com/janedoe/me.png"
   }
 </code></pre>
 其中sub代表EU的唯一标识，这个claim是必须的，其他的都是可选的。
