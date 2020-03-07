@@ -5,9 +5,10 @@
 		<title>MaxKey</title>
 		
         <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+		
+        <link rel="stylesheet" href="{{ "/css/syntax.css" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}">
 
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/fluido-1.8.min.css">
+		<link rel="stylesheet" href="{{ "/css/fluido-1.8.min.css" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}">
     
 </head>
