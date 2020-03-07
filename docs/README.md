@@ -1,5 +1,3 @@
-# <img src="https://github.com/shimingxy/MaxKey/blob/master/logo.jpg?raw=true" width="45px">MaxKey
-
 **MaxKey(马克思的钥匙)**，寓意是最大钥匙，是基于开放用户安全身份认证系统（User Security Access System）,提供简单、可靠和安全的用户认证和单点登录，包含用户认证、单点登录、资源管理、权限管理等。
 
 什么是**单点登录(Single Sign On）**，简称为**SSO**？
@@ -12,7 +10,7 @@
 
   QQ交流群：**434469201** <a href="https://jq.qq.com/?_wv=1027&k=5WrpQ6o" target="_blank">点击链接加入群聊</a>
   
-------------
+
 
 1.  标准化认证协议：
 
@@ -48,25 +46,26 @@
 
 7. 许可证 Apache License, Version 2.0，开源免费。 
 
-------------
+
 # 界面
 **MaxKey认证**
 
 登录界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_login.png)
+<img src="{{ "/images/maxkey_login.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 主界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_index.png)
+<img src="{{ "/images/maxkey_index.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 **MaxKey管理**
 
 用户管理界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_mgt_users.png)
+<img src="{{ "/images/maxkey_mgt_users.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+
 
 应用管理界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_mgt_apps.png)
+<img src="{{ "/images/maxkey_mgt_apps.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
-------------
+
 # 下载
 
 百度网盘下载
@@ -78,7 +77,7 @@
 
 
 
-------------
+
 
 
 
