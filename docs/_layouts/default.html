@@ -6,10 +6,7 @@
   <div class="container-fluid">
     {% include header.html %}
       <div class="row-fluid">
-			<header id="leftColumn" class="span2">
-				<nav class="well sidebar-nav">
-				 </nav>
-			</header>
+			{% include navigation.html %}
 			<main id="bodyColumn"  class="span10" >
 				{{ content }}
 			</main>

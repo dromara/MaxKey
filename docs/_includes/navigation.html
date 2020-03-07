@@ -1,13 +1,9 @@
-{% assign default_paths = site.pages | map: "path" %}
-{% assign page_paths = site.header_pages | default: default_paths %}
-
-{% for path in page_paths %}
-    
-    {% assign page = site.pages | where: "path", path | first %}
-    
-    {% if page.title %}
-        <a href="{{ page.url }}">{{ page.title }}</a>
-    {% endif %}
-
-    
-{% endfor %}
+<header id="leftColumn" class="span2">
+	<nav class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header"><img class="imageLink" src="{{ "/images/home.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}" alt="Apache Log4j™ 2" border="0"/> MaxKey</li>
+			<li class="active"><a href="#"><span class="none"></span>About</a></li>
+			<li><a href="download.html" title="Download"><span class="none"></span>Download</a></li>
+		</ul>
+	 </nav>
+</header>
