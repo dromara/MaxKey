@@ -13,28 +13,86 @@
 
 
 1.  标准化认证协议：
-
-| 序号    | 协议   |  支持  |
-| --------| :-----  | :----:  |
-| 1       | OAuth 2.0/OpenID Connect   |  高  |
-| 2       | SAML 2.0   				   |  高  |
-| 3       | JWT  					   |  高  |
-| 4       | CAS						   |  高  |
-| 5       | FormBased				   |  中  |
-| 6       | TokenBased(Post/Cookie)	   |  中  |
-| 7       | ExtendApi				   |  低  |
-| 8       | EXT						   |  低  |
+<table border="0" class="table table-striped">
+	<tbody>
+		<tr class="a">
+			<th>序号</th>
+			<th>协议</th>
+			<th>支持</th>
+		</tr>
+				
+		<tr class="b">
+			<td>1 </td>
+			<td>OAuth 2.0/OpenID Connect</td>
+			<td> 高 </td>
+		</tr>
+		<tr class="a">
+			<td>2 </td>
+			<td>SAML 2.0 </td>
+			<td>高 </td>
+		</tr>  
+		<tr class="b">
+			<td>3 </td>
+			<td>JWT</td>
+			<td> 高 </td>
+		</tr>
+		<tr class="a">
+			<td>4 </td>
+			<td>CAS</td>
+			<td>高 </td>
+		</tr>  
+		<tr class="b">
+			<td>5 </td>
+			<td>FormBased</td>
+			<td> 中 </td>
+		</tr>
+		<tr class="a">
+			<td>6 </td>
+			<td>TokenBased(Post/Cookie)</td>
+			<td> 中</td>
+		</tr>  
+		<tr class="b">
+			<td>7 </td>
+			<td>ExtendApi</td>
+			<td> 低 </td>
+		</tr>
+		<tr class="a">
+			<td>8 </td>
+			<td>EXT</td>
+			<td> 低</td>
+		</tr>  
+	</tbody>
+</table>
 
 2. 登录支持
-
-| 序号    | 登录方式   | 
-| --------| :-----  |
-| 1       | 动态验证码   	| 
-| 2       | 双因素认证   	| 
-| 3       | Google Authenticator   	|
-| 4       | Kerberos/Spengo/AD域|
-| 5       | 社交账号 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
-
+<table border="0" class="table table-striped">
+	<tbody>
+		<tr class="a">
+			<th>序号</th>
+			<th>登录方式</th>
+		</tr>
+		<tr class="b">
+			<td>1 </td>
+			<td>动态验证码</td>
+		</tr>
+		<tr class="a">
+			<td>2 </td>
+			<td>双因素认证 </td>
+		</tr>  
+		<tr class="b">
+			<td>3 </td>
+			<td>Google Authenticator</td>
+		</tr>
+		<tr class="a">
+			<td>4 </td>
+			<td>Kerberos/Spengo/AD域</td>
+		</tr>  
+		<tr class="b">
+			<td>5 </td>
+			<td>社交账号:微信/QQ/微博/钉钉/Google/Facebook/其他</td>
+		</tr>
+	</tbody>
+</table>
 
 3. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
 
