@@ -33,11 +33,12 @@ xxxxx.yyyyy.zzzzz
 标头通常由两部分组成：令牌的类型（即JWT）和所使用的签名算法，例如HMAC SHA256或RSA。
 
 例如：
-
+<pre><code class="json hljs">
 {
   "alg": "HS256",
   "typ": "JWT"
 }
+</code></pre>
 然后，此JSON被<b>Base64Url</b>编码以形成JWT的第一部分。
 
 <b>Payload(有效载荷)</b>
@@ -53,12 +54,13 @@ xxxxx.yyyyy.zzzzz
 私人权利：这些都是使用它们同意并既不是当事人之间建立共享信息的自定义声明注册或公众的权利要求。
 
 有效负载示例可能是：
-
+<pre><code class="json hljs">
 {
   "sub": "1234567890",
   "name": "John Doe",
   "admin": true
 }
+</code></pre>
 然后，对有效负载进行<b>Base64Url</b>编码，以形成JSON Web令牌的第二部分。
 
 请注意，对于已签名的令牌，此信息尽管可以防止篡改，但任何人都可以读取。除非将其加密，否则请勿将机密信息放入JWT的有效负载或报头元素中。
@@ -68,12 +70,12 @@ xxxxx.yyyyy.zzzzz
 要创建签名部分，您必须获取编码的标头，编码的有效载荷，机密，标头中指定的算法，并对其进行签名。
 
 例如，如果要使用HMAC SHA256算法，则将通过以下方式创建签名：
-
+<pre><code class="java hljs">
 HMACSHA256(
   base64UrlEncode(header) + "." +
   base64UrlEncode(payload),
   secret)
-  
+</code></pre>  
 签名用于验证消息在此过程中没有更改，并且对于使用私钥进行签名的令牌，它还可以验证JWT的发送者是它所说的真实身份。
 
 <b>结合一起</b>
