@@ -82,13 +82,13 @@
 			<td>v 1.0 GA </td>
 			<td>2019/12/06</td>
 			<td> <a href="https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ" target="_blank">https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ</a> </td>
-			<td>**g17z** </td>
+			<td><b>g17z</b> </td>
 		</tr>
 		<tr class="a">
 			<td>v 1.2 GA </td>
 			<td>2020/02/18</td>
 			<td> <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA</a>  </td>
-			<td>**6bda** </td>
+			<td><b>6bda</b> </td>
 		</tr>  
 	</tbody>
 </table>
