@@ -48,7 +48,7 @@ expires是过期的间隔<br>
 
 认证用户名@@认证时间(UTC时间),例如：
 <pre class="prettyprint">
-testUser@2010-01-01T01:01:01.001Z<br>
+testUser@2010-01-01T01:01:01.001Z
 </pre>
 <h3>3.1、令牌加密</h3>
 
