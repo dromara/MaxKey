@@ -94,7 +94,7 @@ GET /authorize?
     &state=af0ifjsldkj
     &redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb HTTP/1.1
   Host: server.example.com
-</pre> 
+</code></pre>
 <h4>4.2.2 基于Authorization Code的认证请求的响应</h4>
 在OP接收到认证请求之后，需要对请求参数做严格的验证，具体的规则参见http://openid.net/specs/openid-connect-core-1_0.html#AuthRequestValidation，验证通过后引导EU进行身份认证并且同意授权。在这一切都完成后，会重定向到RP指定的回调地址(redirect_uri)，并且把code和state参数传递过去。比如：
 <pre><code class="http hljs">
@@ -102,7 +102,7 @@ GET /authorize?
   Location: https://client.example.org/cb?
     code=SplxlOBeZQQYbYS6WxSbIA
     &state=af0ifjsldkj
-</pre>
+</code></pre>
 <h4>4.2.3 获取ID Token</h4>
 RP使用上一步获得的code来请求Token EndPoint，这一步桶OAuth2，就不再展开细说了。然后Token EndPoint会返回响应的Token，其中除了OAuth2规定的部分数据外，还会附加一个id_token的字段。id_token字段就是上面提到的ID Token。例如：
 <pre><code class="json hljs">
@@ -127,7 +127,7 @@ RP使用上一步获得的code来请求Token EndPoint，这一步桶OAuth2，就
      K5hoDalrcvRYLSrQAZZKflyuVCyixEoV9GfNQC3_osjzw2PAithfubEEBLuVVk4
      XUVrWOLrLl0nx7RkKU8NXNHq-rvKMzqg"
   }
-  </pre>
+</code></pre>
 其中看起来一堆乱码的部分就是JWT格式的ID-Token。在RP拿到这些信息之后，需要对id_token以及access_token进行验证（具体的规则参见http://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation和http://openid.net/specs/openid-connect-core-1_0.html#ImplicitTokenValidation）。至此，可以说用户身份认证就可以完成了，后续可以根据UserInfo EndPoint获取更完整的信息。
 
 <h4>4.2.4 安全令牌 ID-Token</h4>
@@ -164,7 +164,7 @@ azp = Authorized party：可选。结合aud使用。只有在被认证的一方�
    "auth_time": 1311280969,
    "acr": "urn:mace:incommon:iap:silver"
   }
-  </pre>
+</code></pre>
 另外ID Token必须使用JWT(JSON Web Token)进行签名和JWE(JSON Web Encryption)加密，从而提供认证的完整性、不可否认性以及可选的保密性。关于JWT的更多内容，请参看JSON Web Token - 在Web应用间安全地传递信息
 
 <h3>4.3 默认模式流程</h3>
@@ -190,7 +190,7 @@ UserInfo Endpoint
   GET /userinfo HTTP/1.1
   Host: server.example.com
   Authorization: Bearer SlAV32hkKG
-</pre>
+</code></pre>
 成功之后响应如下：
 <pre><code class="json hljs">
   HTTP/1.1 200 OK
@@ -205,5 +205,5 @@ UserInfo Endpoint
    "email": "janedoe@example.com",
    "picture": "http://example.com/janedoe/me.jpg"
   }
-  </pre>
+</code></pre>
 其中sub代表EU的唯一标识，这个claim是必须的，其他的都是可选的。
