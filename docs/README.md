@@ -1,3 +1,4 @@
+<h1>MaxKey介绍</h1>
 **MaxKey(马克思的钥匙)**，寓意是最大钥匙，是基于开放用户安全身份认证系统（User Security Access System）,提供简单、可靠和安全的用户认证和单点登录，包含用户认证、单点登录、资源管理、权限管理等。
 
 什么是**单点登录(Single Sign On）**，简称为**SSO**？
@@ -12,7 +13,7 @@
   
 
 
-1.  标准化认证协议：
+<h2>1.  标准化认证协议：</h2>
 <table border="0" class="table table-striped table-bordered ">
 	<tbody>
 		<tr class="a">
@@ -64,7 +65,8 @@
 	</tbody>
 </table>
 
-2. 登录支持
+<h2>2. 登录支持</h2>
+
 <table border="0" class="table table-striped table-bordered ">
 	<tbody>
 		<tr class="a">
@@ -104,27 +106,27 @@
 
 7. 许可证 Apache License, Version 2.0，开源免费。 
 
+<h1>界面</h1>
+<h2>**MaxKey认证**</h2>
 
-# 界面
-**MaxKey认证**
+<h3>登录界面</h3>
 
-登录界面
 <img src="{{ "/images/maxkey_login.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
-主界面
+<h3>主界面</h3>
 <img src="{{ "/images/maxkey_index.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
-**MaxKey管理**
+<h2>**MaxKey管理**</h2>
 
-用户管理界面
+<h3>用户管理界面</h3>
+
 <img src="{{ "/images/maxkey_mgt_users.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
+<h3>应用管理界面</h3>
 
-应用管理界面
 <img src="{{ "/images/maxkey_mgt_apps.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
-
-# 下载
+<h1>下载</h1>
 
 百度网盘下载
 <table border="0" class="table table-striped table-bordered ">
