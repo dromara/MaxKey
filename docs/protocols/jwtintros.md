@@ -4,7 +4,8 @@ JSON Web Token （JWT）是一个开放标准（<a href="https://tools.ietf.org/
 
 尽管可以对JWT进行加密以在各方之间提供保密性，但我们将重点关注已签名的令牌。签名的令牌可以验证其中包含的声明的完整性，而加密的令牌则将这些声明隐藏在其他方的面前。当使用公钥/私钥对对令牌进行签名时，签名还证明只有持有私钥的一方才是对其进行签名的一方。
 
-    扩展阅读参看：官方技术说明 <a href="https://tools.ietf.org/html/rfc7519" target="_blank">JWT</a>
+扩展阅读参看：官方技术说明 <a href="https://tools.ietf.org/html/rfc7519" target="_blank">JWT</a>
+
 <h2>2 什么时候使用JSON Web Token</h2>
 
 以下是JSON Web令牌有用的一些情况：

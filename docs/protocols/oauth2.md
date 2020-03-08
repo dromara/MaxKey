@@ -6,7 +6,7 @@ OAuth2.0：对于用户相关的OpenAPI（例如获取用户信息，动态同�
 
 采用OAuth2.0标准协议来进行用户身份验证和获取用户授权，相对于之前的OAuth1.0协议，其认证流程更简单和安全。
 
-    扩展阅读参看：<a href="http://oauth.net/2/" target="_blank">OAuth标准（英文）</a> | <a href="http://zh.wikipedia.org/zh/OAuth"  target="_blank">OAuth维基百科（中文）</a>
+扩展阅读参看：<a href="http://oauth.net/2/" target="_blank">OAuth标准（英文）</a> | <a href="http://zh.wikipedia.org/zh/OAuth"  target="_blank">OAuth维基百科（中文）</a>
 
 <h2>2 应用场景</h2>
 

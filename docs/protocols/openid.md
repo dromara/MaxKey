@@ -3,7 +3,7 @@ OpenID Connect是基于OAuth 2.0规范族的可互操作的身份验证协议。
 
 OpenID Connect允许开发者验证跨网站和应用的用户，而无需拥有和管理密码文件。OpenID Connect允许所有类型的客户,包括基于浏览器的JavaScript和本机移动应用程序,启动登录流动和接收可验证断言对登录用户的身份。
 
-    扩展阅读参看：官方技术说明<a href="http://openid.net/connect/"  title="http://openid.net/connect/" target="_blank" rel="nofollow">Connect标准（英文） </a> | <a href="http://en.wikipedia.org/wiki/OpenID_Connect"  title="http://en.wikipedia.org/wiki/OpenID_Connect" target="_blank" rel="nofollow">OpenID Connect维基百科（en）</a>
+扩展阅读参看：官方技术说明<a href="http://openid.net/connect/"  title="http://openid.net/connect/" target="_blank" rel="nofollow">Connect标准（英文） </a> | <a href="http://en.wikipedia.org/wiki/OpenID_Connect"  title="http://en.wikipedia.org/wiki/OpenID_Connect" target="_blank" rel="nofollow">OpenID Connect维基百科（en）</a>
 
 
 <h2>2 OpenID的历史是什么？</h2>
