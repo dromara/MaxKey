@@ -1,4 +1,4 @@
-<h2>1CAS简介</h2>
+<h2>1 CAS简介</h2>
 
 CAS 是 Yale 大学发起的一个开源项目，旨在为 Web 应用系统提供一种可靠的单点登录方法，CAS 在 2004 年 12 月正式成为 JA-SIG 的一个项目。CAS 具有以下特点：
 
@@ -15,12 +15,12 @@ CAS的目标是允许用户访问多个应用程序只提供一次用户凭据�
 
 如果您想对CAS进行扩展阅读，请参看：官方技术说明<a href="https://www.apereo.org/cas"  title="https://www.apereo.org/cas" target="_blank" rel="nofollow">CAS官方网站（en） </a> | <a href="http://en.wikipedia.org/wiki/Central_Authentication_Service"  title="http://en.wikipedia.org/wiki/Central_Authentication_Service" target="_blank" rel="nofollow">CAS维基百科（en）</a> 
 
-<h2>2CAS体系结构</h2>
+<h2>2 CAS体系结构</h2>
 CAS 体系包含两个部分： CAS Server 和 CAS Client。CAS Server 需要独立部署，主要负责对用户的认证工作；CAS Client 负责处理对客户端受保护资源的访问请求，需要登录时，重定向到 CAS Server。
 
 <img src="{{ "/images/cas/1.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
-<h2>3CAS原理</h2>
+<h2>3 CAS原理</h2>
 CAS 最基本的协议过程：
 
 <img src="{{ "/images/cas/2.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
@@ -45,7 +45,7 @@ CAS Client 与受保护的客户端应用部署在一起，以 Filter 方式保�
 
 另外，CAS 协议中还提供了 Proxy （代理）模式，以适应更加高级、复杂的应用场景，具体介绍可以参考 CAS 官方网站上的相关文档。
 
-<h2>4CAS中3个术语</h2>
+<h2>4 CAS中3个术语</h2>
 
 Ticket Granting ticket (TGT) ：可以认为是CAS Server根据用户名密码生成的一张票，存在Server端
 
