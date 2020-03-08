@@ -1,5 +1,5 @@
 <h2>介绍</h2>
-为了你更好的使用MaxKey，本教程介绍在Windows中如何快速配置和使用MaxKey，在开始本文档前，请先下载MaxKey并解压到C:盘。
+为了你更好的使用MaxKey，本教程介绍在Windows中如何快速配置和使用MaxKey，在开始本文档前，请先<a href="https://shimingxy.github.io/MaxKey/download.html" target="_blank">下载MaxKey</a>并解压到C:盘。
 
 <h2>配置</h2>
 hosts配置文件目录
@@ -15,19 +15,19 @@ C:\Windows\System32\drivers\etc
 </code></pre>
 
 <h2>应用服务启动</h2>
-    1)启动数据库
+1)启动数据库
 		<pre><code class="bash hljs">
 			start_maxkey_db.bat
 		</code></pre>
-	2)启动认证服务
+2)启动认证服务
 		<pre><code class="bash hljs">
 			start_maxkey.bat
 		</code></pre>
-	3)启动管理服务
+3)启动管理服务
 		<pre><code class="bash hljs">
 			start_maxkey_mgt.bat
 		</code></pre>
-	4)启动样例及WIKI
+4)启动样例及WIKI
 		<pre><code class="bash hljs">
 			start_maxkey_wiki.bat
 		</code></pre>
