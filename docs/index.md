@@ -16,6 +16,7 @@
   邮箱EMAIL: **shimingxy@163.com**
 
 <h2>标准化认证协议</h2>
+<img src="{{ "/images/authz.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 <table border="0" class="table table-striped table-bordered ">
 	<tbody>
 		<tr class="a">
@@ -68,7 +69,7 @@
 </table>
 
 <h2>登录支持</h2>
-
+<img src="{{ "/images/authn.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 <table border="0" class="table table-striped table-bordered ">
 	<tbody>
 		<tr class="a">
