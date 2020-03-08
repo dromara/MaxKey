@@ -17,19 +17,19 @@ C:\Windows\System32\drivers\etc
 <h2>应用服务启动</h2>
 1)启动数据库
 <pre><code class="bash hljs">
-	start_maxkey_db.bat
+start_maxkey_db.bat
 </code></pre>
 2)启动认证服务
 <pre><code class="bash hljs">
-	start_maxkey.bat
+start_maxkey.bat
 </code></pre>
 3)启动管理服务
 <pre><code class="bash hljs">
-	start_maxkey_mgt.bat
+start_maxkey_mgt.bat
 </code></pre>
 4)启动样例及WIKI
 <pre><code class="bash hljs">
-	start_maxkey_wiki.bat
+start_maxkey_wiki.bat
 </code></pre>
 	
 <h2>访问</h2>
