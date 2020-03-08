@@ -1,4 +1,4 @@
-<h2>1.什么是OAuth2</h2>
+<h2>1什么是OAuth2</h2>
 
 OAuth： OAuth（开放授权）是一个开放标准，允许用户授权第三方网站访问他们存储在另外的服务提供者上的信息，而不需要将用户名和密码提供给第三方网站或分享他们数据的所有内容。
 
@@ -10,7 +10,7 @@ Tips：
 
 如果您想对OAuth2.0开放标准进行扩展阅读，请参看：<a href="http://oauth.net/2/" target="_blank">OAuth标准（英文）</a> | <a href="http://zh.wikipedia.org/zh/OAuth"  target="_blank">OAuth维基百科（中文）</a>
 
-<h2>2.应用场景</h2>
+<h2>2应用场景</h2>
 
 第三方应用授权登录：在APP或者网页接入一些第三方应用时，时长会需要用户登录另一个合作平台，比如QQ，微博，微信的授权登录。
 <img src="{{ "/images/oauth2/qq.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
@@ -19,7 +19,7 @@ Tips：
 
 前后端分离单页面应用（spa）：前后端分离框架，前端请求后台数据，需要进行oauth2安全认证，比如使用vue、react后者h5开发的app。
 
-<h2>3.名词定义</h2>
+<h2>3名词定义</h2>
 
 （1） Third-party application：第三方应用程序，本文中又称"客户端"（client），比如打开知乎，使用第三方登录，选择qq登录，这时候知乎就是客户端。
 
@@ -33,7 +33,7 @@ Tips：
 
 （6）Resource server：资源服务器，即服务提供商存放用户生成的资源的服务器。它与认证服务器，可以是同一台服务器，也可以是不同的服务器。
 
-<h2>4.运行流程</h2>
+<h2>4运行流程</h2>
 
 <img src="{{ "/images/oauth2/flow.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
@@ -49,7 +49,7 @@ Tips：
 
 （F）资源服务器确认令牌无误，同意向客户端开放资源。
 
-<h2>5.四种授权模式</h2>
+<h2>5四种授权模式</h2>
 
 授权码模式（authorization code）
 
@@ -59,7 +59,7 @@ Tips：
 
 客户端模式（client credentials）
 
-<h3>5.1.授权码模式</h3>
+<h3>5.1授权码模式</h3>
 
 授权码模式（authorization code）是功能最完整、流程最严密的授权模式。
 <img src="{{ "/images/oauth2/code.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
@@ -71,7 +71,7 @@ Tips：
 （3）认证服务器核对了授权码和重定向URI，确认无误后，向客户端发送访问令牌（access token）和更新令牌（refresh token）。POST /oauth/token?response_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA&redirect_uri=重定向页面链接。请求成功返回access Token和refresh Token。
 
 
-<h3>5.2.简化模式Implicit</h3>
+<h3>5.2简化模式Implicit</h3>
 
 适用于公开的浏览器单页应用
 <img src="{{ "/images/oauth2/implicit.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
@@ -85,7 +85,7 @@ Access Token直接从授权服务器返回(只有前端渠道)
 最容易受安全攻击
 
 
-<h3>5.3.用户名密码 Resource Owner Credentials</h3>
+<h3>5.3用户名密码 Resource Owner Credentials</h3>
 <img src="{{ "/images/oauth2/resource.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 使用用户名密码登录的应用，例如桌面App
@@ -97,7 +97,7 @@ Access Token直接从授权服务器返回(只有前端渠道)
 假定资源拥有者和公开客户子啊相同设备上
 
 
-<h3>5.4.客户端凭证 Client Credentials</h3>
+<h3>5.4客户端凭证 Client Credentials</h3>
 <img src="{{ "/images/oauth2/client.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 适用于服务器见通信场景，机密客户代表它自己或者一个用户

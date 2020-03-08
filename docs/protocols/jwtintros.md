@@ -1,10 +1,10 @@
-<h2>JSON Web Token介绍</h2>
+<h2>1JSON Web Token介绍</h2>
 
 JSON Web Token （JWT）是一个开放标准（<a href="https://tools.ietf.org/html/rfc7519" target="_blank">RFC 7519</a>），它定义了一种紧凑且自包含的方式，用于在各方之间安全地将信息作为JSON对象传输。由于此信息是经过数字签名的，因此可以被验证和信任。可以使用秘密（使用<b>HMAC</b>算法）或使用<b>RSA</b>或<b>ECDSA</b>的公用/专用密钥对对JWT进行签名。
 
 尽管可以对JWT进行加密以在各方之间提供保密性，但我们将重点关注已签名的令牌。签名的令牌可以验证其中包含的声明的完整性，而加密的令牌则将这些声明隐藏在其他方的面前。当使用公钥/私钥对对令牌进行签名时，签名还证明只有持有私钥的一方才是对其进行签名的一方。
 
-<h2>什么时候使用JSON Web Token</h2>
+<h2>2什么时候使用JSON Web Token</h2>
 
 以下是JSON Web令牌有用的一些情况：
 
@@ -12,7 +12,7 @@ JSON Web Token （JWT）是一个开放标准（<a href="https://tools.ietf.org/
 
 <b>信息交换：</b>JSON Web令牌是在各方之间安全地传输信息的好方法。因为可以对JWT进行签名（例如，使用公钥/私钥对），所以您可以确定发件人是他们所说的人。此外，由于签名是使用标头和有效负载计算的，因此您还可以验证内容是否遭到篡改。
 
-<h2>JSON Web Token结构</h2>
+<h2>3JSON Web Token结构</h2>
 
 JSON Web Token以紧凑的形式由三部分组成，这些部分由点（.）分隔，分别是：
 
@@ -88,7 +88,7 @@ HMACSHA256(
 <img src="{{ "/images/jwt/legacy-app-auth-5.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 
-<h2>JSON Web Token工作机制</h2>
+<h2>4JSON Web Token工作机制</h2>
 
 在身份验证中，当用户使用其凭据成功登录时，将返回JSON Web令牌。由于令牌是凭据，因此必须格外小心以防止安全问题。通常，令牌的保留时间不应超过要求的时间。
 
@@ -111,7 +111,7 @@ JSON Web令牌如何工作
 该应用程序使用访问令牌来访问受保护的资源（例如API）。
 请注意，使用签名的令牌，令牌中包含的所有信息都会暴露给用户或其他方，即使他们无法更改它。这意味着您不应将机密信息放入令牌中。
 
-<h2>如何使用JSON Web Token</h2>
+<h2>5如何使用JSON Web Token</h2>
 
 让我们谈谈与Simple Web Tokens（SWT）和Security Assertion Markup Language Tokens安全性声明标记语言令牌（SAML）相比，JSON Web Tokens（JWT）的优势。
 

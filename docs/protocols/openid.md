@@ -1,4 +1,4 @@
-<h2>1. OpenID Connect简介</h2>
+<h2>1 OpenID Connect简介</h2>
 OpenID Connect是基于OAuth 2.0规范族的可互操作的身份验证协议。它使用简单的REST / JSON消息流来实现，和之前任何一种身份认证协议相比，开发者可以轻松集成。
 
 OpenID Connect允许开发者验证跨网站和应用的用户，而无需拥有和管理密码文件。OpenID Connect允许所有类型的客户,包括基于浏览器的JavaScript和本机移动应用程序,启动登录流动和接收可验证断言对登录用户的身份。
@@ -6,12 +6,12 @@ OpenID Connect允许开发者验证跨网站和应用的用户，而无需拥有
 如果您想对OpenID Connect开放标准进行扩展阅读，请参看：官方技术说明<a href="http://openid.net/connect/"  title="http://openid.net/connect/" target="_blank" rel="nofollow">Connect标准（英文） </a> | <a href="http://en.wikipedia.org/wiki/OpenID_Connect"  title="http://en.wikipedia.org/wiki/OpenID_Connect" target="_blank" rel="nofollow">OpenID Connect维基百科（en）</a>
 
 
-<h2>2. OpenID的历史是什么？</h2>
+<h2>2 OpenID的历史是什么？</h2>
 OpenID Connect是OpenID的第三代技术。首先是原始的OpenID，它不是商业应用，但让行业领导者思考什么是可能的。OpenID 2.0设计更为完善，提供良好的安全性保证。然而，其自身存在一些设计上的局限性，最致命的是其中依赖方必须是网页，但不能是本机应用程序；此外它还要依赖XML，这些都会导致一些应用问题。
 
 OpenID Connect的目标是让更多的开发者使用，并扩大其使用范围。幸运的是，这个目标并不遥远，现在有很好的商业和开源库来帮助实现身份验证机制。
 
-<h2>3. OIDC基础</h2>
+<h2>3OIDC基础</h2>
 简要而言，OIDC是一种安全机制，用于应用连接到身份认证服务器（Identity Service）获取用户信息，并将这些信息以安全可靠的方法返回给应用。
 
 在最初，因为OpenID1/2经常和OAuth协议（一种授权协议）一起提及，所以二者经常被搞混。
@@ -28,7 +28,7 @@ OpenID Connect是“认证”和“授权”的结合，因为其基于OAuth协�
 
 在OAuth中，这些授权被称为scope。OpenID-Connect也有自己特殊的scope--openid ,它必须在第一次请求“身份鉴别服务器”（Identity Provider,简称IDP）时发送过去。
 
-<h2>4. OIDC流程</h2>
+<h2>4 OIDC流程</h2>
 OAuth2提供了Access Token来解决授权第三方客户端访问受保护资源的问题；相似的，OIDC在这个基础上提供了ID Token来解决第三方客户端标识用户身份认证的问题。OIDC的核心在于在OAuth2的授权流程中，一并提供用户的身份认证信息（ID-Token）给到第三方客户端，ID-Token使用JWT格式来包装，得益于JWT（JSON Web Token）的自包含性，紧凑性以及防篡改机制，使得ID-Token可以安全的传递给第三方客户端程序并且容易被验证。应有服务器，在验证ID-Token正确只有，使用Access-Token向UserInfo的接口换取用户的更多的信息。
 
 有上述可知，OIDC是遵循OAuth协议流程，在申请Access-Token的同时，也返回了ID-Token来验证用户身份。
