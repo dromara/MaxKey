@@ -13,7 +13,7 @@
 
   QQ交流群：**434469201** <a href="https://jq.qq.com/?_wv=1027&k=5WrpQ6o" target="_blank">点击链接加入群聊</a>
   
-
+  邮箱EMAIL: **shimingxy@163.com**
 
 <h2>标准化认证协议</h2>
 <table border="0" class="table table-striped table-bordered ">
