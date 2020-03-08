@@ -16,7 +16,7 @@
   邮箱EMAIL: **shimingxy@163.com**
 
 <h2>标准化认证协议</h2>
-<img src="{{ "/images/authz.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+
 <table border="0" class="table table-striped table-bordered ">
 	<tbody>
 		<tr class="a">
@@ -67,9 +67,10 @@
 		</tr>  
 	</tbody>
 </table>
+<img src="{{ "/images/authz.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 <h2>登录支持</h2>
-<img src="{{ "/images/authn.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+
 <table border="0" class="table table-striped table-bordered ">
 	<tbody>
 		<tr class="a">
@@ -98,6 +99,7 @@
 		</tr>
 	</tbody>
 </table>
+<img src="{{ "/images/authn.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 <h2>主要优势</h2>
 1. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
