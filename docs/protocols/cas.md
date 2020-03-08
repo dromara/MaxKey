@@ -13,7 +13,7 @@ CAS的目标是允许用户访问多个应用程序只提供一次用户凭据�
   <li>具有广泛的客户群的支持。</li>
 </ol>
 
-如果您想对CAS进行扩展阅读，请参看：官方技术说明<a href="https://www.apereo.org/cas"  title="https://www.apereo.org/cas" target="_blank" rel="nofollow">CAS官方网站（en） </a> | <a href="http://en.wikipedia.org/wiki/Central_Authentication_Service"  title="http://en.wikipedia.org/wiki/Central_Authentication_Service" target="_blank" rel="nofollow">CAS维基百科（en）</a> 
+    扩展阅读参看：官方技术说明<a href="https://www.apereo.org/cas"  title="https://www.apereo.org/cas" target="_blank" rel="nofollow">CAS官方网站（en） </a> | <a href="http://en.wikipedia.org/wiki/Central_Authentication_Service"  title="http://en.wikipedia.org/wiki/Central_Authentication_Service" target="_blank" rel="nofollow">CAS维基百科（en）</a> 
 
 <h2>2 CAS体系结构</h2>
 CAS 体系包含两个部分： CAS Server 和 CAS Client。CAS Server 需要独立部署，主要负责对用户的认证工作；CAS Client 负责处理对客户端受保护资源的访问请求，需要登录时，重定向到 CAS Server。
