@@ -5,6 +5,7 @@
 MaxKey支持谷歌验证器(Google Authenticator)双因素身份认证，步骤如下
 
 1、下载Google Authenticator到手机
+
 <img src="{{ "/images/authn/google1.jpg" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 2、登录到Maxkey，进入"安全设置"-->"时间令牌"，如下图
