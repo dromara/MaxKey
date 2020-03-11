@@ -19,7 +19,7 @@
   
   邮箱EMAIL: **shimingxy@163.com**
 
-<h2>标准化认证协议</h2>
+<h2>认证协议</h2>
 
 <table border="0" class="table table-striped table-bordered ">
 	<tbody>
@@ -105,7 +105,7 @@
 </table>
 <img src="{{ "/images/authn.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
-<h2>主要优势</h2>
+<h2>优势</h2>
 1. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
 
 2. 认证中心具有平台无关性、环境多样性，支持Web、手机、移动设备等, 如Apple iOS，Andriod等，将认证能力从B/S到移动应用全面覆盖。
