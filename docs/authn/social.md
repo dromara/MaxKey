@@ -72,8 +72,8 @@ config.socialsignon.sinaweibo.sortorder=1
 
 
 <h3>第三方支持</h3>
-MaxKey使用第三方的登录认证库，认证支持的第三方，请见JustAuth官方地址
+MaxKey使用第三方的登录认证库，认证支持的第三方，请见JustAuth官方说明
 
+<a href="https://docs.justauth.whnb.wang/#/" target="_blank"  alt="JustAuth">
 <img src="{{ "/images/authn/justauth.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
-
-https://docs.justauth.whnb.wang/#/
+</a>
