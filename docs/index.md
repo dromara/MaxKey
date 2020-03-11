@@ -3,8 +3,12 @@
 
 什么是**单点登录(Single Sign On）**，简称为**SSO**？
 
-  用户只需要登录认证中心一次就可以访问所有相互信任的应用系统，无需再次登录。
+用户只需要登录认证中心一次就可以访问所有相互信任的应用系统，无需再次登录，主要功能：
   
+1.所有应用系统共享一个身份认证系统
+
+2.所有应用系统能够识别和提取ticket信息
+
   <a href="https://github.com/shimingxy/MaxKey" target="_blank">**MaxKey on GitHub**</a>
   
   <a href="https://gitee.com/shimingxy/MaxKey" target="_blank">**MaxKey on 码云(Gitee)**</a>
