@@ -43,22 +43,22 @@ config.socialsignon.sinaweibo.sortorder=1
 配置maxkey/spring/maxkey-support-social.xml
 
 <pre><code class="xml hljs">
-<bean id="socialSignOnWeibo" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
-	<property name="provider" value="${config.socialsignon.sinaweibo.provider}"/>
-	<property name="providerName" value="${config.socialsignon.sinaweibo.provider.name}"/>
-	<property name="icon" value="${config.socialsignon.sinaweibo.icon}"/>
-	<property name="clientId" value="${config.socialsignon.sinaweibo.client.id}"/>
-	<property name="clientSecret" value="${config.socialsignon.sinaweibo.client.secret}"/>
-	<property name="sortOrder" value="${config.socialsignon.sinaweibo.sortorder}"/>
-</bean>
+&lt;bean id="socialSignOnWeibo" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider"&gt;
+	&lt;property name="provider" value="${config.socialsignon.sinaweibo.provider}"/&gt;
+	&lt;property name="providerName" value="${config.socialsignon.sinaweibo.provider.name}"/&gt;
+	&lt;property name="icon" value="${config.socialsignon.sinaweibo.icon}"/&gt;
+	&lt;property name="clientId" value="${config.socialsignon.sinaweibo.client.id}"/&gt;
+	&lt;property name="clientSecret" value="${config.socialsignon.sinaweibo.client.secret}"/&gt;
+	&lt;property name="sortOrder" value="${config.socialsignon.sinaweibo.sortorder}"/&gt;
+&lt;/bean&gt;
 
-<bean id="socialSignOnProviderService" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService">
-	<property name="socialSignOnProviders" >
-		<list>
-			<ref bean="socialSignOnWeibo" />
-		</list>
-	</property>
-</bean>
+&lt;bean id="socialSignOnProviderService" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService"&gt;
+	&lt;property name="socialSignOnProviders" &gt;
+		&lt;list&gt;
+			&lt;ref bean="socialSignOnWeibo" /&gt;
+		&lt;/list&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
 </code></pre>
 
 <h3>账号绑定</h3>
@@ -72,6 +72,8 @@ config.socialsignon.sinaweibo.sortorder=1
 
 
 <h3>第三方支持</h3>
-MaxKey使用第三方的登录认证库，认证支持的第三方，请见官方地址
+MaxKey使用第三方的登录认证库，认证支持的第三方，请见JustAuth官方地址
+
+<img src="{{ "/images/authn/justauth.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 https://docs.justauth.whnb.wang/#/
