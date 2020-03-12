@@ -119,7 +119,7 @@ https://sso.maxkey.org/maxkey/oauth/v20/token?client_id=YOUR_CLIENT_ID&client_se
   </tr>
   <tr>
 		<td colspan="2" align="left">
-		http://app.MaxKey.com/app/callback?tokencode =PQ7q7W91a-oMsCeLvIaQm6bTrgtp7
+		http://app.maxkey.org/app/callback?tokencode =PQ7q7W91a-oMsCeLvIaQm6bTrgtp7
 		</td>
   
   </tr>
@@ -192,12 +192,12 @@ https://sso.maxkey.org/maxkey/oauth/v20/token?client_id=YOUR_CLIENT_ID&client_se
 <pre><code class="http hljs"> 
 The actual request might look like:
 POST /oauth/v20/token token HTTP/1.1
-Host: login.MaxKey.com/openapi
+Host: sso.maxkey.org/openapi
 Content-Type: application/x-www-form-urlencoded
 tokencode= PQ7q7W91a-oMsCeLvIaQm6bTrgtp7&
 client_id=QPKKKSADFUP876&
 client_secret={client_secret}&
-redirect_uri=http://app.MaxKey.com/app/callback
+redirect_uri=http://app.maxkey.org/app/callback
 </pre></code>
 	</td>
   </tr>
@@ -260,7 +260,7 @@ access_token  :  "token_id"
 	  				实际请求如下：
 <pre><code class="http hljs"> 
 POST /oauth/ userinfo HTTP/1.1
-Host: login.MaxKey.com/openapi
+Host: sso.maxkey.org/openapi
 Content-Type: application/x-www-form-urlencoded
 access_token= PQ7q7W91a-oMsCeLvIaQm6bTrgtp7
 </pre></code>
