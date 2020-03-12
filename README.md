@@ -1,4 +1,4 @@
-# <img src="https://github.com/shimingxy/MaxKey/blob/master/logo.jpg?raw=true" width="45px">MaxKey
+# <img src="https://github.com/shimingxy/MaxKey/blob/master/docs/images/logo.jpg?raw=true" width="45px">MaxKey
 
 **MaxKey(马克思的钥匙)**，寓意是最大钥匙，是基于开放用户安全身份认证系统（User Security Access System）,提供简单、可靠和安全的用户认证和单点登录，包含用户认证、单点登录、资源管理、权限管理等。
 
@@ -57,18 +57,18 @@
 **MaxKey认证**
 
 登录界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_login.png)
+![mahua](https://github.com/shimingxy/MaxKey/blob/master/docs/images/maxkey_login.png)
 
 主界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_index.png)
+![mahua](https://github.com/shimingxy/MaxKey/blob/master/docs/images/maxkey_index.png)
 
 **MaxKey管理**
 
 用户管理界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_mgt_users.png)
+![mahua](https://github.com/shimingxy/MaxKey/blob/master/docs/images/maxkey_mgt_users.png)
 
 应用管理界面
-![mahua](https://github.com/shimingxy/MaxKey/blob/master/images/maxkey_mgt_apps.png)
+![mahua](https://github.com/shimingxy/MaxKey/blob/master/docs/images/maxkey_mgt_apps.png)
 
 ------------
 # 下载
@@ -78,9 +78,7 @@
 | --------| :-----  | :----  | :----:  |
 | v 1.0 GA   | 2019/12/06   |  <a href="https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ" target="_blank">https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ</a>  |  **g17z**  |
 | v 1.2 GA   | 2020/02/18   |  <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA</a>  |  **6bda**  |
-
-
-
+| v 1.2.1 GA | 2020/03/03   |  <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA</a>  |  **6bda**  |
 
 ------------
 
