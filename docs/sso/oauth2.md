@@ -191,7 +191,7 @@ https://sso.maxkey.org/maxkey/oauth/v20/token?client_id=YOUR_CLIENT_ID&client_se
 实际请求如下：
 <pre><code class="http hljs"> 
 The actual request might look like:
-POST /oauth/ token HTTP/1.1
+POST /oauth/v20/token token HTTP/1.1
 Host: login.MaxKey.com/openapi
 Content-Type: application/x-www-form-urlencoded
 tokencode= PQ7q7W91a-oMsCeLvIaQm6bTrgtp7&
