@@ -89,3 +89,20 @@ OAuth认证接口属性列表
  </table> 	
 
 其他请参照OAuth2
+
+
+<h2>OAuth2客户端集成</h2>
+
+本文使用JAVA WEB程序为例
+
+jar包依赖如下
+
+https://github.com/shimingxy/MaxKey-Demo/tree/master/maxkey-demo-oauth/lib
+
+认证跳转
+
+https://github.com/shimingxy/MaxKey-Demo/blob/master/maxkey-demo-oauth/src/main/webapp/oauth20index.jsp
+
+获取令牌和用户信息及验证签名
+
+https://github.com/shimingxy/MaxKey-Demo/blob/master/maxkey-demo-oauth/src/main/webapp/oidc10callback.jsp
