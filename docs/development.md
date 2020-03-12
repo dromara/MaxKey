@@ -3,36 +3,226 @@
 
 <table border="0" class="table table-striped table-bordered ">
 	<thead>
-		<th  >序号</th><th>一级目录</th><th>二级目录</th><th>三级目录</th><th>说明</th>
+		<th  >MaxKey</th><th>一级目录</th><th>二级目录</th><th>三级目录</th><th>说明</th>
 	</thead>
 	<tbody>
 		<tr>
-			<td>1</td>
+			<td></td>
+			<td>README.md</td>
+			<td></td>
+			<td></td>
+			<td>关于MaxKey项目</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>LICENSE</td>
+			<td></td>
+			<td></td>
+			<td>许可证</td>
+		</tr>
+		<tr>
+			<td></td>
 			<td>database-sql</td>
 			<td></td>
 			<td></td>
 			<td>版本对于MYSQL</td>
 		</tr>
 		<tr>
-			<td>1</td>
+			<td></td>
+			<td>database-sql</td>
+			<td></td>
+			<td></td>
+			<td>版本对于MYSQL</td>
+		</tr>
+		<tr>
+			<td></td>
 			<td>docs</td>
 			<td></td>
 			<td></td>
 			<td>项目网站</td>
 		</tr>
 		<tr>
-			<td>1</td>
+			<td></td>
 			<td>gradle</td>
 			<td></td>
 			<td></td>
 			<td>gradle的配置</td>
 		</tr>
 		<tr>
-			<td>1</td>
-			<td>gradle</td>
+			<td></td>
+			<td>maxkey-authentications</td>
 			<td></td>
 			<td></td>
-			<td>gradle的配置</td>
+			<td>登录认证</td>
 		</tr>
+		<tr>
+			<td></td>
+			<td>maxkey-client-sdk</td>
+			<td></td>
+			<td></td>
+			<td>JAVA集成使用SDK</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>maxkey-core</td>
+			<td></td>
+			<td></td>
+			<td>基础</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>maxkey-dao</td>
+			<td></td>
+			<td></td>
+			<td>数据库访问</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>maxkey-lib</td>
+			<td></td>
+			<td></td>
+			<td>使用jar包</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>maxkey-protocols</td>
+			<td></td>
+			<td></td>
+			<td>认证协议实现</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-protocol-authorize</td>
+			<td></td>
+			<td>认证协议实现</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-protocol-cas</td>
+			<td></td>
+			<td>CAS认证协议实现</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-protocol-desktop</td>
+			<td></td>
+			<td>桌面认证实现模拟键盘输入登录</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-protocol-extendapi</td>
+			<td></td>
+			<td>扩展API实现</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-protocol-formbased</td>
+			<td></td>
+			<td>Formbased实现</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-protocol-oauth-2.0</td>
+			<td></td>
+			<td>oauth-2.0实现</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-protocol-saml-2.0</td>
+			<td></td>
+			<td>saml-2.0实现</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-protocol-tokenbased</td>
+			<td></td>
+			<td>tokenbased实现</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>maxkey-web-manage</td>
+			<td></td>
+			<td></td>
+			<td>管理系统</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>maxkey-web-manage</td>
+			<td></td>
+			<td></td>
+			<td>管理系统</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>maxkey-web-maxkey</td>
+			<td></td>
+			<td></td>
+			<td>认证系统</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>build.gradle</td>
+			<td></td>
+			<td></td>
+			<td>工程构建及版本控制</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>gradle.properties</td>
+			<td></td>
+			<td></td>
+			<td>版本参数配置</td>
+		</tr>
+		
+		<tr>
+			<td></td>
+			<td>settings.gradle</td>
+			<td></td>
+			<td></td>
+			<td>项目引入</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>gradleSetEnv.bat</td>
+			<td></td>
+			<td></td>
+			<td>JDK及Gradle路径配置，用于构建脚本，需要开发人员自行配置</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>gradleBuildClean.bat</td>
+			<td></td>
+			<td></td>
+			<td>清除历史构建版本</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>gradleBuildRelease.bat</td>
+			<td></td>
+			<td></td>
+			<td>构建新版本</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>gradleIDEClean.bat</td>
+			<td></td>
+			<td></td>
+			<td>清除IDE的设置</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>gradleIDETask.bat</td>
+			<td></td>
+			<td></td>
+			<td>设置IDE</td>
+		</tr>		
 		</tbody>
 </table>
