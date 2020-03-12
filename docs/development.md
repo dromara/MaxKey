@@ -1,5 +1,19 @@
 <h2>开发指南</h2>
 
+<h3>开发工具</h3>
+
+JDK 1.8 +
+
+Gradle 6.0 +
+
+eclipse-jee-2019-12 +
+
+Tomcat 9 +
+
+MySQL Server 5.5 +
+
+
+<h3>程序目录</h3>
 
 <table border="0" class="table table-striped table-bordered ">
 	<thead>
@@ -219,3 +233,20 @@
 		</tr>		
 		</tbody>
 </table>
+
+<h3>问题及解决</h3>
+问题1
+
+“A cycle was detected in the build path of project: XXX” 
+
+解决方法：
+ 
+Eclipse Menu -> Window -> Preferences... -> Java -> Compiler -> Building -> Building path problems -> Circular dependencies -> 将Error改成Warning
+
+问题2
+
+Access restriction
+
+解决方案：
+
+Eclipse Menu -> Window -> Preferences... -> Java -> Compiler ->  Errors/Warnings界面的Deprecated and restricted API下。把Forbidden reference (access rules): 的规则由默认的Error改为Warning即可。
