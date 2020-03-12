@@ -214,7 +214,8 @@ redirect_uri=http://app.maxkey.org/app/callback
 		成功返回JSON数据，如下：
 <pre><code class="json hljs">		
 {
-access_token  :  "token_id"
+access_token  :  "token_id",
+id_token      :  "id_token"
 …
 }
 </code></pre>
