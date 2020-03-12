@@ -198,7 +198,7 @@ tokencode= PQ7q7W91a-oMsCeLvIaQm6bTrgtp7&
 client_id=QPKKKSADFUP876&
 client_secret={client_secret}&
 redirect_uri=http://app.maxkey.org/app/callback
-</pre></code>
+</code></pre>
 	</td>
   </tr>
   <tr>
@@ -224,7 +224,7 @@ redirect_uri=http://app.maxkey.org/app/callback
 access_token  :  "token_id"
 …
 }
-</pre></code>
+</code></pre>
 		</td>
   </tr>
  </table> 	
@@ -263,7 +263,7 @@ POST /oauth/ userinfo HTTP/1.1
 Host: sso.maxkey.org/openapi
 Content-Type: application/x-www-form-urlencoded
 access_token= PQ7q7W91a-oMsCeLvIaQm6bTrgtp7
-</pre></code>
+</code></pre>
 	  	</td>
 	  </tr>
 	  <tr>
@@ -278,7 +278,7 @@ access_token= PQ7q7W91a-oMsCeLvIaQm6bTrgtp7
 {
 userid     :  “zhangs”,
 				…
-}</pre></code>
+}</code></pre>
 <br/>
 zhangs是认证的用户ID
 	  		</td>
@@ -325,7 +325,7 @@ error_description: 错误的描述信息
 	"error":"unsupported_response_type",
 	"error_description":"不支持的 ResponseType."
 }
-</pre></code>
+</code></pre>
 
 OAuth2.0错误响应中的错误码定义如下表所示：
 
