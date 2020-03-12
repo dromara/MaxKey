@@ -63,14 +63,14 @@ https://sso.maxkey.org/maxkey/oauth/v20/token?client_id=YOUR_CLIENT_ID&client_se
 		   <tr>
 			<td> /connect/v10/userinfo </td>
 			<td> OIDC授权用户信息查询接口 </td>
-			<td> 通过访问 token 获取登录用户信息 </td>
+			<td> 通过访问 token 获取登录用户信息及签名信息 </td>
 			<td> APP </td>
 		  </tr>
 		  
  </table>
  
-1./oauth/v20/authorize接口
-<h5>请求用户授权Token</h5>
+<h4>1)/oauth/v20/authorize接口</h4>
+请求用户授权Token
 
 <table border="0" class="table table-striped table-bordered ">
    <tr>
@@ -129,7 +129,7 @@ https://sso.maxkey.org/maxkey/oauth/v20/token?client_id=YOUR_CLIENT_ID&client_se
   </tr>
  </table> 	
 
-/oauth/v20/token接口
+<h4>2 /oauth/v20/token接口</h4>
 
 通过/oauth/v20/token用tokencode换取访问token
 
@@ -229,7 +229,7 @@ access_token  :  "token_id"
   </tr>
  </table> 	
 
-用户属性接口/api/oauth/v20/me
+<h4>3)用户属性接口/api/oauth/v20/me</h4>
  	 <table  border="0" class="table table-striped table-bordered ">
  	   <tr>
 	    <th> 接口名称 </th>
@@ -303,7 +303,7 @@ OAuth认证接口属性列表
  </table> 	
 
 
-<h1>OAuth2.0 错误码</h1>
+<h2>OAuth2.0 错误码</h2>
 
 MaxKey OAuth2.0实现中，授权服务器在接收到验证授权请求时，会按照OAuth2.0协议对本请求的请求头部、请求参数进行检验，若请求不合法或验证未通过，授权服务器会返回相应的错误信息，包含以下几个参数：</p>
 
