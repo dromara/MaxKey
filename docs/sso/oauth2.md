@@ -59,14 +59,7 @@ https://sso.maxkey.org/maxkey/oauth/v20/token?client_id=YOUR_CLIENT_ID&client_se
 			<td> 授权用户信息查询接口 </td>
 			<td> 通过访问 token 获取登录用户信息 </td>
 			<td> APP </td>
-		  </tr>
-		   <tr>
-			<td> /connect/v10/userinfo </td>
-			<td> OIDC授权用户信息查询接口 </td>
-			<td> 通过访问 token 获取登录用户信息及签名信息 </td>
-			<td> APP </td>
-		  </tr>
-		  
+		  </tr>		  
  </table>
  
 <h4>1)/oauth/v20/authorize接口</h4>
