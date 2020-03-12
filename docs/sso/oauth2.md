@@ -18,7 +18,7 @@ https://sso.maxkey.org/maxkey/oauth/v20/authorize?client_id=YOUR_CLIENT_ID&respo
 YOUR_REGISTERED_REDIRECT_URI/?code=CODEsss
 </pre>
 
-3. 换取Access Token
+3.换取Access Token
 <pre class="prettyprint">
 https://sso.maxkey.org/maxkey/oauth/v20/token?client_id=YOUR_CLIENT_ID&client_secret=YOUR _SECRET&grant_type=authorization_code&redirect_uri=YOUR_REGISTERED_REDIRECT_URI&code=CODE
 </pre>
