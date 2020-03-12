@@ -11,7 +11,9 @@
 <h2>CAS客户端配置</h2>
 
 本文使用JAVA WEB程序为例
+
 jar包依赖如下
+
 cas-client-core-3.2.1.jar
 
 commons-codec-1.4.jar
@@ -20,6 +22,7 @@ commons-logging-1.1.1.jar
 
 slf4j-api-1.5.11.jar
 
+web.xml配置
 
 <pre><code class="xml hljs">  
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -102,6 +105,7 @@ slf4j-api-1.5.11.jar
 &lt;/web-app&gt;
 </code></pre>
 
+JSP实现Code
 
 <pre><code class="jsp hljs"> 
 &lt;%@ page language="java" import="java.util.*" pageEncoding="utf-8"%&gt;
