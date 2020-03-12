@@ -43,13 +43,13 @@ https://sso.maxkey.org/maxkey/oauth/v20/token?client_id=YOUR_CLIENT_ID&client_se
 			<th> <strong>调用方法 </strong> </th>
 		  </tr>
 		  <tr>
-			<td> oauth/v20/authorize </td>
+			<td> /oauth/v20/authorize </td>
 			<td> 请求用户授权Token </td>
 			<td> https://sso.maxkey.org/maxkey接收app sso认证请求,<br>client_id为需要认证的应用的id;</td>
 			<td> APP </td>
 		  </tr>
 		  <tr>
-			<td> oauth/v20/token </td>
+			<td> /oauth/v20/token </td>
 			<td> 获取授权过的 Access Token </td>
 			<td> 后台应用获取 tokencode ，调用接口进行 tokencode 校验；<br>校验成功获取访问 token </td>
 			<td> APP </td>
