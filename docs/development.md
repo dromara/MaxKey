@@ -25,14 +25,7 @@
 			<td>database-sql</td>
 			<td></td>
 			<td></td>
-			<td>版本对于MYSQL</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>database-sql</td>
-			<td></td>
-			<td></td>
-			<td>版本对于MYSQL</td>
+			<td>版本对应MYSQL</td>
 		</tr>
 		<tr>
 			<td></td>
