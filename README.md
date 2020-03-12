@@ -78,7 +78,7 @@
 | --------| :-----  | :----  | :----:  |
 | v 1.0 GA   | 2019/12/06   |  <a href="https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ" target="_blank">https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ</a>  |  **g17z**  |
 | v 1.2 GA   | 2020/01/18   |  <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA</a>  |  **6bda**  |
-| v 1.2.1 GA | 2020/02/29   |  <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA</a>  |  **6bda**  |
+| v 1.2.1 GA | 2020/02/29   |  <a href="https://pan.baidu.com/s/1FDkJ4DOMQq8tPAXrIfDeKA" target="_blank">https://pan.baidu.com/s/1FDkJ4DOMQq8tPAXrIfDeKA</a>  |  **yutq**  |
 
 ------------
 
