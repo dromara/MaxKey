@@ -230,7 +230,8 @@ access_token  :  "token_id"
  </table> 	
 
 <h4>3)用户属性接口/api/oauth/v20/me</h4>
- 	 <table  border="0" class="table table-striped table-bordered ">
+
+<table  border="0" class="table table-striped table-bordered ">
  	   <tr>
 	    <th> 接口名称 </th>
 	    <th> token 接口 </th>
@@ -289,7 +290,8 @@ zhangs是认证的用户ID
 
 
 OAuth认证接口属性列表
- <table   border="0" class="table table-striped table-bordered ">
+
+<table   border="0" class="table table-striped table-bordered ">
    <tr >
 	<th> 属性名(Attribute) </th>
 	<th> 描述 </th>
