@@ -244,10 +244,11 @@ access_token  :  "token_id"
 	    <td> 请求方式 </td>
 	    <td> http get/post </td>
 	  </tr>
- 	 </table>
+</table>
  	 
- 	 <h5>请求参数</h5>
- 	 <table  border="0" class="table table-striped table-bordered ">
+<h5>请求参数</h5>
+
+<table  border="0" class="table table-striped table-bordered ">
  	   <tr>
 	    <th>参数 </th>
 	    <th> 说明 </th>
@@ -285,7 +286,6 @@ zhangs是认证的用户ID
 	  		</td>
 	  </tr>
  	 </table> 	
-</div>
 
 
 
