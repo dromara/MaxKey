@@ -18,13 +18,13 @@
 		</tr>
 		<tr class="a">
 			<td>v 1.2 GA </td>
-			<td>2020/02/18</td>
+			<td>2020/01/18</td>
 			<td> <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">百度网盘下载</a>  </td>
 			<td><b>6bda</b> </td>
 		</tr>  
 		<tr class="b">
 			<td>v 1.2.1 GA </td>
-			<td>2020/03/03</td>
+			<td>2020/02/29</td>
 			<td> <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">百度网盘下载</a>  </td>
 			<td><b>6bda</b> </td>
 		</tr>
