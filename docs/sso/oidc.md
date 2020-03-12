@@ -13,7 +13,7 @@
 <h2>集成和接口</h2>
 <h4>3)用户属性接口/api/connect/v10/userinfo</h4>
 
-通过访问token 获取登录用户信息及签名信息
+通过访问token 获取登录用户信息及签名信息，在程序中必须验证相关的签名信息。
  
 <table  border="0" class="table table-striped table-bordered ">
  	   <tr>
