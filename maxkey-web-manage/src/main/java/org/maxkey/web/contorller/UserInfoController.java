@@ -105,8 +105,8 @@ public class UserInfoController {
 		}
 		
 		userInfo.setId(userInfo.generateId());
-		userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
-		userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
+		//userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
+		//userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
 		if( userInfoService.insert(userInfo)) {
 			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
 		}
@@ -162,8 +162,8 @@ public class UserInfoController {
 		}
 		_logger.info(userInfo.getExtraAttributeName());
 		_logger.info(userInfo.getExtraAttributeValue());
-		userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
-		userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
+		//userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
+		//userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
 		convertExtraAttribute(userInfo) ;
 		_logger.info(userInfo.getExtraAttribute());
 		if(userInfoService.update(userInfo)) {

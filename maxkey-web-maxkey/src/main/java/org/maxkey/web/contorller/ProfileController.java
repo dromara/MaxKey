@@ -6,7 +6,6 @@ import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.dao.service.MyProfileService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageScope;
@@ -59,8 +58,6 @@ public class ProfileController {
 	@RequestMapping(value="/update/myProfile") 
 	public ModelAndView updatebasic(@Valid  @ModelAttribute("userInfo")UserInfo userInfo,BindingResult result) {
 		_logger.debug(userInfo.toString());
-		userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
-		userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
 		
 //		if(userInfo.getExtraAttributeValue()!=null){
 //			String []extraAttributeLabel=userInfo.getExtraAttributeName().split(",");

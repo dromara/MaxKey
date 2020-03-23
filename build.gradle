@@ -125,9 +125,9 @@ subprojects {
     	 compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
          //apache
          compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
-         compile group: 'commons-codec', name: 'commons-codec', version: '1.12'
+         compile group: 'commons-codec', name: 'commons-codec', version: '1.14'
          compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
-         compile group: 'org.apache.commons', name: 'commons-csv', version: '1.7'
+         //compile group: 'org.apache.commons', name: 'commons-csv', version: '1.7'
          compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.6.0'
          compile group: 'commons-dbutils', name: 'commons-dbutils', version: '1.7'
          compile group: 'org.apache.commons', name: 'commons-digester3', version: '3.2'
@@ -144,10 +144,10 @@ subprojects {
          compile group: 'org.apache.httpcomponents', name: 'fluent-hc', version: "${httpcomponentsVersion}"
          compile group: 'org.apache.httpcomponents', name: 'httpclient-cache', version: "${httpcomponentsVersion}"
          compile group: 'org.apache.httpcomponents', name: 'httpmime', version: "${httpcomponentsVersion}"
-         compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.10'
+         compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.13'
          compile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
          compile group: 'velocity', name: 'velocity-dep', version: '1.4'
-         compile group: 'org.freemarker', name: 'freemarker', version: '2.3.29'
+         compile group: 'org.freemarker', name: 'freemarker', version: '2.3.30'
          compile group: 'org.apache.commons', name: 'not-yet-commons-ssl', version: '0.3.9'
 		//logs
          compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: "${log4jVersion}"
@@ -159,7 +159,7 @@ subprojects {
 		 compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: "${log4jVersion}"
          compile group: 'org.slf4j', name: 'slf4j-api', version: "${slf4jVersion}"
 		 
-         compile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.4.0.Final'
+         compile group: 'org.jboss.logging', name: 'jboss-logging', version: '3.4.1.Final'
 		 
 		 //spring
          compile group: 'org.springframework', name: 'spring-aop', version: "${springVersion}"
@@ -170,19 +170,19 @@ subprojects {
          compile group: 'org.springframework', name: 'spring-context-indexer', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-context-support', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-expression', version: "${springVersion}"
-         compile group: 'org.springframework', name: 'spring-instrument', version: "${springVersion}"
-         compile group: 'org.springframework', name: 'spring-jcl', version: "${springVersion}"
+         //compile group: 'org.springframework', name: 'spring-instrument', version: "${springVersion}"
+         //compile group: 'org.springframework', name: 'spring-jcl', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-jdbc', version: "${springVersion}"
-         compile group: 'org.springframework', name: 'spring-jms', version: "${springVersion}"
-         compile group: 'org.springframework', name: 'spring-messaging', version: "${springVersion}"
-         compile group: 'org.springframework', name: 'spring-orm', version: "${springVersion}"
+         //compile group: 'org.springframework', name: 'spring-jms', version: "${springVersion}"
+         //compile group: 'org.springframework', name: 'spring-messaging', version: "${springVersion}"
+         //compile group: 'org.springframework', name: 'spring-orm', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-oxm', version: "${springVersion}"
-         compile group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-tx', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-web', version: "${springVersion}"
-         compile group: 'org.springframework', name: 'spring-webflux', version: "${springVersion}"
+         //compile group: 'org.springframework', name: 'spring-webflux', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-webmvc', version: "${springVersion}"
-         compile group: 'org.springframework', name: 'spring-websocket', version: "${springVersion}"
+         //compile group: 'org.springframework', name: 'spring-websocket', version: "${springVersion}"
+		 testCompile group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
          //spring-security
          compile group: 'org.springframework.security', name: 'spring-security-core', version: "${springSecurityVersion}"
          compile group: 'org.springframework.security', name: 'spring-security-web', version: "${springSecurityVersion}"
@@ -202,13 +202,14 @@ subprojects {
          compile group: 'org.opensaml', name: 'openws', version: '1.5.4'
          compile group: 'org.opensaml', name: 'xmltooling', version: '1.4.4'
          
-         compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '8.8'
+		 //jose-jwt
+         compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '8.10'
          compile group: 'net.jcip', name: 'jcip-annotations', version: '1.0'
          compile group: 'net.minidev', name: 'json-smart', version: '2.3'
          compile group: 'net.minidev', name: 'asm', version: '1.0.2'
-         
-         compile group: 'cn.hutool', name: 'hutool-core', version: '5.1.2'
-         compile group: 'cn.hutool', name: 'hutool-http', version: '5.1.2'
+         //oauth third party
+         compile group: 'cn.hutool', name: 'hutool-core', version: '5.2.2'
+         compile group: 'cn.hutool', name: 'hutool-http', version: '5.2.2'
          compile group: 'me.zhyd.oauth', name: 'JustAuth', version: '1.13.2'
          
          compile group: 'org.javassist', name: 'javassist', version: '3.23.0-GA'
@@ -226,51 +227,51 @@ subprojects {
 		 compile group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0.1'
 		 compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.2'
 		 compile group: 'com.sun.xml.bind', name: 'jaxb-xjc',  version: '2.3.2'
-         
+         //crypto
          compile group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: "${bouncycastleVersion}"
          compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: "${bouncycastleVersion}"
          compile group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: "${bouncycastleVersion}"
          compile group: 'com.google.crypto.tink', name: 'tink', version: '1.2.2'
-         
+         //kaptcha
          compile group: 'com.jhlabs', name: 'filters', version: '2.0.235-1'
          compile group: 'com.github.penggle', name: 'kaptcha', version: '2.3.2'
          //json
-         compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+         compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
          compile group: 'org.codehaus.jackson', name: 'jackson-all', version: '1.8.5'
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonVersion}"
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonVersion}"
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"
          compile group: 'com.fasterxml', name: 'classmate', version: '1.5.0'
-		 compile group: 'com.alibaba', name: 'fastjson', version: '1.2.62'
+		 compile group: 'com.alibaba', name: 'fastjson', version: '1.2.66'
          
          compile group: 'org.reactivestreams', name: 'reactive-streams', version: '1.0.2'
          compile group: 'io.projectreactor', name: 'reactor-core', version: '3.2.10.RELEASE'
          compile group: 'eu.tekul', name: 'szxcvbn_2.9.2', version: '0.2'
-         
-         compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.2.3'
+         //quartz
+         compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
          
 		 //database
 		 compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.48'
 		 compile group: 'com.alibaba', name: 'druid', version: '1.1.21'
-         compile group: 'redis.clients', name: 'jedis', version: '3.0.1'
-         compile group: 'org.ehcache', name: 'ehcache', version: '3.5.3'
+         compile group: 'redis.clients', name: 'jedis', version: '3.2.0'
+         compile group: 'org.ehcache', name: 'ehcache', version: '3.8.1'
 		 //mybatis
-         compile group: 'org.mybatis', name: 'mybatis', version: '3.5.3'
-         compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.3'
+         compile group: 'org.mybatis', name: 'mybatis', version: '3.5.4'
+         compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.4'
 		 //hibernate
          compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: "${hibernateVersion}"
          compile group: 'org.hibernate', name: 'hibernate-validator-cdi', version: "${hibernateVersion}"
          compile group: 'org.hibernate.validator', name: 'hibernate-validator-annotation-processor', version: "${hibernateVersion}"
          
-         compile group: 'joda-time', name: 'joda-time', version: '2.10'
-         compile group: 'org.yaml', name: 'snakeyaml', version: '1.24'
+         compile group: 'joda-time', name: 'joda-time', version: '2.10.5'
+         compile group: 'org.yaml', name: 'snakeyaml', version: '1.26'
          compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
          compile group: 'org.jdom', name: 'jdom', version: '2.0.2'
          compile group: 'com.google.zxing', name: 'core', version: '3.4.0'
-         compile group: 'com.google.guava', name: 'guava', version: '27.1-jre'
-         compile group: 'ognl', name: 'ognl', version: '3.2.9'
-         compile group: 'cglib', name: 'cglib', version: '3.2.12'
-         compile group: 'org.ow2.asm', name: 'asm', version: '7.0'
+         compile group: 'com.google.guava', name: 'guava', version: '28.2-jre'
+         compile group: 'ognl', name: 'ognl', version: '3.2.14'
+         compile group: 'cglib', name: 'cglib', version: '3.3.0'
+         compile group: 'org.ow2.asm', name: 'asm', version: '7.3.1'
          compile group: 'aopalliance', name: 'aopalliance', version: '1.0'
          compile group: 'org.aspectj', name: 'aspectjtools', version: '1.9.4'
          compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
@@ -281,7 +282,7 @@ subprojects {
 		 compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
 		 testCompile group: 'xmlunit', name: 'xmlunit', version: '1.6'
 		 
-         compile group: 'com.belerweb', name: 'pinyin4j', version: '2.5.1'
+         //compile group: 'com.belerweb', name: 'pinyin4j', version: '2.5.1'
          
          testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
          

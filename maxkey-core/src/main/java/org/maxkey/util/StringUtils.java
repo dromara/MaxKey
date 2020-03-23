@@ -9,12 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import net.sourceforge.pinyin4j.PinyinHelper;
-import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
-import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
-import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
-import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
-
 public final class StringUtils {
 	
 	/**
@@ -413,7 +407,7 @@ public final class StringUtils {
     * @param first true is Convert first,else all
     * @return 拼音 
     */  
-    public static String hanYu2Pinyin(String  hanYu,boolean first){         
+ /*   public static String hanYu2Pinyin(String  hanYu,boolean first){         
         String pinyin = "";  
         char[] nameChar = hanYu.toCharArray();  
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();  
@@ -436,7 +430,7 @@ public final class StringUtils {
         }  
         return pinyin;  
     }  
-	
+	*/
 	public static Map<String,String> aduserName2Map(String aduserName) {
 		if(isNullOrBlank(aduserName)) {
 			return null;
