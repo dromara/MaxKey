@@ -251,7 +251,6 @@ subprojects {
 		 compile group: 'com.alibaba', name: 'druid', version: '1.1.21'
          compile group: 'redis.clients', name: 'jedis', version: '3.2.0'
          compile group: 'org.ehcache', name: 'ehcache', version: '3.8.1'
-         compile group: 'javax.cache', name: 'cache-api', version: '1.1.0'
 		 //mybatis
          compile group: 'org.mybatis', name: 'mybatis', version: '3.5.4'
          compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.4'

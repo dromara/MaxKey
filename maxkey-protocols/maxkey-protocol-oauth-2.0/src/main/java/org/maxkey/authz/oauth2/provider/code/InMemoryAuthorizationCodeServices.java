@@ -1,7 +1,10 @@
 package org.maxkey.authz.oauth2.provider.code;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.time.Duration;
 
+import org.ehcache.UserManagedCache;
+import org.ehcache.config.builders.ExpiryPolicyBuilder;
+import org.ehcache.config.builders.UserManagedCacheBuilder;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 
 /**
@@ -11,17 +14,19 @@ import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
  * @author Dave Syer
  */
 public class InMemoryAuthorizationCodeServices extends RandomValueAuthorizationCodeServices {
-
-	protected final ConcurrentHashMap<String, OAuth2Authentication> authorizationCodeStore = new ConcurrentHashMap<String, OAuth2Authentication>();
-
+			protected final static  UserManagedCache<String, OAuth2Authentication> authorizationCodeStore = 
+					UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, OAuth2Authentication.class)
+						.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(60)))
+						.build(true);
 	@Override
 	protected void store(String code, OAuth2Authentication authentication) {
-		this.authorizationCodeStore.put(code, authentication);
+		authorizationCodeStore.put(code, authentication);
 	}
 
 	@Override
 	public OAuth2Authentication remove(String code) {
-		OAuth2Authentication auth = this.authorizationCodeStore.remove(code);
+		OAuth2Authentication auth = authorizationCodeStore.get(code);
+		authorizationCodeStore.remove(code);
 		return auth;
 	}
 
