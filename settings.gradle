@@ -2,15 +2,11 @@
  * in the user guide at https://docs.gradle.org
  */
 rootProject.name = 'MaxKey'
-
 //Common
 include 'maxkey-client-sdk'
 include 'maxkey-core'
 include 'maxkey-dao'
-//include 'maxkey-jose-jwt'
-
 include 'maxkey-authentications'
-
 //Protocol
 //include 'maxkey-protocols'
 include 'maxkey-protocols:maxkey-protocol-oauth-2.0'
@@ -21,10 +17,8 @@ include 'maxkey-protocols:maxkey-protocol-extendapi'
 include 'maxkey-protocols:maxkey-protocol-formbased'
 include 'maxkey-protocols:maxkey-protocol-tokenbased'
 include 'maxkey-protocols:maxkey-protocol-cas'
-
 //include 'maxkey-webs'
+//maxkey
 include 'maxkey-web-maxkey'
-//IM
+//maxkey-mgt
 include 'maxkey-web-manage'
-
-
