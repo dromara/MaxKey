@@ -18,8 +18,8 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 
 @Component
-public class FreeMarkerConfigurer  implements ApplicationContextAware {
-	private static final Logger _logger = LoggerFactory.getLogger(FreeMarkerConfigurer.class);
+public class ConfigurerFreeMarker  implements ApplicationContextAware {
+	private static final Logger _logger = LoggerFactory.getLogger(ConfigurerFreeMarker.class);
 	ApplicationContext applicationContext ;
 	
 	@Autowired 
