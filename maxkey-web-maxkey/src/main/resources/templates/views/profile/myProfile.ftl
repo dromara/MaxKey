@@ -39,7 +39,7 @@
 					</td>
 					<th style="width:15%;"><@locale code="userinfo.userType" />：</th>
 					<td  style="width:35%;">
-						<input readonly type="text" id="userType" name="userType"  title="" value="${model.userType !}"/>
+						<input  class="form-control"  readonly type="text" id="userType" name="userType"  title="" value="${model.userType !}"/>
 					</td>
 				</tr>
 				<tr>

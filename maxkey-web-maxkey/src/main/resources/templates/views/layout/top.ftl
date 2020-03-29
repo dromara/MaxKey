@@ -17,17 +17,11 @@
 					</td>
 					<#if  Session["current_user"].gridList==0 >
 					<td>
-						<img src='<@base/>/static/images/grid_sel.png'  style="width=:31px;height:31px;border:0;">
-					</td>
-					<td>
-						<a href="<@base/>/appList?mnid=110101020000&gridList=1"><img src='<@base/>/static/images/list.png'  style="width=:31px;height:31px;border:0;"></a>
+						<a href="<@base/>/appList?mnid=110101020000&gridList=1"><img class="grid_list_sel" src='<@base/>/static/images/list_sel.png' ></a>
 					</td>
 					<#else>
 					<td>
-						<a href="<@base/>/appList?mnid=110101020000&gridList=0" ><img src='<@base/>/static/images/grid.png'  style="width=:31px;height:31px;border:0;"></a>
-					</td>
-					<td>
-						<img src='<@base/>/static/images/list_sel.png'  style="width=:31px;height:31px;border:0;">
+						<a href="<@base/>/appList?mnid=110101020000&gridList=0" ><img class="grid_list_sel"  src='<@base/>/static/images/grid_sel.png'></a>
 					</td>
 					</#if>
 					<td id="changepassword" nowrap>

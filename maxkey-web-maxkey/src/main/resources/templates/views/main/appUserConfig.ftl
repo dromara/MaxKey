@@ -1,33 +1,47 @@
-<script type="text/javascript">
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<#include  "../layout/header.ftl"/>
+	<#include  "../layout/common.cssjs.ftl"/>
+	<script type="text/javascript">
 
 
-</script>
-	 
-	     <!-- content -->  
+	</script>
+<style   type="text/css">
+  .table th, .table td {
+    padding: .2rem;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+	 <!-- content -->  
 	<form id="actionForm" name="credentialsubmit" action="<@base/>/appUserConfig" method="post">
 		<input type="hidden" id="protocol" name="protocol" value="${protocol}" />
 		<input type="hidden" id="credential" name="credential" value="${credential}" />
-		<table width="420px">
+		<table  class="table table-bordered">
 			
 			<tr <#if false==username>style="display:none"</#if>>
-				<td><@locale code="userinfo.appaccouts.relatedUsername" /></td>
-				<td><input type="text" id="identity_username" name="identity_username" value="${identity_username}" /></td>
+				<td><@locale code="account.relatedUsername" /></td>
+				<td><input  class="form-control"  type="text" id="identity_username" name="identity_username" value="${identity_username!}" /></td>
 			</tr>
 			<tr <#if false==password> style="display:none"</#if> >
-				<td><@locale code="userinfo.appaccouts.relatedPassword" /></td>
-				<td><input type="password" id="identity_password" name="identity_password" value="${identity_password}" /></td>
+				<td><@locale code="account.relatedPassword" /></td>
+				<td><input  class="form-control"  type="password" id="identity_password" name="identity_password" value="${identity_password!}" /></td>
 			</tr>
 			
 			<tr style="display:none">
 				<td>uid</td>
-				<td><input type="text" id="uid" name="uid" value="${uid}" /></td>
+				<td><input  class="form-control"  type="text" id="uid" name="uid" value="${uid}" /></td>
 			</tr>
 			<tr style="display:none">
 				<td>appId</td>
-				<td><input type="text" id="appId" name="appId" value="${appId}" /></td>
+				<td><input  class="form-control"  type="text" id="appId" name="appId" value="${appId}" /></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input class="button" type="submit" style="width: 400px" id="credentialsubmitbutton"value="<@locale code="button.text.save" />"/></td>
+				<td colspan="2"><input  class="button btn btn-primary mr-3"  type="submit" style="width: 400px" id="credentialsubmitbutton"value="<@locale code="button.text.save" />"/></td>
 			</tr>
 		</table>
 	</form> 
+</body>
+</html>

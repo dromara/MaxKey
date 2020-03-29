@@ -28,15 +28,9 @@
 					</li>
 				</ul>
 				<ul>
-					<!--应用登录密码-->
-					<li id="nav_second_1303" class="nav_second_level">
-						<a   href="<@base/>/safe/forward/changeAppLoginPasswod"><@locale code="navs.setting.apppassword"/></a>
-					</li>
-				</ul>
-				<ul>
 					<!--应用配置-->
 					<li id="nav_second_1304" class="nav_second_level">
-						<a   href="<@base/>/appConfigList"><@locale code="navs.setting.appsetting"/></a>
+						<a   href="<@base/>/appConfigList"><@locale code="navs.setting.appaccount"/></a>
 					</li>
 				</ul>
 				<ul>

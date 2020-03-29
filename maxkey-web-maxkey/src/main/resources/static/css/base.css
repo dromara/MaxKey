@@ -57,6 +57,13 @@ body{
 	/*border-top: 1px solid #e5e5e5;*/
 }
 
+#topBar .grid_list_sel{
+    width: 31px;
+    height: 31px;
+    border: 1px solid;
+    border-color: #A9A9A9;
+}
+
 .container {
 	width: 990px;
 	margin-left: auto;

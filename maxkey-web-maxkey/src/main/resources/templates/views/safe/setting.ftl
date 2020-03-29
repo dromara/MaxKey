@@ -17,7 +17,7 @@
 	  <table  class="table table-bordered" >
 			<tbody>
 			<tr>
-				<th  colspan="2">authnSetting</th>
+				<th  colspan="2"><@locale code="userinfo.authnType" /></th>
 			</tr>
 			<tr>
 				<th><@locale code="userinfo.displayName" /> :</th>
