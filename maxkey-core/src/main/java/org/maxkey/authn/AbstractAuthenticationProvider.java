@@ -1,7 +1,6 @@
 package org.maxkey.authn;
 
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.constants.LOGINTYPE;
@@ -47,10 +46,6 @@ public abstract class AbstractAuthenticationProvider{
 	@Qualifier("remeberMeService")
 	protected AbstractRemeberMeService remeberMeService;
 
-   /* @Autowired
-   	@Qualifier("jwtLoginService")
-    JwtLoginService jwtLoginService;
-    */
 	protected abstract String getProviderName();
     
     protected abstract Authentication doInternalAuthenticate(Authentication authentication);

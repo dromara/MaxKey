@@ -60,7 +60,9 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     	 */
 	    WebContext.setUserInfo(userInfo);
 	    
-	    if(applicationConfig.getLoginConfig().isRemeberMe()){
+	    auth.setAuthenticated(true);
+	    
+	    if(auth.isAuthenticated()&&applicationConfig.getLoginConfig().isRemeberMe()){
 		    if(auth.getJ_remeberme()!=null&&auth.getJ_remeberme().equals("remeberMe")){
 		    	WebContext.getSession().setAttribute(WebConstants.REMEBER_ME_SESSION,auth.getJ_username());
 		    	_logger.debug("do Remeber Me");
@@ -71,7 +73,6 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 		    }
 	    }
 
-	    auth.setAuthenticated(true);
 	    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =new UsernamePasswordAuthenticationToken(
 	    		auth,
 				"PASSWORD",
