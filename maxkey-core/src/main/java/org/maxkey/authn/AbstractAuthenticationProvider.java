@@ -2,6 +2,7 @@ package org.maxkey.authn;
 
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.jwt.JwtLoginService;
+import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.constants.LOGINTYPE;
 import org.maxkey.crypto.password.PasswordReciprocal;
@@ -41,6 +42,10 @@ public abstract class AbstractAuthenticationProvider{
     @Autowired 
   	@Qualifier("tfaOTPAuthn")
     protected AbstractOTPAuthn tfaOTPAuthn;
+    
+	@Autowired
+	@Qualifier("remeberMeService")
+	protected AbstractRemeberMeService remeberMeService;
 
    /* @Autowired
    	@Qualifier("jwtLoginService")

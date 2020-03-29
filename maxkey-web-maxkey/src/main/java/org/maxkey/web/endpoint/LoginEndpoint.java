@@ -101,6 +101,7 @@ public class LoginEndpoint {
 		//for RemeberMe login
 		if(!isAuthenticated){
 			if(applicationConfig.getLoginConfig().isRemeberMe()&&remeberMe!=null&& !remeberMe.equals("")){
+				_logger.debug("Try RemeberMe login ");
 				isAuthenticated=remeberMeService.login(remeberMe,response);
 			}
 		}
@@ -109,6 +110,7 @@ public class LoginEndpoint {
 			if(applicationConfig.getLoginConfig().isKerberos()&&
 					kerberosUserDomain!=null&&!kerberosUserDomain.equals("")&&
 					kerberosToken!=null && !kerberosToken.equals("")){
+				_logger.debug("Try Kerberos login ");
 				isAuthenticated=kerberosService.login(kerberosToken,kerberosUserDomain);
 			}
 		}
@@ -117,6 +119,7 @@ public class LoginEndpoint {
 			if(applicationConfig.getLoginConfig().isWsFederation()&&
 					StringUtils.isNotEmpty(wsFederationWA) && 
 					wsFederationWA.equalsIgnoreCase(WsFederationConstants.WSIGNIN)){
+				_logger.debug("Try WsFederation login ");
 				//isAuthenticated=wsFederationService.login(wsFederationWA,wsFederationWResult,request);
 			}
 		}
@@ -135,6 +138,7 @@ public class LoginEndpoint {
 			//modelAndView.addObject("jwtToken",jwtLoginService.buildLoginJwt());
 			//load Social Sign On Providers
 			if(applicationConfig.getLoginConfig().isSocialSignOn()){
+				_logger.debug("Load Social Sign On Providers ");
 				modelAndView.addObject("ssopList", socialSignOnProviderService.getSocialSignOnProviders());
 			}
 		}

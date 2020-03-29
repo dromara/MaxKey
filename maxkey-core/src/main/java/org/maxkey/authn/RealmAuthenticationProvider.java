@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 /**
@@ -62,6 +64,10 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 		    if(auth.getJ_remeberme()!=null&&auth.getJ_remeberme().equals("remeberMe")){
 		    	WebContext.getSession().setAttribute(WebConstants.REMEBER_ME_SESSION,auth.getJ_username());
 		    	_logger.debug("do Remeber Me");
+		    	remeberMeService.createRemeberMe(
+		    				userInfo.getUsername(), 
+		    				WebContext.getRequest(), 
+		    				((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getResponse());
 		    }
 	    }
 
