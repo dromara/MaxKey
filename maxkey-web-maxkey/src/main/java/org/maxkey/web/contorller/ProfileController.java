@@ -1,7 +1,6 @@
 package org.maxkey.web.contorller;
 
 import javax.validation.Valid;
-
 import org.maxkey.constants.OPERATEMESSAGE;
 import org.maxkey.dao.service.MyProfileService;
 import org.maxkey.dao.service.UserInfoService;
@@ -20,45 +19,45 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-
 @Controller
-@RequestMapping(value={"/profile"})
+@RequestMapping(value = { "/profile" })
 public class ProfileController {
-	final static Logger _logger = LoggerFactory.getLogger(ProfileController.class);
-	
-	@Autowired
-	private UserInfoService userInfoService;
-	
-	@Autowired
-	private MyProfileService myProfileService;
-	
-	
-	@RequestMapping(value={"/myProfile"})
-	public ModelAndView forwardBasic(){
-		ModelAndView modelAndView=new ModelAndView("profile/myProfile");
-		UserInfo userInfo=userInfoService.loadByUsername(WebContext.getUserInfo().getUsername());
-		WebContext.getSession().setAttribute(userInfo.getId(), userInfo.getPicture());
-		
-//		HashMap<String,Object>extraAttributeMap=new HashMap<String,Object>();
-//		extraAttributeMap=(HashMap<String,Object>)JsonUtils.json2Object(userInfo.getExtraAttribute(),extraAttributeMap);
-//		modelAndView.addObject("extraAttributeMap", extraAttributeMap);
-//		_logger.info("extraAttributeMap : "+extraAttributeMap);
-		
-		modelAndView.addObject("model", userInfo);
-		return modelAndView;
-	}
-	
-	
-	/**
-	 * 修改用户
-	 * @param userInfo
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(value="/update/myProfile") 
-	public ModelAndView updatebasic(@Valid  @ModelAttribute("userInfo")UserInfo userInfo,BindingResult result) {
-		_logger.debug(userInfo.toString());
-		
+    static final Logger _logger = LoggerFactory.getLogger(ProfileController.class);
+
+    @Autowired
+    private UserInfoService userInfoService;
+
+    @Autowired
+    private MyProfileService myProfileService;
+
+    @RequestMapping(value = { "/myProfile" })
+    public ModelAndView forwardBasic() {
+        ModelAndView modelAndView = new ModelAndView("profile/myProfile");
+        UserInfo userInfo = userInfoService.loadByUsername(WebContext.getUserInfo().getUsername());
+        WebContext.getSession().setAttribute(userInfo.getId(), userInfo.getPicture());
+
+        //  HashMap<String,Object>extraAttributeMap=new HashMap<String,Object>();
+        //  extraAttributeMap=(HashMap<String,Object>)JsonUtils.json2Object(userInfo.getExtraAttribute(),extraAttributeMap);
+        //  modelAndView.addObject("extraAttributeMap", extraAttributeMap);
+        //  _logger.info("extraAttributeMap : "+extraAttributeMap);
+        //
+        modelAndView.addObject("model", userInfo);
+        return modelAndView;
+    }
+
+    /**
+     * 修改用户.
+     * 
+     * @param userInfo
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/update/myProfile")
+    public ModelAndView updatebasic(
+                @Valid @ModelAttribute("userInfo") UserInfo userInfo,
+                BindingResult result) {
+        _logger.debug(userInfo.toString());
+
 //		if(userInfo.getExtraAttributeValue()!=null){
 //			String []extraAttributeLabel=userInfo.getExtraAttributeName().split(",");
 //			String []extraAttributeValue=userInfo.getExtraAttributeValue().split(",");
@@ -69,16 +68,19 @@ public class ProfileController {
 //			String extraAttribute=JsonUtils.object2Json(extraAttributeMap);
 //			userInfo.setExtraAttribute(extraAttribute);
 //		}
-		
-		if(myProfileService.updateProfile(userInfo)>0) {
-			new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
-			
-		}else{
-			new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
-		}
-		
-		return   WebContext.forward("forwardMyProfile");
-		
-	}
+
+        if (myProfileService.updateProfile(userInfo) > 0) {
+            new Message(
+                    WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS), 
+                    userInfo, MessageType.success,
+                    OperateType.add, MessageScope.DB);
+
+        } else {
+            new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR), MessageType.error);
+        }
+
+        return WebContext.forward("forwardMyProfile");
+
+    }
 
 }

@@ -2,7 +2,6 @@ package org.maxkey.web.contorller;
 
 import java.awt.image.BufferedImage;
 import java.util.UUID;
-
 import org.apache.commons.codec.binary.Hex;
 import org.maxkey.crypto.Base32Utils;
 import org.maxkey.crypto.password.PasswordReciprocal;
@@ -11,8 +10,8 @@ import org.maxkey.crypto.password.opt.algorithm.OTPSecret;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.RQCodeUtils;
-import org.maxkey.web.WebContext;
 import org.maxkey.web.ImageEndpoint;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,127 +22,128 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 /**
+ * .
  * @author Crystal.Sea
  *
  */
 @Controller
-@RequestMapping(value = { "/safe/otp" })
+@RequestMapping(value  =  { "/safe/otp" })
 public class OneTimePasswordController {
-	final static Logger _logger = LoggerFactory.getLogger(OneTimePasswordController.class);
+    static final  Logger _logger  =  LoggerFactory.getLogger(OneTimePasswordController.class);
 
-	@Autowired
-	@Qualifier("userInfoService")
-	private UserInfoService userInfoService;
-	
-	@Autowired
-	@Qualifier("keyUriFormat")
-	KeyUriFormat keyUriFormat;
+    @Autowired
+    @Qualifier("userInfoService")
+    private UserInfoService userInfoService;
 
-	@Autowired
-	@Qualifier("passwordReciprocal")
-	PasswordReciprocal passwordReciprocal;
-	
-	@RequestMapping(value={"/timebased"})
-	public ModelAndView timebased(){
-		ModelAndView modelAndView=new ModelAndView("safe/timeBased");
-		UserInfo userInfo=WebContext.getUserInfo();
-		String sharedSecret=passwordReciprocal.decoder(userInfo.getSharedSecret());
-		keyUriFormat.setSecret(sharedSecret);
-		String otpauth=keyUriFormat.format(userInfo.getUsername());
-		byte[] byteSharedSecret=Base32Utils.decode(sharedSecret);
-		String hexSharedSecret=Hex.encodeHexString(byteSharedSecret);
-		modelAndView.addObject("id", genRQCode(otpauth));
-		modelAndView.addObject("userInfo", userInfo);
-		modelAndView.addObject("format", keyUriFormat);
-		modelAndView.addObject("sharedSecret", sharedSecret);
-		modelAndView.addObject("hexSharedSecret", hexSharedSecret);
-		return modelAndView;
-	}
-	
-	@RequestMapping(value={"gen/timebased"})
-	public ModelAndView gentimebased(){
-		UserInfo userInfo=WebContext.getUserInfo();
-		byte[] byteSharedSecret=OTPSecret.generate(keyUriFormat.getCrypto());
-		String sharedSecret=Base32Utils.encode(byteSharedSecret);
-		sharedSecret=passwordReciprocal.encode(sharedSecret);
-		userInfo.setSharedSecret(sharedSecret);
-		userInfoService.changeSharedSecret(userInfo);
-		WebContext.setUserInfo(userInfo);
-		return WebContext.redirect("/safe/otp/timebased");
-	}
-	
+    @Autowired
+    @Qualifier("keyUriFormat")
+    KeyUriFormat keyUriFormat;
 
-	@RequestMapping(value={"/counterbased"})
-	public ModelAndView counterbased(){
-		ModelAndView modelAndView=new ModelAndView("safe/counterBased");
-		UserInfo userInfo=WebContext.getUserInfo();
-		String sharedSecret=passwordReciprocal.decoder(userInfo.getSharedSecret());
-		keyUriFormat.setSecret(sharedSecret);
-		keyUriFormat.setCounter(Long.parseLong(userInfo.getSharedCounter()));
-		String otpauth=keyUriFormat.format(userInfo.getUsername());
-	
-		byte[] byteSharedSecret=Base32Utils.decode(sharedSecret);
-		String hexSharedSecret=Hex.encodeHexString(byteSharedSecret);
-		modelAndView.addObject("id", genRQCode(otpauth));
-		modelAndView.addObject("userInfo", userInfo);
-		modelAndView.addObject("format", keyUriFormat);
-		modelAndView.addObject("sharedSecret", sharedSecret);
-		modelAndView.addObject("hexSharedSecret", hexSharedSecret);
-		return modelAndView;
-		
-	}
-	
-	@RequestMapping(value={"gen/counterbased"})
-	public ModelAndView gencounterbased(){
-		UserInfo userInfo=WebContext.getUserInfo();
-		byte[] byteSharedSecret=OTPSecret.generate(keyUriFormat.getCrypto());
-		String sharedSecret=Base32Utils.encode(byteSharedSecret);
-		sharedSecret=passwordReciprocal.encode(sharedSecret);
-		userInfo.setSharedSecret(sharedSecret);
-		userInfo.setSharedCounter("0");
-		userInfoService.changeSharedSecret(userInfo);
-		WebContext.setUserInfo(userInfo);
-		return WebContext.redirect("/safe/otp/counterbased");
-	}
+    @Autowired
+    @Qualifier("passwordReciprocal")
+    PasswordReciprocal passwordReciprocal;
 
-	@RequestMapping(value={"/hotp"})
-	public ModelAndView hotp(){
-		ModelAndView modelAndView=new ModelAndView("safe/hotp");
-		UserInfo userInfo=WebContext.getUserInfo();
-		String sharedSecret=passwordReciprocal.decoder(userInfo.getSharedSecret());
-		keyUriFormat.setSecret(sharedSecret);
-		keyUriFormat.setCounter(Long.parseLong(userInfo.getSharedCounter()));
-		String otpauth=keyUriFormat.format(userInfo.getUsername());
-		byte[] byteSharedSecret=Base32Utils.decode(sharedSecret);
-		String hexSharedSecret=Hex.encodeHexString(byteSharedSecret);
-		modelAndView.addObject("id", genRQCode(otpauth));
-		modelAndView.addObject("userInfo", userInfo);
-		modelAndView.addObject("format", keyUriFormat);
-		modelAndView.addObject("sharedSecret", sharedSecret);
-		modelAndView.addObject("hexSharedSecret", hexSharedSecret);
-		return modelAndView;
-		
-	}
-	
-	@RequestMapping(value={"gen/hotp"})
-	public ModelAndView genhotp(){
-		UserInfo userInfo=WebContext.getUserInfo();
-		byte[] byteSharedSecret=OTPSecret.generate(keyUriFormat.getCrypto());
-		String sharedSecret=Base32Utils.encode(byteSharedSecret);
-		sharedSecret=passwordReciprocal.encode(sharedSecret);
-		userInfo.setSharedSecret(sharedSecret);
-		userInfo.setSharedCounter("0");
-		userInfoService.changeSharedSecret(userInfo);
-		WebContext.setUserInfo(userInfo);
-		return WebContext.redirect("/safe/otp/hotp");
-	}
-	
-	
-	public  String genRQCode(String otpauth){
-		BufferedImage bufferedImage = RQCodeUtils.write2BufferedImage(otpauth, "gif", 300, 300);
-		byte[] imageByte=ImageEndpoint.bufferedImage2Byte(bufferedImage);
-		String uuid=UUID.randomUUID().toString().toLowerCase();
-		WebContext.getSession().setAttribute(uuid, imageByte);
-		return uuid;
-	}
+    @RequestMapping(value = {"/timebased"})
+    public ModelAndView timebased() {
+        ModelAndView modelAndView = new ModelAndView("safe/timeBased");
+        UserInfo userInfo = WebContext.getUserInfo();
+        String sharedSecret = passwordReciprocal.decoder(userInfo.getSharedSecret());
+        keyUriFormat.setSecret(sharedSecret);
+        String otpauth = keyUriFormat.format(userInfo.getUsername());
+        byte[] byteSharedSecret = Base32Utils.decode(sharedSecret);
+        String hexSharedSecret = Hex.encodeHexString(byteSharedSecret);
+        modelAndView.addObject("id", genRqCode(otpauth));
+        modelAndView.addObject("userInfo", userInfo);
+        modelAndView.addObject("format", keyUriFormat);
+        modelAndView.addObject("sharedSecret", sharedSecret);
+        modelAndView.addObject("hexSharedSecret", hexSharedSecret);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"gen/timebased"})
+    public ModelAndView gentimebased() {
+        UserInfo userInfo = WebContext.getUserInfo();
+        byte[] byteSharedSecret = OTPSecret.generate(keyUriFormat.getCrypto());
+        String sharedSecret = Base32Utils.encode(byteSharedSecret);
+        sharedSecret = passwordReciprocal.encode(sharedSecret);
+        userInfo.setSharedSecret(sharedSecret);
+        userInfoService.changeSharedSecret(userInfo);
+        WebContext.setUserInfo(userInfo);
+        return WebContext.redirect("/safe/otp/timebased");
+    }
+
+
+    @RequestMapping(value = {"/counterbased"})
+    public ModelAndView counterbased() {
+        ModelAndView modelAndView = new ModelAndView("safe/counterBased");
+        UserInfo userInfo = WebContext.getUserInfo();
+        String sharedSecret = passwordReciprocal.decoder(userInfo.getSharedSecret());
+        keyUriFormat.setSecret(sharedSecret);
+        keyUriFormat.setCounter(Long.parseLong(userInfo.getSharedCounter()));
+        String otpauth = keyUriFormat.format(userInfo.getUsername());
+
+        byte[] byteSharedSecret = Base32Utils.decode(sharedSecret);
+        String hexSharedSecret = Hex.encodeHexString(byteSharedSecret);
+        modelAndView.addObject("id", genRqCode(otpauth));
+        modelAndView.addObject("userInfo", userInfo);
+        modelAndView.addObject("format", keyUriFormat);
+        modelAndView.addObject("sharedSecret", sharedSecret);
+        modelAndView.addObject("hexSharedSecret", hexSharedSecret);
+        return modelAndView;
+
+    }
+
+    @RequestMapping(value = {"gen/counterbased"})
+    public ModelAndView gencounterbased() {
+        UserInfo userInfo = WebContext.getUserInfo();
+        byte[] byteSharedSecret = OTPSecret.generate(keyUriFormat.getCrypto());
+        String sharedSecret = Base32Utils.encode(byteSharedSecret);
+        sharedSecret = passwordReciprocal.encode(sharedSecret);
+        userInfo.setSharedSecret(sharedSecret);
+        userInfo.setSharedCounter("0");
+        userInfoService.changeSharedSecret(userInfo);
+        WebContext.setUserInfo(userInfo);
+        return WebContext.redirect("/safe/otp/counterbased");
+    }
+
+    @RequestMapping(value = {"/hotp"})
+    public ModelAndView hotp() {
+        ModelAndView modelAndView = new ModelAndView("safe/hotp");
+        UserInfo userInfo = WebContext.getUserInfo();
+        String sharedSecret = passwordReciprocal.decoder(userInfo.getSharedSecret());
+        keyUriFormat.setSecret(sharedSecret);
+        keyUriFormat.setCounter(Long.parseLong(userInfo.getSharedCounter()));
+        String otpauth = keyUriFormat.format(userInfo.getUsername());
+        byte[] byteSharedSecret = Base32Utils.decode(sharedSecret);
+        String hexSharedSecret = Hex.encodeHexString(byteSharedSecret);
+        modelAndView.addObject("id", genRqCode(otpauth));
+        modelAndView.addObject("userInfo", userInfo);
+        modelAndView.addObject("format", keyUriFormat);
+        modelAndView.addObject("sharedSecret", sharedSecret);
+        modelAndView.addObject("hexSharedSecret", hexSharedSecret);
+        return modelAndView;
+
+    }
+
+    @RequestMapping(value = {"gen/hotp"})
+    public ModelAndView genhotp() {
+        UserInfo userInfo = WebContext.getUserInfo();
+        byte[] byteSharedSecret = OTPSecret.generate(keyUriFormat.getCrypto());
+        String sharedSecret = Base32Utils.encode(byteSharedSecret);
+        sharedSecret = passwordReciprocal.encode(sharedSecret);
+        userInfo.setSharedSecret(sharedSecret);
+        userInfo.setSharedCounter("0");
+        userInfoService.changeSharedSecret(userInfo);
+        WebContext.setUserInfo(userInfo);
+        return WebContext.redirect("/safe/otp/hotp");
+    }
+
+
+    public  String genRqCode(String otpauth) {
+        BufferedImage bufferedImage  =  RQCodeUtils.write2BufferedImage(otpauth, "gif", 300, 300);
+        byte[] imageByte = ImageEndpoint.bufferedImage2Byte(bufferedImage);
+        String uuid = UUID.randomUUID().toString().toLowerCase();
+        WebContext.getSession().setAttribute(uuid, imageByte);
+        return uuid;
+    }
 }
