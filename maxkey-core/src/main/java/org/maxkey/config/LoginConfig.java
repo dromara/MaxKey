@@ -87,8 +87,16 @@ public class LoginConfig {
 
     @Override
     public String toString() {
-        return "LoginConfig [captcha=" + captcha + ", oneTimePwd=" + oneTimePwd + ", socialSignOn=" + socialSignOn
-                + ", kerberos=" + kerberos + ", remeberMe=" + remeberMe + ", wsFederation=" + wsFederation
-                + ", defaultUri=" + defaultUri + "]";
+        StringBuilder builder = new StringBuilder();
+        builder
+            .append("LoginConfig [captcha=").append(captcha)
+            .append(", oneTimePwd=").append(oneTimePwd)
+            .append(", socialSignOn=").append(socialSignOn)
+            .append(", kerberos=").append(kerberos)
+            .append(", remeberMe=").append(remeberMe)
+            .append(", wsFederation=").append(wsFederation)
+            .append(", defaultUri=").append(defaultUri).append("]");
+        return builder.toString();
     }
+
 }

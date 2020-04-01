@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.maxkey.web;
 
 import java.sql.Connection;
@@ -11,11 +8,9 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-
 import org.maxkey.cache.CacheFactory;
 import org.maxkey.util.PathUtils;
 import org.slf4j.Logger;
@@ -27,6 +22,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
+ * InitApplicationContext .
  * @author Crystal.Sea
  *
  */
@@ -71,6 +67,9 @@ public class InitApplicationContext extends HttpServlet {
         this.applicationContext = applicationContext;
     }
 
+    /**
+     * loadCaches.
+     */
     public void loadCaches() {
         _logger.info(
                 "----------------------------------------------------------------------------------------------------");
@@ -89,6 +88,9 @@ public class InitApplicationContext extends HttpServlet {
 
     }
 
+    /**
+     * listDataBaseVariables.
+     */
     public void listDataBaseVariables() {
         if (applicationContext.containsBean("dataSource")) {
             try {
@@ -122,7 +124,9 @@ public class InitApplicationContext extends HttpServlet {
         }
     }
 
-    // propertySourcesPlaceholderConfigurer
+    /**
+     * propertySourcesPlaceholderConfigurer.
+     */
     public void listProperties() {
         if (applicationContext.containsBean("propertySourcesPlaceholderConfigurer")) {
             _logger.debug(
@@ -149,6 +153,9 @@ public class InitApplicationContext extends HttpServlet {
         }
     }
 
+    /**
+     * listEnvVars.
+     */
     public void listEnvVars() {
         _logger.debug(
                 "----------------------------------------------------------------------------------------------------");
@@ -169,6 +176,9 @@ public class InitApplicationContext extends HttpServlet {
                 "----------------------------------------------------------------------------------------------------");
     }
 
+    /**
+     * showLicense.
+     */
     public void showLicense() {
         _logger.info(
                 "----------------------------------------------------------------------------------------------------");
