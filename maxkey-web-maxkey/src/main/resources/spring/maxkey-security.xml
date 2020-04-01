@@ -72,10 +72,14 @@
 		
 		<ref bean="localeChangeInterceptor" />
 	</mvc:interceptors>
-     
+     <!--
 	<bean id="remeberMeService" class="org.maxkey.authn.support.rememberme.JdbcRemeberMeService">
 		<constructor-arg ref="jdbcTemplate"/>
 		<property name="validity" value="${config.login.remeberme.validity}"/>
+	</bean>
+	  -->
+	  
+	<bean id="remeberMeService" class="org.maxkey.authn.support.rememberme.InMemoryRemeberMeService">
 	</bean>
 	
 	<bean id="keyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
