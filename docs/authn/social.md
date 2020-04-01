@@ -75,5 +75,5 @@ config.socialsignon.sinaweibo.sortorder=1
 MaxKey使用JustAuth作为第三方OAuth2登录认证库，认证所支持的第三方，请见JustAuth官方说明
 
 <a href="https://docs.justauth.whnb.wang/#/" target="_blank"  alt="JustAuth">
-<img src="{{ "/images/authn/justauth.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+<img style="width:250px;" src="{{ "/images/authn/justauth.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 </a>
