@@ -86,12 +86,15 @@ public abstract class AbstractRemeberMeService {
         remeberMeCookie = (RemeberMe) JsonUtils.json2Object(remeberMe, remeberMeCookie);
         _logger.debug("Remeber Me Cookie : " + remeberMeCookie);
 
-        RemeberMe jdbcRemeberMe = read(remeberMeCookie);
-        DateTime loginDate = new DateTime(jdbcRemeberMe.getLastLogin());
+        RemeberMe storeRemeberMe = read(remeberMeCookie);
+        if (storeRemeberMe == null)  {
+            return false;
+        }
+        DateTime loginDate = new DateTime(storeRemeberMe.getLastLogin());
         DateTime expiryDate = loginDate.plusSeconds(getRemeberMeValidity());
         DateTime now = new DateTime();
         if (now.isBefore(expiryDate)) {
-            if (WebContext.setAuthentication(jdbcRemeberMe.getUsername(), LOGINTYPE.REMEBER_ME, "", "", "success")) {
+            if (WebContext.setAuthentication(storeRemeberMe.getUsername(), LOGINTYPE.REMEBER_ME, "", "", "success")) {
                 return updateRemeberMe(remeberMeCookie, response);
             }
         }
