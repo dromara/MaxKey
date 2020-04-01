@@ -6,22 +6,23 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+
 public class BasicAuthentication implements Authentication {
-    /**
-     * 
-     */
     private static final long serialVersionUID = -110742975439268030L;
-    String j_username;
-    String j_password;
-    String j_sessionid;
-    String j_captcha;
-    String j_otp_captcha;
-    String j_remeberme;
-    String j_auth_type;
-    String j_jwt_token;
+    String username;
+    String password;
+    String sessionId;
+    String captcha;
+    String otpCaptcha;
+    String remeberMe;
+    String authType;
+    String jwtToken;
     ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;
 
+    /**
+     * BasicAuthentication.
+     */
     public BasicAuthentication() {
         grantedAuthority = new ArrayList<GrantedAuthority>();
         grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
@@ -40,7 +41,7 @@ public class BasicAuthentication implements Authentication {
 
     @Override
     public Object getCredentials() {
-        return this.getJ_password();
+        return this.getPassword();
     }
 
     @Override
@@ -50,7 +51,7 @@ public class BasicAuthentication implements Authentication {
 
     @Override
     public Object getPrincipal() {
-        return this.getJ_username();
+        return this.getUsername();
     }
 
     @Override
@@ -64,76 +65,69 @@ public class BasicAuthentication implements Authentication {
 
     }
 
-    public String getJ_username() {
-        return j_username;
-    }
 
     public String getUsername() {
-        return j_username;
+        return username;
     }
 
-    public void setJ_username(String j_username) {
-        this.j_username = j_username;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getJ_password() {
-        return j_password;
+    public String getPassword() {
+        return password;
     }
 
-    public void setJ_password(String j_password) {
-        this.j_password = j_password;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getJ_sessionid() {
-        return j_sessionid;
+    public String getSessionId() {
+        return sessionId;
     }
 
-    public String getSessionid() {
-        return j_sessionid;
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
-    public void setJ_sessionid(String j_sessionid) {
-        this.j_sessionid = j_sessionid;
+    public String getCaptcha() {
+        return captcha;
     }
 
-    public String getJ_captcha() {
-        return j_captcha;
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
     }
 
-    public void setJ_captcha(String j_captcha) {
-        this.j_captcha = j_captcha;
+    public String getOtpCaptcha() {
+        return otpCaptcha;
     }
 
-    public String getJ_otp_captcha() {
-        return j_otp_captcha;
+    public void setOtpCaptcha(String otpCaptcha) {
+        this.otpCaptcha = otpCaptcha;
     }
 
-    public void setJ_otp_captcha(String j_otp_captcha) {
-        this.j_otp_captcha = j_otp_captcha;
+    public String getRemeberMe() {
+        return remeberMe;
     }
 
-    public String getJ_remeberme() {
-        return j_remeberme;
+    public void setRemeberMe(String remeberMe) {
+        this.remeberMe = remeberMe;
     }
 
-    public void setJ_remeberme(String j_remeberme) {
-        this.j_remeberme = j_remeberme;
+    public String getAuthType() {
+        return authType;
     }
 
-    public String getJ_auth_type() {
-        return j_auth_type;
+    public void setAuthType(String authType) {
+        this.authType = authType;
     }
 
-    public void setJ_auth_type(String j_auth_type) {
-        this.j_auth_type = j_auth_type;
+    public String getJwtToken() {
+        return jwtToken;
     }
 
-    public String getJ_jwt_token() {
-        return j_jwt_token;
-    }
-
-    public void setJ_jwt_token(String j_jwt_token) {
-        this.j_jwt_token = j_jwt_token;
+    public void setJwtToken(String jwtToken) {
+        this.jwtToken = jwtToken;
     }
 
     public ArrayList<GrantedAuthority> getGrantedAuthority() {
@@ -146,9 +140,18 @@ public class BasicAuthentication implements Authentication {
 
     @Override
     public String toString() {
-        return "BasicAuthentication [j_username=" + j_username + ", j_sessionId=" + j_sessionid + ", j_captcha="
-                + j_captcha + ", j_otp_captcha=" + j_otp_captcha + ", j_remeberMe=" + j_remeberme + ", j_auth_type="
-                + j_auth_type + ", j_jwtToken=" + j_jwt_token + ", authenticated=" + authenticated + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("BasicAuthentication [username=").append(username)
+                .append(", password=").append(password)
+                .append(", sessionId=").append(sessionId)
+                .append(", captcha=").append(captcha)
+                .append(", otpCaptcha=").append(otpCaptcha)
+                .append(", remeberMe=").append(remeberMe)
+                .append(", authType=").append(authType)
+                .append(", jwtToken=").append(jwtToken)
+                .append(", grantedAuthority=").append(grantedAuthority)
+                .append(", authenticated=").append(authenticated)
+                .append("]");
+        return builder.toString();
     }
-
 }

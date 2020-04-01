@@ -13,13 +13,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 /**
- * database Authentication provider
+ * database Authentication provider.
  * @author Crystal.Sea
  *
  */
 public class RealmAuthenticationProvider extends AbstractAuthenticationProvider {
-
-    private static final Logger _logger = LoggerFactory.getLogger(RealmAuthenticationProvider.class);
+    private static final Logger _logger =
+            LoggerFactory.getLogger(RealmAuthenticationProvider.class);
 
     protected String getProviderName() {
         return "RealmAuthenticationProvider";
@@ -31,53 +31,58 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 
         _logger.debug("authentication " + auth);
 
-        sessionValid(auth.getJ_sessionid());
+        sessionValid(auth.getSessionId());
 
         //jwtTokenValid(j_jwtToken);
 
-        authTypeValid(auth.getJ_auth_type());
+        authTypeValid(auth.getAuthType());
 
-        captchaValid(auth.getJ_captcha(),auth.getJ_auth_type());
+        captchaValid(auth.getCaptcha(),auth.getAuthType());
 
-        emptyPasswordValid(auth.getJ_password());
+        emptyPasswordValid(auth.getPassword());
 
         UserInfo userInfo = null;
 
-        emptyUsernameValid(auth.getJ_username());
+        emptyUsernameValid(auth.getUsername());
 
-        userInfo= loadUserInfo(auth.getJ_username(),auth.getJ_password());
+        userInfo =  loadUserInfo(auth.getUsername(),auth.getPassword());
 
-        userinfoValid(userInfo, auth.getJ_password());
+        userinfoValid(userInfo, auth.getPassword());
 
-        tftcaptchaValid(auth.getJ_otp_captcha(),auth.getJ_auth_type(),userInfo);
+        tftcaptchaValid(auth.getOtpCaptcha(),auth.getAuthType(),userInfo);
 
         authenticationRealm.passwordPolicyValid(userInfo);
 
-        authenticationRealm.passwordMatches(userInfo, auth.getJ_password());
+        authenticationRealm.passwordMatches(userInfo, auth.getPassword());
         authenticationRealm.grantAuthority(userInfo);
-        /**
+        /*
          *  put userInfo to current session context
          */
         WebContext.setUserInfo(userInfo);
 
         auth.setAuthenticated(true);
 
-        if(auth.isAuthenticated()&&applicationConfig.getLoginConfig().isRemeberMe()){
-            if(auth.getJ_remeberme()!=null&&auth.getJ_remeberme().equals("remeberMe")){
-                WebContext.getSession().setAttribute(WebConstants.REMEBER_ME_SESSION,auth.getJ_username());
+        if (auth.isAuthenticated() && applicationConfig.getLoginConfig().isRemeberMe()) {
+            if (auth.getRemeberMe() != null && auth.getRemeberMe().equals("remeberMe")) {
+                WebContext.getSession().setAttribute(
+                        WebConstants.REMEBER_ME_SESSION,auth.getUsername());
                 _logger.debug("do Remeber Me");
                 remeberMeService.createRemeberMe(
                         userInfo.getUsername(), 
                         WebContext.getRequest(), 
-                        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getResponse());
+                        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
+                            .getResponse()
+                );
             }
         }
 
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =new UsernamePasswordAuthenticationToken(
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                new UsernamePasswordAuthenticationToken(
                 auth,
                 "PASSWORD",
                 authenticationRealm.grantAuthority(userInfo));
-        usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetails(WebContext.getRequest()));
+        usernamePasswordAuthenticationToken.setDetails(
+                new WebAuthenticationDetails(WebContext.getRequest()));
 
         return usernamePasswordAuthenticationToken;
     }

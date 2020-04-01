@@ -29,19 +29,19 @@
 							<form class="form-horizontal m-t-20" id="loginForm" name="loginForm" action="<@base />/logon.do" method="post">
 								<div class="form-group">
 									<span class="input-group-addon"><i class="fa fa-user"></i></span>
-									<input id='j_username' name='j_username' value="admin" class="form-control" type="text" required="" placeholder="<@locale code="login.text.username"/>">
+									<input id='j_username' name='username' value="admin" class="form-control" type="text" required="" placeholder="<@locale code="login.text.username"/>">
 								</div>
 								<div class="form-group">
 									<span class="input-group-addon"><i class="fa fa-key"></i></span>
-									<input id='j_password' name='j_password' class="form-control" type="password" required=""	placeholder="<@locale code="login.text.password"/>">
+									<input id='j_password' name='password' class="form-control" type="password" required=""	placeholder="<@locale code="login.text.password"/>">
 								</div>
 								<div class="form-group">
-									<input id="j_captcha" name="j_captcha" class="form-control" value="" type="text" required="" placeholder="<@locale code="login.text.captcha"/>"> 
+									<input id="j_captcha" name="captcha" class="form-control" value="" type="text" required="" placeholder="<@locale code="login.text.captcha"/>"> 
 									<img id="j_captchaimg" src="<@base/>/captcha" />
 								</div>
 								<div class="form-group text-center m-t-20">
-									<input type="hidden" name="j_auth_type" value="basic" /> 
-									<input type='hidden' id="sessionid" name="j_sessionid" value="${sessionid}" />
+									<input type="hidden" name="authType" value="basic" /> 
+									<input type='hidden' id="sessionid" name="sessionId" value="${sessionid}" />
 									<button id="loginSubmit" class="button btn-primary btn btn-common btn-block" type="submit">
 										<@locale code="login.button.login" />
 									</button>

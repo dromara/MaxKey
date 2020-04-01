@@ -52,7 +52,7 @@ public class OAuth20AccessConfirmationController {
 		for(Object key:model.keySet()){
 			modelRequest.put(key.toString(), model.get(key).toString());
 		}
-		String principal=((BasicAuthentication)WebContext.getAuthentication().getPrincipal()).getJ_username();
+		String principal=((BasicAuthentication)WebContext.getAuthentication().getPrincipal()).getUsername();
 		 //Map<String, Object> model
 		AuthorizationRequest clientAuth = (AuthorizationRequest) WebContext.getAttribute("authorizationRequest");
 		ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());

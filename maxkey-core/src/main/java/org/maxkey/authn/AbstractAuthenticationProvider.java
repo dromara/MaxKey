@@ -20,14 +20,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
 /**
- * login Authentication abstract class
+ * login Authentication abstract class.
  * 
  * @author Crystal.Sea
  *
  */
 public abstract class AbstractAuthenticationProvider {
-
-    private static final Logger _logger = LoggerFactory.getLogger(AbstractAuthenticationProvider.class);
+    private static final Logger _logger = 
+            LoggerFactory.getLogger(AbstractAuthenticationProvider.class);
 
     @Autowired
     @Qualifier("applicationConfig")
@@ -39,7 +39,7 @@ public abstract class AbstractAuthenticationProvider {
 
     @Autowired
     @Qualifier("tfaOTPAuthn")
-    protected AbstractOTPAuthn tfaOTPAuthn;
+    protected AbstractOTPAuthn tfaOptAuthn;
 
     @Autowired
     @Qualifier("remeberMeService")
@@ -54,21 +54,22 @@ public abstract class AbstractAuthenticationProvider {
         return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
     }
 
-    /*
-     * authenticate (non-Javadoc)
+    /**
+     * authenticate .
      * 
-     * @see org.springframework.security.authentication.AuthenticationProvider#
-     * authenticate(org.springframework.security.core.Authentication)
      */
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        _logger.debug("Trying to authenticate user '{}' via {}", authentication.getPrincipal(), getProviderName());
+    public Authentication authenticate(Authentication authentication) 
+            throws AuthenticationException {
+        _logger.debug("Trying to authenticate user '{}' via {}", 
+                authentication.getPrincipal(), getProviderName());
 
         try {
             authentication = doInternalAuthenticate(authentication);
         } catch (AuthenticationException e) {
             e.printStackTrace();
             _logger.error("Failed to authenticate user {} via {}: {}",
-                    new Object[] { authentication.getPrincipal(), getProviderName(), e.getMessage() });
+                    new Object[] { 
+                            authentication.getPrincipal(), getProviderName(), e.getMessage() });
             throw e;
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,39 +82,45 @@ public abstract class AbstractAuthenticationProvider {
         }
 
         // user authenticated
-        _logger.debug("'{}' authenticated successfully by {}.", authentication.getPrincipal(), getProviderName());
+        _logger.debug("'{}' authenticated successfully by {}.", 
+                authentication.getPrincipal(), getProviderName());
 
-        UserInfo userInfo = WebContext.getUserInfo();
-        Object password_set_type = WebContext.getSession()
+        final UserInfo userInfo = WebContext.getUserInfo();
+        final Object passwordSetType = WebContext.getSession()
                 .getAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
         // 登录完成后切换SESSION
         _logger.debug("Login  Session {}.", WebContext.getSession().getId());
         WebContext.getSession().invalidate();
-        WebContext.setAttribute(WebConstants.CURRENT_USER_SESSION_ID, WebContext.getSession().getId());
+        WebContext.setAttribute(
+                WebConstants.CURRENT_USER_SESSION_ID, WebContext.getSession().getId());
         _logger.debug("Login Success Session {}.", WebContext.getSession().getId());
 
-        authenticationRealm.insertLoginHistory(userInfo, LOGINTYPE.LOCAL, "", "xe00000004", "success");
+        authenticationRealm.insertLoginHistory(
+                userInfo, LOGINTYPE.LOCAL, "", "xe00000004", "success");
 
         // 认证设置
         WebContext.setAuthentication(authentication);
         WebContext.setUserInfo(userInfo);
-        WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE, password_set_type);
+        WebContext.getSession().setAttribute(
+                WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE, passwordSetType);
 
         // create new authentication response containing the user and it's authorities
-        UsernamePasswordAuthenticationToken simpleUserAuthentication = new UsernamePasswordAuthenticationToken(
-                userInfo.getUsername(), authentication.getCredentials(), authentication.getAuthorities());
+        UsernamePasswordAuthenticationToken simpleUserAuthentication = 
+                new UsernamePasswordAuthenticationToken(
+                        userInfo.getUsername(), 
+                        authentication.getCredentials(), 
+                        authentication.getAuthorities()
+                );
         return simpleUserAuthentication;
     }
 
     /**
-     * session validate
+     * session validate.
      * 
-     * @param j_username
-     * @param j_cname
-     * @param sessionId
+     * @param sessionId String
      */
-    protected void sessionValid(String j_sessionId) {
-        if (j_sessionId == null || !j_sessionId.equals(WebContext.getSession().getId())) {
+    protected void sessionValid(String sessionId) {
+        if (sessionId == null || !sessionId.equals(WebContext.getSession().getId())) {
             String message = WebContext.getI18nValue("login.error.session");
             _logger.debug("login session valid error.");
             throw new BadCredentialsException(message);
@@ -121,15 +128,13 @@ public abstract class AbstractAuthenticationProvider {
     }
 
     /**
-     * session validate
+     * session validate.
      * 
-     * @param j_username
-     * @param j_cname
-     * @param sessionId
+     * @param jwtToken String
      */
-    protected void jwtTokenValid(String j_jwtToken) {
+    protected void jwtTokenValid(String jwtToken) {
         /*
-         * if(j_jwtToken!=null && ! j_jwtToken.equals("")){
+         * if(jwtToken!=null && ! jwtToken.equals("")){
          * if(jwtLoginService.jwtTokenValidation(j_jwtToken)){ return; } }
          */
         String message = WebContext.getI18nValue("login.error.session");
@@ -137,8 +142,8 @@ public abstract class AbstractAuthenticationProvider {
         throw new BadCredentialsException(message);
     }
 
-    protected void authTypeValid(String j_auth_type) {
-        if (j_auth_type == null) {
+    protected void authTypeValid(String authType) {
+        if (authType == null) {
             String message = WebContext.getI18nValue("login.error.authtype");
             _logger.debug("login AuthN type can not been null .");
             throw new BadCredentialsException(message);
@@ -146,19 +151,21 @@ public abstract class AbstractAuthenticationProvider {
     }
 
     /**
-     * captcha validate
+     * captcha validate .
      * 
-     * @param j_username
-     * @param j_cname
-     * @param captcha
+     * @param authType String
+     * @param captcha String
      */
-    protected void captchaValid(String j_captcha, String j_auth_type) {
-        if (applicationConfig.getLoginConfig().isCaptcha()) {// for basic
-            if (j_auth_type.equalsIgnoreCase("common")) {
+    protected void captchaValid(String captcha, String authType) {
+        if (applicationConfig.getLoginConfig().isCaptcha()) {
+            // for basic
+            if (authType.equalsIgnoreCase("common")) {
                 _logger.info("captcha : "
-                        + WebContext.getSession().getAttribute(WebConstants.KAPTCHA_SESSION_KEY).toString());
-                if (j_captcha == null || !j_captcha
-                        .equals(WebContext.getSession().getAttribute(WebConstants.KAPTCHA_SESSION_KEY).toString())) {
+                        + WebContext.getSession().getAttribute(
+                                WebConstants.KAPTCHA_SESSION_KEY).toString());
+                if (captcha == null || !captcha
+                        .equals(WebContext.getSession().getAttribute(
+                                        WebConstants.KAPTCHA_SESSION_KEY).toString())) {
                     String message = WebContext.getI18nValue("login.error.captcha");
                     _logger.debug("login captcha valid error.");
                     throw new BadCredentialsException(message);
@@ -168,22 +175,24 @@ public abstract class AbstractAuthenticationProvider {
     }
 
     /**
-     * captcha validate
+     * captcha validate.
      * 
-     * @param j_username
-     * @param j_cname
-     * @param j_otp_captcha
+     * @param otpCaptcha String
+     * @param authType   String
+     * @param userInfo   UserInfo
      */
-    protected void tftcaptchaValid(String j_otp_captcha, String j_auth_type, UserInfo userInfo) {
-        if (applicationConfig.getLoginConfig().isOneTimePwd()) {// for one time password 2 factor
-            if (j_auth_type.equalsIgnoreCase("tfa")) {
+    protected void tftcaptchaValid(String otpCaptcha, String authType, UserInfo userInfo) {
+        // for one time password 2 factor
+        if (applicationConfig.getLoginConfig().isOneTimePwd()) {
+            if (authType.equalsIgnoreCase("tfa")) {
                 UserInfo validUserInfo = new UserInfo();
                 validUserInfo.setUsername(userInfo.getUsername());
-                String sharedSecret = PasswordReciprocal.getInstance().decoder(userInfo.getSharedSecret());
+                String sharedSecret = 
+                        PasswordReciprocal.getInstance().decoder(userInfo.getSharedSecret());
                 validUserInfo.setSharedSecret(sharedSecret);
                 validUserInfo.setSharedCounter(userInfo.getSharedCounter());
                 validUserInfo.setId(userInfo.getId());
-                if (j_otp_captcha == null || !tfaOTPAuthn.validate(validUserInfo, j_otp_captcha)) {
+                if (otpCaptcha == null || !tfaOptAuthn.validate(validUserInfo, otpCaptcha)) {
                     String message = WebContext.getI18nValue("login.error.captcha");
                     _logger.debug("login captcha valid error.");
                     throw new BadCredentialsException(message);
@@ -195,14 +204,14 @@ public abstract class AbstractAuthenticationProvider {
 
     /**
      * login user by j_username and j_cname first query user by j_cname if first
-     * step userinfo is null,query user from system
+     * step userinfo is null,query user from system.
      * 
-     * @param j_username
-     * @param j_cname
+     * @param username String
+     * @param password String
      * @return
      */
-    protected UserInfo loadUserInfo(String j_username, String j_password) {
-        UserInfo userInfo = authenticationRealm.loadUserInfo(j_username, j_password);
+    protected UserInfo loadUserInfo(String username, String password) {
+        UserInfo userInfo = authenticationRealm.loadUserInfo(username, password);
 
         if (userInfo != null) {
             if (userInfo.getUserType() == "SYSTEM") {
@@ -216,50 +225,49 @@ public abstract class AbstractAuthenticationProvider {
     }
 
     /**
-     * check input password empty
+     * check input password empty.
      * 
-     * @param password
+     * @param password String
      * @return
      */
-    protected boolean emptyPasswordValid(String j_password) {
-        if (null == j_password || "".equals(j_password)) {
+    protected boolean emptyPasswordValid(String password) {
+        if (null == password || "".equals(password)) {
             throw new BadCredentialsException(WebContext.getI18nValue("login.error.password.null"));
         }
         return true;
     }
 
     /**
-     * check input username or password empty
+     * check input username or password empty.
      * 
-     * @param j_username
-     * @param password
+     * @param email String
      * @return
      */
-    protected boolean emptyEmailValid(String j_email) {
-        if (null == j_email || "".equals(j_email)) {
+    protected boolean emptyEmailValid(String email) {
+        if (null == email || "".equals(email)) {
             throw new BadCredentialsException("login.error.email.null");
         }
         return true;
     }
 
     /**
-     * check input username empty
+     * check input username empty.
      * 
-     * @param j_username
+     * @param username String
      * @return
      */
-    protected boolean emptyUsernameValid(String j_username) {
-        if (null == j_username || "".equals(j_username)) {
+    protected boolean emptyUsernameValid(String username) {
+        if (null == username || "".equals(username)) {
             throw new BadCredentialsException(WebContext.getI18nValue("login.error.username.null"));
         }
         return true;
     }
 
-    protected boolean userinfoValid(UserInfo userInfo, String j_username) {
+    protected boolean userinfoValid(UserInfo userInfo, String username) {
         if (null == userInfo) {
             String message = WebContext.getI18nValue("login.error.username");
-            _logger.debug("login user  " + j_username + " not in this System ." + message);
-            UserInfo loginUser = new UserInfo(j_username);
+            _logger.debug("login user  " + username + " not in this System ." + message);
+            UserInfo loginUser = new UserInfo(username);
             loginUser.setId(loginUser.generateId());
             loginUser.setDisplayName("not exist");
             loginUser.setLoginCount(0);

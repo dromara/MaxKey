@@ -186,20 +186,20 @@ $(function(){
 			<td>
 				<div id="div_commonLogin" >
 					<form id="loginForm" name="loginForm" action="<@base />/logon.do" method="post">
-						<input type="hidden" name="j_auth_type" value="basic"/>
+						<input type="hidden" name="authType" value="basic"/>
 						<table  class="table login_form_table">
 							<tr>
 								<td><@locale code="login.text.username"/>：</td>
-								<td><input class="form-control" type='text' id='j_username'  name='j_username' value="admin" tabindex="1"/></td>
+								<td><input class="form-control" type='text' id='j_username'  name='username' value="admin" tabindex="1"/></td>
 							</tr>
 							<tr>
 								<td><@locale code="login.text.password"/>：</td>
-								<td><input class="form-control"  type='password' id='j_password'  name='j_password' value="admin"  tabindex="2"/></td>
+								<td><input class="form-control"  type='password' id='j_password'  name='password' value="admin"  tabindex="2"/></td>
 							</tr>
 							<#if true==isCaptcha> 
 							<tr>
 								<td><@locale code="login.text.captcha"/>：</td>
-								<td><input class="form-control"  type='text' id="j_captcha" name="j_captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" src="<@base/>/captcha"/></td>
+								<td><input class="form-control"  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" src="<@base/>/captcha"/></td>
 								
 							</tr>
 							</#if>
@@ -210,7 +210,7 @@ $(function(){
 										<tr>
 											<td style="width:50%">
 												<span class="form_checkbox_label">
-													<input type='checkbox' id="remeberMe" name="j_remeberme"  class="checkbox"   tabindex="4"  value="remeberMe" />
+													<input type='checkbox' id="remeberMe" name="remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
 													<@locale code="login.text.remeberme"/>
 												</span>
 											</td>
@@ -222,7 +222,7 @@ $(function(){
 							</#if>
 							<tr   style="display:none">
 								<td>sessionid：</td>
-								<td><input  class="form-control"  type='text' id="sessionid" name="j_sessionid" value="${sessionid}" /></td>
+								<td><input  class="form-control"  type='text' id="j_sessionid" name="sessionId" value="${sessionid}" /></td>
 								
 							</tr>
 							<tr >
@@ -235,15 +235,15 @@ $(function(){
 					</div>
 					<div id="div_tfaLogin" >
 					<form id="tfaLoginForm" name="tfaLoginForm" action="<@base />/logon.do" method="post">
-						<input type="hidden" name="j_auth_type" value="tfa"/>
+						<input type="hidden" name="authType" value="tfa"/>
 						<table  class="login_form_table">
 							<tr>
 								<td><@locale code="login.text.username"/>：</td>
-								<td><input class="form-control"  type='text' id='tfa_j_username'  name='j_username' value="" tabindex="1"/></td>
+								<td><input class="form-control"  type='text' id='tfa_j_username'  name='username' value="" tabindex="1"/></td>
 							</tr>
 							<tr> 
 								<td><@locale code="login.text.password"/>：</td>
-								<td><input class="form-control"  type='password' id='tfa_j_password'  name='j_password' value=""  tabindex="2" /></td>
+								<td><input class="form-control"  type='password' id='tfa_j_password'  name='password' value=""  tabindex="2" /></td>
 							</tr>
 							<#if true==isOneTimePwd>
 							<tr>
@@ -255,7 +255,7 @@ $(function(){
 							<tr>
 								<td><@locale code="login.text.captcha"/>：</td>
 								<td>
-									<input class="form-control"  type='text' id="tfa_j_otp_captcha" name="j_otp_captcha"  tabindex="3"  value=""   style="float: left;"/>
+									<input class="form-control"  type='text' id="tfa_j_otp_captcha" name="otpCaptcha"  tabindex="3"  value=""   style="float: left;"/>
 									<input class="form-control"  id="tfa_j_otp_captcha_button" type="button"  tabindex="5" class="button"  value="获取动态验证码"/>
 									
 								</td>
@@ -274,7 +274,7 @@ $(function(){
 										<tr>
 											<td style="width:50%">
 												<span class="form_checkbox_label">
-													<input type='checkbox' id="tfa_remeberMe" name="j_remeberme"  class="checkbox"   tabindex="4"  value="remeberMe" />
+													<input type='checkbox' id="tfa_remeberMe" name="remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
 													<@locale code="login.text.remeberme"/>
 												</span>
 											</td>
@@ -286,7 +286,7 @@ $(function(){
 							</#if>
 							<tr   style="display:none">
 								<td>sessionid：</td>
-								<td><input class="form-control"  type='text' id="tfa_sessionid" name="j_sessionid" value="${sessionid}" /></td>
+								<td><input class="form-control"  type='text' id="tfa_sessionid" name="sessionId" value="${sessionid}" /></td>
 								
 							</tr>
 							<tr >

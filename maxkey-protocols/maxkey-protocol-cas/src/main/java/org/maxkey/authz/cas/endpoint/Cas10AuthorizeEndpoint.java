@@ -90,7 +90,7 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
 		}
 		
 		if(storedTicket!=null){
-			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getJ_username();
+			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getUsername();
 			_logger.debug("principal "+principal);
 			return new Service10ResponseBuilder().success()
 					.setUser(principal)

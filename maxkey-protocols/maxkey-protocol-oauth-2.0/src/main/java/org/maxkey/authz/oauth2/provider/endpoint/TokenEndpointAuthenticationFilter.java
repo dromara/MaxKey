@@ -132,7 +132,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 			}else {
 				Authentication authentication=ClientCredentials(request,response);
 				BasicAuthentication auth =new BasicAuthentication();
-				auth.setJ_username(((User)authentication.getPrincipal()).getUsername());
+				auth.setUsername(((User)authentication.getPrincipal()).getUsername());
 				 auth.setAuthenticated(true);
 				UsernamePasswordAuthenticationToken simpleUserAuthentication = new UsernamePasswordAuthenticationToken(auth, authentication.getCredentials(), authentication.getAuthorities());
 				WebContext.setAuthentication(simpleUserAuthentication);

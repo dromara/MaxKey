@@ -94,7 +94,13 @@ public abstract class AbstractRemeberMeService {
         DateTime expiryDate = loginDate.plusSeconds(getRemeberMeValidity());
         DateTime now = new DateTime();
         if (now.isBefore(expiryDate)) {
-            if (WebContext.setAuthentication(storeRemeberMe.getUsername(), LOGINTYPE.REMEBER_ME, "", "", "success")) {
+            if (WebContext.setAuthentication(
+                    storeRemeberMe.getUsername(), 
+                    LOGINTYPE.REMEBER_ME, 
+                    "", 
+                    "", 
+                    "success")
+            ) {
                 return updateRemeberMe(remeberMeCookie, response);
             }
         }

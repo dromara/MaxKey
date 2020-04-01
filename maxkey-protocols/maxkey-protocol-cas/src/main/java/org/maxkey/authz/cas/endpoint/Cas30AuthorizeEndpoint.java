@@ -71,7 +71,7 @@ public class Cas30AuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
-			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getJ_username();
+			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getUsername();
 			serviceResponseBuilder.success().setUser(principal);
 			
 			if(BOOLEAN.isTrue(storedTicket.getCasDetails().getIsAdapter())){
@@ -111,7 +111,7 @@ public class Cas30AuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
-			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getJ_username();
+			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getUsername();
 			serviceResponseBuilder.success().setUser(principal);
 			
 			if(BOOLEAN.isTrue(storedTicket.getCasDetails().getIsAdapter())){

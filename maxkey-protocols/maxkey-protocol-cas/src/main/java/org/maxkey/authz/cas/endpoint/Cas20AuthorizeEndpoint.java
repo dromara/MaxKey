@@ -190,7 +190,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
-			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getJ_username();
+			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getUsername();
 			_logger.debug("principal "+principal);
 			serviceResponseBuilder.success().setUser(principal);
 			
