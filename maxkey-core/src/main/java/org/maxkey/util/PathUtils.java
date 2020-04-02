@@ -10,6 +10,7 @@ public class PathUtils {
     private String classPath;
     private String appPath;
     public static String WEB_INFO = "/WEB-INF/";
+    private static final String PATH_FILE_NAME = "PathUtils.properties";
 
     /**
      * getInstance .
@@ -29,7 +30,7 @@ public class PathUtils {
     public PathUtils() {
         try {
             classPath = java.net.URLDecoder.decode(
-                    PathUtils.class.getResource("PathUtils.xml").getFile(),
+                    PathUtils.class.getResource(PATH_FILE_NAME).getFile(),
                     "UTF-8"
             );
             _logger.debug("PathUtils() PathUtils " + classPath);
@@ -37,7 +38,7 @@ public class PathUtils {
             e.printStackTrace();
         }
 
-        String fileProtocol = PathUtils.class.getResource("PathUtils.properties").getProtocol();
+        String fileProtocol = PathUtils.class.getResource(PATH_FILE_NAME).getProtocol();
         _logger.info("Properties Protocol:" 
                 + PathUtils.class.getResource("PathUtils.properties").getProtocol());
 
@@ -53,7 +54,8 @@ public class PathUtils {
         }
 
         _logger.info("PathUtils  Class Path  : " + classPath);
-        classPath = classPath.substring(0, classPath.indexOf("/org/maxkey/util/PathUtils.xml"));
+        classPath = classPath.substring(0, 
+                classPath.indexOf("/org/maxkey/util/" + PATH_FILE_NAME));
         if (classPath.indexOf(WEB_INFO) == -1) {
             appPath = classPath.substring(0, classPath.lastIndexOf("/"));
         } else {
