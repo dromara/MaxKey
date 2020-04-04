@@ -76,9 +76,10 @@
 百度网盘下载
 | 版本    | 日期   |  下载地址  |  提取码  |
 | --------| :-----  | :----  | :----:  |
-| v 1.0 GA   | 2019/12/06   |  <a href="https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ" target="_blank">https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ</a>  |  **g17z**  |
-| v 1.2 GA   | 2020/01/18   |  <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA</a>  |  **6bda**  |
+| v 1.3.0 GA | 2020/04/04   |  <a href="https://pan.baidu.com/s/1o7vfBeq21Az_0s0tJvObOw" target="_blank">https://pan.baidu.com/s/1o7vfBeq21Az_0s0tJvObOw</a>  |  **20bj**  |
 | v 1.2.1 GA | 2020/02/29   |  <a href="https://pan.baidu.com/s/1FDkJ4DOMQq8tPAXrIfDeKA" target="_blank">https://pan.baidu.com/s/1FDkJ4DOMQq8tPAXrIfDeKA</a>  |  **yutq**  |
+| v 1.2.0 GA   | 2020/01/18   |  <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA</a>  |  **6bda**  |
+| v 1.0 GA   | 2019/12/06   |  <a href="https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ" target="_blank">https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ</a>  |  **g17z**  |
 
 ------------
 
