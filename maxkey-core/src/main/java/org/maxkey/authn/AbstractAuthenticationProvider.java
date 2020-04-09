@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -70,12 +69,10 @@ public abstract class AbstractAuthenticationProvider {
             _logger.error("Failed to authenticate user {} via {}: {}",
                     new Object[] { 
                             authentication.getPrincipal(), getProviderName(), e.getMessage() });
-            throw e;
         } catch (Exception e) {
             e.printStackTrace();
             String message = "Unexpected exception in " + getProviderName() + " authentication:";
-            _logger.error(message, e);
-            throw new AuthenticationServiceException(message, e);
+            _logger.error("Login error " + message, e);
         }
         if (!authentication.isAuthenticated()) {
             return authentication;
@@ -143,11 +140,16 @@ public abstract class AbstractAuthenticationProvider {
     }
 
     protected void authTypeValid(String authType) {
-        if (authType == null) {
-            String message = WebContext.getI18nValue("login.error.authtype");
-            _logger.debug("login AuthN type can not been null .");
-            throw new BadCredentialsException(message);
+        final   String message = WebContext.getI18nValue("login.error.authtype");
+        _logger.debug("Login AuthN Type  " + authType);
+        if (authType != null && (
+                authType.equalsIgnoreCase("basic") 
+                || authType.equalsIgnoreCase("tfa"))
+            ) {
+            return;
         }
+        _logger.debug("Login AuthN type must eq basic or tfa .");
+        throw new BadCredentialsException(message);
     }
 
     /**
@@ -157,19 +159,17 @@ public abstract class AbstractAuthenticationProvider {
      * @param captcha String
      */
     protected void captchaValid(String captcha, String authType) {
-        if (applicationConfig.getLoginConfig().isCaptcha()) {
-            // for basic
-            if (authType.equalsIgnoreCase("common")) {
-                _logger.info("captcha : "
-                        + WebContext.getSession().getAttribute(
-                                WebConstants.KAPTCHA_SESSION_KEY).toString());
-                if (captcha == null || !captcha
-                        .equals(WebContext.getSession().getAttribute(
-                                        WebConstants.KAPTCHA_SESSION_KEY).toString())) {
-                    String message = WebContext.getI18nValue("login.error.captcha");
-                    _logger.debug("login captcha valid error.");
-                    throw new BadCredentialsException(message);
-                }
+        // for basic
+        if (applicationConfig.getLoginConfig().isCaptcha() && authType.equalsIgnoreCase("basic")) {
+            _logger.info("captcha : "
+                    + WebContext.getSession().getAttribute(
+                            WebConstants.KAPTCHA_SESSION_KEY).toString());
+            if (captcha == null || !captcha
+                    .equals(WebContext.getSession().getAttribute(
+                                    WebConstants.KAPTCHA_SESSION_KEY).toString())) {
+                String message = WebContext.getI18nValue("login.error.captcha");
+                _logger.debug("login captcha valid error.");
+                throw new BadCredentialsException(message);
             }
         }
     }
@@ -183,22 +183,19 @@ public abstract class AbstractAuthenticationProvider {
      */
     protected void tftcaptchaValid(String otpCaptcha, String authType, UserInfo userInfo) {
         // for one time password 2 factor
-        if (applicationConfig.getLoginConfig().isOneTimePwd()) {
-            if (authType.equalsIgnoreCase("tfa")) {
-                UserInfo validUserInfo = new UserInfo();
-                validUserInfo.setUsername(userInfo.getUsername());
-                String sharedSecret = 
-                        PasswordReciprocal.getInstance().decoder(userInfo.getSharedSecret());
-                validUserInfo.setSharedSecret(sharedSecret);
-                validUserInfo.setSharedCounter(userInfo.getSharedCounter());
-                validUserInfo.setId(userInfo.getId());
-                if (otpCaptcha == null || !tfaOptAuthn.validate(validUserInfo, otpCaptcha)) {
-                    String message = WebContext.getI18nValue("login.error.captcha");
-                    _logger.debug("login captcha valid error.");
-                    throw new BadCredentialsException(message);
-                }
+        if (applicationConfig.getLoginConfig().isOneTimePwd() && authType.equalsIgnoreCase("tfa")) {
+            UserInfo validUserInfo = new UserInfo();
+            validUserInfo.setUsername(userInfo.getUsername());
+            String sharedSecret = 
+                    PasswordReciprocal.getInstance().decoder(userInfo.getSharedSecret());
+            validUserInfo.setSharedSecret(sharedSecret);
+            validUserInfo.setSharedCounter(userInfo.getSharedCounter());
+            validUserInfo.setId(userInfo.getId());
+            if (otpCaptcha == null || !tfaOptAuthn.validate(validUserInfo, otpCaptcha)) {
+                String message = WebContext.getI18nValue("login.error.captcha");
+                _logger.debug("login captcha valid error.");
+                throw new BadCredentialsException(message);
             }
-
         }
     }
 

@@ -19,7 +19,7 @@
 
 <h3>认证配置</h3>
 文件
-maxkey/config/applicationLogin.properties
+maxkey/config/applicationConfig.properties
 
 <pre><code class="ini hljs">
 #enable social sign on

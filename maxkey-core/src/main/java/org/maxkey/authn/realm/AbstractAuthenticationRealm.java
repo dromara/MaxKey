@@ -6,9 +6,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
@@ -125,7 +123,7 @@ public abstract class AbstractAuthenticationRealm {
         if (getPasswordPolicy().getExpiration() > 0) {
 
             String passwordLastSetTimeString = userInfo.getPasswordLastSetTime().substring(0, 19);
-            _logger.info("last password set date 锛�" + passwordLastSetTimeString);
+            _logger.info("last password set date " + passwordLastSetTimeString);
 
             DateTime currentdateTime = new DateTime();
             DateTime changePwdDateTime = DateTime.parse(passwordLastSetTimeString,

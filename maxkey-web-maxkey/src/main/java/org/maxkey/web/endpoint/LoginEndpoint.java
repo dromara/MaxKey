@@ -7,17 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.authn.RealmAuthenticationProvider;
-import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
-import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.wsfederation.WsFederationConstants;
-import org.maxkey.authn.support.wsfederation.WsFederationService;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.dao.service.UserInfoService;
-import org.maxkey.domain.Registration;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebConstants;
