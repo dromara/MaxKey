@@ -6,14 +6,14 @@
     <appenders>  
     	
         <Console name="consolePrint" target="SYSTEM_OUT">  
-            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss,SSS} [%t] %-5level %logger{36} - %msg%n" />  
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss,SSS} %-5level [%t] %logger{36}:%L - %msg%n" />  
         </Console>
         
 		<!-- 输出到文件，按天或者超过128MB分割 -->
 		<RollingFile name="RollingFile" fileName="logs/maxkey_mgt.log"    filePattern="logs/$${date:yyyyMMdd}/maxkey-%d{yyyy-MM-dd}-%i.log.gz">
 		    <!-- 需要记录的级别 -->
 		 	<!-- <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" /> -->
-		     <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n" />
+		     <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5level [%t] (%logger{36}:%L) - %msg%n" />
 		     <Policies>
 		          <OnStartupTriggeringPolicy />
 		          <TimeBasedTriggeringPolicy />

@@ -73,6 +73,7 @@ import org.opensaml.saml2.metadata.impl.SurNameBuilder;
 import org.opensaml.saml2.metadata.impl.TelephoneNumberBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
 
 import java.security.KeyStore;
 
@@ -118,7 +119,7 @@ public  void samlmtest(){
 	    try {
 	         KeyStoreLoader keyStoreLoader=new  KeyStoreLoader();
 	         keyStoreLoader.setKeystorePassword("secret");
-	         keyStoreLoader.setKeystoreFile("D:/JavaIDE/cert/idp-keystore.jks");
+	         keyStoreLoader.setKeystoreFile(new FileSystemResource("D:/JavaIDE/cert/idp-keystore.jks"));
 	         keyStoreLoader.afterPropertiesSet();
 	         KeyStore trustKeyStore =keyStoreLoader.getKeyStore();
 	         

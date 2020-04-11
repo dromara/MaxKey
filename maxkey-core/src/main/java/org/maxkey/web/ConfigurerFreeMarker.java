@@ -32,7 +32,7 @@ public class ConfigurerFreeMarker  implements ApplicationContextAware {
 		Map<String, Object> map = this.applicationContext.getBeansWithAnnotation(FreemarkerTag.class);
 		for (String key : map.keySet()) {
 			configuration.setSharedVariable(key, map.get(key));
-			_logger.debug("FreeMarker Template "+key);
+			_logger.trace("FreeMarker Template "+key);
 		}
 
 	}
