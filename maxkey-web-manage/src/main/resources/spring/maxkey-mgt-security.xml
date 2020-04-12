@@ -108,7 +108,6 @@
 	</bean>
 	
 	<bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn">
-		<constructor-arg ref="jdbcTemplate" /> 
 	</bean>
 	
 	<!-- Authentication Password Encoder Config -->
