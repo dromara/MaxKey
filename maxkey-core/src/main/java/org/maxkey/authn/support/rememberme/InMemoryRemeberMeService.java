@@ -4,6 +4,7 @@ import java.time.Duration;
 import org.ehcache.UserManagedCache;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.UserManagedCacheBuilder;
+import org.maxkey.constants.ConstantsTimeInterval;
 
 public class InMemoryRemeberMeService   extends AbstractRemeberMeService {
 
@@ -11,7 +12,7 @@ public class InMemoryRemeberMeService   extends AbstractRemeberMeService {
             UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, RemeberMe.class)
                 .withExpiry(
                     ExpiryPolicyBuilder.timeToLiveExpiration(
-                        Duration.ofMinutes(RemeberMe.TWO_WEEK)
+                        Duration.ofMinutes(ConstantsTimeInterval.TWO_WEEK)
                     )
                 )
                 .build(true);

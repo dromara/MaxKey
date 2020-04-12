@@ -4,7 +4,7 @@ import java.time.Duration;
 import org.ehcache.UserManagedCache;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.UserManagedCacheBuilder;
-import org.maxkey.authn.support.rememberme.RemeberMe;
+import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.password.opt.OneTimePassword;
 
 public class InMemoryOptTokenStore {
@@ -12,7 +12,7 @@ public class InMemoryOptTokenStore {
             UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, OneTimePassword.class)
                 .withExpiry(
                     ExpiryPolicyBuilder.timeToLiveExpiration(
-                        Duration.ofMinutes(RemeberMe.TWO_WEEK)
+                        Duration.ofMinutes(ConstantsTimeInterval.TWO_WEEK)
                     )
                 )
                 .build(true);
