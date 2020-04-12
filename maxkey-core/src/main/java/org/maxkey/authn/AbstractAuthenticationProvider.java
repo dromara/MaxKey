@@ -5,7 +5,7 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.constants.LOGINTYPE;
 import org.maxkey.crypto.password.PasswordReciprocal;
-import org.maxkey.crypto.password.opt.AbstractOTPAuthn;
+import org.maxkey.crypto.password.opt.AbstractOptAuthn;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -37,8 +37,8 @@ public abstract class AbstractAuthenticationProvider {
     protected AbstractAuthenticationRealm authenticationRealm;
 
     @Autowired
-    @Qualifier("tfaOTPAuthn")
-    protected AbstractOTPAuthn tfaOptAuthn;
+    @Qualifier("tfaOptAuthn")
+    protected AbstractOptAuthn tfaOptAuthn;
 
     @Autowired
     @Qualifier("remeberMeService")

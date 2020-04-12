@@ -91,7 +91,7 @@
 		
 	</bean>
 	
-	<bean id="tfaOTPAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOTPAuthn">
+	<bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn">
 		<constructor-arg ref="jdbcTemplate" /> 
 	</bean>
 	
@@ -178,19 +178,6 @@
 			</list>
 		</property>
 	</bean> -->
-	
-	<!-- Radius Server  Realm  
-	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.radius.RadiusServerAuthenticationRealm">
-		<constructor-arg ref="jdbcTemplate"/>
-		<property name="jradiusServers">
-			<list>
-				<bean id="radiusServer1" class="org.maxkey.web.authentication.realm.radius.RadiusServer">
-					<property name="inetAddress" value="localhost"/>
-					<property name="secret" value="test1234"/>
-				</bean>	
-			</list>
-		</property>
-	</bean>-->
 	
 	<!-- Default Realm-->
 	<!-- realm use jdbc -->

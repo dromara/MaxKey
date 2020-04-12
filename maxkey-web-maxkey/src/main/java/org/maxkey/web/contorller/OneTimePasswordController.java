@@ -6,7 +6,7 @@ import org.apache.commons.codec.binary.Hex;
 import org.maxkey.crypto.Base32Utils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.crypto.password.opt.algorithm.KeyUriFormat;
-import org.maxkey.crypto.password.opt.algorithm.OTPSecret;
+import org.maxkey.crypto.password.opt.algorithm.OtpSecret;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.RQCodeUtils;
@@ -63,7 +63,7 @@ public class OneTimePasswordController {
     @RequestMapping(value = {"gen/timebased"})
     public ModelAndView gentimebased() {
         UserInfo userInfo = WebContext.getUserInfo();
-        byte[] byteSharedSecret = OTPSecret.generate(keyUriFormat.getCrypto());
+        byte[] byteSharedSecret = OtpSecret.generate(keyUriFormat.getCrypto());
         String sharedSecret = Base32Utils.encode(byteSharedSecret);
         sharedSecret = passwordReciprocal.encode(sharedSecret);
         userInfo.setSharedSecret(sharedSecret);
@@ -96,7 +96,7 @@ public class OneTimePasswordController {
     @RequestMapping(value = {"gen/counterbased"})
     public ModelAndView gencounterbased() {
         UserInfo userInfo = WebContext.getUserInfo();
-        byte[] byteSharedSecret = OTPSecret.generate(keyUriFormat.getCrypto());
+        byte[] byteSharedSecret = OtpSecret.generate(keyUriFormat.getCrypto());
         String sharedSecret = Base32Utils.encode(byteSharedSecret);
         sharedSecret = passwordReciprocal.encode(sharedSecret);
         userInfo.setSharedSecret(sharedSecret);
@@ -128,7 +128,7 @@ public class OneTimePasswordController {
     @RequestMapping(value = {"gen/hotp"})
     public ModelAndView genhotp() {
         UserInfo userInfo = WebContext.getUserInfo();
-        byte[] byteSharedSecret = OTPSecret.generate(keyUriFormat.getCrypto());
+        byte[] byteSharedSecret = OtpSecret.generate(keyUriFormat.getCrypto());
         String sharedSecret = Base32Utils.encode(byteSharedSecret);
         sharedSecret = passwordReciprocal.encode(sharedSecret);
         userInfo.setSharedSecret(sharedSecret);

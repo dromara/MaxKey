@@ -1,214 +1,205 @@
 package org.maxkey.crypto.password.opt.algorithm;
 
 public class KeyUriFormat {
-	
-	public class Types{
-		public static final String HOTP 	=	"hotp";
-		public static final  String TOTP 	=	"totp";
-		
-	}
 
-	String crypto	=	"HmacSHA1";
-	String type;
-	String secret;
-	String issuer;
-	String domain;
-	int digits 		=	6;
-	//just for hotp
-	Long counter	=	0L;
-	//just for totp
-	int period 		=	30;
-	
-	String account;
-	
-	/**
-	 * 
-	 */
-	public KeyUriFormat() {
+    public class Types {
+        public static final String HOTP = "hotp";
+        public static final String TOTP = "totp";
 
-	}
-	
-	/**
-	 * @param type
-	 * @param secret
-	 */
-	public KeyUriFormat(String type, String secret) {
-		this.type = type;
-		this.secret = secret;
-	}
+    }
 
-	
+    String crypto = "HmacSHA1";
+    String type;
+    String secret;
+    String issuer;
+    String domain;
+    int digits = 6;
+    // just for hotp
+    Long counter = 0L;
+    // just for totp
+    int period = 30;
 
-	/**
-	 * @param type
-	 * @param secret
-	 * @param issuer
-	 */
-	public KeyUriFormat(String type, String secret, String issuer) {
-		this.type = type;
-		this.secret = secret;
-		this.issuer = issuer;
-	}
+    String account;
 
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
-	}
+    public KeyUriFormat() {
 
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+    }
 
-	/**
-	 * @return the secret
-	 */
-	public String getSecret() {
-		return secret;
-	}
+    /**
+     * @param type
+     * @param secret
+     */
+    public KeyUriFormat(String type, String secret) {
+        this.type = type;
+        this.secret = secret;
+    }
 
-	/**
-	 * @param secret the secret to set
-	 */
-	public void setSecret(String secret) {
-		this.secret = secret;
-	}
+    /**
+     * @param type
+     * @param secret
+     * @param issuer
+     */
+    public KeyUriFormat(String type, String secret, String issuer) {
+        this.type = type;
+        this.secret = secret;
+        this.issuer = issuer;
+    }
 
-	/**
-	 * @return the issuer
-	 */
-	public String getIssuer() {
-		return issuer;
-	}
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
 
-	/**
-	 * @param issuer the issuer to set
-	 */
-	public void setIssuer(String issuer) {
-		this.issuer = issuer;
-	}
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	/**
-	 * @return the digits
-	 */
-	public int getDigits() {
-		return digits;
-	}
+    /**
+     * @return the secret
+     */
+    public String getSecret() {
+        return secret;
+    }
 
-	/**
-	 * @param digits the digits to set
-	 */
-	public void setDigits(int digits) {
-		this.digits = digits;
-	}
+    /**
+     * @param secret the secret to set
+     */
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
 
-	/**
-	 * @return the counter
-	 */
-	public Long getCounter() {
-		return counter;
-	}
+    /**
+     * @return the issuer
+     */
+    public String getIssuer() {
+        return issuer;
+    }
 
-	/**
-	 * @param counter the counter to set
-	 */
-	public void setCounter(Long counter) {
-		this.counter = counter;
-	}
+    /**
+     * @param issuer the issuer to set
+     */
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
+    }
 
-	/**
-	 * @return the period
-	 */
-	public int getPeriod() {
-		return period;
-	}
+    /**
+     * @return the digits
+     */
+    public int getDigits() {
+        return digits;
+    }
 
-	/**
-	 * @param period the period to set
-	 */
-	public void setPeriod(int period) {
-		this.period = period;
-	}
+    /**
+     * @param digits the digits to set
+     */
+    public void setDigits(int digits) {
+        this.digits = digits;
+    }
 
-	/**
-	 * @return the account
-	 */
-	public String getAccount() {
-		return account;
-	}
+    /**
+     * @return the counter
+     */
+    public Long getCounter() {
+        return counter;
+    }
 
-	/**
-	 * @param account the account to set
-	 */
-	public void setAccount(String account) {
-		this.account = account;
-	}
-	
-	
-	/**
-	 * @return the crypto
-	 */
-	public String getCrypto() {
-		return crypto;
-	}
+    /**
+     * @param counter the counter to set
+     */
+    public void setCounter(Long counter) {
+        this.counter = counter;
+    }
 
+    /**
+     * @return the period
+     */
+    public int getPeriod() {
+        return period;
+    }
 
+    /**
+     * @param period the period to set
+     */
+    public void setPeriod(int period) {
+        this.period = period;
+    }
 
-	/**
-	 * @param crypto the crypto to set
-	 */
-	public void setCrypto(String crypto) {
-		this.crypto = crypto;
-	}
+    /**
+     * @return the account
+     */
+    public String getAccount() {
+        return account;
+    }
 
+    /**
+     * @param account the account to set
+     */
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
+    /**
+     * @return the crypto
+     */
+    public String getCrypto() {
+        return crypto;
+    }
 
-	public String getDomain() {
-		return domain;
-	}
+    /**
+     * @param crypto the crypto to set
+     */
+    public void setCrypto(String crypto) {
+        this.crypto = crypto;
+    }
 
+    public String getDomain() {
+        return domain;
+    }
 
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 
-	public void setDomain(String domain) {
-		this.domain = domain;
-	}
+    public String format() {
+        return format(this.account);
+    }
 
+    /**
+     * format account.
+     * @param account String
+     * @return
+     */
+    public String format(String account) {
+        StringBuffer uri = new StringBuffer("otpauth://");
+        uri.append(type).append("/");
+        if (null != this.domain) {
+            uri.append(this.domain).append("/").append(account);
+        } else {
+            uri.append(account);
+        }
+        uri.append("?secret=").append(secret);
 
+        if (null != issuer) {
+            uri.append("&issuer=").append(issuer);
+        }
+        if (digits != 6) {
+            uri.append("&digits=").append(digits);
+        }
 
-	public String format(){
-		return format(this.account);
-	}
-	
-	public String format(String account){
-		StringBuffer uri=new StringBuffer("otpauth://");
-		uri.append(type).append("/");
-		if(null!=this.domain){
-			uri.append(this.domain).append("/").append(account);
-		}else{
-			uri.append(account);
-		}
-		uri.append("?secret=").append(secret);
-		
-		if(null!=issuer){
-			uri.append("&issuer=").append(issuer);
-		}
-		if(digits!=6){
-			uri.append("&digits=").append(digits);
-		}
-		
-		if(type.equalsIgnoreCase(Types.TOTP)&&period!=30){
-				uri.append("&period=").append(period);
-		}
-		
-		if(type.equalsIgnoreCase(Types.HOTP)){
-			uri.append("&counter=").append(counter);
-		}
-		
-		return uri.toString();
-	}
-	
+        if (type.equalsIgnoreCase(Types.TOTP) && period != 30) {
+            uri.append("&period=").append(period);
+        }
+
+        if (type.equalsIgnoreCase(Types.HOTP)) {
+            uri.append("&counter=").append(counter);
+        }
+
+        return uri.toString();
+    }
+
 }
