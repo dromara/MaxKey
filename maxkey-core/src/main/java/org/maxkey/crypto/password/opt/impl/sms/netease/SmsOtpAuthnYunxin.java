@@ -11,7 +11,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.maxkey.crypto.password.opt.impl.sms.SendSms;
+import org.maxkey.crypto.password.opt.impl.SmsOtpAuthn;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * 网易云信的短信验证.
@@ -19,7 +20,12 @@ import org.maxkey.crypto.password.opt.impl.sms.SendSms;
  *
  */
 
-public class SendSmsYunxin implements SendSms {
+public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
+    public SmsOtpAuthnYunxin(JdbcTemplate jdbcTemplate) {
+        super(jdbcTemplate);
+        // TODO Auto-generated constructor stub
+    }
+
     //发送验证码的请求路径URL
     private static final String
             SERVER_URL = "https://api.netease.im/sms/sendcode.action";
@@ -49,7 +55,7 @@ public class SendSmsYunxin implements SendSms {
         /*
          * 参考计算CheckSum的java代码，在上述文档的参数列表中，有CheckSum的计算文档示例
          */
-        String checkSum = SendSmsYunxinCheckSumBuilder
+        String checkSum = SmsOtpAuthnCheckSumBuilder
                 .getCheckSum(APP_SECRET, NONCE, curTime);
 
         // 设置请求的header
@@ -92,12 +98,6 @@ public class SendSmsYunxin implements SendSms {
     
     public static void main(String[] args) throws Exception {
         sendSms(null);
-    }
-
-    @Override
-    public String sendSms() {
-        // TODO Auto-generated method stub
-        return null;
     }
     
 }

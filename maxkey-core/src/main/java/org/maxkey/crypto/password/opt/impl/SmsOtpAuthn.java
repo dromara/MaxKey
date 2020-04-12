@@ -15,13 +15,13 @@ public class SmsOtpAuthn extends AbstractOptAuthn {
         String token = this.genToken(userInfo);
         // TODO:You must add send sms code here
 
-        this.insertDataBase(userInfo, token, userInfo.getUsername(), OPT_TYPES.SMS);
+        this.insertDataBase(userInfo, token, userInfo.getUsername(), OptTypes.SMS);
         return true;
     }
 
     @Override
     public boolean validate(UserInfo userInfo, String token) {
-        return this.validateDataBase(userInfo, token, OPT_TYPES.SMS);
+        return this.validateDataBase(userInfo, token, OptTypes.SMS);
     }
 
 }

@@ -33,7 +33,7 @@ public abstract class AbstractOptAuthn {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public static final class OPT_TYPES {
+    public static final class OptTypes {
         // 手机
         public static int MOBILE = 2;
         // 短信

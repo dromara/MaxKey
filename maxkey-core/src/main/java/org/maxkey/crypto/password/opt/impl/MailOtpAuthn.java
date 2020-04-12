@@ -37,7 +37,7 @@ public class MailOtpAuthn extends AbstractOptAuthn {
             _logger.debug(
                     "token " + token + " send to user +" + userInfo.getUsername() 
                     + ", email " + userInfo.getEmail());
-            this.insertDataBase(userInfo, token, userInfo.getUsername(), OPT_TYPES.EMAIL);
+            this.insertDataBase(userInfo, token, userInfo.getUsername(), OptTypes.EMAIL);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,7 +47,7 @@ public class MailOtpAuthn extends AbstractOptAuthn {
 
     @Override
     public boolean validate(UserInfo userInfo, String token) {
-        return this.validateDataBase(userInfo, token, OPT_TYPES.EMAIL);
+        return this.validateDataBase(userInfo, token, OptTypes.EMAIL);
     }
 
     public void setEmailConfig(EmailConfig emailConfig) {
