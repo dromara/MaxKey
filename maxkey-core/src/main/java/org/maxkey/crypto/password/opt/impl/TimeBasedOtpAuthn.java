@@ -22,7 +22,6 @@ public class TimeBasedOtpAuthn extends AbstractOptAuthn {
 
     @Override
     public boolean produce(UserInfo userInfo) {
-        // TODO Auto-generated method stub
         return true;
     }
 

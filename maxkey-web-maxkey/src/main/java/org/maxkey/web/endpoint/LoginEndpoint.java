@@ -12,6 +12,7 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.wsfederation.WsFederationConstants;
 import org.maxkey.config.ApplicationConfig;
+import org.maxkey.crypto.password.opt.AbstractOptAuthn;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.StringUtils;
@@ -69,6 +70,11 @@ public class LoginEndpoint {
 	@Autowired
 	@Qualifier("authenticationProvider")
 	RealmAuthenticationProvider authenticationProvider ;
+	
+	@Autowired
+    @Qualifier("tfaOptAuthn")
+    protected AbstractOptAuthn tfaOptAuthn;
+	
 	/*
 	@Autowired
 	@Qualifier("jwtLoginService")
@@ -124,6 +130,11 @@ public class LoginEndpoint {
 			modelAndView.addObject("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
 			modelAndView.addObject("isKerberos", applicationConfig.getLoginConfig().isKerberos());
 			modelAndView.addObject("isOneTimePwd", applicationConfig.getLoginConfig().isOneTimePwd());
+			if(applicationConfig.getLoginConfig().isOneTimePwd()) {
+			    modelAndView.addObject("optType", tfaOptAuthn.getOptType());
+			    modelAndView.addObject("optInterval", tfaOptAuthn.getInterval());
+			}
+			
 			if( applicationConfig.getLoginConfig().isKerberos()){
 				modelAndView.addObject("userDomainUrlJson", kerberosService.buildKerberosProxys());
 				
@@ -183,4 +194,18 @@ public class LoginEndpoint {
  		
  		return authnType;
  	}
+ 	
+ 	@RequestMapping("/login/otp/{username}")
+    @ResponseBody
+    public String produceOtp(@PathVariable("username") String username) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(username);
+        UserInfo queryUserInfo=userInfoService.loadByUsername(username);//(userInfo);
+        if(queryUserInfo!=null) {
+            tfaOptAuthn.produce(queryUserInfo);
+            return "ok";
+        }
+        
+        return "fail";
+    }
 }

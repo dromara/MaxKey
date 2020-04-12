@@ -1,19 +1,62 @@
 package org.maxkey.crypto.password.opt.token;
 
-import java.time.Duration;
 import org.ehcache.UserManagedCache;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.UserManagedCacheBuilder;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormat;
 import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.password.opt.OneTimePassword;
+import org.maxkey.domain.UserInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class InMemoryOptTokenStore {
-    protected static final UserManagedCache<String, OneTimePassword> remeberMeStore = 
+public class InMemoryOptTokenStore  extends AbstractOptTokenStore {
+    private static final  Logger logger = LoggerFactory.getLogger(InMemoryOptTokenStore.class);
+    
+    protected static final UserManagedCache<String, OneTimePassword> optTokenStore = 
             UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, OneTimePassword.class)
                 .withExpiry(
                     ExpiryPolicyBuilder.timeToLiveExpiration(
-                        Duration.ofMinutes(ConstantsTimeInterval.TWO_WEEK)
+                        java.time.Duration.ofMinutes(ConstantsTimeInterval.ONE_MINUTE * 5)
                     )
                 )
                 .build(true);
+
+    @Override
+    public void store(UserInfo userInfo, String token, String receiver, String type) {
+        DateTime currentDateTime = new DateTime();
+        OneTimePassword otp = new OneTimePassword();
+        otp.setId(userInfo.getUsername() + "_" + type + "_" + token);
+        otp.setType(type);
+        otp.setUsername(userInfo.getUsername());
+        otp.setToken(token);
+        otp.setReceiver(receiver);
+        otp.setCreateTime(currentDateTime.toString("yyyy-MM-dd HH:mm:ss"));
+        optTokenStore.put(otp.getId(), otp);
+        
+    }
+
+    @Override
+    public boolean validate(UserInfo userInfo, String token, String type, int interval) {
+        OneTimePassword otp = optTokenStore.get(userInfo.getUsername() + "_" + type + "_" + token);
+        if (otp != null) {
+            DateTime currentdateTime = new DateTime();
+            DateTime oneCreateTime = DateTime.parse(otp.getCreateTime(),
+                    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+            Duration duration = new Duration(oneCreateTime, currentdateTime);
+            int intDuration = Integer.parseInt(duration.getStandardSeconds() + "");
+            logger.debug("validate duration " + intDuration);
+            logger.debug("validate result " + (intDuration <= interval));
+            if (intDuration <= interval) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public InMemoryOptTokenStore() {
+        
+    }    
 }

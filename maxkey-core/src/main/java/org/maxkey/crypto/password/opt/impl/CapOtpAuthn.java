@@ -15,6 +15,12 @@ import org.maxkey.domain.UserInfo;
  */
 public class CapOtpAuthn extends AbstractOptAuthn {
 
+    
+    
+    public CapOtpAuthn() {
+        optType = OptTypes.CAP_OPT;
+    }
+
     @Override
     public boolean produce(UserInfo userInfo) {
         // TODO Auto-generated method stub

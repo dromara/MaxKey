@@ -15,6 +15,10 @@ public class HotpOtpAuthn extends AbstractOptAuthn {
     boolean addChecksum;
     int truncation = -1;
 
+    public HotpOtpAuthn() {
+        optType = OptTypes.HOTP_OPT;
+    }
+
     @Override
     public boolean produce(UserInfo userInfo) {
         return true;

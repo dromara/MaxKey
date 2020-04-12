@@ -13,6 +13,10 @@ public class MailOtpAuthn extends AbstractOptAuthn {
     private static final Logger _logger = LoggerFactory.getLogger(MailOtpAuthn.class);
     EmailConfig emailConfig;
 
+    public MailOtpAuthn() {
+        optType = OptTypes.EMAIL;
+    }
+
     @Override
     public boolean produce(UserInfo userInfo) {
         try {

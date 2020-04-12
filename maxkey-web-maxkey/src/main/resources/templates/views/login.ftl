@@ -54,6 +54,7 @@ function formatTime(){
 	strTime+=(seconds<10?"0"+seconds:seconds);
 }
 
+<#if true==isOneTimePwd && "TOPT"==optType>
 function currentTime(){
 	seconds++;
 	if(seconds>59){
@@ -74,17 +75,18 @@ function currentTime(){
 	
 	$("#currentTime").val(strTime);
 }
+
 <#--timeBase Token  Interval default is 30s-->
 var timeBaseCount;
 function getTimeBaseCount(){
-	if(seconds<30){
-		timeBaseCount=30-seconds;
+	if(seconds<${optInterval}){
+		timeBaseCount=${optInterval}-seconds;
 	}else{
-		timeBaseCount=30-(seconds-30);
+		timeBaseCount=${optInterval}-(seconds-${optInterval});
 	}
 	$("#tfa_j_otp_captcha_button").val("<@locale code="login.text.login.twofactor.validTime"/>("+timeBaseCount+")<@locale code="login.text.login.twofactor.validTime.unit"/>");
 };
-
+</#if>
 var currentSwitchTab="div_commonLogin";
 <#--submit form-->		
 function doLoginSubmit(){
@@ -117,7 +119,9 @@ document.onkeydown=function(event){
 };
 	
 $(function(){
+	<#if true==isOneTimePwd && "TOPT"==optType>
 	setInterval("currentTime()", 1000);
+	</#if>
 	<#--on captcha image click ,new a captcha code-->
 	<#if true==isCaptcha>
 	$('#j_captchaimg').click(function () {//
@@ -153,6 +157,14 @@ $(function(){
 		if(captchaCount<60){
 			return;
 		}
+		var loginName=$("#tfa_j_username").val();
+		if(loginName==""){
+			return;
+		}
+		$.get("<@base />/login/otp/"+loginName,function(data,status){
+    		alert("Data: " + data + "\nStatus: " + status);
+  		});
+		
 		<#--todo:send captcha-->
 		captchaCountTimer=setInterval("getCaptchaCount()", 1000);
 	});
@@ -245,13 +257,15 @@ $(function(){
 								<td><@locale code="login.text.password"/>：</td>
 								<td><input class="form-control"  type='password' id='tfa_j_password'  name='password' value=""  tabindex="2" /></td>
 							</tr>
-							<#if true==isOneTimePwd>
+							<#if true==isOneTimePwd >
+							<#if "TOPT"==optType >
 							<tr>
 								<td><@locale code="login.text.currenttime"/>：</td>
 								<td>
 									<input class="form-control"  readonly type='text' id="currentTime" name="currentTime"  tabindex="3"  value="" />
 								</td>
 							</tr>
+							</#if>
 							<tr>
 								<td><@locale code="login.text.captcha"/>：</td>
 								<td>

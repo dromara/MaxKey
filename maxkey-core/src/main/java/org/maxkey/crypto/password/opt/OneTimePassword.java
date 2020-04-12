@@ -1,8 +1,11 @@
 package org.maxkey.crypto.password.opt;
 
-public class OneTimePassword {
+import java.io.Serializable;
+
+public class OneTimePassword  implements Serializable {
+    private static final long serialVersionUID = -1637133296702014021L;
     private String id;
-    private int type;
+    private String type;
     private String token;
     private String username;
     private String receiver;
@@ -16,11 +19,11 @@ public class OneTimePassword {
         this.id = id;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

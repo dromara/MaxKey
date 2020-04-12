@@ -15,6 +15,12 @@ import org.maxkey.domain.UserInfo;
  */
 public class RsaOtpAuthn extends AbstractOptAuthn {
 
+    
+    
+    public RsaOtpAuthn() {
+        optType = OptTypes.RSA_OPT;
+    }
+
     @Override
     public boolean produce(UserInfo userInfo) {
         // TODO Auto-generated method stub

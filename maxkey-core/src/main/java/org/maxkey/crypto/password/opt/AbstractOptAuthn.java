@@ -1,5 +1,7 @@
 package org.maxkey.crypto.password.opt;
 
+import org.maxkey.crypto.password.opt.token.AbstractOptTokenStore;
+import org.maxkey.crypto.password.opt.token.InMemoryOptTokenStore;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.StringGenerator;
 import org.slf4j.Logger;
@@ -13,29 +15,35 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractOptAuthn {
     private static final  Logger logger = LoggerFactory.getLogger(AbstractOptAuthn.class);
 
+    protected AbstractOptTokenStore optTokenStore = new InMemoryOptTokenStore();
+    
+    //验证码有效間隔
     protected int interval = 30;
-
+    
+    // 验证码长度，范围4～10，默认为6
     protected int digits = 6;
 
     protected String crypto = "HmacSHA1";
 
     StringGenerator stringGenerator;
+    
+    protected String optType = OptTypes.TIMEBASED_OPT;
 
     public static final class OptTypes {
         // 手机
-        public static int MOBILE = 2;
+        public static String  MOBILE = "MOBILE";
         // 短信
-        public static int SMS = 3;
+        public static String SMS = "SMS";
         // 邮箱
-        public static int EMAIL = 4;
+        public static String EMAIL = "EMAIL";
+        //TIMEBASED_OPT
+        public static String TIMEBASED_OPT = "TOPT";
+        // HmacOTP
+        public static String HOTP_OPT = "HOTP";
 
-        public static int TIMEBASED_OPT = 5;
-
-        public static int COUNTERBASED_OPT = 6;
-
-        public static int HOTP_OPT = 7;
-
-        public static int RSA_OPT = 8;
+        public static String RSA_OPT = "RSA";
+        
+        public static String CAP_OPT = "CAP";
 
     }
 
@@ -107,6 +115,14 @@ public abstract class AbstractOptAuthn {
      */
     public void setCrypto(String crypto) {
         this.crypto = crypto;
+    }
+
+    public String getOptType() {
+        return optType;
+    }
+
+    public void setOptType(String optType) {
+        this.optType = optType;
     }
 
  

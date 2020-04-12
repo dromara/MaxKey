@@ -12,6 +12,10 @@ public class CounterBasedOtpAuthn extends AbstractOptAuthn {
     private static final Logger _logger = LoggerFactory.getLogger(CounterBasedOtpAuthn.class);
 
 
+    public CounterBasedOtpAuthn() {
+        optType = OptTypes.HOTP_OPT;
+    }
+
     @Override
     public boolean produce(UserInfo userInfo) {
         return true;

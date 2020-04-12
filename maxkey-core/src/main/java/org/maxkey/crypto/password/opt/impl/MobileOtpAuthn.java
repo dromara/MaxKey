@@ -5,6 +5,12 @@ import org.maxkey.domain.UserInfo;
 
 public class MobileOtpAuthn extends AbstractOptAuthn {
 
+    
+    
+    public MobileOtpAuthn() {
+        optType = OptTypes.SMS;
+    }
+
     @Override
     public boolean produce(UserInfo userInfo) {
         // TODO Auto-generated method stub

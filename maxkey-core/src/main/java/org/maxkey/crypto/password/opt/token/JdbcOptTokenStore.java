@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-public class JdbcOptTokenStore {
+public class JdbcOptTokenStore extends AbstractOptTokenStore {
     private static final  Logger logger = LoggerFactory.getLogger(JdbcOptTokenStore.class);
     
     private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = 
@@ -38,7 +38,10 @@ public class JdbcOptTokenStore {
     }
     
  
-    protected void store(UserInfo userInfo, String token, String receiver, int type) {
+    /**
+     *store.
+     */
+    public void store(UserInfo userInfo, String token, String receiver, String type) {
         jdbcTemplate.update(DEFAULT_DEFAULT_INSERT_STATEMENT,
                 new Object[] { 
                         java.util.UUID.randomUUID(), 
@@ -48,7 +51,7 @@ public class JdbcOptTokenStore {
                         receiver, 
                         new Date() 
                 },
-                new int[] { Types.VARCHAR, Types.INTEGER, 
+                new int[] { Types.VARCHAR, Types.VARCHAR, 
                         Types.VARCHAR, Types.VARCHAR, 
                         Types.VARCHAR,Types.TIMESTAMP 
                 }
@@ -62,7 +65,7 @@ public class JdbcOptTokenStore {
      * @param type int
      * @return
      */
-    public boolean validate(UserInfo userInfo, String token, int type,int interval) {
+    public boolean validate(UserInfo userInfo, String token, String type,int interval) {
         OneTimePassword oneTimePassword = jdbcTemplate.queryForObject(
                 DEFAULT_DEFAULT_SELECT_STATEMENT,
                 new OneTimePasswordRowMapper(), userInfo.getUsername(), token, type);
@@ -97,7 +100,7 @@ public class JdbcOptTokenStore {
         public OneTimePassword mapRow(ResultSet rs, int rowNum) throws SQLException {
             OneTimePassword oneTimePassword = new OneTimePassword();
             oneTimePassword.setId(rs.getString("ID"));
-            oneTimePassword.setType(rs.getInt("OPTTYPE"));
+            oneTimePassword.setType(rs.getString("OPTTYPE"));
             oneTimePassword.setUsername(rs.getString("USERNAME"));
             oneTimePassword.setToken(rs.getString("TOKEN"));
             oneTimePassword.setUsername(rs.getString("USERNAME"));
