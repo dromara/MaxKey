@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.maxkey.authz.desktop.endpoint.adapter.DesktopDefaultAdapter;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.constants.BOOLEAN;
+import org.maxkey.constants.Boolean;
 import org.maxkey.dao.service.AppsDesktopDetailsService;
 import org.maxkey.domain.Accounts;
 import org.maxkey.domain.apps.AppsDesktopDetails;
@@ -51,7 +51,7 @@ public class DesktopAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			ModelAndView modelAndView=new ModelAndView();
 			
 			AbstractAuthorizeAdapter adapter;
-			if(BOOLEAN.isTrue(desktopDetails.getIsAdapter())){
+			if(Boolean.isTrue(desktopDetails.getIsAdapter())){
 				adapter =(AbstractAuthorizeAdapter)Instance.newInstance(desktopDetails.getAdapter());
 			}else{
 				adapter =(AbstractAuthorizeAdapter)defaultDesktopAdapter;

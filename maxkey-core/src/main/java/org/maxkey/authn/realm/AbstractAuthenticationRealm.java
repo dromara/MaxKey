@@ -11,9 +11,9 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
-import org.maxkey.constants.LOGINTYPE;
-import org.maxkey.constants.PASSWORDSETTYPE;
-import org.maxkey.constants.STATUS;
+import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.constants.ConstantsPasswordSetType;
+import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.domain.Groups;
 import org.maxkey.domain.PasswordPolicy;
 import org.maxkey.domain.UserInfo;
@@ -108,13 +108,13 @@ public abstract class AbstractAuthenticationRealm {
                     WebContext.getI18nValue("login.error.attempts") + " " + userInfo.getBadPasswordCount());
         }
 
-        if (userInfo.getPasswordSetType() != PASSWORDSETTYPE.PASSWORD_NORMAL) {
+        if (userInfo.getPasswordSetType() != ConstantsPasswordSetType.PASSWORD_NORMAL) {
             WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
                     userInfo.getPasswordSetType());
             return true;
         } else {
             WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
-                    PASSWORDSETTYPE.PASSWORD_NORMAL);
+                    ConstantsPasswordSetType.PASSWORD_NORMAL);
         }
 
         /*
@@ -134,7 +134,7 @@ public abstract class AbstractAuthenticationRealm {
             _logger.debug("validate result " + (intDuration <= getPasswordPolicy().getExpiration()));
             if (intDuration > getPasswordPolicy().getExpiration()) {
                 WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
-                        PASSWORDSETTYPE.PASSWORD_EXPIRED);
+                        ConstantsPasswordSetType.PASSWORD_EXPIRED);
             }
         }
 
@@ -171,7 +171,7 @@ public abstract class AbstractAuthenticationRealm {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                 jdbcTemplate.update(LOCK_USER_UPDATE_STATEMENT,
-                        new Object[] { STATUS.LOCK, new Date(), userInfo.getId() },
+                        new Object[] { ConstantsStatus.LOCK, new Date(), userInfo.getId() },
                         new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
             }
         } catch (Exception e) {
@@ -188,7 +188,7 @@ public abstract class AbstractAuthenticationRealm {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                 jdbcTemplate.update(UNLOCK_USER_UPDATE_STATEMENT,
-                        new Object[] { STATUS.ACTIVE, new Date(), userInfo.getId() },
+                        new Object[] { ConstantsStatus.ACTIVE, new Date(), userInfo.getId() },
                         new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
             }
         } catch (Exception e) {
@@ -205,7 +205,7 @@ public abstract class AbstractAuthenticationRealm {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                 jdbcTemplate.update(BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT,
-                        new Object[] { 0, STATUS.ACTIVE, new Date(), userInfo.getId() },
+                        new Object[] { 0, ConstantsStatus.ACTIVE, new Date(), userInfo.getId() },
                         new int[] { Types.INTEGER, Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
             }
         } catch (Exception e) {
@@ -227,7 +227,7 @@ public abstract class AbstractAuthenticationRealm {
                 jdbcTemplate.update(BADPASSWORDCOUNT_UPDATE_STATEMENT,
                         new Object[] { badPasswordCount, new Date(), userInfo.getId() },
                         new int[] { Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
-                insertLoginHistory(userInfo, LOGINTYPE.LOCAL, "", "xe00000004", "password error");
+                insertLoginHistory(userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", "password error");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnUserToken;
-import org.maxkey.constants.LOGINTYPE;
+import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,7 +138,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 
 			_logger.debug("Social Sign On from "+socialSignOnUserToken.getProvider()+" mapping to user "+socialSignOnUserToken.getUsername());
 			
-			if(WebContext.setAuthentication(socialSignOnUserToken.getUsername(), LOGINTYPE.SOCIALSIGNON,this.socialSignOnProvider.getProviderName(),"xe00000004","success")){
+			if(WebContext.setAuthentication(socialSignOnUserToken.getUsername(), ConstantsLoginType.SOCIALSIGNON,this.socialSignOnProvider.getProviderName(),"xe00000004","success")){
 				//socialSignOnUserToken.setAccessToken(JsonUtils.object2Json(this.accessToken));
 				socialSignOnUserToken.setSocialUserInfo(accountJsonString);
 				//socialSignOnUserToken.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));

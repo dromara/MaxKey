@@ -2,7 +2,7 @@ package org.maxkey.authn.support.wsfederation;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.maxkey.constants.LOGINTYPE;
+import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
 import org.opensaml.saml1.core.impl.AssertionImpl;
@@ -42,7 +42,7 @@ public class WsFederationServiceImpl implements   WsFederationService{
 
                     return WebContext.setAuthentication(
                     		wsFederationCredential.getAttributes().get("").toString(),
-                    		LOGINTYPE.WSFEDERATION,
+                    		ConstantsLoginType.WSFEDERATION,
                     		"","","success");
 
                 } else {

@@ -1,7 +1,7 @@
 package org.maxkey.authz.formbased.endpoint.adapter;
 
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.constants.BOOLEAN;
+import org.maxkey.constants.Boolean;
 import org.maxkey.crypto.DigestUtils;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.AppsFormBasedDetails;
@@ -61,7 +61,7 @@ public class FormBasedRedirectAdapter extends AbstractAuthorizeAdapter {
 		}
 		
 		
-		if(BOOLEAN.isTrue(details.getIsExtendAttr())){
+		if(Boolean.isTrue(details.getIsExtendAttr())){
 			modelAndView.addObject("extendAttr", details.getExtendAttr());
 			modelAndView.addObject("isExtendAttr", true);
 		}else{

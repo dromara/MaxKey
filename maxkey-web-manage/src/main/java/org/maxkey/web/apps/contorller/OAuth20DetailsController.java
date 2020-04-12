@@ -3,8 +3,8 @@ package org.maxkey.web.apps.contorller;
 import java.util.List;
 
 import org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
-import org.maxkey.constants.OPERATEMESSAGE;
-import org.maxkey.constants.PROTOCOLS;
+import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.domain.apps.Apps;
 import org.maxkey.domain.apps.AppsOAuth20Details;
@@ -40,7 +40,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		oauth20Details.setSecret(ReciprocalUtils.generateKey(""));
 		oauth20Details.setClientId(oauth20Details.getId());
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
-		oauth20Details.setProtocol(PROTOCOLS.OAUTH20);
+		oauth20Details.setProtocol(ConstantsProtocols.OAUTH20);
 		modelAndView.addObject("model",oauth20Details);
 		return modelAndView;
 	}
@@ -56,10 +56,10 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		
 		oauth20JdbcClientDetailsService.addClientDetails(oauth20Details.clientDetailsRowMapper());
 		if (appsService.insertApp(oauth20Details)) {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+oauth20Details.getId());
 	}
@@ -94,9 +94,9 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		oauth20JdbcClientDetailsService.updateClientDetails(oauth20Details.clientDetailsRowMapper());
 		oauth20JdbcClientDetailsService.updateClientSecret(oauth20Details.getClientId(), oauth20Details.getClientSecret());
 		if (appsService.updateApp(oauth20Details)) {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 		} else {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+oauth20Details.getId());
 	}
@@ -108,10 +108,10 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		_logger.debug("-delete  application :" + id);
 		oauth20JdbcClientDetailsService.removeClientDetails(id);
 		if (appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 	}
 	

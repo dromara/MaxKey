@@ -2,7 +2,7 @@ package org.maxkey.web.contorller;
 
 import javax.validation.Valid;
 
-import org.maxkey.constants.OPERATEMESSAGE;
+import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.dao.service.PasswordPolicyService;
 import org.maxkey.domain.PasswordPolicy;
 import org.maxkey.web.WebContext;
@@ -53,9 +53,9 @@ public class PasswordPolicyController {
 				return message;
 			}
 			if(passwordPolicyService.update(passwordPolicy)) {
-				return new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
+				return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			} else {
-				return new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+				return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 			}
 		}
 		

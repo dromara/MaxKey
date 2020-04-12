@@ -2,8 +2,8 @@ package org.maxkey.web.apps.contorller;
 
 import java.util.List;
 
-import org.maxkey.constants.OPERATEMESSAGE;
-import org.maxkey.constants.PROTOCOLS;
+import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.dao.service.AppsFormBasedDetailsService;
 import org.maxkey.domain.apps.AppsFormBasedDetails;
@@ -35,7 +35,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 		ModelAndView modelAndView=new ModelAndView("apps/formbased/appAdd");
 		AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
 		formBasedDetails.setId(formBasedDetails.generateId());
-		formBasedDetails.setProtocol(PROTOCOLS.FORMBASED);
+		formBasedDetails.setProtocol(ConstantsProtocols.FORMBASED);
 		formBasedDetails.setSecret(ReciprocalUtils.generateKey(""));
 
 		modelAndView.addObject("model",formBasedDetails);
@@ -51,10 +51,10 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 		transform(formBasedDetails);
 		
 		if (formBasedDetailsService.insert(formBasedDetails)&&appsService.insertApp(formBasedDetails)) {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+formBasedDetails.getId());
 	}
@@ -81,10 +81,10 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 		_logger.debug("-update  application :" + formBasedDetails);
 		transform(formBasedDetails);
 		if (formBasedDetailsService.update(formBasedDetails)&&appsService.updateApp(formBasedDetails)) {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+formBasedDetails.getId());
 	}
@@ -95,10 +95,10 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
 		if (formBasedDetailsService.remove(id)&&appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_ERROR),MessageType.error);
 		}
 	}
 }

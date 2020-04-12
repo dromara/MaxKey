@@ -14,7 +14,7 @@ import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.config.ApplicationConfig;
-import org.maxkey.constants.BOOLEAN;
+import org.maxkey.constants.Boolean;
 import org.maxkey.dao.service.AppsCasDetailsService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
@@ -74,7 +74,7 @@ public class Cas30AuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getUsername();
 			serviceResponseBuilder.success().setUser(principal);
 			
-			if(BOOLEAN.isTrue(storedTicket.getCasDetails().getIsAdapter())){
+			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
 				adapter.generateInfo(userInfo, serviceResponseBuilder);
@@ -114,7 +114,7 @@ public class Cas30AuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getUsername();
 			serviceResponseBuilder.success().setUser(principal);
 			
-			if(BOOLEAN.isTrue(storedTicket.getCasDetails().getIsAdapter())){
+			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
 				adapter.generateInfo(userInfo, serviceResponseBuilder);

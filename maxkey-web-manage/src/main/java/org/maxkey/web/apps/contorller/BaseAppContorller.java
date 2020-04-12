@@ -5,7 +5,7 @@ package org.maxkey.web.apps.contorller;
 
 import java.io.IOException;
 
-import org.maxkey.constants.PROTOCOLS;
+import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.dao.service.AppsService;
@@ -65,7 +65,7 @@ public class BaseAppContorller {
 	
 	protected void encodeSharedPassword(Apps application){
 		if(application.getCredential()!=Apps.CREDENTIALS.SHARED){
-			if(application.getProtocol().equals(PROTOCOLS.DESKTOP)||application.getProtocol().equals(PROTOCOLS.FORMBASED)){
+			if(application.getProtocol().equals(ConstantsProtocols.DESKTOP)||application.getProtocol().equals(ConstantsProtocols.FORMBASED)){
 				if(StringUtils.isNotEmpty(application.getSharedPassword())){
 					application.setSharedPassword(ReciprocalUtils.encode(application.getSharedPassword()));
 				}
@@ -75,7 +75,7 @@ public class BaseAppContorller {
 	
 	protected void decoderSharedPassword(Apps application){
 		if(application.getCredential()!=Apps.CREDENTIALS.SHARED){
-			if(application.getProtocol().equals(PROTOCOLS.DESKTOP)||application.getProtocol().equals(PROTOCOLS.FORMBASED)){
+			if(application.getProtocol().equals(ConstantsProtocols.DESKTOP)||application.getProtocol().equals(ConstantsProtocols.FORMBASED)){
 				if(StringUtils.isNotEmpty(application.getSharedPassword())){
 					application.setSharedPassword(ReciprocalUtils.decoder(application.getSharedPassword()));
 				}

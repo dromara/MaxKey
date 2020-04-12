@@ -7,10 +7,7 @@ public class RemeberMe implements Serializable {
 
     private static final long serialVersionUID = 8010496585233991785L;
 
-    /**
-     * The number of seconds in one year (= 60 * 60 * 24 * 365).
-     */
-    public static final Integer ONE_YEAR = 60 * 60 * 24 * 365;
+    
 
     public static final Integer ONE_DAY = 60 * 60 * 24; // 1 day
 
@@ -18,8 +15,15 @@ public class RemeberMe implements Serializable {
 
     public static final Integer TWO_WEEK = ONE_DAY * 14; // 2 week
 
-    public static final Integer TWO_MONTH = ONE_DAY * 30; // 1 month
-
+    public static final Integer ONE_MONTH = ONE_DAY * 30; // 1 month
+    
+    public static final Integer TWO_MONTH = ONE_DAY * 60; // 2 month
+    
+    /**
+     * The number of seconds in one year (= 60 * 60 * 24 * 365).
+     */
+    public static final Integer ONE_YEAR = 60 * 60 * 24 * 365;
+    
     String id;
 
     String username;

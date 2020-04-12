@@ -1,7 +1,7 @@
 package org.maxkey.web.contorller;
 
 import javax.validation.Valid;
-import org.maxkey.constants.OPERATEMESSAGE;
+import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.dao.service.MyProfileService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
@@ -71,12 +71,12 @@ public class ProfileController {
 
         if (myProfileService.updateProfile(userInfo) > 0) {
             new Message(
-                    WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS), 
+                    WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS), 
                     userInfo, MessageType.success,
                     OperateType.add, MessageScope.DB);
 
         } else {
-            new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR), MessageType.error);
+            new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR), MessageType.error);
         }
 
         return WebContext.forward("forwardMyProfile");

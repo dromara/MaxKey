@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.constants.BOOLEAN;
+import org.maxkey.constants.Boolean;
 import org.maxkey.domain.Accounts;
 import org.maxkey.domain.apps.Apps;
 import org.maxkey.util.Instance;
@@ -33,7 +33,7 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		Apps apps=getApp(id);
 		_logger.debug(""+apps);
 		
-		if(BOOLEAN.isTrue(apps.getIsAdapter())){
+		if(Boolean.isTrue(apps.getIsAdapter())){
 			Accounts appUser=getAccounts(apps);
 			
 			if(appUser	==	null){

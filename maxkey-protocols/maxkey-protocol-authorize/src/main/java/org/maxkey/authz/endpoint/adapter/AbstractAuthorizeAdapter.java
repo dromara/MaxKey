@@ -2,7 +2,7 @@ package org.maxkey.authz.endpoint.adapter;
 
 import java.io.UnsupportedEncodingException;
 import org.apache.commons.codec.binary.Hex;
-import org.maxkey.constants.BOOLEAN;
+import org.maxkey.constants.Boolean;
 import org.maxkey.crypto.Base64Utils;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.cert.CertSigner;
@@ -25,7 +25,7 @@ public abstract class AbstractAuthorizeAdapter {
 	public abstract String generateInfo(UserInfo userInfo,Object app);
 	
 	public String  sign(String data,Apps app){
-		if(BOOLEAN.isTrue(app.getIsSignature())){
+		if(Boolean.isTrue(app.getIsSignature())){
 			KeyStoreLoader keyStoreLoader=(KeyStoreLoader)WebContext.getBean("keyStoreLoader");
 			try {	
 				byte[] signature= CertSigner.sign(data.getBytes(), keyStoreLoader.getKeyStore(), keyStoreLoader.getEntityName(), keyStoreLoader.getKeystorePassword());

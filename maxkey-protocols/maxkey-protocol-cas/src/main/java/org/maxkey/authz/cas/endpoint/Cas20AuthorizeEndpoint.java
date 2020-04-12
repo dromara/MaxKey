@@ -15,7 +15,7 @@ import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.config.ApplicationConfig;
-import org.maxkey.constants.BOOLEAN;
+import org.maxkey.constants.Boolean;
 import org.maxkey.dao.service.AppsCasDetailsService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
@@ -194,7 +194,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			_logger.debug("principal "+principal);
 			serviceResponseBuilder.success().setUser(principal);
 			
-			if(BOOLEAN.isTrue(storedTicket.getCasDetails().getIsAdapter())){
+			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
 				adapter.generateInfo(userInfo, serviceResponseBuilder);

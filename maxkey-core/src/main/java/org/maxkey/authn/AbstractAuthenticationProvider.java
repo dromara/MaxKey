@@ -3,7 +3,7 @@ package org.maxkey.authn;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.config.ApplicationConfig;
-import org.maxkey.constants.LOGINTYPE;
+import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.crypto.password.opt.AbstractOptAuthn;
 import org.maxkey.domain.UserInfo;
@@ -93,7 +93,7 @@ public abstract class AbstractAuthenticationProvider {
         _logger.debug("Login Success Session {}.", WebContext.getSession().getId());
 
         authenticationRealm.insertLoginHistory(
-                userInfo, LOGINTYPE.LOCAL, "", "xe00000004", "success");
+                userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", "success");
 
         // 认证设置
         WebContext.setAuthentication(authentication);
@@ -268,7 +268,7 @@ public abstract class AbstractAuthenticationProvider {
             loginUser.setId(loginUser.generateId());
             loginUser.setDisplayName("not exist");
             loginUser.setLoginCount(0);
-            authenticationRealm.insertLoginHistory(loginUser, LOGINTYPE.LOCAL, "",
+            authenticationRealm.insertLoginHistory(loginUser, ConstantsLoginType.LOCAL, "",
                     WebContext.getI18nValue("login.error.username"), "user not exist");
             throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
         }

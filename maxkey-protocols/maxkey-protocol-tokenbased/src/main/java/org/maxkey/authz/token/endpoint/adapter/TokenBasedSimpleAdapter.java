@@ -3,7 +3,7 @@ package org.maxkey.authz.token.endpoint.adapter;
 import java.util.Date;
 
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.constants.BOOLEAN;
+import org.maxkey.constants.Boolean;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.AppsTokenBasedDetails;
 import org.maxkey.util.DateUtils;
@@ -19,17 +19,17 @@ public class TokenBasedSimpleAdapter extends AbstractAuthorizeAdapter {
 	
 		String tokenUsername="";
 		
-		if(BOOLEAN.isTrue(details.getUid())){
+		if(Boolean.isTrue(details.getUid())){
 			tokenUsername=userInfo.getId();
-		}else if(BOOLEAN.isTrue(details.getUsername())){
+		}else if(Boolean.isTrue(details.getUsername())){
 			tokenUsername= userInfo.getUsername();	
-		}else if(BOOLEAN.isTrue(details.getEmail())){
+		}else if(Boolean.isTrue(details.getEmail())){
 			tokenUsername=userInfo.getEmail();
-		}else if(BOOLEAN.isTrue(details.getWindowsAccount())){
+		}else if(Boolean.isTrue(details.getWindowsAccount())){
 			tokenUsername= userInfo.getWindowsAccount();
-		}else if(BOOLEAN.isTrue(details.getEmployeeNumber())){
+		}else if(Boolean.isTrue(details.getEmployeeNumber())){
 			tokenUsername=userInfo.getEmployeeNumber();
-		}else if(BOOLEAN.isTrue(details.getDepartmentId())){
+		}else if(Boolean.isTrue(details.getDepartmentId())){
 			tokenUsername= userInfo.getDepartmentId();
 		}
 		

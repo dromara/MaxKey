@@ -1,7 +1,7 @@
 package org.maxkey.web.endpoint;
 
 import org.maxkey.config.ApplicationConfig;
-import org.maxkey.constants.PASSWORDSETTYPE;
+import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -31,7 +31,7 @@ public class IndexEndpoint {
 		_logger.debug("IndexEndpoint /forwardindex.");
 		ModelAndView modelAndView=new ModelAndView();
 		Integer passwordSetType=(Integer)WebContext.getSession().getAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
-		if(passwordSetType==null || passwordSetType==PASSWORDSETTYPE.PASSWORD_NORMAL){
+		if(passwordSetType==null || passwordSetType==ConstantsPasswordSetType.PASSWORD_NORMAL){
 			if(applicationConfig.getLoginConfig().getDefaultUri()!=null&&
 					!applicationConfig.getLoginConfig().getDefaultUri().equals("")){
 				if(applicationConfig.getLoginConfig().getDefaultUri().startsWith("http")){
@@ -45,11 +45,11 @@ public class IndexEndpoint {
 		
 		UserInfo userInfo=WebContext.getUserInfo();
 		modelAndView.addObject("model", userInfo);
-		if(passwordSetType==PASSWORDSETTYPE.PASSWORD_EXPIRED){
+		if(passwordSetType==ConstantsPasswordSetType.PASSWORD_EXPIRED){
 			modelAndView.setViewName("passwordExpired");
 			return  modelAndView;
-		}else if(passwordSetType==PASSWORDSETTYPE.INITIAL_PASSWORD||
-				 passwordSetType==PASSWORDSETTYPE.MANAGER_CHANGED_PASSWORD){
+		}else if(passwordSetType==ConstantsPasswordSetType.INITIAL_PASSWORD||
+				 passwordSetType==ConstantsPasswordSetType.MANAGER_CHANGED_PASSWORD){
 			modelAndView.setViewName("passwordInitial");
 			return  modelAndView;
 		}

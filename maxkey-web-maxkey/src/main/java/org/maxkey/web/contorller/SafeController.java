@@ -1,6 +1,6 @@
 package org.maxkey.web.contorller;
 
-import org.maxkey.constants.OPERATEMESSAGE;
+import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.dao.service.UserInfoService;
@@ -47,9 +47,9 @@ public class SafeController {
 			@RequestParam("confirmPassword") String confirmPassword) {
 		
 			if(changeUserPassword(oldPassword,newPassword,confirmPassword)) {
-				return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
+				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			}else {
-				return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 			}	
 	}
 
@@ -66,7 +66,7 @@ public class SafeController {
 			}
 				
 		
-			new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+			new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		 
 			return modelAndView;
 	}
@@ -84,7 +84,7 @@ public class SafeController {
 			//modelAndView.setViewName("index");
 		}
 		
-		  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+		  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		  return modelAndView;
 	}
 	
@@ -130,11 +130,11 @@ public class SafeController {
 				userInfo.setAppLoginPassword(ReciprocalUtils.encode(newPassword));
 				boolean change= userInfoService.changeAppLoginPassword(userInfo);
 				_logger.debug(""+change);
-				return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.prompt);
+				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.prompt);
 			}
 		}
 		
-		return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		
 	}
 	
@@ -164,7 +164,7 @@ public class SafeController {
 		userInfo.setEmail(email);
 		userInfoService.changeEmail(userInfo);
 		
-		return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
+		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 		
 	}
 	

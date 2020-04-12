@@ -2,8 +2,8 @@ package org.maxkey.web.apps.contorller;
 
 import java.util.List;
 
-import org.maxkey.constants.OPERATEMESSAGE;
-import org.maxkey.constants.PROTOCOLS;
+import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.dao.service.AppsDesktopDetailsService;
 import org.maxkey.domain.apps.AppsDesktopDetails;
@@ -34,7 +34,7 @@ public class DesktopDetailsController  extends BaseAppContorller {
 		ModelAndView modelAndView=new ModelAndView("apps/desktop/appAdd");
 		AppsDesktopDetails desktopDetails=new AppsDesktopDetails();
 		desktopDetails.setId(desktopDetails.generateId());
-		desktopDetails.setProtocol(PROTOCOLS.DESKTOP);
+		desktopDetails.setProtocol(ConstantsProtocols.DESKTOP);
 		desktopDetails.setSecret(ReciprocalUtils.generateKey(""));
 
 		modelAndView.addObject("model",desktopDetails);
@@ -50,10 +50,10 @@ public class DesktopDetailsController  extends BaseAppContorller {
 		transform(desktopDetails);
 		desktopDetailsService.insert(desktopDetails);
 		if (appsService.insertApp(desktopDetails)) {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+desktopDetails.getId());
 	}
@@ -82,10 +82,10 @@ public class DesktopDetailsController  extends BaseAppContorller {
 		transform(desktopDetails);
 
 		if (desktopDetailsService.update(desktopDetails)&&appsService.updateApp(desktopDetails)) {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+desktopDetails.getId());
 	}
@@ -95,10 +95,10 @@ public class DesktopDetailsController  extends BaseAppContorller {
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
 		if (desktopDetailsService.remove(id)&&appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 	}
 	

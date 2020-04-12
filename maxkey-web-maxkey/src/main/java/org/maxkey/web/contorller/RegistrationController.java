@@ -6,7 +6,7 @@ import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.maxkey.config.ApplicationConfig;
-import org.maxkey.constants.STATUS;
+import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.dao.service.RegistrationService;
@@ -136,7 +136,7 @@ public class RegistrationController {
 				
 				userInfo.setWorkPhoneNumber(registration.getWorkPhone());
 				userInfo.setEmail(registration.getWorkEmail());
-				userInfo.setStatus(STATUS.ACTIVE);
+				userInfo.setStatus(ConstantsStatus.ACTIVE);
 				String rawPassword=PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), password);
 				userInfo.setDecipherable(ReciprocalUtils.encode(rawPassword));
 				

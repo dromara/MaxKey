@@ -2,7 +2,7 @@ package org.maxkey.web.apps.contorller;
 
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.OPERATEMESSAGE;
+import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.domain.ExtraAttr;
 import org.maxkey.domain.ExtraAttrs;
@@ -62,10 +62,10 @@ public class ApplicationsController extends BaseAppContorller {
 		transform(application);
 		
 		if (appsService.insert(application)) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		
 	}
@@ -92,10 +92,10 @@ public class ApplicationsController extends BaseAppContorller {
 		}
 		
 		if (appsService.updateExtendAttr(application)) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
 		}
 	}
 	
@@ -109,10 +109,10 @@ public class ApplicationsController extends BaseAppContorller {
 	public Message query(@ModelAttribute("application") Apps application) {
 		_logger.debug("-query  :" + application);
 		if (appsService.load(application)!=null) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
 		}
 		
 	}
@@ -127,10 +127,10 @@ public class ApplicationsController extends BaseAppContorller {
 	public Message update(@ModelAttribute("application") Apps application) {
 		_logger.debug("-update  application :" + application);
 		if (appsService.update(application)) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		
 	}
@@ -141,10 +141,10 @@ public class ApplicationsController extends BaseAppContorller {
 	public Message delete(@ModelAttribute("application") Apps application) {
 		_logger.debug("-delete  application :" + application);
 		if (appsService.delete(application)) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 		
 	}

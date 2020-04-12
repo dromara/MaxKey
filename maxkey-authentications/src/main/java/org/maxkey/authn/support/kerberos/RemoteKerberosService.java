@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
-import org.maxkey.constants.LOGINTYPE;
+import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
@@ -37,7 +37,7 @@ public class RemoteKerberosService  implements KerberosService{
 		DateTime notOnOrAfter=DateUtils.toUtcDate(kerberosToken.getNotOnOrAfter());
 		_logger.debug("Kerberos Token is After Now  "+notOnOrAfter.isAfterNow());
 		if(notOnOrAfter.isAfterNow()){
-	    	return WebContext.setAuthentication(kerberosToken.getPrincipal(),LOGINTYPE.KERBEROS,kerberosUserDomain,"","success");
+	    	return WebContext.setAuthentication(kerberosToken.getPrincipal(),ConstantsLoginType.KERBEROS,kerberosUserDomain,"","success");
 		}else{
 			
 			return false;

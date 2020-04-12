@@ -1,7 +1,7 @@
 package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.OPERATEMESSAGE;
+import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.dao.service.IpAddrFilterService;
 import org.maxkey.domain.IpAddrFilter;
 import org.maxkey.web.WebContext;
@@ -63,10 +63,10 @@ public class IpAddrFilterController {
 		_logger.debug("-Add  :" + ipAddrFilter);
 		
 		if (ipAddrFilterService.insert(ipAddrFilter)) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		
 	}
@@ -81,10 +81,10 @@ public class IpAddrFilterController {
 	public Message query(@ModelAttribute("ipAddrFilter") IpAddrFilter ipAddrFilter) {
 		_logger.debug("-query  :" + ipAddrFilter);
 		if (ipAddrFilterService.load(ipAddrFilter)!=null) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
 		}
 		
 	}
@@ -100,10 +100,10 @@ public class IpAddrFilterController {
 		_logger.debug("-update  ipAddrFilter :" + ipAddrFilter);
 		
 		if (ipAddrFilterService.update(ipAddrFilter)) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		
 	}
@@ -115,10 +115,10 @@ public class IpAddrFilterController {
 		_logger.debug("-delete  ipAddrFilter :" + ipAddrFilter);
 		
 		if (ipAddrFilterService.delete(ipAddrFilter)) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 		
 	}

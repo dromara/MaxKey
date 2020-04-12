@@ -12,7 +12,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.maxkey.crypto.password.opt.impl.SmsOtpAuthn;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * 网易云信的短信验证.
@@ -21,9 +20,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 
 public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
-    public SmsOtpAuthnYunxin(JdbcTemplate jdbcTemplate) {
-        super(jdbcTemplate);
-        // TODO Auto-generated constructor stub
+    public SmsOtpAuthnYunxin() {
+
     }
 
     //发送验证码的请求路径URL

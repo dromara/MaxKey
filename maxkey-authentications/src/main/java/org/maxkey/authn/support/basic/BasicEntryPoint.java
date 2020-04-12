@@ -3,7 +3,7 @@ package org.maxkey.authn.support.basic;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.constants.LOGINTYPE;
+import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -99,7 +99,7 @@ public class BasicEntryPoint extends HandlerInterceptorAdapter {
 		 }
 		 
 		 if(!isAuthenticated){
-			if(WebContext.setAuthentication(username,LOGINTYPE.BASIC,"","","success")){
+			if(WebContext.setAuthentication(username,ConstantsLoginType.BASIC,"","","success")){
 				_logger.info("Authentication  "+username+" successful .");
 			}
 		 }

@@ -23,7 +23,7 @@ import org.maxkey.authz.saml20.consumer.spring.IdentityProviderAuthenticationExc
 import org.maxkey.authz.saml20.consumer.spring.ServiceProviderAuthenticationException;
 import org.maxkey.authz.saml20.provider.xml.AuthnResponseGenerator;
 import org.maxkey.authz.saml20.xml.SAML2ValidatorSuite;
-import org.maxkey.constants.LOGINTYPE;
+import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.dao.service.AppsSaml20DetailsService;
 import org.maxkey.domain.apps.AppsSAML20Details;
@@ -161,7 +161,7 @@ public class ConsumerEndpoint {
 	
 		logger.debug("assertion.getID() ", assertion.getAuthnStatements());
 		
-		WebContext.setAuthentication(username, LOGINTYPE.SAMLTRUST,"","","success");
+		WebContext.setAuthentication(username, ConstantsLoginType.SAMLTRUST,"","","success");
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("username", username);

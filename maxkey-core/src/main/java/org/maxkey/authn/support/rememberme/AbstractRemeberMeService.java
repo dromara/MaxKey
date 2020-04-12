@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
 import org.maxkey.config.ApplicationConfig;
-import org.maxkey.constants.LOGINTYPE;
+import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.Base64Utils;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.util.JsonUtils;
@@ -96,7 +96,7 @@ public abstract class AbstractRemeberMeService {
         if (now.isBefore(expiryDate)) {
             if (WebContext.setAuthentication(
                     storeRemeberMe.getUsername(), 
-                    LOGINTYPE.REMEBER_ME, 
+                    ConstantsLoginType.REMEBER_ME, 
                     "", 
                     "", 
                     "success")

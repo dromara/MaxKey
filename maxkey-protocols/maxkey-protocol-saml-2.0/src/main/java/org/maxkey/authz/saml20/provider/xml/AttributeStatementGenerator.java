@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.maxkey.constants.BOOLEAN;
+import org.maxkey.constants.Boolean;
 import org.maxkey.domain.ExtraAttr;
 import org.maxkey.domain.ExtraAttrs;
 import org.maxkey.domain.apps.AppsSAML20Details;
@@ -57,7 +57,7 @@ public class AttributeStatementGenerator {
 		}
 		
 		logger.debug("ExtendAttr "+saml20Details.getExtendAttr());
-		if(BOOLEAN.isTrue(saml20Details.getIsExtendAttr())) {
+		if(Boolean.isTrue(saml20Details.getIsExtendAttr())) {
 			ExtraAttrs extraAttrs=new ExtraAttrs(saml20Details.getExtendAttr());
 			for(ExtraAttr extraAttr : extraAttrs.getExtraAttrs()) {
 				logger.debug("Attribute : "+extraAttr.getAttr()+" , Vale : "+extraAttr.getValue()+" , Type : "+extraAttr.getType());

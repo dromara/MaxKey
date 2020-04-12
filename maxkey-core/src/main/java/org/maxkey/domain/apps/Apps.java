@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
-import org.maxkey.constants.BOOLEAN;
+import org.maxkey.constants.Boolean;
 import org.maxkey.domain.Accounts;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -133,7 +133,7 @@ public class Apps extends JpaBaseDomain implements Serializable{
 	
 	public Apps() {
 		super();
-		isSignature=BOOLEAN.FALSE;
+		isSignature=Boolean.FALSE;
 		credential=CREDENTIALS.NONE;
 	}
 

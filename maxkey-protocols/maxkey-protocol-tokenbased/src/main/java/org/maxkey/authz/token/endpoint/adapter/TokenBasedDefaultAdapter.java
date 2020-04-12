@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.constants.BOOLEAN;
+import org.maxkey.constants.Boolean;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.AppsTokenBasedDetails;
 import org.maxkey.util.DateUtils;
@@ -23,25 +23,25 @@ public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 		
 		beanMap.put("randomId",(new StringGenerator()).uuidGenerate());
 		
-		if(BOOLEAN.isTrue(details.getUid())){
+		if(Boolean.isTrue(details.getUid())){
 			beanMap.put("uid",userInfo.getId());
 		}
-		if(BOOLEAN.isTrue(details.getUsername())){
+		if(Boolean.isTrue(details.getUsername())){
 			beanMap.put("username", userInfo.getUsername());	
 		}
-		if(BOOLEAN.isTrue(details.getEmail())){
+		if(Boolean.isTrue(details.getEmail())){
 			beanMap.put("email", userInfo.getEmail());
 		}
-		if(BOOLEAN.isTrue(details.getWindowsAccount())){
+		if(Boolean.isTrue(details.getWindowsAccount())){
 			beanMap.put("windowsAccount", userInfo.getWindowsAccount());
 		}
-		if(BOOLEAN.isTrue(details.getEmployeeNumber())){
+		if(Boolean.isTrue(details.getEmployeeNumber())){
 			beanMap.put("employeeNumber", userInfo.getEmployeeNumber());
 		}
-		if(BOOLEAN.isTrue(details.getDepartmentId())){
+		if(Boolean.isTrue(details.getDepartmentId())){
 			beanMap.put("departmentId", userInfo.getDepartmentId());
 		}
-		if(BOOLEAN.isTrue(details.getDepartment())){
+		if(Boolean.isTrue(details.getDepartment())){
 			beanMap.put("department", userInfo.getDepartment());
 		}
 		

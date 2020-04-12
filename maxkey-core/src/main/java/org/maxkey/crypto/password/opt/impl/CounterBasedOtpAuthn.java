@@ -7,14 +7,10 @@ import org.maxkey.crypto.password.opt.algorithm.TimeBasedOTP;
 import org.maxkey.domain.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 public class CounterBasedOtpAuthn extends AbstractOptAuthn {
     private static final Logger _logger = LoggerFactory.getLogger(CounterBasedOtpAuthn.class);
 
-    public CounterBasedOtpAuthn(JdbcTemplate jdbcTemplate) {
-        super(jdbcTemplate);
-    }
 
     @Override
     public boolean produce(UserInfo userInfo) {

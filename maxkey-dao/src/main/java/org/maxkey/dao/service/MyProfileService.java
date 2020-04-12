@@ -1,10 +1,8 @@
 package org.maxkey.dao.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.constants.OPERATEACTION;
 import org.maxkey.dao.persistence.MyProfileMapper;
 import org.maxkey.domain.UserInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 

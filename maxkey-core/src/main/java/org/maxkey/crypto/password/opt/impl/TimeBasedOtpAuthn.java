@@ -11,14 +11,12 @@ import org.maxkey.crypto.password.opt.algorithm.TimeBasedOTP;
 import org.maxkey.domain.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 public class TimeBasedOtpAuthn extends AbstractOptAuthn {
     private static final  Logger _logger = LoggerFactory.getLogger(TimeBasedOtpAuthn.class);
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public TimeBasedOtpAuthn(JdbcTemplate jdbcTemplate) {
-        super(jdbcTemplate);
+    public TimeBasedOtpAuthn() {
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 

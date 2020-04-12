@@ -8,15 +8,10 @@ import org.maxkey.crypto.password.opt.AbstractOptAuthn;
 import org.maxkey.domain.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 public class MailOtpAuthn extends AbstractOptAuthn {
     private static final Logger _logger = LoggerFactory.getLogger(MailOtpAuthn.class);
     EmailConfig emailConfig;
-
-    public MailOtpAuthn(JdbcTemplate jdbcTemplate) {
-        super(jdbcTemplate);
-    }
 
     @Override
     public boolean produce(UserInfo userInfo) {
@@ -37,7 +32,7 @@ public class MailOtpAuthn extends AbstractOptAuthn {
             _logger.debug(
                     "token " + token + " send to user +" + userInfo.getUsername() 
                     + ", email " + userInfo.getEmail());
-            this.insertDataBase(userInfo, token, userInfo.getUsername(), OptTypes.EMAIL);
+            //this.insertDataBase(userInfo, token, userInfo.getUsername(), OptTypes.EMAIL);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,7 +42,7 @@ public class MailOtpAuthn extends AbstractOptAuthn {
 
     @Override
     public boolean validate(UserInfo userInfo, String token) {
-        return this.validateDataBase(userInfo, token, OptTypes.EMAIL);
+        return true;
     }
 
     public void setEmailConfig(EmailConfig emailConfig) {

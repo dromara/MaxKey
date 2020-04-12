@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.OPERATEMESSAGE;
+import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
@@ -108,10 +108,10 @@ public class UserInfoController {
 		//userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
 		//userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
 		if( userInfoService.insert(userInfo)) {
-			  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
+			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
 		}
 		
-		 new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_ERROR),MessageType.error);
+		 new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
 		return   WebContext.forward("forwardUpdate/"+userInfo.getId());
 	}
 	
@@ -167,10 +167,10 @@ public class UserInfoController {
 		convertExtraAttribute(userInfo) ;
 		_logger.info(userInfo.getExtraAttribute());
 		if(userInfoService.update(userInfo)) {
-			new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
+			new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
 			
 		}
-	    new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+	    new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		return   WebContext.forward("forwardUpdate/"+userInfo.getId());
 	}
 	
@@ -185,10 +185,10 @@ public class UserInfoController {
 	public Message batchDeleteUsers(@RequestParam("id")String id) {
 		_logger.debug(id);
 		if(userInfoService.batchDelete(StringUtils.string2List(id, ","))) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_ERROR),MessageType.error);
 		}
 	}
 	
@@ -204,9 +204,9 @@ public class UserInfoController {
 		_logger.debug(id);
 		if(userInfoService.batchDelete(StringUtils.string2List(id, ","))) {
 			//provisioningPrepare.prepare(userInfo, OPERATEACTION.DELETE_ACTION);
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.DELETE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_ERROR),MessageType.error);
 		}
 	}
 	
@@ -237,10 +237,10 @@ public class UserInfoController {
 	public Message changePassword( @ModelAttribute("userInfo")UserInfo userInfo) {
 		_logger.debug(userInfo.getId());
 		if(userInfoService.changePassword(userInfo)) {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 	}
 	

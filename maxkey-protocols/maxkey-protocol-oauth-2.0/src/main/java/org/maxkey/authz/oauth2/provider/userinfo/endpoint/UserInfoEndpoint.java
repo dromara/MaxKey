@@ -11,7 +11,7 @@ import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
-import org.maxkey.constants.BOOLEAN;
+import org.maxkey.constants.Boolean;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.encryption.service.impl.RecipientJwtEncryptionAndDecryptionServiceBuilder;
@@ -106,7 +106,7 @@ public class UserInfoEndpoint {
 				 String userJson="";
 				 
 				 AbstractAuthorizeAdapter adapter;
-				 if(BOOLEAN.isTrue(app.getIsAdapter())){
+				 if(Boolean.isTrue(app.getIsAdapter())){
 					adapter =(AbstractAuthorizeAdapter)Instance.newInstance(app.getAdapter());
 				 }else{
 					adapter =(AbstractAuthorizeAdapter)defaultOAuthUserInfoAdapter;

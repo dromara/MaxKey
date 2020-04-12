@@ -2,7 +2,6 @@ package org.maxkey.crypto.password.opt.impl;
 
 import org.maxkey.crypto.password.opt.AbstractOptAuthn;
 import org.maxkey.domain.UserInfo;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Chip Authentication Program EMV stands for Europay, MasterCard and Visa, a
@@ -15,10 +14,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
  *
  */
 public class RsaOtpAuthn extends AbstractOptAuthn {
-
-    public RsaOtpAuthn(JdbcTemplate jdbcTemplate) {
-        super(jdbcTemplate);
-    }
 
     @Override
     public boolean produce(UserInfo userInfo) {

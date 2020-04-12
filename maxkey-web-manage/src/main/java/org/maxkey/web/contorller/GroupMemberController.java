@@ -1,7 +1,7 @@
 package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.OPERATEMESSAGE;
+import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.dao.service.GroupMemberService;
 import org.maxkey.dao.service.GroupsService;
 import org.maxkey.domain.GroupMember;
@@ -115,11 +115,11 @@ public class GroupMemberController {
 				result = groupMemberService.insert(newGroupMember);
 			}
 			if(!result) {
-				return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_ERROR),MessageType.error);
+				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
 			}
 			
 		}
-		return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.info);
+		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
 	}
 	
 	@RequestMapping(value = {"/delete"})
@@ -138,10 +138,10 @@ public class GroupMemberController {
 				groupMemberService.remove(arrMemberIds[i]);
 			}
 			if(!result) {
-				return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_ERROR),MessageType.error);
+				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
 			}
 			
 		}
-		return  new Message(WebContext.getI18nValue(OPERATEMESSAGE.INSERT_SUCCESS),MessageType.info);
+		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
 	}
 }

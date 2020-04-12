@@ -8,17 +8,12 @@ import org.maxkey.crypto.password.opt.algorithm.HOTP;
 import org.maxkey.domain.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 public class HotpOtpAuthn extends AbstractOptAuthn {
     private static final  Logger _logger = LoggerFactory.getLogger(HotpOtpAuthn.class);
 
     boolean addChecksum;
     int truncation = -1;
-
-    public HotpOtpAuthn(JdbcTemplate jdbcTemplate) {
-        super(jdbcTemplate);
-    }
 
     @Override
     public boolean produce(UserInfo userInfo) {

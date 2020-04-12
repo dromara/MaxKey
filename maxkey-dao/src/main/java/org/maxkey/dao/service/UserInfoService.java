@@ -2,7 +2,7 @@ package org.maxkey.dao.service;
 
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.constants.STATUS;
+import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.dao.persistence.UserInfoMapper;
@@ -154,7 +154,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	public void locked(UserInfo userInfo) {
 		try {
 			if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-				userInfo.setIsLocked(STATUS.STOP);
+				userInfo.setIsLocked(ConstantsStatus.STOP);
 				getMapper().locked(userInfo);
 			}
 		} catch(Exception e) {
@@ -169,7 +169,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	public void unlock(UserInfo userInfo) {
 		try {
 			if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-				userInfo.setIsLocked(STATUS.START);
+				userInfo.setIsLocked(ConstantsStatus.START);
 				userInfo.setBadPasswordCount(0);
 				getMapper().unlock(userInfo);
 			}

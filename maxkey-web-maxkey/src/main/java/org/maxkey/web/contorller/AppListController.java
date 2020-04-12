@@ -1,8 +1,8 @@
 package org.maxkey.web.contorller;
 
 import java.util.List;
-import org.maxkey.constants.OPERATEMESSAGE;
-import org.maxkey.constants.PROTOCOLS;
+import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.dao.service.AccountsService;
 import org.maxkey.dao.service.AppsService;
@@ -171,10 +171,10 @@ public class AppListController {
 
             userInfoService.updateProtectedApps(userInfo);
         } else {
-            return new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_ERROR), MessageType.error);
+            return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR), MessageType.error);
         }
 
-        return new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS), MessageType.success);
+        return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS), MessageType.success);
     }
 
     @RequestMapping(value = { "/forward/appUserConfig/{protocol}/{credential}/{appId}" })
@@ -187,12 +187,12 @@ public class AppListController {
         UserInfo userInfo = WebContext.getUserInfo();
         if (credential == Apps.CREDENTIALS.USER_DEFINED) {
             appUsers = appUsersService.load(new Accounts(userInfo.getId(), appId));
-            if (protocol.equalsIgnoreCase(PROTOCOLS.DESKTOP) || protocol.equalsIgnoreCase(PROTOCOLS.FORMBASED)
-                    || protocol.equalsIgnoreCase(PROTOCOLS.BASIC) || protocol.equalsIgnoreCase(PROTOCOLS.EXTEND_API)) {
+            if (protocol.equalsIgnoreCase(ConstantsProtocols.DESKTOP) || protocol.equalsIgnoreCase(ConstantsProtocols.FORMBASED)
+                    || protocol.equalsIgnoreCase(ConstantsProtocols.BASIC) || protocol.equalsIgnoreCase(ConstantsProtocols.EXTEND_API)) {
 
                 modelAndView.addObject("username", true);
                 modelAndView.addObject("password", true);
-            } else if (protocol.equalsIgnoreCase(PROTOCOLS.SAML20)) {
+            } else if (protocol.equalsIgnoreCase(ConstantsProtocols.SAML20)) {
                 modelAndView.addObject("username", true);
                 modelAndView.addObject("password", false);
             } else {
@@ -253,6 +253,6 @@ public class AppListController {
             }
         }
 
-        return new Message(WebContext.getI18nValue(OPERATEMESSAGE.UPDATE_SUCCESS), MessageType.success);
+        return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS), MessageType.success);
     }
 }
