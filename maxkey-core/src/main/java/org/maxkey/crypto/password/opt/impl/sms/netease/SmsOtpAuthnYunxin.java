@@ -55,7 +55,7 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
         /*
          * 参考计算CheckSum的java代码，在上述文档的参数列表中，有CheckSum的计算文档示例
          */
-        String checkSum = SmsOtpAuthnCheckSumBuilder
+        String checkSum = SmsOtpAuthnYunxinCheckSumBuilder
                 .getCheckSum(APP_SECRET, NONCE, curTime);
 
         // 设置请求的header
