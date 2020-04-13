@@ -277,6 +277,11 @@ subprojects {
 		 compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
     	 //local jars
     	 compile fileTree(dir: "${rootDir}/maxkey-lib/", include: '*.jar')
+    	 //阿里云
+    	 compile group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: '4.5.1'
+    	 //腾讯云
+    	 compile group: 'com.tencentcloudapi', name: 'tencentcloud-sdk-java', version: '3.1.33'
+    	 
     	 //tomcat embed
     	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.29'
     	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '8.5.2'

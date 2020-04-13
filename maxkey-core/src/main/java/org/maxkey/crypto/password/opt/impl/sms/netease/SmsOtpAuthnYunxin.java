@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 网易云信的短信验证.
+ * 网易云信短信验证.
  * @author shimingxy
  *
  */
