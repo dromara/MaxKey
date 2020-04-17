@@ -6,16 +6,10 @@
 
   用户只需要登录认证中心一次就可以访问所有相互信任的应用系统，无需再次登录。
   
-  <a href="https://github.com/shimingxy/MaxKey" target="_blank">**MaxKey on GitHub**</a>
+  MaxKey  <a href="https://shimingxy.github.io/MaxKey/" target="_blank">**官方文档**</a> on <a href="https://github.com/shimingxy/MaxKey" target="_blank">**GitHub**</a>|<a href="https://gitee.com/shimingxy/MaxKey" target="_blank">**码云(Gitee)**</a>
   
-  <a href="https://gitee.com/shimingxy/MaxKey" target="_blank">**MaxKey on 码云(Gitee)**</a>
-  
-  <a href="https://shimingxy.github.io/MaxKey/" target="_blank">**官方文档**</a>
-
-  QQ交流群：**434469201** <a href="https://jq.qq.com/?_wv=1027&k=5WrpQ6o" target="_blank">点击链接加入群聊</a>
-  
-  邮箱EMAIL: **shimingxy@163.com**
-  
+  QQ交流群：**434469201** <a href="https://jq.qq.com/?_wv=1027&k=5WrpQ6o" target="_blank">点击链接加入群聊</a>|邮箱EMAIL: **shimingxy@163.com**
+ 
 ------------
 
 1.  标准化认证协议：
