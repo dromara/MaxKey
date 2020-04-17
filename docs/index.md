@@ -85,14 +85,18 @@
 		</tr>  
 		<tr class="b">
 			<td>3 </td>
-			<td>Google Authenticator</td>
-		</tr>
+			<td>短信认证  腾讯云短信/阿里云短信/网易云信 </td>
+		</tr> 
 		<tr class="a">
 			<td>4 </td>
-			<td>Kerberos/Spengo/AD域</td>
-		</tr>  
+			<td>Google Authenticator</td>
+		</tr>
 		<tr class="b">
 			<td>5 </td>
+			<td>Kerberos/Spengo/AD域</td>
+		</tr>  
+		<tr class="a">
+			<td>6 </td>
 			<td>社交账号:微信/QQ/微博/钉钉/Google/Facebook/其他</td>
 		</tr>
 	</tbody>
