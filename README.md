@@ -31,9 +31,10 @@
 | --------| :-----  |
 | 1       | 动态验证码   	| 
 | 2       | 双因素认证   	| 
-| 3       | Google Authenticator   	|
-| 4       | Kerberos/Spengo/AD域|
-| 5       | 社交账号 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
+| 3       | 短信认证  腾讯云短信/阿里云短信/网易云信 	|
+| 4       | Google Authenticator   	|
+| 5       | Kerberos/Spengo/AD域|
+| 6       | 社交账号 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
 
 
 3. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
