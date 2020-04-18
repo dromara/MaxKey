@@ -1,5 +1,6 @@
 package org.maxkey.crypto.password.opt.impl;
 
+import java.text.MessageFormat;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.SimpleEmail;
@@ -15,7 +16,10 @@ public class MailOtpAuthn extends AbstractOptAuthn {
     
     @Autowired
     EmailConfig emailConfig;
-
+    String subject = "One Time PassWord";
+    
+    String messageTemplate = "{0} You Token is {1} , it validity in {2}  minutes.";
+    
     public MailOtpAuthn() {
         optType = OptTypes.EMAIL;
     }
@@ -32,13 +36,15 @@ public class MailOtpAuthn extends AbstractOptAuthn {
                     new DefaultAuthenticator(emailConfig.getUsername(), emailConfig.getPassword()));
             
             email.setFrom(emailConfig.getSenderMail());
-            email.setSubject("One Time PassWord");
-            email.setMsg("You Token is " + token 
-                    + " , it validity in " + (interval / 60) + " minutes");
+            email.setSubject(subject);
+            email.setMsg(
+                    MessageFormat.format(
+                            messageTemplate,userInfo.getUsername(),token,(interval / 60)));
+            
             email.addTo(userInfo.getEmail());
             email.send();
             _logger.debug(
-                    "token " + token + " send to user +" + userInfo.getUsername() 
+                    "token " + token + " send to user " + userInfo.getUsername() 
                     + ", email " + userInfo.getEmail());
             //成功返回
             this.optTokenStore.store(
@@ -61,5 +67,22 @@ public class MailOtpAuthn extends AbstractOptAuthn {
     public void setEmailConfig(EmailConfig emailConfig) {
         this.emailConfig = emailConfig;
     }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getMessageTemplate() {
+        return messageTemplate;
+    }
+
+    public void setMessageTemplate(String messageTemplate) {
+        this.messageTemplate = messageTemplate;
+    }
+    
 
 }

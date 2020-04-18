@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 import org.maxkey.crypto.password.opt.AbstractOptAuthn;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.web.WebConstants;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ public class ForgotPasswordContorller {
         public final static int NOTFOUND = 1;
         public final static int EMAIL = 2;
         public final static int MOBILE = 3;
+        public final static int CAPTCHAERROR = 4;
     }
     
     public class PasswordResetResult{
@@ -60,17 +63,27 @@ public class ForgotPasswordContorller {
     public ModelAndView email(@RequestParam String emailMobile,@RequestParam String captcha) {
         _logger.debug("forgotpassword  /forgotpassword/emailmobile.");
         _logger.debug("emailMobile : " + emailMobile);
-        UserInfo userInfo = userInfoService.queryUserInfoByEmailMobile(emailMobile);
-        Matcher matcher = emailRegex.matcher(emailMobile);
         int forgotType = ForgotType.NOTFOUND;
-        if (matcher.matches() && null != userInfo) {
-            tfaMailOptAuthn.produce(userInfo);
-            forgotType = ForgotType.EMAIL;
-        }
-        matcher = mobileRegex.matcher(emailMobile);
-        if (matcher.matches() && null != userInfo) {
-            tfaMobileOptAuthn.produce(userInfo);
-            forgotType = ForgotType.MOBILE;
+        UserInfo userInfo = null;
+        if (captcha != null && captcha
+                .equals(WebContext.getSession().getAttribute(
+                                WebConstants.KAPTCHA_SESSION_KEY).toString())) {
+            userInfo = userInfoService.queryUserInfoByEmailMobile(emailMobile);
+            Matcher matcher = emailRegex.matcher(emailMobile);
+            
+            if (matcher.matches() && null != userInfo) {
+                tfaMailOptAuthn.produce(userInfo);
+                forgotType = ForgotType.EMAIL;
+            }
+            matcher = mobileRegex.matcher(emailMobile);
+            if (matcher.matches() && null != userInfo) {
+                tfaMobileOptAuthn.produce(userInfo);
+                forgotType = ForgotType.MOBILE;
+            }
+           
+        }else {
+            _logger.debug("login captcha valid error.");
+            forgotType = ForgotType.CAPTCHAERROR;
         }
         
         ModelAndView modelAndView = new ModelAndView("forgotpassword/resetpwd");

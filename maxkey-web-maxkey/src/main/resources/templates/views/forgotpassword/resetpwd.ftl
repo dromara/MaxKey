@@ -10,13 +10,19 @@
 	<#include "../layout/nologintop.ftl">
 </div>
 <div class="container">	
-  <#if 1 == forgotType>
-  	<@locale code="forgotpassword.resetpwd.notfound.prefix"/> 
-  	<b>${emailMobile} </b>
-  	<@locale code="forgotpassword.resetpwd.notfound.suffix"/>
-  	<a href="javascript:history.go(-1);"><@locale code="forgotpassword.backstep"/></a >
-  </#if>
-  <#if 2 == forgotType || 3 == forgotType >
+
+
+	<#if 4 == forgotType>
+  		<@locale code="forgotpassword.pwdreseted.captcha"/> 
+  		<a href="javascript:history.go(-1);"><@locale code="forgotpassword.backstep"/></a >
+  	</#if>
+  	<#if 1 == forgotType>
+	  	<@locale code="forgotpassword.resetpwd.notfound.prefix"/> 
+	  	<b>${emailMobile} </b>
+	  	<@locale code="forgotpassword.resetpwd.notfound.suffix"/>
+	  	<a href="javascript:history.go(-1);"><@locale code="forgotpassword.backstep"/></a >
+  	</#if>
+  	<#if 2 == forgotType || 3 == forgotType >
 
 	<form action="<@base/>/forgotpassword/setpassword" method="post">
 		<table  class="table table-bordered">
