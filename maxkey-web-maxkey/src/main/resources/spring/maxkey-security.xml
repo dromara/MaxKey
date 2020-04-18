@@ -93,11 +93,19 @@
 	
 	<bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn">
 	</bean>
-	 
 	<!-- 
 	<bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.netease.SmsOtpAuthnYunxin">
 	</bean>
 	-->
+	
+	<!-- for Forgot Password -->
+	<bean id="tfaMailOptAuthn" class="org.maxkey.crypto.password.opt.impl.MailOtpAuthn">
+	</bean>
+	
+	<bean id="tfaMobileOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.netease.SmsOtpAuthnYunxin">
+	</bean>
+	 
+
 	<!-- Authentication Password Encoder Config -->
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>   
 	

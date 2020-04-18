@@ -1,5 +1,6 @@
 package org.maxkey.dao.persistence;
 
+import org.apache.ibatis.annotations.Select;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.domain.UserInfo;
 
@@ -40,6 +41,7 @@ public interface UserInfoMapper  extends IJpaBaseMapper<UserInfo>{
 	
 	public int changeMobile(UserInfo userInfo);
 	
-	
+    @Select("SELECT * FROM  USERINFO WHERE   EMAIL = #{value} OR MOBILE= #{value}")
+    public UserInfo queryUserInfoByEmailMobile(String emailMobile);
 	
 }

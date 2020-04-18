@@ -8,9 +8,12 @@ import org.maxkey.crypto.password.opt.AbstractOptAuthn;
 import org.maxkey.domain.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class MailOtpAuthn extends AbstractOptAuthn {
     private static final Logger _logger = LoggerFactory.getLogger(MailOtpAuthn.class);
+    
+    @Autowired
     EmailConfig emailConfig;
 
     public MailOtpAuthn() {
@@ -24,9 +27,10 @@ public class MailOtpAuthn extends AbstractOptAuthn {
             Email email = new SimpleEmail();
             email.setHostName(emailConfig.getSmtpHost());
             email.setSmtpPort(emailConfig.getPort());
+            email.setSSLOnConnect(emailConfig.isSsl());
             email.setAuthenticator(
                     new DefaultAuthenticator(emailConfig.getUsername(), emailConfig.getPassword()));
-            email.setSSLOnConnect(emailConfig.isSsl());
+            
             email.setFrom(emailConfig.getSenderMail());
             email.setSubject("One Time PassWord");
             email.setMsg("You Token is " + token 
@@ -36,7 +40,12 @@ public class MailOtpAuthn extends AbstractOptAuthn {
             _logger.debug(
                     "token " + token + " send to user +" + userInfo.getUsername() 
                     + ", email " + userInfo.getEmail());
-            //this.insertDataBase(userInfo, token, userInfo.getUsername(), OptTypes.EMAIL);
+            //成功返回
+            this.optTokenStore.store(
+                    userInfo, 
+                    token, 
+                    userInfo.getMobile(), 
+                    OptTypes.EMAIL);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,7 +55,7 @@ public class MailOtpAuthn extends AbstractOptAuthn {
 
     @Override
     public boolean validate(UserInfo userInfo, String token) {
-        return true;
+        return this.optTokenStore.validate(userInfo, token, OptTypes.EMAIL, interval);
     }
 
     public void setEmailConfig(EmailConfig emailConfig) {
