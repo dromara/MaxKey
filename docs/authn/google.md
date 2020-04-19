@@ -4,6 +4,10 @@
 
 多因素认证（MFA），是一种计算机访问控制的方法，用户要通过两种以上的认证机制之后，才能得到授权，使用计算机资源。MFA的目的是建立一个多层次的防御，使未经授权的人访问计算机系统或网络更加困难，从而提高安全性。
 
+优势：**使用简单、安全性高、低成本、无需携带额外设备**
+
+<h2>Google Authenticator</h2>
+
 MaxKey支持谷歌验证器(Google Authenticator)双因素身份认证，步骤如下
 
 1、下载Google Authenticator到手机
@@ -21,3 +25,13 @@ MaxKey支持谷歌验证器(Google Authenticator)双因素身份认证，步骤�
 4、退出MaxKey,进入到登录界面，"安全认证"，输入用户名和密码，同时需要Google Authenticator产生的验证码登录，如下图
 
 <img src="{{ "/images/authn/google4.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+
+<h2>TOTP或者HOTP支持</h2>
+
+1、Google Authenticator
+
+2、Microsoft Authenticator
+
+3、FreeOTP
+
+4、支持TOTP或者HOTP协议

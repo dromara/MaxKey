@@ -89,7 +89,7 @@
 		</tr> 
 		<tr class="a">
 			<td>4 </td>
-			<td>Google Authenticator</td>
+			<td>Google/Microsoft Authenticator/FreeOTP/支持TOTP或者HOTP</td>
 		</tr>
 		<tr class="b">
 			<td>5 </td>
