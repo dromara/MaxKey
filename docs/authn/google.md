@@ -16,7 +16,7 @@
 
 4、支持TOTP或者HOTP协议
 
-<h2>Google Authenticator</h2>
+<h2>Google Authenticator支持</h2>
 
 MaxKey支持谷歌验证器(Google Authenticator)双因素身份认证，步骤如下
 
