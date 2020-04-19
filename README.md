@@ -32,7 +32,7 @@
 | 1       | 动态验证码   	| 
 | 2       | 双因素认证   	| 
 | 3       | 短信认证  腾讯云短信/阿里云短信/网易云信 	|
-| 4       | Google Authenticator   	|
+| 4       | Google/Microsoft Authenticator/FreeOTP/支持TOTP或者HOTP |
 | 5       | Kerberos/Spengo/AD域|
 | 6       | 社交账号 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
 
