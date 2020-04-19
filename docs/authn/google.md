@@ -6,6 +6,16 @@
 
 优势：**使用简单、安全性高、低成本、无需携带额外设备**
 
+<h2>TOTP或者HOTP支持</h2>
+
+1、Google Authenticator
+
+2、Microsoft Authenticator
+
+3、FreeOTP
+
+4、支持TOTP或者HOTP协议
+
 <h2>Google Authenticator</h2>
 
 MaxKey支持谷歌验证器(Google Authenticator)双因素身份认证，步骤如下
@@ -26,12 +36,3 @@ MaxKey支持谷歌验证器(Google Authenticator)双因素身份认证，步骤�
 
 <img src="{{ "/images/authn/google4.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
-<h2>TOTP或者HOTP支持</h2>
-
-1、Google Authenticator
-
-2、Microsoft Authenticator
-
-3、FreeOTP
-
-4、支持TOTP或者HOTP协议
