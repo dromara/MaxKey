@@ -93,11 +93,11 @@ function doLoginSubmit(){
 	if(currentSwitchTab=="div_commonLogin"){
 		$.cookie("username", $("#loginForm input[name=j_username]").val(), { expires: 7 });
 		$.cookie("switch_form", 1, { expires: 7 });
-		$("#loginForm").submit();
+		$("#loginSubmitButton").click();
 	}else{
 		$.cookie("username", $("#tfaLoginForm input[name=j_username]").val(), { expires: 7 });
 		$.cookie("switch_form", 2, { expires: 7 });
-		$("#tfaLoginForm").submit();
+		$("#tfaLoginSubmitButton").click();
 	}
 };
 
@@ -131,11 +131,11 @@ $(function(){
 
 	<#--submit loginForme-->
 	$("#loginSubmit").on("click",function(){
-		doLoginSubmit();
+			doLoginSubmit();
 	});
 	<#--submit tfaLoginForme-->	
 	$("#tfa_loginSubmit").on("click",function(){
-		doLoginSubmit();
+			doLoginSubmit();
 	});
 	
 	<#--read username cookie for login e-->		
@@ -202,16 +202,16 @@ $(function(){
 						<table  class="table login_form_table">
 							<tr>
 								<td><@locale code="login.text.username"/>：</td>
-								<td><input class="form-control" type='text' id='j_username'  name='username' value="admin" tabindex="1"/></td>
+								<td><input required="" class="form-control" type='text' id='j_username'  name='username' value="admin" tabindex="1"/></td>
 							</tr>
 							<tr>
 								<td><@locale code="login.text.password"/>：</td>
-								<td><input class="form-control"  type='password' id='j_password'  name='password' value="admin"  tabindex="2"/></td>
+								<td><input required="" class="form-control"  type='password' id='j_password'  name='password' value="admin"  tabindex="2"/></td>
 							</tr>
 							<#if true==isCaptcha> 
 							<tr>
 								<td><@locale code="login.text.captcha"/>：</td>
-								<td><input class="form-control"  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" src="<@base/>/captcha"/></td>
+								<td><input required="" class="form-control"  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" src="<@base/>/captcha"/></td>
 								
 							</tr>
 							</#if>
@@ -238,7 +238,9 @@ $(function(){
 								
 							</tr>
 							<tr >
-								<td colspan="2"><input id="loginSubmit" type="button"  tabindex="5"  style="width: 100%;" class="button btn btn-lg btn-primary btn-block"  value="<@locale code="login.button.login"/>"/></td>
+								<td colspan="2">
+								 <input type="submit" id="loginSubmitButton" style="display: none;" />
+								 <input id="loginSubmit" type="button"  tabindex="5"  style="width: 100%;" class="button btn btn-lg btn-primary btn-block"  value="<@locale code="login.button.login"/>"/></td>
 								
 							</tr>
 						</table>
@@ -251,25 +253,25 @@ $(function(){
 						<table  class="login_form_table">
 							<tr>
 								<td><@locale code="login.text.username"/>：</td>
-								<td><input class="form-control"  type='text' id='tfa_j_username'  name='username' value="" tabindex="1"/></td>
+								<td><input required="" class="form-control"  type='text' id='tfa_j_username'  name='username' value="" tabindex="1"/></td>
 							</tr>
 							<tr> 
 								<td><@locale code="login.text.password"/>：</td>
-								<td><input class="form-control"  type='password' id='tfa_j_password'  name='password' value=""  tabindex="2" /></td>
+								<td><input required="" class="form-control"  type='password' id='tfa_j_password'  name='password' value=""  tabindex="2" /></td>
 							</tr>
 							<#if true==isOneTimePwd >
 							<#if "TOPT"==optType >
 							<tr>
 								<td><@locale code="login.text.currenttime"/>：</td>
 								<td>
-									<input class="form-control"  readonly type='text' id="currentTime" name="currentTime"  tabindex="3"  value="" />
+									<input  class="form-control"  readonly type='text' id="currentTime" name="currentTime"  tabindex="3"  value="" />
 								</td>
 							</tr>
 							</#if>
 							<tr>
 								<td><@locale code="login.text.captcha"/>：</td>
 								<td>
-									<input class="form-control"  type='text' id="tfa_j_otp_captcha" name="otpCaptcha"  tabindex="3"  value=""   style="float: left;"/>
+									<input required="" class="form-control"  type='text' id="tfa_j_otp_captcha" name="otpCaptcha"  tabindex="3"  value=""   style="float: left;"/>
 									<input class="form-control"  id="tfa_j_otp_captcha_button" type="button"  tabindex="5" class="button"  value="获取动态验证码"/>
 									
 								</td>
@@ -304,7 +306,9 @@ $(function(){
 								
 							</tr>
 							<tr >
-								<td colspan="2"><input id="tfa_loginSubmit" type="button" style="width: 100%;" tabindex="5" class="button btn btn-lg btn-primary btn-block"  value="<@locale code="login.button.login"/>"/></td>
+								<td colspan="2">
+								 <input type="submit" id="tfaLoginSubmitButton" style="display: none;" />
+								<input id="tfa_loginSubmit" type="button" style="width: 100%;" tabindex="5" class="button btn btn-lg btn-primary btn-block"  value="<@locale code="login.button.login"/>"/></td>
 								
 							</tr>
 						</table>
