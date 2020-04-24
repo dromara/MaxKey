@@ -36,15 +36,15 @@
 			</tr>
 			<tr>
 				<td><@locale code="login.password.newPassword"/></td>
-				<td><input  class="form-control"   type='password' id="password" name="password"  tabindex="1"  value="" /></td>
+				<td><input required=""  class="form-control"   type='password' id="password" name="password"  tabindex="1"  value="" /></td>
 			</tr>
 			<tr>
 				<td><@locale  code="login.password.confirmPassword"/></td>
-				<td><input  class="form-control"   type='password' id="confirmpassword" name="confirmpassword"  tabindex="2"  value="" /></td>
+				<td><input  required="" class="form-control"   type='password' id="confirmpassword" name="confirmpassword"  tabindex="2"  value="" /></td>
 			</tr>
 			<tr>
 				<td><@locale code="login.text.captcha"/>：</td>
-				<td><input class="form-control"  type='text'  name="captcha"  tabindex="3"  value="" /></td>
+				<td><input required="" class="form-control"  type='text'  name="captcha"  tabindex="3"  value="" /></td>
 					
 			</tr>
 			<tr>
