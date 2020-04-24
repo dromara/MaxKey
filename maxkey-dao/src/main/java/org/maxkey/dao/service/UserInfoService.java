@@ -43,14 +43,15 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		return (UserInfoMapper)super.getMapper();
 	}
 	
-	public boolean insert(UserInfo userinfo) {
-		 if(super.insert(userinfo)){
-			
-			 return true;
-		 }
-		 
-		 return false;
-	}
+    public boolean insert(UserInfo userInfo) {
+        userInfo = passwordEncoder(userInfo);
+        if (super.insert(userInfo)) {
+
+            return true;
+        }
+
+        return false;
+    }
 	
 	public boolean update(UserInfo userinfo) {
 		 if(super.update(userinfo)){
@@ -102,20 +103,25 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public UserInfo passwordEncoder(UserInfo userInfo) {
+	    String password = passwordEncoder.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
+        userInfo.setDecipherable(ReciprocalUtils.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword())));
+        _logger.debug("decipherable : "+userInfo.getDecipherable());
+        userInfo.setPassword(password);
+        userInfo.setPasswordLastSetTime(DateUtils.getCurrentDateTimeAsString());
+        
+        userInfo.setModifiedDate(DateUtils.getCurrentDateTimeAsString());
+        
+        return userInfo;
+	}
 	public boolean changePassword(UserInfo userInfo) {
 		try {
 			if(WebContext.getUserInfo() != null) {
 				userInfo.setModifiedBy(WebContext.getUserInfo().getId());
 				
 			}
-			String password = passwordEncoder.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
-			userInfo.setDecipherable(ReciprocalUtils.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword())));
-			_logger.debug("decipherable : "+userInfo.getDecipherable());
-			userInfo.setPassword(password);
-			userInfo.setPasswordLastSetTime(DateUtils.getCurrentDateTimeAsString());
-			
-			userInfo.setModifiedDate(DateUtils.getCurrentDateTimeAsString());
+			userInfo = passwordEncoder(userInfo);
 			
 			if(getMapper().changePassword(userInfo) > 0){
 				ChangePassword changePassword=new ChangePassword();

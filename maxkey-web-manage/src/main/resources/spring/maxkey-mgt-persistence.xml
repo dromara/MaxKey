@@ -62,6 +62,8 @@
 	<!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
 	<bean id="sqlSessionFactory" class="org.apache.mybatis.jpa.MyBatisSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
+		<property name="dialect" value="mysql" />
+		<property name="timeout" value="30" />
 		<property name="transactionFactory">
 			<bean class="org.apache.ibatis.transaction.managed.ManagedTransactionFactory" />
 		</property>
@@ -70,32 +72,13 @@
 	        			org.maxkey.domain,
 	        			org.maxkey.domain.apps,
         			" />
-		<property name="timeout" value="30" />
 		<property name="mapperLocations" value="classpath*:org/maxkey/dao/persistence/xml/#{dataSoruceConfig.database}/*.xml" />
-		<property name="interceptors">
-			<list>
-				<ref bean="StatementHandlerInterceptor"/>  
-			</list>
-		</property>
 	</bean>
 	
-	<bean id="StatementHandlerInterceptor" class="org.apache.mybatis.jpa.StatementHandlerInterceptor">
-		<!--  dialect need bean dialect
-		<property name="dialect">
-			<bean id="dialect" class="org.apache.mybatis.jpa.dialect.MySQLDialect"/>
-		</property>
-		-->
-		<!-- from database type -->
-		<property name="dialectString" value="#{dataSoruceConfig.dialect}"/>
-		
-	</bean>
-
-
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
-
     <!-- scan for mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" 

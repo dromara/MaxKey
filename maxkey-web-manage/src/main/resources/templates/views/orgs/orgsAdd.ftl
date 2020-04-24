@@ -51,11 +51,11 @@ $(function () {
            </tr>
            <tr>
               <td > <@locale code="org.name" />：</td>
-              <td><input type="text"  id="name" name="name"    class="form-control"/></td>
+              <td><input type="text"  id="name" name="name" required=""    class="form-control"/></td>
            </tr>
            <tr>
               <td > <@locale code="org.fullname" />：</td>
-              <td><input type="text"  id="fullName" name="fullName"    class="form-control"/></td>
+              <td><input type="text"  id="fullName" name="fullName"  required=""   class="form-control"/></td>
            </tr>
             <tr >
               <td > <@locale code="org.xpath" /> ：

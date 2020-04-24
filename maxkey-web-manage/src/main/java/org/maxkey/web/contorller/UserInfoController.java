@@ -199,7 +199,7 @@ public class UserInfoController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/delete",method=RequestMethod.DELETE)  
+	@RequestMapping(value="/delete")  
 	public Message deleteUsersById(@RequestParam("id") String id) {
 		_logger.debug(id);
 		if(userInfoService.batchDelete(StringUtils.string2List(id, ","))) {

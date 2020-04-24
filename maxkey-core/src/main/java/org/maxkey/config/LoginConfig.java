@@ -9,16 +9,26 @@ import org.springframework.context.annotation.PropertySource;
 public class LoginConfig {
     @Value("${config.login.captcha}")
     boolean captcha;
+    
+    //验证码类型 text 文本 ， arithmetic算术验证码
+    @Value("${config.login.captcha.type}")
+    String captchaType;
+    
     @Value("${config.login.onetimepwd}")
     boolean oneTimePwd;
+    
     @Value("${config.login.socialsignon}")
     boolean socialSignOn;
+    
     @Value("${config.login.kerberos}")
     boolean kerberos;
+    
     @Value("${config.login.remeberme}")
     boolean remeberMe;
+    
     @Value("${config.login.wsfederation}")
     boolean wsFederation;
+    
     @Value("${config.login.default.uri}")
     String defaultUri;
 
@@ -83,6 +93,14 @@ public class LoginConfig {
 
     public void setWsFederation(boolean wsFederation) {
         this.wsFederation = wsFederation;
+    }
+    
+    public String getCaptchaType() {
+        return captchaType;
+    }
+
+    public void setCaptchaType(String captchaType) {
+        this.captchaType = captchaType;
     }
 
     @Override

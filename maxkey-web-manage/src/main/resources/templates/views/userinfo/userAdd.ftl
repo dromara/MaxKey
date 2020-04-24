@@ -51,11 +51,11 @@
 		<td style="width:15%;"><@locale code="userinfo.username" />：</td>
 		<td style="width:35%;">
 		<input type="hidden" id="id" name="id" value=""/>
-			<input  class="form-control"  type="text" id="username" name="username"  title="" value=""/>
+			<input  class="form-control"  type="text" required="" id="username" name="username"  title="" value=""/>
 		</td>
 		<td style="width:15%;"><@locale code="login.text.password" />：</td>
 		<td style="width:35%;">
-			<input  class="form-control"  type="password" id="password" name="password"  title="" value=""/>
+			<input  class="form-control"  type="password" required="" id="password" name="password"  title="" value=""/>
 		</td>
 	</tr>
 	<tr>
@@ -88,7 +88,7 @@
 	<tr>
 		<td><@locale code="userinfo.displayName" />：</td>
 		<td>
-			<input class="form-control"  type="text" id="displayName" name="displayName"  title="" value=""/>
+			<input class="form-control"  type="text" required="" id="displayName" name="displayName"  title="" value=""/>
 		</td>
 		<td rowspan="4"><@locale code="userinfo.picture" />：</td>
 		<td rowspan="4">
