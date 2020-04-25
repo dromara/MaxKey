@@ -356,11 +356,37 @@ public final class WebContext {
      * @return
      */
     public static String getI18nValue(String code) {
-        return code;
+        String message = code;
+        try {
+            message = getApplicationContext().getMessage(
+                code.toString(), 
+                null,
+                getLocale());
+        } catch (Exception e) {
+            //
+            e.printStackTrace();
+        }
+        return message;
     }
 
+    /**
+     * getI18nValue.
+     * @param code String
+     * @param filedValues Object
+     * @return
+     */
     public static String getI18nValue(String code, Object[] filedValues) {
-        return code;
+        String message = code;
+        try { 
+            message = getApplicationContext().getMessage(
+                code.toString(), 
+                filedValues,
+                getLocale());
+        } catch (Exception e) {
+            //
+            e.printStackTrace();
+        }
+        return message;
     }
     
     //TODO:
