@@ -10,11 +10,11 @@ MaxKey v 1.4.0 GA	2020/**/**
 						config/applicationConfig.properties
 						#text字符验证码,arithmetic算术验证码
 						config.login.captcha.type=text
-	*(MAXKEY-200506) 修复新增用户时报错
-	*(MAXKEY-200507) 修复操作日志报错
-	*(MAXKEY-200508) 修改应用添加报错，增加不为空验证功能
+	*(MAXKEY-200506) 修复新增用户时错误
+	*(MAXKEY-200507) 修复操作日志错误
+	*(MAXKEY-200508) 修改应用添加错误，增加不为空验证功能
 	*(MAXKEY-200509) 用户组增加不为空验证功能
-	*(MAXKEY-200510) 机构增加不为空验证功能
+	*(MAXKEY-200510) 机构增加不为空验证功能,排序显示
 	*(MAXKEY-200511) mybatis-jpa-extra升级到v2.0
 	
 MaxKey v 1.3.0 GA   2020/04/04  
