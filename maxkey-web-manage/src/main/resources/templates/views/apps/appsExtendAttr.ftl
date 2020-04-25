@@ -22,15 +22,15 @@ $(function(){
 		html +=			'</th>';  
 		//attribute
 		html +=			'<td>';   
-		html += 			'<input type="text" class="form-control" id="attribute_' + attrIndex + '" name="attr" class="int" title="" value="'+attribute+'"/>';   
+		html += 			'<input type="text" class="form-control" id="attribute_' + attrIndex + '" name="attr" class="int" title="" value="'+attribute+'"  required="" />';   
         html += 		'</span></td>';
         //attributeType
         html += 		'<th  nowrap ><@locale code="apps.extendAttr.parameter.type"/>：</th>	<td><span class="intspan">';
-        html += 			'<input type="text"  class="form-control" id="attributeType_' + attrIndex + '" name="type" class="int" title="" value="'+attributeType+'"/>';
+        html += 			'<input type="text"  class="form-control" id="attributeType_' + attrIndex + '" name="type" class="int" title="" value="'+attributeType+'"  required="" />';
         html += 		'</span></td>';
 		//attributeValue   
         html += 		'<th  nowrap ><@locale code="apps.extendAttr.parameter.value"/>：</th>	<td><span class="intspan">';
-        html += 			'<input type="text"  class="form-control" id="attributeValue_' + attrIndex + '" name="value" class="int" title="" value="'+attributeValue+'"/>';
+        html += 			'<input type="text"  class="form-control" id="attributeValue_' + attrIndex + '" name="value" class="int" title="" value="'+attributeValue+'"  required="" />';
         html += 		'</span></td>';
        
         html += '</tr>'; 

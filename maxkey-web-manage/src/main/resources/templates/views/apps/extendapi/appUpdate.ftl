@@ -54,12 +54,12 @@ $(function(){
 				<tr>
 					<th  ><@locale code="apps.principal"/>：</th>
 					<td  >
-						<input type="text"  class="form-control"  id="principal" name="principal"  title="" value="${model.principal}"/>
+						<input type="text"  class="form-control"  id="principal" name="principal"  title="" value="${model.principal}"  required=""   />
 						
 					</td>
 					<th  ><@locale code="apps.credentials"/>：</th>
 					<td  >
-						<input type="text" class="form-control"  id="credentials" name="credentials"  title="" value="${model.credentials}"/>
+						<input type="text" class="form-control"  id="credentials" name="credentials"  title="" value="${model.credentials}"  required=""  />
 						
 					</td>
 				</tr>

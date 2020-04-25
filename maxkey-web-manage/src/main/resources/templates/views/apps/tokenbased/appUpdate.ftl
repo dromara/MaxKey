@@ -61,7 +61,7 @@ $(function(){
 								<tr>
 									<th style="width:15%;"><@locale code="apps.tokenbased.redirectUri" />：</th>
 									<td  colspan=3>
-										<input type="text" id="redirectUri" class="form-control" name="redirectUri"  title="" value="${model.redirectUri}"/>
+										<input type="text" id="redirectUri" class="form-control" name="redirectUri"  title="" value="${model.redirectUri}"  required="" />
 									</td>
 								</tr>
 								<tr>
@@ -117,7 +117,7 @@ $(function(){
 								<tr>
 									<th><@locale code="apps.tokenbased.expires" />：</th>
 									<td>
-										<input type="text" class="form-control" id="expires" name="expires"  title="" value="${model.expires}"/>
+										<input type="text" class="form-control" id="expires" name="expires"  title="" value="${model.expires}"  required="" />
 									</td>
 									<th><@locale code="apps.isAdapter" />：</th>
 									<td>

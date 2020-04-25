@@ -59,7 +59,7 @@
 			<tr>
 				<th><@locale code="userinfo.mobile" /> :</th>
 				<td>
-					<input   class="form-control" type="text" id="mobile" name="mobile" class=" required" title="" value="${model.mobile}"/>
+					<input   class="form-control" type="text" id="mobile" name="mobile" class=" required" title="" value="${model.mobile}"  required="" />
 					<label for="mobile"></label>
 				</td>
 			</tr>
@@ -73,7 +73,7 @@
 			<tr>
 				<th><@locale code="userinfo.email" /> :</th>
 				<td>
-					<input  class="form-control"  type="text" id="email" name="email" class="required" title="" value="${model.email}"/>
+					<input  class="form-control"  type="text" id="email" name="email" class="required" title="" value="${model.email}"  required="" />
 					<label for="eamil"></label>
 				</td>
 			</tr>

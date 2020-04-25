@@ -51,29 +51,27 @@ $(function(){
 					<td colspan=4><@locale code="apps.saml.v2.0.info" /></td>
 				</tr>
 				<tr>
+                    <th><@locale code="apps.saml.spAcsUrl" />：</th>
+                    <td colspan =3>
+                        <input type="text" class="form-control"  id="spAcsUrl" name="spAcsUrl"  title="" value="${model.spAcsUrl!}"  required="" />
+                    </td>
+                </tr>
+				<tr>
 					<th><@locale code="apps.saml.entityId" />：</th>
 					<td  colspan =3>
-						<input type="text" class="form-control"  id="entityId" name="entityId"  title="" value="${model.entityId}"/>
-					</td>
-					
-					
-				</tr>
-				<tr>
-					<th><@locale code="apps.saml.spAcsUrl" />：</th>
-					<td colspan =3>
-						<input type="text" class="form-control"  id="spAcsUrl" name="spAcsUrl"  title="" value="${model.spAcsUrl}"/>
+						<input type="text" class="form-control"  id="entityId" name="entityId"  title="" value="${model.entityId!}"  required="" />
 					</td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.issuer" />：</th>
 					<td  colspan =3>
-						<input type="text" class="form-control"  id="issuer" name="issuer"  title="" value="${model.issuer}"/>
+						<input type="text" class="form-control"  id="issuer" name="issuer"  title="" value="${model.issuer!}"  required="" />
 					</td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.audience" />：</th>
 					<td  colspan =2>
-						<input type="text" class="form-control"  id="audience" name="audience"  title="" value="${model.audience}"/>
+						<input type="text" class="form-control"  id="audience" name="audience"  title="" value="${model.audience!}"  required="" />
 					</td>
 					<td  >
 						<a target="_blank" href="${maxKeyURI}/metadata/saml20/${model.id}.xml"> SAML MetaData</a>
@@ -165,15 +163,15 @@ $(function(){
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.certIssuer" />：</th>
-					<td>${model.certIssuer}
+					<td>${model.certIssuer!}
 					</td>
 					<th><@locale code="apps.saml.certExpiration" />：</th>
-					<td>${model.certExpiration}
+					<td>${model.certExpiration!}
 					</td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.certSubject" />：</th>
-					<td  colspan =3>${model.certSubject}
+					<td  colspan =3>${model.certSubject!}
 					</td>
 				</tr>
 				<tr>

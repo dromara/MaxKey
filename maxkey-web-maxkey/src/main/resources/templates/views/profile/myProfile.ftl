@@ -50,7 +50,7 @@
 				<tr>
 					<th><@locale code="userinfo.displayName" />：</th>
 					<td>
-						<input class="form-control"  type="text" id="displayName" name="displayName"  title="" value="${model.displayName!}"/>
+						<input class="form-control"  type="text" id="displayName" name="displayName"  title="" value="${model.displayName!}"  required="" />
 						<label for="displayName"></label>
 					</td>
 					<th rowspan="4"><@locale code="userinfo.picture" />：</th>

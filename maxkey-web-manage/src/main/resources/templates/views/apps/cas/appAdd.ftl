@@ -47,15 +47,13 @@ $(function(){
 							<tr>
 								<th style="width:15%;"><@locale code="apps.cas.service"/>：</th>
 								<td  colspan=3>
-									<input type="text" id="service" class="form-control" name="service"  title="" value=""/>
-									<b class="orange">*</b><label for="service"></label>
+									<input type="text" id="service" class="form-control" name="service"  title="" value=""  required=""    />
 								</td>
 							</tr>
 							<tr>
 								<th style="width:15%;"><@locale code="apps.cas.validation"/>：</th>
 								<td  colspan=3>
-									<input type="text" class="form-control" id="validation" name="validation"  title="" value=""/>
-									<b class="orange">*</b><label for="validation"></label>
+									<input type="text" class="form-control" id="validation" name="validation"  title="" value=""  required=""  />
 								</td>
 							</tr>
 							<tr>

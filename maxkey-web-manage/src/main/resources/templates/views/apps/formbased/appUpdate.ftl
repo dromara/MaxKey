@@ -58,19 +58,19 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.formbased.redirectUri"/>：</th>
 					<td colspan="3">
-						<input type="text" class="form-control" id="redirectUri" name="redirectUri"  title="" value="${model.redirectUri}"/>
+						<input type="text" class="form-control" id="redirectUri" name="redirectUri"  title="" value="${model.redirectUri}"  required=""   />
 					</td>
 					
-				</tr>
+				</tr> 
 				
 				<tr>
 					<th style="width:15%;"><@locale code="apps.formbased.usernameMapping"/>：</th>
 					<td style="width:35%;">
-						<input type="text" class="form-control" id="usernameMapping" name="usernameMapping"  title="" value="${model.usernameMapping}"/>
+						<input type="text" class="form-control" id="usernameMapping" name="usernameMapping"  title="" value="${model.usernameMapping}"  required=""   />
 					</td>
 					<th style="width:15%;"><@locale code="apps.formbased.passwordMapping"/>：</th>
 					<td style="width:35%;">
-						<input type="text" class="form-control" id="passwordMapping" name="passwordMapping"  title="" value="${model.passwordMapping}"/>
+						<input type="text" class="form-control" id="passwordMapping" name="passwordMapping"  title="" value="${model.passwordMapping}"  required=""   />
 	
 					</td>
 				</tr>

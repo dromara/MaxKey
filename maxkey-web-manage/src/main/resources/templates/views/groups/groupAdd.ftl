@@ -17,7 +17,7 @@
 			<tr>
 				<th><@locale code="group.name" />：</th>
 				<td nowrap>
-					<input type="text" id="name" name="name" class="form-control" title="" value=""/>
+					<input type="text" id="name" name="name" class="form-control" title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>

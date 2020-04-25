@@ -25,7 +25,7 @@
 			<tr>
 				<th><@locale code="userinfo.username" />：</th>
 				<td nowrap>
-					<input readonly type="text" id="username" name="username"  class="form-control username" title="" value="${model.username!}" style="float:left;width:70%;"/>
+					<input readonly type="text" id="username" name="username"  class="form-control username" title="" value="${model.username!}" style="float:left;width:70%;"  required="" />
 					<input class="button btn btn-primary mr-3 window"  type="button"    id="selectUserinfoBtn" value="<@locale code="button.text.select" />"
 					 wurl="<@base/>/userinfo/select"
 						 		    wwidth="800"
@@ -37,14 +37,14 @@
 			<tr>
 				<th><@locale code="userinfo.displayName" />：</th>
 				<td nowrap>
-					<input readonly  type="text" id="displayName" name="displayName"  class="form-control displayName"  title="" value="${model.displayName!}" style="width:70%;"/>
+					<input readonly  type="text" id="displayName" name="displayName"  class="form-control displayName"  title="" value="${model.displayName!}" style="width:70%;"  required="" />
 			
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="apps.name" />：</th>
 				<td nowrap>
-					<input readonly  type="text" id="appName" name="appName"  class="form-control appName" title="" value="${model.appName!}"  style="float:left;width:70%;"/>
+					<input readonly  type="text" id="appName" name="appName"  class="form-control appName" title="" value="${model.appName!}"  style="float:left;width:70%;"  required="" />
 					<input class="button btn btn-primary mr-3 window"  type="button"    id="selectAppsubmitBtn" value="<@locale code="button.text.select" />"
 					  wurl="<@base/>/apps/select"
 						 		    wwidth="800"
@@ -56,14 +56,14 @@
 			<tr>
 				<th><@locale code="account.relatedUsername" />：</th>
 				<td nowrap>
-					<input type="text" id="relatedUsername" name="relatedUsername"  class="form-control" title="" value="${model.relatedUsername!}"  style="width:70%;"/>
+					<input type="text" id="relatedUsername" name="relatedUsername"  class="form-control" title="" value="${model.relatedUsername!}"  style="width:70%;"  required="" />
 
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="account.relatedPassword" />：</th>
 				<td nowrap>
-					<input type="password" id="relatedPassword" name="relatedPassword"  class="form-control" title="" value="${model.relatedPassword!}"  style="width:70%;"/>
+					<input type="password" id="relatedPassword" name="relatedPassword"  class="form-control" title="" value="${model.relatedPassword!}"  style="width:70%;"  required="" />
 		
 				</td>
 			</tr>

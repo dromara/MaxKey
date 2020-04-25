@@ -90,7 +90,6 @@ $(function(){
 								<td>id_token<input <#if   model.authorizedGrantTypes?contains('id_token') >checked</#if>  type="checkbox" id="grantTypes_id_token" name="authorizedGrantTypes" value="id_token"/></td>
 								<td>token<input <#if   model.authorizedGrantTypes?contains( 'token') >checked</#if>  type="checkbox" id="grantTypes_token" name="authorizedGrantTypes" value="token"/></td>
 								
-								<td><b class="orange">*</b><label for="authorizedGrantTypes"></label></td>
 							</tr>
 						</table>
 					</td>
@@ -98,20 +97,20 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.oauth.registeredRedirectUris" />：</th>
 					<td colspan=3>
-						<textarea  class="form-control" id="registeredRedirectUris" name="registeredRedirectUris" rows="4" cols="60">${model.registeredRedirectUris}</textarea>
-						<b class="orange">*</b><label for="registeredRedirectUris"></label>
+						<textarea  class="form-control" id="registeredRedirectUris" name="registeredRedirectUris" rows="4" cols="60"  required="" >${model.registeredRedirectUris}</textarea>
+
 					</td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.oauth.accessTokenValiditySeconds" />：</th>
 					<td >
 						<input type="text" class="form-control" id="accessTokenValiditySeconds" name="accessTokenValiditySeconds"  title="" value="${model.accessTokenValiditySeconds}"/>
-						<b class="orange">*</b><label for="accessTokenValiditySeconds"></label>
+			
 					</td>
 					<th><@locale code="apps.oauth.refreshTokenValiditySeconds" />：</th>
 					<td>
 						<input type="text" class="form-control" id="refreshTokenValiditySeconds" name="refreshTokenValiditySeconds"  title="" value="${model.refreshTokenValiditySeconds}"/>
-						<b class="orange">*</b><label for="refreshTokenValiditySeconds"></label>
+					
 					</td>
 				</tr>
 				<tr>

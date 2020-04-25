@@ -53,7 +53,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.formbased.redirectUri"/>：</th>
 					<td colspan="3">
-						<input type="text"  class="form-control"  id="redirectUri" name="redirectUri"  title="" value=""/>
+						<input type="text"  class="form-control"  id="redirectUri" name="redirectUri"  title="" value=""  required="" />
 						<b class="orange">*</b><label for="redirectUri"></label>
 					</td>
 					
@@ -61,12 +61,12 @@ $(function(){
 				<tr>
 					<th style="width:15%;"><@locale code="apps.formbased.usernameMapping"/>：</th>
 					<td style="width:35%;">
-						<input type="text"  class="form-control"  id="usernameMapping" name="usernameMapping"  title="" value="username"/>
+						<input type="text"  class="form-control"  id="usernameMapping" name="usernameMapping"  title="" value="username"  required="" />
 						<b class="orange">*</b><label for="usernameMapping"></label>
 					</td>
 					<th style="width:15%;"><@locale code="apps.formbased.passwordMapping"/>：</th>
 					<td style="width:35%;">
-						<input type="text"  class="form-control" id="passwordMapping" name="passwordMapping"  title="" value="password"/>
+						<input type="text"  class="form-control" id="passwordMapping" name="passwordMapping"  title="" value="password"  required=""  />
 						<b class="orange">*</b><label for="passwordMapping"></label>
 					</td>
 				</tr>

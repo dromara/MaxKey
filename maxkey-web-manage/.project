@@ -4,8 +4,8 @@
 	<comment>maxkey-web-manage</comment>
 	<projects>
 		<project>maxkey-protocol-authorize</project>
-		<project>maxkey-core</project>
 		<project>maxkey-jose-jwt</project>
+		<project>maxkey-core</project>
 		<project>maxkey-dao</project>
 		<project>maxkey-client-sdk</project>
 		<project>maxkey-protocol-oauth-2.0</project>

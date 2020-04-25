@@ -40,13 +40,13 @@
 			<tr>
 				<th><@locale code="login.password.newPassword" />:</th>
 				<td>
-					<input type="password" id="newPassword" name="newPassword" class="form-control" title="" value=""/>
+					<input type="password" id="newPassword" name="newPassword" class="form-control" title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="login.password.confirmPassword" />:</th>
 				<td nowrap>
-					<input type="password" id="confirmPassword" name="confirmPassword" class="form-control" title="" value=""/>
+					<input type="password" id="confirmPassword" name="confirmPassword" class="form-control" title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>

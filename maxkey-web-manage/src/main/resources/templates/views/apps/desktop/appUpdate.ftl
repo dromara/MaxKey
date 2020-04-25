@@ -93,7 +93,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.desktop.programPath" />：</th>
 					<td colspan="3">
-						<textarea class="form-control" id="programPath" name="programPath" rows="4" cols="60">${model.programPath}</textarea>
+						<textarea class="form-control" id="programPath" name="programPath" rows="4" cols="60"  required="" >${model.programPath}</textarea>
 						
 					</td>
 					
@@ -117,7 +117,7 @@ $(function(){
 					<th  class="usernameParameter" <#if 'SIMULATION'==model.usernameType>style="display:none"</#if> >
 						<@locale code="apps.desktop.usernameParameter" />：</th>
 					<td  class="usernameParameter" <#if 'SIMULATION'==model.usernameType>style="display:none"</#if> >
-						<input type="text" class="form-control" id="usernameParameter" name="usernameParameter"  title="" value="${model.usernameParameter}"/>
+						<input type="text" class="form-control" id="usernameParameter" name="usernameParameter"  title="" value="${model.usernameParameter}"  />
 						
 					</td>
 					
@@ -141,7 +141,7 @@ $(function(){
 					<th   class="passwordParameter" <#if 'SIMULATION'==model.passwordType>style="display:none"</#if>  >
 						<@locale code="apps.desktop.passwordParameter" />：</th>
 					<td   class="passwordParameter" <#if 'SIMULATION'==model.passwordType>style="display:none"</#if> >
-						<input type="text" class="form-control" id="passwordParameter" name="passwordParameter"  title="" value="${model.passwordParameter}"/>
+						<input type="text" class="form-control" id="passwordParameter" name="passwordParameter"  title="" value="${model.passwordParameter}"  />
 						
 					</td>
 					

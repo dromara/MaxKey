@@ -36,20 +36,20 @@
 			<tr>
 				<th><@locale code="login.password.oldPassword" /> :</th>
 				<td>
-					<input  class="form-control"  type="password" id="oldPassword" name="oldPassword" class="required" title="" value=""/>
+					<input  class="form-control"  type="password" id="oldPassword" name="oldPassword" class="required" title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="login.password.newPassword" />:</th>
 				<td>
-					<input  class="form-control"  type="password" id="newPassword" name="newPassword" class=" required" title="" value=""/>
+					<input  class="form-control"  type="password" id="newPassword" name="newPassword" class=" required" title="" value=""  required="" />
 
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="login.password.confirmPassword" />:</th>
 				<td nowrap>
-					<input  class="form-control"  type="password" id="confirmPassword" name="confirmPassword" class="{ required: true, equalTo: '#newPassword' }" title="" value=""/>
+					<input  class="form-control"  type="password" id="confirmPassword" name="confirmPassword" class="{ required: true, equalTo: '#newPassword' }" title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>

@@ -20,13 +20,13 @@
        <tr>
          <th><@locale code="apps.name"/>：</th>
          <td colspan="3">
-            <input type="text"class="form-control"  id="name" name="name"  size="100"  title="" value=""/>
+            <input type="text"class="form-control"  id="name" name="name"  size="100"  title="" value=""  required=""   />
          </td>
       </tr>
       <tr>
          <th><@locale code="apps.loginUrl"/>：</th>
          <td colspan="3">
-            <input type="text" class="form-control"  id="loginUrl" name="loginUrl" size="100"  title="" value=""/>
+            <input type="text" class="form-control"  id="loginUrl" name="loginUrl" size="100"  title="" value=""  required=""   />
          </td>
       </tr>
       <tr>
@@ -37,9 +37,7 @@
          </td>
          <th style="width:15%;"><@locale code="apps.category"/>：</th>
          <td style="width:35%;">
-         	<select name="category"  class="form-control" >
-			
-			</select>
+            <input type="text"class="form-control"  id="category" name="category"  title="" value="${model.category!}"/>
          </td>
       </tr>
       <tr>
@@ -49,7 +47,7 @@
          </td>
          <th><@locale code="common.text.sortindex"/></th>
          <td>
-         	<input  type="text" id="sortOrder" class="form-control"  name="sortOrder"  title="" value="0"/>
+         	<input  type="text" id="sortOrder" class="form-control"  name="sortOrder"  title="" value="1"  required=""    />
          </td>
       </tr>
       <tr>

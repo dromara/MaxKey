@@ -3,20 +3,20 @@
 	<name>maxkey-web-maxkey</name>
 	<comment>maxkey-web-maxkey</comment>
 	<projects>
-		<project>maxkey-protocol-desktop</project>
-		<project>maxkey-protocol-tokenbased</project>
-		<project>maxkey-client-sdk</project>
 		<project>maxkey-jose-jwt</project>
-		<project>maxkey-protocol-authorize</project>
-		<project>maxkey-protocol-saml-2.0</project>
-		<project>maxkey-protocol-oauth-2.0</project>
-		<project>maxkey-authentications</project>
-		<project>maxkey-protocol-formbased</project>
 		<project>maxkey-protocol-simulate</project>
-		<project>maxkey-dao</project>
+		<project>maxkey-protocol-oauth-2.0</project>
+		<project>maxkey-protocol-saml-2.0</project>
 		<project>maxkey-core</project>
-		<project>maxkey-protocol-extendapi</project>
+		<project>maxkey-dao</project>
+		<project>maxkey-client-sdk</project>
+		<project>maxkey-authentications</project>
+		<project>maxkey-protocol-authorize</project>
 		<project>maxkey-protocol-cas</project>
+		<project>maxkey-protocol-desktop</project>
+		<project>maxkey-protocol-extendapi</project>
+		<project>maxkey-protocol-formbased</project>
+		<project>maxkey-protocol-tokenbased</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

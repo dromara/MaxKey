@@ -38,35 +38,27 @@ $(function(){
 					<td colspan=4><@locale code="apps.saml.v2.0.info" /></td>
 				</tr>
 				<tr>
+                    <th><@locale code="apps.saml.spAcsUrl" />：</th>
+                    <td colspan =3>
+                        <input type="text" class="form-control"   id="spAcsUrl" name="spAcsUrl"  title="" value=""  required="" />
+                    </td>
+                </tr>
+				<tr>
 					<th><@locale code="apps.saml.entityId" />：</th>
 					<td colspan =3>
-						<input type="text" class="form-control"   id="entityId" name="entityId"  title="" value=""/>
-						<b class="orange">*</b><label for="entityId"></label>
+						<input type="text" class="form-control"   id="entityId" name="entityId"  title="" value=""  required="" />
 					</td>
-					
-					
 				</tr>
-				
 				<tr>
 					<th><@locale code="apps.saml.issuer" />：</th>
 					<td colspan =3>
-						<input type="text" class="form-control"   id="issuer" name="issuer"  title="" value=""/>
-						<b class="orange">*</b><label for="issuer"></label>
-					</td>
-					
-				</tr>
-				<tr>
-					<th><@locale code="apps.saml.spAcsUrl" />：</th>
-					<td colspan =3>
-						<input type="text" class="form-control"   id="spAcsUrl" name="spAcsUrl"  title="" value=""/>
-						<b class="orange">*</b><label for="spAcsUrl"></label>
+						<input type="text" class="form-control"   id="issuer" name="issuer"  title="" value=""  required="" />
 					</td>
 				</tr>
-				
 				<tr>
 					<th><@locale code="apps.saml.audience" />：</th>
 					<td colspan =3>
-						<input type="text" class="form-control"   id="audience" name="audience"  title="" value=""/>
+						<input type="text" class="form-control"   id="audience" name="audience"  title="" value="" required="" />
 					</td>
 				</tr>
 				<tr>
@@ -114,7 +106,7 @@ $(function(){
 					</td>
 					<th style="width:15%;"><@locale code="apps.saml.validityInterval" />：</th>
 					<td style="width:35%;">
-						<input type="text" class="form-control"   id="validityInterval" name="validityInterval"  title="" value="15"/>
+						<input type="text" class="form-control"   id="validityInterval" name="validityInterval"  title="" value="15"  required="" />
 					</td>
 					
 				</tr>

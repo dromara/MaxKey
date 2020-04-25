@@ -86,7 +86,7 @@ $(function(){
 				<tr>
 					<th ><@locale code="apps.desktop.programPath" />：</th>
 					<td colspan="3">
-						<textarea  id="programPath" name="programPath" rows="4" cols="60" class="form-control" ></textarea>
+						<textarea  id="programPath" name="programPath" rows="4" cols="60" class="form-control"  required=""  ></textarea>
 						<b class="orange">*</b><label for="programPath"></label>
 					</td>
 					
@@ -110,7 +110,7 @@ $(function(){
 					</td>
 					<th class="usernameParameter"  style="display:none"><@locale code="apps.desktop.usernameParameter" />：</th>
 					<td class="usernameParameter"  style="display:none">
-						<input type="text" id="usernameParameter" name="usernameParameter"  title="" value="username" class="form-control" />
+						<input type="text" id="usernameParameter" name="usernameParameter"  title="" value="username" class="form-control"  />
 						<b class="orange">*</b><label for="usernameParameter"></label>
 					</td>
 					
@@ -132,7 +132,7 @@ $(function(){
 					</td>
 					<th   class="passwordParameter" style="display:none"><@locale code="apps.desktop.passwordParameter" />：</th>
 					<td   class="passwordParameter" style="display:none">
-						<input type="text" id="passwordParameter" name="passwordParameter"  title="" value="password" class="form-control" />
+						<input type="text" id="passwordParameter" name="passwordParameter"  title="" value="password" class="form-control"    />
 						<b class="orange">*</b><label for="passwordParameter"></label>
 					</td>
 					

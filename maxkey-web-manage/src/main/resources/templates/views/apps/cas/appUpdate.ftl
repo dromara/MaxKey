@@ -57,13 +57,13 @@ $(function(){
 								<tr>
 									<th style="width:15%;"><@locale code="apps.cas.service"/>：</th>
 									<td  colspan=3>
-										<input type="text" class="form-control" id="service" name="service"  title="" value="${model.service}"/>
+										<input type="text" class="form-control" id="service" name="service"  title="" value="${model.service}"  required=""   />
 									</td>
 								</tr>
 								<tr>
 									<th style="width:15%;"><@locale code="apps.cas.validation"/>：</th>
 									<td  colspan=3>
-										<input type="text" class="form-control" id="redirectUri" name="validation"  title="" value="${model.validation}"/>
+										<input type="text" class="form-control" id="redirectUri" name="validation"  title="" value="${model.validation}"  required="" />
 							
 									</td>
 								</tr>

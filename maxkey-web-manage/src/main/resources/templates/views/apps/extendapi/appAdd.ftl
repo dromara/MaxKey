@@ -33,8 +33,8 @@ $(function(){
 </head>
 <body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
-   action="<s:Base/>/apps/extendapi/add"  
-   forward="<s:Base/>/apps/list"
+   action="<@base/>/apps/extendapi/add"  
+   forward="<@base/>/apps/list"
    enctype="multipart/form-data">
    <!-- content -->    
    <!--table-->
@@ -50,13 +50,11 @@ $(function(){
 				<tr>
 					<th  ><@locale code="apps.principal"/>：</th>
 					<td  >
-						<input  class="form-control" type="text" id="principal" name="principal"  title="" value=""/>
-						<b class="orange">*</b><label for="principal"></label>
+						<input  class="form-control" type="text" id="principal" name="principal"  title="" value=""  required=""  />
 					</td>
 					<th  ><@locale code="apps.credentials"/>：</th>
 					<td  >
-						<input class="form-control" type="text" id="credentials" name="credentials"  title="" value=""/>
-						<b class="orange">*</b><label for="credentials"></label>
+						<input class="form-control" type="text" id="credentials" name="credentials"  title="" value=""  required=""   />
 					</td>
 				</tr>
 				<tr>

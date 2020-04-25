@@ -23,7 +23,7 @@
 		<tr>
 			<th><@locale code="group.name" />：</th>
 			<td nowrap>
-				<input type="text" id="name" name="name" class="form-control" title="" value="${model.name}"/>
+				<input type="text" id="name" name="name" class="form-control" title="" value="${model.name}"  required="" />
 			</td>
 		</tr>
 		<tr>

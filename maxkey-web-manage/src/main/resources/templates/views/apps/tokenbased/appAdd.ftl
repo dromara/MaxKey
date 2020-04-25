@@ -53,8 +53,7 @@ $(function(){
 							<tr>
 								<th style="width:15%;"><@locale code="apps.tokenbased.redirectUri" />：</th>
 								<td style="width:35%;" colspan=3>
-									<input type="text" class="form-control" id="redirectUri" name="redirectUri"  title="" value=""/>
-									<b class="orange">*</b><label for="redirectUri"></label>
+									<input type="text" class="form-control" id="redirectUri" name="redirectUri"  title="" value=""  required="" />
 								</td>
 							</tr>
 							<tr>
@@ -68,7 +67,6 @@ $(function(){
 									<th ><@locale code="apps.tokenbased.cookieName" />：</th>
 									<td >
 										<input type="text" class="form-control" id="cookieName" name="cookieName"  title="" value=""/>
-										<b class="orange">*</b><label for="cookieName"></label>
 									</td>
 								</tr>
 							<tr>
@@ -97,7 +95,7 @@ $(function(){
 									<table class="hidetable" style="width:100%;">
 										<tr>
 											<td><@locale code="userinfo.id" /><input type="checkbox" id="uid" name="uid" value="1"/></td>
-											<td><@locale code="userinfo.username" /><input type="checkbox" id="username" name="username" value="1"/></td>
+											<td><@locale code="userinfo.username" /><input type="checkbox" id="username" name="username" value="1" checked/></td>
 											<td><@locale code="userinfo.email" /><input type="checkbox" id="email" name="email" value="1"/></td>
 											<td><@locale code="userinfo.windowsAccount" /><input type="checkbox" id="windowsAccount" name="windowsAccount" value="1"/></td>
 											<td><@locale code="userinfo.employeeNumber" /><input type="checkbox" id="employeeNumber" name="employeeNumber" value="1"/></td>
@@ -110,7 +108,7 @@ $(function(){
 							<tr>
 								<th><@locale code="apps.tokenbased.expires" />：</th>
 								<td>
-									<input type="text" class="form-control" id="expires" name="expires"  title="" value="1"/>
+									<input type="text" class="form-control" id="expires" name="expires"  title="" value="1"  required="" />
 								</td>
 								<th><@locale code="apps.isAdapter" />：</th>
 								<td >
