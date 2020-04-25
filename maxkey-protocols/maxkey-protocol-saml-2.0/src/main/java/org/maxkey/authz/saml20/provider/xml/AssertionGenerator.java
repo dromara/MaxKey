@@ -103,7 +103,7 @@ public class AssertionGenerator {
 	        
 	        Signature signature = new SignatureBuilder().buildObject();
 	        signature.setCanonicalizationAlgorithm(SignatureConstants.ALGO_ID_C14N_EXCL_OMIT_COMMENTS);
-	        signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA256);
+	        
 	        
 	        signature.setSigningCredential(basicCredential);
 	        KeyInfoGeneratorFactory keyInfoGeneratorFactory = Configuration
@@ -113,8 +113,71 @@ public class AssertionGenerator {
 	        
 	        signature.setKeyInfo(keyInfoGeneratorFactory.newInstance().generate(bindingAdapter.getSigningCredential()));
 	        BasicSecurityConfiguration config = (BasicSecurityConfiguration) Configuration.getGlobalSecurityConfiguration();
-	        config.registerSignatureAlgorithmURI("RSA", SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA256);
-	        config.setSignatureReferenceDigestMethod(SignatureConstants.ALGO_ID_DIGEST_SHA256);
+	        
+	        if(saml20Details.getSignature().equalsIgnoreCase("RSAwithSHA1"))  {  
+    	        signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA1);
+    	        config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA1);
+	        }else if(saml20Details.getSignature().equalsIgnoreCase("RSAwithSHA256"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA256);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA256);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("RSAwithSHA384"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA384);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA384);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("RSAwithSHA512"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA512);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA512);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("RSAwithMD5"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_NOT_RECOMMENDED_RSA_MD5);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_SIGNATURE_NOT_RECOMMENDED_RSA_MD5);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("RSAwithRIPEMD160"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_RSA_RIPEMD160);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_SIGNATURE_RSA_RIPEMD160);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("DSAwithSHA1"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_ECDSA_SHA1);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_SIGNATURE_ECDSA_SHA1);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("ECDSAwithSHA256"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_ECDSA_SHA256);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_SIGNATURE_ECDSA_SHA256);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("ECDSAwithSHA384"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_ECDSA_SHA384);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_SIGNATURE_ECDSA_SHA384);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("ECDSAwithSHA512"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_ECDSA_SHA512);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_SIGNATURE_ECDSA_SHA512);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("HMAC-MD5"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_MAC_HMAC_NOT_RECOMMENDED_MD5);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_MAC_HMAC_NOT_RECOMMENDED_MD5);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("HMAC-SHA1"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_MAC_HMAC_SHA1);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA1);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("HMAC-SHA256"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_MAC_HMAC_SHA256);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_MAC_HMAC_SHA256);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("HMAC-SHA384"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_MAC_HMAC_SHA384);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_MAC_HMAC_SHA384);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("HMAC-SHA512"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_MAC_HMAC_SHA512);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_MAC_HMAC_SHA512);
+            }else if(saml20Details.getSignature().equalsIgnoreCase("HMAC-RIPEMD160"))  {  
+                signature.setSignatureAlgorithm(SignatureConstants.ALGO_ID_MAC_HMAC_RIPEMD160);
+                config.registerSignatureAlgorithmURI(saml20Details.getSignature(), SignatureConstants.ALGO_ID_MAC_HMAC_RIPEMD160);
+            }
+	        
+            if(saml20Details.getDigestMethod().equalsIgnoreCase("MD5"))  {  
+                config.setSignatureReferenceDigestMethod(SignatureConstants.ALGO_ID_DIGEST_NOT_RECOMMENDED_MD5);
+            }else if(saml20Details.getDigestMethod().equalsIgnoreCase("SHA1"))  {  
+                config.setSignatureReferenceDigestMethod(SignatureConstants.ALGO_ID_DIGEST_SHA1);
+            }else if(saml20Details.getDigestMethod().equalsIgnoreCase("SHA256"))  {  
+                config.setSignatureReferenceDigestMethod(SignatureConstants.ALGO_ID_DIGEST_SHA256);
+            }else if(saml20Details.getDigestMethod().equalsIgnoreCase("SHA384"))  {  
+                config.setSignatureReferenceDigestMethod(SignatureConstants.ALGO_ID_DIGEST_SHA384);
+            }else if(saml20Details.getDigestMethod().equalsIgnoreCase("SHA512"))  {  
+                config.setSignatureReferenceDigestMethod(SignatureConstants.ALGO_ID_DIGEST_SHA512);
+            }else if(saml20Details.getDigestMethod().equalsIgnoreCase("RIPEMD-160"))  {  
+                config.setSignatureReferenceDigestMethod(SignatureConstants.ALGO_ID_DIGEST_RIPEMD160);
+            }
+            
 			assertion.setSignature(signature);
 
 			Configuration.getMarshallerFactory().getMarshaller(assertion).marshall(assertion);
