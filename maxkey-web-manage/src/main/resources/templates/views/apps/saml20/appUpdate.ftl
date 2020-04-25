@@ -58,24 +58,59 @@ $(function(){
                 </tr>
 				<tr>
 					<th><@locale code="apps.saml.entityId" />：</th>
-					<td  colspan =3>
+					<td >
 						<input type="text" class="form-control"  id="entityId" name="entityId"  title="" value="${model.entityId!}"  required="" />
 					</td>
+					<td></td>
+                    <td  >
+                        <a target="_blank" href="${maxKeyURI}/metadata/saml20/${model.id}.xml"> SAML MetaData</a>
+                    </td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.issuer" />：</th>
-					<td  colspan =3>
+					<td >
 						<input type="text" class="form-control"  id="issuer" name="issuer"  title="" value="${model.issuer!}"  required="" />
 					</td>
+					<th><@locale code="apps.saml.audience" />：</th>
+                    <td  colspan =2>
+                        <input type="text" class="form-control"  id="audience" name="audience"  title="" value="${model.audience!}"  required="" />
+                    </td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.saml.audience" />：</th>
-					<td  colspan =2>
-						<input type="text" class="form-control"  id="audience" name="audience"  title="" value="${model.audience!}"  required="" />
+					<th><@locale code="apps.saml.signature" />：</th>
+					<td>
+						<select  id="signature" name="signature"  class="form-control" >
+                            <option value="RSAwithSHA1"  <#if 'RSAwithSHA1'==model.signature>selected</#if>>RSAwithSHA1</option>
+                            <option value="RSAwithSHA256" <#if 'RSAwithSHA256'==model.signature>selected</#if>>RSAwithSHA256</option>
+                            <option value="RSAwithSHA384" <#if 'RSAwithSHA384'==model.signature>selected</#if>>RSAwithSHA384</option>
+                            <option value="RSAwithSHA512" <#if 'RSAwithSHA512'==model.signature>selected</#if>>RSAwithSHA512</option>
+                            <option value="RSAwithMD5" <#if 'RSAwithMD5'==model.signature>selected</#if>>RSAwithMD5</option>
+                            <option value="RSAwithRIPEMD160" <#if 'RSAwithRIPEMD160'==model.signature>selected</#if>>RSAwithRIPEMD160</option>
+                            <option value="DSAwithSHA1" <#if 'DSAwithSHA1'==model.signature>selected</#if>>DSAwithSHA1</option>
+                            <option value="ECDSAwithSHA1" <#if 'ECDSAwithSHA1'==model.signature>selected</#if>>ECDSAwithSHA1</option>
+                            <option value="ECDSAwithSHA256"  <#if 'ECDSAwithSHA256'==model.signature>selected</#if>>ECDSAwithSHA256</option>
+                            <option value="ECDSAwithSHA384" <#if 'ECDSAwithSHA384'==model.signature>selected</#if>>ECDSAwithSHA384</option>
+                            <option value="ECDSAwithSHA512" <#if 'ECDSAwithSHA512'==model.signature>selected</#if>>ECDSAwithSHA512</option>
+                            <option value="HMAC-MD5"  <#if 'HMAC-MD5'==model.signature>selected</#if>>HMAC-MD5</option>
+                            <option value="HMAC-SHA1"  <#if 'HMAC-SHA1'==model.signature>selected</#if>>HMAC-SHA1</option>
+                            <option value="HMAC-SHA256"  <#if 'HMAC-SHA256'==model.signature>selected</#if>>HMAC-SHA256</option>
+                            <option value="HMAC-SHA384"  <#if 'HMAC-SHA384'==model.signature>selected</#if>>HMAC-SHA384</option>
+                            <option value="HMAC-SHA512"  <#if 'HMAC-SHA512'==model.signature>selected</#if>>HMAC-SHA512</option>
+                            <option value="HMAC-RIPEMD160"  <#if 'HMAC-RIPEMD160'==model.signature>selected</#if>>HMAC-RIPEMD160</option>
+                          </select>
 					</td>
-					<td  >
-						<a target="_blank" href="${maxKeyURI}/metadata/saml20/${model.id}.xml"> SAML MetaData</a>
-					</td>
+					<th><@locale code="apps.saml.digestMethod" />：</th>
+                    <td>
+                        <select  id="digestMethod" name="digestMethod"  class="form-control" >
+                            <option value="MD5"         <#if 'MD5'==model.digestMethod>selected</#if>>MD5</option>
+                            <option value="SHA1"        <#if 'SHA1'==model.digestMethod>selected</#if>>SHA1</option>
+                            <option value="SHA256"      <#if 'SHA256'==model.digestMethod>selected</#if>>SHA256</option>
+                            <option value="SHA384"      <#if 'SHA384'==model.digestMethod>selected</#if>>SHA384</option>
+                            <option value="SHA512"      <#if 'SHA512'==model.digestMethod>selected</#if>>SHA512</option>
+                            <option value="RIPEMD-160"  <#if 'RIPEMD-160'==model.digestMethod>selected</#if>>RIPEMD-160</option>
+                            
+                        </select>
+                    </td>
 				</tr>
 				<tr>
 					<th style="width:15%;"><@locale code="apps.saml.nameidFormat" />：</th>

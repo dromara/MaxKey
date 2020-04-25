@@ -32,6 +32,10 @@ public class AppsSAML20Details extends Apps {
     @Column
     private String certExpiration;
     @Column
+    private String signature;
+    @Column
+    private String digestMethod;
+    @Column
     private byte[] keyStore;
     @Column
     private String entityId;
@@ -290,19 +294,35 @@ public class AppsSAML20Details extends Apps {
         this.nameIdConvert = nameIdConvert;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getDigestMethod() {
+        return digestMethod;
+    }
+
+    public void setDigestMethod(String digestMethod) {
+        this.digestMethod = digestMethod;
+    }
+
     @Override
     public String toString() {
-        return "SAMLBaseDetails [certIssuer=" + certIssuer + ", certSubject=" + certSubject + ", certExpiration="
-                + certExpiration + ", keyStore=" + Arrays.toString(keyStore) + ", entityId=" + entityId + ", spAcsUrl="
-                + spAcsUrl + ", issuer=" + issuer + ", audience=" + audience + ", nameidFormat=" + nameidFormat
-                + ", validityInterval=" + validityInterval + ", binding=" + binding + ", encrypted=" + encrypted
-                + ", certMetaFile=" + certMetaFile + ", fileType=" + fileType + ", nameIdConvert=" + nameIdConvert
-                + "]";
+        final int maxLen = 40;
+        return "AppsSAML20Details [id=" + id + ", certIssuer=" + certIssuer + ", certSubject=" + certSubject
+                + ", certExpiration=" + certExpiration + ", signature=" + signature + ", keyStore="
+                + (keyStore != null ? Arrays.toString(Arrays.copyOf(keyStore, Math.min(keyStore.length, maxLen)))
+                        : null)
+                + ", entityId=" + entityId + ", spAcsUrl=" + spAcsUrl + ", issuer=" + issuer + ", audience=" + audience
+                + ", nameidFormat=" + nameidFormat + ", validityInterval=" + validityInterval + ", binding=" + binding
+                + ", encrypted=" + encrypted + ", certMetaFile=" + certMetaFile + ", fileType=" + fileType
+                + ", nameIdConvert=" + nameIdConvert + "]";
     }
+
+ 
 
 }

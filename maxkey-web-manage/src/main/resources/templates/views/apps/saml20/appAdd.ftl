@@ -51,16 +51,49 @@ $(function(){
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.issuer" />：</th>
-					<td colspan =3>
+					<td>
 						<input type="text" class="form-control"   id="issuer" name="issuer"  title="" value=""  required="" />
 					</td>
+					<th><@locale code="apps.saml.audience" />：</th>
+                    <td >
+                        <input type="text" class="form-control"   id="audience" name="audience"  title="" value="" required="" />
+                    </td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.saml.audience" />：</th>
-					<td colspan =3>
-						<input type="text" class="form-control"   id="audience" name="audience"  title="" value="" required="" />
+					<th><@locale code="apps.saml.signature" />：</th>
+					<td>
+						  <select  id="signature" name="signature"  class="form-control" >
+                            <option value="RSAwithSHA1"  selected>RSAwithSHA1</option>
+                            <option value="RSAwithSHA256" >RSAwithSHA256</option>
+                            <option value="RSAwithSHA384" >RSAwithSHA384</option>
+                            <option value="RSAwithSHA512" >RSAwithSHA512</option>
+                            <option value="RSAwithMD5" >RSAwithMD5</option>
+                            <option value="RSAwithRIPEMD160" >RSAwithRIPEMD160</option>
+                            <option value="DSAwithSHA1" >DSAwithSHA1</option>
+                            <option value="ECDSAwithSHA1" >ECDSAwithSHA1</option>
+                            <option value="ECDSAwithSHA256"  >ECDSAwithSHA256</option>
+                            <option value="ECDSAwithSHA384" >ECDSAwithSHA384</option>
+                            <option value="ECDSAwithSHA512" >ECDSAwithSHA512</option>
+                            <option value="HMAC-MD5"  >HMAC-MD5</option>
+                            <option value="HMAC-SHA1"  >HMAC-SHA1</option>
+                            <option value="HMAC-SHA256"  >HMAC-SHA256</option>
+                            <option value="HMAC-SHA384"  >HMAC-SHA384</option>
+                            <option value="HMAC-SHA512"  >HMAC-SHA512</option>
+                            <option value="HMAC-RIPEMD160"  >HMAC-RIPEMD160</option>
+                          </select>
 					</td>
-				</tr>
+					<th><@locale code="apps.saml.digestMethod" />：</th>
+                    <td>
+                        <select  id="digestMethod" name="digestMethod"  class="form-control" >
+                            <option value="MD5"         >MD5</option>
+                            <option value="SHA1"        selected>SHA1</option>
+                            <option value="SHA256"      >SHA256</option>
+                            <option value="SHA384"      >SHA384</option>
+                            <option value="SHA512"      >SHA512</option>
+                            <option value="RIPEMD-160"  >RIPEMD-160</option>
+                        </select>
+                    </td>
+				</tr>				
 				<tr>
 					
 					<th><@locale code="apps.saml.nameidFormat" />：</th>
