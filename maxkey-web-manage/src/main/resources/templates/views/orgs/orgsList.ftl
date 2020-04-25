@@ -233,7 +233,7 @@ $(function () {
 			<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
 			<th data-field="id"><@locale code="org.id"/></th>
 			<th data-field="name"><@locale code="org.name"/></th>
-			<th data-field="sortorder"><@locale code="org.sortorder"/></th>
+			<th data-field="sortOrder"><@locale code="org.sortorder"/></th>
 			<th data-field="division"   data-visible="false"><@locale code="org.division"/></th>
 			<th data-field="description"><@locale code="org.description"/></th>
 			</tr>
