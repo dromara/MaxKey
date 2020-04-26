@@ -3,12 +3,12 @@
 	<script	src ="<@base />/static/jquery/jquery-3.5.0.min.js"	type="text/javascript"></script>
 	<script src ="<@base />/static/jquery/jquery-3.5.0.min.map"  type="text/javascript"></script>
 	<script src ="<@base />/static/jquery/popper.min.js" type="text/javascript" ></script>
-	<#-- bootstrap-4.3.1 -->
+	<#-- bootstrap-4.4.1 -->
 	<link 	href="<@base />/static/bootstrap-4.4.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 	<script src ="<@base />/static/bootstrap-4.4.1/js/bootstrap.min.js" type="text/javascript" ></script>
 	<#-- metadata -->
 	<script src ="<@base />/static/jquery/jquery.metadata.js" type="text/javascript" ></script>
-	<#--bootstrap-table-1.14.2-->
+	<#--bootstrap-table-1.16.0-->
 	<link 	href="<@base />/static/jquery/bootstrap-table-v1.16.0/bootstrap-table.css" 		type="text/css" rel="stylesheet" />
 	<script src ="<@base />/static/jquery/bootstrap-table-v1.16.0/bootstrap-table.min.js"	type="text/javascript" ></script> 
 	<script src ="<@base />/static/jquery/bootstrap-table-v1.16.0/bootstrap-table-locale-all.min.js"	type="text/javascript" ></script>
