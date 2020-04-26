@@ -18,11 +18,11 @@ $(function(){
 	<#include "../layout/nologintop.ftl">
 </div>
 <div class="container">	
-				<form action="<@base/>/forgotpassword/emailmobile" method="post">
+				<form action="<@base/>/forgotpassword/emailmobile" method="post"   class="needs-validation" novalidate>
 					<table  class="table table-bordered">
 						<tr>
 							<td><@locale code="forgotpassword.emailmobile"/></td>
-							<td><input  required="" type="email" id="emailMobile" name="emailMobile" class="form-control"  title="" value=""/></td>
+							<td><input  required="" type="text" id="emailMobile" name="emailMobile" class="form-control"  title="" value=""/></td>
 						</tr>
 						<tr>
 								<td><@locale code="login.text.captcha"/>：</td>

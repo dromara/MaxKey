@@ -12,7 +12,7 @@
   <tr>
     <td>
 
-<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/safe/setting"> 
+<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/safe/setting"  class="needs-validation" novalidate> 
 
 	  <table  class="table table-bordered" >
 			<tbody>
@@ -59,14 +59,14 @@
 			<tr>
 				<th><@locale code="userinfo.mobile" /> :</th>
 				<td>
-					<input   class="form-control" type="text" id="mobile" name="mobile" class=" required" title="" value="${model.mobile}"  required="" />
+					<input   class="form-control" type="text" id="mobile" name="mobile" required title="" value="${model.mobile}"  required="" />
 					<label for="mobile"></label>
 				</td>
 			</tr>
 			<tr style="display:none;">
 				<th>Verify Code :</th>
 				<td>
-					<input  class="form-control"  type="text" id="mobileVerify" name="mobileVerify" class="required" title="" value="1"  style="width:200px" /><input class="button" style="width:100px"  type="button"    id="getMobileVerifyBtn" value="get Verify"/>
+					<input  class="form-control"  type="text" id="mobileVerify" name="mobileVerify" required title="" value="1"  style="width:200px" /><input class="button" style="width:100px"  type="button"    id="getMobileVerifyBtn" value="get Verify"/>
 					<label for="verify"></label>
 				</td>
 			</tr>
@@ -87,7 +87,7 @@
 			<tr>
 				<td colspan="2"  class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
-		    		<input class="button btn btn-primary" style="width:100px"  type="button"    id="submitBtn" value="<@locale code="button.text.save" />"/>
+		    		<input class="button btn btn-primary" style="width:100px"  type="submit"    id="submitBtn" value="<@locale code="button.text.save" />"/>
 					
 				</td>
 			</tr>

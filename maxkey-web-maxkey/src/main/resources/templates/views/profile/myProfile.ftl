@@ -22,7 +22,8 @@
 	type="alert" 
 	forward="<@base/>/profile/myProfile"
 	action="<@base/>/profile/update/myProfile" 
-	enctype="multipart/form-data">
+	enctype="multipart/form-data"
+	class="needs-validation" novalidate>
 	 <div class="" style="width:100%;">
 	    <div class="main">
 	    <div class="mainin">			 
@@ -1017,6 +1018,7 @@
 			<div >
 				<div >
 					<input id="_method" type="hidden" name="_method"  value="post"/>
+					<input type="submit" id="submitButton" style="display: none;" />
 					<input id="submitBtn" class="button btn btn-primary mr-3" type="button" value="<@locale code="button.text.save" />"/>
 				</div>
 			</div>

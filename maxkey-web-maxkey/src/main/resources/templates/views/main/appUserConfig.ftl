@@ -16,23 +16,23 @@
 </head>
 <body>
 	 <!-- content -->  
-	<form id="actionForm" name="credentialsubmit" action="<@base/>/appUserConfig" method="post">
+	<form id="actionForm" name="credentialsubmit" action="<@base/>/appUserConfig" method="post" class="needs-validation" novalidate>
 		<input type="hidden" id="protocol" name="protocol" value="${protocol}" />
 		<input type="hidden" id="credential" name="credential" value="${credential}" />
 		<table  class="table table-bordered">
 			
 			<tr <#if false==username>style="display:none"</#if>>
 				<td><@locale code="account.relatedUsername" /></td>
-				<td><input  class="form-control"  type="text" id="identity_username" name="identity_username" value="${identity_username!}" /></td>
+				<td><input  class="form-control"  type="text" id="identity_username" name="identity_username" value="${identity_username!}"  required="" /></td>
 			</tr>
 			<tr <#if false==password> style="display:none"</#if> >
 				<td><@locale code="account.relatedPassword" /></td>
-				<td><input  class="form-control"  type="password" id="identity_password" name="identity_password" value="${identity_password!}" /></td>
+				<td><input  class="form-control"  type="password" id="identity_password" name="identity_password" value="${identity_password!}"  required=""/></td>
 			</tr>
 			
 			<tr style="display:none">
 				<td>uid</td>
-				<td><input  class="form-control"  type="text" id="uid" name="uid" value="${uid}" /></td>
+				<td><input  class="form-control"  type="text" id="uid" name="uid" value="${uid}"  /></td>
 			</tr>
 			<tr style="display:none">
 				<td>appId</td>

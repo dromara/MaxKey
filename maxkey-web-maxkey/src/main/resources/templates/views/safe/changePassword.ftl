@@ -12,7 +12,7 @@
   <tr>
     <td>
 
-<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/safe/changePassword"> 
+<form    method="post"  action="<@base/>/safe/changePassword"  class="needs-validation" novalidate> 
 
 	  <table   class="table table-bordered" >
 			<tbody>
@@ -36,26 +36,27 @@
 			<tr>
 				<th><@locale code="login.password.oldPassword" /> :</th>
 				<td>
-					<input  class="form-control"  type="password" id="oldPassword" name="oldPassword" class="required" title="" value=""  required="" />
+					<input  class="form-control"  type="password" id="oldPassword" name="oldPassword"  title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="login.password.newPassword" />:</th>
 				<td>
-					<input  class="form-control"  type="password" id="newPassword" name="newPassword" class=" required" title="" value=""  required="" />
+					<input  class="form-control"  type="password" id="newPassword" name="newPassword"  title="" value=""  required="" />
 
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="login.password.confirmPassword" />:</th>
 				<td nowrap>
-					<input  class="form-control"  type="password" id="confirmPassword" name="confirmPassword" class="{ required: true, equalTo: '#newPassword' }" title="" value=""  required="" />
+					<input  class="form-control"  type="password" id="confirmPassword" name="confirmPassword"  title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2"  class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
-		    		<input class="button btn btn-primary" style="width:100px"  type="button"    id="submitBtn" value="<@locale code="button.text.save" />"/>
+					<input type="submit" id="submitButton" style="display: none;" />
+		    		<input id="submitBtn" class="button btn btn-primary" style="width:100px"  type="button"     value="<@locale code="button.text.save" />"/>
 					
 				</td>
 			</tr>

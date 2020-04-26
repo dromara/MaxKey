@@ -24,7 +24,7 @@
   	</#if>
   	<#if 2 == forgotType || 3 == forgotType >
 
-	<form action="<@base/>/forgotpassword/setpassword" method="post">
+	<form action="<@base/>/forgotpassword/setpassword" method="post"  class="needs-validation" novalidate>
 		<table  class="table table-bordered">
 			<tr>
 				<td><@locale code="forgotpassword.emailmobile"/>

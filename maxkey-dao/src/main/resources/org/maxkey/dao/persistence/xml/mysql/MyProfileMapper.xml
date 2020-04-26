@@ -6,8 +6,8 @@
     	UPDATE USERINFO SET
     		DISPLAYNAME 	=	#{displayName},
 			NICKNAME 		=	#{nickName},
-			NAMEZHSPELL		=	#{nameZHSpell},
-			NAMEZHSHORTSPELL=	#{nameZHShortSpell},
+			NAMEZHSPELL		=	#{nameZhSpell},
+			NAMEZHSHORTSPELL=	#{nameZhShortSpell},
 			GIVENNAME 		=	#{givenName},
 			MIDDLENAME 		=	#{middleName},
 			FAMILYNAME 		=	#{familyName},

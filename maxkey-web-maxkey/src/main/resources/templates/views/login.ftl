@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en">
 <head>
 
 <#include  "layout/header.ftl">
@@ -197,7 +197,7 @@ $(function(){
 		<tr>
 			<td>
 				<div id="div_commonLogin" >
-					<form id="loginForm" name="loginForm" action="<@base />/logon.do" method="post">
+					<form id="loginForm" name="loginForm" action="<@base />/logon.do" method="post" class="needs-validation" novalidate>
 						<input type="hidden" name="authType" value="basic"/>
 						<table  class="table login_form_table">
 							<tr>
@@ -211,7 +211,9 @@ $(function(){
 							<#if true==isCaptcha> 
 							<tr>
 								<td><@locale code="login.text.captcha"/>：</td>
-								<td><input required="" class="form-control"  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" src="<@base/>/captcha"/></td>
+								<td>
+								<input required="" class="form-control"  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" src="<@base/>/captcha"/>
+								</td>
 								
 							</tr>
 							</#if>
@@ -248,7 +250,7 @@ $(function(){
 					    </form>
 					</div>
 					<div id="div_tfaLogin" >
-					<form id="tfaLoginForm" name="tfaLoginForm" action="<@base />/logon.do" method="post">
+					<form id="tfaLoginForm" name="tfaLoginForm" action="<@base />/logon.do" method="post"  class="needs-validation" novalidate>
 						<input type="hidden" name="authType" value="tfa"/>
 						<table  class="login_form_table">
 							<tr>
