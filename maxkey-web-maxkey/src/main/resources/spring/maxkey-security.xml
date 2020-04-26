@@ -111,23 +111,6 @@
 	
 	<bean id="passwordReciprocal" class="org.maxkey.crypto.password.PasswordReciprocal"></bean>
 	
-	
-	<bean id="cacheFactory"  class="org.maxkey.cache.CacheFactory">
-		<property name="cache">
-			   <list>
-			   		<bean class="org.maxkey.web.filter.ipaddress.IpAddressCache">
-			   			<property name="jdbcIpAddressService">
-			   				<bean class="org.maxkey.web.filter.ipaddress.JdbcIpAddressService">
-			   					<constructor-arg ref="jdbcTemplate"/>
-			   				</bean>
-			   			</property>
-			   			<property name="interval"  value="1200" />
-			   		</bean>
-			   </list>
-		</property>
-	</bean>
-	
-	
 	<!-- Captcha Producer  Config -->
 	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
         <property name="config">
