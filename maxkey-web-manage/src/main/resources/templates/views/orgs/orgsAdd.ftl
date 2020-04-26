@@ -20,7 +20,7 @@ $(function () {
 
 </head>
 <body> 
-     <form  id="actionForm" action='<@base/>/orgs/add' method="post">
+     <form  id="actionForm" action='<@base/>/orgs/add' method="post" class="needs-validation" novalidate>
      	<table  class="datatable" style="width:600px" >
      		<tr>
      			<td>
@@ -134,7 +134,7 @@ $(function () {
      		</td></tr>
      		<tr><td nowrap class="center">
                         
-                          <input id="submitBtn" class="button btn btn-primary mr-3"      type="button"   style="width:100px"  value="<@locale code="button.text.save" />"/>
+                          <input id="submitBtn" class="button btn btn-primary mr-3"      type="submit"   style="width:100px"  value="<@locale code="button.text.save" />"/>
                        
      		</td></tr>
      	</table>

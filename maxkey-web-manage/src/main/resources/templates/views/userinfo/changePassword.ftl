@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/userinfo/changePassword"> 
+<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/userinfo/changePassword"  class="needs-validation" novalidate> 
 
 	  <table   class="table table-bordered" >
 			<tbody>
@@ -34,19 +34,19 @@
 			<tr>
 				<th><@locale code="login.password.newPassword" />:</th>
 				<td>
-					<input type="password" id="password" name="password"  class="form-control"  title="" value=""/>
+					<input type="password" id="password" name="password"  required=""  class="form-control"  title="" value=""/>
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="login.password.confirmPassword" />:</th>
 				<td nowrap>
-					<input type="password" id="confirmPassword" name="confirmPassword"  class="form-control"  title="" value=""/>
+					<input type="password" id="confirmPassword" name="confirmPassword"  required=""  class="form-control"  title="" value=""/>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2"  class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
-		    		<input class="button btn btn-primary mr-3"  style="width:100px"  type="button"    id="submitBtn" value="<@locale code="button.text.save" />"/>
+		    		<input class="button btn btn-primary mr-3"  style="width:100px"  type="submit"    id="submitBtn" value="<@locale code="button.text.save" />"/>
 					
 				</td>
 			</tr>

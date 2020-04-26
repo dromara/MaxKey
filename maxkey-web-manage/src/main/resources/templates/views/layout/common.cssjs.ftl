@@ -1,7 +1,6 @@
 	<#-- javascript js begin  -->
 	<#-- jquery base -->
 	<script src ="<@base />/static/jquery/jquery-3.5.0.min.js"  type="text/javascript"></script>
-    <script src ="<@base />/static/jquery/jquery-3.5.0.min.map"  type="text/javascript"></script>
 	<script src ="<@base />/static/jquery/popper.min.js" type="text/javascript" ></script>
 	<#-- bootstrap-4.4.1 -->
     <link   href="<@base />/static/bootstrap-4.4.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
@@ -31,9 +30,7 @@
 	<script src ="<@base />/static/jquery/jquery.blockUI.js" type="text/javascript" ></script>
 	<#-- serializeObject -->
 	<script src ="<@base />/static/jquery/jquery.serialize-object.min.js" type="text/javascript" ></script>
-	<#-- validation -->
-	<script src ="<@base />/static/jquery/jquery-validation-1.11.1/jquery.validate.min.js" type="text/javascript" ></script>
-	<script src ="<@base />/static/jquery/jquery-validation-1.11.1/localization/messages_<@locale />.js" type="text/javascript" ></script>
+	
 	<script src ="<@base />/static/jquery/jsonformatter.js" type="text/javascript" ></script>
 	<script src ="<@base />/static/jquery/switchtab/switchtab.js" type="text/javascript" ></script>
 	<link 	href="<@base />/static/jquery/switchtab/switchtab.css" type="text/css" rel="stylesheet" />

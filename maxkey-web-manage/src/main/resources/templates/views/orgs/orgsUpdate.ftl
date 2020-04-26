@@ -19,7 +19,7 @@ $(function () {
 
 </head>
 <body> 
-     <form  id="actionForm" action='<@base/>/orgs/update' method="post">
+     <form  id="actionForm" action='<@base/>/orgs/update' method="post" class="needs-validation" novalidate>
      	<table  class="datatable" style="width:600px" >
      		<tr>
      			<td>
@@ -46,15 +46,15 @@ $(function () {
            </tr>
            <tr >
               <td > <@locale code="org.id" />：</td>
-              <td><input type="text" id="id" name="id"    class="form-control" value="${model.id!}"/></td>
+              <td><input type="text" id="id" name="id"  required=""    class="form-control" value="${model.id!}"/></td>
            </tr>
            <tr>
               <td > <@locale code="org.name" />：</td>
-              <td><input type="text"  id="name" name="name"    class="form-control" value="${model.name!}"/></td>
+              <td><input type="text"  id="name" name="name"  required=""    class="form-control" value="${model.name!}"/></td>
            </tr>
            <tr>
               <td > <@locale code="org.fullname" />：</td>
-              <td><input type="text"  id="fullName" name="fullName"    class="form-control" value="${model.fullName!}"/></td>
+              <td><input type="text"  id="fullName" name="fullName"  required=""    class="form-control" value="${model.fullName!}"/></td>
            </tr>
             <tr >
               <td > <@locale code="org.xpath" /> ：
@@ -133,7 +133,7 @@ $(function () {
      		</td></tr>
      		<tr><td nowrap class="center">
                           
-                          <input id="submitBtn" class="button btn btn-primary mr-3"     type="button"   style="width:100px"  value="<@locale code="button.text.save" />"/>
+                          <input id="submitBtn" class="button btn btn-primary mr-3"     type="submit"   style="width:100px"  value="<@locale code="button.text.save" />"/>
                        
      		</td></tr>
      	</table>

@@ -26,7 +26,8 @@
 	type="alert"  
 	action="<@base/>/userinfo/update" 
 	autoclose="true" 
-	enctype="multipart/form-data">
+	enctype="multipart/form-data"
+	class="needs-validation" novalidate>
 	 <div class="" style="width:100%;">
 		<div class="top">
 			<ul class="switch_tab"  style="width:100%" >

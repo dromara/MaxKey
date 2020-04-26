@@ -75,7 +75,8 @@ $(function(){
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
 			action="<@base/>/apps/desktop/update"  
 			forward="<@base/>/apps/list"
-			enctype="multipart/form-data">		 
+			enctype="multipart/form-data"
+			class="needs-validation" novalidate>		 
   	        <!-- content -->    
   	      	<!--table-->
 			<table   class="table table-bordered" >

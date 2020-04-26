@@ -11,7 +11,7 @@
 </style>
 </head>
 <body>
-<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/groups/add">
+<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/groups/add"  class="needs-validation" novalidate>
 	<table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
 		<tbody>
 			<tr>
@@ -24,7 +24,7 @@
 				<td nowrap colspan="2" class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
 					<input  id="status" type="hidden" name="status"  value="1"/>
-		    		<input class="button btn btn-primary mr-3"  id="submitBtn" type="button" value="<@locale code="button.text.save" />">
+		    		<input class="button btn btn-primary mr-3"  id="submitBtn" type="submit" value="<@locale code="button.text.save" />">
 	  				<input class="button btn btn-secondary mr-3"  id="closeBtn"   type="button" value="<@locale code="button.text.cancel" />"> 
 				</td>
 			</tr>

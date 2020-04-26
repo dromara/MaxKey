@@ -58,7 +58,7 @@ $(function(){
 </head>
 <body>	
 <form id="actionForm"  method="post" type="label" autoclose="true"  
-			action="<@base/>/apps/updateExtendAttr">		 
+			action="<@base/>/apps/updateExtendAttr"  class="needs-validation" novalidate>		 
     <!-- content -->    
   	<!--table-->
 	<table   class="table table-bordered" >

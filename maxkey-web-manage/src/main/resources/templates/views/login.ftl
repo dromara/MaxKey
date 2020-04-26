@@ -26,7 +26,7 @@
 							</h4>
 						</div>
 						<div class="card-body">
-							<form class="form-horizontal m-t-20" id="loginForm" name="loginForm" action="<@base />/logon.do" method="post">
+							<form class="form-horizontal m-t-20 needs-validation" id="loginForm" name="loginForm" action="<@base />/logon.do" method="post"  novalidate>
 								<div class="form-group">
 									<span class="input-group-addon"><i class="fa fa-user"></i></span>
 									<input id='j_username' name='username' value="admin" class="form-control" type="text" required="" placeholder="<@locale code="login.text.username"/>">

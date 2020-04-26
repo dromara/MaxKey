@@ -12,20 +12,20 @@
 </head>
 <body>
 
-<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/app/accounts/add">
+<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/app/accounts/add"  class="needs-validation" novalidate>
 	<table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
 		<tbody>
 			<tr style="display:none">
 				<th><@locale code="userinfo.id" />：</th>
 				<td nowrap>
-					<input type="text" id="id" name="id" readonly  class="form-control" title="" value="${model.id!}"/>
+					<input  required="" type="text" id="id" name="id" readonly  class="form-control" title="" value="${model.id!}"/>
 	
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="userinfo.username" />：</th>
 				<td nowrap>
-					<input readonly type="text" id="username" name="username"  class="form-control username" title="" value="${model.username!}" style="float:left;width:70%;"  required="" />
+					<input  required="" readonly type="text" id="username" name="username"  class="form-control username" title="" value="${model.username!}" style="float:left;width:70%;"  required="" />
 					<input class="button btn btn-primary mr-3 window"  type="button"    id="selectUserinfoBtn" value="<@locale code="button.text.select" />"
 					 wurl="<@base/>/userinfo/select"
 						 		    wwidth="800"
@@ -37,14 +37,14 @@
 			<tr>
 				<th><@locale code="userinfo.displayName" />：</th>
 				<td nowrap>
-					<input readonly  type="text" id="displayName" name="displayName"  class="form-control displayName"  title="" value="${model.displayName!}" style="width:70%;"  required="" />
+					<input  required="" readonly  type="text" id="displayName" name="displayName"  class="form-control displayName"  title="" value="${model.displayName!}" style="width:70%;"  required="" />
 			
 				</td>
 			</tr>
 			<tr>
 				<th><@locale code="apps.name" />：</th>
 				<td nowrap>
-					<input readonly  type="text" id="appName" name="appName"  class="form-control appName" title="" value="${model.appName!}"  style="float:left;width:70%;"  required="" />
+					<input  required="" readonly  type="text" id="appName" name="appName"  class="form-control appName" title="" value="${model.appName!}"  style="float:left;width:70%;"  required="" />
 					<input class="button btn btn-primary mr-3 window"  type="button"    id="selectAppsubmitBtn" value="<@locale code="button.text.select" />"
 					  wurl="<@base/>/apps/select"
 						 		    wwidth="800"
@@ -73,7 +73,7 @@
 					<input id="status" type="hidden" name="status"  value="1"/>
 					<input type="hidden" id="uid" name="uid" class="uid" title="" value="${model.uid!}"/>
 					<input type="hidden" id="appId" name="appId" class="appId" title="" value="${model.appId!}"/>
-			   		<input class="button btn btn-primary mr-3"  type="button"    id="submitBtn" value="<@locale code="button.text.save" />"/>
+			   		<input class="button btn btn-primary mr-3"  type="submit"    id="submitBtn" value="<@locale code="button.text.save" />"/>
 					<input class="button btn btn-secondary mr-3"  type="button"    id="closeBtn" value="<@locale code="button.text.cancel" /> "/>	
 					
 				</td>

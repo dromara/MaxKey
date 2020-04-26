@@ -495,7 +495,7 @@ $(function(){
 			return false;
 		}
 		if(canSubmit) {
-			$("#actionForm").submit();//submit
+			//$("#actionForm").submit();//submit
 		}
 	});
 	
