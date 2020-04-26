@@ -1,4 +1,4 @@
-MaxKey v 1.4.0 GA	2020/**/**  
+MaxKey v 1.4.0 GA	2020/05/01  
 	*(MAXKEY-200501) 登录错误修复
 	*(MAXKEY-200502) 登录无验证码登录
 	*(MAXKEY-200503) 短信验证码SMS
@@ -17,7 +17,12 @@ MaxKey v 1.4.0 GA	2020/**/**
 	*(MAXKEY-200510) 机构增加不为空验证功能,排序显示
 	*(MAXKEY-200511) 国际化操作提示
 	*(MAXKEY-200512) SAML2.0增加签名和摘要配置
-	*(MAXKEY-200513) mybatis-jpa-extra升级到v2.0
+	*(MAXKEY-200513) 优化界面，强化提交表单验证功能
+	*(MAXKEY-200514) 组件升级
+						mybatis-jpa-extra v2.0
+						bootstrap 4.4.1
+						bootstrap-table v1.16.0
+						jquery 3.5.0
 	
 MaxKey v 1.3.0 GA   2020/04/04  
 	*(MAXKEY-200401) 记住登录修复，RememberMe fix
