@@ -2,7 +2,7 @@
 
 **MaxKey(马克思的钥匙)**，寓意是最大钥匙， 是用户单点登录认证系统（Sigle Sign On System）,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS等标准化的开放协议，提供**简单、标准、安全和开放**的用户身份认证和单点登录，包含用户认证、单点登录、资源管理、权限管理等。
 
-  MaxKey  <a href="https://shimingxy.github.io/MaxKey/" target="_blank">**官方文档**</a> | <a href="https://github.com/shimingxy/MaxKey" target="_blank">**GitHub**</a> | <a href="https://gitee.com/shimingxy/MaxKey" target="_blank">**码云(Gitee)**</a>
+  MaxKey  <a href="https://www.maxkey.top" target="_blank">**官方文档**</a> | <a href="https://github.com/shimingxy/MaxKey" target="_blank">**GitHub**</a> | <a href="https://gitee.com/shimingxy/MaxKey" target="_blank">**码云(Gitee)**</a>
   
   QQ交流群：**434469201** <a href="https://jq.qq.com/?_wv=1027&k=5WrpQ6o" target="_blank">点击链接加入群聊</a>|邮箱EMAIL: **shimingxy@163.com**
  
@@ -74,6 +74,7 @@
 百度网盘下载
 | 版本    | 日期   |  下载地址  |  提取码  |
 | --------| :-----  | :----  | :----:  |
+| v 1.4.0 GA | 2020/05/01   |  <a href="https://pan.baidu.com/s/1i53-oR-xnwZddqEl9dP4ag" target="_blank">链接下载</a>  |  **f3fs**  |
 | v 1.3.0 GA | 2020/04/04   |  <a href="https://pan.baidu.com/s/1o7vfBeq21Az_0s0tJvObOw" target="_blank">链接下载</a>  |  **20bj**  |
 | v 1.2.1 GA | 2020/02/29   |  <a href="https://pan.baidu.com/s/1FDkJ4DOMQq8tPAXrIfDeKA" target="_blank">链接下载</a>  |  **yutq**  |
 | v 1.2.0 GA | 2020/01/18   |  <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">链接下载</a>  |  **6bda**  |
