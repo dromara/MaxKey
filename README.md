@@ -1,6 +1,6 @@
-# <img src="https://www.maxkey.top/images/logo.jpg" width="45px">MaxKey
+# <img src="http://www.maxkey.top/images/logo.jpg" width="45px">MaxKey
 
-**MaxKey(-马克思的钥匙)**，寓意是最大钥匙， 是用户单点登录认证系统（Sigle Sign On System）,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS等标准化的开放协议，提供**简单、标准、安全和开放**的用户身份认证和单点登录，包含用户认证、单点登录、资源管理、权限管理等。
+**MaxKey(马克思的钥匙)**，寓意是最大钥匙， 是用户单点登录认证系统（Sigle Sign On System）,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS等标准化的开放协议，提供**简单、标准、安全和开放**的用户身份认证和单点登录，包含用户认证、单点登录、资源管理、权限管理等。
 
   MaxKey  <a href="https://www.maxkey.top" target="_blank">**官方文档**</a> | <a href="https://github.com/shimingxy/MaxKey" target="_blank">**GitHub**</a> | <a href="https://gitee.com/shimingxy/MaxKey" target="_blank">**码云(Gitee)**</a>
   
@@ -9,7 +9,7 @@
 什么是**单点登录(Single Sign On）**，简称为**SSO**？
 
   用户只需要登录认证中心一次就可以访问所有相互信任的应用系统，无需再次登录。
-  
+ 
 ------------
 
 1.  标准化认证协议：
@@ -52,21 +52,21 @@
 **MaxKey认证**
 
 登录界面
-<img src="https://www.maxkey.top/images/maxkey_login.png"/>
+<img src="http://www.maxkey.top/images/maxkey_login.png"/>
 
 主界面
-<img src="https://www.maxkey.top/images/maxkey_index.png"/>
+<img src="http://www.maxkey.top/images/maxkey_index.png"/>
 
 **MaxKey管理**
 
 访问报表
-<img src="https://www.maxkey.top/images/maxkey_mgt_rpt.png"/>
+<img src="http://www.maxkey.top/images/maxkey_mgt_rpt.png"/>
 
 用户管理
-<img src="https://www.maxkey.top/images/maxkey_mgt_users.png"/>
+<img src="http://www.maxkey.top/images/maxkey_mgt_users.png"/>
 
 应用管理
-<img src="https://www.maxkey.top/images/maxkey_mgt_apps.png"/>
+<img src="http://www.maxkey.top/images/maxkey_mgt_apps.png"/>
 
 ------------
 # 下载
