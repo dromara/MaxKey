@@ -1,4 +1,4 @@
-# <img src="https://www.maxkey.top/images/logo.jpg?raw=true" width="45px">MaxKey
+# <img src="https://www.maxkey.top/images/logo.jpg" width="45px">MaxKey
 
 **MaxKey(马克思的钥匙)**，寓意是最大钥匙， 是用户单点登录认证系统（Sigle Sign On System）,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS等标准化的开放协议，提供**简单、标准、安全和开放**的用户身份认证和单点登录，包含用户认证、单点登录、资源管理、权限管理等。
 
@@ -52,21 +52,21 @@
 **MaxKey认证**
 
 登录界面
-<img src="https://www.maxkey.top/images/maxkey_login.png?raw=true"/>
+<img src="https://www.maxkey.top/images/maxkey_login.png"/>
 
 主界面
-<img src="https://www.maxkey.top/images/maxkey_index.png?raw=true"/>
+<img src="https://www.maxkey.top/images/maxkey_index.png"/>
 
 **MaxKey管理**
 
 访问报表
-<img src="https://www.maxkey.top/images/maxkey_mgt_rpt.png?raw=true"/>
+<img src="https://www.maxkey.top/images/maxkey_mgt_rpt.png"/>
 
 用户管理
-<img src="https://www.maxkey.top/images/maxkey_mgt_users.png?raw=true"/>
+<img src="https://www.maxkey.top/images/maxkey_mgt_users.png"/>
 
 应用管理
-<img src="https://www.maxkey.top/images/maxkey_mgt_apps.png?raw=true"/>
+<img src="https://www.maxkey.top/images/maxkey_mgt_apps.png"/>
 
 ------------
 # 下载
