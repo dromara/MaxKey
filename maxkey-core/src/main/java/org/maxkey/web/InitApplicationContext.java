@@ -197,7 +197,7 @@ public class InitApplicationContext extends HttpServlet {
         _logger.info("+                           Version "
                     + properties.getProperty("application.formatted-version"));
         _logger.info("+");
-        _logger.info("+                      https://shimingxy.github.io/MaxKey/");
+        _logger.info("+                      https://www.maxkey.top/");
         _logger.info("+                      email:shimingxy@163.com");
         _logger.info("+                      Licensed under Apache License 2.0");
         _logger.info("-----------------------------------------------------------");
