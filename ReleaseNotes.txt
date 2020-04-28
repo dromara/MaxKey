@@ -18,7 +18,8 @@ MaxKey v 1.4.0 GA	2020/05/01
 	*(MAXKEY-200511) 国际化操作提示
 	*(MAXKEY-200512) SAML2.0增加签名和摘要配置
 	*(MAXKEY-200513) 优化界面，强化提交表单验证功能
-	*(MAXKEY-200514) 组件版本升级
+	*(MAXKEY-200514) 官方地址域名解析www.maxkey.top
+	*(MAXKEY-200515) 组件版本升级
 						mybatis-jpa-extra v2.0
 						JustAuth 1.15.1
 						log4j 2.13.2
