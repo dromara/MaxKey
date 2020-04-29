@@ -77,7 +77,7 @@
 		</tr>
 		<tr class="b">
 			<td>1 </td>
-			<td>动态验证码</td>
+			<td>动态验证码 字母/数字/算术</td>
 		</tr>
 		<tr class="a">
 			<td>2 </td>
