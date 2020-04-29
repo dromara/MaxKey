@@ -5,6 +5,8 @@
 	<#-- bootstrap-4.4.1 -->
     <link   href="<@base />/static/bootstrap-4.4.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
     <script src ="<@base />/static/bootstrap-4.4.1/js/bootstrap.min.js" type="text/javascript" ></script>
+	<#-- font-awesome-4.7.0 -->
+	<link   href="<@base />/static/font-awesome-4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
 	<#-- metadata -->
 	<script src ="<@base />/static/jquery/jquery.metadata.js" type="text/javascript" ></script>
 	<#--bootstrap-table-1.16.0-->

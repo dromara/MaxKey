@@ -2,115 +2,116 @@
 <ul class="metismenu" id="side-nav-menu" >
 	<li>
 		<a class="side-nav-menu" href="<@base />/main/">
-       		<span class="fa fa-fw fa-github fa-lg"></span>
        		<@locale code="navs.home"/>
+       		<span class="fa fa-fw fa-home fa-lg"></span>
     	</a>
 	</li>
    	<li>
      	<a class="side-nav-menu" href="<@base />/orgs/list/">
-      		<span class="fa fa-fw fa-github fa-lg"></span>
        		<@locale code="navs.orgs"/>
+       		<span class="fa fa-fw fa-sitemap fa-lg"></span>
      	</a>
    	</li>
    	<li>
      	<a class="side-nav-menu" href="<@base />/userinfo/list/">
-      		<span class="fa fa-fw fa-github fa-lg"></span>
        		<@locale code="navs.users"/>
+       		<span class="fa fa-fw fa-user fa-lg"></span>
      	</a>
    	</li>
    	<li>
      	<a class="side-nav-menu" href="<@base />/apps/list/">
-      		<span class="fa fa-fw fa-github fa-lg"></span>
        		<@locale code="navs.apps"/>
+       		<span class="fa fa-fw fa-globe fa-lg"></span>
      	</a>
    	</li>
    	
  	<li>
      	<a class="side-nav-menu" href="<@base />/app/accounts/list/">
-      		<span class="fa fa-fw fa-github fa-lg"></span>
+      		
        		<@locale code="navs.accounts"/>
+       		<span class="fa fa-fw fa-vcard  fa-lg"></span>
      	</a>
    	</li>  	
    	<li>
      	<a class="side-nav-menu has-arrow" href="#">
-      		<span class="fa fa-fw fa-github fa-lg"></span>
        		<@locale code="navs.groups"/>
+       		<span class="fa fa-fw fa-cubes fa-lg"></span>
      	</a>
      	<ul>
      		<li>
 	         <a class="side-nav-menu" href="<@base />/groups/list/">
-	           <span class="fa fa-fw fa-code-fork"></span>
 	         	<@locale code="navs.groups"/>	
+	         	<span class="fa fa-fw fa-address-book"></span>
 	         </a>
 	       </li>
 	       <li>
 	         <a class="side-nav-menu"  href="<@base />/groupMember/list/">
-	           <span class="fa fa-fw fa-code-fork"></span>
 	         	<@locale code="navs.groups.member"/>
+	         	<span class="fa fa-fw fa-podcast"></span>
 	         </a>
 	       </li>
 	       <li>
 	         <a class="side-nav-menu" href="<@base />/groupPrivileges/list/">
-	           <span class="fa fa-fw fa-code-fork"></span>
 	         	 <@locale code="navs.groups.privileges"/>
+	         	 <span class="fa fa-fw fa-anchor"></span>
 	         </a>
 	       </li>
 	    </ul>
    	</li> 
    	<li>
      	<a class="side-nav-menu has-arrow" href="#">
-      		<span class="fa fa-fw fa-github fa-lg"></span>
        		<@locale code="navs.conf"/>
+       		<span class="fa fa-fw fa-cogs fa-lg"></span>
      	</a>
      	<ul>
 	       <li>
              <a class="side-nav-menu" href="<@base />/roles/list/">
-               <span class="fa fa-fw fa-code-fork"></span>
                 <@locale code="navs.roles"/>  
+                <span class="fa fa-fw fa-shield"></span>
              </a>
            </li>
            <li>
                  <a class="side-nav-menu" href="<@base />/resources/list/">
-                   <span class="fa fa-fw fa-code-fork"></span>
                     <@locale code="navs.resources"/>
+                     <span class="fa fa-fw fa-paper-plane"></span>
                  </a>
             </li>
            <li>
              <a class="side-nav-menu" href="<@base />/permissions/list/">
-               <span class="fa fa-fw fa-code-fork"></span>
                  <@locale code="navs.role.permissions"/>
+                 <span class="fa fa-fw fa-check-square"></span>
              </a>
            </li>
            <li>
              <a class="side-nav-menu" href="<@base />/config/passwordpolicy/forward/">
-               <span class="fa fa-fw fa-code-fork"></span>
                 <@locale code="navs.conf.passwordpolicy"/>
+                 <span class="fa fa-fw fa-balance-scale"></span>
              </a>
            </li>
 	    </ul>
 	</li>
    	<li>
      	<a class="side-nav-menu has-arrow" href="#">
-      		<span class="fa fa-fw fa-github fa-lg"></span>
        		<@locale code="navs.audit"/>
+       		<span class="fa fa-fw fa-eye fa-lg"></span>
      	</a>
      	<ul>
 	       <li>
 	         <a class="side-nav-menu" href="<@base />/logs/loginHistoryList/">
-	           <span class="fa fa-fw fa-code-fork"></span>
 	         	<@locale code="navs.audit.login"/>
+	         	<span class="fa fa-fw fa-eraser"></span>
 	         </a>
 	       </li>
 	       <li>
 	         <a class="side-nav-menu" href="<@base />/logs/loginAppsHistoryList/">
-	           <span class="fa fa-fw fa-code-fork"></span>
 	         	 <@locale code="navs.audit.loginapps"/>
+	         	 <span class="fa fa-fw fa-eraser"></span>
 	         </a>
 	       </li>
 	       <li>
 	         <a class="side-nav-menu" href="<@base />/logs/list/">
-	           <span class="fa fa-fw fa-code-fork"></span>
 	         	  <@locale code="navs.audit.operate"/>
+	         	  <span class="fa fa-fw fa-eraser"></span>
 	         </a>
 	       </li>
 	    </ul>
