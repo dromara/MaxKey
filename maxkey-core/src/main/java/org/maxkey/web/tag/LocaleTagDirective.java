@@ -1,24 +1,24 @@
 package org.maxkey.web.tag;
 
-import java.io.IOException;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.maxkey.web.WebContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.context.WebApplicationContext;
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import java.io.IOException;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import org.maxkey.web.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+
 
 /**
- * 获取应用上下文标签 <@locale/>
+ * 获取应用上下文标签 .<@locale/>
  * 
  * @author Crystal.Sea
  *
@@ -30,6 +30,7 @@ public class LocaleTagDirective implements TemplateDirectiveModel {
     @Autowired
     private HttpServletRequest request;
 
+    @SuppressWarnings("rawtypes")
     @Override
     public void execute(Environment env, 
             Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
