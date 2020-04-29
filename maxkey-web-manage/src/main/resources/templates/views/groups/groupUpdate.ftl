@@ -27,6 +27,12 @@
 			</td>
 		</tr>
 		<tr>
+                <th><@locale code="common.text.description" />：</th>
+                <td nowrap>
+                    <input type="text" id="description" name="description" class="form-control" title="" value="${model.description!}"  />
+                </td>
+            </tr>
+		<tr>
 			<td nowrap colspan="2"  class="center">
 				<input id="_method" type="hidden" name="_method"  value="post"/>
 				<input id="status" type="hidden" name="status"  value="1"/>

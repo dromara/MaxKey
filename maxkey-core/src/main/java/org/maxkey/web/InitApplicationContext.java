@@ -30,7 +30,7 @@ public class InitApplicationContext extends HttpServlet {
     private static final Logger _logger = LoggerFactory.getLogger(InitApplicationContext.class);
     private static final long serialVersionUID = -797399138268601444L;
     ApplicationContext applicationContext;
-    Properties properties;
+    
 
     @Override
     public String getServletInfo() {
@@ -146,11 +146,11 @@ public class InitApplicationContext extends HttpServlet {
             PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = 
                     ((PropertySourcesPlaceholderConfigurer) applicationContext
                     .getBean("propertySourcesPlaceholderConfigurer"));
-            properties = (Properties) propertySourcesPlaceholderConfigurer
+            WebContext.properties = (Properties) propertySourcesPlaceholderConfigurer
                     .getAppliedPropertySources()
                     .get(PropertySourcesPlaceholderConfigurer.LOCAL_PROPERTIES_PROPERTY_SOURCE_NAME)
                     .getSource();
-            Set<Object> keyValue = properties.keySet();
+            Set<Object> keyValue = WebContext.properties.keySet();
             SortedSet<String> keyValueSet = new TreeSet<String>();
             // sort key
             for (Iterator<Object> it = keyValue.iterator(); it.hasNext();) {
@@ -160,7 +160,7 @@ public class InitApplicationContext extends HttpServlet {
             // out
             for (Iterator<String> it = keyValueSet.iterator(); it.hasNext();) {
                 String key = (String) it.next();
-                _logger.trace(key + "   =   " + properties.get(key));
+                _logger.trace(key + "   =   " + WebContext.properties.get(key));
             }
             _logger.trace("-----------------------------------------------------------");
         }
@@ -195,7 +195,7 @@ public class InitApplicationContext extends HttpServlet {
         _logger.info("+                                MaxKey ");
         _logger.info("+                      Single   Sign   On ( SSO ) ");
         _logger.info("+                           Version "
-                    + properties.getProperty("application.formatted-version"));
+                    + WebContext.properties.getProperty("application.formatted-version"));
         _logger.info("+");
         _logger.info("+                      https://www.maxkey.top/");
         _logger.info("+                      email:shimingxy@163.com");

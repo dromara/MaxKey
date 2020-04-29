@@ -1,6 +1,7 @@
 package org.maxkey.web;
 
 import java.util.Locale;
+import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.LogFactory;
@@ -29,6 +30,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  */
 public final class WebContext {
 
+    public static Properties properties;
+     
     /**
      * set Current login user to session.
      * 

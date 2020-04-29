@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,21 +36,25 @@ public class LocaleTagDirective implements TemplateDirectiveModel {
             throws TemplateException, IOException {
         WebApplicationContext webApplicationContext = 
                 RequestContextUtils.findWebApplicationContext(request);
+        String message = "";
         if (params.get("code") == null) {
-            env.getOut().append(RequestContextUtils.getLocale(request).getLanguage());
+            message = RequestContextUtils.getLocale(request).getLanguage();
+        } else if (params.get("code").toString().equals("global.application.version")
+                || params.get("code").toString().equals("application.version")) {
+            message = WebContext.properties.getProperty("application.formatted-version");
         } else {
             _logger.trace("message code " + params.get("code"));
             try {
-                env.getOut().append(
-                        webApplicationContext.getMessage(
+                message = webApplicationContext.getMessage(
                                 params.get("code").toString(), 
                                 null,
-                                RequestContextUtils.getLocale(request)));
+                                RequestContextUtils.getLocale(request));
 
             } catch (Exception e) {
                 _logger.error("message code " + params.get("code"), e);
             }
         }
+        env.getOut().append(message);
     }
 
 }
