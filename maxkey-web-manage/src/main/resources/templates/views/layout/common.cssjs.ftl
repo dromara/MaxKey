@@ -47,6 +47,14 @@
                    e.preventDefault();
 	         });
 	         
+	         $('.side-nav-menu').each(function(){
+                   var href = $(this).attr('href');
+                   if(window.location.href.indexOf(href) > 0){
+                        $(this).parents("li").addClass("mm-active");
+                        
+                   }
+             });
+	         
 			$(".datetimepicker").datetimepicker({format:'Y-m-d H:i',lang:'<@locale/>'.substring(0, 2)});
 			$(".datepicker").datetimepicker({timepicker:false,format:'Y-m-d',lang:'<@locale/>'.substring(0, 2)});
 			

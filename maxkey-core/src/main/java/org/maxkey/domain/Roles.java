@@ -7,22 +7,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
-import org.hibernate.validator.constraints.Length;
 
-@Table(name = "GROUPS")
-public class Groups extends JpaBaseDomain implements Serializable {
-
-    private static final long serialVersionUID = 4660258495864814777L;
+@Table(name = "ROLES")
+public class Roles extends JpaBaseDomain implements Serializable {
+    private static final long serialVersionUID = -7515832728504943821L;
+    
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
-    String id;
-
-    @Length(max = 60)
+    @GeneratedValue(strategy = GenerationType.AUTO,generator = "uuid")
+    private String id;
     @Column
     private String name;
     @Column
-    private int isdefault;
+    String status;
     @Column
     String description;
     @Column
@@ -33,35 +30,10 @@ public class Groups extends JpaBaseDomain implements Serializable {
     String modifiedBy;
     @Column
     String modifiedDate;
-    @Column
-    String status;
 
-    public Groups() {
-    }
-
-    public Groups(String id) {
-        this.id = id;
-    }
-
-    /**
-     * Groups.
-     * @param id String
-     * @param name String
-     * @param isdefault int
-     */
-    public Groups(String id, String name, int isdefault) {
+    public Roles() {
         super();
-        this.id = id;
-        this.name = name;
-        this.isdefault = isdefault;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        // TODO Auto-generated constructor stub
     }
 
     public String getId() {
@@ -72,12 +44,20 @@ public class Groups extends JpaBaseDomain implements Serializable {
         this.id = id;
     }
 
-    public int getIsdefault() {
-        return isdefault;
+    public String getName() {
+        return name;
     }
 
-    public void setIsdefault(int isdefault) {
-        this.isdefault = isdefault;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDescription() {
@@ -119,23 +99,7 @@ public class Groups extends JpaBaseDomain implements Serializable {
     public void setModifiedDate(String modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "Groups [name=" + name + ", isdefault=" + isdefault + "]";
-    }
+   
+    
 
 }

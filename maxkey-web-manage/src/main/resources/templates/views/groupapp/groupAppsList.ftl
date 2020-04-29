@@ -93,24 +93,10 @@
 	 			<tr>
 		 			<td width="120px"><@locale code="apps.name"/></td>
 		 			<td width="360px">
-		 				<input type="text" name="name" style ="width:150px">
+		 				<input class="form-control" type="text" name="name" style ="width:150px">
 		 			</td>
-		 			<td width="120px"><@locale code="apps.protocol"/></td>
+		 			<td width="120px"></td>
 		 			<td width="360px">
-		 				<select name="protocol" class="select_protocol">
-		 					<option value=""  selected>Select</option>
-		 					<option value="<%=PROTOCOLS.FORMBASED%>"><%=PROTOCOLS.FORMBASED%></option>
-		 					<option value="<%=PROTOCOLS.OPEN_ID_CONNECT%>"><%=PROTOCOLS.OPEN_ID_CONNECT%></option>
-		 					<option value="<%=PROTOCOLS.OAUTH10A%>"><%=PROTOCOLS.OAUTH10A%></option>
-		 					<option value="<%=PROTOCOLS.OAUTH20%>"><%=PROTOCOLS.OAUTH20%></option>
-		 					<option value="<%=PROTOCOLS.SAML11%>"><%=PROTOCOLS.SAML11%></option>
-		 					<option value="<%=PROTOCOLS.SAML20%>"><%=PROTOCOLS.SAML20%></option>
-		 					<option value="<%=PROTOCOLS.COOKIEBASED%>"><%=PROTOCOLS.COOKIEBASED%></option>
-		 					<option value="<%=PROTOCOLS.TOKENBASED%>"><%=PROTOCOLS.TOKENBASED%></option>
-		 					<option value="<%=PROTOCOLS.DESKTOP%>"><%=PROTOCOLS.DESKTOP%></option>
-		 					<option value="<%=PROTOCOLS.BASIC%>"><%=PROTOCOLS.BASIC%></option>
-		 					
-		 				</select>
 		 			</td>
 	 			</tr>
 	 		</table>
