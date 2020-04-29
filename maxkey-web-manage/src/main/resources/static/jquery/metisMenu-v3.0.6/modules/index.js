@@ -1,7 +1,7 @@
 /*!
 * metismenu https://github.com/onokumus/metismenu#readme
 * A jQuery menu plugin
-* @version 3.0.4
+* @version 3.0.6
 * @author Osman Nuri Okumus <onokumus@gmail.com> (https://github.com/onokumus)
 * @license: MIT 
 */
@@ -108,13 +108,11 @@ var ClassName = {
   COLLAPSED: 'mm-collapsed'
 };
 
-var MetisMenu =
-/*#__PURE__*/
-function () {
+var MetisMenu = /*#__PURE__*/function () {
   // eslint-disable-line no-shadow
   function MetisMenu(element, config) {
     this.element = element;
-    this.config = _extends({}, Default, config);
+    this.config = _extends({}, Default, {}, config);
     this.transitioning = null;
     this.init();
   }
@@ -279,7 +277,8 @@ function () {
 
   _proto.dispose = function dispose() {
     $.removeData(this.element, DATA_KEY);
-    $(this.element).find(this.config.parentTrigger).has(this.config.subMenu).children(this.config.triggerElement).off('click');
+    $(this.element).find(this.config.parentTrigger) // .has(this.config.subMenu)
+    .children(this.config.triggerElement).off(Event.CLICK_DATA_API);
     this.transitioning = null;
     this.config = null;
     this.element = null;
@@ -291,7 +290,7 @@ function () {
       var $this = $(this);
       var data = $this.data(DATA_KEY);
 
-      var conf = _extends({}, Default, $this.data(), typeof config === 'object' && config ? config : {});
+      var conf = _extends({}, Default, {}, $this.data(), {}, typeof config === 'object' && config ? config : {});
 
       if (!data) {
         data = new MetisMenu(this, conf);

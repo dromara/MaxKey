@@ -1,7 +1,7 @@
 /*!
 * metismenu https://github.com/onokumus/metismenu#readme
 * A jQuery menu plugin
-* @version 3.0.4
+* @version 3.0.6
 * @author Osman Nuri Okumus <onokumus@gmail.com> (https://github.com/onokumus)
 * @license: MIT 
 */
@@ -9,9 +9,9 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('jquery')) :
   typeof define === 'function' && define.amd ? define(['jquery'], factory) :
   (global = global || self, global.metisMenu = factory(global.jQuery));
-}(this, function ($) { 'use strict';
+}(this, (function ($) { 'use strict';
 
-  $ = $ && $.hasOwnProperty('default') ? $['default'] : $;
+  $ = $ && Object.prototype.hasOwnProperty.call($, 'default') ? $['default'] : $;
 
   function _extends() {
     _extends = Object.assign || function (target) {
@@ -114,13 +114,11 @@
     COLLAPSED: 'mm-collapsed'
   };
 
-  var MetisMenu =
-  /*#__PURE__*/
-  function () {
+  var MetisMenu = /*#__PURE__*/function () {
     // eslint-disable-line no-shadow
     function MetisMenu(element, config) {
       this.element = element;
-      this.config = _extends({}, Default, config);
+      this.config = _extends({}, Default, {}, config);
       this.transitioning = null;
       this.init();
     }
@@ -285,7 +283,8 @@
 
     _proto.dispose = function dispose() {
       $.removeData(this.element, DATA_KEY);
-      $(this.element).find(this.config.parentTrigger).has(this.config.subMenu).children(this.config.triggerElement).off('click');
+      $(this.element).find(this.config.parentTrigger) // .has(this.config.subMenu)
+      .children(this.config.triggerElement).off(Event.CLICK_DATA_API);
       this.transitioning = null;
       this.config = null;
       this.element = null;
@@ -297,7 +296,7 @@
         var $this = $(this);
         var data = $this.data(DATA_KEY);
 
-        var conf = _extends({}, Default, $this.data(), typeof config === 'object' && config ? config : {});
+        var conf = _extends({}, Default, {}, $this.data(), {}, typeof config === 'object' && config ? config : {});
 
         if (!data) {
           data = new MetisMenu(this, conf);
@@ -336,5 +335,5 @@
 
   return MetisMenu;
 
-}));
+})));
 //# sourceMappingURL=metisMenu.js.map

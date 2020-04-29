@@ -35,9 +35,9 @@
 	<script src ="<@base />/static/jquery/switchtab/switchtab.js" type="text/javascript" ></script>
 	<link 	href="<@base />/static/jquery/switchtab/switchtab.css" type="text/css" rel="stylesheet" />
 	<#-- metisMenu-v3.0.4 -->
-	<link   href="<@base />/static/jquery/metisMenu-v3.0.4/css/mm-vertical.css"  rel="stylesheet" >
-	<link   href="<@base />/static/jquery/metisMenu-v3.0.4/metisMenu.min.css"  rel="stylesheet" >
-	<script src ="<@base />/static/jquery/metisMenu-v3.0.4/metisMenu.min.js" type="text/javascript" ></script>
+	<link   href="<@base />/static/jquery/metisMenu-v3.0.6/css/mm-vertical.css"  rel="stylesheet" >
+	<link   href="<@base />/static/jquery/metisMenu-v3.0.6/metisMenu.min.css"  rel="stylesheet" >
+	<script src ="<@base />/static/jquery/metisMenu-v3.0.6/metisMenu.min.js" type="text/javascript" ></script>
 	<script src ="<@base />/static/js/Chart.min.js" type="text/javascript" ></script>
 	<#-- common script start -->
 	<script type="text/javascript">
