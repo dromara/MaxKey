@@ -71,6 +71,12 @@
              </a>
            </li>
            <li>
+             <a class="side-nav-menu"  href="<@base />/groupMember/list/">
+                <@locale code="navs.groups.member"/>
+                <span class="fa fa-fw fa-user-md"></span>
+             </a>
+           </li>
+           <li>
                  <a class="side-nav-menu" href="<@base />/resources/list/">
                     <@locale code="navs.resources"/>
                      <span class="fa fa-fw fa-paper-plane"></span>
