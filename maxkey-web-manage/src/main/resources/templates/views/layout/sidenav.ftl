@@ -71,8 +71,8 @@
              </a>
            </li>
            <li>
-             <a class="side-nav-menu"  href="<@base />/groupMember/list/">
-                <@locale code="navs.groups.member"/>
+             <a class="side-nav-menu"  href="<@base />/rolemembers/list/">
+                <@locale code="navs.role.member"/>
                 <span class="fa fa-fw fa-user-md"></span>
              </a>
            </li>
