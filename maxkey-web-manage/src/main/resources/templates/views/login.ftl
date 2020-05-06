@@ -28,16 +28,31 @@
 						<div class="card-body">
 							<form class="form-horizontal m-t-20 needs-validation" id="loginForm" name="loginForm" action="<@base />/logon.do" method="post"  novalidate>
 								<div class="form-group">
-									<span class="input-group-addon"><i class="fa fa-user"></i></span>
-									<input id='j_username' name='username' value="admin" class="form-control" type="text" required="" placeholder="<@locale code="login.text.username"/>">
+								    <span class="input-group">
+                                        <div class="input-group-prepend">
+                                                      <span class="input-group-text fa fa-user"></span>
+                                        </div>
+                                        <input id='j_username' name='username' value="admin" class="form-control" type="text" required="" placeholder="<@locale code="login.text.username"/>">
+                                    </span>
+									
 								</div>
 								<div class="form-group">
-									<span class="input-group-addon"><i class="fa fa-key"></i></span>
-									<input id='j_password' name='password' class="form-control" type="password" required=""	placeholder="<@locale code="login.text.password"/>">
+								    <span class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text fa fa-key"></span>
+                                        </div>
+                                        <input id='j_password' name='password' class="form-control" type="password" required="" placeholder="<@locale code="login.text.password"/>">
+									</span>
 								</div>
 								<div class="form-group">
-									<input id="j_captcha" name="captcha" class="form-control" value="" type="text" required="" placeholder="<@locale code="login.text.captcha"/>"> 
-									<img id="j_captchaimg" src="<@base/>/captcha" />
+								    <span class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text fa fa-refresh"></span>
+                                        </div>
+                                        <input id="j_captcha" name="captcha" class="form-control" value="" type="text" required="" placeholder="<@locale code="login.text.captcha"/>"> 
+                                        <img id="j_captchaimg" src="<@base/>/captcha" />
+                                    </span>
+									
 								</div>
 								<div class="form-group text-center m-t-20">
 									<input type="hidden" name="authType" value="basic" /> 
