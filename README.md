@@ -4,7 +4,7 @@
 
 MaxKey  <a href="https://www.maxkey.top" target="_blank"><b>官方文档</b></a> | <a href="https://github.com/shimingxy/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/shimingxy/MaxKey" target="_blank"><b>码云(Gitee)</b></a>
   
-QQ交流群：<b>434469201</b> <a href="https://jq.qq.com/?_wv=1027&k=5WrpQ6o" target="_blank">点击链接加入群聊</a>|邮箱EMAIL: <b>shimingxy@163.com</b>
+QQ交流群：<b>434469201</b> | 邮箱EMAIL: <b>shimingxy@163.com</b>
  
 什么是<b>单点登录(Single Sign On）</b>，简称为<b>SSO</b>？
 
