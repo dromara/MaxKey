@@ -36,8 +36,8 @@
 </head>
 <body>
 
-<div style="display:none1">
-	<form id="actionForm" method="post" action="<@base/>/rolemembers/insert">
+<div style="display:none">
+	<form id="actionForm" method="post" action="<@base/>/rolemembers/insert"  class="needs-validation" novalidate>
 		<table>
 			<tr><td></td><td><input type="text" id="roleId" name="roleId" value="${role.id}"/></td></tr>
 			<tr><td></td><td><input type="text" id="roleName" name="roleName" value="${role.name}"/></td></tr>

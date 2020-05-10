@@ -35,11 +35,11 @@
 </head>
 <body>
 <div style="display:none">
-	<form id="actionForm" method="post" action="<@base/>/groupPrivileges/insert">
+	<form id="actionForm" method="post" action="<@base/>/groupPrivileges/insert"  class="needs-validation" novalidate>
 		<table>
 			<tr><td></td><td><input type="text" id="groupId" name="groupId" value="${groupId}"/></td></tr>
 			<tr><td></td><td><input type="text" id="appId" name="appId" value=""/></td></tr>
-			<tr><td colspan="2"><input id="submitBtn" type="button" value="submit"></input></td></tr>
+			<tr><td colspan="2"><input id="submitBtn" type="submit" value="submit"></input></td></tr>
 		</table>
 	</form>
 </div>

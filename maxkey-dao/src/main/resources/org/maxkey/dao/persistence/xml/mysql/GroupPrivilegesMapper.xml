@@ -20,7 +20,17 @@
 	<!-- AppGroup -->
 	<select id="appsInGroup" parameterType="GroupPrivileges" resultType="GroupPrivileges">
 		SELECT
-			*
+			GP.ID,
+			GP.GROUPID,
+			GP.APPID,
+			APPS.NAME,
+            APPS.ICON,
+            APPS.LOGINURL,
+            APPS.PROTOCOL,
+            APPS.CATEGORY,
+            APPS.DESCRIPTION,
+            APPS.VENDOR,
+            APPS.VENDORURL
 		FROM
 			APPS APPS,
 			GROUP_PRIVILEGES    GP

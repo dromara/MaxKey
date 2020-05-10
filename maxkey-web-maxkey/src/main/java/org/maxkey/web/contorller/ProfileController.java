@@ -2,7 +2,6 @@ package org.maxkey.web.contorller;
 
 import javax.validation.Valid;
 import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.dao.service.MyProfileService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebContext;
@@ -26,9 +25,6 @@ public class ProfileController {
 
     @Autowired
     private UserInfoService userInfoService;
-
-    @Autowired
-    private MyProfileService myProfileService;
 
     @RequestMapping(value = { "/myProfile" })
     public ModelAndView forwardBasic() {
@@ -69,7 +65,7 @@ public class ProfileController {
 //			userInfo.setExtraAttribute(extraAttribute);
 //		}
 
-        if (myProfileService.updateProfile(userInfo) > 0) {
+        if (userInfoService.updateProfile(userInfo) > 0) {
             new Message(
                     WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS), 
                     userInfo, MessageType.success,

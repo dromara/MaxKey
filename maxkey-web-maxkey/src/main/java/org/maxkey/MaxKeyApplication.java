@@ -4,7 +4,7 @@ import java.util.Date;
 import javax.servlet.ServletException;
 import org.apache.ibatis.io.VFS;
 import org.apache.mybatis.jpa.SpringBootVFS;
-import org.maxkey.web.InitApplicationContext;
+import org.maxkey.web.InitializeContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -24,7 +24,7 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
         VFS.addImplClass(SpringBootVFS.class);
         ConfigurableApplicationContext applicationContext = 
                 SpringApplication.run(MaxKeyApplication.class, args);
-        InitApplicationContext initWebContext = new InitApplicationContext(applicationContext);
+        InitializeContext initWebContext = new InitializeContext(applicationContext);
         try {
             initWebContext.init(null);
         } catch (ServletException e) {

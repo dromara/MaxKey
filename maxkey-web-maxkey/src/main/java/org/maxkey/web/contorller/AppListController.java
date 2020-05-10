@@ -6,7 +6,6 @@ import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.dao.service.AccountsService;
 import org.maxkey.dao.service.AppsService;
-import org.maxkey.dao.service.MyAppsListService;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.Accounts;
 import org.maxkey.domain.UserInfo;
@@ -41,9 +40,6 @@ public class AppListController {
 
     @Autowired
     protected JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    MyAppsListService myAppsListService;
 
     @Autowired
     AccountsService appUsersService;
@@ -82,7 +78,7 @@ public class AppListController {
         UserApps userApplications = new UserApps();
         userApplications.setUsername(WebContext.getUserInfo().getUsername());
 
-        List<UserApps> appList = myAppsListService.queryMyApps(userApplications);
+        List<UserApps> appList = appsService.queryMyApps(userApplications);
         for (UserApps app : appList) {
             WebContext.setAttribute(app.getId(), app.getIcon());
         }

@@ -37,13 +37,13 @@
 <body>
 
 <div style="display:none">
-	<form id="actionForm" method="post" action="<@base/>/groupMember/insert">
+	<form id="actionForm" method="post" action="<@base/>/groupMember/insert"  class="needs-validation" novalidate>
 		<table>
 			<tr><td></td><td><input type="text" id="groupId" name="groupId" value="${group.id}"/></td></tr>
 			<tr><td></td><td><input type="text" id="groupName" name="groupName" value="${group.name}"/></td></tr>
 			<tr><td></td><td><input type="text" id="memberId" name="memberId" value=""/></td></tr>
 			<tr><td></td><td><input type="text" id="memberName" name="memberName" value=""/></td></tr>
-			<tr><td colspan="2"><input id="submitBtn" type="button" value="submit"></input></td></tr>
+			<tr><td colspan="2"><input id="submitBtn" type="submit" value="submit"></input></td></tr>
 		</table>
 	</form>
 </div>

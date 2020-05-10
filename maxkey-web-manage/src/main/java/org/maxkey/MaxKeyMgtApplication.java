@@ -4,7 +4,7 @@ import java.util.Date;
 
 import javax.servlet.ServletException;
 
-import org.maxkey.web.InitApplicationContext;
+import org.maxkey.web.InitializeContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -34,7 +34,7 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 		System.out.println("MaxKeyMgtApplication");
 
 		ConfigurableApplicationContext  applicationContext =SpringApplication.run(MaxKeyMgtApplication.class, args);
-		InitApplicationContext initWebContext=new InitApplicationContext(applicationContext);
+		InitializeContext initWebContext=new InitializeContext(applicationContext);
 		
 		
 		try {

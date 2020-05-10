@@ -26,8 +26,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * @author Crystal.Sea
  *
  */
-public class InitApplicationContext extends HttpServlet {
-    private static final Logger _logger = LoggerFactory.getLogger(InitApplicationContext.class);
+public class InitializeContext extends HttpServlet {
+    private static final Logger _logger = LoggerFactory.getLogger(InitializeContext.class);
     private static final long serialVersionUID = -797399138268601444L;
     ApplicationContext applicationContext;
     
@@ -59,12 +59,12 @@ public class InitApplicationContext extends HttpServlet {
     /**
     * InitApplicationContext.
     */
-    public InitApplicationContext() {
+    public InitializeContext() {
         this.applicationContext = 
                 WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
     }
 
-    public InitApplicationContext(ConfigurableApplicationContext applicationContext) {
+    public InitializeContext(ConfigurableApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 

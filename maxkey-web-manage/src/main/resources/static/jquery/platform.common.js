@@ -1,26 +1,18 @@
-/*
- * crystal.sea
- */
-
 /* for datagrid  queryParams*/
 function dataGridQueryParams(params) {
 	var postData={};
 	if($("#basic_search_form")){//o.length>0
 		postData=$("#basic_search_form").serializeObject();
 	}
-	
 	if($("#advanced_search")){//o.length>0
 		postData=$.extend(postData,$("#advanced_search_form").serializeObject()||{});
 	}
-	
 	params=$.extend(params,postData);
-	
     return params;
 }
 
  //jquery begin
 $(function(){
-
 	//document forward
 	$.forward=function(config){
 		if(config.target){
@@ -232,6 +224,85 @@ $(function(){
 	 	$(".d-footer").show();
 	};
 	
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	// For actionForm use ajax submit
+    var forms = $(".needs-validation");
+    // Loop over them and prevent submission
+    Array.prototype.filter.call(forms, function (form) {
+      form.addEventListener('submit', function (event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }else{
+        	if($("#actionForm")[0]){//ajaxSubmit
+            	$("#actionForm").ajaxSubmit({//form ajax submit
+    				dataType	:	'json',//json type
+    				success		:	function(data) { //success return 
+    					$.unloading();
+    					
+    					var formErrorType=$("#actionForm").attr("type");//error alert type
+    					
+    					if(data.errors	&&	formErrorType){//have error field return 
+    						if(formErrorType=="alert"){//alert dialog
+    							var errorMessage=data.message+"<br>";
+    							for (var elem in data.errors){
+    								errorMessage+=data.errors[elem].message+"<br>";
+    							}
+    							$.alert({content:errorMessage,type:"error"});
+    						}else{//label tip
+    							for (var elem in data.errors){
+    								$("label[for='"+data.errors[elem].field+"']").html(data.errors[elem].message);
+    							}
+    							if(formErrorType!="label"){
+    								$("#"+formErrorType).show();
+    							}
+    						}
+    						return;
+    					} else {//no error,alert result message
+    						$.alert({content:data.message,type:$.platform.messages.messageType[data.messageType],
+    							callback:function(){
+    								if($("#actionForm").attr("autoclose")) {//auto close button
+    									if($("#backBtn").attr("id")){
+    										$("#backBtn").click();
+    									}else{
+    										$.closeWindow();
+    									}
+    									return;
+    								}				        		
+    								if($("#actionForm").attr("forward")){//auto forwar to actionForm forward attr
+    									document.location.href=$("#actionForm").attr("forward");
+    								}
+    							}
+    						});
+    					}
+    					// refresh datagrid after Submit
+    					if($("#datagrid")[0]){
+    						$("#datagrid").bootstrapTable("refresh");
+    					}
+    					//self define afterSubmit
+    					if (typeof(afterSubmit) == "function"){
+    						afterSubmit(data);//call back
+    					}
+    				},
+    				beforeSubmit:	function(arr, $form, options) { //before submit
+    					$.loading();//loading icon
+    					if (typeof(beforeSubmit) == "function"){
+    						return beforeSubmit();//callback 
+    					}
+    				},
+    				error		:	function(a, b, c) {//submit error
+    					$.unloading();
+    					$.alert({content:$.platform.messages.submit.errorText,type:"error"});
+    				}
+    			});
+            	event.preventDefault();
+                event.stopPropagation();
+        	}
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+    
 	//window open by element is window style
 	$(".window").on("click",function(){
 		if (typeof(beforeWindow) == "function"){
@@ -444,7 +515,9 @@ $(function(){
 					//alert delete result
 					$.alert({content:data.message,type:$.platform.messages.messageType[data.messageType]});
 					//refresh grid list
-					
+					if($("#datagrid")[0]){
+						$("#datagrid").bootstrapTable("refresh");
+					}
 			 	}); 
 		    }
 		});
@@ -456,7 +529,6 @@ $(function(){
 		if($("#actionForm").attr("autoclose")) {
 			// try to refresh parent grid list
 			if($.dialog.parent) {
-				
 				$.dialog.close();
 				return;
 			}
@@ -484,111 +556,19 @@ $(function(){
 		
 	});
 	
-	
-	//submit button
-	$("#submitBtn").click(function(){
-		var canSubmit = true;
-		if (typeof(beforeAction) == "function"){
-			canSubmit = beforeAction();//before submit
-		}
-		if($("#actionForm").attr("validate") && $("#actionForm").attr("validate")=="false"){//是否通过验证和自定义验证，validate属性
-			return false;
-		}
-		if(canSubmit) {
-			//$("#actionForm").submit();//submit
-		}
-	});
-	
-	//form submit form define
+	//form json url init all ways not used
 	if($("#actionForm")){//actionForm exist
 		if($("#actionForm").attr("loadaction")){//init form
 	    	$("#actionForm").json2form({url	:	$("#actionForm").attr("loadaction")});//init #actionForm with loadaction url
 	    	$("#actionForm").removeAttr('loadaction'); //is need init
 		}
 	};
-
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = $(".needs-validation");
-    // Loop over them and prevent submission
-    Array.prototype.filter.call(forms, function (form) {
-      form.addEventListener('submit', function (event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }else{
-        	if($("#actionForm")[0]){//ajaxSubmit
-            	$("#actionForm").ajaxSubmit({//form ajax submit
-    				dataType	:	'json',//json type
-    				success		:	function(data) { //success return 
-    					$.unloading();
-    					if (typeof(afterSubmit) == "function"){
-    						afterSubmit(data);//call back
-    						return;
-    					}
-    					
-    					var formErrorType=$("#actionForm").attr("type");//error alert type
-    					
-    					if(data.errors	&&	formErrorType){//have error field return 
-    						if(formErrorType=="alert"){//alert dialog
-    							var errorMessage=data.message+"<br>";
-    							for (var elem in data.errors){
-    								errorMessage+=data.errors[elem].message+"<br>";
-    							}
-    							$.alert({content:errorMessage,type:"error"});
-    						}else{//label tip
-    							for (var elem in data.errors){
-    								$("label[for='"+data.errors[elem].field+"']").html(data.errors[elem].message);
-    							}
-    							if(formErrorType!="label"){
-    								$("#"+formErrorType).show();
-    							}
-    						}
-    						return;
-    					} else {//no error,alert result message
-    						$.alert({content:data.message,type:$.platform.messages.messageType[data.messageType],
-    							callback:function(){
-    								if($("#actionForm").attr("autoclose")) {//auto close button
-    									if($("#backBtn").attr("id")){
-    										$("#backBtn").click();
-    									}else{
-    										$.closeWindow();
-    									}
-    									return;
-    								}				        		
-    								if($("#actionForm").attr("forward")){//auto forwar to actionForm forward attr
-    									document.location.href=$("#actionForm").attr("forward");
-    								}
-    							}
-    						});
-    					}
-    				},
-    				beforeSubmit:	function(arr, $form, options) { //before submit
-    					$.loading();//loading icon
-    					if (typeof(beforeSubmit) == "function"){
-    						return beforeSubmit();//callback 
-    					}
-    				},
-    				error		:	function(a, b, c) {//submit error
-    					$.unloading();
-    					$.alert({content:$.platform.messages.submit.errorText,type:"error"});
-    				}
-    			});
-            	event.preventDefault();
-                event.stopPropagation();
-        	}
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
 	
 	$.dataGridSelRowsData=function(dataGridElement){
 		return $(dataGridElement).bootstrapTable('getSelections');
 	};
 	
-	
-	
 	var curExpandNode = null;
-	
 	$.tree=function (treeSettings){
 		
 		function singlePath(newNode) {
@@ -696,5 +676,4 @@ $(function(){
 	    		}
 	    	);
 		};//end tree
-		
 });//jquery end

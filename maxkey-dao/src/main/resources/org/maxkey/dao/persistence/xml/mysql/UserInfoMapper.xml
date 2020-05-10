@@ -189,4 +189,61 @@
 				#{item}
     		</foreach>
 	</update>
+	
+    <update id="updateProfile" parameterType="UserInfo" >
+        UPDATE USERINFO SET
+            DISPLAYNAME     =   #{displayName},
+            NICKNAME        =   #{nickName},
+            NAMEZHSPELL     =   #{nameZhSpell},
+            NAMEZHSHORTSPELL=   #{nameZhShortSpell},
+            GIVENNAME       =   #{givenName},
+            MIDDLENAME      =   #{middleName},
+            FAMILYNAME      =   #{familyName},
+            HONORIFICPREFIX =   #{honorificPrefix},
+            HONORIFICSUFFIX =   #{honorificSuffix},
+            FORMATTEDNAME   =   #{formattedName} ,
+            MARRIED         =   #{married},
+            GENDER          =   #{gender},
+            BIRTHDATE       =   #{birthDate},
+            <if test="picture != null">
+            PICTURE         =   #{picture},
+            </if>
+            IDTYPE          =   #{idType},
+            IDCARDNO        =   #{idCardNo},
+            WEBSITE         =   #{webSite},
+
+            LOCALE          =   #{locale},
+            TIMEZONE        =   #{timeZone},
+            PREFERREDLANGUAGE=  #{preferredLanguage},
+
+            WINDOWSACCOUNT  =   #{windowsAccount},
+            
+            WORKCOUNTRY     =   #{workCountry},
+            WORKREGION      =   #{workRegion},
+            WORKLOCALITY    =   #{workLocality},
+            WORKSTREETADDRESS=  #{workStreetAddress},
+            WORKADDRESSFORMATTED=   #{workAddressFormatted},
+            WORKEMAIL       =   #{workEmail},
+            WORKPHONENUMBER =   #{workPhoneNumber},
+            WORKPOSTALCODE  =   #{workPostalCode},
+            WORKFAX         =   #{workFax},
+            
+            HOMECOUNTRY     =   #{homeCountry},
+            HOMEREGION      =   #{homeRegion},
+            HOMELOCALITY    =   #{homeLocality},
+            HOMESTREETADDRESS=  #{homeStreetAddress},
+            HOMEADDRESSFORMATTED=   #{homeAddressFormatted},
+            HOMEEMAIL       =   #{homeEmail},
+            HOMEPHONENUMBER=    #{homePhoneNumber},
+            HOMEPOSTALCODE  =   #{homePostalCode},
+            HOMEFAX         =   #{homeFax},
+            
+            EXTRAATTRIBUTE  =   #{extraAttribute},
+            
+            MODIFIEDBY      =   #{modifiedBy},
+            MODIFIEDDATE    =   current_timestamp       
+        WHERE 
+            ID  =   #{id}
+    </update>
+ 
 </mapper>

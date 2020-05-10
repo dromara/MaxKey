@@ -223,5 +223,10 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public UserInfo queryUserInfoByEmailMobile(String emailMobile) {
         return getMapper().queryUserInfoByEmailMobile(emailMobile);
     }
+    
+    public int updateProfile(UserInfo userInfo){
+        
+        return getMapper().updateProfile(userInfo);
+    }
 
 }
