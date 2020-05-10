@@ -199,6 +199,7 @@ public class UserInfo extends JpaBaseDomain {
     protected String defineIm;
     protected int weixinFollow;
 
+    protected String theme;
     /*
      * for extended Attribute from userType extraAttribute for database
      * extraAttributeName & extraAttributeValue for page submit
@@ -1236,6 +1237,14 @@ public class UserInfo extends JpaBaseDomain {
      */
     public void setModifiedDate(String modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
 }

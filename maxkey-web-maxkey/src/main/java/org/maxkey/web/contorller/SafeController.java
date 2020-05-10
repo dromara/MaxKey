@@ -1,11 +1,15 @@
 package org.maxkey.web.contorller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.StringUtils;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -149,11 +153,14 @@ public class SafeController {
 	@ResponseBody
 	@RequestMapping(value="/setting") 
 	public Message setting(
+	        HttpServletRequest request,
+            HttpServletResponse response,
 			@RequestParam("authnType") String authnType,
 			@RequestParam("mobile") String mobile,
 			@RequestParam("mobileVerify") String mobileVerify,
 			@RequestParam("email") String email,
-			@RequestParam("emailVerify") String emailVerify) {
+			@RequestParam("emailVerify") String emailVerify,
+			@RequestParam("theme") String theme) {
 		UserInfo userInfo =WebContext.getUserInfo();
 		userInfo.setAuthnType(Integer.parseInt(authnType));
 		userInfoService.changeAuthnType(userInfo);
@@ -162,7 +169,12 @@ public class SafeController {
 		userInfoService.changeMobile(userInfo);
 		
 		userInfo.setEmail(email);
+
+        userInfo.setTheme(theme);
+        WebContext.setCookie(response, WebConstants.THEME_COOKIE_NAME, theme, 0);
+        
 		userInfoService.changeEmail(userInfo);
+		
 		
 		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 		

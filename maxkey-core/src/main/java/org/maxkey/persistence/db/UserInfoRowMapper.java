@@ -112,7 +112,11 @@ public class UserInfoRowMapper implements RowMapper<UserInfo> {
         userInfo.setStatus(rs.getInt("STATUS"));
         userInfo.setGridList(rs.getInt("GRIDLIST"));
         userInfo.setDescription(rs.getString("DESCRIPTION"));
-
+        userInfo.setTheme(rs.getString("THEME"));
+        if (userInfo.getTheme() == null || userInfo.getTheme().equalsIgnoreCase("")) {
+            userInfo.setTheme("default");
+        }
+        
         return userInfo;
     }
 }

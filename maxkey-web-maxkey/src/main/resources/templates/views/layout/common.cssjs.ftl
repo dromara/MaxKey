@@ -4,6 +4,7 @@
 	<script src ="<@base />/static/jquery/popper.min.js" type="text/javascript" ></script>
 	<#-- bootstrap-4.4.1 -->
 	<link 	href="<@base />/static/bootstrap-4.4.1/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+	<link  href="<@base />/static/bootstrap-4.4.1/css/<@theme/>/bootstrap.min.css" type="text/css" rel="stylesheet" />
 	<script src ="<@base />/static/bootstrap-4.4.1/js/bootstrap.min.js" type="text/javascript" ></script>
 	<#-- metadata -->
 	<script src ="<@base />/static/jquery/jquery.metadata.js" type="text/javascript" ></script>
@@ -79,6 +80,6 @@
 	<#-- common css begin -->
 	<#-- if browser is not msie 6.0,follow styles over ie 6.0 style -->
 	<link type="text/css" rel="stylesheet"  href="<@base />/static/css/base.css"/>
-	<link type="text/css" rel="stylesheet"  href="<@base />/static/css/menu.css"/>
+	<link type="text/css" rel="stylesheet"  href="<@base />/static/css/menu_<@theme/>.css"/>
 	<link type="text/css" rel="stylesheet" href="<@base />/static/css/login.css"/>
 	<#-- common css end -->

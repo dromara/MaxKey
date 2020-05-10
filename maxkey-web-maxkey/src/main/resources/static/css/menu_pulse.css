@@ -1,6 +1,7 @@
 #nav_primary{
-    background: #414141;
+    background: #721170;
 }
+
 .menuprimary {
 	font: bold 12px Verdana;
 	width: 990px;
@@ -35,7 +36,7 @@
 /*Top level menu link items style*/
 .menuprimary ul li a {
 	display: block;
-	background: #414141; /*background of menu items (default state)*/
+	background: #721170; /*background of menu items (default state)*/
 	color: white;
 	padding: 10px 20px;
 	border-right: 1px solid white;
@@ -56,12 +57,12 @@
 
 .menuprimary ul li a.selected {
 	/*CSS class that's dynamically added to the currently active menu items' LI A element*/
-	background: #0769AD !important;
+	background: #63065f !important;
 	color: white;
 }
 
 .menuprimary ul li a:hover {
-	background: #0769AD;
+	background: #63065f;
 	/*background of menu items during onmouseover (hover state)*/
 	color: white;
 }
@@ -173,7 +174,7 @@
 .menusecond ul li a {
 	display: block;
 	background: white; /*background of menu items (default state)*/
-	color: #414141;
+	color: #721170;
 	padding: 8px 10px;
 	border-right: 1px solid #778;
 	color: #2d2b2b;
@@ -186,7 +187,7 @@
 }
 
 .menusecond ul li a:link,.menusecond ul li a:visited {
-	color: #414141;
+	color: #721170;
 }
 
 .menusecond ul li a.selected {

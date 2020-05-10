@@ -165,6 +165,9 @@
 			<if test="emailVerified != null">
     		EMAILVERIFIED	=	#{emailVerified},
 			</if>
+			<if test="theme != null">
+            THEME   =   #{theme},
+            </if>
 			MODIFIEDDATE		=	current_timestamp
 		WHERE 
 			ID	=	#{id}

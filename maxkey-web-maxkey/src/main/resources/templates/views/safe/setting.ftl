@@ -85,6 +85,16 @@
 				</td>
 			</tr>	
 			<tr>
+                <th><@locale code="userinfo.theme" />:</th>
+                <td nowrap>
+                    <select  class="form-control"  name="theme" id="theme">
+                        <option value="default"  <#if "default"==model.theme >selected</#if>  ><@locale code="userinfo.theme.default" /></option>
+                        <option value="minty"    <#if "minty"  ==model.theme >selected</#if>  ><@locale code="userinfo.theme.minty" /></option>
+                        <option value="pulse"    <#if "pulse"  ==model.theme >selected</#if>  ><@locale code="userinfo.theme.pulse" /></option>
+                    </select>
+                </td>
+            </tr>   
+			<tr>
 				<td colspan="2"  class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
 		    		<input class="button btn btn-primary" style="width:100px"  type="submit"    id="submitBtn" value="<@locale code="button.text.save" />"/>
