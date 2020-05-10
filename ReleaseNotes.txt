@@ -1,3 +1,12 @@
+MaxKey v 1.5.0 GA	2020/**/**  
+	*(MAXKEY-200601) RBAC 基于角色的访问控制(Role-Based Access Control )支持
+	*(MAXKEY-200602) 修复用户组访问权限删除问题
+	*(MAXKEY-200603) Javascript验证及AJAX提交优化
+	*(MAXKEY-200604) DAO层整合
+	*(MAXKEY-200605) 社交账号关联调整
+	*(MAXKEY-200606) 数据库表字段的注释修复
+	*(MAXKEY-200607) 官方网站优化
+	
 MaxKey v 1.4.0 GA	2020/05/01  
 	*(MAXKEY-200501) 登录错误修复
 	*(MAXKEY-200502) 登录无验证码登录
