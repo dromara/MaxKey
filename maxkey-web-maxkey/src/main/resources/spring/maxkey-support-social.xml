@@ -90,7 +90,7 @@
 	</bean>
 	
 	
-	<bean id="socialSignOnUserTokenService" class="org.maxkey.authn.support.socialsignon.service.JdbcSocialSignOnUserTokenService">
+	<bean id="socialsAssociateService" class="org.maxkey.authn.support.socialsignon.service.JdbcSocialsAssociateService">
 		<constructor-arg ref="jdbcTemplate"/>
 	</bean>
 	
