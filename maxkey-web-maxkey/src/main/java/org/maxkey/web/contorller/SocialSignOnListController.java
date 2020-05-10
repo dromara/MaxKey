@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
-import org.maxkey.authn.support.socialsignon.service.SocialSignOnUserToken;
-import org.maxkey.authn.support.socialsignon.service.SocialSignOnUserTokenService;
+import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
+import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class SocialSignOnListController {
 	SocialSignOnProviderService socialSignOnProviderService;
 	
 	@Autowired
-	protected SocialSignOnUserTokenService socialSignOnUserService;
+	protected SocialsAssociateService socialSignOnUserService;
 	
 	@Autowired
   	@Qualifier("applicationConfig")
@@ -40,9 +40,9 @@ public class SocialSignOnListController {
 		if(applicationConfig.getLoginConfig().isSocialSignOn()){
 			List<SocialSignOnProvider>  listSocialSignOnProvider= socialSignOnProviderService.getSocialSignOnProviders();
 			
-			SocialSignOnUserToken socialSignOnUser=new SocialSignOnUserToken();
+			SocialsAssociate socialSignOnUser=new SocialsAssociate();
 			socialSignOnUser.setUid(WebContext.getUserInfo().getId());
-			List<SocialSignOnUserToken>  listSocialSignOnUserToken= socialSignOnUserService.query(socialSignOnUser);
+			List<SocialsAssociate>  listSocialSignOnUserToken= socialSignOnUserService.query(socialSignOnUser);
 			List<SocialSignOnProvider>  listBindSocialSignOnProvider=new ArrayList<SocialSignOnProvider>();
 			_logger.debug("list SocialSignOnProvider : "+listSocialSignOnProvider);
 			_logger.debug("list SocialSignOnUserToken : "+listSocialSignOnUserToken);
@@ -51,7 +51,7 @@ public class SocialSignOnListController {
 				socialSignOnProvider.setProvider(ssop.getProvider());
 				socialSignOnProvider.setProviderName(ssop.getProviderName());
 				socialSignOnProvider.setIcon(ssop.getIcon());
-				for(SocialSignOnUserToken ssout :listSocialSignOnUserToken){
+				for(SocialsAssociate ssout :listSocialSignOnUserToken){
 					if(ssout.getProvider().equals(ssop.getProvider())){
 						socialSignOnProvider.setUserBind(true);
 						_logger.debug("binded provider : "+ssout.getProvider());

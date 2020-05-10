@@ -6,7 +6,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  * 
  * @author Crystal.Sea
  */
-public class SocialSignOnUserToken extends JpaBaseDomain {
+public class SocialsAssociate extends JpaBaseDomain {
 	
 	/**
 	 * 
@@ -21,7 +21,7 @@ public class SocialSignOnUserToken extends JpaBaseDomain {
 	private String accessToken;
 	private String exAttribute; 
 	
-	public SocialSignOnUserToken() {}
+	public SocialsAssociate() {}
 
 	/**
 	 * @return the id

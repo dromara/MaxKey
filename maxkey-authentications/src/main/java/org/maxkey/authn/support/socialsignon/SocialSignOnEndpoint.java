@@ -6,7 +6,7 @@ package org.maxkey.authn.support.socialsignon;
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.support.socialsignon.service.SocialSignOnUserToken;
+import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -62,13 +62,13 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	public ModelAndView unbind(HttpServletRequest request,
 				@PathVariable String provider) {
 		WebContext.setAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI, request.getParameter(SOCIALSIGNON_REDIRECT_URI));
-		SocialSignOnUserToken socialSignOnUser =new SocialSignOnUserToken();
+		SocialsAssociate socialSignOnUser =new SocialsAssociate();
 		socialSignOnUser.setProvider(provider);
 		socialSignOnUser.setUid(WebContext.getUserInfo().getId());
 		socialSignOnUser.setUsername(WebContext.getUserInfo().getUsername());
 		_logger.debug("Social Sign On unbind "+provider+" from user "+WebContext.getUserInfo().getUsername());
 		
-		socialSignOnUserTokenService.delete(socialSignOnUser);
+		socialsAssociateService.delete(socialSignOnUser);
 		
 		if(WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI)!=null){
 			return WebContext.redirect(WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI).toString());
@@ -92,7 +92,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		this.provider=provider;
 		this.authCallback();
 		_logger.debug(this.accountId);
-		SocialSignOnUserToken socialSignOnUserToken =new SocialSignOnUserToken();
+		SocialsAssociate socialSignOnUserToken =new SocialsAssociate();
 		socialSignOnUserToken.setProvider(provider);
 		socialSignOnUserToken.setSocialuid(this.accountId);
 		
@@ -117,21 +117,21 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		
 	}
 	
-	public boolean socialBind(SocialSignOnUserToken socialSignOnUserToken){
+	public boolean socialBind(SocialsAssociate socialSignOnUserToken){
 		socialSignOnUserToken.setSocialUserInfo(accountJsonString);
 		socialSignOnUserToken.setUid(WebContext.getUserInfo().getId());
 		socialSignOnUserToken.setUsername(WebContext.getUserInfo().getUsername());
 		//socialSignOnUserToken.setAccessToken(JsonUtils.object2Json(accessToken));
 		//socialSignOnUserToken.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
 		_logger.debug("Social Bind : "+socialSignOnUserToken);
-		this.socialSignOnUserTokenService.delete(socialSignOnUserToken);
-		this.socialSignOnUserTokenService.insert(socialSignOnUserToken);
+		this.socialsAssociateService.delete(socialSignOnUserToken);
+		this.socialsAssociateService.insert(socialSignOnUserToken);
 		return true;
 	}
 	
-	public boolean socialSignOn(SocialSignOnUserToken socialSignOnUserToken){
+	public boolean socialSignOn(SocialsAssociate socialSignOnUserToken){
 		
-		socialSignOnUserToken=this.socialSignOnUserTokenService.get(socialSignOnUserToken);
+		socialSignOnUserToken=this.socialsAssociateService.get(socialSignOnUserToken);
 		
 		_logger.debug("callback SocialSignOn User Token : "+socialSignOnUserToken);
 		if(null !=socialSignOnUserToken){
@@ -143,7 +143,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 				socialSignOnUserToken.setSocialUserInfo(accountJsonString);
 				//socialSignOnUserToken.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
 				
-				this.socialSignOnUserTokenService.update(socialSignOnUserToken);
+				this.socialsAssociateService.update(socialSignOnUserToken);
 			}
 			
 		}else{

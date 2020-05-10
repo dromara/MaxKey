@@ -5,7 +5,7 @@ package org.maxkey.authn.support.socialsignon;
 
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
-import org.maxkey.authn.support.socialsignon.service.SocialSignOnUserTokenService;
+import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +53,7 @@ public class AbstractSocialSignOnEndpoint {
 	protected SocialSignOnProviderService socialSignOnProviderService;
 	
 	@Autowired
-	protected SocialSignOnUserTokenService socialSignOnUserTokenService;
+	protected SocialsAssociateService socialsAssociateService;
 	
 	
  	
