@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -29,6 +31,9 @@ public class ThemeTagDirective implements TemplateDirectiveModel {
     private static final Logger _logger = LoggerFactory.getLogger(ThemeTagDirective.class);
     @Autowired
     private HttpServletRequest request;
+    
+    @Autowired
+    HttpServletResponse response;
 
     @SuppressWarnings("rawtypes")
     @Override
@@ -49,6 +54,15 @@ public class ThemeTagDirective implements TemplateDirectiveModel {
                 _logger.trace("read theme form cookie , theme is " + theme);
             }
         }
+        
+        //每次登陆完成设置一次COOKIE
+        if (request.getAttribute(WebConstants.THEME_COOKIE_NAME) == null 
+                && null != WebContext.getUserInfo()) {
+            request.setAttribute(WebConstants.THEME_COOKIE_NAME, "theme");
+            WebContext.setCookie(response, 
+                    WebConstants.THEME_COOKIE_NAME, theme, ConstantsTimeInterval.ONE_WEEK);
+        }
+        
         env.getOut().append(theme == null ? "default" : theme);
     }
 

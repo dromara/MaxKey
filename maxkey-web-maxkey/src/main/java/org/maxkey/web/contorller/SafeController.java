@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.dao.service.UserInfoService;
@@ -171,7 +172,7 @@ public class SafeController {
 		userInfo.setEmail(email);
 
         userInfo.setTheme(theme);
-        WebContext.setCookie(response, WebConstants.THEME_COOKIE_NAME, theme, 0);
+        WebContext.setCookie(response, WebConstants.THEME_COOKIE_NAME, theme, ConstantsTimeInterval.ONE_WEEK);
         
 		userInfoService.changeEmail(userInfo);
 		
