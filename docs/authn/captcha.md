@@ -1,6 +1,6 @@
 <h3>验证码</h3>
 
-验证码（CAPTCHA）是“Completely Automated Public Turing test to tell Computers and Humans Apart”（全自动区分计算机和人类的图灵测试）的缩写，是一种区分用户是计算机还是人的公共全自动程序。可以防止用户用特定程序暴力破解方式进行不断的登陆尝试。
+<b>验证码（CAPTCHA）</b>是“Completely Automated Public Turing test to tell Computers and Humans Apart”（全自动区分计算机和人类的图灵测试）的缩写，是一种区分用户是计算机还是人的公共全自动程序。可以防止用户用特定程序暴力破解方式进行不断的登陆尝试。
 
 <b>文本验证码</b>
 
