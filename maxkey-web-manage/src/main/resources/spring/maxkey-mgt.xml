@@ -56,7 +56,7 @@
 		<constructor-arg value="${config.maxkey.uri}"/>
 	</bean>
 	
-	<bean id="oauth20JdbcClientDetailsService" class="org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService">
+	<bean id="oauth20JdbcClientDetailsService" class="org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService" >
 		<constructor-arg ref="dataSource" /> 
 		<property name="passwordEncoder" ref="passwordReciprocal"></property>
 	</bean>
