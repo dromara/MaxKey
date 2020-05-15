@@ -15,6 +15,7 @@
 <h2>短信认证</h2>
 
 <h3>腾讯云短信</h3>
+配置maxkey中spring/maxkey-security.xml
 secretId 账号Appkey
 
 secretKey 密钥appSecret
@@ -41,6 +42,8 @@ sign 签名
 </code></pre>
 
 <h3>阿里云短信</h3>
+配置maxkey中spring/maxkey-security.xml
+
 accessKeyId 账号Appkey
 
 accessSecret 密钥appSecret
