@@ -11,7 +11,7 @@ public class LoginConfig {
     boolean captcha;
     
     //验证码类型 text 文本 ， arithmetic算术验证码
-    @Value("${config.login.captcha.type}")
+    @Value("${config.login.captcha.type:text}")
     String captchaType;
     
     @Value("${config.login.onetimepwd}")

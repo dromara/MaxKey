@@ -1,10 +1,17 @@
 package org.maxkey;
 
+import java.io.IOException;
+import java.util.Properties;
+
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.maxkey.authz.oauth2.provider.endpoint.TokenEndpointAuthenticationFilter;
+import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
+import org.maxkey.crypto.password.PasswordReciprocal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
@@ -15,12 +22,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+
+import com.google.code.kaptcha.Producer;
+import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.google.code.kaptcha.util.Config;
 
 @Configuration
 @ImportResource(locations = { "classpath:spring/maxkey.xml" })
 @PropertySource("classpath:/application.properties")
 public class MaxKeyConfig {
+    private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyConfig.class);
     @Value("${server.port:8080}")
     private int port;
 
@@ -85,6 +99,33 @@ public class MaxKeyConfig {
         };
         tomcat.addAdditionalTomcatConnectors(connector);
         return tomcat;
+    }
+    
+    @Bean(name = "passwordReciprocal")
+    public PasswordReciprocal passwordReciprocal() {
+        return new PasswordReciprocal();
+    }
+    
+    @Bean(name = "savedRequestSuccessHandler")
+    public SavedRequestAwareAuthenticationSuccessHandler SavedRequestAwareAuthenticationSuccessHandler() {
+        return new SavedRequestAwareAuthenticationSuccessHandler();
+    }
+    
+    /**
+     * Captcha Producer  Config .
+     * @return Producer
+     * @throws IOException
+     */
+    @Bean(name = "captchaProducer")
+    public Producer captchaProducer() throws IOException{
+        Resource resource = new ClassPathResource("config/kaptcha.properties");
+        _logger.debug("Kaptcha config file " + resource.getURL());
+        DefaultKaptcha  kaptcha=new DefaultKaptcha();
+        Properties properties = new Properties();
+        properties.load(resource.getInputStream());
+        Config config = new Config(properties);
+        kaptcha.setConfig(config);
+        return kaptcha;
     }
 
 }

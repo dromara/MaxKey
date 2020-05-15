@@ -8,14 +8,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * 全局应用程序配置
- * 包含
- * 	1、数据源配置 dataSoruceConfig
- * 	2、字符集转换配置 characterEncodingConfig
- * 	3、webseal认证集成配置 webSealConfig
- * 	4、系统的配置 sysConfig
- *  5、所有用户可访问地址配置  allAccessUrl
- *  
+ * 全局应用程序配置 包含 1、数据源配置 dataSoruceConfig 2、字符集转换配置 characterEncodingConfig
+ * 3、webseal认证集成配置 webSealConfig 4、系统的配置 sysConfig 5、所有用户可访问地址配置 allAccessUrl
+ * 
  * 其中1、2、3项在applicationContext.xml中配置，配置文件applicationConfig.properties
  * 4项根据dynamic的属性判断是否动态从sysConfigService动态读取
  * 
@@ -25,195 +20,185 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource("classpath:/config/applicationConfig.properties")
 public class ApplicationConfig {
-	private static final Logger _logger = LoggerFactory.getLogger(ApplicationConfig.class);
-	@Autowired
-	DataSoruceConfig dataSoruceConfig;
-	@Autowired
-	EmailConfig emailConfig;
-	@Autowired
-	CharacterEncodingConfig characterEncodingConfig;
-	@Autowired
-	LoginConfig loginConfig;
-	
-	@Value("${config.server.domain}")
-	String domainName;
-	
-	@Value("${config.server.domain.sub}")
-	String subDomainName;
-	
-	@Value("${config.server.name}")
-	String serverName;
-	
-	@Value("${config.server.prefix.uri}")
-	String serverPrefix;
-	
-	@Value("${config.server.default.uri}")
-	String defaultUri;
-	
-	@Value("${config.server.manage.uri}")
-	String manageUri;
-	
-	/*
-	//is enable whiteList for ipAddress filter
-	boolean whiteList;
-	
-	//All user have permission Access URL
-	public  ConcurrentHashMap<String,String> anonymousAccessUrls;
-	*/
-	
-	
-	
-	
-	public ApplicationConfig() {
-		super();
-		
-		/*anonymousAccessUrls=new ConcurrentHashMap<String,String>();
-		anonymousAccessUrls.put("/index/", "/index/");
-		anonymousAccessUrls.put("/index/top","/index/top/");
-		anonymousAccessUrls.put("/index/left/","/index/left/");
-		anonymousAccessUrls.put("/index/main/","/index/main/");
-		anonymousAccessUrls.put("/index/bottom/","/index/bottom/");
-		
-		anonymousAccessUrls.put("/menus/onelevelchild/","/menus/onelevelchild/");
-		anonymousAccessUrls.put("/menus/leftchild/","/menus/leftchild/");
-		anonymousAccessUrls.put("/menus/loadMenu/","/menus/loadMenu/");
-		
-		anonymousAccessUrls.put("/enterprises/select/","/enterprises/select/");
-		anonymousAccessUrls.put("/employees/selectAppRoles/","/employees/selectAppRoles/");
-		anonymousAccessUrls.put("/approles/appRolesGrid/","/approles/appRolesGrid/");
-		
-		_logger.debug("Anonymous Access Urls : \n"+anonymousAccessUrls);
-		*/
-		
-	}
-	
-	public DataSoruceConfig getDataSoruceConfig() {
-		return dataSoruceConfig;
-	}
+    private static final Logger _logger = LoggerFactory.getLogger(ApplicationConfig.class);
+    @Autowired
+    DataSoruceConfig dataSoruceConfig;
+    @Autowired
+    EmailConfig emailConfig;
+    @Autowired
+    CharacterEncodingConfig characterEncodingConfig;
+    @Autowired
+    LoginConfig loginConfig;
 
+    @Value("${config.server.domain}")
+    String domainName;
 
-	public void setDataSoruceConfig(DataSoruceConfig dataSoruceConfig) {
-		this.dataSoruceConfig = dataSoruceConfig;
-	}
+    @Value("${config.server.domain.sub}")
+    String subDomainName;
 
-	/**
-	 * @return the characterEncodingConfig
-	 */
-	public CharacterEncodingConfig getCharacterEncodingConfig() {
-		return characterEncodingConfig;
-	}
+    @Value("${config.server.name}")
+    String serverName;
 
-	/**
-	 * @param characterEncodingConfig the characterEncodingConfig to set
-	 */
-	public void setCharacterEncodingConfig(
-			CharacterEncodingConfig characterEncodingConfig) {
-		this.characterEncodingConfig = characterEncodingConfig;
-	}
+    @Value("${config.server.prefix.uri}")
+    String serverPrefix;
 
+    @Value("${config.server.default.uri}")
+    String defaultUri;
 
-	public LoginConfig getLoginConfig() {
-		return loginConfig;
-	}
+    @Value("${config.server.manage.uri}")
+    String manageUri;
 
-	public void setLoginConfig(LoginConfig loginConfig) {
-		this.loginConfig = loginConfig;
-	}
+    /*
+     * //is enable whiteList for ipAddress filter boolean whiteList;
+     * 
+     * //All user have permission Access URL public ConcurrentHashMap<String,String>
+     * anonymousAccessUrls;
+     */
 
-	public String getServerName() {
-		return serverName;
-	}
+    public ApplicationConfig() {
+        super();
 
-	public void setServerName(String serverName) {
-		this.serverName = serverName;
-	}
+        /*
+         * anonymousAccessUrls=new ConcurrentHashMap<String,String>();
+         * anonymousAccessUrls.put("/index/", "/index/");
+         * anonymousAccessUrls.put("/index/top","/index/top/");
+         * anonymousAccessUrls.put("/index/left/","/index/left/");
+         * anonymousAccessUrls.put("/index/main/","/index/main/");
+         * anonymousAccessUrls.put("/index/bottom/","/index/bottom/");
+         * 
+         * anonymousAccessUrls.put("/menus/onelevelchild/","/menus/onelevelchild/");
+         * anonymousAccessUrls.put("/menus/leftchild/","/menus/leftchild/");
+         * anonymousAccessUrls.put("/menus/loadMenu/","/menus/loadMenu/");
+         * 
+         * anonymousAccessUrls.put("/enterprises/select/","/enterprises/select/");
+         * anonymousAccessUrls.put("/employees/selectAppRoles/",
+         * "/employees/selectAppRoles/");
+         * anonymousAccessUrls.put("/approles/appRolesGrid/","/approles/appRolesGrid/");
+         * 
+         * _logger.debug("Anonymous Access Urls : \n"+anonymousAccessUrls);
+         */
 
-	public String getServerPrefix() {
-		return serverPrefix;
-	}
+    }
 
-	public void setServerPrefix(String serverPrefix) {
-		this.serverPrefix = serverPrefix;
-	}
+    public DataSoruceConfig getDataSoruceConfig() {
+        return dataSoruceConfig;
+    }
 
-	/**
-	 * @return the domainName
-	 */
-	public String getDomainName() {
-		return domainName;
-	}
+    public void setDataSoruceConfig(DataSoruceConfig dataSoruceConfig) {
+        this.dataSoruceConfig = dataSoruceConfig;
+    }
 
-	/**
-	 * @param domainName the domainName to set
-	 */
-	public void setDomainName(String domainName) {
-		this.domainName = domainName;
-		String []domainSubStrings=domainName.split("\\.");
-		if(domainSubStrings.length>=3){
-			this.subDomainName=domainSubStrings[domainSubStrings.length-2]+"."+domainSubStrings[domainSubStrings.length-1];
-			_logger.debug("subDomainName "+subDomainName);
-		}else{
-			this.subDomainName=domainName;
-		}
-	}
+    /**
+     * @return the characterEncodingConfig
+     */
+    public CharacterEncodingConfig getCharacterEncodingConfig() {
+        return characterEncodingConfig;
+    }
 
-	public String getSubDomainName() {
-		return subDomainName;
-	}
+    /**
+     * @param characterEncodingConfig the characterEncodingConfig to set
+     */
+    public void setCharacterEncodingConfig(CharacterEncodingConfig characterEncodingConfig) {
+        this.characterEncodingConfig = characterEncodingConfig;
+    }
 
-	public void setSubDomainName(String subDomainName) {
-		this.subDomainName = subDomainName;
-	}
-	/*
-	public ConcurrentHashMap<String, String> getAnonymousAccessUrls() {
-		return anonymousAccessUrls;
-	}
+    public LoginConfig getLoginConfig() {
+        return loginConfig;
+    }
 
-	public void setAnonymousAccessUrls(ArrayList<String> anonymousAccessUrls) {
-		//this.anonymousAccessUrls = anonymousAccessUrls;
-		for (String anonymousAccessUrl: anonymousAccessUrls){
-			this.anonymousAccessUrls.put(anonymousAccessUrl,anonymousAccessUrl);
-		}
-	}
-*/
-	/**
-	 * @return the emailConfig
-	 */
-	public EmailConfig getEmailConfig() {
-		return emailConfig;
-	}
+    public void setLoginConfig(LoginConfig loginConfig) {
+        this.loginConfig = loginConfig;
+    }
 
-	/**
-	 * @param emailConfig the emailConfig to set
-	 */
-	public void setEmailConfig(EmailConfig emailConfig) {
-		this.emailConfig = emailConfig;
-	}
+    public String getServerName() {
+        return serverName;
+    }
 
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
+    }
 
-	public String getManageUri() {
-		return manageUri;
-	}
+    public String getServerPrefix() {
+        return serverPrefix;
+    }
 
-	public void setManageUri(String manageUri) {
-		this.manageUri = manageUri;
-	}
+    public void setServerPrefix(String serverPrefix) {
+        this.serverPrefix = serverPrefix;
+    }
 
-	public String getDefaultUri() {
-		return defaultUri;
-	}
+    /**
+     * @return the domainName
+     */
+    public String getDomainName() {
+        return domainName;
+    }
 
-	public void setDefaultUri(String defaultUri) {
-		this.defaultUri = defaultUri;
-	}
-	
-/*
-	public boolean isWhiteList() {
-		return whiteList;
-	}
+    /**
+     * @param domainName the domainName to set
+     */
+    public void setDomainName(String domainName) {
+        this.domainName = domainName;
+        String[] domainSubStrings = domainName.split("\\.");
+        if (domainSubStrings.length >= 3) {
+            this.subDomainName = domainSubStrings[domainSubStrings.length - 2] + "."
+                    + domainSubStrings[domainSubStrings.length - 1];
+            _logger.debug("subDomainName " + subDomainName);
+        } else {
+            this.subDomainName = domainName;
+        }
+    }
 
-	public void setWhiteList(boolean whiteList) {
-		this.whiteList = whiteList;
-	}*/
-	
+    public String getSubDomainName() {
+        return subDomainName;
+    }
+
+    public void setSubDomainName(String subDomainName) {
+        this.subDomainName = subDomainName;
+    }
+
+    /*
+     * public ConcurrentHashMap<String, String> getAnonymousAccessUrls() { return
+     * anonymousAccessUrls; }
+     * 
+     * public void setAnonymousAccessUrls(ArrayList<String> anonymousAccessUrls) {
+     * //this.anonymousAccessUrls = anonymousAccessUrls; for (String
+     * anonymousAccessUrl: anonymousAccessUrls){
+     * this.anonymousAccessUrls.put(anonymousAccessUrl,anonymousAccessUrl); } }
+     */
+    /**
+     * @return the emailConfig
+     */
+    public EmailConfig getEmailConfig() {
+        return emailConfig;
+    }
+
+    /**
+     * @param emailConfig the emailConfig to set
+     */
+    public void setEmailConfig(EmailConfig emailConfig) {
+        this.emailConfig = emailConfig;
+    }
+
+    public String getManageUri() {
+        return manageUri;
+    }
+
+    public void setManageUri(String manageUri) {
+        this.manageUri = manageUri;
+    }
+
+    public String getDefaultUri() {
+        return defaultUri;
+    }
+
+    public void setDefaultUri(String defaultUri) {
+        this.defaultUri = defaultUri;
+    }
+
+    /*
+     * public boolean isWhiteList() { return whiteList; }
+     * 
+     * public void setWhiteList(boolean whiteList) { this.whiteList = whiteList; }
+     */
+
 }

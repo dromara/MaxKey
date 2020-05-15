@@ -72,12 +72,6 @@
 		
 		<ref bean="localeChangeInterceptor" />
 	</mvc:interceptors>
-     <!--
-	<bean id="remeberMeService" class="org.maxkey.authn.support.rememberme.JdbcRemeberMeService">
-		<constructor-arg ref="jdbcTemplate"/>
-		<property name="validity" value="${config.login.remeberme.validity}"/>
-	</bean>
-	  -->
 	  
 	<bean id="remeberMeService" class="org.maxkey.authn.support.rememberme.InMemoryRemeberMeService">
 	</bean>
@@ -88,7 +82,6 @@
 		<property name="issuer" value="MaxKey" />
 		<property name="domain" value="MaxKey.org" />
 		<property name="period" value="30" />
-		
 	</bean>
 	
 	<bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn">
@@ -109,33 +102,6 @@
 	<!-- Authentication Password Encoder Config -->
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>   
 	
-	<bean id="passwordReciprocal" class="org.maxkey.crypto.password.PasswordReciprocal"></bean>
-	
-	<!-- Captcha Producer  Config -->
-	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
-        <property name="config">
-	        <bean id="kaptchaConfig" class="com.google.code.kaptcha.util.Config">
-	             <constructor-arg type="java.util.Properties">
-	                     <props>
-	                             <prop key="kaptcha.image.width">80</prop> 
-	                             <prop key="kaptcha.image.height">25</prop>
-	                             <prop key="kaptcha.border">no</prop>
-	                             <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>
-	                             <prop key="kaptcha.textproducer.font.size">23</prop>
-	                             <prop key="kaptcha.textproducer.char.string">0123456789</prop>
-	                             <prop key="kaptcha.textproducer.char.length">4</prop>
-	                             <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
-	                             <!-- 干扰线
-	                             <prop key="kaptcha.noise.color">white</prop>
-	                               -->
-	                     </props>
-	             </constructor-arg>
-	     </bean>
-	    </property>
-	</bean>
-	
-   	<bean id="savedRequestSuccessHandler" class="org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler"> </bean>
-
 	<!-- LDAP Realm 
 	<bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.ldap.LdapAuthenticationRealm">
 		<constructor-arg ref="jdbcTemplate"/>

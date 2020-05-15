@@ -101,9 +101,6 @@
 		</property>
 	</bean>
 
-	<!-- View Resolver
-	<bean id="viewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/templates/" p:suffix=".jsp" p:order="2" />
-	 -->
 	<!-- upload file support -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
     	<property name="maxUploadSize" value="4194304" />  
