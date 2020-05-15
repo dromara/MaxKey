@@ -12,7 +12,6 @@
 
 
 <h3>验证码配置</h3>
-MaxKey使用kaptcha作为验证码的插件，详细可参考Kaptchar详细配置表
 
 文件
 maxkey/config/applicationConfig.properties
@@ -25,6 +24,8 @@ config.login.captcha.type=text
 </code></pre>
 
 <h3>验证码配置文件</h3>
+MaxKey使用kaptcha作为验证码的插件，详细可参考Kaptchar详细配置表
+
 文件
 maxkey/config/kaptcha.properties
 
