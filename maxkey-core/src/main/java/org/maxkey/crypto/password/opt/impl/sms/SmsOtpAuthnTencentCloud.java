@@ -1,4 +1,4 @@
-package org.maxkey.crypto.password.opt.impl.sms.netease;
+package org.maxkey.crypto.password.opt.impl.sms;
 
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.profile.ClientProfile;

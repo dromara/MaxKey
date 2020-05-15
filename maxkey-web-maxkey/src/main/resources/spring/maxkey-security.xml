@@ -87,7 +87,7 @@
 	<bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn">
 	</bean>
 	<!-- 
-	<bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.netease.SmsOtpAuthnYunxin">
+	<bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnYunxin">
 	</bean>
 	-->
 	
@@ -95,7 +95,7 @@
 	<bean id="tfaMailOptAuthn" class="org.maxkey.crypto.password.opt.impl.MailOtpAuthn">
 	</bean>
 	
-	<bean id="tfaMobileOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.netease.SmsOtpAuthnYunxin">
+	<bean id="tfaMobileOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnYunxin">
 	</bean>
 	 
 
