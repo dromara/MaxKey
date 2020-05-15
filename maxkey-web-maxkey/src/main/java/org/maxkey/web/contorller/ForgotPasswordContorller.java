@@ -69,14 +69,12 @@ public class ForgotPasswordContorller {
                 .equals(WebContext.getSession().getAttribute(
                                 WebConstants.KAPTCHA_SESSION_KEY).toString())) {
             userInfo = userInfoService.queryUserInfoByEmailMobile(emailMobile);
-            Matcher matcher = emailRegex.matcher(emailMobile);
             
+            Matcher matcher = emailRegex.matcher(emailMobile);
             if (matcher.matches() && null != userInfo) {
                 tfaMailOptAuthn.produce(userInfo);
                 forgotType = ForgotType.EMAIL;
-            }
-            matcher = mobileRegex.matcher(emailMobile);
-            if (matcher.matches() && null != userInfo) {
+            }else if (null != userInfo) {
                 tfaMobileOptAuthn.produce(userInfo);
                 forgotType = ForgotType.MOBILE;
             }
