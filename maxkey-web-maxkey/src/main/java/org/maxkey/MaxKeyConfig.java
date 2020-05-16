@@ -47,12 +47,7 @@ public class MaxKeyConfig {
         return port;
     }
 
-    @Bean
-    @Primary
-    @ConfigurationProperties("spring.datasource")
-    public DataSource dataSource() {
-        return DruidDataSourceBuilder.create().build();
-    }
+
     
     @Bean
     public FilterRegistrationBean<TokenEndpointAuthenticationFilter> TokenEndpointAuthenticationFilter() {
@@ -109,16 +104,7 @@ public class MaxKeyConfig {
         tomcat.addAdditionalTomcatConnectors(connector);
         return tomcat;
     }
-    
-    @Bean(name = "passwordReciprocal")
-    public PasswordReciprocal passwordReciprocal() {
-        return new PasswordReciprocal();
-    }
-    
-    @Bean(name = "savedRequestSuccessHandler")
-    public SavedRequestAwareAuthenticationSuccessHandler SavedRequestAwareAuthenticationSuccessHandler() {
-        return new SavedRequestAwareAuthenticationSuccessHandler();
-    }
+   
     
     @Bean(name = "keyUriFormat")
     public KeyUriFormat keyUriFormat(
@@ -143,24 +129,6 @@ public class MaxKeyConfig {
         return keyUriFormat;
     }
 
-    @Bean(name = "authenticationProvider")
-    public RealmAuthenticationProvider authenticationProvider() {
-        return new RealmAuthenticationProvider();
-    }
-    
-    @Bean(name = "jdbcTemplate")
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
-    }
-    
-    @Bean(name = "sqlSession")
-    public SqlSessionTemplate sqlSession(SqlSessionFactory sqlSessionFactory) throws Exception {
-        return new SqlSessionTemplate(sqlSessionFactory);
-    }
-    
-    @Bean(name = "transactionManager")
-    DataSourceTransactionManager transactionManager(DataSource dataSource) {
-        return new DataSourceTransactionManager(dataSource);
-    }
+
     
 }

@@ -1,4 +1,4 @@
-package org.maxkey.config;
+package org.maxkey.autoconfigure;
 
 import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -14,7 +15,7 @@ import org.springframework.core.io.Resource;
 
 
 @Configuration
-public class KaptchaAutoConfiguration {
+public class KaptchaAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(KaptchaAutoConfiguration.class);
     
     /**
@@ -32,5 +33,11 @@ public class KaptchaAutoConfiguration {
         Config config = new Config(properties);
         kaptcha.setConfig(config);
         return kaptcha;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        // TODO Auto-generated method stub
+        
     }
 }

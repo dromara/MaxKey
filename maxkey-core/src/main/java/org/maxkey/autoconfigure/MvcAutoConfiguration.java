@@ -1,4 +1,4 @@
-package org.maxkey.config;
+package org.maxkey.autoconfigure;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,29 +32,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 public class MvcAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MvcAutoConfiguration.class);
    
-    /**
-     * propertySourcesPlaceholderConfigurer .
-     * @return propertySourcesPlaceholderConfigurer
-     * @throws IOException  null
-     */
-    @Bean (name = "propertySourcesPlaceholderConfigurer")
-    public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer()
-            throws IOException {
-        ClassPathResource classPathResource1 = 
-                new ClassPathResource("/config/applicationConfig.properties");
-        ClassPathResource classPathResource2 = new ClassPathResource("/application.properties");
-
-        PropertySourcesPlaceholderConfigurer configurer = 
-                new PropertySourcesPlaceholderConfigurer();
-        configurer.setLocations(
-                classPathResource1,
-                classPathResource2
-        );
-        configurer.setIgnoreUnresolvablePlaceholders(true);
- 
-        return configurer;
-    }
-    
     /**
      * cookieLocaleResolver .
      * @return cookieLocaleResolver

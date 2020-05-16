@@ -1,5 +1,6 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.maxkey.RedisAutoConfiguration,\
-org.maxkey.config.KaptchaAutoConfiguration,\
-org.maxkey.config.MvcAutoConfiguration
+org.maxkey.autoconfigure.ApplicationAutoConfiguration,\
+org.maxkey.autoconfigure.MvcAutoConfiguration,\
+org.maxkey.autoconfigure.KaptchaAutoConfiguration,\
+org.maxkey.autoconfigure.RedisAutoConfiguration
