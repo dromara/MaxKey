@@ -26,7 +26,6 @@
     <import resource="maxkey-support-social.xml"/>
     <!--  
     <import resource="maxkey-support-wsfederation.xml"/>
-    <import resource="maxkey-support-jwt.xml"/>
     -->
     
     <!-- single sign on protocol -->
