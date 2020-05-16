@@ -1,18 +1,19 @@
 package org.maxkey.autoconfigure;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.server.ConfigurableWebServerFactory;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -183,6 +184,28 @@ public class MvcAutoConfiguration implements InitializingBean {
         return restTemplate;
     }
 
+    /**
+     * 配置默认错误页面（仅用于内嵌tomcat启动时） 使用这种方式，在打包为war后不起作用.
+     *
+     * @return webServerFactoryCustomizer
+     */
+    @Bean
+    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
+        return new WebServerFactoryCustomizer<ConfigurableWebServerFactory>() {
+            @Override
+            public void customize(ConfigurableWebServerFactory factory) {
+                _logger.debug("WebServerFactoryCustomizer ... ");
+                ErrorPage errorPage400 = 
+                        new ErrorPage(HttpStatus.BAD_REQUEST, "/exception/error/400");
+                ErrorPage errorPage404 = 
+                        new ErrorPage(HttpStatus.NOT_FOUND, "/exception/error/404");
+                ErrorPage errorPage500 = 
+                        new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/exception/error/500");
+                factory.addErrorPages(errorPage400, errorPage404, errorPage500);
+            }
+        };
+    }
+    
     @Override
     public void afterPropertiesSet() throws Exception {
         // TODO Auto-generated method stub

@@ -1,36 +1,21 @@
 package org.maxkey;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
-import javax.sql.DataSource;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.maxkey.authz.oauth2.provider.endpoint.TokenEndpointAuthenticationFilter;
-import org.maxkey.authn.RealmAuthenticationProvider;
-import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
-import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.crypto.password.opt.algorithm.KeyUriFormat;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.server.ConfigurableWebServerFactory;
-import org.springframework.boot.web.server.ErrorPage;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 @Configuration
 @ImportResource(locations = { "classpath:spring/maxkey.xml" })
@@ -47,35 +32,15 @@ public class MaxKeyConfig {
         return port;
     }
 
-
-    
     @Bean
     public FilterRegistrationBean<TokenEndpointAuthenticationFilter> TokenEndpointAuthenticationFilter() {
+        _logger.debug("TokenEndpointAuthenticationFilter init ");
         FilterRegistrationBean<TokenEndpointAuthenticationFilter> registration = new FilterRegistrationBean<TokenEndpointAuthenticationFilter>();
         registration.setFilter(new TokenEndpointAuthenticationFilter());
         registration.addUrlPatterns("/oauth/v20/token/*");
         registration.setName("TokenEndpointAuthenticationFilter");
         registration.setOrder(1);
         return registration;
-    }
-
-    /**
-     * 配置默认错误页面（仅用于内嵌tomcat启动时） 使用这种方式，在打包为war后不起作用
-     *
-     * @return
-     */
-    @Bean
-    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
-        return new WebServerFactoryCustomizer<ConfigurableWebServerFactory>() {
-            @Override
-            public void customize(ConfigurableWebServerFactory factory) {
-                _logger.debug("WebServerFactoryCustomizer ... ");
-                ErrorPage errorPage400 = new ErrorPage(HttpStatus.BAD_REQUEST, "/exception/error/400");
-                ErrorPage errorPage404 = new ErrorPage(HttpStatus.NOT_FOUND, "/exception/error/404");
-                ErrorPage errorPage500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/exception/error/500");
-                factory.addErrorPages(errorPage400, errorPage404, errorPage500);
-            }
-        };
     }
 
     @Bean
