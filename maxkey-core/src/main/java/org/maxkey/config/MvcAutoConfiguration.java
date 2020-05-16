@@ -1,14 +1,18 @@
 package org.maxkey.config;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -25,22 +29,39 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Configuration
 @PropertySource("classpath:/application.properties")
 @PropertySource("classpath:/config/applicationConfig.properties")
-public class MvcAutoConfiguration {
+public class MvcAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MvcAutoConfiguration.class);
-    
-    @Value("${config.server.domain.sub}")
-    String subDomainName;
-    @Value("${spring.servlet.multipart.max-file-size:4194304}")
-    int maxUploadSize;
-    @Value("${spring.messages.basename:classpath:messages/message}")
-    String messagesBasename;
+   
+    /**
+     * propertySourcesPlaceholderConfigurer .
+     * @return propertySourcesPlaceholderConfigurer
+     * @throws IOException  null
+     */
+    @Bean (name = "propertySourcesPlaceholderConfigurer")
+    public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer()
+            throws IOException {
+        ClassPathResource classPathResource1 = 
+                new ClassPathResource("/config/applicationConfig.properties");
+        ClassPathResource classPathResource2 = new ClassPathResource("/application.properties");
+
+        PropertySourcesPlaceholderConfigurer configurer = 
+                new PropertySourcesPlaceholderConfigurer();
+        configurer.setLocations(
+                classPathResource1,
+                classPathResource2
+        );
+        configurer.setIgnoreUnresolvablePlaceholders(true);
  
+        return configurer;
+    }
+    
     /**
      * cookieLocaleResolver .
      * @return cookieLocaleResolver
      */
     @Bean (name = "localeResolver")
-    public CookieLocaleResolver cookieLocaleResolver() {
+    public CookieLocaleResolver cookieLocaleResolver(
+            @Value("${config.server.domain.sub:maxkey.top}")String subDomainName) {
         _logger.debug("subDomainName " + subDomainName);
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setCookieName("maxkey_lang");
@@ -55,8 +76,11 @@ public class MvcAutoConfiguration {
      * @return messageSource
      */
     @Bean (name = "messageSource")
-    public ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource()  {
+    public ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource(
+            @Value("${spring.messages.basename:classpath:messages/message}")
+            String messagesBasename)  {
         _logger.debug("Basename " + messagesBasename);
+        
         ReloadableResourceBundleMessageSource messageSource = 
                 new ReloadableResourceBundleMessageSource();
         messageSource.setBasename(messagesBasename);
@@ -82,7 +106,8 @@ public class MvcAutoConfiguration {
      * @return multipartResolver
      */
     @Bean (name = "multipartResolver")
-    public CommonsMultipartResolver commonsMultipartResolver()  {
+    public CommonsMultipartResolver commonsMultipartResolver(
+            @Value("${spring.servlet.multipart.max-file-size:0}") int maxUploadSize)  {
         _logger.debug("maxUploadSize " + maxUploadSize);
         CommonsMultipartResolver multipartResolver = 
                 new CommonsMultipartResolver();
@@ -180,8 +205,12 @@ public class MvcAutoConfiguration {
         restTemplate.setMessageConverters(httpMessageConverterList);
         return restTemplate;
     }
-    
-    
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        // TODO Auto-generated method stub
+        
+    }
     
     
 }

@@ -120,24 +120,19 @@ public class MaxKeyConfig {
         return new SavedRequestAwareAuthenticationSuccessHandler();
     }
     
-    
-    @Value("${config.otp.keyuri.format.type:totp}")
-    String keyuriFormatType;
-    
-    @Value("${config.otp.keyuri.format.domain:MaxKey.top}")
-    String keyuriFormatDomain;
-    
-    @Value("${config.otp.keyuri.format.issuer:MaxKey}")
-    String keyuriFormatIssuer;
-    
-    @Value("${config.otp.keyuri.format.digits:6}")
-    int keyuriFormatDigits;
-    
-    @Value("${config.otp.keyuri.format.period:30}")
-    int keyuriFormatPeriod;
-    
     @Bean(name = "keyUriFormat")
-    public KeyUriFormat keyUriFormat() {
+    public KeyUriFormat keyUriFormat(
+            @Value("${config.otp.keyuri.format.type:totp}")
+            String keyuriFormatType,
+            @Value("${config.otp.keyuri.format.domain:MaxKey.top}")
+            String keyuriFormatDomain,
+            @Value("${config.otp.keyuri.format.issuer:MaxKey}")
+            String keyuriFormatIssuer,
+            @Value("${config.otp.keyuri.format.digits:6}")
+            int keyuriFormatDigits,
+            @Value("${config.otp.keyuri.format.period:30}")
+            int keyuriFormatPeriod) {
+        
         KeyUriFormat keyUriFormat=new KeyUriFormat();
         keyUriFormat.setType(keyuriFormatType);
         keyUriFormat.setDomain(keyuriFormatDomain);

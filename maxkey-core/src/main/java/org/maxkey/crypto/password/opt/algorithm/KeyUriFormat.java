@@ -202,4 +202,11 @@ public class KeyUriFormat {
         return uri.toString();
     }
 
+    @Override
+    public String toString() {
+        return "KeyUriFormat [crypto=" + crypto + ", type=" + type + ", secret=" + secret + ", issuer=" + issuer
+                + ", domain=" + domain + ", digits=" + digits + ", counter=" + counter + ", period=" + period
+                + ", account=" + account + "]";
+    }
+
 }

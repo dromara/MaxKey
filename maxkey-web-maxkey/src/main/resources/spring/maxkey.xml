@@ -17,17 +17,6 @@
 	        http://www.springframework.org/schema/util/spring-util.xsd
 	        http://www.springframework.org/schema/mvc 
 	        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-    
-    <!-- Application properties configs  -->
-	<bean id="propertySourcesPlaceholderConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-	  <property name="locations">
-	    <list>
-	   	  <value>classpath:config/applicationConfig.properties</value>
-	   	  <value>classpath:application.properties</value>
-	    </list>
-	  </property>
-	  <property name="ignoreUnresolvablePlaceholders" value="true"/>
-	</bean>
 	
 	<!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
  	 @Controller and @Service. Make sure to set the correct base-package-->
