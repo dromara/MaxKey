@@ -5,10 +5,17 @@ import java.io.IOException;
 import javax.sql.DataSource;
 import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
+import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
+import org.maxkey.authn.support.rememberme.InMemoryRemeberMeService;
+import org.maxkey.authn.support.rememberme.JdbcRemeberMeService;
+import org.maxkey.authn.support.rememberme.RedisRemeberMeService;
+import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.password.PasswordReciprocal;
+import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +23,16 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @Configuration
 @PropertySource("classpath:/application.properties")
+@PropertySource("classpath:/config/applicationConfig.properties")
 public class ApplicationAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = 
             LoggerFactory.getLogger(ApplicationAutoConfiguration.class);
@@ -77,9 +89,85 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     }
     
     @Bean(name = "transactionManager")
-    DataSourceTransactionManager transactionManager(DataSource dataSource) {
+    public DataSourceTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
+    
+    /**
+     * Authentication Password Encoder .
+     * @return
+     */
+    @Bean(name = "passwordEncoder")
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    
+    /**
+     * remeberMeService .
+     * @return
+     */
+    @Bean(name = "remeberMeService")
+    public AbstractRemeberMeService remeberMeService(
+            @Value("${config.server.persistence}") int persistence,
+            @Value("${config.login.remeberme.validity}") int validity,
+            JdbcTemplate jdbcTemplate,
+            RedisConnectionFactory jedisConnectionFactory) {
+        AbstractRemeberMeService remeberMeService = null;
+        if (persistence == 0) {
+            remeberMeService = new InMemoryRemeberMeService();
+            _logger.debug("InMemoryRemeberMeService");
+        } else if (persistence == 1) {
+            remeberMeService = new JdbcRemeberMeService(jdbcTemplate);
+            _logger.debug("JdbcRemeberMeService");
+        } else if (persistence == 2) {
+            remeberMeService = new RedisRemeberMeService(jedisConnectionFactory);
+            _logger.debug("RedisRemeberMeService");
+        }
+        return remeberMeService;
+    }
+    
+    /**
+     * keyStoreLoader .
+     * @return
+     */
+    @Bean(name = "keyStoreLoader")
+    public KeyStoreLoader keyStoreLoader(
+            @Value("${config.saml.v20.idp.issuing.entity.id}") String entityName,
+            @Value("${config.saml.v20.idp.keystore.password}") String keystorePassword,
+            @Value("${config.saml.v20.idp.keystore}") Resource keystoreFile) {
+        KeyStoreLoader keyStoreLoader = new KeyStoreLoader();
+        keyStoreLoader.setEntityName(entityName);
+        keyStoreLoader.setKeystorePassword(keystorePassword);
+        keyStoreLoader.setKeystoreFile(keystoreFile);
+        return keyStoreLoader;
+    }
+    
+    /**
+     * spKeyStoreLoader .
+     * @return
+     */
+    @Bean(name = "spKeyStoreLoader")
+    public KeyStoreLoader spKeyStoreLoader(
+            @Value("${config.saml.v20.sp.issuing.entity.id}") String entityName,
+            @Value("${config.saml.v20.sp.keystore.password}") String keystorePassword,
+            @Value("${config.saml.v20.sp.keystore}") Resource keystoreFile) {
+        KeyStoreLoader keyStoreLoader = new KeyStoreLoader();
+        keyStoreLoader.setEntityName(entityName);
+        keyStoreLoader.setKeystorePassword(keystorePassword);
+        keyStoreLoader.setKeystoreFile(keystoreFile);
+        return keyStoreLoader;
+    }
+    
+    /**
+     * spKeyStoreLoader .
+     * @return
+     */
+    @Bean(name = "spIssuingEntityName")
+    public String spIssuingEntityName(
+            @Value("${config.saml.v20.sp.issuing.entity.id}") String spIssuingEntityName) {
+        return spIssuingEntityName;
+    }
+
 
     @Override
     public void afterPropertiesSet() throws Exception {

@@ -9,20 +9,34 @@ import org.maxkey.crypto.password.opt.algorithm.KeyUriFormat;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
+
+
+
 
 @Configuration
 @ImportResource(locations = { "classpath:spring/maxkey.xml" })
 @PropertySource("classpath:/application.properties")
 @PropertySource("classpath:/config/applicationConfig.properties")
 @MapperScan("org.maxkey.dao.persistence,")
-public class MaxKeyConfig {
+@ComponentScan(basePackages = {
+        "org.maxkey.config",
+        "org.maxkey.domain",
+        "org.maxkey.domain.apps",
+        "org.maxkey.domain.userinfo",
+        "org.maxkey.api.v1.contorller",
+        "org.maxkey.web.endpoint",
+        "org.maxkey.web.contorller"
+})
+public class MaxKeyConfig  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyConfig.class);
     
     @Value("${server.port:8080}")
@@ -92,6 +106,12 @@ public class MaxKeyConfig {
         keyUriFormat.setPeriod(keyuriFormatPeriod);
         _logger.debug("KeyUri Format " + keyUriFormat);
         return keyUriFormat;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        // TODO Auto-generated method stub
+        
     }
 
 

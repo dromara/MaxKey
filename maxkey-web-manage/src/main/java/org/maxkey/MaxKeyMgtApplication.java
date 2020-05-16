@@ -3,6 +3,7 @@ package org.maxkey;
 import java.util.Date;
 import javax.servlet.ServletException;
 import org.maxkey.web.InitializeContext;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -16,9 +17,22 @@ import org.springframework.context.annotation.ImportResource;
 @SpringBootApplication
 @ImportResource(locations={"classpath:spring/maxkey-mgt.xml"})
 @ComponentScan(basePackages = {
-		"org.maxkey.MaxKeyMgtConfig"
+		"org.maxkey.MaxKeyMgtConfig",
+		"org.maxkey.config",
+		"org.maxkey.domain",
+		"org.maxkey.domain.apps",
+		"org.maxkey.domain.userinfo",
+		"org.maxkey.web.endpoint",
+		"org.maxkey.web.contorller",
+		"org.maxkey.web.apps.contorller",
+		"org.maxkey.web.endpoint",
+		"org.maxkey.authn",
+		"org.maxkey.dao",
+		"org.maxkey.web",
+		"org.maxkey.web.tag"
 	}
 )
+@MapperScan("org.maxkey.dao.persistence,")
 public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 	private static final Logger _logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
 
@@ -27,7 +41,6 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 
 		ConfigurableApplicationContext  applicationContext =SpringApplication.run(MaxKeyMgtApplication.class, args);
 		InitializeContext initWebContext=new InitializeContext(applicationContext);
-		
 		
 		try {
 			initWebContext.init(null);
