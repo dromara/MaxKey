@@ -5,24 +5,28 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource("classpath:/application.properties")
 public class EmailConfig {
 
-    @Value("${config.email.username}")
+    @Value("${spring.mail.username}")
     private String username;
-    @Value("${config.email.password}")
+    
+    @Value("${spring.mail.password}")
     private String password;
-    @Value("${config.email.smtpHost}")
+    
+    @Value("${spring.mail.host}")
     private String smtpHost;
-    @Value("${config.email.senderMail}")
-    private String senderMail;
-    @Value("${config.email.port}")
+    
+    @Value("${spring.mail.port}")
     private Integer port;
-    @Value("${config.email.ssl}")
+    
+    @Value("${spring.mail.properties.ssl}")
     private boolean ssl;
+    
+    @Value("${spring.mail.properties.sender}")
+    private String sender;
 
     public EmailConfig() {
-        // TODO Auto-generated constructor stub
     }
 
     /*
@@ -67,18 +71,14 @@ public class EmailConfig {
         this.smtpHost = smtpHost;
     }
 
-    /*
-     * @return the senderMail
-     */
-    public String getSenderMail() {
-        return senderMail;
+
+
+    public String getSender() {
+        return sender;
     }
 
-    /*
-     * @param senderMail the senderMail to set
-     */
-    public void setSenderMail(String senderMail) {
-        this.senderMail = senderMail;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
     /*

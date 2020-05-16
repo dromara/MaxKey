@@ -1,0 +1,5 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.maxkey.RedisAutoConfiguration,\
+org.maxkey.config.KaptchaAutoConfiguration,\
+org.maxkey.config.MvcAutoConfiguration

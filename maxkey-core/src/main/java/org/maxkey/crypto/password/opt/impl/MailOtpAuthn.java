@@ -35,7 +35,7 @@ public class MailOtpAuthn extends AbstractOptAuthn {
             email.setAuthenticator(
                     new DefaultAuthenticator(emailConfig.getUsername(), emailConfig.getPassword()));
             
-            email.setFrom(emailConfig.getSenderMail());
+            email.setFrom(emailConfig.getSender());
             email.setSubject(subject);
             email.setMsg(
                     MessageFormat.format(

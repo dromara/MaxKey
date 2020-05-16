@@ -41,4 +41,9 @@ public class RedisRemeberMeService extends AbstractRemeberMeService {
         conn.close();
     }
 
+    public void setConnectionFactory(RedisConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
+
+    
 }

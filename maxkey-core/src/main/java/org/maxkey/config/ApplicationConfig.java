@@ -21,8 +21,7 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:/config/applicationConfig.properties")
 public class ApplicationConfig {
     private static final Logger _logger = LoggerFactory.getLogger(ApplicationConfig.class);
-    @Autowired
-    DataSoruceConfig dataSoruceConfig;
+
     @Autowired
     EmailConfig emailConfig;
     @Autowired
@@ -45,8 +44,8 @@ public class ApplicationConfig {
     @Value("${config.server.default.uri}")
     String defaultUri;
 
-    @Value("${config.server.manage.uri}")
-    String manageUri;
+    @Value("${config.server.management.uri}")
+    String managementUri;
 
     /*
      * //is enable whiteList for ipAddress filter boolean whiteList;
@@ -78,14 +77,6 @@ public class ApplicationConfig {
          * _logger.debug("Anonymous Access Urls : \n"+anonymousAccessUrls);
          */
 
-    }
-
-    public DataSoruceConfig getDataSoruceConfig() {
-        return dataSoruceConfig;
-    }
-
-    public void setDataSoruceConfig(DataSoruceConfig dataSoruceConfig) {
-        this.dataSoruceConfig = dataSoruceConfig;
     }
 
     /**
@@ -179,12 +170,12 @@ public class ApplicationConfig {
         this.emailConfig = emailConfig;
     }
 
-    public String getManageUri() {
-        return manageUri;
+    public String getManagementUri() {
+        return managementUri;
     }
 
-    public void setManageUri(String manageUri) {
-        this.manageUri = manageUri;
+    public void setManagementUri(String managementUri) {
+        this.managementUri = managementUri;
     }
 
     public String getDefaultUri() {

@@ -12,25 +12,25 @@ import org.springframework.context.annotation.PropertySource;
  *
  */
 @Configuration
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource("classpath:/application.properties")
 public class CharacterEncodingConfig {
 
     /**
      * 源字符集.
      */
-    @Value("${config.characterencoding.charset.from}")
+    @Value("${server.servlet.encoding.charset.from:UTF-8}")
     String fromCharSet;
 
     /**
      * 目标字符集.
      */
-    @Value("${config.characterencoding.charset.to}")
+    @Value("${server.servlet.encoding.charset:UTF-8}")
     String toCharSet;
 
     /**
      * 转换标志.
      */
-    @Value("${config.characterencoding.encoding}")
+    @Value("${server.servlet.encoding.enabled:false}")
     boolean encoding = false;
 
     public CharacterEncodingConfig() {

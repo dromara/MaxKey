@@ -34,6 +34,25 @@
 	</bean>
 	
 	<context:component-scan base-package="org.maxkey.config" />
+	<!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
+     @Controller and @Service. Make sure to set the correct base-package-->
+ 
+    <!-- domain bean  -->
+    <context:component-scan base-package="org.maxkey.domain" />
+    <context:component-scan base-package="org.maxkey.domain.apps" />
+    <context:component-scan base-package="org.maxkey.domain.userinfo" />
+    
+    
+    <!-- Business  Contorller -->
+    <context:component-scan base-package="org.maxkey.web.endpoint" />
+    <context:component-scan base-package="org.maxkey.web.contorller" />
+    <context:component-scan base-package="org.maxkey.web.apps.contorller" />
+    <context:component-scan base-package="org.maxkey.web.endpoint" />
+    <context:component-scan base-package="org.maxkey.authn" />
+    <context:component-scan base-package="org.maxkey.dao" />
+    <context:component-scan base-package="org.maxkey.web" />
+    <context:component-scan base-package="org.maxkey.web.tag" />
+    
 	
 	<bean id="keyStoreLoader" class="org.maxkey.crypto.keystore.KeyStoreLoader">
     	<property name="entityName" value="${config.saml.v20.idp.issuing.entity.id}" />
@@ -60,10 +79,6 @@
 		<constructor-arg ref="dataSource" /> 
 		<property name="passwordEncoder" ref="passwordReciprocal"></property>
 	</bean>
-	
-	<import resource="maxkey-mgt-persistence.xml"/>
-	
-	<import resource="maxkey-mgt-web.xml"/>
 	
 	<import resource="maxkey-mgt-security.xml"/>
 	

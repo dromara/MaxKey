@@ -80,7 +80,7 @@ public class RegistrationController {
 			email.setAuthenticator(new DefaultAuthenticator(applicationConfig.getEmailConfig().getUsername(), applicationConfig.getEmailConfig().getPassword()));
 			
 			email.addTo(registration.getWorkEmail(), registration.getLastName()+registration.getFirstName());
-			email.setFrom(applicationConfig.getEmailConfig().getSenderMail(), "ConnSec");
+			email.setFrom(applicationConfig.getEmailConfig().getSender(), "ConnSec");
 			email.setSubject("ConnSec Cloud Identity & Access Registration activate Email .");
 			  
 			String activateUrl=WebContext.getHttpContextPath()+"/registration/forward/activate/"+registration.getId();

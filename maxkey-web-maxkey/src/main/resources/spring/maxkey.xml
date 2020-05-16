@@ -43,8 +43,6 @@
 	<context:component-scan base-package="org.maxkey.web.endpoint" />
 	<context:component-scan base-package="org.maxkey.web.contorller" />
 	
- 	<!-- persistence configuration  -->
- 	<import resource="maxkey-persistence.xml"/>
 	<!-- authn support -->
  	<import resource="maxkey-support.xml"/>
  	<!-- single sign on protocol -->
@@ -53,7 +51,5 @@
  	<import resource="maxkey-task.xml"/>
 	<!-- Basic Authn  for user login -->
  	<import resource="maxkey-security.xml"/>
- 	<!-- web mvc  configuration -->
- 	<import resource="maxkey-web.xml"/>
  	
 </beans>

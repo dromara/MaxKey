@@ -75,15 +75,11 @@
 	  
 	<bean id="remeberMeService" class="org.maxkey.authn.support.rememberme.InMemoryRemeberMeService">
 	</bean>
-	
-	<bean id="keyUriFormat" class="org.maxkey.crypto.password.opt.algorithm.KeyUriFormat">
-		<property name="type" value="totp" />
-		<property name="digits" value="6" />
-		<property name="issuer" value="MaxKey" />
-		<property name="domain" value="MaxKey.org" />
-		<property name="period" value="30" />
-	</bean>
-	
+	 <!--
+	<bean id="remeberMeService" class="org.maxkey.authn.support.rememberme.RedisRemeberMeService">
+	   <property name="connectionFactory" ref="redisConnectionFactory"></property>
+    </bean>
+    -->
 	<bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn">
 	</bean>
 	<!-- 
@@ -98,7 +94,6 @@
 	<bean id="tfaMobileOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnYunxin">
 	</bean>
 	 
-
 	<!-- Authentication Password Encoder Config -->
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>   
 	
@@ -146,11 +141,6 @@
 	<bean id="authenticationRealm" class="org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm">
 		<constructor-arg ref="jdbcTemplate"/>
 	</bean>
-	
-		
-	<!-- Authentication providers -->
-    <bean id="authenticationProvider" class="org.maxkey.authn.RealmAuthenticationProvider" >
-    </bean>
    
 	<mvc:annotation-driven />
 
