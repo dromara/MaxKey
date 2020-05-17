@@ -34,7 +34,14 @@ import org.springframework.context.annotation.PropertySource;
         "org.maxkey.domain.userinfo",
         "org.maxkey.api.v1.contorller",
         "org.maxkey.web.endpoint",
-        "org.maxkey.web.contorller"
+        "org.maxkey.web.contorller",
+        //single sign on protocol
+        "org.maxkey.authz.endpoint",
+        "org.maxkey.authz.desktop.endpoint",
+        "org.maxkey.authz.exapi.endpoint",
+        "org.maxkey.authz.formbased.endpoint",
+        "org.maxkey.authz.ltpa.endpoint",
+        "org.maxkey.authz.token.endpoint",
 })
 public class MaxKeyConfig  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyConfig.class);

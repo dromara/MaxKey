@@ -21,7 +21,7 @@ public class FormBasedNetease163EmailAdapter extends AbstractAuthorizeAdapter {
 
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
-		modelAndView.setViewName("authorize/formbased_netease_163email_sso_submint");
+		modelAndView.setViewName("authorize/formbased_163email_sso_submint");
 		AppsFormBasedDetails details=(AppsFormBasedDetails)app;
 		modelAndView.addObject("username", details.getAppUser().getRelatedUsername().substring(details.getAppUser().getRelatedUsername().indexOf("@")));
 		modelAndView.addObject("email", details.getAppUser().getRelatedUsername());

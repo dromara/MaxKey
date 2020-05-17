@@ -3,9 +3,6 @@ package org.maxkey.authz.cas.endpoint.ticket.service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-
-import javax.sql.DataSource;
-
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.maxkey.util.SerializationUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -27,9 +24,9 @@ public class JdbcTicketServices extends RandomServiceTicketServices {
 
 	private final JdbcTemplate jdbcTemplate;
 
-	public JdbcTicketServices(DataSource dataSource) {
-		Assert.notNull(dataSource, "DataSource required");
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	public JdbcTicketServices(JdbcTemplate jdbcTemplate) {
+		Assert.notNull(jdbcTemplate, "jdbcTemplate required");
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	@Override

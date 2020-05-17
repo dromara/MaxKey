@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <#include  "formbased_common.ftl">
   <title>Token-Based SSO Submit</title>
-  <link rel="shortcut icon" type="image/x-icon" href="<@base />/static/images/favicon.ico"/>
-  <link type="text/css" rel="stylesheet" href="<@base />/static/css/base.css"/>
+  
 </head>
 
 <body  onload="document.forms[0].submit()"  style="display:none">

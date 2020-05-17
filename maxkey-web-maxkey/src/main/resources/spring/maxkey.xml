@@ -18,30 +18,160 @@
 	        http://www.springframework.org/schema/mvc 
 	        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	        
-	<!-- authn support -->
-	<!-- Authentication -->
-    <import resource="maxkey-support-httpheader.xml"/>
-    <import resource="maxkey-support-basic.xml"/>
-    <import resource="maxkey-support-kerberos.xml"/>
-    <import resource="maxkey-support-social.xml"/>
-    <!--  
-    <import resource="maxkey-support-wsfederation.xml"/>
+	<!-- Authentication Extends support -->
+	<!-- HttpHeader Support Start-->
+    <bean id="httpHeaderSupport" class="org.maxkey.authn.support.httpheader.HttpHeaderConfig">
+        <property name="enable" value="${config.support.httpheader.enable}"></property>
+        <property name="headerName" value="${config.support.httpheader.headername}"></property>
+    </bean>
+    
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*" />
+            <bean class="org.maxkey.authn.support.httpheader.HttpHeaderEntryPoint" />
+        </mvc:interceptor>  
+    </mvc:interceptors>
+    <!-- HttpHeader Support End-->
+    
+    <!-- BASIC Support Start-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*" />
+            <bean class="org.maxkey.authn.support.basic.BasicEntryPoint" >
+                <property name="enable" value="${config.support.basic.enable}"></property>
+            </bean>
+        </mvc:interceptor>  
+    </mvc:interceptors>
+    <!-- BASIC Support End-->
+    
+    <!-- KERBEROS Support Start-->
+    <bean id="kerberosService" class="org.maxkey.authn.support.kerberos.RemoteKerberosService">
+        <property name="kerberosProxys" >
+            <list>
+                <!-- default -->
+                <bean class="org.maxkey.authn.support.kerberos.KerberosProxy">
+                    <property name="userdomain" value="${config.support.kerberos.default.userdomain}"/>
+                    <property name="fullUserdomain" value="${config.support.kerberos.default.fulluserdomain}"/>
+                    <property name="crypto" value="${config.support.kerberos.default.crypto}"/>
+                    <property name="redirectUri" value="${config.support.kerberos.default.redirecturi}"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <!-- KERBEROS Support End-->
+    
+    <!-- WsFederation  Support Start -->
+    <!-- 
+            #identifier: the identifer for the ADFS server
+            #url: the login url for ADFS
+            #principal: the name of the attribute/assertion returned by ADFS that contains the principal's username.
+            #relyingParty: the identifier of the CAS Server as it has been configured in ADFS.
+            #tolerance: (optional) the amount of drift to allow when validating the timestamp on the token. Default: 10000 (ms)
+            #attributeMutator: (optional) a class (defined by you) that can modify the attributes/assertions returned by the ADFS server
+            #signingCertificate: ADFS's signing certificate used to validate the token/assertions issued by ADFS.
     -->
+    <!-- 
+    <bean id="wsFederationConfiguration" class="org.maxkey.authn.support.wsfederation.WsFederationConfiguration">
+        <property name="identifier" value="${config.support.wsfederation.identifier}" />
+        <property name="url" value="${config.support.wsfederation.url}" />
+        <property name="logoutUrl" value="${config.support.wsfederation.logoutUrl}" />
+        <property name="principal" value="${config.support.wsfederation.principal}" />
+        <property name="relyingParty" value="${config.support.wsfederation.relyingParty}" />
+        <property name="tolerance" value="${config.support.wsfederation.tolerance}" />
+        <property name="upnSuffix" value="${config.support.wsfederation.upn.suffix}" />
+        <property name="attributeMutator">
+            <bean class="org.maxkey.authn.support.wsfederation.WsFedAttributeMutatorImpl" />
+        </property>
+        <property name="signingCertificates">
+            <list>
+                <value>classpath:${config.support.wsfederation.signingCertificate}</value>
+            </list>
+        </property>
+    </bean>
     
-    <!-- single sign on protocol -->
- 	<!-- Single Sign On for application -->
-    <context:component-scan base-package="org.maxkey.authz.endpoint" />
-    <context:component-scan base-package="org.maxkey.authz.desktop.endpoint" />
-    <context:component-scan base-package="org.maxkey.authz.exapi.endpoint" />
-    <context:component-scan base-package="org.maxkey.authz.formbased.endpoint" />
-    <context:component-scan base-package="org.maxkey.authz.ltpa.endpoint" />
-    <context:component-scan base-package="org.maxkey.authz.token.endpoint" />
+    <bean id="wsFederationService" class="org.maxkey.authn.support.wsfederation.WsFederationServiceImpl">
+         <property name="wsFederationConfiguration" ref="wsFederationConfiguration" />
+    </bean>
+     -->
+    <!-- WsFederation  Support End -->
+    
+    <!-- Social Sign On Support Start-->
+    <!-- Social Sign On Endpoint-->
+    <context:component-scan base-package="org.maxkey.web.authentication.support.socialsignon" />
+    
+    
+    <bean id="socialSignOnWeibo" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+        <property name="provider" value="${config.socialsignon.sinaweibo.provider}"/>
+        <property name="providerName" value="${config.socialsignon.sinaweibo.provider.name}"/>
+        <property name="icon" value="${config.socialsignon.sinaweibo.icon}"/>
+        <property name="clientId" value="${config.socialsignon.sinaweibo.client.id}"/>
+        <property name="clientSecret" value="${config.socialsignon.sinaweibo.client.secret}"/>
+        <property name="sortOrder" value="${config.socialsignon.sinaweibo.sortorder}"/>
+    </bean>
+    
+    <bean id="socialSignOnGoogle" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+        <property name="provider" value="${config.socialsignon.google.provider}"/>
+        <property name="providerName" value="${config.socialsignon.google.provider.name}"/>
+        <property name="icon" value="${config.socialsignon.google.icon}"/>
+        <property name="clientId" value="${config.socialsignon.google.client.id}"/>
+        <property name="clientSecret" value="${config.socialsignon.google.client.secret}"/>
+        <property name="sortOrder" value="${config.socialsignon.google.sortorder}"/>
+    </bean>
+    
+    <bean id="socialSignOnQQ" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+        <property name="provider" value="${config.socialsignon.qq.provider}"/>
+        <property name="providerName" value="${config.socialsignon.qq.provider.name}"/>
+        <property name="icon" value="${config.socialsignon.qq.icon}"/>
+        <property name="clientId" value="${config.socialsignon.qq.client.id}"/>
+        <property name="clientSecret" value="${config.socialsignon.qq.client.secret}"/>
+        <property name="sortOrder" value="${config.socialsignon.qq.sortorder}"/>
+    </bean>
 
-    <import resource="maxkey-protocol-cas.xml"/>
-    <import resource="maxkey-protocol-saml.xml"/>
-    <import resource="maxkey-protocol-oauth2.0.xml"/>
+    <bean id="socialSignOnMicrosoft" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+        <property name="provider" value="${config.socialsignon.microsoft.provider}"/>
+        <property name="providerName" value="${config.socialsignon.microsoft.provider.name}"/>
+        <property name="icon" value="${config.socialsignon.microsoft.icon}"/>
+        <property name="clientId" value="${config.socialsignon.microsoft.client.id}"/>
+        <property name="clientSecret" value="${config.socialsignon.microsoft.client.secret}"/>
+        <property name="sortOrder" value="${config.socialsignon.microsoft.sortorder}"/>
+    </bean>
+
+    <bean id="socialSignOnFacebook" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+        <property name="provider" value="${config.socialsignon.facebook.provider}"/>
+        <property name="providerName" value="${config.socialsignon.facebook.provider.name}"/>
+        <property name="icon" value="${config.socialsignon.facebook.icon}"/>
+        <property name="clientId" value="${config.socialsignon.facebook.client.id}"/>
+        <property name="clientSecret" value="${config.socialsignon.facebook.client.secret}"/>
+        <property name="sortOrder" value="${config.socialsignon.facebook.sortorder}"/>
+    </bean> 
+    <bean id="socialSignOndingtalk" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
+        <property name="provider" value="${config.socialsignon.dingtalk.provider}"/>
+        <property name="providerName" value="${config.socialsignon.dingtalk.provider.name}"/>
+        <property name="icon" value="${config.socialsignon.dingtalk.icon}"/>
+        <property name="clientId" value="${config.socialsignon.dingtalk.client.id}"/>
+        <property name="clientSecret" value="${config.socialsignon.dingtalk.client.secret}"/>
+        <property name="sortOrder" value="${config.socialsignon.dingtalk.sortorder}"/>
+    </bean> 
     
-	<!-- Basic Authn  for user login -->
+    <bean id="socialSignOnProviderService" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService">
+        <property name="socialSignOnProviders" >
+            <list>
+                <ref bean="socialSignOnWeibo" />
+                <ref bean="socialSignOnQQ"/>
+                <ref bean="socialSignOnGoogle"/>
+                <ref bean="socialSignOnMicrosoft"/>
+                <ref bean="socialSignOnFacebook"/>
+                <ref bean="socialSignOndingtalk"/>
+                
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="socialsAssociateService" class="org.maxkey.authn.support.socialsignon.service.JdbcSocialsAssociateService">
+        <constructor-arg ref="jdbcTemplate"/>
+    </bean>
+     <!-- Social Sign On Support End -->
+     
  	<!-- enable autowire -->
     <context:annotation-config />
     
@@ -95,8 +225,6 @@
             <mvc:mapping path="/authz/cas/granting"/>
             <bean class="org.maxkey.web.interceptor.HistoryLoginAppAdapter" />
         </mvc:interceptor>
-
-        
         <ref bean="localeChangeInterceptor" />
     </mvc:interceptors>
 

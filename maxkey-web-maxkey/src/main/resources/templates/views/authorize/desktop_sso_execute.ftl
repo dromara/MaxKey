@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <#include  "formbased_common.ftl">
   <title>Desktop SSO Execute</title>
-  <link rel="shortcut icon" type="image/x-icon" href="<@base />/static/images/favicon.ico"/>
-  <link type="text/css" rel="stylesheet" href="<@base />/static/css/base.css"/>
 </head>
 
 

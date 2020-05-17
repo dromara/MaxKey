@@ -23,7 +23,7 @@ public class FormBasedNeteaseNoteYoudaoAdapter extends AbstractAuthorizeAdapter 
 
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
-		modelAndView.setViewName("authorize/formbased_netease_noteyoudao_sso_submint");
+		modelAndView.setViewName("authorize/formbased_wy_youdao_sso_submint");
 		AppsFormBasedDetails details=(AppsFormBasedDetails)app;
 		modelAndView.addObject("username", details.getAppUser().getRelatedUsername());
 		modelAndView.addObject("password",  DigestUtils.md5Hex(details.getAppUser().getRelatedPassword()));

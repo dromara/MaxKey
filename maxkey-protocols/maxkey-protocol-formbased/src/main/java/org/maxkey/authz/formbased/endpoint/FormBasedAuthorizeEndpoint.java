@@ -73,7 +73,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 					modelAndView);
 		}
 		
-		
+		_logger.debug("FormBased View Name " + modelAndView.getViewName());
 		
 		return modelAndView;
 	}

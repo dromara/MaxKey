@@ -40,7 +40,7 @@ config.socialsignon.sinaweibo.account.id=id
 config.socialsignon.sinaweibo.sortorder=1
 </code></pre>
 
-配置maxkey/spring/maxkey-support-social.xml
+配置maxkey/spring/maxkey.xml
 
 <pre><code class="xml hljs">
 &lt;bean id="socialSignOnWeibo" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider"&gt;
