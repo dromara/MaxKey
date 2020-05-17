@@ -225,6 +225,7 @@
             <mvc:mapping path="/authz/cas/granting"/>
             <bean class="org.maxkey.web.interceptor.HistoryLoginAppAdapter" />
         </mvc:interceptor>
+        
         <ref bean="localeChangeInterceptor" />
     </mvc:interceptors>
 

@@ -21,7 +21,7 @@ public class ExceptionEndpoint {
     @RequestMapping(value = { "/exception/error/400" })
     public ModelAndView error400(
             HttpServletRequest request, HttpServletResponse response) {
-        _logger.debug("exception/400 ");
+        _logger.debug("Exception BAD_REQUEST");
         return new ModelAndView("exception/400");
     }
 
@@ -34,14 +34,13 @@ public class ExceptionEndpoint {
     @RequestMapping(value = { "/exception/error/404" })
     public ModelAndView error404(
             HttpServletRequest request, HttpServletResponse response) {
-        
-        _logger.debug("exception/404 ");
+        _logger.debug("Exception PAGE NOT_FOUND ");
         return new ModelAndView("exception/404");
     }
 
     @RequestMapping(value = { "/exception/error/500" })
     public ModelAndView error500(HttpServletRequest request, HttpServletResponse response) {
-        _logger.debug("exception/500 ");
+        _logger.debug("Exception INTERNAL_SERVER_ERROR ");
         return new ModelAndView("exception/500");
     }
 
