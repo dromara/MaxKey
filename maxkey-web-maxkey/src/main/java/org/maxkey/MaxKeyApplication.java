@@ -21,6 +21,8 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
      * @param args args
      */
     public static void main(String[] args) {
+        _logger.info("Start MaxKeyApplication ...");
+        
         VFS.addImplClass(SpringBootVFS.class);
         ConfigurableApplicationContext applicationContext = 
                 SpringApplication.run(MaxKeyApplication.class, args);

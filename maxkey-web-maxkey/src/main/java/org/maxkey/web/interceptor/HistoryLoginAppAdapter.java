@@ -37,21 +37,14 @@ public class HistoryLoginAppAdapter extends HandlerInterceptorAdapter {
             HttpServletResponse response,
             Object handler,ModelAndView modelAndView) throws Exception {
         _logger.debug("postHandle");
-        String appId = null;
-        if (WebContext.getAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID) != null) {
-            appId = WebContext.getAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID).toString();
-        }
-        if (appId == null) {
-            PreLoginAppAdapter.getAppIdFromRequestUrl(request);
-        }
-        //Applications  app=applicationsService.get(appId);
+       
         final Apps app = (Apps)WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
         String sessionId = (String)WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID);
         final UserInfo userInfo = WebContext.getUserInfo();
-        _logger.debug("sessionId : " + sessionId + " ,appId : " + appId);
+        _logger.debug("sessionId : " + sessionId + " ,appId : " + app.getId());
         HistoryLoginApps historyLoginApps = new HistoryLoginApps();
         historyLoginApps.setId(historyLoginApps.generateId());
-        historyLoginApps.setAppId(appId);
+        historyLoginApps.setAppId(app.getId());
         historyLoginApps.setSessionId(sessionId);
         historyLoginApps.setAppName(app.getName());
         historyLoginApps.setUid(userInfo.getId());

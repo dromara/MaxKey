@@ -15,29 +15,30 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@ImportResource(locations={"classpath:spring/maxkey-mgt.xml"})
+//@ImportResource(locations={"classpath:spring/maxkey-mgt.xml"})
 @ComponentScan(basePackages = {
-		"org.maxkey.MaxKeyMgtConfig",
-		"org.maxkey.config",
-		"org.maxkey.domain",
-		"org.maxkey.domain.apps",
-		"org.maxkey.domain.userinfo",
-		"org.maxkey.web.endpoint",
-		"org.maxkey.web.contorller",
-		"org.maxkey.web.apps.contorller",
-		"org.maxkey.web.endpoint",
-		"org.maxkey.authn",
-		"org.maxkey.dao",
-		"org.maxkey.web",
-		"org.maxkey.web.tag"
-	}
-)
+    "org.maxkey.MaxKeyMgtConfig",
+    "org.maxkey.MaxKeyMgtMvcConfig",
+    "org.maxkey.web.interceptor",
+    "org.maxkey.config",
+    "org.maxkey.domain",
+    "org.maxkey.domain.apps",
+    "org.maxkey.domain.userinfo",
+    "org.maxkey.web.endpoint",
+    "org.maxkey.web.contorller",
+    "org.maxkey.web.apps.contorller",
+    "org.maxkey.web.endpoint",
+    "org.maxkey.authn",
+    "org.maxkey.dao",
+    "org.maxkey.web",
+    "org.maxkey.web.tag"
+})
 @MapperScan("org.maxkey.dao.persistence,")
 public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 	private static final Logger _logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
 
 	public static void main(String[] args) {
-		System.out.println("MaxKeyMgtApplication");
+	    _logger.info("Start MaxKeyMgtApplication ...");
 
 		ConfigurableApplicationContext  applicationContext =SpringApplication.run(MaxKeyMgtApplication.class, args);
 		InitializeContext initWebContext=new InitializeContext(applicationContext);

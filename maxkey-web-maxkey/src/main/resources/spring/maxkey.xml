@@ -17,7 +17,6 @@
 	        http://www.springframework.org/schema/util/spring-util.xsd
 	        http://www.springframework.org/schema/mvc 
 	        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-	        
 	<!-- Authentication Extends support -->
 	<!-- HttpHeader Support Start-->
     <bean id="httpHeaderSupport" class="org.maxkey.authn.support.httpheader.HttpHeaderConfig">
@@ -99,7 +98,6 @@
     <!-- Social Sign On Endpoint-->
     <context:component-scan base-package="org.maxkey.web.authentication.support.socialsignon" />
     
-    
     <bean id="socialSignOnWeibo" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
         <property name="provider" value="${config.socialsignon.sinaweibo.provider}"/>
         <property name="providerName" value="${config.socialsignon.sinaweibo.provider.name}"/>
@@ -153,6 +151,8 @@
         <property name="sortOrder" value="${config.socialsignon.dingtalk.sortorder}"/>
     </bean> 
     
+    <!-- Add Your Providers Here -->
+    
     <bean id="socialSignOnProviderService" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService">
         <property name="socialSignOnProviders" >
             <list>
@@ -162,7 +162,7 @@
                 <ref bean="socialSignOnMicrosoft"/>
                 <ref bean="socialSignOnFacebook"/>
                 <ref bean="socialSignOndingtalk"/>
-                
+                <!-- ref Your Providers Here -->
             </list>
         </property>
     </bean>
@@ -172,35 +172,30 @@
     </bean>
      <!-- Social Sign On Support End -->
      
- 	<!-- enable autowire -->
-    <context:annotation-config />
-    
-    <!-- language select must remove -->
-    <mvc:annotation-driven />
-  
-    <!-- web Controller InterceptorAdapter  -->
+    <!-- Web URL InterceptorAdapter  -->
     <mvc:interceptors>
-        <!-- web Controller InterceptorAdapter for platform permission  -->
+        <!-- InterceptorAdapter for platform permission  -->
         <mvc:interceptor>
             <!-- for permission -->
-            <mvc:mapping path="/index*/**" />
-            <mvc:mapping path="/logs*/**" />
-            <mvc:mapping path="/userinfo*/**" />
-            <mvc:mapping path="/profile*/**" />
-            <mvc:mapping path="/safe*/**" />
-            <mvc:mapping path="/historys*/**" />
-            <mvc:mapping path="/appList*/**" />
+            <mvc:mapping path="/index/**" />
+            <mvc:mapping path="/logs/**" />
+            <mvc:mapping path="/userinfo/**" />
+            <mvc:mapping path="/profile/**" />
+            <mvc:mapping path="/safe/**" />
+            <mvc:mapping path="/historys/**" />
+            <mvc:mapping path="/appList/**" />
+            <mvc:mapping path="/socialsignon/**" />
             <bean class="org.maxkey.web.interceptor.PermissionAdapter" />
-        </mvc:interceptor>  
-        <!-- web Controller InterceptorAdapter for platform log  -->
+        </mvc:interceptor> 
+         
+        <!-- InterceptorAdapter for platform log  -->
         <mvc:interceptor>
-            <mvc:mapping path="/users/*" /> 
             <mvc:mapping path="/userinfo/*" />
-            <mvc:mapping path="/authInfo/*" />
-            <mvc:mapping path="/retrievePassword/*"/>
+            <mvc:mapping path="//safe/changePassword/**"/>
             <bean class="org.maxkey.web.interceptor.HistoryLogsAdapter" />
         </mvc:interceptor>
-        <!-- web Controller sso Adapter -->
+        
+        <!-- Interceptor LoginAppAdapter sso Adapter -->
         <mvc:interceptor>
             <mvc:mapping path="/authz/basic/*" />
             <mvc:mapping path="/authz/ltpa/*" />
@@ -213,7 +208,8 @@
             <mvc:mapping path="/authz/cas/granting"/>
             <bean class="org.maxkey.web.interceptor.PreLoginAppAdapter" />
         </mvc:interceptor>
-        <!-- web Controller sso Adapter -->
+        
+        <!-- Interceptor LoginApp History Logs -->
         <mvc:interceptor>
             <mvc:mapping path="/authz/basic/*" />
             <mvc:mapping path="/authz/ltpa/*" />
@@ -287,6 +283,9 @@
     <bean id="authenticationRealm" class="org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm">
         <constructor-arg ref="jdbcTemplate"/>
     </bean>
+   
+    <!-- enable autowire -->
+    <context:annotation-config />
    
     <mvc:annotation-driven />
 

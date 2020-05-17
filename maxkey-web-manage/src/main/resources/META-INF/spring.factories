@@ -5,4 +5,5 @@ org.maxkey.autoconfigure.KaptchaAutoConfiguration,\
 org.maxkey.autoconfigure.MvcAutoConfiguration,\
 org.maxkey.autoconfigure.JwtAuthnAutoConfiguration,\
 org.maxkey.autoconfigure.RedisAutoConfiguration,\
-org.maxkey.MaxKeyMgtConfig
+org.maxkey.MaxKeyMgtConfig,\
+org.maxkey.MaxKeyMgtMvcConfig

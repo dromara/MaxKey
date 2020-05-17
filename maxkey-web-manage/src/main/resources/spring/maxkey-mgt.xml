@@ -17,46 +17,7 @@
 	        http://www.springframework.org/schema/util/spring-util.xsd
 	        http://www.springframework.org/schema/mvc 
 	        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-    <!-- enable autowire -->
-    <context:annotation-config />
-	<mvc:annotation-driven />
- 
-    <!-- web Controller InterceptorAdapter  -->
-    <mvc:interceptors>
-        <!-- web Controller InterceptorAdapter for platform permission  -->
-        <mvc:interceptor>
-            <mvc:mapping path="/main*/**" />
-            <mvc:mapping path="/main*/**" />
-            <mvc:mapping path="/orgs*/**" />
-            <mvc:mapping path="/userinfo*/**" />
-            <mvc:mapping path="/apps*/**" />
-            <mvc:mapping path="/app*/**" />
-            <mvc:mapping path="/groups*/**" />
-            <mvc:mapping path="/groupMember*/**" />
-            <mvc:mapping path="/groupPrivileges*/**" />
-            <mvc:mapping path="/config*/**" />
-            <mvc:mapping path="/logs*/**" />
-            
-            <bean class="org.maxkey.web.interceptor.PermissionAdapter" />
-        </mvc:interceptor>  
-        <!-- web Controller InterceptorAdapter for platform log  -->
-        <mvc:interceptor>
-            <mvc:mapping path="/users/*" /> 
-            <mvc:mapping path="/userinfo/*" />
-            <mvc:mapping path="/enterprises/*" />
-            <mvc:mapping path="/employees/*" />
-            <mvc:mapping path="/authInfo/*" />
-            <mvc:mapping path="/usercenter/*"/>
-            <mvc:mapping path="/retrievePassword/*"/>
-            <mvc:mapping path="/roles/*"/>
-            <mvc:mapping path="/applications/*"/>
-            <mvc:mapping path="/approles/*"/>
-            <bean class="org.maxkey.web.interceptor.HistoryLogsAdapter" />
-        </mvc:interceptor>
-        
-         <ref bean="localeChangeInterceptor" />
-    </mvc:interceptors>
-    
+
     <bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn">
     </bean>
     
@@ -105,8 +66,5 @@
         <constructor-arg ref="jdbcTemplate"/>
     </bean>
 
-    <mvc:annotation-driven />
-
-    <mvc:default-servlet-handler />
 	
 </beans>
