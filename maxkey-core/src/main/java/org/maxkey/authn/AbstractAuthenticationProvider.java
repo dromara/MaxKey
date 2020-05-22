@@ -87,6 +87,10 @@ public abstract class AbstractAuthenticationProvider {
                 .getAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
         // 登录完成后切换SESSION
         _logger.debug("Login  Session {}.", WebContext.getSession().getId());
+        
+        final Object firstSavedRequest =
+                WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
+        
         WebContext.getSession().invalidate();
         WebContext.setAttribute(
                 WebConstants.CURRENT_USER_SESSION_ID, WebContext.getSession().getId());
@@ -95,6 +99,7 @@ public abstract class AbstractAuthenticationProvider {
         authenticationRealm.insertLoginHistory(
                 userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", "success");
 
+        WebContext.setAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER,firstSavedRequest);
         // 认证设置
         WebContext.setAuthentication(authentication);
         WebContext.setUserInfo(userInfo);

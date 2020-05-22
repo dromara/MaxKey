@@ -1,5 +1,10 @@
 package org.maxkey.web.endpoint;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.maxkey.config.ApplicationConfig;
 import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.domain.UserInfo;
@@ -25,9 +30,10 @@ public class IndexEndpoint {
 	@Autowired
   	@Qualifier("applicationConfig")
   	ApplicationConfig applicationConfig;
-	
 	@RequestMapping(value={"/forwardindex"})
-	public ModelAndView forwardindex() {
+	public ModelAndView forwardindex(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+	    
 		_logger.debug("IndexEndpoint /forwardindex.");
 		ModelAndView modelAndView=new ModelAndView();
 		Integer passwordSetType=(Integer)WebContext.getSession().getAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
@@ -54,11 +60,14 @@ public class IndexEndpoint {
 			return  modelAndView;
 		}
 		
+		
+		
 		return  new ModelAndView("index");
 	}
 	
 	@RequestMapping(value={"/index"})
-	public ModelAndView home() {
+	public ModelAndView home(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
 		_logger.debug("IndexEndpoint /index.");
 		
 		if(applicationConfig.getLoginConfig().getDefaultUri()!=null&&

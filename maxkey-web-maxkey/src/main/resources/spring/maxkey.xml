@@ -185,6 +185,18 @@
             <mvc:mapping path="/historys/**" />
             <mvc:mapping path="/appList/**" />
             <mvc:mapping path="/socialsignon/**" />
+            
+            <mvc:mapping path="/authz/basic/*" />
+            <mvc:mapping path="/authz/ltpa/*" />
+            <mvc:mapping path="/authz/desktop/*" />
+            <mvc:mapping path="/authz/formbased/*" />
+            <mvc:mapping path="/authz/tokenbased/*"/>
+            <mvc:mapping path="/authz/saml20/idpinit/*"/>
+            <mvc:mapping path="/authz/saml20/assertion"/>
+            <mvc:mapping path="/authz/cas/login"/>
+            <mvc:mapping path="/authz/cas/granting"/>
+            <mvc:mapping path="/oauth/v20/authorize"/>
+            
             <bean class="org.maxkey.web.interceptor.PermissionAdapter" />
         </mvc:interceptor> 
          

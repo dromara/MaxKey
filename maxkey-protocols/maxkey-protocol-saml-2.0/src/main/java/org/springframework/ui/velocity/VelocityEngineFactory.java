@@ -71,7 +71,6 @@ import org.springframework.util.StringUtils;
  * @see org.apache.velocity.app.VelocityEngine
  * @deprecated as of Spring 4.3, in favor of FreeMarker
  */
-@Deprecated
 public class VelocityEngineFactory {
 
 	protected final Log logger = LogFactory.getLog(getClass());

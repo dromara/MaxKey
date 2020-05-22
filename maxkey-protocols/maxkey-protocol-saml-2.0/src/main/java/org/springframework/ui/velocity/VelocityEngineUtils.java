@@ -32,7 +32,6 @@ import org.apache.velocity.exception.VelocityException;
  * @since 22.01.2004
  * @deprecated as of Spring 4.3, in favor of FreeMarker
  */
-@Deprecated
 public abstract class VelocityEngineUtils {
 
 	/**
@@ -46,7 +45,6 @@ public abstract class VelocityEngineUtils {
 	 * @deprecated Use {@link #mergeTemplate(VelocityEngine, String, String, Map, Writer)}
 	 * instead, following Velocity 1.6's corresponding deprecation in its own API.
 	 */
-	@Deprecated
 	public static void mergeTemplate(
 			VelocityEngine velocityEngine, String templateLocation, Map<String, Object> model, Writer writer)
 			throws VelocityException {
@@ -86,7 +84,6 @@ public abstract class VelocityEngineUtils {
 	 * @deprecated Use {@link #mergeTemplateIntoString(VelocityEngine, String, String, Map)}
 	 * instead, following Velocity 1.6's corresponding deprecation in its own API.
 	 */
-	@Deprecated
 	public static String mergeTemplateIntoString(VelocityEngine velocityEngine, String templateLocation,
 			Map<String, Object> model) throws VelocityException {
 
