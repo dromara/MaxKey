@@ -43,11 +43,10 @@
     </mvc:interceptors>
     <!-- BASIC Support End-->
     
-    <!-- KERBEROS Support Start-->
+    <!-- KERBEROS Support Start
     <bean id="kerberosService" class="org.maxkey.authn.support.kerberos.RemoteKerberosService">
         <property name="kerberosProxys" >
             <list>
-                <!-- default -->
                 <bean class="org.maxkey.authn.support.kerberos.KerberosProxy">
                     <property name="userdomain" value="${config.support.kerberos.default.userdomain}"/>
                     <property name="fullUserdomain" value="${config.support.kerberos.default.fulluserdomain}"/>
@@ -56,7 +55,7 @@
                 </bean>
             </list>
         </property>
-    </bean>
+    </bean>-->
     <!-- KERBEROS Support End-->
     
     <!-- WsFederation  Support Start -->
@@ -93,85 +92,7 @@
     </bean>
      -->
     <!-- WsFederation  Support End -->
-    
-    <!-- Social Sign On Support Start-->
-    <!-- Social Sign On Endpoint-->
-    <context:component-scan base-package="org.maxkey.web.authentication.support.socialsignon" />
-    
-    <bean id="socialSignOnWeibo" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
-        <property name="provider" value="${config.socialsignon.sinaweibo.provider}"/>
-        <property name="providerName" value="${config.socialsignon.sinaweibo.provider.name}"/>
-        <property name="icon" value="${config.socialsignon.sinaweibo.icon}"/>
-        <property name="clientId" value="${config.socialsignon.sinaweibo.client.id}"/>
-        <property name="clientSecret" value="${config.socialsignon.sinaweibo.client.secret}"/>
-        <property name="sortOrder" value="${config.socialsignon.sinaweibo.sortorder}"/>
-    </bean>
-    
-    <bean id="socialSignOnGoogle" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
-        <property name="provider" value="${config.socialsignon.google.provider}"/>
-        <property name="providerName" value="${config.socialsignon.google.provider.name}"/>
-        <property name="icon" value="${config.socialsignon.google.icon}"/>
-        <property name="clientId" value="${config.socialsignon.google.client.id}"/>
-        <property name="clientSecret" value="${config.socialsignon.google.client.secret}"/>
-        <property name="sortOrder" value="${config.socialsignon.google.sortorder}"/>
-    </bean>
-    
-    <bean id="socialSignOnQQ" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
-        <property name="provider" value="${config.socialsignon.qq.provider}"/>
-        <property name="providerName" value="${config.socialsignon.qq.provider.name}"/>
-        <property name="icon" value="${config.socialsignon.qq.icon}"/>
-        <property name="clientId" value="${config.socialsignon.qq.client.id}"/>
-        <property name="clientSecret" value="${config.socialsignon.qq.client.secret}"/>
-        <property name="sortOrder" value="${config.socialsignon.qq.sortorder}"/>
-    </bean>
-
-    <bean id="socialSignOnMicrosoft" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
-        <property name="provider" value="${config.socialsignon.microsoft.provider}"/>
-        <property name="providerName" value="${config.socialsignon.microsoft.provider.name}"/>
-        <property name="icon" value="${config.socialsignon.microsoft.icon}"/>
-        <property name="clientId" value="${config.socialsignon.microsoft.client.id}"/>
-        <property name="clientSecret" value="${config.socialsignon.microsoft.client.secret}"/>
-        <property name="sortOrder" value="${config.socialsignon.microsoft.sortorder}"/>
-    </bean>
-
-    <bean id="socialSignOnFacebook" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
-        <property name="provider" value="${config.socialsignon.facebook.provider}"/>
-        <property name="providerName" value="${config.socialsignon.facebook.provider.name}"/>
-        <property name="icon" value="${config.socialsignon.facebook.icon}"/>
-        <property name="clientId" value="${config.socialsignon.facebook.client.id}"/>
-        <property name="clientSecret" value="${config.socialsignon.facebook.client.secret}"/>
-        <property name="sortOrder" value="${config.socialsignon.facebook.sortorder}"/>
-    </bean> 
-    <bean id="socialSignOndingtalk" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider">
-        <property name="provider" value="${config.socialsignon.dingtalk.provider}"/>
-        <property name="providerName" value="${config.socialsignon.dingtalk.provider.name}"/>
-        <property name="icon" value="${config.socialsignon.dingtalk.icon}"/>
-        <property name="clientId" value="${config.socialsignon.dingtalk.client.id}"/>
-        <property name="clientSecret" value="${config.socialsignon.dingtalk.client.secret}"/>
-        <property name="sortOrder" value="${config.socialsignon.dingtalk.sortorder}"/>
-    </bean> 
-    
-    <!-- Add Your Providers Here -->
-    
-    <bean id="socialSignOnProviderService" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService">
-        <property name="socialSignOnProviders" >
-            <list>
-                <ref bean="socialSignOnWeibo" />
-                <ref bean="socialSignOnQQ"/>
-                <ref bean="socialSignOnGoogle"/>
-                <ref bean="socialSignOnMicrosoft"/>
-                <ref bean="socialSignOnFacebook"/>
-                <ref bean="socialSignOndingtalk"/>
-                <!-- ref Your Providers Here -->
-            </list>
-        </property>
-    </bean>
-    
-    <bean id="socialsAssociateService" class="org.maxkey.authn.support.socialsignon.service.JdbcSocialsAssociateService">
-        <constructor-arg ref="jdbcTemplate"/>
-    </bean>
-     <!-- Social Sign On Support End -->
-     
+ 
     <!-- Web URL InterceptorAdapter  -->
     <mvc:interceptors>
         <!-- InterceptorAdapter for platform permission  -->
@@ -238,20 +159,15 @@
         <ref bean="localeChangeInterceptor" />
     </mvc:interceptors>
 
-    <bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn">
-    </bean>
-    <!-- 
-    <bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnYunxin">
-    </bean>
-    -->
-    
-    <!-- for Forgot Password -->
+
+    <!-- for Forgot Password 
     <bean id="tfaMailOptAuthn" class="org.maxkey.crypto.password.opt.impl.MailOtpAuthn">
     </bean>
     
     <bean id="tfaMobileOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnYunxin">
     </bean>
-
+    -->
+    
     <!-- LDAP Realm 
     <bean id="authenticationRealm" class="org.maxkey.web.authentication.realm.ldap.LdapAuthenticationRealm">
         <constructor-arg ref="jdbcTemplate"/>
@@ -292,11 +208,14 @@
     </bean> -->
     
     <!-- Default Realm-->
-    <!-- realm use jdbc -->
+    <!-- realm use jdbc 
     <bean id="authenticationRealm" class="org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm">
         <constructor-arg ref="jdbcTemplate"/>
     </bean>
-   
+     <bean id="tfaOptAuthn" class="org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn">
+    </bean>
+    
+   -->
     <!-- enable autowire -->
     <context:annotation-config />
    

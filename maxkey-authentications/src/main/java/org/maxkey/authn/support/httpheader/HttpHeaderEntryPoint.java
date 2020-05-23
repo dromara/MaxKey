@@ -7,8 +7,6 @@ import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -17,8 +15,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 	private static final Logger _logger = LoggerFactory.getLogger(HttpHeaderEntryPoint.class);
 	
-	@Autowired 
-  	@Qualifier("httpHeaderSupport")
+	
 	HttpHeaderConfig httpHeaderSupport;
 	
 	String []skipRequestURI={
@@ -94,7 +91,16 @@ public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 		 return true;
 	}
 
-	public void setHttpHeaderSupport(HttpHeaderConfig httpHeaderSupport) {
+	 public HttpHeaderEntryPoint() {
+	        super();
+	 }
+	 
+	public HttpHeaderEntryPoint(HttpHeaderConfig httpHeaderSupport) {
+        super();
+        this.httpHeaderSupport = httpHeaderSupport;
+    }
+
+    public void setHttpHeaderSupport(HttpHeaderConfig httpHeaderSupport) {
 		this.httpHeaderSupport = httpHeaderSupport;
 	}
 	

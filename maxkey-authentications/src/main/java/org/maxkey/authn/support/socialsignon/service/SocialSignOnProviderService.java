@@ -78,8 +78,9 @@ public class SocialSignOnProviderService{
 			return ((AuthUser)authResponse.getData()).getUuid();
 		}else if(provider.equalsIgnoreCase("DingTalk")) {
 			return ((AuthUser)authResponse.getData()).getUuid();
+		}else {
+		    return ((AuthUser)authResponse.getData()).getUuid();
 		}
-		return null;
 	}
 	public List<SocialSignOnProvider> getSocialSignOnProviders() {
 		return socialSignOnProviders;

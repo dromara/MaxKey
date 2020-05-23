@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
@@ -24,7 +25,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @author Crystal.Sea
  *
  */
-
+@Component
 public class PermissionAdapter extends HandlerInterceptorAdapter {
     private static final Logger _logger = LoggerFactory.getLogger(PermissionAdapter.class);
     // 无需Interceptor url

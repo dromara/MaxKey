@@ -87,6 +87,13 @@ public class SocialSignOnProvider {
 	public void setUserBind(boolean userBind) {
 		this.userBind = userBind;
 	}
+
+    @Override
+    public String toString() {
+        return "SocialSignOnProvider [provider=" + provider + ", providerName=" + providerName + ", icon=" + icon
+                + ", clientId=" + clientId + ", clientSecret=" + clientSecret + ", accountId=" + accountId
+                + ", sortOrder=" + sortOrder + ", userBind=" + userBind + "]";
+    }
 	
 	
 

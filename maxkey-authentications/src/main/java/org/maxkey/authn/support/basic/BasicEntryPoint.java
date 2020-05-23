@@ -18,7 +18,16 @@ public class BasicEntryPoint extends HandlerInterceptorAdapter {
 	
 	boolean enable;
 	
-	String []skipRequestURI={
+	public BasicEntryPoint() {
+	    
+    }
+	
+	public BasicEntryPoint(boolean enable) {
+        super();
+        this.enable = enable;
+    }
+
+    String []skipRequestURI={
 			"/oauth/v20/token",
 			"/oauth/v10a/request_token",
 			"/oauth/v10a/access_token"

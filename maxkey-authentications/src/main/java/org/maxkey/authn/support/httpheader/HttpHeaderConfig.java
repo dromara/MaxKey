@@ -23,6 +23,11 @@ public class HttpHeaderConfig {
 	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
+    public HttpHeaderConfig(String headerName, boolean enable) {
+        super();
+        this.headerName = headerName;
+        this.enable = enable;
+    }
 	
 	
 }
