@@ -80,6 +80,7 @@ public class CasAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
 		WebContext.setAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS, casDetails);
 		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, casDetails.getId());
+		WebContext.setAttribute(AuthorizeBaseEndpoint.class.getName(),casDetails);
 		return WebContext.redirect("/authz/cas/granting");
 	}
 	

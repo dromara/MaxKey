@@ -1,4 +1,4 @@
-MaxKey v 1.5.0 GA	2020/**/**  
+﻿MaxKey v 2.0.0 RC1	2020/**/**  
 	*(MAXKEY-200601) RBAC 基于角色的访问控制(Role-Based Access Control )支持
 	*(MAXKEY-200602) 主题切换支持  黑色经典|薄荷清新|激情紫荆
 	*(MAXKEY-200603) 修复用户组访问权限删除问题

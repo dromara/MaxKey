@@ -193,9 +193,10 @@
             <mvc:mapping path="/authz/tokenbased/*"/>
             <mvc:mapping path="/authz/saml20/idpinit/*"/>
             <mvc:mapping path="/authz/saml20/assertion"/>
-            <mvc:mapping path="/authz/cas/login"/>
-            <mvc:mapping path="/authz/cas/granting"/>
-            <mvc:mapping path="/oauth/v20/authorize"/>
+            <mvc:mapping path="/authz/cas/*"/>
+            <mvc:mapping path="/authz/cas/*/*"/>
+            <mvc:mapping path="/authz/cas/granting/*"/>
+            <mvc:mapping path="/oauth/v20/authorize/*"/>
             
             <bean class="org.maxkey.web.interceptor.PermissionAdapter" />
         </mvc:interceptor> 
