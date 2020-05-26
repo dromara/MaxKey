@@ -10,6 +10,11 @@ import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
+import org.maxkey.authn.realm.ldap.LdapAuthenticationRealm;
+import org.maxkey.authn.realm.ldap.LdapServer;
+import org.maxkey.authn.realm.IAuthenticationServer;
+import org.maxkey.authn.realm.activedirectory.ActiveDirectoryAuthenticationRealm;
+import org.maxkey.authn.realm.activedirectory.ActiveDirectoryServer;
 import org.maxkey.authn.support.kerberos.KerberosProxy;
 import org.maxkey.authn.support.kerberos.RemoteKerberosService;
 import org.maxkey.authn.support.socialsignon.service.JdbcSocialsAssociateService;
@@ -21,6 +26,8 @@ import org.maxkey.crypto.password.opt.impl.MailOtpAuthn;
 import org.maxkey.crypto.password.opt.impl.SmsOtpAuthn;
 import org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn;
 import org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnYunxin;
+import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
+import org.maxkey.persistence.ldap.LdapUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -135,12 +142,58 @@ public class MaxKeyConfig  implements InitializingBean {
         _logger.debug("KeyUri Format " + keyUriFormat);
         return keyUriFormat;
     }
-
+    
+    //可以在此实现其他的登陆认证方式，请实现AbstractAuthenticationRealm
     @Bean(name = "authenticationRealm")
-    public JdbcAuthenticationRealm JdbcAuthenticationRealm(
+    public JdbcAuthenticationRealm authenticationRealm(
+                JdbcTemplate jdbcTemplate) {
+        JdbcAuthenticationRealm authenticationRealm = jdbcAuthenticationRealm(jdbcTemplate);
+        return authenticationRealm;
+    }
+    
+    //JdbcAuthenticationRealm
+    public JdbcAuthenticationRealm jdbcAuthenticationRealm(
                 JdbcTemplate jdbcTemplate) {
         JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(jdbcTemplate);
         _logger.debug("JdbcAuthenticationRealm inited.");
+        return authenticationRealm;
+    }
+    
+    //LdapAuthenticationRealm
+    public LdapAuthenticationRealm ldapAuthenticationRealm(
+                JdbcTemplate jdbcTemplate) {
+        LdapAuthenticationRealm authenticationRealm = new LdapAuthenticationRealm(jdbcTemplate);
+        LdapServer ldapServer=new LdapServer();
+        String providerUrl = "ldap://localhost:389";
+        String principal = "cn=root";
+        String credentials = "maxkey";
+        String baseDN = "dc=maxkey,dc=top";
+        LdapUtils ldapUtils = new LdapUtils(providerUrl,principal,credentials,baseDN);
+        ldapServer.setLdapUtils(ldapUtils);
+        ldapServer.setFilterAttribute("uid");
+        List<IAuthenticationServer> ldapServers = new ArrayList<IAuthenticationServer>();
+        ldapServers.add(ldapServer);
+        authenticationRealm.setLdapServers(ldapServers);
+        _logger.debug("LdapAuthenticationRealm inited.");
+        return authenticationRealm;
+    }
+    
+    //ActiveDirectoryAuthenticationRealm
+    public ActiveDirectoryAuthenticationRealm activeDirectoryAuthenticationRealm(
+                JdbcTemplate jdbcTemplate) {
+        ActiveDirectoryAuthenticationRealm authenticationRealm = new ActiveDirectoryAuthenticationRealm(jdbcTemplate);
+        ActiveDirectoryServer ldapServer=new ActiveDirectoryServer();
+        String providerUrl = "ldap://localhost:389";
+        String principal = "cn=root";
+        String credentials = "maxkey";
+        String domain = "maxkey";
+        ActiveDirectoryUtils ldapUtils = new ActiveDirectoryUtils(providerUrl,principal,credentials,domain);
+        ldapServer.setActiveDirectoryUtils(ldapUtils);
+        
+        List<IAuthenticationServer> ldapServers = new ArrayList<IAuthenticationServer>();
+        ldapServers.add(ldapServer);
+        authenticationRealm.setActiveDirectoryServers(ldapServers);
+        _logger.debug("LdapAuthenticationRealm inited.");
         return authenticationRealm;
     }
     

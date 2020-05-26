@@ -15,8 +15,9 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 	private static final Logger _logger = LoggerFactory.getLogger(HttpHeaderEntryPoint.class);
 	
-	
-	HttpHeaderConfig httpHeaderSupport;
+	String headerName;
+    boolean enable;
+    
 	
 	String []skipRequestURI={
 			"/oauth/v20/token",
@@ -27,7 +28,7 @@ public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 	 @Override
 	 public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 
-		 if(!httpHeaderSupport.isEnable()){
+		 if(!enable){
 			 return true;
 		 }
 		 String requestPath=request.getServletPath();
@@ -55,7 +56,7 @@ public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 		 }
 		 
 		 _logger.info("getSession.getId : "+ request.getSession().getId());
-		 String httpHeaderUsername = request.getHeader(httpHeaderSupport.getHeaderName());
+		 String httpHeaderUsername = request.getHeader(headerName);
 
 		 _logger.info("HttpHeader username : " + httpHeaderUsername);
 		
@@ -94,14 +95,28 @@ public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 	 public HttpHeaderEntryPoint() {
 	        super();
 	 }
-	 
-	public HttpHeaderEntryPoint(HttpHeaderConfig httpHeaderSupport) {
+
+    public HttpHeaderEntryPoint(String headerName, boolean enable) {
         super();
-        this.httpHeaderSupport = httpHeaderSupport;
+        this.headerName = headerName;
+        this.enable = enable;
     }
 
-    public void setHttpHeaderSupport(HttpHeaderConfig httpHeaderSupport) {
-		this.httpHeaderSupport = httpHeaderSupport;
-	}
+    public String getHeaderName() {
+        return headerName;
+    }
+
+    public void setHeaderName(String headerName) {
+        this.headerName = headerName;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+	 
 	
 }

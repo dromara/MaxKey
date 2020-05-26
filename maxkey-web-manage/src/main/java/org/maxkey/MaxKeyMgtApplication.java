@@ -53,11 +53,9 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 		_logger.info("MaxKeyMgt Server Port "+applicationContext.getBean(MaxKeyMgtConfig.class).getPort());
 		_logger.info("MaxKeyMgt started.");
 		
-		
 	}
 
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		
 		return application.sources(MaxKeyMgtApplication.class);
 	}
 

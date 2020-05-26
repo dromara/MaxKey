@@ -2,7 +2,6 @@ package org.maxkey.dao.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.dao.persistence.AppsFormBasedDetailsMapper;
-import org.maxkey.domain.apps.AppsCasDetails;
 import org.maxkey.domain.apps.AppsFormBasedDetails;
 import org.springframework.stereotype.Service;
 

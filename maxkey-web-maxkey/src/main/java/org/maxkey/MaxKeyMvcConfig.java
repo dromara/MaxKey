@@ -1,7 +1,6 @@
 package org.maxkey;
 
 import org.maxkey.authn.support.basic.BasicEntryPoint;
-import org.maxkey.authn.support.httpheader.HttpHeaderConfig;
 import org.maxkey.authn.support.httpheader.HttpHeaderEntryPoint;
 import org.maxkey.web.interceptor.HistoryLoginAppAdapter;
 import org.maxkey.web.interceptor.HistoryLogsAdapter;
@@ -76,11 +75,17 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/authz/desktop/*")
                 .addPathPatterns("/authz/formbased/*")
                 .addPathPatterns("/authz/tokenbased/*")
+                //SAML
                 .addPathPatterns("/authz/saml20/idpinit/*")
                 .addPathPatterns("/authz/saml20/assertion")
+                .addPathPatterns("/authz/saml20/assertion/")
+                //CAS
                 .addPathPatterns("/authz/cas/*")
                 .addPathPatterns("/authz/cas/*/*")
+                .addPathPatterns("/authz/cas/login")
+                .addPathPatterns("/authz/cas/login/")
                 .addPathPatterns("/authz/cas/granting/*")
+                //OAuth
                 .addPathPatterns("/oauth/v20/authorize")
                 .addPathPatterns("/oauth/v20/authorize/*")
                 ;
@@ -122,8 +127,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         _logger.debug("add LocaleChangeInterceptor");
         
         if(httpHeaderEnable) {
-            HttpHeaderConfig httpHeaderConfig= new HttpHeaderConfig(this.httpHeaderName,httpHeaderEnable);
-            registry.addInterceptor(new HttpHeaderEntryPoint(httpHeaderConfig))
+            registry.addInterceptor(new HttpHeaderEntryPoint(httpHeaderName,httpHeaderEnable))
                     .addPathPatterns("/*");
             _logger.debug("add HttpHeaderEntryPoint");
         }

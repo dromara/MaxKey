@@ -1,10 +1,8 @@
 package org.maxkey.dao.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.dao.persistence.GroupMemberMapper;
 import org.maxkey.domain.GroupMember;
-import org.maxkey.domain.UserInfo;
 import org.springframework.stereotype.Service;
 
 @Service
