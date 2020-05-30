@@ -25,6 +25,7 @@ import org.maxkey.authz.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
 import org.maxkey.authz.oidc.idtoken.OIDCIdTokenEnhancer;
 import org.maxkey.config.oidc.OIDCProviderMetadataDetails;
+import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
@@ -53,8 +54,8 @@ import com.nimbusds.jose.JWEAlgorithm;
         "org.maxkey.authz.oauth2.provider.userinfo.endpoint",
         "org.maxkey.authz.oauth2.provider.approval.controller"
 })
-@PropertySource("classpath:/application.properties")
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource(ConstantsProperties.applicationPropertySource)
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class Oauth20AutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(Oauth20AutoConfiguration.class);
     

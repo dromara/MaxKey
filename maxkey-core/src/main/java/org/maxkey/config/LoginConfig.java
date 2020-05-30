@@ -1,11 +1,12 @@
 package org.maxkey.config;
 
+import org.maxkey.constants.ConstantsProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class LoginConfig {
     @Value("${config.login.captcha}")
     boolean captcha;

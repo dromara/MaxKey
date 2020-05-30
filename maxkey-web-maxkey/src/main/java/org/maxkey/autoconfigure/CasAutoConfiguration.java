@@ -4,6 +4,7 @@ import org.maxkey.authz.cas.endpoint.ticket.service.InMemoryTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.service.JdbcTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.service.RedisTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
+import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @ComponentScan(basePackages = {
         "org.maxkey.authz.cas.endpoint"
 })
-@PropertySource("classpath:/application.properties")
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class CasAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(CasAutoConfiguration.class);
     

@@ -5,6 +5,7 @@ import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import java.io.IOException;
 import java.util.Properties;
+import org.maxkey.constants.ConstantsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -25,7 +26,8 @@ public class KaptchaAutoConfiguration  implements InitializingBean {
      */
     @Bean (name = "captchaProducer")
     public Producer captchaProducer() throws IOException {
-        Resource resource = new ClassPathResource("/kaptcha.properties");
+        Resource resource = new ClassPathResource(
+                ConstantsProperties.classPathResource(ConstantsProperties.kaptchaPropertySource));
         _logger.debug("Kaptcha config file " + resource.getURL());
         DefaultKaptcha  kaptcha = new DefaultKaptcha();
         Properties properties = new Properties();

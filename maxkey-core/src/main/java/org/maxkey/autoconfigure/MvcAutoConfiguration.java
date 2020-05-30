@@ -2,6 +2,8 @@ package org.maxkey.autoconfigure;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.maxkey.constants.ConstantsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -28,8 +30,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 
 @Configuration
-@PropertySource("classpath:/application.properties")
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource(ConstantsProperties.applicationPropertySource)
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class MvcAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MvcAutoConfiguration.class);
    

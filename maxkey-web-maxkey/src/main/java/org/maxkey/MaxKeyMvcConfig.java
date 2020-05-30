@@ -2,6 +2,7 @@ package org.maxkey;
 
 import org.maxkey.authn.support.basic.BasicEntryPoint;
 import org.maxkey.authn.support.httpheader.HttpHeaderEntryPoint;
+import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.web.interceptor.HistoryLoginAppAdapter;
 import org.maxkey.web.interceptor.HistoryLogsAdapter;
 import org.maxkey.web.interceptor.PermissionAdapter;
@@ -20,7 +21,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 @Configuration
 @EnableWebMvc
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class MaxKeyMvcConfig implements WebMvcConfigurer {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMvcConfig.class);
     @Autowired

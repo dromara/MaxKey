@@ -21,6 +21,7 @@ import org.maxkey.authn.support.socialsignon.service.JdbcSocialsAssociateService
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authz.oauth2.provider.endpoint.TokenEndpointAuthenticationFilter;
+import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.password.opt.algorithm.KeyUriFormat;
 import org.maxkey.crypto.password.opt.impl.MailOtpAuthn;
 import org.maxkey.crypto.password.opt.impl.SmsOtpAuthn;
@@ -50,8 +51,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 //@ImportResource(locations = { "classpath:spring/maxkey.xml" })
-@PropertySource("classpath:/application.properties")
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource(ConstantsProperties.applicationPropertySource)
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
 @MapperScan("org.maxkey.dao.persistence,")
 @ComponentScan(basePackages = {
         "org.maxkey.config",
@@ -74,13 +75,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class MaxKeyConfig  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyConfig.class);
     
-    @Value("${server.port:8080}")
-    private int port;
-
-    public int getPort() {
-        return port;
-    }
-
     @Bean
     public FilterRegistrationBean<TokenEndpointAuthenticationFilter> TokenEndpointAuthenticationFilter() {
         _logger.debug("TokenEndpointAuthenticationFilter init ");
@@ -250,7 +244,8 @@ public class MaxKeyConfig  implements InitializingBean {
     public SocialSignOnProviderService socialSignOnProviderService() throws IOException {
         SocialSignOnProviderService socialSignOnProviderService = new SocialSignOnProviderService();
         
-        Resource resource = new ClassPathResource("/config/applicationConfig.properties");
+        Resource resource = new ClassPathResource(
+                ConstantsProperties.classPathResource(ConstantsProperties.classPathResource(ConstantsProperties.maxKeyPropertySource)));
         Properties properties = new Properties();
         properties.load(resource.getInputStream());
         String [] providerList =properties.get("config.login.socialsignon.providers").toString().split(",");

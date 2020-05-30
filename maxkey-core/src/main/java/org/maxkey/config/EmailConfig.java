@@ -1,11 +1,12 @@
 package org.maxkey.config;
 
+import org.maxkey.constants.ConstantsProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:/application.properties")
+@PropertySource(ConstantsProperties.applicationPropertySource)
 public class EmailConfig {
 
     @Value("${spring.mail.username}")
