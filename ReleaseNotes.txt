@@ -18,6 +18,7 @@
 					log4j 2.13.3
 					font-awesome 4.7.0
 					tomcat-embed 9.0.35
+					mybatis-jpa-extra 2.1
 	
 MaxKey v 1.4.0 GA	2020/05/01  
 	*(MAXKEY-200501) 登录错误修复
