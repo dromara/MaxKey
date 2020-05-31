@@ -162,13 +162,6 @@ MySQL Server 5.5 +
 		</tr>
 		<tr>
 			<td></td>
-			<td>maxkey-web-manage</td>
-			<td></td>
-			<td></td>
-			<td>管理系统</td>
-		</tr>
-		<tr>
-			<td></td>
 			<td>maxkey-web-maxkey</td>
 			<td></td>
 			<td></td>
