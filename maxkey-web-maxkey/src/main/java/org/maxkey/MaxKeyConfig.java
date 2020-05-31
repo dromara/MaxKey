@@ -16,10 +16,13 @@ import org.maxkey.authn.support.kerberos.KerberosProxy;
 import org.maxkey.authn.support.kerberos.RemoteKerberosService;
 import org.maxkey.authz.oauth2.provider.endpoint.TokenEndpointAuthenticationFilter;
 import org.maxkey.constants.ConstantsProperties;
+import org.maxkey.crypto.password.opt.AbstractOptAuthn;
 import org.maxkey.crypto.password.opt.algorithm.KeyUriFormat;
 import org.maxkey.crypto.password.opt.impl.MailOtpAuthn;
 import org.maxkey.crypto.password.opt.impl.SmsOtpAuthn;
 import org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn;
+import org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnAliyun;
+import org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnTencentCloud;
 import org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnYunxin;
 import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
 import org.maxkey.persistence.ldap.LdapUtils;
@@ -180,26 +183,64 @@ public class MaxKeyConfig  implements InitializingBean {
         return authenticationRealm;
     }
     
+    //default tfaOptAuthn
     @Bean(name = "tfaOptAuthn")
-    public TimeBasedOtpAuthn tfaOptAuthn() {
-        TimeBasedOtpAuthn tfaOptAuthn = new TimeBasedOtpAuthn();
-        _logger.debug("TimeBasedOtpAuthn inited.");
-        return tfaOptAuthn;
+    public AbstractOptAuthn tfaOptAuthn(
+            @Value("${config.login.mfa.type}")String mfaType) {    
+        
+        if(mfaType.equalsIgnoreCase("SmsOtpAuthnAliyun")) {
+            SmsOtpAuthnAliyun tfaOptAuthn = new SmsOtpAuthnAliyun();
+            tfaOptAuthn.initPropertys();
+            _logger.debug("SmsOtpAuthnAliyun inited.");
+            return tfaOptAuthn;
+        }else if(mfaType.equalsIgnoreCase("SmsOtpAuthnTencentCloud")) {
+            SmsOtpAuthnTencentCloud tfaOptAuthn = new SmsOtpAuthnTencentCloud();
+            tfaOptAuthn.initPropertys();
+            _logger.debug("SmsOtpAuthnTencentCloud inited.");
+            return tfaOptAuthn;
+        }else if(mfaType.equalsIgnoreCase("SmsOtpAuthnYunxin")) {
+            SmsOtpAuthnYunxin tfaOptAuthn = new SmsOtpAuthnYunxin();
+            tfaOptAuthn.initPropertys();
+            _logger.debug("SmsOtpAuthnYunxin inited.");
+            return tfaOptAuthn;
+        }else {
+            TimeBasedOtpAuthn tfaOptAuthn = new TimeBasedOtpAuthn();
+            _logger.debug("TimeBasedOtpAuthn inited.");
+            return tfaOptAuthn;
+        }
     }
     
     @Bean(name = "tfaMailOptAuthn")
-    public MailOtpAuthn mailOtpAuthn() {
+    public MailOtpAuthn mailOtpAuthn(
+            @Value("${spring.mail.properties.mailotp.message.subject}")
+            String messageSubject,
+            @Value("${spring.mail.properties.mailotp.message.template}")
+            String messageTemplate
+            ) {
         MailOtpAuthn mailOtpAuthn = new MailOtpAuthn();
+        mailOtpAuthn.setSubject(messageSubject);
+        mailOtpAuthn.setMessageTemplate(messageTemplate);
         _logger.debug("tfaMailOptAuthn inited.");
         return mailOtpAuthn;
     }
     
     @Bean(name = "tfaMobileOptAuthn")
-    public SmsOtpAuthn smsOtpAuthn() {
-        SmsOtpAuthnYunxin smsOtpAuthn = new SmsOtpAuthnYunxin();
+    public SmsOtpAuthn smsOtpAuthn(@Value("${config.otp.sms}")String optSmsProvider) {
+        SmsOtpAuthn smsOtpAuthn = null;
+        
+        if(optSmsProvider.equalsIgnoreCase("SmsOtpAuthnAliyun")) {
+            smsOtpAuthn = new SmsOtpAuthnAliyun();
+        }else if(optSmsProvider.equalsIgnoreCase("SmsOtpAuthnTencentCloud")) {
+            smsOtpAuthn = new SmsOtpAuthnTencentCloud();
+        }else {
+            smsOtpAuthn = new SmsOtpAuthnYunxin();
+        }
+        smsOtpAuthn.initPropertys();
+        
         _logger.debug("SmsOtpAuthn inited.");
         return smsOtpAuthn;
     }
+    
     
     @Bean(name = "kerberosService")
     public RemoteKerberosService kerberosService(

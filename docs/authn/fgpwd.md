@@ -27,10 +27,17 @@
 2、电子邮件 
 
 
-<h2>短信验证码</h2>
+<h2>短信认证</h2>
+
+配置maxkey中maxkey.properties
+
+<pre><code class="ini hljs">
+#SmsOtpAuthnYunxin SmsOtpAuthnAliyun SmsOtpAuthnTencentCloud
+config.otp.sms=SmsOtpAuthnYunxin
+</code></pre>
 
 <h3>腾讯云短信</h3>
-配置maxkey中spring/maxkey-security.xml
+配置maxkey中maxkey.properties
 secretId 账号Appkey
 
 secretKey 密钥appSecret
@@ -41,19 +48,15 @@ templateId 短信模板ID
 
 sign 签名
 
-<pre><code class="xml hljs">
-&lt;bean id="tfaMobileOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnTencentCloud"&gt;
-	&lt;property name="secretId" value="94395d754eb55693043f5d6a2b772ef4" /&gt;
-	&lt;property name="secretKey" value="05d5485357bc" /&gt;
-	&lt;property name="smsSdkAppid" value="1486220095" /&gt;
-	&lt;property name="templateId" value="14860095" /&gt;
-	&lt;property name="sign" value="1486009522" /&gt;
-&lt;/bean&gt;
-
+<pre><code class="ini hljs">
+config.otp.sms.aliyun.accesskeyid=94395d754eb55693043f5d6a2b772ef4
+config.otp.sms.aliyun.accesssecret=05d5485357bc
+config.otp.sms.aliyun.templatecode=14860095
+config.otp.sms.aliyun.signname=maxkey
 </code></pre>
 
 <h3>阿里云短信</h3>
-配置maxkey中spring/maxkey-security.xml
+配置maxkey中maxkey.properties
 
 accessKeyId 账号Appkey
 
@@ -63,18 +66,16 @@ templateCode 短信模板ID
 
 signName 签名
 
-<pre><code class="xml hljs">
-&lt;bean id="tfaMobileOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnAliyun"&gt;
-	&lt;property name="accessKeyId" value="94395d754eb55693043f5d6a2b772ef3" /&gt;
-	&lt;property name="accessSecret" value="05d5485357bc" /&gt;
-	&lt;property name="templateCode" value="SMS_187590021" /&gt;
-	&lt;property name="signName" value="MaxKey" /&gt;
-&lt;/bean&gt;
-
+<pre><code class="ini hljs">
+config.otp.sms.tencentcloud.secretid=94395d754eb55693043f5d6a2b772ef4
+config.otp.sms.tencentcloud.secretkey=05d5485357bc
+config.otp.sms.tencentcloud.smssdkappid=1486220095
+config.otp.sms.tencentcloud.templateid=14860095
+config.otp.sms.tencentcloud.sign=1486009522
 </code></pre>
 
 <h3>网易云信</h3>
-配置maxkey中spring/maxkey-security.xml
+配置maxkey中maxkey.properties
 
 appKey 网易云信分配的账号Appkey
 
@@ -82,13 +83,10 @@ appSecret 网易云信分配的密钥appSecret
 
 templateId 短信模板ID
 
-<pre><code class="xml hljs">
-&lt;bean id="tfaMobileOptAuthn" class="org.maxkey.crypto.password.opt.impl.sms.SmsOtpAuthnYunxin"&gt;
-	&lt;property name="appKey" value="94395d754eb55693043f5d6a2b772ef4" /&gt;
-	&lt;property name="appSecret" value="05d5485357bc" /&gt;
-	&lt;property name="templateId" value="14860095" /&gt;
-&lt;/bean&gt;
-
+<pre><code class="ini hljs">
+config.otp.sms.yunxin.appkey=94395d754eb55693043f5d6a2b772ef4
+config.otp.sms.yunxin.appsecret=05d5485357bc
+config.otp.sms.yunxin.templateid=14860095
 </code></pre>
 
 <h2>电子邮件</h2>
@@ -96,28 +94,26 @@ templateId 短信模板ID
 配置邮箱地址
 
 文件
-maxkey/config/applicationConfig.properties
+maxkey/application.properties
 
 <pre><code class="ini hljs">
-#  EMAIL configuration
-config.email.username=maxkey@163.com
-config.email.password=password
-config.email.smtpHost=smtp.163.com
-config.email.port=465
-config.email.senderMail=maxkey@163.com
-config.email.ssl=true
+spring.mail.default-encoding=utf-8
+spring.mail.host=smtp.163.com
+spring.mail.port=465
+spring.mail.username=maxkey@163.com
+spring.mail.password=password
+spring.mail.protocol=smtp
+spring.mail.properties.ssl=true
+spring.mail.properties.sender=maxkey@163.com
 </code></pre>
 
-配置maxkey中spring/maxkey-security.xml
+配置maxkey中application.properties
 
 subject 邮件主题
 
 messageTemplate 邮件内容模板，请勿修改参数{0}为用户名，{1}认证码，{2}有效间隔
 
-<pre><code class="xml hljs">
-
-&lt;bean id="tfaMailOptAuthn" class="org.maxkey.crypto.password.opt.impl.MailOtpAuthn"&gt;
-	&lt;property name="subject" value="MaxKey One Time PassWord" /&gt;
-	&lt;property name="messageTemplate" value="{0} You Token is {1} , it validity in {2}  minutes." /&gt;
-&lt;/bean&gt;
+<pre><code class="ini hljs">
+spring.mail.properties.mailotp.message.subject=MaxKey One Time PassWord
+spring.mail.properties.mailotp.message.template={0} You Token is {1} , it validity in {2}  minutes.
 </code></pre>

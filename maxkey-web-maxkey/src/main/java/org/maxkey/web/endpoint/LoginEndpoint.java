@@ -128,8 +128,8 @@ public class LoginEndpoint {
 		if(!isAuthenticated){
 			modelAndView.addObject("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
 			modelAndView.addObject("isKerberos", applicationConfig.getLoginConfig().isKerberos());
-			modelAndView.addObject("isOneTimePwd", applicationConfig.getLoginConfig().isOneTimePwd());
-			if(applicationConfig.getLoginConfig().isOneTimePwd()) {
+			modelAndView.addObject("isMfa", applicationConfig.getLoginConfig().isMfa());
+			if(applicationConfig.getLoginConfig().isMfa()) {
 			    modelAndView.addObject("optType", tfaOptAuthn.getOptType());
 			    modelAndView.addObject("optInterval", tfaOptAuthn.getInterval());
 			}

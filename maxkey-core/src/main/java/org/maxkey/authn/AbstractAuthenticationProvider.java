@@ -188,7 +188,7 @@ public abstract class AbstractAuthenticationProvider {
      */
     protected void tftcaptchaValid(String otpCaptcha, String authType, UserInfo userInfo) {
         // for one time password 2 factor
-        if (applicationConfig.getLoginConfig().isOneTimePwd() && authType.equalsIgnoreCase("tfa")) {
+        if (applicationConfig.getLoginConfig().isMfa() && authType.equalsIgnoreCase("tfa")) {
             UserInfo validUserInfo = new UserInfo();
             validUserInfo.setUsername(userInfo.getUsername());
             String sharedSecret = 

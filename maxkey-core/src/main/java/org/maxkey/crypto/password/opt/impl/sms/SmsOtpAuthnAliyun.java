@@ -6,6 +6,9 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+
+import java.io.IOException;
+
 import org.maxkey.crypto.password.opt.impl.SmsOtpAuthn;
 import org.maxkey.domain.UserInfo;
 import org.slf4j.Logger;
@@ -108,6 +111,20 @@ public class SmsOtpAuthnAliyun extends SmsOtpAuthn {
 
     public void setSignName(String signName) {
         this.signName = signName;
+    }
+    
+    @Override
+    public void initPropertys() {
+        try {
+            this.loadProperties();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        this.accessKeyId = this.properties.getProperty("config.otp.sms.aliyun.accesskeyid");
+        this.accessSecret = this.properties.getProperty("config.otp.sms.aliyun.accesssecret");
+        this.templateCode = this.properties.getProperty("config.otp.sms.aliyun.templatecode");
+        this.signName = this.properties.getProperty("config.otp.sms.aliyun.signname");
     }
     
 }
