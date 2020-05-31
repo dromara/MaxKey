@@ -19,7 +19,7 @@
 
 <h3>认证配置</h3>
 文件
-maxkey/config/applicationConfig.properties
+maxkey/maxkey.properties
 
 <pre><code class="ini hljs">
 #enable social sign on
@@ -40,25 +40,13 @@ config.socialsignon.sinaweibo.account.id=id
 config.socialsignon.sinaweibo.sortorder=1
 </code></pre>
 
-配置maxkey/spring/maxkey.xml
+配置maxkey/maxkey.properties
 
-<pre><code class="xml hljs">
-&lt;bean id="socialSignOnWeibo" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider"&gt;
-	&lt;property name="provider" value="${config.socialsignon.sinaweibo.provider}"/&gt;
-	&lt;property name="providerName" value="${config.socialsignon.sinaweibo.provider.name}"/&gt;
-	&lt;property name="icon" value="${config.socialsignon.sinaweibo.icon}"/&gt;
-	&lt;property name="clientId" value="${config.socialsignon.sinaweibo.client.id}"/&gt;
-	&lt;property name="clientSecret" value="${config.socialsignon.sinaweibo.client.secret}"/&gt;
-	&lt;property name="sortOrder" value="${config.socialsignon.sinaweibo.sortorder}"/&gt;
-&lt;/bean&gt;
-
-&lt;bean id="socialSignOnProviderService" class="org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService"&gt;
-	&lt;property name="socialSignOnProviders" &gt;
-		&lt;list&gt;
-			&lt;ref bean="socialSignOnWeibo" /&gt;
-		&lt;/list&gt;
-	&lt;/property&gt;
-&lt;/bean&gt;
+<pre><code class="ini hljs">
+#enable social sign on
+config.login.socialsignon=true
+#social sign on providers
+config.login.socialsignon.providers=sinaweibo,google,qq,dingtalk,microsoft,facebook
 </code></pre>
 
 <h3>账号绑定</h3>

@@ -5,12 +5,12 @@
 	*(MAXKEY-200604) 修复用户组访问权限删除问题
 	*(MAXKEY-200605) Javascript验证及AJAX提交优化
 	*(MAXKEY-200606) DAO层整合
-	*(MAXKEY-200607) 社交账号关联调整
+	*(MAXKEY-200607) 社交账号关联调整及优化
 	*(MAXKEY-200608) 数据库表字段的注释修复
 	*(MAXKEY-200609) 官方网站优化
 	*(MAXKEY-200610) properties优化
 	*(MAXKEY-200611) 访问控制修复，访问重定向的问题修复
-	*(MAXKEY-200607) 依赖jar升级,消除非必要依赖
+	*(MAXKEY-200612) 依赖jar升级,消除非必要依赖
 	                spring 5.2.6.RELEASE
 					springBoot 2.3.0.RELEASE
 					springSecurity 5.3.2.RELEASE
