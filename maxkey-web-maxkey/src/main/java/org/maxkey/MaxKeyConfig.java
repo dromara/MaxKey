@@ -186,7 +186,8 @@ public class MaxKeyConfig  implements InitializingBean {
     //default tfaOptAuthn
     @Bean(name = "tfaOptAuthn")
     public AbstractOptAuthn tfaOptAuthn(
-            @Value("${config.login.mfa.type}")String mfaType) {    
+            @Value("${config.login.mfa.type}")String mfaType,
+            MailOtpAuthn tfaMailOptAuthn) {    
         
         if(mfaType.equalsIgnoreCase("SmsOtpAuthnAliyun")) {
             SmsOtpAuthnAliyun tfaOptAuthn = new SmsOtpAuthnAliyun();
@@ -203,6 +204,9 @@ public class MaxKeyConfig  implements InitializingBean {
             tfaOptAuthn.initPropertys();
             _logger.debug("SmsOtpAuthnYunxin inited.");
             return tfaOptAuthn;
+        }else if(mfaType.equalsIgnoreCase("MailOtpAuthn")) {
+            _logger.debug("MailOtpAuthn inited.");
+            return tfaMailOptAuthn;
         }else {
             TimeBasedOtpAuthn tfaOptAuthn = new TimeBasedOtpAuthn();
             _logger.debug("TimeBasedOtpAuthn inited.");
