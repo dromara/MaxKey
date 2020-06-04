@@ -43,16 +43,21 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/orgs/**")
                 .addPathPatterns("/userinfo/**")
                 .addPathPatterns("/apps/**")
+                .addPathPatterns("/app/accounts/**")
                 .addPathPatterns("/groups/**")
                 .addPathPatterns("/groupMember/**")
                 .addPathPatterns("/groupPrivileges/**")
+                .addPathPatterns("/roles/**")
+                .addPathPatterns("/rolemembers/**")
+                .addPathPatterns("/resources/**")
+                .addPathPatterns("/permissions/**")
                 .addPathPatterns("/config/**")
                 .addPathPatterns("/logs/**")
                 ;
+        
         _logger.debug("add PermissionAdapter");
         
         registry.addInterceptor(historyLogsAdapter)
-                .addPathPatterns("/users/*")
                 .addPathPatterns("/userinfo/**")
                 .addPathPatterns("/enterprises/**")
                 .addPathPatterns("/employees/**")
@@ -64,6 +69,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/approles/**")
                 ;
         _logger.debug("add HistoryLogsAdapter");
+        
         registry.addInterceptor(localeChangeInterceptor);
         _logger.debug("add LocaleChangeInterceptor");
         

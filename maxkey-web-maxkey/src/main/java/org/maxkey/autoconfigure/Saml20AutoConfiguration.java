@@ -17,6 +17,7 @@ import org.maxkey.authz.saml20.binding.impl.PostBindingAdapter;
 import org.maxkey.authz.saml20.binding.impl.PostSimpleSignBindingAdapter;
 import org.maxkey.authz.saml20.provider.xml.AuthnResponseGenerator;
 import org.maxkey.authz.saml20.xml.SAML2ValidatorSuite;
+import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.domain.Saml20Metadata;
 import org.opensaml.common.binding.security.IssueInstantRule;
@@ -40,8 +41,8 @@ import org.springframework.ui.velocity.VelocityEngineFactoryBean;
         "org.maxkey.authz.saml20.provider.endpoint",
         "org.maxkey.authz.saml20.metadata.endpoint",
 })
-@PropertySource("classpath:/application.properties")
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource(ConstantsProperties.applicationPropertySource)
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class Saml20AutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(Saml20AutoConfiguration.class);
     

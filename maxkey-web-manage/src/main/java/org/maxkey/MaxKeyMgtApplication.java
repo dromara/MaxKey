@@ -2,6 +2,8 @@ package org.maxkey;
 
 import java.util.Date;
 import javax.servlet.ServletException;
+
+import org.maxkey.config.ApplicationConfig;
 import org.maxkey.web.InitializeContext;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -50,14 +52,12 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 			_logger.error("",e);
 		}
 		_logger.info("MaxKeyMgt at "+new Date(applicationContext.getStartupDate()));
-		_logger.info("MaxKeyMgt Server Port "+applicationContext.getBean(MaxKeyMgtConfig.class).getPort());
+		_logger.info("MaxKeyMgt Server Port "+applicationContext.getBean(ApplicationConfig.class).getPort());
 		_logger.info("MaxKeyMgt started.");
-		
 		
 	}
 
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		
 		return application.sources(MaxKeyMgtApplication.class);
 	}
 

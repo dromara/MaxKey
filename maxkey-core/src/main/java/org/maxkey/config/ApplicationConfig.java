@@ -1,5 +1,6 @@
 package org.maxkey.config;
 
+import org.maxkey.constants.ConstantsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
+@PropertySource(ConstantsProperties.applicationPropertySource)
 public class ApplicationConfig {
     private static final Logger _logger = LoggerFactory.getLogger(ApplicationConfig.class);
 
@@ -47,6 +49,16 @@ public class ApplicationConfig {
     @Value("${config.server.management.uri}")
     String managementUri;
 
+    @Value("${server.port:8080}")
+    private int port;
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
     /*
      * //is enable whiteList for ipAddress filter boolean whiteList;
      * 

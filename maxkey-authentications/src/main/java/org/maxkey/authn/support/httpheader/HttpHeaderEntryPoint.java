@@ -7,8 +7,6 @@ import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -17,9 +15,9 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 	private static final Logger _logger = LoggerFactory.getLogger(HttpHeaderEntryPoint.class);
 	
-	@Autowired 
-  	@Qualifier("httpHeaderSupport")
-	HttpHeaderConfig httpHeaderSupport;
+	String headerName;
+    boolean enable;
+    
 	
 	String []skipRequestURI={
 			"/oauth/v20/token",
@@ -30,7 +28,7 @@ public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 	 @Override
 	 public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 
-		 if(!httpHeaderSupport.isEnable()){
+		 if(!enable){
 			 return true;
 		 }
 		 String requestPath=request.getServletPath();
@@ -58,7 +56,7 @@ public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 		 }
 		 
 		 _logger.info("getSession.getId : "+ request.getSession().getId());
-		 String httpHeaderUsername = request.getHeader(httpHeaderSupport.getHeaderName());
+		 String httpHeaderUsername = request.getHeader(headerName);
 
 		 _logger.info("HttpHeader username : " + httpHeaderUsername);
 		
@@ -94,8 +92,31 @@ public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 		 return true;
 	}
 
-	public void setHttpHeaderSupport(HttpHeaderConfig httpHeaderSupport) {
-		this.httpHeaderSupport = httpHeaderSupport;
-	}
+	 public HttpHeaderEntryPoint() {
+	        super();
+	 }
+
+    public HttpHeaderEntryPoint(String headerName, boolean enable) {
+        super();
+        this.headerName = headerName;
+        this.enable = enable;
+    }
+
+    public String getHeaderName() {
+        return headerName;
+    }
+
+    public void setHeaderName(String headerName) {
+        this.headerName = headerName;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+	 
 	
 }

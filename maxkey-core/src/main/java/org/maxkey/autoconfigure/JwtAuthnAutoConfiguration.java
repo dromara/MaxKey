@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.config.oidc.OIDCProviderMetadataDetails;
+import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
@@ -21,8 +22,8 @@ import org.springframework.core.io.ClassPathResource;
 
 
 @Configuration
-@PropertySource("classpath:/application.properties")
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource(ConstantsProperties.applicationPropertySource)
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class JwtAuthnAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(JwtAuthnAutoConfiguration.class);
     

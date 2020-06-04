@@ -54,7 +54,7 @@ function formatTime(){
 	strTime+=(seconds<10?"0"+seconds:seconds);
 }
 
-<#if true==isOneTimePwd && "TOPT"==optType>
+<#if true==isMfa && "TOPT"==optType>
 function currentTime(){
 	seconds++;
 	if(seconds>59){
@@ -119,7 +119,7 @@ document.onkeydown=function(event){
 };
 	
 $(function(){
-	<#if true==isOneTimePwd && "TOPT"==optType>
+	<#if true==isMfa && "TOPT"==optType>
 	setInterval("currentTime()", 1000);
 	</#if>
 	<#--on captcha image click ,new a captcha code-->
@@ -261,7 +261,7 @@ $(function(){
 								<td><@locale code="login.text.password"/>：</td>
 								<td><input required="" class="form-control"  type='password' id='tfa_j_password'  name='password' value=""  tabindex="2" /></td>
 							</tr>
-							<#if true==isOneTimePwd >
+							<#if true==isMfa >
 							<#if "TOPT"==optType >
 							<tr>
 								<td><@locale code="login.text.currenttime"/>：</td>

@@ -1,5 +1,6 @@
 package org.maxkey.autoconfigure;
 
+import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
-@PropertySource("classpath:/application.properties")
+@PropertySource(ConstantsProperties.applicationPropertySource)
 public class RedisAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(RedisAutoConfiguration.class);
     

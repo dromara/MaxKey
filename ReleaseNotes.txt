@@ -1,12 +1,24 @@
-MaxKey v 1.5.0 GA	2020/**/**  
+﻿MaxKey v 2.0.0 RC1	2020/06/01 
 	*(MAXKEY-200601) RBAC 基于角色的访问控制(Role-Based Access Control )支持
-	*(MAXKEY-200602) 主题切换支持  黑色经典|薄荷清新|激情紫荆
-	*(MAXKEY-200603) 修复用户组访问权限删除问题
-	*(MAXKEY-200604) Javascript验证及AJAX提交优化
-	*(MAXKEY-200605) DAO层整合
-	*(MAXKEY-200606) 社交账号关联调整
-	*(MAXKEY-200607) 数据库表字段的注释修复
-	*(MAXKEY-200608) 官方网站优化
+	*(MAXKEY-200602) xml配置改为Spring annotation，提升模块间的组件化
+	*(MAXKEY-200603) 管理MGT界面优化及增加菜单图标，认证Maxkey主题切换支持-黑色经典|薄荷清新|激情紫荆
+	*(MAXKEY-200604) 修复用户组访问权限删除问题
+	*(MAXKEY-200605) Javascript验证及AJAX提交优化
+	*(MAXKEY-200606) DAO层整合
+	*(MAXKEY-200607) 社交账号关联调整及优化
+	*(MAXKEY-200608) 数据库表字段的注释修复
+	*(MAXKEY-200609) 官方网站优化
+	*(MAXKEY-200610) properties优化
+	*(MAXKEY-200611) 访问控制修复，访问重定向的问题修复
+	*(MAXKEY-200612) 依赖jar升级,消除非必要依赖
+	                spring 5.2.6.RELEASE
+					springBoot 2.3.0.RELEASE
+					springSecurity 5.3.2.RELEASE
+					jackson  2.11.0
+					log4j 2.13.3
+					font-awesome 4.7.0
+					tomcat-embed 9.0.35
+					mybatis-jpa-extra 2.1
 	
 MaxKey v 1.4.0 GA	2020/05/01  
 	*(MAXKEY-200501) 登录错误修复
@@ -36,7 +48,7 @@ MaxKey v 1.4.0 GA	2020/05/01
 						bootstrap 4.4.1
 						bootstrap-table v1.16.0
 						jquery 3.5.0
-	
+
 MaxKey v 1.3.0 GA   2020/04/04  
 	*(MAXKEY-200401) 记住登录修复，RememberMe fix
 	*(MAXKEY-200402) 应用账号配置修复

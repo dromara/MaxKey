@@ -6,6 +6,9 @@ import com.tencentcloudapi.common.profile.HttpProfile;
 import com.tencentcloudapi.sms.v20190711.SmsClient;
 import com.tencentcloudapi.sms.v20190711.models.SendSmsRequest;
 import com.tencentcloudapi.sms.v20190711.models.SendSmsResponse;
+
+import java.io.IOException;
+
 import org.maxkey.crypto.password.opt.impl.SmsOtpAuthn;
 import org.maxkey.domain.UserInfo;
 import org.slf4j.Logger;
@@ -151,6 +154,21 @@ public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+    
+    @Override
+    public void initPropertys() {
+        try {
+            this.loadProperties();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        this.secretId = this.properties.getProperty("config.otp.sms.tencentcloud.secretid");
+        this.secretKey = this.properties.getProperty("config.otp.sms.tencentcloud.secretkey");
+        this.smsSdkAppid = this.properties.getProperty("config.otp.sms.tencentcloud.smssdkappid");
+        this.templateId = this.properties.getProperty("config.otp.sms.tencentcloud.templateid");
+        this.sign = this.properties.getProperty("config.otp.sms.tencentcloud.sign");
     }
     
 }

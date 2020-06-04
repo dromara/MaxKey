@@ -1,7 +1,7 @@
 package org.maxkey.web;
 
 /**
- * Web Application Constants define
+ * Web Application Constants define.
  * 
  * @author Crystal.Sea
  *
@@ -32,9 +32,7 @@ public class WebConstants {
     public static final  String CURRENT_MESSAGE = "current_message";
 
     // SPRING_SECURITY_SAVED_REQUEST
-    public static final  String SPRING_PROCESS_SAVED_REQUEST = "SPRING_SECURITY_SAVED_REQUEST";
-
-    public static final  String FIRST_SAVED_REQUEST_PARAMETER = "first_saved_request_parameter";
+    public static final  String FIRST_SAVED_REQUEST_PARAMETER = "SPRING_SECURITY_SAVED_REQUEST";
 
     public static final  String KAPTCHA_SESSION_KEY = "kaptcha_session_key";
 

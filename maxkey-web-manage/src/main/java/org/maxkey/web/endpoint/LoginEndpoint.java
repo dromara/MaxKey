@@ -14,9 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -87,18 +84,7 @@ public class LoginEndpoint {
 			modelAndView.addObject("isCaptcha", applicationConfig.getLoginConfig().isCaptcha());
 			modelAndView.addObject("sessionid", WebContext.getSession().getId());
 		}
-		//save  first protected url 
-		SavedRequest  firstSavedRequest = (SavedRequest)WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
-		if(firstSavedRequest==null){
-			RequestCache requestCache = new HttpSessionRequestCache();
-			SavedRequest  savedRequest =requestCache.getRequest(request, response);
-			if(savedRequest!=null){
-				_logger.debug("first request parameter "+savedRequest.getRedirectUrl());
-				WebContext.setAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER, savedRequest);
-			}
-		}else {
-			WebContext.setAttribute(WebConstants.SPRING_PROCESS_SAVED_REQUEST, firstSavedRequest);
-		}
+		
 		if(WebContext.isAuthenticated()){
  			return WebContext.redirect("/main");
 		}

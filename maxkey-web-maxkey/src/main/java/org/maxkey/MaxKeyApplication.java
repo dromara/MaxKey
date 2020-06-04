@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.servlet.ServletException;
 import org.apache.ibatis.io.VFS;
 import org.apache.mybatis.jpa.SpringBootVFS;
+import org.maxkey.config.ApplicationConfig;
 import org.maxkey.web.InitializeContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
         }
         _logger.info("MaxKey at " + new Date(applicationContext.getStartupDate()));
         _logger.info("MaxKey Server Port "
-                +   applicationContext.getBean(MaxKeyConfig.class).getPort());
+                +   applicationContext.getBean(ApplicationConfig.class).getPort());
         _logger.info("MaxKey started.");
     }
 

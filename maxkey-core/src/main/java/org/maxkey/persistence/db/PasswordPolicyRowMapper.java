@@ -2,7 +2,6 @@ package org.maxkey.persistence.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.maxkey.domain.PasswordPolicy;
 import org.springframework.jdbc.core.RowMapper;
 

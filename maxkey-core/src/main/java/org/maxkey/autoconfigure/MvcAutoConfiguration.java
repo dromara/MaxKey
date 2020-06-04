@@ -1,7 +1,10 @@
 package org.maxkey.autoconfigure;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.maxkey.constants.ConstantsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -16,6 +19,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -28,8 +32,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 
 @Configuration
-@PropertySource("classpath:/application.properties")
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource(ConstantsProperties.applicationPropertySource)
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class MvcAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MvcAutoConfiguration.class);
    
@@ -149,6 +153,17 @@ public class MvcAutoConfiguration implements InitializingBean {
     }
     
     /**
+     * stringHttpMessageConverter .
+     * @return stringHttpMessageConverter
+     */
+    @Bean (name = "stringHttpMessageConverter")
+    public HttpMessageConverter<String> responseBodyConverter() {
+        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter(
+                Charset.forName("UTF-8"));
+        return stringHttpMessageConverter;
+    }
+    
+    /**
      * AnnotationMethodHandlerAdapter
      * requestMappingHandlerAdapter .
      * @return requestMappingHandlerAdapter
@@ -156,13 +171,16 @@ public class MvcAutoConfiguration implements InitializingBean {
     @Bean (name = "requestMappingHandlerAdapter")
     public RequestMappingHandlerAdapter requestMappingHandlerAdapter(
             MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter,
-            MarshallingHttpMessageConverter marshallingHttpMessageConverter) {
+            MarshallingHttpMessageConverter marshallingHttpMessageConverter,
+            StringHttpMessageConverter stringHttpMessageConverter) {
+        
         RequestMappingHandlerAdapter requestMappingHandlerAdapter = 
                 new RequestMappingHandlerAdapter();
         List<HttpMessageConverter<?>> httpMessageConverterList = 
                 new ArrayList<HttpMessageConverter<?>>();
         httpMessageConverterList.add(mappingJacksonHttpMessageConverter);
         httpMessageConverterList.add(marshallingHttpMessageConverter);
+        httpMessageConverterList.add(stringHttpMessageConverter);
         requestMappingHandlerAdapter.setMessageConverters(httpMessageConverterList);
         return requestMappingHandlerAdapter;
     }

@@ -9,6 +9,7 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.InMemoryRemeberMeService;
 import org.maxkey.authn.support.rememberme.JdbcRemeberMeService;
 import org.maxkey.authn.support.rememberme.RedisRemeberMeService;
+import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
@@ -31,8 +32,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
-@PropertySource("classpath:/application.properties")
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource(ConstantsProperties.applicationPropertySource)
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class ApplicationAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = 
             LoggerFactory.getLogger(ApplicationAutoConfiguration.class);
@@ -53,8 +54,11 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer()
             throws IOException {
         ClassPathResource classPathResource1 = 
-                new ClassPathResource("/config/applicationConfig.properties");
-        ClassPathResource classPathResource2 = new ClassPathResource("/application.properties");
+                new ClassPathResource(ConstantsProperties.classPathResource(
+                        ConstantsProperties.applicationPropertySource));
+        ClassPathResource classPathResource2 = 
+                new ClassPathResource(ConstantsProperties.classPathResource(
+                        ConstantsProperties.maxKeyPropertySource));
 
         PropertySourcesPlaceholderConfigurer configurer = 
                 new PropertySourcesPlaceholderConfigurer();

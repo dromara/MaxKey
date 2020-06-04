@@ -14,7 +14,7 @@
 <h3>验证码配置</h3>
 
 文件
-maxkey/config/applicationConfig.properties
+maxkey/maxkey.properties
 
 <pre><code class="ini hljs">
 #是否支持验证码
@@ -27,7 +27,7 @@ config.login.captcha.type=text
 MaxKey使用kaptcha作为验证码的插件，详细可参考Kaptchar详细配置表
 
 文件
-maxkey/config/kaptcha.properties
+maxkey/kaptcha.properties
 
 默认配置如下
 

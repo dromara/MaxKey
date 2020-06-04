@@ -1,5 +1,6 @@
 package org.maxkey.crypto.password.opt.impl.sms;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -182,6 +183,19 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
             this.obj = obj;
         }
         
+    }
+    
+    @Override
+    public void initPropertys() {
+        try {
+            this.loadProperties();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        this.appKey = this.properties.getProperty("config.otp.sms.yunxin.appkey");
+        this.appSecret = this.properties.getProperty("config.otp.sms.yunxin.appsecret");
+        this.templateId = this.properties.getProperty("config.otp.sms.yunxin.templateid");
     }
     
     /**

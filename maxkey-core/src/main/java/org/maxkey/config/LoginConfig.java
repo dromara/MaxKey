@@ -1,11 +1,12 @@
 package org.maxkey.config;
 
+import org.maxkey.constants.ConstantsProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:/config/applicationConfig.properties")
+@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class LoginConfig {
     @Value("${config.login.captcha}")
     boolean captcha;
@@ -14,8 +15,8 @@ public class LoginConfig {
     @Value("${config.login.captcha.type:text}")
     String captchaType;
     
-    @Value("${config.login.onetimepwd}")
-    boolean oneTimePwd;
+    @Value("${config.login.mfa}")
+    boolean mfa;
     
     @Value("${config.login.socialsignon}")
     boolean socialSignOn;
@@ -47,14 +48,6 @@ public class LoginConfig {
         this.captcha = captcha;
     }
 
-    public boolean isOneTimePwd() {
-        return oneTimePwd;
-    }
-
-    public void setOneTimePwd(boolean oneTimePwd) {
-        this.oneTimePwd = oneTimePwd;
-    }
-
     public boolean isSocialSignOn() {
         return socialSignOn;
     }
@@ -69,6 +62,14 @@ public class LoginConfig {
 
     public void setKerberos(boolean kerberos) {
         this.kerberos = kerberos;
+    }
+
+    public boolean isMfa() {
+        return mfa;
+    }
+
+    public void setMfa(boolean mfa) {
+        this.mfa = mfa;
     }
 
     public String getDefaultUri() {
@@ -108,7 +109,7 @@ public class LoginConfig {
         StringBuilder builder = new StringBuilder();
         builder
             .append("LoginConfig [captcha=").append(captcha)
-            .append(", oneTimePwd=").append(oneTimePwd)
+            .append(", mfa=").append(mfa)
             .append(", socialSignOn=").append(socialSignOn)
             .append(", kerberos=").append(kerberos)
             .append(", remeberMe=").append(remeberMe)
