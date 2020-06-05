@@ -40,12 +40,13 @@ public class AuthorizeBaseEndpoint {
 		Apps  app=(Apps)WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
 		//session中为空或者id不一致重新加载
 		if(app==null||!app.getId().equalsIgnoreCase(id)) {
-			app=appsService.get(id);		
+			app=appsService.get(id);
+			WebContext.setAttribute(AuthorizeBaseEndpoint.class.getName(), app);
 		}
 		if(app	==	null){
 			_logger.error("Applications for id "+id + "  is null");
 		}
-		WebContext.setAttribute(AuthorizeBaseEndpoint.class.getName(), app);
+		
 		return app;
 	}
 	
