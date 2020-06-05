@@ -54,288 +54,289 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JdbcClientDetailsService implements ClientDetailsService, ClientRegistrationService {
 
-	private static final Log logger = LogFactory.getLog(JdbcClientDetailsService.class);
+    private static final Log logger = LogFactory.getLog(JdbcClientDetailsService.class);
 
-	private JsonMapper mapper = createJsonMapper();
+    private JsonMapper mapper = createJsonMapper();
 
-	private static final String CLIENT_FIELDS_FOR_UPDATE = "RESOURCE_IDS, SCOPE, "
-			+ "AUTHORIZED_GRANT_TYPES, WEB_SERVER_REDIRECT_URI, AUTHORITIES, ACCESS_TOKEN_VALIDITY, "
-			+ "REFRESH_TOKEN_VALIDITY, ADDITIONAL_INFORMATION, AUTOAPPROVE, "
-			+ "IDTOKENSIGNINGALGORITHM, IDTOKENENCRYPTEDALGORITHM, IDTOKENENCRYPTIONMETHOD, "
-			+ "USERINFOSIGNINGALGORITHM, USERINFOCRYPTEDALGORITHM, USERINFOENCRYPTIONMETHOD, JWKSURI";
+    private static final String CLIENT_FIELDS_FOR_UPDATE = "RESOURCE_IDS, SCOPE, "
+            + "AUTHORIZED_GRANT_TYPES, WEB_SERVER_REDIRECT_URI, AUTHORITIES, ACCESS_TOKEN_VALIDITY, "
+            + "REFRESH_TOKEN_VALIDITY, ADDITIONAL_INFORMATION, AUTOAPPROVE, "
+            + "IDTOKENSIGNINGALGORITHM, IDTOKENENCRYPTEDALGORITHM, IDTOKENENCRYPTIONMETHOD, "
+            + "USERINFOSIGNINGALGORITHM, USERINFOCRYPTEDALGORITHM, USERINFOENCRYPTIONMETHOD, JWKSURI";
 
-	private static final String CLIENT_FIELDS = "client_secret, " + CLIENT_FIELDS_FOR_UPDATE;
+    private static final String CLIENT_FIELDS = "client_secret, " + CLIENT_FIELDS_FOR_UPDATE;
 
-	private static final String BASE_FIND_STATEMENT = "select client_id, " + CLIENT_FIELDS
-			+ " from apps_oauth_client_details";
+    private static final String BASE_FIND_STATEMENT = "select client_id, " + CLIENT_FIELDS
+            + " from apps_oauth_client_details";
 
-	private static final String DEFAULT_FIND_STATEMENT = BASE_FIND_STATEMENT + " order by client_id";
+    private static final String DEFAULT_FIND_STATEMENT = BASE_FIND_STATEMENT + " order by client_id";
 
-	private static final String DEFAULT_SELECT_STATEMENT = BASE_FIND_STATEMENT + " where client_id = ?";
+    private static final String DEFAULT_SELECT_STATEMENT = BASE_FIND_STATEMENT + " where client_id = ?";
 
-	private static final String DEFAULT_INSERT_STATEMENT = "insert into apps_oauth_client_details (" + CLIENT_FIELDS
-			+ ", client_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String DEFAULT_INSERT_STATEMENT = "insert into apps_oauth_client_details (" + CLIENT_FIELDS
+            + ", client_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-	private static final String DEFAULT_UPDATE_STATEMENT = "update apps_oauth_client_details " + "set "
-			+ CLIENT_FIELDS_FOR_UPDATE.replaceAll(", ", "=?, ") + "=? where client_id = ?";
+    private static final String DEFAULT_UPDATE_STATEMENT = "update apps_oauth_client_details " + "set "
+            + CLIENT_FIELDS_FOR_UPDATE.replaceAll(", ", "=?, ") + "=? where client_id = ?";
 
-	private static final String DEFAULT_UPDATE_SECRET_STATEMENT = "update apps_oauth_client_details "
-			+ "set client_secret = ? where client_id = ?";
+    private static final String DEFAULT_UPDATE_SECRET_STATEMENT = "update apps_oauth_client_details "
+            + "set client_secret = ? where client_id = ?";
 
-	private static final String DEFAULT_DELETE_STATEMENT = "delete from apps_oauth_client_details where client_id = ?";
+    private static final String DEFAULT_DELETE_STATEMENT = "delete from apps_oauth_client_details where client_id = ?";
 
-	private RowMapper<ClientDetails> rowMapper = new ClientDetailsRowMapper();
+    private RowMapper<ClientDetails> rowMapper = new ClientDetailsRowMapper();
 
-	private String deleteClientDetailsSql = DEFAULT_DELETE_STATEMENT;
+    private String deleteClientDetailsSql = DEFAULT_DELETE_STATEMENT;
 
-	private String findClientDetailsSql = DEFAULT_FIND_STATEMENT;
+    private String findClientDetailsSql = DEFAULT_FIND_STATEMENT;
 
-	private String updateClientDetailsSql = DEFAULT_UPDATE_STATEMENT;
+    private String updateClientDetailsSql = DEFAULT_UPDATE_STATEMENT;
 
-	private String updateClientSecretSql = DEFAULT_UPDATE_SECRET_STATEMENT;
+    private String updateClientSecretSql = DEFAULT_UPDATE_SECRET_STATEMENT;
 
-	private String insertClientDetailsSql = DEFAULT_INSERT_STATEMENT;
+    private String insertClientDetailsSql = DEFAULT_INSERT_STATEMENT;
 
-	private String selectClientDetailsSql = DEFAULT_SELECT_STATEMENT;
+    private String selectClientDetailsSql = DEFAULT_SELECT_STATEMENT;
 
-	private PasswordEncoder passwordEncoder = NoOpPasswordEncoder.getInstance();
+    private PasswordEncoder passwordEncoder = NoOpPasswordEncoder.getInstance();
 
-	private final JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-	private JdbcListFactory listFactory;
+    private JdbcListFactory listFactory;
 
-	public JdbcClientDetailsService(DataSource dataSource) {
-		Assert.notNull(dataSource, "DataSource required");
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-		this.listFactory = new DefaultJdbcListFactory(new NamedParameterJdbcTemplate(jdbcTemplate));
-	}
+    public JdbcClientDetailsService(DataSource dataSource) {
+        Assert.notNull(dataSource, "DataSource required");
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.listFactory = new DefaultJdbcListFactory(new NamedParameterJdbcTemplate(jdbcTemplate));
+    }
 
-	/**
-	 * @param passwordEncoder the password encoder to set
-	 */
-	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
+    /**
+     * @param passwordEncoder the password encoder to set
+     */
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
-	public ClientDetails loadClientByClientId(String clientId)  {
-		ClientDetails details;
-		try {
-			details = jdbcTemplate.queryForObject(selectClientDetailsSql, new ClientDetailsRowMapper(), clientId);
-		}
-		catch (EmptyResultDataAccessException e) {
-			throw new NoSuchClientException("No client with requested id: " + clientId);
-		}
+    public ClientDetails loadClientByClientId(String clientId) {
+        ClientDetails details;
+        try {
+            details = jdbcTemplate.queryForObject(selectClientDetailsSql, new ClientDetailsRowMapper(), clientId);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NoSuchClientException("No client with requested id: " + clientId);
+        }
 
-		return details;
-	}
+        return details;
+    }
 
-	public void addClientDetails(ClientDetails clientDetails) throws ClientAlreadyExistsException {
-		try {
-			jdbcTemplate.update(insertClientDetailsSql, getFields(clientDetails));
-		}
-		catch (DuplicateKeyException e) {
-			throw new ClientAlreadyExistsException("Client already exists: " + clientDetails.getClientId(), e);
-		}
-	}
+    public void addClientDetails(ClientDetails clientDetails) throws ClientAlreadyExistsException {
+        try {
+            jdbcTemplate.update(insertClientDetailsSql, getFields(clientDetails));
+        } catch (DuplicateKeyException e) {
+            throw new ClientAlreadyExistsException("Client already exists: " + clientDetails.getClientId(), e);
+        }
+    }
 
-	public void updateClientDetails(ClientDetails clientDetails) throws NoSuchClientException {
-		int count = jdbcTemplate.update(updateClientDetailsSql, getFieldsForUpdate(clientDetails));
-		if (count != 1) {
-			throw new NoSuchClientException("No client found with id = " + clientDetails.getClientId());
-		}
-	}
+    public void updateClientDetails(ClientDetails clientDetails) throws NoSuchClientException {
+        int count = jdbcTemplate.update(updateClientDetailsSql, getFieldsForUpdate(clientDetails));
+        if (count != 1) {
+            throw new NoSuchClientException("No client found with id = " + clientDetails.getClientId());
+        }
+    }
 
-	public void updateClientSecret(String clientId, String secret) throws NoSuchClientException {
-		int count = jdbcTemplate.update(updateClientSecretSql, passwordEncoder.encode(secret), clientId);
-		if (count != 1) {
-			throw new NoSuchClientException("No client found with id = " + clientId);
-		}
-	}
+    public void updateClientSecret(String clientId, String secret) throws NoSuchClientException {
+        int count = jdbcTemplate.update(updateClientSecretSql, passwordEncoder.encode(secret), clientId);
+        if (count != 1) {
+            throw new NoSuchClientException("No client found with id = " + clientId);
+        }
+    }
 
-	public void removeClientDetails(String clientId) throws NoSuchClientException {
-		int count = jdbcTemplate.update(deleteClientDetailsSql, clientId);
-		if (count != 1) {
-			throw new NoSuchClientException("No client found with id = " + clientId);
-		}
-	}
+    public void removeClientDetails(String clientId) throws NoSuchClientException {
+        int count = jdbcTemplate.update(deleteClientDetailsSql, clientId);
+        if (count != 1) {
+            throw new NoSuchClientException("No client found with id = " + clientId);
+        }
+    }
 
-	public List<ClientDetails> listClientDetails() {
-		return listFactory.getList(findClientDetailsSql, Collections.<String, Object> emptyMap(), rowMapper);
-	}
+    public List<ClientDetails> listClientDetails() {
+        return listFactory.getList(findClientDetailsSql, Collections.<String, Object>emptyMap(), rowMapper);
+    }
 
-	private Object[] getFields(ClientDetails clientDetails) {
-		Object[] fieldsForUpdate = getFieldsForUpdate(clientDetails);
-		Object[] fields = new Object[fieldsForUpdate.length + 1];
-		System.arraycopy(fieldsForUpdate, 0, fields, 1, fieldsForUpdate.length);
-		fields[0] = clientDetails.getClientSecret() != null ? passwordEncoder.encode(clientDetails.getClientSecret())
-				: null;
-		return fields;
-	}
+    private Object[] getFields(ClientDetails clientDetails) {
+        Object[] fieldsForUpdate = getFieldsForUpdate(clientDetails);
+        Object[] fields = new Object[fieldsForUpdate.length + 1];
+        System.arraycopy(fieldsForUpdate, 0, fields, 1, fieldsForUpdate.length);
+        fields[0] = clientDetails.getClientSecret() != null ? passwordEncoder.encode(clientDetails.getClientSecret())
+                : null;
+        return fields;
+    }
 
-	private Object[] getFieldsForUpdate(ClientDetails clientDetails) {
-		String json = null;
-		try {
-			json = mapper.write(clientDetails.getAdditionalInformation());
-		}
-		catch (Exception e) {
-			logger.warn("Could not serialize additional information: " + clientDetails, e);
-		}
-		return new Object[] {
-				clientDetails.getResourceIds() != null ? StringUtils.collectionToCommaDelimitedString(clientDetails
-						.getResourceIds()) : null,
-				clientDetails.getScope() != null ? StringUtils.collectionToCommaDelimitedString(clientDetails
-						.getScope()) : null,
-				clientDetails.getAuthorizedGrantTypes() != null ? StringUtils
-						.collectionToCommaDelimitedString(clientDetails.getAuthorizedGrantTypes()) : null,
-				clientDetails.getRegisteredRedirectUri() != null ? StringUtils
-						.collectionToCommaDelimitedString(clientDetails.getRegisteredRedirectUri()) : null,
-				clientDetails.getAuthorities() != null ? StringUtils.collectionToCommaDelimitedString(clientDetails
-						.getAuthorities()) : null, clientDetails.getAccessTokenValiditySeconds(),
-				clientDetails.getRefreshTokenValiditySeconds(), json, getAutoApproveScopes(clientDetails),
-				clientDetails.getIdTokenSigningAlgorithm(),clientDetails.getIdTokenEncryptedAlgorithm(),clientDetails.getIdTokenEncryptionMethod(),
-				clientDetails.getUserInfoSigningAlgorithm(),clientDetails.getUserInfoEncryptedAlgorithm(),clientDetails.getUserInfoEncryptionMethod(),
-				clientDetails.getJwksUri(),
-				clientDetails.getClientId() };
-	}
+    private Object[] getFieldsForUpdate(ClientDetails clientDetails) {
+        String json = null;
+        try {
+            json = mapper.write(clientDetails.getAdditionalInformation());
+        } catch (Exception e) {
+            logger.warn("Could not serialize additional information: " + clientDetails, e);
+        }
+        return new Object[] {
+                clientDetails.getResourceIds() != null
+                        ? StringUtils.collectionToCommaDelimitedString(clientDetails.getResourceIds())
+                        : null,
+                clientDetails.getScope() != null
+                        ? StringUtils.collectionToCommaDelimitedString(clientDetails.getScope())
+                        : null,
+                clientDetails.getAuthorizedGrantTypes() != null
+                        ? StringUtils.collectionToCommaDelimitedString(clientDetails.getAuthorizedGrantTypes())
+                        : null,
+                clientDetails.getRegisteredRedirectUri() != null
+                        ? StringUtils.collectionToCommaDelimitedString(clientDetails.getRegisteredRedirectUri())
+                        : null,
+                clientDetails.getAuthorities() != null
+                        ? StringUtils.collectionToCommaDelimitedString(clientDetails.getAuthorities())
+                        : null,
+                clientDetails.getAccessTokenValiditySeconds(), clientDetails.getRefreshTokenValiditySeconds(), json,
+                getAutoApproveScopes(clientDetails), clientDetails.getIdTokenSigningAlgorithm(),
+                clientDetails.getIdTokenEncryptedAlgorithm(), clientDetails.getIdTokenEncryptionMethod(),
+                clientDetails.getUserInfoSigningAlgorithm(), clientDetails.getUserInfoEncryptedAlgorithm(),
+                clientDetails.getUserInfoEncryptionMethod(), clientDetails.getJwksUri(), clientDetails.getClientId() };
+    }
 
-	private String getAutoApproveScopes(ClientDetails clientDetails) {
-		if (clientDetails.isAutoApprove("true")) {
-			return "true"; // all scopes autoapproved
-		}
-		Set<String> scopes = new HashSet<String>();
-		for (String scope : clientDetails.getScope()) {
-			if (clientDetails.isAutoApprove(scope)) {
-				scopes.add(scope);
-			}
-		}
-		return StringUtils.collectionToCommaDelimitedString(scopes);
-	}
+    private String getAutoApproveScopes(ClientDetails clientDetails) {
+        if (clientDetails.isAutoApprove("true")) {
+            return "true"; // all scopes autoapproved
+        }
+        Set<String> scopes = new HashSet<String>();
+        for (String scope : clientDetails.getScope()) {
+            if (clientDetails.isAutoApprove(scope)) {
+                scopes.add(scope);
+            }
+        }
+        return StringUtils.collectionToCommaDelimitedString(scopes);
+    }
 
-	public void setSelectClientDetailsSql(String selectClientDetailsSql) {
-		this.selectClientDetailsSql = selectClientDetailsSql;
-	}
+    public void setSelectClientDetailsSql(String selectClientDetailsSql) {
+        this.selectClientDetailsSql = selectClientDetailsSql;
+    }
 
-	public void setDeleteClientDetailsSql(String deleteClientDetailsSql) {
-		this.deleteClientDetailsSql = deleteClientDetailsSql;
-	}
+    public void setDeleteClientDetailsSql(String deleteClientDetailsSql) {
+        this.deleteClientDetailsSql = deleteClientDetailsSql;
+    }
 
-	public void setUpdateClientDetailsSql(String updateClientDetailsSql) {
-		this.updateClientDetailsSql = updateClientDetailsSql;
-	}
+    public void setUpdateClientDetailsSql(String updateClientDetailsSql) {
+        this.updateClientDetailsSql = updateClientDetailsSql;
+    }
 
-	public void setUpdateClientSecretSql(String updateClientSecretSql) {
-		this.updateClientSecretSql = updateClientSecretSql;
-	}
+    public void setUpdateClientSecretSql(String updateClientSecretSql) {
+        this.updateClientSecretSql = updateClientSecretSql;
+    }
 
-	public void setInsertClientDetailsSql(String insertClientDetailsSql) {
-		this.insertClientDetailsSql = insertClientDetailsSql;
-	}
+    public void setInsertClientDetailsSql(String insertClientDetailsSql) {
+        this.insertClientDetailsSql = insertClientDetailsSql;
+    }
 
-	public void setFindClientDetailsSql(String findClientDetailsSql) {
-		this.findClientDetailsSql = findClientDetailsSql;
-	}
+    public void setFindClientDetailsSql(String findClientDetailsSql) {
+        this.findClientDetailsSql = findClientDetailsSql;
+    }
 
-	/**
-	 * @param listFactory the list factory to set
-	 */
-	public void setListFactory(JdbcListFactory listFactory) {
-		this.listFactory = listFactory;
-	}
+    /**
+     * @param listFactory the list factory to set
+     */
+    public void setListFactory(JdbcListFactory listFactory) {
+        this.listFactory = listFactory;
+    }
 
-	/**
-	 * @param rowMapper the rowMapper to set
-	 */
-	public void setRowMapper(RowMapper<ClientDetails> rowMapper) {
-		this.rowMapper = rowMapper;
-	}
+    /**
+     * @param rowMapper the rowMapper to set
+     */
+    public void setRowMapper(RowMapper<ClientDetails> rowMapper) {
+        this.rowMapper = rowMapper;
+    }
 
-	/**
-	 * Row mapper for ClientDetails.
-	 * 
-	 * @author Dave Syer
-	 * 
-	 */
-	private static class ClientDetailsRowMapper implements RowMapper<ClientDetails> {
-		private JsonMapper mapper = createJsonMapper();
+    /**
+     * Row mapper for ClientDetails.
+     * 
+     * @author Dave Syer
+     * 
+     */
+    private static class ClientDetailsRowMapper implements RowMapper<ClientDetails> {
+        private JsonMapper mapper = createJsonMapper();
 
-		public ClientDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
-			BaseClientDetails details = new BaseClientDetails(rs.getString(1), rs.getString(3), rs.getString(4),
-					rs.getString(5), rs.getString(7), rs.getString(6));
-			details.setClientSecret(rs.getString(2));
-			if (rs.getObject(8) != null) {
-				details.setAccessTokenValiditySeconds(rs.getInt(8));
-			}
-			if (rs.getObject(9) != null) {
-				details.setRefreshTokenValiditySeconds(rs.getInt(9));
-			}
-			
-			details.setIdTokenEncryptedAlgorithm(rs.getString("IDTOKENENCRYPTEDALGORITHM"));
-			details.setIdTokenEncryptionMethod(rs.getString("IDTOKENENCRYPTIONMETHOD"));
-			details.setIdTokenSigningAlgorithm(rs.getString("IDTOKENSIGNINGALGORITHM"));
-			
-			details.setUserInfoEncryptedAlgorithm(rs.getString("USERINFOCRYPTEDALGORITHM"));
-			details.setUserInfoEncryptionMethod(rs.getString("USERINFOENCRYPTIONMETHOD"));
-			details.setUserInfoSigningAlgorithm(rs.getString("USERINFOSIGNINGALGORITHM"));
-			details.setJwksUri(rs.getString("JWKSURI"));
-			
-			String json = rs.getString(10);
-			if (json != null) {
-				try {
-					@SuppressWarnings("unchecked")
-					Map<String, Object> additionalInformation = mapper.read(json, Map.class);
-					details.setAdditionalInformation(additionalInformation);
-				}
-				catch (Exception e) {
-					logger.warn("Could not decode JSON for additional information: " + details, e);
-				}
-			}
-			String scopes = rs.getString(11);
-			if (scopes != null) {
-				details.setAutoApproveScopes(StringUtils.commaDelimitedListToSet(scopes));
-			}
-			return details;
-		}
-	}
+        public ClientDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
+            BaseClientDetails details = new BaseClientDetails(rs.getString(1), rs.getString(3), rs.getString(4),
+                    rs.getString(5), rs.getString(7), rs.getString(6));
+            details.setClientSecret(rs.getString(2));
+            if (rs.getObject(8) != null) {
+                details.setAccessTokenValiditySeconds(rs.getInt(8));
+            }
+            if (rs.getObject(9) != null) {
+                details.setRefreshTokenValiditySeconds(rs.getInt(9));
+            }
 
-	interface JsonMapper {
-		String write(Object input) throws Exception;
+            details.setIdTokenEncryptedAlgorithm(rs.getString("IDTOKENENCRYPTEDALGORITHM"));
+            details.setIdTokenEncryptionMethod(rs.getString("IDTOKENENCRYPTIONMETHOD"));
+            details.setIdTokenSigningAlgorithm(rs.getString("IDTOKENSIGNINGALGORITHM"));
 
-		<T> T read(String input, Class<T> type) throws Exception;
-	}
+            details.setUserInfoEncryptedAlgorithm(rs.getString("USERINFOCRYPTEDALGORITHM"));
+            details.setUserInfoEncryptionMethod(rs.getString("USERINFOENCRYPTIONMETHOD"));
+            details.setUserInfoSigningAlgorithm(rs.getString("USERINFOSIGNINGALGORITHM"));
+            details.setJwksUri(rs.getString("JWKSURI"));
 
-	private static JsonMapper createJsonMapper() {
-		if (ClassUtils.isPresent("com.fasterxml.jackson.databind.ObjectMapper", null)) {
-			return new Jackson2Mapper();
-		}
-		return new NotSupportedJsonMapper();
-	}
+            String json = rs.getString(10);
+            if (json != null) {
+                try {
+                    @SuppressWarnings("unchecked")
+                    Map<String, Object> additionalInformation = mapper.read(json, Map.class);
+                    details.setAdditionalInformation(additionalInformation);
+                } catch (Exception e) {
+                    logger.warn("Could not decode JSON for additional information: " + details, e);
+                }
+            }
+            String scopes = rs.getString(11);
+            if (scopes != null) {
+                details.setAutoApproveScopes(StringUtils.commaDelimitedListToSet(scopes));
+            }
+            return details;
+        }
+    }
 
-	private static class Jackson2Mapper implements JsonMapper {
-		private com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+    interface JsonMapper {
+        String write(Object input) throws Exception;
 
-		@Override
-		public String write(Object input) throws Exception {
-			return mapper.writeValueAsString(input);
-		}
+        <T> T read(String input, Class<T> type) throws Exception;
+    }
 
-		@Override
-		public <T> T read(String input, Class<T> type) throws Exception {
-			return mapper.readValue(input, type);
-		}
-	}
+    private static JsonMapper createJsonMapper() {
+        if (ClassUtils.isPresent("com.fasterxml.jackson.databind.ObjectMapper", null)) {
+            return new Jackson2Mapper();
+        }
+        return new NotSupportedJsonMapper();
+    }
 
-	private static class NotSupportedJsonMapper implements JsonMapper {
-		@Override
-		public String write(Object input) throws Exception {
-			throw new UnsupportedOperationException(
-					"Neither Jackson 1 nor 2 is available so JSON conversion cannot be done");
-		}
+    private static class Jackson2Mapper implements JsonMapper {
+        private com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
 
-		@Override
-		public <T> T read(String input, Class<T> type) throws Exception {
-			throw new UnsupportedOperationException(
-					"Neither Jackson 1 nor 2 is available so JSON conversion cannot be done");
-		}
-	}
+        @Override
+        public String write(Object input) throws Exception {
+            return mapper.writeValueAsString(input);
+        }
+
+        @Override
+        public <T> T read(String input, Class<T> type) throws Exception {
+            return mapper.readValue(input, type);
+        }
+    }
+
+    private static class NotSupportedJsonMapper implements JsonMapper {
+        @Override
+        public String write(Object input) throws Exception {
+            throw new UnsupportedOperationException(
+                    "Neither Jackson 1 nor 2 is available so JSON conversion cannot be done");
+        }
+
+        @Override
+        public <T> T read(String input, Class<T> type) throws Exception {
+            throw new UnsupportedOperationException(
+                    "Neither Jackson 1 nor 2 is available so JSON conversion cannot be done");
+        }
+    }
 
 }

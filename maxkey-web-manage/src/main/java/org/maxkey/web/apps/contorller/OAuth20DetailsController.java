@@ -88,11 +88,12 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		//
 		_logger.debug("-update  application :" + oauth20Details);
 		_logger.debug("-update  oauth20Details use oauth20JdbcClientDetails" );
+		oauth20Details.setClientSecret(oauth20Details.getSecret());
+        oauth20JdbcClientDetailsService.updateClientDetails(oauth20Details.clientDetailsRowMapper());
+        oauth20JdbcClientDetailsService.updateClientSecret(oauth20Details.getClientId(), oauth20Details.getClientSecret());
+        
 		transform(oauth20Details);
 		
-		oauth20Details.setClientSecret(oauth20Details.getSecret());
-		oauth20JdbcClientDetailsService.updateClientDetails(oauth20Details.clientDetailsRowMapper());
-		oauth20JdbcClientDetailsService.updateClientSecret(oauth20Details.getClientId(), oauth20Details.getClientSecret());
 		if (appsService.updateApp(oauth20Details)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 		} else {
