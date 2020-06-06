@@ -1,4 +1,4 @@
-﻿MaxKey v 2.0.0 RC1	2020/06/01 
+﻿MaxKey v 2.0.0 GA	2020/07/** 
 	*(MAXKEY-200601) RBAC 基于角色的访问控制(Role-Based Access Control )支持
 	*(MAXKEY-200602) xml配置改为Spring annotation，提升模块间的组件化
 	*(MAXKEY-200603) 管理MGT界面优化及增加菜单图标，认证Maxkey主题切换支持-黑色经典|薄荷清新|激情紫荆
@@ -10,7 +10,10 @@
 	*(MAXKEY-200609) 官方网站优化
 	*(MAXKEY-200610) properties优化
 	*(MAXKEY-200611) 访问控制修复，访问重定向的问题修复
-	*(MAXKEY-200612) 依赖jar升级,消除非必要依赖
+	*(MAXKEY-200612) String类型数据转换JSON修复
+	*(MAXKEY-200613) OAuth2授权页面优化，显示目标系统图标和相关授权提示
+	*(MAXKEY-200614) OAuth2 secret修改后登陆错误修复
+	*(MAXKEY-200615) 依赖jar升级,消除非必要依赖
 	                spring 5.2.6.RELEASE
 					springBoot 2.3.0.RELEASE
 					springSecurity 5.3.2.RELEASE
