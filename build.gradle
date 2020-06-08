@@ -255,8 +255,8 @@ subprojects {
          compile group: 'redis.clients', name: 'jedis', version: '3.2.0'
          compile group: 'org.ehcache', name: 'ehcache', version: '3.8.1'
 		 //mybatis
-         compile group: 'org.mybatis', name: 'mybatis', version: '3.5.4'
-         compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.4'
+         compile group: 'org.mybatis', name: 'mybatis', version: '3.5.5'
+         compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.5'
 		 //hibernate
          compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: "${hibernateVersion}"
          compile group: 'org.hibernate', name: 'hibernate-validator-cdi', version: "${hibernateVersion}"
