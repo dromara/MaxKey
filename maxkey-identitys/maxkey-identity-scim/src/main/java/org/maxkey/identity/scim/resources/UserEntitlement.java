@@ -2,7 +2,7 @@ package org.maxkey.identity.scim.resources;
 
 import java.io.Serializable;
 
-public class UserEntitlement  implements Serializable {
+public class UserEntitlement extends MultiValuedAttribute implements Serializable {
 
     /**
      * 

@@ -2,7 +2,7 @@ package org.maxkey.identity.scim.resources;
 
 import java.io.Serializable;
 
-public class UserAddress implements Serializable {
+public class UserAddress extends MultiValuedAttribute implements Serializable {
 
     /**
      * 
@@ -14,7 +14,14 @@ public class UserAddress implements Serializable {
     private  String region;
     private  String postalCode;
     private  String country;
-    private  String type;
+    
+    public static class UserAddressType {
+        public static final String WORK = "work";
+        public static final String HOME = "home";
+        public static final String OTHER = "other";
+
+    }
+    
     public String getFormatted() {
         return formatted;
     }
