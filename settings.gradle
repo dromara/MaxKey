@@ -9,6 +9,9 @@ include 'maxkey-core'
 include 'maxkey-dao'
 include 'maxkey-authentications'
 
+//identity
+include 'maxkey-identitys:maxkey-identity-scim'
+
 //Protocol
 //include 'maxkey-protocols'
 include 'maxkey-protocols:maxkey-protocol-oauth-2.0'
