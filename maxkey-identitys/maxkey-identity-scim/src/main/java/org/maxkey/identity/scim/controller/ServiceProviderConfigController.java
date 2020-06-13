@@ -2,18 +2,20 @@ package org.maxkey.identity.scim.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "/ServiceProviderConfig")
+@RequestMapping(value = "/identity/scim/v2/ServiceProviderConfig")
 public class ServiceProviderConfigController {
 
     public static final int MAX_RESULTS = 100;
     
     @RequestMapping
+    @ResponseBody
     public ServiceProviderConfig getConfig() {
         return ServiceProviderConfig.INSTANCE;
     }

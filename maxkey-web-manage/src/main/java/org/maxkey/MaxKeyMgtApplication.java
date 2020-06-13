@@ -33,7 +33,8 @@ import org.springframework.context.annotation.ImportResource;
     "org.maxkey.authn",
     "org.maxkey.dao",
     "org.maxkey.web",
-    "org.maxkey.web.tag"
+    "org.maxkey.web.tag",
+    "org.maxkey.identity.scim.controller"
 })
 @MapperScan("org.maxkey.dao.persistence,")
 public class MaxKeyMgtApplication extends SpringBootServletInitializer {
