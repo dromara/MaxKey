@@ -22,7 +22,8 @@ dependencies {
    	compile project(":maxkey-client-sdk")
    	compile project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
    	compile project(":maxkey-protocols:maxkey-protocol-saml-2.0")   
-   	compile project(":maxkey-identitys:maxkey-identity-scim")   	
+   	compile project(":maxkey-identitys:maxkey-identity-scim")   
+   	compile project(":maxkey-identitys:maxkey-identity-kafka")	
    	
 }
 

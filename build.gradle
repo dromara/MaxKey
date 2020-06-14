@@ -31,11 +31,15 @@ allprojects {
 	compileJava.options.encoding = 'UTF-8'
 	
 	eclipse {
+		
 		jdt  {
 		    File f = file('.settings/org.eclipse.core.resources.prefs')
 		    f.write('eclipse.preferences.version=1\n')
 		    f.append('encoding/<project>=UTF-8') //use UTF-8
-		}/*
+		}
+		/**/
+		
+		/*
 		wtp {
 	        facet {
 	            facet name: 'jst.web', type: Facet.FacetType.fixed
@@ -174,7 +178,7 @@ subprojects {
          //compile group: 'org.springframework', name: 'spring-jcl', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-jdbc', version: "${springVersion}"
          //compile group: 'org.springframework', name: 'spring-jms', version: "${springVersion}"
-         //compile group: 'org.springframework', name: 'spring-messaging', version: "${springVersion}"
+         compile group: 'org.springframework', name: 'spring-messaging', version: "${springVersion}"
          //compile group: 'org.springframework', name: 'spring-orm', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-oxm', version: "${springVersion}"
          compile group: 'org.springframework', name: 'spring-tx', version: "${springVersion}"
@@ -183,6 +187,15 @@ subprojects {
          compile group: 'org.springframework', name: 'spring-webmvc', version: "${springVersion}"
          //compile group: 'org.springframework', name: 'spring-websocket', version: "${springVersion}"
 		 testCompile group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
+		 
+		 // https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
+		 compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.5.0'
+		 // https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
+		 compile group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.5.2.RELEASE'
+		 // https://mvnrepository.com/artifact/org.springframework.retry/spring-retry
+		 compile group: 'org.springframework.retry', name: 'spring-retry', version: '1.3.0'
+		 
+		 
          //spring-security
          compile group: 'org.springframework.security', name: 'spring-security-core', version: "${springSecurityVersion}"
          compile group: 'org.springframework.security', name: 'spring-security-web', version: "${springSecurityVersion}"

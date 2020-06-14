@@ -8,6 +8,9 @@ import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.dao.persistence.UserInfoMapper;
 import org.maxkey.domain.ChangePassword;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.identity.kafka.KafkaIdentityAction;
+import org.maxkey.identity.kafka.KafkaIdentityTopic;
+import org.maxkey.identity.kafka.KafkaProvisioningService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
@@ -29,6 +32,8 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	KafkaProvisioningService kafkaProvisioningService;
 	
 	public UserInfoService() {
 		super(UserInfoMapper.class);
@@ -46,22 +51,27 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean insert(UserInfo userInfo) {
         userInfo = passwordEncoder(userInfo);
         if (super.insert(userInfo)) {
-
+            kafkaProvisioningService.send(
+                    KafkaIdentityTopic.USERINFO_TOPIC, userInfo, KafkaIdentityAction.CREATE_ACTION);
             return true;
         }
 
         return false;
     }
 	
-	public boolean update(UserInfo userinfo) {
-		 if(super.update(userinfo)){
+	public boolean update(UserInfo userInfo) {
+		 if(super.update(userInfo)){
+		     kafkaProvisioningService.send(
+		             KafkaIdentityTopic.USERINFO_TOPIC, userInfo, KafkaIdentityAction.UPDATE_ACTION);
 			 return true;
 		 }
 		 return false;
 	}
 	
-	public boolean delete(UserInfo userinfo) {
-		if( super.delete(userinfo)){
+	public boolean delete(UserInfo userInfo) {
+		if( super.delete(userInfo)){
+		    kafkaProvisioningService.send(
+		            KafkaIdentityTopic.USERINFO_TOPIC, userInfo, KafkaIdentityAction.DELETE_ACTION);
 			 return true;
 		}
 		return false;
@@ -130,6 +140,8 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 				changePassword.setUsername(userInfo.getUsername());
 				changePassword.setDecipherable(userInfo.getDecipherable());
 				changePassword.setPassword(userInfo.getPassword());
+				kafkaProvisioningService.send(
+				        KafkaIdentityTopic.PASSWORD_TOPIC, changePassword, KafkaIdentityAction.PASSWORD_ACTION);
 				return true;
 			}
 			return false;

@@ -52,6 +52,9 @@ public class ApplicationConfig {
     @Value("${server.port:8080}")
     private int port;
 
+    @Value("${config.identity.kafkasupport:false}")
+    private boolean kafkaSupport;
+    
     public int getPort() {
         return port;
     }
@@ -196,6 +199,14 @@ public class ApplicationConfig {
 
     public void setDefaultUri(String defaultUri) {
         this.defaultUri = defaultUri;
+    }
+
+    public boolean isKafkaSupport() {
+        return kafkaSupport;
+    }
+
+    public void setKafkaSupport(boolean kafkaSupport) {
+        this.kafkaSupport = kafkaSupport;
     }
 
     /*

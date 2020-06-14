@@ -10,6 +10,7 @@
 		<project>maxkey-client-sdk</project>
 		<project>maxkey-protocol-oauth-2.0</project>
 		<project>maxkey-protocol-saml-2.0</project>
+		<project>maxkey-identity-scim</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
