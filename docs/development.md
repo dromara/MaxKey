@@ -1,6 +1,6 @@
 <h2>开发指南</h2>
 
-<h3>开发工具</h3>
+<h3>开发工具及相关软件</h3>
 
 JDK 1.8 +
 
@@ -11,6 +11,12 @@ eclipse-jee-2019-12 +
 Tomcat 9 +
 
 MySQL Server 5.5 +
+
+kafka 2.5.0 +
+
+Redis 6 +
+
+OpenLDAP 2.2 +
 
 
 <h3>程序目录</h3>
@@ -71,10 +77,52 @@ MySQL Server 5.5 +
 		</tr>
 		<tr>
 			<td></td>
+			<td>maxkey-connectors</td>
+			<td></td>
+			<td></td>
+			<td>身份供应连接器</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-connector-activedirectory</td>
+			<td></td>
+			<td>ActiveDirectory连接器</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-connector-base</td>
+			<td></td>
+			<td>身份供应连接器接口</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-connector-ldap</td>
+			<td></td>
+			<td>LDAP连接器</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-connector-dingtalk</td>
+			<td></td>
+			<td>钉钉连接器</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-connector-workweixin</td>
+			<td></td>
+			<td>企业微信连接器</td>
+		</tr>
+		<tr>
+			<td></td>
 			<td>maxkey-core</td>
 			<td></td>
 			<td></td>
-			<td>基础</td>
+			<td>基础包</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -82,6 +130,27 @@ MySQL Server 5.5 +
 			<td></td>
 			<td></td>
 			<td>数据库访问</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>maxkey-identitys</td>
+			<td></td>
+			<td></td>
+			<td>身份管理</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-identity-kafka</td>
+			<td></td>
+			<td>kafka身份同步</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>maxkey-identity-scim</td>
+			<td></td>
+			<td>SCIM2.0身份管理</td>
 		</tr>
 		<tr>
 			<td></td>
@@ -226,6 +295,33 @@ MySQL Server 5.5 +
 		</tr>		
 		</tbody>
 </table>
+
+<h3>工程构建BuildRelease</h3>
+
+1. 配置环境变量
+
+gradleSetEnv.bat
+
+set JAVA_HOME=D:\JavaIDE\jdk1.8.0_91
+
+set GRADLE_HOME=D:\JavaIDE\gradle-5.4.1
+
+
+2. 启动构建
+
+gradleBuildRelease.bat
+
+
+3. 构建结果
+
+构建包路径
+
+MaxKey/build/maxkey-jars
+
+依赖包路径
+
+MaxKey/build/maxkey-depjars
+
 
 <h3>问题及解决</h3>
 问题1
