@@ -2,11 +2,16 @@ package org.maxkey.identity.scim.resources;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class MultiValuedAttribute implements Serializable {
+    
     private static final long serialVersionUID = 6878912593878245947L;
+    
     String value;
     String display;
     boolean primary;
+    @JsonProperty("$ref")
     String reference;
     String type;
       

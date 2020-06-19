@@ -1,0 +1,33 @@
+{
+  "schemas": [
+    "urn:ietf:params:scim:schemas:core:2.0:Group"
+  ],
+  "meta": {
+    "resourceType": "User",
+    "created": "2020-06-15T23:08:50.698Z",
+    "lastModified": "2020-06-15T23:08:50.698Z",
+    "location": "https://example.com/v2/Users/2819c223...",
+    "version": "W\\/\"f250dd84f0671c3\""
+  },
+  "displayName": "Tour Guides",
+  "members": [
+    {
+      "value": "2819c223-7f76-453a-919d-413861904646",
+      "display": "Babs Jensen",
+      "primary": false,
+      "$ref": "https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646"
+    },
+    {
+      "value": "2819c223-7f76-453a-919d-413861904646",
+      "display": "Babs Jensen",
+      "primary": false,
+      "$ref": "https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646"
+    },
+    {
+      "value": "2819c223-7f76-453a-919d-413861904646",
+      "display": "Babs Jensen",
+      "primary": false,
+      "$ref": "https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646"
+    }
+  ]
+}

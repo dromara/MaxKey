@@ -1,0 +1,42 @@
+{
+  "schemas": [
+    "urn:ietf:params:scim:schemas:core:2.0:User"
+  ],
+  "id": "1111111111111",
+  "externalId": "UserName",
+  "meta": {
+    "resourceType": "User",
+    "created": "2020-06-15T23:09:30.763Z",
+    "lastModified": "2020-06-15T23:09:30.763Z",
+    "location": "https://example.com/v2/Users/2819c223...",
+    "version": "W\\/\"f250dd84f0671c3\""
+  },
+  "userName": "UserName",
+  "name": {
+    "formatted": "Ms. Barbara J Jensen, III",
+    "familyName": "Jensen",
+    "givenName": "Barbara",
+    "middleName": "Jane",
+    "honorificPrefix": "Ms.",
+    "honorificSuffix": "III"
+  },
+  "emails": [
+    {
+      "value": "bjensen@example.com",
+      "primary": false,
+      "type": "work"
+    }
+  ],
+  "phoneNumbers": [
+    {
+      "value": "555-555-8377",
+      "primary": false,
+      "type": "home"
+    },
+    {
+      "value": "555-555-8377",
+      "primary": false,
+      "type": "work"
+    }
+  ]
+}

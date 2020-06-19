@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+import org.maxkey.json.*;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 public class Meta implements Serializable {
     
     /**
@@ -12,10 +17,20 @@ public class Meta implements Serializable {
     private static final long serialVersionUID = -2244662962968933591L;
     
     private  String resourceType;
+    
+    @JsonSerialize(using = JsonISODateSerializer.class)
+    @JsonDeserialize(using = JsonISODateDeserializer.class)
     private  Date created;
+    
+    @JsonSerialize(using = JsonISODateSerializer.class)
+    @JsonDeserialize(using = JsonISODateDeserializer.class)
+    
     private  Date lastModified;
+    
     private  String location;
+    
     private  String version;
+    
     private  Set<String> attributes;
     
     

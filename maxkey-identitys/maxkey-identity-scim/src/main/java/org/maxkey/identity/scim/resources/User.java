@@ -1,5 +1,6 @@
 package org.maxkey.identity.scim.resources;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -176,6 +177,8 @@ public class User extends Resource{
         this.extensions = extensions;
     }
     public User() {
+        schemas =new HashSet<String>();
+        schemas.add(SCHEMA);
     }
 
     

@@ -9,10 +9,11 @@ public class Resource implements Serializable {
      * 
      */
     private static final long serialVersionUID = -5159743553948621024L;
+    protected  Set<String> schemas;
     private  String id;
     private  String externalId;
     private  Meta meta;
-    private  Set<String> schemas;
+    
     public Resource() {
 
     }

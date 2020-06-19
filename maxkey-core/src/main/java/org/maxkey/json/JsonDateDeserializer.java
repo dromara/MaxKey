@@ -15,11 +15,10 @@ import java.util.Date;
  * in ISO format.
  *
  */
-
-public class JsonISODateDeserializer extends JsonDeserializer<Date> {
+public class JsonDateDeserializer extends JsonDeserializer<Date> {
 
     private static final SimpleDateFormat dateFormat = 
-            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public Date deserialize(JsonParser parser, DeserializationContext context)

@@ -3,11 +3,8 @@ package org.maxkey.identity.scim.resources;
 import java.io.Serializable;
 
 public class Enterprise implements Serializable {
-    
-    /**
-     * 
-     */
     private static final long serialVersionUID = -204619629148409697L;
+    
     private  String employeeNumber;
     private  String costCenter;
     private  String organization;
