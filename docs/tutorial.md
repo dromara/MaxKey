@@ -221,7 +221,11 @@ chkconfig mysqld on
 
 3.1 把MaxKey上传到Linux服务器
 
-3.2 启动
+3.2 数据导入
+
+	使用客户端工具导出windows版本的MaxKey的数据及表SQL,登陆LINUX MYSQL并创建schema maxkey,数据导入到maxkey schema中。
+
+3.3 启动
 <pre><code class="bash hljs">
   ./start_maxkey_db.sh &
   
