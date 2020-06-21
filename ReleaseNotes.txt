@@ -14,9 +14,10 @@
 	*(MAXKEY-200613) OAuth2授权页面优化，显示目标系统图标和相关授权提示
 	*(MAXKEY-200614) OAuth2 secret修改后登陆错误修复
 	*(MAXKEY-200615) CAS单点登陆后进行验证空指针的异常处理，原因权限调整
-	*(MAXKEY-200616) 依赖jar升级,消除非必要依赖
-	                spring 5.2.6.RELEASE
-					springBoot 2.3.0.RELEASE
+	*(MAXKEY-200616) LINUX操作系统支持
+	*(MAXKEY-200617) 依赖jar升级,消除非必要依赖
+	                spring 5.2.7.RELEASE
+					springBoot 2.3.1.RELEASE
 					springSecurity 5.3.2.RELEASE
 					jackson  2.11.0
 					log4j 2.13.3
