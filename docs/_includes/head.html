@@ -27,6 +27,12 @@
 			  var s = document.getElementsByTagName("script")[0]; 
 			  s.parentNode.insertBefore(hm, s);
 			})();
+			
+			currentLang = navigator.language;   //判断除IE外其他浏览器使用语言
+			if(!currentLang){//判断IE浏览器使用语言
+				currentLang = navigator.browserLanguage;
+			}
+			alert(currentLang);
 		</script>
 
 
