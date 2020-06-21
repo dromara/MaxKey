@@ -54,7 +54,7 @@
 			<td>PMC Chair</td>
 			<td>Asia/北京</td>
 		</tr>
-	<tbody>
+	</tbody>
 </table>
 
 
@@ -74,7 +74,7 @@
 			<td></td>
 			<td></td>
 		</tr>
-	<tbody>
+	</tbody>
 </table>
 
 其他贡献者
