@@ -1,6 +1,6 @@
 # <img src="http://www.maxkey.top/images/logo.jpg" width="45px">MaxKey
 
-<b>MaxKey(马克思的钥匙)</b>，寓意是最大钥匙,用户单点登录认证系统(Sigle Sign On System),是<b>业界领先的开源身份管理(IDM)和身份认证(AM)产品</b>,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS等标准化的开放协议，提供<b>简单、标准、安全和开放</b>的用户身份认证和单点登录，包含身份管理、用户认证、单点登录、资源管理、权限管理等。
+<b>MaxKey(马克思的钥匙)</b>用户单点登录认证系统(Sigle Sign On System)，寓意是最大钥匙,是<b>业界领先的开源身份管理(IDM)和身份认证(AM)产品</b>,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS等标准化的开放协议，提供<b>简单、标准、安全和开放</b>的用户身份认证和单点登录，包含身份管理、用户认证、单点登录、资源管理、权限管理等。
 
 MaxKey  <a href="https://www.maxkey.top" target="_blank"><b>官方文档</b></a> | <a href="https://github.com/shimingxy/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/shimingxy/MaxKey" target="_blank"><b>码云(Gitee)</b></a>
   
