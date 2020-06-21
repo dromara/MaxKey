@@ -103,3 +103,131 @@ start_maxkey_wiki.bat
 		</tr>
 	</tbody>
 </table>
+
+<h2>LINUX版本</h2>
+
+1 OpenJDK 14 安装
+
+1.1 下载地址
+http://jdk.java.net/archive/
+
+OpenJDK 14
+14 GA (build 14+36)
+
+    Linux	64-bit	tar.gz (sha256) 190M
+	
+<pre><code class="bash hljs">	
+wget --no-check-certificate --no-cookies https://download.java.net/java/GA/jdk14/076bab302c7b4508975440c56f6cc26a/36/GPL/openjdk-14_linux-x64_bin.tar.gz
+</code></pre>
+ 
+1.2 解压缩
+
+<pre><code class="bash hljs">
+tar -zxvf openjdk-14_linux-x64_bin.tar.gz
+</code></pre>
+
+2.安装MySQL5.6
+
+<pre><code class="bash hljs">
+rpm -ivh http://repo.mysql.com/yum/mysql-5.5-community/el/6/x86_64/mysql-community-release-el6-5.noarch.rpm
+ </code></pre>
+ 
+要安装MySQL5.6的可以安装：
+
+<pre><code class="bash hljs">
+rpm -ivh http://repo.mysql.com/mysql-community-release-el6.rpm
+ </code></pre>
+ 
+最新的yum源可以去http://dev.mysql.com/downloads/repo/yum下载
+
+
+2.1修改安装好的yum源
+
+编辑 /etc/yum.repos.d/mysql-community.repo文件，5.6的enabled改为1,其他改未0
+
+<pre><code class="bash hljs">
+# Enable to use MySQL 5.6
+[mysql56-community]
+name=MySQL 5.6 Community Server
+baseurl=http://repo.mysql.com/yum/mysql-5.6-community/el/6/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:/etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
+</code></pre>
+ 
+2.2.安装mysql-5.6
+
+<pre><code class="bash hljs">
+yum install mysql-community-client mysql-community-devel mysql-community-server php-mysql
+ </code></pre>
+ 
+2.3 调整配置
+
+编辑 /etc/my.cnf 文件
+
+<pre><code class="bash hljs">
+character-set-server=utf8
+lower_case_table_names=0
+</code></pre>
+ 
+2.4. 启动mysql服务
+
+    > service mysqld start
+	
+    #或者下面这个
+	
+    >/etc/init.d/mysqld start
+	
+	停止
+	
+	service mysqld stop  --无需执行
+	
+	
+2.5 设置密码	
+
+<pre><code class="bash hljs">
+/usr/bin/mysqladmin -u root password maxkey
+</code></pre>
+ 
+2.6 设置访问权限
+
+<pre><code class="bash hljs">
+mysql -u root -pmaxkey;
+
+use mysql;
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'maxkey' WITH GRANT OPTION;
+
+flush privileges ;
+</code></pre>
+ 
+2.7. 设置开机启动
+
+<pre><code class="bash hljs">
+chkconfig --add mysqld
+chkconfig mysqld on
+</code></pre>
+
+查看开机启动设置是否成功
+
+<pre><code class="bash hljs">
+ chkconfig --list | grep mysql*
+ 
+ # mysqld 0:关闭 1:关闭 2:启用 3:启用 4:启用 5:启用 6:关闭停止
+</code></pre>
+
+
+3 MaxKey安装
+
+3.1 把MaxKey上传到Linux服务器
+
+3.2 启动
+<pre><code class="bash hljs">
+  ./start_maxkey_db.sh &
+  
+  ./start_maxkey.sh &
+  
+  ./start_maxkey_mgt.sh &
+  
+  ./start_maxkey_wiki.sh &
+</code></pre>
