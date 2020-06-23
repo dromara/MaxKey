@@ -1,5 +1,5 @@
 <h3>项目依赖</h3>
-<h3>项目软件包</h3>
+<h3>项目软件</h3>
 
 <table border="0" class="table table-striped table-bordered ">
     <thead>
