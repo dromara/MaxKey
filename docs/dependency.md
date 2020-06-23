@@ -1120,5 +1120,19 @@
             <td>8.5.2</td>
             <td>jar</td>
             <td>The Apache License, Version 2.0</td></tr>
+		 <tr>
+            <td>compile</td>
+            <td>mybatis-jpa-extra</td>
+            <td>mybatis-jpa-extra</td>
+            <td>2.1</td>
+            <td>jar</td>
+            <td>The Apache License, Version 2.0</td></tr>
+		<tr>
+            <td>compile</td>
+            <td>mybatis-jpa-extra</td>
+            <td>mybatis-jpa-extra-spring-boot-starter</td>
+            <td>2.1</td>
+            <td>jar</td>
+            <td>The Apache License, Version 2.0</td></tr>
     </tbody>
 </table>
