@@ -238,6 +238,13 @@ OpenLDAP 2.2 +
 		</tr>
 		<tr>
 			<td></td>
+			<td>shellscript</td>
+			<td></td>
+			<td></td>
+			<td>启动脚本</td>
+		</tr>
+		<tr>
+			<td></td>
 			<td>build.gradle</td>
 			<td></td>
 			<td></td>
