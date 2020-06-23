@@ -148,7 +148,6 @@ $(function(){
 								</tr>
 								<tr>
 									<td colspan =4>
-										<input class="button"  id="status" type="hidden" name="status"  value="1"/>
 							    		<input class="button btn btn-primary mr-3"  id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
 										<input class="button btn btn-secondary mr-3"  id="backBtn" type="button" value="<@locale code="button.text.cancel" />"/>	
 									</td>

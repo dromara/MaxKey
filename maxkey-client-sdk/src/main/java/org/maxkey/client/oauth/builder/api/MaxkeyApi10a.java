@@ -4,7 +4,7 @@ import org.maxkey.client.oauth.model.Token;
 
 public class MaxkeyApi10a extends DefaultApi10a
 {
-	private static final String DEFAULT_WEB_URL = "https://sso.maxkey.org/maxkey";
+	private static final String DEFAULT_WEB_URL = "https://sso.maxkey.top/maxkey";
 	private static final String AUTHORIZATION_URL = DEFAULT_WEB_URL+"/oauth/v10a/authz?oauth_token=%s";
   
   public MaxkeyApi10a() {
