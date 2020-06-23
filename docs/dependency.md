@@ -86,7 +86,7 @@
             <td>https://www.eclipse.org/</td>
             <td>Eclipse Public License - v 2.0</td>
 		</tr>
-    <tbody>
+    </tbody>
 </table>	
 
 
