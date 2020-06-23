@@ -97,7 +97,7 @@
 <table border="0" class="table table-striped table-bordered ">
     <thead>
         <tr>
-            <th>依赖</th>
+            <th>Dependency</th>
             <th>GroupId</th>
             <th>ArtifactId</th>
             <th>Version</th>
