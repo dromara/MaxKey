@@ -8,10 +8,10 @@ C:\Windows\System32\drivers\etc
 </pre>
 新增如下内容
 <pre><code class="ini hljs">
-127.0.0.1  sso.maxkey.org
-127.0.0.1  tokenbased.demo.maxkey.org
-127.0.0.1  cas.demo.maxkey.org
-127.0.0.1  oauth.demo.maxkey.org
+127.0.0.1  sso.maxkey.top
+127.0.0.1  tokenbased.demo.maxkey.top
+127.0.0.1  cas.demo.maxkey.top
+127.0.0.1  oauth.demo.maxkey.top
 </code></pre>
 
 <h2>应用服务启动</h2>
@@ -42,13 +42,13 @@ start_maxkey_wiki.bat
 		</thead>
 		<tbody>
 			<tr>
-				<td>1</td><td>认证平台</td><td><a href="http://sso.maxkey.org/maxkey/login" target="blank">http://sso.maxkey.org/maxkey/login</a></td>
+				<td>1</td><td>认证平台</td><td><a href="http://sso.maxkey.top/maxkey/login" target="blank">http://sso.maxkey.top/maxkey/login</a></td>
 			</tr>
 			<tr>
-				<td>2</td><td>管理平台</td><td><a href="http://sso.maxkey.org:9521/maxkey-mgt/login" target="blank">http://sso.maxkey.org:9521/maxkey-mgt/login</a></td>
+				<td>2</td><td>管理平台</td><td><a href="http://sso.maxkey.top:9521/maxkey-mgt/login" target="blank">http://sso.maxkey.top:9521/maxkey-mgt/login</a></td>
 			</tr>
 			<tr>
-				<td>3</td><td>集成指南</td><td><a href="http://sso.maxkey.org:8080/wiki" target="blank">http://sso.maxkey.org:8080/wiki</a></td>
+				<td>3</td><td>集成指南</td><td><a href="http://sso.maxkey.top:8080/wiki" target="blank">http://sso.maxkey.top:8080/wiki</a></td>
 			</tr>
 			<tr>
 				<td>4</td><td>账户密码</td><td>admin/admin</td>

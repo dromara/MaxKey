@@ -24,7 +24,7 @@
 	<bean id="propertySourcesPlaceholderConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
 	  <property name="locations">
 	    <list>
-	   	  	<value>classpath:config/applicationConfig.properties</value>
+	   	  	<value>classpath:application.properties</value>
 	    </list>
 	  </property>
 	  <property name="ignoreUnresolvablePlaceholders" value="true"/>
@@ -39,7 +39,43 @@
  	<import resource="applicationContext-database.xml"/>
  	<import resource="applicationContext-persist.xml"/>
  
+ 	<bean id="kafkaProvisioningService" class="org.maxkey.identity.kafka.KafkaProvisioningService"></bean>
+	
+	<bean id="applicationConfig" class="org.maxkey.config.ApplicationConfig"></bean>
+	
+	<bean id="emailConfig" class="org.maxkey.config.EmailConfig"></bean>
+ 	<bean id="characterEncodingConfig" class="org.maxkey.config.CharacterEncodingConfig"></bean>
+ 	<bean id="loginConfig" class="org.maxkey.config.LoginConfig"></bean>
  	
+   <bean id="producerProperties" class="java.util.HashMap">
+         <constructor-arg>
+             <map>
+                 <entry key="bootstrap.servers" value="${kafka.producer.bootstrap.servers}" />
+                 <!--<entry key="group.id" value="${group.id}" />-->
+                 <entry key="retries" value="${kafka.producer.retries}" />
+                 <entry key="batch.size" value="${kafka.producer.batch.size}" />
+                 <entry key="linger.ms" value="${kafka.producer.linger.ms}" />
+                 <entry key="buffer.memory" value="${kafka.producer.buffer.memory}" />
+                 <entry key="acks" value="${kafka.producer.acks}" />
+                 <entry key="key.serializer" value="${kafka.producer.key.serializer}" />
+                 <entry key="value.serializer" value="${kafka.producer.value.serializer}"/>
+             </map>
+         </constructor-arg>
+     </bean>
+ 
+     <!-- 创建kafkatemplate需要使用的producerfactory bean -->
+     <bean id="producerFactory"
+           class="org.springframework.kafka.core.DefaultKafkaProducerFactory">
+         <constructor-arg>
+             <ref bean="producerProperties" />
+         </constructor-arg>
+     </bean>
+ 
+     <!-- 创建kafkatemplate bean，使用的时候，只需要注入这个bean，即可使用template的send消息方法 -->
+     <bean id="kafkaTemplate" class="org.springframework.kafka.core.KafkaTemplate">
+         <constructor-arg ref="producerFactory" />
+         <constructor-arg name="autoFlush" value="true" />
+     </bean>
  	<!-- 配置执行的任务列表  -->
  	<util:list id="businessTask" list-class="java.util.ArrayList">
 
