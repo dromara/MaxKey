@@ -111,28 +111,28 @@
             <td>junit</td>
             <td>4.11</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>EPL 1.0</td></tr>
         <tr>
             <td>test</td>
             <td>javax.servlet</td>
             <td>javax.servlet-api</td>
             <td>3.0.1</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>GPL 2.0</td></tr>
         <tr>
             <td>test</td>
             <td>org.mockito</td>
             <td>mockito-all</td>
             <td>1.10.19</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>MIT</td></tr>
         <tr>
             <td>test</td>
             <td>xmlunit</td>
             <td>xmlunit</td>
             <td>1.6</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>BSD</td></tr>
         <tr>
             <td>compile</td>
             <td>commons-beanutils</td>
@@ -678,14 +678,14 @@
             <td>simple-http</td>
             <td>1.0</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>LGPL 3.0</td></tr>
         <tr>
             <td>compile</td>
             <td>me.zhyd.oauth</td>
             <td>JustAuth</td>
             <td>1.15.1</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>MIT</td></tr>
         <tr>
             <td>compile</td>
             <td>org.javassist</td>
@@ -699,49 +699,49 @@
             <td>esapi</td>
             <td>2.2.0.0</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>BSD 2-clause</td></tr>
         <tr>
             <td>compile</td>
             <td>com.sun.mail</td>
             <td>javax.mail</td>
             <td>1.6.2</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>GPL 2.0</td></tr>
         <tr>
             <td>compile</td>
             <td>org.eclipse.persistence</td>
             <td>javax.persistence</td>
             <td>2.2.1</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>Eclipse Public License v. 2.0</td></tr>
         <tr>
             <td>compile</td>
             <td>javax.activation</td>
             <td>activation</td>
             <td>1.1.1</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>CDDL 1.0</td></tr>
         <tr>
             <td>compile</td>
             <td>javax.annotation</td>
             <td>javax.annotation-api</td>
             <td>1.3.2</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>GPLv2</td></tr>
         <tr>
             <td>compile</td>
             <td>javax.transaction</td>
             <td>jta</td>
             <td>1.1</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>GPLv2</td></tr>
         <tr>
             <td>compile</td>
             <td>javax.transaction</td>
             <td>javax.transaction-api</td>
             <td>1.3</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>GPLv2</td></tr>
         <tr>
             <td>compile</td>
             <td>javax.validation</td>
@@ -762,49 +762,49 @@
             <td>jaxb-api</td>
             <td>2.3.1</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>CDDL 1.1</td></tr>
         <tr>
             <td>compile</td>
             <td>com.sun.xml.bind</td>
             <td>jaxb-core</td>
             <td>2.3.0.1</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>Eclipse Distribution License - v 1.0</td></tr>
         <tr>
             <td>compile</td>
             <td>com.sun.xml.bind</td>
             <td>jaxb-impl</td>
             <td>2.3.2</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>Eclipse Distribution License - v 1.0</td></tr>
         <tr>
             <td>compile</td>
             <td>com.sun.xml.bind</td>
             <td>jaxb-xjc</td>
             <td>2.3.2</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>Eclipse Distribution License - v 1.0</td></tr>
         <tr>
             <td>compile</td>
             <td>org.bouncycastle</td>
             <td>bcpkix-jdk15on</td>
             <td>1.64</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>Bouncy Castle Licence</td></tr>
         <tr>
             <td>compile</td>
             <td>org.bouncycastle</td>
             <td>bcprov-jdk15on</td>
             <td>1.64</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>Bouncy Castle Licence</td></tr>
         <tr>
             <td>compile</td>
             <td>org.bouncycastle</td>
             <td>bcprov-ext-jdk15on</td>
             <td>1.64</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>Bouncy Castle Licence</td></tr>
         <tr>
             <td>compile</td>
             <td>com.google.crypto.tink</td>
@@ -881,7 +881,7 @@
             <td>reactive-streams</td>
             <td>1.0.2</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>CC0 1.0</td></tr>
         <tr>
             <td>compile</td>
             <td>io.projectreactor</td>
@@ -895,7 +895,7 @@
             <td>szxcvbn_2.9.2</td>
             <td>0.2</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>MIT</td></tr>
         <tr>
             <td>compile</td>
             <td>org.quartz-scheduler</td>
@@ -909,7 +909,7 @@
             <td>mysql-connector-java</td>
             <td>5.1.48</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>GPL 2.0</td></tr>
         <tr>
             <td>compile</td>
             <td>com.alibaba</td>
@@ -930,7 +930,7 @@
             <td>jedis</td>
             <td>3.2.0</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>MIT</td></tr>
         <tr>
             <td>compile</td>
             <td>org.ehcache</td>
@@ -1035,28 +1035,28 @@
             <td>asm</td>
             <td>7.3.1</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>BSD 3-clause</td></tr>
         <tr>
             <td>compile</td>
             <td>aopalliance</td>
             <td>aopalliance</td>
             <td>1.0</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>Public</td></tr>
         <tr>
             <td>compile</td>
             <td>org.aspectj</td>
             <td>aspectjtools</td>
             <td>1.9.4</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>EPL 1.0</td></tr>
         <tr>
             <td>compile</td>
             <td>dom4j</td>
             <td>dom4j</td>
             <td>1.6.1</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>BSD</td></tr>
         <tr>
             <td>compile</td>
             <td>xalan</td>
@@ -1091,14 +1091,14 @@
             <td>xstream</td>
             <td>1.4.10</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>BSD 3-clause</td></tr>
         <tr>
             <td>compile</td>
             <td>com.aliyun</td>
             <td>aliyun-java-sdk-core</td>
             <td>4.5.1</td>
             <td>jar</td>
-            <td>The Apache License, Version 2.0</td></tr>
+            <td>Aliyun </td></tr>
         <tr>
             <td>compile</td>
             <td>com.tencentcloudapi</td>
