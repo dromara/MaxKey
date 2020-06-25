@@ -12,6 +12,7 @@ include 'maxkey-authentications'
 //identity
 include 'maxkey-identitys:maxkey-identity-scim'
 include 'maxkey-identitys:maxkey-identity-kafka'
+include 'maxkey-identitys:maxkey-identity-rest'
 
 
 //connectors

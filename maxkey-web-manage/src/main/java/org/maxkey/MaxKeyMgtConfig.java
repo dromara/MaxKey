@@ -2,8 +2,15 @@ package org.maxkey;
 
 import javax.sql.DataSource;
 import org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
+import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
+import org.maxkey.authz.oauth2.provider.token.TokenStore;
+import org.maxkey.authz.oauth2.provider.token.store.InMemoryTokenStore;
+import org.maxkey.authz.oauth2.provider.token.store.JdbcTokenStore;
+import org.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
+import org.maxkey.authz.oidc.idtoken.OIDCIdTokenEnhancer;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn;
+import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +37,46 @@ public class MaxKeyMgtConfig  implements InitializingBean {
 	    _logger.debug("JdbcClientDetailsService inited.");
         return clientDetailsService;
     }
+	
+    /**
+     * TokenStore. 
+     * @param persistence int
+     * @return oauth20TokenStore
+     */
+    @Bean(name = "oauth20TokenStore")
+    public TokenStore oauth20TokenStore(
+            @Value("${config.server.persistence}") int persistence,
+            JdbcTemplate jdbcTemplate,
+            RedisConnectionFactory jedisConnectionFactory) {
+        TokenStore tokenStore = null;
+        if (persistence == 0) {
+            tokenStore = new InMemoryTokenStore();
+            _logger.debug("InMemoryTokenStore");
+        } else if (persistence == 1) {
+            tokenStore = new JdbcTokenStore(jdbcTemplate);
+            _logger.debug("JdbcTokenStore");
+        } else if (persistence == 2) {
+            tokenStore = new RedisTokenStore(jedisConnectionFactory);
+            _logger.debug("RedisTokenStore");
+        }
+        return tokenStore;
+    }
+    
+    /**
+     * clientDetailsUserDetailsService. 
+     * @return oauth20TokenServices
+     */
+    @Bean(name = "oauth20TokenServices")
+    public DefaultTokenServices DefaultTokenServices(
+            JdbcClientDetailsService oauth20JdbcClientDetailsService,
+            TokenStore oauth20TokenStore) {
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setClientDetailsService(oauth20JdbcClientDetailsService);
+        tokenServices.setTokenStore(oauth20TokenStore);
+        tokenServices.setSupportRefreshToken(true);
+        return tokenServices;
+    }
+    
 	
 	//以下内容可以注释掉后再xml中配置,xml引入在MaxKeyMgtApplication中
 	@Bean(name = "authenticationRealm")

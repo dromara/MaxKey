@@ -35,7 +35,8 @@ import org.springframework.context.annotation.ImportResource;
     "org.maxkey.web",
     "org.maxkey.web.tag",
     "org.maxkey.identity.kafka",
-    "org.maxkey.identity.scim.controller"
+    "org.maxkey.identity.scim.controller",
+    "org.maxkey.identity.rest"
 })
 @MapperScan("org.maxkey.dao.persistence,")
 public class MaxKeyMgtApplication extends SpringBootServletInitializer {

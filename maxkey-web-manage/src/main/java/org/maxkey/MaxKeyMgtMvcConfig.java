@@ -2,6 +2,7 @@ package org.maxkey;
 
 import org.maxkey.web.interceptor.HistoryLogsAdapter;
 import org.maxkey.web.interceptor.PermissionAdapter;
+import org.maxkey.web.interceptor.RestApiPermissionAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
     
     @Autowired
     LocaleChangeInterceptor localeChangeInterceptor;
+    
+    @Autowired
+    RestApiPermissionAdapter restApiPermissionAdapter;
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -72,6 +76,13 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
         
         registry.addInterceptor(localeChangeInterceptor);
         _logger.debug("add LocaleChangeInterceptor");
+        
+        
+        registry.addInterceptor(restApiPermissionAdapter)
+                .addPathPatterns("/identity/api/**")
+                ;
+
+        _logger.debug("add RestApiPermissionAdapter");
         
     }
 

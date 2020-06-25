@@ -40,9 +40,35 @@ public class KafkaProvisioningService {
             message.setContent(JsonUtils.gson2Json(content));
             String msg = JsonUtils.gson2Json(message);
             _logger.info("send  message = {}", msg);
+            //通过线程发送Kafka消息
+            KafkaProvisioningThread thread = 
+                    new  KafkaProvisioningThread(kafkaTemplate,topic,msg);
             
+            thread.start();
+        }
+    }
+    
+    
+    
+    class KafkaProvisioningThread extends Thread{
+
+        KafkaTemplate<String, String> kafkaTemplate;
+        
+        String topic ;
+        
+        String msg;
+        
+        public KafkaProvisioningThread(KafkaTemplate<String, String> kafkaTemplate, String topic, String msg) {
+            this.kafkaTemplate = kafkaTemplate;
+            this.topic = topic;
+            this.msg = msg;
+        }
+
+        @Override
+        public void run() {
             kafkaTemplate.send(topic, msg);
         }
+
     }
     
 }

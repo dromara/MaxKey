@@ -3,7 +3,6 @@ package org.maxkey.autoconfigure;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.maxkey.constants.ConstantsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -134,6 +133,8 @@ public class MvcAutoConfiguration implements InitializingBean {
         marshallingHttpMessageConverter.setUnmarshaller(jaxb2Marshaller);
         ArrayList<MediaType> mediaTypesList = new ArrayList<MediaType>();
         mediaTypesList.add(MediaType.APPLICATION_XML);
+        mediaTypesList.add(MediaType.TEXT_XML);
+        mediaTypesList.add(MediaType.TEXT_PLAIN);
         marshallingHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
         return marshallingHttpMessageConverter;
     }
@@ -148,6 +149,7 @@ public class MvcAutoConfiguration implements InitializingBean {
                 new MappingJackson2HttpMessageConverter();
         ArrayList<MediaType> mediaTypesList = new ArrayList<MediaType>();
         mediaTypesList.add(MediaType.APPLICATION_JSON);
+        mediaTypesList.add(MediaType.TEXT_PLAIN);
         mappingJacksonHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
         return mappingJacksonHttpMessageConverter;
     }
@@ -173,14 +175,14 @@ public class MvcAutoConfiguration implements InitializingBean {
             MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter,
             MarshallingHttpMessageConverter marshallingHttpMessageConverter,
             StringHttpMessageConverter stringHttpMessageConverter) {
-        
-        RequestMappingHandlerAdapter requestMappingHandlerAdapter = 
-                new RequestMappingHandlerAdapter();
         List<HttpMessageConverter<?>> httpMessageConverterList = 
                 new ArrayList<HttpMessageConverter<?>>();
         httpMessageConverterList.add(mappingJacksonHttpMessageConverter);
         httpMessageConverterList.add(marshallingHttpMessageConverter);
         httpMessageConverterList.add(stringHttpMessageConverter);
+        
+        RequestMappingHandlerAdapter requestMappingHandlerAdapter = 
+                new RequestMappingHandlerAdapter();
         requestMappingHandlerAdapter.setMessageConverters(httpMessageConverterList);
         return requestMappingHandlerAdapter;
     }
