@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.maxkey.configuration.ApplicationConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
