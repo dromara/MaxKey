@@ -7,6 +7,7 @@ import java.security.cert.X509Certificate;
 import java.util.List;
 
 import org.maxkey.authz.saml20.metadata.MetadataDescriptorUtil;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
@@ -47,7 +48,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	AppsSaml20DetailsService saml20DetailsService;
 	
 	@Autowired
-	String maxKeyURI;
+	ApplicationConfig applicationConfig;
 	
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd() {
@@ -87,7 +88,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		decoderSecret(saml20Details);
 		WebContext.setAttribute(saml20Details.getId(), saml20Details.getIcon());
 		modelAndView.addObject("model",saml20Details);
-		modelAndView.addObject("maxKeyURI",maxKeyURI);
+		modelAndView.addObject("maxKeyURI",applicationConfig.getMaxKeyUri());
 		return modelAndView;
 	}
 	/**

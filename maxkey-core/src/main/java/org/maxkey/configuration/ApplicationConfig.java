@@ -55,6 +55,9 @@ public class ApplicationConfig {
     @Value("${config.identity.kafkasupport:false}")
     private boolean kafkaSupport;
     
+    @Value("${config.maxkey.uri}")
+    private String maxKeyUri;
+    
     public int getPort() {
         return port;
     }
@@ -207,6 +210,14 @@ public class ApplicationConfig {
 
     public void setKafkaSupport(boolean kafkaSupport) {
         this.kafkaSupport = kafkaSupport;
+    }
+
+    public String getMaxKeyUri() {
+        return maxKeyUri;
+    }
+
+    public void setMaxKeyUri(String maxKeyUri) {
+        this.maxKeyUri = maxKeyUri;
     }
 
     /*
