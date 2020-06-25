@@ -3,7 +3,7 @@
  */
 package org.maxkey.authz.endpoint;
 
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.dao.service.AccountsService;
 import org.maxkey.dao.service.AppsService;

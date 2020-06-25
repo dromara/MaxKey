@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringGenerator;

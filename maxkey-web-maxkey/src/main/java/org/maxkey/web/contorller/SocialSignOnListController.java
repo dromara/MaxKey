@@ -7,7 +7,7 @@ import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

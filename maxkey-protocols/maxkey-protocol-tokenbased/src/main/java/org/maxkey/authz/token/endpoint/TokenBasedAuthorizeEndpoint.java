@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.token.endpoint.adapter.TokenBasedDefaultAdapter;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.Boolean;
 import org.maxkey.dao.service.AppsTokenBasedDetailsService;
 import org.maxkey.domain.apps.Apps;

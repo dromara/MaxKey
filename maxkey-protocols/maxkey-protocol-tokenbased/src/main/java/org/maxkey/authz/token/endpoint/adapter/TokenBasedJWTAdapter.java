@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import org.joda.time.DateTime;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.config.oidc.OIDCProviderMetadata;
+import org.maxkey.configuration.oidc.OIDCProviderMetadata;
 import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.Apps;

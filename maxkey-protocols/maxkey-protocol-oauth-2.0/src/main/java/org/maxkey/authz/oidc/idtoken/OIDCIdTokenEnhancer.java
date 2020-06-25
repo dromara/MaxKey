@@ -16,7 +16,7 @@ import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.OAuth2Request;
 import org.maxkey.authz.oauth2.provider.token.TokenEnhancer;
-import org.maxkey.config.oidc.OIDCProviderMetadata;
+import org.maxkey.configuration.oidc.OIDCProviderMetadata;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.encryption.service.impl.RecipientJwtEncryptionAndDecryptionServiceBuilder;

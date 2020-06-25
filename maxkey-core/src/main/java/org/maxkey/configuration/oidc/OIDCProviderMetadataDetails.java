@@ -1,4 +1,4 @@
-package org.maxkey.config.oidc;
+package org.maxkey.configuration.oidc;
 
 import java.net.URI;
 import java.util.Set;

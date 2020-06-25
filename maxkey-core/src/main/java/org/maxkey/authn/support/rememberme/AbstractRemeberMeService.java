@@ -6,7 +6,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.Base64Utils;

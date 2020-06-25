@@ -5,7 +5,8 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.maxkey.config.ApplicationConfig;
+
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebConstants;

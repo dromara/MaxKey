@@ -24,7 +24,7 @@ import org.maxkey.authz.oauth2.provider.token.store.JdbcTokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
 import org.maxkey.authz.oidc.idtoken.OIDCIdTokenEnhancer;
-import org.maxkey.config.oidc.OIDCProviderMetadataDetails;
+import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;

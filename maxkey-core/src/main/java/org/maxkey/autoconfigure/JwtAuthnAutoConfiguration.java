@@ -6,7 +6,7 @@ import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import org.maxkey.authn.support.jwt.JwtLoginService;
-import org.maxkey.config.oidc.OIDCProviderMetadataDetails;
+import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;

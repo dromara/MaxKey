@@ -2,7 +2,7 @@ package org.maxkey.authn;
 
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.crypto.password.opt.AbstractOptAuthn;

@@ -1,4 +1,4 @@
-package org.maxkey.config;
+package org.maxkey.configuration;
 
 import java.io.UnsupportedEncodingException;
 

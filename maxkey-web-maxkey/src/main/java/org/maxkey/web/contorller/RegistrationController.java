@@ -5,7 +5,7 @@ import java.util.Date;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;

@@ -2,7 +2,7 @@ package org.maxkey.identity.kafka;
 
 import java.util.UUID;
 
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.slf4j.Logger;

@@ -12,7 +12,7 @@ import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

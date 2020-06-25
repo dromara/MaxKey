@@ -1,4 +1,4 @@
-package org.maxkey.config;
+package org.maxkey.configuration;
 
 import org.maxkey.constants.ConstantsProperties;
 import org.springframework.beans.factory.annotation.Value;

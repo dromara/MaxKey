@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;

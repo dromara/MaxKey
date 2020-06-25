@@ -4,7 +4,7 @@ import java.util.Date;
 import javax.servlet.ServletException;
 import org.apache.ibatis.io.VFS;
 import org.apache.mybatis.jpa.SpringBootVFS;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.InitializeContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

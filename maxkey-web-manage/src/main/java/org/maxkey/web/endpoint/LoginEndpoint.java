@@ -7,7 +7,7 @@ import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;

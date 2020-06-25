@@ -13,7 +13,7 @@ import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.Boolean;
 import org.maxkey.dao.service.AppsCasDetailsService;
 import org.maxkey.dao.service.UserInfoService;

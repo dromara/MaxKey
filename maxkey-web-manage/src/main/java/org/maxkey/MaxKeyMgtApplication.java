@@ -3,7 +3,7 @@ package org.maxkey;
 import java.util.Date;
 import javax.servlet.ServletException;
 
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.InitializeContext;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;

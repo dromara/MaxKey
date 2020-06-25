@@ -13,7 +13,7 @@ import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.wsfederation.WsFederationConstants;
-import org.maxkey.config.ApplicationConfig;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.crypto.password.opt.AbstractOptAuthn;
 import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
