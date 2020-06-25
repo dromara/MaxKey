@@ -22,7 +22,7 @@ import org.springframework.context.annotation.ImportResource;
     "org.maxkey.MaxKeyMgtConfig",
     "org.maxkey.MaxKeyMgtMvcConfig",
     "org.maxkey.web.interceptor",
-    "org.maxkey.config",
+    "org.maxkey.configuration",
     "org.maxkey.domain",
     "org.maxkey.domain.apps",
     "org.maxkey.domain.userinfo",
