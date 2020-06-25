@@ -1,5 +1,6 @@
 package org.maxkey.identity.scim.resources;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class Organization extends Resource{
@@ -161,6 +162,8 @@ public class Organization extends Resource{
     }
 
     public Organization() {
+        schemas =new HashSet<String>();
+        schemas.add(SCHEMA);
     }
     
     
