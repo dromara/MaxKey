@@ -41,11 +41,11 @@
  
  	<bean id="kafkaProvisioningService" class="org.maxkey.identity.kafka.KafkaProvisioningService"></bean>
 	
-	<bean id="applicationConfig" class="org.maxkey.config.ApplicationConfig"></bean>
+	<bean id="applicationConfig" class="org.maxkey.configuration.ApplicationConfig"></bean>
 	
-	<bean id="emailConfig" class="org.maxkey.config.EmailConfig"></bean>
- 	<bean id="characterEncodingConfig" class="org.maxkey.config.CharacterEncodingConfig"></bean>
- 	<bean id="loginConfig" class="org.maxkey.config.LoginConfig"></bean>
+	<bean id="emailConfig" class="org.maxkey.configuration.EmailConfig"></bean>
+ 	<bean id="characterEncodingConfig" class="org.maxkey.configuration.CharacterEncodingConfig"></bean>
+ 	<bean id="loginConfig" class="org.maxkey.configuration.LoginConfig"></bean>
  	
    <bean id="producerProperties" class="java.util.HashMap">
          <constructor-arg>
