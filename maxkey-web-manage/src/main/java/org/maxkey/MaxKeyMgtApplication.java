@@ -31,14 +31,14 @@ import org.springframework.context.annotation.ImportResource;
     "org.maxkey.web.apps.contorller",
     "org.maxkey.web.endpoint",
     "org.maxkey.authn",
-    "org.maxkey.dao",
+    "org.maxkey.persistence",
     "org.maxkey.web",
     "org.maxkey.web.tag",
     "org.maxkey.identity.kafka",
     "org.maxkey.identity.scim.controller",
     "org.maxkey.identity.rest"
 })
-@MapperScan("org.maxkey.dao.persistence,")
+@MapperScan("org.maxkey.persistence.mapper,")
 public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 	private static final Logger _logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
 

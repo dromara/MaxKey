@@ -46,7 +46,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 //@ImportResource(locations = { "classpath:spring/maxkey.xml" })
 @PropertySource(ConstantsProperties.applicationPropertySource)
 @PropertySource(ConstantsProperties.maxKeyPropertySource)
-@MapperScan("org.maxkey.dao.persistence,")
+@MapperScan("org.maxkey.persistence.mapper,")
 @ComponentScan(basePackages = {
         "org.maxkey.configuration",
         "org.maxkey.domain",

@@ -17,11 +17,11 @@ import org.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionServic
 import org.maxkey.crypto.jwt.encryption.service.impl.RecipientJwtEncryptionAndDecryptionServiceBuilder;
 import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
 import org.maxkey.crypto.jwt.signer.service.impl.SymmetricSigningAndValidationServiceBuilder;
-import org.maxkey.dao.service.AppsService;
-import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.Apps;
 import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.persistence.service.AppsService;
+import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.Instance;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;

@@ -15,8 +15,8 @@ import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService
 import org.maxkey.authn.support.wsfederation.WsFederationConstants;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.crypto.password.opt.AbstractOptAuthn;
-import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;

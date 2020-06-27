@@ -8,7 +8,6 @@
 		<project>maxkey-protocol-oauth-2.0</project>
 		<project>maxkey-protocol-saml-2.0</project>
 		<project>maxkey-core</project>
-		<project>maxkey-dao</project>
 		<project>maxkey-client-sdk</project>
 		<project>maxkey-authentications</project>
 		<project>maxkey-protocol-authorize</project>

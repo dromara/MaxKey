@@ -4,12 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.dao.service.HistoryLoginAppsService;
-import org.maxkey.dao.service.HistoryLoginService;
-import org.maxkey.dao.service.HistoryLogsService;
 import org.maxkey.domain.HistoryLoginApps;
 import org.maxkey.domain.HistoryLogin;
 import org.maxkey.domain.HistoryLogs;
+import org.maxkey.persistence.service.HistoryLoginAppsService;
+import org.maxkey.persistence.service.HistoryLoginService;
+import org.maxkey.persistence.service.HistoryLogsService;
 import org.maxkey.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

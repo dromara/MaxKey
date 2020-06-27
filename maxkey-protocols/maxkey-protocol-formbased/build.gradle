@@ -7,7 +7,7 @@ dependencies {
 	compile fileTree(dir: '../maxkey-lib/*/', include: '*.jar')
 	
 	compile project(":maxkey-core")
-	compile project(":maxkey-dao")
+	compile project(":maxkey-persistence")
    	compile project(":maxkey-client-sdk")
    	compile project(":maxkey-protocols:maxkey-protocol-authorize")
    

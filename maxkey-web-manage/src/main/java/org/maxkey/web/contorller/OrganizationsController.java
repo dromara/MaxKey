@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.dao.service.OrganizationsService;
 import org.maxkey.domain.Organizations;
+import org.maxkey.persistence.service.OrganizationsService;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.component.TreeNode;
 import org.maxkey.web.component.TreeNodeList;

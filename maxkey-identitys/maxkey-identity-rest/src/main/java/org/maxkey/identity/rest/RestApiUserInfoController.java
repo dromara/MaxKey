@@ -2,8 +2,8 @@ package org.maxkey.identity.rest;
 
 import java.io.IOException;
 
-import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.persistence.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;

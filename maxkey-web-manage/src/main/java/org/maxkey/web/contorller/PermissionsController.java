@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.dao.service.RolesService;
 import org.maxkey.domain.RolePermissions;
+import org.maxkey.persistence.service.RolesService;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;

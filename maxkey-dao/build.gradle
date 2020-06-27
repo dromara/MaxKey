@@ -1,9 +1,0 @@
-description = "maxkey-dao"
-
-dependencies {
-	//local jars
-	compile fileTree(dir: '../maxkey-lib/*/', include: '*.jar')
-    	
-    compile project(":maxkey-core")
-    compile project(":maxkey-identitys:maxkey-identity-kafka")
-}

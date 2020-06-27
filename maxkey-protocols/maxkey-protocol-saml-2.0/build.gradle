@@ -5,5 +5,5 @@ dependencies {
 	compile fileTree(dir: '../maxkey-lib/*/', include: '*.jar')
 	
     compile project(":maxkey-core")
-    compile project(":maxkey-dao")
+    compile project(":maxkey-persistence")
 }

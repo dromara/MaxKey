@@ -6,7 +6,7 @@ rootProject.name = 'MaxKey'
 //Common
 include 'maxkey-client-sdk'
 include 'maxkey-core'
-include 'maxkey-dao'
+include 'maxkey-persistence'
 include 'maxkey-authentications'
 
 //identity

@@ -6,7 +6,7 @@
 		<dependent-module deploy-path="../" handle="module:/resource/maxkey-core/maxkey-core">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
-		<dependent-module deploy-path="../" handle="module:/resource/maxkey-dao/maxkey-dao">
+		<dependent-module deploy-path="../" handle="module:/resource/maxkey-persistence/maxkey-persistence">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="../" handle="module:/resource/maxkey-client-sdk/maxkey-client-sdk">

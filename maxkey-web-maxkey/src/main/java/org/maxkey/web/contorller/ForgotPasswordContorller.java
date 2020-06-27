@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.maxkey.crypto.password.opt.AbstractOptAuthn;
-import org.maxkey.dao.service.UserInfoService;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package org.maxkey.web.endpoint;
 
-import org.maxkey.dao.service.ReportService;
+import org.maxkey.persistence.service.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

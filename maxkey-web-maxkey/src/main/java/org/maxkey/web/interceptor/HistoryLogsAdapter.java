@@ -2,9 +2,10 @@ package org.maxkey.web.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.maxkey.dao.service.HistoryLogsService;
+
 import org.maxkey.domain.HistoryLogs;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.persistence.service.HistoryLogsService;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;

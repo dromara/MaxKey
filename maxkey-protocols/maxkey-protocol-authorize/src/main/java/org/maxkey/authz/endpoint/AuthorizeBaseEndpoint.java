@@ -5,11 +5,11 @@ package org.maxkey.authz.endpoint;
 
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.dao.service.AccountsService;
-import org.maxkey.dao.service.AppsService;
 import org.maxkey.domain.Accounts;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.Apps;
+import org.maxkey.persistence.service.AccountsService;
+import org.maxkey.persistence.service.AppsService;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

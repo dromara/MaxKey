@@ -3,8 +3,8 @@ package org.maxkey.web.contorller;
 import javax.validation.Valid;
 
 import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.dao.service.PasswordPolicyService;
 import org.maxkey.domain.PasswordPolicy;
+import org.maxkey.persistence.service.PasswordPolicyService;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
