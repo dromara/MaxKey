@@ -60,6 +60,7 @@ public class BasicEntryPoint extends HandlerInterceptorAdapter {
 		 
 		// session not exists，session timeout，recreate new session
 		 if(request.getSession(false) == null) {
+		    _logger.info("recreate new session .");
 			request.getSession(true);
 		 }
 		 String basicCredential =request.getHeader(AuthorizationHeaderUtils.AUTHORIZATION_HEADERNAME);

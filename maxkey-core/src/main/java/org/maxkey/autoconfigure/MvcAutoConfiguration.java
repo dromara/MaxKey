@@ -149,7 +149,7 @@ public class MvcAutoConfiguration implements InitializingBean {
                 new MappingJackson2HttpMessageConverter();
         ArrayList<MediaType> mediaTypesList = new ArrayList<MediaType>();
         mediaTypesList.add(MediaType.APPLICATION_JSON);
-        mediaTypesList.add(MediaType.TEXT_PLAIN);
+        //mediaTypesList.add(MediaType.TEXT_PLAIN);
         mappingJacksonHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
         return mappingJacksonHttpMessageConverter;
     }

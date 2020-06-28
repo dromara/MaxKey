@@ -52,6 +52,7 @@ public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 		 
 		// session not exists，session timeout，recreate new session
 		 if(request.getSession(false) == null) {
+		    _logger.info("recreate new session .");
 			request.getSession(true);
 		 }
 		 

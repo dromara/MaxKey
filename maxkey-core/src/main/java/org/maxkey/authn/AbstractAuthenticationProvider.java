@@ -123,8 +123,11 @@ public abstract class AbstractAuthenticationProvider {
      */
     protected void sessionValid(String sessionId) {
         if (sessionId == null || !sessionId.equals(WebContext.getSession().getId())) {
-            String message = WebContext.getI18nValue("login.error.session");
             _logger.debug("login session valid error.");
+            _logger.debug("login session sessionId " + sessionId);
+            _logger.debug("login getSession sessionId " + WebContext.getSession().getId());
+            
+            String message = WebContext.getI18nValue("login.error.session");
             throw new BadCredentialsException(message);
         }
     }

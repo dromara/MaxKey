@@ -220,6 +220,7 @@ public final class WebContext {
      * @return HttpSession
      */
     public static HttpSession getSession(boolean create) {
+        System.out.println("new Session created");
         return getRequest().getSession(create);
     }
 
