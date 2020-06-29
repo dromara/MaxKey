@@ -3,9 +3,16 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
+	<script type="text/javascript">
+		$(function () {
+			if("${model.approval_prompt!}"=="auto"){
+				$("#confirmationForm").submit();
+			}
+		});
+	</script>
 </head>
 
-<body>
+<body <#if model.approval_prompt?? && 'auto'==model.approval_prompt> style="display:none;"</#if>>
 	<div id="top">
 		<#include  "../layout/nologintop.ftl"/>
 	</div>
@@ -34,7 +41,7 @@
 		      
 		      <!--<p>You hereby authorize "${model.client.clientId!}" to access your protected resources.</p>-->
 		      <form id="confirmationForm" name="confirmationForm" action="<@base/>/oauth/v20/authorize" method="post">
-		        <input name="user_oauth_approval" value="true" type="hidden"/>
+		        <input id="user_oauth_approval" name="user_oauth_approval" value="true" type="hidden"/>
 		        <label><input class="button btn btn-primary mr-3" name="authorize" value='<@locale code="apps.oauth.approval.authorize"/>' type="submit"/></label>
 		      </form>
 	    </#if>
