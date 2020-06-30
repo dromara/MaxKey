@@ -1,4 +1,3 @@
-
 description = "maxkey-web-maxkey"
 
 // Apply the java plugin to add support for Java
@@ -31,9 +30,9 @@ dependencies {
 	compile project(":maxkey-protocols:maxkey-protocol-tokenbased")
    	compile project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
    	compile project(":maxkey-protocols:maxkey-protocol-saml-2.0")
-  
-   	
-   
+	
+	compile project(":maxkey-identitys:maxkey-identity-kafka")
+	
 }
 
 //For Eclipse IDE only
