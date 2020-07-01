@@ -44,6 +44,6 @@ limitations under the License.
 <h2><a name="Declaration "></a>MaxKey 显著声明 </h2>
 
 
-<img src="{{ "/images/im/maxkey_login_licenses.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+<img src="{{ "/images/maxkey_login_licenses.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
 
 
