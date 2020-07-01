@@ -11,7 +11,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 </a>
 
 <pre><code class="ini hljs">
-Copyright [2020] [MaxKey of copyright shimingxy@163.com]
+Copyright [2020] [MaxKey of copyright http://www.maxkey.top & shimingxy@163.com]
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
