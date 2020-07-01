@@ -26,3 +26,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 </code></pre>
+
+<h2><a name="Illegal "></a>违反 Apache 2.0新闻</h2>
+
+<a href="https://segmentfault.com/a/1190000022973105">博云违反 Apache 2.0 开源协议被要求整改，开源协议到底应该如何遵守？-2020年06月19日</a>
+
+
+<a href="https://www.oschina.net/news/100440/what-is-a-repo-license">开源作者痛斥京东重量级项目抄袭-2018年09月30日</a>
+
+
+<h2><a name="Declaration "></a>MaxKey 显著声明 </h2>
+
+
+<img src="{{ "/images/im/maxkey_login_licenses.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+
+
