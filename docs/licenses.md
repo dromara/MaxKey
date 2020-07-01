@@ -27,6 +27,12 @@ limitations under the License.
 
 </code></pre>
 
+
+<h2><a name="Dependency "></a>MaxKey依赖软件及第三方产品声明</h2>
+
+参见<a href="https://maxkey.top/dependency.html">项目依赖</a>
+
+
 <h2><a name="Illegal "></a>违反 Apache 2.0新闻</h2>
 
 <a href="https://segmentfault.com/a/1190000022973105">博云违反 Apache 2.0 开源协议被要求整改，开源协议到底应该如何遵守？-2020年06月19日</a>
