@@ -28,7 +28,7 @@ limitations under the License.
 </code></pre>
 
  
-<h3><a name="Dependency "></a>MaxKey依赖软件及第三方产品声明</h3>
+<h3><a name="Dependency "></a>MaxKey软件依赖及第三方产品声明</h3>
 
 参见<a href="https://maxkey.top/dependency.html">项目依赖</a>
 
