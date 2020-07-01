@@ -27,7 +27,7 @@ limitations under the License.
 
 </code></pre>
 
-<h3><a name="ApacheLicense20"></a>Apache License Version 2.0中文</h3>
+<h3><a name="ApacheLicense20"></a>Apache License Version 2.0中文解释</h3>
  
 Apache License Version 2.0 鼓励代码共享和尊重原作者的著作权，同样允许代码修改，再发布（作为开源或商业软件）。Apache Licence 也是对商业应用友好的许可，使用者也可以在需要的时候修改代码来满足需要并作为开源或商业产品发布/销售。
 
