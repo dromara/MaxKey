@@ -6,12 +6,16 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ContentType;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.encryption.service.impl.RecipientJwtEncryptionAndDecryptionServiceBuilder;
@@ -76,6 +80,7 @@ public class UserInfoEndpoint {
 	@Qualifier("jwtEncryptionService")
 	private JwtEncryptionAndDecryptionService jwtEnDecryptionService; 
 	
+	
 	private SymmetricSigningAndValidationServiceBuilder symmetricJwtSignerServiceBuilder
 					=new SymmetricSigningAndValidationServiceBuilder();
 
@@ -85,13 +90,16 @@ public class UserInfoEndpoint {
 	
 	OAuthDefaultUserInfoAdapter defaultOAuthUserInfoAdapter=new OAuthDefaultUserInfoAdapter();
 	
-	@RequestMapping(value="/oauth/v20/me",produces="text/plain;charset=UTF-8") 
+	@RequestMapping(value="/oauth/v20/me") 
 	@ResponseBody
 	public String apiV20UserInfo(
-			@RequestParam(value = "access_token", required = true) String access_token) {
+			@RequestParam(value = "access_token", required = true) String access_token,
+            HttpServletRequest request, 
+            HttpServletResponse response) {
+	        response.setContentType(ContentType.APPLICATION_JSON_UTF8);
 			String principal="";
 			if (!StringGenerator.uuidMatches(access_token)) {
-				return accessTokenFormatError(access_token);
+				return JsonUtils.gson2Json(accessTokenFormatError(access_token));
 			}
 			OAuth2Authentication oAuth2Authentication =null;
 			try{
@@ -103,8 +111,6 @@ public class UserInfoEndpoint {
 				 UserInfo userInfo=queryUserInfo(principal);
 				 Apps app=appsService.get(client_id);
 				 
-				 String userJson="";
-				 
 				 AbstractAuthorizeAdapter adapter;
 				 if(Boolean.isTrue(app.getIsAdapter())){
 					adapter =(AbstractAuthorizeAdapter)Instance.newInstance(app.getAdapter());
@@ -112,28 +118,28 @@ public class UserInfoEndpoint {
 					adapter =(AbstractAuthorizeAdapter)defaultOAuthUserInfoAdapter;
 				 }
 
-				 String jsonData=adapter.generateInfo(userInfo, null);
-				 userJson=adapter.sign(jsonData, app);
-				 
-				 return userJson;
-				 
+				String jsonData=adapter.generateInfo(userInfo, app);
+				return jsonData;
 			}catch(OAuth2Exception e){
 				HashMap<String,Object>authzException=new HashMap<String,Object>();
 				authzException.put(OAuth2Exception.ERROR, e.getOAuth2ErrorCode());
 				authzException.put(OAuth2Exception.DESCRIPTION,e.getMessage());
-				return JsonUtils.object2Json(authzException);
+				return JsonUtils.gson2Json(authzException);
 			}
 	}
 	
 	
-	@RequestMapping(value="/connect/v10/userinfo",produces="text/plain;charset=UTF-8")
+	@RequestMapping(value="/connect/v10/userinfo")
 	@ResponseBody
-	public String apiConnect10aUserInfo(
-			@RequestHeader(value = "Authorization", required = true) String access_token) {
+	public String connect10aUserInfo(
+			@RequestHeader(value = "Authorization", required = true) String access_token,
+			HttpServletRequest request, 
+			HttpServletResponse response) {
 		String principal="";
 		if (!StringGenerator.uuidMatches(access_token)) {
-			return accessTokenFormatError(access_token);
+			return JsonUtils.gson2Json(accessTokenFormatError(access_token));
 		}
+		
 		OAuth2Authentication oAuth2Authentication =null;
 		try{
 			 oAuth2Authentication = oauth20tokenServices.loadAuthentication(access_token);
@@ -207,10 +213,14 @@ public class UserInfoEndpoint {
 			JWTClaimsSet userInfoJWTClaims = jwtClaimsSetBuilder.build();
 			JWT userInfoJWT=null;
 			JWSAlgorithm signingAlg = jwtSignerValidationService.getDefaultSigningAlgorithm();
-			if (clientDetails.getUserInfoEncryptedAlgorithm() != null && !clientDetails.getUserInfoEncryptedAlgorithm().equals("none")
-					&& clientDetails.getUserInfoEncryptionMethod() != null && !clientDetails.getUserInfoEncryptionMethod().equals("none")
+			if (clientDetails.getUserInfoEncryptedAlgorithm() != null 
+			        && !clientDetails.getUserInfoEncryptedAlgorithm().equals("none")
+					&& clientDetails.getUserInfoEncryptionMethod() != null 
+					&& !clientDetails.getUserInfoEncryptionMethod().equals("none")
 					&&clientDetails.getJwksUri()!=null&&clientDetails.getJwksUri().length()>4
 					) {
+			    //需要加密
+			    response.setContentType(ContentType.APPLICATION_JWT_UTF8);
 				JwtEncryptionAndDecryptionService recipientJwtEnDecryptionService =
 						recipientJwtEnDecryptionServiceBuilder.serviceBuilder(clientDetails.getJwksUri());
 				
@@ -227,38 +237,41 @@ public class UserInfoEndpoint {
 					authzException.put(OAuth2Exception.DESCRIPTION,"Couldn't find encrypter for client: " + clientDetails.getClientId());
 					return JsonUtils.gson2Json(authzException);
 				}	
-			} else {
-				if (clientDetails.getUserInfoSigningAlgorithm()==null||clientDetails.getUserInfoSigningAlgorithm().equals("none")) {
-					// unsigned ID token
-					//userInfoJWT = new PlainJWT(userInfoJWTClaims);
-					userJson=JsonUtils.gson2Json(jwtClaimsSetBuilder.getClaims());
-				} else {
-					// signed ID token
-					if (signingAlg.equals(JWSAlgorithm.HS256)
-							|| signingAlg.equals(JWSAlgorithm.HS384)
-							|| signingAlg.equals(JWSAlgorithm.HS512)) {
-						// sign it with the client's secret
-						String client_secret=ReciprocalUtils.decoder(clientDetails.getClientSecret());
-						
-						JwtSigningAndValidationService symmetricJwtSignerService =symmetricJwtSignerServiceBuilder.serviceBuilder(client_secret);
-						if(symmetricJwtSignerService!=null){
-							userInfoJWTClaims = new JWTClaimsSet.Builder(userInfoJWTClaims).claim("kid", "SYMMETRIC-KEY").build();
-							userInfoJWT = new SignedJWT(new JWSHeader(signingAlg), userInfoJWTClaims);
-							symmetricJwtSignerService.signJwt((SignedJWT) userInfoJWT);
-						}else{
-							_logger.error("Couldn't create symmetric validator for client " + clientDetails.getClientId() + " without a client secret");
-						}
-					} else {
-						userInfoJWTClaims = new JWTClaimsSet.Builder(userInfoJWTClaims).claim("kid", jwtSignerValidationService.getDefaultSignerKeyId()).build();
+			}else if (clientDetails.getUserInfoSigningAlgorithm()!=null 
+			        && !clientDetails.getUserInfoSigningAlgorithm().equals("none")) {
+			    //需要签名
+			    response.setContentType(ContentType.APPLICATION_JWT_UTF8);
+				// signed ID token
+				if (signingAlg.equals(JWSAlgorithm.HS256)
+						|| signingAlg.equals(JWSAlgorithm.HS384)
+						|| signingAlg.equals(JWSAlgorithm.HS512)) {
+					// sign it with the client's secret
+					String client_secret=ReciprocalUtils.decoder(clientDetails.getClientSecret());
+					
+					JwtSigningAndValidationService symmetricJwtSignerService =symmetricJwtSignerServiceBuilder.serviceBuilder(client_secret);
+					if(symmetricJwtSignerService!=null){
+						userInfoJWTClaims = new JWTClaimsSet.Builder(userInfoJWTClaims).claim("kid", "SYMMETRIC-KEY").build();
 						userInfoJWT = new SignedJWT(new JWSHeader(signingAlg), userInfoJWTClaims);
-						// sign it with the server's key
-						jwtSignerValidationService.signJwt((SignedJWT) userInfoJWT);
+						symmetricJwtSignerService.signJwt((SignedJWT) userInfoJWT);
+					}else{
+						_logger.error("Couldn't create symmetric validator for client " + clientDetails.getClientId() + " without a client secret");
 					}
-					userJson=userInfoJWT.serialize();
+				} else {
+					userInfoJWTClaims = new JWTClaimsSet.Builder(userInfoJWTClaims).claim("kid", jwtSignerValidationService.getDefaultSignerKeyId()).build();
+					userInfoJWT = new SignedJWT(new JWSHeader(signingAlg), userInfoJWTClaims);
+					// sign it with the server's key
+					jwtSignerValidationService.signJwt((SignedJWT) userInfoJWT);
 				}
-			}
+				userJson=userInfoJWT.serialize();
+			}else {
+			    //不需要加密和签名
+                response.setContentType(ContentType.APPLICATION_JSON_UTF8);
+                // unsigned ID token
+                //userInfoJWT = new PlainJWT(userInfoJWTClaims);
+                userJson=JsonUtils.gson2Json(jwtClaimsSetBuilder.getClaims());
+            }
 			 
-			 return userJson;
+			return userJson;
 			 
 		}catch(OAuth2Exception e){
 			HashMap<String,Object>authzException=new HashMap<String,Object>();
@@ -267,17 +280,15 @@ public class UserInfoEndpoint {
 			return JsonUtils.object2Json(authzException);
 		}
 	}
-
-
-	public String accessTokenFormatError(String access_token){
+	
+	public HashMap<String,Object> accessTokenFormatError(String access_token){
 		HashMap<String,Object>atfe=new HashMap<String,Object>();
 		atfe.put(OAuth2Exception.ERROR, "token Format Invalid");
 		atfe.put(OAuth2Exception.DESCRIPTION, "access Token Format Invalid , access_token : "+access_token);
 		
-		return JsonUtils.object2Json(atfe);
+		return atfe;
 	}
 
-	
 	public  UserInfo queryUserInfo(String uid){
 		_logger.debug("uid : "+uid);
 		UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(uid);

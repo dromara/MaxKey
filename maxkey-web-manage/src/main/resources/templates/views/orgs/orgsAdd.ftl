@@ -39,11 +39,11 @@ $(function () {
            </tr>
            <tr >
               <td > <@locale code="org.pid" />：</td>
-              <td><input type="text"  id="pId" name="pId"  class="form-control"/></td>
+              <td><input type="text"  id="pId" name="parentId"  class="form-control"/></td>
            </tr>
            <tr>
               <th  width="200px"> <@locale code="org.pname" />：</td>
-              <td><input type="text"  id="pName" name="pName"    class="form-control"/></td>
+              <td><input type="text"  id="pName" name="parentName"    class="form-control"/></td>
            </tr>
            <tr >
               <td > <@locale code="org.id" />：</td>
@@ -60,13 +60,13 @@ $(function () {
             <tr >
               <td > <@locale code="org.xpath" /> ：
               </th>
-              <td><input type="text"  id="xPath" name="xPath"    class="form-control"/></td>
+              <td><input type="text"  id="xPath" name="codePath"    class="form-control"/></td>
            </tr>
            
             <tr >
               <td > <@locale code="org.xnamepath" /> ：
               </th>
-              <td><input type="text"  id="xNamePath" name="xNamePath"    class="form-control"/></td>
+              <td><input type="text"  id="xNamePath" name="namePath"    class="form-control"/></td>
            </tr>
            
            <tr>
@@ -81,7 +81,7 @@ $(function () {
               <th >
                  <@locale code="org.sortorder" /> ：
               </th>
-              <td><input type="text"  id="sortOrder" name="sortOrder"    class="form-control" value='1'/></td>
+              <td><input type="text"  id="sortIndex" name="sortIndex"    class="form-control" value='1'/></td>
            </tr>
           
            <tr>

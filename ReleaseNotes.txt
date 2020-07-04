@@ -19,7 +19,9 @@
 	*(MAXKEY-200618) 修复更新应用时状态问题
 	*(MAXKEY-200619) REST API 机构和用户接口实现
 	*(MAXKEY-200620) 代码优化及命名调整
-	*(MAXKEY-200621) 依赖jar升级,消除非必要依赖
+	*(MAXKEY-200621) CAS协议增强
+	*(MAXKEY-200622) 机构变更时JSON序列化错误修复
+	*(MAXKEY-200623) 依赖jar升级,消除非必要依赖
 	                spring 5.2.7.RELEASE
 					springBoot 2.3.1.RELEASE
 					springSecurity 5.3.2.RELEASE
@@ -29,6 +31,9 @@
 					tomcat-embed 9.0.35
 					mybatis 3.5.5
 					mybatis-jpa-extra 2.1
+					tomcat-embed 9.0.36
+					simple-http 1.0.2
+					JustAuth  1.15.6
 	
 MaxKey v 1.4.0 GA	2020/05/01  
 	*(MAXKEY-200501) 登录错误修复

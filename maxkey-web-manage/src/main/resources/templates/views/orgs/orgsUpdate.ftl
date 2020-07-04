@@ -38,11 +38,11 @@ $(function () {
            </tr>
            <tr >
               <td > <@locale code="org.pid" />：</td>
-              <td><input type="text" readonly id="pId" name="pId"  class="form-control" value="${model.pId!}"/></td>
+              <td><input type="text" readonly id="pId" name="parentId"  class="form-control" value="${model.parentId!}"/></td>
            </tr>
            <tr>
               <th  width="200px"> <@locale code="org.pname" />：</td>
-              <td><input type="text" readonly  id="pName" name="pName"    class="form-control" value="${model.pName!}"/></td>
+              <td><input type="text" readonly  id="pName" name="parentName"    class="form-control" value="${model.parentName!}"/></td>
            </tr>
            <tr >
               <td > <@locale code="org.id" />：</td>
@@ -59,13 +59,13 @@ $(function () {
             <tr >
               <td > <@locale code="org.xpath" /> ：
               </th>
-              <td><input type="text"  id="xPath" name="xPath"    class="form-control" value="${model.xPath!}"/></td>
+              <td><input type="text"  id="xPath" name="codePath"    class="form-control" value="${model.codePath!}"/></td>
            </tr>
            
             <tr >
               <td > <@locale code="org.xnamepath" /> ：
               </th>
-              <td><input type="text"  id="xNamePath" name="xNamePath"    class="form-control" value="${model.xNamePath!}"/></td>
+              <td><input type="text"  id="xNamePath" name="namePath"    class="form-control" value="${model.namePath!}"/></td>
            </tr>
            
            <tr>
@@ -80,7 +80,7 @@ $(function () {
               <th >
                  <@locale code="org.sortorder" /> ：
               </th>
-              <td><input type="text"  id="sortOrder" name="sortOrder"    class="form-control" value="${model.sortOrder!}"/></td>
+              <td><input type="text"  id="sortOrder" name="sortIndex"    class="form-control" value="${model.sortIndex!}"/></td>
            </tr>
           
            <tr>

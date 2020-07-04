@@ -77,13 +77,13 @@ public class AppsSAML20Details extends Apps {
     @Column
     private int nameIdConvert;
 
-    public static class BINDINGTYPE {
-        public String Redirect_Post = "Redirect-Post";
-        public String Post_Post = "Post-Post";
-        public String IdpInit_Post = "IdpInit-Post";
-        public String Redirect_PostSimpleSign = "Redirect-PostSimpleSign";
-        public String Post_PostSimpleSign = "Post-PostSimpleSign";
-        public String IdpInit_PostSimpleSign = "IdpInit-PostSimpleSign";
+    public static final class BindingType {
+        public static final  String Redirect_Post = "Redirect-Post";
+        public static final  String Post_Post = "Post-Post";
+        public static final  String IdpInit_Post = "IdpInit-Post";
+        public static final  String Redirect_PostSimpleSign = "Redirect-PostSimpleSign";
+        public static final  String Post_PostSimpleSign = "Post-PostSimpleSign";
+        public static final  String IdpInit_PostSimpleSign = "IdpInit-PostSimpleSign";
     }
 
     /**

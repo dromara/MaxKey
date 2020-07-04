@@ -1,18 +1,18 @@
 package org.maxkey.domain;
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 
 @Table(name = "ORGANIZATIONS")
 public class Organizations extends JpaBaseDomain implements Serializable {
 
+    private static final long serialVersionUID = 5085413816404119803L;
+    
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
@@ -24,15 +24,15 @@ public class Organizations extends JpaBaseDomain implements Serializable {
     @Column
     private String fullName;
     @Column
-    private String pId;
+    private String parentId;
     @Column
-    private String pName;
+    private String parentName;
     @Column
     private String type;
     @Column
-    private String xPath;
+    private String codePath;
     @Column
-    private String xNamePath;
+    private String namePath;
     @Column
     private String level;
     @Column
@@ -60,14 +60,9 @@ public class Organizations extends JpaBaseDomain implements Serializable {
     @Column
     private String email;
     @Column
-    private String sortOrder;
+    private String sortIndex;
     @Column
     private String description;
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 5085413816404119803L;
 
     public Organizations() {
         // TODO Auto-generated constructor stub
@@ -105,20 +100,22 @@ public class Organizations extends JpaBaseDomain implements Serializable {
         this.fullName = fullName;
     }
 
-    public String getpId() {
-        return pId;
+
+
+    public String getParentId() {
+        return parentId;
     }
 
-    public void setpId(String pId) {
-        this.pId = pId;
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 
-    public String getpName() {
-        return pName;
+    public String getParentName() {
+        return parentName;
     }
 
-    public void setpName(String pName) {
-        this.pName = pName;
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 
     public String getType() {
@@ -127,22 +124,6 @@ public class Organizations extends JpaBaseDomain implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getxPath() {
-        return xPath;
-    }
-
-    public void setxPath(String xPath) {
-        this.xPath = xPath;
-    }
-
-    public String getxNamePath() {
-        return xNamePath;
-    }
-
-    public void setxNamePath(String xNamePath) {
-        this.xNamePath = xNamePath;
     }
 
     public String getLevel() {
@@ -265,14 +246,41 @@ public class Organizations extends JpaBaseDomain implements Serializable {
         this.description = description;
     }
 
+    public String getCodePath() {
+        return codePath;
+    }
+
+    public void setCodePath(String codePath) {
+        this.codePath = codePath;
+    }
+
+    public String getNamePath() {
+        return namePath;
+    }
+
+    public void setNamePath(String namePath) {
+        this.namePath = namePath;
+    }
+
+    public String getSortIndex() {
+        return sortIndex;
+    }
+
+    public void setSortIndex(String sortIndex) {
+        this.sortIndex = sortIndex;
+    }
+
     @Override
     public String toString() {
-        return "Organizations [id=" + id + ", code=" + code + ", name=" + name + ", fullName=" + fullName + ", pId="
-                + pId + ", pName=" + pName + ", type=" + type + ", xPath=" + xPath + ", xNamePath=" + xNamePath
-                + ", level=" + level + ", hasChild=" + hasChild + ", division=" + division + ", country=" + country
-                + ", region=" + region + ", locality=" + locality + ", street=" + street + ", address=" + address
-                + ", contact=" + contact + ", postalCode=" + postalCode + ", phone=" + phone + ", fax=" + fax
-                + ", email=" + email + ", sortOrder=" + sortOrder + ", description=" + description + "]";
+        return "Organizations [id=" + id + ", code=" + code + ", name=" + name + ", fullName=" + fullName
+                + ", parentId=" + parentId + ", parentName=" + parentName + ", type=" + type + ", codePath=" + codePath
+                + ", namePath=" + namePath + ", level=" + level + ", hasChild=" + hasChild + ", division=" + division
+                + ", country=" + country + ", region=" + region + ", locality=" + locality + ", street=" + street
+                + ", address=" + address + ", contact=" + contact + ", postalCode=" + postalCode + ", phone=" + phone
+                + ", fax=" + fax + ", email=" + email + ", sortIndex=" + sortIndex + ", description=" + description
+                + "]";
     }
+
+
 
 }

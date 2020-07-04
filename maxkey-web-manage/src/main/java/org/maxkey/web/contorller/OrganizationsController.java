@@ -48,7 +48,7 @@ public class OrganizationsController {
       }
       
       treeNode.setAttr("data", org);
-      treeNode.setPId(org.getpId());
+      treeNode.setPId(org.getParentId());
       if (org.getId().equals("1")) {
         treeNode.setAttr("open", Boolean.valueOf(true));
       } else {

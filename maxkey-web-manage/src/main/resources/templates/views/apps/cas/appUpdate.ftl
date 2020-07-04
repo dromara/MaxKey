@@ -62,9 +62,9 @@ $(function(){
 									</td>
 								</tr>
 								<tr>
-									<th style="width:15%;"><@locale code="apps.cas.validation"/>：</th>
+									<th style="width:15%;"><@locale code="apps.cas.callbackUrl"/>：</th>
 									<td  colspan=3>
-										<input type="text" class="form-control" id="redirectUri" name="validation"  title="" value="${model.validation}"  required="" />
+										<input type="text" class="form-control" id="callbackUrl" name="callbackUrl"  title="" value="${model.callbackUrl}"  required="" />
 							
 									</td>
 								</tr>

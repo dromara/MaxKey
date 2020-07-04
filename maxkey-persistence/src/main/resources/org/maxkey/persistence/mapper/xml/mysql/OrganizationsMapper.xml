@@ -9,11 +9,11 @@
 		<if test="name != null and name != '' ">
 			AND	NAME	like	'%#{name}%'
 		</if>
-		<if test="pId != null and pId != '' ">
-			AND	PID	=	#{pId}
+		<if test="parentId != null and parentId != '' ">
+			AND	PARENTID	=	#{parentId}
 		</if>
-		<if test="pName != null and pName != ''">
-			AND	PNAME	like	'%#{pName}%'
+		<if test="parentName != null and parentName != ''">
+			AND	PARENTNAME	like	'%#{parentName}%'
 		</if>
 
     </sql>
@@ -41,8 +41,8 @@
 		<if test="enable != null">
 			ADN	STATUS	=	'1'
 		</if>
-		<if test="xPath != null">
-			ADN	XPATH	=	#{xPath}
+		<if test="codePath != null">
+			ADN	CODEPATH	=	#{codePath}
 		</if>
     </update>
     

@@ -94,6 +94,17 @@ public class CasAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		
 		String ticket=ticketServices.createTicket(serviceTicket);
 		
-		return WebContext.redirect(casDetails.getService()+"?"+CasConstants.PARAMETER.TICKET+"="+ticket);
+		StringBuffer callbackUrl = new StringBuffer(casDetails.getCallbackUrl());
+		if(casDetails.getCallbackUrl().indexOf("?")==-1) {
+		    callbackUrl.append("?");
+		}
+		
+		callbackUrl.append(CasConstants.PARAMETER.TICKET).append("=").append(ticket)
+                .append("&")
+                .append(CasConstants.PARAMETER.SERVICE).append("=").append(casDetails.getService());
+		
+		_logger.debug("redirect to CAS Client URL " + callbackUrl);
+		
+		return WebContext.redirect(callbackUrl.toString());
 	}
 }

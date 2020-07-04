@@ -31,7 +31,7 @@ public class Organization2Activedirectory  extends OrganizationConnector{
 			SearchControls constraints = new SearchControls();
 			constraints.setSearchScope(ldapUtils.getSearchScope());
 			NamingEnumeration<SearchResult> results = ldapUtils.getConnection()
-					.search(ldapUtils.getBaseDN(), "(&(objectClass=organizationalUnit)(description="+organization.getpId()+"))", constraints);
+					.search(ldapUtils.getBaseDN(), "(&(objectClass=organizationalUnit)(description="+organization.getParentId()+"))", constraints);
 			String rdn="";
 			if (results == null || !results.hasMore()) {
 				rdn=ldapUtils.getBaseDN();

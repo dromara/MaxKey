@@ -10,6 +10,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.constants.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class AbstractImageEndpoint {
         // Set standard HTTP/1.0 no-cache header.
         response.setHeader("Pragma", "no-cache");
         // return a jpeg/gif
-        response.setContentType("image/gif");
+        response.setContentType(ContentType.IMAGE_GIF);
         _logger.trace("create the image");
         // create the image
         if (bufferedImage != null) {
