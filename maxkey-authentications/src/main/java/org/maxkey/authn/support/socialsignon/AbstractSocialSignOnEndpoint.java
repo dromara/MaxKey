@@ -80,9 +80,9 @@ public class AbstractSocialSignOnEndpoint {
   		AuthCallback authCallback=new AuthCallback();
   		authCallback.setCode(WebContext.getRequest().getParameter("code"));
   		authCallback.setAuth_code(WebContext.getRequest().getParameter("auth_code"));
-  		authCallback.setOauthToken(WebContext.getRequest().getParameter("oauthToken"));
+  		authCallback.setOauth_token(WebContext.getRequest().getParameter("oauthToken"));
   		authCallback.setAuthorization_code(WebContext.getRequest().getParameter("authorization_code"));
-  		authCallback.setOauthVerifier(WebContext.getRequest().getParameter("oauthVerifier"));
+  		authCallback.setOauth_verifier(WebContext.getRequest().getParameter("oauthVerifier"));
   		authCallback.setState(WebContext.getRequest().getParameter("state"));
   		
   		AuthResponse<?> authResponse=authRequest.login(authCallback);
