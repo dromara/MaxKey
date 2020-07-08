@@ -100,4 +100,8 @@ Apache Kafka Support
 
 钉钉支持
 
+飞书
+
+华为WeLink
+
 动态用户组实现(基于用户属性或机构)
