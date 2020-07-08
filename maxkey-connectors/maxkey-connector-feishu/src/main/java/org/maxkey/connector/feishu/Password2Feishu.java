@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.connector.ldap;
+package org.maxkey.connector.feishu;
 
 import javax.naming.NamingException;
 import javax.naming.directory.BasicAttribute;
@@ -32,12 +32,12 @@ import org.springframework.stereotype.Component;
 
 
 @Component(value = "passwordConnector")
-public class Password2Welink  extends PasswordConnector{
-	private final static Logger logger = LoggerFactory.getLogger(Password2Welink.class);
+public class Password2Feishu  extends PasswordConnector{
+	private final static Logger logger = LoggerFactory.getLogger(Password2Feishu.class);
 
 	LdapUtils  ldapUtils;
 	
-	public Password2Welink() {
+	public Password2Feishu() {
 		
 	}
 

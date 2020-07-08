@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.connector.ldap;
+package org.maxkey.connector.workweixin;
 
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.Attributes;
@@ -34,11 +34,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component(value = "organizationConnector")
-public class Organization2Feishu  extends OrganizationConnector{
-	private final static Logger logger = LoggerFactory.getLogger(Organization2Feishu.class);
+public class Organization2Weixin  extends OrganizationConnector{
+	private final static Logger logger = LoggerFactory.getLogger(Organization2Weixin.class);
 
 	LdapUtils  ldapUtils;
-	public Organization2Feishu() {
+	public Organization2Weixin() {
 		
 	}
 

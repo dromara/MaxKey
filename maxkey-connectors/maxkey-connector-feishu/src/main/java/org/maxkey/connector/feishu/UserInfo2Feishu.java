@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.connector.ldap;
+package org.maxkey.connector.feishu;
 
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;

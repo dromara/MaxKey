@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.connector.ldap;
+package org.maxkey.connector.workweixin;
 
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;

@@ -35,7 +35,7 @@ import org.springframework.context.annotation.PropertySource;
 @ComponentScan(basePackages = {
         "org.maxkey.connector",
         "org.maxkey.connector.receiver",
-        "org.maxkey.connector.ldap"
+        "org.maxkey.connector.welink"
     })
 public class WelinkConsumerApplication {
 

@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.connector.ldap;
+package org.maxkey.connector.workweixin;
 
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -36,11 +36,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component(value = "groupConnector")
-public class Group2Welink extends GroupConnector {
-	private final static Logger logger = LoggerFactory.getLogger(Group2Welink.class);
+public class Group2Weixin extends GroupConnector {
+	private final static Logger logger = LoggerFactory.getLogger(Group2Weixin.class);
 
 	LdapUtils  ldapUtils;
-	public Group2Welink() {
+	public Group2Weixin() {
 
 	}
 
