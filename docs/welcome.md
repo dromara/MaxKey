@@ -93,7 +93,7 @@
 		</tr>
 		<tr class="b">
 			<td>5 </td>
-			<td>Kerberos/Spengo/AD域</td>
+			<td>Kerberos/SPNEGO/AD域</td>
 		</tr>  
 		<tr class="a">
 			<td>6 </td>
