@@ -50,7 +50,7 @@ public class AuthenticationFilter implements Filter {
 	
 	private static final String UUID_REGEX =  "^[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}$";
 	
-	public  static final String CONST_CONNSEC_USERINFO="CONST_CONNSEC_USERINFO";
+	public  static final String CONST_MAXKEY_USERINFO="CONST_MAXKEY_USERINFO";
 	
 	private String clientId;
 	private String clientSecret;
@@ -77,9 +77,9 @@ public class AuthenticationFilter implements Filter {
 				 
 				UserInfo userInfo=restClient.getUserInfo(accessToken.getToken());
 
-				session.setAttribute(CONST_CONNSEC_USERINFO, userInfo);
+				session.setAttribute(CONST_MAXKEY_USERINFO, userInfo);
 				
-			}else if(session.getAttribute(CONST_CONNSEC_USERINFO)==null){
+			}else if(session.getAttribute(CONST_MAXKEY_USERINFO)==null){
 				String authorizationUrl = service.getAuthorizationUrl(EMPTY_TOKEN);
 				log.debug("Redirect to authorization Url : "+authorizationUrl);
 				httpServletResponse.sendRedirect(authorizationUrl);

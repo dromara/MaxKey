@@ -292,6 +292,7 @@ subprojects {
 		 compile group: 'org.apache.santuario', name: 'xmlsec', version: '1.5.8'
 		 compile group: 'org.ogce', name: 'xpp3', version: '1.1.6'
 		 compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
+		
     	 //local jars
     	 compile fileTree(dir: "${rootDir}/maxkey-lib/", include: '*.jar')
     	 //阿里云

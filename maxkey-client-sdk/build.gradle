@@ -1,10 +1,12 @@
 description = "maxkey-client-sdk"
 
-dependencies {
-   	compile fileTree(dir: '../maxkey-lib/log/', include: '*slf4j*.jar')
-   	compile fileTree(dir: '../maxkey-lib/log/', include: 'log4j*.jar')
-   	compile fileTree(dir: '../maxkey-lib/apache/', include: 'commons-logging*.jar')
-   	compile fileTree(dir: '../maxkey-lib/apache/', include: 'commons-codec*.jar')
-   	compile fileTree(dir: '../maxkey-lib/json/', include: 'gson*.jar')
-   	compile fileTree(dir: '../maxkey-lib/java/', include: '*.jar')
+dependencies {   	
+	/*compile group: 'commons-io', name: 'commons-io', version: '2.6'
+   	compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
+	compile group: 'log4j', name: 'log4j', version: '1.2.17'
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.5.11'
+   	compile group: 'commons-codec', name: 'commons-codec', version: '1.14'
+   	compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '8.10'
+   	compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+   	*/
 }

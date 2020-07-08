@@ -3,16 +3,16 @@ description = "maxkey-web-manage"
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 //apply plugin: 'war'
-apply plugin: 'eclipse-wtp'
-apply plugin: 'com.bmuschko.tomcat-base'
-apply plugin: 'com.bmuschko.tomcat'
+//apply plugin: 'eclipse-wtp'
+//apply plugin: 'com.bmuschko.tomcat-base'
+//apply plugin: 'com.bmuschko.tomcat'
 
 buildscript {
   repositories {
   jcenter()
   }
   dependencies {
-  	classpath "com.bmuschko:gradle-tomcat-plugin:2.2.3"
+  	//classpath "com.bmuschko:gradle-tomcat-plugin:2.2.3"
   }
 }
 
@@ -28,6 +28,7 @@ dependencies {
    	
 }
 
+/*
 eclipse {
 
 	wtp {
@@ -39,4 +40,4 @@ eclipse {
 		}	
     
 	}
-}
+}*/

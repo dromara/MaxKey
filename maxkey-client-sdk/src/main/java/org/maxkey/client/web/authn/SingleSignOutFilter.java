@@ -46,7 +46,7 @@ public class SingleSignOutFilter implements Filter {
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		
 		HttpSession session = httpServletRequest.getSession();
-		session.removeAttribute(AuthenticationFilter.CONST_CONNSEC_USERINFO);
+		session.removeAttribute(AuthenticationFilter.CONST_MAXKEY_USERINFO);
 		session.invalidate();
 		
 		httpServletResponse.sendRedirect(singleSignOutEndpoint);

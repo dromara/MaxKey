@@ -21,12 +21,17 @@ import java.util.Optional;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.maxkey.connector.OrganizationConnector;
+import org.maxkey.domain.Organizations;
+import org.maxkey.identity.kafka.KafkaIdentityAction;
 import org.maxkey.identity.kafka.KafkaIdentityTopic;
+import org.maxkey.identity.kafka.KafkaMessage;
+import org.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+
 @Component
 public class KafkaOrgsTopicReceiver {
     private static final Logger _logger = LoggerFactory.getLogger(KafkaOrgsTopicReceiver.class);
@@ -36,15 +41,31 @@ public class KafkaOrgsTopicReceiver {
     
     @KafkaListener(topics = {KafkaIdentityTopic.ORG_TOPIC})
     public void listen(ConsumerRecord<?, ?> record) {
-
-        Optional<?> kafkaMessage = Optional.ofNullable(record.value());
-
-        if (kafkaMessage.isPresent()) {
-
-            Object message = kafkaMessage.get();
-
-            _logger.info("----------------- record =" + record);
-            _logger.info("------------------ message =" + message);
+        try {
+            Optional<?> kafkaMessage = Optional.ofNullable(record.value());
+    
+            if (kafkaMessage.isPresent()) {
+    
+                Object message = kafkaMessage.get();
+    
+                _logger.debug("----------------- record =" + record);
+                _logger.debug("------------------ message =" + message);
+                
+                KafkaMessage receiverMessage = JsonUtils.gson2Object(message.toString(), KafkaMessage.class);
+                Organizations org = JsonUtils.gson2Object(receiverMessage.getContent().toString(),Organizations.class);
+                
+                if(receiverMessage.getActionType().equalsIgnoreCase(KafkaIdentityAction.CREATE_ACTION)) {
+                    organizationConnector.create(org);
+                }else if(receiverMessage.getActionType().equalsIgnoreCase(KafkaIdentityAction.UPDATE_ACTION)) {
+                    organizationConnector.update(org);
+                }else if(receiverMessage.getActionType().equalsIgnoreCase(KafkaIdentityAction.DELETE_ACTION)) {
+                    organizationConnector.delete(org);
+                }else{
+                    _logger.info("Other Action ");
+                }
+            }
+        }catch(Exception e) {
+            
         }
 
     }

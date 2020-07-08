@@ -17,8 +17,18 @@ include 'maxkey-identitys:maxkey-identity-rest'
 
 //connectors
 include 'maxkey-connectors:maxkey-connector-base'
-include 'maxkey-connectors:maxkey-connector-ldap'
+//MS Active Directory
 include 'maxkey-connectors:maxkey-connector-activedirectory'
+//OpenLDAP
+include 'maxkey-connectors:maxkey-connector-ldap'
+//企业微信
+include 'maxkey-connectors:maxkey-connector-workweixin'
+//阿里钉钉
+include 'maxkey-connectors:maxkey-connector-dingding'
+//字节跳动飞书
+include 'maxkey-connectors:maxkey-connector-feishu'
+//华为WeLink
+include 'maxkey-connectors:maxkey-connector-welink'
 
 //Protocol
 //include 'maxkey-protocols'
