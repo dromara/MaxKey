@@ -40,7 +40,7 @@ QQ交流群：<b>434469201</b> | 邮箱EMAIL: <b>shimingxy@163.com</b>
 | 2       | 双因素认证   	| 
 | 3       | 短信认证  腾讯云短信/阿里云短信/网易云信 	|
 | 4       | Google/Microsoft Authenticator/FreeOTP/支持TOTP或者HOTP |
-| 5       | Kerberos/Spengo/AD域|
+| 5       | Kerberos/SPNEGO/AD域|
 | 6       | 社交账号 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
 
 

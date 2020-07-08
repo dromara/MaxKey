@@ -63,16 +63,17 @@
 以下其他人员通过建议，补丁或文档的方式为该项目做出了贡献。
 <table border="0" class="table table-striped table-bordered ">
 	<thead>
-		<th>名称</th><th  >头像</th><th>github ID</th><th>组织</th><th>角色</th><th>时区</th>
+		<th>名称</th><th  >头像</th><th>github ID</th><th>组织</th><th>角色</th><th>时区</th><th>问题</th>
 	</thead>
 	<tbody>
 		<tr>
+			<td>QQ793732900(恍然如梦)</td>
 			<td></td>
 			<td></td>
 			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>contributor</td>
+			<td>Asia/北京</td>
+			<td>解决Maxkey在Chrome “您的连接不是私密连接” 问题</td>
 		</tr>
 	</tbody>
 </table>
