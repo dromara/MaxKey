@@ -70,7 +70,7 @@ public class JsonPretty  implements Pretty{
 	 * @return String
 	 */
 	public  String format(String  jsonString){
-		return format(new JsonParser().parse(jsonString));
+		return format(JsonParser.parseString(jsonString));
 	}
 	
 }
