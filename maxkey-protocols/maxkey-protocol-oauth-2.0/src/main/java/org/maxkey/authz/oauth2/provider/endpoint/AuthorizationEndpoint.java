@@ -24,7 +24,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidClientException;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidRequestException;
@@ -42,10 +41,9 @@ import org.maxkey.authz.oauth2.provider.TokenRequest;
 import org.maxkey.authz.oauth2.provider.approval.DefaultUserApprovalHandler;
 import org.maxkey.authz.oauth2.provider.approval.UserApprovalHandler;
 import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;
-import org.maxkey.authz.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.implicit.ImplicitTokenRequest;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestValidator;
-import org.maxkey.client.utils.HttpEncoder;
+import org.maxkey.util.HttpEncoder;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
 import org.maxkey.web.WebContext;
@@ -516,11 +514,17 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			@PathVariable("id") String id){
 		ClientDetails  clientDetails =clientDetailsService.loadClientByClientId(id);
 		_logger.debug(""+clientDetails);
-		String authorizationUrl = String.format(OAUTH_V20_AUTHORIZATION_URL, 
-						applicationConfig.getServerPrefix(),
-						clientDetails.getClientId(), 
-						HttpEncoder.encode(clientDetails.getRegisteredRedirectUri().toArray()[0].toString())
-				);
+		String authorizationUrl = "";
+        try {
+            authorizationUrl = String.format(OAUTH_V20_AUTHORIZATION_URL, 
+            				applicationConfig.getServerPrefix(),
+            				clientDetails.getClientId(), 
+            				HttpEncoder.encode(clientDetails.getRegisteredRedirectUri().toArray()[0].toString())
+            		);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 		
 		_logger.debug("authorizationUrl "+authorizationUrl);
 		

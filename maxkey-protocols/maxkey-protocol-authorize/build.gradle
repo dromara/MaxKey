@@ -8,7 +8,6 @@ dependencies {
 	
 	compile project(":maxkey-core")
 	compile project(":maxkey-persistence")
-   	compile project(":maxkey-client-sdk")
    	//compileOnly project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
    	//compileOnly project(":maxkey-protocols:maxkey-protocol-saml-2.0")
    

@@ -22,7 +22,7 @@ import java.util.HashMap;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.client.oauth.OAuthClient;
 import org.maxkey.client.oauth.model.Token;
-import org.maxkey.client.utils.JsonUtils;
+import org.maxkey.util.JsonUtils;
 import org.maxkey.domain.ExtraAttrs;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.Apps;

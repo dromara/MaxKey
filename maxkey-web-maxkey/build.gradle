@@ -18,7 +18,6 @@ buildscript {
 dependencies {         	
 	compile project(":maxkey-core")
 	compile project(":maxkey-persistence")
-   	compile project(":maxkey-client-sdk")
    	
    	compile project(":maxkey-authentications")
 	

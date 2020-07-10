@@ -9,8 +9,5 @@
 		<dependent-module deploy-path="../" handle="module:/resource/maxkey-persistence/maxkey-persistence">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
-		<dependent-module deploy-path="../" handle="module:/resource/maxkey-client-sdk/maxkey-client-sdk">
-			<dependency-type>uses</dependency-type>
-		</dependent-module>
 	</wb-module>
 </project-modules>
