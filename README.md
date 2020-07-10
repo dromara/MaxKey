@@ -2,7 +2,7 @@
 
 <b>MaxKey(马克思的钥匙)</b>用户单点登录认证系统(Sigle Sign On System)，寓意是最大钥匙,是<b>业界领先的企业级IAM身份管理和身份认证产品</b>,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS等标准化的开放协议，提供<b>简单、标准、安全和开放</b>的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、RBAC权限管理和资源管理等。
 
-MaxKey  <a href="https://www.maxkey.top" target="_blank"><b>官方文档</b></a> | <a href="https://github.com/shimingxy/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/shimingxy/MaxKey" target="_blank"><b>码云(Gitee)</b></a>
+MaxKey  <a href="https://www.maxkey.top" target="_blank"><b>官方文档</b></a> | <a href="https://github.com/MaxKeyTop/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/shimingxy/MaxKey" target="_blank"><b>码云(Gitee)</b></a>
   
 QQ交流群：<b>434469201</b> | 邮箱EMAIL: <b>shimingxy@163.com</b>
  
