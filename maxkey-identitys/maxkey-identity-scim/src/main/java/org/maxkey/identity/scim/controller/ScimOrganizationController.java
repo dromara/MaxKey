@@ -20,6 +20,7 @@ package org.maxkey.identity.scim.controller;
 import java.io.IOException;
 import java.util.Map;
 
+import org.maxkey.identity.scim.resources.Organization;
 import org.maxkey.identity.scim.resources.ScimSearchResult;
 import org.maxkey.identity.scim.resources.User;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- * This Controller is used to manage User
+ * This Controller is used to manage Organization
  * <p>
  * http://tools.ietf.org/html/draft-ietf-scim-core-schema-00#section-6
  * <p>
@@ -44,30 +45,30 @@ import org.springframework.web.util.UriComponentsBuilder;
  * http://tools.ietf.org/html/draft-ietf-scim-api-00#section-3
  */
 @RestController
-@RequestMapping(value = "/identity/scim/v2/Users")
-public class UserController {
+@RequestMapping(value = "/identity/scim/v2/Organization")
+public class ScimOrganizationController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public MappingJacksonValue getUser(@PathVariable String id,
+    public MappingJacksonValue getOrganization(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
-        User user = null;
+        Organization user = null;
         return null;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<MappingJacksonValue> create(@RequestBody  User user,
+    public ResponseEntity<MappingJacksonValue> create(@RequestBody  Organization user,
                                                       @RequestParam(required = false) String attributes,
                                                       UriComponentsBuilder builder) throws IOException {
-        User createdUser = null;
+        Organization createdUser = null;
         return null;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<MappingJacksonValue> replace(@PathVariable String id,
-                                                       @RequestBody User user,
+                                                       @RequestBody Organization user,
                                                        @RequestParam(required = false) String attributes)
             throws IOException {
-        User createdUser = null;
+        Organization createdUser = null;
         return null;
     }
 
@@ -90,7 +91,7 @@ public class UserController {
                 requestParameters.get("filter"),
                 requestParameters.get("sortBy"),
                 requestParameters.getOrDefault("sortOrder", "ascending"),             // scim default
-                Integer.parseInt(requestParameters.getOrDefault("count", "" + ServiceProviderConfigController.MAX_RESULTS)),
+                Integer.parseInt(requestParameters.getOrDefault("count", "" + ScimServiceProviderConfigController.MAX_RESULTS)),
                 Integer.parseInt(requestParameters.getOrDefault("startIndex", "1")); // scim default
 */
         String attributes = (requestParameters.containsKey("attributes") ? requestParameters.get("attributes") : "");
