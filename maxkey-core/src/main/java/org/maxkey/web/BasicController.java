@@ -26,17 +26,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 public interface BasicController  <T extends JpaBaseDomain> {
 
-	public JpaPageResults<T> pageResults(@ModelAttribute("modelAttr") T modelAttr);
+	public JpaPageResults<T> pageResults(@ModelAttribute("modelAttribute") T modelAttribute);
 	
-	public ModelAndView forwardAdd(@ModelAttribute("modelAttr") T modelAttr);
+	public ModelAndView forwardAdd(@ModelAttribute("modelAttribute") T modelAttribute);
 	
-	public Message insert(@ModelAttribute("modelAttr") T modelAttr);
+	public Message insert(@ModelAttribute("modelAttribute") T modelAttribute);
 	
 	public ModelAndView forwardUpdate(@PathVariable("id") String id);
 	
-	public Message update(@ModelAttribute("modelAttr") T modelAttr);
+	public Message update(@ModelAttribute("modelAttribute") T modelAttribute);
 	
-	public Message delete(@ModelAttribute("modelAttr") T modelAttr) ;
+	public Message delete(@ModelAttribute("modelAttribute") T modelAttribute) ;
 	
 	
 }

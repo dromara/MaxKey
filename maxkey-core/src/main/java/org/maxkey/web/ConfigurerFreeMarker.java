@@ -37,6 +37,7 @@ import freemarker.template.TemplateException;
 @Component
 public class ConfigurerFreeMarker  implements ApplicationContextAware {
 	private static final Logger _logger = LoggerFactory.getLogger(ConfigurerFreeMarker.class);
+	
 	ApplicationContext applicationContext ;
 	
 	@Autowired 

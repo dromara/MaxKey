@@ -17,6 +17,7 @@
 
 package org.maxkey.util;
 
+import org.junit.Test;
 import org.maxkey.pretty.PrettyFactory;
 
 public class SqlPrettyTest {
@@ -24,8 +25,9 @@ public class SqlPrettyTest {
 	public SqlPrettyTest() {
 		
 	}
-
-	public static void main(String[] args) {
+	
+	@Test
+	public void testSqlFormat()  {
 		String sqlString="select * from userinfo where t='111' order by  t,s,t";
 		System.out.println(PrettyFactory.getSqlPretty().format(sqlString));
 	}
