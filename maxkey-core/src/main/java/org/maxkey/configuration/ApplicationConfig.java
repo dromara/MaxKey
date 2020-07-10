@@ -43,8 +43,10 @@ public class ApplicationConfig {
 
     @Autowired
     EmailConfig emailConfig;
+    
     @Autowired
     CharacterEncodingConfig characterEncodingConfig;
+    
     @Autowired
     LoginConfig loginConfig;
 
@@ -82,36 +84,9 @@ public class ApplicationConfig {
     public void setPort(int port) {
         this.port = port;
     }
-    /*
-     * //is enable whiteList for ipAddress filter boolean whiteList;
-     * 
-     * //All user have permission Access URL public ConcurrentHashMap<String,String>
-     * anonymousAccessUrls;
-     */
 
     public ApplicationConfig() {
         super();
-
-        /*
-         * anonymousAccessUrls=new ConcurrentHashMap<String,String>();
-         * anonymousAccessUrls.put("/index/", "/index/");
-         * anonymousAccessUrls.put("/index/top","/index/top/");
-         * anonymousAccessUrls.put("/index/left/","/index/left/");
-         * anonymousAccessUrls.put("/index/main/","/index/main/");
-         * anonymousAccessUrls.put("/index/bottom/","/index/bottom/");
-         * 
-         * anonymousAccessUrls.put("/menus/onelevelchild/","/menus/onelevelchild/");
-         * anonymousAccessUrls.put("/menus/leftchild/","/menus/leftchild/");
-         * anonymousAccessUrls.put("/menus/loadMenu/","/menus/loadMenu/");
-         * 
-         * anonymousAccessUrls.put("/enterprises/select/","/enterprises/select/");
-         * anonymousAccessUrls.put("/employees/selectAppRoles/",
-         * "/employees/selectAppRoles/");
-         * anonymousAccessUrls.put("/approles/appRolesGrid/","/approles/appRolesGrid/");
-         * 
-         * _logger.debug("Anonymous Access Urls : \n"+anonymousAccessUrls);
-         */
-
     }
 
     /**
@@ -182,15 +157,6 @@ public class ApplicationConfig {
         this.subDomainName = subDomainName;
     }
 
-    /*
-     * public ConcurrentHashMap<String, String> getAnonymousAccessUrls() { return
-     * anonymousAccessUrls; }
-     * 
-     * public void setAnonymousAccessUrls(ArrayList<String> anonymousAccessUrls) {
-     * //this.anonymousAccessUrls = anonymousAccessUrls; for (String
-     * anonymousAccessUrl: anonymousAccessUrls){
-     * this.anonymousAccessUrls.put(anonymousAccessUrl,anonymousAccessUrl); } }
-     */
     /**
      * @return the emailConfig
      */
@@ -236,11 +202,5 @@ public class ApplicationConfig {
     public void setMaxKeyUri(String maxKeyUri) {
         this.maxKeyUri = maxKeyUri;
     }
-
-    /*
-     * public boolean isWhiteList() { return whiteList; }
-     * 
-     * public void setWhiteList(boolean whiteList) { this.whiteList = whiteList; }
-     */
 
 }

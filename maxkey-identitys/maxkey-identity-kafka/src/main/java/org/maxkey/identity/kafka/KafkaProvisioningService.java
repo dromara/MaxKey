@@ -47,13 +47,23 @@ public class KafkaProvisioningService {
         this.kafkaTemplate = kafkaTemplate;
     }
     
+    /**
+     * send  msg to kafka
+     * @param topic kafka TOPIC
+     * @param content msg Object
+     * @param actionType CREATE UPDATE DELETE
+     */
     public void send(String topic,Object content,String actionType) {
+        //config.identity.kafkasupport , if true 
         if(applicationConfig.isKafkaSupport()) {
             KafkaMessage message = new KafkaMessage();
+            //message id uuid
             message.setMsgId(UUID.randomUUID().toString());
             message.setActionType(actionType);
             message.setTopic(topic);
+            //send to kafka time
             message.setSendTime(DateUtils.getCurrentDateTimeAsString());
+            //content Object to json message content
             message.setContent(JsonUtils.gson2Json(content));
             String msg = JsonUtils.gson2Json(message);
             _logger.info("send  message = {}", msg);
@@ -67,6 +77,10 @@ public class KafkaProvisioningService {
     
     
     
+    /**
+     * KafkaProvisioningThread for send message
+     *
+     */
     class KafkaProvisioningThread extends Thread{
 
         KafkaTemplate<String, String> kafkaTemplate;
@@ -75,15 +89,22 @@ public class KafkaProvisioningService {
         
         String msg;
         
-        public KafkaProvisioningThread(KafkaTemplate<String, String> kafkaTemplate, String topic, String msg) {
+        public KafkaProvisioningThread(
+                                KafkaTemplate<String, String> kafkaTemplate, 
+                                String topic, 
+                                String msg) {
+            
             this.kafkaTemplate = kafkaTemplate;
             this.topic = topic;
             this.msg = msg;
+            
         }
 
         @Override
         public void run() {
+            
             kafkaTemplate.send(topic, msg);
+            
         }
 
     }

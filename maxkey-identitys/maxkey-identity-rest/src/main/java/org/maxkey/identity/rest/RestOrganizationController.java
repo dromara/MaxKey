@@ -19,10 +19,9 @@ package org.maxkey.identity.rest;
 
 import java.io.IOException;
 
-import org.maxkey.domain.UserInfo;
-import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.domain.Organizations;
+import org.maxkey.persistence.service.OrganizationsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,57 +34,54 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping(value={"/identity/api/userinfo"})
-public class RestApiUserInfoController {
+@RequestMapping(value={"/identity/api/org"})
+public class RestOrganizationController {
 
     @Autowired
-    @Qualifier("userInfoService")
-    private UserInfoService userInfoService;
+    OrganizationsService organizationsService;
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public UserInfo getUser(
-                                       @PathVariable String id,
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Organizations getUser(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
-        
-        UserInfo loadUserInfo = userInfoService.get(id);
-        loadUserInfo.setDecipherable(null);
-        return loadUserInfo;
+        Organizations org = organizationsService.get(id);
+        return org;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public UserInfo create(@RequestBody  UserInfo userInfo,
+    @RequestMapping(method = RequestMethod.POST)
+    public Organizations create(@RequestBody  Organizations org,
                                                       @RequestParam(required = false) String attributes,
                                                       UriComponentsBuilder builder) throws IOException {
-        UserInfo loadUserInfo = userInfoService.loadByUsername(userInfo.getUsername());
-        if(loadUserInfo != null) {
-            userInfoService.update(userInfo);
+        Organizations loadOrg = organizationsService.get(org.getId());
+        if(loadOrg == null) {
+            organizationsService.insert(org);
         }else {
-            userInfoService.insert(userInfo);
+            organizationsService.update(org);
         }
-        return userInfo;
+        return org;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public UserInfo replace(@PathVariable String id,
-                                                       @RequestBody UserInfo userInfo,
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public Organizations replace(@PathVariable String id,
+                                                       @RequestBody Organizations org,
                                                        @RequestParam(required = false) String attributes)
             throws IOException {
-        UserInfo loadUserInfo = userInfoService.loadByUsername(userInfo.getUsername());
-        if(loadUserInfo != null) {
-            userInfoService.update(userInfo);
+        Organizations loadOrg = organizationsService.get(id);
+        if(loadOrg == null) {
+            organizationsService.insert(org);
         }else {
-            userInfoService.insert(userInfo);
+            organizationsService.update(org);
         }
-        return userInfo;
+
+        return org;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
-        userInfoService.logisticDeleteAllByCid(id);
+        organizationsService.remove(id);
        
     }
 }

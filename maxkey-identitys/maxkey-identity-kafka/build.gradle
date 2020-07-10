@@ -1,8 +1,6 @@
 description = "maxkey-identity-kafka"
 
 apply plugin: 'java'
-apply plugin: 'eclipse-wtp'
-
 
 dependencies {
 	//local jars
