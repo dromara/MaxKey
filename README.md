@@ -96,12 +96,4 @@ SCIM 2 Support-System for Cross-domain Identity Management
 
 Apache Kafka Support 
 
-企业微信支持
-
-钉钉支持
-
-飞书
-
-华为WeLink
-
 动态用户组实现(基于用户属性或机构)
