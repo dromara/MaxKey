@@ -88,7 +88,7 @@ QQ交流群：<b>434469201</b> | 邮箱EMAIL: <b>shimingxy@163.com</b>
 | v 1.3.0 GA | 2020/04/04   |  <a href="https://pan.baidu.com/s/1o7vfBeq21Az_0s0tJvObOw" target="_blank">链接下载</a>  |  **20bj**  |
 | v 1.2.1 GA | 2020/02/29   |  <a href="https://pan.baidu.com/s/1FDkJ4DOMQq8tPAXrIfDeKA" target="_blank">链接下载</a>  |  **yutq**  |
 | v 1.2.0 GA | 2020/01/18   |  <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">链接下载</a>  |  **6bda**  |
-| v 1.0 GA   | 2019/12/06   |  <a href="https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ" target="_blank">链接下载</a>  |  **g17z**  |
+| v 1.0.0 GA   | 2019/12/06   |  <a href="https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ" target="_blank">链接下载</a>  |  **g17z**  |
 
 
 # Roadmap
