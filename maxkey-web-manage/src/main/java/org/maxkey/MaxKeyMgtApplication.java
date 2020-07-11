@@ -31,10 +31,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-//@ImportResource(locations={"classpath:spring/maxkey-mgt.xml"})
 @ComponentScan(basePackages = {
     "org.maxkey.MaxKeyMgtConfig",
     "org.maxkey.MaxKeyMgtMvcConfig",
