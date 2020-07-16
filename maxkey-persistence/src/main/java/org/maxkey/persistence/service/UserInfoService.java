@@ -69,26 +69,35 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
         userInfo = passwordEncoder(userInfo);
         if (super.insert(userInfo)) {
             kafkaProvisioningService.send(
-                    KafkaIdentityTopic.USERINFO_TOPIC, userInfo, KafkaIdentityAction.CREATE_ACTION);
+                    KafkaIdentityTopic.USERINFO_TOPIC, 
+                    userInfo,
+                    KafkaIdentityAction.CREATE_ACTION);
             return true;
         }
 
         return false;
     }
 	
-	public boolean update(UserInfo userInfo) {
-		 if(super.update(userInfo)){
-		     kafkaProvisioningService.send(
-		             KafkaIdentityTopic.USERINFO_TOPIC, userInfo, KafkaIdentityAction.UPDATE_ACTION);
-			 return true;
-		 }
-		 return false;
-	}
+    public boolean update(UserInfo userInfo) {
+        userInfo = passwordEncoder(userInfo);
+        if (super.update(userInfo)) {
+            kafkaProvisioningService.send(
+                    KafkaIdentityTopic.USERINFO_TOPIC, 
+                    userInfo,
+                    KafkaIdentityAction.UPDATE_ACTION);
+           
+            changePasswordProvisioning(userInfo);
+            return true;
+        }
+        return false;
+    }
 	
 	public boolean delete(UserInfo userInfo) {
 		if( super.delete(userInfo)){
 		    kafkaProvisioningService.send(
-		            KafkaIdentityTopic.USERINFO_TOPIC, userInfo, KafkaIdentityAction.DELETE_ACTION);
+		            KafkaIdentityTopic.USERINFO_TOPIC, 
+		            userInfo, 
+		            KafkaIdentityAction.DELETE_ACTION);
 			 return true;
 		}
 		return false;
@@ -132,14 +141,16 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	}
 	
 	public UserInfo passwordEncoder(UserInfo userInfo) {
-	    String password = passwordEncoder.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
-        userInfo.setDecipherable(ReciprocalUtils.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword())));
-        _logger.debug("decipherable : "+userInfo.getDecipherable());
-        userInfo.setPassword(password);
-        userInfo.setPasswordLastSetTime(DateUtils.getCurrentDateTimeAsString());
-        
-        userInfo.setModifiedDate(DateUtils.getCurrentDateTimeAsString());
-        
+	    //密码不为空，则需要进行加密处理
+	    if(userInfo.getPassword()!=null && !userInfo.getPassword().equals("")) {
+    	    String password = passwordEncoder.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
+            userInfo.setDecipherable(ReciprocalUtils.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword())));
+            _logger.debug("decipherable : "+userInfo.getDecipherable());
+            userInfo.setPassword(password);
+            userInfo.setPasswordLastSetTime(DateUtils.getCurrentDateTimeAsString());
+            
+            userInfo.setModifiedDate(DateUtils.getCurrentDateTimeAsString());
+	    }
         return userInfo;
 	}
 	public boolean changePassword(UserInfo userInfo) {
@@ -151,14 +162,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 			userInfo = passwordEncoder(userInfo);
 			
 			if(getMapper().changePassword(userInfo) > 0){
-				ChangePassword changePassword=new ChangePassword();
-				changePassword.setId(userInfo.getId());
-				changePassword.setUid(userInfo.getId());
-				changePassword.setUsername(userInfo.getUsername());
-				changePassword.setDecipherable(userInfo.getDecipherable());
-				changePassword.setPassword(userInfo.getPassword());
-				kafkaProvisioningService.send(
-				        KafkaIdentityTopic.PASSWORD_TOPIC, changePassword, KafkaIdentityAction.PASSWORD_ACTION);
+			    changePasswordProvisioning(userInfo);
 				return true;
 			}
 			return false;
@@ -166,6 +170,21 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public void changePasswordProvisioning(UserInfo userInfo) {
+	    if(userInfo.getPassword()!=null && !userInfo.getPassword().equals("")) {
+    	    ChangePassword changePassword=new ChangePassword();
+            changePassword.setId(userInfo.getId());
+            changePassword.setUid(userInfo.getId());
+            changePassword.setUsername(userInfo.getUsername());
+            changePassword.setDecipherable(userInfo.getDecipherable());
+            changePassword.setPassword(userInfo.getPassword());
+            kafkaProvisioningService.send(
+                    KafkaIdentityTopic.PASSWORD_TOPIC, 
+                    changePassword, 
+                    KafkaIdentityAction.PASSWORD_ACTION);
+	    }
 	}
 	
 	public boolean changeAppLoginPassword(UserInfo userinfo) {
