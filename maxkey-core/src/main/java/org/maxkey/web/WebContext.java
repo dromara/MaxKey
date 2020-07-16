@@ -35,6 +35,8 @@ import org.maxkey.domain.UserInfo;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringGenerator;
 import org.maxkey.web.message.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -52,7 +54,9 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * @since 1.5
  */
 public final class WebContext {
-
+    
+    final static Logger _logger = LoggerFactory.getLogger(WebContext.class);
+    
     public static Properties properties;
      
     /**
@@ -192,33 +196,39 @@ public final class WebContext {
     }
 
     /**
-     * get Http Context full Path,if port equals 80 is omitted.
+     * get Http Context full Path.
+     * 
+     * @return String HttpContextPath
+     */
+    public static String getHttpContextPath() {
+        HttpServletRequest httpServletRequest = WebContext.getRequest();
+        return getHttpContextPath(httpServletRequest);
+    }
+    
+    /**
+     * get Http Context full Path,if port equals 80 or 443 is omitted.
      * 
      * @return String eg:http://192.168.1.20:9080/webcontext or
      *         http://www.website.com/webcontext
      */
-    public static String getHttpContextPath() {
-        HttpServletRequest httpServletRequest = WebContext.getRequest();
+    public static String getHttpContextPath(HttpServletRequest httpServletRequest) {
         ApplicationConfig applicationConfig = (
                 ApplicationConfig) WebContext.getBean("applicationConfig");
-
-        if (applicationConfig.getServerPrefix() != null 
-                && !applicationConfig.getServerPrefix().equals("")) {
-            return applicationConfig.getServerPrefix();
-        } else {
-            String httpContextPath = 
-                    httpServletRequest.getScheme() + "://" + applicationConfig.getDomainName();
-            int port = httpServletRequest.getServerPort();
-            if (port == 443 && httpServletRequest.getScheme().equalsIgnoreCase("https")) {
-                //
-            } else if (port == 80 && httpServletRequest.getScheme().equalsIgnoreCase("http")) {
-                //
-            } else {
-                httpContextPath += ":" + port;
-            }
-            httpContextPath += httpServletRequest.getContextPath() + "";
-            return httpContextPath;
+        
+        _logger.trace("Config ServerPrefix " + applicationConfig.getServerPrefix());
+        _logger.trace("Config DomainName " + applicationConfig.getDomainName());
+        _logger.trace("ServerName " + httpServletRequest.getServerName());
+        
+        String scheme = httpServletRequest.getScheme().toLowerCase();
+        String httpContextPath = scheme + "://"+httpServletRequest.getServerName();
+        int port = httpServletRequest.getServerPort();
+        if(!(port==80 || port==443)){
+            httpContextPath    +=  ":"+port;
         }
+        httpContextPath += httpServletRequest.getContextPath() + "";
+        
+        _logger.trace("httpContextPath " + httpContextPath);
+        return httpContextPath;
 
     }
 

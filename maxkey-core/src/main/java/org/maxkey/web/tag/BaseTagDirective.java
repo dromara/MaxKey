@@ -40,16 +40,14 @@ import freemarker.template.TemplateModel;
 public class BaseTagDirective implements TemplateDirectiveModel {
 	@Autowired
     private HttpServletRequest request;
-	
-	private static String base = null;
 
 	@Override
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
 			throws TemplateException, IOException {
 		//String url = params.get(URL).toString();
-		if(base==null) {
-			base=request.getContextPath();
-		}
+
+		String  base=request.getContextPath();
+		
 		env.getOut().append(base);
 		
 
