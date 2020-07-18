@@ -92,7 +92,7 @@ public class ProfileController {
             new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR), MessageType.error);
         }
 
-        return WebContext.forward("forwardMyProfile");
+        return WebContext.redirect("/profile/myProfile");
 
     }
 

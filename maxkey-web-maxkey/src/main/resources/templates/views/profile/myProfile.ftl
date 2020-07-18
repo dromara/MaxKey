@@ -17,7 +17,7 @@
 <#include  "../layout/top.ftl"/>
 <#include  "../layout/nav_primary.ftl"/>
 <div class="container">
-<form id="actionForm"  
+<form id="actionFormProfile"  
 	method="post" 
 	type="alert" 
 	forward="<@base/>/profile/myProfile"
