@@ -7,7 +7,7 @@
 
 function onClick (event, treeId, treeNode) {
 
-    $("#pid").val(treeNode.id);
+    $("#parentId").val(treeNode.id);
     $.cookie("select_res_id", treeNode.id, { path: '/' });
     $.cookie("select_app_id", $("#appId").val(), { path: '/' });
     $.cookie("select_res_name", treeNode.name,{ path: '/' });
@@ -173,7 +173,7 @@ $(function () {
 		 			<td width="450px">
 		 				<form id="basic_search_form">
 			 				<input class="form-control appId" id="appId" name="appId" value="" type="hidden"  >
-			 				<input class="form-control" id="pid" name="pid" value="" type="hidden"  >
+			 				<input class="form-control" id="parentId" name="parentId" value="" type="hidden"  >
                             <input class="form-control appName"    style="width:200px;float: left;" value=""    id="appName" name="appName" type="text" >
                             <input class="button btn btn-success mr-3 window" style="float: left;" id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
                                     wurl="<@base/>/apps/select"
@@ -240,6 +240,9 @@ $(function () {
 				<th data-checkbox="true"></th>
 				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
 				<th data-field="name"><@locale code="resource.name"/></th>
+				<th data-field="resourceType"><@locale code="resource.resType"/></th>
+				<th data-field="resourceUrl"><@locale code="resource.resUrl"/></th>
+				<th data-field="resourceAction"><@locale code="resource.resAction"/></th>
 				<th data-field="description"><@locale code="common.text.description"/></th>
 	
 			</tr>

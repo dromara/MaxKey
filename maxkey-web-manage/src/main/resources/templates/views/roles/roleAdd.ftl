@@ -15,6 +15,12 @@
 	<table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
 		<tbody>
 			<tr>
+				<th><@locale code="role.id" />：</th>
+				<td nowrap>
+					<input type="text" id="id" name="id" class="form-control" title="" value=""  />
+				</td>
+			</tr>
+			<tr>
 				<th><@locale code="role.name" />：</th>
 				<td nowrap>
 					<input type="text" id="name" name="name" class="form-control" title="" value=""  required="" />

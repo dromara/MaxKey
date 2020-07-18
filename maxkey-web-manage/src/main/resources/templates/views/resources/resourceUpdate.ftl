@@ -29,10 +29,10 @@
 		<tr>
                 <th><@locale code="resource.pid" />：</th>
                 <td nowrap>
-                    <input type="text" id="pid" name="pid" class="form-control" title="" value="${model.pid!}"  required="" />
+                    <input type="text" id="parentId" name="parentId" class="form-control" title="" value="${model.parentId!}"  required="" />
                 </td>
             </tr>
-            <tr>
+            <tr style="display:none;">
                 <th><@locale code="apps.id" />：</th>
                 <td nowrap>
                     <input type="text" id="appId" name="appId" class="form-control" title="" value="${model.appId!}"  required="" />
@@ -41,25 +41,25 @@
             <tr>
                 <th><@locale code="resource.pname" />：</th>
                 <td nowrap>
-                    <input type="text" id="pname" name="pname" class="form-control" title="" value="${model.pname!}"  required="" />
+                    <input type="text" id="parentName" name="parentName" class="form-control" title="" value="${model.parentName!}"  required="" />
                 </td>
             </tr>
             <tr>
                 <th><@locale code="resource.resType" />：</th>
                 <td nowrap>
-                    <input type="text" id="resType" name="resType" class="form-control" title="" value="${model.resType!}"  required="" />
+                    <input type="text" id="resourceType" name="resourceType" class="form-control" title="" value="${model.resourceType!}"  required="" />
                 </td>
             </tr>
             <tr>
                 <th><@locale code="resource.resUrl" />：</th>
                 <td nowrap>
-                    <input type="text" id="resUrl" name="resUrl" class="form-control" title="" value="${model.resUrl!}"  required="" />
+                    <input type="text" id="resourceUrl" name="resourceUrl" class="form-control" title="" value="${model.resourceUrl!}"  required="" />
                 </td>
             </tr>
             <tr>
                 <th><@locale code="resource.resAction" />：</th>
                 <td nowrap>
-                    <input type="text" id="resAction" name="resAction" class="form-control" title="" value="${model.resAction!}"  required="" />
+                    <input type="text" id="resourceAction" name="resourceAction" class="form-control" title="" value="${model.resourceAction!}"  required="" />
                 </td>
             </tr>
             <tr>

@@ -14,7 +14,7 @@
 <form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/roles/update"  class="needs-validation" novalidate>
 	 <table  border="0" cellpadding="0" cellspacing="0" class="table table-bordered">
 		<tbody>
-		<tr style="display:none1">
+		<tr>
 			<th><@locale code="role.id" />：</th>
 			<td nowrap>
 				<input id="id" type="text" readonly name="id"  class="form-control"   value="${model.id}"/>

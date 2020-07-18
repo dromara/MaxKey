@@ -37,15 +37,15 @@ public class Resources  extends JpaBaseDomain implements Serializable {
     @Column
     String appId;
     @Column
-    String pid;
+    String parentId;
     @Column
-    String pname;
+    String parentName;
     @Column
-    String resType;
+    String resourceType;
     @Column
-    String resUrl;
+    String resourceUrl;
     @Column
-    String resAction;
+    String resourceAction;
     @Column
     String status;
     @Column
@@ -78,6 +78,54 @@ public class Resources  extends JpaBaseDomain implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public String getResourceUrl() {
+        return resourceUrl;
+    }
+
+    public void setResourceUrl(String resourceUrl) {
+        this.resourceUrl = resourceUrl;
+    }
+
+    public String getResourceAction() {
+        return resourceAction;
+    }
+
+    public void setResourceAction(String resourceAction) {
+        this.resourceAction = resourceAction;
     }
 
     public String getStatus() {
@@ -127,55 +175,5 @@ public class Resources  extends JpaBaseDomain implements Serializable {
     public void setModifiedDate(String modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
-
-    public String getResType() {
-        return resType;
-    }
-
-    public void setResType(String resType) {
-        this.resType = resType;
-    }
-
-    public String getResUrl() {
-        return resUrl;
-    }
-
-    public void setResUrl(String resUrl) {
-        this.resUrl = resUrl;
-    }
-
-    public String getResAction() {
-        return resAction;
-    }
-
-    public void setResAction(String resAction) {
-        this.resAction = resAction;
-    }
-
-    public String getPid() {
-        return pid;
-    }
-
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
-
-    public String getPname() {
-        return pname;
-    }
-
-    public void setPname(String pname) {
-        this.pname = pname;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-    
-    
-   
+ 
 }

@@ -170,7 +170,7 @@ public class ResourcesController {
 	    for (Resources res : resourcesList) {
 	      TreeNode treeNode = new TreeNode(res.getId(), res.getName());
 	      treeNode.setAttr("data", res);
-	      treeNode.setPId(res.getPid());
+	      treeNode.setPId(res.getParentId());
 	      treeNodeList.addTreeNode(treeNode.getAttr());
 	    } 
 

@@ -9,8 +9,8 @@
 		<if test="appId != null and appId != ''">
             AND APPID  =   #{appId}
         </if> 
-        <if test="pid != null and pid != ''">
-            AND PID  =   #{pid}
+        <if test="parentId != null and parentId != ''">
+            AND PARENTID  =   #{parentId}
         </if> 
 		<if test="name != null and name != ''">
 			AND NAME LIKE '%${name}%'
