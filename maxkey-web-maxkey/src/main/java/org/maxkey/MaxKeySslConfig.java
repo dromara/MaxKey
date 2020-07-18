@@ -37,7 +37,7 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class MaxKeySslConfig  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeySslConfig.class);
-
+/*
     @Bean
     public Connector connector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
@@ -65,7 +65,7 @@ public class MaxKeySslConfig  implements InitializingBean {
         tomcat.addAdditionalTomcatConnectors(connector);
         return tomcat;
     }
-
+*/
 
     @Override
     public void afterPropertiesSet() throws Exception {
