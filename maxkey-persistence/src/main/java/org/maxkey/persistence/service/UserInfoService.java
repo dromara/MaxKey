@@ -143,7 +143,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	public UserInfo passwordEncoder(UserInfo userInfo) {
 	    //密码不为空，则需要进行加密处理
 	    if(userInfo.getPassword()!=null && !userInfo.getPassword().equals("")) {
-    	    String password = passwordEncoder.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword()));
+    	    String password = passwordEncoder.encode(userInfo.getPassword());
             userInfo.setDecipherable(ReciprocalUtils.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword())));
             _logger.debug("decipherable : "+userInfo.getDecipherable());
             userInfo.setPassword(password);

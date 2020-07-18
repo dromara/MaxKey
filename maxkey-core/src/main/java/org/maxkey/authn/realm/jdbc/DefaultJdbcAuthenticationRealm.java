@@ -55,9 +55,7 @@ public class DefaultJdbcAuthenticationRealm extends AbstractAuthenticationRealm 
         boolean passwordMatches = false;
         _logger.info("password : " 
                 + PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), password));
-        passwordMatches = passwordEncoder.matches(
-                PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), password),
-                userInfo.getPassword());
+        passwordMatches = passwordEncoder.matches(password,userInfo.getPassword());
         _logger.debug("passwordvalid : " + passwordMatches);
         if (!passwordMatches) {
             setBadPasswordCount(userInfo);

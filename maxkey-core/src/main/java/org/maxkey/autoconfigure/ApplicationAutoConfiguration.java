@@ -19,6 +19,9 @@ package org.maxkey.autoconfigure;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.sql.DataSource;
 import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
@@ -29,6 +32,8 @@ import org.maxkey.authn.support.rememberme.RedisRemeberMeService;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.password.PasswordReciprocal;
+import org.maxkey.crypto.password.SM3PasswordEncoder;
+import org.maxkey.crypto.password.StandardPasswordEncoder;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +50,14 @@ import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
+import org.springframework.security.crypto.password.Md4PasswordEncoder;
+import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 
 @Configuration
@@ -120,7 +132,30 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
      */
     @Bean(name = "passwordEncoder")
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        String idForEncode = "bcrypt";
+        Map<String ,PasswordEncoder > encoders = new HashMap<String ,PasswordEncoder>();
+        encoders.put(idForEncode, new BCryptPasswordEncoder());
+        encoders.put("noop", NoOpPasswordEncoder.getInstance());
+        encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
+        encoders.put("scrypt", new SCryptPasswordEncoder());
+        //md
+        encoders.put("md4", new Md4PasswordEncoder());
+        encoders.put("md5", new MessageDigestPasswordEncoder("MD5"));
+        //sha
+        encoders.put("sha1", new StandardPasswordEncoder("SHA-1",""));
+        encoders.put("sha256", new StandardPasswordEncoder());
+        encoders.put("sha384", new StandardPasswordEncoder("SHA-384",""));
+        encoders.put("sha512", new StandardPasswordEncoder("SHA-512",""));
+        
+        encoders.put("sm3", new SM3PasswordEncoder());
+        
+        encoders.put("ldap", new LdapShaPasswordEncoder());
+        
+        //idForEncode is default for encoder
+        PasswordEncoder passwordEncoder =
+            new DelegatingPasswordEncoder(idForEncode, encoders);
+        
+        return passwordEncoder;
     }
     
     /**
