@@ -164,7 +164,7 @@
                 SELECT 
                     G.ID
                 FROM  
-                    GROUPS G
+                    `GROUPS` G
                 WHERE 
                     G.ID='ALL_USER_GROUP'
                     OR G.ID IN(
