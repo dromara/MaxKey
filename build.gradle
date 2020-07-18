@@ -262,7 +262,7 @@ subprojects {
          //quartz
          compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
 		 //database
-		 compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.48'
+		 compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
 		 compile group: 'com.alibaba', name: 'druid', version: '1.1.21'
 		 compile group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.1.21'
          compile group: 'redis.clients', name: 'jedis', version: '3.2.0'
