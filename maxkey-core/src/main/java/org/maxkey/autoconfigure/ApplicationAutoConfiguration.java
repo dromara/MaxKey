@@ -135,7 +135,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
         String idForEncode = "bcrypt";
         Map<String ,PasswordEncoder > encoders = new HashMap<String ,PasswordEncoder>();
         encoders.put(idForEncode, new BCryptPasswordEncoder());
-        encoders.put("noop", NoOpPasswordEncoder.getInstance());
+        encoders.put("plain", NoOpPasswordEncoder.getInstance());
         encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
         encoders.put("scrypt", new SCryptPasswordEncoder());
         //md
