@@ -61,13 +61,5 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(MaxKeyApplication.class);
     }
-    
-    /*@Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        super.onStartup(servletContext);
-        servletContext.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));
-        SessionCookieConfig sessionCookieConfig = servletContext.getSessionCookieConfig();
-        sessionCookieConfig.setHttpOnly(true);
-    }*/
 
 }
