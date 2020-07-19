@@ -38,6 +38,7 @@ public class Resources  extends JpaBaseDomain implements Serializable {
     int sortIndex;
     @Column
     String appId;
+    String appName;
     @Column
     String parentId;
     @Column
@@ -92,6 +93,14 @@ public class Resources  extends JpaBaseDomain implements Serializable {
 
     public void setAppId(String appId) {
         this.appId = appId;
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
     }
 
     public String getParentId() {

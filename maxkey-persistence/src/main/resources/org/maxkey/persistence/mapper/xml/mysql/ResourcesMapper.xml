@@ -4,16 +4,16 @@
 
 	<sql id="where_statement">
     	<if test="id != null and id != ''">
-			AND	ID	=	#{id}
+			AND	RES.ID	=	#{id}
 		</if> 
 		<if test="appId != null and appId != ''">
-            AND APPID  =   #{appId}
+            AND RES.APPID  =   #{appId}
         </if> 
         <if test="parentId != null and parentId != ''">
-            AND PARENTID  =   #{parentId}
+            AND RES.PARENTID  =   #{parentId}
         </if> 
 		<if test="name != null and name != ''">
-			AND NAME LIKE '%${name}%'
+			AND RES.NAME LIKE '%${name}%'
 		</if>
     </sql>
     
@@ -21,13 +21,13 @@
 	
 	<select id="queryPageResults" parameterType="Resources" resultType="Resources">
 		SELECT
-			*
+			RES.*,APP.NAME APPNAME
 		FROM
-			RESOURCES
+			RESOURCES RES, APPS APP
 		WHERE
-			 (1=1)	
+			 (1=1)	AND RES.APPID=APP.ID
 		<include refid="where_statement"/>
-		ORDER BY SORTINDEX 
+		ORDER BY RES.SORTINDEX 
 	</select>
 	
 	

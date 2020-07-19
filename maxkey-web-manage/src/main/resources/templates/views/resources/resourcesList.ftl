@@ -239,13 +239,12 @@ $(function () {
 			<tr>
 				<th data-checkbox="true"></th>
 				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
+				<th data-field="appName"><@locale code="apps.name"/></th>
 				<th data-field="name"><@locale code="resource.name"/></th>
 				<th data-field="resourceType"><@locale code="resource.resourceType"/></th>
 				<th data-field="sortIndex"><@locale code="common.text.sortindex"/></th>
-				<th data-field="resourceUrl"><@locale code="resource.resourceUrl"/></th>
 				<th data-field="resourceAction"><@locale code="resource.resourceAction"/></th>
 				<th data-field="description"><@locale code="common.text.description"/></th>
-	
 			</tr>
 		</thead>
 	</table>
