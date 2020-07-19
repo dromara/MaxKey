@@ -47,7 +47,7 @@
          </td>
          <th><@locale code="common.text.sortindex"/></th>
          <td>
-         	<input  type="text" id="sortOrder" class="form-control"  name="sortOrder"  title="" value="1"  required=""    />
+         	<input  type="text" id="sortIndex" class="form-control"  name="sortIndex"  title="" value="1"  required=""    />
          </td>
       </tr>
       <tr>

@@ -27,6 +27,7 @@
 		WHERE
 			 (1=1)	
 		<include refid="where_statement"/>
+		ORDER BY SORTINDEX 
 	</select>
 	
 	

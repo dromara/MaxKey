@@ -35,6 +35,8 @@ public class Resources  extends JpaBaseDomain implements Serializable {
     @Column
     String name;
     @Column
+    int sortIndex;
+    @Column
     String appId;
     @Column
     String parentId;
@@ -42,6 +44,10 @@ public class Resources  extends JpaBaseDomain implements Serializable {
     String parentName;
     @Column
     String resourceType;
+    @Column
+    String resourceIcon;
+    @Column
+    String resourceStyle;
     @Column
     String resourceUrl;
     @Column
@@ -112,6 +118,22 @@ public class Resources  extends JpaBaseDomain implements Serializable {
         this.resourceType = resourceType;
     }
 
+    public String getResourceIcon() {
+        return resourceIcon;
+    }
+
+    public void setResourceIcon(String resourceIcon) {
+        this.resourceIcon = resourceIcon;
+    }
+
+    public String getResourceStyle() {
+        return resourceStyle;
+    }
+
+    public void setResourceStyle(String resourceStyle) {
+        this.resourceStyle = resourceStyle;
+    }
+
     public String getResourceUrl() {
         return resourceUrl;
     }
@@ -175,5 +197,13 @@ public class Resources  extends JpaBaseDomain implements Serializable {
     public void setModifiedDate(String modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
- 
+
+    public int getSortIndex() {
+        return sortIndex;
+    }
+
+    public void setSortIndex(int sortIndex) {
+        this.sortIndex = sortIndex;
+    }
+
 }

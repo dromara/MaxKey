@@ -25,7 +25,7 @@ $(function () {
 			<tr>
 				<th><@locale code="resource.id" />：</th>
 				<td nowrap>
-					<input type="text" id="id" name="id" class="form-control" title="" value=""  required="" />
+					<input type="text" id="id" name="id" class="form-control" title="" value=""  />
 				</td>
 			</tr>
 			<tr>
@@ -41,35 +41,61 @@ $(function () {
                 </td>
             </tr>
 			<tr>
-                <th><@locale code="resource.pid" />：</th>
+                <th><@locale code="resource.parentId" />：</th>
                 <td nowrap>
                     <input type="text" id="parentId" name="parentId" class="form-control" title="" value=""  required="" />
                 </td>
             </tr>
             <tr>
-                <th><@locale code="resource.pname" />：</th>
+                <th><@locale code="resource.parentName" />：</th>
                 <td nowrap>
                     <input type="text" id="parentName" name="parentName" class="form-control" title="" value=""  required="" />
                 </td>
             </tr>
             <tr>
-                <th><@locale code="resource.resType" />：</th>
+                <th><@locale code="resource.resourceType" />：</th>
                 <td nowrap>
-                    <input type="text" id="resourceType" name="resourceType" class="form-control" title="" value=""  required="" />
+                	<select id="resourceType"  name="resourceType"   class="form-control" >
+						<option value="MENU"  selected	><@locale code="resource.resourceType.Menu" /></option>
+						<option value="ELEMENT" 		><@locale code="resource.resourceType.Element" /></option>
+						<option value="BUTTON"  		><@locale code="resource.resourceType.Button" /></option>
+						<option value="MODULE"  		><@locale code="resource.resourceType.Module" /></option>
+						<option value="FILE"  			><@locale code="resource.resourceType.File" /></option>
+						<option value="DATA"  			><@locale code="resource.resourceType.Data" /></option>
+						<option value="OTHER"  			><@locale code="resource.resourceType.Other" /></option>
+					</select>
                 </td>
             </tr>
             <tr>
-                <th><@locale code="resource.resUrl" />：</th>
+                <th><@locale code="resource.resourceUrl" />：</th>
                 <td nowrap>
-                    <input type="text" id="resourceUrl" name="resourceUrl" class="form-control" title="" value=""  required="" />
+                    <input type="text" id="resourceUrl" name="resourceUrl" class="form-control" title="" value="" />
                 </td>
             </tr>
             <tr>
-                <th><@locale code="resource.resAction" />：</th>
+                <th><@locale code="resource.resourceAction" />：</th>
                 <td nowrap>
-                    <input type="text" id="resourceAction" name="resourceAction" class="form-control" title="" value=""  required="" />
+                    <input type="text" id="resourceAction" name="resourceAction" class="form-control" title="" value="" />
                 </td>
             </tr>
+            <tr>
+                <th><@locale code="resource.resourceIcon" />：</th>
+                <td nowrap>
+                    <input type="text" id="resourceIcon" name="resourceIcon" class="form-control" title="" value=""   />
+                </td>
+            </tr>
+            <tr>
+                <th><@locale code="resource.resourceStyle" />：</th>
+                <td nowrap>
+                    <input type="text" id="resourceStyle" name="resourceStyle" class="form-control" title="" value=""  />
+                </td>
+            </tr>
+            <tr>
+            	<th><@locale code="common.text.sortindex"/></th>
+         		<td>
+         		<input  type="text" id="sortIndex" class="form-control"  name="sortIndex"  title="" value="1"  required=""    />
+         		</td>
+         	</tr>
             <tr>
                 <th><@locale code="common.text.description" />：</th>
                 <td nowrap>

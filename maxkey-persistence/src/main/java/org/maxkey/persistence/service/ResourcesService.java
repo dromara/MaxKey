@@ -17,6 +17,8 @@
 
 package org.maxkey.persistence.service;
 
+import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.Resources;
 import org.maxkey.persistence.mapper.ResourcesMapper;
@@ -36,5 +38,9 @@ public class ResourcesService  extends JpaBaseService<Resources>{
 	public ResourcesMapper getMapper() {
 		// TODO Auto-generated method stub
 		return (ResourcesMapper)super.getMapper();
+	}
+	
+	public List<Resources> queryResourcesTree(Resources resource){
+	   return  getMapper().queryPageResults(resource);
 	}
 }

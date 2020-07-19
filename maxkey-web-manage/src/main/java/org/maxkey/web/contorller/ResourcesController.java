@@ -160,7 +160,7 @@ public class ResourcesController {
 	    _logger.debug("resourcesTree appId :" + appId + " ,appName " + appName);
 	    Resources queryRes = new Resources();
 	    queryRes.setAppId(appId);
-	    List<Resources> resourcesList = this.resourcesService.query(queryRes);
+	    List<Resources> resourcesList = this.resourcesService.queryResourcesTree(queryRes);
 	    TreeNodeList treeNodeList = new TreeNodeList();
 	    
 	    TreeNode rootNode = new TreeNode(appId, appName);
