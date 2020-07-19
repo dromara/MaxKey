@@ -85,7 +85,7 @@
             <tr>
             	<th><@locale code="common.text.sortindex"/></th>
          		<td>
-         		<input  type="text" id="sortIndex" class="form-control"  name="sortIndex"  title="" value="1"  required="${model.sortIndex!}"    />
+         		<input  type="text" id="sortIndex" class="form-control"  name="sortIndex"  title="" value="${model.sortIndex!}"  required=""    />
          		</td>
          	</tr>
             <tr>

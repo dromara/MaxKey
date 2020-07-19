@@ -191,13 +191,13 @@ $(function () {
 		 					 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/resources/forwardAdd"
 						 		    wwidth="500"
-						 		    wheight="500"
+						 		    wheight="550"
 					 		    	target="window"/>	    	
 					 		    	
 					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
 					 				wurl="<@base/>/resources/forwardUpdate"
 					 				wwidth="500"
-						 		    wheight="500"
+						 		    wheight="550"
 					 		    	target="window"/> 
 					 		    	
 					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
@@ -240,9 +240,10 @@ $(function () {
 				<th data-checkbox="true"></th>
 				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
 				<th data-field="name"><@locale code="resource.name"/></th>
-				<th data-field="resourceType"><@locale code="resource.resType"/></th>
-				<th data-field="resourceUrl"><@locale code="resource.resUrl"/></th>
-				<th data-field="resourceAction"><@locale code="resource.resAction"/></th>
+				<th data-field="resourceType"><@locale code="resource.resourceType"/></th>
+				<th data-field="sortIndex"><@locale code="common.text.sortindex"/></th>
+				<th data-field="resourceUrl"><@locale code="resource.resourceUrl"/></th>
+				<th data-field="resourceAction"><@locale code="resource.resourceAction"/></th>
 				<th data-field="description"><@locale code="common.text.description"/></th>
 	
 			</tr>
