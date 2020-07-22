@@ -1,6 +1,6 @@
 # <img src="http://www.maxkey.top/images/logo.jpg" width="45px">MaxKey
 
-<b>MaxKey(马克思的钥匙)</b>用户单点登录认证系统(Sigle Sign On System)，寓意是最大钥匙,是<b>业界领先的企业级IAM身份管理和身份认证产品</b>,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS等标准化的开放协议，提供<b>简单、标准、安全和开放</b>的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、RBAC权限管理和资源管理等。
+<b>MaxKey(马克思的钥匙)</b>单点登录认证系统(Sigle Sign On System)，寓意是最大钥匙,是<b>业界领先的企业级IAM身份管理和身份认证产品</b>,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS、SCIM等标准协议，提供<b>简单、标准、安全和开放</b>的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、RBAC权限管理和资源管理等。
 
 MaxKey  <a href="https://www.maxkey.top" target="_blank"><b>官方文档</b></a> | <a href="https://github.com/MaxKeyTop/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/maxkeytop/MaxKey" target="_blank"><b>码云(Gitee)</b></a>
   
@@ -88,7 +88,7 @@ QQ交流群：<b>434469201</b> | 邮箱EMAIL: <b>shimingxy@163.com</b>
 | v 1.3.0 GA | 2020/04/04   |  <a href="https://pan.baidu.com/s/1o7vfBeq21Az_0s0tJvObOw" target="_blank">链接下载</a>  |  **20bj**  |
 | v 1.2.1 GA | 2020/02/29   |  <a href="https://pan.baidu.com/s/1FDkJ4DOMQq8tPAXrIfDeKA" target="_blank">链接下载</a>  |  **yutq**  |
 | v 1.2.0 GA | 2020/01/18   |  <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">链接下载</a>  |  **6bda**  |
-| v 1.0.0 GA   | 2019/12/06   |  <a href="https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ" target="_blank">链接下载</a>  |  **g17z**  |
+| v 1.0.0 GA | 2019/12/06   |  <a href="https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ" target="_blank">链接下载</a>  |  **g17z**  |
 
 
 # Roadmap
