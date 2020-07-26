@@ -18,6 +18,9 @@ $(function(){
 	<#include "../layout/nologintop.ftl">
 </div>
 <div class="container">	
+<div class="row">
+<div class="col-md-2"></div>
+<div class="col-md-8">
 				<form action="<@base/>/forgotpassword/emailmobile" method="post"   class="needs-validation" novalidate>
 					<table  class="table table-bordered">
 						<tr>
@@ -35,6 +38,9 @@ $(function(){
 						
 					</table>
 				</form>
+</div>
+<div class="col-md-2"></div>
+</div >
 </div>
 <div id="footer">
 	<#include "../layout/footer.ftl">

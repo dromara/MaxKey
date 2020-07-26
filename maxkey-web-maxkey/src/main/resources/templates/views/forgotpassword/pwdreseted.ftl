@@ -10,6 +10,9 @@
 	<#include "../layout/nologintop.ftl">
 </div>
 <div class="container">	
+<div class="row">
+<div class="col-md-2"></div>
+<div class="col-md-8">
   <#if 3 == passwordResetResult>
   	<@locale code="forgotpassword.pwdreseted.password"/>
   	<a href="javascript:history.go(-1);"><@locale code="forgotpassword.backstep"/></a >
@@ -25,7 +28,9 @@
   	<a href="<@base/>/login"><@locale code="forgotpassword.pwdreseted.success.login"/></a> .
   	
   </#if>
-
+</div>
+<div class="col-md-2"></div>
+</div >
 </div>
 <div id="footer">
 	<#include "../layout/footer.ftl">
