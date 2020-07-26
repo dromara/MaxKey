@@ -40,7 +40,8 @@
   	</#if>
 
 <#else>
-
+<div class="row">
+<div class="col-12">
 <table  class="table">
 	<tr>
 		<td>
@@ -49,9 +50,7 @@
 		<td>
 			<@locale code="apps.icon"/>
 		</td>
-		<td><@locale code="apps.name"/></td>
-		<!--<td><@locale code="apps.protocol"/></td>-->
-		<td><@locale code="apps.category"/></td>
+		<td style="word-wrap:break-word;"><@locale code="apps.name"/></td>
 		<td>
 			<@locale code="button.text.action"/>
 		</td>
@@ -71,9 +70,7 @@
 				</a>
 			</#if>
 		</td>
-		<td>${app.name}</td>
-		<!--<td>${app.protocol}</td>-->
-		<td>${app.category}</td>
+		<td style="word-wrap:break-word;">${app.name}</td>
 		<td>
 			<#if app.protocol ?contains("Desktop")>
 				<a href="javascript:void(0);" title="${app.name}" 
@@ -88,8 +85,11 @@
 		</td>
 	</tr>
 </#list>
+</table>
 </div>
 </#if>
+</div>
+
 </div>
 <div id="footer">
 	<#include  "../layout/footer.ftl"/>
