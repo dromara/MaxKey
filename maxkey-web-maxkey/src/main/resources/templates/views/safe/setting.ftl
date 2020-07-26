@@ -8,20 +8,18 @@
 <#include  "../layout/top.ftl"/>
 <#include  "../layout/nav_primary.ftl"/>
 <div class="container">
-<table width="100%">
-  <tr>
-    <td>
-
+<div class="row">
+<div class="col-md-1"></div>
+<div class="col-md-10">
 <form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/safe/setting"  class="needs-validation" novalidate> 
-
-	  <table  class="table table-bordered" >
+	  <table  class="table table-bordered"  style="width:100%;">
 			<tbody>
 			<tr>
 				<th  colspan="2"><@locale code="userinfo.authnType" /></th>
 			</tr>
 			<tr>
 				<th><@locale code="userinfo.displayName" /> :</th>
-				<td style="width:700px">
+				<td >
 					<input  class="form-control"  readonly type="text" id="displayName" name="displayName" class="required" title="" value="${model.displayName}"/>
 					
 				</td>
@@ -104,9 +102,9 @@
 		</tbody>
 	  </table>
 </form>
-</td>
-  </tr>
-</table>
+</div>
+<div class="col-md-1"></div>
+</div >
 </div>
 <div id="footer">
 	<#include   "../layout/footer.ftl"/>

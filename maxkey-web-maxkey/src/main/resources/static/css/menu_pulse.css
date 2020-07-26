@@ -4,14 +4,12 @@
 
 .menuprimary {
 	font: bold 12px Verdana;
-	width: 990px;
 	margin: auto;
 	height: 41px;
 }
 
 .menucontainer {
 	float: left;
-	width: 990px;
 	margin-top: -2px;
 }
 
@@ -152,7 +150,6 @@
 .menusecond {
 	font: bold 12px Verdana;
 	background: white; /*background of menu bar (default state)*/
-	width: 990px;
 	margin: auto;
 }
 

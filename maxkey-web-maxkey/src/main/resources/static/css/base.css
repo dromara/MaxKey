@@ -35,7 +35,7 @@ body{
 	border-bottom: 1px solid #e5e5e5;
 	min-width: 100%;
 	align:left;
-	height:60px;
+	min-height: 60px;
 	margin-bottom: 1px;
 }
 #topNav{
@@ -63,7 +63,6 @@ body{
 }
 
 .container {
-	width: 990px;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 0 10px
@@ -74,7 +73,6 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
-	width:990px;
 	align:center;
 }
 

@@ -8,14 +8,14 @@
 <#include  "../layout/top.ftl"/>
 <#include  "../layout/nav_primary.ftl"/>
 <div class="container">
-<table  class="table">
+
 	<#list listSocialSignOnProvider as socialSignOnProvider>
 		<#if (socialSignOnProvider_index)%4==0>
-			<tr>
+			<div class="row">
 		</#if>
-			<td align="left" nowrap  style="width:25%">
+			<div class="col-3" style="min-width: 170px;">
 				<#if socialSignOnProvider.provider?default("")!="">
-	  				<table class="none"  style="width:100%;">
+	  				<table class="none"  style="min-width: 170px; min-height: 150px;">
 	  				<tr><td  style="text-align: center;border-spacing: 0;border-collapse: collapse;border: 0px;">
 	  					<img src="<@base />/static/${socialSignOnProvider.icon}" title="${socialSignOnProvider.providerName}" width="65px;" height="65px;"/>
 	  				</td></tr>
@@ -29,12 +29,11 @@
 	  				</div></td></tr>
 	  				</table>
 	  			</#if>
-			</td>
+			</div>
 		<#if (socialSignOnProvider_index +1)%4==0>
-			</tr>
+			</div>
 		</#if>
 	</#list>
-</table>
 </div >
 <div id="footer">
 	<#include   "../layout/footer.ftl"/>

@@ -9,14 +9,13 @@
 <#include  "../layout/nav_primary.ftl"/>
 <div class="container">
 <#if  Session["current_user"].gridList==0 >
-<table  class="table">
 	<#list appList as app>
 		<#if (app_index)%4==0>
-			<tr>
+		<div class="row">
 		</#if>
-			<td align="left" nowrap style="width:20%">
-	  				<table  class="none" style="width:100%; border-spacing: 0;border-collapse: collapse;">
-	  				<tr><td style="text-align: center;border-spacing: 0;border-collapse: collapse;border: 0px;">
+			<div class="col-3" style="min-width: 170px;">
+	  				<table  class="none" style="min-width: 170px; min-height: 150px;border-spacing: 0;border-collapse: collapse;">
+	  					<tr><td style="text-align: center;border-spacing: 0;border-collapse: collapse;border: 0px;">
 	  					<#if "Desktop"==app.protocol>
 	  						<a href="javascript:void(0);" title="${app.name}" 
 	  						onclick="window.open('<@base/>/authz/${app.id}');">
@@ -28,18 +27,18 @@
 	  							<img src="<@base/>/image/${app.id}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
 	  						</a>
 	  					</#if>
-	  				</td></tr>
-	  				<tr><td style="text-align: center;border-spacing: 0;border-collapse: collapse;border: 0px;">${app.name}</td></tr>
+	  					</td></tr>
+	  					<tr><td style="text-align: center;border-spacing: 0;border-collapse: collapse;border: 0px;">${app.name}</td></tr>
 	  				</table>
-			</td>
+	  		</div>
 		<#if (app_index +1)%4==0>
-		</tr>
+		</div>
 		</#if>
 	</#list>
   	<#if (appList?size)%4!=0>
-  		</tr>
+  		</div >
   	</#if>
-</table>
+
 <#else>
 
 <table  class="table">
@@ -89,7 +88,7 @@
 		</td>
 	</tr>
 </#list>
-</table>
+</div>
 </#if>
 </div>
 <div id="footer">
