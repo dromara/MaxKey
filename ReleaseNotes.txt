@@ -1,4 +1,18 @@
-﻿MaxKey v 2.0.0 GA	2020/07/13 
+﻿MaxKey v 2.1.0 GA	2020/08/*
+	*(MAXKEY-200701)  官方网站升级，清晰简洁的界面，全新的页面导航
+	*(MAXKEY-200702) Mysql升级到8.0.21GA
+	*(MAXKEY-200703)   取消MaxKey认证系统双端口的启动，解决登录时session不一致问题
+	*(MAXKEY-200704)   强化密码验证的功能，适配多种密码结构
+	*(MAXKEY-200705) RBAC权限功能增强，支持多种资源类型
+	*(MAXKEY-200706) Connector连接器从主项目分离，专注与KAFKA的适配
+	*(MAXKEY-200707) SDK主项目分离，增加用户管理API适配功能
+	*(MAXKEY-200720)  依赖jar升级,消除非必要依赖
+	                spring 5.2.8.RELEASE
+					springBoot 2.3.2.RELEASE
+					MySql  8.0.21GA
+					
+					
+MaxKey v 2.0.0 GA	2020/07/13 
 	*(MAXKEY-200601) RBAC 基于角色的访问控制(Role-Based Access Control)支持
 	*(MAXKEY-200602) xml配置改为Spring annotation，提升模块间的组件化
 	*(MAXKEY-200603) 管理MGT界面优化及增加菜单图标，认证Maxkey主题切换支持-黑色经典|薄荷清新|激情紫荆
