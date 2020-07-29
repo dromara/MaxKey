@@ -80,7 +80,7 @@ QQ交流群：<b>434469201</b> | 邮箱EMAIL: <b>shimingxy@163.com</b>
 ------------
 # 下载
 
-百度网盘下载,<a href="https://maxkey.top/download.html" target="_blank"> 历史版本</a>
+当前版本百度网盘下载,<a href="https://maxkey.top/download.html" target="_blank"> 历史版本</a>
 | 版本    | 日期   |  下载地址  |  提取码  |
 | --------| :-----  | :----  | :----:  |
 | v 2.0.0 GA | 2020/07/13   |  <a href="https://pan.baidu.com/s/16hhDTk_I-yjh0E6Lukpkxw" target="_blank">链接下载</a>  |  **xfrr**  |
