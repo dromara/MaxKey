@@ -80,15 +80,10 @@ QQ交流群：<b>434469201</b> | 邮箱EMAIL: <b>shimingxy@163.com</b>
 ------------
 # 下载
 
-百度网盘下载
+百度网盘下载,<a href="https://maxkey.top/download.html" target="_blank"> 历史版本</a>
 | 版本    | 日期   |  下载地址  |  提取码  |
 | --------| :-----  | :----  | :----:  |
 | v 2.0.0 GA | 2020/07/13   |  <a href="https://pan.baidu.com/s/16hhDTk_I-yjh0E6Lukpkxw" target="_blank">链接下载</a>  |  **xfrr**  |
-| v 1.4.0 GA | 2020/05/01   |  <a href="https://pan.baidu.com/s/1i53-oR-xnwZddqEl9dP4ag" target="_blank">链接下载</a>  |  **f3fs**  |
-| v 1.3.0 GA | 2020/04/04   |  <a href="https://pan.baidu.com/s/1o7vfBeq21Az_0s0tJvObOw" target="_blank">链接下载</a>  |  **20bj**  |
-| v 1.2.1 GA | 2020/02/29   |  <a href="https://pan.baidu.com/s/1FDkJ4DOMQq8tPAXrIfDeKA" target="_blank">链接下载</a>  |  **yutq**  |
-| v 1.2.0 GA | 2020/01/18   |  <a href="https://pan.baidu.com/s/1NDeB_g_-6Qbn_bHkTGnFGA" target="_blank">链接下载</a>  |  **6bda**  |
-| v 1.0.0 GA | 2019/12/06   |  <a href="https://pan.baidu.com/s/15j7RSUQybCVlHx8uyFk2rQ" target="_blank">链接下载</a>  |  **g17z**  |
 
 
 # Roadmap
