@@ -17,9 +17,15 @@
 	        http://www.springframework.org/schema/util/spring-util.xsd
 	        http://www.springframework.org/schema/mvc 
 	        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
- 	<!-- 
- 	<import resource="applicationContext-task.xml"/>
- 	-->
+ 	<!-- dataSource define begin -->
+	<!-- dataSource configuration -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"  destroy-method="close" >      
+	   <!--  <property name="driverClass" value="#{dataSoruceConfig.driverClass}"/>     -->  
+	    <property name="url" value="${spring.datasource.url}"/>      
+	    <property name="username" value="${spring.datasource.username}"/>      
+	    <property name="password" value="${spring.datasource.password}"/>       
+	</bean> 
+	
  	<!-- Application properties configs  -->
 	<bean id="propertySourcesPlaceholderConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
 	  <property name="locations">
@@ -36,7 +42,6 @@
 	<bean id="passwordReciprocal" class="org.maxkey.crypto.password.PasswordReciprocal"></bean>
 	
  	<!-- Datastore configuration  -->
- 	<import resource="applicationContext-database.xml"/>
  	<import resource="applicationContext-persist.xml"/>
  
  	<bean id="kafkaProvisioningService" class="org.maxkey.identity.kafka.KafkaProvisioningService"></bean>

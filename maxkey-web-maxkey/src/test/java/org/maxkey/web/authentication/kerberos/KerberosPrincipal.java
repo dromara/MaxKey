@@ -18,7 +18,7 @@
 /**
  * 
  */
-package com.connsec.web.authentication.kerberos;
+package org.maxkey.web.authentication.kerberos;
 
 import java.util.Date;
 import java.util.regex.Pattern;
