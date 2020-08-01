@@ -4,9 +4,10 @@
 
 官方网站  <a href="https://www.maxkey.top" target="_blank"><b>官方网站</b></a> |  <a href="https://maxkeytop.gitee.io" target="_blank"><b>官方网站二线</b></a>
 
+社区交流  QQ群：<b>434469201</b> | 邮箱EMAIL: <b>shimingxy@163.com</b>
+
 代码托管 <a href="https://github.com/MaxKeyTop/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/maxkeytop/MaxKey" target="_blank"><b>码云(Gitee)</b></a>
-  
-社区  QQ交流群：<b>434469201</b> | 邮箱EMAIL: <b>shimingxy@163.com</b>
+
  
 什么是<b>单点登录(Single Sign On）</b>，简称为<b>SSO</b>？
 
