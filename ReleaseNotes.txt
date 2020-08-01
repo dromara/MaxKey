@@ -7,7 +7,7 @@
 	*(MAXKEY-200706) RBAC权限功能增强，支持多种资源类型
 	*(MAXKEY-200707) Connector连接器从主项目分离，专注与KAFKA的适配
 	*(MAXKEY-200708) SDK主项目分离，增加用户管理API适配功能
-	*(MAXKEY-200720)  依赖jar升级,消除非必要依赖
+	*(MAXKEY-200709)  依赖jar升级,消除非必要依赖
 	                spring 5.2.8.RELEASE
 					springBoot 2.3.2.RELEASE
 					MySql  8.0.21GA
