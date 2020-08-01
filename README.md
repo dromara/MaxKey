@@ -89,6 +89,5 @@ QQ交流群：<b>434469201</b> | 邮箱EMAIL: <b>shimingxy@163.com</b>
 # Roadmap
 SCIM 2 Support-System for Cross-domain Identity Management
 
-Apache Kafka Support 
 
 动态用户组实现(基于用户属性或机构)
