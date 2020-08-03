@@ -41,18 +41,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class AuthorizeBaseEndpoint {
 	final static Logger _logger = LoggerFactory.getLogger(AuthorizeBaseEndpoint.class);
 	
+	@Autowired 
+    @Qualifier("applicationConfig")
+    protected ApplicationConfig applicationConfig;
+	
 	@Autowired
 	@Qualifier("appsService")
 	protected AppsService appsService;
-	
-	@Autowired 
-  	@Qualifier("applicationConfig")
-  	protected ApplicationConfig applicationConfig;
-	
+		
 	@Autowired
-	AccountsService accountsService;
-	
-	
+	@Qualifier("accountsService")
+	protected AccountsService accountsService;
+		
 	protected Apps getApp(String id){
 		Apps  app=(Apps)WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
 		//session中为空或者id不一致重新加载

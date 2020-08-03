@@ -27,17 +27,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
-import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
-import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.domain.apps.AppsCasDetails;
-import org.maxkey.persistence.service.AppsCasDetailsService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,19 +44,9 @@ import org.springframework.web.servlet.ModelAndView;
  * https://apereo.github.io/cas/5.0.x/protocol/CAS-Protocol-V2-Specification.html
  */
 @Controller
-public class CasAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
+public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 
 	final static Logger _logger = LoggerFactory.getLogger(CasAuthorizeEndpoint.class);
-
-	@Autowired
-	AppsCasDetailsService casDetailsService;
-	
-	@Autowired
-	ApplicationConfig applicationConfig;
-	
-	@Autowired
-	@Qualifier("casTicketServices")
-	TicketServices ticketServices;
 	
 	@RequestMapping("/authz/cas/login")
 	public ModelAndView casLogin(

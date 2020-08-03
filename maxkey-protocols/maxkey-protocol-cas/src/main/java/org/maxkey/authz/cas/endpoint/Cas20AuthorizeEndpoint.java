@@ -28,19 +28,12 @@ import org.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
-import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
-import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.Boolean;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.persistence.service.AppsCasDetailsService;
-import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.Instance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,25 +44,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * https://apereo.github.io/cas/5.0.x/protocol/CAS-Protocol-V2-Specification.html
  */
 @Controller
-public class Cas20AuthorizeEndpoint  extends AuthorizeBaseEndpoint{
+public class Cas20AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 
 	final static Logger _logger = LoggerFactory.getLogger(Cas20AuthorizeEndpoint.class);
-	@Autowired
-	AppsCasDetailsService casDetailsService;
 	
-	@Autowired
-	ApplicationConfig applicationConfig;
-	
-	@Autowired
-	@Qualifier("userInfoService")
-	private UserInfoService userInfoService;
-	
-	
-	@Autowired
-	@Qualifier("casTicketServices")
-	TicketServices ticketServices;
-	
-
 	/**
 	 * @param request
 	 * @param response
@@ -196,7 +174,8 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
 		
-		
+	    setContentType(request,response,format);
+	    
 		Ticket storedTicket=null;
 		try {
 			storedTicket = ticketServices.consumeTicket(ticket);
@@ -222,8 +201,6 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 				.setDescription("Ticket "+ticket+" not recognized");
 		}
 	
-		
-		
 		return serviceResponseBuilder.serviceResponseBuilder();
 	}
 	
@@ -298,6 +275,7 @@ Response on ticket validation failure:
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
 		
+	    setContentType(request,response,format);
 		
 		Ticket storedTicket=null;
 		try {
@@ -380,7 +358,10 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_GRANTING_TICKET) String pgt,
 			@RequestParam(value = CasConstants.PARAMETER.TARGET_SERVICE) String targetService,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
-		ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder();
+	    
+	    setContentType(request,response,format);
+	    
+	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder();
 		return proxyServiceResponseBuilder.success().setTicket("").setFormat(format).serviceResponseBuilder();
 	}
 }
