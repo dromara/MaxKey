@@ -2,29 +2,31 @@
 #.gitignore
 *.class
 */bin/*
-bin/*
-/bin
 /*/*/bin/*
-/.gradle/*
+
+/.metadata
 
 # Log file
 *.log
 *.log.*
 */logs/*
 /log
+/log/*
 
 */jdk/*
 
 */.settings/*
-/.settings
+
 */org/apache/mybatis/jpa/*
 
+/build/*
 */build/*
-build/*
-/build
 /*/*/build/*/*
 /*/build/*/*
+
 */META-INF/MANIFEST.MF
 /*/*/.gitignore
 /*/.gitignore
+
 /.gradle/
+/.gradle/*
