@@ -21,6 +21,7 @@
 package org.maxkey.authz.cas.endpoint;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,7 +62,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		
 		casDetails=(casDetailsList!=null && casDetailsList.size()==1)?casDetailsList.get(0):null;
 		
-		return buildCasModelAndView(casDetails);
+		return buildCasModelAndView(request,response,casDetails);
 		
 	}
 	
@@ -73,13 +74,20 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		
 		AppsCasDetails casDetails=casDetailsService.getAppDetails(id);
 		
-		return buildCasModelAndView(casDetails);
+		return buildCasModelAndView(request,response,casDetails);
 	}
 	
-	private  ModelAndView buildCasModelAndView(AppsCasDetails casDetails){
+	private  ModelAndView buildCasModelAndView(
+	                HttpServletRequest request,
+	                HttpServletResponse response,
+	                AppsCasDetails casDetails){
 		
 		_logger.debug(""+casDetails);
 
+		WebContext.setAttribute(
+    		        CasConstants.PARAMETER.PARAMETER_MAP, 
+    		        WebContext.getRequestParameterMap(request)
+		        );
 		WebContext.setAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS, casDetails);
 		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, casDetails.getId());
 		WebContext.setAttribute(AuthorizeBaseEndpoint.class.getName(),casDetails);
@@ -101,9 +109,23 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		    callbackUrl.append("?");
 		}
 		
-		callbackUrl.append(CasConstants.PARAMETER.TICKET).append("=").append(ticket)
-                .append("&")
-                .append(CasConstants.PARAMETER.SERVICE).append("=").append(casDetails.getService());
+		//append ticket
+		callbackUrl.append(CasConstants.PARAMETER.TICKET).append("=").append(ticket);
+		
+		callbackUrl.append("&");
+		//append service
+		callbackUrl.append(CasConstants.PARAMETER.SERVICE).append("=").append(casDetails.getService());
+		
+		//增加可自定义的参数
+		if(WebContext.getAttribute(CasConstants.PARAMETER.PARAMETER_MAP)!=null) {
+    		@SuppressWarnings("unchecked")
+            Map <String, String> parameterMap = (Map <String, String>)WebContext.getAttribute(CasConstants.PARAMETER.PARAMETER_MAP);
+    		parameterMap.remove(CasConstants.PARAMETER.TICKET);
+    		parameterMap.remove(CasConstants.PARAMETER.SERVICE);
+    		for (String key : parameterMap.keySet()) {
+    		    callbackUrl.append("&").append(key).append(parameterMap.get(key));
+    		}
+		}
 		
 		_logger.debug("redirect to CAS Client URL " + callbackUrl);
 		

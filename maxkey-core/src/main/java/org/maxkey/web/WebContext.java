@@ -322,6 +322,16 @@ public final class WebContext {
 
         return locale;
     }
+    
+    public static Map<String, String> getRequestParameterMap(HttpServletRequest request) {
+        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String[]> parameters = request.getParameterMap();
+        for (String key : parameters.keySet()) {
+            String[] values = parameters.get(key);
+            map.put(key, values != null && values.length > 0 ? values[0] : null);
+        }
+        return map;
+    }
 
     /**
      * 根据名字获取cookie.

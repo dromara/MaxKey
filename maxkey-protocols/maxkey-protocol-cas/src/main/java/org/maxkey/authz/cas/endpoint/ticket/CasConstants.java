@@ -23,6 +23,8 @@ public class CasConstants {
 	public static final class PARAMETER{
 		public final static String ENDPOINT_CAS_DETAILS="CAS_AUTHORIZE_ENDPOINT_CAS_DETAILS";
 		
+		public final static String PARAMETER_MAP="CAS_AUTHORIZE_ENDPOINT_PARAMETER_MAP";
+
 		/** Constant representing the ticket parameter in the request. */
 		public final static String TICKET="ticket";
 		
