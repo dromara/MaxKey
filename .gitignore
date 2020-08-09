@@ -5,6 +5,7 @@
 /*/*/bin/*
 
 /.metadata
+/.settings
 
 # Log file
 *.log
