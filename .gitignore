@@ -1,6 +1,10 @@
 # Compiled class file
 #.gitignore
 *.class
+.classpath
+.project
+classpath-data.json
+
 */bin/*
 /*/*/bin/*
 
@@ -9,6 +13,8 @@
 
 /.settings
 */.settings/*
+/*/.settings/*
+/*/*/.settings/*
 
 /.sts4-cache
 */.sts4-cache/*
