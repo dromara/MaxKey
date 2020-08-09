@@ -5,7 +5,13 @@
 /*/*/bin/*
 
 /.metadata
+*/.metadata/*
+
 /.settings
+*/.settings/*
+
+/.sts4-cache
+*/.sts4-cache/*
 
 # Log file
 *.log
@@ -15,8 +21,6 @@
 /log/*
 
 */jdk/*
-
-*/.settings/*
 
 */org/apache/mybatis/jpa/*
 
