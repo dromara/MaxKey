@@ -4,6 +4,8 @@
 .classpath
 .project
 classpath-data.json
+.myumldata
+
 
 */bin/*
 /*/*/bin/*
