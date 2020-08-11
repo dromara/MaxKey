@@ -6,8 +6,8 @@
     	SELECT 
 			*
     	FROM 
-    		APPS_DESKTOP_DETAILS DD,
-    		APPS APP
+    		MXK_APPS_DESKTOP_DETAILS DD,
+    		MXK_APPS APP
     	WHERE 	
     		APP.ID	=	#{value}
     		AND DD.ID	=	#{value}

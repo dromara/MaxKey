@@ -17,7 +17,7 @@
 		SELECT
 			*
 		FROM
-			`GROUPS`
+			`MXK_GROUPS`
 		WHERE
 			 (1=1)	
 		<include refid="where_statement"/>
@@ -25,7 +25,7 @@
 	
 	
 	<update id="logisticDelete" parameterType="Groups" >
-    	UPDATE `GROUPS` SET
+    	UPDATE `MXK_GROUPS` SET
     		STATUS	=	'2'  
     	WHERE	1	=	1
     	<if test="id != null">
@@ -38,7 +38,7 @@
     
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	UPDATE `GROUPS` SET STATUS='2' WHERE ID IN
+    	UPDATE `MXK_GROUPS` SET STATUS='2' WHERE ID IN
     		<foreach item="item" collection="list" open="(" separator="," close=")">
 				#{item}
     		</foreach>

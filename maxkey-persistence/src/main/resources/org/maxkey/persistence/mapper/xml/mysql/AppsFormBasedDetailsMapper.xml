@@ -6,8 +6,8 @@
     	SELECT 
 			*
     	FROM 
-    		APPS_FORM_BASED_DETAILS FBD,
-    		APPS APP
+    		MXK_APPS_FORM_BASED_DETAILS FBD,
+    		MXK_APPS APP
     	WHERE 	
     		APP.ID	=	#{value}
     		AND FBD.ID	=	#{value}

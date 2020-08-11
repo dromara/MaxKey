@@ -23,7 +23,7 @@
 		SELECT
 			RES.*,APP.NAME APPNAME
 		FROM
-			RESOURCES RES, APPS APP
+			MXK_RESOURCES RES, MXK_APPS APP
 		WHERE
 			 (1=1)	AND RES.APPID=APP.ID
 		<include refid="where_statement"/>
@@ -32,7 +32,7 @@
 	
 	
 	<update id="logisticDelete" parameterType="Resources" >
-    	UPDATE RESOURCES SET
+    	UPDATE MXK_RESOURCES SET
     		STATUS	=	'2'  
     	WHERE	1	=	1
     	<if test="id != null">
@@ -45,7 +45,7 @@
     
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	UPDATE RESOURCES SET STATUS='2' WHERE ID IN
+    	UPDATE MXK_RESOURCES SET STATUS='2' WHERE ID IN
     		<foreach item="item" collection="list" open="(" separator="," close=")">
 				#{item}
     		</foreach>

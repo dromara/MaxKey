@@ -30,7 +30,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  *
  */
 
-@Table(name = "HISTORY_LOGIN_APPS")  
+@Table(name = "MXK_HISTORY_LOGIN_APPS")  
 public class HistoryLoginApps extends JpaBaseDomain {
 	
 	private static final long serialVersionUID = 5085201575292304749L;

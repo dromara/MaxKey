@@ -30,7 +30,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  * @author Crystal.Sea
  * 
  */
-@Table(name = "HISTORY_LOGS")
+@Table(name = "MXK_HISTORY_LOGS")
 public class HistoryLogs extends JpaBaseDomain implements Serializable {
     private static final long serialVersionUID = 6560201093784960493L;
     @Id

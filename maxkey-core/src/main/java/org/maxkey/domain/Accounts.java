@@ -36,7 +36,7 @@ import org.hibernate.validator.constraints.Length;
    constraint PK_ROLES primary key clustered (ID)
  */
 
-@Table(name = "ACCOUNTS")
+@Table(name = "MXK_ACCOUNTS")
 public class Accounts extends JpaBaseDomain implements Serializable {
     private static final long serialVersionUID = 6829592256223630307L;
     @Id

@@ -26,7 +26,7 @@ import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 import org.maxkey.constants.ConstantsStatus;
 
-@Table(name = "ROLE_PERMISSIONS")
+@Table(name = "MXK_ROLE_PERMISSIONS")
 public class RolePermissions  extends JpaBaseDomain implements Serializable {
     private static final long serialVersionUID = -8783585691243853899L;
     

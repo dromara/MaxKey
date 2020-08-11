@@ -6,8 +6,8 @@
     	SELECT 
 			*
     	FROM 
-    		APPS_TOKEN_BASED_DETAILS TBD,
-    		APPS APP
+    		MXK_APPS_TOKEN_BASED_DETAILS TBD,
+    		MXK_APPS APP
     	WHERE 	
     		APP.ID	=	#{value}
     		AND TBD.ID	=	#{value}

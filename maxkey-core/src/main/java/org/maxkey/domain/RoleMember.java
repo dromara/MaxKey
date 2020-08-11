@@ -30,7 +30,7 @@ import javax.persistence.Table;
    UID	                varchar(40)	                   null
    constraint PK_ROLES primary key clustered (ID)
  */
-@Table(name = "ROLE_MEMBER")
+@Table(name = "MXK_ROLE_MEMBER")
 public class RoleMember extends UserInfo implements Serializable {
     private static final long serialVersionUID = -8059639972590554760L;
     @Id

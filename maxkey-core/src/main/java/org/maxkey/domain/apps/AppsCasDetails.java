@@ -23,7 +23,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "APPS_CAS_DETAILS")
+@Table(name = "MXK_APPS_CAS_DETAILS")
 public class AppsCasDetails extends Apps {
 
     /**

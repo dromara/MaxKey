@@ -44,7 +44,7 @@
 			DISPLAYNAME,
 			DATE_FORMAT(LOGINTIME, '%Y-%m-%d  %H:%i:%s') AS LOGINTIME
 			 
-    	FROM HISTORY_LOGIN_APPS
+    	FROM MXK_HISTORY_LOGIN_APPS
     	WHERE	1	=	1
     	<include refid="dao_where_statement"/>
     	

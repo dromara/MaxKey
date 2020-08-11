@@ -19,7 +19,7 @@ package org.maxkey.domain.apps;
 
 import javax.persistence.Table;
 
-@Table(name = "APPS_EXTENDAPI_DETAILS") 
+@Table(name = "MXK_APPS_EXTENDAPI_DETAILS") 
 public class AppsExtendApiDetails extends Apps {
 
 	/**

@@ -30,7 +30,7 @@ import javax.persistence.Table;
  * @author Crystal.Sea
  *
  */
-@Table(name = "APPS_TOKEN_BASED_DETAILS") 
+@Table(name = "MXK_APPS_TOKEN_BASED_DETAILS") 
 public class AppsTokenBasedDetails  extends Apps {
 
 	/**

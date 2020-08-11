@@ -34,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Crystal.Sea
  * 
  */
-@Table(name = "USERINFO")
+@Table(name = "MXK_USERINFO")
 public class UserInfo extends JpaBaseDomain {
     private static final long serialVersionUID = 6402443942083382236L;
     //

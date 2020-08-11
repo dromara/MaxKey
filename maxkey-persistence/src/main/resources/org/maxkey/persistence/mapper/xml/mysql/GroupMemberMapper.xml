@@ -53,7 +53,7 @@
 					
 					U.STATUS
 				FROM
-					USERINFO U
+					MXK_USERINFO U
 			WHERE	1	=	1
 	</select>
 	
@@ -97,9 +97,9 @@
 				
 				U.STATUS
 			FROM
-				USERINFO U,
-				`GROUPS` G,
-				GROUP_MEMBER GM
+				MXK_USERINFO U,
+				`MXK_GROUPS` G,
+				MXK_GROUP_MEMBER GM
 			WHERE	1	=	1
 				<if test="groupId != null and groupId != ''">
 					AND GM.GROUPID = #{groupId}
@@ -154,11 +154,11 @@
 			
 			U.STATUS
 		FROM
-			USERINFO U
+			MXK_USERINFO U
 		WHERE
 			U.ID NOT IN(
        			 SELECT GM.MEMBERID 
-       			 FROM 	`GROUPS` G,GROUP_MEMBER GM
+       			 FROM 	`MXK_GROUPS` G,MXK_GROUP_MEMBER GM
 			     WHERE  1  =  1
 			     <if test="groupId != null and groupId != ''">
 					AND GM.GROUPID = #{groupId}
@@ -178,9 +178,9 @@
 		SELECT	DISTINCT
 			IG.*
 		FROM
-			`GROUPS` IG,
-			`GROUPS` G,
-			GROUP_MEMBER GM
+			`MXK_GROUPS` IG,
+			`MXK_GROUPS` G,
+			MXK_GROUP_MEMBER GM
 		WHERE
 			 1	=	1
 			AND GM.GROUPID	=	G.ID	

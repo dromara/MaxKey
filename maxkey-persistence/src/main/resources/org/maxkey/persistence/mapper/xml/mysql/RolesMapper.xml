@@ -17,7 +17,7 @@
 		SELECT
 			*
 		FROM
-			ROLES
+			MXK_ROLES
 		WHERE
 			 (1=1)	
 		<include refid="where_statement"/>
@@ -25,7 +25,7 @@
 	
 	
 	<update id="logisticDelete" parameterType="Groups" >
-    	UPDATE ROLES SET
+    	UPDATE MXK_ROLES SET
     		STATUS	=	'2'  
     	WHERE	1	=	1
     	<if test="id != null">
@@ -38,7 +38,7 @@
     
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	UPDATE ROLES SET STATUS='2' WHERE ID IN
+    	UPDATE MXK_ROLES SET STATUS='2' WHERE ID IN
     		<foreach item="item" collection="list" open="(" separator="," close=")">
 				#{item}
     		</foreach>
@@ -49,7 +49,7 @@
         SELECT
             *
         FROM
-            ROLE_PERMISSIONS
+            MXK_ROLE_PERMISSIONS
         WHERE
              STATUS = 1
        <if test="id != null and id != ''">
@@ -65,14 +65,14 @@
     </select>
     
     <update id="logisticDeleteRolePermissions" parameterType="java.util.List">
-        UPDATE ROLE_PERMISSIONS SET STATUS=9 WHERE ID IN
+        UPDATE MXK_ROLE_PERMISSIONS SET STATUS=9 WHERE ID IN
             <foreach item="item" collection="list" open="(" separator="," close=")">
                 #{item.id}
             </foreach>
     </update>
     
     <insert id="insertRolePermissions"  parameterType="java.util.List">
-	    INSERT INTO ROLE_PERMISSIONS ( ID,APPID,ROLEID,RESOURCEID,STATUS) 
+	    INSERT INTO MXK_ROLE_PERMISSIONS ( ID,APPID,ROLEID,RESOURCEID,STATUS) 
 	    VALUES 
 	    <foreach collection="list" item="item" index="index" separator=",">
 	        (#{item.id},#{item.appId},#{item.roleId},#{item.resourceId},#{item.status})

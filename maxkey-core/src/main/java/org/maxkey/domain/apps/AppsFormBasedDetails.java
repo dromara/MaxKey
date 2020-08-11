@@ -27,7 +27,7 @@ import javax.persistence.Table;
  * @author Crystal.Sea
  *
  */
-@Table(name = "APPS_FORM_BASED_DETAILS")  
+@Table(name = "MXK_APPS_FORM_BASED_DETAILS")  
 public class AppsFormBasedDetails  extends Apps {
 	/**
 	 * 

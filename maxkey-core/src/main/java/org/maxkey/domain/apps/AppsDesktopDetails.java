@@ -29,7 +29,7 @@ import org.maxkey.domain.Accounts;
  * @author Crystal.Sea
  *
  */
-@Table(name = "APPS_DESKTOP_DETAILS")  
+@Table(name = "MXK_APPS_DESKTOP_DETAILS")  
 public class AppsDesktopDetails extends Apps {
 
 

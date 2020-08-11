@@ -15,7 +15,7 @@
 			ID,
 			WORKEMAIL EAMIL
 		FROM
-			REGISTRATION
+			MXK_REGISTRATION
 		WHERE 
 			WORKEMAIL = #{value}
 	</select>

@@ -53,7 +53,7 @@
 					
 					U.STATUS
 				FROM
-					USERINFO U
+					MXK_USERINFO U
 			WHERE	1	=	1
 	</select>
 	
@@ -97,9 +97,9 @@
 				
 				U.STATUS
 			FROM
-				USERINFO U,
-				ROLES R,
-				ROLE_MEMBER RM
+				MXK_USERINFO U,
+				MXK_ROLES R,
+				MXK_ROLE_MEMBER RM
 			WHERE	1	=	1
 				<if test="roleId != null and roleId != ''">
 					AND RM.ROLEID = #{roleId}
@@ -154,11 +154,11 @@
 			
 			U.STATUS
 		FROM
-			USERINFO U
+			MXK_USERINFO U
 		WHERE
 			U.ID NOT IN(
        			 SELECT RM.MEMBERID 
-       			 FROM 	ROLES R,ROLE_MEMBER RM
+       			 FROM 	MXK_ROLES R,MXK_ROLE_MEMBER RM
 			     WHERE  1  =  1
 			     <if test="roleId != null and roleId != ''">
 					AND RM.ROLEID = #{roleId}
@@ -178,9 +178,9 @@
 		SELECT	DISTINCT
 			IR.*
 		FROM
-			ROLES IR,
-			ROLES R,
-			ROLE_MEMBER RM
+			MXK_ROLES IR,
+			MXK_ROLES R,
+			MXK_ROLE_MEMBER RM
 		WHERE
 			 1	=	1
 			AND RM.GROUPID	=	R.ID	

@@ -32,8 +32,8 @@
             APPS.VENDOR,
             APPS.VENDORURL
 		FROM
-			APPS APPS,
-			GROUP_PRIVILEGES    GP
+			MXK_APPS APPS,
+			MXK_GROUP_PRIVILEGES    GP
 		WHERE
 			GP.APPID=APPS.ID
 			AND GP.GROUPID	=	#{groupId}
@@ -44,14 +44,14 @@
 		SELECT
 			*
 		FROM
-			APPS APPS
+			MXK_APPS APPS
 		WHERE
 			 1	=	1
 			AND  APPS.ID NOT IN(
 				SELECT 
 					APPID
 				FROM
-					GROUP_PRIVILEGES
+					MXK_GROUP_PRIVILEGES
 				WHERE 
 					GROUPID	=	#{groupId}
 			)

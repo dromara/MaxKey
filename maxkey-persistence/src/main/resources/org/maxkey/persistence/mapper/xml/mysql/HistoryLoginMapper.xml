@@ -56,7 +56,7 @@
 			LOGINURL,
 			DATE_FORMAT(LOGINTIME, '%Y-%m-%d  %H:%i:%s') AS LOGINTIME,
 			DATE_FORMAT(LOGOUTTIME, '%Y-%m-%d  %H:%i:%s') AS LOGOUTTIME
-    	FROM HISTORY_LOGIN
+    	FROM MXK_HISTORY_LOGIN
     	WHERE	1	=	1
     	<include refid="dao_where_statement"/>
     	
@@ -64,7 +64,7 @@
     </select>
     
     <update id="logout" parameterType="java.lang.String" >
-    	UPDATE HISTORY_LOGIN SET
+    	UPDATE MXK_HISTORY_LOGIN SET
 			LOGOUTTIME			=	current_timestamp() 
 		WHERE
 			SESSIONID	=	#{value}

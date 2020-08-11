@@ -32,7 +32,7 @@ import javax.persistence.Table;
    UID	                varchar(40)	                   null
    constraint PK_ROLES primary key clustered (ID)
  */
-@Table(name = "GROUP_MEMBER")  
+@Table(name = "MXK_GROUP_MEMBER")  
 public class GroupMember extends UserInfo implements Serializable{
 
 	/**

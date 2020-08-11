@@ -23,7 +23,7 @@
 		SELECT
 			*
 		FROM
-			ACCOUNTS
+			MXK_ACCOUNTS
 		WHERE
 			 (1=1)	
 		<include refid="where_statement"/>

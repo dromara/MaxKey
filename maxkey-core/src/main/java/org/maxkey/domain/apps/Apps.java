@@ -31,7 +31,7 @@ import org.maxkey.constants.Boolean;
 import org.maxkey.domain.Accounts;
 import org.springframework.web.multipart.MultipartFile;
 
-@Table(name = "APPS")
+@Table(name = "MXK_APPS")
 public class Apps extends JpaBaseDomain implements Serializable {
 
     /**

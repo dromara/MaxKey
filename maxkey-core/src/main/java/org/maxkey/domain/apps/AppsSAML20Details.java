@@ -31,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Crystal.Sea
  *
  */
-@Table(name = "APPS_SAML_V20_DETAILS")
+@Table(name = "MXK_APPS_SAML_V20_DETAILS")
 public class AppsSAML20Details extends Apps {
 
     /**

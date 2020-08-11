@@ -21,8 +21,8 @@
     		SVD.DIGESTMETHOD,
 			APP.*
     	FROM 
-    		APPS_SAML_V20_DETAILS SVD,
-    		APPS APP
+    		MXK_APPS_SAML_V20_DETAILS SVD,
+    		MXK_APPS APP
     	WHERE 	
     		APP.ID			=	#{value}
     		AND SVD.ID		=	#{value}

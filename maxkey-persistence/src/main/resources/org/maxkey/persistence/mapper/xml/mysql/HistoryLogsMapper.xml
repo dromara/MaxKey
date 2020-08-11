@@ -45,7 +45,7 @@
 			USERNAME,
 			CREATEDDATE,
 			CREATEDBY
-    	FROM HISTORY_LOGS 
+    	FROM MXK_HISTORY_LOGS 
     	WHERE	1	=	1
     	<include refid="where_statement"/>
     	

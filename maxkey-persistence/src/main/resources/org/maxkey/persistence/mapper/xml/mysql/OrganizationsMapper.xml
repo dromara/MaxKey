@@ -23,14 +23,14 @@
      <select id="queryPageResults" parameterType="Organizations" resultType="Organizations">
     	SELECT 
 			*
-    	FROM ORGANIZATIONS 
+    	FROM MXK_ORGANIZATIONS 
     	WHERE	1	=	1
     	<include refid="dao_where_statement"/>
     </select>
     
   
     <update id="logisticDelete" parameterType="Organizations" >
-    	UPDATE ORGANIZATIONS SET STATUS	=	'2'  
+    	UPDATE MXK_ORGANIZATIONS SET STATUS	=	'2'  
     		WHERE	1	=	1
     	<if test="id != null and id != '' ">
 			AND	ID	=	#{id}
@@ -47,7 +47,7 @@
     </update>
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	UPDATE ORGANIZATIONS SET STATUS	=	'2'  
+    	UPDATE MXK_ORGANIZATIONS SET STATUS	=	'2'  
     		 WHERE ID IN
 		<foreach collection="ids" item="selectId"  open="(" separator="," close=")">  
         	#{selectId}   

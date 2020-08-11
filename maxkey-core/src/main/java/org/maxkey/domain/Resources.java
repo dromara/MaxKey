@@ -25,7 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 
-@Table(name = "RESOURCES")
+@Table(name = "MXK_RESOURCES")
 public class Resources  extends JpaBaseDomain implements Serializable {
     private static final long serialVersionUID = 2567171742999638608L;
     @Id

@@ -26,7 +26,7 @@ import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 import org.hibernate.validator.constraints.Length;
 
-@Table(name = "GROUPS")
+@Table(name = "MXK_GROUPS")
 public class Groups extends JpaBaseDomain implements Serializable {
 
     private static final long serialVersionUID = 4660258495864814777L;

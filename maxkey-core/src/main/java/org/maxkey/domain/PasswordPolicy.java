@@ -32,7 +32,7 @@ import org.maxkey.exception.PasswordPolicyException;
  *
  */
 
-@Table(name = "PASSWORD_POLICY")
+@Table(name = "MXK_PASSWORD_POLICY")
 public class PasswordPolicy extends JpaBaseDomain implements java.io.Serializable {
 
     private static final long serialVersionUID = -4797776994287829182L;

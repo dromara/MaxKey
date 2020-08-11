@@ -28,7 +28,7 @@
 		SELECT
 			*
 		FROM
-			APPS
+			MXK_APPS
 		WHERE
 			 (1=1)	
 		<include refid="where_statement"/>
@@ -37,7 +37,7 @@
 	
 		
 	<insert id="insertApp" parameterType="Apps">
-		INSERT INTO APPS(
+		INSERT INTO MXK_APPS(
 			ID,
 			NAME,
 			ICON,
@@ -113,7 +113,7 @@
 	</insert>
 	
 	<update id="updateApp" parameterType="Apps" >
-    	UPDATE APPS SET
+    	UPDATE MXK_APPS SET
     		NAME			=	#{name},
     		<if test="icon != null">
 			ICON			=	#{icon},
@@ -157,21 +157,21 @@
         SELECT DISTINCT
             APP.*
         FROM
-            APPS APP,GROUP_PRIVILEGES GP
+            MXK_APPS APP,MXK_GROUP_PRIVILEGES GP
         WHERE
             APP.ID=GP.APPID
             AND GP.GROUPID IN(
                 SELECT 
                     G.ID
                 FROM  
-                    `GROUPS` G
+                    `MXK_GROUPS` G
                 WHERE 
                     G.ID='ALL_USER_GROUP'
                     OR G.ID IN(
                       SELECT 
                         GM.GROUPID 
                       FROM 
-                        GROUP_MEMBER GM,USERINFO U 
+                        MXK_GROUP_MEMBER GM,MXK_USERINFO U 
                       WHERE 1   =   1
                         <if test="userId != null and userId != ''">
                             AND U.ID        =   #{userId}

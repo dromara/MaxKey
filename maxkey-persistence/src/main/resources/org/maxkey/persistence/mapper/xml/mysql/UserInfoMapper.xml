@@ -6,7 +6,7 @@
     	SELECT 
 			*
     	FROM
-			USERINFO
+			MXK_USERINFO
 		WHERE	USERNAME = #{value}
     </select>
     
@@ -50,7 +50,7 @@
 			
 			STATUS
 		FROM
-			USERINFO
+			MXK_USERINFO
 		WHERE
 			 (1=1)	
 		<if test="username != null and username != ''">
@@ -72,7 +72,7 @@
 	</select>
 	
     <update id="locked" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
+    	UPDATE MXK_USERINFO SET
     		<if test="isLocked != null">
     		ISLOCKED		=	#{isLocked},
 			</if>
@@ -82,7 +82,7 @@
     </update>
     
     <update id="lockout" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
+    	UPDATE MXK_USERINFO SET
     		<if test="isLocked != null">
     		ISLOCKED		=	#{isLocked},
     		BADPWDCOUNT		=	0,
@@ -94,7 +94,7 @@
     </update>
     	
 	<update id="changePassword" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
+    	UPDATE MXK_USERINFO SET
     		<if test="password != null">
     		PASSWORD			=	#{password},
 			DECIPHERABLE		=	#{decipherable},
@@ -106,7 +106,7 @@
     </update>
     
     <update id="changeSharedSecret" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
+    	UPDATE MXK_USERINFO SET
     		<if test="sharedSecret != null">
     		SHAREDSECRET		=	#{sharedSecret},
 			SHAREDCOUNTER		=	#{sharedCounter},
@@ -117,7 +117,7 @@
     </update>
     
     <update id="changeAppLoginPassword" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
+    	UPDATE MXK_USERINFO SET
     		<if test="appLoginPassword != null">
     		APPLOGINPASSWORD		=	#{appLoginPassword},
 			</if>
@@ -127,7 +127,7 @@
     </update>
     
     <update id="updateProtectedApps" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
+    	UPDATE MXK_USERINFO SET
     		<if test="protectedApps != null">
     		PROTECTEDAPPS		=	#{protectedApps},
 			</if>
@@ -137,7 +137,7 @@
     </update>
     
     <update id="changePasswordQuestion" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
+    	UPDATE MXK_USERINFO SET
     		<if test="passwordAnswer != null">
     		PASSWORDQUESTION	=	#{passwordQuestion},
 			PASSWORDANSWER		=	#{passwordAnswer},
@@ -148,7 +148,7 @@
     </update>
 	
 	<update id="changeAuthnType" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
+    	UPDATE MXK_USERINFO SET
     		<if test="authnType != null">
     		AUTHNTYPE	=	#{authnType},
 			</if>
@@ -158,7 +158,7 @@
     </update>
     
     <update id="changeEmail" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
+    	UPDATE MXK_USERINFO SET
     		<if test="email != null">
     		EMAIL	=	#{email},
 			</if>
@@ -174,7 +174,7 @@
     </update>
     
     <update id="changeMobile" parameterType="UserInfo" >
-    	UPDATE USERINFO SET
+    	UPDATE MXK_USERINFO SET
     		<if test="mobile != null">
     		MOBILE			=	#{mobile},
 			</if>
@@ -187,14 +187,14 @@
     </update>
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	UPDATE USERINFO SET STATUS='2' WHERE ID IN
+    	UPDATE MXK_USERINFO SET STATUS='2' WHERE ID IN
     		<foreach item="item" collection="list" open="(" separator="," close=")">
 				#{item}
     		</foreach>
 	</update>
 	
     <update id="updateProfile" parameterType="UserInfo" >
-        UPDATE USERINFO SET
+        UPDATE MXK_USERINFO SET
             DISPLAYNAME     =   #{displayName},
             NICKNAME        =   #{nickName},
             NAMEZHSPELL     =   #{nameZhSpell},

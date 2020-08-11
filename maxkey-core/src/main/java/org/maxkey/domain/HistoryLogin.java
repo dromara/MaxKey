@@ -32,7 +32,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  * @author Crystal.Sea
  *
  */
-@Table(name = "HISTORY_LOGIN")  
+@Table(name = "MXK_HISTORY_LOGIN")  
 public class HistoryLogin  extends JpaBaseDomain  implements Serializable{
 	
 	/**
