@@ -165,7 +165,6 @@ public abstract class AbstractAuthenticationProvider {
     }
 
     protected void authTypeValid(String authType) {
-        final   String message = WebContext.getI18nValue("login.error.authtype");
         _logger.debug("Login AuthN Type  " + authType);
         if (authType != null && (
                 authType.equalsIgnoreCase("basic") 
@@ -173,7 +172,9 @@ public abstract class AbstractAuthenticationProvider {
             ) {
             return;
         }
-        _logger.debug("Login AuthN type must eq basic or tfa .");
+        
+        final   String message = WebContext.getI18nValue("login.error.authtype");
+        _logger.debug("Login AuthN type must eq basic or tfa ， Error message is " + message);
         throw new BadCredentialsException(message);
     }
 
