@@ -36,6 +36,7 @@
     	WHERE 
     		DATE(LOGINTIME) =curdate()
     	GROUP BY REPORTSTRING
+    	ORDER BY REPORTSTRING
     </select>
     <!-- 30 DAY COUNT 最近30天每天访问量-->   
     <select id="analysisMonth" parameterType="String" resultType="Map">
@@ -45,6 +46,7 @@
     	WHERE 
     		DATE(LOGINTIME) >date_add(curdate(), interval - day(curdate()) -31 day)
     	GROUP BY REPORTSTRING
+    	ORDER BY REPORTSTRING
     </select>
     
     <!-- 30天浏览器的访问统计 -->
@@ -55,6 +57,7 @@
     	WHERE 
     		DATE(LOGINTIME) >date_add(curdate(), interval - day(curdate()) -31 day)
     	GROUP BY REPORTSTRING
+    	ORDER BY REPORTCOUNT DESC
     </select>
     
     <!-- 30天应用单点登录的访问统计 -->

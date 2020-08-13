@@ -206,7 +206,7 @@
 				}],
 				yAxes: [{
 					display: true,
-					type: 'logarithmic',
+					stacked: true
 				}]
 			}
 		}
@@ -235,7 +235,7 @@
 					}],
 					yAxes: [{
 						display: true,
-						type: 'logarithmic',
+						stacked: true
 					}]
 				}
 			}
