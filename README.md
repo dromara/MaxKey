@@ -4,7 +4,7 @@
 
 官方网站  <a href="https://www.maxkey.top" target="_blank"><b>官方网站</b></a> |  <a href="https://maxkeytop.gitee.io" target="_blank"><b>官方网站二线</b></a>
 
-社区交流  QQ群：<b>434469201</b> | 邮箱EMAIL: <b>shimingxy@163.com</b>
+社区交流  QQ群：<b>434469201</b> | 邮箱EMAIL: <b>maxkeysupport@163.com</b>
 
 代码托管 <a href="https://github.com/MaxKeyTop/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/maxkeytop/MaxKey" target="_blank"><b>码云(Gitee)</b></a>
 
