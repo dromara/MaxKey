@@ -1,4 +1,4 @@
-# <img src="http://www.maxkey.top/images/logo.jpg" width="45px">MaxKey
+# <img src="http://www.maxkey.top/static/images/logo.jpg" width="45px">MaxKey
 
 <b>MaxKey(马克思的钥匙)</b>单点登录认证系统(Single Sign On System)，寓意是最大钥匙,是<b>业界领先的企业级IAM身份管理和身份认证产品</b>,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS、SCIM等标准协议，提供<b>简单、标准、安全和开放</b>的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、RBAC权限管理和资源管理等。
 
@@ -64,26 +64,26 @@
 **MaxKey认证**
 
 登录界面
-<img src="http://www.maxkey.top/images/maxkey_login.png"/>
+<img src="http://www.maxkey.top/static/images/maxkey_login.png"/>
 
 主界面
-<img src="http://www.maxkey.top/images/maxkey_index.png"/>
+<img src="http://www.maxkey.top/static/images/maxkey_index.png"/>
 
 **MaxKey管理**
 
 访问报表
-<img src="http://www.maxkey.top/images/maxkey_mgt_rpt.png"/>
+<img src="http://www.maxkey.top/static/images/maxkey_mgt_rpt.png"/>
 
 用户管理
-<img src="http://www.maxkey.top/images/maxkey_mgt_users.png"/>
+<img src="http://www.maxkey.top/static/images/maxkey_mgt_users.png"/>
 
 应用管理
-<img src="http://www.maxkey.top/images/maxkey_mgt_apps.png"/>
+<img src="http://www.maxkey.top/static/images/maxkey_mgt_apps.png"/>
 
 ------------
 # 下载
 
-当前版本百度网盘下载,<a href="https://maxkey.top/download.html" target="_blank"> 历史版本</a>
+当前版本百度网盘下载,<a href="https://maxkey.top/zh/download.html" target="_blank"> 历史版本</a>
 | 版本    | 日期   |  下载地址  |  提取码  |
 | --------| :-----  | :----  | :----:  |
 | v 2.1.0 GA | 2020/08/01   |  <a href="https://pan.baidu.com/s/1dVtIxm2NmM21VA1TUIgXKg" target="_blank">链接下载</a>  |  **9umv**  |
