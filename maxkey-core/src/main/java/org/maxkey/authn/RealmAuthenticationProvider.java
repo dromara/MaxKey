@@ -68,7 +68,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 
         tftcaptchaValid(auth.getOtpCaptcha(),auth.getAuthType(),userInfo);
 
-        authenticationRealm.passwordPolicyValid(userInfo);
+        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
 
         authenticationRealm.passwordMatches(userInfo, auth.getPassword());
         authenticationRealm.grantAuthority(userInfo);

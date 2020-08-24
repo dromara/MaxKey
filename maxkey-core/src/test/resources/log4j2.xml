@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!--DOCTYPE log4j:configuration SYSTEM "log4j.dtd" -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+	 status="INFO"  monitorInterval="300"
+>  
+    <appenders>  
+    	
+        <Console name="consolePrint" target="SYSTEM_OUT">  
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss,SSS} %-5level [%t] %logger{36}:%L - %msg%n" />  
+        </Console>
+   
+		<!-- 输出到文件，按天或者超过128MB分割  每天进行归档yyyy-MM-dd -->
+		<RollingFile name="RollingFile" fileName="logs/maxkey.log"    filePattern="logs/$${date:yyyyMMdd}/maxkey-%d{yyyy-MM-dd}-%i.log.gz">
+		    <!-- 需要记录的级别 -->
+		 	<!-- <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" /> -->
+		     <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss,SSS} %-5level [%t] %logger{36}:%L - %msg%n" />
+		     <Policies>
+		          <OnStartupTriggeringPolicy />
+		          <TimeBasedTriggeringPolicy />
+		          <SizeBasedTriggeringPolicy size="128 MB" />
+		     </Policies>
+		     <DefaultRolloverStrategy max="100"/>
+		</RollingFile>
+	 </appenders>  
+	 
+    <loggers>  
+    	<Logger name="org.springframework" level="INFO"></Logger>
+    	<Logger name="org.apache.logging" level="INFO"></Logger>
+    	<Logger name="org.maxkey" level="DEBUG"></Logger>
+    	
+    	
+        <root level="INFO">  
+            <appender-ref ref="consolePrint" />
+            <appender-ref ref="RollingFile" /> 
+        </root>  
+    </loggers>  
+</log4j:configuration>

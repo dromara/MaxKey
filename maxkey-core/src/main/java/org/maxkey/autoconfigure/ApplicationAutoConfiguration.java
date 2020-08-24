@@ -34,6 +34,7 @@ import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.crypto.password.SM3PasswordEncoder;
 import org.maxkey.crypto.password.StandardPasswordEncoder;
+import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+import org.maxkey.persistence.db.LoginService;
+import org.maxkey.persistence.db.LoginHistoryService;
 
 
 @Configuration
@@ -125,6 +128,21 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     public DataSourceTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
+    
+    @Bean(name = "passwordPolicyValidator")
+    public PasswordPolicyValidator passwordPolicyValidator(JdbcTemplate jdbcTemplate) {
+        return new PasswordPolicyValidator(jdbcTemplate);
+    }
+    
+    @Bean(name = "loginService")
+    public LoginService LoginService(JdbcTemplate jdbcTemplate) {
+        return new LoginService(jdbcTemplate);
+    }
+    @Bean(name = "loginHistoryService")
+    public LoginHistoryService loginHistoryService(JdbcTemplate jdbcTemplate) {
+        return new LoginHistoryService(jdbcTemplate);
+    }
+    
     
     /**
      * Authentication Password Encoder .

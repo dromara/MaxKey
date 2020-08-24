@@ -1,8 +1,13 @@
 ﻿MaxKey v 2.2.0 GA	2020/**/**
 	*(MAXKEY-200801)   官方网站内容调整，初步增加英文版支持
-	*(MAXKEY-200802) CAS协议增加自定义参数回传
-	*(MAXKEY-200803)  优化开发集成指南
-	*(MAXKEY-200804)  删除冗余的文件和文件夹
+	*(MAXKEY-200802)  密码策略优化
+	*(MAXKEY-200803) CAS协议增加自定义参数回传
+	*(MAXKEY-200804)  优化开发集成指南
+	*(MAXKEY-200805)  删除冗余的文件和文件夹
+	*(MAXKEY-200806)  CAS适配器支持
+	*(MAXKEY-200807)  Maven版本支持
+	*(MAXKEY-200808)  CAS spring boot demo
+	
 	
 	
 MaxKey v 2.1.0 GA	2020/08/01

@@ -34,16 +34,19 @@ public class PasswordGen {
     public static String CHAR_DEFAULT = CHAR_LOWERCASE + CHAR_NUMBERS + CHAR_UPPERCASE;
     private Random random = new Random();
     public static int DEFAULT_LENGTH = 8;
+    private int length;
 
     public PasswordGen() {
-
+        length = DEFAULT_LENGTH;
     }
 
     public String gen() {
-        return gen(DEFAULT_LENGTH);
+        this.length = DEFAULT_LENGTH;
+        return gen(length);
     }
 
     public String gen(int length) {
+        this.length = length;
         return gen(CHAR_DEFAULT, length);
     }
 
@@ -61,6 +64,7 @@ public class PasswordGen {
         password.append(gen(CHAR_NUMBERS, numbers));
         password.append(gen(CHAR_UPPERCASE, upperCase));
         password.append(gen(CHAR_SPECIAL, special));
+        password.append(gen(CHAR_DEFAULT, length - lowerCase - upperCase - numbers -special));
         // random generator String by sequence password
         return gen(password.toString(), password.length());
     }

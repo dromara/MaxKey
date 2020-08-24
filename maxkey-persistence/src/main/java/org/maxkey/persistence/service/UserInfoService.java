@@ -27,6 +27,7 @@ import org.maxkey.domain.UserInfo;
 import org.maxkey.identity.kafka.KafkaIdentityAction;
 import org.maxkey.identity.kafka.KafkaIdentityTopic;
 import org.maxkey.identity.kafka.KafkaProvisioningService;
+import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.mapper.UserInfoMapper;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
@@ -48,6 +49,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	PasswordPolicyValidator passwordPolicyValidator;
 	
 	@Autowired
 	KafkaProvisioningService kafkaProvisioningService;
@@ -153,8 +157,13 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	    }
         return userInfo;
 	}
+	
+	
 	public boolean changePassword(UserInfo userInfo) {
 		try {
+		    
+		    passwordPolicyValidator.validator(userInfo);
+		    
 			if(WebContext.getUserInfo() != null) {
 				userInfo.setModifiedBy(WebContext.getUserInfo().getId());
 				
@@ -275,6 +284,10 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public int updateProfile(UserInfo userInfo){
         
         return getMapper().updateProfile(userInfo);
+    }
+
+    public void setPasswordPolicyValidator(PasswordPolicyValidator passwordPolicyValidator) {
+        this.passwordPolicyValidator = passwordPolicyValidator;
     }
 
 }

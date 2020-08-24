@@ -118,7 +118,7 @@ public class SafeController {
 		_logger.debug("decipherable new : "+ReciprocalUtils.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), newPassword)));
 		if(newPassword.equals(confirmPassword)){
 			if(oldPassword==null || 
-					passwordEncoder.matches(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(),oldPassword), userInfo.getPassword())){
+					passwordEncoder.matches(oldPassword, userInfo.getPassword())){
 				userInfo.setPassword(newPassword);
 				userInfoService.changePassword(userInfo);
 				//TODO syncProvisioningService.changePassword(userInfo);

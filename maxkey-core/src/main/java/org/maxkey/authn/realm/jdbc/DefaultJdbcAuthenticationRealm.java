@@ -18,6 +18,7 @@
 package org.maxkey.authn.realm.jdbc;
 
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebContext;
@@ -58,7 +59,8 @@ public class DefaultJdbcAuthenticationRealm extends AbstractAuthenticationRealm 
         passwordMatches = passwordEncoder.matches(password,userInfo.getPassword());
         _logger.debug("passwordvalid : " + passwordMatches);
         if (!passwordMatches) {
-            setBadPasswordCount(userInfo);
+            passwordPolicyValidator.setBadPasswordCount(userInfo);
+            insertLoginHistory(userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", "password error");
             throw new BadCredentialsException(WebContext.getI18nValue("login.error.password"));
         }
         return passwordMatches;

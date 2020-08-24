@@ -43,5 +43,7 @@ public final class ConstantsStatus {
     public static final int STOP = 12;
 
     public static final int APPROVED = 13;
+    
+    public static final int QUITED = 14;
 
 }
