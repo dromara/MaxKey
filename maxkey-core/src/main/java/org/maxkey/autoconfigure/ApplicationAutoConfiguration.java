@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -130,8 +131,8 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     }
     
     @Bean(name = "passwordPolicyValidator")
-    public PasswordPolicyValidator passwordPolicyValidator(JdbcTemplate jdbcTemplate) {
-        return new PasswordPolicyValidator(jdbcTemplate);
+    public PasswordPolicyValidator passwordPolicyValidator(JdbcTemplate jdbcTemplate,MessageSource messageSource) {
+        return new PasswordPolicyValidator(jdbcTemplate,messageSource);
     }
     
     @Bean(name = "loginService")

@@ -34,6 +34,7 @@ import org.passay.dictionary.Dictionary;
 import org.passay.dictionary.DictionaryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -58,6 +59,8 @@ public class PasswordPolicyValidator {
     
     protected JdbcTemplate jdbcTemplate;
     
+    MessageSource messageSource;
+    
     private static final String PASSWORD_POLICY_KEY = "PASSWORD_POLICY_KEY";
     private static final String LOCK_USER_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET ISLOCKED = ?  , UNLOCKTIME = ? WHERE ID = ?";
 
@@ -72,7 +75,8 @@ public class PasswordPolicyValidator {
     public PasswordPolicyValidator() {
     }
     
-    public PasswordPolicyValidator(JdbcTemplate jdbcTemplate) {
+    public PasswordPolicyValidator(JdbcTemplate jdbcTemplate,MessageSource messageSource) {
+        this.messageSource=messageSource;
         this.jdbcTemplate = jdbcTemplate;
     }
     
@@ -138,8 +142,9 @@ public class PasswordPolicyValidator {
        }
        
        getPasswordPolicy();
-       
-       PasswordValidator validator = new PasswordValidator(passwordPolicyRuleList);
+
+       PasswordValidator validator = new PasswordValidator(
+               new PasswordPolicyMessageResolver(messageSource),passwordPolicyRuleList);
        
        RuleResult result = validator.validate(new PasswordData(username,password));
        
