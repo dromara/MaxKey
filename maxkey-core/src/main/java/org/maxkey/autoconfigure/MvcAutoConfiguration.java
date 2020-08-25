@@ -78,10 +78,11 @@ public class MvcAutoConfiguration implements InitializingBean {
             @Value("${spring.messages.basename:classpath:messages/message}")
             String messagesBasename)  {
         _logger.debug("Basename " + messagesBasename);
+        String passwordPolicyMessagesBasename="classpath:messages/passwordpolicy_message";
         
         ReloadableResourceBundleMessageSource messageSource = 
                 new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename(messagesBasename);
+        messageSource.setBasenames(messagesBasename,passwordPolicyMessagesBasename);
         messageSource.setUseCodeAsDefaultMessage(false);
         return messageSource;
     }

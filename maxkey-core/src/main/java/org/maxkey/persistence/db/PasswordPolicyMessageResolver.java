@@ -47,7 +47,7 @@ public class PasswordPolicyMessageResolver  implements MessageResolver{
     public String resolve(final RuleResultDetail detail)
     {
       try {
-        return this.messageSourceAccessor.getMessage(detail.getErrorCode().toLowerCase(), detail.getValues());
+        return this.messageSourceAccessor.getMessage("PasswordPolicy."+detail.getErrorCode(), detail.getValues());
       } catch (NoSuchMessageException e) {
         return this.fallbackMessageResolver.resolve(detail);
       }

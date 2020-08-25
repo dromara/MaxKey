@@ -43,7 +43,7 @@ public class PasswordPolicyValidator {
     private static Logger _logger = LoggerFactory.getLogger(PasswordPolicyValidator.class);
 
     public static final String topWeakPasswordPropertySource      = 
-            "classpath:/org/maxkey/persistence/db/top_weak_password.txt";
+            "classpath:/top_weak_password.txt";
     protected static final UserManagedCache<String, PasswordPolicy> passwordPolicyStore = 
             UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, PasswordPolicy.class)
                 .withExpiry(
