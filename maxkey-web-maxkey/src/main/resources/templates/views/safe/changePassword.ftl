@@ -11,7 +11,7 @@
 <div class="row">
 <div class="col-md-1"></div>
 <div class="col-md-10">
-<form    method="post"  action="<@base/>/safe/changePassword"  class="needs-validation" novalidate> 
+<form   id="actionForm"    method="post"  action="<@base/>/safe/changePassword"  class="needs-validation" novalidate> 
 
 	  <table   class="table table-bordered" >
 			<tbody>

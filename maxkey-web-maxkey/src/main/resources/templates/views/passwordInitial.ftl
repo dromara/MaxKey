@@ -16,7 +16,7 @@
   <tr>
     <td>
 
-<form  method="post" type="label" autoclose="true"  action="<@base/>/safe/changeInitPassword"> 
+<form  id="actionForm"   method="post" type="label" autoclose="true"  action="<@base/>/safe/changeInitPassword"> 
 
 	  <table   class="table table-bordered"  >
 			<tbody>

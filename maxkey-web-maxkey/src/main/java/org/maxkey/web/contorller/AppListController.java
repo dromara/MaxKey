@@ -76,7 +76,7 @@ public class AppListController {
 
         if (gridList != null && !gridList.equals("")) {
             int intGridList = Integer.parseInt(gridList);
-            jdbcTemplate.update("UPDATE USERINFO SET GRIDLIST = ? WHERE ID = ?", intGridList,
+            jdbcTemplate.update("UPDATE MXK_USERINFO SET GRIDLIST = ? WHERE ID = ?", intGridList,
                     WebContext.getUserInfo().getId());
             WebContext.getUserInfo().setGridList(intGridList);
         }
