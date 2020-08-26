@@ -38,7 +38,12 @@ public class PasswordPolicyRowMapper implements RowMapper<PasswordPolicy> {
         passwordPolicy.setDuration(rs.getInt("DURATION"));
         passwordPolicy.setExpiration(rs.getInt("EXPIRATION"));
         passwordPolicy.setUsername(rs.getInt("USERNAME"));
-        passwordPolicy.setSimplePasswords(rs.getString("SIMPLEPASSWORDS"));
+        passwordPolicy.setHistory(rs.getInt("HISTORY"));
+        passwordPolicy.setDictionary(rs.getInt("DICTIONARY"));
+        passwordPolicy.setAlphabetical(rs.getInt("ALPHABETICAL"));
+        passwordPolicy.setNumerical(rs.getInt("NUMERICAL"));
+        passwordPolicy.setQwerty(rs.getInt("QWERTY"));
+        passwordPolicy.setOccurances(rs.getInt("OCCURANCES"));
         return passwordPolicy;
     }
 

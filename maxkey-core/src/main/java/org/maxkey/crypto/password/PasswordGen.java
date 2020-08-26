@@ -39,6 +39,10 @@ public class PasswordGen {
     public PasswordGen() {
         length = DEFAULT_LENGTH;
     }
+    
+    public PasswordGen(int length) {
+        this.length = length;
+    }
 
     public String gen() {
         this.length = DEFAULT_LENGTH;

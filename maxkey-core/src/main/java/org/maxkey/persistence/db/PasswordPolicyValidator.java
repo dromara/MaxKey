@@ -15,11 +15,13 @@ import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.crypto.password.PasswordGen;
 import org.maxkey.domain.PasswordPolicy;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
+import org.passay.CharacterOccurrencesRule;
 import org.passay.CharacterRule;
 import org.passay.DictionaryRule;
 import org.passay.EnglishCharacterData;
@@ -64,7 +66,7 @@ public class PasswordPolicyValidator {
     private static final String PASSWORD_POLICY_KEY = "PASSWORD_POLICY_KEY";
     private static final String LOCK_USER_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET ISLOCKED = ?  , UNLOCKTIME = ? WHERE ID = ?";
 
-    private static final String PASSWORD_POLICY_SELECT_STATEMENT = "SELECT ID,MINLENGTH,MAXLENGTH,LOWERCASE,UPPERCASE,DIGITS,SPECIALCHAR,ATTEMPTS,DURATION,EXPIRATION,USERNAME,SIMPLEPASSWORDS FROM MXK_PASSWORD_POLICY ";
+    private static final String PASSWORD_POLICY_SELECT_STATEMENT = "SELECT * FROM MXK_PASSWORD_POLICY ";
 
     private static final String UNLOCK_USER_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET ISLOCKED = ? , UNLOCKTIME = ? WHERE ID = ?";
 
@@ -97,20 +99,28 @@ public class PasswordPolicyValidator {
             if(passwordPolicy.getUpperCase()>0) {
                 passwordPolicyRuleList.add(new CharacterRule(EnglishCharacterData.UpperCase, passwordPolicy.getUpperCase()));
             }
+            
             if(passwordPolicy.getLowerCase()>0) {
                 passwordPolicyRuleList.add(new CharacterRule(EnglishCharacterData.LowerCase, passwordPolicy.getLowerCase()));
             }
+            
             if(passwordPolicy.getDigits()>0) {
                 passwordPolicyRuleList.add(new CharacterRule(EnglishCharacterData.Digit, passwordPolicy.getDigits()));
             }
+            
             if(passwordPolicy.getSpecialChar()>0) {
                 passwordPolicyRuleList.add(new CharacterRule(EnglishCharacterData.Special, passwordPolicy.getSpecialChar()));
             }
+            
             if(passwordPolicy.getUsername()>0) {
                 passwordPolicyRuleList.add(new UsernameRule());
             }
             
-            if(passwordPolicy.getSimplePasswords().length()>0 ) {
+            if(passwordPolicy.getOccurances()>0) {
+                passwordPolicyRuleList.add(new CharacterOccurrencesRule(passwordPolicy.getOccurances()));
+            }
+            
+            if(passwordPolicy.getDictionary()>0 ) {
                 try {
                     ClassPathResource dictFile= 
                             new ClassPathResource(
@@ -201,9 +211,15 @@ public class PasswordPolicyValidator {
                                 );
         }
 
+        //initial password need change
+        if(userInfo.getLoginCount()<=0) {
+            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
+                    ConstantsPasswordSetType.INITIAL_PASSWORD);
+        }
+        
         if (userInfo.getPasswordSetType() != ConstantsPasswordSetType.PASSWORD_NORMAL) {
             WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
-                    userInfo.getPasswordSetType());
+                        userInfo.getPasswordSetType());
             return true;
         } else {
             WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
@@ -232,12 +248,6 @@ public class PasswordPolicyValidator {
             }
         }
         
-        //initial password need change
-        if(userInfo.getLoginCount()<=0) {
-            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
-                    ConstantsPasswordSetType.INITIAL_PASSWORD);
-        }
-
         return true;
     }
    
@@ -316,7 +326,23 @@ public class PasswordPolicyValidator {
        }
    }
    
-   
+   public String generateRandomPassword() {
+       getPasswordPolicy();
+       PasswordGen passwordGen = new PasswordGen(
+               Math.round(
+                       (
+                               passwordPolicy.getMaxLength() + 
+                               passwordPolicy.getMinLength()
+                       )/2
+                  )
+               );
+       
+       return passwordGen.gen(
+               passwordPolicy.getLowerCase(), 
+               passwordPolicy.getUpperCase(), 
+               passwordPolicy.getDigits(), 
+               passwordPolicy.getSpecialChar());
+   }
    
    public void setPasswordPolicy(PasswordPolicy passwordPolicy) {
     this.passwordPolicy = passwordPolicy;

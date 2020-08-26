@@ -16,7 +16,7 @@ public class PasswordPolicyValidatorTest {
          passwordPolicy.setUpperCase(2);
          passwordPolicy.setSpecialChar(1);
          passwordPolicy.setUsername(1);
-         passwordPolicy.setSimplePasswords("admin,1qaz,2wsx,123456,12345678,1234567890");
+         passwordPolicy.setDictionary(0);
         PasswordPolicyValidator passwordPolicyValidator =new PasswordPolicyValidator();
         
         passwordPolicyValidator.setPasswordPolicy(passwordPolicy);

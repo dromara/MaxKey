@@ -104,7 +104,23 @@ public class PasswordPolicy extends JpaBaseDomain implements java.io.Serializabl
      * not include password list
      */
     @Column
-    private String simplePasswords;
+    private int history;
+    
+    @Column
+    private int dictionary;
+    
+    @Column
+    private int alphabetical;
+    
+    @Column
+    private int numerical;
+    
+    @Column
+    private int qwerty;
+    
+    @Column
+    private int occurances;
+    
 
     /**
      * @return the minLength
@@ -260,18 +276,57 @@ public class PasswordPolicy extends JpaBaseDomain implements java.io.Serializabl
         this.username = username;
     }
 
-    /**
-     * @return the simplePasswords
-     */
-    public String getSimplePasswords() {
-        return simplePasswords;
+
+    public int getHistory() {
+        return history;
     }
 
-    /**
-     * @param simplePasswords the simplePasswords to set
-     */
-    public void setSimplePasswords(String simplePasswords) {
-        this.simplePasswords = simplePasswords;
+    public void setHistory(int history) {
+        this.history = history;
+    }
+
+    public int getDictionary() {
+        return dictionary;
+    }
+
+    public void setDictionary(int dictionary) {
+        this.dictionary = dictionary;
+    }
+
+    public int getAlphabetical() {
+        return alphabetical;
+    }
+
+    public void setAlphabetical(int alphabetical) {
+        this.alphabetical = alphabetical;
+    }
+
+    public int getNumerical() {
+        return numerical;
+    }
+
+    public void setNumerical(int numerical) {
+        this.numerical = numerical;
+    }
+
+    public int getQwerty() {
+        return qwerty;
+    }
+
+    public void setQwerty(int qwerty) {
+        this.qwerty = qwerty;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public int getOccurances() {
+        return occurances;
+    }
+
+    public void setOccurances(int occurances) {
+        this.occurances = occurances;
     }
 
     public void check(String username, String newPassword, String oldPassword) throws PasswordPolicyException {
@@ -319,17 +374,14 @@ public class PasswordPolicy extends JpaBaseDomain implements java.io.Serializabl
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
-        return "PasswordPolicy [minLength=" + minLength + ", maxLength=" + maxLength + ", lowerCase=" + lowerCase
-                + ", upperCase=" + upperCase + ", digits=" + digits + ", specialChar=" + specialChar + ", attempts="
-                + attempts + ", duration=" + duration + ", expiration=" + expiration + ", username=" + username
-                + ", simplePasswords=" + simplePasswords + "]";
+        return "PasswordPolicy [id=" + id + ", minLength=" + minLength + ", maxLength=" + maxLength + ", lowerCase="
+                + lowerCase + ", upperCase=" + upperCase + ", digits=" + digits + ", specialChar=" + specialChar
+                + ", attempts=" + attempts + ", duration=" + duration + ", expiration=" + expiration + ", username="
+                + username + ", history=" + history + ", dictionary=" + dictionary + ", alphabetical=" + alphabetical
+                + ", numerical=" + numerical + ", qwerty=" + qwerty + "]";
     }
 
+  
 }

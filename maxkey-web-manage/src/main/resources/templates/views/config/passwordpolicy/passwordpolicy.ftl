@@ -122,6 +122,79 @@
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.occurances" />：</label>
+												<div class="col-sm-9">
+													<input  required="" class="form-control" type="text" id="occurances" name="occurances" value="${model.occurances}" />
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.username" />：</label>
+												<div class="col-sm-9">
+													<select  class="form-control"   id="username" name="username"  >
+														<option  <#if 1==model.username>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
+														<option  <#if 0==model.username>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group row">
+												
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.alphabetical" />：</label>
+												<div class="col-sm-9">
+													<select  class="form-control"   id="alphabetical" name="alphabetical"  >
+														<option  <#if 1==model.alphabetical>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
+														<option  <#if 0==model.alphabetical>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group row">
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.numerical" />：</label>
+												<div class="col-sm-9">
+													<select  class="form-control"   id="numerical" name="numerical"  >
+														<option  <#if 1==model.numerical>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
+														<option  <#if 0==model.numerical>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group row">
+												
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.qwerty" />：</label>
+												<div class="col-sm-9">
+													<select  class="form-control"   id="qwerty" name="qwerty"  >
+														<option  <#if 1==model.qwerty>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
+														<option  <#if 0==model.qwerty>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group row">
+												
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.dictionary" />：</label>
+												<div class="col-sm-9">
+													<select  class="form-control"   id="dictionary" name="dictionary"  >
+														<option  <#if 1==model.dictionary>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
+														<option  <#if 0==model.dictionary>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.attempts" />：</label>
 												<div class="col-sm-9">
 													<input  required="" class="form-control" type="text" id="attempts" name="attempts" value="${model.attempts}" />
@@ -148,29 +221,20 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.username" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.history" />：</label>
 												<div class="col-sm-9">
-													<select  class="form-control"   id="username" name="username"  >
-														<option  <#if 1==model.username>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
-														<option  <#if 0==model.username>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
-													</select>
+													<input  required="" class="form-control" type="text" id="history" name="history"  value="${model.history!}" />
 												</div>
 											</div>
 										</div>
 									</div>
 
 									<div class="row">
-										<div class="col-md-12">
-											<div class="form-group m-b-20">
-												<label   style="float: left;" for="simplePasswords"><@locale code="login.passwordpolicy.simplepasswords" />：</label>
-												<textarea  required="" id="simplePasswords" name="simplePasswords"  class="form-control" >${model.simplePasswords!}</textarea>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-3">
+										<div class="col-md-4"></div>
+										<div class="col-md-4">
 											<button type="submit" class="button btn-primary btn btn-common btn-block mr-3"    id="submitBtn" ><@locale code="button.text.save" /></button>
 										</div>
+										<div class="col-md-4"></div>
 									</div>
 									
 								</form>

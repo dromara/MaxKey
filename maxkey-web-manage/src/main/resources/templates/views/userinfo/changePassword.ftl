@@ -3,12 +3,33 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
-<style   type="text/css">
-  .table th, .table td {
-    padding: .2rem;
-    vertical-align: middle;
-  }
-</style>
+	<style   type="text/css">
+	  .table th, .table td {
+	    padding: .2rem;
+	    vertical-align: middle;
+	  }
+	</style>
+
+	<script type="text/javascript">
+	<!--
+	$(function(){	
+		$("#generateSecret").on("click",function(){
+			$.post("<@base/>/userinfo/randomPassword/", {_method:"post",currTime:(new Date()).getTime()}, function(data) {
+				$("#password").val(data+"");
+				$("#confirmPassword").val(data+"");
+			}); 
+		});
+		$("#view").on("click",function(){
+			if($("#password").attr("type")=="text"){
+				$("#password").attr("type","password");
+			}else{
+				$("#password").attr("type","text");
+			}
+		});
+		
+	});
+	//-->
+	</script>
 </head>
 <body>
 
@@ -34,7 +55,8 @@
 			<tr>
 				<th><@locale code="login.password.newPassword" />:</th>
 				<td>
-					<input type="password" id="password" name="password"  required=""  class="form-control"  title="" value=""/>
+					<input type="password" id="password" name="password"  required=""  class="form-control"  title="" value="" width="80%"/>
+					
 				</td>
 			</tr>
 			<tr>
@@ -46,8 +68,10 @@
 			<tr>
 				<td colspan="2"  class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
+		    		<input id="generateSecret" type="button" class="button btn btn-warning mr-3" style="width:100px"  value="<@locale code="button.text.generate"/>"/>
+		    		<input id="view" type="button" class="button btn btn-info mr-3" style="width:100px"  value="<@locale code="button.text.view"/>"/>
 		    		<input class="button btn btn-primary mr-3"  style="width:100px"  type="submit"    id="submitBtn" value="<@locale code="button.text.save" />"/>
-					
+		    		
 				</td>
 			</tr>
 		</tbody>

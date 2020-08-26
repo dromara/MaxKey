@@ -181,6 +181,10 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		return false;
 	}
 	
+	public String randomPassword() {
+	    return passwordPolicyValidator.generateRandomPassword();
+	}
+	
 	public void changePasswordProvisioning(UserInfo userInfo) {
 	    if(userInfo.getPassword()!=null && !userInfo.getPassword().equals("")) {
     	    ChangePassword changePassword=new ChangePassword();

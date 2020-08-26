@@ -42,7 +42,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -50,7 +49,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -68,11 +66,7 @@ public class UserInfoController {
 	@Autowired
 	@Qualifier("userInfoService")
 	private UserInfoService userInfoService;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
-	
 	
 	/**
 	 * 查询用户列表
@@ -164,6 +158,13 @@ public class UserInfoController {
 		return userInfo;
 	}
 	
+	
+    @ResponseBody
+    @RequestMapping(value = "/randomPassword")
+    public String randomPassword() {
+        return userInfoService.randomPassword();
+    }
+	   
 	/**
 	 * 修改用户
 	 * @param userInfo

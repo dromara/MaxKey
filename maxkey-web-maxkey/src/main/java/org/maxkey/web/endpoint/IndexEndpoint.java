@@ -69,11 +69,12 @@ public class IndexEndpoint {
 		
 		UserInfo userInfo=WebContext.getUserInfo();
 		modelAndView.addObject("model", userInfo);
-		if(passwordSetType==ConstantsPasswordSetType.PASSWORD_EXPIRED){
+		
+		if(passwordSetType==ConstantsPasswordSetType.PASSWORD_EXPIRED||
+                passwordSetType==ConstantsPasswordSetType.MANAGER_CHANGED_PASSWORD){
 			modelAndView.setViewName("passwordExpired");
 			return  modelAndView;
-		}else if(passwordSetType==ConstantsPasswordSetType.INITIAL_PASSWORD||
-				 passwordSetType==ConstantsPasswordSetType.MANAGER_CHANGED_PASSWORD){
+		}else if(passwordSetType==ConstantsPasswordSetType.INITIAL_PASSWORD){
 			modelAndView.setViewName("passwordInitial");
 			return  modelAndView;
 		}
