@@ -231,6 +231,12 @@ public class PasswordPolicyValidator {
                         ConstantsPasswordSetType.PASSWORD_EXPIRED);
             }
         }
+        
+        //initial password need change
+        if(userInfo.getLoginCount()<=0) {
+            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
+                    ConstantsPasswordSetType.INITIAL_PASSWORD);
+        }
 
         return true;
     }
