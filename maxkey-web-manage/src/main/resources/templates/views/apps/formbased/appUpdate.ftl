@@ -3,21 +3,10 @@
 <head>
 	<#include  "../../layout/header.ftl"/>
 	<#include  "../../layout/common.cssjs.ftl"/>
-<style   type="text/css">
-  .table th, .table td {
-    padding: .2rem;
-    vertical-align: middle;
-  }
-</style>
+	<#include  "../appCommonHead.ftl"/>
 <script type="text/javascript">
 <!--
 $(function(){	
-	$("#generateSecret").on("click",function(){
-		$.post("<@base/>/apps/generate/secret/oauth20", {_method:"post",currTime:(new Date()).getTime()}, function(data) {
-			$("#secret").val(data+"");
-			$("#secret_text").html(data+"");
-		}); 
-	});
 	
 	$("input[name='credential']").on("click",function(){
 		if($(this).val()=="3"){
@@ -86,18 +75,8 @@ $(function(){
 							<@locale code="apps.credential.system"/>
 						
 					</td>
-					<th><@locale code="apps.isAdapter"/>：</th>
+					<th></th>
 					<td  >
-						<select  id="isAdapter" name="isAdapter"  class="form-control">
-							<option value="0"  <#if 0==model.isAdapter>selected</#if> ><@locale code="apps.isAdapter.no"/></option>
-							<option value="1"  <#if 1==model.isAdapter>selected</#if> ><@locale code="apps.isAdapter.yes"/></option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th><@locale code="apps.adapter"/>：</th>
-					<td colspan =3>
-						<input type="text" class="form-control" id="adapter" name="adapter"  title="" value="${model.adapter!}"/>
 					</td>
 				</tr>
 				<tr>

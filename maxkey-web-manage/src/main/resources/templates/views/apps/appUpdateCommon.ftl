@@ -1,15 +1,3 @@
-<script type="text/javascript">
-   <!--
-      $(function(){	
-      	$("#iconFileImg").on("click",function(){
-      		if(!$("#iconFileImg").hasClass("appended")){
-      			$("#iconFileImg").after('<input  type="file" id="iconFile" name="iconFile"  title="" value=""/>');
-      			$("#iconFileImg").addClass("appended");
-      		}
-      	});
-      });
-      //-->
-</script>
 <!--table-->
 <table width="960"   class="table table-bordered" >
    <tbody>
@@ -25,9 +13,8 @@
          </td>
          <th style="width:15%;"><@locale code="apps.secret"/>：</th>
          <td style="width:35%;">
-         	<input id="generateSecret" type="button" class="button" value="<@locale code="button.text.generate"/>"/><br>
-         	<div id="secret_text" style="width:100%;font-weight: bold;">${model.secret!}</div>
-            <input type="hidden" id="secret" name="secret"  title="" value="${model.secret!}"/>
+         	<input type="text" id="secret" readonly style="width:80%;float: left;font-weight: bold;" class="form-control" name="secret"  title="" value="${model.secret!}"/>
+            <input id="generateSecret" type="button"  class="button btn btn-warning mr-2" value="<@locale code="button.text.generate"/>"/>
          </td>
       </tr>
       <tr>
@@ -91,6 +78,23 @@
 	 		    	target="window">
 		 </td>
 	 </tr>
+	 <tr>
+		<th><@locale code="apps.isAdapter" />：</th>
+		<td>
+			<select  id="isAdapter" name="isAdapter"  class="form-control">
+				<option value="0"  <#if 0==model.isAdapter>selected</#if> ><@locale code="apps.isAdapter.no"/></option>
+				<option value="1"  <#if 1==model.isAdapter>selected</#if> ><@locale code="apps.isAdapter.yes"/></option>
+			</select>
+		</td>
+		<td >
+		</td>
+	</tr>
+	<tr>
+		<th><@locale code="apps.adapter" />：</th>
+		<td colspan =3>
+			<input type="text" class="form-control"   id="adapter" name="adapter"  title="" value="${model.adapter!}"/>
+		</td>
+	</tr>
 	 <tr>
          <th><@locale code="common.text.description"/>：</th>
          <td colspan =3>

@@ -3,27 +3,7 @@
 <head>
 	<#include  "../../layout/header.ftl"/>
 	<#include  "../../layout/common.cssjs.ftl"/>
-<style   type="text/css">
-  .table th, .table td {
-    padding: .2rem;
-    vertical-align: middle;
-  }
-</style>
-
-<script type="text/javascript">
-<!--
-$(function(){	
-	$("#algorithm").change(function(){
-		$.post("<s:Base/>/apps/generate/secret/"+$(this).val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
-			$("#secret").val(data+"");
-			$("#secret_text").html(data+"");
-			
-		});
-	}); 
-
-});
-//-->
-</script>
+	<#include  "../appCommonHead.ftl"/>
 </head>
 <body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
@@ -55,8 +35,6 @@ $(function(){
 				</tr>
 				</tbody>
 				</table>
-			   
-
 			
 </form>
 </body>

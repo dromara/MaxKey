@@ -75,5 +75,22 @@
             <input  type="text" class="form-control"  id="description" name="description"  title="" value=""/>
          </td>
       </tr>
+      <tr>
+		<th><@locale code="apps.isAdapter" />：</th>
+		<td>
+			<select  id="isAdapter" name="isAdapter"  class="form-control"  >
+				<option value="0"  selected><@locale code="apps.isAdapter.no" /></option>
+				<option value="1"><@locale code="apps.isAdapter.yes" /></option>
+			</select>
+		</td>
+		<td >
+		</td>
+	</tr>
+	<tr>
+		<th><@locale code="apps.adapter" />：</th>
+		<td colspan =3>
+			<input type="text" class="form-control"   id="adapter" name="adapter"  title="" value=""/>
+		</td>
+	</tr>
    </tbody>
 </table>

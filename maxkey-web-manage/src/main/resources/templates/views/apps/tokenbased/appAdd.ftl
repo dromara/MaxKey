@@ -3,33 +3,7 @@
 <head>
 	<#include  "../../layout/header.ftl"/>
 	<#include  "../../layout/common.cssjs.ftl"/>
-<style   type="text/css">
-  .table th, .table td {
-    padding: .2rem;
-    vertical-align: middle;
-  }
-</style>
-
-<script type="text/javascript">
-<!--
-$(function(){	
-	$("#algorithm").change(function(){
-		$.post("<@base/>/apps/generate/secret/"+$(this).val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
-			$("#algorithmKey").val(data+"");
-			$("#algorithmKey_text").html(data+"");
-			$("#secret").val(data+"");
-			$("#secret_text").html(data+"");
-			
-		});
-	}); 
-	
-	$("#selectAdapter").change(function(){
-		$("#adapter").val($("#selectAdapter").val());
-	}); 
-
-});
-//-->
-</script>
+	<#include  "../appCommonHead.ftl"/>
 </head>
 <body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  
@@ -111,30 +85,8 @@ $(function(){
 								<td>
 									<input type="text" class="form-control" id="expires" name="expires"  title="" value="1"  required="" />
 								</td>
-								<th><@locale code="apps.isAdapter" />：</th>
+								<th></th>
 								<td >
-									<select  id="isAdapter" name="isAdapter"  class="form-control">
-										<option value="0"  selected><@locale code="apps.isAdapter.no" /></option>
-										<option value="1"><@locale code="apps.isAdapter.yes" /></option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<th><@locale code="apps.adapter" />：</th>
-								<td colspan =3>
-									<select id="selectAdapter" name="selectAdapter"   class="form-control">
-										<option value="">No Adapter</option>
-										<option value="org.maxkey.authz.token.endpoint.adapter.TokenBasedDefaultAdapter" <#if "org.maxkey.authz.token.endpoint.adapter.TokenBasedDefaultAdapter"==model.adapter!>selected</#if>>DefaultAdapter</option>
-										<option value="org.maxkey.authz.token.endpoint.adapter.TokenBasedSimpleAdapter"  <#if  "org.maxkey.authz.token.endpoint.adapter.TokenBasedSimpleAdapter"==model.adapter!>selected</#if> >SimpleAdapter</option>
-										<option value="org.maxkey.authz.token.endpoint.adapter.TokenBasedJWTAdapter" 	<#if  "org.maxkey.authz.token.endpoint.adapter.TokenBasedJWTAdapter"==model.adapter!>selected</#if>>JWTAdapter</option>
-										<option value="org.maxkey.authz.token.endpoint.adapter.TokenBasedJWTHS256Adapter" <#if  "org.maxkey.authz.token.endpoint.adapter.TokenBasedJWTHS256Adapter"==model.adapter!>selected</#if>>JWTHS256Adapter</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<th><@locale code="apps.adapter" />：</th>
-								<td colspan =3>
-									<input type="text"  class="form-control" id="adapter" name="adapter"  title="" value=""/>
 								</td>
 							</tr>
 							<tr>

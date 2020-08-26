@@ -18,7 +18,7 @@ $(function(){
 		var html =	'<tr  id="extendTr_' + attrIndex + '">';   
 		//Index 
 		html += 		'<th nowrap ><@locale code="apps.extendAttr.parameter"/>：'; 
-		html += 			'<input  class="button delExtendTr"  type="button" name="delExtendTr"  attrTrId="extendTr_'+attrIndex+'" value="<@locale code="button.text.delete" />"/>';
+		html += 			'<input  class="button  btn btn-danger mr-3  delExtendTr"  type="button" name="delExtendTr"  attrTrId="extendTr_'+attrIndex+'" value="<@locale code="button.text.delete" />"/>';
 		html +=			'</th>';  
 		//attribute
 		html +=			'<td>';   

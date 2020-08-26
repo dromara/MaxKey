@@ -3,12 +3,7 @@
 <head>
 	<#include  "../../layout/header.ftl"/>
 	<#include  "../../layout/common.cssjs.ftl"/>
-<style   type="text/css">
-  .table th, .table td {
-    padding: .2rem;
-    vertical-align: middle;
-  }
-</style>
+	<#include  "../appCommonHead.ftl"/>
 <script type="text/javascript">
 <!--
 $(function(){	
@@ -173,19 +168,12 @@ $(function(){
 						<@locale code="apps.credential.system" />
 						<b class="orange">*</b><label for="credential"></label>
 					</td>
-					<th style="width:15%;"><@locale code="apps.isAdapter" />：</th>
+					<th style="width:15%;"></th>
 					<td style="width:35%;" >
-						<select  id="isAdapter" name="isAdapter" class="form-control" >
-							<option value="0"  selected><@locale code="apps.isAdapter.no" /></option>
-							<option value="1"><@locale code="apps.isAdapter.yes" /></option>
-						</select>
+
 					</td>
 				</tr>
-				<tr>
-					<th><@locale code="apps.adapter" />：</th>
-					<td colspan =3>
-						<input type="text" class="form-control"  id="adapter" name="adapter"  title="" value=""/>
-					</td>
+>
 				</tr>
 				<tr id="systemconfigure"  style="display:none">
 					<th><@locale code="apps.credential" />：</th>
