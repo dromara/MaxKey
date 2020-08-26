@@ -35,6 +35,7 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,7 @@ import org.springframework.stereotype.Service;
 public class UserInfoService extends JpaBaseService<UserInfo> {
 	final static Logger _logger = LoggerFactory.getLogger(UserInfoService.class);
 	
+	final static  String UPDATE_GRIDLIST_SQL = "UPDATE MXK_USERINFO SET GRIDLIST = ? WHERE ID = ?";
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -55,6 +57,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
 	@Autowired
 	KafkaProvisioningService kafkaProvisioningService;
+	
+	 @Autowired
+	 protected JdbcTemplate jdbcTemplate;
 	
 	public UserInfoService() {
 		super(UserInfoMapper.class);
@@ -107,6 +112,22 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		return false;
 	}
 
+	public boolean updateGridList(String gridList) {
+	    try {
+    	    if (gridList != null && !gridList.equals("")) {
+                int intGridList = Integer.parseInt(gridList);
+                jdbcTemplate.update(UPDATE_GRIDLIST_SQL, intGridList,
+                        WebContext.getUserInfo().getId());
+                WebContext.getUserInfo().setGridList(intGridList);
+            }
+	    }catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+	    return true;
+	}
+	
+	
 	public boolean updateProtectedApps(UserInfo userinfo) {
 		try {
 			if(WebContext.getUserInfo() != null) {

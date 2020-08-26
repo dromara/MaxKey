@@ -34,7 +34,6 @@ import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,9 +55,6 @@ public class AppListController {
     private UserInfoService userInfoService;
 
     @Autowired
-    protected JdbcTemplate jdbcTemplate;
-
-    @Autowired
     AccountsService appUsersService;
 
     @Autowired
@@ -73,13 +69,7 @@ public class AppListController {
     public ModelAndView appList(
             @RequestParam(value = "gridList", required = false) String gridList) {
         ModelAndView modelAndView = new ModelAndView("main/appList");
-
-        if (gridList != null && !gridList.equals("")) {
-            int intGridList = Integer.parseInt(gridList);
-            jdbcTemplate.update("UPDATE MXK_USERINFO SET GRIDLIST = ? WHERE ID = ?", intGridList,
-                    WebContext.getUserInfo().getId());
-            WebContext.getUserInfo().setGridList(intGridList);
-        }
+        userInfoService.updateGridList(gridList);
         modelAndView.addObject("appList", queryAccessableApps());
         return modelAndView;
     }
