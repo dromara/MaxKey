@@ -6,7 +6,7 @@
 	<#include  "../appCommonHead.ftl"/>
 </head>
 <body>
-<form id="actionForm_app"  method="post" type="label" autoclose="true"  
+<form id="actionForm_app"  method="post" type="label" autoclose="true"   closeWindow="true" 
 			action="<@base/>/apps/tokenbased/update"  
 			forward="<@base/>/apps/list"
 			enctype="multipart/form-data"
@@ -68,27 +68,12 @@
 								</tr>
 								<tr>
 									<th><@locale code="apps.tokenbased.token.content" />：</th>
-									<td colspan=3>
-										<table  class="hidetable"  style="width:100%;">
-											<tr>
-												<td><@locale code="userinfo.id" /><input type="checkbox" id="uid" name="uid" value="1" <#if 1==model.uid>checked</#if> /></td>
-												<td><@locale code="userinfo.username" /><input type="checkbox" id="username" name="username" value="1" <#if 1==model.username>checked</#if>/></td>
-												<td><@locale code="userinfo.email" /><input type="checkbox" id="email" name="email" value="1" <#if 1==model.email>checked</#if>/></td>
-												<td><@locale code="userinfo.windowsAccount" /><input type="checkbox" id="windowsAccount" name="windowsAccount" value="1" <#if 1==model.windowsAccount>checked</#if>/></td>
-												<td><@locale code="userinfo.employeeNumber" /><input type="checkbox" id="employeeNumber" name="employeeNumber" value="1" <#if 1==model.employeeNumber>checked</#if>/></td>
-												<td><@locale code="userinfo.departmentId" /><input type="checkbox" id="departmentId" name="departmentId" value="1" <#if 1==model.departmentId>checked</#if>/></td>
-												<td><@locale code="userinfo.department" /><input type="checkbox" id="department" name="department" value="1" <#if 1==model.department>checked</#if>/></td>
-											</tr>
-										</table>
+									<td >
+										<#include  "../userPropertys.ftl"/>
 									</td>
-								</tr>
-								<tr>
 									<th><@locale code="apps.tokenbased.expires" />：</th>
 									<td>
 										<input type="text" class="form-control" id="expires" name="expires"  title="" value="${model.expires}"  required="" />
-									</td>
-									<th></th>
-									<td>
 									</td>
 								</tr>
 								

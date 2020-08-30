@@ -8,7 +8,7 @@
 <!--
 $(function(){	
 	
-	$("input[name='credential']").on("click",function(){
+	$("select[name='credential']").on("click",function(){
 		if($(this).val()=="3"){
 			$("#sharedconfigure").hide();
 			$("#systemconfigure").hide();
@@ -25,7 +25,7 @@ $(function(){
 </script>
 </head>
 <body>
-<form id="actionForm_app"  method="post" type="label" autoclose="true"  
+<form id="actionForm_app"  method="post" type="label" autoclose="true"    closeWindow="true"
    action="<@base/>/apps/extendapi/update"  
    forward="<@base/>/apps/list"
    enctype="multipart/form-data"
@@ -56,13 +56,17 @@ $(function(){
 				<tr>
 					<th style="width:15%;"><@locale code="apps.credential"/>：</th>
 					<td style="width:35%;">
-							<input type="radio" id="credential1" name="credential" class="credential" value="3"  <#if  3==model.credential >checked</#if> />
-							<@locale code="apps.credential.user-defined"/>
-							<input type="radio" id="credential3" name="credential" class="credential" value="2"  <#if  2==model.credential >checked</#if> />
-							<@locale code="apps.credential.shared"/>
-							<input type="radio" id="credential2" name="credential" class="credential" value="1"  <#if  1==model.credential >checked</#if> />
-							<@locale code="apps.credential.system"/>
-						
+						<select id="credential" name="credential"  class="form-control" >
+							<option value="3"   <#if  3==model.credential >selected</#if> >
+								<@locale code="apps.credential.user-defined"/>
+							</option>
+							<option value="2"   <#if  2==model.credential >selected</#if> >
+								<@locale code="apps.credential.shared"/>
+							</option>
+							<option value="1"   <#if  1==model.credential >selected</#if> >
+								<@locale code="apps.credential.system"/>
+							</option>
+						</select>						
 					</td>
 					<th style="width:15%;"></th>
 					<td style="width:35%;" >
@@ -94,7 +98,6 @@ $(function(){
 					<th><@locale code="apps.credential.sharedPassword"/>：</th>
 					<td>
 						<input type="text" class="form-control"  id="sharedPassword" name="sharedPassword" value="${model.sharedPassword}" />
-						
 					</td>
 				</tr>
 				

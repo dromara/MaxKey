@@ -58,194 +58,88 @@ public class AppsTokenBasedDetails  extends Apps {
 	private String algorithmKey;
 	@Column
 	private String expires;
-	
-	//
-	@Column
-	private int uid;
-	@Column
-	private int username;
-	@Column
-	private int email;
-	@Column
-	private int windowsAccount;
-	@Column
-	private int employeeNumber;
-	@Column
-	private int departmentId;
-	@Column
-	private int department;
-	
-	
+		
 	
 	public AppsTokenBasedDetails() {
 		super();
 	}
 
 
+    public String getId() {
+        return id;
+    }
 
-	public String getRedirectUri() {
-		return redirectUri;
-	}
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
 
-	public void setRedirectUri(String redirectUri) {
-		this.redirectUri = redirectUri;
-	}
+    public String getRedirectUri() {
+        return redirectUri;
+    }
 
 
+    public void setRedirectUri(String redirectUri) {
+        this.redirectUri = redirectUri;
+    }
 
-	public String getCookieName() {
-		return cookieName;
-	}
 
+    public String getTokenType() {
+        return tokenType;
+    }
 
 
-	public void setCookieName(String cookieName) {
-		this.cookieName = cookieName;
-	}
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
 
 
+    public String getCookieName() {
+        return cookieName;
+    }
 
-	public String getAlgorithm() {
-		return algorithm;
-	}
 
+    public void setCookieName(String cookieName) {
+        this.cookieName = cookieName;
+    }
 
 
-	public void setAlgorithm(String algorithm) {
-		this.algorithm = algorithm;
-	}
+    public String getAlgorithm() {
+        return algorithm;
+    }
 
 
+    public void setAlgorithm(String algorithm) {
+        this.algorithm = algorithm;
+    }
 
-	public String getAlgorithmKey() {
-		return algorithmKey;
-	}
 
+    public String getAlgorithmKey() {
+        return algorithmKey;
+    }
 
 
-	public void setAlgorithmKey(String algorithmKey) {
-		this.algorithmKey = algorithmKey;
-	}
+    public void setAlgorithmKey(String algorithmKey) {
+        this.algorithmKey = algorithmKey;
+    }
 
 
+    public String getExpires() {
+        return expires;
+    }
 
-	public String getExpires() {
-		return expires;
-	}
 
+    public void setExpires(String expires) {
+        this.expires = expires;
+    }
 
 
-	public void setExpires(String expires) {
-		this.expires = expires;
-	}
-
-
-
-	public int getUid() {
-		return uid;
-	}
-
-
-
-	public void setUid(int uid) {
-		this.uid = uid;
-	}
-
-
-
-	public int getUsername() {
-		return username;
-	}
-
-
-
-	public void setUsername(int username) {
-		this.username = username;
-	}
-
-
-
-	public int getEmail() {
-		return email;
-	}
-
-
-
-	public void setEmail(int email) {
-		this.email = email;
-	}
-
-
-
-	public int getWindowsAccount() {
-		return windowsAccount;
-	}
-
-
-
-	public void setWindowsAccount(int windowsAccount) {
-		this.windowsAccount = windowsAccount;
-	}
-
-
-
-	public String getTokenType() {
-		return tokenType;
-	}
-
-
-
-	public void setTokenType(String tokenType) {
-		this.tokenType = tokenType;
-	}
-
-
-
-	public int getEmployeeNumber() {
-		return employeeNumber;
-	}
-
-
-
-	public void setEmployeeNumber(int employeeNumber) {
-		this.employeeNumber = employeeNumber;
-	}
-
-
-
-	public int getDepartmentId() {
-		return departmentId;
-	}
-
-
-
-	public void setDepartmentId(int departmentId) {
-		this.departmentId = departmentId;
-	}
-
-
-
-	public int getDepartment() {
-		return department;
-	}
-
-
-
-	public void setDepartment(int department) {
-		this.department = department;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "TokenBasedDetails [redirectUri=" + redirectUri + ", cookieName=" + cookieName + ", algorithm="
-				+ algorithm + ", algorithmKey=" + algorithmKey + ", expires=" + expires + ", uid=" + uid + ", username="
-				+ username + ", email=" + email + ", windowsAccount=" + windowsAccount + ", employeeNumber="
-				+ employeeNumber + ", departmentId=" + departmentId + ", department=" + department + "]";
-	}
-
+    @Override
+    public String toString() {
+        return "AppsTokenBasedDetails [id=" + id + ", redirectUri=" + redirectUri + ", tokenType=" + tokenType
+                + ", cookieName=" + cookieName + ", algorithm=" + algorithm + ", algorithmKey=" + algorithmKey
+                + ", expires=" + expires + "]";
+    }
 
 }

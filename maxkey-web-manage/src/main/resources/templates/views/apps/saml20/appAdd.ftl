@@ -6,7 +6,7 @@
 	<#include  "../appCommonHead.ftl"/>
 </head>
 <body>
-<form id="actionForm_app"  method="post" type="label" autoclose="true"  
+<form id="actionForm_app"  method="post" type="label" autoclose="true"   closeWindow="true" 
 			action="<@base/>/apps/saml20/add"
 			forward="<@base/>/apps/list"
 			enctype="multipart/form-data"

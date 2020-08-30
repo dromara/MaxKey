@@ -13,20 +13,14 @@
 <script type="text/javascript">
 <!--
 $(function(){	
-	$("#algorithm").change(function(){
-		$.post("<s:Base/>/apps/generate/secret/"+$(this).val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
-			$("#secret").val(data+"");
-			$("#secret_text").html(data+"");
-			
-		});
-	}); 
-
+	$("#isAdapter").val("1");
+	$("#adapter").val("org.maxkey.authz.cas.endpoint.adapter.CasDefaultAdapter");
 });
 //-->
 </script>
 </head>
 <body>
-<form id="actionForm_app"  method="post" type="label" autoclose="true"  
+<form id="actionForm_app"  method="post" type="label" autoclose="true"    closeWindow="true"
 			action="<@base/>/apps/cas/add"  
 			forward="<@base/>/apps/list"
 			enctype="multipart/form-data"

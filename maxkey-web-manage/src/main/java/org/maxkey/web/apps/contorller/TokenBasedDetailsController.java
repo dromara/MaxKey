@@ -52,6 +52,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		tokenBasedDetails.setProtocol(ConstantsProtocols.TOKENBASED);
 		tokenBasedDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.AES));
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
+		tokenBasedDetails.setUserPropertys("userPropertys");
 		modelAndView.addObject("model",tokenBasedDetails);
 		return modelAndView;
 	}

@@ -532,16 +532,14 @@ $(function(){
 				$.dialog.close();
 				return;
 			}
-		}	
+		}			
 		
-		if($("#actionForm")){//#actionForm attr forward
-			if($("#actionForm").attr("forward")){
-	    		document.location.href=$("#actionForm").attr("forward");
-	    		return;
-	    	}
-		}
-		
-		if($("form")){//#actionForm attr forward
+		if($("form")){//#Form attr forward
+			if($("form").attr("closeWindow")){
+				window.close(); 
+				return;
+			}
+			
 			if($("form").attr("forward")){
 	    		document.location.href=$("form").attr("forward");
 	    		return;

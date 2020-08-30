@@ -20,7 +20,6 @@ package org.maxkey.authz.token.endpoint.adapter;
 import java.util.Date;
 
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.constants.Boolean;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.AppsTokenBasedDetails;
 import org.maxkey.util.DateUtils;
@@ -36,19 +35,22 @@ public class TokenBasedSimpleAdapter extends AbstractAuthorizeAdapter {
 	
 		String tokenUsername="";
 		
-		if(Boolean.isTrue(details.getUid())){
+		
+		if(details.getUserPropertys().indexOf("uid")>-1){
 			tokenUsername=userInfo.getId();
-		}else if(Boolean.isTrue(details.getUsername())){
+		}else if(details.getUserPropertys().indexOf("username")>-1){
 			tokenUsername= userInfo.getUsername();	
-		}else if(Boolean.isTrue(details.getEmail())){
+		}else if(details.getUserPropertys().indexOf("email")>-1){
 			tokenUsername=userInfo.getEmail();
-		}else if(Boolean.isTrue(details.getWindowsAccount())){
+		}else if(details.getUserPropertys().indexOf("windowsAccount")>-1){
 			tokenUsername= userInfo.getWindowsAccount();
-		}else if(Boolean.isTrue(details.getEmployeeNumber())){
+		}else if(details.getUserPropertys().indexOf("employeeNumber")>-1){
 			tokenUsername=userInfo.getEmployeeNumber();
-		}else if(Boolean.isTrue(details.getDepartmentId())){
+		}else if(details.getUserPropertys().indexOf("department")>-1){
 			tokenUsername= userInfo.getDepartmentId();
-		}
+		}else if(details.getUserPropertys().indexOf("departmentId")>-1){
+            tokenUsername= userInfo.getDepartment();
+        }
 		
 		/*
 		 * use UTC date time format

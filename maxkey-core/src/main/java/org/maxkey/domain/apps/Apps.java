@@ -112,6 +112,8 @@ public class Apps extends JpaBaseDomain implements Serializable {
      */
     private int isExtendAttr;
     private String extendAttr;
+    
+    private String userPropertys;
 
     /**
      * Signature for client verify create by SignaturePublicKey &
@@ -386,6 +388,14 @@ public class Apps extends JpaBaseDomain implements Serializable {
      */
     public void setExtendAttr(String extendAttr) {
         this.extendAttr = extendAttr;
+    }
+
+    public String getUserPropertys() {
+        return userPropertys;
+    }
+
+    public void setUserPropertys(String userPropertys) {
+        this.userPropertys = userPropertys;
     }
 
     public int getVisible() {
