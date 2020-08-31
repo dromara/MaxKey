@@ -65,7 +65,10 @@ public class PasswordPolicyValidator {
     
     MessageSource messageSource;
     
+    public static final String PASSWORD_POLICY_VALIDATE_RESULT = "PASSWORD_POLICY_SESSION_VALIDATE_RESULT_KEY";
+    
     private static final String PASSWORD_POLICY_KEY = "PASSWORD_POLICY_KEY";
+    
     private static final String LOCK_USER_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET ISLOCKED = ?  , UNLOCKTIME = ? WHERE ID = ?";
 
     private static final String PASSWORD_POLICY_SELECT_STATEMENT = "SELECT * FROM MXK_PASSWORD_POLICY ";
@@ -192,7 +195,7 @@ public class PasswordPolicyValidator {
                passwordPolicyMessage = passwordPolicyMessage + msg + "<br>";
                _logger.debug("Rule Message " + msg);
            }
-           WebContext.setAttribute(PasswordPolicyValidator.class.getName(), passwordPolicyMessage);
+           WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, passwordPolicyMessage);
            return false;
        }
    }

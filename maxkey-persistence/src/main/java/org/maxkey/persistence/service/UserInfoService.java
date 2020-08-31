@@ -180,29 +180,77 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	}
 	
 	
-	public boolean changePassword(UserInfo userInfo) {
+	public boolean changePassword(String oldPassword,
+            String newPassword,
+            String confirmPassword) {
 		try {
+		    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, "");
+	        UserInfo userInfo = WebContext.getUserInfo();
+	        UserInfo changeUserInfo = new UserInfo();
+	        changeUserInfo.setUsername(userInfo.getUsername());
+	        changeUserInfo.setPassword(newPassword);
+	        changeUserInfo.setId(userInfo.getId());
+	        changeUserInfo.setDecipherable(userInfo.getDecipherable());
+	        
+	        if(newPassword.equals(confirmPassword)){
+	            if(oldPassword==null || 
+	                    passwordEncoder.matches(oldPassword, changeUserInfo.getPassword())){
+	                if(changePassword(changeUserInfo) ){
+	                    userInfo.setPassword(changeUserInfo.getPassword());
+                        userInfo.setDecipherable(changeUserInfo.getDecipherable());
+	                    return true;
+	                }
+	                return false;	               
+	            }else {
+	                if(oldPassword!=null &&
+	                        passwordEncoder.matches(newPassword, userInfo.getPassword())) {
+	                    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, 
+	                            WebContext.getI18nValue("PasswordPolicy.OLD_PASSWORD_MATCH"));
+	                }else {
+	                    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, 
+	                        WebContext.getI18nValue("PasswordPolicy.OLD_PASSWORD_NOT_MATCH"));
+	                }
+	            }
+	        }else {
+	            WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, 
+	                    WebContext.getI18nValue("PasswordPolicy.CONFIRMPASSWORD_NOT_MATCH"));
+	        }
+		 } catch (Exception e) {
+             e.printStackTrace();
+         }    
 		    
-		    if(passwordPolicyValidator.validator(userInfo) == false) {
-		        return false;
-		    }
-		    
-			if(WebContext.getUserInfo() != null) {
-				userInfo.setModifiedBy(WebContext.getUserInfo().getId());
-				
-			}
-			userInfo = passwordEncoder(userInfo);
-			
-			if(getMapper().changePassword(userInfo) > 0){
-			    changePasswordProvisioning(userInfo);
-				return true;
-			}
-			return false;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return false;
 	}
+	
+    public boolean changePassword(UserInfo changeUserInfo) {
+        try {
+            _logger.debug("decipherable old : " + changeUserInfo.getDecipherable());
+            _logger.debug("decipherable new : " + ReciprocalUtils.encode(PasswordReciprocal.getInstance()
+                    .rawPassword(changeUserInfo.getUsername(), changeUserInfo.getPassword())));
+
+            if (passwordPolicyValidator.validator(changeUserInfo) == false) {
+                return false;
+            }
+
+            if (WebContext.getUserInfo() != null) {
+                changeUserInfo.setModifiedBy(WebContext.getUserInfo().getId());
+
+            }
+
+            changeUserInfo = passwordEncoder(changeUserInfo);
+
+            if (getMapper().changePassword(changeUserInfo) > 0) {
+                changePasswordProvisioning(changeUserInfo);
+                return true;
+            }
+            return false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 	
 	public String randomPassword() {
 	    return passwordPolicyValidator.generateRandomPassword();
