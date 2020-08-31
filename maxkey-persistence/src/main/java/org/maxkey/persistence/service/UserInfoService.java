@@ -183,7 +183,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	public boolean changePassword(UserInfo userInfo) {
 		try {
 		    
-		    passwordPolicyValidator.validator(userInfo);
+		    if(passwordPolicyValidator.validator(userInfo) == false) {
+		        return false;
+		    }
 		    
 			if(WebContext.getUserInfo() != null) {
 				userInfo.setModifiedBy(WebContext.getUserInfo().getId());

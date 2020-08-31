@@ -25,6 +25,8 @@ import org.passay.CharacterOccurrencesRule;
 import org.passay.CharacterRule;
 import org.passay.DictionaryRule;
 import org.passay.EnglishCharacterData;
+import org.passay.EnglishSequenceData;
+import org.passay.IllegalSequenceRule;
 import org.passay.LengthRule;
 import org.passay.PasswordData;
 import org.passay.PasswordValidator;
@@ -92,6 +94,16 @@ public class PasswordPolicyValidator {
             _logger.debug("query PasswordPolicy : " + passwordPolicy);
             passwordPolicyStore.put(PASSWORD_POLICY_KEY,passwordPolicy);
             
+            //init Password Policy
+            passwordPolicy.setRandomPasswordLength(
+                Math.round(
+                        (
+                                passwordPolicy.getMaxLength() + 
+                                passwordPolicy.getMinLength()
+                        )/2
+                   )
+            );
+            
             passwordPolicyRuleList = new ArrayList<Rule>();
             passwordPolicyRuleList.add(new WhitespaceRule());
             passwordPolicyRuleList.add(new LengthRule(passwordPolicy.getMinLength(), passwordPolicy.getMaxLength()));
@@ -120,12 +132,23 @@ public class PasswordPolicyValidator {
                 passwordPolicyRuleList.add(new CharacterOccurrencesRule(passwordPolicy.getOccurances()));
             }
             
+            if(passwordPolicy.getAlphabetical()>0) {
+                passwordPolicyRuleList.add(new IllegalSequenceRule(EnglishSequenceData.Alphabetical, 4, false));
+            }
+            
+            if(passwordPolicy.getNumerical()>0) {
+                passwordPolicyRuleList.add(new IllegalSequenceRule(EnglishSequenceData.Numerical, 4, false));
+            }
+            
+            if(passwordPolicy.getQwerty()>0) {
+                passwordPolicyRuleList.add(new IllegalSequenceRule(EnglishSequenceData.USQwerty, 4, false));
+            }
+                        
             if(passwordPolicy.getDictionary()>0 ) {
                 try {
                     ClassPathResource dictFile= 
                             new ClassPathResource(
                                     ConstantsProperties.classPathResource(topWeakPasswordPropertySource));
-                    
                     Dictionary dictionary =new DictionaryBuilder().addReader(new InputStreamReader(dictFile.getInputStream())).build();
                     passwordPolicyRuleList.add(new DictionaryRule(dictionary));
                 }catch(Exception e) {
@@ -143,6 +166,7 @@ public class PasswordPolicyValidator {
      */
    public boolean validator(UserInfo userInfo) {
        
+       
        String password = userInfo.getPassword();
        String username = userInfo.getUsername();
        
@@ -159,15 +183,18 @@ public class PasswordPolicyValidator {
        RuleResult result = validator.validate(new PasswordData(username,password));
        
        if (result.isValid()) {
-           System.out.println("Password is valid");
-         } else {
-           System.out.println("Invalid password:");
+           _logger.debug("Password is valid");
+           return true;
+       } else {
+           _logger.debug("Invalid password:");
+           String passwordPolicyMessage = "";
            for (String msg : validator.getMessages(result)) {
-             System.out.println(msg);
+               passwordPolicyMessage = passwordPolicyMessage + msg + "<br>";
+               _logger.debug("Rule Message " + msg);
            }
-         }
-       
-       return true;
+           WebContext.setAttribute(PasswordPolicyValidator.class.getName(), passwordPolicyMessage);
+           return false;
+       }
    }
    
    
@@ -329,13 +356,8 @@ public class PasswordPolicyValidator {
    public String generateRandomPassword() {
        getPasswordPolicy();
        PasswordGen passwordGen = new PasswordGen(
-               Math.round(
-                       (
-                               passwordPolicy.getMaxLength() + 
-                               passwordPolicy.getMinLength()
-                       )/2
-                  )
-               );
+               passwordPolicy.getRandomPasswordLength()
+       );
        
        return passwordGen.gen(
                passwordPolicy.getLowerCase(), 

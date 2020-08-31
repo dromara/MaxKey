@@ -121,6 +121,7 @@ public class PasswordPolicy extends JpaBaseDomain implements java.io.Serializabl
     @Column
     private int occurances;
     
+    private int randomPasswordLength;
 
     /**
      * @return the minLength
@@ -327,6 +328,14 @@ public class PasswordPolicy extends JpaBaseDomain implements java.io.Serializabl
 
     public void setOccurances(int occurances) {
         this.occurances = occurances;
+    }
+    
+    public int getRandomPasswordLength() {
+        return randomPasswordLength;
+    }
+
+    public void setRandomPasswordLength(int randomPasswordLength) {
+        this.randomPasswordLength = randomPasswordLength;
     }
 
     public void check(String username, String newPassword, String oldPassword) throws PasswordPolicyException {

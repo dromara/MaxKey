@@ -32,7 +32,7 @@ public class PasswordReciprocalTest {
 		String epass=spe.encode(pass);
 		System.out.println("PasswordEncoder "+epass); 
 		
-		System.out.println(PasswordReciprocal.getInstance().decoder("bb2002b9f55b05d3e0e6f34ec5321051"));
+		System.out.println(PasswordReciprocal.getInstance().decoder("f1ee1e9b912f05333a06925c99daf9c0"));
 	}
 
 }

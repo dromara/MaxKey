@@ -23,6 +23,11 @@
 			<tr>
 				<th  colspan="2"><@locale code="login.password.initial.change.tip" /></th>
 			</tr>
+			<tr <#if ''==errorMessage>style="display:none;"</#if>>
+				<th  colspan="2" style="color:red;">
+					${errorMessage!}
+				</th>
+			</tr>
 			<tr>
 				<th><@locale code="userinfo.displayName" /> :</th>
 				<td>

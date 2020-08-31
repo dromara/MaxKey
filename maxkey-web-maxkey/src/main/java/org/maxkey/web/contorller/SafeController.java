@@ -26,6 +26,7 @@ import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebConstants;
@@ -72,7 +73,10 @@ public class SafeController {
 			if(changeUserPassword(oldPassword,newPassword,confirmPassword)) {
 				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			}else {
-				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+				return  new Message(
+				        WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR)+"<br>"
+				        +WebContext.getAttribute(PasswordPolicyValidator.class.getName()),
+				        MessageType.error);
 			}	
 	}
 
@@ -83,17 +87,16 @@ public class SafeController {
 			@RequestParam(value ="confirmPassword",required = false) String confirmPassword) {
 			ModelAndView modelAndView=new ModelAndView("passwordExpired");
 	        if(newPassword ==null ||newPassword.equals("")) {
-	            UserInfo userInfo=WebContext.getUserInfo();
-	            modelAndView.addObject("model", userInfo);
-	            return modelAndView;
+	            
 	        }else if(changeUserPassword(oldPassword,newPassword,confirmPassword)){
 	            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
 				return WebContext.redirect("/index");
-				//modelAndView.setViewName("index");
 			}
 	        
-			new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
-		 
+			Object errorMessage=WebContext.getAttribute(PasswordPolicyValidator.class.getName());
+			UserInfo userInfo=WebContext.getUserInfo();
+            modelAndView.addObject("model", userInfo);
+            modelAndView.addObject("errorMessage", errorMessage==null?"":errorMessage);
 			return modelAndView;
 	}
 	
@@ -105,33 +108,53 @@ public class SafeController {
 			@RequestParam(value ="confirmPassword",required = false) String confirmPassword) {
 		ModelAndView modelAndView=new ModelAndView("passwordInitial");
         if(newPassword ==null ||newPassword.equals("")) {
-            UserInfo userInfo=WebContext.getUserInfo();
-            modelAndView.addObject("model", userInfo);
-            return modelAndView;
+            
         }else if(changeUserPassword(oldPassword,newPassword,confirmPassword)){
             WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
 			return WebContext.redirect("/index");
-			//modelAndView.setViewName("index");
 		}
 		
-		  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
-		  return modelAndView;
+        Object errorMessage=WebContext.getAttribute(PasswordPolicyValidator.class.getName());
+        modelAndView.addObject("errorMessage", errorMessage==null?"":errorMessage);
+        UserInfo userInfo=WebContext.getUserInfo();
+        modelAndView.addObject("model", userInfo);
+        return modelAndView;
 	}
 	
 	public boolean changeUserPassword(String oldPassword,
 									String newPassword,
 									String confirmPassword){
-		UserInfo userInfo =WebContext.getUserInfo();
+	    WebContext.setAttribute(PasswordPolicyValidator.class.getName(), "");
+		UserInfo userInfo = WebContext.getUserInfo();
+		UserInfo changeUserInfo = new UserInfo();
+		changeUserInfo.setUsername(userInfo.getUsername());
+		changeUserInfo.setPassword(newPassword);
+		changeUserInfo.setId(userInfo.getId());
+		changeUserInfo.setDecipherable(userInfo.getDecipherable());
 		_logger.debug("decipherable old : "+userInfo.getDecipherable());
 		_logger.debug("decipherable new : "+ReciprocalUtils.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), newPassword)));
+		
 		if(newPassword.equals(confirmPassword)){
 			if(oldPassword==null || 
 					passwordEncoder.matches(oldPassword, userInfo.getPassword())){
-				userInfo.setPassword(newPassword);
-				userInfoService.changePassword(userInfo);
-				//TODO syncProvisioningService.changePassword(userInfo);
-				return true;
+				if(userInfoService.changePassword(changeUserInfo)) {
+				    userInfo.setPassword(changeUserInfo.getPassword());
+				    userInfo.setDecipherable(changeUserInfo.getDecipherable());
+				    return true;
+				}
+			}else {
+			    if(oldPassword!=null &&
+	                    passwordEncoder.matches(newPassword, userInfo.getPassword())) {
+			        WebContext.setAttribute(PasswordPolicyValidator.class.getName(), 
+	                        WebContext.getI18nValue("PasswordPolicy.OLD_PASSWORD_MATCH"));
+			    }else {
+			        WebContext.setAttribute(PasswordPolicyValidator.class.getName(), 
+			            WebContext.getI18nValue("PasswordPolicy.OLD_PASSWORD_NOT_MATCH"));
+			    }
 			}
+		}else {
+		    WebContext.setAttribute(PasswordPolicyValidator.class.getName(), 
+                    WebContext.getI18nValue("PasswordPolicy.CONFIRMPASSWORD_NOT_MATCH"));
 		}
 		return false;
 		
