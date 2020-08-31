@@ -85,6 +85,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/profile/**")
                 .addPathPatterns("/safe/**")
                 .addPathPatterns("/historys/**")
+                .addPathPatterns("/appList")
                 .addPathPatterns("/appList/**")
                 .addPathPatterns("/socialsignon/**")
                 

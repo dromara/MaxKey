@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -70,6 +71,31 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
             HttpServletResponse response, Object handler)
             throws Exception {
         _logger.trace("PermissionAdapter preHandle");
+        
+        Object passwordSetTypeAttribute=WebContext.getSession().getAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
+        
+        if(passwordSetTypeAttribute != null) {
+            Integer passwordSetType=(Integer)passwordSetTypeAttribute;
+            if(passwordSetType==ConstantsPasswordSetType.PASSWORD_EXPIRED||
+                    passwordSetType==ConstantsPasswordSetType.MANAGER_CHANGED_PASSWORD){
+                _logger.trace("changeExpiredPassword ... forward to /safe/changeExpiredPassword");
+                if(request.getRequestURI().indexOf("/changeExpiredPassword")>-1) {
+                    return true;
+                }
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/safe/changeExpiredPassword");
+                dispatcher.forward(request, response);
+                return false;
+            }else if(passwordSetType==ConstantsPasswordSetType.INITIAL_PASSWORD){
+                _logger.trace("changeInitPassword ... forward to /safe/changeInitPassword");
+                if(request.getRequestURI().indexOf("/changeInitPassword")>-1) {
+                    return true;
+                }
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/safe/changeInitPassword");
+                dispatcher.forward(request, response);
+                return false;
+            }
+        }
+        
         //save  first protected url 
         SavedRequest  firstSavedRequest = (SavedRequest)WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
         // 判断用户是否登录, 判断用户和角色，判断用户是否登录用户

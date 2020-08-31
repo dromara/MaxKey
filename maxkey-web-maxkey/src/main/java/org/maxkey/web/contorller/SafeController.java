@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
@@ -77,17 +78,20 @@ public class SafeController {
 
 	@RequestMapping(value="/changeExpiredPassword") 
 	public ModelAndView changeExpiredPassword(
-			@RequestParam(value ="oldPassword",required = false) String oldPassword,
-			@RequestParam("newPassword") String newPassword,
-			@RequestParam("confirmPassword") String confirmPassword) {
+			@RequestParam(value ="oldPassword" ,required = false) String oldPassword,
+			@RequestParam(value ="newPassword",required = false) String newPassword,
+			@RequestParam(value ="confirmPassword",required = false) String confirmPassword) {
 			ModelAndView modelAndView=new ModelAndView("passwordExpired");
-		
-			if(changeUserPassword(oldPassword,newPassword,confirmPassword)){
+	        if(newPassword ==null ||newPassword.equals("")) {
+	            UserInfo userInfo=WebContext.getUserInfo();
+	            modelAndView.addObject("model", userInfo);
+	            return modelAndView;
+	        }else if(changeUserPassword(oldPassword,newPassword,confirmPassword)){
+	            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
 				return WebContext.redirect("/index");
 				//modelAndView.setViewName("index");
 			}
-				
-		
+	        
 			new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		 
 			return modelAndView;
@@ -97,11 +101,15 @@ public class SafeController {
 	@RequestMapping(value="/changeInitPassword") 
 	public ModelAndView changeInitPassword(
 			@RequestParam(value ="oldPassword",required = false) String oldPassword,
-			@RequestParam("newPassword") String newPassword,
-			@RequestParam("confirmPassword") String confirmPassword) {
+			@RequestParam(value ="newPassword",required = false) String newPassword,
+			@RequestParam(value ="confirmPassword",required = false) String confirmPassword) {
 		ModelAndView modelAndView=new ModelAndView("passwordInitial");
-		
-		if(changeUserPassword(oldPassword,newPassword,confirmPassword)){
+        if(newPassword ==null ||newPassword.equals("")) {
+            UserInfo userInfo=WebContext.getUserInfo();
+            modelAndView.addObject("model", userInfo);
+            return modelAndView;
+        }else if(changeUserPassword(oldPassword,newPassword,confirmPassword)){
+            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
 			return WebContext.redirect("/index");
 			//modelAndView.setViewName("index");
 		}
