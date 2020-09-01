@@ -67,7 +67,7 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		
 		
 		AppsTokenBasedDetails tokenBasedDetails=null;
-		tokenBasedDetails=tokenBasedDetailsService.get(id);
+		tokenBasedDetails=tokenBasedDetailsService.getAppDetails(id);
 		_logger.debug(""+tokenBasedDetails);
 		
 		Apps  application= getApp(id);
