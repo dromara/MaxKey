@@ -47,8 +47,6 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * Basic, JDBC implementation of the client details service.
  */
@@ -60,7 +58,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
 
     private static final String CLIENT_FIELDS_FOR_UPDATE = "RESOURCE_IDS, SCOPE, "
             + "AUTHORIZED_GRANT_TYPES, WEB_SERVER_REDIRECT_URI, AUTHORITIES, ACCESS_TOKEN_VALIDITY, "
-            + "REFRESH_TOKEN_VALIDITY, ADDITIONAL_INFORMATION, AUTOAPPROVE, "
+            + "REFRESH_TOKEN_VALIDITY, ADDITIONAL_INFORMATION, AUTOAPPROVE, APPROVALPROMPT , "
             + "IDTOKENSIGNINGALGORITHM, IDTOKENENCRYPTEDALGORITHM, IDTOKENENCRYPTIONMETHOD, "
             + "USERINFOSIGNINGALGORITHM, USERINFOCRYPTEDALGORITHM, USERINFOENCRYPTIONMETHOD, JWKSURI";
 
@@ -74,7 +72,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
     private static final String DEFAULT_SELECT_STATEMENT = BASE_FIND_STATEMENT + " where client_id = ?";
 
     private static final String DEFAULT_INSERT_STATEMENT = "insert into mxk_apps_oauth_client_details (" + CLIENT_FIELDS
-            + ", client_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ", client_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     private static final String DEFAULT_UPDATE_STATEMENT = "update mxk_apps_oauth_client_details " + "set "
             + CLIENT_FIELDS_FOR_UPDATE.replaceAll(", ", "=?, ") + "=? where client_id = ?";
@@ -194,7 +192,8 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
                         ? StringUtils.collectionToCommaDelimitedString(clientDetails.getAuthorities())
                         : null,
                 clientDetails.getAccessTokenValiditySeconds(), clientDetails.getRefreshTokenValiditySeconds(), json,
-                getAutoApproveScopes(clientDetails), clientDetails.getIdTokenSigningAlgorithm(),
+                getAutoApproveScopes(clientDetails),clientDetails.getApprovalPrompt(),
+                clientDetails.getIdTokenSigningAlgorithm(),
                 clientDetails.getIdTokenEncryptedAlgorithm(), clientDetails.getIdTokenEncryptionMethod(),
                 clientDetails.getUserInfoSigningAlgorithm(), clientDetails.getUserInfoEncryptedAlgorithm(),
                 clientDetails.getUserInfoEncryptionMethod(), clientDetails.getJwksUri(), clientDetails.getClientId() };
@@ -279,6 +278,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
             details.setUserInfoEncryptionMethod(rs.getString("USERINFOENCRYPTIONMETHOD"));
             details.setUserInfoSigningAlgorithm(rs.getString("USERINFOSIGNINGALGORITHM"));
             details.setJwksUri(rs.getString("JWKSURI"));
+            details.setApprovalPrompt(rs.getString("APPROVALPROMPT"));
 
             String json = rs.getString(10);
             if (json != null) {

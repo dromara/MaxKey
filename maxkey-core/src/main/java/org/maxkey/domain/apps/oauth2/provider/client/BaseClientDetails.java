@@ -92,6 +92,8 @@ public class BaseClientDetails implements ClientDetails {
 	
 	private String jwksUri;
 	
+	private String approvalPrompt;
+	
 	
 	public BaseClientDetails() {
 	}
@@ -360,7 +362,16 @@ public class BaseClientDetails implements ClientDetails {
 		this.jwksUri = jwksUri;
 	}
 
-	@Override
+	
+	public String getApprovalPrompt() {
+        return approvalPrompt;
+    }
+
+    public void setApprovalPrompt(String approvalPrompt) {
+        this.approvalPrompt = approvalPrompt;
+    }
+
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

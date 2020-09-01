@@ -13,7 +13,9 @@
 	*(MAXKEY-200812)  MGT管理密码修改增加自动密码生成
 	*(MAXKEY-200813)   优化TOKENBASED令牌内容的配置
 	*(MAXKEY-200814)   修复初始化密码和密码过期修改后错误问题
-	*(MAXKEY-200715)  依赖jar升级
+	*(MAXKEY-200815)  修复OAuth 2.0管理端的跳过确认提示不能修改
+	*(MAXKEY-200816)  应用管理修改时关闭修正
+	*(MAXKEY-200817)  依赖jar升级
 					 passay 1.6.0
 					 springBoot 2.3.3.RELEASE
 					 springSecurity 5.3.4.RELEASE

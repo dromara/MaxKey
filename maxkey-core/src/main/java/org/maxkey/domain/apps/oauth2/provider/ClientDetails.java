@@ -145,5 +145,7 @@ public interface ClientDetails extends Serializable {
 	public String getUserInfoEncryptionMethod();
 	
 	public String getJwksUri();
+	
+	public String getApprovalPrompt();
 
 }

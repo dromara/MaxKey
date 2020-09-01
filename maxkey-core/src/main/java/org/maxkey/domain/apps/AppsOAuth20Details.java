@@ -106,6 +106,7 @@ public class AppsOAuth20Details extends Apps {
         this.userInfoSigningAlgorithm = baseClientDetails.getUserInfoSigningAlgorithm();
 
         this.jwksUri = baseClientDetails.getJwksUri();
+        this.approvalPrompt = baseClientDetails.getApprovalPrompt();
 
     }
 
@@ -322,6 +323,7 @@ public class AppsOAuth20Details extends Apps {
         baseClientDetails.setUserInfoSigningAlgorithm(this.getUserInfoSigningAlgorithm());
 
         baseClientDetails.setJwksUri(this.getJwksUri());
+        baseClientDetails.setApprovalPrompt(this.getApprovalPrompt());
 
         return baseClientDetails;
     }
