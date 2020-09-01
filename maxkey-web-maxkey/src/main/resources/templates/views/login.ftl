@@ -204,6 +204,11 @@ $(function(){
 								<form id="loginForm" name="loginForm" action="<@base />/logon.do" method="post" class="needs-validation" novalidate>
 									<input type="hidden" name="authType" value="basic"/>
 									<table  class="table login_form_table">
+										<tr  class="loginErrorMessage"  <#if ''==loginErrorMessage>style="display:none;"</#if>>
+											<td  colspan="2" style="color:red;">
+												${loginErrorMessage!}
+											</td>
+										</tr>
 										<tr>
 											<td><@locale code="login.text.username"/>：</td>
 											<td><input required="" class="form-control" type='text' id='j_username'  name='username' value="admin" tabindex="1"/></td>
@@ -257,6 +262,11 @@ $(function(){
 								<form id="tfaLoginForm" name="tfaLoginForm" action="<@base />/logon.do" method="post"  class="needs-validation" novalidate>
 									<input type="hidden" name="authType" value="tfa"/>
 									<table  class="login_form_table">
+										<tr class="loginErrorMessage" <#if ''==loginErrorMessage>style="display:none;"</#if>>
+											<td  colspan="2" style="color:red;">
+												${loginErrorMessage!}
+											</td>
+										</tr>
 										<tr>
 											<td><@locale code="login.text.username"/>：</td>
 											<td><input required="" class="form-control"  type='text' id='tfa_j_username'  name='username' value="" tabindex="1"/></td>

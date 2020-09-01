@@ -82,12 +82,12 @@ public abstract class AbstractAuthenticationProvider {
         try {
             authentication = doInternalAuthenticate(authentication);
         } catch (AuthenticationException e) {
-            e.printStackTrace();
             _logger.error("Failed to authenticate user {} via {}: {}",
                     new Object[] { 
                             authentication.getPrincipal(), getProviderName(), e.getMessage() });
+            WebContext.setAttribute(
+                    WebConstants.LOGIN_ERROR_SESSION_MESSAGE, e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
             String message = "Unexpected exception in " + getProviderName() + " authentication:";
             _logger.error("Login error " + message, e);
         }

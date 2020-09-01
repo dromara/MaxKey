@@ -59,6 +59,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginEndpoint {
 	private static Logger _logger = LoggerFactory.getLogger(LoginEndpoint.class);
 	
+	
+	
 	@Autowired
   	@Qualifier("applicationConfig")
   	ApplicationConfig applicationConfig;
@@ -170,6 +172,9 @@ public class LoginEndpoint {
 			return  WebContext.redirect("/forwardindex");
 		}
 		
+		Object loginErrorMessage=WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
+        modelAndView.addObject("loginErrorMessage", loginErrorMessage==null?"":loginErrorMessage);
+        WebContext.removeAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
 		return modelAndView;
 	}
  	
@@ -178,14 +183,15 @@ public class LoginEndpoint {
 	                    HttpServletRequest request,
 	                    HttpServletResponse response,
 	                    @ModelAttribute("authentication") BasicAuthentication authentication) throws ServletException, IOException {
+
+        authenticationProvider.authenticate(authentication);
+
+        if (WebContext.isAuthenticated()) {
+            return WebContext.redirect("/forwardindex");
+        } else {
+            return WebContext.redirect("/login");
+        }
  		
- 		authenticationProvider.authenticate(authentication);
- 
- 		if(WebContext.isAuthenticated()){
- 		   return WebContext.redirect("/forwardindex");
-		}else{
-			return WebContext.redirect("/login");
-		}
  	}
 	
  	

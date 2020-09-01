@@ -217,12 +217,10 @@ public class PasswordPolicyValidator {
             _logger.debug("PasswordPolicy : " + passwordPolicy);
             _logger.debug("login Attempts is " + userInfo.getBadPasswordCount());
             lockUser(userInfo);
-
             throw new BadCredentialsException(
-                                userInfo.getUsername() + " " +
-                                WebContext.getI18nValue("login.error.attempts") + " " +
-                                userInfo.getBadPasswordCount()
-                                );
+                    WebContext.getI18nValue("login.error.attempts",
+                            new Object[]{userInfo.getUsername(),userInfo.getBadPasswordCount()}) 
+                    );
         }
         
         //locked
@@ -235,8 +233,7 @@ public class PasswordPolicyValidator {
         // inactive
         if(userInfo.getStatus()!=ConstantsStatus.ACTIVE) {
             throw new BadCredentialsException(
-                                userInfo.getUsername()+ " status "+ 
-                                userInfo.getStatus() +
+                                userInfo.getUsername()+ 
                                 WebContext.getI18nValue("login.error.inactive") 
                                 );
         }
