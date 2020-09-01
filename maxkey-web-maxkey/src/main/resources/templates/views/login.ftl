@@ -215,7 +215,7 @@ $(function(){
 										</tr>
 										<tr>
 											<td><@locale code="login.text.password"/>：</td>
-											<td><input required="" class="form-control"  type='password' id='j_password'  name='password' value="admin"  tabindex="2"/></td>
+											<td><input required="" class="form-control"  type='password' id='j_password'  name='password' value="maxkey"  tabindex="2"/></td>
 										</tr>
 										<#if true==isCaptcha> 
 										<tr>
