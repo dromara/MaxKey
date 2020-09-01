@@ -38,34 +38,36 @@ public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 		HashMap<String,String> beanMap=new HashMap<String,String>();
 		
 		beanMap.put("randomId",(new StringGenerator()).uuidGenerate());
-		
-		if(details.getUserPropertys().indexOf("uid")>-1){
-            beanMap.put("uid",userInfo.getId());
-        }
-		
-		if(details.getUserPropertys().indexOf("username")>-1){
-            beanMap.put("username",userInfo.getUsername());
-        }
-		
-		if(details.getUserPropertys().indexOf("email")>-1){
-            beanMap.put("email",userInfo.getEmail());
-        }
-		
-		if(details.getUserPropertys().indexOf("windowsAccount")>-1){
-            beanMap.put("windowsAccount",userInfo.getWindowsAccount());
-        }
-		
-		if(details.getUserPropertys().indexOf("employeeNumber")>-1){
-            beanMap.put("employeeNumber",userInfo.getEmployeeNumber());
-        }
-		
-		if(details.getUserPropertys().indexOf("department")>-1){
-            beanMap.put("department",userInfo.getDepartment());
-        }
-		
-		if(details.getUserPropertys().indexOf("departmentId")>-1){
-            beanMap.put("departmentId",userInfo.getDepartmentId());
-        }
+		if(details.getUserPropertys()!=null && !details.getUserPropertys().equals("")) {
+		    
+    		if(details.getUserPropertys().indexOf("uid")>-1){
+                beanMap.put("uid",userInfo.getId());
+            }
+    		
+    		if(details.getUserPropertys().indexOf("username")>-1){
+                beanMap.put("username",userInfo.getUsername());
+            }
+    		
+    		if(details.getUserPropertys().indexOf("email")>-1){
+                beanMap.put("email",userInfo.getEmail());
+            }
+    		
+    		if(details.getUserPropertys().indexOf("windowsAccount")>-1){
+                beanMap.put("windowsAccount",userInfo.getWindowsAccount());
+            }
+    		
+    		if(details.getUserPropertys().indexOf("employeeNumber")>-1){
+                beanMap.put("employeeNumber",userInfo.getEmployeeNumber());
+            }
+    		
+    		if(details.getUserPropertys().indexOf("department")>-1){
+                beanMap.put("department",userInfo.getDepartment());
+            }
+    		
+    		if(details.getUserPropertys().indexOf("departmentId")>-1){
+                beanMap.put("departmentId",userInfo.getDepartmentId());
+            }
+		}
 		
 		beanMap.put("displayName", userInfo.getDisplayName());
 		
