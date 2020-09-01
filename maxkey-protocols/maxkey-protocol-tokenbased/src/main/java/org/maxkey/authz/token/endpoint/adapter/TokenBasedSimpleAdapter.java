@@ -33,25 +33,26 @@ public class TokenBasedSimpleAdapter extends AbstractAuthorizeAdapter {
 	public String generateInfo(UserInfo userInfo,Object app) {
 		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 	
-		String tokenUsername="";
+		String tokenUsername = userInfo.getUsername();
 		
-		
-		if(details.getUserPropertys().indexOf("uid")>-1){
-			tokenUsername=userInfo.getId();
-		}else if(details.getUserPropertys().indexOf("username")>-1){
-			tokenUsername= userInfo.getUsername();	
-		}else if(details.getUserPropertys().indexOf("email")>-1){
-			tokenUsername=userInfo.getEmail();
-		}else if(details.getUserPropertys().indexOf("windowsAccount")>-1){
-			tokenUsername= userInfo.getWindowsAccount();
-		}else if(details.getUserPropertys().indexOf("employeeNumber")>-1){
-			tokenUsername=userInfo.getEmployeeNumber();
-		}else if(details.getUserPropertys().indexOf("department")>-1){
-			tokenUsername= userInfo.getDepartmentId();
-		}else if(details.getUserPropertys().indexOf("departmentId")>-1){
-            tokenUsername= userInfo.getDepartment();
-        }
-		
+		if(details.getUserPropertys()!=null && !details.getUserPropertys().equals("")) {
+    		if(details.getUserPropertys().indexOf("uid")>-1){
+    			tokenUsername=userInfo.getId();
+    		}else if(details.getUserPropertys().indexOf("username")>-1){
+    			tokenUsername= userInfo.getUsername();	
+    		}else if(details.getUserPropertys().indexOf("email")>-1){
+    			tokenUsername=userInfo.getEmail();
+    		}else if(details.getUserPropertys().indexOf("windowsAccount")>-1){
+    			tokenUsername= userInfo.getWindowsAccount();
+    		}else if(details.getUserPropertys().indexOf("employeeNumber")>-1){
+    			tokenUsername=userInfo.getEmployeeNumber();
+    		}else if(details.getUserPropertys().indexOf("department")>-1){
+    			tokenUsername= userInfo.getDepartmentId();
+    		}else if(details.getUserPropertys().indexOf("departmentId")>-1){
+                tokenUsername= userInfo.getDepartment();
+            }
+		}
+
 		/*
 		 * use UTC date time format
 		 */
