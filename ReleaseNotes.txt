@@ -1,15 +1,24 @@
 ﻿MaxKey v 2.2.0 GA	2020/**/**
-	*(MAXKEY-200801)  官方网站内容调整，初步增加英文版支持，增加新闻、合作伙伴及与CAS等开源产品对比
-	*(MAXKEY-200802)  使用Passay增强密码策略，分离出静态密码策略和动态密码策略
-	*(MAXKEY-200803)  CAS协议增加自定义参数回传
-	*(MAXKEY-200804)  优化开发集成指南
-	*(MAXKEY-200805)  删除冗余的文件和文件夹
-	*(MAXKEY-200806)  CAS适配器支持
-	*(MAXKEY-200807)  Maven版本支持
-	*(MAXKEY-200808)  CAS spring boot demo
-	*(MAXKEY-200809)  MGT管理访问找不到页面修复
-	*(MAXKEY-200810)  MGT管理密码修改增加自动密码生成
-	
+	*(MAXKEY-200801  官方网站内容调整，初步增加英文版支持，增加新闻、合作伙伴及与CAS等开源产品对比
+	*(MAXKEY-200802)  使用Passay增强密码策略，分离静态密码策略和动态密码策略
+	*(MAXKEY-200803)  修复登录失败的提示消息，支持国际化
+	*(MAXKEY-200804)  优化密码修改的过程，增加密码策略匹配及提示消息
+	*(MAXKEY-200805)  CAS协议增加自定义参数回传
+	*(MAXKEY-200806)  优化开发集成指南
+	*(MAXKEY-200807)  删除冗余的文件和文件夹
+	*(MAXKEY-200808)      优化应用适配器支持
+	*(MAXKEY-200809)  Maven版本支持
+	*(MAXKEY-200810)  CAS spring boot demo
+	*(MAXKEY-200811)  MGT管理访问找不到页面修复
+	*(MAXKEY-200812)  MGT管理密码修改增加自动密码生成
+	*(MAXKEY-200813)   优化TOKENBASED令牌内容的配置
+	*(MAXKEY-200814)   修复初始化密码和密码过期修改后错误问题
+	*(MAXKEY-200715)  依赖jar升级
+					 passay 1.6.0
+					 springBoot 2.3.3.RELEASE
+					 springSecurity 5.3.4.RELEASE
+					 hibernate	6.1.5.Final
+					 jackson 2.11.2
 	
 	
 MaxKey v 2.1.0 GA	2020/08/01
