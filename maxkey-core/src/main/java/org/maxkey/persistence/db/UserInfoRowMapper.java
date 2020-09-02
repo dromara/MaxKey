@@ -71,6 +71,7 @@ public class UserInfoRowMapper implements RowMapper<UserInfo> {
         userInfo.setPasswordLastSetTime(rs.getString("PASSWORDLASTSETTIME"));
         userInfo.setPasswordSetType(rs.getInt("PASSWORDSETTYPE"));
         userInfo.setBadPasswordCount(rs.getInt("BADPASSWORDCOUNT"));
+        userInfo.setBadPasswordTime(rs.getString("BADPASSWORDTIME"));
         userInfo.setUnLockTime(rs.getString("UNLOCKTIME"));
         userInfo.setIsLocked(rs.getInt("ISLOCKED"));
         userInfo.setLastLoginTime(rs.getString("LASTLOGINTIME"));

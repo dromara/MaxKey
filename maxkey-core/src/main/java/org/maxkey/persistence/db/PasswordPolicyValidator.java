@@ -1,3 +1,20 @@
+/*
+ * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+
 package org.maxkey.persistence.db;
 
 import java.io.InputStreamReader;
@@ -45,9 +62,12 @@ import org.springframework.security.authentication.BadCredentialsException;
 
 public class PasswordPolicyValidator {
     private static Logger _logger = LoggerFactory.getLogger(PasswordPolicyValidator.class);
-
+    
+    //Dictionary topWeakPassword Source
     public static final String topWeakPasswordPropertySource      = 
             "classpath:/top_weak_password.txt";
+    
+    //Cache PasswordPolicy in memory ONE_HOUR
     protected static final UserManagedCache<String, PasswordPolicy> passwordPolicyStore = 
             UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, PasswordPolicy.class)
                 .withExpiry(
@@ -87,7 +107,10 @@ public class PasswordPolicyValidator {
         this.jdbcTemplate = jdbcTemplate;
     }
     
-    
+    /**
+     * init PasswordPolicy and load Rules
+     * @return
+     */
     public PasswordPolicy getPasswordPolicy() {
         passwordPolicy = passwordPolicyStore.get(PASSWORD_POLICY_KEY);
        
@@ -97,7 +120,7 @@ public class PasswordPolicyValidator {
             _logger.debug("query PasswordPolicy : " + passwordPolicy);
             passwordPolicyStore.put(PASSWORD_POLICY_KEY,passwordPolicy);
             
-            //init Password Policy
+            //RandomPasswordLength =(MaxLength +MinLength)/2
             passwordPolicy.setRandomPasswordLength(
                 Math.round(
                         (
@@ -163,7 +186,7 @@ public class PasswordPolicyValidator {
     }
     
     /**
-     * validator .
+     * static validator .
      * @param userInfo
      * @return boolean
      */
@@ -202,7 +225,7 @@ public class PasswordPolicyValidator {
    
    
    /**
-    * passwordPolicyValid .
+    * dynamic passwordPolicy Valid for user login.
     * @param userInfo
     * @return boolean
     */
@@ -210,17 +233,34 @@ public class PasswordPolicyValidator {
        
        getPasswordPolicy();
        
+       DateTime currentdateTime = new DateTime();
         /*
          * check login attempts fail times
          */
         if (userInfo.getBadPasswordCount() >= passwordPolicy.getAttempts()) {
-            _logger.debug("PasswordPolicy : " + passwordPolicy);
             _logger.debug("login Attempts is " + userInfo.getBadPasswordCount());
-            lockUser(userInfo);
-            throw new BadCredentialsException(
-                    WebContext.getI18nValue("login.error.attempts",
-                            new Object[]{userInfo.getUsername(),userInfo.getBadPasswordCount()}) 
-                    );
+            //duration
+            String badPasswordTimeString = userInfo.getBadPasswordTime().substring(0, 19);
+            _logger.trace("bad Password Time " + badPasswordTimeString);
+            
+            DateTime badPasswordTime = DateTime.parse(badPasswordTimeString,
+                    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+            Duration duration = new Duration(badPasswordTime, currentdateTime);
+            int intDuration = Integer.parseInt(duration.getStandardHours() + "");
+            _logger.debug("bad Password duration " + intDuration
+                    + " , password policy Duration "+passwordPolicy.getDuration()
+                    + " , validate result " + (intDuration > passwordPolicy.getDuration()));
+            //auto unlock attempts when intDuration > set Duration
+            if(intDuration > passwordPolicy.getDuration()) {
+                _logger.debug("resetAttempts ...");
+                resetAttempts(userInfo);
+            }else {
+                lockUser(userInfo);
+                throw new BadCredentialsException(
+                        WebContext.getI18nValue("login.error.attempts",
+                                new Object[]{userInfo.getUsername(),userInfo.getBadPasswordCount()}) 
+                        );
+            }
         }
         
         //locked
@@ -258,17 +298,16 @@ public class PasswordPolicyValidator {
          *
          */
         if (passwordPolicy.getExpiration() > 0) {
-
             String passwordLastSetTimeString = userInfo.getPasswordLastSetTime().substring(0, 19);
             _logger.info("last password set date " + passwordLastSetTimeString);
 
-            DateTime currentdateTime = new DateTime();
             DateTime changePwdDateTime = DateTime.parse(passwordLastSetTimeString,
                     DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
             Duration duration = new Duration(changePwdDateTime, currentdateTime);
             int intDuration = Integer.parseInt(duration.getStandardDays() + "");
-            _logger.debug("validate duration " + intDuration);
-            _logger.debug("validate result " + (intDuration <= passwordPolicy.getExpiration()));
+            _logger.debug("password Last Set duration day " + intDuration
+                    + " , password policy Expiration " +passwordPolicy.getExpiration()
+                    +" , validate result " + (intDuration <= passwordPolicy.getExpiration()));
             if (intDuration > passwordPolicy.getExpiration()) {
                 WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
                         ConstantsPasswordSetType.PASSWORD_EXPIRED);
@@ -319,7 +358,7 @@ public class PasswordPolicyValidator {
     * 
     * @param userInfo
     */
-   public void resetBadPasswordCountAndLockout(UserInfo userInfo) {
+   public void resetAttempts(UserInfo userInfo) {
        try {
            if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                jdbcTemplate.update(BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT,

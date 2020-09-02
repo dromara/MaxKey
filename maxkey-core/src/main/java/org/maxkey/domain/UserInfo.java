@@ -128,6 +128,7 @@ public class UserInfo extends JpaBaseDomain {
 
     protected String passwordLastSetTime;
     protected int badPasswordCount;
+    protected String badPasswordTime;
     protected String unLockTime;
     protected int isLocked;
     protected String lastLoginTime;
@@ -690,6 +691,14 @@ public class UserInfo extends JpaBaseDomain {
 
     public void setBadPasswordCount(int badPasswordCount) {
         this.badPasswordCount = badPasswordCount;
+    }
+
+    public String getBadPasswordTime() {
+        return badPasswordTime;
+    }
+
+    public void setBadPasswordTime(String badPasswordTime) {
+        this.badPasswordTime = badPasswordTime;
     }
 
     public String getUnLockTime() {
