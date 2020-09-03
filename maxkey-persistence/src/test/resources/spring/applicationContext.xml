@@ -52,6 +52,10 @@
  	<bean id="characterEncodingConfig" class="org.maxkey.configuration.CharacterEncodingConfig"></bean>
  	<bean id="loginConfig" class="org.maxkey.configuration.LoginConfig"></bean>
  	
+ 	<bean id="passwordPolicyValidator" class="org.maxkey.persistence.db.PasswordPolicyValidator">
+ 		
+ 	</bean>
+ 	
    <bean id="producerProperties" class="java.util.HashMap">
          <constructor-arg>
              <map>
