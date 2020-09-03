@@ -15,7 +15,7 @@
  */
  
 
-package com.connsec.web.authorize.endpoint.cas.ticket.generator;
+package org.maxkey.web.authorize.endpoint.cas.ticket.generator;
 
 import org.maxkey.authz.cas.endpoint.ticket.generator.InetAddressUtils;
 

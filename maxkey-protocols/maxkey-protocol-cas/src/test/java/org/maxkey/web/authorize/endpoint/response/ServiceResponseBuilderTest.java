@@ -15,7 +15,7 @@
  */
  
 
-package com.connsec.web.authorize.endpoint.response;
+package org.maxkey.web.authorize.endpoint.response;
 
 import org.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
