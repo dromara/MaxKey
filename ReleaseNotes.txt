@@ -17,7 +17,8 @@
 	*(MAXKEY-200816)  应用管理修改时关闭修正
 	*(MAXKEY-200817)  密码错误次数大于6次后，超过设定时间自动解锁
 	*(MAXKEY-200818)  MySQL时间问题，参见https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html
-	*(MAXKEY-200819)  依赖jar升级
+	*(MAXKEY-200819)  SCIM 2服务端功能优化
+	*(MAXKEY-200820)  依赖jar升级
 					 passay 1.6.0
 					 springBoot 2.3.3.RELEASE
 					 springSecurity 5.3.4.RELEASE
