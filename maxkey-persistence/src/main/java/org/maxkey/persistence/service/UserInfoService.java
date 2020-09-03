@@ -194,7 +194,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	        
 	        if(newPassword.equals(confirmPassword)){
 	            if(oldPassword==null || 
-	                    passwordEncoder.matches(oldPassword, changeUserInfo.getPassword())){
+	                    passwordEncoder.matches(oldPassword, userInfo.getPassword())){
 	                if(changePassword(changeUserInfo) ){
 	                    userInfo.setPassword(changeUserInfo.getPassword());
                         userInfo.setDecipherable(changeUserInfo.getDecipherable());
