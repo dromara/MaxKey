@@ -62,8 +62,9 @@
                    }
              });
 	         
-			$(".datetimepicker").datetimepicker({format:'Y-m-d H:i',lang:'<@locale/>'.substring(0, 2)});
-			$(".datepicker").datetimepicker({timepicker:false,format:'Y-m-d',lang:'<@locale/>'.substring(0, 2)});
+	        $.datetimepicker.setLocale('<@locale/>'.substring(0, 2));
+			$(".datetimepicker").datetimepicker({format:'Y-m-d H:i'});
+			$(".datepicker").datetimepicker({timepicker:false,format:'Y-m-d'});
 			
 			$(".multipleselect").multipleSelect({}); 
 			
