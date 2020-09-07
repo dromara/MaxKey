@@ -4,17 +4,7 @@
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
 	<script type="text/javascript">	
-		function onSelectRow(id){		
-	   		$("#changepwdBtn").attr("wurl","<@base/>/users/forwardChangePassword/"+$.gridRowData("#list",id).id);
-	   	}
-	   	
-	   	function genderFormatter(value, options, rData){
-	   		if(value==1){
-	   			return '<@locale code="userinfo.gender.female" />';
-	   		}else{
-	   			return '<@locale code="userinfo.gender.male" />';
-	   		}
-		};
+
 	</script>
 </head>
 <body> 
@@ -91,11 +81,13 @@
 		 			
 			 </tr>
 			 <tr>
-					<td width="120px"><@locale code="userinfo.department"/></td>
+					<td width="120px"><@locale code="common.text.startdate"/></td>
 		 			<td width="360px">
+			 			<input  class="form-control datetimepicker"    type="text" id="startDate" name="startDate"  title="" value=""/>
 			 		</td>
-	 				<td width="120px"><@locale code="userinfo.userType"/></td>
+	 				<td width="120px"><@locale code="common.text.enddate"/></td>
 		 			<td width="360px">
+		 				<input  class="form-control datetimepicker"    type="text" id="endDate" name="endDate"  title="" value=""/>
 		 			</td>
 		 			
 			 </tr>

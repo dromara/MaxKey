@@ -4,17 +4,7 @@
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
 	<script type="text/javascript">	
-		function onSelectRow(id){		
-	   		$("#changepwdBtn").attr("wurl","<@base/>/users/forwardChangePassword/"+$.gridRowData("#list",id).id);
-	   	}
-	   	
-	   	function genderFormatter(value, options, rData){
-	   		if(value==1){
-	   			return '<@locale code="userinfo.gender.female" />';
-	   		}else{
-	   			return '<@locale code="userinfo.gender.male" />';
-	   		}
-		};
+
 	</script>
 </head>
 <body> 
@@ -91,17 +81,13 @@
 		 			
 			 </tr>
 			 <tr>
-					<td width="120px"><@locale code="userinfo.department"/></td>
+					<td width="120px"><@locale code="common.text.startdate"/></td>
 		 			<td width="360px">
-			 			<input  class="form-control"  type="text" style="display:none;" id="departmentId" name="departmentId"  title="" value=""/>
-						<input  class="form-control"  style="width:70%;;float:left;"  type="text" id="department" name="department"  title="" value=""/>
-			 			<input class="window button btn btn-secondary mr-3 "  type="button"  size="50" value="<@locale code="button.text.select"/>" title="department" wurl="/orgs/orgsSelect/deptId/department" wwidth="300" wheight="400" />
+			 			<input  class="form-control datetimepicker"    type="text" id="startDate" name="startDate"  title="" value=""/>
 			 		</td>
-	 				<td width="120px"><@locale code="userinfo.userType"/></td>
+	 				<td width="120px"><@locale code="common.text.enddate"/></td>
 		 			<td width="360px">
-		 				<input class="form-control"  class="userTypeId" name="userType" type="text" style="display:none;"  >
-		 				<input class="form-control"  class="userTypeName" name="userTypeName" type="text" style="width:70%;;float:left;"  >
-		 				<input class="window button btn btn-secondary mr-3 " type="button"   size="50" value="<@locale code="button.text.select"/>" title="UserType" wurl="/usertype//selectUserTypeList" wwidth="700" wheight="500" />
+		 				<input  class="form-control datetimepicker"    type="text" id="endDate" name="endDate"  title="" value=""/>
 		 			</td>
 		 			
 			 </tr>
