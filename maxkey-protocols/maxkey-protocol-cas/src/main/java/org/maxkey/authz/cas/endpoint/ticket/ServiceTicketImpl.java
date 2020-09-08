@@ -18,6 +18,7 @@
 package org.maxkey.authz.cas.endpoint.ticket;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.maxkey.authz.cas.endpoint.ticket.proxy.ProxyGrantingTicket;
 import org.maxkey.domain.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 
@@ -33,7 +34,7 @@ import javax.persistence.Column;
  * @since 3.0.0
  */
 
-public class ServiceTicketImpl extends AbstractTicket {
+public class ServiceTicketImpl extends AbstractTicket  implements ServiceTicket{
     
     private static final long serialVersionUID = -4223319704861765405L;
 
@@ -110,6 +111,25 @@ public class ServiceTicketImpl extends AbstractTicket {
         return new EqualsBuilder()
                 .append(ticket.getId(), this.getId())
                 .isEquals();
+    }
+
+    @Override
+    public Service getService() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean isFromNewLogin() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public ProxyGrantingTicket grantProxyGrantingTicket(String id, Authentication authentication,
+            ExpirationPolicy expirationPolicy) throws Exception {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

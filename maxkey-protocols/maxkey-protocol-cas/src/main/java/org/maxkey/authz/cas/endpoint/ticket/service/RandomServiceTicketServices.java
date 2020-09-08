@@ -46,9 +46,9 @@ public abstract class RandomServiceTicketServices implements TicketServices {
 			ticketId = generator.getNewTicketId(CasConstants.PREFIX.SERVICE_TICKET_PREFIX);
 		}else if(ticket.getClass().getSimpleName().equalsIgnoreCase("ProxyTicketImpl")){
 			ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_TICKET_PREFIX);
-		}else if(ticket.getClass().getSimpleName().equalsIgnoreCase("ProxyTicketImpl")){
-			ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_TICKET_PREFIX);
-		}else if(ticket.getClass().getSimpleName().equalsIgnoreCase("ProxyTicketImpl")){
+		}else if(ticket.getClass().getSimpleName().equalsIgnoreCase("TicketGrantingTicketImpl")){
+			ticketId = generator.getNewTicketId(CasConstants.PREFIX.TICKET_GRANTING_TICKET_PREFIX);
+		}else {
 			ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_TICKET_PREFIX);
 		}
 		store(ticketId, ticket);

@@ -57,6 +57,10 @@ public class CasConstants {
 
 	    /** Constant representing the pgtIou parameter in the request. */
 		public static final String PROXY_GRANTING_TICKET_IOU = "pgtIou";
+		
+		public static final String REST_USERNAME = "username";
+		
+		public static final String REST_PASSWORD = "password";
 	}
 	
 	public  static final class  FORMAT_TYPE {
@@ -83,6 +87,8 @@ public class CasConstants {
 		public static final String PROXY_GRANTING_TICKET_PREFIX = "PGT";
 	    /** The prefix to use when generating an id for a Proxy Granting Ticket IOU. */
 		public static final String PROXY_GRANTING_TICKET_IOU_PREFIX = "PGTIOU";
+		
+		public static final String TICKET_GRANTING_TICKET_PREFIX = "TGT";
 	}
 	
 	/* CAS Protocol Error Codes. **/
