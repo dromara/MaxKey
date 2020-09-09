@@ -12,7 +12,7 @@
     		AND CD.ID	=	APP.ID
     		AND (
     			APP.ID	=	#{value}
-    			OR  LOWER(CD.SERVICE) LIKE LOWER(CONCAT(#{value},'%'))
+    			OR  LOWER(CD.SERVICE) = LOWER(SUBSTRING(#{value},1,LENGTH(CD.SERVICE)))
     		)
     </select>
 </mapper>
