@@ -133,5 +133,44 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         }
     }
 
+    /**
+     * trustAuthentication.
+     * @param username String
+     * @param type String
+     * @param provider String
+     * @param code String
+     * @param message String
+     * @return boolean
+     */
+    public  Authentication trustAuthentication(String username, 
+                                            String type, 
+                                            String provider, 
+                                            String code,
+                                            String message) {
+        UserInfo loadeduserInfo = loadUserInfo(username, "");
+        if (loadeduserInfo != null) {
+            WebContext.setUserInfo(loadeduserInfo);
+            BasicAuthentication authentication = new BasicAuthentication();
+            authentication.setUsername(loadeduserInfo.getUsername());
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(
+                            authentication, 
+                            "PASSWORD", 
+                            authenticationRealm.grantAuthority(loadeduserInfo)
+                    );
+
+            authentication.setAuthenticated(true);
+            WebContext.setAuthentication(authenticationToken);
+            WebContext.setUserInfo(loadeduserInfo);
+
+            authenticationRealm.insertLoginHistory(loadeduserInfo, type, provider, code, message);
+            
+            return authenticationToken;
+        }else {
+            String i18nMessage = WebContext.getI18nValue("login.error.username");
+            _logger.debug("login user  " + username + " not in this System ." + i18nMessage);
+            throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
+        }
+    }
   
 }

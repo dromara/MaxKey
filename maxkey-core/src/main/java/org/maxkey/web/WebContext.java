@@ -28,8 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.LogFactory;
-import org.maxkey.authn.BasicAuthentication;
-import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.DateUtils;
@@ -38,7 +37,6 @@ import org.maxkey.web.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -121,27 +119,12 @@ public final class WebContext {
                                             String provider, 
                                             String code,
                                             String message) {
-        AbstractAuthenticationRealm authenticationRealm = 
-                (AbstractAuthenticationRealm) getBean("authenticationRealm");
-        UserInfo loadeduserInfo = authenticationRealm.loadUserInfo(username, "");
-        if (loadeduserInfo != null) {
-            setUserInfo(loadeduserInfo);
-            BasicAuthentication authentication = new BasicAuthentication();
-            authentication.setUsername(loadeduserInfo.getUsername());
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                    new UsernamePasswordAuthenticationToken(
-                            authentication, 
-                            "PASSWORD", 
-                            authenticationRealm.grantAuthority(loadeduserInfo)
-                    );
-
-            authentication.setAuthenticated(true);
-            WebContext.setAuthentication(usernamePasswordAuthenticationToken);
-            WebContext.setUserInfo(loadeduserInfo);
-
-            authenticationRealm.insertLoginHistory(loadeduserInfo, type, provider, code, message);
-        }
-        return true;
+        
+        RealmAuthenticationProvider authenticationProvider = 
+                (RealmAuthenticationProvider) getBean("authenticationProvider");
+        authenticationProvider.trustAuthentication(username, type, provider, code, message);
+        
+        return isAuthenticated();
     }
 
     public static void setAuthentication(Authentication authentication) {
