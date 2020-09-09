@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
 import org.maxkey.authz.cas.endpoint.ticket.TicketGrantingTicketImpl;
@@ -57,7 +58,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
-	final static Logger _logger = LoggerFactory.getLogger(CasRestV1Endpoint.class);
+    final static Logger _logger = LoggerFactory.getLogger(CasRestV1Endpoint.class);
 	
 	@Autowired
     protected PasswordPolicyValidator passwordPolicyValidator;
@@ -73,7 +74,6 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
     public ResponseEntity<String> casLoginRestTickets(
             HttpServletRequest request,
             HttpServletResponse response,
-           
             @RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService,
             @RequestParam(value=CasConstants.PARAMETER.REST_USERNAME,required=true) String username,
             @RequestParam(value=CasConstants.PARAMETER.REST_PASSWORD,required=true) String password){
@@ -133,10 +133,10 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
         }
 	}
 	
-	   @RequestMapping(value="/authz/cas/v1/tickets/{ticketGrantingTicket}", 
+	@RequestMapping(value="/authz/cas/v1/tickets/{ticketGrantingTicket}", 
 	            method=RequestMethod.POST, 
 	            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	    public ResponseEntity<String> requestServiceTicket(
+    public ResponseEntity<String> requestServiceTicket(
 	            HttpServletRequest request,
 	            HttpServletResponse response,
 	            @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
@@ -168,6 +168,46 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
         }
 	       return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
 	   }
+	   
+    @RequestMapping(value="/authz/cas/v1/tickets/{ticketGrantingTicket}", 
+	            method=RequestMethod.GET)
+    public ResponseEntity<String> verifyTicketGrantingTicketStatus(
+	            @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
+	            HttpServletRequest request,
+	            HttpServletResponse response){
+	       try {
+            TicketGrantingTicketImpl ticketGrantingTicketImpl = 
+                       (TicketGrantingTicketImpl) ticketServices.consumeTicket(ticketGrantingTicket);
+                if(ticketGrantingTicketImpl != null) {
+                    return new ResponseEntity<>("", HttpStatus.OK);
+                }
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+	       return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+	}
+    
+    @RequestMapping(value="/authz/cas/v1/tickets/{ticketGrantingTicket}", 
+            method=RequestMethod.DELETE)
+    public ResponseEntity<String> destroyTicketGrantingTicket(
+            @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
+            HttpServletRequest request,
+            HttpServletResponse response){
+       try {
+        TicketGrantingTicketImpl ticketGrantingTicketImpl = 
+                   (TicketGrantingTicketImpl) ticketServices.consumeTicket(ticketGrantingTicket);
+            if(ticketGrantingTicketImpl != null) {
+                return new ResponseEntity<>("", HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+       return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+    }
+	   
+	   
 	@RequestMapping(value="/authz/cas/v1/users", 
             method=RequestMethod.POST, 
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -177,8 +217,80 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             @RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService,
             @RequestParam(value=CasConstants.PARAMETER.REST_USERNAME,required=true) String username,
             @RequestParam(value=CasConstants.PARAMETER.REST_PASSWORD,required=true) String password){
-        
-       return null;
+	    try {
+            if (password == null || password.isEmpty()) {
+                throw new BadCredentialsException("No credentials are provided or extracted to authenticate the REST request");
+            }
+            
+            AbstractAuthenticationRealm authenticationRealm = 
+                    (AbstractAuthenticationRealm) WebContext.getBean("authenticationRealm");
+            UserInfo loadeduserInfo = authenticationRealm.loadUserInfo(username, "");
+            if (loadeduserInfo != null) {
+                
+                authenticationRealm.passwordMatches(loadeduserInfo, password);
+                
+                passwordPolicyValidator.passwordPolicyValid(loadeduserInfo);
+                
+                WebContext.setUserInfo(loadeduserInfo);
+                BasicAuthentication authentication =new BasicAuthentication();
+                authentication.setUsername(username);
+                authentication.setPassword(password);
+                authentication.setAuthType("basic");
+                
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                        new UsernamePasswordAuthenticationToken(
+                                authentication, 
+                                "PASSWORD", 
+                                authenticationRealm.grantAuthority(loadeduserInfo)
+                        );
+
+                authentication.setAuthenticated(true);
+                WebContext.setAuthentication(usernamePasswordAuthenticationToken);
+                WebContext.setUserInfo(loadeduserInfo);
+
+                authenticationRealm.insertLoginHistory(loadeduserInfo, "CAS", "", "", "SUCCESS");
+                
+                TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
+                
+                String ticket=ticketServices.createTicket(ticketGrantingTicket);
+                String location = applicationConfig.getServerPrefix()+"/authz/cas/v1/tickets/" + ticket;
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("location", location);
+                ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
+                serviceResponseBuilder.setFormat(CasConstants.FORMAT_TYPE.JSON);
+                //for user
+                serviceResponseBuilder.setAttribute("uid", loadeduserInfo.getId());
+                serviceResponseBuilder.setAttribute("displayName",loadeduserInfo.getDisplayName());
+                serviceResponseBuilder.setAttribute("firstName", loadeduserInfo.getGivenName());
+                serviceResponseBuilder.setAttribute("lastname", loadeduserInfo.getFamilyName());
+                serviceResponseBuilder.setAttribute("mobile", loadeduserInfo.getMobile());
+                serviceResponseBuilder.setAttribute("birthday", loadeduserInfo.getBirthDate());
+                serviceResponseBuilder.setAttribute("gender", loadeduserInfo.getGender()+"");
+                
+                //for work
+                serviceResponseBuilder.setAttribute("employeeNumber", loadeduserInfo.getEmployeeNumber());
+                serviceResponseBuilder.setAttribute("title", loadeduserInfo.getJobTitle());
+                serviceResponseBuilder.setAttribute("email", loadeduserInfo.getWorkEmail());
+                serviceResponseBuilder.setAttribute("department", loadeduserInfo.getDepartment());
+                serviceResponseBuilder.setAttribute("departmentId", loadeduserInfo.getDepartmentId());
+                serviceResponseBuilder.setAttribute("workRegion",loadeduserInfo.getWorkRegion());
+                
+                serviceResponseBuilder.success().setUser(loadeduserInfo.getUsername());
+                return new ResponseEntity<>(serviceResponseBuilder.serviceResponseBuilder(), headers ,HttpStatus.OK);
+                
+            }else {
+                String message = WebContext.getI18nValue("login.error.username");
+                _logger.debug("login user  " + username + " not in this System ." + message);
+                throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
+            }
+        } catch (final AuthenticationException e) {
+            _logger.error("BadCredentialsException ", e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (final Exception e) {
+            
+            _logger.error("Exception ", e);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 	
 }
