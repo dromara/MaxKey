@@ -47,7 +47,7 @@ public class JdbcTicketServices extends RandomServiceTicketServices {
 	}
 
 	@Override
-	protected void store(String ticketId, Ticket ticket) {
+	public void store(String ticketId, Ticket ticket) {
 		jdbcTemplate.update(insertAuthenticationSql,
 				new Object[] { ticket, new SqlLobValue(SerializationUtils.serialize(ticket)) }, new int[] {
 						Types.VARCHAR, Types.BLOB });
@@ -86,4 +86,10 @@ public class JdbcTicketServices extends RandomServiceTicketServices {
 	public void setDeleteAuthenticationSql(String deleteAuthenticationSql) {
 		this.deleteAuthenticationSql = deleteAuthenticationSql;
 	}
+
+    @Override
+    public Ticket get(String ticketId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

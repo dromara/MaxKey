@@ -17,8 +17,10 @@
 
 package org.maxkey.autoconfigure;
 
+import org.maxkey.authz.cas.endpoint.ticket.service.InMemoryTicketGrantingTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.service.InMemoryTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.service.JdbcTicketServices;
+import org.maxkey.authz.cas.endpoint.ticket.service.RedisTicketGrantingTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.service.RedisTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
 import org.maxkey.constants.ConstantsProperties;
@@ -67,7 +69,33 @@ public class CasAutoConfiguration implements InitializingBean {
         return casTicketServices;
     }
    
-
+    /**
+     * TicketServices. 
+     * @param persistence int
+     * @param validity int
+     * @return casTicketServices
+     */
+    @Bean(name = "casTicketGrantingTicketServices")
+    public TicketServices casTicketGrantingTicketServices(
+            @Value("${config.server.persistence}") int persistence,
+            @Value("${config.login.remeberme.validity}") int validity,
+            JdbcTemplate jdbcTemplate,
+            RedisConnectionFactory jedisConnectionFactory) {
+        TicketServices casTicketServices = null;
+        if (persistence == 0) {
+            casTicketServices = new InMemoryTicketGrantingTicketServices();
+            _logger.debug("InMemoryTicketServices");
+        } else if (persistence == 1) {
+            //
+            //casTicketServices = new JdbcTicketServices(jdbcTemplate);
+            _logger.debug("JdbcTicketServices not support ");
+        } else if (persistence == 2) {
+            casTicketServices = new RedisTicketGrantingTicketServices(jedisConnectionFactory);
+            _logger.debug("RedisTicketServices");
+        }
+        return casTicketServices;
+    }
+    
     @Override
     public void afterPropertiesSet() throws Exception {
         // TODO Auto-generated method stub

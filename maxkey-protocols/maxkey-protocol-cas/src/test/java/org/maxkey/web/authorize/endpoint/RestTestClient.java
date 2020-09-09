@@ -47,6 +47,6 @@ public class RestTestClient {
         for (Map.Entry entry : mapEntries) {
             System.out.println(entry.getKey() + ":" + entry.getValue());
         }
-        //client.destroyTicketGrantingTicket(profile,webContext);
+        client.destroyTicketGrantingTicket(profile,webContext);
     }
 }

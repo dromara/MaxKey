@@ -25,30 +25,30 @@ import org.ehcache.config.builders.UserManagedCacheBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 
 
-public class InMemoryTicketServices extends RandomServiceTicketServices {
+public class InMemoryTicketGrantingTicketServices extends RandomServiceTicketServices {
 
-	protected final static  UserManagedCache<String, Ticket> casTicketStore = 
+	protected final static  UserManagedCache<String, Ticket> casTicketGrantingTicketStore = 
 			UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, Ticket.class)
-				.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(60)))
+				.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofDays(2)))
 				.build(true);
 
 	
 	@Override
 	public void store(String ticketId, Ticket ticket) {
-		casTicketStore.put(ticketId, ticket);
+	    casTicketGrantingTicketStore.put(ticketId, ticket);
 	}
 
 	@Override
 	public Ticket remove(String ticketId) {
-		Ticket ticket=casTicketStore.get(ticketId);	
-		casTicketStore.remove(ticketId);
+		Ticket ticket=casTicketGrantingTicketStore.get(ticketId);	
+		casTicketGrantingTicketStore.remove(ticketId);
 		return ticket;
 	}
 
     @Override
-    public Ticket get(String ticket) {
-        // TODO Auto-generated method stub
-        return null;
+    public Ticket get(String ticketId) {
+        Ticket ticket=casTicketGrantingTicketStore.get(ticketId);   
+        return ticket;
     }
 
 }

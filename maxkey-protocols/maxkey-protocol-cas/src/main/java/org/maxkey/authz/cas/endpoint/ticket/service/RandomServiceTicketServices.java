@@ -28,11 +28,6 @@ public abstract class RandomServiceTicketServices implements TicketServices {
 	//private RandomValueStringGenerator generator = new RandomValueStringGenerator();
 	
 	private DefaultUniqueTicketIdGenerator generator=new DefaultUniqueTicketIdGenerator();
-	
-
-	protected abstract void store(String ticketId, Ticket ticket);
-
-	protected abstract Ticket remove(String ticket);
 
 	public String createTicket(Ticket ticket) {
 		//String code = generator.generate();

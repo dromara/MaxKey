@@ -46,6 +46,11 @@ public class CasBaseAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
     @Qualifier("casTicketServices")
     protected TicketServices ticketServices;
     
+    @Autowired
+    @Qualifier("casTicketGrantingTicketServices")
+    protected TicketServices casTicketGrantingTicketServices;
+    
+    
     public void setContentType(
                         HttpServletRequest request,
                         HttpServletResponse response,

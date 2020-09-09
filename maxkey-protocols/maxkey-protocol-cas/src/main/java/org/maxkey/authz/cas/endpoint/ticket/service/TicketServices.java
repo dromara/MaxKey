@@ -38,5 +38,11 @@ public interface TicketServices {
 	 */
 	Ticket consumeTicket(String ticketId)
 			throws Exception;
+	
+	public  void store(String ticketId, Ticket ticket);
+
+    public  Ticket remove(String ticket);
+    
+    public  Ticket get(String ticketId);
 
 }

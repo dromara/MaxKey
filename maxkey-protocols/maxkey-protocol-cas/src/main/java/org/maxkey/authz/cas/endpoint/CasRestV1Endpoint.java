@@ -81,7 +81,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             
             TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
             
-            String ticket=ticketServices.createTicket(ticketGrantingTicket);
+            String ticket=casTicketGrantingTicketServices.createTicket(ticketGrantingTicket);
             String location = applicationConfig.getServerPrefix()+"/authz/cas/v1/tickets/" + ticket;
             HttpHeaders headers = new HttpHeaders();
             headers.add("location", location);
@@ -110,7 +110,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
 	            @RequestParam(value=CasConstants.PARAMETER.REST_PASSWORD,required=false) String password){
 	       try {
             TicketGrantingTicketImpl ticketGrantingTicketImpl = 
-                    (TicketGrantingTicketImpl) ticketServices.consumeTicket(ticketGrantingTicket);
+                    (TicketGrantingTicketImpl) casTicketGrantingTicketServices.get(ticketGrantingTicket);
             
             AppsCasDetails  casDetails=casDetailsService.getAppDetails(casService);
             
@@ -133,7 +133,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
 	            HttpServletResponse response){
 	       try {
             TicketGrantingTicketImpl ticketGrantingTicketImpl = 
-                       (TicketGrantingTicketImpl) ticketServices.consumeTicket(ticketGrantingTicket);
+                       (TicketGrantingTicketImpl) casTicketGrantingTicketServices.get(ticketGrantingTicket);
                 if(ticketGrantingTicketImpl != null) {
                     return new ResponseEntity<>("", HttpStatus.OK);
                 }
@@ -152,7 +152,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             HttpServletResponse response){
        try {
         TicketGrantingTicketImpl ticketGrantingTicketImpl = 
-                   (TicketGrantingTicketImpl) ticketServices.consumeTicket(ticketGrantingTicket);
+                   (TicketGrantingTicketImpl) casTicketGrantingTicketServices.remove(ticketGrantingTicket);
             if(ticketGrantingTicketImpl != null) {
                 return new ResponseEntity<>("", HttpStatus.OK);
             }
@@ -184,7 +184,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             UserInfo userInfo =WebContext.getUserInfo();
             TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
             
-            String ticket=ticketServices.createTicket(ticketGrantingTicket);
+            String ticket=casTicketGrantingTicketServices.createTicket(ticketGrantingTicket);
             String location = applicationConfig.getServerPrefix()+"/authz/cas/v1/tickets/" + ticket;
             HttpHeaders headers = new HttpHeaders();
             headers.add("location", location);
