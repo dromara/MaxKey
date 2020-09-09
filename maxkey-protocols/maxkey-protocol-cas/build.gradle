@@ -6,10 +6,12 @@ dependencies {
 	//local jars
 	compile fileTree(dir: '../maxkey-lib/*/', include: '*.jar')
 	
+	// https://mvnrepository.com/artifact/org.jasig.cas.client/cas-client-core
+	testCompile group: 'org.jasig.cas.client', name: 'cas-client-core', version: '3.6.1'
 	
-	testCompile group: 'org.pac4j', name: 'pac4j-core', version: '3.1.0'
+	testCompile group: 'org.pac4j', name: 'pac4j-core', version: '3.8.3'
 	// https://mvnrepository.com/artifact/org.pac4j/pac4j-cas
-	testCompile group: 'org.pac4j', name: 'pac4j-cas', version: '3.1.0'
+	testCompile group: 'org.pac4j', name: 'pac4j-cas', version: '3.8.3'
 	
 	
 	compile project(":maxkey-core")

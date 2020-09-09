@@ -38,7 +38,7 @@ public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
 	public String base64Attr(String attrValue){
 		String b64="";
 		try {
-			b64="base64:"+Base64.encodeBase64String(attrValue.getBytes(Charset_UTF8));
+			b64=(attrValue == null? "":"base64:"+Base64.encodeBase64String(attrValue.getBytes(Charset_UTF8)));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

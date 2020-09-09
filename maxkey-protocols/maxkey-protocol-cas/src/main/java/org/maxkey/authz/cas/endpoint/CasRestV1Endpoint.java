@@ -20,20 +20,17 @@
  */
 package org.maxkey.authz.cas.endpoint;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.BasicAuthentication;
-import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
 import org.maxkey.authz.cas.endpoint.ticket.TicketGrantingTicketImpl;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.AppsCasDetails;
-import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +41,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,12 +56,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
     final static Logger _logger = LoggerFactory.getLogger(CasRestV1Endpoint.class);
 	
-	@Autowired
-    protected PasswordPolicyValidator passwordPolicyValidator;
-    
     @Autowired
-    @Qualifier("authenticationRealm")
-    protected AbstractAuthenticationRealm authenticationRealm;
+    @Qualifier("authenticationProvider")
+    RealmAuthenticationProvider authenticationProvider ;
     
 
 	@RequestMapping(value="/authz/cas/v1/tickets", 
@@ -82,47 +75,18 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
                 throw new BadCredentialsException("No credentials are provided or extracted to authenticate the REST request");
             }
     	    
-            AbstractAuthenticationRealm authenticationRealm = 
-                    (AbstractAuthenticationRealm) WebContext.getBean("authenticationRealm");
-            UserInfo loadeduserInfo = authenticationRealm.loadUserInfo(username, "");
-            if (loadeduserInfo != null) {
-                
-                authenticationRealm.passwordMatches(loadeduserInfo, password);
-                
-                passwordPolicyValidator.passwordPolicyValid(loadeduserInfo);
-                
-                WebContext.setUserInfo(loadeduserInfo);
-                BasicAuthentication authentication =new BasicAuthentication();
-                authentication.setUsername(username);
-                authentication.setPassword(password);
-                authentication.setAuthType("basic");
-                
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(
-                                authentication, 
-                                "PASSWORD", 
-                                authenticationRealm.grantAuthority(loadeduserInfo)
-                        );
-
-                authentication.setAuthenticated(true);
-                WebContext.setAuthentication(usernamePasswordAuthenticationToken);
-                WebContext.setUserInfo(loadeduserInfo);
-
-                authenticationRealm.insertLoginHistory(loadeduserInfo, "CAS", "", "", "SUCCESS");
-                
-                TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
-                
-                String ticket=ticketServices.createTicket(ticketGrantingTicket);
-                String location = applicationConfig.getServerPrefix()+"/authz/cas/v1/tickets/" + ticket;
-                HttpHeaders headers = new HttpHeaders();
-                headers.add("location", location);
-                return new ResponseEntity<>("Location: " + location, headers ,HttpStatus.CREATED);
-                
-            }else {
-    	        String message = WebContext.getI18nValue("login.error.username");
-                _logger.debug("login user  " + username + " not in this System ." + message);
-                throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
-    	    }
+    	    BasicAuthentication authentication =new BasicAuthentication(username,password,"CASREST");
+    	    
+    	    authenticationProvider.basicAuthenticate(authentication);
+            
+            TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
+            
+            String ticket=ticketServices.createTicket(ticketGrantingTicket);
+            String location = applicationConfig.getServerPrefix()+"/authz/cas/v1/tickets/" + ticket;
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("location", location);
+            return new ResponseEntity<>("Location: " + location, headers ,HttpStatus.CREATED);
+ 
 	    } catch (final AuthenticationException e) {
 	        _logger.error("BadCredentialsException ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -147,16 +111,8 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
 	       try {
             TicketGrantingTicketImpl ticketGrantingTicketImpl = 
                     (TicketGrantingTicketImpl) ticketServices.consumeTicket(ticketGrantingTicket);
-            AppsCasDetails casDetails=new AppsCasDetails();
-            if(casService.startsWith("http")) {
-                casDetails.setService(casService);
-                
-                List<AppsCasDetails> casDetailsList=casDetailsService.query(casDetails);
-                
-                casDetails=(casDetailsList!=null && casDetailsList.size()==1)?casDetailsList.get(0):null;
-            }else {
-                casDetails=casDetailsService.getAppDetails(casService);
-            }
+            
+            AppsCasDetails  casDetails=casDetailsService.getAppDetails(casService);
             
             ServiceTicketImpl serviceTicket=new ServiceTicketImpl(ticketGrantingTicketImpl.getAuthentication(),casDetails);
             String ticket=ticketServices.createTicket(serviceTicket);
@@ -222,67 +178,38 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
                 throw new BadCredentialsException("No credentials are provided or extracted to authenticate the REST request");
             }
             
-            AbstractAuthenticationRealm authenticationRealm = 
-                    (AbstractAuthenticationRealm) WebContext.getBean("authenticationRealm");
-            UserInfo loadeduserInfo = authenticationRealm.loadUserInfo(username, "");
-            if (loadeduserInfo != null) {
-                
-                authenticationRealm.passwordMatches(loadeduserInfo, password);
-                
-                passwordPolicyValidator.passwordPolicyValid(loadeduserInfo);
-                
-                WebContext.setUserInfo(loadeduserInfo);
-                BasicAuthentication authentication =new BasicAuthentication();
-                authentication.setUsername(username);
-                authentication.setPassword(password);
-                authentication.setAuthType("basic");
-                
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(
-                                authentication, 
-                                "PASSWORD", 
-                                authenticationRealm.grantAuthority(loadeduserInfo)
-                        );
-
-                authentication.setAuthenticated(true);
-                WebContext.setAuthentication(usernamePasswordAuthenticationToken);
-                WebContext.setUserInfo(loadeduserInfo);
-
-                authenticationRealm.insertLoginHistory(loadeduserInfo, "CAS", "", "", "SUCCESS");
-                
-                TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
-                
-                String ticket=ticketServices.createTicket(ticketGrantingTicket);
-                String location = applicationConfig.getServerPrefix()+"/authz/cas/v1/tickets/" + ticket;
-                HttpHeaders headers = new HttpHeaders();
-                headers.add("location", location);
-                ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
-                serviceResponseBuilder.setFormat(CasConstants.FORMAT_TYPE.JSON);
-                //for user
-                serviceResponseBuilder.setAttribute("uid", loadeduserInfo.getId());
-                serviceResponseBuilder.setAttribute("displayName",loadeduserInfo.getDisplayName());
-                serviceResponseBuilder.setAttribute("firstName", loadeduserInfo.getGivenName());
-                serviceResponseBuilder.setAttribute("lastname", loadeduserInfo.getFamilyName());
-                serviceResponseBuilder.setAttribute("mobile", loadeduserInfo.getMobile());
-                serviceResponseBuilder.setAttribute("birthday", loadeduserInfo.getBirthDate());
-                serviceResponseBuilder.setAttribute("gender", loadeduserInfo.getGender()+"");
-                
-                //for work
-                serviceResponseBuilder.setAttribute("employeeNumber", loadeduserInfo.getEmployeeNumber());
-                serviceResponseBuilder.setAttribute("title", loadeduserInfo.getJobTitle());
-                serviceResponseBuilder.setAttribute("email", loadeduserInfo.getWorkEmail());
-                serviceResponseBuilder.setAttribute("department", loadeduserInfo.getDepartment());
-                serviceResponseBuilder.setAttribute("departmentId", loadeduserInfo.getDepartmentId());
-                serviceResponseBuilder.setAttribute("workRegion",loadeduserInfo.getWorkRegion());
-                
-                serviceResponseBuilder.success().setUser(loadeduserInfo.getUsername());
-                return new ResponseEntity<>(serviceResponseBuilder.serviceResponseBuilder(), headers ,HttpStatus.OK);
-                
-            }else {
-                String message = WebContext.getI18nValue("login.error.username");
-                _logger.debug("login user  " + username + " not in this System ." + message);
-                throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
-            }
+            BasicAuthentication authentication =new BasicAuthentication(username,password,"CASREST");
+            
+            authenticationProvider.basicAuthenticate(authentication);
+            UserInfo userInfo =WebContext.getUserInfo();
+            TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
+            
+            String ticket=ticketServices.createTicket(ticketGrantingTicket);
+            String location = applicationConfig.getServerPrefix()+"/authz/cas/v1/tickets/" + ticket;
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("location", location);
+            ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
+            serviceResponseBuilder.setFormat(CasConstants.FORMAT_TYPE.JSON);
+            //for user
+            serviceResponseBuilder.setAttribute("uid", userInfo.getId());
+            serviceResponseBuilder.setAttribute("displayName",userInfo.getDisplayName());
+            serviceResponseBuilder.setAttribute("firstName", userInfo.getGivenName());
+            serviceResponseBuilder.setAttribute("lastname", userInfo.getFamilyName());
+            serviceResponseBuilder.setAttribute("mobile", userInfo.getMobile());
+            serviceResponseBuilder.setAttribute("birthday", userInfo.getBirthDate());
+            serviceResponseBuilder.setAttribute("gender", userInfo.getGender()+"");
+            
+            //for work
+            serviceResponseBuilder.setAttribute("employeeNumber", userInfo.getEmployeeNumber());
+            serviceResponseBuilder.setAttribute("title", userInfo.getJobTitle());
+            serviceResponseBuilder.setAttribute("email", userInfo.getWorkEmail());
+            serviceResponseBuilder.setAttribute("department", userInfo.getDepartment());
+            serviceResponseBuilder.setAttribute("departmentId", userInfo.getDepartmentId());
+            serviceResponseBuilder.setAttribute("workRegion",userInfo.getWorkRegion());
+            
+            serviceResponseBuilder.success().setUser(userInfo.getUsername());
+            
+            return new ResponseEntity<>(serviceResponseBuilder.serviceResponseBuilder(), headers ,HttpStatus.OK);
         } catch (final AuthenticationException e) {
             _logger.error("BadCredentialsException ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

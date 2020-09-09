@@ -48,13 +48,6 @@ public class TicketGrantingTicketImpl extends AbstractTicket implements TicketGr
      * Unique Id for serialization.
      */
     private static final long serialVersionUID = -8608149809180911599L;
-
-    /**
-     * The authenticated object for which this ticket was generated for.
-     */
-    @Lob
-    @Column(name = "AUTHENTICATION", nullable = false, length = Integer.MAX_VALUE)
-    private Authentication authentication;
     
     /**
      * Service that produced a proxy-granting ticket.

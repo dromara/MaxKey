@@ -86,6 +86,7 @@ public abstract class AbstractAuthenticationRealm {
     }
 
     public abstract boolean passwordMatches(UserInfo userInfo, String password);
+    
 
     public static boolean isAuthenticated() {
         if (WebContext.getUserInfo() != null) {

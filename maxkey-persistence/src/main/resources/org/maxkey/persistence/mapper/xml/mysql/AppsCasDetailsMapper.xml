@@ -8,9 +8,11 @@
     		MXK_APPS_CAS_DETAILS CD,
     		MXK_APPS APP
     	WHERE 	
-    		APP.ID	=	#{value}
-    		AND CD.ID	=	#{value}
+    		STATUS	=	1
     		AND CD.ID	=	APP.ID
-    		AND STATUS	=	1
+    		AND (
+    			APP.ID	=	#{value}
+    			OR  LOWER(CD.SERVICE) LIKE LOWER(CONCAT(#{value},'%'))
+    		)
     </select>
 </mapper>

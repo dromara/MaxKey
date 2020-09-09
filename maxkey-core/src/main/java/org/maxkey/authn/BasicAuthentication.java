@@ -46,6 +46,17 @@ public class BasicAuthentication implements Authentication {
         grantedAuthority.add(new SimpleGrantedAuthority("ORDINARY_USER"));
     }
 
+    /**
+     * BasicAuthentication.
+     */
+    public BasicAuthentication(String username,String password,String authType) {
+        this.username = username;
+        this.password = password;
+        this.authType = authType;
+        grantedAuthority = new ArrayList<GrantedAuthority>();
+        grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
+        grantedAuthority.add(new SimpleGrantedAuthority("ORDINARY_USER"));
+    }
     @Override
     public String getName() {
         return "Basic Authentication";

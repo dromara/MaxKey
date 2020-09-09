@@ -20,7 +20,6 @@
  */
 package org.maxkey.authz.cas.endpoint;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,13 +53,8 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService){
-		
-		AppsCasDetails casDetails=new AppsCasDetails();
-		casDetails.setService(casService);
-		
-		List<AppsCasDetails> casDetailsList=casDetailsService.query(casDetails);
-		
-		casDetails=(casDetailsList!=null && casDetailsList.size()==1)?casDetailsList.get(0):null;
+	    
+		AppsCasDetails  casDetails=casDetailsService.getAppDetails(casService);
 		
 		return buildCasModelAndView(request,response,casDetails);
 		

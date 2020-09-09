@@ -65,4 +65,8 @@ public class DefaultJdbcAuthenticationRealm extends AbstractAuthenticationRealm 
         }
         return passwordMatches;
     }
+    
+    
+    
+ 
 }
