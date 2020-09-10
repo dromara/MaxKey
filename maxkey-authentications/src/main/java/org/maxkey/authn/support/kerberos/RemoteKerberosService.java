@@ -23,17 +23,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
+import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RemoteKerberosService  implements KerberosService{
 	private static Logger _logger = LoggerFactory.getLogger(RemoteKerberosService.class);
 	List<KerberosProxy> kerberosProxys;
+	
+	RealmAuthenticationProvider authenticationProvider ;
 	
 	public boolean login(String kerberosTokenString,String kerberosUserDomain){
 		_logger.debug("encoder Kerberos Token "+kerberosTokenString);
@@ -54,7 +56,8 @@ public class RemoteKerberosService  implements KerberosService{
 		DateTime notOnOrAfter=DateUtils.toUtcDate(kerberosToken.getNotOnOrAfter());
 		_logger.debug("Kerberos Token is After Now  "+notOnOrAfter.isAfterNow());
 		if(notOnOrAfter.isAfterNow()){
-	    	return WebContext.setAuthentication(kerberosToken.getPrincipal(),ConstantsLoginType.KERBEROS,kerberosUserDomain,"","success");
+	    	authenticationProvider.trustAuthentication(kerberosToken.getPrincipal(),ConstantsLoginType.KERBEROS,kerberosUserDomain,"","success");
+	    	return true;
 		}else{
 			
 			return false;

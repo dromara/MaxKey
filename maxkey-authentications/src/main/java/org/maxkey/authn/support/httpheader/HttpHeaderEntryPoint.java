@@ -20,10 +20,12 @@ package org.maxkey.authn.support.httpheader;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.constants.ConstantsLoginType;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -35,6 +37,9 @@ public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 	String headerName;
     boolean enable;
     
+    @Autowired
+    @Qualifier("authenticationProvider")
+    RealmAuthenticationProvider authenticationProvider ;
 	
 	String []skipRequestURI={
 			"/oauth/v20/token",
@@ -102,9 +107,8 @@ public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
 		 }
 		 
 		 if(!isAuthenticated){
-			if(WebContext.setAuthentication(httpHeaderUsername,ConstantsLoginType.HTTPHEADER,"","","success")){
-				_logger.info("Authentication  "+httpHeaderUsername+" successful .");
-			}
+			authenticationProvider.trustAuthentication(httpHeaderUsername,ConstantsLoginType.HTTPHEADER,"","","success");
+			_logger.info("Authentication  "+httpHeaderUsername+" successful .");
 		 }
 		
 		 return true;

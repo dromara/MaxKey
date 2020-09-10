@@ -19,18 +19,24 @@ package org.maxkey.authn.support.wsfederation;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.util.StringUtils;
-import org.maxkey.web.WebContext;
 import org.opensaml.saml1.core.impl.AssertionImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 
 public class WsFederationServiceImpl implements   WsFederationService{
 	final static Logger _logger = LoggerFactory.getLogger(WsFederationServiceImpl.class);
 	
 	private WsFederationConfiguration wsFederationConfiguration;
+	
+	@Autowired
+    @Qualifier("authenticationProvider")
+    RealmAuthenticationProvider authenticationProvider ;
 	
 	public boolean login(String wsFederationWA,String wsFederationWResult,HttpServletRequest request){
 		// it's an authentication
@@ -57,11 +63,11 @@ public class WsFederationServiceImpl implements   WsFederationService{
                     			wsFederationConfiguration.getUpnSuffix());
                     }
 
-                    return WebContext.setAuthentication(
+                    authenticationProvider.trustAuthentication(
                     		wsFederationCredential.getAttributes().get("").toString(),
                     		ConstantsLoginType.WSFEDERATION,
                     		"","","success");
-
+                    return true;
                 } else {
                     _logger.warn("SAML assertions are blank or no longer valid.");
                     return false;

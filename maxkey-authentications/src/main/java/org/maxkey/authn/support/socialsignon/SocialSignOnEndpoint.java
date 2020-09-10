@@ -22,14 +22,11 @@ package org.maxkey.authn.support.socialsignon;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
@@ -49,11 +46,6 @@ import me.zhyd.oauth.utils.AuthStateUtils;
 public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(SocialSignOnEndpoint.class);
 	
-    @Autowired
-	@Qualifier("authenticationRealm")
-	protected AbstractAuthenticationRealm authenticationRealm;
-    
-    
     public  ModelAndView socialSignOnAuthorize(String provider){
     	_logger.debug("SocialSignOn provider : "+provider);
     	String authorizationUrl=buildAuthRequest(provider).authorize(AuthStateUtils.createState());
@@ -155,13 +147,13 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 
 			_logger.debug("Social Sign On from "+socialSignOnUserToken.getProvider()+" mapping to user "+socialSignOnUserToken.getUsername());
 			
-			if(WebContext.setAuthentication(socialSignOnUserToken.getUsername(), ConstantsLoginType.SOCIALSIGNON,this.socialSignOnProvider.getProviderName(),"xe00000004","success")){
-				//socialSignOnUserToken.setAccessToken(JsonUtils.object2Json(this.accessToken));
-				socialSignOnUserToken.setSocialUserInfo(accountJsonString);
-				//socialSignOnUserToken.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
-				
-				this.socialsAssociateService.update(socialSignOnUserToken);
-			}
+			authenticationProvider.trustAuthentication(socialSignOnUserToken.getUsername(), ConstantsLoginType.SOCIALSIGNON,this.socialSignOnProvider.getProviderName(),"xe00000004","success");
+			//socialSignOnUserToken.setAccessToken(JsonUtils.object2Json(this.accessToken));
+			socialSignOnUserToken.setSocialUserInfo(accountJsonString);
+			//socialSignOnUserToken.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
+			
+			this.socialsAssociateService.update(socialSignOnUserToken);
+			
 			
 		}else{
 			WebContext.getRequest().getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, new BadCredentialsException(WebContext.getI18nValue("login.error.social")));

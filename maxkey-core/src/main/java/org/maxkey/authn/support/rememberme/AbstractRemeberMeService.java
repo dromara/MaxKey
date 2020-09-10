@@ -23,6 +23,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
+import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.constants.ConstantsTimeInterval;
@@ -46,6 +47,10 @@ public abstract class AbstractRemeberMeService {
     @Autowired
     @Qualifier("applicationConfig")
     protected ApplicationConfig applicationConfig;
+    
+    @Autowired
+    @Qualifier("authenticationProvider")
+    RealmAuthenticationProvider authenticationProvider ;
 
     // follow function is for persist
     public abstract void save(RemeberMe remeberMe);
@@ -112,15 +117,14 @@ public abstract class AbstractRemeberMeService {
         DateTime expiryDate = loginDate.plusSeconds(getRemeberMeValidity());
         DateTime now = new DateTime();
         if (now.isBefore(expiryDate)) {
-            if (WebContext.setAuthentication(
+            authenticationProvider.trustAuthentication(
                     storeRemeberMe.getUsername(), 
                     ConstantsLoginType.REMEBER_ME, 
                     "", 
                     "", 
-                    "success")
-            ) {
-                return updateRemeberMe(remeberMeCookie, response);
-            }
+                    "success");
+            return updateRemeberMe(remeberMeCookie, response);
+
         }
         return false;
     }

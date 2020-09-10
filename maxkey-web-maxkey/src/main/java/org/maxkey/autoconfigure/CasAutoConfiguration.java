@@ -84,7 +84,7 @@ public class CasAutoConfiguration implements InitializingBean {
         TicketServices casTicketServices = null;
         if (persistence == 0) {
             casTicketServices = new InMemoryTicketGrantingTicketServices();
-            _logger.debug("InMemoryTicketServices");
+            _logger.debug("InMemoryTicketGrantingTicketServices");
         } else if (persistence == 1) {
             //
             //casTicketServices = new JdbcTicketServices(jdbcTemplate);

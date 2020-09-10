@@ -22,6 +22,8 @@ import com.nimbusds.jose.JWEAlgorithm;
 import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+
+import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
 import org.maxkey.constants.ConstantsProperties;
@@ -124,11 +126,13 @@ public class JwtAuthnAutoConfiguration implements InitializingBean {
     @Bean(name = "jwtLoginService")
     public JwtLoginService jwtLoginService(
             DefaultJwtSigningAndValidationService jwtSignerValidationService,
-            OIDCProviderMetadataDetails oidcProviderMetadata) {
-        JwtLoginService jwkSetKeyStore = new JwtLoginService();
-        jwkSetKeyStore.setJwtSignerValidationService(jwtSignerValidationService);
-        jwkSetKeyStore.setJwtProviderMetadata(oidcProviderMetadata);
-        return jwkSetKeyStore;
+            OIDCProviderMetadataDetails oidcProviderMetadata,
+            RealmAuthenticationProvider authenticationProvider) {
+        JwtLoginService jwtLoginService = new JwtLoginService();
+        jwtLoginService.setJwtSignerValidationService(jwtSignerValidationService);
+        jwtLoginService.setJwtProviderMetadata(oidcProviderMetadata);
+        jwtLoginService.setAuthenticationProvider(authenticationProvider);
+        return jwtLoginService;
     }
     
  

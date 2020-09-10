@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.LogFactory;
-import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.DateUtils;
@@ -113,7 +112,7 @@ public final class WebContext {
      * @param code String
      * @param message String
      * @return boolean
-     */
+     
     public static boolean setAuthentication(String username, 
                                             String type, 
                                             String provider, 
@@ -125,7 +124,7 @@ public final class WebContext {
         authenticationProvider.trustAuthentication(username, type, provider, code, message);
         
         return isAuthenticated();
-    }
+    }*/
 
     public static void setAuthentication(Authentication authentication) {
         setAttribute(WebConstants.AUTHENTICATION, authentication);

@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
+import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
 import org.maxkey.constants.ConstantsLoginType;
@@ -47,6 +48,8 @@ public class JwtLoginService {
     OIDCProviderMetadataDetails jwtProviderMetadata;
 
     DefaultJwtSigningAndValidationService jwtSignerValidationService;
+    
+    RealmAuthenticationProvider authenticationProvider ;
 
     public boolean login(String jwt, HttpServletResponse response) {
         _logger.debug("jwt : " + jwt);
@@ -93,9 +96,8 @@ public class JwtLoginService {
             DateTime now = new DateTime();
 
             if (loginResult && now.isBefore(jwtClaimsSet.getExpirationTime().getTime())) {
-                if (WebContext.setAuthentication(username, ConstantsLoginType.JWT, "", "", "success")) {
-                    return true;
-                }
+                authenticationProvider.trustAuthentication(username, ConstantsLoginType.JWT, "", "", "success");
+                return true;
             }
         } catch (java.text.ParseException e) {
             // Invalid signed JWT encoding
@@ -196,6 +198,10 @@ public class JwtLoginService {
 
     public void setJwtSignerValidationService(DefaultJwtSigningAndValidationService jwtSignerValidationService) {
         this.jwtSignerValidationService = jwtSignerValidationService;
+    }
+
+    public void setAuthenticationProvider(RealmAuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
     }
 
 }

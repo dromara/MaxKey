@@ -20,11 +20,13 @@ package org.maxkey.authn.support.basic;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.util.AuthorizationHeaderUtils;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -34,6 +36,10 @@ public class BasicEntryPoint extends HandlerInterceptorAdapter {
 	private static final Logger _logger = LoggerFactory.getLogger(BasicEntryPoint.class);
 	
 	boolean enable;
+	
+	@Autowired
+    @Qualifier("authenticationProvider")
+    RealmAuthenticationProvider authenticationProvider ;
 	
 	public BasicEntryPoint() {
 	    
@@ -126,9 +132,8 @@ public class BasicEntryPoint extends HandlerInterceptorAdapter {
 		 }
 		 
 		 if(!isAuthenticated){
-			if(WebContext.setAuthentication(username,ConstantsLoginType.BASIC,"","","success")){
+			authenticationProvider.trustAuthentication(username,ConstantsLoginType.BASIC,"","","success");
 				_logger.info("Authentication  "+username+" successful .");
-			}
 		 }
 		
 		 return true;

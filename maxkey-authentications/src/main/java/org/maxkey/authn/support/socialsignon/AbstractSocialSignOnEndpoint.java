@@ -20,6 +20,7 @@
  */
 package org.maxkey.authn.support.socialsignon;
 
+import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
@@ -27,6 +28,7 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthResponse;
@@ -72,7 +74,9 @@ public class AbstractSocialSignOnEndpoint {
 	@Autowired
 	protected SocialsAssociateService socialsAssociateService;
 	
-	
+	@Autowired
+    @Qualifier("authenticationProvider")
+    RealmAuthenticationProvider authenticationProvider ;
  	
   	protected AuthRequest buildAuthRequest(String provider){
   		
