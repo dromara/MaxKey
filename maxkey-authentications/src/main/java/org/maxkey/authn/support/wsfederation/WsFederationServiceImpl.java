@@ -19,7 +19,7 @@ package org.maxkey.authn.support.wsfederation;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.maxkey.authn.RealmAuthenticationProvider;
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.util.StringUtils;
 import org.opensaml.saml1.core.impl.AssertionImpl;
@@ -36,7 +36,7 @@ public class WsFederationServiceImpl implements   WsFederationService{
 	
 	@Autowired
     @Qualifier("authenticationProvider")
-    RealmAuthenticationProvider authenticationProvider ;
+	AbstractAuthenticationProvider authenticationProvider ;
 	
 	public boolean login(String wsFederationWA,String wsFederationWResult,HttpServletRequest request){
 		// it's an authentication

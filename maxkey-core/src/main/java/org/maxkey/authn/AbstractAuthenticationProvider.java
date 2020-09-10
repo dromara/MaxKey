@@ -64,7 +64,16 @@ public abstract class AbstractAuthenticationProvider {
     protected abstract String getProviderName();
 
     protected abstract Authentication doInternalAuthenticate(Authentication authentication);
+    
+    public abstract Authentication basicAuthenticate(Authentication authentication) ;
 
+    public abstract Authentication trustAuthentication(
+                                    String username, 
+                                    String type, 
+                                    String provider, 
+                                    String code,
+                                    String message);
+    
     @SuppressWarnings("rawtypes")
     public boolean supports(Class authentication) {
         return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));

@@ -20,7 +20,7 @@ package org.maxkey.authn.support.httpheader;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.RealmAuthenticationProvider;
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.constants.ConstantsLoginType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ public class HttpHeaderEntryPoint extends HandlerInterceptorAdapter {
     
     @Autowired
     @Qualifier("authenticationProvider")
-    RealmAuthenticationProvider authenticationProvider ;
+    AbstractAuthenticationProvider authenticationProvider ;
 	
 	String []skipRequestURI={
 			"/oauth/v20/token",

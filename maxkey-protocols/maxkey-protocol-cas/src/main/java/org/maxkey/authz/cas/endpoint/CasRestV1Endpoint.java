@@ -23,8 +23,8 @@ package org.maxkey.authz.cas.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.BasicAuthentication;
-import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
@@ -58,7 +58,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
 	
     @Autowired
     @Qualifier("authenticationProvider")
-    RealmAuthenticationProvider authenticationProvider ;
+    AbstractAuthenticationProvider authenticationProvider ;
     
 
 	@RequestMapping(value="/authz/cas/v1/tickets", 

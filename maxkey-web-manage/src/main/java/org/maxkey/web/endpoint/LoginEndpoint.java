@@ -20,8 +20,8 @@ package org.maxkey.web.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.BasicAuthentication;
-import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
@@ -62,7 +62,7 @@ public class LoginEndpoint {
 	
 	@Autowired
 	@Qualifier("authenticationProvider")
-	RealmAuthenticationProvider authenticationProvider ;
+	AbstractAuthenticationProvider authenticationProvider ;
 	
 	/**
 	 * init login

@@ -30,8 +30,7 @@ import java.util.Date;
 import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
-import org.maxkey.authn.RealmAuthenticationProvider;
-import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
@@ -43,14 +42,23 @@ import org.slf4j.LoggerFactory;
 public class JwtLoginService {
     private static final Logger _logger = LoggerFactory.getLogger(JwtLoginService.class);
 
-    protected ApplicationConfig applicationConfig;
 
     OIDCProviderMetadataDetails jwtProviderMetadata;
 
     DefaultJwtSigningAndValidationService jwtSignerValidationService;
     
-    RealmAuthenticationProvider authenticationProvider ;
+    AbstractAuthenticationProvider authenticationProvider ;
 
+    
+    public JwtLoginService(AbstractAuthenticationProvider authenticationProvider,
+            OIDCProviderMetadataDetails jwtProviderMetadata,
+            DefaultJwtSigningAndValidationService jwtSignerValidationService
+            ) {
+        this.authenticationProvider = authenticationProvider;
+        this.jwtProviderMetadata = jwtProviderMetadata;
+        this.jwtSignerValidationService = jwtSignerValidationService;
+        
+    }
     public boolean login(String jwt, HttpServletResponse response) {
         _logger.debug("jwt : " + jwt);
 
@@ -188,9 +196,6 @@ public class JwtLoginService {
         return loginResult;
     }
 
-    public void setApplicationConfig(ApplicationConfig applicationConfig) {
-        this.applicationConfig = applicationConfig;
-    }
 
     public void setJwtProviderMetadata(OIDCProviderMetadataDetails jwtProviderMetadata) {
         this.jwtProviderMetadata = jwtProviderMetadata;
@@ -200,7 +205,7 @@ public class JwtLoginService {
         this.jwtSignerValidationService = jwtSignerValidationService;
     }
 
-    public void setAuthenticationProvider(RealmAuthenticationProvider authenticationProvider) {
+    public void setAuthenticationProvider(AbstractAuthenticationProvider authenticationProvider) {
         this.authenticationProvider = authenticationProvider;
     }
 

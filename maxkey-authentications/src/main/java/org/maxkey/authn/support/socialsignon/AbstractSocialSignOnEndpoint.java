@@ -20,7 +20,7 @@
  */
 package org.maxkey.authn.support.socialsignon;
 
-import org.maxkey.authn.RealmAuthenticationProvider;
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
@@ -76,7 +76,7 @@ public class AbstractSocialSignOnEndpoint {
 	
 	@Autowired
     @Qualifier("authenticationProvider")
-    RealmAuthenticationProvider authenticationProvider ;
+	AbstractAuthenticationProvider authenticationProvider ;
  	
   	protected AuthRequest buildAuthRequest(String provider){
   		

@@ -23,6 +23,7 @@ import java.security.spec.InvalidKeySpecException;
 
 import javax.sql.DataSource;
 
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.approval.TokenApprovalStore;
@@ -46,6 +47,7 @@ import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
+import org.maxkey.crypto.password.NoOpPasswordEncoder;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +61,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.nimbusds.jose.JOSEException;
@@ -156,11 +157,15 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     @Bean(name = "jwtLoginService")
     public JwtLoginService jwtLoginService(
             DefaultJwtSigningAndValidationService jwtSignerValidationService,
-            OIDCProviderMetadataDetails oidcProviderMetadata) {
-        JwtLoginService jwkSetKeyStore = new JwtLoginService();
-        jwkSetKeyStore.setJwtSignerValidationService(jwtSignerValidationService);
-        jwkSetKeyStore.setJwtProviderMetadata(oidcProviderMetadata);
-        return jwkSetKeyStore;
+            OIDCProviderMetadataDetails oidcProviderMetadata,
+            AbstractAuthenticationProvider authenticationProvider) {
+        
+        JwtLoginService jwtLoginService = new JwtLoginService(
+                authenticationProvider,
+                oidcProviderMetadata,
+                jwtSignerValidationService
+                );
+        return jwtLoginService;
     }
     
     

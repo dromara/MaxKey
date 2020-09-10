@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
-import org.maxkey.authn.RealmAuthenticationProvider;
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.util.DateUtils;
@@ -35,7 +35,7 @@ public class RemoteKerberosService  implements KerberosService{
 	private static Logger _logger = LoggerFactory.getLogger(RemoteKerberosService.class);
 	List<KerberosProxy> kerberosProxys;
 	
-	RealmAuthenticationProvider authenticationProvider ;
+	AbstractAuthenticationProvider authenticationProvider ;
 	
 	public boolean login(String kerberosTokenString,String kerberosUserDomain){
 		_logger.debug("encoder Kerberos Token "+kerberosTokenString);

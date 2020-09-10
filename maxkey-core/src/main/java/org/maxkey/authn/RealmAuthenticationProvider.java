@@ -105,6 +105,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         return usernamePasswordAuthenticationToken;
     }
     
+    @Override
     public Authentication basicAuthenticate(Authentication authentication) {
         BasicAuthentication basicAuth = (BasicAuthentication) authentication;
         UserInfo loadeduserInfo = loadUserInfo(basicAuth.getUsername(), "");
@@ -142,6 +143,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
      * @param message String
      * @return boolean
      */
+    @Override
     public  Authentication trustAuthentication(String username, 
                                             String type, 
                                             String provider, 

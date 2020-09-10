@@ -24,8 +24,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.BasicAuthentication;
-import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
@@ -87,7 +87,7 @@ public class LoginEndpoint {
 	
 	@Autowired
 	@Qualifier("authenticationProvider")
-	RealmAuthenticationProvider authenticationProvider ;
+	AbstractAuthenticationProvider authenticationProvider ;
 	
 	@Autowired
     @Qualifier("tfaOptAuthn")

@@ -20,7 +20,7 @@ package org.maxkey.authn.support.basic;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.RealmAuthenticationProvider;
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class BasicEntryPoint extends HandlerInterceptorAdapter {
 	
 	@Autowired
     @Qualifier("authenticationProvider")
-    RealmAuthenticationProvider authenticationProvider ;
+	AbstractAuthenticationProvider authenticationProvider ;
 	
 	public BasicEntryPoint() {
 	    

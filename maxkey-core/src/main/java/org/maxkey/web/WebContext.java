@@ -104,28 +104,6 @@ public final class WebContext {
         removeAttribute(WebConstants.CURRENT_MESSAGE);
     }
 
-    /**
-     * setAuthentication.
-     * @param username String
-     * @param type String
-     * @param provider String
-     * @param code String
-     * @param message String
-     * @return boolean
-     
-    public static boolean setAuthentication(String username, 
-                                            String type, 
-                                            String provider, 
-                                            String code,
-                                            String message) {
-        
-        RealmAuthenticationProvider authenticationProvider = 
-                (RealmAuthenticationProvider) getBean("authenticationProvider");
-        authenticationProvider.trustAuthentication(username, type, provider, code, message);
-        
-        return isAuthenticated();
-    }*/
-
     public static void setAuthentication(Authentication authentication) {
         setAttribute(WebConstants.AUTHENTICATION, authentication);
     }

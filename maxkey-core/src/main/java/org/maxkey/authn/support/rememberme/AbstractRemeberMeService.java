@@ -23,7 +23,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
-import org.maxkey.authn.RealmAuthenticationProvider;
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.constants.ConstantsTimeInterval;
@@ -50,7 +50,7 @@ public abstract class AbstractRemeberMeService {
     
     @Autowired
     @Qualifier("authenticationProvider")
-    RealmAuthenticationProvider authenticationProvider ;
+    AbstractAuthenticationProvider authenticationProvider ;
 
     // follow function is for persist
     public abstract void save(RemeberMe remeberMe);

@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
+
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
@@ -117,7 +119,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     }
     
     @Bean(name = "authenticationProvider")
-    public RealmAuthenticationProvider authenticationProvider() {
+    public AbstractAuthenticationProvider authenticationProvider() {
         return new RealmAuthenticationProvider();
     }
     
