@@ -18,6 +18,8 @@
 package org.maxkey.persistence.db;
 
 import java.io.InputStreamReader;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,6 +60,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.authentication.BadCredentialsException;
 
 public class PasswordPolicyValidator {
@@ -410,5 +413,30 @@ public class PasswordPolicyValidator {
    }
 
  
-   
+   public class PasswordPolicyRowMapper implements RowMapper<PasswordPolicy> {
+
+       @Override
+       public PasswordPolicy mapRow(ResultSet rs, int rowNum) throws SQLException {
+           PasswordPolicy passwordPolicy = new PasswordPolicy();
+           passwordPolicy.setId(rs.getString("ID"));
+           passwordPolicy.setMinLength(rs.getInt("MINLENGTH"));
+           passwordPolicy.setMaxLength(rs.getInt("MAXLENGTH"));
+           passwordPolicy.setLowerCase(rs.getInt("LOWERCASE"));
+           passwordPolicy.setUpperCase(rs.getInt("UPPERCASE"));
+           passwordPolicy.setDigits(rs.getInt("DIGITS"));
+           passwordPolicy.setSpecialChar(rs.getInt("SPECIALCHAR"));
+           passwordPolicy.setAttempts(rs.getInt("ATTEMPTS"));
+           passwordPolicy.setDuration(rs.getInt("DURATION"));
+           passwordPolicy.setExpiration(rs.getInt("EXPIRATION"));
+           passwordPolicy.setUsername(rs.getInt("USERNAME"));
+           passwordPolicy.setHistory(rs.getInt("HISTORY"));
+           passwordPolicy.setDictionary(rs.getInt("DICTIONARY"));
+           passwordPolicy.setAlphabetical(rs.getInt("ALPHABETICAL"));
+           passwordPolicy.setNumerical(rs.getInt("NUMERICAL"));
+           passwordPolicy.setQwerty(rs.getInt("QWERTY"));
+           passwordPolicy.setOccurances(rs.getInt("OCCURANCES"));
+           return passwordPolicy;
+       }
+
+   }
 }
