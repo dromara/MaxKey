@@ -59,6 +59,9 @@ public class PasswordReciprocal implements PasswordEncoder {
     }
 
     public String decoder(CharSequence encodedPassword) {
+        if(encodedPassword == null || encodedPassword.equals("")) {
+            return "";
+        }
         return ReciprocalUtils.decoder(encodedPassword.toString());
     }
 
