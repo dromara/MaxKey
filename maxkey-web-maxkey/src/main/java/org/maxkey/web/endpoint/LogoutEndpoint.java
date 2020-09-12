@@ -72,7 +72,7 @@ public class LogoutEndpoint {
  		ModelAndView modelAndView = new ModelAndView();
  		authenticationRealm.logout(response);
  		
- 		if(reLoginUrl!=null){
+ 		if(reLoginUrl==null){
 	 		SavedRequest  firstSavedRequest = (SavedRequest)WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
 	 		reLoginUrl=WebContext.getHttpContextPath()+"/login";
 	 		if(firstSavedRequest!=null){
