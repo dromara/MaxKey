@@ -1,31 +1,41 @@
 ﻿MaxKey v 2.2.0 GA	2020/**/**
 	*(MAXKEY-200801)  官方网站内容调整，初步增加英文版支持，增加新闻、合作伙伴及与CAS等开源产品对比
-	*(MAXKEY-200802)  使用Passay增强密码策略，分离静态密码策略和动态密码策略
-	*(MAXKEY-200803)  修复登录失败的提示消息，支持国际化
-	*(MAXKEY-200804)  优化密码修改的过程，增加密码策略匹配及提示消息
-	*(MAXKEY-200805)  CAS协议增加自定义参数回传
-	*(MAXKEY-200806)  优化开发集成指南
-	*(MAXKEY-200807)  删除冗余的文件和文件夹
-	*(MAXKEY-200808)  优化应用适配器支持
-	*(MAXKEY-200809)  Maven版本支持
-	*(MAXKEY-200810)  CAS spring boot demo
-	*(MAXKEY-200811)  MGT管理访问找不到页面修复
-	*(MAXKEY-200812)  MGT管理密码修改增加自动密码生成
-	*(MAXKEY-200813)  优化TOKENBASED令牌内容的配置
-	*(MAXKEY-200814)  修复初始化密码和密码过期修改后错误问题
-	*(MAXKEY-200815)  修复OAuth 2.0管理端的跳过确认提示不能修改
-	*(MAXKEY-200816)  应用管理修改时关闭修正
-	*(MAXKEY-200817)  密码错误次数大于6次后，超过设定时间自动解锁
-	*(MAXKEY-200818)  MySQL时间问题，参见https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html
-	*(MAXKEY-200819)  MGT管理首页统计优化
-	*(MAXKEY-200820)  SCIM 2服务端功能优化
-	*(MAXKEY-200821)  国际化I18N内容优化
-	*(MAXKEY-200822)  依赖jar升级
+	*(MAXKEY-200802)  国际化I18N内容优化
+	*(MAXKEY-200803)  使用Passay增强密码策略，分离静态密码策略和动态密码策略
+	*(MAXKEY-200804)  修复登录失败的提示消息，支持国际化
+	*(MAXKEY-200805)  密码@Deprecated从spring移到maxkey并去掉@Deprecated
+	*(MAXKEY-200806)  默认管理员登录名和密码admin/maxkey
+	*(MAXKEY-200807)  优化密码修改的过程，增加密码策略匹配及提示消息
+	*(MAXKEY-200808)  密码错误次数大于6次后，超过设定时间自动解锁
+	*(MAXKEY-200809)  修复初始化密码和密码过期修改后错误问题
+	*(MAXKEY-200810)  修复SHAREDSECRET为空令牌显示报错
+	*(MAXKEY-200811)  登录代码优化与整合
+	*(MAXKEY-200812)  优化开发集成指南
+	*(MAXKEY-200813)  删除冗余的文件和文件夹
+	*(MAXKEY-200814)  优化应用适配器支持
+	*(MAXKEY-200815)  Maven版本支持
+	*(MAXKEY-200816)  CAS REST-Protocol支持及客户端demo
+	*(MAXKEY-200817)  修复CAS返回参数为空时BASE64编码报错
+	*(MAXKEY-200818)  修复CAS SERVICE参数过长的不一致问题，截取与数据参数等长，然后比较
+	*(MAXKEY-200819)  CAS协议增加自定义参数回传
+	*(MAXKEY-200820)  CAS spring boot demo
+	*(MAXKEY-200821)  MGT管理访问找不到页面修复
+	*(MAXKEY-200822)  MGT管理密码修改增加自动密码生成
+	*(MAXKEY-200823)  优化TOKENBASED令牌内容的配置
+	*(MAXKEY-200824)  修复OAuth 2.0管理端的跳过确认提示不能修改
+	*(MAXKEY-200825)  应用管理修改时关闭修正
+	*(MAXKEY-200826)  MGT管理首页统计优化
+	*(MAXKEY-200827)  审计查询功能优化
+	*(MAXKEY-200828)  修复日期控件显示问题
+	*(MAXKEY-200829)  SCIM 2服务端功能优化
+	*(MAXKEY-200830)  MySQL时间问题，参见https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html
+	*(MAXKEY-200831)  依赖jar升级
 						passay 1.6.0
 						springBoot 2.3.3.RELEASE
 						springSecurity 5.3.4.RELEASE
 						hibernate	6.1.5.Final
 						jackson 2.11.2
+						multiple-select-1.5.2
 	
 	
 MaxKey v 2.1.0 GA	2020/08/01
