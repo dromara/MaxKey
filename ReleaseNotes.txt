@@ -28,8 +28,9 @@
 	*(MAXKEY-200827)  审计查询功能优化
 	*(MAXKEY-200828)  修复日期控件显示问题
 	*(MAXKEY-200829)  SCIM 2服务端功能优化
-	*(MAXKEY-200830)  MySQL时间问题，参见https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html
-	*(MAXKEY-200831)  依赖jar升级
+	*(MAXKEY-200830)  注销时的跳转修复
+	*(MAXKEY-200831)  MySQL时间问题，参见https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html
+	*(MAXKEY-200832)  依赖jar升级
 						passay 1.6.0
 						springBoot 2.3.3.RELEASE
 						springSecurity 5.3.4.RELEASE
