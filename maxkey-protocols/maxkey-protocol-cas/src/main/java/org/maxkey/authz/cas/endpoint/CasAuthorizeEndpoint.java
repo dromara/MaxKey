@@ -41,7 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Crystal.Sea
- * https://apereo.github.io/cas/5.0.x/protocol/CAS-Protocol-V2-Specification.html
+ * https://apereo.github.io/cas/6.2.x/protocol/CAS-Protocol.html
  */
 @Controller
 public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{

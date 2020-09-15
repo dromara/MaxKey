@@ -95,14 +95,18 @@ public class TokenEndpoint extends AbstractEndpoint {
 	public ResponseEntity<OAuth2AccessToken> postAccessToken(@RequestParam
 	Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
 		// TokenEndpointAuthenticationFilter
-		Principal principal=(Principal)WebContext.getAuthentication().getPrincipal();
-		
+	    
+	    Object principal = WebContext.getAuthentication();
+
+		if(parameters.get("code") != null) {
+		    principal=WebContext.getAuthentication().getPrincipal();
+		}
 		if (!(principal instanceof Authentication)) {
 			throw new InsufficientAuthenticationException(
 					"There is no client authentication. Try adding an appropriate authentication filter.");
 		}
 
-		String clientId = getClientId(principal);
+		String clientId = getClientId((Authentication)principal);
 		ClientDetails authenticatedClient = getClientDetailsService().loadClientByClientId(clientId);
 
 		TokenRequest tokenRequest = getOAuth2RequestFactory().createTokenRequest(parameters, authenticatedClient);
@@ -138,7 +142,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 		/**crystal.sea
 		 * code must uuid format
 		 */
-		 if (!StringGenerator.uuidMatches(parameters.get("code"))) {
+		 if (parameters.get("code") != null &&!StringGenerator.uuidMatches(parameters.get("code"))) {
 		    	throw new InvalidRequestException("The code is not valid format .");
 		}
 		 
@@ -160,7 +164,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 	 * @param principal the currently authentication principal
 	 * @return a client id if there is one in the principal
 	 */
-	protected String getClientId(Principal principal) {
+	protected String getClientId(Authentication principal) {
 		Authentication client = (Authentication) principal;
 		if (!client.isAuthenticated()) {
 			throw new InsufficientAuthenticationException("The client is not authenticated.");

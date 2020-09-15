@@ -30,12 +30,14 @@ import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeTokenGranter;
 import org.maxkey.authz.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.implicit.ImplicitTokenGranter;
+import org.maxkey.authz.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.maxkey.authz.oauth2.provider.refresh.RefreshTokenGranter;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.util.Assert;
 
 /**
@@ -67,6 +69,11 @@ public class AbstractEndpoint implements InitializingBean {
   	@Qualifier("oAuth2RequestFactory")
 	private OAuth2RequestFactory defaultOAuth2RequestFactory;
 
+	@Autowired
+    @Qualifier("oauth20UserAuthenticationManager")
+	AuthenticationManager authenticationManager;
+	
+	
 	public void afterPropertiesSet() throws Exception {
 		if (tokenGranter == null) {
 			//ClientDetailsService clientDetails = clientDetailsService();
@@ -81,10 +88,10 @@ public class AbstractEndpoint implements InitializingBean {
 			ImplicitTokenGranter implicit = new ImplicitTokenGranter(tokenServices, clientDetailsService, oAuth2RequestFactory);
 			tokenGranters.add(implicit);
 			tokenGranters.add(new ClientCredentialsTokenGranter(tokenServices, clientDetailsService, oAuth2RequestFactory));
-			/*if (authenticationManager != null) {
+			if (authenticationManager != null) {
 				tokenGranters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager, tokenServices,
-						clientDetails, requestFactory));
-			}*/
+				        clientDetailsService, oAuth2RequestFactory));
+			}
 			tokenGranter = new CompositeTokenGranter(tokenGranters);
 		}
 		Assert.state(tokenGranter != null, "TokenGranter must be provided");

@@ -21,11 +21,13 @@ import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+import javax.servlet.Filter;
 import javax.sql.DataSource;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
+import org.maxkey.authz.oauth2.provider.OAuth2UserDetailsService;
 import org.maxkey.authz.oauth2.provider.approval.TokenApprovalStore;
 import org.maxkey.authz.oauth2.provider.approval.controller.OAuth20UserApprovalHandler;
 import org.maxkey.authz.oauth2.provider.client.ClientDetailsUserDetailsService;
@@ -34,6 +36,7 @@ import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.code.RedisAuthorizationCodeServices;
+import org.maxkey.authz.oauth2.provider.endpoint.TokenEndpointAuthenticationFilter;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.token.TokenStore;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
@@ -47,12 +50,13 @@ import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
-import org.maxkey.crypto.password.NoOpPasswordEncoder;
+import org.maxkey.persistence.db.LoginService;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -76,6 +80,17 @@ import com.nimbusds.jose.JWEAlgorithm;
 @PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class Oauth20AutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(Oauth20AutoConfiguration.class);
+    
+    @Bean
+    public FilterRegistrationBean<Filter> TokenEndpointAuthenticationFilter() {
+        _logger.debug("TokenEndpointAuthenticationFilter init ");
+        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<Filter>();
+        registration.setFilter(new TokenEndpointAuthenticationFilter());
+        registration.addUrlPatterns("/oauth/v20/token/*");
+        registration.setName("TokenEndpointAuthenticationFilter");
+        registration.setOrder(1);
+        return registration;
+    }
     
     /**
      * OIDCProviderMetadataDetails. 
@@ -256,21 +271,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
         clientDetailsService.setPasswordEncoder(passwordReciprocal);
         return clientDetailsService;
-    }
-    
-    /**
-     * clientDetailsUserDetailsService. 
-     * @return oauth20ClientDetailsUserService
-     */
-    @Bean(name = "oauth20ClientDetailsUserService")
-    public ClientDetailsUserDetailsService clientDetailsUserDetailsService(
-            JdbcClientDetailsService oauth20JdbcClientDetailsService,PasswordEncoder passwordReciprocal) {
-        ClientDetailsUserDetailsService cientDetailsUserDetailsService = 
-                new ClientDetailsUserDetailsService(oauth20JdbcClientDetailsService);
-        cientDetailsUserDetailsService.setPasswordEncoder(passwordReciprocal);
-        return cientDetailsUserDetailsService;
-    }
-    
+    }    
     
     /**
      * clientDetailsUserDetailsService. 
@@ -334,18 +335,42 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     
     /**
      * ProviderManager. 
+     * @return oauth20UserAuthenticationManager
+     */
+    @Bean(name = "oauth20UserAuthenticationManager")
+    public ProviderManager oauth20UserAuthenticationManager(
+            PasswordEncoder passwordEncoder,
+            LoginService loginService
+            ) {
+        
+        OAuth2UserDetailsService userDetailsService =new OAuth2UserDetailsService();
+        userDetailsService.setLoginService(loginService);
+        
+        DaoAuthenticationProvider daoAuthenticationProvider= new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        ProviderManager authenticationManager = new ProviderManager(daoAuthenticationProvider);
+        return authenticationManager;
+    }
+    
+    /**
+     * ProviderManager. 
      * @return oauth20ClientAuthenticationManager
      */
     @Bean(name = "oauth20ClientAuthenticationManager")
     public ProviderManager oauth20ClientAuthenticationManager(
-            ClientDetailsUserDetailsService oauth20ClientDetailsUserService
+            JdbcClientDetailsService oauth20JdbcClientDetailsService,
+            PasswordEncoder passwordReciprocal
             ) {
+        
+        ClientDetailsUserDetailsService cientDetailsUserDetailsService = 
+                new ClientDetailsUserDetailsService(oauth20JdbcClientDetailsService);
+        
         DaoAuthenticationProvider daoAuthenticationProvider= new DaoAuthenticationProvider();
-        PasswordEncoder passwordEncoder = NoOpPasswordEncoder.getInstance();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-        daoAuthenticationProvider.setUserDetailsService(oauth20ClientDetailsUserService);
-        ProviderManager clientAuthenticationManager = new ProviderManager(daoAuthenticationProvider);
-        return clientAuthenticationManager;
+        daoAuthenticationProvider.setPasswordEncoder(passwordReciprocal);
+        daoAuthenticationProvider.setUserDetailsService(cientDetailsUserDetailsService);
+        ProviderManager authenticationManager = new ProviderManager(daoAuthenticationProvider);
+        return authenticationManager;
     }
     
     

@@ -27,7 +27,6 @@ import org.maxkey.authn.realm.activedirectory.ActiveDirectoryAuthenticationRealm
 import org.maxkey.authn.realm.activedirectory.ActiveDirectoryServer;
 import org.maxkey.authn.support.kerberos.KerberosProxy;
 import org.maxkey.authn.support.kerberos.RemoteKerberosService;
-import org.maxkey.authz.oauth2.provider.endpoint.TokenEndpointAuthenticationFilter;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.password.opt.AbstractOptAuthn;
 import org.maxkey.crypto.password.opt.algorithm.KeyUriFormat;
@@ -79,17 +78,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class MaxKeyConfig  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyConfig.class);
     
-    @Bean
-    public FilterRegistrationBean<TokenEndpointAuthenticationFilter> TokenEndpointAuthenticationFilter() {
-        _logger.debug("TokenEndpointAuthenticationFilter init ");
-        FilterRegistrationBean<TokenEndpointAuthenticationFilter> registration = new FilterRegistrationBean<TokenEndpointAuthenticationFilter>();
-        registration.setFilter(new TokenEndpointAuthenticationFilter());
-        registration.addUrlPatterns("/oauth/v20/token/*");
-        registration.setName("TokenEndpointAuthenticationFilter");
-        registration.setOrder(1);
-        return registration;
-    }
-   
+
     @Bean(name = "keyUriFormat")
     public KeyUriFormat keyUriFormat(
             @Value("${config.otp.keyuri.format.type:totp}")

@@ -34,6 +34,7 @@ import org.maxkey.authz.oauth2.provider.ClientAlreadyExistsException;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.ClientRegistrationService;
 import org.maxkey.authz.oauth2.provider.NoSuchClientException;
+import org.maxkey.crypto.password.NoOpPasswordEncoder;
 import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
 import org.maxkey.domain.apps.oauth2.provider.client.BaseClientDetails;
 import org.springframework.dao.DuplicateKeyException;
@@ -41,7 +42,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
@@ -50,7 +50,7 @@ import org.springframework.util.StringUtils;
 /**
  * Basic, JDBC implementation of the client details service.
  */
-public class JdbcClientDetailsService implements ClientDetailsService, ClientRegistrationService {
+public class JdbcClientDetailsService implements ClientDetailsService, ClientRegistrationService{
 
     private static final Log logger = LogFactory.getLog(JdbcClientDetailsService.class);
 
@@ -338,5 +338,5 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
                     "Neither Jackson 1 nor 2 is available so JSON conversion cannot be done");
         }
     }
-
+    
 }

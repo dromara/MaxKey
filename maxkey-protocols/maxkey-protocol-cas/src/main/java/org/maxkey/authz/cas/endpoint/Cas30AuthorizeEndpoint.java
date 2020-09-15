@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Crystal.Sea
- * https://apereo.github.io/cas/5.0.x/protocol/CAS-Protocol.html
+ * https://apereo.github.io/cas/6.2.x/protocol/CAS-Protocol-Specification.html
  */
 @Controller
 public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{

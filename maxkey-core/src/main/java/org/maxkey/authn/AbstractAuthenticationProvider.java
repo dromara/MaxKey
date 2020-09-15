@@ -242,7 +242,7 @@ public abstract class AbstractAuthenticationProvider {
      * @param password String
      * @return
      */
-    protected UserInfo loadUserInfo(String username, String password) {
+    public UserInfo loadUserInfo(String username, String password) {
         UserInfo userInfo = authenticationRealm.loadUserInfo(username, password);
 
         if (userInfo != null) {

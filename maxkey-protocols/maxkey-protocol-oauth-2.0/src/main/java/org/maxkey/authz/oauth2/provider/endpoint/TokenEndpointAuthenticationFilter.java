@@ -84,6 +84,8 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 	
 	private  AuthenticationManager authenticationManager;
 	
+	private AuthenticationManager  oauth20ClientAuthenticationManager;
+	
 	private  OAuth2RequestFactory oAuth2RequestFactory;
 
 	public TokenEndpointAuthenticationFilter() {
@@ -115,10 +117,13 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 			ServletException {
 		logger.debug("Authentication TokenEndpoint ");
 		if(authenticationManager==null) {
-			authenticationManager=(AuthenticationManager)WebContext.getBean("oauth20ClientAuthenticationManager");
+			authenticationManager=(AuthenticationManager)WebContext.getBean("oauth20UserAuthenticationManager");
 		}
 		if(oAuth2RequestFactory==null) {
 			oAuth2RequestFactory=(OAuth2RequestFactory)WebContext.getBean("oAuth2RequestFactory");
+		}
+		if(oauth20ClientAuthenticationManager==null) {
+		    oauth20ClientAuthenticationManager = (AuthenticationManager)WebContext.getBean("oauth20ClientAuthenticationManager");
 		}
 		
 		final boolean debug = logger.isDebugEnabled();
@@ -133,7 +138,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 				Authentication authentication=ClientCredentials(request,response);
 				BasicAuthentication auth =new BasicAuthentication();
 				auth.setUsername(((User)authentication.getPrincipal()).getUsername());
-				 auth.setAuthenticated(true);
+				auth.setAuthenticated(true);
 				UsernamePasswordAuthenticationToken simpleUserAuthentication = new UsernamePasswordAuthenticationToken(auth, authentication.getCredentials(), authentication.getAuthorities());
 				WebContext.setAuthentication(simpleUserAuthentication);
 			}
@@ -166,8 +171,12 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 			Authentication authResult = authenticationManager.authenticate(credentials);
 	
 			logger.debug("Authentication success: " + authResult.getName());
-	
-			Authentication clientAuth = SecurityContextHolder.getContext().getAuthentication();
+			String clientId = request.getParameter("client_id");
+	        String clientSecret = request.getParameter("client_secret");
+	        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(clientId,
+	                clientSecret);
+	        Authentication clientAuth = oauth20ClientAuthenticationManager.authenticate(authRequest);
+			//Authentication clientAuth = SecurityContextHolder.getContext().getAuthentication();
 			if (clientAuth == null) {
 				throw new BadCredentialsException(
 						"No client authentication found. Remember to put a filter upstream of the TokenEndpointAuthenticationFilter.");
@@ -231,7 +240,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 			clientId = clientId.trim();
 			UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(clientId,clientSecret);
 
-			return this.authenticationManager.authenticate(authRequest);
+			return this.oauth20ClientAuthenticationManager.authenticate(authRequest);
 		}
 	 
 	private Map<String, String> getSingleValueMap(HttpServletRequest request) {
