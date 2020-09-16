@@ -73,6 +73,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		AppsSAML20Details saml20Details=new AppsSAML20Details();
 		saml20Details.setSecret(ReciprocalUtils.generateKey(""));
 		saml20Details.setProtocol(ConstantsProtocols.SAML20);
+		saml20Details.setId(saml20Details.generateId());
 		modelAndView.addObject("model",saml20Details);
 		 
 		return modelAndView;

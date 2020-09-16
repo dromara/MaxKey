@@ -49,6 +49,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	public ModelAndView forwardAdd() {
 		ModelAndView modelAndView=new ModelAndView("apps/tokenbased/appAdd");
 		AppsTokenBasedDetails tokenBasedDetails =new AppsTokenBasedDetails();
+		tokenBasedDetails.setId(tokenBasedDetails.generateId());
 		tokenBasedDetails.setProtocol(ConstantsProtocols.TOKENBASED);
 		tokenBasedDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.AES));
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());

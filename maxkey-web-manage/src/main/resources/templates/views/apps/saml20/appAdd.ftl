@@ -136,8 +136,8 @@
 					<th><@locale code="apps.saml.fileType" />：</th>
 					<td>
 						<select  id="fileType" name="fileType"  class="form-control"  >
-							<option value="certificate" selected><@locale code="apps.saml.fileType.certificate" /></option>
-							<option value="metadata"><@locale code="apps.saml.fileType.metadata" /></option>
+							<option value="certificate"><@locale code="apps.saml.fileType.certificate" /></option>
+							<option value="metadata"  selected><@locale code="apps.saml.fileType.metadata" /></option>
 						</select>
 						<b class="orange">*</b><label for="fileType"></label>
 					</td>

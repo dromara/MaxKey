@@ -52,7 +52,7 @@
 					</td>
 					<td></td>
                     <td  >
-                        <a target="_blank" href="${maxKeyURI}/metadata/saml20/${model.id}.xml"> SAML MetaData</a>
+                        <a target="_blank" href="${maxKeyURI}/metadata/saml20/Idp_Metadata_${model.id}.xml"> SAML MetaData</a>
                     </td>
 				</tr>
 				<tr>
