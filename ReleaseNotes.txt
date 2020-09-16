@@ -32,7 +32,8 @@
 	*(MAXKEY-200831)  MySQL时间问题，参见https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html
 	*(MAXKEY-200832)  OAuth2 Password模式修复
 	*(MAXKEY-200833)  MGT管理SAML上传问题、IDP元数据链接优化、主键生成修复、元数据参数配置调整
-	*(MAXKEY-200834)  依赖jar升级
+	*(MAXKEY-200834)  MGT管理TOKENBASED令牌主键生成修复
+	*(MAXKEY-200835)  依赖jar升级
 						passay 1.6.0
 						springBoot 2.3.3.RELEASE
 						springSecurity 5.3.4.RELEASE
