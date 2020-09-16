@@ -1,4 +1,4 @@
-﻿MaxKey v 2.2.0 GA	2020/**/**
+﻿MaxKey v 2.2.0 GA	2020/09/**
 	*(MAXKEY-200801)  官方网站内容调整，初步增加英文版支持，增加新闻、合作伙伴及与CAS等开源产品对比
 	*(MAXKEY-200802)  国际化I18N内容优化
 	*(MAXKEY-200803)  使用Passay增强密码策略，分离静态密码策略和动态密码策略
@@ -31,7 +31,7 @@
 	*(MAXKEY-200830)  注销时的跳转修复
 	*(MAXKEY-200831)  MySQL时间问题，参见https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html
 	*(MAXKEY-200832)  OAuth2 Password模式修复
-	*(MAXKEY-200833)  MGT管理SAML上传问题、IDP元数据链接优化、主键生成修复
+	*(MAXKEY-200833)  MGT管理SAML上传问题、IDP元数据链接优化、主键生成修复、元数据参数配置调整
 	*(MAXKEY-200834)  依赖jar升级
 						passay 1.6.0
 						springBoot 2.3.3.RELEASE
