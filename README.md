@@ -86,7 +86,7 @@
 当前版本百度网盘下载,<a href="https://maxkey.top/zh/download.html" target="_blank"> 历史版本</a>
 | 版本    | 日期   |  下载地址  |  提取码  |
 | --------| :-----  | :----  | :----:  |
-| v 2.2.0 RC | 2020/09/04   |  <a href="https://pan.baidu.com/s/19BvjmBxqwP-66lAfcCvFXA" target="_blank">链接下载</a>  |  **pzzw**  |
+| v 2.2.0 RC2 | 2020/09/17   |  <a href="https://pan.baidu.com/s/1t0dnyzQOthTxwk2eiYdkVQ" target="_blank">链接下载</a>  |  **saft**  |
 
 
 # Roadmap
