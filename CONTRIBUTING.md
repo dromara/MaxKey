@@ -10,7 +10,7 @@ MaxKey开发中使用到的几种模型在这个链接下载 [点我](https://gi
 
 ### Fork
 
-* MaxKey采用Pull Request的方式提交代码，禁止直接push，所有的代码都需要人工review。首先要fork一份MaxKey-Moble的代码 ["Fork" button](https://help.github.com/articles/fork-a-repo/).
+* MaxKey采用Pull Request的方式提交代码，禁止直接push，所有的代码都需要人工review。首先要fork一份MaxKey的代码 ["Fork" button](https://help.github.com/articles/fork-a-repo/).
 * 跳转到[MaxKey](https://github.com/MaxKeyTop/MaxKey) GitHub首页，然后单击 `Fork` 按钮，生成自己目录下的仓库，比如 <https://github.com/你的用户名/MaxKey>。
 
 ### Clone(克隆)
