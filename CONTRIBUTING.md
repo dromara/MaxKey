@@ -10,7 +10,7 @@ MaxKey开发中使用到的几种模型在这个链接下载 [点我](https://gi
 
 ### Fork
 
-* MaxKey采用Pull Request的方式提交代码，禁止直接push，所有的代码都需要人工review。首先要fork一份Paddle-Moble的代码 ["Fork" button](https://help.github.com/articles/fork-a-repo/).
+* MaxKey采用Pull Request的方式提交代码，禁止直接push，所有的代码都需要人工review。首先要fork一份MaxKey-Moble的代码 ["Fork" button](https://help.github.com/articles/fork-a-repo/).
 * 跳转到[MaxKey](https://github.com/MaxKeyTop/MaxKey) GitHub首页，然后单击 `Fork` 按钮，生成自己目录下的仓库，比如 <https://github.com/你的用户名/MaxKey>。
 
 ### Clone(克隆)
@@ -18,7 +18,7 @@ MaxKey开发中使用到的几种模型在这个链接下载 [点我](https://gi
 
 ```bash
 ➜  git clone https://github.com/你的用户名/MaxKey
-➜  cd Paddle
+➜  cd MaxKey
 ```
 
 ### 创建本地分支
@@ -39,7 +39,7 @@ MaxKey 目前使用[Git流分支模型](http://nvie.com/posts/a-successful-git-b
 
 MaxKey 开发人员使用 [pre-commit](http://pre-commit.com/) 工具来管理 Git 预提交钩子。 在提交（commit）前自动检查一些基本事宜（如每个文件只有一个 EOL，Git 中不要添加大文件等）。
 
-`pre-commit`测试是 Travis-CI 中单元测试的一部分，不满足钩子的 PR 不能被提交到 Paddle，首先安装并在当前目录运行它：
+`pre-commit`测试是单元测试的一部分，不满足钩子的 PR 不能被提交到 MaxKey，首先安装并在当前目录运行它：
 
 ```bash
 pip install pre-commit
