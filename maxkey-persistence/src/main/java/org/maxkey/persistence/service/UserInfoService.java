@@ -1,19 +1,19 @@
 /*
  * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 
 package org.maxkey.persistence.service;
 
@@ -23,6 +23,7 @@ import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.domain.ChangePassword;
+import org.maxkey.domain.ImportResultVO;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.identity.kafka.KafkaIdentityAction;
 import org.maxkey.identity.kafka.KafkaIdentityTopic;
@@ -38,6 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -47,20 +49,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserInfoService extends JpaBaseService<UserInfo> {
 	final static Logger _logger = LoggerFactory.getLogger(UserInfoService.class);
-	
+
 	final static  String UPDATE_GRIDLIST_SQL = "UPDATE MXK_USERINFO SET GRIDLIST = ? WHERE ID = ?";
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	PasswordPolicyValidator passwordPolicyValidator;
-	
+
 	@Autowired
 	KafkaProvisioningService kafkaProvisioningService;
-	
+
 	 @Autowired
 	 protected JdbcTemplate jdbcTemplate;
-	
+
 	public UserInfoService() {
 		super(UserInfoMapper.class);
 	}
@@ -73,12 +75,12 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		// TODO Auto-generated method stub
 		return (UserInfoMapper)super.getMapper();
 	}
-	
+
     public boolean insert(UserInfo userInfo) {
         userInfo = passwordEncoder(userInfo);
         if (super.insert(userInfo)) {
             kafkaProvisioningService.send(
-                    KafkaIdentityTopic.USERINFO_TOPIC, 
+                    KafkaIdentityTopic.USERINFO_TOPIC,
                     userInfo,
                     KafkaIdentityAction.CREATE_ACTION);
             return true;
@@ -86,26 +88,38 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 
         return false;
     }
-	
+
     public boolean update(UserInfo userInfo) {
         userInfo = passwordEncoder(userInfo);
         if (super.update(userInfo)) {
             kafkaProvisioningService.send(
-                    KafkaIdentityTopic.USERINFO_TOPIC, 
+                    KafkaIdentityTopic.USERINFO_TOPIC,
                     userInfo,
                     KafkaIdentityAction.UPDATE_ACTION);
-           
+
             changePasswordProvisioning(userInfo);
             return true;
         }
         return false;
     }
-	
+
+    public ImportResultVO importing(MultipartFile file,Integer type){
+
+		// 校验当前文件格式是不是excel文件
+
+		// 解析excel文件中数据
+
+		// 判断当前类型 0忽略 1覆盖 2终止
+		// 返回导入结果
+
+		return new ImportResultVO();
+	}
+
 	public boolean delete(UserInfo userInfo) {
 		if( super.delete(userInfo)){
 		    kafkaProvisioningService.send(
-		            KafkaIdentityTopic.USERINFO_TOPIC, 
-		            userInfo, 
+		            KafkaIdentityTopic.USERINFO_TOPIC,
+		            userInfo,
 		            KafkaIdentityAction.DELETE_ACTION);
 			 return true;
 		}
@@ -126,8 +140,8 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
         }
 	    return true;
 	}
-	
-	
+
+
 	public boolean updateProtectedApps(UserInfo userinfo) {
 		try {
 			if(WebContext.getUserInfo() != null) {
@@ -144,7 +158,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	public UserInfo loadByUsername(String username) {
 		return getMapper().loadByUsername(username);
 	}
-	
+
 	public UserInfo loadByAppIdAndUsername(String appId,String username){
 		try {
 			UserInfo userinfo = new UserInfo();
@@ -155,7 +169,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		}
 		return null;
 	}
-	
+
 
 	public void logisticDeleteAllByCid(String cid){
 		try {
@@ -164,7 +178,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public UserInfo passwordEncoder(UserInfo userInfo) {
 	    //密码不为空，则需要进行加密处理
 	    if(userInfo.getPassword()!=null && !userInfo.getPassword().equals("")) {
@@ -173,13 +187,13 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
             _logger.debug("decipherable : "+userInfo.getDecipherable());
             userInfo.setPassword(password);
             userInfo.setPasswordLastSetTime(DateUtils.getCurrentDateTimeAsString());
-            
+
             userInfo.setModifiedDate(DateUtils.getCurrentDateTimeAsString());
 	    }
         return userInfo;
 	}
-	
-	
+
+
 	public boolean changePassword(String oldPassword,
             String newPassword,
             String confirmPassword) {
@@ -191,37 +205,37 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	        changeUserInfo.setPassword(newPassword);
 	        changeUserInfo.setId(userInfo.getId());
 	        changeUserInfo.setDecipherable(userInfo.getDecipherable());
-	        
+
 	        if(newPassword.equals(confirmPassword)){
-	            if(oldPassword==null || 
+	            if(oldPassword==null ||
 	                    passwordEncoder.matches(oldPassword, userInfo.getPassword())){
 	                if(changePassword(changeUserInfo) ){
 	                    userInfo.setPassword(changeUserInfo.getPassword());
                         userInfo.setDecipherable(changeUserInfo.getDecipherable());
 	                    return true;
 	                }
-	                return false;	               
+	                return false;
 	            }else {
 	                if(oldPassword!=null &&
 	                        passwordEncoder.matches(newPassword, userInfo.getPassword())) {
-	                    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, 
+	                    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT,
 	                            WebContext.getI18nValue("PasswordPolicy.OLD_PASSWORD_MATCH"));
 	                }else {
-	                    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, 
+	                    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT,
 	                        WebContext.getI18nValue("PasswordPolicy.OLD_PASSWORD_NOT_MATCH"));
 	                }
 	            }
 	        }else {
-	            WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, 
+	            WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT,
 	                    WebContext.getI18nValue("PasswordPolicy.CONFIRMPASSWORD_NOT_MATCH"));
 	        }
 		 } catch (Exception e) {
              e.printStackTrace();
-         }    
-		    
+         }
+
 		return false;
 	}
-	
+
     public boolean changePassword(UserInfo changeUserInfo) {
         try {
             _logger.debug("decipherable old : " + changeUserInfo.getDecipherable());
@@ -251,11 +265,11 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 
         return false;
     }
-	
+
 	public String randomPassword() {
 	    return passwordPolicyValidator.generateRandomPassword();
 	}
-	
+
 	public void changePasswordProvisioning(UserInfo userInfo) {
 	    if(userInfo.getPassword()!=null && !userInfo.getPassword().equals("")) {
     	    ChangePassword changePassword=new ChangePassword();
@@ -265,12 +279,12 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
             changePassword.setDecipherable(userInfo.getDecipherable());
             changePassword.setPassword(userInfo.getPassword());
             kafkaProvisioningService.send(
-                    KafkaIdentityTopic.PASSWORD_TOPIC, 
-                    changePassword, 
+                    KafkaIdentityTopic.PASSWORD_TOPIC,
+                    changePassword,
                     KafkaIdentityAction.PASSWORD_ACTION);
 	    }
 	}
-	
+
 	public boolean changeAppLoginPassword(UserInfo userinfo) {
 		try {
 			if(WebContext.getUserInfo() != null) {
@@ -283,8 +297,8 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		}
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * 锁定用户：islock：1 用户解锁 2 用户锁定
 	 * @param userInfo
@@ -331,33 +345,33 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean changeSharedSecret(UserInfo userInfo){
 		return getMapper().changeSharedSecret(userInfo)>0;
 	}
-	
+
 	public boolean changePasswordQuestion(UserInfo userInfo){
 		return getMapper().changePasswordQuestion(userInfo)>0;
 	}
-	
+
 	public boolean changeAuthnType(UserInfo userInfo){
 		return getMapper().changeAuthnType(userInfo)>0;
 	}
-	
+
 	public boolean changeEmail(UserInfo userInfo){
 		return getMapper().changeEmail(userInfo)>0;
 	}
-	
+
 	public boolean changeMobile(UserInfo userInfo){
 		return getMapper().changeMobile(userInfo)>0;
 	}
-	
+
     public UserInfo queryUserInfoByEmailMobile(String emailMobile) {
         return getMapper().queryUserInfoByEmailMobile(emailMobile);
     }
-    
+
     public int updateProfile(UserInfo userInfo){
-        
+
         return getMapper().updateProfile(userInfo);
     }
 
