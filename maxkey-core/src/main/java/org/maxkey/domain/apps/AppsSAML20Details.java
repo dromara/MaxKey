@@ -93,6 +93,9 @@ public class AppsSAML20Details extends Apps {
      */
     @Column
     private int nameIdConvert;
+    
+    @Column
+    private String nameIdSuffix;
 
     public static final class BindingType {
         public static final  String Redirect_Post = "Redirect-Post";
@@ -325,6 +328,14 @@ public class AppsSAML20Details extends Apps {
 
     public void setDigestMethod(String digestMethod) {
         this.digestMethod = digestMethod;
+    }
+    
+    public String getNameIdSuffix() {
+        return nameIdSuffix;
+    }
+
+    public void setNameIdSuffix(String nameIdSuffix) {
+        this.nameIdSuffix = nameIdSuffix;
     }
 
     @Override

@@ -85,6 +85,7 @@ public class AssertionGenerator {
 		Assertion assertion = new AssertionBuilder().buildObject();;
 		//Subject
 		Subject subject = subjectGenerator.generateSubject(
+		                saml20Details,
 						assertionConsumerURL,
 						inResponseTo,
 						validInSeconds);
