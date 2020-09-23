@@ -1,5 +1,5 @@
 # <img src="http://www.maxkey.top/static/images/logo_maxkey.png"  width="200px" />
-
+# 概述
 <b>MaxKey(马克思的钥匙)</b>单点登录认证系统(Single Sign On System)，寓意是最大钥匙,是<b>业界领先的企业级IAM身份管理和身份认证产品</b>,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS、SCIM等标准协议，提供<b>简单、标准、安全和开放</b>的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、RBAC权限管理和资源管理等。
 
 官方网站  <a href="https://www.maxkey.top" target="_blank"><b>官方网站</b></a> |  <a href="https://maxkeytop.gitee.io" target="_blank"><b>官方网站二线</b></a>
@@ -15,9 +15,9 @@
   
 主要功能： 
 
-1.所有应用系统共享一个身份认证系统
+1) 所有应用系统共享一个身份认证系统
 
-2.所有应用系统能够识别和提取ticket信息
+2) 所有应用系统能够识别和提取ticket信息
  
  
 ------------
@@ -26,25 +26,25 @@
 
 | 序号    | 协议   |  支持  |
 | --------| :-----  | :----:  |
-| 1       | OAuth 2.0/OpenID Connect   |  高  |
-| 2       | SAML 2.0   				   |  高  |
-| 3       | JWT  					   |  高  |
-| 4       | CAS						   |  高  |
-| 5       | FormBased				   |  中  |
-| 6       | TokenBased(Post/Cookie)	   |  中  |
-| 7       | ExtendApi				   |  低  |
-| 8       | EXT						   |  低  |
+| 1.1     | OAuth 2.0/OpenID Connect   |  高  |
+| 1.2     | SAML 2.0   				 |  高  |
+| 1.3     | JWT  					     |  高  |
+| 1.4     | CAS						 |  高  |
+| 1.5     | FormBased				     |  中  |
+| 1.6     | TokenBased(Post/Cookie)    |  中  |
+| 1.7     | ExtendApi				     |  低  |
+| 1.8     | EXT						 |  低  |
 
 2. 登录支持
 
 | 序号    | 登录方式   | 
 | --------| :-----  |
-| 1       | 动态验证码  字母/数字/算术 	| 
-| 2       | 双因素认证   	| 
-| 3       | 短信认证  腾讯云短信/阿里云短信/网易云信 	|
-| 4       | 登录易/Google/Microsoft Authenticator/FreeOTP/支持TOTP或者HOTP |
-| 5       | Kerberos/SPNEGO/AD域|
-| 6       | 社交账号 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
+| 2.1     | 动态验证码  字母/数字/算术 	| 
+| 2.2     | 双因素认证   	| 
+| 2.3     | 短信认证  腾讯云短信/阿里云短信/网易云信 	|
+| 2.4     | 登录易/Google/Microsoft Authenticator/FreeOTP/支持TOTP或者HOTP |
+| 2.5     | Kerberos/SPNEGO/AD域|
+| 2.6     | 社交账号 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
 
 
 3. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
@@ -86,15 +86,21 @@
 当前版本百度网盘下载,<a href="https://maxkey.top/zh/download.html" target="_blank"> 历史版本</a>
 | 版本    | 日期   |  下载地址  |  提取码  |
 | --------| :-----  | :----  | :----:  |
-| v 2.2.0 RC2 | 2020/09/17   |  <a href="https://pan.baidu.com/s/1t0dnyzQOthTxwk2eiYdkVQ" target="_blank">链接下载</a>  |  **saft**  |
+| v 2.2.0 GA | 2020/09/24   |  <a href="https://pan.baidu.com/s/1gtgELidq1F-GwvmxKbY_oA" target="_blank">链接下载</a>  |  **0y9o**  |
 
 
 # Roadmap
 
-基于Excel批量机构和用户导入
+1.基于Excel批量机构和用户导入
 
-用户注册功能
+2.用户注册功能
 
-动态用户组实现(基于用户属性或机构)
+3.动态用户组实现(基于用户属性或机构)
+
+4.主任职机构和兼职机构
+
+5.MaxKey Cloud(微服务版)-2021年
+
+6.零信任场景整合
 
 
