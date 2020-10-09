@@ -209,7 +209,11 @@ subprojects {
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version:  "${springBootVersion}"
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:  "${springBootVersion}"
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version:  "${springBootVersion}"
+         compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: "${springBootVersion}"
          testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:  "${springBootVersion}"
+         //spring-session
+         compile group: 'org.springframework.session', name: 'spring-session-core', version: "${springSessionVersion}"
+         compile group: 'org.springframework.session', name: 'spring-session-data-redis', version: "${springSessionVersion}"
          //saml 
          compile group: 'org.opensaml', name: 'opensaml', version: '2.6.4'
          compile group: 'org.opensaml', name: 'openws', version: '1.5.4'
@@ -253,7 +257,7 @@ subprojects {
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonVersion}"
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"
          compile group: 'com.fasterxml', name: 'classmate', version: '1.5.0'
-		 compile group: 'com.alibaba', name: 'fastjson', version: '1.2.73'
+		 compile group: 'com.alibaba', name: 'fastjson', version: '1.2.74'
          //reactive
          compile group: 'org.reactivestreams', name: 'reactive-streams', version: '1.0.2'
          compile group: 'io.projectreactor', name: 'reactor-core', version: '3.2.10.RELEASE'
@@ -262,8 +266,8 @@ subprojects {
          compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
 		 //database
 		 compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
-		 compile group: 'com.alibaba', name: 'druid', version: '1.1.24'
-		 compile group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.1.24'
+		 compile group: 'com.alibaba', name: 'druid', version: '1.2.1'
+		 compile group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.2.1'
          compile group: 'redis.clients', name: 'jedis', version: '3.3.0'
          compile group: 'org.ehcache', name: 'ehcache', version: '3.9.0'
 		 //mybatis
