@@ -211,6 +211,10 @@ subprojects {
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version:  "${springBootVersion}"
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: "${springBootVersion}"
          testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:  "${springBootVersion}"
+         //spring-data
+         compile group: 'org.springframework.data', name: 'spring-data-commons', version: "${springDataVersion}"
+         compile group: 'org.springframework.data', name: 'spring-data-keyvalue', version: "${springDataVersion}"
+		 compile group: 'org.springframework.data', name: 'spring-data-redis', version: "${springDataVersion}"
          //spring-session
          compile group: 'org.springframework.session', name: 'spring-session-core', version: "${springSessionVersion}"
          compile group: 'org.springframework.session', name: 'spring-session-data-redis', version: "${springSessionVersion}"

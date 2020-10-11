@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -31,6 +32,7 @@ import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 
 @Configuration
+@ConditionalOnProperty(value = "spring.session.store-type", havingValue = "redis", matchIfMissing = false)
 @EnableRedisHttpSession
 @PropertySource(ConstantsProperties.applicationPropertySource)
 public class SessionRedisAutoConfiguration implements InitializingBean {
@@ -44,6 +46,7 @@ public class SessionRedisAutoConfiguration implements InitializingBean {
 
     @Bean
     public CookieSerializer cookieSerializer() {
+        _logger.debug("CookieSerializer Default .");
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
         serializer.setCookieName("JSESSIONID"); 
         serializer.setCookiePath("/"); 

@@ -29,8 +29,8 @@ import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.InMemoryRemeberMeService;
-import org.maxkey.authn.support.rememberme.JdbcRemeberMeService;
 import org.maxkey.authn.support.rememberme.RedisRemeberMeService;
+import org.maxkey.constants.ConstantsPersistence;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.password.LdapShaPasswordEncoder;
@@ -189,16 +189,16 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
             @Value("${config.server.persistence}") int persistence,
             @Value("${config.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,
-            RedisConnectionFactory jedisConnectionFactory) {
+            RedisConnectionFactory redisConnFactory) {
         AbstractRemeberMeService remeberMeService = null;
-        if (persistence == 0) {
+        if (persistence == ConstantsPersistence.INMEMORY) {
             remeberMeService = new InMemoryRemeberMeService();
             _logger.debug("InMemoryRemeberMeService");
-        } else if (persistence == 1) {
-            remeberMeService = new JdbcRemeberMeService(jdbcTemplate);
-            _logger.debug("JdbcRemeberMeService");
-        } else if (persistence == 2) {
-            remeberMeService = new RedisRemeberMeService(jedisConnectionFactory);
+        } else if (persistence == ConstantsPersistence.JDBC) {
+            //remeberMeService = new JdbcRemeberMeService(jdbcTemplate);
+            _logger.debug("JdbcRemeberMeService not support "); 
+        } else if (persistence == ConstantsPersistence.REDIS) {
+            remeberMeService = new RedisRemeberMeService(redisConnFactory);
             _logger.debug("RedisRemeberMeService");
         }
         return remeberMeService;

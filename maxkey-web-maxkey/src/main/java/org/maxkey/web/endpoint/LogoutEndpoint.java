@@ -81,6 +81,11 @@ public class LogoutEndpoint {
 	 		}
  		}
  		
+ 		//not start with http or https
+ 		if(reLoginUrl!=null && !reLoginUrl.toLowerCase().startsWith("http")) {
+ 		   reLoginUrl=WebContext.getHttpContextPath()+"/"+reLoginUrl;
+ 		}
+ 		
  		_logger.debug("re Login URL : "+ reLoginUrl);
  		
  		modelAndView.addObject("reloginUrl",reLoginUrl);
