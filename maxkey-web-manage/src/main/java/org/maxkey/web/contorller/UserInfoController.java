@@ -1,23 +1,24 @@
 /*
  * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 
 package org.maxkey.web.contorller;
 
 import java.beans.PropertyEditorSupport;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,10 +26,12 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import com.alibaba.excel.EasyExcel;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.persistence.service.UserInfoListener;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringUtils;
@@ -51,6 +54,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -62,81 +66,100 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = { "/userinfo" })
 public class UserInfoController {
 	final static Logger _logger = LoggerFactory.getLogger(UserInfoController.class);
-	
+
 	@Autowired
 	@Qualifier("userInfoService")
 	private UserInfoService userInfoService;
 
-	
-	/**
-	 * 查询用户列表
-	 * @param user
-	 * @return
-	 */
-	@RequestMapping(value={"/grid"})
-	@ResponseBody
-	public JpaPageResults<UserInfo> forwardUsersList(@ModelAttribute("userInfo") UserInfo userInfo){
-		return userInfoService.queryPageResults(userInfo);
-		
-	}
-	
-	@RequestMapping(value={"/forwardAdd"})
-	public ModelAndView forwardSelectUserType(){
-		ModelAndView modelAndView=new ModelAndView("/userinfo/userAdd");
-		//List<UserType> userTypeList=userTypeService.query(null);
-		//modelAndView.addObject("userTypeList", userTypeList);
-		return modelAndView;
-	}
-	
-	
-	
-	
-	@RequestMapping(value={"/list"})
-	public ModelAndView usersList(){
-		return new ModelAndView("/userinfo/usersList");
-	}
-	
-	@RequestMapping(value={"/select"})
-	public ModelAndView usersSelect(){
-		ModelAndView modelAndView= new ModelAndView("/userinfo/userinfoSelect");
-		return modelAndView;
-	}
-	
-	/**
-	 * 新增
-	 * @param userInfo
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(value="/add") 
-	public ModelAndView addUsers(@Valid  @ModelAttribute("userInfo")UserInfo userInfo,BindingResult result) {
-		_logger.debug(userInfo.toString());
-		if(result.hasErrors()){
-			// new Message(WebContext.getValidErrorText(),result);
-		}
-		
-		userInfo.setId(userInfo.generateId());
-		//userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
-		//userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
-		if( userInfoService.insert(userInfo)) {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
-		}
-		
-		 new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
-		return   WebContext.forward("forwardUpdate/"+userInfo.getId());
-	}
-	
-	@RequestMapping(value={"/forwardUpdate/{id}"})
-	public ModelAndView forwardUpdateUsers(@PathVariable("id")String id){
-		ModelAndView modelAndView=new ModelAndView("/userinfo/userUpdate");
-		UserInfo userInfo=userInfoService.get(id);
-		if(userInfo.getPicture()!=null){
-			WebContext.getSession().setAttribute(userInfo.getId(), userInfo.getPicture());
-		}
-		
-		modelAndView.addObject("model", userInfo);
-		return modelAndView;
-	}
+
+    /**
+     * 查询用户列表
+     *
+     * @param user
+     * @return
+     */
+    @RequestMapping(value = {"/grid"})
+    @ResponseBody
+    public JpaPageResults<UserInfo> forwardUsersList(@ModelAttribute("userInfo") UserInfo userInfo) {
+        return userInfoService.queryPageResults(userInfo);
+
+    }
+
+    @RequestMapping(value = {"/forwardAdd"})
+    public ModelAndView forwardSelectUserType() {
+        ModelAndView modelAndView = new ModelAndView("/userinfo/userAdd");
+        //List<UserType> userTypeList=userTypeService.query(null);
+        //modelAndView.addObject("userTypeList", userTypeList);
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = {"/list"})
+    public ModelAndView usersList() {
+        return new ModelAndView("/userinfo/usersList");
+    }
+
+    @RequestMapping(value = {"/select"})
+    public ModelAndView usersSelect() {
+        ModelAndView modelAndView = new ModelAndView("/userinfo/userinfoSelect");
+        return modelAndView;
+    }
+
+    /**
+     * 新增
+     *
+     * @param userInfo
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/add")
+    public ModelAndView addUsers(@Valid @ModelAttribute("userInfo") UserInfo userInfo, BindingResult result) {
+        _logger.debug(userInfo.toString());
+        if (result.hasErrors()) {
+            // new Message(WebContext.getValidErrorText(),result);
+        }
+
+        userInfo.setId(userInfo.generateId());
+        //userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
+        //userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
+        if (userInfoService.insert(userInfo)) {
+            new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), userInfo, MessageType.success, OperateType.add, MessageScope.DB);
+        }
+
+        new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+        return WebContext.forward("forwardUpdate/" + userInfo.getId());
+    }
+
+    /**
+     * 用户excel导入
+     *
+     * @param userInfo
+     * @param result
+     * @return
+     */
+    /**
+     *
+     * @param file excel文件
+     * @return
+     */
+    @RequestMapping(value = "/importing")
+    public Object importing(MultipartFile file) throws IOException {
+        EasyExcel.read(file.getInputStream(), UserInfo.class, new UserInfoListener(userInfoService)).sheet().doRead();
+        return "success";
+    }
+
+
+    @RequestMapping(value = {"/forwardUpdate/{id}"})
+    public ModelAndView forwardUpdateUsers(@PathVariable("id") String id) {
+        ModelAndView modelAndView = new ModelAndView("/userinfo/userUpdate");
+        UserInfo userInfo = userInfoService.get(id);
+        if (userInfo.getPicture() != null) {
+            WebContext.getSession().setAttribute(userInfo.getId(), userInfo.getPicture());
+        }
+
+        modelAndView.addObject("model", userInfo);
+        return modelAndView;
+    }
 
 	/**
 	 * 查询用户，根据id
@@ -144,7 +167,7 @@ public class UserInfoController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/getUsers/{id}") 
+	@RequestMapping(value="/getUsers/{id}")
 	public UserInfo getUserInfo(@PathVariable("id")String id) {
 		_logger.debug(id);
 		UserInfo userInfo = userInfoService.get(id);
@@ -157,14 +180,14 @@ public class UserInfoController {
 		}
 		return userInfo;
 	}
-	
-	
+
+
     @ResponseBody
     @RequestMapping(value = "/randomPassword")
     public String randomPassword() {
         return userInfoService.randomPassword();
     }
-	   
+
 	/**
 	 * 修改用户
 	 * @param userInfo
@@ -192,31 +215,6 @@ public class UserInfoController {
         return WebContext.forward("forwardUpdate/" + userInfo.getId());
     }
 
-    /**
-     * 用户excel导入
-     *
-     * @param userInfo
-     * @param result
-     * @return
-     */
-    /**
-     *
-     * @param file excel文件
-     * @param type //重名处理方式 0忽略 1覆盖 2终止
-     * @return
-     */
-    @RequestMapping(value = "/importing")
-    public Object importing(@RequestParam(value = "file") MultipartFile file,@RequestParam Integer type ) {
-    	// 判断当前上传文件是否存在
-        if (file == null || file.getSize() <= 0) {
-            return new Message(WebContext.getI18nValue(ConstantsOperateMessage.IMPORT_ERROR), MessageType.error);
-        }
-        if (file.getSize() > 1048576 * 256) {
-            return new Message(WebContext.getI18nValue(ConstantsOperateMessage.IMPORT_ERROR), MessageType.error);
-        }
-        _logger.debug(file.getOriginalFilename(),type);
-        return userInfoService.importing(file,type);
-    }
 
 
     /**
@@ -301,10 +299,12 @@ public class UserInfoController {
                 }
             }
 
-		    
-		});
-		 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	        dateFormat.setLenient(false);  
-	        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-	}
+
+        });
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+
 }
