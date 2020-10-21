@@ -28,6 +28,7 @@ import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.Apps;
 import org.maxkey.domain.apps.AppsTokenBasedDetails;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +68,7 @@ public class TokenBasedJWTAdapter extends AbstractAuthorizeAdapter {
 				.claim("user_id", userInfo.getId())
 				.claim("external_id", userInfo.getId())
 				.claim("locale", userInfo.getLocale())
+				.claim(WebConstants.ONLINE_TICKET_NAME, userInfo.getOnlineTickit())
 				.claim("kid", jwtSignerService.getDefaultSignerKeyId())
 				.build();
 		

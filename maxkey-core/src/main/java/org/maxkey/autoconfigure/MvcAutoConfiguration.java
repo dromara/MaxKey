@@ -59,11 +59,11 @@ public class MvcAutoConfiguration implements InitializingBean {
      */
     @Bean (name = "localeResolver")
     public CookieLocaleResolver cookieLocaleResolver(
-            @Value("${config.server.domain.sub:maxkey.top}")String subDomainName) {
-        _logger.debug("subDomainName " + subDomainName);
+            @Value("${config.server.domain:maxkey.top}")String domainName) {
+        _logger.debug("DomainName " + domainName);
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setCookieName("maxkey_lang");
-        cookieLocaleResolver.setCookieDomain(subDomainName);
+        cookieLocaleResolver.setCookieDomain(domainName);
         cookieLocaleResolver.setCookieMaxAge(604800);
         return cookieLocaleResolver;
     }

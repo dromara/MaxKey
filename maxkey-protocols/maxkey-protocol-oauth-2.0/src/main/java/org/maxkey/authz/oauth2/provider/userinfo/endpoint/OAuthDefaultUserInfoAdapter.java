@@ -23,6 +23,7 @@ import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;
+import org.maxkey.web.WebConstants;
 import org.springframework.web.servlet.ModelAndView;
 
 public class OAuthDefaultUserInfoAdapter extends AbstractAuthorizeAdapter {
@@ -43,6 +44,7 @@ public class OAuthDefaultUserInfoAdapter extends AbstractAuthorizeAdapter {
 		beanMap.put("title", userInfo.getJobTitle());
 		beanMap.put("state", userInfo.getWorkRegion());
 		beanMap.put("gender", userInfo.getGender());
+		beanMap.put(WebConstants.ONLINE_TICKET_NAME, userInfo.getOnlineTickit());
 		
 		String info= JsonUtils.object2Json(beanMap);
 		

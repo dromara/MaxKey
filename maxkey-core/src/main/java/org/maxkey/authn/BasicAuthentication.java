@@ -34,6 +34,7 @@ public class BasicAuthentication implements Authentication {
     String remeberMe;
     String authType;
     String jwtToken;
+    String onlineTickit;
     ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;
 
@@ -164,6 +165,14 @@ public class BasicAuthentication implements Authentication {
 
     public void setGrantedAuthority(ArrayList<GrantedAuthority> grantedAuthority) {
         this.grantedAuthority = grantedAuthority;
+    }
+
+    public String getOnlineTickit() {
+        return onlineTickit;
+    }
+
+    public void setOnlineTickit(String onlineTickit) {
+        this.onlineTickit = onlineTickit;
     }
 
     @Override

@@ -23,6 +23,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.web.WebConstants;
 import org.springframework.web.servlet.ModelAndView;
 
 public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
@@ -65,6 +66,7 @@ public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
 		serviceResponseBuilder.setAttribute("departmentId", userInfo.getDepartmentId());
 		serviceResponseBuilder.setAttribute("workRegion",base64Attr(userInfo.getWorkRegion()));
 		
+		serviceResponseBuilder.setAttribute(WebConstants.ONLINE_TICKET_NAME,userInfo.getOnlineTickit());
 	
 		return null;
 	}

@@ -26,6 +26,7 @@ import org.maxkey.domain.apps.AppsTokenBasedDetails;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;
+import org.maxkey.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -70,6 +71,7 @@ public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 		}
 		
 		beanMap.put("displayName", userInfo.getDisplayName());
+		beanMap.put(WebConstants.ONLINE_TICKET_NAME, userInfo.getOnlineTickit());
 		
 		/*
 		 * use UTC date time format

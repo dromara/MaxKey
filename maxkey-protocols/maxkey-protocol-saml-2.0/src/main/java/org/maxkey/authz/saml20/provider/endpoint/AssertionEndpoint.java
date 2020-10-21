@@ -27,6 +27,8 @@ import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.provider.xml.AuthnResponseGenerator;
 import org.maxkey.domain.apps.AppsSAML20Details;
+import org.maxkey.web.WebConstants;
+import org.maxkey.web.WebContext;
 import org.opensaml.saml2.core.Response;
 import org.opensaml.saml2.metadata.Endpoint;
 import org.opensaml.ws.message.encoder.MessageEncodingException;
@@ -70,6 +72,9 @@ public class AssertionEndpoint {
 		logger.debug("AuthnRequestInfo: {}", authnRequestInfo);
 
 		HashMap <String,String>attributeMap=new HashMap<String,String>();
+		
+		attributeMap.put(WebConstants.ONLINE_TICKET_NAME, WebContext.getUserInfo().getOnlineTickit());
+		
 		//saml20Details
 		Response authResponse = authnResponseGenerator.generateAuthnResponse(
 				saml20Details,

@@ -86,12 +86,19 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
 			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew
 			 ){
+	    _logger.debug("serviceValidate " 
+                + " ticket " + ticket 
+                +" , service " + service
+                +" , renew " + renew
+        );
+	    
 		Ticket storedTicket=null;
 		try {
 			storedTicket = ticketServices.consumeTicket(ticket);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			_logger.error("consume Ticket error " , e);
 		}
 		
 		if(storedTicket!=null){
@@ -101,6 +108,7 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
 					.setUser(principal)
 					.serviceResponseBuilder();
 		}else{
+		    _logger.debug("Ticket not found .");
 			return new Service10ResponseBuilder().failure()
 					.serviceResponseBuilder();
 		}

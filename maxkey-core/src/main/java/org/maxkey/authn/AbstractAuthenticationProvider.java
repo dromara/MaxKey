@@ -251,6 +251,8 @@ public abstract class AbstractAuthenticationProvider {
             } else {
                 _logger.debug("User Login. ");
             }
+            //Online Tickit
+            userInfo.setOnlineTickit(WebConstants.ONLINE_TICKET_PREFIX + "-" +userInfo.generateId());
         }
 
         return userInfo;

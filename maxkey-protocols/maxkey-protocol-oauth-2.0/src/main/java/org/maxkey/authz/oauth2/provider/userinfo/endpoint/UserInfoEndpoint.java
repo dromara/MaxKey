@@ -26,6 +26,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
@@ -46,7 +47,7 @@ import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.Instance;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;
-
+import org.maxkey.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,7 +135,8 @@ public class UserInfoEndpoint {
 				 }else{
 					adapter =(AbstractAuthorizeAdapter)defaultOAuthUserInfoAdapter;
 				 }
-
+				 BasicAuthentication authentication = (BasicAuthentication)oAuth2Authentication.getUserAuthentication();
+				 userInfo.setOnlineTickit(authentication.getOnlineTickit());
 				String jsonData=adapter.generateInfo(userInfo, app);
 				return jsonData;
 			}catch(OAuth2Exception e){
@@ -170,8 +172,11 @@ public class UserInfoEndpoint {
 			 String userJson="";
 			 Builder jwtClaimsSetBuilder= new JWTClaimsSet.Builder();
 			 
+			 BasicAuthentication authentication = (BasicAuthentication)oAuth2Authentication.getUserAuthentication();
+			 
 			 jwtClaimsSetBuilder.claim("sub", userInfo.getId());
-		 	
+			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTickit());
+			 
 		 	if(scopes.contains("profile")){
 		 		jwtClaimsSetBuilder.claim("name", userInfo.getUsername());
 		 		jwtClaimsSetBuilder.claim("preferred_username", userInfo.getDisplayName());

@@ -76,7 +76,7 @@ public class ThemeTagDirective implements TemplateDirectiveModel {
         if (request.getAttribute(WebConstants.THEME_COOKIE_NAME) == null 
                 && null != WebContext.getUserInfo()) {
             request.setAttribute(WebConstants.THEME_COOKIE_NAME, "theme");
-            WebContext.setCookie(response, 
+            WebContext.setCookie(response, null,
                     WebConstants.THEME_COOKIE_NAME, theme, ConstantsTimeInterval.ONE_WEEK);
         }
         
