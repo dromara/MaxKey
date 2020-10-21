@@ -50,16 +50,16 @@ public class ApplicationConfig {
     @Autowired
     LoginConfig loginConfig;
 
+    @Value("${config.server.basedomain}")
+    String baseDomainName;
+
     @Value("${config.server.domain}")
     String domainName;
-
-    @Value("${config.server.domain.sub}")
-    String subDomainName;
 
     @Value("${config.server.name}")
     String serverName;
 
-    @Value("${config.server.prefix.uri}")
+    @Value("${config.server.uri}")
     String serverPrefix;
 
     @Value("${config.server.default.uri}")
@@ -139,22 +139,15 @@ public class ApplicationConfig {
      */
     public void setDomainName(String domainName) {
         this.domainName = domainName;
-        String[] domainSubStrings = domainName.split("\\.");
-        if (domainSubStrings.length >= 3) {
-            this.subDomainName = domainSubStrings[domainSubStrings.length - 2] + "."
-                    + domainSubStrings[domainSubStrings.length - 1];
-            _logger.debug("subDomainName " + subDomainName);
-        } else {
-            this.subDomainName = domainName;
-        }
+       
     }
 
-    public String getSubDomainName() {
-        return subDomainName;
+    public String getBaseDomainName() {
+        return baseDomainName;
     }
 
-    public void setSubDomainName(String subDomainName) {
-        this.subDomainName = subDomainName;
+    public void setBaseDomainName(String baseDomainName) {
+        this.baseDomainName = baseDomainName;
     }
 
     /**
@@ -201,6 +194,37 @@ public class ApplicationConfig {
 
     public void setMaxKeyUri(String maxKeyUri) {
         this.maxKeyUri = maxKeyUri;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ApplicationConfig [emailConfig=");
+        builder.append(emailConfig);
+        builder.append(", characterEncodingConfig=");
+        builder.append(characterEncodingConfig);
+        builder.append(", loginConfig=");
+        builder.append(loginConfig);
+        builder.append(", baseDomainName=");
+        builder.append(baseDomainName);
+        builder.append(", domainName=");
+        builder.append(domainName);
+        builder.append(", serverName=");
+        builder.append(serverName);
+        builder.append(", serverPrefix=");
+        builder.append(serverPrefix);
+        builder.append(", defaultUri=");
+        builder.append(defaultUri);
+        builder.append(", managementUri=");
+        builder.append(managementUri);
+        builder.append(", port=");
+        builder.append(port);
+        builder.append(", kafkaSupport=");
+        builder.append(kafkaSupport);
+        builder.append(", maxKeyUri=");
+        builder.append(maxKeyUri);
+        builder.append("]");
+        return builder.toString();
     }
 
 }

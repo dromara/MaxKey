@@ -109,9 +109,13 @@ public class ExtraAttrs {
 	}
 	
 	@Override
-	public String toString() {
-		return "ExtraAttrs [extraAttrs=" + extraAttrs + "]";
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ExtraAttrs [extraAttrs=");
+        builder.append(extraAttrs);
+        builder.append("]");
+        return builder.toString();
+    }
 	
 	
 }

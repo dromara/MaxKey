@@ -328,18 +328,45 @@ public class AppsOAuth20Details extends Apps {
         return baseClientDetails;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
-        return "OAuth20Details [clientId=" + clientId + ", clientSecret=" + clientSecret + ", scope=" + scope
-                + ", resourceIds=" + resourceIds + ", authorizedGrantTypes=" + authorizedGrantTypes
-                + ", registeredRedirectUris=" + registeredRedirectUris + ", authorities=" + authorities
-                + ", accessTokenValiditySeconds=" + accessTokenValiditySeconds + ", refreshTokenValiditySeconds="
-                + refreshTokenValiditySeconds + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("AppsOAuth20Details [clientId=");
+        builder.append(clientId);
+        builder.append(", clientSecret=");
+        builder.append(clientSecret);
+        builder.append(", scope=");
+        builder.append(scope);
+        builder.append(", resourceIds=");
+        builder.append(resourceIds);
+        builder.append(", authorizedGrantTypes=");
+        builder.append(authorizedGrantTypes);
+        builder.append(", registeredRedirectUris=");
+        builder.append(registeredRedirectUris);
+        builder.append(", authorities=");
+        builder.append(authorities);
+        builder.append(", accessTokenValiditySeconds=");
+        builder.append(accessTokenValiditySeconds);
+        builder.append(", refreshTokenValiditySeconds=");
+        builder.append(refreshTokenValiditySeconds);
+        builder.append(", approvalPrompt=");
+        builder.append(approvalPrompt);
+        builder.append(", idTokenSigningAlgorithm=");
+        builder.append(idTokenSigningAlgorithm);
+        builder.append(", idTokenEncryptedAlgorithm=");
+        builder.append(idTokenEncryptedAlgorithm);
+        builder.append(", idTokenEncryptionMethod=");
+        builder.append(idTokenEncryptionMethod);
+        builder.append(", userInfoSigningAlgorithm=");
+        builder.append(userInfoSigningAlgorithm);
+        builder.append(", userInfoEncryptedAlgorithm=");
+        builder.append(userInfoEncryptedAlgorithm);
+        builder.append(", userInfoEncryptionMethod=");
+        builder.append(userInfoEncryptionMethod);
+        builder.append(", jwksUri=");
+        builder.append(jwksUri);
+        builder.append("]");
+        return builder.toString();
     }
 
 }

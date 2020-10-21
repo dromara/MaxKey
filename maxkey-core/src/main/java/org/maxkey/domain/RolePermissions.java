@@ -107,6 +107,23 @@ public class RolePermissions  extends JpaBaseDomain implements Serializable {
     public String  getUniqueId() {
         return  appId + "_" + roleId + "_" + resourceId;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("RolePermissions [id=");
+        builder.append(id);
+        builder.append(", appId=");
+        builder.append(appId);
+        builder.append(", roleId=");
+        builder.append(roleId);
+        builder.append(", resourceId=");
+        builder.append(resourceId);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append("]");
+        return builder.toString();
+    }
     
 
 }

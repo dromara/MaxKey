@@ -209,4 +209,39 @@ public class HistoryLogs extends JpaBaseDomain implements Serializable {
         this.endDate = endDate;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("HistoryLogs [id=");
+        builder.append(id);
+        builder.append(", serviceName=");
+        builder.append(serviceName);
+        builder.append(", message=");
+        builder.append(message);
+        builder.append(", content=");
+        builder.append(content);
+        builder.append(", messageType=");
+        builder.append(messageType);
+        builder.append(", operateType=");
+        builder.append(operateType);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", code=");
+        builder.append(code);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append(", startDate=");
+        builder.append(startDate);
+        builder.append(", endDate=");
+        builder.append(endDate);
+        builder.append("]");
+        return builder.toString();
+    }
+
 }

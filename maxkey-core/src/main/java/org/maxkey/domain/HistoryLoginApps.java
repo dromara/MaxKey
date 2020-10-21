@@ -210,14 +210,30 @@ public class HistoryLoginApps extends JpaBaseDomain {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
-	public String toString() {
-		return "LoginAppsHistory [sessionId=" + sessionId + ", appId=" + appId
-				+ ", appName=" + appName + ", uid=" + uid + ", username="
-				+ username + ", displayName=" + displayName + ", loginTime="
-				+ loginTime + "]";
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("HistoryLoginApps [id=");
+        builder.append(id);
+        builder.append(", sessionId=");
+        builder.append(sessionId);
+        builder.append(", appId=");
+        builder.append(appId);
+        builder.append(", appName=");
+        builder.append(appName);
+        builder.append(", uid=");
+        builder.append(uid);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", displayName=");
+        builder.append(displayName);
+        builder.append(", loginTime=");
+        builder.append(loginTime);
+        builder.append(", startDate=");
+        builder.append(startDate);
+        builder.append(", endDate=");
+        builder.append(endDate);
+        builder.append("]");
+        return builder.toString();
+    }
 }

@@ -385,11 +385,45 @@ public class PasswordPolicy extends JpaBaseDomain implements java.io.Serializabl
 
     @Override
     public String toString() {
-        return "PasswordPolicy [id=" + id + ", minLength=" + minLength + ", maxLength=" + maxLength + ", lowerCase="
-                + lowerCase + ", upperCase=" + upperCase + ", digits=" + digits + ", specialChar=" + specialChar
-                + ", attempts=" + attempts + ", duration=" + duration + ", expiration=" + expiration + ", username="
-                + username + ", history=" + history + ", dictionary=" + dictionary + ", alphabetical=" + alphabetical
-                + ", numerical=" + numerical + ", qwerty=" + qwerty + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("PasswordPolicy [id=");
+        builder.append(id);
+        builder.append(", minLength=");
+        builder.append(minLength);
+        builder.append(", maxLength=");
+        builder.append(maxLength);
+        builder.append(", lowerCase=");
+        builder.append(lowerCase);
+        builder.append(", upperCase=");
+        builder.append(upperCase);
+        builder.append(", digits=");
+        builder.append(digits);
+        builder.append(", specialChar=");
+        builder.append(specialChar);
+        builder.append(", attempts=");
+        builder.append(attempts);
+        builder.append(", duration=");
+        builder.append(duration);
+        builder.append(", expiration=");
+        builder.append(expiration);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", history=");
+        builder.append(history);
+        builder.append(", dictionary=");
+        builder.append(dictionary);
+        builder.append(", alphabetical=");
+        builder.append(alphabetical);
+        builder.append(", numerical=");
+        builder.append(numerical);
+        builder.append(", qwerty=");
+        builder.append(qwerty);
+        builder.append(", occurances=");
+        builder.append(occurances);
+        builder.append(", randomPasswordLength=");
+        builder.append(randomPasswordLength);
+        builder.append("]");
+        return builder.toString();
     }
 
   

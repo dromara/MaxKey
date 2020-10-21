@@ -162,13 +162,33 @@ public class Navigations extends JpaBaseDomain  implements java.io.Serializable 
 	}
 
 	@Override
-	public String toString() {
-		return "Navigations [name=" + name + ", url=" + url + ", type=" + type
-				+ ", target=" + target + ", pId=" + pId + ", pName=" + pName
-				+ ", xPath=" + xPath + ", hasChild=" + hasChild
-				+", visible=" + visible
-				+ ", childNavs=" + childNavs + "]";
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Navigations [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", url=");
+        builder.append(url);
+        builder.append(", type=");
+        builder.append(type);
+        builder.append(", target=");
+        builder.append(target);
+        builder.append(", pId=");
+        builder.append(pId);
+        builder.append(", pName=");
+        builder.append(pName);
+        builder.append(", xPath=");
+        builder.append(xPath);
+        builder.append(", hasChild=");
+        builder.append(hasChild);
+        builder.append(", visible=");
+        builder.append(visible);
+        builder.append(", childNavs=");
+        builder.append(childNavs);
+        builder.append("]");
+        return builder.toString();
+    }
 
 
 

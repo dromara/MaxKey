@@ -127,4 +127,23 @@ public class EmailConfig {
         this.ssl = ssl;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("EmailConfig [username=");
+        builder.append(username);
+        builder.append(", password=");
+        builder.append(password);
+        builder.append(", smtpHost=");
+        builder.append(smtpHost);
+        builder.append(", port=");
+        builder.append(port);
+        builder.append(", ssl=");
+        builder.append(ssl);
+        builder.append(", sender=");
+        builder.append(sender);
+        builder.append("]");
+        return builder.toString();
+    }
+
 }

@@ -61,8 +61,15 @@ public class UserApps extends Apps {
 
     @Override
     public String toString() {
-        return "UserApplications [username=" + username 
-                + ", userId=" + userId + ", displayName=" + displayName + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("UserApps [username=");
+        builder.append(username);
+        builder.append(", userId=");
+        builder.append(userId);
+        builder.append(", displayName=");
+        builder.append(displayName);
+        builder.append("]");
+        return builder.toString();
     }
 
 }

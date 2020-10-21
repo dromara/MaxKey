@@ -226,13 +226,47 @@ public class HistoryLogin  extends JpaBaseDomain  implements Serializable{
 	}
 
 	@Override
-	public String toString() {
-		return "LoginHistory [id=" + id + ", sessionId=" + sessionId + ", uid=" + uid + ", username=" + username
-				+ ", displayName=" + displayName + ", loginType=" + loginType + ", message=" + message + ", code="
-				+ code + ", provider=" + provider + ", sourceIp=" + sourceIp + ", browser=" + browser + ", platform="
-				+ platform + ", application=" + application + ", loginUrl=" + loginUrl + ", loginTime=" + loginTime
-				+ ", logoutTime=" + logoutTime + ", startDate=" + startDate + ", endDate=" + endDate + "]";
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("HistoryLogin [id=");
+        builder.append(id);
+        builder.append(", sessionId=");
+        builder.append(sessionId);
+        builder.append(", uid=");
+        builder.append(uid);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", displayName=");
+        builder.append(displayName);
+        builder.append(", loginType=");
+        builder.append(loginType);
+        builder.append(", message=");
+        builder.append(message);
+        builder.append(", code=");
+        builder.append(code);
+        builder.append(", provider=");
+        builder.append(provider);
+        builder.append(", sourceIp=");
+        builder.append(sourceIp);
+        builder.append(", browser=");
+        builder.append(browser);
+        builder.append(", platform=");
+        builder.append(platform);
+        builder.append(", application=");
+        builder.append(application);
+        builder.append(", loginUrl=");
+        builder.append(loginUrl);
+        builder.append(", loginTime=");
+        builder.append(loginTime);
+        builder.append(", logoutTime=");
+        builder.append(logoutTime);
+        builder.append(", startDate=");
+        builder.append(startDate);
+        builder.append(", endDate=");
+        builder.append(endDate);
+        builder.append("]");
+        return builder.toString();
+    }
 
 
 }

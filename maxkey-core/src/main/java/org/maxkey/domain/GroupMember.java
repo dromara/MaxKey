@@ -164,11 +164,23 @@ public class GroupMember extends UserInfo implements Serializable{
 
 
 	@Override
-	public String toString() {
-		return "GroupMember [groupId=" + groupId + ", groupName=" + groupName
-				+ ", memberId=" + memberId + ", memberName=" + memberName
-				+ ", type=" + type + "]";
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("GroupMember [id=");
+        builder.append(id);
+        builder.append(", groupId=");
+        builder.append(groupId);
+        builder.append(", groupName=");
+        builder.append(groupName);
+        builder.append(", memberId=");
+        builder.append(memberId);
+        builder.append(", memberName=");
+        builder.append(memberName);
+        builder.append(", type=");
+        builder.append(type);
+        builder.append("]");
+        return builder.toString();
+    }
 
 
 }

@@ -18,7 +18,6 @@
 package org.maxkey.domain.apps;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -81,6 +80,10 @@ public class Apps extends JpaBaseDomain implements Serializable {
     private MultipartFile iconFile;
     @Column
     private int visible;
+    
+
+    //引导方式 IDP OR SP,default is IDP
+    private String inducer;
     /*
      * vendor
      */
@@ -505,15 +508,80 @@ public class Apps extends JpaBaseDomain implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
+    
+    public String getInducer() {
+        return inducer;
+    }
+
+    public void setInducer(String inducer) {
+        this.inducer = inducer;
+    }
 
     @Override
     public String toString() {
-        return "Applications [name=" + name + ", loginUrl=" + loginUrl + ", category=" + category + ", protocol="
-                + protocol + ", secret=" + secret + ", icon=" + Arrays.toString(icon) + ", iconFile=" + iconFile
-                + ", visible=" + visible + ", vendor=" + vendor + ", vendorUrl=" + vendorUrl + ", credential="
-                + credential + ", sharedUsername=" + sharedUsername + ", sharedPassword=" + sharedPassword
-                + ", systemUserAttr=" + systemUserAttr + ", isExtendAttr=" + isExtendAttr + ", extendAttr=" + extendAttr
-                + ", isSignature=" + isSignature + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("Apps [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", loginUrl=");
+        builder.append(loginUrl);
+        builder.append(", category=");
+        builder.append(category);
+        builder.append(", protocol=");
+        builder.append(protocol);
+        builder.append(", secret=");
+        builder.append(secret);
+        builder.append(", visible=");
+        builder.append(visible);
+        builder.append(", inducer=");
+        builder.append(inducer);
+        builder.append(", vendor=");
+        builder.append(vendor);
+        builder.append(", vendorUrl=");
+        builder.append(vendorUrl);
+        builder.append(", credential=");
+        builder.append(credential);
+        builder.append(", sharedUsername=");
+        builder.append(sharedUsername);
+        builder.append(", sharedPassword=");
+        builder.append(sharedPassword);
+        builder.append(", systemUserAttr=");
+        builder.append(systemUserAttr);
+        builder.append(", principal=");
+        builder.append(principal);
+        builder.append(", credentials=");
+        builder.append(credentials);
+        builder.append(", isExtendAttr=");
+        builder.append(isExtendAttr);
+        builder.append(", extendAttr=");
+        builder.append(extendAttr);
+        builder.append(", userPropertys=");
+        builder.append(userPropertys);
+        builder.append(", isSignature=");
+        builder.append(isSignature);
+        builder.append(", isAdapter=");
+        builder.append(isAdapter);
+        builder.append(", adapter=");
+        builder.append(adapter);
+        builder.append(", appUser=");
+        builder.append(appUser);
+        builder.append(", sortIndex=");
+        builder.append(sortIndex);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append("]");
+        return builder.toString();
     }
 
 }

@@ -102,13 +102,18 @@ public class GroupPrivileges extends Apps implements Serializable{
 	}
 
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
-	public String toString() {
-		return "GroupApp [groupId=" + groupId + ", appId=" + appId + "]";
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("GroupPrivileges [id=");
+        builder.append(id);
+        builder.append(", groupId=");
+        builder.append(groupId);
+        builder.append(", appId=");
+        builder.append(appId);
+        builder.append("]");
+        return builder.toString();
+    }
 	
 
 }

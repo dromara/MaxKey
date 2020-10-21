@@ -229,6 +229,8 @@ public class UserInfo extends JpaBaseDomain {
     protected HashMap<String, String> extraAttributeMap;
 
     protected int online;
+    
+    String onlineTickit;
 
     protected String ldapDn;
 
@@ -247,6 +249,8 @@ public class UserInfo extends JpaBaseDomain {
     @Column
     String description;
 
+    
+    
     public static class ONLINE {
         // 在线
         public static final int ONLINE = 1;
@@ -1145,70 +1149,7 @@ public class UserInfo extends JpaBaseDomain {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "UserInfo [username=" + username 
-                + ", password=" + password + ", decipherable=" + decipherable
-                + ", sharedSecret=" + sharedSecret 
-                + ", sharedCounter=" + sharedCounter + ", userType=" + userType
-                + ", windowsAccount=" + windowsAccount 
-                + ", displayName=" + displayName + ", nickName=" + nickName
-                + ", nameZHSpell=" + nameZhSpell 
-                + ", nameZHShortSpell=" + nameZhShortSpell 
-                + ", givenName=" + givenName
-                + ", middleName=" + middleName + ", familyName=" + familyName 
-                + ", honorificPrefix=" + honorificPrefix
-                + ", honorificSuffix=" + honorificSuffix 
-                + ", formattedName=" + formattedName + ", married=" + married
-                + ", gender=" + gender + ", birthDate=" + birthDate 
-                + ", pictureFile=" + pictureFile + ", idType="
-                + idType + ", idCardNo=" + idCardNo + ", webSite=" + webSite 
-                + ", startWorkDate=" + startWorkDate
-                + ", authnType=" + authnType + ", email=" + email 
-                + ", emailVerified=" + emailVerified + ", mobile="
-                + mobile + ", mobileVerified=" + mobileVerified 
-                + ", passwordQuestion=" + passwordQuestion
-                + ", passwordAnswer=" + passwordAnswer + ", appLoginAuthnType=" + appLoginAuthnType
-                + ", appLoginPassword=" + appLoginPassword 
-                + ", protectedApps=" + protectedApps + ", protectedAppsMap="
-                + protectedAppsMap + ", passwordLastSetTime=" + passwordLastSetTime 
-                + ", badPasswordCount="
-                + badPasswordCount + ", unLockTime=" + unLockTime 
-                + ", isLocked=" + isLocked + ", lastLoginTime="
-                + lastLoginTime + ", lastLoginIp=" + lastLoginIp 
-                + ", lastLogoffTime=" + lastLogoffTime
-                + ", passwordSetType=" + passwordSetType 
-                + ", loginCount=" + loginCount + ", locale=" + locale
-                + ", timeZone=" + timeZone + ", preferredLanguage=" + preferredLanguage 
-                + ", workCountry=" + workCountry
-                + ", workRegion=" + workRegion + ", workLocality=" + workLocality 
-                + ", workStreetAddress="
-                + workStreetAddress + ", workAddressFormatted=" + workAddressFormatted 
-                + ", workEmail=" + workEmail
-                + ", workPhoneNumber=" + workPhoneNumber + ", workPostalCode=" + workPostalCode 
-                + ", workFax=" + workFax
-                + ", homeCountry=" + homeCountry + ", homeRegion=" + homeRegion 
-                + ", homeLocality=" + homeLocality
-                + ", homeStreetAddress=" + homeStreetAddress 
-                + ", homeAddressFormatted=" + homeAddressFormatted
-                + ", homeEmail=" + homeEmail 
-                + ", homePhoneNumber=" + homePhoneNumber + ", homePostalCode="
-                + homePostalCode + ", homeFax=" + homeFax 
-                + ", employeeNumber=" + employeeNumber + ", costCenter="
-                + costCenter + ", organization=" + organization 
-                + ", division=" + division + ", departmentId="
-                + departmentId + ", department=" + department 
-                + ", jobTitle=" + jobTitle + ", jobLevel=" + jobLevel
-                + ", managerId=" + managerId + ", manager=" + manager 
-                + ", assistantId=" + assistantId + ", assistant="
-                + assistant + ", entryDate=" + entryDate 
-                + ", quitDate=" + quitDate + ", extraAttribute=" + extraAttribute 
-                + ", extraAttributeName=" + extraAttributeName + ", extraAttributeValue="
-                + extraAttributeValue + ", extraAttributeMap=" + extraAttributeMap 
-                + ", online=" + online + ", ldapDn="
-                + ldapDn + "]";
-    }
-
+ 
     /**
      * @return the createdBy
      */
@@ -1221,6 +1162,14 @@ public class UserInfo extends JpaBaseDomain {
      */
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public String getOnlineTickit() {
+        return onlineTickit;
+    }
+
+    public void setOnlineTickit(String onlineTickit) {
+        this.onlineTickit = onlineTickit;
     }
 
     /**
@@ -1271,6 +1220,213 @@ public class UserInfo extends JpaBaseDomain {
 
     public void setTheme(String theme) {
         this.theme = theme;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("UserInfo [id=");
+        builder.append(id);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", password=");
+        builder.append(password);
+        builder.append(", decipherable=");
+        builder.append(decipherable);
+        builder.append(", sharedSecret=");
+        builder.append(sharedSecret);
+        builder.append(", sharedCounter=");
+        builder.append(sharedCounter);
+        builder.append(", userType=");
+        builder.append(userType);
+        builder.append(", windowsAccount=");
+        builder.append(windowsAccount);
+        builder.append(", displayName=");
+        builder.append(displayName);
+        builder.append(", nickName=");
+        builder.append(nickName);
+        builder.append(", nameZhSpell=");
+        builder.append(nameZhSpell);
+        builder.append(", nameZhShortSpell=");
+        builder.append(nameZhShortSpell);
+        builder.append(", givenName=");
+        builder.append(givenName);
+        builder.append(", middleName=");
+        builder.append(middleName);
+        builder.append(", familyName=");
+        builder.append(familyName);
+        builder.append(", honorificPrefix=");
+        builder.append(honorificPrefix);
+        builder.append(", honorificSuffix=");
+        builder.append(honorificSuffix);
+        builder.append(", formattedName=");
+        builder.append(formattedName);
+        builder.append(", married=");
+        builder.append(married);
+        builder.append(", gender=");
+        builder.append(gender);
+        builder.append(", birthDate=");
+        builder.append(birthDate);
+        builder.append(", picture=");
+        builder.append(picture);
+        builder.append(", pictureFile=");
+        builder.append(pictureFile);
+        builder.append(", idType=");
+        builder.append(idType);
+        builder.append(", idCardNo=");
+        builder.append(idCardNo);
+        builder.append(", webSite=");
+        builder.append(webSite);
+        builder.append(", startWorkDate=");
+        builder.append(startWorkDate);
+        builder.append(", authnType=");
+        builder.append(authnType);
+        builder.append(", email=");
+        builder.append(email);
+        builder.append(", emailVerified=");
+        builder.append(emailVerified);
+        builder.append(", mobile=");
+        builder.append(mobile);
+        builder.append(", mobileVerified=");
+        builder.append(mobileVerified);
+        builder.append(", passwordQuestion=");
+        builder.append(passwordQuestion);
+        builder.append(", passwordAnswer=");
+        builder.append(passwordAnswer);
+        builder.append(", appLoginAuthnType=");
+        builder.append(appLoginAuthnType);
+        builder.append(", appLoginPassword=");
+        builder.append(appLoginPassword);
+        builder.append(", protectedApps=");
+        builder.append(protectedApps);
+        builder.append(", protectedAppsMap=");
+        builder.append(protectedAppsMap);
+        builder.append(", passwordLastSetTime=");
+        builder.append(passwordLastSetTime);
+        builder.append(", badPasswordCount=");
+        builder.append(badPasswordCount);
+        builder.append(", badPasswordTime=");
+        builder.append(badPasswordTime);
+        builder.append(", unLockTime=");
+        builder.append(unLockTime);
+        builder.append(", isLocked=");
+        builder.append(isLocked);
+        builder.append(", lastLoginTime=");
+        builder.append(lastLoginTime);
+        builder.append(", lastLoginIp=");
+        builder.append(lastLoginIp);
+        builder.append(", lastLogoffTime=");
+        builder.append(lastLogoffTime);
+        builder.append(", passwordSetType=");
+        builder.append(passwordSetType);
+        builder.append(", loginCount=");
+        builder.append(loginCount);
+        builder.append(", locale=");
+        builder.append(locale);
+        builder.append(", timeZone=");
+        builder.append(timeZone);
+        builder.append(", preferredLanguage=");
+        builder.append(preferredLanguage);
+        builder.append(", workCountry=");
+        builder.append(workCountry);
+        builder.append(", workRegion=");
+        builder.append(workRegion);
+        builder.append(", workLocality=");
+        builder.append(workLocality);
+        builder.append(", workStreetAddress=");
+        builder.append(workStreetAddress);
+        builder.append(", workAddressFormatted=");
+        builder.append(workAddressFormatted);
+        builder.append(", workEmail=");
+        builder.append(workEmail);
+        builder.append(", workPhoneNumber=");
+        builder.append(workPhoneNumber);
+        builder.append(", workPostalCode=");
+        builder.append(workPostalCode);
+        builder.append(", workFax=");
+        builder.append(workFax);
+        builder.append(", homeCountry=");
+        builder.append(homeCountry);
+        builder.append(", homeRegion=");
+        builder.append(homeRegion);
+        builder.append(", homeLocality=");
+        builder.append(homeLocality);
+        builder.append(", homeStreetAddress=");
+        builder.append(homeStreetAddress);
+        builder.append(", homeAddressFormatted=");
+        builder.append(homeAddressFormatted);
+        builder.append(", homeEmail=");
+        builder.append(homeEmail);
+        builder.append(", homePhoneNumber=");
+        builder.append(homePhoneNumber);
+        builder.append(", homePostalCode=");
+        builder.append(homePostalCode);
+        builder.append(", homeFax=");
+        builder.append(homeFax);
+        builder.append(", employeeNumber=");
+        builder.append(employeeNumber);
+        builder.append(", costCenter=");
+        builder.append(costCenter);
+        builder.append(", organization=");
+        builder.append(organization);
+        builder.append(", division=");
+        builder.append(division);
+        builder.append(", departmentId=");
+        builder.append(departmentId);
+        builder.append(", department=");
+        builder.append(department);
+        builder.append(", jobTitle=");
+        builder.append(jobTitle);
+        builder.append(", jobLevel=");
+        builder.append(jobLevel);
+        builder.append(", managerId=");
+        builder.append(managerId);
+        builder.append(", manager=");
+        builder.append(manager);
+        builder.append(", assistantId=");
+        builder.append(assistantId);
+        builder.append(", assistant=");
+        builder.append(assistant);
+        builder.append(", entryDate=");
+        builder.append(entryDate);
+        builder.append(", quitDate=");
+        builder.append(quitDate);
+        builder.append(", defineIm=");
+        builder.append(defineIm);
+        builder.append(", weixinFollow=");
+        builder.append(weixinFollow);
+        builder.append(", theme=");
+        builder.append(theme);
+        builder.append(", extraAttribute=");
+        builder.append(extraAttribute);
+        builder.append(", extraAttributeName=");
+        builder.append(extraAttributeName);
+        builder.append(", extraAttributeValue=");
+        builder.append(extraAttributeValue);
+        builder.append(", extraAttributeMap=");
+        builder.append(extraAttributeMap);
+        builder.append(", online=");
+        builder.append(online);
+        builder.append(", onlineTickit=");
+        builder.append(onlineTickit);
+        builder.append(", ldapDn=");
+        builder.append(ldapDn);
+        builder.append(", gridList=");
+        builder.append(gridList);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append("]");
+        return builder.toString();
     }
 
 }

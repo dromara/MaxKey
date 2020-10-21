@@ -69,9 +69,18 @@ public class ExtraAttr {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
 	@Override
-	public String toString() {
-		return "ExtraAttr [attr=" + attr + ", value=" + value + "]";
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ExtraAttr [attr=");
+        builder.append(attr);
+        builder.append(", type=");
+        builder.append(type);
+        builder.append(", value=");
+        builder.append(value);
+        builder.append("]");
+        return builder.toString();
+    }
 	
 }
