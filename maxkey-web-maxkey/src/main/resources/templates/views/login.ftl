@@ -168,6 +168,9 @@ $(function(){
 		<#--todo:send captcha-->
 		captchaCountTimer=setInterval("getCaptchaCount()", 1000);
 	});
+	$('#register').on('click',function(){
+		window.location.href="<@base />/register";
+	});
 	
 });
 </script>
