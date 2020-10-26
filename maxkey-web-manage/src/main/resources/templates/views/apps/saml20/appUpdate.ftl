@@ -4,6 +4,7 @@
 	<#include  "../../layout/header.ftl"/>
 	<#include  "../../layout/common.cssjs.ftl"/>
 	<#include  "../appCommonHead.ftl"/>
+	<#setting number_format="#">
 	<script type="text/javascript">
 	<!--
 	$(function(){	

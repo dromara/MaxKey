@@ -109,7 +109,10 @@ public class Apps extends JpaBaseDomain implements Serializable {
     private String principal;
     @Column
     private String credentials;
-
+    @Column
+    private String logoutUrl;
+    @Column
+    private int logoutType;
     /*
      * extendAttr
      */
@@ -516,6 +519,23 @@ public class Apps extends JpaBaseDomain implements Serializable {
     public void setInducer(String inducer) {
         this.inducer = inducer;
     }
+    
+
+    public String getLogoutUrl() {
+        return logoutUrl;
+    }
+
+    public void setLogoutUrl(String logoutUrl) {
+        this.logoutUrl = logoutUrl;
+    }
+
+    public int getLogoutType() {
+        return logoutType;
+    }
+
+    public void setLogoutType(int logoutType) {
+        this.logoutType = logoutType;
+    }
 
     @Override
     public String toString() {
@@ -552,6 +572,10 @@ public class Apps extends JpaBaseDomain implements Serializable {
         builder.append(principal);
         builder.append(", credentials=");
         builder.append(credentials);
+        builder.append(", logoutUrl=");
+        builder.append(logoutUrl);
+        builder.append(", logoutType=");
+        builder.append(logoutType);
         builder.append(", isExtendAttr=");
         builder.append(isExtendAttr);
         builder.append(", extendAttr=");
