@@ -17,6 +17,7 @@
 
 package org.maxkey.authn;
 
+import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -72,15 +73,10 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
 
         authenticationRealm.passwordMatches(userInfo, auth.getPassword());
-        authenticationRealm.grantAuthority(userInfo);
-        /*
-         *  put userInfo to current session context
-         */
-        WebContext.setUserInfo(userInfo);
-
-        auth.setAuthenticated(true);
-
-        if (auth.isAuthenticated() && applicationConfig.getLoginConfig().isRemeberMe()) {
+        
+        UsernamePasswordAuthenticationToken authenticationToken = setOnline(auth,userInfo);
+        //RemeberMe Config check then set  RemeberMe cookies
+        if (applicationConfig.getLoginConfig().isRemeberMe()) {
             if (auth.getRemeberMe() != null && auth.getRemeberMe().equals("remeberMe")) {
                 WebContext.getSession().setAttribute(
                         WebConstants.REMEBER_ME_SESSION,auth.getUsername());
@@ -93,47 +89,25 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
                 );
             }
         }
-        auth.setOnlineTickit(userInfo.getOnlineTickit());
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(
-                auth,
-                "PASSWORD",
-                authenticationRealm.grantAuthority(userInfo));
-        usernamePasswordAuthenticationToken.setDetails(
-                new WebAuthenticationDetails(WebContext.getRequest()));
         
-        setOnlineTickit(userInfo.getOnlineTickit());
-        
-        return usernamePasswordAuthenticationToken;
+        return  authenticationToken;
     }
     
     @Override
     public Authentication basicAuthenticate(Authentication authentication) {
-        BasicAuthentication basicAuth = (BasicAuthentication) authentication;
-        UserInfo loadeduserInfo = loadUserInfo(basicAuth.getUsername(), "");
+        BasicAuthentication auth = (BasicAuthentication) authentication;
+        UserInfo loadeduserInfo = loadUserInfo(auth.getUsername(), "");
         if (loadeduserInfo != null) {
-            
-            authenticationRealm.passwordMatches(loadeduserInfo, basicAuth.getPassword());
+            authenticationRealm.passwordMatches(loadeduserInfo, auth.getPassword());
 
             authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(loadeduserInfo);
 
-            WebContext.setUserInfo(loadeduserInfo);
-
-            authentication.setAuthenticated(true);
-            basicAuth.setOnlineTickit(loadeduserInfo.getOnlineTickit());
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    authentication, "PASSWORD", authenticationRealm.grantAuthority(loadeduserInfo));
-
-            WebContext.setAuthentication(authenticationToken);
-            WebContext.setUserInfo(loadeduserInfo);
-            authenticationRealm.insertLoginHistory(loadeduserInfo, basicAuth.getAuthType(), "", "", "SUCCESS");
-            
-            setOnlineTickit(loadeduserInfo.getOnlineTickit());
-            
-            return authenticationToken;
+            authenticationRealm.insertLoginHistory(loadeduserInfo, auth.getAuthType(), "", "", "SUCCESS");
+                        
+            return setOnline(auth,loadeduserInfo);
         }else {
             String message = WebContext.getI18nValue("login.error.username");
-            _logger.debug("login user  " + basicAuth.getUsername() + " not in this System ." + message);
+            _logger.debug("login user  " + auth.getUsername() + " not in this System ." + message);
             throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
         }
     }
@@ -155,26 +129,12 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
                                             String message) {
         UserInfo loadeduserInfo = loadUserInfo(username, "");
         if (loadeduserInfo != null) {
-            WebContext.setUserInfo(loadeduserInfo);
-            BasicAuthentication authentication = new BasicAuthentication();
-            authentication.setUsername(loadeduserInfo.getUsername());
-            authentication.setOnlineTickit(loadeduserInfo.getOnlineTickit());
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(
-                            authentication, 
-                            "PASSWORD", 
-                            authenticationRealm.grantAuthority(loadeduserInfo)
-                    );
-
-            authentication.setAuthenticated(true);
-            WebContext.setAuthentication(authenticationToken);
-            WebContext.setUserInfo(loadeduserInfo);
-
+            BasicAuthentication auth = new BasicAuthentication();
+            auth.setUsername(loadeduserInfo.getUsername());
+            
             authenticationRealm.insertLoginHistory(loadeduserInfo, type, provider, code, message);
             
-            setOnlineTickit(loadeduserInfo.getOnlineTickit());
-            
-            return authenticationToken;
+            return setOnline(auth,loadeduserInfo);
         }else {
             String i18nMessage = WebContext.getI18nValue("login.error.username");
             _logger.debug("login user  " + username + " not in this System ." + i18nMessage);
@@ -182,13 +142,42 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         }
     }
     
-    public void setOnlineTickit(String tickit) {
-        _logger.debug("set online Tickit " + tickit + " on domain "+ this.applicationConfig.getBaseDomainName());
+    public UsernamePasswordAuthenticationToken setOnline(BasicAuthentication authentication,UserInfo userInfo) {
+        //Online Tickit Id
+        String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + java.util.UUID.randomUUID().toString().toLowerCase();
+        _logger.debug("set online Tickit Cookie " + onlineTickitId + " on domain "+ this.applicationConfig.getBaseDomainName());
+        
         WebContext.setCookie(WebContext.getResponse(), 
                 this.applicationConfig.getBaseDomainName(), 
                 WebConstants.ONLINE_TICKET_NAME, 
-                tickit, 
+                onlineTickitId, 
                 0);
+        
+        //set OnlineTicket
+        OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId,authentication);
+        this.onlineTicketServices.store(onlineTickitId, onlineTicket);
+        authentication.setOnlineTicket(onlineTicket);
+        
+        authentication.setAuthenticated(true);
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(
+                        authentication, 
+                        "PASSWORD", 
+                        authenticationRealm.grantAuthority(userInfo)
+                );
+        
+        authenticationToken.setDetails(
+                new WebAuthenticationDetails(WebContext.getRequest()));
+        
+        /*
+         *  put userInfo to current session context
+         */
+        WebContext.setAuthentication(authenticationToken);
+        
+        userInfo.setOnlineTicket(onlineTicket);
+        WebContext.setUserInfo(userInfo);
+        
+        return authenticationToken;
     }
   
 }

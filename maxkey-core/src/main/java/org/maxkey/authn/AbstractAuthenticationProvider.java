@@ -17,6 +17,7 @@
 
 package org.maxkey.authn;
 
+import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
@@ -60,6 +61,10 @@ public abstract class AbstractAuthenticationProvider {
     @Autowired
     @Qualifier("remeberMeService")
     protected AbstractRemeberMeService remeberMeService;
+    
+    @Autowired
+    @Qualifier("onlineTicketServices")
+    protected OnlineTicketServices onlineTicketServices;
 
     protected abstract String getProviderName();
 
@@ -251,8 +256,7 @@ public abstract class AbstractAuthenticationProvider {
             } else {
                 _logger.debug("User Login. ");
             }
-            //Online Tickit
-            userInfo.setOnlineTickit(WebConstants.ONLINE_TICKET_PREFIX + "-" +userInfo.generateId());
+            
         }
 
         return userInfo;
@@ -311,5 +315,27 @@ public abstract class AbstractAuthenticationProvider {
         }
         return true;
     }
+
+    public void setApplicationConfig(ApplicationConfig applicationConfig) {
+        this.applicationConfig = applicationConfig;
+    }
+
+    public void setAuthenticationRealm(AbstractAuthenticationRealm authenticationRealm) {
+        this.authenticationRealm = authenticationRealm;
+    }
+
+    public void setTfaOptAuthn(AbstractOptAuthn tfaOptAuthn) {
+        this.tfaOptAuthn = tfaOptAuthn;
+    }
+
+    public void setRemeberMeService(AbstractRemeberMeService remeberMeService) {
+        this.remeberMeService = remeberMeService;
+    }
+
+    public void setOnlineTicketServices(OnlineTicketServices onlineTicketServices) {
+        this.onlineTicketServices = onlineTicketServices;
+    }
+    
+    
 
 }

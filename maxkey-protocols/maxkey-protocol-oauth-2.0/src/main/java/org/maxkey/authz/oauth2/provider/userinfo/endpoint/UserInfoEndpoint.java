@@ -136,7 +136,7 @@ public class UserInfoEndpoint {
 					adapter =(AbstractAuthorizeAdapter)defaultOAuthUserInfoAdapter;
 				 }
 				 BasicAuthentication authentication = (BasicAuthentication)oAuth2Authentication.getUserAuthentication();
-				 userInfo.setOnlineTickit(authentication.getOnlineTickit());
+				 userInfo.setOnlineTicket(authentication.getOnlineTicket());
 				String jsonData=adapter.generateInfo(userInfo, app);
 				return jsonData;
 			}catch(OAuth2Exception e){
@@ -175,7 +175,7 @@ public class UserInfoEndpoint {
 			 BasicAuthentication authentication = (BasicAuthentication)oAuth2Authentication.getUserAuthentication();
 			 
 			 jwtClaimsSetBuilder.claim("sub", userInfo.getId());
-			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTickit());
+			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId());
 			 
 		 	if(scopes.contains("profile")){
 		 		jwtClaimsSetBuilder.claim("name", userInfo.getUsername());

@@ -32,7 +32,11 @@ public class InMemoryOnlineTicketServices implements OnlineTicketServices{
 				.build(true);
 
 	
-	@Override
+	public InMemoryOnlineTicketServices() {
+        super();
+    }
+
+    @Override
 	public void store(String ticketId, OnlineTicket ticket) {
 	    onlineTicketStore.put(ticketId, ticket);
 	}
@@ -48,6 +52,12 @@ public class InMemoryOnlineTicketServices implements OnlineTicketServices{
     public OnlineTicket get(String ticketId) {
         OnlineTicket ticket=onlineTicketStore.get(ticketId); 
         return ticket;
+    }
+
+    @Override
+    public void setValiditySeconds(int validitySeconds) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

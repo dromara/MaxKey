@@ -72,5 +72,11 @@ public class RedisOnlineTicketServices implements OnlineTicketServices {
         return ticket;
     }
 
+    @Override
+    public void setValiditySeconds(int validitySeconds) {
+       this.serviceTicketValiditySeconds = validitySeconds;
+        
+    }
+
 	
 }

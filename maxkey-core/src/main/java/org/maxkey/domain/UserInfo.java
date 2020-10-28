@@ -26,6 +26,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -230,7 +231,7 @@ public class UserInfo extends JpaBaseDomain {
 
     protected int online;
     
-    String onlineTickit;
+    OnlineTicket onlineTicket;
 
     protected String ldapDn;
 
@@ -1164,12 +1165,12 @@ public class UserInfo extends JpaBaseDomain {
         this.createdBy = createdBy;
     }
 
-    public String getOnlineTickit() {
-        return onlineTickit;
+    public OnlineTicket getOnlineTicket() {
+        return onlineTicket;
     }
 
-    public void setOnlineTickit(String onlineTickit) {
-        this.onlineTickit = onlineTickit;
+    public void setOnlineTicket(OnlineTicket onlineTicket) {
+        this.onlineTicket = onlineTicket;
     }
 
     /**
@@ -1407,8 +1408,6 @@ public class UserInfo extends JpaBaseDomain {
         builder.append(extraAttributeMap);
         builder.append(", online=");
         builder.append(online);
-        builder.append(", onlineTickit=");
-        builder.append(onlineTickit);
         builder.append(", ldapDn=");
         builder.append(ldapDn);
         builder.append(", gridList=");

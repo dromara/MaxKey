@@ -26,4 +26,5 @@ public interface OnlineTicketServices {
     
     public  OnlineTicket get(String ticketId);
 
+    public void setValiditySeconds(int validitySeconds);
 }

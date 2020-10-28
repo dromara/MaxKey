@@ -149,6 +149,9 @@ public class Apps extends JpaBaseDomain implements Serializable {
     protected String modifiedDate;
     @Column
     protected String description;
+    
+    
+    protected String loginDateTime;
 
     public Apps() {
         super();
@@ -535,6 +538,15 @@ public class Apps extends JpaBaseDomain implements Serializable {
 
     public void setLogoutType(int logoutType) {
         this.logoutType = logoutType;
+    }
+
+    
+    public String getLoginDateTime() {
+        return loginDateTime;
+    }
+
+    public void setLoginDateTime(String loginDateTime) {
+        this.loginDateTime = loginDateTime;
     }
 
     @Override

@@ -27,6 +27,9 @@ import javax.sql.DataSource;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
+import org.maxkey.authn.online.InMemoryOnlineTicketServices;
+import org.maxkey.authn.online.OnlineTicketServices;
+import org.maxkey.authn.online.RedisOnlineTicketServices;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.InMemoryRemeberMeService;
 import org.maxkey.authn.support.rememberme.RedisRemeberMeService;
@@ -202,6 +205,24 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
             _logger.debug("RedisRemeberMeService");
         }
         return remeberMeService;
+    }
+    
+    @Bean(name = "onlineTicketServices")
+    public OnlineTicketServices onlineTicketServices(
+            @Value("${config.server.persistence}") int persistence,
+            JdbcTemplate jdbcTemplate,
+            RedisConnectionFactory redisConnFactory) {
+        OnlineTicketServices onlineTicketServices = null;
+        if (persistence == ConstantsPersistence.INMEMORY) {
+            onlineTicketServices = new InMemoryOnlineTicketServices();
+            _logger.debug("InMemoryOnlineTicketServices");
+        } else if (persistence == ConstantsPersistence.JDBC) {
+            _logger.debug("OnlineTicketServices not support "); 
+        } else if (persistence == ConstantsPersistence.REDIS) {
+            onlineTicketServices = new RedisOnlineTicketServices(redisConnFactory);
+            _logger.debug("RedisOnlineTicketServices");
+        }
+        return onlineTicketServices;
     }
     
     /**

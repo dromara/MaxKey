@@ -19,6 +19,8 @@ package org.maxkey.authn;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.maxkey.authn.online.OnlineTicket;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,7 +36,7 @@ public class BasicAuthentication implements Authentication {
     String remeberMe;
     String authType;
     String jwtToken;
-    String onlineTickit;
+    OnlineTicket onlineTicket;
     ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;
 
@@ -167,12 +169,12 @@ public class BasicAuthentication implements Authentication {
         this.grantedAuthority = grantedAuthority;
     }
 
-    public String getOnlineTickit() {
-        return onlineTickit;
+    public OnlineTicket getOnlineTicket() {
+        return onlineTicket;
     }
 
-    public void setOnlineTickit(String onlineTickit) {
-        this.onlineTickit = onlineTickit;
+    public void setOnlineTicket(OnlineTicket onlineTicket) {
+        this.onlineTicket = onlineTicket;
     }
 
     @Override

@@ -201,7 +201,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
-				userInfo.setOnlineTickit(authentication.getOnlineTickit());
+				userInfo.setOnlineTicket(authentication.getOnlineTicket());
 				adapter.generateInfo(userInfo, serviceResponseBuilder);
 			}
 		}else{

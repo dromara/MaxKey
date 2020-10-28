@@ -83,7 +83,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
-				userInfo.setOnlineTickit(authentication.getOnlineTickit());
+				userInfo.setOnlineTicket(authentication.getOnlineTicket());
 				adapter.generateInfo(userInfo, serviceResponseBuilder);
 			}
 		}else{
