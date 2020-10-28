@@ -41,6 +41,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 @PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class MaxKeyMvcConfig implements WebMvcConfigurer {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMvcConfig.class);
+    
     @Autowired
     PermissionAdapter permissionAdapter;
     
@@ -119,6 +120,10 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 //OAuth
                 .addPathPatterns("/oauth/v20/authorize")
                 .addPathPatterns("/oauth/v20/authorize/*")
+                
+                //online ticket Validate
+                .excludePathPatterns("/onlineticket/ticketValidate")
+                .excludePathPatterns("/onlineticket/ticketValidate/*")
                 ;
         
         _logger.debug("add PermissionAdapter");
