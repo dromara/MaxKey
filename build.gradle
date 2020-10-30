@@ -228,8 +228,8 @@ subprojects {
          compile group: 'net.minidev', name: 'json-smart', version: '2.3'
          compile group: 'net.minidev', name: 'asm', version: '1.0.2'
          //oauth third party JustAuth
-         compile group: 'com.xkcoding.http', name: 'simple-http', version: '1.0.2'
-         compile group: 'me.zhyd.oauth', name: 'JustAuth', version: '1.15.7'
+         compile group: 'com.xkcoding.http', name: 'simple-http', version: '1.0.3'
+         compile group: 'me.zhyd.oauth', name: 'JustAuth', version: '1.15.8'
          //common
          compile group: 'org.javassist', name: 'javassist', version: '3.23.0-GA'
          compile group: 'org.owasp.esapi', name: 'esapi', version: '2.2.0.0'

@@ -98,12 +98,20 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	@RequestMapping(value={"/callback/{provider}"}, method = RequestMethod.GET)
 	public ModelAndView callback(@PathVariable String provider
 			) {
-		this.provider=provider;
-		this.authCallback();
-		_logger.debug(this.accountId);
-		SocialsAssociate socialSignOnUserToken =new SocialsAssociate();
-		socialSignOnUserToken.setProvider(provider);
-		socialSignOnUserToken.setSocialuid(this.accountId);
+	    
+	    SocialsAssociate socialsAssociate = null;
+	    //auth call back may exception 
+	    try {
+    		this.provider=provider;
+    		this.authCallback();
+    		_logger.debug(this.accountId);
+    		socialsAssociate =new SocialsAssociate();
+    		socialsAssociate.setProvider(provider);
+    		socialsAssociate.setSocialuid(this.accountId);
+    		
+	    }catch(Exception e) {
+	        _logger.error("callback Exception  ",e);
+	    }
 		
 		//for login
 		String socialSignOnType= "";
@@ -112,10 +120,10 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		}
 		
 		if(socialSignOnType.equals(SOCIALSIGNON_TYPE.SOCIALSIGNON_TYPE_LOGON)||socialSignOnType.equals("")){
-			socialSignOn(socialSignOnUserToken);
+			socialSignOn(socialsAssociate);
 			return WebContext.redirect("/index");
 		}else{
-			socialBind(socialSignOnUserToken);
+			socialBind(socialsAssociate);
 		}
 		
 		if(WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI)!=null){
@@ -126,38 +134,41 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		
 	}
 	
-	public boolean socialBind(SocialsAssociate socialSignOnUserToken){
-		socialSignOnUserToken.setSocialUserInfo(accountJsonString);
-		socialSignOnUserToken.setUid(WebContext.getUserInfo().getId());
-		socialSignOnUserToken.setUsername(WebContext.getUserInfo().getUsername());
-		//socialSignOnUserToken.setAccessToken(JsonUtils.object2Json(accessToken));
-		//socialSignOnUserToken.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
-		_logger.debug("Social Bind : "+socialSignOnUserToken);
-		this.socialsAssociateService.delete(socialSignOnUserToken);
-		this.socialsAssociateService.insert(socialSignOnUserToken);
+	public boolean socialBind(SocialsAssociate socialsAssociate){
+	    if(null == socialsAssociate) {
+	        return false;
+	    }
+	    
+	    socialsAssociate.setSocialUserInfo(accountJsonString);
+	    socialsAssociate.setUid(WebContext.getUserInfo().getId());
+		socialsAssociate.setUsername(WebContext.getUserInfo().getUsername());
+		//socialsAssociate.setAccessToken(JsonUtils.object2Json(accessToken));
+		//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
+		_logger.debug("Social Bind : "+socialsAssociate);
+		this.socialsAssociateService.delete(socialsAssociate);
+		this.socialsAssociateService.insert(socialsAssociate);
 		return true;
 	}
 	
-	public boolean socialSignOn(SocialsAssociate socialSignOnUserToken){
+	public boolean socialSignOn(SocialsAssociate socialsAssociate){
 		
-		socialSignOnUserToken=this.socialsAssociateService.get(socialSignOnUserToken);
+	    socialsAssociate=this.socialsAssociateService.get(socialsAssociate);
 		
-		_logger.debug("callback SocialSignOn User Token : "+socialSignOnUserToken);
-		if(null !=socialSignOnUserToken){
-
-			_logger.debug("Social Sign On from "+socialSignOnUserToken.getProvider()+" mapping to user "+socialSignOnUserToken.getUsername());
-			
-			authenticationProvider.trustAuthentication(socialSignOnUserToken.getUsername(), ConstantsLoginType.SOCIALSIGNON,this.socialSignOnProvider.getProviderName(),"xe00000004","success");
-			//socialSignOnUserToken.setAccessToken(JsonUtils.object2Json(this.accessToken));
-			socialSignOnUserToken.setSocialUserInfo(accountJsonString);
-			//socialSignOnUserToken.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
-			
-			this.socialsAssociateService.update(socialSignOnUserToken);
-			
-			
-		}else{
-			WebContext.getRequest().getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, new BadCredentialsException(WebContext.getI18nValue("login.error.social")));
+		_logger.debug("Loaded SocialSignOn Socials Associate : "+socialsAssociate);
+		
+		if(null == socialsAssociate) {
+		    WebContext.getRequest().getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, new BadCredentialsException(WebContext.getI18nValue("login.error.social")));
+            return false;
 		}
+		
+		_logger.debug("Social Sign On from "+socialsAssociate.getProvider()+" mapping to user "+socialsAssociate.getUsername());
+		
+		authenticationProvider.trustAuthentication(socialsAssociate.getUsername(), ConstantsLoginType.SOCIALSIGNON,this.socialSignOnProvider.getProviderName(),"xe00000004","success");
+		//socialsAssociate.setAccessToken(JsonUtils.object2Json(this.accessToken));
+		socialsAssociate.setSocialUserInfo(accountJsonString);
+		//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
+		
+		this.socialsAssociateService.update(socialsAssociate);
 		return true;
 	}
 }

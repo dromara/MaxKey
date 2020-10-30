@@ -12,6 +12,8 @@
 	*(MAXKEY-200912) 构建脚本的优化和更新
 	*(MAXKEY-200920)  依赖jar引用、更新和升级
 	    druid 1.2.1
+	    JustAuth 1.15.8
+	    simple-http 1.0.3
 	    spring-session 2.3.1.RELEASE
 	    druid-spring-boot-starter 1.2.1
  
