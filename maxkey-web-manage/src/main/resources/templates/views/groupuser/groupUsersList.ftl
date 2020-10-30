@@ -11,7 +11,11 @@
 	
 	
 	$(function () {
-		$("#insertGroupUserBtn").on("click",function(){		
+		$("#insertGroupUserBtn").on("click",function(){	
+			if($("#groupId").val()==""){
+				$.alert({content:$.platform.messages.select.alertText});	
+				return;
+			}
 			var settings={
 							url		:	"<@base/>/groupMember/addGroupAppsList/"+$("#groupId").val(),//window url
 							title	:	"New",//title
