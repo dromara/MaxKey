@@ -17,6 +17,7 @@
 
 package org.maxkey.web.interceptor;
 
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -30,6 +31,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 /**
@@ -48,6 +51,12 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 	private ApplicationConfig applicationConfig;
 	
 	static  ConcurrentHashMap<String ,String >navigationsMap=null;
+	
+	static  ArrayList<GrantedAuthority> grantedAuthoritys = new ArrayList<GrantedAuthority>();
+	static {
+	    grantedAuthoritys.add(new SimpleGrantedAuthority("ADMINISTRATORS"));
+	}
+	
 	/*
 	 * 请求前处理
 	 *  (non-Javadoc)
@@ -58,13 +67,27 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 		 _logger.trace("PermissionAdapter preHandle");
 		
 		//判断用户是否登录
-		if(WebContext.getAuthentication()==null||WebContext.getAuthentication().getAuthorities()==null){//判断用户和角色，判断用户是否登录用户
-			_logger.trace("No Authentication ... forward to /login");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
-			dispatcher.forward(request, response);
-			return false;
-		}
-		
+        if(WebContext.getAuthentication()==null
+                ||WebContext.getAuthentication().getAuthorities()==null){//判断用户和角色，判断用户是否登录用户
+            _logger.trace("No Authentication ... forward to /login");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+            dispatcher.forward(request, response);
+            return false;
+        }
+	        
+		 boolean isGrantedAuthority = false;
+		 for(GrantedAuthority grantedAuthority : grantedAuthoritys) {
+		     if(WebContext.getAuthentication().getAuthorities().contains(grantedAuthority)) {
+		         isGrantedAuthority = true;
+		         _logger.trace("ADMINISTRATORS Authentication .");
+		     }
+		 }
+		 
+		 if(!isGrantedAuthority) {
+		     RequestDispatcher dispatcher = request.getRequestDispatcher("/logout");
+	            dispatcher.forward(request, response);
+	            return false;
+		 }
 		
 		boolean hasAccess=true;
 		
