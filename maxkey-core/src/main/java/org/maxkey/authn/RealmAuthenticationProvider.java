@@ -168,8 +168,8 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         
         authentication.setAuthenticated(true);
         
-        for(GrantedAuthority grantedAuthority : grantedAuthoritys) {
-            if(grantedAdministratorsAuthoritys.contains(grantedAuthority)) {
+        for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
+            if(grantedAuthoritys.contains(administratorsAuthority)) {
                 authentication.setRoleAdministrators(true);
                 _logger.trace("ROLE ADMINISTRATORS Authentication .");
             }
