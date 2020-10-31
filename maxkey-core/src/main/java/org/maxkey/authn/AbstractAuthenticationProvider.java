@@ -17,6 +17,8 @@
 
 package org.maxkey.authn;
 
+import java.util.ArrayList;
+
 import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
@@ -35,6 +37,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * login Authentication abstract class.
@@ -65,6 +69,12 @@ public abstract class AbstractAuthenticationProvider {
     @Autowired
     @Qualifier("onlineTicketServices")
     protected OnlineTicketServices onlineTicketServices;
+    
+    static  ArrayList<GrantedAuthority> grantedAdministratorsAuthoritys = new ArrayList<GrantedAuthority>();
+    
+    static {
+        grantedAdministratorsAuthoritys.add(new SimpleGrantedAuthority("ROLE_ADMINISTRATORS"));
+    }
 
     protected abstract String getProviderName();
 
