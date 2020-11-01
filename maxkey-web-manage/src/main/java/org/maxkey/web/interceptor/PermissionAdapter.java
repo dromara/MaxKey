@@ -23,13 +23,13 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.BasicAuthentication;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 /**
@@ -48,6 +48,7 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 	private ApplicationConfig applicationConfig;
 	
 	static  ConcurrentHashMap<String ,String >navigationsMap=null;
+	
 	/*
 	 * 请求前处理
 	 *  (non-Javadoc)
@@ -58,13 +59,21 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
 		 _logger.trace("PermissionAdapter preHandle");
 		
 		//判断用户是否登录
-		if(WebContext.getAuthentication()==null||WebContext.getAuthentication().getAuthorities()==null){//判断用户和角色，判断用户是否登录用户
-			_logger.trace("No Authentication ... forward to /login");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
-			dispatcher.forward(request, response);
-			return false;
-		}
-		
+        if(WebContext.getAuthentication()==null
+                ||WebContext.getAuthentication().getAuthorities()==null){//判断用户和角色，判断用户是否登录用户
+            _logger.trace("No Authentication ... forward to /login");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+            dispatcher.forward(request, response);
+            return false;
+        }
+        
+        //非管理员用户直接注销
+        if (!((BasicAuthentication) WebContext.getAuthentication().getPrincipal()).isRoleAdministrators()) {
+            _logger.debug("Not ADMINISTRATORS Authentication .");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/logout");
+            dispatcher.forward(request, response);
+            return false;
+        }
 		
 		boolean hasAccess=true;
 		

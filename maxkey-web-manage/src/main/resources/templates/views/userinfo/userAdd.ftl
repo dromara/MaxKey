@@ -51,7 +51,8 @@
 	<tr>
 		<td style="width:15%;"><@locale code="userinfo.username" />：</td>
 		<td style="width:35%;">
-		<input type="hidden" id="id" name="id" value=""/>
+			<input type="hidden" id="id" name="id" value=""/>
+			<input type="hidden" id="status" name="status" value="1"/>
 			<input  class="form-control"  type="text" required="" id="username" name="username"  title="" value=""/>
 		</td>
 		<td style="width:15%;"><@locale code="login.text.password" />：</td>

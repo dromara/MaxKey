@@ -17,6 +17,8 @@
 
 package org.maxkey.authn;
 
+import java.util.ArrayList;
+
 import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebConstants;
@@ -26,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -157,13 +161,25 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId,authentication);
         this.onlineTicketServices.store(onlineTickitId, onlineTicket);
         authentication.setOnlineTicket(onlineTicket);
+        ArrayList<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
+        //set default roles
+        grantedAuthoritys.add(new SimpleGrantedAuthority("ROLE_USER"));
+        grantedAuthoritys.add(new SimpleGrantedAuthority("ROLE_ORDINARY_USER"));
         
         authentication.setAuthenticated(true);
+        
+        for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
+            if(grantedAuthoritys.contains(administratorsAuthority)) {
+                authentication.setRoleAdministrators(true);
+                _logger.trace("ROLE ADMINISTRATORS Authentication .");
+            }
+        }
+        
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
                         authentication, 
                         "PASSWORD", 
-                        authenticationRealm.grantAuthority(userInfo)
+                        grantedAuthoritys
                 );
         
         authenticationToken.setDetails(

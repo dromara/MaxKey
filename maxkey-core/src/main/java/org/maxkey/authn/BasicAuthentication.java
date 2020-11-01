@@ -23,7 +23,6 @@ import java.util.Collection;
 import org.maxkey.authn.online.OnlineTicket;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 
 public class BasicAuthentication implements Authentication {
@@ -39,14 +38,12 @@ public class BasicAuthentication implements Authentication {
     OnlineTicket onlineTicket;
     ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;
+    boolean roleAdministrators;
 
     /**
      * BasicAuthentication.
      */
     public BasicAuthentication() {
-        grantedAuthority = new ArrayList<GrantedAuthority>();
-        grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
-        grantedAuthority.add(new SimpleGrantedAuthority("ORDINARY_USER"));
     }
 
     /**
@@ -56,9 +53,6 @@ public class BasicAuthentication implements Authentication {
         this.username = username;
         this.password = password;
         this.authType = authType;
-        grantedAuthority = new ArrayList<GrantedAuthority>();
-        grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
-        grantedAuthority.add(new SimpleGrantedAuthority("ORDINARY_USER"));
     }
     @Override
     public String getName() {
@@ -175,6 +169,14 @@ public class BasicAuthentication implements Authentication {
 
     public void setOnlineTicket(OnlineTicket onlineTicket) {
         this.onlineTicket = onlineTicket;
+    }
+
+    public boolean isRoleAdministrators() {
+        return roleAdministrators;
+    }
+
+    public void setRoleAdministrators(boolean roleAdministrators) {
+        this.roleAdministrators = roleAdministrators;
     }
 
     @Override

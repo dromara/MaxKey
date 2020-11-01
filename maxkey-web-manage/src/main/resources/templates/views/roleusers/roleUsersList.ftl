@@ -12,6 +12,10 @@
 	
 	$(function () {
 		$("#insertGroupUserBtn").on("click",function(){		
+			if($("#roleId").val()==""){
+				$.alert({content:$.platform.messages.select.alertText});	
+				return;
+			}
 			var settings={
 							url		:	"<@base/>/rolemembers/addRoleAppsList/"+$("#roleId").val(),//window url
 							title	:	"New",//title
