@@ -250,11 +250,32 @@ public class UserInfoController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value={"/forwardChangeUserinfoStatus/{id}"})
+	public ModelAndView forwardChangeUserinfoStatus(@PathVariable("id")String id){
+		ModelAndView modelAndView=new ModelAndView("/userinfo/changeUserinfoStatus");
+		UserInfo userInfo=userInfoService.get(id);
+		
+		modelAndView.addObject("model", userInfo);
+		return modelAndView;
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="/changePassword")  
 	public Message changePassword( @ModelAttribute("userInfo")UserInfo userInfo) {
 		_logger.debug(userInfo.getId());
 		if(userInfoService.changePassword(userInfo)) {
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			
+		} else {
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/changeUserinfoStatus")  
+	public Message changeUserinfoStatus( @ModelAttribute("userInfo")UserInfo userInfo) {
+		_logger.debug(userInfo.getId());
+		if(userInfoService.update(userInfo)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
