@@ -18,7 +18,7 @@ public class OnlineTicketEndpoint {
     protected OnlineTicketServices onlineTicketServices;
     
     @ResponseBody
-    @RequestMapping(value="/ticketValidate") 
+    @RequestMapping(value="/validate") 
     public OnlineTicket ticketValidate(
             @RequestParam(value ="ticket",required = true) String ticket) {
         OnlineTicket onlineTicket = onlineTicketServices.get(ticket);

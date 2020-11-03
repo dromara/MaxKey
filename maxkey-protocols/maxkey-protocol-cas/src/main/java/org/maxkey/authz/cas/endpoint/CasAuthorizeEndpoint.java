@@ -25,9 +25,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
+import org.maxkey.authz.singlelogout.LogoutType;
 import org.maxkey.domain.apps.AppsCasDetails;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -123,6 +126,13 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
     		for (String key : parameterMap.keySet()) {
     		    callbackUrl.append("&").append(key).append(parameterMap.get(key));
     		}
+		}
+		
+		if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
+		    String onlineTicketId = ((BasicAuthentication)WebContext.getAuthentication().getPrincipal()).getOnlineTicket().getTicketId();
+		    OnlineTicket onlineTicket  = onlineTicketServices.get(onlineTicketId);
+		    onlineTicket.setAuthorizedApp(casDetails);
+		    onlineTicketServices.store(onlineTicketId, onlineTicket);
 		}
 		
 		_logger.debug("redirect to CAS Client URL " + callbackUrl);

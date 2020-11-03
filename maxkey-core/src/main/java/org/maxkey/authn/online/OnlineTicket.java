@@ -17,7 +17,7 @@ public class OnlineTicket implements Serializable{
     
     public Authentication authentication;
     
-    private HashMap<String , Apps> authorizedApps;
+    private HashMap<String , Apps> authorizedApps = new HashMap<String , Apps>();
     
 
     public OnlineTicket(String ticketId) {
@@ -64,6 +64,10 @@ public class OnlineTicket implements Serializable{
 
     public void setAuthorizedApps(HashMap<String, Apps> authorizedApps) {
         this.authorizedApps = authorizedApps;
+    }
+    
+    public void setAuthorizedApp(Apps authorizedApp) {
+        this.authorizedApps.put(authorizedApp.getId(), authorizedApp);
     }
 
 

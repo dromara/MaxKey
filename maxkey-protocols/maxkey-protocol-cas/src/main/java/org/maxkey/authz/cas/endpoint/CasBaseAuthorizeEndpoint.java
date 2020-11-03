@@ -20,6 +20,7 @@ package org.maxkey.authz.cas.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
@@ -49,6 +50,10 @@ public class CasBaseAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
     @Autowired
     @Qualifier("casTicketGrantingTicketServices")
     protected TicketServices casTicketGrantingTicketServices;
+    
+    @Autowired
+    @Qualifier("onlineTicketServices")
+    protected OnlineTicketServices onlineTicketServices;
     
     
     public void setContentType(
