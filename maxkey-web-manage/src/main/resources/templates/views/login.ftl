@@ -44,6 +44,7 @@
                                         <input id='j_password' name='password' class="form-control" type="password" required="" placeholder="<@locale code="login.text.password"/>">
 									</span>
 								</div>
+								<#if true==isCaptcha> 
 								<div class="form-group">
 								    <span class="input-group">
                                         <div class="input-group-prepend">
@@ -54,6 +55,7 @@
                                     </span>
 									
 								</div>
+								</#if>
 								<div class="form-group text-center m-t-20">
 									<input type="hidden" name="authType" value="basic" /> 
 									<input type='hidden' id="sessionid" name="sessionId" value="${sessionid}" />
