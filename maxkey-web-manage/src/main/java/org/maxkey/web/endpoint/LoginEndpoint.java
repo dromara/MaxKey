@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
-import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
@@ -110,12 +110,12 @@ public class LoginEndpoint {
 	}
  	
  	@RequestMapping(value={"/logon.do"})
-	public ModelAndView logon(@ModelAttribute("authentication") BasicAuthentication authentication) {
+	public ModelAndView logon(@ModelAttribute("loginCredential") LoginCredential loginCredential) {
  		
  		if(WebContext.isAuthenticated()){
  			return WebContext.redirect("/main");
 		}else{
-			authenticationProvider.authenticate(authentication);
+			authenticationProvider.authenticate(loginCredential);
 			return WebContext.redirect("/login");
 		}
  	}

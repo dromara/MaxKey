@@ -129,7 +129,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	@RequestMapping(value = "/oauth/v20/authorize", method = RequestMethod.GET)
 	public ModelAndView authorize(Map<String, Object> model, @RequestParam Map<String, String> parameters,
 			SessionStatus sessionStatus) {
-		 Principal principal=(Principal)WebContext.getAuthentication().getPrincipal();
+		 Principal principal=(Principal)WebContext.getAuthentication();
 		// Pull out the authorization request first, using the OAuth2RequestFactory. All further logic should
 		// query off of the authorization request instead of referring back to the parameters map. The contents of the
 		// parameters map will be stored without change in the AuthorizationRequest object once it is created.
@@ -208,7 +208,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	@RequestMapping(value = "/oauth/v20/authorize", method = RequestMethod.POST, params = OAuth2Utils.USER_OAUTH_APPROVAL)
 	public View approveOrDeny(@RequestParam Map<String, String> approvalParameters, Map<String, ?> model,
 			SessionStatus sessionStatus) {
-		Principal principal=(Principal)WebContext.getAuthentication().getPrincipal();
+		Principal principal=(Principal)WebContext.getAuthentication();
 		if (!(principal instanceof Authentication)) {
 			sessionStatus.setComplete();
 			throw new InsufficientAuthenticationException(

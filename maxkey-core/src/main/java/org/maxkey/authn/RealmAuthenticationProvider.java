@@ -49,41 +49,40 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     }
 
     @Override
-    protected Authentication doInternalAuthenticate(Authentication authentication) {
-        BasicAuthentication auth = (BasicAuthentication)authentication;
+    protected Authentication doInternalAuthenticate(LoginCredential loginCredential) {
 
-        _logger.debug("authentication " + auth);
+        _logger.debug("authentication " + loginCredential);
 
-        sessionValid(auth.getSessionId());
+        sessionValid(loginCredential.getSessionId());
 
         //jwtTokenValid(j_jwtToken);
 
-        authTypeValid(auth.getAuthType());
+        authTypeValid(loginCredential.getAuthType());
 
-        captchaValid(auth.getCaptcha(),auth.getAuthType());
+        captchaValid(loginCredential.getCaptcha(),loginCredential.getAuthType());
 
-        emptyPasswordValid(auth.getPassword());
+        emptyPasswordValid(loginCredential.getPassword());
 
         UserInfo userInfo = null;
 
-        emptyUsernameValid(auth.getUsername());
+        emptyUsernameValid(loginCredential.getUsername());
 
-        userInfo =  loadUserInfo(auth.getUsername(),auth.getPassword());
+        userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
 
-        userinfoValid(userInfo, auth.getPassword());
+        userinfoValid(userInfo, loginCredential.getPassword());
 
-        tftcaptchaValid(auth.getOtpCaptcha(),auth.getAuthType(),userInfo);
+        tftcaptchaValid(loginCredential.getOtpCaptcha(),loginCredential.getAuthType(),userInfo);
 
         authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
 
-        authenticationRealm.passwordMatches(userInfo, auth.getPassword());
+        authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
         
-        UsernamePasswordAuthenticationToken authenticationToken = setOnline(auth,userInfo);
+        UsernamePasswordAuthenticationToken authenticationToken = setOnline(loginCredential,userInfo);
         //RemeberMe Config check then set  RemeberMe cookies
         if (applicationConfig.getLoginConfig().isRemeberMe()) {
-            if (auth.getRemeberMe() != null && auth.getRemeberMe().equals("remeberMe")) {
+            if (loginCredential.getRemeberMe() != null && loginCredential.getRemeberMe().equals("remeberMe")) {
                 WebContext.getSession().setAttribute(
-                        WebConstants.REMEBER_ME_SESSION,auth.getUsername());
+                        WebConstants.REMEBER_ME_SESSION,loginCredential.getUsername());
                 _logger.debug("do Remeber Me");
                 remeberMeService.createRemeberMe(
                         userInfo.getUsername(), 
@@ -98,20 +97,19 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     }
     
     @Override
-    public Authentication basicAuthenticate(Authentication authentication) {
-        BasicAuthentication auth = (BasicAuthentication) authentication;
-        UserInfo loadeduserInfo = loadUserInfo(auth.getUsername(), "");
+    public Authentication basicAuthenticate(LoginCredential loginCredential) {
+        UserInfo loadeduserInfo = loadUserInfo(loginCredential.getUsername(), "");
         if (loadeduserInfo != null) {
-            authenticationRealm.passwordMatches(loadeduserInfo, auth.getPassword());
+            authenticationRealm.passwordMatches(loadeduserInfo, loginCredential.getPassword());
 
             authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(loadeduserInfo);
 
-            authenticationRealm.insertLoginHistory(loadeduserInfo, auth.getAuthType(), "", "", "SUCCESS");
+            authenticationRealm.insertLoginHistory(loadeduserInfo, loginCredential.getAuthType(), "", "", "SUCCESS");
                         
-            return setOnline(auth,loadeduserInfo);
+            return setOnline(loginCredential,loadeduserInfo);
         }else {
             String message = WebContext.getI18nValue("login.error.username");
-            _logger.debug("login user  " + auth.getUsername() + " not in this System ." + message);
+            _logger.debug("login user  " + loginCredential.getUsername() + " not in this System ." + message);
             throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
         }
     }
@@ -133,12 +131,12 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
                                             String message) {
         UserInfo loadeduserInfo = loadUserInfo(username, "");
         if (loadeduserInfo != null) {
-            BasicAuthentication auth = new BasicAuthentication();
-            auth.setUsername(loadeduserInfo.getUsername());
+            LoginCredential loginCredential = new LoginCredential();
+            loginCredential.setUsername(loadeduserInfo.getUsername());
             
             authenticationRealm.insertLoginHistory(loadeduserInfo, type, provider, code, message);
             
-            return setOnline(auth,loadeduserInfo);
+            return setOnline(loginCredential,loadeduserInfo);
         }else {
             String i18nMessage = WebContext.getI18nValue("login.error.username");
             _logger.debug("login user  " + username + " not in this System ." + i18nMessage);
@@ -146,7 +144,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         }
     }
     
-    public UsernamePasswordAuthenticationToken setOnline(BasicAuthentication authentication,UserInfo userInfo) {
+    public UsernamePasswordAuthenticationToken setOnline(LoginCredential credential,UserInfo userInfo) {
         //Online Tickit Id
         String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + java.util.UUID.randomUUID().toString().toLowerCase();
         _logger.debug("set online Tickit Cookie " + onlineTickitId + " on domain "+ this.applicationConfig.getBaseDomainName());
@@ -157,27 +155,26 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
                 onlineTickitId, 
                 0);
         
+        SigninPrincipal signinPrincipal = new SigninPrincipal(userInfo);
         //set OnlineTicket
-        OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId,authentication);
-        this.onlineTicketServices.store(onlineTickitId, onlineTicket);
-        authentication.setOnlineTicket(onlineTicket);
+        signinPrincipal.setOnlineTicket(onlineTickitId);
         ArrayList<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
         //set default roles
         grantedAuthoritys.add(new SimpleGrantedAuthority("ROLE_USER"));
         grantedAuthoritys.add(new SimpleGrantedAuthority("ROLE_ORDINARY_USER"));
         
-        authentication.setAuthenticated(true);
+        signinPrincipal.setAuthenticated(true);
         
         for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
             if(grantedAuthoritys.contains(administratorsAuthority)) {
-                authentication.setRoleAdministrators(true);
+                signinPrincipal.setRoleAdministrators(true);
                 _logger.trace("ROLE ADMINISTRATORS Authentication .");
             }
         }
         
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
-                        authentication, 
+                        signinPrincipal, 
                         "PASSWORD", 
                         grantedAuthoritys
                 );
@@ -185,12 +182,13 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         authenticationToken.setDetails(
                 new WebAuthenticationDetails(WebContext.getRequest()));
         
+        OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId,authenticationToken);
+        this.onlineTicketServices.store(onlineTickitId, onlineTicket);
         /*
          *  put userInfo to current session context
          */
         WebContext.setAuthentication(authenticationToken);
         
-        userInfo.setOnlineTicket(onlineTicket);
         WebContext.setUserInfo(userInfo);
         
         return authenticationToken;

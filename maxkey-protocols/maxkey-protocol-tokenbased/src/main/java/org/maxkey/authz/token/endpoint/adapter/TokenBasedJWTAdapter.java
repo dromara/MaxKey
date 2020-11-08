@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.joda.time.DateTime;
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.configuration.oidc.OIDCProviderMetadata;
 import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
@@ -44,7 +45,7 @@ import com.nimbusds.jwt.SignedJWT;
 public class TokenBasedJWTAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(TokenBasedJWTAdapter.class);
 	@Override
-	public String generateInfo(UserInfo userInfo,Object app) {
+	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
 		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 	
 		
@@ -68,7 +69,7 @@ public class TokenBasedJWTAdapter extends AbstractAuthorizeAdapter {
 				.claim("user_id", userInfo.getId())
 				.claim("external_id", userInfo.getId())
 				.claim("locale", userInfo.getLocale())
-				.claim(WebConstants.ONLINE_TICKET_NAME, userInfo.getOnlineTicket().getTicketId())
+				.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket())
 				.claim("kid", jwtSignerService.getDefaultSignerKeyId())
 				.build();
 		

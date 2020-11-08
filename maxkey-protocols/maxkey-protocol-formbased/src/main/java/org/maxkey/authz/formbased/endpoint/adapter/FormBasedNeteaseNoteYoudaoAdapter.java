@@ -19,6 +19,7 @@ package org.maxkey.authz.formbased.endpoint.adapter;
 
 import java.util.Date;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.crypto.DigestUtils;
 import org.maxkey.domain.UserInfo;
@@ -28,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class FormBasedNeteaseNoteYoudaoAdapter extends AbstractAuthorizeAdapter {
 
 	@Override
-	public String generateInfo(UserInfo userInfo,Object app) {
+	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
 		return null;
 	}
 

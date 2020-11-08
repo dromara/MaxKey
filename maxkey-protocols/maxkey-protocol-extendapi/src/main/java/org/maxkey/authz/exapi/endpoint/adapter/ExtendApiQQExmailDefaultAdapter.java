@@ -19,6 +19,7 @@ package org.maxkey.authz.exapi.endpoint.adapter;
 
 import java.util.HashMap;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.client.oauth.OAuthClient;
 import org.maxkey.client.oauth.model.Token;
@@ -38,7 +39,7 @@ public class ExtendApiQQExmailDefaultAdapter extends AbstractAuthorizeAdapter {
 	static String authkey_uri="http://openapi.exmail.qq.com:12211/openapi/mail/authkey";
 	
 	@Override
-	public String generateInfo(UserInfo userInfo,Object app) {
+	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
 		return null;
 	}
 

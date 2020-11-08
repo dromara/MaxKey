@@ -36,6 +36,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
@@ -57,7 +58,10 @@ public class InitializeContext extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-
+        
+        _logger.info("SecurityContextHolder StrategyName " + SessionSecurityContextHolderStrategy.class.getCanonicalName());
+        SecurityContextHolder.setStrategyName(SessionSecurityContextHolderStrategy.class.getCanonicalName());
+        
         // List Environment Variables
         listEnvVars();
 

@@ -23,7 +23,7 @@ package org.maxkey.authz.cas.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
@@ -76,15 +76,14 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
-		    BasicAuthentication authentication = ((BasicAuthentication)storedTicket.getAuthentication().getPrincipal());
+		    SigninPrincipal authentication = ((SigninPrincipal)storedTicket.getAuthentication().getPrincipal());
 			String principal=authentication.getUsername();
 			serviceResponseBuilder.success().setUser(principal);
 			
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
-				userInfo.setOnlineTicket(authentication.getOnlineTicket());
-				adapter.generateInfo(userInfo, serviceResponseBuilder);
+				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);
 			}
 		}else{
 			serviceResponseBuilder.failure()
@@ -123,13 +122,14 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
-			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getUsername();
+		    SigninPrincipal authentication = ((SigninPrincipal)storedTicket.getAuthentication().getPrincipal());
+			String principal=authentication.getUsername();
 			serviceResponseBuilder.success().setUser(principal);
 			
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
-				adapter.generateInfo(userInfo, serviceResponseBuilder);
+				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);
 			}
 		}else{
 			serviceResponseBuilder.failure()

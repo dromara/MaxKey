@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidClientException;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidGrantException;
@@ -41,6 +42,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -98,9 +100,6 @@ public class TokenEndpoint extends AbstractEndpoint {
 	    
 	    Object principal = WebContext.getAuthentication();
 
-		if(parameters.get("code") != null) {
-		    principal=WebContext.getAuthentication().getPrincipal();
-		}
 		if (!(principal instanceof Authentication)) {
 			throw new InsufficientAuthenticationException(
 					"There is no client authentication. Try adding an appropriate authentication filter.");
@@ -173,6 +172,9 @@ public class TokenEndpoint extends AbstractEndpoint {
 		if (client instanceof OAuth2Authentication) {
 			// Might be a client and user combined authentication
 			clientId = ((OAuth2Authentication) client).getOAuth2Request().getClientId();
+		}
+		if (client instanceof UsernamePasswordAuthenticationToken) {
+		    clientId = ((SigninPrincipal)client.getPrincipal()).getUsername();
 		}
 		return clientId;
 	}

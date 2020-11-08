@@ -19,6 +19,7 @@ package org.maxkey.authz.desktop.endpoint.adapter;
 
 import java.util.HashMap;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.crypto.HexUtils;
 import org.maxkey.domain.UserInfo;
@@ -33,7 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class DesktopQQAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(DesktopQQAdapter.class);
 	@Override
-	public String generateInfo(UserInfo userInfo,Object app) {
+	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
 		AppsDesktopDetails details=(AppsDesktopDetails)app;
 		String parameter=details.getParameter()==null?"":details.getParameter();
 		

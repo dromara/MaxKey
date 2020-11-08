@@ -19,6 +19,7 @@ package org.maxkey.authz.endpoint.adapter;
 
 import java.io.UnsupportedEncodingException;
 import org.apache.commons.codec.binary.Hex;
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.constants.Boolean;
 import org.maxkey.crypto.Base64Utils;
 import org.maxkey.crypto.ReciprocalUtils;
@@ -39,7 +40,7 @@ public abstract class AbstractAuthorizeAdapter {
 	
 	public abstract ModelAndView authorize(UserInfo userInfo,Object app,String data,ModelAndView modelAndView);
 	
-	public abstract String generateInfo(UserInfo userInfo,Object app);
+	public abstract String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app);
 	
 	public String  sign(String data,Apps app){
 		if(Boolean.isTrue(app.getIsSignature())){

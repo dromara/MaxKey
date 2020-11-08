@@ -1,32 +1,17 @@
-/*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *     http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
- 
-
 package org.maxkey.authn;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.maxkey.authn.online.OnlineTicket;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-
-public class BasicAuthentication implements Authentication {
-    private static final long serialVersionUID = -110742975439268030L;
+public class LoginCredential  implements Authentication {
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3125709257481600320L;
     String username;
     String password;
     String sessionId;
@@ -35,7 +20,7 @@ public class BasicAuthentication implements Authentication {
     String remeberMe;
     String authType;
     String jwtToken;
-    OnlineTicket onlineTicket;
+    String onlineTicket;
     ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;
     boolean roleAdministrators;
@@ -43,20 +28,21 @@ public class BasicAuthentication implements Authentication {
     /**
      * BasicAuthentication.
      */
-    public BasicAuthentication() {
+    public LoginCredential() {
     }
 
     /**
      * BasicAuthentication.
      */
-    public BasicAuthentication(String username,String password,String authType) {
+    public LoginCredential(String username,String password,String authType) {
         this.username = username;
         this.password = password;
         this.authType = authType;
     }
+    
     @Override
     public String getName() {
-        return "Basic Authentication";
+        return "Login Credential";
     }
 
     @Override
@@ -163,11 +149,11 @@ public class BasicAuthentication implements Authentication {
         this.grantedAuthority = grantedAuthority;
     }
 
-    public OnlineTicket getOnlineTicket() {
+    public String getOnlineTicket() {
         return onlineTicket;
     }
 
-    public void setOnlineTicket(OnlineTicket onlineTicket) {
+    public void setOnlineTicket(String onlineTicket) {
         this.onlineTicket = onlineTicket;
     }
 

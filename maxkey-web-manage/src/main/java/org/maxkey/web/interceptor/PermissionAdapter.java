@@ -23,7 +23,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -68,7 +68,7 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
         }
         
         //非管理员用户直接注销
-        if (!((BasicAuthentication) WebContext.getAuthentication().getPrincipal()).isRoleAdministrators()) {
+        if (!((SigninPrincipal) WebContext.getAuthentication().getPrincipal()).isRoleAdministrators()) {
             _logger.debug("Not ADMINISTRATORS Authentication .");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/logout");
             dispatcher.forward(request, response);

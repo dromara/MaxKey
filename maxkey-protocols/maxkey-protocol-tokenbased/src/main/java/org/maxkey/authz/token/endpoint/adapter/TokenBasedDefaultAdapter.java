@@ -20,6 +20,7 @@ package org.maxkey.authz.token.endpoint.adapter;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.AppsTokenBasedDetails;
@@ -34,7 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(TokenBasedDefaultAdapter.class);
 	@Override
-	public String generateInfo(UserInfo userInfo,Object app) {
+	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
 		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 		HashMap<String,String> beanMap=new HashMap<String,String>();
 		
@@ -71,7 +72,7 @@ public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 		}
 		
 		beanMap.put("displayName", userInfo.getDisplayName());
-		beanMap.put(WebConstants.ONLINE_TICKET_NAME, userInfo.getOnlineTicket().getTicketId());
+		beanMap.put(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket());
 		
 		/*
 		 * use UTC date time format

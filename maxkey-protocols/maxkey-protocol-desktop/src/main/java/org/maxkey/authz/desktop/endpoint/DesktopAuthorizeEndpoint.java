@@ -22,6 +22,7 @@ package org.maxkey.authz.desktop.endpoint;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.desktop.endpoint.adapter.DesktopDefaultAdapter;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
@@ -74,7 +75,9 @@ public class DesktopAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 				adapter =(AbstractAuthorizeAdapter)defaultDesktopAdapter;
 			}
 			
-			String paramString=adapter.generateInfo(WebContext.getUserInfo(), desktopDetails);
+			String paramString=adapter.generateInfo(
+			        (SigninPrincipal)WebContext.getAuthentication().getPrincipal(),
+			        WebContext.getUserInfo(), desktopDetails);
 			
 			String encryptParamString=adapter.encrypt(paramString, null, null);
 			

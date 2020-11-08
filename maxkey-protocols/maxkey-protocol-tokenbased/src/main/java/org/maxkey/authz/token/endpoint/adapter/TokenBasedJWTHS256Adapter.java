@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.joda.time.DateTime;
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.configuration.oidc.OIDCProviderMetadata;
 import org.maxkey.crypto.ReciprocalUtils;
@@ -48,7 +49,7 @@ public class TokenBasedJWTHS256Adapter extends AbstractAuthorizeAdapter {
 	private SymmetricSigningAndValidationServiceBuilder symmetricJwtSignerServiceBuilder=new SymmetricSigningAndValidationServiceBuilder();
 
 	@Override
-	public String generateInfo(UserInfo userInfo,Object app) {
+	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
 		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 		
 		OIDCProviderMetadata providerMetadata= (OIDCProviderMetadata)WebContext.getBean("oidcProviderMetadata");
@@ -68,7 +69,7 @@ public class TokenBasedJWTHS256Adapter extends AbstractAuthorizeAdapter {
 				.claim("email", userInfo.getWorkEmail())
 				.claim("name", userInfo.getUsername())
 				.claim("user_id", userInfo.getId())
-				.claim(WebConstants.ONLINE_TICKET_NAME, userInfo.getOnlineTicket().getTicketId())
+				.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket())
 				.claim("external_id", userInfo.getId())
 				.claim("locale", userInfo.getLocale())
 				.claim("kid", "SYMMETRIC-KEY")

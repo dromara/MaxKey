@@ -22,6 +22,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml20.binding.BindingAdapter;
@@ -72,8 +73,7 @@ public class AssertionEndpoint {
 		logger.debug("AuthnRequestInfo: {}", authnRequestInfo);
 
 		HashMap <String,String>attributeMap=new HashMap<String,String>();
-		
-		attributeMap.put(WebConstants.ONLINE_TICKET_NAME, WebContext.getUserInfo().getOnlineTicket().getTicketId());
+		attributeMap.put(WebConstants.ONLINE_TICKET_NAME, ((SigninPrincipal)WebContext.getAuthentication().getPrincipal()).getOnlineTicket());
 		
 		//saml20Details
 		Response authResponse = authnResponseGenerator.generateAuthnResponse(

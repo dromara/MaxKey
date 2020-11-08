@@ -153,6 +153,8 @@ public class Apps extends JpaBaseDomain implements Serializable {
     
     protected String loginDateTime;
 
+    protected String onlineTicket;
+    
     public Apps() {
         super();
         isSignature = Boolean.FALSE;
@@ -547,6 +549,14 @@ public class Apps extends JpaBaseDomain implements Serializable {
 
     public void setLoginDateTime(String loginDateTime) {
         this.loginDateTime = loginDateTime;
+    }
+
+    public String getOnlineTicket() {
+        return onlineTicket;
+    }
+
+    public void setOnlineTicket(String onlineTicket) {
+        this.onlineTicket = onlineTicket;
     }
 
     @Override

@@ -25,13 +25,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
-import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.wsfederation.WsFederationConstants;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.password.opt.AbstractOptAuthn;
 import org.maxkey.domain.UserInfo;
@@ -185,9 +184,9 @@ public class LoginEndpoint {
 	public ModelAndView logon(
 	                    HttpServletRequest request,
 	                    HttpServletResponse response,
-	                    @ModelAttribute("authentication") BasicAuthentication authentication) throws ServletException, IOException {
+	                    @ModelAttribute("loginCredential") LoginCredential loginCredential) throws ServletException, IOException {
 
-        authenticationProvider.authenticate(authentication);
+        authenticationProvider.authenticate(loginCredential);
 
         if (WebContext.isAuthenticated()) {
             return WebContext.redirect("/forwardindex");

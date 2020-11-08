@@ -23,7 +23,7 @@ package org.maxkey.authz.cas.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
@@ -193,7 +193,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
-		    BasicAuthentication authentication = ((BasicAuthentication)storedTicket.getAuthentication().getPrincipal());
+		    SigninPrincipal authentication = ((SigninPrincipal)storedTicket.getAuthentication().getPrincipal());
 			String principal=authentication.getUsername();
 			_logger.debug("principal "+principal);
 			serviceResponseBuilder.success().setUser(principal);
@@ -201,8 +201,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
-				userInfo.setOnlineTicket(authentication.getOnlineTicket());
-				adapter.generateInfo(userInfo, serviceResponseBuilder);
+				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);
 			}
 		}else{
 			serviceResponseBuilder.failure()

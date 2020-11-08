@@ -20,6 +20,7 @@ package org.maxkey.authz.cas.endpoint.adapter;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.codec.binary.Base64;
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.domain.UserInfo;
@@ -47,7 +48,7 @@ public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
 	}
 	
 	@Override
-	public String generateInfo(UserInfo userInfo, Object serviceResponseObject) {
+	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo, Object serviceResponseObject) {
 		ServiceResponseBuilder serviceResponseBuilder=(ServiceResponseBuilder)serviceResponseObject;
 		//for user
 		serviceResponseBuilder.setAttribute("uid", userInfo.getId());
@@ -66,7 +67,7 @@ public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
 		serviceResponseBuilder.setAttribute("departmentId", userInfo.getDepartmentId());
 		serviceResponseBuilder.setAttribute("workRegion",base64Attr(userInfo.getWorkRegion()));
 		
-		serviceResponseBuilder.setAttribute(WebConstants.ONLINE_TICKET_NAME,userInfo.getOnlineTicket().getTicketId());
+		serviceResponseBuilder.setAttribute(WebConstants.ONLINE_TICKET_NAME,authentication.getOnlineTicket());
 	
 		return null;
 	}

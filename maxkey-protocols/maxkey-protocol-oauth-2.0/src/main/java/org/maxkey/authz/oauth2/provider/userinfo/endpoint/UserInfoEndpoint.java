@@ -26,7 +26,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
@@ -123,7 +123,7 @@ public class UserInfoEndpoint {
 			try{
 				 oAuth2Authentication = oauth20tokenServices.loadAuthentication(access_token);
 				 
-				 principal=oAuth2Authentication.getPrincipal().toString();
+				 principal=((SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal()).getUsername();
 				 
 				 String client_id= oAuth2Authentication.getOAuth2Request().getClientId();
 				 UserInfo userInfo=queryUserInfo(principal);
@@ -135,9 +135,10 @@ public class UserInfoEndpoint {
 				 }else{
 					adapter =(AbstractAuthorizeAdapter)defaultOAuthUserInfoAdapter;
 				 }
-				 BasicAuthentication authentication = (BasicAuthentication)oAuth2Authentication.getUserAuthentication();
-				 userInfo.setOnlineTicket(authentication.getOnlineTicket());
-				String jsonData=adapter.generateInfo(userInfo, app);
+				 
+				String jsonData=adapter.generateInfo(
+				        (SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal(),
+				        userInfo, app);
 				return jsonData;
 			}catch(OAuth2Exception e){
 				HashMap<String,Object>authzException=new HashMap<String,Object>();
@@ -163,7 +164,7 @@ public class UserInfoEndpoint {
 		try{
 			 oAuth2Authentication = oauth20tokenServices.loadAuthentication(access_token);
 			 
-			 principal=oAuth2Authentication.getPrincipal().toString();
+			 principal=((SigninPrincipal)oAuth2Authentication.getPrincipal()).getUsername();
 			 
 			 Set<String >scopes=oAuth2Authentication.getOAuth2Request().getScope();
 			 ClientDetails clientDetails = clientDetailsService.loadClientByClientId(oAuth2Authentication.getOAuth2Request().getClientId());
@@ -172,10 +173,10 @@ public class UserInfoEndpoint {
 			 String userJson="";
 			 Builder jwtClaimsSetBuilder= new JWTClaimsSet.Builder();
 			 
-			 BasicAuthentication authentication = (BasicAuthentication)oAuth2Authentication.getUserAuthentication();
+			 SigninPrincipal authentication = (SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal();
 			 
 			 jwtClaimsSetBuilder.claim("sub", userInfo.getId());
-			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId());
+			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket());
 			 
 		 	if(scopes.contains("profile")){
 		 		jwtClaimsSetBuilder.claim("name", userInfo.getUsername());
