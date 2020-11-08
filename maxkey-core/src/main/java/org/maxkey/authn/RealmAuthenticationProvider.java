@@ -149,6 +149,9 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + java.util.UUID.randomUUID().toString().toLowerCase();
         _logger.debug("set online Tickit Cookie " + onlineTickitId + " on domain "+ this.applicationConfig.getBaseDomainName());
         
+        OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId);
+        
+        
         WebContext.setCookie(WebContext.getResponse(), 
                 this.applicationConfig.getBaseDomainName(), 
                 WebConstants.ONLINE_TICKET_NAME, 
@@ -157,7 +160,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         
         SigninPrincipal signinPrincipal = new SigninPrincipal(userInfo);
         //set OnlineTicket
-        signinPrincipal.setOnlineTicket(onlineTickitId);
+        signinPrincipal.setOnlineTicket(onlineTicket);
         ArrayList<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
         //set default roles
         grantedAuthoritys.add(new SimpleGrantedAuthority("ROLE_USER"));
@@ -182,8 +185,10 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         authenticationToken.setDetails(
                 new WebAuthenticationDetails(WebContext.getRequest()));
         
-        OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId,authenticationToken);
+        onlineTicket.setAuthentication(authenticationToken);
+        
         this.onlineTicketServices.store(onlineTickitId, onlineTicket);
+        
         /*
          *  put userInfo to current session context
          */

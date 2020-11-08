@@ -176,7 +176,7 @@ public class UserInfoEndpoint {
 			 SigninPrincipal authentication = (SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal();
 			 
 			 jwtClaimsSetBuilder.claim("sub", userInfo.getId());
-			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket());
+			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId());
 			 
 		 	if(scopes.contains("profile")){
 		 		jwtClaimsSetBuilder.claim("name", userInfo.getUsername());

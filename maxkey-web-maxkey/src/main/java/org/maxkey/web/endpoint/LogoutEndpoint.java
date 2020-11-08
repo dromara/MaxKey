@@ -20,6 +20,8 @@ package org.maxkey.web.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.WebConstants;
@@ -48,6 +50,10 @@ public class LogoutEndpoint {
 	
 	@Autowired
 	ApplicationConfig applicationConfig;
+	
+	@Autowired
+    @Qualifier("onlineTicketServices")
+    protected OnlineTicketServices onlineTicketServices;
 	
  	@RequestMapping(value={"/logout"})
  	public ModelAndView logout(
@@ -89,8 +95,10 @@ public class LogoutEndpoint {
  		_logger.debug("re Login URL : "+ reLoginUrl);
  		
  		modelAndView.addObject("reloginUrl",reLoginUrl);
+ 	    onlineTicketServices.remove(((SigninPrincipal)WebContext.getAuthentication().getPrincipal()).getOnlineTicket().getTicketId());
  		request.getSession().invalidate();
  		SecurityContextHolder.clearContext();
+ 		
  		modelAndView.setViewName(viewName);
  		return modelAndView;
  	}

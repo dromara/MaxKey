@@ -23,6 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
+import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.online.OnlineTicket;
+import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.web.WebConstants;
@@ -31,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
@@ -57,6 +61,10 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
     SavedRequestAwareAuthenticationSuccessHandler savedRequestSuccessHandler;
     
     static ConcurrentHashMap<String, String> navigationsMap = null;
+    
+    @Autowired
+    @Qualifier("onlineTicketServices")
+    protected OnlineTicketServices onlineTicketServices;
 
     /*
      * 请求前处理 (non-Javadoc)
@@ -96,11 +104,12 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
             }
         }
         
+        Authentication authentication = WebContext.getAuthentication();
         //save  first protected url 
         SavedRequest  firstSavedRequest = (SavedRequest)WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
         // 判断用户是否登录, 判断用户和角色，判断用户是否登录用户
-        if  (WebContext.getAuthentication() == null 
-                || WebContext.getAuthentication().getAuthorities() == null) {
+        if  (authentication == null 
+                || authentication.getAuthorities() == null) {
             //保存未认证的请求信息
             if(firstSavedRequest==null){
                 RequestCache requestCache = new HttpSessionRequestCache();
@@ -119,14 +128,20 @@ public class PermissionAdapter extends HandlerInterceptorAdapter {
             return false;
         }
         
+        
         //认证完成，跳转到未认证请求
         if(firstSavedRequest!=null) {
-            savedRequestSuccessHandler.onAuthenticationSuccess(request, response, WebContext.getAuthentication());
+            savedRequestSuccessHandler.onAuthenticationSuccess(request, response, authentication);
             WebContext.removeAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
         }
 
         boolean hasAccess = true;
-
+        
+        if(authentication.getPrincipal() instanceof SigninPrincipal) {
+            SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal();
+            OnlineTicket onlineTicket = signinPrincipal.getOnlineTicket();
+            onlineTicketServices.refresh(onlineTicket.getTicketId());
+        }
         /*
          * boolean preHandler = super.preHandle(request, response, handler);
          * 

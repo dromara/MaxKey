@@ -20,6 +20,7 @@ package org.maxkey.authn;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.domain.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +32,7 @@ public class SigninPrincipal implements  UserDetails {
     
     UserDetails userDetails;
     
-    String onlineTicket;
+    OnlineTicket onlineTicket;
     ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;
     boolean roleAdministrators;
@@ -95,11 +96,11 @@ public class SigninPrincipal implements  UserDetails {
         this.grantedAuthority = grantedAuthority;
     }
 
-    public String getOnlineTicket() {
+    public OnlineTicket getOnlineTicket() {
         return onlineTicket;
     }
 
-    public void setOnlineTicket(String onlineTicket) {
+    public void setOnlineTicket(OnlineTicket onlineTicket) {
         this.onlineTicket = onlineTicket;
     }
 

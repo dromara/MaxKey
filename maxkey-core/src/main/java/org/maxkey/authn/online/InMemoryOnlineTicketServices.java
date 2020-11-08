@@ -18,15 +18,19 @@
 package org.maxkey.authn.online;
 
 import java.time.Duration;
+import java.time.LocalTime;
 
 import org.ehcache.UserManagedCache;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.UserManagedCacheBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class InMemoryOnlineTicketServices implements OnlineTicketServices{
-
-	protected final static  UserManagedCache<String, OnlineTicket> onlineTicketStore = 
+    private static final Logger _logger = LoggerFactory.getLogger(InMemoryOnlineTicketServices.class);
+    
+	protected  static  UserManagedCache<String, OnlineTicket> onlineTicketStore = 
 			UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, OnlineTicket.class)
 				.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMinutes(30)))
 				.build(true);
@@ -56,8 +60,37 @@ public class InMemoryOnlineTicketServices implements OnlineTicketServices{
 
     @Override
     public void setValiditySeconds(int validitySeconds) {
-        // TODO Auto-generated method stub
+        onlineTicketStore = 
+                UserManagedCacheBuilder.
+                    newUserManagedCacheBuilder(String.class, OnlineTicket.class)
+                    .withExpiry(
+                            ExpiryPolicyBuilder.timeToLiveExpiration(
+                                    Duration.ofMinutes(validitySeconds/60))
+                     )
+                    .build(true);
         
+    }
+
+    @Override
+    public void refresh(String ticketId,LocalTime refreshTime) {
+        OnlineTicket onlineTicket = get(ticketId);
+        onlineTicket.setTicketTime(refreshTime);
+        store(ticketId , onlineTicket);
+    }
+
+    @Override
+    public void refresh(String ticketId) {
+        OnlineTicket onlineTicket = get(ticketId);
+        
+        LocalTime currentTime = LocalTime.now();
+        Duration duration = Duration.between(currentTime, onlineTicket.getTicketTime());
+        
+        _logger.trace("OnlineTicket duration " + duration.getSeconds());
+        
+        if(duration.getSeconds() > OnlineTicket.MAX_EXPIRY_DURATION) {
+            onlineTicket.setTicketTime(currentTime);
+            refresh(ticketId,currentTime);
+        }
     }
 
 }

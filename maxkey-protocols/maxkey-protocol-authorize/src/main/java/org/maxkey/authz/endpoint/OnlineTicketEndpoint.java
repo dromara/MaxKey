@@ -1,4 +1,4 @@
-package org.maxkey.web.endpoint;
+package org.maxkey.authz.endpoint;
 
 import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authn.online.OnlineTicketServices;

@@ -1,6 +1,7 @@
 package org.maxkey.authn.online;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.HashMap;
 
 import org.maxkey.domain.apps.Apps;
@@ -11,9 +12,14 @@ public class OnlineTicket implements Serializable{
     /**
      * 
      */
-    private static final long serialVersionUID = 9008067569150338296L;
+    
+    public static final  int    MAX_EXPIRY_DURATION = 60 * 10; //default 10 minutes.
+    
+    private static final long   serialVersionUID = 9008067569150338296L;
 
     public String ticketId;
+    
+    public LocalTime ticketTime;
     
     public Authentication authentication;
     
@@ -23,12 +29,14 @@ public class OnlineTicket implements Serializable{
     public OnlineTicket(String ticketId) {
         super();
         this.ticketId = ticketId;
+        this.ticketTime = LocalTime.now();
     }
     
     public OnlineTicket(String ticketId,Authentication authentication) {
         super();
         this.ticketId = ticketId;
         this.authentication = authentication;
+        this.ticketTime = LocalTime.now();
     }
     
     
@@ -44,6 +52,14 @@ public class OnlineTicket implements Serializable{
     }
 
     
+    public LocalTime getTicketTime() {
+        return ticketTime;
+    }
+
+    public void setTicketTime(LocalTime ticketTime) {
+        this.ticketTime = ticketTime;
+    }
+
     public Authentication getAuthentication() {
         return authentication;
     }

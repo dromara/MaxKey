@@ -17,12 +17,17 @@
 
 package org.maxkey.authn.online;
 
+import java.time.Duration;
+import java.time.LocalTime;
+
 import org.maxkey.persistence.redis.RedisConnection;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class RedisOnlineTicketServices implements OnlineTicketServices {
-
+    private static final Logger _logger = LoggerFactory.getLogger(RedisOnlineTicketServices.class);
 	
 	protected int serviceTicketValiditySeconds = 60 * 30; //default 30 minutes.
 	
@@ -76,6 +81,28 @@ public class RedisOnlineTicketServices implements OnlineTicketServices {
     public void setValiditySeconds(int validitySeconds) {
        this.serviceTicketValiditySeconds = validitySeconds;
         
+    }
+
+    @Override
+    public void refresh(String ticketId,LocalTime refreshTime) {
+        OnlineTicket onlineTicket = get(ticketId);
+        onlineTicket.setTicketTime(refreshTime);
+        store(ticketId , onlineTicket);
+    }
+    
+    @Override
+    public void refresh(String ticketId) {
+        OnlineTicket onlineTicket = get(ticketId);
+        
+        LocalTime currentTime = LocalTime.now();
+        Duration duration = Duration.between(currentTime, onlineTicket.getTicketTime());
+        
+        _logger.trace("OnlineTicket duration " + duration.getSeconds());
+        
+        if(duration.getSeconds() > OnlineTicket.MAX_EXPIRY_DURATION) {
+            onlineTicket.setTicketTime(currentTime);
+            refresh(ticketId,currentTime);
+        }
     }
 
 	

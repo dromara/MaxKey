@@ -17,6 +17,7 @@
 
 package org.maxkey.authn.online;
 
+import java.time.LocalTime;
 
 public interface OnlineTicketServices {
 
@@ -25,6 +26,10 @@ public interface OnlineTicketServices {
     public  OnlineTicket remove(String ticket);
     
     public  OnlineTicket get(String ticketId);
+    
+    public void refresh(String ticketId ,LocalTime refreshTime);
+    
+    public void refresh(String ticketId);
 
     public void setValiditySeconds(int validitySeconds);
 }
