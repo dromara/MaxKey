@@ -26,12 +26,10 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import com.alibaba.excel.EasyExcel;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.persistence.service.UserInfoListener;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringUtils;
@@ -144,8 +142,11 @@ public class UserInfoController {
      */
     @RequestMapping(value = "/importing")
     public Object importing(MultipartFile file) throws IOException {
-        EasyExcel.read(file.getInputStream(), UserInfo.class, new UserInfoListener(userInfoService)).sheet().doRead();
-        return "success";
+        if (userInfoService.importing(file)) {
+            return new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
+        }else {
+            return new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+        }
     }
 
 

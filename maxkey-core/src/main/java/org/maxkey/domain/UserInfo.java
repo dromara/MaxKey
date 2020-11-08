@@ -1,19 +1,19 @@
 /*
  * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 
 package org.maxkey.domain;
 
@@ -32,7 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * .
  * @author Crystal.Sea
- * 
+ *
  */
 @Table(name = "MXK_USERINFO")
 public class UserInfo extends JpaBaseDomain {
@@ -327,7 +327,7 @@ public class UserInfo extends JpaBaseDomain {
     }
 
     /**
-     * 
+     *
      */
     public UserInfo() {
         super();
@@ -467,7 +467,7 @@ public class UserInfo extends JpaBaseDomain {
         this.nickName = nickName;
     }
 
-   
+
 
     public String getNameZhSpell() {
         return nameZhSpell;
@@ -1147,64 +1147,64 @@ public class UserInfo extends JpaBaseDomain {
 
     @Override
     public String toString() {
-        return "UserInfo [username=" + username 
+        return "UserInfo [username=" + username
                 + ", password=" + password + ", decipherable=" + decipherable
-                + ", sharedSecret=" + sharedSecret 
+                + ", sharedSecret=" + sharedSecret
                 + ", sharedCounter=" + sharedCounter + ", userType=" + userType
-                + ", windowsAccount=" + windowsAccount 
+                + ", windowsAccount=" + windowsAccount
                 + ", displayName=" + displayName + ", nickName=" + nickName
-                + ", nameZHSpell=" + nameZhSpell 
-                + ", nameZHShortSpell=" + nameZhShortSpell 
+                + ", nameZHSpell=" + nameZhSpell
+                + ", nameZHShortSpell=" + nameZhShortSpell
                 + ", givenName=" + givenName
-                + ", middleName=" + middleName + ", familyName=" + familyName 
+                + ", middleName=" + middleName + ", familyName=" + familyName
                 + ", honorificPrefix=" + honorificPrefix
-                + ", honorificSuffix=" + honorificSuffix 
+                + ", honorificSuffix=" + honorificSuffix
                 + ", formattedName=" + formattedName + ", married=" + married
-                + ", gender=" + gender + ", birthDate=" + birthDate 
+                + ", gender=" + gender + ", birthDate=" + birthDate
                 + ", pictureFile=" + pictureFile + ", idType="
-                + idType + ", idCardNo=" + idCardNo + ", webSite=" + webSite 
+                + idType + ", idCardNo=" + idCardNo + ", webSite=" + webSite
                 + ", startWorkDate=" + startWorkDate
-                + ", authnType=" + authnType + ", email=" + email 
+                + ", authnType=" + authnType + ", email=" + email
                 + ", emailVerified=" + emailVerified + ", mobile="
-                + mobile + ", mobileVerified=" + mobileVerified 
+                + mobile + ", mobileVerified=" + mobileVerified
                 + ", passwordQuestion=" + passwordQuestion
                 + ", passwordAnswer=" + passwordAnswer + ", appLoginAuthnType=" + appLoginAuthnType
-                + ", appLoginPassword=" + appLoginPassword 
+                + ", appLoginPassword=" + appLoginPassword
                 + ", protectedApps=" + protectedApps + ", protectedAppsMap="
-                + protectedAppsMap + ", passwordLastSetTime=" + passwordLastSetTime 
+                + protectedAppsMap + ", passwordLastSetTime=" + passwordLastSetTime
                 + ", badPasswordCount="
-                + badPasswordCount + ", unLockTime=" + unLockTime 
+                + badPasswordCount + ", unLockTime=" + unLockTime
                 + ", isLocked=" + isLocked + ", lastLoginTime="
-                + lastLoginTime + ", lastLoginIp=" + lastLoginIp 
+                + lastLoginTime + ", lastLoginIp=" + lastLoginIp
                 + ", lastLogoffTime=" + lastLogoffTime
-                + ", passwordSetType=" + passwordSetType 
+                + ", passwordSetType=" + passwordSetType
                 + ", loginCount=" + loginCount + ", locale=" + locale
-                + ", timeZone=" + timeZone + ", preferredLanguage=" + preferredLanguage 
+                + ", timeZone=" + timeZone + ", preferredLanguage=" + preferredLanguage
                 + ", workCountry=" + workCountry
-                + ", workRegion=" + workRegion + ", workLocality=" + workLocality 
+                + ", workRegion=" + workRegion + ", workLocality=" + workLocality
                 + ", workStreetAddress="
-                + workStreetAddress + ", workAddressFormatted=" + workAddressFormatted 
+                + workStreetAddress + ", workAddressFormatted=" + workAddressFormatted
                 + ", workEmail=" + workEmail
-                + ", workPhoneNumber=" + workPhoneNumber + ", workPostalCode=" + workPostalCode 
+                + ", workPhoneNumber=" + workPhoneNumber + ", workPostalCode=" + workPostalCode
                 + ", workFax=" + workFax
-                + ", homeCountry=" + homeCountry + ", homeRegion=" + homeRegion 
+                + ", homeCountry=" + homeCountry + ", homeRegion=" + homeRegion
                 + ", homeLocality=" + homeLocality
-                + ", homeStreetAddress=" + homeStreetAddress 
+                + ", homeStreetAddress=" + homeStreetAddress
                 + ", homeAddressFormatted=" + homeAddressFormatted
-                + ", homeEmail=" + homeEmail 
+                + ", homeEmail=" + homeEmail
                 + ", homePhoneNumber=" + homePhoneNumber + ", homePostalCode="
-                + homePostalCode + ", homeFax=" + homeFax 
+                + homePostalCode + ", homeFax=" + homeFax
                 + ", employeeNumber=" + employeeNumber + ", costCenter="
-                + costCenter + ", organization=" + organization 
+                + costCenter + ", organization=" + organization
                 + ", division=" + division + ", departmentId="
-                + departmentId + ", department=" + department 
+                + departmentId + ", department=" + department
                 + ", jobTitle=" + jobTitle + ", jobLevel=" + jobLevel
-                + ", managerId=" + managerId + ", manager=" + manager 
+                + ", managerId=" + managerId + ", manager=" + manager
                 + ", assistantId=" + assistantId + ", assistant="
-                + assistant + ", entryDate=" + entryDate 
-                + ", quitDate=" + quitDate + ", extraAttribute=" + extraAttribute 
+                + assistant + ", entryDate=" + entryDate
+                + ", quitDate=" + quitDate + ", extraAttribute=" + extraAttribute
                 + ", extraAttributeName=" + extraAttributeName + ", extraAttributeValue="
-                + extraAttributeValue + ", extraAttributeMap=" + extraAttributeMap 
+                + extraAttributeValue + ", extraAttributeMap=" + extraAttributeMap
                 + ", online=" + online + ", ldapDn="
                 + ldapDn + "]";
     }
