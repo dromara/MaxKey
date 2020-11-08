@@ -19,9 +19,9 @@ public class OnlineTicketEndpoint {
     
     @ResponseBody
     @RequestMapping(value="/validate") 
-    public OnlineTicket ticketValidate(
+    public String ticketValidate(
             @RequestParam(value ="ticket",required = true) String ticket) {
         OnlineTicket onlineTicket = onlineTicketServices.get(ticket);
-        return onlineTicket;
+        return onlineTicket == null ? "" :onlineTicket.getTicketId();
     }
 }
