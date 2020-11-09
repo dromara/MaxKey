@@ -34,6 +34,7 @@ public class SigninPrincipal implements  UserDetails {
     
     OnlineTicket onlineTicket;
     ArrayList<GrantedAuthority> grantedAuthority;
+    ArrayList<GrantedAuthority> grantedAuthorityApps;
     boolean authenticated;
     boolean roleAdministrators;
 
@@ -131,6 +132,14 @@ public class SigninPrincipal implements  UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public ArrayList<GrantedAuthority> getGrantedAuthorityApps() {
+        return grantedAuthorityApps;
+    }
+
+    public void setGrantedAuthorityApps(ArrayList<GrantedAuthority> grantedAuthorityApps) {
+        this.grantedAuthorityApps = grantedAuthorityApps;
     }
 
     @Override

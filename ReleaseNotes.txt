@@ -1,6 +1,6 @@
-﻿﻿MaxKey v 2.3.0 GA	2020/**/**
+﻿﻿MaxKey v 2.3.0 GA	2020/11/**
  	*(MAXKEY-200901)  基于spring session的集群会话共享功能 
-    *(MAXKEY-200902) 单点注销功能
+    *(MAXKEY-200902) 单点注销功能，应用可以配置为NONE/BACK_CHANNEL/FRONT_CHANNEL三种方式，支持CAS/SAML/Default
 	*(MAXKEY-200903)  用户在线实时更新功能
 	*(MAXKEY-200904)  批量Excel用户导入功能
 	*(MAXKEY-200905)  用户注册功能
@@ -13,6 +13,9 @@
 	*(MAXKEY-200913)  权限控制 RoleAdministrators 
 	*(MAXKEY-200914)  社交账号登录优化
 	*(MAXKEY-200915)  列表界面中未”选择“情况下，弹出界面错误
+	*(MAXKEY-200916) jib(docker) 支持 ，感谢https://github.com/alanland
+	*(MAXKEY-200916)  登录过程的优化
+	*(MAXKEY-200917)  认证的优化，支持@Principal的注入
 	*(MAXKEY-200920)  依赖jar引用、更新和升级
 	    druid 1.2.1
 	    JustAuth 1.15.8

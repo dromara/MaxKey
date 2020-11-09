@@ -56,6 +56,8 @@ public class LoginService {
 
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "SELECT * FROM  MXK_USERINFO WHERE USERNAME = ?";
     
+    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "SELECT DISTINCT APP.ID,APP.NAME FROM MXK_APPS APP,MXK_GROUP_PRIVILEGES GP,MXK_GROUPS G  WHERE APP.ID=GP.APPID AND GP.GROUPID=G.ID AND G.ID IN(%s)";
+    
     protected JdbcTemplate jdbcTemplate;
     
     public LoginService(){
@@ -151,6 +153,24 @@ public class LoginService {
         }
     }
     
+    public ArrayList<GrantedAuthority> queryAuthorizedApps(ArrayList<GrantedAuthority> grantedAuthoritys) {
+        String grantedAuthorityString="'ROLE_ALL_USER'";
+        for(GrantedAuthority grantedAuthority : grantedAuthoritys) {
+            grantedAuthorityString += ",'"+ grantedAuthority.getAuthority()+"'";
+        }
+        
+        ArrayList<GrantedAuthority> listAuthorizedApps = (ArrayList<GrantedAuthority>) jdbcTemplate.query(
+                String.format(DEFAULT_MYAPPS_SELECT_STATEMENT, grantedAuthorityString), 
+                new RowMapper<GrantedAuthority>() {
+            public GrantedAuthority mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new SimpleGrantedAuthority(rs.getString("ID"));
+            }
+        });
+
+        _logger.debug("list Authorized Apps  " + listAuthorizedApps);
+        return listAuthorizedApps;
+    }
+    
     public List<Groups> queryGroups(UserInfo userInfo) {
         List<Groups> listGroups = jdbcTemplate.query(GROUPS_SELECT_STATEMENT, new RowMapper<Groups>() {
             public Groups mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -174,9 +194,11 @@ public class LoginService {
         // query roles for user
         List<Groups> listGroups = queryGroups(userInfo);
 
-        // set role for spring security
+        //set default roles
         ArrayList<GrantedAuthority> grantedAuthority = new ArrayList<GrantedAuthority>();
         grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
+        grantedAuthority.add(new SimpleGrantedAuthority("ROLE_ORDINARY_USER"));
+        grantedAuthority.add(new SimpleGrantedAuthority("ROLE_ALL_USER"));
         for (Groups group : listGroups) {
             grantedAuthority.add(new SimpleGrantedAuthority(group.getId()));
         }

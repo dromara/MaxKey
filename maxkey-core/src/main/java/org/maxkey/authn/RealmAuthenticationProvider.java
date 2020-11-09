@@ -29,7 +29,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -162,10 +161,6 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         //set OnlineTicket
         signinPrincipal.setOnlineTicket(onlineTicket);
         ArrayList<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
-        //set default roles
-        grantedAuthoritys.add(new SimpleGrantedAuthority("ROLE_USER"));
-        grantedAuthoritys.add(new SimpleGrantedAuthority("ROLE_ORDINARY_USER"));
-        
         signinPrincipal.setAuthenticated(true);
         
         for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
@@ -174,6 +169,9 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
                 _logger.trace("ROLE ADMINISTRATORS Authentication .");
             }
         }
+        _logger.debug("Granted Authority " + grantedAuthoritys);
+        
+        signinPrincipal.setGrantedAuthorityApps(authenticationRealm.queryAuthorizedApps(grantedAuthoritys));
         
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(

@@ -19,6 +19,8 @@ package org.maxkey.web.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.domain.HistoryLoginApps;
 import org.maxkey.domain.UserInfo;
@@ -31,6 +33,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -45,6 +49,28 @@ public class HistoryLoginAppAdapter extends HandlerInterceptorAdapter {
     @Autowired
     @Qualifier("appsService")
     protected AppsService appsService;
+    
+    /**
+             *          判断应用访问权限
+     */
+    @Override
+    public boolean preHandle(HttpServletRequest request, 
+            HttpServletResponse response, Object handler)
+            throws Exception {
+        _logger.debug("preHandle");
+        final Apps app = (Apps)WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
+        Authentication authentication = WebContext.getAuthentication();
+        if(authentication.getPrincipal() instanceof SigninPrincipal) {
+            SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal() ;
+            if(signinPrincipal.getGrantedAuthorityApps().contains(new SimpleGrantedAuthority(app.getId()))) {
+                _logger.trace("preHandle have authority access " + app);
+                return true;
+            }
+        }
+        _logger.debug("preHandle not have authority access " + app);
+        return false;
+    }
+    
     
     /**
      * postHandle .

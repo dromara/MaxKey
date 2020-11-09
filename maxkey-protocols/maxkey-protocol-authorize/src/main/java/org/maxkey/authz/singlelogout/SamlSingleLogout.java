@@ -7,6 +7,12 @@ import org.maxkey.domain.apps.Apps;
 import org.maxkey.util.DateUtils;
 import org.springframework.security.core.Authentication;
 
+/**
+ * SamlSingleLogout
+ * https://apereo.github.io/cas/6.2.x/installation/Logout-Single-Signout.html
+ * @author Crystal.Sea
+ *
+ */
 public class SamlSingleLogout extends SingleLogout{
 
     /**
