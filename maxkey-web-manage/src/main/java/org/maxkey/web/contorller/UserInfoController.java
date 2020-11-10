@@ -28,6 +28,7 @@ import javax.validation.Valid;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.domain.ExcelImport;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.JsonUtils;
@@ -283,6 +284,19 @@ public class UserInfoController {
 		}
 	}
 	
+    @RequestMapping(value = "/import")
+    public ModelAndView importing(@ModelAttribute("excelImportFile")ExcelImport excelImportFile)  {
+        ModelAndView modelAndView=new ModelAndView("/userinfo/usersImport");
+        
+        if (excelImportFile.getExcelFile() != null && !excelImportFile.getExcelFile().isEmpty() && userInfoService.importing(excelImportFile.getExcelFile())) {
+             new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
+        }else {
+             new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+        }
+        
+        return modelAndView;
+    }
+    
 	@InitBinder
 	public void binder(WebDataBinder binder) {
 		binder.registerCustomEditor(String.class, new PropertyEditorSupport() {

@@ -18,7 +18,23 @@
 package org.maxkey.persistence.service;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
@@ -38,6 +54,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.google.common.collect.Lists;
 
 
 /**
@@ -331,6 +351,278 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 			e.printStackTrace();
 		}
 	}
+	
+    public boolean importing(MultipartFile file) {
+        if(file ==null){
+            return false;
+        }
+        InputStream is = null;
+        List<UserInfo> userInfoList = null;
+        try {
+            is = file.getInputStream();
+            Workbook wb;
+            String xls = ".xls";
+            String xlsx = ".xlsx";
+            int columnSize = 46;
+            userInfoList = Lists.newArrayList();
+            if (file.getOriginalFilename().toLowerCase().endsWith(xls)) {
+                wb = new HSSFWorkbook(is);
+            } else if (file.getOriginalFilename().toLowerCase().endsWith(xlsx)) {
+                wb = new XSSFWorkbook(is);
+            } else {
+                throw new RuntimeException("maxKey用户导入没有Excel类型");
+            }
+
+            int sheetSize = wb.getNumberOfSheets();
+            //遍历sheet页
+            for (int i = 0; i < sheetSize; i++) {
+                Sheet sheet = wb.getSheetAt(i);
+
+                int rowSize = sheet.getLastRowNum() + 1;
+                //遍历行
+                for (int j = 1; j < rowSize; j++) {
+                    Row row = sheet.getRow(j);
+                    //略过空行和第一行
+                    if (row == null || j <2 ) {
+                        continue;
+                    } else {
+                        //其他行是数据行
+                        UserInfo userInfo = new UserInfo();
+                        userInfo.setCreatedDate(DateUtils.formatDateTime(new Date()));
+
+                        int rangeType = -1;
+                        for (int k = 0; k < columnSize; k++) {
+                            if (k == 0) {
+                                // 登录账号
+                                Cell cell = row.getCell(k);
+                                userInfo.setUsername(getValue(cell));
+                            } else if (k == 1) {
+                                // 密码
+                                Cell cell = row.getCell(k);
+                                userInfo.setPassword(getValue(cell));
+                            } else if (k == 2) {
+                                // 员工编码
+                                Cell cell = row.getCell(k);
+                                userInfo.setEmployeeNumber(getValue(cell));
+                            } else if (k == 3) {
+                                // 用户类型
+                                Cell cell = row.getCell(k);
+                                userInfo.setUserType(getValue(cell));
+                            } else if (k == 4) {
+                                // 用户名
+                                Cell cell = row.getCell(k);
+                                userInfo.setDisplayName(getValue(cell));
+                            } else if (k == 5) {
+                                // 姓
+                                Cell cell = row.getCell(k);
+                                userInfo.setFamilyName(getValue(cell));
+                            } else if (k == 6) {
+                                // 名
+                                Cell cell = row.getCell(k);
+                                userInfo.setGivenName(getValue(cell));
+                            } else if (k == 7) {
+                                // 中间名
+                                Cell cell = row.getCell(k);
+                                userInfo.setMiddleName(getValue(cell));
+                            } else if (k == 8) {
+                                // 昵称
+                                Cell cell = row.getCell(k);
+                                userInfo.setNickName(getValue(cell));
+                            } else if (k == 9) {
+                                // 性别
+                                Cell cell = row.getCell(k);
+                                userInfo.setGender(Integer.valueOf(getValue(cell)));
+                            } else if (k == 10) {
+                                // AD域账号
+                                Cell cell = row.getCell(k);
+                                userInfo.setWindowsAccount(getValue(cell));
+                            } else if (k == 11) {
+                                // 出生日期
+                                Cell cell = row.getCell(k);
+                                userInfo.setBirthDate(getValue(cell));
+                            } else if (k == 12) {
+                                // 语言偏好
+                                Cell cell = row.getCell(k);
+                                userInfo.setPreferredLanguage(getValue(cell));
+                            } else if (k == 13) {
+                                // 时区
+                                Cell cell = row.getCell(k);
+                                userInfo.setTimeZone(getValue(cell));
+                            }else if (k == 14) {
+                                // 所属机构
+                                Cell cell = row.getCell(k);
+                                userInfo.setOrganization(getValue(cell));
+                            }else if (k == 15) {
+                                // 分支机构
+                                Cell cell = row.getCell(k);
+                                userInfo.setDivision(getValue(cell));
+                            }else if (k == 16) {
+                                // 部门名称
+                                Cell cell = row.getCell(k);
+                                userInfo.setDepartment(getValue(cell));
+                            }else if (k == 17) {
+                                // 成本中心
+                                Cell cell = row.getCell(k);
+                                userInfo.setCostCenter(getValue(cell));
+                            }else if (k == 18) {
+                                // 职位
+                                Cell cell = row.getCell(k);
+                                userInfo.setJobTitle(getValue(cell));
+                            }else if (k == 19) {
+                                // 级别
+                                Cell cell = row.getCell(k);
+                                userInfo.setJobLevel(getValue(cell));
+                            }else if (k == 20) {
+                                // 上级经理
+                                Cell cell = row.getCell(k);
+                                userInfo.setManager(getValue(cell));
+                            }else if (k == 21) {
+                                // 助理
+                                Cell cell = row.getCell(k);
+                                userInfo.setAssistant(getValue(cell));
+                            }else if (k == 22) {
+                                // 入职时间
+                                Cell cell = row.getCell(k);
+                                userInfo.setEntryDate(getValue(cell));
+                            }else if (k == 23) {
+                                // 离职时间
+                                Cell cell = row.getCell(k);
+                                userInfo.setQuitDate(getValue(cell));
+                            }else if (k == 24) {
+                                // 工作-国家
+                                Cell cell = row.getCell(k);
+                                userInfo.setWorkCountry(getValue(cell));
+                            }else if (k == 25) {
+                                // 工作-省
+                                Cell cell = row.getCell(k);
+                                userInfo.setWorkRegion(getValue(cell));
+                            }else if (k == 26) {
+                                // 工作-城市
+                                Cell cell = row.getCell(k);
+                                userInfo.setTimeZone(getValue(cell));
+                            }else if (k == 27) {
+                                // 工作-地址
+                                Cell cell = row.getCell(k);
+                                userInfo.setWorkLocality(getValue(cell));
+                            }else if (k == 28) {
+                                // 邮编
+                                Cell cell = row.getCell(k);
+                                userInfo.setWorkPostalCode(getValue(cell));
+                            }else if (k == 29) {
+                                // 传真
+                                Cell cell = row.getCell(k);
+                                userInfo.setWorkFax(getValue(cell));
+                            }else if (k == 30) {
+                                // 工作电话
+                                Cell cell = row.getCell(k);
+                                userInfo.setWorkPhoneNumber(getValue(cell));
+                            }else if (k == 31) {
+                                // 工作邮件
+                                Cell cell = row.getCell(k);
+                                userInfo.setWorkEmail(getValue(cell));
+                            }else if (k == 32) {
+                                // 证件类型 todo 现在数据库中存储的是tinyint
+//                                Cell cell = row.getCell(k);
+//                                userInfo.setIdType(getValue(cell));
+                            }else if (k == 33) {
+                                // 证件号码
+                                Cell cell = row.getCell(k);
+                                userInfo.setIdCardNo(getValue(cell));
+                            }else if (k == 34) {
+                                // 婚姻状态 todo 现在数据字段类型是 tinyint
+//                                Cell cell = row.getCell(k);
+//                                userInfo.setMarried(getValue(cell));
+                            }else if (k == 35) {
+                                // 开始工作时间
+                                Cell cell = row.getCell(k);
+                                userInfo.setStartWorkDate(getValue(cell));
+                            }else if (k == 36) {
+                                // 国家
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeCountry(getValue(cell));
+                            }else if (k == 37) {
+                                // 省
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeRegion(getValue(cell));
+                            }else if (k == 38) {
+                                // 城市
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeLocality(getValue(cell));
+                            }else if (k == 39) {
+                                // 家庭地址
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeStreetAddress(getValue(cell));
+                            }else if (k == 40) {
+                                // 家庭邮编
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomePostalCode(getValue(cell));
+                            }else if (k == 41) {
+                                // 家庭传真
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeFax(getValue(cell));
+                            }else if (k == 42) {
+                                // 家庭电话
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomePhoneNumber(getValue(cell));
+                            }else if (k == 43) {
+                                // 家庭邮箱
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeEmail(getValue(cell));
+                            }else if (k == 44) {
+                                // 个人主页
+                                Cell cell = row.getCell(k);
+                                userInfo.setWebSite(getValue(cell));
+                            }else if (k == 45) {
+                                // 即时通讯
+                                Cell cell = row.getCell(k);
+                                userInfo.setDefineIm(getValue(cell));
+                            }
+                        }
+                        userInfo.setStatus(1);
+                        userInfoList.add(passwordEncoder(userInfo));
+                    }
+                }
+            }
+            // 数据去重
+            if(CollectionUtils.isEmpty(userInfoList)){
+                userInfoList = userInfoList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getUsername()))), ArrayList::new));
+            }
+           
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+       
+        return batchInsert(userInfoList);
+    }
+
+
+    /**
+             *       根据数据格式返回数据
+     *
+     * @param cell
+     * @return
+     */
+    public static String getValue(Cell cell) {
+        if (cell == null) {
+            return "";
+        } else if (cell.getCellType() == CellType.BOOLEAN) {
+            return String.valueOf(cell.getBooleanCellValue());
+        } else if (cell.getCellType() == CellType.NUMERIC) {
+            cell.setCellType(CellType.STRING);
+            return String.valueOf(cell.getStringCellValue().trim());
+        } else {
+            return String.valueOf(cell.getStringCellValue().trim());
+        }
+    }
 	
 	public boolean changeSharedSecret(UserInfo userInfo){
 		return getMapper().changeSharedSecret(userInfo)>0;
