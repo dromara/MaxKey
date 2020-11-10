@@ -28,4 +28,7 @@ public final class ConstantsOperateMessage {
     public static final String DELETE_SUCCESS = "message.action.delete.success";
     public static final String DELETE_ERROR = "message.action.delete.error";
 
+    public static final String import_success = "message.action.import.success";
+    public static final String IMPORT_ERROR = "message.action.import.error";
+
 }
