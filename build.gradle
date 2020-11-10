@@ -312,10 +312,6 @@ subprojects {
     	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.38'
     	 //JULI logging implementation for embedded Tomcat
     	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '8.5.2'
-
-         //easyExcel
-        compile group: 'com.alibaba', name: 'easyexcel', version: '2.1.6'
-
     }
     
     jar {  
