@@ -116,6 +116,29 @@ public class Roles extends JpaBaseDomain implements Serializable {
     public void setModifiedDate(String modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Roles [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append("]");
+        return builder.toString();
+    }
    
     
 

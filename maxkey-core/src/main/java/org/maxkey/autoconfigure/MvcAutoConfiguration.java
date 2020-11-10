@@ -20,6 +20,9 @@ package org.maxkey.autoconfigure;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.Filter;
+
 import org.maxkey.constants.ConstantsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +31,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -39,7 +43,9 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -59,11 +65,11 @@ public class MvcAutoConfiguration implements InitializingBean {
      */
     @Bean (name = "localeResolver")
     public CookieLocaleResolver cookieLocaleResolver(
-            @Value("${config.server.domain.sub:maxkey.top}")String subDomainName) {
-        _logger.debug("subDomainName " + subDomainName);
+            @Value("${config.server.domain:maxkey.top}")String domainName) {
+        _logger.debug("DomainName " + domainName);
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setCookieName("maxkey_lang");
-        cookieLocaleResolver.setCookieDomain(subDomainName);
+        cookieLocaleResolver.setCookieDomain(domainName);
         cookieLocaleResolver.setCookieMaxAge(604800);
         return cookieLocaleResolver;
     }
@@ -242,6 +248,25 @@ public class MvcAutoConfiguration implements InitializingBean {
                 factory.addErrorPages(errorPage400, errorPage404, errorPage500);
             }
         };
+    }
+    
+    @Bean
+    public SecurityContextHolderAwareRequestFilter securityContextHolderAwareRequestFilter() {
+        _logger.debug("securityContextHolderAwareRequestFilter init ");
+        return new SecurityContextHolderAwareRequestFilter();
+    }
+    
+    @Bean
+    public FilterRegistrationBean<Filter> delegatingFilterProxy() {
+        _logger.debug("delegatingFilterProxy init for /* ");
+        FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>();
+        registrationBean.setFilter(new DelegatingFilterProxy("securityContextHolderAwareRequestFilter"));
+        registrationBean.addUrlPatterns("/*");
+        //registrationBean.
+        registrationBean.setName("delegatingFilterProxy");
+        registrationBean.setOrder(1);
+        
+        return registrationBean;
     }
     
     @Override

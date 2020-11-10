@@ -19,6 +19,7 @@ package org.maxkey.authz.token.endpoint.adapter;
 
 import java.util.Date;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.AppsTokenBasedDetails;
@@ -30,7 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class TokenBasedSimpleAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(TokenBasedSimpleAdapter.class);
 	@Override
-	public String generateInfo(UserInfo userInfo,Object app) {
+	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
 		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 	
 		String tokenUsername = userInfo.getUsername();

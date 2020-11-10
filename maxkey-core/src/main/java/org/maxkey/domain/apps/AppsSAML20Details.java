@@ -17,8 +17,6 @@
 
 package org.maxkey.domain.apps;
 
-import java.util.Arrays;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -93,6 +91,9 @@ public class AppsSAML20Details extends Apps {
      */
     @Column
     private int nameIdConvert;
+    
+    @Column
+    private String nameIdSuffix;
 
     public static final class BindingType {
         public static final  String Redirect_Post = "Redirect-Post";
@@ -326,18 +327,54 @@ public class AppsSAML20Details extends Apps {
     public void setDigestMethod(String digestMethod) {
         this.digestMethod = digestMethod;
     }
+    
+    public String getNameIdSuffix() {
+        return nameIdSuffix;
+    }
+
+    public void setNameIdSuffix(String nameIdSuffix) {
+        this.nameIdSuffix = nameIdSuffix;
+    }
 
     @Override
     public String toString() {
-        final int maxLen = 40;
-        return "AppsSAML20Details [id=" + id + ", certIssuer=" + certIssuer + ", certSubject=" + certSubject
-                + ", certExpiration=" + certExpiration + ", signature=" + signature + ", keyStore="
-                + (keyStore != null ? Arrays.toString(Arrays.copyOf(keyStore, Math.min(keyStore.length, maxLen)))
-                        : null)
-                + ", entityId=" + entityId + ", spAcsUrl=" + spAcsUrl + ", issuer=" + issuer + ", audience=" + audience
-                + ", nameidFormat=" + nameidFormat + ", validityInterval=" + validityInterval + ", binding=" + binding
-                + ", encrypted=" + encrypted + ", certMetaFile=" + certMetaFile + ", fileType=" + fileType
-                + ", nameIdConvert=" + nameIdConvert + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("AppsSAML20Details [id=");
+        builder.append(id);
+        builder.append(", certIssuer=");
+        builder.append(certIssuer);
+        builder.append(", certSubject=");
+        builder.append(certSubject);
+        builder.append(", certExpiration=");
+        builder.append(certExpiration);
+        builder.append(", signature=");
+        builder.append(signature);
+        builder.append(", digestMethod=");
+        builder.append(digestMethod);
+        builder.append(", entityId=");
+        builder.append(entityId);
+        builder.append(", spAcsUrl=");
+        builder.append(spAcsUrl);
+        builder.append(", issuer=");
+        builder.append(issuer);
+        builder.append(", audience=");
+        builder.append(audience);
+        builder.append(", nameidFormat=");
+        builder.append(nameidFormat);
+        builder.append(", validityInterval=");
+        builder.append(validityInterval);
+        builder.append(", binding=");
+        builder.append(binding);
+        builder.append(", encrypted=");
+        builder.append(encrypted);
+        builder.append(", fileType=");
+        builder.append(fileType);
+        builder.append(", nameIdConvert=");
+        builder.append(nameIdConvert);
+        builder.append(", nameIdSuffix=");
+        builder.append(nameIdSuffix);
+        builder.append("]");
+        return builder.toString();
     }
 
  

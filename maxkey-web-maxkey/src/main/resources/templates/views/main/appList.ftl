@@ -23,7 +23,14 @@
 	  						</a>
 	  					</#if>
 	  					<#if "Desktop"!=app.protocol>
-	  						<a href="<@base/>/authz/${app.id}" target="_blank" title="${app.name}" >
+	  						<a 
+	  							<#if "SP"==app.inducer>
+	  								href="${app.loginUrl}"
+	  							</#if>
+	  							<#if "IDP"==app.inducer>
+	  								href="<@base/>/authz/${app.id}"
+	  							</#if>
+	  						 target="_blank" title="${app.name}" >
 	  							<img src="<@base/>/image/${app.id}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
 	  						</a>
 	  					</#if>
@@ -65,7 +72,14 @@
 					<img src="<@base/>/image/${app.id}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
 				</a>
 			<#else>
-				<a href="<@base/>/authz/${app.id}" target="_blank" title="${app.name}" >
+				<a 
+					<#if "SP"==app.inducer>
+						href="${app.loginUrl}"
+					</#if>
+					<#if "IDP"==app.inducer>
+						href="<@base/>/authz/${app.id}"
+					</#if>
+					 target="_blank" title="${app.name}" >
 					<img src="<@base/>/image/${app.id}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
 				</a>
 			</#if>
@@ -78,7 +92,14 @@
 					<@locale code="button.text.visit"/>
 				</a>
 			<#else>
-				<a href="<@base/>/authz/${app.id}" target="_blank" title="${app.name}" >
+				<a 
+					<#if "SP"==app.inducer>
+						href="${app.loginUrl}"
+					</#if>
+					<#if "IDP"==app.inducer>
+						href="<@base/>/authz/${app.id}"
+					</#if>
+					 target="_blank" title="${app.name}" >
 					<@locale code="button.text.visit"/>
 				</a>
 			</#if>

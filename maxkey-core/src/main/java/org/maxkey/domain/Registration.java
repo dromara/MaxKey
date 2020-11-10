@@ -162,16 +162,29 @@ public class Registration extends JpaBaseDomain{
 		this.firstName = firstName;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
-	public String toString() {
-		return "Registration [loginName=" + loginName + ", workEmail="
-				+ workEmail + ", company=" + company + ", workPhone="
-				+ workPhone + ", nickName=" + nickName + ", lastName="
-				+ lastName + ", firstName=" + firstName + ", users=" + users
-				+ "]";
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Registration [id=");
+        builder.append(id);
+        builder.append(", loginName=");
+        builder.append(loginName);
+        builder.append(", workEmail=");
+        builder.append(workEmail);
+        builder.append(", company=");
+        builder.append(company);
+        builder.append(", workPhone=");
+        builder.append(workPhone);
+        builder.append(", nickName=");
+        builder.append(nickName);
+        builder.append(", lastName=");
+        builder.append(lastName);
+        builder.append(", firstName=");
+        builder.append(firstName);
+        builder.append(", users=");
+        builder.append(users);
+        builder.append("]");
+        return builder.toString();
+    }
 	
 }

@@ -1,31 +1,17 @@
-/*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *     http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
- 
-
 package org.maxkey.authn;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-
-public class BasicAuthentication implements Authentication {
-    private static final long serialVersionUID = -110742975439268030L;
+public class LoginCredential  implements Authentication {
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3125709257481600320L;
     String username;
     String password;
     String sessionId;
@@ -34,32 +20,29 @@ public class BasicAuthentication implements Authentication {
     String remeberMe;
     String authType;
     String jwtToken;
+    String onlineTicket;
     ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;
+    boolean roleAdministrators;
 
     /**
      * BasicAuthentication.
      */
-    public BasicAuthentication() {
-        grantedAuthority = new ArrayList<GrantedAuthority>();
-        grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
-        grantedAuthority.add(new SimpleGrantedAuthority("ORDINARY_USER"));
+    public LoginCredential() {
     }
 
     /**
      * BasicAuthentication.
      */
-    public BasicAuthentication(String username,String password,String authType) {
+    public LoginCredential(String username,String password,String authType) {
         this.username = username;
         this.password = password;
         this.authType = authType;
-        grantedAuthority = new ArrayList<GrantedAuthority>();
-        grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
-        grantedAuthority.add(new SimpleGrantedAuthority("ORDINARY_USER"));
     }
+    
     @Override
     public String getName() {
-        return "Basic Authentication";
+        return "Login Credential";
     }
 
     @Override
@@ -164,6 +147,22 @@ public class BasicAuthentication implements Authentication {
 
     public void setGrantedAuthority(ArrayList<GrantedAuthority> grantedAuthority) {
         this.grantedAuthority = grantedAuthority;
+    }
+
+    public String getOnlineTicket() {
+        return onlineTicket;
+    }
+
+    public void setOnlineTicket(String onlineTicket) {
+        this.onlineTicket = onlineTicket;
+    }
+
+    public boolean isRoleAdministrators() {
+        return roleAdministrators;
+    }
+
+    public void setRoleAdministrators(boolean roleAdministrators) {
+        this.roleAdministrators = roleAdministrators;
     }
 
     @Override

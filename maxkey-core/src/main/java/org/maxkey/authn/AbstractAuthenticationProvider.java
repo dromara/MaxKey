@@ -17,6 +17,8 @@
 
 package org.maxkey.authn;
 
+import java.util.ArrayList;
+import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
@@ -34,7 +36,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 /**
  * login Authentication abstract class.
  * 
@@ -60,12 +63,22 @@ public abstract class AbstractAuthenticationProvider {
     @Autowired
     @Qualifier("remeberMeService")
     protected AbstractRemeberMeService remeberMeService;
+    
+    @Autowired
+    @Qualifier("onlineTicketServices")
+    protected OnlineTicketServices onlineTicketServices;
+    
+    static  ArrayList<GrantedAuthority> grantedAdministratorsAuthoritys = new ArrayList<GrantedAuthority>();
+    
+    static {
+        grantedAdministratorsAuthoritys.add(new SimpleGrantedAuthority("ROLE_ADMINISTRATORS"));
+    }
 
     protected abstract String getProviderName();
 
-    protected abstract Authentication doInternalAuthenticate(Authentication authentication);
+    protected abstract Authentication doInternalAuthenticate(LoginCredential authentication);
     
-    public abstract Authentication basicAuthenticate(Authentication authentication) ;
+    public abstract Authentication basicAuthenticate(LoginCredential authentication) ;
 
     public abstract Authentication trustAuthentication(
                                     String username, 
@@ -83,17 +96,18 @@ public abstract class AbstractAuthenticationProvider {
      * authenticate .
      * 
      */
-    public Authentication authenticate(Authentication authentication) 
+    public Authentication authenticate(LoginCredential loginCredential) 
             throws AuthenticationException {
         _logger.debug("Trying to authenticate user '{}' via {}", 
-                authentication.getPrincipal(), getProviderName());
-
+                loginCredential.getPrincipal(), getProviderName());
+        Authentication authentication = null;
         try {
-            authentication = doInternalAuthenticate(authentication);
+            authentication = doInternalAuthenticate(loginCredential);
         } catch (AuthenticationException e) {
             _logger.error("Failed to authenticate user {} via {}: {}",
-                    new Object[] { 
-                            authentication.getPrincipal(), getProviderName(), e.getMessage() });
+                    new Object[] {  loginCredential.getPrincipal(),
+                                    getProviderName(),
+                                    e.getMessage() });
             WebContext.setAttribute(
                     WebConstants.LOGIN_ERROR_SESSION_MESSAGE, e.getMessage());
         } catch (Exception e) {
@@ -116,7 +130,7 @@ public abstract class AbstractAuthenticationProvider {
         
         final Object firstSavedRequest =
                 WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
-        
+        //change Session
         WebContext.getSession().invalidate();
         WebContext.setAttribute(
                 WebConstants.CURRENT_USER_SESSION_ID, WebContext.getSession().getId());
@@ -132,14 +146,7 @@ public abstract class AbstractAuthenticationProvider {
         WebContext.getSession().setAttribute(
                 WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE, passwordSetType);
 
-        // create new authentication response containing the user and it's authorities
-        UsernamePasswordAuthenticationToken simpleUserAuthentication = 
-                new UsernamePasswordAuthenticationToken(
-                        userInfo.getUsername(), 
-                        authentication.getCredentials(), 
-                        authentication.getAuthorities()
-                );
-        return simpleUserAuthentication;
+        return authentication;
     }
 
     /**
@@ -251,6 +258,7 @@ public abstract class AbstractAuthenticationProvider {
             } else {
                 _logger.debug("User Login. ");
             }
+            
         }
 
         return userInfo;
@@ -309,5 +317,27 @@ public abstract class AbstractAuthenticationProvider {
         }
         return true;
     }
+
+    public void setApplicationConfig(ApplicationConfig applicationConfig) {
+        this.applicationConfig = applicationConfig;
+    }
+
+    public void setAuthenticationRealm(AbstractAuthenticationRealm authenticationRealm) {
+        this.authenticationRealm = authenticationRealm;
+    }
+
+    public void setTfaOptAuthn(AbstractOptAuthn tfaOptAuthn) {
+        this.tfaOptAuthn = tfaOptAuthn;
+    }
+
+    public void setRemeberMeService(AbstractRemeberMeService remeberMeService) {
+        this.remeberMeService = remeberMeService;
+    }
+
+    public void setOnlineTicketServices(OnlineTicketServices onlineTicketServices) {
+        this.onlineTicketServices = onlineTicketServices;
+    }
+    
+    
 
 }

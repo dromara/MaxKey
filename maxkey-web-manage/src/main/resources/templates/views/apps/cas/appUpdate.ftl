@@ -3,6 +3,7 @@
 <head>
 	<#include  "../../layout/header.ftl"/>
 	<#include  "../../layout/common.cssjs.ftl"/>
+	<#setting number_format="#">
 <style   type="text/css">
   .table th, .table td {
     padding: .2rem;

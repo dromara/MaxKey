@@ -1,4 +1,30 @@
-﻿MaxKey v 2.2.0 GA	2020/09/**
+﻿﻿MaxKey v 2.3.0 GA	2020/11/**
+ 	*(MAXKEY-200901)  基于spring session的集群会话共享功能 
+    *(MAXKEY-200902) 单点注销功能，应用可以配置为NONE/BACK_CHANNEL/FRONT_CHANNEL三种方式，支持CAS/SAML/Default
+	*(MAXKEY-200903)  用户在线实时更新功能
+	*(MAXKEY-200904)  批量Excel用户导入功能
+	*(MAXKEY-200905)  用户注册功能
+	*(MAXKEY-200906)  用户状态修改
+	*(MAXKEY-200907)  用户详情显示问题
+	*(MAXKEY-200908)  应用修改时数字大于4为长度格式化问题
+	*(MAXKEY-200910)  注销后，点击重新登陆跳转问题
+	*(MAXKEY-200911)  增加SP登录跳转功能，支持knox的认证
+	*(MAXKEY-200912)  构建脚本的优化和更新
+	*(MAXKEY-200913)  权限控制 RoleAdministrators 
+	*(MAXKEY-200914)  社交账号登录优化
+	*(MAXKEY-200915)  列表界面中未”选择“情况下，弹出界面错误
+	*(MAXKEY-200916) jib(docker) 支持 ，感谢https://github.com/alanland
+	*(MAXKEY-200916)  登录过程的优化
+	*(MAXKEY-200917)  认证的优化，支持@Principal的注入
+	*(MAXKEY-200918) 应用单点登录时，用户访问权限控制
+	*(MAXKEY-200920)  依赖jar引用、更新和升级
+	    druid 1.2.1
+	    JustAuth 1.15.8
+	    simple-http 1.0.3
+	    spring-session 2.3.1.RELEASE
+	    druid-spring-boot-starter 1.2.1
+ 
+MaxKey v 2.2.0 GA	2020/09/24
 	*(MAXKEY-200801)  官方网站内容调整，初步增加英文版支持，增加新闻、合作伙伴及与CAS等开源产品对比
 	*(MAXKEY-200802)  国际化I18N内容优化
 	*(MAXKEY-200803)  使用Passay增强密码策略，分离静态密码策略和动态密码策略
@@ -32,13 +58,27 @@
 	*(MAXKEY-200831)  MySQL时间问题，参见https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html
 	*(MAXKEY-200832)  OAuth2 Password模式修复
 	*(MAXKEY-200833)  MGT管理SAML上传问题、IDP元数据链接优化、主键生成修复、元数据参数配置调整
-	*(MAXKEY-200834)  MGT管理TOKENBASED令牌主键生成修复
-	*(MAXKEY-200835)  依赖jar升级
+	*(MAXKEY-200834)  SAML 2添加多种NameId的支持，支持后缀的配置，NameId支持大小写转换
+	*(MAXKEY-200835)  MGT管理TOKENBASED令牌主键生成修复
+	*(MAXKEY-200836)  依赖jar升级
+						tomcat 9.0.38
 						passay 1.6.0
-						springBoot 2.3.3.RELEASE
-						springSecurity 5.3.4.RELEASE
-						hibernate	6.1.5.Final
+						springBootVersion  2.3.4.RELEASE
+						springVersion   5.2.9.RELEASE
+						springSecurityVersion	5.4.0
+						guava  29.0-jre
+						joda-time 2.10.6
+						ehcache 3.9.0
+						alibaba druid 1.1.24
+						fastjson 1.2.73
 						jackson 2.11.2
+						tink 1.4.0
+						JustAuth 1.15.7
+						nimbus-jose-jwt 9.0.1
+						commons-lang3 3.11
+						commons-io 2.8.0
+						commons-codec 1.15
+						hibernate	6.1.5.Final
 						multiple-select-1.5.2
 	
 	

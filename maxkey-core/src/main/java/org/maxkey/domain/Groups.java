@@ -145,14 +145,29 @@ public class Groups extends JpaBaseDomain implements Serializable {
         this.status = status;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
-        return "Groups [name=" + name + ", isdefault=" + isdefault + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("Groups [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", isdefault=");
+        builder.append(isdefault);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append("]");
+        return builder.toString();
     }
 
 }

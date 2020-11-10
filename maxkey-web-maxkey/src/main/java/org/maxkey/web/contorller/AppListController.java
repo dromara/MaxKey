@@ -17,6 +17,7 @@
 
 package org.maxkey.web.contorller;
 
+import java.security.Principal;
 import java.util.List;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsProtocols;
@@ -67,7 +68,7 @@ public class AppListController {
      */
     @RequestMapping(value = { "/appList" })
     public ModelAndView appList(
-            @RequestParam(value = "gridList", required = false) String gridList) {
+            @RequestParam(value = "gridList", required = false) String gridList,Principal principal) {
         ModelAndView modelAndView = new ModelAndView("main/appList");
         userInfoService.updateGridList(gridList);
         modelAndView.addObject("appList", queryAccessableApps());

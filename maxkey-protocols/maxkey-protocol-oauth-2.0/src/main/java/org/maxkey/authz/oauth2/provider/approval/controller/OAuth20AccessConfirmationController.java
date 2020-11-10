@@ -20,7 +20,7 @@ package org.maxkey.authz.oauth2.provider.approval.controller;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
@@ -102,7 +102,7 @@ public class OAuth20AccessConfirmationController {
             scopes.put(OAuth2Utils.SCOPE_PREFIX + scope, "false");
         }
         String principal = 
-                ((BasicAuthentication) WebContext.getAuthentication().getPrincipal()).getUsername();
+                ((SigninPrincipal) WebContext.getAuthentication().getPrincipal()).getUsername();
         for (Approval approval : approvalStore.getApprovals(principal, client.getClientId())) {
             if (clientAuth.getScope().contains(approval.getScope())) {
                 scopes.put(OAuth2Utils.SCOPE_PREFIX + approval.getScope(),

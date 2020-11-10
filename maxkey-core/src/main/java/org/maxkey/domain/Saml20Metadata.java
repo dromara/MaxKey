@@ -126,9 +126,27 @@ public class Saml20Metadata extends JpaBaseDomain implements Serializable {
 
     @Override
     public String toString() {
-        return "Saml20Metadata [orgName=" + orgName + ", orgDisplayName=" + orgDisplayName + ", orgURL=" + orgURL
-                + ", contactType=" + contactType + ", company=" + company + ", givenName=" + givenName + ", surName="
-                + surName + ", emailAddress=" + emailAddress + ", telephoneNumber=" + telephoneNumber + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("Saml20Metadata [orgName=");
+        builder.append(orgName);
+        builder.append(", orgDisplayName=");
+        builder.append(orgDisplayName);
+        builder.append(", orgURL=");
+        builder.append(orgURL);
+        builder.append(", contactType=");
+        builder.append(contactType);
+        builder.append(", company=");
+        builder.append(company);
+        builder.append(", givenName=");
+        builder.append(givenName);
+        builder.append(", surName=");
+        builder.append(surName);
+        builder.append(", emailAddress=");
+        builder.append(emailAddress);
+        builder.append(", telephoneNumber=");
+        builder.append(telephoneNumber);
+        builder.append("]");
+        return builder.toString();
     }
 
 }

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
-import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.LoginCredential;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
@@ -75,9 +75,9 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
                 throw new BadCredentialsException("No credentials are provided or extracted to authenticate the REST request");
             }
     	    
-    	    BasicAuthentication authentication =new BasicAuthentication(username,password,"CASREST");
+    	    LoginCredential loginCredential =new LoginCredential(username,password,"CASREST");
     	    
-    	    authenticationProvider.basicAuthenticate(authentication);
+    	    authenticationProvider.basicAuthenticate(loginCredential);
             
             TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
             
@@ -178,9 +178,9 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
                 throw new BadCredentialsException("No credentials are provided or extracted to authenticate the REST request");
             }
             
-            BasicAuthentication authentication =new BasicAuthentication(username,password,"CASREST");
+            LoginCredential loginCredential =new LoginCredential(username,password,"CASREST");
             
-            authenticationProvider.basicAuthenticate(authentication);
+            authenticationProvider.basicAuthenticate(loginCredential);
             UserInfo userInfo =WebContext.getUserInfo();
             TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
             

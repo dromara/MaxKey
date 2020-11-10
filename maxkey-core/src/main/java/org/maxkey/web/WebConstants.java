@@ -71,8 +71,12 @@ public class WebConstants {
 
     public static final String AUTHENTICATION = "current_authentication";
     
-    public static final String THEME_COOKIE_NAME = "maxkey_theme";
+    public static final String THEME_COOKIE_NAME = "theme_value";
     
     public static final String LOGIN_ERROR_SESSION_MESSAGE = "login_error_session_message_key";
+    
+    public static final String ONLINE_TICKET_NAME = "online_ticket";
+    
+    public static final String ONLINE_TICKET_PREFIX = "OT";
 
 }

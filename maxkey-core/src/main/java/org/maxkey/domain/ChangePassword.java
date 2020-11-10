@@ -165,14 +165,27 @@ public class ChangePassword extends JpaBaseDomain{
 	}
 
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
-	public String toString() {
-		return "ChangePassword [uid=" + uid + ", username=" + username
-				+ ", password=" + password + ", confirmpassword="
-				+ confirmpassword + ", decipherable=" + decipherable + "]";
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ChangePassword [id=");
+        builder.append(id);
+        builder.append(", uid=");
+        builder.append(uid);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", displayName=");
+        builder.append(displayName);
+        builder.append(", oldPassword=");
+        builder.append(oldPassword);
+        builder.append(", password=");
+        builder.append(password);
+        builder.append(", confirmpassword=");
+        builder.append(confirmpassword);
+        builder.append(", decipherable=");
+        builder.append(decipherable);
+        builder.append("]");
+        return builder.toString();
+    }
 	
 }

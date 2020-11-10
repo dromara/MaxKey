@@ -40,12 +40,13 @@
 									<div  style="float:right;" >&nbsp;&nbsp;<@locale code="login.password.changepassword"/>&nbsp;&nbsp;</div>
 								</a>
 							</td>
+							<#if  Session["current_authentication"].principal.roleAdministrators==true >
 							<td id="manage" nowrap>
 								<a target="_blank"  href="<@base/>/authz/maxkey_mgt">
 									<div  style="float:right;" >&nbsp;&nbsp;<@locale code="global.text.manage"/>&nbsp;&nbsp;</div>
 								</a>
 							</td>
-				
+							</#if>
 							<td id="logout" class="ui-widget-header" >
 								<a  href="<@base/>/logout?reLoginUrl=login">
 									<div  style="float:right;" >&nbsp;&nbsp;<@locale code="global.text.logout"/>&nbsp;&nbsp;</div>

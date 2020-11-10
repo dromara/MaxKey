@@ -19,7 +19,10 @@
 package org.maxkey.authz.saml20.provider.xml;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authz.saml.service.TimeService;
+import org.maxkey.domain.UserInfo;
+import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.web.WebContext;
 import org.opensaml.saml2.core.NameID;
 import org.opensaml.saml2.core.NameIDType;
@@ -41,12 +44,54 @@ public class SubjectGenerator {
 		this.timeService = timeService;
 	}
 
-	public Subject generateSubject( 
+	public Subject generateSubject( AppsSAML20Details saml20Details,
 							String assertionConsumerURL, 
 							String inResponseTo, 
 							int validInSeconds) {
+		UserInfo userInfo = WebContext.getUserInfo();
+		String nameIdValue = userInfo.getUsername();
+		if(saml20Details.getNameidFormat().equalsIgnoreCase("persistent")) {
+		    
+		}else if(saml20Details.getNameidFormat().equalsIgnoreCase("transient")) {
+            
+        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("unspecified")) {
+            
+        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("emailAddress")) {
+            if(userInfo.getEmail()!=null && !userInfo.getEmail().equals("")) {
+                nameIdValue = userInfo.getEmail();
+            }
+        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("X509SubjectName")) {
+            
+        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("WindowsDomainQualifiedName")) {
+            if(userInfo.getWindowsAccount()!=null && !userInfo.getWindowsAccount().equals("")) {
+                nameIdValue = userInfo.getWindowsAccount();
+            }
+        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("entity")) {
+            
+        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("custom")) {
+            
+        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("Mobile")) {
+            if(userInfo.getMobile()!=null && !userInfo.getMobile().equals("")) {
+                nameIdValue = userInfo.getMobile();
+            }
+        }else if(saml20Details.getNameidFormat().equalsIgnoreCase("EmployeeNumber")) {
+            if(userInfo.getEmployeeNumber()!=null && !userInfo.getEmployeeNumber().equals("")) {
+                nameIdValue = userInfo.getEmployeeNumber();
+            }
+        }
 		
-		String nameIdValue =WebContext.getUserInfo().getUsername();
+		if(!StringUtils.isEmpty(saml20Details.getNameIdSuffix())) {
+		    nameIdValue = nameIdValue + saml20Details.getNameIdSuffix();
+		}
+		
+		if(saml20Details.getNameIdConvert()==0) {
+		    
+		}else if(saml20Details.getNameIdConvert()==1) {
+		    nameIdValue = nameIdValue.toUpperCase();
+        }else if(saml20Details.getNameIdConvert()==1) {
+            nameIdValue = nameIdValue.toLowerCase();
+        }
+		
 		NameID nameID =builderNameID(nameIdValue,assertionConsumerURL);
 		Subject subject =builderSubject(nameID);
 		

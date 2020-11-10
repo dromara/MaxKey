@@ -19,16 +19,18 @@ package org.maxkey.authz.oauth2.provider.userinfo.endpoint;
 
 import java.util.HashMap;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;
+import org.maxkey.web.WebConstants;
 import org.springframework.web.servlet.ModelAndView;
 
 public class OAuthDefaultUserInfoAdapter extends AbstractAuthorizeAdapter {
 
 	@Override
-	public String generateInfo(UserInfo userInfo,Object app) {
+	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
 		HashMap<String, Object> beanMap = new HashMap<String, Object>();
 		beanMap.put("randomId",(new StringGenerator()).uuidGenerate());
 		beanMap.put("uid", userInfo.getId());
@@ -43,6 +45,7 @@ public class OAuthDefaultUserInfoAdapter extends AbstractAuthorizeAdapter {
 		beanMap.put("title", userInfo.getJobTitle());
 		beanMap.put("state", userInfo.getWorkRegion());
 		beanMap.put("gender", userInfo.getGender());
+		beanMap.put(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId());
 		
 		String info= JsonUtils.object2Json(beanMap);
 		

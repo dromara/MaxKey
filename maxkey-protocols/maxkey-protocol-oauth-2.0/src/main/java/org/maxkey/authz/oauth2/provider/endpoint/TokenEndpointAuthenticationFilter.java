@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
@@ -136,8 +136,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 				usernamepassword(request,response);
 			}else {
 				Authentication authentication=ClientCredentials(request,response);
-				BasicAuthentication auth =new BasicAuthentication();
-				auth.setUsername(((User)authentication.getPrincipal()).getUsername());
+				SigninPrincipal auth =new SigninPrincipal((User)authentication.getPrincipal());
 				auth.setAuthenticated(true);
 				UsernamePasswordAuthenticationToken simpleUserAuthentication = new UsernamePasswordAuthenticationToken(auth, authentication.getCredentials(), authentication.getAuthorities());
 				WebContext.setAuthentication(simpleUserAuthentication);

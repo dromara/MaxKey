@@ -176,7 +176,7 @@ public class SafeController {
 		userInfo.setEmail(email);
 
         userInfo.setTheme(theme);
-        WebContext.setCookie(response, WebConstants.THEME_COOKIE_NAME, theme, ConstantsTimeInterval.ONE_WEEK);
+        WebContext.setCookie(response,null, WebConstants.THEME_COOKIE_NAME, theme, ConstantsTimeInterval.ONE_WEEK);
         
 		userInfoService.changeEmail(userInfo);
 		

@@ -60,7 +60,7 @@ public interface UserInfoMapper  extends IJpaBaseMapper<UserInfo>{
 	
 	public int updateProfile(UserInfo userInfo);
 	   
-    @Select("SELECT * FROM  USERINFO WHERE   EMAIL = #{value} OR MOBILE= #{value}")
+    @Select("SELECT * FROM  MXK_USERINFO WHERE   EMAIL = #{value} OR MOBILE= #{value}")
     public UserInfo queryUserInfoByEmailMobile(String emailMobile);
 	
 }

@@ -158,29 +158,24 @@
         SELECT DISTINCT
             APP.*
         FROM
-            MXK_APPS APP,MXK_GROUP_PRIVILEGES GP
+            MXK_APPS APP,MXK_GROUP_PRIVILEGES GP,MXK_GROUPS G
         WHERE
             APP.ID=GP.APPID
-            AND GP.GROUPID IN(
-                SELECT 
-                    G.ID
-                FROM  
-                    `MXK_GROUPS` G
-                WHERE 
-                    G.ID='ALL_USER_GROUP'
-                    OR G.ID IN(
+            AND GP.GROUPID=G.ID
+            AND (
+            	 G.ID='ROLE_ALL_USER'
+                 OR G.ID IN(
                       SELECT 
                         GM.GROUPID 
                       FROM 
                         MXK_GROUP_MEMBER GM,MXK_USERINFO U 
-                      WHERE 1   =   1
+                      WHERE GM.MEMBERID    =   U.ID 
                         <if test="userId != null and userId != ''">
                             AND U.ID        =   #{userId}
                         </if>
                         <if test="username != null and username != ''">
                             AND  U.USERNAME =   #{username}
                         </if>
-                        AND  GM.MEMBERID    =   U.ID 
                     )
             )
         <if test="name != null and name != ''">

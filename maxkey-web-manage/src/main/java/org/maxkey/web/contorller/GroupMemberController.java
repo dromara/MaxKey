@@ -87,7 +87,7 @@ public class GroupMemberController {
 	@ResponseBody
 	public JpaPageResults<GroupMember> queryMemberInGroup(@ModelAttribute("groupMember")  GroupMember groupMember) {
 		_logger.debug("groupMember : "+groupMember);
-		if(groupMember.getGroupId()==null||groupMember.getGroupId().equals("")||groupMember.getGroupId().equals("ALL_USER_GROUP")){
+		if(groupMember.getGroupId()==null||groupMember.getGroupId().equals("")||groupMember.getGroupId().equals("ROLE_ALL_USER")){
 			return groupMemberService.queryPageResults("allMemberInGroup",groupMember);
 		}else{
 			return groupMemberService.queryPageResults("memberInGroup",groupMember);

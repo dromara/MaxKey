@@ -119,4 +119,21 @@ public class KeyStoreLoader implements InitializingBean {
         return keystoreType;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("KeyStoreLoader [keyStore=");
+        builder.append(keyStore);
+        builder.append(", entityName=");
+        builder.append(entityName);
+        builder.append(", keystoreFile=");
+        builder.append(keystoreFile);
+        builder.append(", keystorePassword=");
+        builder.append(keystorePassword);
+        builder.append(", keystoreType=");
+        builder.append(keystoreType);
+        builder.append("]");
+        return builder.toString();
+    }
+
 }

@@ -17,11 +17,23 @@
 
 package org.maxkey.web.endpoint;
 
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Map.Entry;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.online.OnlineTicket;
+import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authz.singlelogout.SamlSingleLogout;
+import org.maxkey.authz.singlelogout.DefaultSingleLogout;
+import org.maxkey.authz.singlelogout.LogoutType;
+import org.maxkey.authz.singlelogout.SingleLogout;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.constants.ConstantsProtocols;
+import org.maxkey.domain.apps.Apps;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -48,6 +60,10 @@ public class LogoutEndpoint {
 	
 	@Autowired
 	ApplicationConfig applicationConfig;
+	
+	@Autowired
+    @Qualifier("onlineTicketServices")
+    protected OnlineTicketServices onlineTicketServices;
 	
  	@RequestMapping(value={"/logout"})
  	public ModelAndView logout(
@@ -81,11 +97,37 @@ public class LogoutEndpoint {
 	 		}
  		}
  		
+ 		//not start with http or https
+ 		if(reLoginUrl!=null && !reLoginUrl.toLowerCase().startsWith("http")) {
+ 		   reLoginUrl=WebContext.getHttpContextPath()+"/"+reLoginUrl;
+ 		}
+ 		
  		_logger.debug("re Login URL : "+ reLoginUrl);
  		
  		modelAndView.addObject("reloginUrl",reLoginUrl);
+ 		String onlineTicketId = ((SigninPrincipal)WebContext.getAuthentication().getPrincipal()).getOnlineTicket().getTicketId();
+ 		OnlineTicket onlineTicket = onlineTicketServices.get(onlineTicketId);
+ 		
+ 		Set<Entry<String, Apps>> entrySet = onlineTicket.getAuthorizedApps().entrySet();
+ 
+        Iterator<Entry<String, Apps>> iterator = entrySet.iterator();
+        while (iterator.hasNext()) {
+            Entry<String, Apps> mapEntry = iterator.next();
+            _logger.debug("App Id : "+ mapEntry.getKey()+ " , " +mapEntry.getValue());
+            if( mapEntry.getValue().getLogoutType() == LogoutType.BACK_CHANNEL){
+                SingleLogout singleLogout;
+                if(mapEntry.getValue().getProtocol().equalsIgnoreCase(ConstantsProtocols.CAS)) {
+                    singleLogout =new SamlSingleLogout();
+                }else {
+                    singleLogout = new DefaultSingleLogout();
+                }
+                singleLogout.sendRequest(onlineTicket.getAuthentication(), mapEntry.getValue());
+            }
+        }
+ 		onlineTicketServices.remove(onlineTicketId);
  		request.getSession().invalidate();
  		SecurityContextHolder.clearContext();
+ 		
  		modelAndView.setViewName(viewName);
  		return modelAndView;
  	}

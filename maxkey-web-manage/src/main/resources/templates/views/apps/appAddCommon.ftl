@@ -30,6 +30,20 @@
          </td>
       </tr>
       <tr>
+         <th><@locale code="apps.logoutUrl"/>：</th>
+         <td>
+            <input  type="text" id="logoutUrl" class="form-control"  name="logoutUrl"  title="" value=""/>
+         </td>
+         <th><@locale code="apps.logoutType"/></th>
+         <td>
+         	<select  id="logoutType" name="logoutType" class="form-control" >
+				<option value="0" selected ><@locale code="apps.logoutType.none"/></option>
+				<option value="1" ><@locale code="apps.logoutType.back_channel"/></option>
+				<option value="2" ><@locale code="apps.logoutType.front_channel"/></option>
+			</select>
+         </td>
+      </tr>
+      <tr>
          <th style="width:15%;"><@locale code="apps.protocol"/>：</th>
          <td style="width:35%;">
          	<span  id="protocol_text" >${model.protocol!}</span>

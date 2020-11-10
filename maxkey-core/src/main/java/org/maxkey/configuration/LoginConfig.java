@@ -124,14 +124,23 @@ public class LoginConfig {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder
-            .append("LoginConfig [captcha=").append(captcha)
-            .append(", mfa=").append(mfa)
-            .append(", socialSignOn=").append(socialSignOn)
-            .append(", kerberos=").append(kerberos)
-            .append(", remeberMe=").append(remeberMe)
-            .append(", wsFederation=").append(wsFederation)
-            .append(", defaultUri=").append(defaultUri).append("]");
+        builder.append("LoginConfig [captcha=");
+        builder.append(captcha);
+        builder.append(", captchaType=");
+        builder.append(captchaType);
+        builder.append(", mfa=");
+        builder.append(mfa);
+        builder.append(", socialSignOn=");
+        builder.append(socialSignOn);
+        builder.append(", kerberos=");
+        builder.append(kerberos);
+        builder.append(", remeberMe=");
+        builder.append(remeberMe);
+        builder.append(", wsFederation=");
+        builder.append(wsFederation);
+        builder.append(", defaultUri=");
+        builder.append(defaultUri);
+        builder.append("]");
         return builder.toString();
     }
 

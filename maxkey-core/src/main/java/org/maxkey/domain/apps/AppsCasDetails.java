@@ -61,7 +61,17 @@ public class AppsCasDetails extends Apps {
         this.callbackUrl = callbackUrl;
     }
 
-
-
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("AppsCasDetails [id=");
+        builder.append(id);
+        builder.append(", service=");
+        builder.append(service);
+        builder.append(", callbackUrl=");
+        builder.append(callbackUrl);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

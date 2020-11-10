@@ -117,8 +117,21 @@ public class RoleMember extends UserInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "RoleMember [id=" + id + ", roleId=" + roleId + ", roleName=" + roleName + ", memberId=" + memberId
-                + ", memberName=" + memberName + ", type=" + type + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("RoleMember [id=");
+        builder.append(id);
+        builder.append(", roleId=");
+        builder.append(roleId);
+        builder.append(", roleName=");
+        builder.append(roleName);
+        builder.append(", memberId=");
+        builder.append(memberId);
+        builder.append(", memberName=");
+        builder.append(memberName);
+        builder.append(", type=");
+        builder.append(type);
+        builder.append("]");
+        return builder.toString();
     }
 
 }

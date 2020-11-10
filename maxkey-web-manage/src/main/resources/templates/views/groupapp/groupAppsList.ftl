@@ -11,6 +11,10 @@
    	
 	$(function () {
 		$("#addGroupAppsBtn").on("click",function(){
+			if($("#groupId").val()==""){
+				$.alert({content:$.platform.messages.select.alertText});	
+				return;
+			}
 			var settings={
 					url		:	"<@base/>/groupPrivileges/addGroupAppsList/"+$("#groupId").val(),//window url
 					title	:	"New",//title

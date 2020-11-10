@@ -32,11 +32,11 @@ allprojects {
 	
 	eclipse {
 		/*第一次时请注释这段eclipse设置，可能报错*/
-		jdt  {
-		    File f = file('.settings/org.eclipse.core.resources.prefs')
-		    f.write('eclipse.preferences.version=1\n')
-		    f.append('encoding/<project>=UTF-8') //use UTF-8
-		}
+//		jdt  {
+//		    File f = file('.settings/org.eclipse.core.resources.prefs')
+//		    f.write('eclipse.preferences.version=1\n')
+//		    f.append('encoding/<project>=UTF-8') //use UTF-8
+//		}
 		
 		
 		/*
@@ -131,16 +131,16 @@ subprojects {
          testCompile group: 'xmlunit', name: 'xmlunit', version: '1.6'
          //apache
          compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
-         compile group: 'commons-codec', name: 'commons-codec', version: '1.14'
+         compile group: 'commons-codec', name: 'commons-codec', version: '1.15'
          compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
          //compile group: 'org.apache.commons', name: 'commons-csv', version: '1.7'
          compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.6.0'
          compile group: 'commons-dbutils', name: 'commons-dbutils', version: '1.7'
          compile group: 'org.apache.commons', name: 'commons-digester3', version: '3.2'
          compile group: 'commons-digester', name: 'commons-digester', version: '2.1'
-         compile group: 'commons-io', name: 'commons-io', version: '2.6'
+         compile group: 'commons-io', name: 'commons-io', version: '2.8.0'
          compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
-         compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+         compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
          compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
          compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.6.2'
          compile group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
@@ -209,19 +209,27 @@ subprojects {
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version:  "${springBootVersion}"
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:  "${springBootVersion}"
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version:  "${springBootVersion}"
+         compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: "${springBootVersion}"
          testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:  "${springBootVersion}"
+         //spring-data
+         compile group: 'org.springframework.data', name: 'spring-data-commons', version: "${springDataVersion}"
+         compile group: 'org.springframework.data', name: 'spring-data-keyvalue', version: "${springDataVersion}"
+		 compile group: 'org.springframework.data', name: 'spring-data-redis', version: "${springDataVersion}"
+         //spring-session
+         compile group: 'org.springframework.session', name: 'spring-session-core', version: "${springSessionVersion}"
+         compile group: 'org.springframework.session', name: 'spring-session-data-redis', version: "${springSessionVersion}"
          //saml 
          compile group: 'org.opensaml', name: 'opensaml', version: '2.6.4'
          compile group: 'org.opensaml', name: 'openws', version: '1.5.4'
          compile group: 'org.opensaml', name: 'xmltooling', version: '1.4.4'
 		 //jose-jwt
-         compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '8.10'
+         compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '9.0.1'
          compile group: 'net.jcip', name: 'jcip-annotations', version: '1.0'
          compile group: 'net.minidev', name: 'json-smart', version: '2.3'
          compile group: 'net.minidev', name: 'asm', version: '1.0.2'
          //oauth third party JustAuth
-         compile group: 'com.xkcoding.http', name: 'simple-http', version: '1.0.2'
-         compile group: 'me.zhyd.oauth', name: 'JustAuth', version: '1.15.6'
+         compile group: 'com.xkcoding.http', name: 'simple-http', version: '1.0.3'
+         compile group: 'me.zhyd.oauth', name: 'JustAuth', version: '1.15.8'
          //common
          compile group: 'org.javassist', name: 'javassist', version: '3.23.0-GA'
          compile group: 'org.owasp.esapi', name: 'esapi', version: '2.2.0.0'
@@ -243,7 +251,7 @@ subprojects {
          compile group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: "${bouncycastleVersion}"
          compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: "${bouncycastleVersion}"
          compile group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: "${bouncycastleVersion}"
-         compile group: 'com.google.crypto.tink', name: 'tink', version: '1.2.2'
+         compile group: 'com.google.crypto.tink', name: 'tink', version: '1.4.0'
          //kaptcha
          compile group: 'com.jhlabs', name: 'filters', version: '2.0.235-1'
          compile group: 'com.github.penggle', name: 'kaptcha', version: '2.3.2'
@@ -253,7 +261,7 @@ subprojects {
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonVersion}"
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"
          compile group: 'com.fasterxml', name: 'classmate', version: '1.5.0'
-		 compile group: 'com.alibaba', name: 'fastjson', version: '1.2.66'
+		 compile group: 'com.alibaba', name: 'fastjson', version: '1.2.74'
          //reactive
          compile group: 'org.reactivestreams', name: 'reactive-streams', version: '1.0.2'
          compile group: 'io.projectreactor', name: 'reactor-core', version: '3.2.10.RELEASE'
@@ -262,10 +270,10 @@ subprojects {
          compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
 		 //database
 		 compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
-		 compile group: 'com.alibaba', name: 'druid', version: '1.1.21'
-		 compile group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.1.21'
-         compile group: 'redis.clients', name: 'jedis', version: '3.2.0'
-         compile group: 'org.ehcache', name: 'ehcache', version: '3.8.1'
+		 compile group: 'com.alibaba', name: 'druid', version: '1.2.1'
+		 compile group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.2.1'
+         compile group: 'redis.clients', name: 'jedis', version: '3.3.0'
+         compile group: 'org.ehcache', name: 'ehcache', version: '3.9.0'
 		 //mybatis
          compile group: 'org.mybatis', name: 'mybatis', version: '3.5.5'
          compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.5'
@@ -274,12 +282,12 @@ subprojects {
          compile group: 'org.hibernate', name: 'hibernate-validator-cdi', version: "${hibernateVersion}"
          compile group: 'org.hibernate.validator', name: 'hibernate-validator-annotation-processor', version: "${hibernateVersion}"
          //usefull
-         compile group: 'joda-time', name: 'joda-time', version: '2.10.5'
+         compile group: 'joda-time', name: 'joda-time', version: '2.10.6'
          compile group: 'org.yaml', name: 'snakeyaml', version: '1.26'
          compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
          compile group: 'org.jdom', name: 'jdom', version: '2.0.2'
          compile group: 'com.google.zxing', name: 'core', version: '3.4.0'
-         compile group: 'com.google.guava', name: 'guava', version: '28.2-jre'
+         compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
          compile group: 'ognl', name: 'ognl', version: '3.2.14'
          compile group: 'cglib', name: 'cglib', version: '3.3.0'
          compile group: 'org.ow2.asm', name: 'asm', version: '7.3.1'
@@ -300,8 +308,9 @@ subprojects {
     	 //腾讯云
     	 compile group: 'com.tencentcloudapi', name: 'tencentcloud-sdk-java', version: '3.1.33'
     	 
-    	 //tomcat embed
-    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.36'
+    	 //tomcat embed Core Tomcat implementation
+    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.38'
+    	 //JULI logging implementation for embedded Tomcat
     	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '8.5.2'
 
          //easyExcel

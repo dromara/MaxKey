@@ -17,6 +17,7 @@
 
 package org.maxkey.authz.formbased.endpoint.adapter;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.Boolean;
 import org.maxkey.domain.UserInfo;
@@ -26,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class FormBasedNetease163EmailAdapter extends AbstractAuthorizeAdapter {
 
 	@Override
-	public String generateInfo(UserInfo userInfo,Object app) {
+	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
 		return null;
 	}
 

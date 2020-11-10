@@ -215,4 +215,47 @@ public class Resources  extends JpaBaseDomain implements Serializable {
         this.sortIndex = sortIndex;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Resources [id=");
+        builder.append(id);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", sortIndex=");
+        builder.append(sortIndex);
+        builder.append(", appId=");
+        builder.append(appId);
+        builder.append(", appName=");
+        builder.append(appName);
+        builder.append(", parentId=");
+        builder.append(parentId);
+        builder.append(", parentName=");
+        builder.append(parentName);
+        builder.append(", resourceType=");
+        builder.append(resourceType);
+        builder.append(", resourceIcon=");
+        builder.append(resourceIcon);
+        builder.append(", resourceStyle=");
+        builder.append(resourceStyle);
+        builder.append(", resourceUrl=");
+        builder.append(resourceUrl);
+        builder.append(", resourceAction=");
+        builder.append(resourceAction);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", createdBy=");
+        builder.append(createdBy);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", modifiedBy=");
+        builder.append(modifiedBy);
+        builder.append(", modifiedDate=");
+        builder.append(modifiedDate);
+        builder.append("]");
+        return builder.toString();
+    }
+
 }

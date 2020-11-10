@@ -46,7 +46,7 @@ public class RedisAutoConfiguration implements InitializingBean {
      * @return RedisConnectionFactory
      */
     @Bean
-    public RedisConnectionFactory redisConnectionFactory(
+    public RedisConnectionFactory redisConnFactory(
             @Value("${spring.redis.host}")
             String host,
             @Value("${spring.redis.port}")
@@ -63,7 +63,7 @@ public class RedisAutoConfiguration implements InitializingBean {
             int maxIdle,
             @Value("${spring.redis.lettuce.pool.min-idle}")
             int minIdle) {
-        _logger.debug("RedisConnectionFactory init .");
+        _logger.debug("redisConnFactory init .");
         RedisConnectionFactory factory = new RedisConnectionFactory();
         factory.setHostName(host);
         factory.setPort(port);

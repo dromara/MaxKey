@@ -136,9 +136,13 @@ $(function () {
 	    		}
 	    	);//end tree
 	    	
-	$("#changepwdBtn").on("click",function(){	
-			$("#changepwdBtnHidden").attr("wurl","<@base/>/userinfo/forwardChangePassword/"+$.dataGridSelRowsData("#datagrid")[0].id);
-		   	$("#changepwdBtnHidden").click();	
+	$("#changepwdBtn").on("click",function(){
+	 	if($.dataGridSelRowsData("#datagrid")[0]==null){
+			$.alert({content:$.platform.messages.select.alertText});
+			return;
+		}	
+		$("#changepwdBtnHidden").attr("wurl","<@base/>/userinfo/forwardChangePassword/"+$.dataGridSelRowsData("#datagrid")[0].id);
+		$("#changepwdBtnHidden").click();	
 	});
 	
 });

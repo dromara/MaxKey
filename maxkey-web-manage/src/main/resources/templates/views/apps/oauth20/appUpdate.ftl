@@ -4,6 +4,7 @@
 	<#include  "../../layout/header.ftl"/>
 	<#include  "../../layout/common.cssjs.ftl"/>
 	<#include  "../appCommonHead.ftl"/>
+	<#setting number_format="#">
 </head>
 <body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"   closeWindow="true" 

@@ -294,19 +294,35 @@ public class AppsDesktopDetails extends Apps {
 
 
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
-	public String toString() {
-		return "DesktopDetails [programPath=" + programPath + ", parameter="
-				+ parameter + ", preUsername=" + preUsername
-				+ ", usernameType=" + usernameType + ", usernameParameter="
-				+ usernameParameter + ", prePassword=" + prePassword
-				+ ", passwordType=" + passwordType + ", passwordParameter="
-				+ passwordParameter + ", preSubmit=" + preSubmit
-				+ ", submitType=" + submitType + ", submitKey=" + submitKey
-				+ "]";
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("AppsDesktopDetails [programPath=");
+        builder.append(programPath);
+        builder.append(", parameter=");
+        builder.append(parameter);
+        builder.append(", preUsername=");
+        builder.append(preUsername);
+        builder.append(", usernameType=");
+        builder.append(usernameType);
+        builder.append(", usernameParameter=");
+        builder.append(usernameParameter);
+        builder.append(", prePassword=");
+        builder.append(prePassword);
+        builder.append(", passwordType=");
+        builder.append(passwordType);
+        builder.append(", passwordParameter=");
+        builder.append(passwordParameter);
+        builder.append(", preSubmit=");
+        builder.append(preSubmit);
+        builder.append(", submitType=");
+        builder.append(submitType);
+        builder.append(", submitKey=");
+        builder.append(submitKey);
+        builder.append(", appUser=");
+        builder.append(appUser);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

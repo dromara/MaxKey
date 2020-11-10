@@ -23,7 +23,7 @@ package org.maxkey.authz.cas.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.BasicAuthentication;
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
@@ -173,7 +173,14 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
-		
+	    _logger.debug("serviceValidate " 
+                + " ticket " + ticket 
+                +" , service " + service 
+                +" , pgtUrl " + pgtUrl
+                +" , renew " + renew
+                +" , format " + format
+        );
+	    
 	    setContentType(request,response,format);
 	    
 		Ticket storedTicket=null;
@@ -186,14 +193,15 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
-			String principal=((BasicAuthentication)storedTicket.getAuthentication().getPrincipal()).getUsername();
+		    SigninPrincipal authentication = ((SigninPrincipal)storedTicket.getAuthentication().getPrincipal());
+			String principal=authentication.getUsername();
 			_logger.debug("principal "+principal);
 			serviceResponseBuilder.success().setUser(principal);
 			
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
-				adapter.generateInfo(userInfo, serviceResponseBuilder);
+				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);
 			}
 		}else{
 			serviceResponseBuilder.failure()
@@ -274,7 +282,13 @@ Response on ticket validation failure:
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
-		
+	    _logger.debug("proxyValidate " 
+                + " ticket " + ticket 
+                +" , service " + service 
+                +" , pgtUrl " + pgtUrl
+                +" , renew " + renew
+                +" , format " + format
+        );
 	    setContentType(request,response,format);
 		
 		Ticket storedTicket=null;
@@ -358,7 +372,11 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_GRANTING_TICKET) String pgt,
 			@RequestParam(value = CasConstants.PARAMETER.TARGET_SERVICE) String targetService,
 			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
-	    
+	    _logger.debug("proxy " 
+                + " pgt " + pgt 
+                +" , targetService " + targetService 
+                +" , format " + format
+        );
 	    setContentType(request,response,format);
 	    
 	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder();

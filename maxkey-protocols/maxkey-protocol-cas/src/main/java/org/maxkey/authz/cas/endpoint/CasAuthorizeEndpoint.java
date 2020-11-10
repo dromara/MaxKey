@@ -20,19 +20,26 @@
  */
 package org.maxkey.authz.cas.endpoint;
 
+import java.security.Principal;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
+import org.maxkey.authz.singlelogout.LogoutType;
 import org.maxkey.domain.apps.AppsCasDetails;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,10 +96,12 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	}
 	
 	@RequestMapping("/authz/cas/granting")
-	public ModelAndView grantingTicket(
+	public ModelAndView grantingTicket(Principal principal,
+	        @AuthenticationPrincipal Object user,
 			HttpServletRequest request,
 			HttpServletResponse response){
 		
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		AppsCasDetails casDetails=(AppsCasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
 		ServiceTicketImpl serviceTicket=new ServiceTicketImpl(WebContext.getAuthentication(),casDetails);
 		
@@ -101,6 +110,10 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		StringBuffer callbackUrl = new StringBuffer(casDetails.getCallbackUrl());
 		if(casDetails.getCallbackUrl().indexOf("?")==-1) {
 		    callbackUrl.append("?");
+		}
+		
+		if(callbackUrl.indexOf("&") != -1) {
+		    callbackUrl.append("&");
 		}
 		
 		//append ticket
@@ -119,6 +132,15 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
     		for (String key : parameterMap.keySet()) {
     		    callbackUrl.append("&").append(key).append(parameterMap.get(key));
     		}
+		}
+		
+		if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
+		    String onlineTicketId = ((SigninPrincipal)WebContext.getAuthentication().getPrincipal()).getOnlineTicket().getTicketId();
+		    OnlineTicket onlineTicket  = onlineTicketServices.get(onlineTicketId);
+		    //set cas ticket as OnlineTicketId
+		    casDetails.setOnlineTicket(ticket);
+		    onlineTicket.setAuthorizedApp(casDetails);
+		    onlineTicketServices.store(onlineTicketId, onlineTicket);
 		}
 		
 		_logger.debug("redirect to CAS Client URL " + callbackUrl);

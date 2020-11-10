@@ -99,4 +99,17 @@ public class CharacterEncodingConfig {
         return null;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("CharacterEncodingConfig [fromCharSet=");
+        builder.append(fromCharSet);
+        builder.append(", toCharSet=");
+        builder.append(toCharSet);
+        builder.append(", encoding=");
+        builder.append(encoding);
+        builder.append("]");
+        return builder.toString();
+    }
+
 }

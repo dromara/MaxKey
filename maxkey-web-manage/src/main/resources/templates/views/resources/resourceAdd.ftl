@@ -15,6 +15,14 @@ $(function () {
     $("#appId").val($.cookie("select_app_id"));
     $("#parentId").val($.cookie("select_res_id"));
     $("#parentName").val($.cookie("select_res_name"));
+    
+    if($("#parentId").val()==""){
+		$.alert({
+			content:$.platform.messages.select.alertText,
+			callback:function (){$.closeWindow();}
+		});	
+		
+	}
 });
 </script>
 </head>

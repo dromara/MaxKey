@@ -289,13 +289,57 @@ public class Organizations extends JpaBaseDomain implements Serializable {
 
     @Override
     public String toString() {
-        return "Organizations [id=" + id + ", code=" + code + ", name=" + name + ", fullName=" + fullName
-                + ", parentId=" + parentId + ", parentName=" + parentName + ", type=" + type + ", codePath=" + codePath
-                + ", namePath=" + namePath + ", level=" + level + ", hasChild=" + hasChild + ", division=" + division
-                + ", country=" + country + ", region=" + region + ", locality=" + locality + ", street=" + street
-                + ", address=" + address + ", contact=" + contact + ", postalCode=" + postalCode + ", phone=" + phone
-                + ", fax=" + fax + ", email=" + email + ", sortIndex=" + sortIndex + ", description=" + description
-                + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("Organizations [id=");
+        builder.append(id);
+        builder.append(", code=");
+        builder.append(code);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", fullName=");
+        builder.append(fullName);
+        builder.append(", parentId=");
+        builder.append(parentId);
+        builder.append(", parentName=");
+        builder.append(parentName);
+        builder.append(", type=");
+        builder.append(type);
+        builder.append(", codePath=");
+        builder.append(codePath);
+        builder.append(", namePath=");
+        builder.append(namePath);
+        builder.append(", level=");
+        builder.append(level);
+        builder.append(", hasChild=");
+        builder.append(hasChild);
+        builder.append(", division=");
+        builder.append(division);
+        builder.append(", country=");
+        builder.append(country);
+        builder.append(", region=");
+        builder.append(region);
+        builder.append(", locality=");
+        builder.append(locality);
+        builder.append(", street=");
+        builder.append(street);
+        builder.append(", address=");
+        builder.append(address);
+        builder.append(", contact=");
+        builder.append(contact);
+        builder.append(", postalCode=");
+        builder.append(postalCode);
+        builder.append(", phone=");
+        builder.append(phone);
+        builder.append(", fax=");
+        builder.append(fax);
+        builder.append(", email=");
+        builder.append(email);
+        builder.append(", sortIndex=");
+        builder.append(sortIndex);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append("]");
+        return builder.toString();
     }
 
 

@@ -79,10 +79,19 @@ public class OneTimePassword  implements Serializable {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("OneTimePassword [id=").append(id)
-            .append(", type=").append(type).append(", token=").append(token)
-            .append(", username=").append(username).append(", receiver=").append(receiver)
-                .append(", createTime=").append(createTime).append("]");
+        builder.append("OneTimePassword [id=");
+        builder.append(id);
+        builder.append(", type=");
+        builder.append(type);
+        builder.append(", token=");
+        builder.append(token);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", receiver=");
+        builder.append(receiver);
+        builder.append(", createTime=");
+        builder.append(createTime);
+        builder.append("]");
         return builder.toString();
     }
 

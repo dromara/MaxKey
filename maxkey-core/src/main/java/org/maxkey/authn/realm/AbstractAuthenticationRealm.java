@@ -110,6 +110,16 @@ public abstract class AbstractAuthenticationRealm {
     public ArrayList<GrantedAuthority> grantAuthority(UserInfo userInfo) {
         return loginService.grantAuthority(userInfo);
     }
+    
+    /**
+     * grant Authority by grantedAuthoritys
+     * 
+     * @param grantedAuthoritys
+     * @return ArrayList<GrantedAuthority Apps>
+     */
+    public ArrayList<GrantedAuthority> queryAuthorizedApps(ArrayList<GrantedAuthority> grantedAuthoritys) {
+        return loginService.queryAuthorizedApps(grantedAuthoritys);
+    }
 
     /**
      * login log write to log db

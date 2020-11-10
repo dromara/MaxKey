@@ -122,10 +122,20 @@ public class AppsFormBasedDetails  extends Apps {
 
 
 	@Override
-	public String toString() {
-		return "FormBasedDetails [redirectUri=" + redirectUri
-				+ ", usernameMapping=" + usernameMapping + ", passwordMapping="
-				+ passwordMapping + ", authorizeView=" + authorizeView + "]";
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("AppsFormBasedDetails [id=");
+        builder.append(id);
+        builder.append(", redirectUri=");
+        builder.append(redirectUri);
+        builder.append(", usernameMapping=");
+        builder.append(usernameMapping);
+        builder.append(", passwordMapping=");
+        builder.append(passwordMapping);
+        builder.append(", authorizeView=");
+        builder.append(authorizeView);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

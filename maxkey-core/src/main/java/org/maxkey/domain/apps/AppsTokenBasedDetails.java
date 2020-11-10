@@ -137,9 +137,23 @@ public class AppsTokenBasedDetails  extends Apps {
 
     @Override
     public String toString() {
-        return "AppsTokenBasedDetails [id=" + id + ", redirectUri=" + redirectUri + ", tokenType=" + tokenType
-                + ", cookieName=" + cookieName + ", algorithm=" + algorithm + ", algorithmKey=" + algorithmKey
-                + ", expires=" + expires + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("AppsTokenBasedDetails [id=");
+        builder.append(id);
+        builder.append(", redirectUri=");
+        builder.append(redirectUri);
+        builder.append(", tokenType=");
+        builder.append(tokenType);
+        builder.append(", cookieName=");
+        builder.append(cookieName);
+        builder.append(", algorithm=");
+        builder.append(algorithm);
+        builder.append(", algorithmKey=");
+        builder.append(algorithmKey);
+        builder.append(", expires=");
+        builder.append(expires);
+        builder.append("]");
+        return builder.toString();
     }
 
 }
