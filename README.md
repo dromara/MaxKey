@@ -59,7 +59,7 @@
 
 7. 基于Java平台开发，采用Spring、MySQL、Tomcat、Apache Kafka、Redis等开源技术，支持微服务，扩展性强。  
 
-8. 许可证 Apache License, Version 2.0，开源免费。 
+8. 许可证 Apache License, Version 2.0，开源、安全、自主可控。 
 
 
 # 界面
@@ -94,16 +94,12 @@
 
 # Roadmap
 
-1.基于Excel批量机构和用户导入
+1.动态用户组实现(基于用户属性或机构)
 
-2.用户注册功能
+2.主任职机构和兼职机构
 
-3.动态用户组实现(基于用户属性或机构)
+3.零信任场景整合
 
-4.主任职机构和兼职机构
-
-5.零信任场景整合
-
-6.MaxKey Cloud(微服务版)-2021年
+4.MaxKey Cloud(微服务版)-2021年
 
 
