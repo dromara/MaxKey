@@ -22,7 +22,7 @@
 
 <form 
 	enctype="multipart/form-data" 
-	method="post" type="label" autoclose="true"  action="<@base/>/userinfo/import"  
+	method="post" type="label" autoclose="true"  action="<@base/>/orgs/import"  
 	class="needs-validation" novalidate> 
 
 	  <table   class="table table-bordered" >

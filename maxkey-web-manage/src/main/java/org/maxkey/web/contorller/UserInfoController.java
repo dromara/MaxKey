@@ -272,18 +272,6 @@ public class UserInfoController {
 		}
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/changeUserinfoStatus")  
-	public Message changeUserinfoStatus( @ModelAttribute("userInfo")UserInfo userInfo) {
-		_logger.debug(userInfo.getId());
-		if(userInfoService.update(userInfo)) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
-			
-		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
-		}
-	}
-	
     @RequestMapping(value = "/import")
     public ModelAndView importing(@ModelAttribute("excelImportFile")ExcelImport excelImportFile)  {
         ModelAndView modelAndView=new ModelAndView("/userinfo/usersImport");

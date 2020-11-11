@@ -21,13 +21,17 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.domain.ExcelImport;
 import org.maxkey.domain.Organizations;
 import org.maxkey.persistence.service.OrganizationsService;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.component.TreeNode;
 import org.maxkey.web.component.TreeNodeList;
 import org.maxkey.web.message.Message;
+import org.maxkey.web.message.MessageScope;
 import org.maxkey.web.message.MessageType;
+import org.maxkey.web.message.OperateType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -195,7 +199,18 @@ public class OrganizationsController {
   public ModelAndView orgUsersList() { return new ModelAndView("orgs/orgUsersList"); }
 
 
-
+  @RequestMapping(value = "/import")
+  public ModelAndView importing(@ModelAttribute("excelImportFile")ExcelImport excelImportFile)  {
+      ModelAndView modelAndView=new ModelAndView("/orgs/orgsImport");
+      
+      if (excelImportFile.getExcelFile() != null && !excelImportFile.getExcelFile().isEmpty() && organizationsService.importing(excelImportFile.getExcelFile())) {
+           new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
+      }else {
+           new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+      }
+      
+      return modelAndView;
+  }
 
 
 

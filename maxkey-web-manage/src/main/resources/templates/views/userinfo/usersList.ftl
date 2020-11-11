@@ -201,12 +201,12 @@ $(function () {
 				<td colspan="2"> 
 					 <div id="tool_box_right">
 					 	<input class="button btn btn-warning mr-3" id="changepwdBtn" type="button" value="<@locale code="login.password.changepassword"/>" />
-						<input class="button btn btn-warning mr-3 window" id="changepwdBtnHidden" type="button"
+						<input class="button btn btn-warning mr-3 window" id="changepwdBtnHidden" type="hidden"
 						 value="<@locale code="login.password.changepassword"/>" 
 						 		    wurl="<@base/>/userinfo/forwardChangePassword" wwidth="600px" wheight="250px" />
 						 		    
-						 <input class="button btn btn-warning mr-3 window" id="usersImportBtn" type="button" 
-						 		value="<@locale code="Import"/>" 
+						 <input class="button btn btn-success mr-3 window" id="usersImportBtn" type="button" 
+						 		value="<@locale code="button.text.import"/>" 
 						 		    wurl="<@base/>/userinfo/import" wwidth="400px" wheight="250px" />
 						 		    
 						 		    		    

@@ -183,7 +183,11 @@ $(function () {
 					 	</form>
 				</td>
 				<td colspan="2"> 
-					 <div id="tool_box_right">	    
+					 <div id="tool_box_right">	
+					 	<input class="button btn btn-success mr-3 window" id="usersImportBtn" type="button" 
+						 		value="<@locale code="button.text.import"/>" 
+						 		    wurl="<@base/>/orgs/import" wwidth="400px" wheight="250px" />
+						 		        
 						 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/orgs/forwardAdd"
 						 		    wwidth="620"

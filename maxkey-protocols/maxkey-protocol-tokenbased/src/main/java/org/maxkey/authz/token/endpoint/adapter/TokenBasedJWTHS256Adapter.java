@@ -69,7 +69,7 @@ public class TokenBasedJWTHS256Adapter extends AbstractAuthorizeAdapter {
 				.claim("email", userInfo.getWorkEmail())
 				.claim("name", userInfo.getUsername())
 				.claim("user_id", userInfo.getId())
-				.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket())
+				.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId())
 				.claim("external_id", userInfo.getId())
 				.claim("locale", userInfo.getLocale())
 				.claim("kid", "SYMMETRIC-KEY")

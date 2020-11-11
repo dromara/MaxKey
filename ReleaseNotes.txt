@@ -1,28 +1,36 @@
-﻿﻿MaxKey v 2.3.0 GA	2020/11/**
+﻿﻿MaxKey v 2.3.0 GA	2020/11/12
  	*(MAXKEY-200901)  基于spring session的集群会话共享功能 
     *(MAXKEY-200902) 单点注销功能，应用可以配置为NONE/BACK_CHANNEL/FRONT_CHANNEL三种方式，支持CAS/SAML/Default
 	*(MAXKEY-200903)  用户在线实时更新功能
-	*(MAXKEY-200904)  批量Excel用户导入功能
-	*(MAXKEY-200905)  用户注册功能
-	*(MAXKEY-200906)  用户状态修改
-	*(MAXKEY-200907)  用户详情显示问题
-	*(MAXKEY-200908)  应用修改时数字大于4为长度格式化问题
+	*(MAXKEY-200904)  定制用户模板，实现批量Excel用户导入功能
+	*(MAXKEY-200905)   定制机构模板，实现批量Excel机构导入功能
+	*(MAXKEY-200906)  用户注册功能
+	*(MAXKEY-200907)  用户状态修改
+	*(MAXKEY-200908)  用户详情显示问题
+	*(MAXKEY-200909)  应用修改时数字大于4为长度格式化问题
 	*(MAXKEY-200910)  注销后，点击重新登陆跳转问题
 	*(MAXKEY-200911)  增加SP登录跳转功能，支持knox的认证
 	*(MAXKEY-200912)  构建脚本的优化和更新
-	*(MAXKEY-200913)  权限控制 RoleAdministrators 
+	*(MAXKEY-200913)  管理员权限控制 RoleAdministrators 
 	*(MAXKEY-200914)  社交账号登录优化
 	*(MAXKEY-200915)  列表界面中未”选择“情况下，弹出界面错误
 	*(MAXKEY-200916) jib(docker) 支持 ，感谢https://github.com/alanland
-	*(MAXKEY-200916)  登录过程的优化
-	*(MAXKEY-200917)  认证的优化，支持@Principal的注入
-	*(MAXKEY-200918) 应用单点登录时，用户访问权限控制
-	*(MAXKEY-200920)  依赖jar引用、更新和升级
+	*(MAXKEY-200917)  登录过程的优化
+	*(MAXKEY-200918)  认证的优化，支持@Principal的注入
+	*(MAXKEY-200919) 应用单点登录时，用户访问权限控制
+	*(MAXKEY-200920) maxkey-mgt 项目配置文件的验证码启用不启用配置未生效
+	*(MAXKEY-200921) 登录图标改进
+	*(MAXKEY-200922)  官方网站的优化
+	*(MAXKEY-200923)  依赖jar引用、更新和升级
 	    druid 1.2.1
 	    JustAuth 1.15.8
 	    simple-http 1.0.3
 	    spring-session 2.3.1.RELEASE
 	    druid-spring-boot-starter 1.2.1
+	    xmlbeans  3.0.1
+	    commons-compress 1.20
+	    poi 4.1.2
+	    commons-collections4 4.4
  
 MaxKey v 2.2.0 GA	2020/09/24
 	*(MAXKEY-200801)  官方网站内容调整，初步增加英文版支持，增加新闻、合作伙伴及与CAS等开源产品对比

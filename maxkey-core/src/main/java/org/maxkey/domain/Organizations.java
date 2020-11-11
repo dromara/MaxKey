@@ -80,6 +80,8 @@ public class Organizations extends JpaBaseDomain implements Serializable {
     private String sortIndex;
     @Column
     private String description;
+    
+    private String status;
 
     public Organizations() {
         // TODO Auto-generated constructor stub
@@ -285,6 +287,16 @@ public class Organizations extends JpaBaseDomain implements Serializable {
 
     public void setSortIndex(String sortIndex) {
         this.sortIndex = sortIndex;
+    }
+    
+    
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

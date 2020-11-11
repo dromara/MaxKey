@@ -69,7 +69,7 @@ public class TokenBasedJWTAdapter extends AbstractAuthorizeAdapter {
 				.claim("user_id", userInfo.getId())
 				.claim("external_id", userInfo.getId())
 				.claim("locale", userInfo.getLocale())
-				.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket())
+				.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId())
 				.claim("kid", jwtSignerService.getDefaultSignerKeyId())
 				.build();
 		

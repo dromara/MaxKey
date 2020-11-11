@@ -44,6 +44,9 @@ public class ExcelImport extends JpaBaseDomain {
  
     @JsonIgnore
     protected MultipartFile excelFile;
+    
+    
+    String updateExist;
 
     public ExcelImport() {
         super();
@@ -55,6 +58,14 @@ public class ExcelImport extends JpaBaseDomain {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUpdateExist() {
+        return updateExist;
+    }
+
+    public void setUpdateExist(String updateExist) {
+        this.updateExist = updateExist;
     }
 
     public MultipartFile getExcelFile() {

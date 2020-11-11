@@ -90,7 +90,6 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	 */
 	@Override
 	public UserInfoMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (UserInfoMapper)super.getMapper();
 	}
 	
@@ -357,10 +356,11 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
             return false;
         }
         InputStream is = null;
+        Workbook wb = null;
         List<UserInfo> userInfoList = null;
         try {
             is = file.getInputStream();
-            Workbook wb;
+            
             String xls = ".xls";
             String xlsx = ".xlsx";
             int columnSize = 46;
@@ -382,15 +382,14 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
                 //遍历行
                 for (int j = 1; j < rowSize; j++) {
                     Row row = sheet.getRow(j);
-                    //略过空行和第一行
-                    if (row == null || j <2 ) {
+                    //略过空行和前3行
+                    if (row == null || j <3 ) {
                         continue;
                     } else {
                         //其他行是数据行
                         UserInfo userInfo = new UserInfo();
                         userInfo.setCreatedDate(DateUtils.formatDateTime(new Date()));
 
-                        int rangeType = -1;
                         for (int k = 0; k < columnSize; k++) {
                             if (k == 0) {
                                 // 登录账号
@@ -401,61 +400,62 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
                                 Cell cell = row.getCell(k);
                                 userInfo.setPassword(getValue(cell));
                             } else if (k == 2) {
-                                // 员工编码
-                                Cell cell = row.getCell(k);
-                                userInfo.setEmployeeNumber(getValue(cell));
-                            } else if (k == 3) {
-                                // 用户类型
-                                Cell cell = row.getCell(k);
-                                userInfo.setUserType(getValue(cell));
-                            } else if (k == 4) {
-                                // 用户名
+                                // 用户显示
                                 Cell cell = row.getCell(k);
                                 userInfo.setDisplayName(getValue(cell));
-                            } else if (k == 5) {
+                            } else if (k == 3) {
                                 // 姓
                                 Cell cell = row.getCell(k);
                                 userInfo.setFamilyName(getValue(cell));
-                            } else if (k == 6) {
+                            } else if (k == 4) {
                                 // 名
                                 Cell cell = row.getCell(k);
                                 userInfo.setGivenName(getValue(cell));
-                            } else if (k == 7) {
+                            } else if (k == 5) {
                                 // 中间名
                                 Cell cell = row.getCell(k);
                                 userInfo.setMiddleName(getValue(cell));
-                            } else if (k == 8) {
+                            } else if (k == 6) {
                                 // 昵称
                                 Cell cell = row.getCell(k);
                                 userInfo.setNickName(getValue(cell));
-                            } else if (k == 9) {
+                            } else if (k == 7) {
                                 // 性别
                                 Cell cell = row.getCell(k);
-                                userInfo.setGender(Integer.valueOf(getValue(cell)));
-                            } else if (k == 10) {
-                                // AD域账号
-                                Cell cell = row.getCell(k);
-                                userInfo.setWindowsAccount(getValue(cell));
-                            } else if (k == 11) {
-                                // 出生日期
-                                Cell cell = row.getCell(k);
-                                userInfo.setBirthDate(getValue(cell));
-                            } else if (k == 12) {
+                                String gender = getValue(cell);
+                                userInfo.setGender(gender.equals("")? 1 : Integer.valueOf(getValue(cell)));
+                            } else if (k == 8) {
                                 // 语言偏好
                                 Cell cell = row.getCell(k);
                                 userInfo.setPreferredLanguage(getValue(cell));
-                            } else if (k == 13) {
+                            } else if (k == 9) {
                                 // 时区
                                 Cell cell = row.getCell(k);
                                 userInfo.setTimeZone(getValue(cell));
-                            }else if (k == 14) {
+                            } else if (k == 10) {
+                                // 用户类型
+                                Cell cell = row.getCell(k);
+                                userInfo.setUserType(getValue(cell));
+                            } else if (k == 11) {
+                                // 员工编码
+                                Cell cell = row.getCell(k);
+                                userInfo.setEmployeeNumber(getValue(cell));
+                            } else if (k == 12) {
+                                // AD域账号
+                                Cell cell = row.getCell(k);
+                                userInfo.setWindowsAccount(getValue(cell));
+                            }else if (k == 13) {
                                 // 所属机构
                                 Cell cell = row.getCell(k);
                                 userInfo.setOrganization(getValue(cell));
-                            }else if (k == 15) {
+                            }else if (k == 14) {
                                 // 分支机构
                                 Cell cell = row.getCell(k);
                                 userInfo.setDivision(getValue(cell));
+                            }else if (k == 15) {
+                                // 部门编号
+                                Cell cell = row.getCell(k);
+                                userInfo.setDepartmentId(getValue(cell));
                             }else if (k == 16) {
                                 // 部门名称
                                 Cell cell = row.getCell(k);
@@ -528,54 +528,58 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
                                 // 证件号码
                                 Cell cell = row.getCell(k);
                                 userInfo.setIdCardNo(getValue(cell));
-                            }else if (k == 34) {
+                            } else if (k == 34) {
+                                // 出生日期
+                                Cell cell = row.getCell(k);
+                                userInfo.setBirthDate(getValue(cell));
+                            }else if (k == 35) {
                                 // 婚姻状态 todo 现在数据字段类型是 tinyint
 //                                Cell cell = row.getCell(k);
 //                                userInfo.setMarried(getValue(cell));
-                            }else if (k == 35) {
+                            }else if (k == 36) {
                                 // 开始工作时间
                                 Cell cell = row.getCell(k);
                                 userInfo.setStartWorkDate(getValue(cell));
-                            }else if (k == 36) {
-                                // 国家
-                                Cell cell = row.getCell(k);
-                                userInfo.setHomeCountry(getValue(cell));
                             }else if (k == 37) {
-                                // 省
-                                Cell cell = row.getCell(k);
-                                userInfo.setHomeRegion(getValue(cell));
-                            }else if (k == 38) {
-                                // 城市
-                                Cell cell = row.getCell(k);
-                                userInfo.setHomeLocality(getValue(cell));
-                            }else if (k == 39) {
-                                // 家庭地址
-                                Cell cell = row.getCell(k);
-                                userInfo.setHomeStreetAddress(getValue(cell));
-                            }else if (k == 40) {
-                                // 家庭邮编
-                                Cell cell = row.getCell(k);
-                                userInfo.setHomePostalCode(getValue(cell));
-                            }else if (k == 41) {
-                                // 家庭传真
-                                Cell cell = row.getCell(k);
-                                userInfo.setHomeFax(getValue(cell));
-                            }else if (k == 42) {
-                                // 家庭电话
-                                Cell cell = row.getCell(k);
-                                userInfo.setHomePhoneNumber(getValue(cell));
-                            }else if (k == 43) {
-                                // 家庭邮箱
-                                Cell cell = row.getCell(k);
-                                userInfo.setHomeEmail(getValue(cell));
-                            }else if (k == 44) {
                                 // 个人主页
                                 Cell cell = row.getCell(k);
                                 userInfo.setWebSite(getValue(cell));
-                            }else if (k == 45) {
+                            }else if (k == 38) {
                                 // 即时通讯
                                 Cell cell = row.getCell(k);
                                 userInfo.setDefineIm(getValue(cell));
+                            }else if (k == 39) {
+                                // 国家
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeCountry(getValue(cell));
+                            }else if (k == 40) {
+                                // 省
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeRegion(getValue(cell));
+                            }else if (k == 41) {
+                                // 城市
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeLocality(getValue(cell));
+                            }else if (k == 42) {
+                                // 家庭地址
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeStreetAddress(getValue(cell));
+                            }else if (k == 43) {
+                                // 家庭邮编
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomePostalCode(getValue(cell));
+                            }else if (k == 44) {
+                                // 家庭传真
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeFax(getValue(cell));
+                            }else if (k == 45) {
+                                // 家庭电话
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomePhoneNumber(getValue(cell));
+                            }else if (k == 46) {
+                                // 家庭邮箱
+                                Cell cell = row.getCell(k);
+                                userInfo.setHomeEmail(getValue(cell));
                             }
                         }
                         userInfo.setStatus(1);
@@ -595,7 +599,13 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            if(wb != null) {
+                try {
+                    wb.close();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -617,7 +627,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
         } else if (cell.getCellType() == CellType.BOOLEAN) {
             return String.valueOf(cell.getBooleanCellValue());
         } else if (cell.getCellType() == CellType.NUMERIC) {
-            cell.setCellType(CellType.STRING);
+            cell.setBlank();
             return String.valueOf(cell.getStringCellValue().trim());
         } else {
             return String.valueOf(cell.getStringCellValue().trim());

@@ -50,9 +50,14 @@
 			<input type="hidden" id="id" name="id" value="${model.id!""}"/>
 			<input  class="form-control"  type="text" id="username" name="username"  title="" value="${model.username!""}"/>
 		</td>
-		<td style="width:15%;"><@locale code="login.text.password" />：</td>
+		<td style="width:15%;"><@locale code="userinfo.status" />：</td>
 		<td style="width:35%;">
-			<input  class="form-control"  type="password" id="password" name="password"  title="" value=""/>
+			<select name="status"  id="status" class="form-control" >
+						<option value="1"   <#if 1==model.status>selected</#if>><@locale code="userinfo.status.active" /></option>
+						<option value="2"   <#if 2==model.status>selected</#if>><@locale code="userinfo.status.withdrawn" /></option>
+						<option value="3"   <#if 3==model.status>selected</#if>><@locale code="userinfo.status.inactive" /></option>
+						<option value="4"   <#if 4==model.status>selected</#if>><@locale code="userinfo.status.retiree" /></option>
+				</select>
 		</td>
 	</tr>
 	<tr>
