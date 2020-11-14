@@ -6,10 +6,7 @@ buildscript {
 	}
 }
 
-plugins {
-	id 'com.google.cloud.tools.jib' version '2.6.0'
-	id 'org.springframework.boot' version '2.3.4.RELEASE'
-}
+
 
 description = "maxkey-web-manage"
 
@@ -20,12 +17,18 @@ apply plugin: 'java'
 //apply plugin: 'com.bmuschko.tomcat-base'
 //apply plugin: 'com.bmuschko.tomcat'
 
+/*
+plugins {
+	id 'com.google.cloud.tools.jib' version '2.6.0'
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+}
+
 jib {
 	from {
 		image = 'adoptopenjdk:11-jre-openj9'
 	}
 	to {
-		image = "maxkey/maxkey-web-manage"
+		image = "maxkey/maxkey-mgt"
 		tags = ["${project.version}".toString(), 'latest']
 	}
 	container {
@@ -33,6 +36,7 @@ jib {
 		ports = ['80']
 	}
 }
+*/
 
 dependencies {
 	compile project(":maxkey-core")
