@@ -25,7 +25,7 @@ allprojects {
 	configurations.all {
 		transitive = false// 为本依赖关闭依赖传递特性
 	}	
-	//JAVA Version
+	//java Version
 	sourceCompatibility = 1.8
 	targetCompatibility	= 1.8
 	compileJava.options.encoding = 'UTF-8'
@@ -73,27 +73,12 @@ repositories {
     
 }
 
+
+
 subprojects {  
 	//apply plugin: 'org.springframework.boot'
 	//apply plugin: 'io.spring.dependency-management'
 	
-	//项目名
-     println project.name
-     //项目相对路径
-     println project.path
-     //项目描述
-     println project.description
-     //项目的绝对路径
-     println project.projectDir
-     //项目的build文件绝对路径
-     println project.buildDir
-     //项目所在的group
-     println project.group
-     //项目的版本号
-     println project.version
-     //项目的ant对象
-     println project.ant
-	     
 	sourceSets {
 	    main {
 	        java {
@@ -161,8 +146,8 @@ subprojects {
          compile group: 'org.apache.poi', name: 'poi-ooxml', version: "${poiVersion}"
          compile group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: "${poiVersion}"
          compile group: 'org.apache.poi', name: 'poi-scratchpad', version: "${poiVersion}"
+         compile group: 'org.apache.commons', name: 'not-yet-commons-ssl', version: '0.3.9'
          
-         //compile group: 'org.apache.commons', name: 'not-yet-commons-ssl', version: '0.3.9'
 		//logs
          compile group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: "${log4jVersion}"
          compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: "${log4jVersion}"
@@ -326,33 +311,14 @@ subprojects {
 
 	    def currentTime = java.time.ZonedDateTime.now()
 	    manifest {
-	        attributes( "Implementation-Title": project.name,
+	        attributes(
+						"Implementation-Title": project.name,
 	                	"Implementation-Vendor": project.vendor,
 	                	"Created-By": project.author,
 	                	"Implementation-Date": currentTime,
-	                	"Implementation-Version": project.version)
+	                	"Implementation-Version": project.version
+	           )
 	    }
-	}
-    
-    task checkenv{
-		println 'check env for project '
-	     //项目名
-	     println project.name
-	     //项目相对路径
-	     println project.path
-	     //项目描述
-	     println project.description
-	     //项目的绝对路径
-	     println project.projectDir
-	     //项目的build文件绝对路径
-	     println "buildDir " +project.buildDir
-	     //项目所在的group
-	     println project.group
-	     //项目的版本号
-	     println project.version
-	     //项目的ant对象
-	     println project.ant
-		 
 	}
 
     task copyjar2Release(type: Copy) {
@@ -360,11 +326,6 @@ subprojects {
 		into "$rootDir/build/maxkey-jars/"
 	    from "$buildDir/libs/"
 	    include '*.jar'
-	}
-	
-	task copyDepJars(type: Copy){
-		from configurations.runtime
-		into "$rootDir/build/maxkey-depjars"
 	}
 	
 	task copydemoWar2Release(type: Copy) {
@@ -383,12 +344,37 @@ subprojects {
 		into "$rootDir/build/"
 	    from "$buildDir/libs/"
 	}
-
-	task buildRelease(dependsOn:['build','jar','copyjar2Release','copyDepJars'])  {
-	   println 'Build MaxKey '+project.name +' complete .'
+	
+	task buildRelease(dependsOn:['build','jar','copyjar2Release'])  {
+		//项目名
+		println  "project " + project.name + " environment ..."
 	}
-}  
+}
 
+//copy Dep Jars to /build/maxkey-depjars
+project('maxkey-core')  {
+	task copyDepJars(type: Copy){
+		println  "copy Dep Jars to $rootDir/build/maxkey-depjars"
+		
+		from configurations.runtime
+		into "$rootDir/build/maxkey-depjars"
+	}
+}
+
+	
+task buildRelease(dependsOn:['build'])  {
+	//项目名
+	println  "project " + project.name + " environment ..."
+	//项目所在的group version 版本号
+	println "project group " + project.group +" , version " + project.version
+	//项目相对路径
+	println "project path " + project.path
+	//项目的绝对路径
+	println "project projectDir " + project.projectDir
+	//项目的build文件绝对路径
+	println "project buildDir " + project.buildDir
+	println 'Build MaxKey '+project.name +' '
+}
 // In this section you declare the dependencies for your production and test code
 dependencies {
  
