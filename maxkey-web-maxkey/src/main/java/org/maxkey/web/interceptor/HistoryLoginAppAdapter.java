@@ -58,7 +58,7 @@ public class HistoryLoginAppAdapter extends HandlerInterceptorAdapter {
             HttpServletResponse response, Object handler)
             throws Exception {
         _logger.debug("preHandle");
-        final Apps app = (Apps)WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
+        final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
         Authentication authentication = WebContext.getAuthentication();
         if(authentication.getPrincipal() instanceof SigninPrincipal) {
             SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal() ;
@@ -83,7 +83,7 @@ public class HistoryLoginAppAdapter extends HandlerInterceptorAdapter {
             Object handler,ModelAndView modelAndView) throws Exception {
         _logger.debug("postHandle");
        
-        final Apps app = (Apps)WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
+        final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
         String sessionId = (String)WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID);
         final UserInfo userInfo = WebContext.getUserInfo();
         _logger.debug("sessionId : " + sessionId + " ,appId : " + app.getId());

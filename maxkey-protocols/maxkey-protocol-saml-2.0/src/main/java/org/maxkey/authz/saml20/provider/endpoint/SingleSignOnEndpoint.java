@@ -21,7 +21,6 @@ import java.security.KeyStore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.binding.ExtractBindingAdapter;
@@ -29,6 +28,7 @@ import org.maxkey.authz.saml20.xml.SAML2ValidatorSuite;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
 import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.persistence.service.AppsSaml20DetailsService;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.opensaml.common.binding.SAMLMessageContext;
 import org.opensaml.saml2.core.AuthnRequest;
@@ -101,14 +101,14 @@ public class SingleSignOnEndpoint {
 
 		extractSAMLMessage(extractBindingAdapter,request);
 		
-		request.getSession().setAttribute("samlv20Adapter", bindingAdapter);
+		request.getSession().setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER, bindingAdapter);
 		
 		return WebContext.forward("/authz/saml20/assertion");
 	}
 
 	public void extractSaml20Detail(ExtractBindingAdapter extractBindingAdapter,String samlId) throws Exception{
 		AppsSAML20Details  saml20Details  = saml20DetailsService.getAppDetails(samlId);
-		
+		WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, saml20Details);
 		if (saml20Details == null) {
 			logger.error("Request SAML APPID [" + samlId + "] is not exist .");
 			throw new Exception();

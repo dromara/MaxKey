@@ -30,7 +30,6 @@ import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
-import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.singlelogout.LogoutType;
 import org.maxkey.domain.apps.AppsCasDetails;
 import org.maxkey.web.WebConstants;
@@ -91,7 +90,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		        );
 		WebContext.setAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS, casDetails);
 		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, casDetails.getId());
-		WebContext.setAttribute(AuthorizeBaseEndpoint.class.getName(),casDetails);
+		WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP,casDetails);
 		return WebContext.redirect("/authz/cas/granting");
 	}
 	

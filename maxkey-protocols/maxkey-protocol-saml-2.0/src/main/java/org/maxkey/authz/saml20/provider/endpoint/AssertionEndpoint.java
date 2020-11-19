@@ -59,7 +59,8 @@ public class AssertionEndpoint {
 	@RequestMapping(value = "/authz/saml20/assertion")
 	public ModelAndView assertion(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		logger.debug("saml20 assertion start.");
-		bindingAdapter = (BindingAdapter) request.getSession().getAttribute("samlv20Adapter");
+		bindingAdapter = (BindingAdapter) request.getSession().getAttribute(
+		        WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER);
 		logger.debug("saml20 assertion get session samlv20Adapter "+bindingAdapter);
 		AppsSAML20Details saml20Details = bindingAdapter.getSaml20Details();
 		logger.debug("saml20Details "+saml20Details.getExtendAttr());

@@ -19,6 +19,7 @@ package org.maxkey.web;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -55,6 +56,17 @@ public final class WebContext {
     final static Logger _logger = LoggerFactory.getLogger(WebContext.class);
     
     public static Properties properties;
+    
+    public static ArrayList<String> sessionAttributeNameList = new ArrayList<String>();
+    
+    static {
+        sessionAttributeNameList.add(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
+        sessionAttributeNameList.add(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
+        sessionAttributeNameList.add(WebConstants.AUTHENTICATION);
+        sessionAttributeNameList.add(WebConstants.CURRENT_USER);
+        sessionAttributeNameList.add(WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER);
+        sessionAttributeNameList.add(WebConstants.AUTHORIZE_SIGN_ON_APP);
+    }
      
     /**
      * set Current login user to session.

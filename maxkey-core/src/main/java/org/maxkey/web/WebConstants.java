@@ -54,7 +54,11 @@ public class WebConstants {
     public static final  String KAPTCHA_SESSION_KEY = "kaptcha_session_key";
 
     public static final String SINGLE_SIGN_ON_APP_ID = "single_sign_on_app_id";
-
+    
+    public static final String AUTHORIZE_SIGN_ON_APP = "authorize_sign_on_app";
+    
+    public static final String AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER = "authorize_sign_on_app_samlv20_adapter";
+    
     public static final String REMEBER_ME_SESSION = "remeber_me_session";
 
     public static final String KERBEROS_TOKEN_PARAMETER = "kerberosToken";

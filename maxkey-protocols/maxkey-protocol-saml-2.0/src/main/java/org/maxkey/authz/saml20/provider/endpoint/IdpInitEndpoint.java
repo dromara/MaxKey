@@ -21,7 +21,6 @@ import java.security.KeyStore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.binding.ExtractBindingAdapter;
@@ -29,6 +28,7 @@ import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
 import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.persistence.service.AppsSaml20DetailsService;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +88,7 @@ public class IdpInitEndpoint {
 				@PathVariable("appid") String appId)throws Exception {
 		logger.debug("SAML IDP init , app id is "+appId);
 		AppsSAML20Details saml20Details = saml20DetailsService.getAppDetails(appId);
-		
+		WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, saml20Details);
 		if (saml20Details == null) {
 			logger.error("samlId[" + appId + "] Error .");
 			throw new Exception();
@@ -114,7 +114,7 @@ public class IdpInitEndpoint {
 
 		bindingAdapter.setExtractBindingAdapter(extractRedirectBindingAdapter);
 		
-		request.getSession().setAttribute("samlv20Adapter", bindingAdapter);
+		request.getSession().setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER, bindingAdapter);
 
 		logger.debug("idp init forwarding to assertion :","/authz/saml20/assertion");
 

@@ -31,6 +31,7 @@ import org.maxkey.authz.oauth2.provider.approval.ApprovalStore;
 import org.maxkey.domain.apps.Apps;
 import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
 import org.maxkey.persistence.service.AppsService;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -85,11 +86,11 @@ public class OAuth20AccessConfirmationController {
         AuthorizationRequest clientAuth = 
                 (AuthorizationRequest) WebContext.getAttribute("authorizationRequest");
         ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
-        Apps  app = (Apps)WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
+        Apps  app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
         //session中为空或者id不一致重新加载
         if (app == null || !app.getId().equalsIgnoreCase(clientAuth.getClientId())) {
             app = appsService.get(clientAuth.getClientId()); 
-            WebContext.setAttribute(AuthorizeBaseEndpoint.class.getName(), app);
+            WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
             WebContext.setAttribute(app.getId(), app.getIcon());
         }
        

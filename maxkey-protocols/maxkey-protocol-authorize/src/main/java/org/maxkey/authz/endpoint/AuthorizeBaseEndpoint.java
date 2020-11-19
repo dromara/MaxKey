@@ -27,6 +27,7 @@ import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.Apps;
 import org.maxkey.persistence.service.AccountsService;
 import org.maxkey.persistence.service.AppsService;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,11 +55,11 @@ public class AuthorizeBaseEndpoint {
 	protected AccountsService accountsService;
 		
 	protected Apps getApp(String id){
-		Apps  app=(Apps)WebContext.getAttribute(AuthorizeBaseEndpoint.class.getName());
+		Apps  app=(Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
 		//session中为空或者id不一致重新加载
 		if(app==null||!app.getId().equalsIgnoreCase(id)) {
 			app=appsService.get(id);
-			WebContext.setAttribute(AuthorizeBaseEndpoint.class.getName(), app);
+			WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
 		}
 		if(app	==	null){
 			_logger.error("Applications for id "+id + "  is null");

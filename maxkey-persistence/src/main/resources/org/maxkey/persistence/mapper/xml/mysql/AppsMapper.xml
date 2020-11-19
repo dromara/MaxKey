@@ -162,6 +162,7 @@
         WHERE
             APP.ID=GP.APPID
             AND GP.GROUPID=G.ID
+            AND APP.VISIBLE != 0
             AND (
             	 G.ID='ROLE_ALL_USER'
                  OR G.ID IN(

@@ -18,6 +18,8 @@
 package org.maxkey.authn;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
@@ -100,6 +102,8 @@ public abstract class AbstractAuthenticationProvider {
             throws AuthenticationException {
         _logger.debug("Trying to authenticate user '{}' via {}", 
                 loginCredential.getPrincipal(), getProviderName());
+        // 登录SESSION
+        _logger.debug("Login  Session {}.", WebContext.getSession().getId());
         Authentication authentication = null;
         try {
             authentication = doInternalAuthenticate(loginCredential);
@@ -121,33 +125,34 @@ public abstract class AbstractAuthenticationProvider {
         // user authenticated
         _logger.debug("'{}' authenticated successfully by {}.", 
                 authentication.getPrincipal(), getProviderName());
-
-        final UserInfo userInfo = WebContext.getUserInfo();
-        final Object passwordSetType = WebContext.getSession()
-                .getAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
-        // 登录完成后切换SESSION
-        _logger.debug("Login  Session {}.", WebContext.getSession().getId());
         
-        final Object firstSavedRequest =
-                WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
-        //change Session
+        changeSession(authentication);
+        
+        authenticationRealm.insertLoginHistory(
+                WebContext.getUserInfo(), ConstantsLoginType.LOCAL, "", "xe00000004", "success");
+        
+        return authentication;
+    }
+    
+    protected void changeSession(Authentication authentication) {
+        
+        HashMap<String,Object> sessionAttributeMap = new HashMap<String,Object>();
+        for(String attributeName : WebContext.sessionAttributeNameList) {
+            sessionAttributeMap.put(attributeName, WebContext.getAttribute(attributeName));
+        }
+        
+        //new Session        
         WebContext.getSession().invalidate();
+        
+        for(String attributeName : WebContext.sessionAttributeNameList) {
+            WebContext.setAttribute(attributeName, sessionAttributeMap.get(attributeName));
+        }
+        
         WebContext.setAttribute(
                 WebConstants.CURRENT_USER_SESSION_ID, WebContext.getSession().getId());
         _logger.debug("Login Success Session {}.", WebContext.getSession().getId());
-
-        authenticationRealm.insertLoginHistory(
-                userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", "success");
-
-        WebContext.setAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER,firstSavedRequest);
-        // 认证设置
-        WebContext.setAuthentication(authentication);
-        WebContext.setUserInfo(userInfo);
-        WebContext.getSession().setAttribute(
-                WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE, passwordSetType);
-
-        return authentication;
     }
+   
 
     /**
      * session validate.
