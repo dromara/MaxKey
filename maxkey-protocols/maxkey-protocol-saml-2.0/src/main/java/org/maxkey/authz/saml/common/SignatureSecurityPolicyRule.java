@@ -101,7 +101,6 @@ public class SignatureSecurityPolicyRule  implements InitializingBean, SecurityP
 	private void checkMessageSignature(MessageContext messageContext,SignableSAMLObject samlMessage) throws SecurityPolicyException {
 		CriteriaSet criteriaSet = new CriteriaSet();
 		logger.debug("Inbound issuer is {}", messageContext.getInboundMessageIssuer());
-		// System.out.println("Inbound issuer is {} "+ messageContext.getInboundMessageIssuer());
 		//https://localhost-dev-ed.my.salesforce.com
 		criteriaSet.add( new EntityIDCriteria(messageContext.getInboundMessageIssuer()));	
 		//criteriaSet.add( new EntityIDCriteria("https://localhost-dev-ed.my.salesforce.com"));

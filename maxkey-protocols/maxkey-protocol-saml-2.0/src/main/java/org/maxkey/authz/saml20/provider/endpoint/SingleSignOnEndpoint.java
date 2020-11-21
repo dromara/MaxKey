@@ -122,58 +122,68 @@ public class SingleSignOnEndpoint {
 		extractBindingAdapter.buildSecurityPolicyResolver(trustKeyStore);
 	}
 	
-	
+
+	   
 	@SuppressWarnings("rawtypes")
 	public void extractSAMLMessage(ExtractBindingAdapter extractBindingAdapter,HttpServletRequest request) throws Exception{
-		SAMLMessageContext messageContext;
+		
+	    SAMLMessageContext messageContext;
 		logger.debug("extract SAML Message .");
+		
 		try {
 			messageContext = extractBindingAdapter.extractSAMLMessageContext(request);
+			logger.debug("validate SAML AuthnRequest .");
+	        AuthnRequest authnRequest = (AuthnRequest) messageContext.getInboundSAMLMessage();
+	        logger.debug("AuthnRequest ProtocolBinding "+authnRequest.getProtocolBinding());
+	        logger.debug("InboundSAMLMessage Id "+messageContext.getInboundSAMLMessageId());
+	        logger.debug("AuthnRequest AssertionConsumerServiceURL "+authnRequest.getAssertionConsumerServiceURL());
+	        logger.debug("InboundMessage Issuer "+messageContext.getInboundMessageIssuer());
+	        logger.debug("InboundSAMLMessage IssueInstant "+messageContext.getInboundSAMLMessageIssueInstant());
+	        logger.debug("InboundSAMLMessage RelayState "+messageContext.getRelayState());      
+	        logger.debug("AuthnRequest isPassive "+authnRequest.isPassive());
+	        logger.debug("AuthnRequest ForceAuthn "+authnRequest.isForceAuthn());
+	        
+	        validatorSuite.validate(authnRequest);
+	        
+
+	        logger.debug("Select Authz  Binding.");
+	        String binding=extractBindingAdapter.getSaml20Detail().getBinding();
+	        
+	        if(binding.endsWith("PostSimpleSign")){
+	            bindingAdapter=postSimpleSignBindingAdapter;
+	            logger.debug("Authz POST Binding is  use PostSimpleSign .");
+	        }else{
+	            bindingAdapter=postBindingAdapter;
+	            logger.debug("Authz POST Binding is  use Post .");
+	        }
+	        
+	        
+	        AuthnRequestInfo authnRequestInfo = new AuthnRequestInfo(
+	                                authnRequest.getAssertionConsumerServiceURL(),
+	                                authnRequest.getID());
+	        
+	        logger.debug("AuthnRequest vefified.  Forwarding to AuthnResponder",authnRequestInfo);
+	        
+	        bindingAdapter.setAuthnRequestInfo(authnRequestInfo);
+	        
+	        bindingAdapter.setExtractBindingAdapter(extractBindingAdapter);
+	        
+	        String relayState=request.getParameter("RelayState");
+	        if (relayState != null) {
+	            bindingAdapter.setRelayState(relayState);
+	            logger.debug("RelayState : ",relayState);
+	        }
+	        
 		} catch (MessageDecodingException e1) {
 			logger.error("Exception decoding SAML MessageDecodingException", e1);
 			throw new Exception(e1);
 		} catch (SecurityException e1) {
 			logger.error("Exception decoding SAML SecurityException", e1);
 			throw new Exception(e1);
-		}
-		
-		logger.debug("validate SAML AuthnRequest .");
-		AuthnRequest authnRequest = (AuthnRequest) messageContext.getInboundSAMLMessage();
-
-		try {
-			validatorSuite.validate(authnRequest);
-		} catch (ValidationException ve) {
-			logger.warn("AuthnRequest Message failed Validation", ve);
-			throw new Exception(ve);
-		}
-
-		logger.debug("Select Authz  Binding.");
-		String binding=extractBindingAdapter.getSaml20Detail().getBinding();
-		
-		if(binding.endsWith("PostSimpleSign")){
-			bindingAdapter=postSimpleSignBindingAdapter;
-			logger.debug("Authz POST Binding is  use PostSimpleSign .");
-		}else{
-			bindingAdapter=postBindingAdapter;
-			logger.debug("Authz POST Binding is  use Post .");
-		}
-		
-		
-		AuthnRequestInfo authnRequestInfo = new AuthnRequestInfo(
-								authnRequest.getAssertionConsumerServiceURL(),
-								authnRequest.getID());
-		
-		logger.debug("AuthnRequest vefified.  Forwarding to AuthnResponder",authnRequestInfo);
-		
-		bindingAdapter.setAuthnRequestInfo(authnRequestInfo);
-		
-		bindingAdapter.setExtractBindingAdapter(extractBindingAdapter);
-		
-		String relayState=request.getParameter("RelayState");
-		if (relayState != null) {
-			bindingAdapter.setRelayState(relayState);
-			logger.debug("RelayState : ",relayState);
-		}
+		}catch (ValidationException ve) {
+            logger.warn("AuthnRequest Message failed Validation", ve);
+            throw new Exception(ve);
+        }
 		
 	}
 
