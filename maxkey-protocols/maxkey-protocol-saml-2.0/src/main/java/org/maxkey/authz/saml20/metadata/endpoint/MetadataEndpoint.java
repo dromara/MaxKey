@@ -47,7 +47,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -73,7 +73,8 @@ public class MetadataEndpoint {
 	public static String IDP_METADATA_PREFIX = "Idp_Metadata_";
 
 	@RequestMapping(value = "/{appid}.xml",produces = "application/xml")
-	public ModelAndView  metadata(HttpServletRequest request,
+	@ResponseBody
+	public String  metadata(HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("appid") String appId) {
 	    response.setContentType(ContentType.APPLICATION_XML_UTF8);
 	    appId = appId.substring(IDP_METADATA_PREFIX.length(), appId.length());
@@ -157,16 +158,14 @@ public class MetadataEndpoint {
 	         
 	        logger.trace("EntityDescriptor element XML : \\n");
 	        logger.trace(entityDescriptorXml);
-	        
-	        ModelAndView mv = new ModelAndView("trusts/saml_v20_metadata");
-	        mv.addObject("metadata", entityDescriptorXml);
-	        return mv;
+	     
+	        return entityDescriptorXml;
 		}catch (Exception e) {
 			logger.error(e.getMessage(),e); 
         }
 		
 
-		return null;
+		return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 	}
 
 	/**
