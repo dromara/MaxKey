@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 /**
  * 权限Interceptor处理
  * 权限处理需在servlet.xml中配置
@@ -40,7 +40,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  *
  */
 @Component
-public class PermissionAdapter extends HandlerInterceptorAdapter {
+public class PermissionAdapter  implements AsyncHandlerInterceptor  {
 	private static final Logger _logger = LoggerFactory.getLogger(PermissionAdapter.class);
 	//无需Interceptor url
 	@Autowired

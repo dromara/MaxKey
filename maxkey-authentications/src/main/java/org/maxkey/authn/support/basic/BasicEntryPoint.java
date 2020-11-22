@@ -29,10 +29,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
-
-public class BasicEntryPoint extends HandlerInterceptorAdapter {
+public class BasicEntryPoint implements   AsyncHandlerInterceptor {
 	private static final Logger _logger = LoggerFactory.getLogger(BasicEntryPoint.class);
 	
 	boolean enable;

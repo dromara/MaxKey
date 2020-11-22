@@ -25,10 +25,10 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 @Component
-public class PreLoginAppAdapter extends HandlerInterceptorAdapter {
+public class PreLoginAppAdapter  implements AsyncHandlerInterceptor {
 
     private static final Logger _logger = LoggerFactory.getLogger(PreLoginAppAdapter.class);
 

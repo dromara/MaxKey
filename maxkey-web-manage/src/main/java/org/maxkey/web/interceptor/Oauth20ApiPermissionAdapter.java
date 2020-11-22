@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 /**
  * OAuth v2.0 accessToken认证Interceptor处理.
@@ -40,7 +40,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  *
  */
 @Component
-public class Oauth20ApiPermissionAdapter extends HandlerInterceptorAdapter {
+public class Oauth20ApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	private static final Logger _logger = LoggerFactory.getLogger(Oauth20ApiPermissionAdapter.class);
 	
 	@Autowired

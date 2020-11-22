@@ -31,10 +31,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * Contorller调用完成后进行日志操作
@@ -45,7 +44,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  *
  */
 @Component
-public class HistoryLogsAdapter extends HandlerInterceptorAdapter {
+public class HistoryLogsAdapter  implements AsyncHandlerInterceptor  {
 	
 	private static final Logger _logger = LoggerFactory.getLogger(HistoryLogsAdapter.class);
 	

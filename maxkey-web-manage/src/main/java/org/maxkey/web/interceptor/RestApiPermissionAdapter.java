@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 /**
  * basic认证Interceptor处理.
@@ -39,7 +39,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  *
  */
 @Component
-public class RestApiPermissionAdapter extends HandlerInterceptorAdapter {
+public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	private static final Logger _logger = LoggerFactory.getLogger(RestApiPermissionAdapter.class);
 	
 	@Autowired

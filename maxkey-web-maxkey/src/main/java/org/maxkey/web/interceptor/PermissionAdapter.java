@@ -39,7 +39,7 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 /**
  * 权限Interceptor处理 权限处理需在servlet.xml中配置 mvc:interceptors permission
@@ -48,7 +48,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  *
  */
 @Component
-public class PermissionAdapter extends HandlerInterceptorAdapter {
+public class PermissionAdapter  implements AsyncHandlerInterceptor  {
     private static final Logger _logger = LoggerFactory.getLogger(PermissionAdapter.class);
     // 无需Interceptor url
     @Autowired

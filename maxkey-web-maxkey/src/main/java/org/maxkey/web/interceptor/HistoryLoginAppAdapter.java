@@ -36,11 +36,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 @Component
-public class HistoryLoginAppAdapter extends HandlerInterceptorAdapter {
+public class HistoryLoginAppAdapter  implements AsyncHandlerInterceptor  {
     private static final Logger _logger = LoggerFactory.getLogger(HistoryLoginAppAdapter.class);
 
     @Autowired
