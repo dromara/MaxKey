@@ -15,14 +15,15 @@ include 'maxkey-identitys:maxkey-identity-rest'
 
 //Protocol
 //include 'maxkey-protocols'
+include 'maxkey-protocols:maxkey-protocol-authorize'
 include 'maxkey-protocols:maxkey-protocol-oauth-2.0'
 include 'maxkey-protocols:maxkey-protocol-saml-2.0'
-include 'maxkey-protocols:maxkey-protocol-authorize'
-include 'maxkey-protocols:maxkey-protocol-desktop'
-include 'maxkey-protocols:maxkey-protocol-extendapi'
+include 'maxkey-protocols:maxkey-protocol-cas'
+include 'maxkey-protocols:maxkey-protocol-jwt'
 include 'maxkey-protocols:maxkey-protocol-formbased'
 include 'maxkey-protocols:maxkey-protocol-tokenbased'
-include 'maxkey-protocols:maxkey-protocol-cas'
+include 'maxkey-protocols:maxkey-protocol-extendapi'
+include 'maxkey-protocols:maxkey-protocol-desktop'
 
 //include 'maxkey-webs'
 //maxkey

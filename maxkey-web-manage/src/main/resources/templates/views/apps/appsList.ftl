@@ -24,6 +24,7 @@
 	protocolArray["CAS"]="cas";
 	protocolArray["Basic"]="basic";
 	protocolArray["Desktop"]="desktop";
+	protocolArray["JWT"]="jwt";
 	
 	$(function () {
 		$("#modifyApps").on("click",function(){
@@ -131,13 +132,14 @@
 							     	<@locale code="button.text.add"/>
 							  	</button>
 								 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/formbased/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.formbased" /></a>
-								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/desktop/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.desktop" /></a>
-								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/tokenbased/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.tokenbased" /></a>
-								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/oauth20/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.oauth2.0" /></a>
+								 	 <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/oauth20/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.oauth2.0" /></a>
 								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/saml20/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.saml2.0" /></a>
 								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/cas/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.cas" /></a>
+								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/formbased/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.formbased" /></a>
+								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/jwt/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.jwt" /></a>
+								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/tokenbased/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.tokenbased" /></a>
 							 		 <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/extendapi/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.extendapi" /></a>
+								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/desktop/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.desktop" /></a>
 							 		 <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/basic/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.basic" /></a>
 								  </div>
 							</div>

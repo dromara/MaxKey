@@ -68,7 +68,9 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 			modelAndView=WebContext.forward("/authz/tokenbased/"+id);
 		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.CAS)){
 			modelAndView=WebContext.forward("/authz/cas/"+id);
-		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.DESKTOP)){
+		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.JWT)){
+            modelAndView=WebContext.forward("/authz/jwt/"+id);
+        }else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.DESKTOP)){
 			modelAndView=WebContext.forward("/authz/desktop/"+id);
 		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.BASIC)){
 			modelAndView=WebContext.redirect(application.getLoginUrl());
@@ -77,15 +79,6 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 		_logger.debug(modelAndView.getViewName());
 		
 		return modelAndView;
-	}
-
-	@RequestMapping("/authz/oauth10a/{id}")
-	public ModelAndView authorizeOAuth10a(
-			@PathVariable("id") String id){
-		
-		 String redirec_uri=getApp(id).getLoginUrl();
-		return WebContext.redirect(redirec_uri);
-		
 	}
 	
 }

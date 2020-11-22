@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authz.token.endpoint.adapter;
+package org.maxkey.authz.jwt.endpoint.adapter;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -25,10 +25,12 @@ import org.joda.time.DateTime;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.configuration.oidc.OIDCProviderMetadata;
+import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
+import org.maxkey.crypto.jwt.signer.service.impl.SymmetricSigningAndValidationServiceBuilder;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.Apps;
-import org.maxkey.domain.apps.AppsTokenBasedDetails;
+import org.maxkey.domain.apps.AppsJwtDetails;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -42,14 +44,14 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.PlainJWT;
 import com.nimbusds.jwt.SignedJWT;
 
-public class TokenBasedJWTAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(TokenBasedJWTAdapter.class);
+public class JwtHS256Adapter extends AbstractAuthorizeAdapter {
+	final static Logger _logger = LoggerFactory.getLogger(JwtHS256Adapter.class);
+	private SymmetricSigningAndValidationServiceBuilder symmetricJwtSignerServiceBuilder=new SymmetricSigningAndValidationServiceBuilder();
+
 	@Override
 	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
-		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
-	
+		AppsJwtDetails details=(AppsJwtDetails)app;
 		
-		JwtSigningAndValidationService jwtSignerService= (JwtSigningAndValidationService)WebContext.getBean("jwtSignerValidationService");
 		OIDCProviderMetadata providerMetadata= (OIDCProviderMetadata)WebContext.getBean("oidcProviderMetadata");
 	
 		DateTime currentDateTime=DateTime.now();
@@ -67,30 +69,25 @@ public class TokenBasedJWTAdapter extends AbstractAuthorizeAdapter {
 				.claim("email", userInfo.getWorkEmail())
 				.claim("name", userInfo.getUsername())
 				.claim("user_id", userInfo.getId())
+				.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId())
 				.claim("external_id", userInfo.getId())
 				.claim("locale", userInfo.getLocale())
-				.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId())
-				.claim("kid", jwtSignerService.getDefaultSignerKeyId())
+				.claim("kid", "SYMMETRIC-KEY")
 				.build();
 		
 		_logger.debug("jwt Claims : "+jwtClaims);
 		
 		JWT jwtToken = new PlainJWT(jwtClaims);
 		
-		JWSAlgorithm signingAlg = jwtSignerService.getDefaultSigningAlgorithm();
+		String sharedSecret=ReciprocalUtils.decoder(details.getAlgorithmKey());
 		
-		//get PublicKey
-		/*Map<String, JWK>  jwkMap=jwtSignerService.getAllPublicKeys();
+		_logger.debug("jwt sharedSecret : "+sharedSecret);
 		
-		JWK jwk=jwkMap.get("connsec_rsa1");
-		
-		_logger.debug("isPrivate "+jwk.isPrivate());*/
-		
-		_logger.debug(" signingAlg "+signingAlg);
-		
-		jwtToken = new SignedJWT(new JWSHeader(signingAlg), jwtClaims);
-		// sign it with the server's key
-		jwtSignerService.signJwt((SignedJWT) jwtToken);
+		JwtSigningAndValidationService symmetricJwtSignerService =symmetricJwtSignerServiceBuilder.serviceBuilder(sharedSecret);
+		if(symmetricJwtSignerService!=null){
+			jwtToken = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), jwtClaims);
+			symmetricJwtSignerService.signJwt((SignedJWT) jwtToken);
+		}
 		
 		String tokenString=jwtToken.serialize();
 		_logger.debug("jwt Token : "+tokenString);
@@ -111,8 +108,8 @@ public class TokenBasedJWTAdapter extends AbstractAuthorizeAdapter {
 
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
-		modelAndView.setViewName("authorize/tokenbased_jwt_sso_submint");
-		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
+		modelAndView.setViewName("authorize/jwt_sso_submint");
+		AppsJwtDetails details=(AppsJwtDetails)app;
 		modelAndView.addObject("action", details.getRedirectUri());
 		_logger.debug("jwt Token data : "+data);
 		

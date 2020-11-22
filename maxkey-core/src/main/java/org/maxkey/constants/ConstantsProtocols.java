@@ -42,5 +42,7 @@ public final class ConstantsProtocols {
     public static final String OPEN_ID_CONNECT = "OpenID_Connect";
 
     public static final String CAS = "CAS";
+    
+    public static final String JWT = "JWT";
 
 }
