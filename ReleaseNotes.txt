@@ -9,6 +9,10 @@
 	*(MAXKEY-201008)  SAML2.0 SP DEMO,案例参见 https://github.com/MaxKeyTop/spring-boot-security-saml-sample
 	*(MAXKEY-201009)  docker支持的优化
 	*(MAXKEY-201010)  源代码增加LICENSE声明
+	*(MAXKEY-201011)  JWT的分离成protocols下子项目
+	*(MAXKEY-201012)  密码策略提示参数问题修复
+	*(MAXKEY-201013)  SAML 2.0 Metadata优化
+	*(MAXKEY-201014)  HandlerInterceptorAdapter@deprecated  调整为 AsyncHandlerInterceptor 
 	*(MAXKEY-201020)  依赖jar引用、更新和升级
 		not-yet-commons-ssl 0.3.9
 		log4j          	 	2.14.0
