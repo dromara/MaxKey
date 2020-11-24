@@ -6,7 +6,7 @@
 
 <b>Maxkey (Marx's key) </b> Single Sign On system, which means the Maximum key, <b>Leading-Edge IAM Identity and Access management product </b>, Support OAuth 2.0/OPENID CONNECT, SAML 2.0, JWT, CAS, SCIM and other standard protocols, and provide <b> Simple, Standard, Secure and Open </b> Identity management (IDM), Access management (AM), Single Sign On (SSO), RBAC permission management and Resource management.
 
-Official Website <a href="https://www.maxkey.top" target="_blank"><b>official website</b></a> |  <a href="https://maxkeytop.gitee.io" target="_blank"><b>Second Line</b></a>
+Official Website <a href="https://www.maxkey.top" target="_blank"><b>Official</b></a> |  <a href="https://maxkeytop.gitee.io" target="_blank"><b>Line2</b></a>
 
 QQ Community: <b> 434469201 </b> | email: <b> maxkeysupport@163.com </b>
 
