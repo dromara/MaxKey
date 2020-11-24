@@ -1,5 +1,7 @@
 # <img src="http://www.maxkey.top/static/images/logo_maxkey.png"  width="200px" />
 
+<a href="README_en.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
+
 # Overview
 
 <b>Maxkey (Marx's key) </b> Single Sign On system, which means the Maximum key, <b>Leading-Edge IAM Identity and Access management product </b>, Support OAuth 2.0/OPENID CONNECT, SAML 2.0, JWT, CAS, SCIM and other standard protocols, and provide <b> Simple, Standard, Secure and Open </b> Identity management (IDM), Access management (AM), Single Sign On (SSO), RBAC permission management and Resource management.
