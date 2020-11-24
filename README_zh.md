@@ -1,5 +1,7 @@
 # <img src="http://www.maxkey.top/static/images/logo_maxkey.png"  width="200px" />
 
+<a href="README_en.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
+
 # 概述
 
 <b>MaxKey(马克思的钥匙)</b>单点登录认证系统(Single Sign On System)，寓意是最大钥匙,是<b>业界领先的企业级IAM身份管理和身份认证产品</b>,支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS、SCIM等标准协议，提供<b>简单、标准、安全和开放</b>的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、RBAC权限管理和资源管理等。
