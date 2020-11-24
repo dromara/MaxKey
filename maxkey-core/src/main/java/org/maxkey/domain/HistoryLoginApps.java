@@ -18,6 +18,7 @@
 package org.maxkey.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  * @author Crystal.Sea
  *
  */
-
+@Entity
 @Table(name = "MXK_HISTORY_LOGIN_APPS")  
 public class HistoryLoginApps extends JpaBaseDomain {
 	

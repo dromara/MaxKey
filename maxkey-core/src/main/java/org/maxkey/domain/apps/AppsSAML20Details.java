@@ -18,6 +18,7 @@
 package org.maxkey.domain.apps;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Crystal.Sea
  *
  */
+@Entity
 @Table(name = "MXK_APPS_SAML_V20_DETAILS")
 public class AppsSAML20Details extends Apps {
 

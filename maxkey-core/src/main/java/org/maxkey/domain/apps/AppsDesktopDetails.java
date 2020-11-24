@@ -20,6 +20,7 @@
  */
 package org.maxkey.domain.apps;
 
+import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import org.maxkey.domain.Accounts;
@@ -29,6 +30,8 @@ import org.maxkey.domain.Accounts;
  * @author Crystal.Sea
  *
  */
+
+@Entity
 @Table(name = "MXK_APPS_DESKTOP_DETAILS")  
 public class AppsDesktopDetails extends Apps {
 

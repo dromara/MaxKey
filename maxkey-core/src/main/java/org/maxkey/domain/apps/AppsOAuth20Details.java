@@ -17,11 +17,13 @@
 
 package org.maxkey.domain.apps;
 
+import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import org.maxkey.domain.apps.oauth2.provider.client.BaseClientDetails;
 import org.springframework.util.StringUtils;
 
+@Entity
 @Table(name = "MXK_APPS_OAUTH_CLIENT_DETAILS")
 public class AppsOAuth20Details extends Apps {
 

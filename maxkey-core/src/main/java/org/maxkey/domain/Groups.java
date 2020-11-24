@@ -19,13 +19,14 @@ package org.maxkey.domain;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 import org.hibernate.validator.constraints.Length;
-
+@Entity
 @Table(name = "MXK_GROUPS")
 public class Groups extends JpaBaseDomain implements Serializable {
 

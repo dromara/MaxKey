@@ -19,6 +19,7 @@ package org.maxkey.domain;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,6 +31,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  * @author Crystal.Sea
  * 
  */
+@Entity
 @Table(name = "MXK_HISTORY_LOGS")
 public class HistoryLogs extends JpaBaseDomain implements Serializable {
     private static final long serialVersionUID = 6560201093784960493L;

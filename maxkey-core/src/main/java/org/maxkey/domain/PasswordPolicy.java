@@ -18,6 +18,7 @@
 package org.maxkey.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +33,7 @@ import org.maxkey.exception.PasswordPolicyException;
  *
  */
 
+@Entity
 @Table(name = "MXK_PASSWORD_POLICY")
 public class PasswordPolicy extends JpaBaseDomain implements java.io.Serializable {
 

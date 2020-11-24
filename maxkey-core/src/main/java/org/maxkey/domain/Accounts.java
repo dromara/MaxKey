@@ -19,6 +19,7 @@ package org.maxkey.domain;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +36,7 @@ import org.hibernate.validator.constraints.Length;
    STATUS	            char(1)                        null
    constraint PK_ROLES primary key clustered (ID)
  */
-
+@Entity
 @Table(name = "MXK_ACCOUNTS")
 public class Accounts extends JpaBaseDomain implements Serializable {
     private static final long serialVersionUID = 6829592256223630307L;

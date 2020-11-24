@@ -17,8 +17,10 @@
 
 package org.maxkey.domain.apps;
 
+import javax.persistence.Entity;
 import javax.persistence.Table;
 
+@Entity
 @Table(name = "MXK_APPS_EXTENDAPI_DETAILS") 
 public class AppsExtendApiDetails extends Apps {
 

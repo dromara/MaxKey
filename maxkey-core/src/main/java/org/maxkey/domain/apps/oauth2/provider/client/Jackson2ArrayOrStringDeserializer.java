@@ -31,7 +31,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.type.SimpleType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 @SuppressWarnings("serial")
 public class Jackson2ArrayOrStringDeserializer extends StdDeserializer<Set<String>> {
@@ -42,7 +42,8 @@ public class Jackson2ArrayOrStringDeserializer extends StdDeserializer<Set<Strin
 
 	@Override
 	public JavaType getValueType() {
-		return SimpleType.construct(String.class);
+		//return SimpleType.construct(String.class);
+		return TypeFactory.defaultInstance().constructType(String.class);
 	}
 
 	@Override

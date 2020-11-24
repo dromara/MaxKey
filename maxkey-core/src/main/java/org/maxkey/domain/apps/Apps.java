@@ -20,6 +20,7 @@ package org.maxkey.domain.apps;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,6 +31,7 @@ import org.maxkey.constants.Boolean;
 import org.maxkey.domain.Accounts;
 import org.springframework.web.multipart.MultipartFile;
 
+@Entity
 @Table(name = "MXK_APPS")
 public class Apps extends JpaBaseDomain implements Serializable {
 

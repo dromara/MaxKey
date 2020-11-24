@@ -19,6 +19,7 @@ package org.maxkey.domain;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 import org.maxkey.constants.ConstantsStatus;
 
+@Entity
 @Table(name = "MXK_ROLE_PERMISSIONS")
 public class RolePermissions  extends JpaBaseDomain implements Serializable {
     private static final long serialVersionUID = -8783585691243853899L;

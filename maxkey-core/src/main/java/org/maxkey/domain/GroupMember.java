@@ -20,6 +20,7 @@ package org.maxkey.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +33,7 @@ import javax.persistence.Table;
    UID	                varchar(40)	                   null
    constraint PK_ROLES primary key clustered (ID)
  */
+@Entity
 @Table(name = "MXK_GROUP_MEMBER")  
 public class GroupMember extends UserInfo implements Serializable{
 

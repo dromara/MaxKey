@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,6 +35,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Crystal.Sea
  * 
  */
+
+@Entity
 @Table(name = "MXK_USERINFO")
 public class UserInfo extends JpaBaseDomain {
     private static final long serialVersionUID = 6402443942083382236L;
