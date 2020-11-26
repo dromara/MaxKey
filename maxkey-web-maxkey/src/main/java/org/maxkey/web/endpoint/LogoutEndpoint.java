@@ -19,6 +19,7 @@ package org.maxkey.web.endpoint;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.UUID;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
@@ -125,6 +126,13 @@ public class LogoutEndpoint {
             }
         }
  		onlineTicketServices.remove(onlineTicketId);
+ 		
+ 		//remove ONLINE_TICKET cookie
+ 		WebContext.expiryCookie(WebContext.getResponse(), 
+                this.applicationConfig.getBaseDomainName(), 
+                WebConstants.ONLINE_TICKET_NAME, 
+                UUID.randomUUID().toString());
+ 		
  		request.getSession().invalidate();
  		SecurityContextHolder.clearContext();
  		

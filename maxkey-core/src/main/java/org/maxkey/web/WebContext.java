@@ -368,11 +368,23 @@ public final class WebContext {
             e.printStackTrace();
         }
         // 单位：秒
-        if(time > 0) {
+        if(time >= 0) {
             cookie.setMaxAge(time);
         }
         // 将Cookie添加到Response中,使之生效
         response.addCookie(cookie); // addCookie后，如果已经存在相同名字的cookie，则最新的覆盖旧的cookie
+        return response;
+    }
+
+    public static HttpServletResponse expiryCookie(
+            HttpServletResponse response, String domain ,String name, String value) {
+        WebContext.setCookie(response,domain,name, value,0);
+        return response;
+    }
+    
+    public static HttpServletResponse setCookie(
+            HttpServletResponse response, String domain ,String name, String value) {
+        WebContext.setCookie(response,domain,name, value,-1);
         return response;
     }
 

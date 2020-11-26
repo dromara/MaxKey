@@ -150,12 +150,11 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         
         OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId);
         
-        
+        //set ONLINE_TICKET cookie
         WebContext.setCookie(WebContext.getResponse(), 
                 this.applicationConfig.getBaseDomainName(), 
                 WebConstants.ONLINE_TICKET_NAME, 
-                onlineTickitId, 
-                0);
+                onlineTickitId);
         
         SigninPrincipal signinPrincipal = new SigninPrincipal(userInfo);
         //set OnlineTicket
