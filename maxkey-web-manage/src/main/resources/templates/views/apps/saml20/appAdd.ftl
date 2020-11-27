@@ -4,6 +4,22 @@
 	<#include  "../../layout/header.ftl"/>
 	<#include  "../../layout/common.cssjs.ftl"/>
 	<#include  "../appCommonHead.ftl"/>
+	<script type="text/javascript">
+		<!--
+		$(function(){	
+			$("#fileType").change(function(){
+				if($("#fileType").val() !="metadata_url"){
+					$(".MetaFile").show();
+					$(".MetaUrl").hide();
+				}else{
+					$(".MetaFile").hide();
+					$(".MetaUrl").show();
+				}
+			}); 
+	});
+	//-->
+	</script>
+	
 </head>
 <body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"   closeWindow="true" 
@@ -29,23 +45,23 @@
 				<tr>
                     <th><@locale code="apps.saml.spAcsUrl" />：</th>
                     <td colspan =3>
-                        <input type="text" class="form-control"   id="spAcsUrl" name="spAcsUrl"  title="" value=""  required="" />
+                        <input type="text" class="form-control"   id="spAcsUrl" name="spAcsUrl"  title="" value=""   />
                     </td>
                 </tr>
 				<tr>
 					<th><@locale code="apps.saml.entityId" />：</th>
 					<td colspan =3>
-						<input type="text" class="form-control"   id="entityId" name="entityId"  title="" value=""  required="" />
+						<input type="text" class="form-control"   id="entityId" name="entityId"  title="" value=""  />
 					</td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.issuer" />：</th>
 					<td>
-						<input type="text" class="form-control"   id="issuer" name="issuer"  title="" value=""  required="" />
+						<input type="text" class="form-control"   id="issuer" name="issuer"  title="" value=""   />
 					</td>
 					<th><@locale code="apps.saml.audience" />：</th>
                     <td >
-                        <input type="text" class="form-control"   id="audience" name="audience"  title="" value="" required="" />
+                        <input type="text" class="form-control"   id="audience" name="audience"  title="" value=""  />
                     </td>
 				</tr>
 				<tr>
@@ -137,19 +153,20 @@
 					<td>
 						<select  id="fileType" name="fileType"  class="form-control"  >
 							<option value="certificate"><@locale code="apps.saml.fileType.certificate" /></option>
-							<option value="metadata"  selected><@locale code="apps.saml.fileType.metadata" /></option>
+							<option value="metadata_file"  selected><@locale code="apps.saml.fileType.metadata.file" /></option>
+							<option value="metadata_url"           ><@locale code="apps.saml.fileType.metadata.url" /></option>
 						</select>
 						<b class="orange">*</b><label for="fileType"></label>
 					</td>
-					<th><@locale code="apps.saml.certMetaFile" />：</th>
+					<th><@locale code="apps.saml.metaFile" />：</th>
 					<td nowrap >
-						<div style="float: left;">
-							<img id="certMetaFileImg"  height="40" width="80" alt="upload certificate or metadata file" src="<@base />/static/images/cert.png">
+						<div class="MetaFile" style="float: left;">
+							<img id="metaFileImg"  height="40" width="80" alt="upload certificate or metadata file" src="<@base />/static/images/cert.png">
 						</div>
-						<div style="float: left; width: 250px;">
-							<input class="form-control"   id="certMetaFile" type="file" name="certMetaFile" />
-							<b class="orange">*</b><label for="certMetaFile"></label>
+						<div class="MetaFile" style="float: left; width: 250px;">
+							<input class="form-control"   id="metaFile" type="file" name="metaFile" />
 						</div>
+						<input type="text" style="display:none" class="form-control MetaUrl"   id="metaUrl" name="metaUrl"  title="" value=""   />
 					</td>
 				</tr>
 				

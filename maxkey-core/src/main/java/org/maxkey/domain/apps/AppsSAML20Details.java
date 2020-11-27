@@ -17,6 +17,8 @@
 
 package org.maxkey.domain.apps;
 
+import java.security.cert.X509Certificate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -82,11 +84,18 @@ public class AppsSAML20Details extends Apps {
     /**
      * for upload
      */
-    private MultipartFile certMetaFile;
+    private MultipartFile metaFile;
     /**
-     * metadata or certificate
+     * metadata_file metadata_url or certificate
      */
     private String fileType;
+    
+    X509Certificate trustCert = null;
+    /**
+     * metadata Url
+     */
+    @Column
+    private String metaUrl;
 
     /**
      * 0 original 1 uppercase 2 lowercase
@@ -248,6 +257,14 @@ public class AppsSAML20Details extends Apps {
         this.nameidFormat = nameidFormat;
     }
 
+    public X509Certificate getTrustCert() {
+        return trustCert;
+    }
+
+    public void setTrustCert(X509Certificate trustCert) {
+        this.trustCert = trustCert;
+    }
+
     /**
      * @return the validityInterval
      */
@@ -262,18 +279,14 @@ public class AppsSAML20Details extends Apps {
         this.validityInterval = validityInterval;
     }
 
-    /**
-     * @return the certMetaFile
-     */
-    public MultipartFile getCertMetaFile() {
-        return certMetaFile;
+  
+
+    public MultipartFile getMetaFile() {
+        return metaFile;
     }
 
-    /**
-     * @param certMetaFile the certMetaFile to set
-     */
-    public void setCertMetaFile(MultipartFile certMetaFile) {
-        this.certMetaFile = certMetaFile;
+    public void setMetaFile(MultipartFile metaFile) {
+        this.metaFile = metaFile;
     }
 
     /**
@@ -338,6 +351,14 @@ public class AppsSAML20Details extends Apps {
         this.nameIdSuffix = nameIdSuffix;
     }
 
+    public String getMetaUrl() {
+        return metaUrl;
+    }
+
+    public void setMetaUrl(String metaUrl) {
+        this.metaUrl = metaUrl;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -371,6 +392,8 @@ public class AppsSAML20Details extends Apps {
         builder.append(encrypted);
         builder.append(", fileType=");
         builder.append(fileType);
+        builder.append(", metaUrl=");
+        builder.append(metaUrl);
         builder.append(", nameIdConvert=");
         builder.append(nameIdConvert);
         builder.append(", nameIdSuffix=");

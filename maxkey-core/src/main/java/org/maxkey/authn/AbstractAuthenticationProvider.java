@@ -118,7 +118,8 @@ public abstract class AbstractAuthenticationProvider {
             String message = "Unexpected exception in " + getProviderName() + " authentication:";
             _logger.error("Login error " + message, e);
         }
-        if (!authentication.isAuthenticated()) {
+        
+        if (authentication== null || !authentication.isAuthenticated()) {
             return authentication;
         }
 

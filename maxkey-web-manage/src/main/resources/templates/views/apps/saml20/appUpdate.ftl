@@ -7,14 +7,16 @@
 	<#setting number_format="#">
 	<script type="text/javascript">
 	<!--
-	$(function(){	
-		$("#certMetaFileImg").on("click",function(){
-			if(!$("#certMetaFileImg").hasClass("appended")){
-				$("#certMetaFileImg").after('<input id="certMetaFile" type="file" name="certMetaFile" />');
-				$("#certMetaFileImg").addClass("appended");
+	$(function(){			
+		$("#fileType").change(function(){
+			if($("#fileType").val() !="metadata_url"){
+				$(".MetaFile").show();
+				$(".MetaUrl").hide();
+			}else{
+				$(".MetaFile").hide();
+				$(".MetaUrl").show();
 			}
-			
-		});
+		}); 
 	});
 	//-->
 	</script>
@@ -43,13 +45,13 @@
 				<tr>
                     <th><@locale code="apps.saml.spAcsUrl" />：</th>
                     <td colspan =3>
-                        <input type="text" class="form-control"  id="spAcsUrl" name="spAcsUrl"  title="" value="${model.spAcsUrl!}"  required="" />
+                        <input type="text" class="form-control"  id="spAcsUrl" name="spAcsUrl"  title="" value="${model.spAcsUrl!}"   />
                     </td>
                 </tr>
 				<tr>
 					<th><@locale code="apps.saml.entityId" />：</th>
 					<td >
-						<input type="text" class="form-control"  id="entityId" name="entityId"  title="" value="${model.entityId!}"  required="" />
+						<input type="text" class="form-control"  id="entityId" name="entityId"  title="" value="${model.entityId!}"  />
 					</td>
 					<td></td>
                     <td  >
@@ -59,11 +61,11 @@
 				<tr>
 					<th><@locale code="apps.saml.issuer" />：</th>
 					<td >
-						<input type="text" class="form-control"  id="issuer" name="issuer"  title="" value="${model.issuer!}"  required="" />
+						<input type="text" class="form-control"  id="issuer" name="issuer"  title="" value="${model.issuer!}"  />
 					</td>
 					<th><@locale code="apps.saml.audience" />：</th>
                     <td  colspan =2>
-                        <input type="text" class="form-control"  id="audience" name="audience"  title="" value="${model.audience!}"  required="" />
+                        <input type="text" class="form-control"  id="audience" name="audience"  title="" value="${model.audience!}"   />
                     </td>
 				</tr>
 				<tr>
@@ -152,13 +154,19 @@
 					<td>
 						<select  id="fileType" name="fileType"  class="form-control" >
 							<option value="certificate" selected><@locale code="apps.saml.fileType.certificate" /></option>
-							<option value="metadata"><@locale code="apps.saml.fileType.metadata" /></option>
+							<option value="metadata_file"><@locale code="apps.saml.fileType.metadata.file" /></option>
+							<option value="metadata_url" ><@locale code="apps.saml.fileType.metadata.url" /></option>
 						</select>
 					</td>
-					<th><@locale code="apps.saml.certMetaFile" />：</th>
+					<th><@locale code="apps.saml.metaFile" />：</th>
 					<td>
-						<img id="certMetaFileImg"  height="40" width="80" alt="upload certificate or metadata file" src="<@base />/static/images/cert.png">
-						<b class="orange">*</b><label for="certMetaFile"></label>
+						<div class="MetaFile" style="float: left;">
+							<img id="metaFileImg"  height="40" width="80" alt="upload certificate or metadata file" src="<@base />/static/images/cert.png">
+						</div>
+						<div class="MetaFile" style="float: left; width: 250px;">
+							<input class="form-control"   id="metaFile" type="file" name="metaFile" />
+						</div>
+						<input type="text" style="display:none" class="form-control MetaUrl"   id="metaUrl" name="metaUrl"  title="" value="${model.metaUrl!}"   />
 					</td>
 				</tr>
 				

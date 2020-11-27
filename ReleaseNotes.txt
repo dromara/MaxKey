@@ -13,6 +13,10 @@
 	*(MAXKEY-201012)  密码策略提示参数问题修复
 	*(MAXKEY-201013)  SAML 2.0 Metadata优化
 	*(MAXKEY-201014)  HandlerInterceptorAdapter@deprecated  调整为 AsyncHandlerInterceptor 
+	*(MAXKEY-201015)  mybatis-jpa升级，添加@Entity和@Transient支持，优化update时字段为null的处理，SQL代码优化 
+	*(MAXKEY-201016)  README中文和英文支持
+	*(MAXKEY-201017)  认证失败时，authentication 空指针异常
+	*(MAXKEY-201018)  SAML Metadata URL配置读取
 	*(MAXKEY-201020)  依赖jar引用、更新和升级
 		not-yet-commons-ssl 0.3.9
 		log4j          	 	2.14.0
@@ -21,6 +25,7 @@
 		springSecurity 	 	5.4.1
 		springData    	 	2.4.1
 		springSession    	2.4.1
+		mybatis-jpa-extra	2.2
 		
 
 MaxKey v 2.3.0 GA	2020/11/12
