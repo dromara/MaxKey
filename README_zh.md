@@ -88,7 +88,7 @@
 
 # 下载
 
-当前版本百度网盘下载,<a href="https://maxkey.top/zh/download.html" target="_blank"> 历史版本</a>
+当前版本百度网盘下载,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> 历史版本</a>
 | 版本    | 日期   |  下载地址  |  提取码  |
 | --------| :-----  | :----  | :----:  |
 | v 2.3.0 GA | 2020/11/11   |  <a href="https://pan.baidu.com/s/17jAatKNlM6L649992kEMBQ" target="_blank">链接下载</a>  |  **h3zw**  |
