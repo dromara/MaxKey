@@ -31,26 +31,23 @@ import org.maxkey.authz.saml20.binding.ExtractBindingAdapter;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
 import org.maxkey.domain.apps.AppsSAML20Details;
-import org.opensaml.common.SignableSAMLObject;
-import org.opensaml.common.binding.BasicSAMLMessageContext;
-import org.opensaml.common.binding.decoding.SAMLMessageDecoder;
-import org.opensaml.common.binding.encoding.SAMLMessageEncoder;
-import org.opensaml.saml2.binding.encoding.HTTPPostEncoder;
-import org.opensaml.saml2.metadata.Endpoint;
-import org.opensaml.ws.message.encoder.MessageEncodingException;
-import org.opensaml.ws.security.SecurityPolicyResolver;
-import org.opensaml.ws.transport.http.HttpServletResponseAdapter;
-import org.opensaml.xml.security.CriteriaSet;
-import org.opensaml.xml.security.SecurityException;
-import org.opensaml.xml.security.credential.Credential;
-import org.opensaml.xml.security.credential.CredentialResolver;
-import org.opensaml.xml.security.credential.KeyStoreCredentialResolver;
-import org.opensaml.xml.security.credential.UsageType;
-import org.opensaml.xml.security.criteria.EntityIDCriteria;
-import org.opensaml.xml.security.criteria.UsageCriteria;
+import org.opensaml.core.criterion.EntityIdCriterion;
+import org.opensaml.messaging.encoder.MessageEncodingException;
+import org.opensaml.saml.common.SignableSAMLObject;
+import org.opensaml.saml.common.binding.decoding.SAMLMessageDecoder;
+import org.opensaml.saml.common.binding.encoding.SAMLMessageEncoder;
+import org.opensaml.saml.saml2.binding.encoding.impl.HTTPPostEncoder;
+import org.opensaml.saml.saml2.metadata.Endpoint;
+import org.opensaml.security.credential.Credential;
+import org.opensaml.security.credential.CredentialResolver;
+import org.opensaml.security.credential.UsageType;
+import org.opensaml.security.credential.impl.KeyStoreCredentialResolver;
+import org.opensaml.security.criteria.UsageCriterion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+
+import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 
 public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 	private final static Logger logger = LoggerFactory.getLogger(PostBindingAdapter.class);
@@ -96,7 +93,6 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 	}
 	
 	@Override
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void sendSAMLMessage(SignableSAMLObject samlMessage,
 								Endpoint endpoint, 
 								HttpServletRequest request,
@@ -124,8 +120,8 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 	public void  buildCredentialResolver(CredentialResolver credentialResolver) throws Exception{
 		this.credentialResolver=credentialResolver;
 		CriteriaSet criteriaSet = new CriteriaSet();
-		criteriaSet.add(new EntityIDCriteria(getKeyStoreLoader().getEntityName()));
-		criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
+		criteriaSet.add(new EntityIdCriterion(getKeyStoreLoader().getEntityName()));
+		criteriaSet.add(new UsageCriterion(UsageType.SIGNING));
 
 		try {
 			signingCredential = credentialResolver.resolveSingle(criteriaSet);
@@ -148,8 +144,8 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 							getKeyStoreLoader().getKeystorePassword());
 	
 		CriteriaSet criteriaSet = new CriteriaSet();
-		criteriaSet.add(new EntityIDCriteria(getSaml20Details().getEntityId()));
-		criteriaSet.add(new UsageCriteria(UsageType.ENCRYPTION));
+		criteriaSet.add(new EntityIdCriterion(getSaml20Details().getEntityId()));
+		criteriaSet.add(new UsageCriterion(UsageType.ENCRYPTION));
 
 		try {
 			spSigningCredential = credentialResolver.resolveSingle(criteriaSet);
@@ -164,7 +160,10 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 	
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		encoder = new HTTPPostEncoder(velocityEngine,"/templates/saml2-post-binding.vm");
+		HTTPPostEncoder HTTPPostEncoder = new HTTPPostEncoder();
+		HTTPPostEncoder.setVelocityEngine(velocityEngine);
+		HTTPPostEncoder.setVelocityTemplateId("/templates/saml2-post-binding.vm");
+		encoder = HTTPPostEncoder;
 	}
 
 	/**

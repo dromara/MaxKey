@@ -18,76 +18,73 @@
 package org.maxkey.authz.saml20.metadata;
 
 
-import org.opensaml.DefaultBootstrap;
+
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
-import org.opensaml.util.storage.MapBasedStorageService;
-import org.opensaml.util.storage.ReplayCache;
-
-import org.opensaml.common.binding.security.IssueInstantRule;
-import org.opensaml.common.binding.security.MessageReplayRule;
-import org.opensaml.xml.ConfigurationException;
-import org.opensaml.xml.XMLObject;
-import org.opensaml.xml.XMLObjectBuilder;
-import org.opensaml.xml.XMLObjectBuilderFactory;
-
-import org.opensaml.xml.io.Marshaller;
-import org.opensaml.xml.io.MarshallerFactory;
-import org.opensaml.xml.io.Unmarshaller;
-import org.opensaml.xml.io.UnmarshallerFactory;
-import org.opensaml.xml.io.UnmarshallingException;
-import org.opensaml.xml.parse.BasicParserPool;
-import org.opensaml.xml.security.CriteriaSet;
-import org.opensaml.xml.security.SecurityException;
-import org.opensaml.xml.security.credential.Credential;
-import org.opensaml.xml.security.credential.CredentialResolver;
-import org.opensaml.xml.security.credential.UsageType;
-import org.opensaml.xml.security.criteria.EntityIDCriteria;
-import org.opensaml.xml.security.criteria.UsageCriteria;
-import org.opensaml.xml.security.keyinfo.KeyInfoGenerator;
-import org.opensaml.xml.security.x509.X509KeyInfoGeneratorFactory;
-import org.opensaml.xml.util.XMLHelper;
-
+import org.maxkey.pretty.impl.XMLHelper;
+import org.opensaml.core.config.InitializationException;
+import org.opensaml.core.config.InitializationService;
+import org.opensaml.core.criterion.EntityIdCriterion;
+import org.opensaml.core.xml.XMLObject;
+import org.opensaml.core.xml.XMLObjectBuilder;
+import org.opensaml.core.xml.XMLObjectBuilderFactory;
+import org.opensaml.core.xml.config.XMLObjectProviderRegistrySupport;
+import org.opensaml.core.xml.io.Marshaller;
+import org.opensaml.core.xml.io.MarshallerFactory;
+import org.opensaml.core.xml.io.Unmarshaller;
+import org.opensaml.core.xml.io.UnmarshallerFactory;
+import org.opensaml.core.xml.io.UnmarshallingException;
+import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.saml2.core.NameIDType;
+import org.opensaml.saml.saml2.metadata.Company;
+import org.opensaml.saml.saml2.metadata.ContactPerson;
+import org.opensaml.saml.saml2.metadata.ContactPersonTypeEnumeration;
+import org.opensaml.saml.saml2.metadata.EmailAddress;
+import org.opensaml.saml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml.saml2.metadata.GivenName;
+import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
+import org.opensaml.saml.saml2.metadata.KeyDescriptor;
+import org.opensaml.saml.saml2.metadata.ManageNameIDService;
+import org.opensaml.saml.saml2.metadata.NameIDFormat;
+import org.opensaml.saml.saml2.metadata.Organization;
+import org.opensaml.saml.saml2.metadata.OrganizationDisplayName;
+import org.opensaml.saml.saml2.metadata.OrganizationName;
+import org.opensaml.saml.saml2.metadata.OrganizationURL;
+import org.opensaml.saml.saml2.metadata.RoleDescriptor;
+import org.opensaml.saml.saml2.metadata.SingleLogoutService;
+import org.opensaml.saml.saml2.metadata.SingleSignOnService;
+import org.opensaml.saml.saml2.metadata.SurName;
+import org.opensaml.saml.saml2.metadata.TelephoneNumber;
+import org.opensaml.saml.saml2.metadata.impl.CompanyBuilder;
+import org.opensaml.saml.saml2.metadata.impl.EmailAddressBuilder;
+import org.opensaml.saml.saml2.metadata.impl.EntityDescriptorBuilder;
+import org.opensaml.saml.saml2.metadata.impl.GivenNameBuilder;
+import org.opensaml.saml.saml2.metadata.impl.KeyDescriptorBuilder;
+import org.opensaml.saml.saml2.metadata.impl.ManageNameIDServiceBuilder;
+import org.opensaml.saml.saml2.metadata.impl.NameIDFormatBuilder;
+import org.opensaml.saml.saml2.metadata.impl.OrganizationBuilder;
+import org.opensaml.saml.saml2.metadata.impl.OrganizationDisplayNameBuilder;
+import org.opensaml.saml.saml2.metadata.impl.OrganizationNameBuilder;
+import org.opensaml.saml.saml2.metadata.impl.OrganizationURLBuilder;
+import org.opensaml.saml.saml2.metadata.impl.SurNameBuilder;
+import org.opensaml.saml.saml2.metadata.impl.TelephoneNumberBuilder;
+import org.opensaml.security.credential.Credential;
+import org.opensaml.security.credential.CredentialResolver;
+import org.opensaml.security.credential.UsageType;
+import org.opensaml.security.criteria.UsageCriterion;
+import org.opensaml.xmlsec.keyinfo.KeyInfoGenerator;
+import org.opensaml.xmlsec.keyinfo.impl.X509KeyInfoGeneratorFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
+import net.shibboleth.utilities.java.support.xml.BasicParserPool;
+import net.shibboleth.utilities.java.support.xml.ParserPool;
+
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import org.opensaml.common.xml.SAMLConstants;
-import org.opensaml.saml2.core.NameIDType;
-import org.opensaml.saml2.metadata.Company;
-import org.opensaml.saml2.metadata.ContactPerson;
-import org.opensaml.saml2.metadata.ContactPersonTypeEnumeration;
-import org.opensaml.saml2.metadata.EmailAddress;
-import org.opensaml.saml2.metadata.EntityDescriptor;
-import org.opensaml.saml2.metadata.GivenName;
-import org.opensaml.saml2.metadata.IDPSSODescriptor;
-import org.opensaml.saml2.metadata.KeyDescriptor;
-import org.opensaml.saml2.metadata.LocalizedString;
-import org.opensaml.saml2.metadata.ManageNameIDService;
-import org.opensaml.saml2.metadata.NameIDFormat;
-import org.opensaml.saml2.metadata.Organization;
-import org.opensaml.saml2.metadata.OrganizationDisplayName;
-import org.opensaml.saml2.metadata.OrganizationName;
-import org.opensaml.saml2.metadata.OrganizationURL;
-import org.opensaml.saml2.metadata.RoleDescriptor;
-import org.opensaml.saml2.metadata.SingleLogoutService;
-import org.opensaml.saml2.metadata.SingleSignOnService;
-import org.opensaml.saml2.metadata.SurName;
-import org.opensaml.saml2.metadata.TelephoneNumber;
-import org.opensaml.saml2.metadata.impl.CompanyBuilder;
-import org.opensaml.saml2.metadata.impl.EmailAddressBuilder;
-import org.opensaml.saml2.metadata.impl.EntityDescriptorBuilder;
-import org.opensaml.saml2.metadata.impl.GivenNameBuilder;
-import org.opensaml.saml2.metadata.impl.KeyDescriptorBuilder;
-import org.opensaml.saml2.metadata.impl.ManageNameIDServiceBuilder;
-import org.opensaml.saml2.metadata.impl.NameIDFormatBuilder;
-import org.opensaml.saml2.metadata.impl.OrganizationBuilder;
-import org.opensaml.saml2.metadata.impl.OrganizationDisplayNameBuilder;
-import org.opensaml.saml2.metadata.impl.OrganizationNameBuilder;
-import org.opensaml.saml2.metadata.impl.OrganizationURLBuilder;
-import org.opensaml.saml2.metadata.impl.SurNameBuilder;
-import org.opensaml.saml2.metadata.impl.TelephoneNumberBuilder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -98,7 +95,7 @@ public class MetadataGenerator {
 	private final static Logger logger = LoggerFactory.getLogger(MetadataGenerator.class);
 
 	/** Parser manager used to parse XML. */
-	protected static BasicParserPool parser;
+	protected static ParserPool parser;
 
 	/** XMLObject builder factory. */
 	protected static XMLObjectBuilderFactory builderFactory;
@@ -112,13 +109,12 @@ public class MetadataGenerator {
 	/** Constructor. */
 	public MetadataGenerator() {
 		try {
-			parser = new BasicParserPool();
-			parser.setNamespaceAware(true);
-			DefaultBootstrap.bootstrap();
-			builderFactory = org.opensaml.xml.Configuration.getBuilderFactory();
-			marshallerFactory = org.opensaml.xml.Configuration.getMarshallerFactory();
-			unmarshallerFactory = org.opensaml.xml.Configuration.getUnmarshallerFactory();
-		} catch (ConfigurationException e) {
+			parser = XMLObjectProviderRegistrySupport.getParserPool();
+			InitializationService.initialize();
+			builderFactory = XMLObjectProviderRegistrySupport.getBuilderFactory();
+			marshallerFactory = XMLObjectProviderRegistrySupport.getMarshallerFactory();
+			unmarshallerFactory = XMLObjectProviderRegistrySupport.getUnmarshallerFactory();
+		} catch (InitializationException e) {
 			e.printStackTrace();
 		}
 
@@ -155,9 +151,9 @@ public  void samlmtest(){
 	         
 	         CriteriaSet criteriaSet = new CriteriaSet();
 	         
-	 		 criteriaSet.add(new EntityIDCriteria("idp"));
+	 		 criteriaSet.add(new EntityIdCriterion("idp"));
 	 		
-	 		 criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
+	 		 criteriaSet.add(new UsageCriterion(UsageType.SIGNING));
 	 		 Credential signingCredential=null;
 	 		
 	 		try {
@@ -249,21 +245,15 @@ public  void samlmtest(){
 	   Organization organization=new OrganizationBuilder().buildObject();
 	   
        OrganizationName organizationName=new OrganizationNameBuilder().buildObject();
-       LocalizedString orglocalizedString=new LocalizedString();
-       orglocalizedString.setLocalizedString(name);
-       organizationName.setName(orglocalizedString);
+       organizationName.setValue(name);
        organization.getOrganizationNames().add(organizationName);
        
        OrganizationDisplayName organizationDisplayName=new OrganizationDisplayNameBuilder().buildObject();
-	   LocalizedString localizedString=new LocalizedString();
-	   localizedString.setLocalizedString(displayName);
-	   organizationDisplayName.setName(localizedString);
+	   organizationDisplayName.setValue(displayName);
        organization.getDisplayNames().add(organizationDisplayName);
        
        OrganizationURL organizationURL=new OrganizationURLBuilder().buildObject();
-       LocalizedString urllocalizedString=new LocalizedString();
-       urllocalizedString.setLocalizedString(url);
-       organizationURL.setURL(urllocalizedString);
+       organizationURL.setURI(url);
        organization.getURLs().add(organizationURL);
        
        return organization;
@@ -280,11 +270,11 @@ public  void samlmtest(){
   	 
   	 GivenName contactPersonGivenName=(new GivenNameBuilder()).buildObject();
   	 contactPersonGivenName.setName(givenName);
-  	 contactPerson.setGivenName(contactPersonGivenName);//名
+  	 contactPerson.setGivenName(contactPersonGivenName);//鍚�
   	 
   	 SurName contactPersonSurName =new SurNameBuilder().buildObject();
   	 contactPersonSurName.setName(surName);
-  	 contactPerson.setSurName(contactPersonSurName);//姓
+  	 contactPerson.setSurName(contactPersonSurName);//濮�
 
   	 EmailAddress contactPersonEmailAddress =(new EmailAddressBuilder()).buildObject();
   	 contactPersonEmailAddress.setAddress(emailAddress);
@@ -341,7 +331,10 @@ public  void samlmtest(){
         signKeyDescriptor.setKeyInfo(getKeyInfoGenerator().generate(signingCredential));  
        } catch (SecurityException e) {  
     	   logger.error(e.getMessage(), e);  
-       }  
+       } catch (org.opensaml.security.SecurityException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}  
        
        return signKeyDescriptor;
    }
@@ -356,7 +349,10 @@ public  void samlmtest(){
 		   encryptionKeyDescriptor.setKeyInfo(getKeyInfoGenerator().generate(signingCredential));  
 	   } catch (SecurityException e) {  
 		   logger.error(e.getMessage(), e);  
-	   }  
+	   } catch (org.opensaml.security.SecurityException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}  
 	   
 	   return encryptionKeyDescriptor;
    }
@@ -375,7 +371,7 @@ public static XMLObject buildXMLObject(QName objectQName){
        try {
            Element samlElement = doc.getDocumentElement();
 
-           Unmarshaller unmarshaller = org.opensaml.xml.Configuration.getUnmarshallerFactory().getUnmarshaller(samlElement);
+           Unmarshaller unmarshaller = XMLObjectProviderRegistrySupport.getUnmarshallerFactory().getUnmarshaller(samlElement);
            if (unmarshaller == null) {
         	   logger.error("Unable to retrieve unmarshaller by DOM Element");
            }

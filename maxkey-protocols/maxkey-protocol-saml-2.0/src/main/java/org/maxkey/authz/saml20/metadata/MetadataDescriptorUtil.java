@@ -27,29 +27,30 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.maxkey.crypto.cert.StringUtil;
-import org.opensaml.common.xml.SAMLConstants;
-import org.opensaml.saml2.metadata.EntityDescriptor;
-import org.opensaml.saml2.metadata.IDPSSODescriptor;
-import org.opensaml.saml2.metadata.RoleDescriptor;
-import org.opensaml.saml2.metadata.SPSSODescriptor;
-import org.opensaml.saml2.metadata.impl.EntityDescriptorImpl;
-import org.opensaml.saml2.metadata.impl.IDPSSODescriptorImpl;
-import org.opensaml.saml2.metadata.impl.SPSSODescriptorImpl;
-import org.opensaml.saml2.metadata.provider.DOMMetadataProvider;
-import org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider;
-import org.opensaml.saml2.metadata.provider.MetadataProviderException;
-import org.opensaml.xml.Configuration;
-import org.opensaml.xml.ConfigurationException;
-import org.opensaml.xml.XMLObject;
-import org.opensaml.xml.io.Unmarshaller;
-import org.opensaml.xml.io.UnmarshallerFactory;
-import org.opensaml.xml.io.UnmarshallingException;
-import org.opensaml.xml.parse.BasicParserPool;
-import org.opensaml.xml.parse.XMLParserException;
+import org.opensaml.core.config.Configuration;
+import org.opensaml.core.config.InitializationException;
+import org.opensaml.core.config.InitializationService;
+import org.opensaml.core.xml.XMLObject;
+import org.opensaml.core.xml.config.XMLObjectProviderRegistrySupport;
+import org.opensaml.core.xml.io.Unmarshaller;
+import org.opensaml.core.xml.io.UnmarshallerFactory;
+import org.opensaml.core.xml.io.UnmarshallingException;
+import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.metadata.resolver.impl.FilesystemMetadataResolver;
+import org.opensaml.saml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
+import org.opensaml.saml.saml2.metadata.RoleDescriptor;
+import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
+import org.opensaml.saml.saml2.metadata.impl.EntityDescriptorImpl;
+import org.opensaml.saml.saml2.metadata.impl.IDPSSODescriptorImpl;
+import org.opensaml.saml.saml2.metadata.impl.SPSSODescriptorImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import net.shibboleth.utilities.java.support.xml.BasicParserPool;
+import net.shibboleth.utilities.java.support.xml.XMLParserException;
 
 /**
  * @author Crystal.Sea
@@ -65,8 +66,8 @@ public class MetadataDescriptorUtil {
 	 */
 	public MetadataDescriptorUtil() {
 		try {
-			org.opensaml.DefaultBootstrap.bootstrap();
-		} catch (ConfigurationException e) {
+			InitializationService.initialize();
+		} catch (InitializationException e) {
 			e.printStackTrace();
 		}
 	}
@@ -87,17 +88,17 @@ public class MetadataDescriptorUtil {
 	public EntityDescriptor getEntityDescriptor(File file)
 			throws Exception {
 		try {
-			FilesystemMetadataProvider filesystemMetadataProvider = new FilesystemMetadataProvider(
+			FilesystemMetadataResolver filesystemMetadataProvider = new FilesystemMetadataResolver(
 					file);
 			filesystemMetadataProvider.setRequireValidMetadata(true); // Enable
 			// validation
 			filesystemMetadataProvider.setParserPool(new BasicParserPool());
 			filesystemMetadataProvider.initialize();
-			EntityDescriptor entityDescriptor = (EntityDescriptorImpl) filesystemMetadataProvider.getMetadata();
+			EntityDescriptor entityDescriptor = (EntityDescriptorImpl) (filesystemMetadataProvider.getIndexes().toArray()[0]);
 			return entityDescriptor;
-		} catch (MetadataProviderException e) {
-			logger.error("元数据解析出错", e);
-			throw new Exception("元数据文件解析出错", e);
+		} catch (Exception e) {
+			logger.error("鍏冩暟鎹В鏋愬嚭閿�", e);
+			throw new Exception("鍏冩暟鎹枃浠惰В鏋愬嚭閿�", e);
 		}
 
 	}
@@ -110,8 +111,7 @@ public class MetadataDescriptorUtil {
 			Document inMetadataDoc = basicParserPool.parse(inputStream);
 			Element metadataRoot = inMetadataDoc.getDocumentElement();
 
-			UnmarshallerFactory unmarshallerFactory = Configuration.getUnmarshallerFactory();
-			Unmarshaller unmarshaller = unmarshallerFactory.getUnmarshaller(metadataRoot);
+			Unmarshaller unmarshaller = XMLObjectProviderRegistrySupport.getUnmarshallerFactory().getUnmarshaller(metadataRoot);;
 
 			// unmarshaller.unmarshall(arg0)
 			// Unmarshall using the document root element, an EntitiesDescriptor
@@ -121,11 +121,11 @@ public class MetadataDescriptorUtil {
 			EntityDescriptor entityDescriptor = (EntityDescriptorImpl) xMLObject;
 			return entityDescriptor;
 		} catch (XMLParserException e) {
-			logger.error("元数据解析出错", e);
-			throw new Exception("元数据文件解析出错", e);
+			logger.error("鍏冩暟鎹В鏋愬嚭閿�", e);
+			throw new Exception("鍏冩暟鎹枃浠惰В鏋愬嚭閿�", e);
 		} catch (UnmarshallingException e) {
-			logger.error("元数据解析出错", e);
-			throw new Exception("元数据文件解析出错", e);
+			logger.error("鍏冩暟鎹В鏋愬嚭閿�", e);
+			throw new Exception("鍏冩暟鎹枃浠惰В鏋愬嚭閿�", e);
 		}
 
 	}
@@ -147,9 +147,9 @@ public class MetadataDescriptorUtil {
 			dOMMetadataProvider.initialize();
 			EntityDescriptor entityDescriptor = (EntityDescriptorImpl) dOMMetadataProvider.getMetadata();
 			return entityDescriptor;
-		} catch (MetadataProviderException e) {
-			logger.error("元数据解析出错", e);
-			throw new Exception("元数据解析出错", e);
+		} catch (Exception e) {
+			logger.error("鍏冩暟鎹В鏋愬嚭閿�", e);
+			throw new Exception("鍏冩暟鎹В鏋愬嚭閿�", e);
 		}
 
 	}
@@ -161,11 +161,10 @@ public class MetadataDescriptorUtil {
 	 * @throws ConfigurationException
 	 * @throws FileNotFoundException
 	 */
-	public static void main(String[] args) throws Exception,
-			ConfigurationException, FileNotFoundException {
+	public static void main(String[] args) throws Exception,FileNotFoundException {
 		//
 		File file = new File("d:\\SAMLSP-00D90000000hf9n.xml");
-		org.opensaml.DefaultBootstrap.bootstrap();
+		InitializationService.initialize();
 		
 		EntityDescriptor entityDescriptor = MetadataDescriptorUtil.getInstance().getEntityDescriptor(file);
 

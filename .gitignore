@@ -43,3 +43,7 @@ classpath-data.json
 
 /.gradle/
 /.gradle/*
+/build/
+setEnvVars.bat
+setEnvVars.bat
+setEnvVars.bat

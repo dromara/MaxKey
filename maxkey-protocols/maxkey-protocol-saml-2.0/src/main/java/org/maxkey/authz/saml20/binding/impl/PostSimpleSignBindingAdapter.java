@@ -18,8 +18,7 @@
 
 package org.maxkey.authz.saml20.binding.impl;
 
-import org.opensaml.saml2.binding.encoding.HTTPPostSimpleSignEncoder;
-import org.opensaml.ws.security.SecurityPolicyResolver;
+import org.opensaml.saml.saml2.binding.encoding.impl.HTTPPostSimpleSignEncoder;
 
 public class PostSimpleSignBindingAdapter extends PostBindingAdapter{
 
@@ -41,7 +40,11 @@ public class PostSimpleSignBindingAdapter extends PostBindingAdapter{
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		encoder = new HTTPPostSimpleSignEncoder(velocityEngine,"/templates/saml2-post-simplesign-binding.vm", true); 
+		HTTPPostSimpleSignEncoder HTTPPostSimpleSignEncoder = new HTTPPostSimpleSignEncoder(); 
+		HTTPPostSimpleSignEncoder.setVelocityEngine(velocityEngine);
+		HTTPPostSimpleSignEncoder.setVelocityTemplateId("/templates/saml2-post-simplesign-binding.vm");
+
+		encoder = HTTPPostSimpleSignEncoder;
 	}
 
 

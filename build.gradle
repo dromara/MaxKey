@@ -32,11 +32,11 @@ allprojects {
 	
 	eclipse {
 		/*第一次时请注释这段eclipse设置，可能报错*/
-//		jdt  {
-//		    File f = file('.settings/org.eclipse.core.resources.prefs')
-//		    f.write('eclipse.preferences.version=1\n')
-//		    f.append('encoding/<project>=UTF-8') //use UTF-8
-//		}
+		jdt  {
+		    File f = file('.settings/org.eclipse.core.resources.prefs')
+		    f.write('eclipse.preferences.version=1\n')
+		    f.append('encoding/<project>=UTF-8') //use UTF-8
+		}
 		
 		
 		/*
@@ -93,6 +93,7 @@ subprojects {
         mavenLocal()
         mavenCentral()
         jcenter()
+        maven { url "https://build.shibboleth.net/nexus/content/repositories/releases/" }
 		maven { url "https://repo1.maven.org/maven2/" }
 		maven { url "https://mvnrepository.com/repos/central/" }
         maven { url "http://jcenter.bintray.com" }
@@ -212,9 +213,23 @@ subprojects {
          compile group: 'org.springframework.session', name: 'spring-session-core', version: "${springSessionVersion}"
          compile group: 'org.springframework.session', name: 'spring-session-data-redis', version: "${springSessionVersion}"
          //saml 
-         compile group: 'org.opensaml', name: 'opensaml', version: '2.6.4'
-         compile group: 'org.opensaml', name: 'openws', version: '1.5.4'
-         compile group: 'org.opensaml', name: 'xmltooling', version: '1.4.4'
+         //compile group: 'org.opensaml', name: 'opensaml', version: '2.6.4'
+         //compile group: 'org.opensaml', name: 'openws', version: '1.5.4'
+         //compile group: 'org.opensaml', name: 'xmltooling', version: '1.4.4'
+         // https://mvnrepository.com/artifact/org.opensaml/
+		 compile group: 'org.opensaml', name: 'opensaml-core', version: "${opensamlVersion}"
+		 compile group: 'org.opensaml', name: 'opensaml-saml-api', version: "${opensamlVersion}"
+		 compile group: 'org.opensaml', name: 'opensaml-saml-impl', version: "${opensamlVersion}"
+		 compile group: 'org.opensaml', name: 'opensaml-messaging-api', version: "${opensamlVersion}"
+		 compile group: 'org.opensaml', name: 'opensaml-messaging-impl', version: "${opensamlVersion}"
+		 compile group: 'org.opensaml', name: 'opensaml-profile-api', version: "${opensamlVersion}"
+		 compile group: 'org.opensaml', name: 'opensaml-profile-impl', version: "${opensamlVersion}"
+		 compile group: 'org.opensaml', name: 'opensaml-security-api', version: "${opensamlVersion}"
+		 compile group: 'org.opensaml', name: 'opensaml-security-impl', version: "${opensamlVersion}"
+		 compile group: 'org.opensaml', name: 'opensaml-xmlsec-api', version: "${opensamlVersion}"
+		 compile group: 'org.opensaml', name: 'opensaml-xmlsec-impl', version: "${opensamlVersion}"
+		 compile group: 'net.shibboleth.utilities', name: 'java-support', version: '8.1.0'
+         
 		 //jose-jwt
          compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '9.0.1'
          compile group: 'net.jcip', name: 'jcip-annotations', version: '1.0'

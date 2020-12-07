@@ -28,15 +28,14 @@ import org.maxkey.constants.Boolean;
 import org.maxkey.domain.ExtraAttr;
 import org.maxkey.domain.ExtraAttrs;
 import org.maxkey.domain.apps.AppsSAML20Details;
-import org.opensaml.Configuration;
-import org.opensaml.saml2.core.Attribute;
-import org.opensaml.saml2.core.AttributeStatement;
-import org.opensaml.saml2.core.AttributeValue;
-import org.opensaml.saml2.core.impl.AttributeBuilder;
-import org.opensaml.saml2.core.impl.AttributeStatementBuilder;
-import org.opensaml.xml.XMLObjectBuilderFactory;
-import org.opensaml.xml.schema.XSString;
-import org.opensaml.xml.schema.impl.XSStringBuilder;
+import org.opensaml.core.xml.XMLObjectBuilderFactory;
+import org.opensaml.core.xml.schema.XSString;
+import org.opensaml.core.xml.schema.impl.XSStringBuilder;
+import org.opensaml.saml.saml2.core.Attribute;
+import org.opensaml.saml.saml2.core.AttributeStatement;
+import org.opensaml.saml.saml2.core.AttributeValue;
+import org.opensaml.saml.saml2.core.impl.AttributeBuilder;
+import org.opensaml.saml.saml2.core.impl.AttributeStatementBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -44,7 +43,7 @@ import org.springframework.security.core.GrantedAuthority;
 public class AttributeStatementGenerator {
 	private final static Logger logger = LoggerFactory.getLogger(AttributeStatementGenerator.class);
 	
-	private final XMLObjectBuilderFactory builderFactory = Configuration.getBuilderFactory();
+	private final XMLObjectBuilderFactory builderFactory = new XMLObjectBuilderFactory();
 
 	public AttributeStatement generateAttributeStatement(AppsSAML20Details saml20Details,ArrayList<GrantedAuthority> grantedAuthoritys) {
 		return generateAttributeStatement(saml20Details, grantedAuthoritys,null);

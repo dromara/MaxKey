@@ -24,11 +24,8 @@ import java.security.KeyStore;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.opensaml.common.binding.security.IssueInstantRule;
-import org.opensaml.common.binding.security.MessageReplayRule;
-import org.opensaml.security.SAMLSignatureProfileValidator;
-import org.opensaml.ws.security.provider.StaticSecurityPolicyResolver;
-import org.opensaml.xml.security.credential.KeyStoreCredentialResolver;
+import org.opensaml.security.credential.impl.KeyStoreCredentialResolver;
+
 
 /**
  * @author Crystal.Sea

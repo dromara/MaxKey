@@ -20,11 +20,8 @@ package org.maxkey.authz.saml.common;
 
 import java.util.List;
 
-import org.opensaml.ws.message.MessageContext;
-import org.opensaml.ws.security.SecurityPolicy;
-import org.opensaml.ws.security.SecurityPolicyException;
-import org.opensaml.ws.security.SecurityPolicyRule;
-import org.opensaml.ws.security.provider.BasicSecurityPolicy;
+import org.opensaml.messaging.context.MessageContext;
+
 
 public class SecurityPolicyDelegate implements SecurityPolicy  {
 

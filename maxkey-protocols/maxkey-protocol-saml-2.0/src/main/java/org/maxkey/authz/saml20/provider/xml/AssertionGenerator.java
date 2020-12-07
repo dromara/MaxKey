@@ -17,6 +17,7 @@
 
 package org.maxkey.authz.saml20.provider.xml;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,21 +28,21 @@ import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.xml.IssuerGenerator;
 import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.web.WebContext;
-import org.opensaml.Configuration;
-import org.opensaml.saml2.core.Assertion;
-import org.opensaml.saml2.core.AttributeStatement;
-import org.opensaml.saml2.core.AuthnStatement;
-import org.opensaml.saml2.core.Conditions;
-import org.opensaml.saml2.core.Issuer;
-import org.opensaml.saml2.core.Subject;
-import org.opensaml.saml2.core.impl.AssertionBuilder;
-import org.opensaml.xml.security.BasicSecurityConfiguration;
-import org.opensaml.xml.security.credential.BasicCredential;
-import org.opensaml.xml.security.keyinfo.KeyInfoGeneratorFactory;
-import org.opensaml.xml.signature.Signature;
-import org.opensaml.xml.signature.SignatureConstants;
-import org.opensaml.xml.signature.Signer;
-import org.opensaml.xml.signature.impl.SignatureBuilder;
+import org.opensaml.core.config.Configuration;
+import org.opensaml.saml.saml2.core.Assertion;
+import org.opensaml.saml.saml2.core.AttributeStatement;
+import org.opensaml.saml.saml2.core.AuthnStatement;
+import org.opensaml.saml.saml2.core.Conditions;
+import org.opensaml.saml.saml2.core.Issuer;
+import org.opensaml.saml.saml2.core.Subject;
+import org.opensaml.saml.saml2.core.impl.AssertionBuilder;
+import org.opensaml.security.credential.BasicCredential;
+import org.opensaml.xmlsec.keyinfo.KeyInfoGeneratorFactory;
+import org.opensaml.xmlsec.keyinfo.impl.X509KeyInfoGeneratorFactory;
+import org.opensaml.xmlsec.signature.Signature;
+import org.opensaml.xmlsec.signature.impl.SignatureBuilder;
+import org.opensaml.xmlsec.signature.support.SignatureConstants;
+import org.opensaml.xmlsec.signature.support.Signer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -109,14 +110,17 @@ public class AssertionGenerator {
 		//ID
 		assertion.setID(idService.generateID());
 		//IssueInstant
-		assertion.setIssueInstant(timeService.getCurrentDateTime());
+		assertion.setIssueInstant(Instant.now());
 		//Conditions
 		Conditions conditions = conditionsGenerator.generateConditions(audienceUrl,validInSeconds);
 		assertion.setConditions(conditions);
 		//sign Assertion
 		try{
 			
-	        BasicCredential basicCredential = new BasicCredential();
+	        BasicCredential basicCredential = BasicCredential(
+	        		bindingAdapter.getSigningCredential().getPublicKey(),
+	        		bindingAdapter.getSigningCredential().getPrivateKey());
+	        
 	        basicCredential.setPrivateKey(bindingAdapter.getSigningCredential().getPrivateKey());
 	        
 	        Signature signature = new SignatureBuilder().buildObject();
@@ -124,10 +128,7 @@ public class AssertionGenerator {
 	        
 	        
 	        signature.setSigningCredential(basicCredential);
-	        KeyInfoGeneratorFactory keyInfoGeneratorFactory = Configuration
-					.getGlobalSecurityConfiguration()
-					.getKeyInfoGeneratorManager().getDefaultManager()
-					.getFactory(bindingAdapter.getSigningCredential());
+	        KeyInfoGeneratorFactory keyInfoGeneratorFactory = new X509KeyInfoGeneratorFactory();
 	        
 	        signature.setKeyInfo(keyInfoGeneratorFactory.newInstance().generate(bindingAdapter.getSigningCredential()));
 	        BasicSecurityConfiguration config = (BasicSecurityConfiguration) Configuration.getGlobalSecurityConfiguration();

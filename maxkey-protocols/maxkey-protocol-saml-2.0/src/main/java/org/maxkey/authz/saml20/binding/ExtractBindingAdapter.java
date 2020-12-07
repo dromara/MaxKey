@@ -24,11 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.domain.apps.AppsSAML20Details;
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.ws.message.decoder.MessageDecodingException;
-import org.opensaml.ws.security.SecurityPolicyResolver;
-import org.opensaml.xml.security.SecurityException;
-import org.opensaml.xml.security.credential.CredentialResolver;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.messaging.decoder.MessageDecodingException;
+import org.opensaml.security.credential.CredentialResolver;
+
 
 /**
  * 
@@ -38,8 +37,7 @@ import org.opensaml.xml.security.credential.CredentialResolver;
  */
 public interface ExtractBindingAdapter {
 
-	@SuppressWarnings("rawtypes")
-	public SAMLMessageContext extractSAMLMessageContext(HttpServletRequest request) throws MessageDecodingException, SecurityException;
+	public MessageContext extractSAMLMessageContext(HttpServletRequest request) throws MessageDecodingException, SecurityException;
 
 	public String extractSAMLMessage(HttpServletRequest request);
 	

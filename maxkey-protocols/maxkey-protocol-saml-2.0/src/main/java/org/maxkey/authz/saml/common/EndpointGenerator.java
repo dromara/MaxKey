@@ -22,9 +22,9 @@ package org.maxkey.authz.saml.common;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang.StringUtils;
-import org.opensaml.saml2.metadata.AssertionConsumerService;
-import org.opensaml.saml2.metadata.Endpoint;
-import org.opensaml.saml2.metadata.impl.AssertionConsumerServiceBuilder;
+import org.opensaml.saml.saml2.metadata.AssertionConsumerService;
+import org.opensaml.saml.saml2.metadata.Endpoint;
+import org.opensaml.saml.saml2.metadata.impl.AssertionConsumerServiceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

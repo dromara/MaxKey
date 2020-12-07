@@ -45,21 +45,15 @@ import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.persistence.service.AppsSaml20DetailsService;
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.common.binding.security.IssueInstantRule;
-import org.opensaml.common.binding.security.MessageReplayRule;
-import org.opensaml.saml2.core.Assertion;
-import org.opensaml.saml2.core.Response;
-import org.opensaml.saml2.core.StatusCode;
-import org.opensaml.xml.security.CriteriaSet;
-import org.opensaml.xml.security.SecurityException;
-import org.opensaml.xml.security.credential.Credential;
-import org.opensaml.xml.security.credential.CredentialResolver;
-import org.opensaml.xml.security.credential.KeyStoreCredentialResolver;
-import org.opensaml.xml.security.credential.UsageType;
-import org.opensaml.xml.security.criteria.EntityIDCriteria;
-import org.opensaml.xml.security.criteria.UsageCriteria;
-import org.opensaml.xml.validation.ValidationException;
+import org.opensaml.core.criterion.EntityIdCriterion;
+import org.opensaml.saml.saml2.core.Assertion;
+import org.opensaml.saml.saml2.core.Response;
+import org.opensaml.saml.saml2.core.StatusCode;
+import org.opensaml.security.credential.Credential;
+import org.opensaml.security.credential.CredentialResolver;
+import org.opensaml.security.credential.UsageType;
+import org.opensaml.security.credential.impl.KeyStoreCredentialResolver;
+import org.opensaml.security.criteria.UsageCriterion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +64,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 
 
 @Controller
@@ -199,8 +195,8 @@ public class ConsumerEndpoint {
 		endpointGenerator = new EndpointGenerator();
 
 		CriteriaSet criteriaSet = new CriteriaSet();
-		criteriaSet.add(new EntityIDCriteria(keyStoreLoader.getEntityName()));
-		criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
+		criteriaSet.add(new EntityIdCriterion(keyStoreLoader.getEntityName()));
+		criteriaSet.add(new UsageCriterion(UsageType.SIGNING));
 
 		try {
 			signingCredential = credentialResolver.resolveSingle(criteriaSet);
@@ -248,9 +244,9 @@ public class ConsumerEndpoint {
 			// endpointGenerator = new EndpointGenerator();
 
 			CriteriaSet criteriaSet = new CriteriaSet();
-			criteriaSet.add(new EntityIDCriteria(keyStoreLoader
+			criteriaSet.add(new EntityIdCriterion(keyStoreLoader
 					.getEntityName()));
-			criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
+			criteriaSet.add(new UsageCriterion(UsageType.SIGNING));
 
 			KeyStoreCredentialResolver credentialResolver = new KeyStoreCredentialResolver(
 					keyStore, passwords);
@@ -272,25 +268,14 @@ public class ConsumerEndpoint {
 	
 	
 	private void checkResponseStatus(Response samlResponse) {
-
-		
-		if(StatusCode.SUCCESS_URI.equals( StringUtils.trim(samlResponse.getStatus().getStatusCode().getValue()))) {
-			
+		if(StatusCode.SUCCESS.equals( StringUtils.trim(samlResponse.getStatus().getStatusCode().getValue()))) {
 			additionalValidationChecksOnSuccessfulResponse(samlResponse);
-			
-		}
-		
-		
-		else {
-			
+		}else {
 			StringBuilder extraInformation = extractExtraInformation(samlResponse);
-			
 			if(extraInformation.length() > 0) {
 				logger.warn("Extra information extracted from authentication failure was {}", extraInformation.toString());
-				
 				throw new IdentityProviderAuthenticationException("Identity Provider has failed the authentication.", extraInformation.toString());
 			}
-			
 			else {
 				throw new IdentityProviderAuthenticationException("Identity Provider has failed the authentication.");
 			}

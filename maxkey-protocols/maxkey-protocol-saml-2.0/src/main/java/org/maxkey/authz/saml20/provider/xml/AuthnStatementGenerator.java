@@ -18,13 +18,15 @@
 
 package org.maxkey.authz.saml20.provider.xml;
 
+import java.time.Instant;
+
 import org.joda.time.DateTime;
-import org.opensaml.saml2.core.AuthnContext;
-import org.opensaml.saml2.core.AuthnContextClassRef;
-import org.opensaml.saml2.core.AuthnStatement;
-import org.opensaml.saml2.core.impl.AuthnContextBuilder;
-import org.opensaml.saml2.core.impl.AuthnContextClassRefBuilder;
-import org.opensaml.saml2.core.impl.AuthnStatementBuilder;
+import org.opensaml.saml.saml2.core.AuthnContext;
+import org.opensaml.saml.saml2.core.AuthnContextClassRef;
+import org.opensaml.saml.saml2.core.AuthnStatement;
+import org.opensaml.saml.saml2.core.impl.AuthnContextBuilder;
+import org.opensaml.saml.saml2.core.impl.AuthnContextClassRefBuilder;
+import org.opensaml.saml.saml2.core.impl.AuthnStatementBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +46,7 @@ public class AuthnStatementGenerator {
 		//Response/Assertion/AuthnStatement
 		AuthnStatement authnStatement = new AuthnStatementBuilder().buildObject();
 		authnStatement.setAuthnContext(authnContext);
-		authnStatement.setAuthnInstant(authnInstant);
+		authnStatement.setAuthnInstant(Instant.now());
 		logger.debug("generateAuthnStatement authnInstant "+authnInstant);
 		return authnStatement;
 

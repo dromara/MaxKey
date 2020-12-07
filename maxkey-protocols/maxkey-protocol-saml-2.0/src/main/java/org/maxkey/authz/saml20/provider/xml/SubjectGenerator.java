@@ -19,20 +19,22 @@
 package org.maxkey.authz.saml20.provider.xml;
 
 
+import java.time.Instant;
+
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authz.saml.service.TimeService;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.web.WebContext;
-import org.opensaml.saml2.core.NameID;
-import org.opensaml.saml2.core.NameIDType;
-import org.opensaml.saml2.core.Subject;
-import org.opensaml.saml2.core.SubjectConfirmation;
-import org.opensaml.saml2.core.SubjectConfirmationData;
-import org.opensaml.saml2.core.impl.NameIDBuilder;
-import org.opensaml.saml2.core.impl.SubjectBuilder;
-import org.opensaml.saml2.core.impl.SubjectConfirmationBuilder;
-import org.opensaml.saml2.core.impl.SubjectConfirmationDataBuilder;
+import org.opensaml.saml.saml2.core.NameID;
+import org.opensaml.saml.saml2.core.NameIDType;
+import org.opensaml.saml.saml2.core.Subject;
+import org.opensaml.saml.saml2.core.SubjectConfirmation;
+import org.opensaml.saml.saml2.core.SubjectConfirmationData;
+import org.opensaml.saml.saml2.core.impl.NameIDBuilder;
+import org.opensaml.saml.saml2.core.impl.SubjectBuilder;
+import org.opensaml.saml.saml2.core.impl.SubjectConfirmationBuilder;
+import org.opensaml.saml.saml2.core.impl.SubjectConfirmationDataBuilder;
 
 public class SubjectGenerator {
 
@@ -138,7 +140,7 @@ public class SubjectGenerator {
 		if(null!=inResponseTo){
 			subjectConfirmationData.setInResponseTo(inResponseTo);
 		}
-		subjectConfirmationData.setNotOnOrAfter(timeService.getCurrentDateTime().plusSeconds(validInSeconds));
+		subjectConfirmationData.setNotOnOrAfter(Instant.now().plusSeconds(validInSeconds));
 		subjectConfirmationData.setAddress(clientAddress);
 		
 		subjectConfirmation.setSubjectConfirmationData(subjectConfirmationData);

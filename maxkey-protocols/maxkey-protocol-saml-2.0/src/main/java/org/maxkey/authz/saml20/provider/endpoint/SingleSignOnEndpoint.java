@@ -30,11 +30,9 @@ import org.maxkey.domain.apps.AppsSAML20Details;
 import org.maxkey.persistence.service.AppsSaml20DetailsService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.core.AuthnRequest;
-import org.opensaml.ws.message.decoder.MessageDecodingException;
-import org.opensaml.xml.security.SecurityException;
-import org.opensaml.xml.validation.ValidationException;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.messaging.decoder.MessageDecodingException;
+import org.opensaml.saml.saml2.core.AuthnRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,7 +125,7 @@ public class SingleSignOnEndpoint {
 	@SuppressWarnings("rawtypes")
 	public void extractSAMLMessage(ExtractBindingAdapter extractBindingAdapter,HttpServletRequest request) throws Exception{
 		
-	    SAMLMessageContext messageContext;
+	    MessageContext messageContext;
 		logger.debug("extract SAML Message .");
 		
 		try {
@@ -180,7 +178,7 @@ public class SingleSignOnEndpoint {
 		} catch (SecurityException e1) {
 			logger.error("Exception decoding SAML SecurityException", e1);
 			throw new Exception(e1);
-		}catch (ValidationException ve) {
+		}catch (Exception ve) {
             logger.warn("AuthnRequest Message failed Validation", ve);
             throw new Exception(ve);
         }

@@ -18,9 +18,9 @@
 
 package org.maxkey.authz.saml20.xml;
 
-import org.opensaml.saml2.core.Issuer;
-import org.opensaml.saml2.core.NameIDType;
-import org.opensaml.saml2.core.impl.IssuerBuilder;
+import org.opensaml.saml.saml2.core.Issuer;
+import org.opensaml.saml.saml2.core.NameIDType;
+import org.opensaml.saml.saml2.core.impl.IssuerBuilder;
 
 public class IssuerGenerator {
 	

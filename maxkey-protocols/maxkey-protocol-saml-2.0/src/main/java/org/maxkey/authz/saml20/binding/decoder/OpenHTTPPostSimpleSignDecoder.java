@@ -19,13 +19,9 @@ package org.maxkey.authz.saml20.binding.decoder;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.binding.decoding.HTTPPostSimpleSignDecoder;
-import org.opensaml.ws.message.decoder.MessageDecodingException;
-import org.opensaml.ws.transport.InTransport;
-import org.opensaml.ws.transport.http.HttpServletRequestAdapter;
-import org.opensaml.xml.parse.ParserPool;
-import org.opensaml.xml.util.DatatypeHelper;
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.messaging.decoder.MessageDecodingException;
+import org.opensaml.saml.saml2.binding.decoding.impl.HTTPPostSimpleSignDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +80,7 @@ public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
 		log.debug("Intended message destination endpoint: {}",messageDestination);
 		log.debug("Actual message receiver endpoint: {}", receiverEndpoint);
 
-		// 协议头统一（http或https，需要和destination统一）
+		// 鍗忚澶寸粺涓�锛坔ttp鎴杊ttps锛岄渶瑕佸拰destination缁熶竴锛�
 		if (messageDestination.indexOf("/") != -1
 				&& receiverEndpoint.indexOf("/") != -1) {
 			if (!messageDestination.substring(0,messageDestination.indexOf("/"))
@@ -108,7 +104,7 @@ public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
 	@Override
 	@SuppressWarnings("rawtypes")
 	protected String getActualReceiverEndpointURI(
-			SAMLMessageContext messageContext) throws MessageDecodingException {
+			MessageContext messageContext) throws MessageDecodingException {
 		InTransport inTransport = messageContext.getInboundMessageTransport();
 		if (!(inTransport instanceof HttpServletRequestAdapter)) {
 			throw new MessageDecodingException("Message context InTransport instance was an unsupported type");
@@ -118,7 +114,7 @@ public class OpenHTTPPostSimpleSignDecoder extends HTTPPostSimpleSignDecoder {
 		StringBuffer urlBuilder = httpRequest.getRequestURL();
 
 		String tempUrl = urlBuilder.toString();
-		// 从http协议头开始，跳过前面两个斜杠
+		// 浠巋ttp鍗忚澶村紑濮嬶紝璺宠繃鍓嶉潰涓や釜鏂滄潬
 		tempUrl = tempUrl.substring(tempUrl.indexOf("/", 8) + 1);
 		return receiverEndpoint + tempUrl;
 	}

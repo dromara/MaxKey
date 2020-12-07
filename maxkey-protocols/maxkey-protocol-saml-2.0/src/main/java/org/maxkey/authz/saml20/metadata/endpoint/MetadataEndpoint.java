@@ -26,20 +26,18 @@ import org.maxkey.authz.saml20.metadata.MetadataGenerator;
 import org.maxkey.constants.ContentType;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.domain.Saml20Metadata;
+import org.maxkey.pretty.impl.XMLHelper;
 import org.maxkey.web.WebContext;
-import org.opensaml.common.xml.SAMLConstants;
-import org.opensaml.saml2.core.NameIDType;
-import org.opensaml.saml2.metadata.ContactPersonTypeEnumeration;
-import org.opensaml.saml2.metadata.EntityDescriptor;
-import org.opensaml.saml2.metadata.IDPSSODescriptor;
-import org.opensaml.xml.security.CriteriaSet;
-import org.opensaml.xml.security.SecurityException;
-import org.opensaml.xml.security.credential.Credential;
-import org.opensaml.xml.security.credential.CredentialResolver;
-import org.opensaml.xml.security.credential.UsageType;
-import org.opensaml.xml.security.criteria.EntityIDCriteria;
-import org.opensaml.xml.security.criteria.UsageCriteria;
-import org.opensaml.xml.util.XMLHelper;
+import org.opensaml.core.criterion.EntityIdCriterion;
+import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.saml2.core.NameIDType;
+import org.opensaml.saml.saml2.metadata.ContactPersonTypeEnumeration;
+import org.opensaml.saml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
+import org.opensaml.security.credential.Credential;
+import org.opensaml.security.credential.CredentialResolver;
+import org.opensaml.security.credential.UsageType;
+import org.opensaml.security.criteria.UsageCriterion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +46,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
+import net.shibboleth.utilities.java.support.resolver.ResolverException;
 
 
 @Controller
@@ -87,16 +88,18 @@ public class MetadataEndpoint {
 	        
 	         CriteriaSet criteriaSet = new CriteriaSet();
 	         
-	 		 criteriaSet.add(new EntityIDCriteria(keyStoreLoader.getEntityName()));
+	 		 criteriaSet.add(new EntityIdCriterion(keyStoreLoader.getEntityName()));
 	 		
-	 		 criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
+	 		 criteriaSet.add(new UsageCriterion(UsageType.SIGNING));
 	 		 
 			
 			try {
 				signingCredential = credentialResolver.resolveSingle(criteriaSet);
 			}catch (SecurityException e) {
 				logger.error("Credential Resolver error .", e);
-				
+			} catch (ResolverException e) {
+				logger.error("ResolverException error .", e);
+				e.printStackTrace();
 			}
 		}
 			

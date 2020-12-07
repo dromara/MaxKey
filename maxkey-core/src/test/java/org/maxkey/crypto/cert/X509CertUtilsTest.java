@@ -89,7 +89,7 @@ public class X509CertUtilsTest {
 
 	certInfo.set(X509CertInfo.ISSUER + "." + CertificateSubjectName.DN_NAME,issuer);
 
-	AlgorithmId algorithm = new AlgorithmId(AlgorithmId.md5WithRSAEncryption_oid);
+	AlgorithmId algorithm = new AlgorithmId(AlgorithmId.MD5_oid);
 	certInfo.set(CertificateAlgorithmId.NAME + "."+ CertificateAlgorithmId.ALGORITHM, algorithm);
 	X509CertImpl newCert = new X509CertImpl(certInfo);
 

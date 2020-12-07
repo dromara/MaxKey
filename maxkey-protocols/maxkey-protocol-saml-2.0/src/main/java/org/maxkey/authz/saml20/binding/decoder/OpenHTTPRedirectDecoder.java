@@ -19,15 +19,11 @@ package org.maxkey.authz.saml20.binding.decoder;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.opensaml.common.binding.SAMLMessageContext;
-import org.opensaml.saml2.binding.decoding.HTTPRedirectDeflateDecoder;
-import org.opensaml.ws.message.decoder.MessageDecodingException;
-import org.opensaml.ws.transport.InTransport;
-import org.opensaml.ws.transport.http.HttpServletRequestAdapter;
-import org.opensaml.xml.parse.ParserPool;
-import org.opensaml.xml.util.DatatypeHelper;
+import org.opensaml.saml.saml2.binding.decoding.impl.HTTPRedirectDeflateDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.shibboleth.utilities.java.support.xml.ParserPool;
 
 public class OpenHTTPRedirectDecoder extends HTTPRedirectDeflateDecoder {
 	private final Logger log = LoggerFactory.getLogger(OpenHTTPRedirectDecoder.class);
@@ -86,7 +82,7 @@ public class OpenHTTPRedirectDecoder extends HTTPRedirectDeflateDecoder {
 				messageDestination);
 		log.debug("Actual message receiver endpoint: {}", receiverEndpoint);
 
-		// 协议头统一（http或https，需要和destination统一）
+		// 鍗忚澶寸粺涓�锛坔ttp鎴杊ttps锛岄渶瑕佸拰destination缁熶竴锛�
 		if (messageDestination.indexOf("/") != -1
 				&& receiverEndpoint.indexOf("/") != -1) {
 			if (!messageDestination.substring(0,
@@ -127,7 +123,7 @@ public class OpenHTTPRedirectDecoder extends HTTPRedirectDeflateDecoder {
 		StringBuffer urlBuilder = httpRequest.getRequestURL();
 
 		String tempUrl = urlBuilder.toString();
-		// 从http协议头开始，跳过前面两个斜杠
+		// 浠巋ttp鍗忚澶村紑濮嬶紝璺宠繃鍓嶉潰涓や釜鏂滄潬
 		tempUrl = tempUrl.substring(tempUrl.indexOf("/", 8) + 1);
 		return receiverEndpoint + tempUrl;
 	}

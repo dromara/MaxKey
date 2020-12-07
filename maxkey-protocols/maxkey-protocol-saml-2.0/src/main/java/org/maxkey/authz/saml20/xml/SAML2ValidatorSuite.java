@@ -17,20 +17,62 @@
 
 package org.maxkey.authz.saml20.xml;
 
-import org.opensaml.xml.Configuration;
-import org.opensaml.xml.XMLObject;
-import org.opensaml.xml.validation.ValidationException;
-import org.opensaml.xml.validation.ValidatorSuite;
-import org.springframework.beans.factory.InitializingBean;
+import javax.xml.validation.Schema;
+
+import org.opensaml.messaging.context.MessageContext;
+import org.opensaml.messaging.handler.MessageHandlerException;
+import org.opensaml.messaging.handler.impl.SchemaValidateXMLMessage;
+import org.springframework.core.io.ClassPathResource;
+
+import net.shibboleth.utilities.java.support.xml.SchemaBuilder;
 
 public class SAML2ValidatorSuite  {
 
-	public void validate(XMLObject xmlObject) throws ValidationException {
+	//SchemaValidateXMLMessage schemaValidator = Configuration.getValidatorSuite("saml2-core-schema-validator");
+	//SchemaValidateXMLMessage specValidator = Configuration.getValidatorSuite("saml2-core-spec-validator");
+	SchemaValidateXMLMessage schemaValidator = null;
+	SchemaValidateXMLMessage specValidator = null;
 	
-		ValidatorSuite schemaValidator = Configuration.getValidatorSuite("saml2-core-schema-validator");
-		schemaValidator.validate(xmlObject);
-		ValidatorSuite specValidator = Configuration.getValidatorSuite("saml2-core-spec-validator");
-		specValidator.validate(xmlObject);
+	public SAML2ValidatorSuite() {
+		try {
+			schemaValidator = new SchemaValidateXMLMessage(loadSaml2Schema());
+			schemaValidator.initialize();
+			
+			specValidator = new SchemaValidateXMLMessage(loadSpecSchema());
+			specValidator.initialize();
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	public Schema loadSaml2Schema() throws Exception {
+		 ClassPathResource classPathResource = new ClassPathResource("org/opensaml/messaging/handler/impl/schemaValidateXmlMessageTest-schema.xsd");
+	    SchemaBuilder schemaBuilder = new SchemaBuilder();
+	    schemaBuilder.addSchema(classPathResource.getInputStream());
+	    Schema schema = schemaBuilder.buildSchema();
+	    return schema;
+	}
+	
+	public Schema loadSpecSchema() throws Exception {
+		 ClassPathResource classPathResource = new ClassPathResource("org/opensaml/messaging/handler/impl/schemaValidateXmlMessageTest-schema.xsd");
+	    SchemaBuilder schemaBuilder = new SchemaBuilder();
+	    schemaBuilder.addSchema(classPathResource.getInputStream());
+	    Schema schema = schemaBuilder.buildSchema();
+	    return schema;
+	}
+	
+	public void validate(MessageContext messageContext)  {
+		try {
+			schemaValidator.invoke(messageContext);
+			specValidator.invoke(messageContext);
+		} catch (MessageHandlerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 	

@@ -20,9 +20,8 @@ package org.maxkey.authz.saml20.binding.impl;
 import java.security.KeyStore;
 
 import org.maxkey.authz.saml.common.TrustResolver;
-import org.opensaml.common.binding.decoding.SAMLMessageDecoder;
-import org.opensaml.ws.security.SecurityPolicyResolver;
-import org.opensaml.xml.security.credential.CredentialResolver;
+import org.opensaml.saml.common.binding.decoding.SAMLMessageDecoder;
+import org.opensaml.security.credential.CredentialResolver;
 
 public class ExtractRedirectBindingAdapter extends ExtractPostBindingAdapter{
 

@@ -19,11 +19,13 @@
 package org.maxkey.authz.saml20.consumer;
 
 
+import java.time.Instant;
+
 import org.maxkey.authz.saml.service.IDService;
 import org.maxkey.authz.saml.service.TimeService;
 import org.maxkey.authz.saml20.xml.IssuerGenerator;
-import org.opensaml.saml2.core.AuthnRequest;
-import org.opensaml.saml2.core.impl.AuthnRequestBuilder;
+import org.opensaml.saml.saml2.core.AuthnRequest;
+import org.opensaml.saml.saml2.core.impl.AuthnRequestBuilder;
 
 
 public class AuthnRequestGenerator {
@@ -47,7 +49,7 @@ public class AuthnRequestGenerator {
 		
 		authnRequest.setAssertionConsumerServiceURL(responseLocation);
 		authnRequest.setID(idService.generateID());
-		authnRequest.setIssueInstant(timeService.getCurrentDateTime());
+		authnRequest.setIssueInstant(Instant.now());
 		authnRequest.setDestination(destination);
 		
 		authnRequest.setIssuer(issuerGenerator.generateIssuer());

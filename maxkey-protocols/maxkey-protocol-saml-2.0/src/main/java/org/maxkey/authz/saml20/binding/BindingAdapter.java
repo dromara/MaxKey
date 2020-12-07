@@ -23,11 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.maxkey.domain.apps.AppsSAML20Details;
-import org.opensaml.common.SignableSAMLObject;
-import org.opensaml.saml2.metadata.Endpoint;
-import org.opensaml.ws.message.encoder.MessageEncodingException;
-import org.opensaml.ws.security.SecurityPolicyResolver;
-import org.opensaml.xml.security.credential.Credential;
+import org.opensaml.messaging.encoder.MessageEncodingException;
+import org.opensaml.saml.common.SignableSAMLObject;
+import org.opensaml.saml.saml2.metadata.Endpoint;
+import org.opensaml.security.credential.Credential;
 
 /**
  * 
