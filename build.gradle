@@ -94,6 +94,7 @@ subprojects {
         mavenCentral()
         jcenter()
 		maven { url "https://repo1.maven.org/maven2/" }
+		maven { url "https://build.shibboleth.net/nexus/content/repositories/releases/" }
 		maven { url "https://mvnrepository.com/repos/central/" }
         maven { url "http://jcenter.bintray.com" }
         maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases"}
@@ -212,9 +213,10 @@ subprojects {
          compile group: 'org.springframework.session', name: 'spring-session-core', version: "${springSessionVersion}"
          compile group: 'org.springframework.session', name: 'spring-session-data-redis', version: "${springSessionVersion}"
          //saml 
-         compile group: 'org.opensaml', name: 'opensaml', version: '2.6.4'
-         compile group: 'org.opensaml', name: 'openws', version: '1.5.4'
-         compile group: 'org.opensaml', name: 'xmltooling', version: '1.4.4'
+         compile group: 'org.opensaml', name: 'opensaml', version: '2.6.6'
+         compile group: 'org.opensaml', name: 'openws', version: '1.5.6'
+         compile group: 'org.opensaml', name: 'xmltooling', version: '1.4.6'
+         compile group: 'net.shibboleth.utilities', name: 'java-support', version: '7.5.1'
 		 //jose-jwt
          compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '9.0.1'
          compile group: 'net.jcip', name: 'jcip-annotations', version: '1.0'

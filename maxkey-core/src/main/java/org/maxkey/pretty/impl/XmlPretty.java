@@ -49,7 +49,7 @@ public class XmlPretty implements Pretty{
 	
 	public  String format(Node node){
 		try{
-			return org.opensaml.xml.util.XMLHelper.prettyPrintXML(node);
+			return XMLHelper.prettyPrintXML(node);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
