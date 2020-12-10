@@ -8,7 +8,9 @@
 
 Official Website <a href="https://www.maxkey.top" target="_blank"><b>Official</b></a> |  <a href="https://maxkeytop.gitee.io" target="_blank"><b>Line2</b></a>
 
-QQ Community: <b> 434469201 </b> | email: <b> maxkeysupport@163.com </b>
+QQ Community: <b> 434469201 </b> 
+
+email: <b> maxkeysupport@163.com </b>
 
 Code Hosting <a href="https://github.com/MaxKeyTop/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/maxkeytop/MaxKey" target="_blank"><b>Gitee</b></a>
 
