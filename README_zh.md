@@ -63,7 +63,7 @@
 
 7. 基于Java平台开发，采用Spring、MySQL、Tomcat、Apache Kafka、Redis等开源技术，支持微服务，扩展性强。  
 
-8. 许可证 Apache License, Version 2.0，开源、安全、自主可控。 
+8. 许可证 Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey版权声明</a>，开源、安全、自主可控。 
 
 
 # 界面

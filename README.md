@@ -62,7 +62,7 @@ Key Functions
 
 7. Based on Java platform, Adopts Spring, MySQL, Tomcat, Apache Kafka, Redis and other open source technologies, supports microservices, and has strong scalability.
 
-8. License Apache license, version 2.0, Open Source, Secure,  Independent and Controllable. 
+8. License Under Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright</a>, Open Source, Secure,  Independent and Controllable. 
 
 
 # Interface
