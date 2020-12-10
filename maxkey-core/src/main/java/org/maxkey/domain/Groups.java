@@ -38,9 +38,19 @@ public class Groups extends JpaBaseDomain implements Serializable {
 
     @Length(max = 60)
     @Column
-    private String name;
+    String name;
+    
     @Column
-    private int isdefault;
+    String dynamic;
+
+    @Column
+    String filters ;
+    
+    @Column
+    String orgIdsList;
+    
+    @Column
+    int isdefault;
     @Column
     String description;
     @Column
@@ -144,6 +154,31 @@ public class Groups extends JpaBaseDomain implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    
+    public String getDynamic() {
+        return dynamic;
+    }
+
+    public void setDynamic(String dynamic) {
+        this.dynamic = dynamic;
+    }
+
+    public String getFilters() {
+        return filters;
+    }
+
+    public void setFilters(String filters) {
+        this.filters = filters;
+    }
+
+    public String getOrgIdsList() {
+        return orgIdsList;
+    }
+
+    public void setOrgIdsList(String orgIdsList) {
+        this.orgIdsList = orgIdsList;
     }
 
     @Override

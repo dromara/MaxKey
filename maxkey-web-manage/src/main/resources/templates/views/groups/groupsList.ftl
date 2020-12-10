@@ -52,13 +52,13 @@
 		 					 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/groups/forwardAdd"
 						 		    wwidth="500"
-						 		    wheight="200"
+						 		    wheight="600"
 					 		    	target="window">	    	
 					 		    	
 					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
 					 				wurl="<@base/>/groups/forwardUpdate"
 					 				wwidth="500"
-						 		    wheight="200"
+						 		    wheight="600"
 					 		    	target="window"> 
 					 		    	
 					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
