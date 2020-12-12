@@ -97,12 +97,10 @@ Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/d
 
 # Roadmap
 
-1. Implementation of dynamic group (based on user attribute or organization)
+1. Director and part-time organizations
 
-2. Director and part-time organizations
+2. Zero trust scenario integration
 
-3. Zero trust scenario integration
-
-4. Maxkey-Cloud (micro service version)-2021
+3. Maxkey-Cloud (micro service version)-2021
 
 
