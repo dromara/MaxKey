@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.domain.GroupMember;
+import org.maxkey.domain.Groups;
 
 /**
  * @author Crystal.sea
@@ -36,4 +37,13 @@ public  interface GroupMemberMapper extends IJpaBaseMapper<GroupMember> {
 	public List<GroupMember> memberInGroup(GroupMember entity);
 	public List<GroupMember> memberNotInGroup(GroupMember entity);
 	public List<GroupMember> groupMemberInGroup(GroupMember entity);
+	
+	public int addDynamicGroupMember(Groups dynamicGroup);
+	
+	public int deleteDynamicGroupMember(Groups dynamicGroup);
+	
+	public int deleteByGroupId(String groupId);
+	
+	
+	
 }

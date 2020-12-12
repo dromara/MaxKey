@@ -23,11 +23,17 @@ import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.RolePermissions;
 import org.maxkey.domain.Roles;
 import org.maxkey.persistence.mapper.RolesMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RolesService  extends JpaBaseService<Roles>{
 	
+    @Autowired
+    @Qualifier("roleMemberService")
+    RoleMemberService roleMemberService;
+    
 	public RolesService() {
 		super(RolesMapper.class);
 	}
@@ -50,5 +56,26 @@ public class RolesService  extends JpaBaseService<Roles>{
 	
     public List<RolePermissions> queryRolePermissions(RolePermissions rolePermissions){
         return getMapper().queryRolePermissions(rolePermissions);
+    }
+    
+    public List<Roles> queryDynamicRoles(Roles dynamicRole){
+        return this.getMapper().queryDynamicRoles(dynamicRole);
+    }
+    
+    public boolean deleteById(String roleId) {
+        this.remove(roleId);
+        roleMemberService.deleteByRoleId(roleId);
+        return true;
+    }
+    
+    public void refreshDynamicRoles(Roles dynamicRole){
+        if(dynamicRole.getDynamic().equals("1")) {
+            if(dynamicRole.getOrgIdsList()!=null && !dynamicRole.getOrgIdsList().equals("")) {
+                dynamicRole.setOrgIdsList("'"+dynamicRole.getOrgIdsList().replace(",", "','")+"'");
+            }
+            
+            roleMemberService.deleteDynamicRoleMember(dynamicRole);
+            roleMemberService.addDynamicRoleMember(dynamicRole);
+        }
     }
 }

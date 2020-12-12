@@ -62,6 +62,10 @@ public class InitializeContext extends HttpServlet {
         _logger.info("SecurityContextHolder StrategyName " + SessionSecurityContextHolderStrategy.class.getCanonicalName());
         SecurityContextHolder.setStrategyName(SessionSecurityContextHolderStrategy.class.getCanonicalName());
         
+        WebContext.applicationContext = applicationContext;
+        
+        org.apache.mybatis.jpa.util.WebContext.applicationContext = applicationContext;
+        
         // List Environment Variables
         listEnvVars();
 

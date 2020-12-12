@@ -85,6 +85,7 @@ public class GroupsController {
 		_logger.debug("-Add  :" + group);
 		
 		if (groupsService.insert(group)) {
+		    groupsService.refreshDynamicGroups(group);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -122,6 +123,7 @@ public class GroupsController {
 		_logger.debug("-update  group :" + group);
 		
 		if (groupsService.update(group)) {
+		    groupsService.refreshDynamicGroups(group);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -136,7 +138,7 @@ public class GroupsController {
 	public Message delete(@ModelAttribute("group") Groups group) {
 		_logger.debug("-delete  group :" + group);
 		
-		if (groupsService.remove(group.getId())) {
+		if (groupsService.deleteById(group.getId())) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

@@ -57,6 +57,8 @@ public final class WebContext {
     
     public static Properties properties;
     
+    public static ApplicationContext applicationContext;
+    
     public static ArrayList<String> sessionAttributeNameList = new ArrayList<String>();
     
     static {
@@ -137,23 +139,24 @@ public final class WebContext {
     }
 
     /**
-     * get ApplicationContext from web ServletContext configuration.
-     * 
+     * get ApplicationContext from web  ServletContext configuration
      * @return ApplicationContext
      */
-    public static ApplicationContext getApplicationContext() {
-        return WebApplicationContextUtils.getWebApplicationContext(
-                    getSession().getServletContext());
+    public static ApplicationContext getApplicationContext(){
+        return WebApplicationContextUtils.getWebApplicationContext(getSession().getServletContext());
     }
-
+    
     /**
-     * get bean from spring configuration by bean id.
-     * 
-     * @param id String
+     * get bean from spring configuration by bean id
+     * @param id
      * @return Object
      */
-    public static Object getBean(String id) {
-        return getApplicationContext().getBean(id);
+    public static Object getBean(String id){
+        if(applicationContext==null) {
+            return getApplicationContext().getBean(id);
+        }else {
+            return applicationContext.getBean(id);
+        }
     }
 
     // below method is common HttpServlet method

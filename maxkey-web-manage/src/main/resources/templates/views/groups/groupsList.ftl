@@ -3,13 +3,13 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
-
+	<script type="text/javascript">	
+		function dynamicFormatter(value, row, index){
+	  		return value=='0'? '<@locale code="common.text.no" />':'<@locale code="common.text.yes" />';
+		};
+	</script>
 </head>
-<script type="text/javascript">	
-	function dynamicFormatter(value, row, index){
-  		return value=='0'? '<@locale code="common.text.no" />':'<@locale code="common.text.yes" />';
-	};
-</script>
+
 <body> 
 <div class="app header-default side-nav-dark">
 <div class="layout">

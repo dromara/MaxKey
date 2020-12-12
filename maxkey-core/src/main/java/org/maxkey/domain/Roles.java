@@ -38,6 +38,14 @@ public class Roles extends JpaBaseDomain implements Serializable {
     @Column
     private String name;
     @Column
+    String dynamic;
+
+    @Column
+    String filters ;
+    
+    @Column
+    String orgIdsList;
+    @Column
     String status;
     @Column
     String description;
@@ -119,6 +127,30 @@ public class Roles extends JpaBaseDomain implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
+    public String getDynamic() {
+        return dynamic;
+    }
+
+    public void setDynamic(String dynamic) {
+        this.dynamic = dynamic;
+    }
+
+    public String getFilters() {
+        return filters;
+    }
+
+    public void setFilters(String filters) {
+        this.filters = filters;
+    }
+
+    public String getOrgIdsList() {
+        return orgIdsList;
+    }
+
+    public void setOrgIdsList(String orgIdsList) {
+        this.orgIdsList = orgIdsList;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -126,6 +158,12 @@ public class Roles extends JpaBaseDomain implements Serializable {
         builder.append(id);
         builder.append(", name=");
         builder.append(name);
+        builder.append(", dynamic=");
+        builder.append(dynamic);
+        builder.append(", filters=");
+        builder.append(filters);
+        builder.append(", orgIdsList=");
+        builder.append(orgIdsList);
         builder.append(", status=");
         builder.append(status);
         builder.append(", description=");

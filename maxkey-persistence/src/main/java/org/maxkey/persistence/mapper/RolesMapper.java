@@ -38,4 +38,6 @@ public  interface RolesMapper extends IJpaBaseMapper<Roles> {
     public int logisticDeleteRolePermissions(List<RolePermissions> rolePermissionsList);
         
     public List<RolePermissions> queryRolePermissions(RolePermissions rolePermissions);
+
+    public List<Roles> queryDynamicRoles(Roles role);
 }

@@ -85,6 +85,7 @@ public class RolesController {
 		_logger.debug("-Add  :" + role);
 		
 		if (rolesService.insert(role)) {
+		    rolesService.refreshDynamicRoles(role);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -122,6 +123,7 @@ public class RolesController {
 		_logger.debug("-update  role :" + role);
 		
 		if (rolesService.update(role)) {
+		    rolesService.refreshDynamicRoles(role);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -136,7 +138,7 @@ public class RolesController {
 	public Message delete(@ModelAttribute("role") Roles role) {
 		_logger.debug("-delete  role :" + role);
 		
-		if (rolesService.remove(role.getId())) {
+		if (rolesService.deleteById(role.getId())) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

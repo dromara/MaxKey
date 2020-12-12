@@ -188,6 +188,12 @@ public class Groups extends JpaBaseDomain implements Serializable {
         builder.append(id);
         builder.append(", name=");
         builder.append(name);
+        builder.append(", dynamic=");
+        builder.append(dynamic);
+        builder.append(", filters=");
+        builder.append(filters);
+        builder.append(", orgIdsList=");
+        builder.append(orgIdsList);
         builder.append(", isdefault=");
         builder.append(isdefault);
         builder.append(", description=");

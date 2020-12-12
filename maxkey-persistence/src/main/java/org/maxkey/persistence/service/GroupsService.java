@@ -17,14 +17,22 @@
 
 package org.maxkey.persistence.service;
 
+import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.Groups;
 import org.maxkey.persistence.mapper.GroupsMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GroupsService  extends JpaBaseService<Groups>{
 	
+    @Autowired
+    @Qualifier("groupMemberService")
+    GroupMemberService groupMemberService;
+    
 	public GroupsService() {
 		super(GroupsMapper.class);
 	}
@@ -37,4 +45,27 @@ public class GroupsService  extends JpaBaseService<Groups>{
 		// TODO Auto-generated method stub
 		return (GroupsMapper)super.getMapper();
 	}
+	
+	
+	public List<Groups> queryDynamicGroups(Groups groups){
+	    return this.getMapper().queryDynamicGroups(groups);
+	}
+	
+	public boolean deleteById(String groupId) {
+	    this.remove(groupId);
+	    groupMemberService.deleteByGroupId(groupId);
+	    return true;
+	}
+	
+	public void refreshDynamicGroups(Groups dynamicGroup){
+	    if(dynamicGroup.getDynamic().equals("1")) {
+    	    if(dynamicGroup.getOrgIdsList()!=null && !dynamicGroup.getOrgIdsList().equals("")) {
+    	        dynamicGroup.setOrgIdsList("'"+dynamicGroup.getOrgIdsList().replace(",", "','")+"'");
+    	    }
+    	    
+    	    groupMemberService.deleteDynamicGroupMember(dynamicGroup);
+    	    groupMemberService.addDynamicGroupMember(dynamicGroup);
+	    }
+    }
+	
 }

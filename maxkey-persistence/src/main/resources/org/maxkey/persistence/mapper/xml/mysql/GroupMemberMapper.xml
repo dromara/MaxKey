@@ -108,7 +108,7 @@
 				<if test="groupName != null and groupName != ''">
 					AND G.NAME = #{groupName}
 				</if>
-				AND	GM.TYPE		=	'USER'
+				AND	GM.TYPE		IN(	'USER','USER-DYNAMIC')
 				AND	GM.GROUPID	=	G.ID	
 				AND	GM.MEMBERID	=	U.ID
 	</select>
@@ -167,7 +167,7 @@
 				<if test="groupName != null and groupName != ''">
 					AND G.NAME = #{groupName}
 				</if>
-					AND	GM.TYPE		=	'USER'
+					AND	GM.TYPE		IN(	'USER','USER-DYNAMIC')
 			     	AND GM.GROUPID	=	G.ID
 			)
 	</select>
@@ -195,5 +195,54 @@
 		</if>
 	</select>
 
+	<update id="addDynamicGroupMember" parameterType="Groups" >
+    	INSERT INTO MXK_GROUP_MEMBER(
+    		ID,
+    		GROUPID,
+    		MEMBERID,
+    		TYPE
+    	)
+    	SELECT 
+    		CONCAT_WS('-','UD','${id}',U.ID) ID,
+    		'${id}' GROUPID,
+    		U.ID MEMBERID,
+    		'USER-DYNAMIC' TYPE
+    	FROM MXK_USERINFO U
+		WHERE NOT EXISTS(
+				SELECT  1 FROM MXK_GROUP_MEMBER GM 
+				WHERE GM.GROUPID=#{id}
+					AND GM.MEMBERID=U.ID
+					AND GM.TYPE='USER-DYNAMIC'
+			)
+		<if test="filters != null and filters != ''">
+				${filters}
+		</if>
+		<if test="orgIdsList != null and orgIdsList != ''">
+				AND U.DEPARTMENTID IN( ${orgIdsList})
+		</if>
+    </update>
+    
+    <delete id="deleteDynamicGroupMember" parameterType="Groups" >
+    	DELETE FROM MXK_GROUP_MEMBER GM
+    	WHERE TYPE = 'USER-DYNAMIC'
+    		AND GM.GROUPID=#{id}
+    		AND NOT EXISTS(
+		    	SELECT 1
+		    	FROM MXK_USERINFO U
+		    	WHERE 1 = 1 
+		    		AND U.ID=GM.MEMBERID
+				<if test="filters != null and filters != ''">
+						${filters}
+				</if>
+				<if test="orgIdsList != null and orgIdsList != ''">
+						AND U.DEPARTMENTID IN( ${orgIdsList})
+				</if>
+			)
+    </delete>
+    
+    <delete id="deleteByGroupId" parameterType="string" >
+    	DELETE FROM MXK_GROUP_MEMBER GM
+    	WHERE  GM.GROUPID=#{value}
+    </delete>
 	
 </mapper>

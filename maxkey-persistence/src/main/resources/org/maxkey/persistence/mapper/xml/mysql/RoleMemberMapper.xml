@@ -108,7 +108,7 @@
 				<if test="roleName != null and roleName != ''">
 					AND R.NAME = #{roleName}
 				</if>
-				AND	RM.TYPE		=	'USER'
+				AND	RM.TYPE		IN(	'USER','USER-DYNAMIC')
 				AND	RM.ROLEID	=	R.ID	
 				AND	RM.MEMBERID	=	U.ID
 	</select>
@@ -167,14 +167,14 @@
 				<if test="roleName != null and roleName != ''">
 					AND R.NAME = #{roleName}
 				</if>
-					AND	RM.TYPE		=	'USER'
+					AND	RM.TYPE		IN(	'USER','USER-DYNAMIC')
 			     	AND RM.ROLEID	=	R.ID
 			)
 	</select>
 	
 	
 	<!-- ROLE_MEMBER  Roles Member-->
-	<select id="groupMemberInRole" parameterType="RoleMember" resultType="Roles">
+	<select id="roleMemberInRole" parameterType="RoleMember" resultType="Roles">
 		SELECT	DISTINCT
 			IR.*
 		FROM
@@ -185,7 +185,7 @@
 			 1	=	1
 			AND RM.GROUPID	=	R.ID	
 			AND	RM.MEMBERID	=	IR.ID
-			AND	RM.TYPE		=	'ROLE'
+			AND	RM.TYPE		IN(	'USER','USER-DYNAMIC')
 		<if test="roleId != null and roleId != ''">
 			AND RM.ROLEID = #{roleId}
 			AND R.ID = #{roleId}
@@ -195,5 +195,54 @@
 		</if>
 	</select>
 
+	<update id="addDynamicRoleMember" parameterType="Roles" >
+    	INSERT INTO MXK_ROLE_MEMBER(
+    		ID,
+    		ROLEID,
+    		MEMBERID,
+    		TYPE
+    	)
+    	SELECT 
+    		CONCAT_WS('-','UD','${id}',U.ID) ID,
+    		'${id}' ROLEID,
+    		U.ID MEMBERID,
+    		'USER-DYNAMIC' TYPE
+    	FROM MXK_USERINFO U
+		WHERE NOT EXISTS(
+				SELECT  1 FROM MXK_ROLE_MEMBER RM 
+				WHERE RM.ROLEID=#{id}
+					AND RM.MEMBERID=U.ID
+					AND RM.TYPE='USER-DYNAMIC'
+			)
+		<if test="filters != null and filters != ''">
+				${filters}
+		</if>
+		<if test="orgIdsList != null and orgIdsList != ''">
+				AND U.DEPARTMENTID IN( ${orgIdsList})
+		</if>
+    </update>
+    
+    <delete id="deleteDynamicRoleMember" parameterType="Roles" >
+    	DELETE FROM MXK_ROLE_MEMBER RM
+    	WHERE TYPE = 'USER-DYNAMIC'
+    		AND RM.ROLEID=#{id}
+    		AND NOT EXISTS(
+		    	SELECT 1
+		    	FROM MXK_USERINFO U
+		    	WHERE 1 = 1 
+		    		AND U.ID=RM.MEMBERID
+				<if test="filters != null and filters != ''">
+						${filters}
+				</if>
+				<if test="orgIdsList != null and orgIdsList != ''">
+						AND U.DEPARTMENTID IN( ${orgIdsList})
+				</if>
+			)
+    </delete>
+    
+    <delete id="deleteByRoleId" parameterType="string" >
+    	DELETE FROM MXK_ROLE_MEMBER RM
+    	WHERE  RM.ROLEID=#{value}
+    </delete>
 	
 </mapper>
