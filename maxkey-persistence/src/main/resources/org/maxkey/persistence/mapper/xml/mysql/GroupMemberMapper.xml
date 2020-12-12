@@ -108,6 +108,12 @@
 				<if test="groupName != null and groupName != ''">
 					AND G.NAME = #{groupName}
 				</if>
+				<if test="username != null and username != ''">
+					AND U.USERNAME = #{username}
+				</if>
+				<if test="displayName != null and displayName != ''">
+					AND U.DISPLAYNAME   LIKE  '%${displayName}%'
+				</if>
 				AND	GM.TYPE		IN(	'USER','USER-DYNAMIC')
 				AND	GM.GROUPID	=	G.ID	
 				AND	GM.MEMBERID	=	U.ID
@@ -170,6 +176,12 @@
 					AND	GM.TYPE		IN(	'USER','USER-DYNAMIC')
 			     	AND GM.GROUPID	=	G.ID
 			)
+		<if test="username != null and username != ''">
+			AND U.USERNAME = #{username}
+		</if>
+		<if test="displayName != null and displayName != ''">
+			AND U.DISPLAYNAME   LIKE  '%${displayName}%'
+		</if>
 	</select>
 	
 	

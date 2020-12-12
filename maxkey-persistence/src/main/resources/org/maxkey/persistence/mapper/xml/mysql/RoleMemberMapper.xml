@@ -108,6 +108,12 @@
 				<if test="roleName != null and roleName != ''">
 					AND R.NAME = #{roleName}
 				</if>
+				<if test="username != null and username != ''">
+					AND U.USERNAME = #{username}
+				</if>
+				<if test="displayName != null and displayName != ''">
+					AND U.DISPLAYNAME   LIKE  '%${displayName}%'
+				</if>
 				AND	RM.TYPE		IN(	'USER','USER-DYNAMIC')
 				AND	RM.ROLEID	=	R.ID	
 				AND	RM.MEMBERID	=	U.ID
@@ -167,9 +173,16 @@
 				<if test="roleName != null and roleName != ''">
 					AND R.NAME = #{roleName}
 				</if>
+				
 					AND	RM.TYPE		IN(	'USER','USER-DYNAMIC')
 			     	AND RM.ROLEID	=	R.ID
 			)
+		<if test="username != null and username != ''">
+			AND U.USERNAME = #{username}
+		</if>
+		<if test="displayName != null and displayName != ''">
+			AND U.DISPLAYNAME   LIKE  '%${displayName}%'
+		</if>
 	</select>
 	
 	

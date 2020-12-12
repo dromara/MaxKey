@@ -54,7 +54,7 @@
 		 			<td width="120px"><@locale code="userinfo.username"/>:</td>
 		 			<td width="374px">
 		 				<form id="basic_search_form">
-				 			<input class="form-control" type="text" name="name" style ="width:150px;float:left;">
+				 			<input class="form-control" type="text" name="username" style ="width:150px;float:left;">
 				 			<input class="button btn btn-primary mr-3" id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
 				 		</form>
 		 			</td>
