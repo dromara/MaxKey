@@ -7,7 +7,7 @@
 	$(function(){
 		<#if true==isCaptcha>
 			$('#j_captchaimg').click(function () {//
-		           $(this).attr("src", "<@base />/captcha"); 
+		           $(this).attr("src", "<@base />/captcha?"+(new Date()).getTime()); 
 			}); 
 		 </#if>
 	});
