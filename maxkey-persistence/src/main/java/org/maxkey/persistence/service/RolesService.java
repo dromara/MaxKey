@@ -23,13 +23,17 @@ import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.RolePermissions;
 import org.maxkey.domain.Roles;
 import org.maxkey.persistence.mapper.RolesMapper;
+import org.maxkey.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RolesService  extends JpaBaseService<Roles>{
-	
+    final static Logger _logger = LoggerFactory.getLogger(RolesService.class);
+    
     @Autowired
     @Qualifier("roleMemberService")
     RoleMemberService roleMemberService;
@@ -73,6 +77,17 @@ public class RolesService  extends JpaBaseService<Roles>{
             if(dynamicRole.getOrgIdsList()!=null && !dynamicRole.getOrgIdsList().equals("")) {
                 dynamicRole.setOrgIdsList("'"+dynamicRole.getOrgIdsList().replace(",", "','")+"'");
             }
+            
+            String filters = dynamicRole.getFilters();
+            if(StringUtils.filtersSQLInjection(filters.toLowerCase())) {  
+                _logger.info("filters include SQL Injection Attack Risk.");
+                return;
+            }
+            
+            filters = filters.replace("&", " AND ");
+            filters = filters.replace("|", " OR ");
+            
+            dynamicRole.setFilters(filters);
             
             roleMemberService.deleteDynamicRoleMember(dynamicRole);
             roleMemberService.addDynamicRoleMember(dynamicRole);

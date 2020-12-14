@@ -227,7 +227,7 @@
 					AND GM.TYPE='USER-DYNAMIC'
 			)
 		<if test="filters != null and filters != ''">
-				${filters}
+				AND (${filters})
 		</if>
 		<if test="orgIdsList != null and orgIdsList != ''">
 				AND U.DEPARTMENTID IN( ${orgIdsList})
@@ -244,10 +244,10 @@
 		    	WHERE 1 = 1 
 		    		AND U.ID=GM.MEMBERID
 				<if test="filters != null and filters != ''">
-						${filters}
+						AND (${filters})
 				</if>
 				<if test="orgIdsList != null and orgIdsList != ''">
-						AND U.DEPARTMENTID IN( ${orgIdsList})
+						AND U.DEPARTMENTID IN ( ${orgIdsList})
 				</if>
 			)
     </delete>

@@ -57,6 +57,7 @@
 			</div>
 		</div>
 		<div class="container-fluid">
+			<div class="content-wrapper row">
 			<div class="col-12 grid-margin">
 				<div class="card">
 					<div class="card-body">
@@ -151,7 +152,7 @@
 	</footer>
 
 	</div>
-	
+	</div>
 	</div>
 </div>
 

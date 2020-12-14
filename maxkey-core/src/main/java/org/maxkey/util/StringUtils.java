@@ -518,4 +518,33 @@ public final class StringUtils {
         return flag;
     }
 
+    public static ArrayList<String> sqlInjection = null;
+    
+    static{
+        sqlInjection = new ArrayList<String>();
+        sqlInjection.add("--");
+        sqlInjection.add(";");
+        sqlInjection.add("/");
+        sqlInjection.add("\\");
+        sqlInjection.add("#");
+        sqlInjection.add("drop");
+        sqlInjection.add("create");
+        sqlInjection.add("delete");
+        sqlInjection.add("alter");
+        sqlInjection.add("truncate");
+        sqlInjection.add("update");
+        sqlInjection.add("insert");
+        sqlInjection.add("and");
+        sqlInjection.add("or");
+    }
+    
+    public static boolean filtersSQLInjection(String filters) {
+        for(String s : sqlInjection) {
+            if(filters.indexOf(s)>-1) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

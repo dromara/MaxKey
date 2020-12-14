@@ -58,6 +58,7 @@
 					</div>
 
 	<div class="container-fluid">
+			<div class="content-wrapper row">
 					<div class="col-12 grid-margin">
 						<div class="card">
 							<div class="card-body">
@@ -140,7 +141,7 @@
 					<footer class="content-footer">
 		<#include  "../layout/footer.ftl"/>
 	</footer>
-
+</div>
 	</div>
 	
 	</div>
