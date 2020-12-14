@@ -93,12 +93,12 @@ QQ交流群：<b>434469201</b>
 当前版本百度网盘下载,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> 历史版本</a>
 | 版本    | 日期   |  下载地址  |  提取码  |
 | --------| :-----  | :----  | :----:  |
-| v 2.3.0 GA | 2020/11/11   |  <a href="https://pan.baidu.com/s/17jAatKNlM6L649992kEMBQ" target="_blank">链接下载</a>  |  **h3zw**  |
+| v 2.4.0 RC | 2020/12/15   |  <a href="https://pan.baidu.com/s/1xUZZJrxEUmbU3thIxd2lDA" target="_blank">链接下载</a>  |  **k65z**  |
 
 
 # Roadmap
 
-1.主任职机构和兼职机构
+1.兼职机构
 
 2.零信任场景整合
 

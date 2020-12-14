@@ -1,4 +1,4 @@
-﻿﻿﻿MaxKey v 2.4.0 GA	2020/12/**
+﻿﻿﻿MaxKey v 2.4.0 RC	2020/12/16
 	*(MAXKEY-201001)  动态用户组实现(基于用户属性或机构)
 	*(MAXKEY-201002)  任职机构和兼职机构
 	*(MAXKEY-201003)  登录会话切换的优化
@@ -21,7 +21,7 @@
 	*(MAXKEY-201020)  firefox点击验证码无更新修复
 	*(MAXKEY-201021)  官网内容更新
 	*(MAXKEY-201022)  管理MGT样式调整优化
-	*(MAXKEY-201030)  依赖jar引用、更新和升级
+	*(MAXKEY-201023)  依赖jar引用、更新和升级
 		not-yet-commons-ssl 0.3.9
 		log4j          	 	2.14.0
 		spring         	 	5.3.1
