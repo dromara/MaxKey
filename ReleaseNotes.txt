@@ -1,4 +1,4 @@
-﻿﻿﻿MaxKey v 2.4.0 GA	2020/12/**
+﻿﻿﻿MaxKey v 2.4.0 RC	2020/12/16
 	*(MAXKEY-201001)  动态用户组实现(基于用户属性或机构)
 	*(MAXKEY-201002)  任职机构和兼职机构
 	*(MAXKEY-201003)  登录会话切换的优化
@@ -14,10 +14,14 @@
 	*(MAXKEY-201013)  SAML 2.0 Metadata优化
 	*(MAXKEY-201014)  HandlerInterceptorAdapter@deprecated  调整为 AsyncHandlerInterceptor 
 	*(MAXKEY-201015)  mybatis-jpa升级，添加@Entity和@Transient支持，优化update时字段为null的处理，SQL代码优化 
-	*(MAXKEY-201016)  README中文和英文支持
+	*(MAXKEY-201016)  README更新及中文和英文支持
 	*(MAXKEY-201017)  认证失败时，authentication 空指针异常
 	*(MAXKEY-201018)  SAML Metadata URL配置读取
-	*(MAXKEY-201020)  依赖jar引用、更新和升级
+	*(MAXKEY-201019)  添加组和角色时按登录名查询成员
+	*(MAXKEY-201020)  firefox点击验证码无更新修复
+	*(MAXKEY-201021)  官网内容更新
+	*(MAXKEY-201022)  管理MGT样式调整优化
+	*(MAXKEY-201023)  依赖jar引用、更新和升级
 		not-yet-commons-ssl 0.3.9
 		log4j          	 	2.14.0
 		spring         	 	5.3.1
@@ -26,6 +30,7 @@
 		springData    	 	2.4.1
 		springSession    	2.4.1
 		mybatis-jpa-extra	2.2
+		opensaml 	        2.6.6
 		
 
 MaxKey v 2.3.0 GA	2020/11/12

@@ -24,10 +24,20 @@ import org.maxkey.authz.oauth2.provider.token.TokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.InMemoryTokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.JdbcTokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
-import org.maxkey.authz.oidc.idtoken.OIDCIdTokenEnhancer;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn;
+import org.maxkey.jobs.DynamicGroupsJob;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
+import org.maxkey.persistence.service.GroupsService;
+import org.opensaml.xml.ConfigurationException;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.CronTrigger;
+import org.quartz.JobBuilder;
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.TriggerBuilder;
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +47,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -44,9 +55,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class MaxKeyMgtConfig  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMgtConfig.class);
     
-	
-	
-	@Bean(name = "oauth20JdbcClientDetailsService")
+
+    @Bean(name = "oauth20JdbcClientDetailsService")
     public JdbcClientDetailsService JdbcClientDetailsService(
                 DataSource dataSource,PasswordEncoder passwordReciprocal) {
 	    JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
@@ -111,9 +121,47 @@ public class MaxKeyMgtConfig  implements InitializingBean {
         return tfaOptAuthn;
     }
 	
+    /**
+     * schedulerJobsInit.
+     * @return schedulerJobsInit
+     * @throws ConfigurationException 
+     * @throws SchedulerException 
+     */
+    @Bean(name = "schedulerJobs")
+    public Scheduler schedulerJobs(
+            SchedulerFactoryBean schedulerFactoryBean,
+            GroupsService groupsService,
+            @Value("${config.job.cron.dynamicgroups}") String cronScheduleDynamicGroups
+            ) throws SchedulerException {
+       
+        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+        dynamicGroupsJob(scheduler,cronScheduleDynamicGroups,groupsService);
+        
+        return scheduler;
+    }
+    
+	
+    private void dynamicGroupsJob(Scheduler scheduler ,
+                                  String cronSchedule,
+                                  GroupsService groupsService) throws SchedulerException {
+        JobDetail jobDetail = 
+                JobBuilder.newJob(DynamicGroupsJob.class) 
+                .withIdentity("DynamicGroupsJob", "DynamicGroups")
+                .build();
+        JobDataMap jobDataMap = new JobDataMap();
+        jobDataMap.put("groupsService", groupsService);
+        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronSchedule);
+        CronTrigger cronTrigger = 
+                TriggerBuilder.newTrigger()
+                .withIdentity("triggerDynamicGroups", "DynamicGroups")
+                .usingJobData(jobDataMap)
+                .withSchedule(scheduleBuilder)
+                .build();
+        scheduler.scheduleJob(jobDetail,cronTrigger);    
+    }
+	 
     @Override
     public void afterPropertiesSet() throws Exception {
-        // TODO Auto-generated method stub
         
     }
 

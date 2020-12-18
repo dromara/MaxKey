@@ -41,10 +41,10 @@
 
 					</div>
 <div class="container-fluid">
-						<div class="row">
+						<div class="row" style="height:115px; padding-top: 10px;">
 							<div class="col-lg-3 col-md-6 col-xs-12">
-								<div class="info-box bg-primary">
-									<div class="icon-box">
+								<div class="card text-white bg-primary">
+									<div class="card-body card-body pb-0 d-flex justify-content-between align-items-start">
 										<i class="lni-home"></i>
 									</div>
 									<div class="info-box-content">
@@ -54,8 +54,8 @@
 								</div>
 							</div>
 							<div class="col-lg-3 col-md-6 col-xs-12">
-								<div class="info-box bg-success">
-									<div class="icon-box">
+								<div class="card text-white bg-info">
+									<div class="card-body card-body pb-0 d-flex justify-content-between align-items-start">
 										<i class="lni-tag"></i>
 									</div>
 									<div class="info-box-content">
@@ -65,8 +65,8 @@
 								</div>
 							</div>
 							<div class="col-lg-3 col-md-6 col-xs-12">
-								<div class="info-box bg-info">
-									<div class="icon-box">
+								<div class="card text-white  bg-warning">
+									<div class="card-body card-body pb-0 d-flex justify-content-between align-items-start">
 										<i class="lni-cart"></i>
 									</div>
 									<div class="info-box-content">
@@ -76,8 +76,8 @@
 								</div>
 							</div>
 							<div class="col-lg-3 col-md-6 col-xs-12">
-								<div class="info-box bg-purple">
-									<div class="icon-box">
+								<div class="card text-white  bg-danger">
+									<div class="card-body card-body pb-0 d-flex justify-content-between align-items-start">
 										<i class="lni-wallet"></i>
 									</div>
 									<div class="info-box-content">

@@ -19,6 +19,7 @@ package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.GroupMember;
+import org.maxkey.domain.Groups;
 import org.maxkey.persistence.mapper.GroupMemberMapper;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +38,16 @@ public class GroupMemberService  extends JpaBaseService<GroupMember>{
 		// TODO Auto-generated method stub
 		return (GroupMemberMapper)super.getMapper();
 	}
+	
+	public int addDynamicGroupMember(Groups dynamicGroup) {
+	    return getMapper().addDynamicGroupMember(dynamicGroup);
+	}
+	
+	public int deleteDynamicGroupMember(Groups dynamicGroup) {
+	    return getMapper().deleteDynamicGroupMember(dynamicGroup);
+	}
+	public int deleteByGroupId(String groupId) {
+        return getMapper().deleteByGroupId(groupId);
+    }
+	
 }

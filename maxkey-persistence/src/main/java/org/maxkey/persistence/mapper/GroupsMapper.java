@@ -20,6 +20,8 @@
  */
 package org.maxkey.persistence.mapper;
 
+import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.domain.Groups;
 
@@ -30,4 +32,5 @@ import org.maxkey.domain.Groups;
 
 public  interface GroupsMapper extends IJpaBaseMapper<Groups> {
 
+    public List<Groups> queryDynamicGroups(Groups groups);
 }

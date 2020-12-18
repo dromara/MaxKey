@@ -3,13 +3,13 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
-
+	<script type="text/javascript">	
+		function dynamicFormatter(value, row, index){
+	  		return value=='0'? '<@locale code="common.text.no" />':'<@locale code="common.text.yes" />';
+		};
+	</script>
 </head>
-<script type="text/javascript">	
-	function dynamicFormatter(value, row, index){
-  		return value=='0'? '<@locale code="common.text.no" />':'<@locale code="common.text.yes" />';
-	};
-</script>
+
 <body> 
 <div class="app header-default side-nav-dark">
 <div class="layout">
@@ -37,6 +37,7 @@
 			</div>
 		</div>
 		<div class="container-fluid">
+			<div class="content-wrapper row">
 			<div class="col-12 grid-margin">
 				<div class="card">
 					<div class="card-body">
@@ -113,6 +114,7 @@
 	
 </div>
 					</div>
+</div>
 	<footer class="content-footer">
 		<#include  "../layout/footer.ftl"/>
 	</footer>

@@ -11,28 +11,22 @@
 		<@locale code="global.application"/>
 	</ul>
 	<ul class="nav-right">
-		<li style="font-size: 18px; margin-top: 10px;">
-				<@locale code="global.text.welcome"/>：<b>
+		<li style="font-size: 16px; margin-top: 10px;">
+				<@locale code="global.text.welcome"/>:<b>
 				<#if  Session["current_user"]?exists>
-					${Session["current_user"].displayName}
+					 ${Session["current_user"].displayName}
+					(${Session["current_user"].username}) 
 				</#if>
-				(
-					<#if  Session["current_user"]?exists>
-						${Session["current_user"].username} 
-					</#if>
-				)&nbsp;&nbsp;</b>
+				&nbsp;</b>
 		 </li>
-		<li class="scale-left">
-			<a class="sidenav-fold-toggler" href="javascript:void(0);"> 
-				<img  src="<@base/>/static/images/menu-left.png" alt="" style="width: 30px; height: 40px; padding-top: 10px;">
+		<li class="scale-left" style="margin-top: 5px;">
+			<a class="sidenav-fold-toggler" href="javascript:void(0);" > 
+				<i class="fa fa-bars fa-2x" aria-hidden="true" style="border:0px"></i>
 			</a>
 		</li>
-		<li class="scale-left">
-			 &nbsp;
-		</li>
-		<li class="scale-left"> 
+		<li class="scale-left" style="font-size: 18px; margin-top: 5px;"> 
 			<a  href="<@base/>/logout?reLoginUrl=login">
-				<IMG SRC="<@base/>/static/images/exit4.png" alt="Exit" style="width: 40px; height: 45px; padding-top: 8px;">	
+				<i class="fa fa-sign-out fa-2x" aria-hidden="true" style="border:0px;color:#e22a6f"></i>
 			</a>
 		</li>
 	</ul>

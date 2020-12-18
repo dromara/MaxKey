@@ -19,6 +19,7 @@ package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.RoleMember;
+import org.maxkey.domain.Roles;
 import org.maxkey.persistence.mapper.RoleMemberMapper;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +38,17 @@ public class RoleMemberService  extends JpaBaseService<RoleMember>{
 		// TODO Auto-generated method stub
 		return (RoleMemberMapper)super.getMapper();
 	}
+	
+	
+    public int addDynamicRoleMember(Roles dynamicRole) {
+        return getMapper().addDynamicRoleMember(dynamicRole);
+    }
+
+    public int deleteDynamicRoleMember(Roles dynamicRole) {
+        return getMapper().deleteDynamicRoleMember(dynamicRole);
+    }
+
+    public int deleteByRoleId(String roleId) {
+        return getMapper().deleteByRoleId(roleId);
+    }
 }

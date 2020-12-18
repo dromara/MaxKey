@@ -23,6 +23,16 @@
 		<include refid="where_statement"/>
 	</select>
 	
+	<select id="queryDynamicGroups" parameterType="Groups" resultType="Groups">
+		SELECT
+			*
+		FROM
+			`MXK_GROUPS`
+		WHERE
+			 DYNAMIC = '1'
+		<include refid="where_statement"/>
+	</select>
+	
 	
 	<update id="logisticDelete" parameterType="Groups" >
     	UPDATE `MXK_GROUPS` SET

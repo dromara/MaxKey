@@ -17,14 +17,25 @@
 
 package org.maxkey.persistence.service;
 
+import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.Groups;
 import org.maxkey.persistence.mapper.GroupsMapper;
+import org.maxkey.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GroupsService  extends JpaBaseService<Groups>{
-	
+    final static Logger _logger = LoggerFactory.getLogger(GroupsService.class);
+    @Autowired
+    @Qualifier("groupMemberService")
+    GroupMemberService groupMemberService;
+    
 	public GroupsService() {
 		super(GroupsMapper.class);
 	}
@@ -37,4 +48,39 @@ public class GroupsService  extends JpaBaseService<Groups>{
 		// TODO Auto-generated method stub
 		return (GroupsMapper)super.getMapper();
 	}
+	
+	
+	public List<Groups> queryDynamicGroups(Groups groups){
+	    return this.getMapper().queryDynamicGroups(groups);
+	}
+	
+	public boolean deleteById(String groupId) {
+	    this.remove(groupId);
+	    groupMemberService.deleteByGroupId(groupId);
+	    return true;
+	}
+	
+	public void refreshDynamicGroups(Groups dynamicGroup){
+	    if(dynamicGroup.getDynamic().equals("1")) {
+    	    if(dynamicGroup.getOrgIdsList()!=null && !dynamicGroup.getOrgIdsList().equals("")) {
+    	        dynamicGroup.setOrgIdsList("'"+dynamicGroup.getOrgIdsList().replace(",", "','")+"'");
+    	    }
+    	    String filters = dynamicGroup.getFilters();
+    	    if(StringUtils.filtersSQLInjection(filters.toLowerCase())) {  
+    	        _logger.info("filters include SQL Injection Attack Risk.");
+    	        return;
+    	    }
+    	    
+    	    filters = filters.replace("&", " AND ");
+    	    filters = filters.replace("|", " OR ");
+    	    
+    	    dynamicGroup.setFilters(filters);
+    	    
+    	    groupMemberService.deleteDynamicGroupMember(dynamicGroup);
+    	    groupMemberService.addDynamicGroupMember(dynamicGroup);
+	    }
+    }
+	
+
+	
 }

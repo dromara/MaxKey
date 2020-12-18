@@ -92,17 +92,15 @@ App Management UI
 Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> history version</a>
 | Version    | Date   |  URL  |  Code  |
 | --------| :-----  | :----  | :----:  |
-| v 2.3.0 GA | 2020/11/11   |  <a href="https://pan.baidu.com/s/17jAatKNlM6L649992kEMBQ" target="_blank">Download</a>  |  **h3zw**  |
+| v 2.4.0 RC | 2020/12/15   |  <a href="https://pan.baidu.com/s/1xUZZJrxEUmbU3thIxd2lDA" target="_blank">Download</a>  |  **k65z**  |
 
 
 # Roadmap
 
-1. Implementation of dynamic group (based on user attribute or organization)
+1. Part-time organizations
 
-2. Director and part-time organizations
+2. Zero trust scenario integration
 
-3. Zero trust scenario integration
-
-4. Maxkey-Cloud (micro service version)-2021
+3. Maxkey-Cloud (micro service version)-2021
 
 

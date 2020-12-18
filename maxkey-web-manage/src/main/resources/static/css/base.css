@@ -148,7 +148,7 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 }
 
 .page-container .main-content {
-    padding: calc(50px + 35px) 15px 15px;
+    padding: calc(35px + 35px) 15px 15px;
     min-height: calc(100vh - 65px);
     background: #e6e8ea;
     width: 100%;
@@ -178,11 +178,15 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 }
 
 .breadcrumb-wrapper {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+}
+
+.content-wrapper {
+	padding-top: 15px;
 }
 
 .breadcrumb-wrapper .breadcrumb li {

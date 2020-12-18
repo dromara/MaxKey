@@ -33,7 +33,7 @@
 
 					</div>
 					<div class="container-fluid">
-
+					<div class="content-wrapper row">
 					<div class="col-12 grid-margin">
 						<div class="card">
 							<div class="card-body">
@@ -113,6 +113,7 @@
 	</table>
 </div>
 	
+</div>
 </div>
 					</div>
 <footer class="content-footer">

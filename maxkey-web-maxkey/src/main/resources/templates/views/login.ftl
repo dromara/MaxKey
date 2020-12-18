@@ -131,7 +131,7 @@
 		<#--on captcha image click ,new a captcha code-->
 		<#if true==isCaptcha>
 		$('#j_captchaimg').click(function () {//
-	           $(this).attr("src", "<@base />/captcha"+(new Date()).getTime()); 
+	           $(this).attr("src", "<@base />/captcha?"+(new Date()).getTime()); 
 		}); 
 		</#if>
 	
