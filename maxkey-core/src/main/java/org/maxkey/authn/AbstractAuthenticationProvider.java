@@ -70,7 +70,7 @@ public abstract class AbstractAuthenticationProvider {
     @Qualifier("onlineTicketServices")
     protected OnlineTicketServices onlineTicketServices;
     
-    static  ArrayList<GrantedAuthority> grantedAdministratorsAuthoritys = new ArrayList<GrantedAuthority>();
+    public static  ArrayList<GrantedAuthority> grantedAdministratorsAuthoritys = new ArrayList<GrantedAuthority>();
     
     static {
         grantedAdministratorsAuthoritys.add(new SimpleGrantedAuthority("ROLE_ADMINISTRATORS"));

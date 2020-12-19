@@ -37,6 +37,14 @@ public class SigninPrincipal implements  UserDetails {
     ArrayList<GrantedAuthority> grantedAuthorityApps;
     boolean authenticated;
     boolean roleAdministrators;
+    
+	private  boolean accountNonExpired;
+
+	private  boolean accountNonLocked;
+
+	private  boolean credentialsNonExpired;
+
+	private  boolean enabled;
 
     /**
      * SigninPrincipal.
@@ -50,6 +58,10 @@ public class SigninPrincipal implements  UserDetails {
     public SigninPrincipal(UserInfo userInfo) {
         this.userInfo = userInfo;
         this.authenticated = true;
+        this.accountNonExpired = true;
+        this.accountNonLocked  = true;
+        this.credentialsNonExpired =true;
+        this.enabled = true;
     }
     
     /**
@@ -116,22 +128,22 @@ public class SigninPrincipal implements  UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return this.accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return this.accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return this.credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.enabled;
     }
 
     public ArrayList<GrantedAuthority> getGrantedAuthorityApps() {
