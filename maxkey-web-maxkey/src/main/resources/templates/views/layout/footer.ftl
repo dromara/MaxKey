@@ -17,3 +17,13 @@
 		    <div class="col-sm-4"></div>
 	    </div>
 	 </div>
+<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?ae02bfc0d49b4dfa890f81d96472fe99";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+</script>
+<#-- footer end -->
