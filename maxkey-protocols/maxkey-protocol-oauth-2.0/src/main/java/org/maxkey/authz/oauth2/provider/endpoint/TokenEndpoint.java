@@ -16,7 +16,6 @@
 
 package org.maxkey.authz.oauth2.provider.endpoint;
 
-import java.security.Principal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -24,10 +23,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authz.oauth2.common.DefaultOAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidClientException;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidGrantException;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidRequestException;
+import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
 import org.maxkey.authz.oauth2.common.exceptions.UnsupportedGrantTypeException;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
@@ -97,64 +98,69 @@ public class TokenEndpoint extends AbstractEndpoint {
 	public ResponseEntity<OAuth2AccessToken> postAccessToken(@RequestParam
 	Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
 		// TokenEndpointAuthenticationFilter
-	    
-	    Object principal = WebContext.getAuthentication();
-
-		if (!(principal instanceof Authentication)) {
-			throw new InsufficientAuthenticationException(
-					"There is no client authentication. Try adding an appropriate authentication filter.");
-		}
-
-		String clientId = getClientId((Authentication)principal);
-		ClientDetails authenticatedClient = getClientDetailsService().loadClientByClientId(clientId);
-
-		TokenRequest tokenRequest = getOAuth2RequestFactory().createTokenRequest(parameters, authenticatedClient);
-
-		if (clientId != null && !clientId.equals("")) {
-			// Only validate the client details if a client authenticated during this
-			// request.
-			if (!clientId.equals(tokenRequest.getClientId())) {
-				// double check to make sure that the client ID in the token request is the same as that in the
-				// authenticated client
-				throw new InvalidClientException("Given client ID does not match authenticated client");
+		OAuth2AccessToken token = null;
+	    try {
+		    Object principal = WebContext.getAuthentication();
+	
+			if (!(principal instanceof Authentication)) {
+				throw new InsufficientAuthenticationException(
+						"There is no client authentication. Try adding an appropriate authentication.");
 			}
-		}
-		if (authenticatedClient != null) {
-			oAuth2RequestValidator.validateScope(tokenRequest, authenticatedClient);
-		}
-		if (!StringUtils.hasText(tokenRequest.getGrantType())) {
-			throw new InvalidRequestException("Missing grant type");
-		}
-		if (tokenRequest.getGrantType().equals("implicit")) {
-			throw new InvalidGrantException("Implicit grant type not supported from token endpoint");
-		}
-
-		if (isAuthCodeRequest(parameters)) {
+	
+			String clientId = getClientId((Authentication)principal);
+			ClientDetails authenticatedClient = getClientDetailsService().loadClientByClientId(clientId);
+	
+			TokenRequest tokenRequest = getOAuth2RequestFactory().createTokenRequest(parameters, authenticatedClient);
+	
+			if (clientId != null && !clientId.equals("")) {
+				// Only validate the client details if a client authenticated during this
+				// request.
+				if (!clientId.equals(tokenRequest.getClientId())) {
+					// double check to make sure that the client ID in the token request is the same as that in the
+					// authenticated client
+					throw new InvalidClientException("Given client ID does not match authenticated client");
+				}
+			}
+			if (authenticatedClient != null) {
+				oAuth2RequestValidator.validateScope(tokenRequest, authenticatedClient);
+			}
+			if (!StringUtils.hasText(tokenRequest.getGrantType())) {
+				throw new InvalidRequestException("Missing grant type");
+			}
+			if (tokenRequest.getGrantType().equals("implicit")) {
+				throw new InvalidGrantException("Implicit grant type not supported from token endpoint");
+			}
+	
+			if (isAuthCodeRequest(parameters)) {
+				// The scope was requested or determined during the authorization step
+				if (!tokenRequest.getScope().isEmpty()) {
+					logger.debug("Clearing scope of incoming token request");
+					tokenRequest.setScope(Collections.<String> emptySet());
+				}
+			}
+			
 			// The scope was requested or determined during the authorization step
-			if (!tokenRequest.getScope().isEmpty()) {
-				logger.debug("Clearing scope of incoming token request");
-				tokenRequest.setScope(Collections.<String> emptySet());
+			/**crystal.sea
+			 * code must uuid format
+			 */
+			 if (parameters.get("code") != null &&!StringGenerator.uuidMatches(parameters.get("code"))) {
+			    	throw new InvalidRequestException("The code is not valid format .");
 			}
-		}
-		
-		// The scope was requested or determined during the authorization step
-		/**crystal.sea
-		 * code must uuid format
-		 */
-		 if (parameters.get("code") != null &&!StringGenerator.uuidMatches(parameters.get("code"))) {
-		    	throw new InvalidRequestException("The code is not valid format .");
-		}
-		 
-		if (isRefreshTokenRequest(parameters)) {
-			// A refresh token has its own default scopes, so we should ignore any added by the factory here.
-			tokenRequest.setScope(OAuth2Utils.parseParameterList(parameters.get(OAuth2Utils.SCOPE)));
-		}
-
-		OAuth2AccessToken token = getTokenGranter().grant(tokenRequest.getGrantType(), tokenRequest);
-		if (token == null) {
-			throw new UnsupportedGrantTypeException("Unsupported grant type: " + tokenRequest.getGrantType());
-		}
-
+			 
+			if (isRefreshTokenRequest(parameters)) {
+				// A refresh token has its own default scopes, so we should ignore any added by the factory here.
+				tokenRequest.setScope(OAuth2Utils.parseParameterList(parameters.get(OAuth2Utils.SCOPE)));
+			}
+	
+			token = getTokenGranter().grant(tokenRequest.getGrantType(), tokenRequest);
+			if (token == null) {
+				throw new UnsupportedGrantTypeException("Unsupported grant type: " + tokenRequest.getGrantType());
+			}
+	    }catch(OAuth2Exception oauth2Exception) {
+	    	token = new DefaultOAuth2AccessToken(oauth2Exception); 
+	    }catch(InsufficientAuthenticationException authenticationException) {
+	    	token = new DefaultOAuth2AccessToken(new OAuth2Exception(authenticationException.getMessage())); 
+	    }
 		return getResponse(token);
 
 	}

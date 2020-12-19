@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
+import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
+
 /**
  * @author Dave Syer
  *
@@ -59,6 +61,11 @@ public interface OAuth2AccessToken  extends Serializable {
 	 * href="http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-3.3">Section 3.3</a>
 	 */
 	public static String SCOPE = "scope";
+	
+	public static String ERROR = "error";
+	
+	public static String ERROR_DESCRIPTION = "error_description";
+	
 
 	/**
 	 * The additionalInformation map is used by the token serializers to export any fields used by extensions of OAuth.
@@ -73,6 +80,8 @@ public interface OAuth2AccessToken  extends Serializable {
 	OAuth2RefreshToken getRefreshToken();
 
 	String getTokenType();
+	
+	OAuth2Exception getOAuth2Exception();
 
 	boolean isExpired();
 

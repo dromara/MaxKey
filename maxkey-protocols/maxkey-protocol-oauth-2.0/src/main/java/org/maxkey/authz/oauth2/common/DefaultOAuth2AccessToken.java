@@ -26,6 +26,8 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
+import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
+
 /**
  * Basic access token for OAuth 2.
  * 
@@ -48,7 +50,9 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
     private Set<String> scope;
 
     private Map<String, Object> additionalInformation = Collections.emptyMap();
-
+    
+    private OAuth2Exception oauth2Exception; 
+    
     /**
      * Create an access token from the value provided.
      */
@@ -78,6 +82,10 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
         setTokenType(accessToken.getTokenType());
     }
 
+    public DefaultOAuth2AccessToken(OAuth2Exception oauth2Exception) {
+    	this.oauth2Exception = oauth2Exception;
+    }
+    
     public void setValue(String value) {
         this.value = value;
     }
@@ -257,5 +265,11 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
     public void setAdditionalInformation(Map<String, Object> additionalInformation) {
         this.additionalInformation = new LinkedHashMap<String, Object>(additionalInformation);
     }
+
+	@Override
+	public OAuth2Exception getOAuth2Exception() {
+		
+		return this.oauth2Exception;
+	}
 
 }
