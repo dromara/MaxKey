@@ -1,4 +1,4 @@
-# <img src="images/logo_maxkey.png"  width="200px"   alt=""/>
+# <img src="images/logo_maxkey.png?raw=true"  width="200px"   alt=""/>
 
 
 <a href="README_en.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
@@ -72,21 +72,21 @@ QQ交流群：<b>434469201</b>
 **MaxKey认证**
 
 登录界面
-<img src="images/maxkey_login.png"/>
+<img src="images/maxkey_login.png?raw=true"/>
 
 主界面
-<img src="images/maxkey_index.png"/>
+<img src="images/maxkey_index.png?raw=true"/>
 
 **MaxKey管理**
 
 访问报表
-<img src="images/maxkey_mgt_rpt.png"/>
+<img src="images/maxkey_mgt_rpt.png?raw=true"/>
 
 用户管理
-<img src="images/maxkey_mgt_users.png"/>
+<img src="images/maxkey_mgt_users.png?raw=true"/>
 
 应用管理
-<img src="images/maxkey_mgt_apps.png"/>
+<img src="images/maxkey_mgt_apps.png?raw=true"/>
 
 
 # 下载
