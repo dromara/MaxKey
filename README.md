@@ -1,5 +1,5 @@
 # <img src="http://www.maxkey.top/static/images/logo_maxkey.png"  width="200px" />
-<img src="{{ "/images/logo_maxkey.png" | prepend: site.baseurl }}?{{ site.time | date: "%Y%m%d%H%M" }}"  alt=""/>
+<img src="images/logo_maxkey.png"  alt=""/>
 
 <a href="README_en.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
 
