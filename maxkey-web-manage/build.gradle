@@ -3,24 +3,45 @@ buildscript {
 		jcenter()
 	}
 	dependencies {
+		//springboot jar
+		//classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
 }
-
-
 
 description = "maxkey-web-manage"
 
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
-//apply plugin: 'war'
-//apply plugin: 'eclipse-wtp'
-//apply plugin: 'com.bmuschko.tomcat-base'
-//apply plugin: 'com.bmuschko.tomcat'
+
+//springboot jar
+/*
+apply plugin: 'io.spring.dependency-management'
+
+plugins {
+	id 'org.springframework.boot' version "${springBootVersion}"
+}
+
+bootJar {
+	dependsOn jar
+	baseName = 'maxkey-mgt-boot'
+    version = "${project.version}-ga"
+    mainClass = 'org.maxkey.MaxKeyMgtApplication'
+	manifest {
+	        attributes(
+						"Implementation-Title": project.name,
+	                	"Implementation-Vendor": project.vendor,
+	                	"Created-By": project.author,
+	                	"Implementation-Date": java.time.ZonedDateTime.now(),
+	                	"Implementation-Version": project.version
+	           )
+	    }	
+}
+*/
 
 /*
 plugins {
-	id 'com.google.cloud.tools.jib' version '2.6.0'
-	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'com.google.cloud.tools.jib' version "${jibGradlePluginVersion}"
+	id 'org.springframework.boot' version "${springBootVersion}"
 }
 
 jib {
@@ -28,12 +49,12 @@ jib {
 		image = 'adoptopenjdk:11-jre-openj9'
 	}
 	to {
-		image = "maxkey/maxkey-mgt"
+		image = "maxkey/maxkey-mgt-docker"
 		tags = ["${project.version}".toString(), 'latest']
 	}
 	container {
-		jvmFlags = ['-Dfile.encoding=utf-8', '-Dserver.port=80']
-		ports = ['80']
+		jvmFlags = ['-Dfile.encoding=utf-8', '-Dserver.port=9521']
+		ports = ['9521']
 	}
 }
 */
