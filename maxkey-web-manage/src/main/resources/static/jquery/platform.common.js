@@ -311,7 +311,12 @@ $(function(){
 		
 		var url=$(this).attr("wurl");
 		
+		
 		if($(this).attr("ref")){
+			if($("#"+$(this).attr("ref")).val()==""){
+				$.alert({content:$.platform.messages.select.alertText});
+				return;
+			}
 			url=url+"/"+$("#"+$(this).attr("ref")).val();
 		}
 		
@@ -375,7 +380,8 @@ $(function(){
 			if($(this).attr("target")&&$(this).attr("target")=="forward"){
 				if($(this).attr("ref")){
 					if($("#"+$(this).attr("ref")+"").val()==""){
-						$.forward($(this).attr("wurl"));
+						$.alert({content:$.platform.messages.select.alertText});
+						return;
 					}else{
 						$.forward($(this).attr("wurl")+"/"+$("#"+$(this).attr("ref")+"").val());
 					}
@@ -392,7 +398,8 @@ $(function(){
 					};
 				if($(this).attr("ref")){
 					if($("#"+$(this).attr("ref")+"").val()==""){
-						settings.url=$(this).attr("wurl");
+						$.alert({content:$.platform.messages.select.alertText});
+						return;
 					}else{
 						settings.url=$(this).attr("wurl")+"/"+$("#"+$(this).attr("ref")+"").val();
 					}

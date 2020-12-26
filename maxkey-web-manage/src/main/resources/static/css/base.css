@@ -309,7 +309,13 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 }
 
 #tool_box_right {
-	height:32px;
+	height:46px;
+	text-align: right;
+	padding-right: 10px;
+	width:484px;
+}
+#tool_box_right_more{
+	height:46px;
 	text-align: right;
 	padding-right: 10px;
 	width:484px;

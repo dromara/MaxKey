@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.UserInfoAdjointMapper">
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			AND	ID	=	#{id}
+		</if> 
+		<if test="userId != null and userId != ''">
+			AND	USERID	=	#{userId}
+		</if> 
+    </sql>
+    
+
+	
+	<select id="queryPageResults" parameterType="UserInfoAdjoint" resultType="UserInfoAdjoint">
+		SELECT
+			*
+		FROM
+			MXK_USERINFO_ADJUNCT
+		WHERE
+			 (1=1)	
+		<include refid="where_statement"/>
+	</select>
+	
+	
+	<update id="logisticDelete" parameterType="UserInfoAdjoint" >
+    	UPDATE MXK_USERINFO_ADJUNCT SET
+    		STATUS	=	'2'  
+    	WHERE	1	=	1
+    	<if test="id != null">
+			AND	ID	=	#{id}
+		</if>
+		<if test="name != name">
+			ADN	NAME	=	#{name}
+		</if>
+    </update>
+    
+    
+    <update id="logisticBatchDelete" parameterType="java.util.List">
+    	UPDATE MXK_USERINFO_ADJUNCT SET STATUS='2' WHERE ID IN
+    		<foreach item="item" collection="list" open="(" separator="," close=")">
+				#{item}
+    		</foreach>
+    </update>
+    
+
+   
+</mapper>

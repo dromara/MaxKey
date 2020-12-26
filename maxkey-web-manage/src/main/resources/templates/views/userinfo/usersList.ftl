@@ -19,6 +19,14 @@ function onClick (event, treeId, treeNode) {
 	$("#searchBtn").click();
 	 
 }
+
+//adjunctUserIdRef
+function beforeWindow( ){
+	if($('#datagrid').bootstrapTable('getSelections')){
+		$("#adjunctUserIdRef").val($('#datagrid').bootstrapTable('getSelections')[0].id);
+	}
+}
+
 	
 $(function () {
 		
@@ -145,6 +153,16 @@ $(function () {
 		$("#changepwdBtnHidden").click();	
 	});
 	
+	
+	$("#moreBtn").on("click",function(){
+		var node=$("#tool_box_right_more");
+		if(node.is(':hidden')){　　
+		　　node.show();　
+		}else{
+		　　node.hide();
+		}
+	});
+	
 });
 	</script>
 </head>
@@ -199,17 +217,7 @@ $(function () {
 					 	</form>
 				</td>
 				<td colspan="2"> 
-					 <div id="tool_box_right">
-					 	<input class="button btn btn-warning mr-3" id="changepwdBtn" type="button" value="<@locale code="login.password.changepassword"/>" />
-						<input class="button btn btn-warning mr-3 window" id="changepwdBtnHidden" type="hidden"
-						 value="<@locale code="login.password.changepassword"/>" 
-						 		    wurl="<@base/>/userinfo/forwardChangePassword" wwidth="600px" wheight="250px" />
-						 		    
-						 <input class="button btn btn-success mr-3 window" id="usersImportBtn" type="button" 
-						 		value="<@locale code="button.text.import"/>" 
-						 		    wurl="<@base/>/userinfo/import" wwidth="400px" wheight="250px" />
-						 		    
-						 		    		    
+					 <div id="tool_box_right">    
 						 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/userinfo/forwardAdd"
 						 		    wwidth="960"
@@ -221,9 +229,23 @@ $(function () {
 					 				wwidth="960"
 						 		    wheight="600"
 					 		    	target="window"> 
-					 		    	
 					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
 					 				wurl="<@base/>/userinfo/delete" />
+					 	<input  class="button btn btn-secondary"  id="moreBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">	    	
+					 </div>
+					 <div id="tool_box_right_more" style="display:none;">
+					 	<input class="button btn btn-warning mr-3" id="changepwdBtn" type="button" value="<@locale code="login.password.changepassword"/>" />
+						<input class="button btn btn-warning mr-3 window" id="changepwdBtnHidden" type="hidden"
+						 value="<@locale code="login.password.changepassword"/>" 
+						 		    wurl="<@base/>/userinfo/forwardChangePassword" wwidth="600px" wheight="250px" />
+						
+						 <input class="button btn btn-info mr-3 window" id="userAdjointBtn" type="button" 
+						 		value="<@locale code="button.text.adjunct"/>"  ref="adjunctUserIdRef"
+						 		    wurl="<@base/>/useradjoint/list" wwidth="900px" wheight="600px" />
+						 <input  id="adjunctUserIdRef" 		type="hidden" />     		    
+						 <input class="button btn btn-success mr-3 window" id="usersImportBtn" type="button" 
+						 		value="<@locale code="button.text.import"/>" 
+						 		    wurl="<@base/>/userinfo/import" wwidth="400px" wheight="250px" />
 					</div>
 				</td>
 			</tr>
