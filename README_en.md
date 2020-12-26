@@ -97,10 +97,8 @@ Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/d
 
 # Roadmap
 
-1. Part-time organizations
+1. Zero trust scenario integration
 
-2. Zero trust scenario integration
-
-3. Maxkey-Cloud (micro service version)-2021
+2. Maxkey-Cloud (micro service version)-2021
 
 
