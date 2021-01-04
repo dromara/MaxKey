@@ -103,6 +103,5 @@ Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/d
 
 # User Registration
 
-<a href="https://github.com/MaxKeyTop/MaxKey/issues/40" target="_blank">  Click to register as MaxKey user and contribute to MaxKey!</a>
+<a href="https://github.com/MaxKeyTop/MaxKey/issues/40" target="_blank"> Click to register </a> as MaxKey user and contribute to MaxKey!
 
-Many thanks to the following registered users. 

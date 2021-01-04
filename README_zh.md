@@ -105,8 +105,4 @@ QQ交流群：<b>434469201</b>
 
 # 接入登记
 
-<a href="https://gitee.com/maxkeytop/MaxKey/issues/I2BNRZ" target="_blank"> 点击进行接入登记，为 MaxKey的发展贡献自己的力量！</a>
-
-感谢以下接入用户的大力支持
-
-
+<a href="https://gitee.com/maxkeytop/MaxKey/issues/I2BNRZ" target="_blank"> 点击进行接入登记</a>，为 MaxKey的发展贡献自己的力量！
