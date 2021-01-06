@@ -30,6 +30,11 @@ public class RedisOptTokenStore  extends AbstractOptTokenStore {
     
     RedisConnectionFactory connectionFactory;
     
+    public RedisOptTokenStore(RedisConnectionFactory connectionFactory) {
+        super();
+        this.connectionFactory = connectionFactory;
+    }
+
     public static String PREFIX = "REDIS_OTP_SERVICE_";
     
     @Override

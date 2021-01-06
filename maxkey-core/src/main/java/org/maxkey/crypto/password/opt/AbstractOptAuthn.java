@@ -142,5 +142,12 @@ public abstract class AbstractOptAuthn {
         this.optType = optType;
     }
 
+    public void setOptTokenStore(AbstractOptTokenStore optTokenStore) {
+        this.optTokenStore = optTokenStore;
+    }
+
+    public void initPropertys() {
+        
+    }
  
 }
