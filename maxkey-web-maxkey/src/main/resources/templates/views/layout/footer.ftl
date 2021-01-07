@@ -1,6 +1,6 @@
      <#-- footer -->
- 	<div class="footer" >
-	    <div class="container row">
+ 	<div class="container" >
+	    <div class="row">
 	    	<div class="col-sm-4"></div>
 	    	<div class="col-sm-4">
 			    <table cellpadding="2" cellspacing="0" style="margin-top: 30px;width:100%;height:100%; border:0;">

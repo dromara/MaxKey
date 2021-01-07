@@ -357,49 +357,29 @@
 					</tr>
 					<tr>
 						<td>
-							<table>
-								<tr >
-									<td ><@locale code="global.change.language"/> :</td>
-									<td >
-										<div > 
-											<a href="<@basePath />/login?language=en">
-												<@locale code="global.change.language.en"/>
-											</a>|
-											<a href="<@basePath />/login?language=zh_CN">
-												<@locale code="global.change.language.zh"/>
-											</a>/ Locale : <@locale/>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										 <div>
-									      	<table width="100%" frame="void" cellpadding="8px;" cellspacing="8px;">
-									      		<tr>
-									      			<td align="left"><@locale code="login.text.otherlogins"/>：</td>
-									      		</tr>
-									      		
-									      		<#list ssopList as ssop>
-									      			<#if (ssop_index)%3==0>
-										      			<tr>
-										      		</#if>
-										      			<td align="right" nowrap>
-												      			<a href="<@base />/logon/oauth20/authorize/${ssop.provider}"  title="${ssop.providerName}" >
-												      				<img src="<@base />/static/${ssop.icon}" title="${ssop.providerName}"  style="width=:32px;height:32px;border:0;"/>
-												      			</a>&nbsp;&nbsp;
-										      			</td>
-										      		<#if (ssop_index +1)%3==0>
-										      		</tr>
-										      		</#if>
-										      	</#list>
-										      	<#if (ssopList?size)%3!=0>
-										      		</tr>
-										      	</#if>
-									      	</table>
-								  		</div>
-									</td>
-								</tr>
-							</table>
+							
+					      	<table width="100%" frame="void" cellpadding="8px;" cellspacing="8px;">
+					      		<tr>
+					      			<td colspan="3" align="left"><@locale code="login.text.otherlogins"/>：</td>
+					      		</tr>
+					      		
+					      		<#list ssopList as ssop>
+					      			<#if (ssop_index)%3==0>
+						      			<tr>
+						      		</#if>
+						      			<td align="center" nowrap>
+								      			<a href="<@base />/logon/oauth20/authorize/${ssop.provider}"  title="${ssop.providerName}" >
+								      				<img src="<@base />/static/${ssop.icon}" title="${ssop.providerName}"  style="width=:32px;height:32px;border:0;"/>
+								      			</a>&nbsp;&nbsp;
+						      			</td>
+						      		<#if (ssop_index +1)%3==0>
+						      		</tr>
+						      		</#if>
+						      	</#list>
+						      	<#if (ssopList?size)%3!=0>
+						      		</tr>
+						      	</#if>
+					      	</table>
 						</td>
 					</tr>
 					<tr>

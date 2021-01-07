@@ -6,7 +6,7 @@
 				<div style="letter-spacing:2px;font-size:24px;font-weight:bolder;margin-top: 16px;float:left;"><@locale code="global.application"/></div>
 				</div>
 			</div>
-			<div class="col-sm-3">
+			<div class="col-sm-4">
 				<div  style="margin-top:25px;margin-right:10px;float:right;">
 					<table  style="height: 31px;">
 						<tr>
@@ -22,7 +22,7 @@
 					</table>
 				</div >
 			</div>
-			<div class="col-sm-4">
+			<div class="col-sm-3">
 				<div  style="margin-top:25px;margin-right:10px;float:right;">
 					<table  style="height: 31px;">
 						<tr>
