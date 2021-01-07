@@ -16,15 +16,23 @@
  
 
 package org.maxkey.util;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
+import java.net.Socket;
 import java.security.SecureRandom;
 import java.util.Enumeration;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class EthernetAddress   
 	implements Serializable, Cloneable, Comparable<EthernetAddress>
 {
+    private static final  Logger _logger = LoggerFactory.getLogger(EthernetAddress.class);
+    
     private static final long serialVersionUID = 1L;
 
     private final static char[] HEX_CHARS = "0123456789abcdefABCDEF".toCharArray();
@@ -492,4 +500,20 @@ public class EthernetAddress
         sb.append(HEX_CHARS[(hex & 0x0f)]);
     }
 
+    public  boolean  isPortAvailable(String host , int port) {
+        Socket socket = new Socket();
+        try {
+            socket.connect(new InetSocketAddress(host, port));
+        } catch (IOException e) {
+            _logger.debug("IOException",e);
+            return false;
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                _logger.debug("IOException Close ",e);
+            }
+        }
+        return true;
+    }
 }

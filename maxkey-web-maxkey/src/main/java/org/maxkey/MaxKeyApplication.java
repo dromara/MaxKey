@@ -37,7 +37,7 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
     private static final Logger _logger = LoggerFactory.getLogger(MaxKeyApplication.class);
 
     /**
-     * @param args args
+     * @param args start parameter 
      */
     public static void main(String[] args) {
         _logger.info("Start MaxKeyApplication ...");
@@ -49,8 +49,7 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
         try {
             initWebContext.init(null);
         } catch (ServletException e) {
-            e.printStackTrace();
-            _logger.error("", e);
+            _logger.error("ServletException", e);
         }
         _logger.info("MaxKey at " + new Date(applicationContext.getStartupDate()));
         _logger.info("MaxKey Server Port "
