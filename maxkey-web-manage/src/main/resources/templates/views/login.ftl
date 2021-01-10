@@ -64,20 +64,7 @@
 									</button>
 								</div>
 								<div class="form-group">
-									<div class="float-right">
-										Locale : <@locale/>
-										<a href="<@basePath />/login?language=en">
-											<@locale code="global.change.language.en" />
-										</a>
-										|
-										<a href="<@basePath />/login?language=zh_CN">
-											<@locale code="global.change.language.zh" />
-										</a>
-									</div>
-									<div class="float-left">
-										<@locale code="global.change.language" />：
-
-									</div>
+									
 								</div>
 							</form>
 						</div>
@@ -86,9 +73,11 @@
 			</div>
 		</div>
 	</div>
+	<div id="footer">
+		<#include  "layout/footer.ftl"/>
+	</div>
 	<div id="preloader">
 		<div class="loader" id="loader-1"></div>
-		<#include  "layout/footer.ftl"/>
 	</div>
 </body>
 </html>
