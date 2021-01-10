@@ -358,7 +358,7 @@
 					<tr>
 						<td>
 							
-					      	<table width="100%" frame="void" cellpadding="8px;" cellspacing="8px;">
+					      	<table id="otherlogins" width="100%">
 					      		<tr>
 					      			<td colspan="3" align="left"><@locale code="login.text.otherlogins"/>：</td>
 					      		</tr>
@@ -367,7 +367,7 @@
 					      			<#if (ssop_index)%3==0>
 						      			<tr>
 						      		</#if>
-						      			<td align="center" nowrap>
+						      			<td align="center" nowrap style="height: 40px;">
 								      			<a href="<@base />/logon/oauth20/authorize/${ssop.provider}"  title="${ssop.providerName}" >
 								      				<img src="<@base />/static/${ssop.icon}" title="${ssop.providerName}"  style="width=:32px;height:32px;border:0;"/>
 								      			</a>&nbsp;&nbsp;

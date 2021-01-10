@@ -91,6 +91,17 @@ body{
 	margin-bottom: 10px;
 }
 
+#otherlogins a {
+    /* color: #007bff; */
+    text-decoration: none; 
+    background-color: transparent; 
+}
+
+#otherlogins a:hover {
+    /* color: #0056b3; **/
+   text-decoration: none; 
+}
+
 #tool_box {
 	margin-bottom: 10px;
 	border: 1px solid #e5e5e5;
