@@ -17,6 +17,8 @@
 
 package org.maxkey.persistence.service;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
@@ -62,6 +64,25 @@ public class GroupsService  extends JpaBaseService<Groups>{
 	
 	public void refreshDynamicGroups(Groups dynamicGroup){
 	    if(dynamicGroup.getDynamic().equals("1")) {
+	        boolean isDynamicTimeSupport = false;
+	        boolean isBetweenEffectiveTime = false;
+	        if(dynamicGroup.getResumeTime()!=null&&dynamicGroup.getResumeTime().equals("")
+	                &&dynamicGroup.getSuspendTime()!=null&&dynamicGroup.getSuspendTime().equals("")) {
+	            LocalTime currentTime = LocalDateTime.now().toLocalTime();
+	            LocalTime resumeTime = LocalTime.parse(dynamicGroup.getResumeTime());
+	            LocalTime suspendTime = LocalTime.parse(dynamicGroup.getSuspendTime());
+	            
+	            _logger.info("currentTime: " + currentTime 
+                        + " , resumeTime : " + resumeTime 
+                        + " , suspendTime: " + suspendTime);
+	            isDynamicTimeSupport = true;
+	            
+	            if(resumeTime.isBefore(currentTime) && currentTime.isBefore(suspendTime)) {
+	                isBetweenEffectiveTime = true;
+	            }
+	            
+	        }
+	        
     	    if(dynamicGroup.getOrgIdsList()!=null && !dynamicGroup.getOrgIdsList().equals("")) {
     	        dynamicGroup.setOrgIdsList("'"+dynamicGroup.getOrgIdsList().replace(",", "','")+"'");
     	    }
@@ -76,8 +97,17 @@ public class GroupsService  extends JpaBaseService<Groups>{
     	    
     	    dynamicGroup.setFilters(filters);
     	    
-    	    groupMemberService.deleteDynamicGroupMember(dynamicGroup);
-    	    groupMemberService.addDynamicGroupMember(dynamicGroup);
+    	    if(isDynamicTimeSupport) {
+    	        if(isBetweenEffectiveTime) {
+    	            groupMemberService.deleteDynamicGroupMember(dynamicGroup);
+                    groupMemberService.addDynamicGroupMember(dynamicGroup);
+    	        }else {
+    	            groupMemberService.deleteDynamicGroupMember(dynamicGroup);
+    	        }
+    	    }else{
+                groupMemberService.deleteDynamicGroupMember(dynamicGroup);
+                groupMemberService.addDynamicGroupMember(dynamicGroup);
+            }
 	    }
     }
 	

@@ -185,6 +185,18 @@ function showOrgsTree() {
 				</td>
 			</tr>
 			<tr>
+				<th><@locale code="group.resumeTime" />：</th>
+				<td nowrap>
+					<input type="text" id="resumeTime" name="resumeTime" class="form-control timepicker" title="" value=""  required="" />
+				</td>
+			</tr>
+			<tr>
+				<th><@locale code="group.suspendTime" />：</th>
+				<td nowrap>
+					<input type="text" id="suspendTime" name="suspendTime" class="form-control timepicker" title="" value=""  required="" />
+				</td>
+			</tr>
+			<tr>
 				<th><@locale code="group.orgidslist" />：</th>
 				<td nowrap>
 					<input type="text" id="orgIdsListName" name="orgIdsListName"   readonly  class="form-control" title="" value=""   onclick="showOrgsTree();"/>
@@ -194,13 +206,13 @@ function showOrgsTree() {
 			<tr>
 				<th><@locale code="group.filters" />：</th>
 				<td nowrap>
-					<textarea id="filters" name="filters" class="form-control"  rows="7" cols="20"></textarea>
+					<textarea id="filters" name="filters" class="form-control"  rows="6" cols="20"></textarea>
 				</td>
 			</tr>
 			<tr>
                 <th><@locale code="common.text.description" />：</th>
                 <td nowrap>
-                    <textarea id="description" name="description" class="form-control"  rows="6" cols="20"></textarea>
+                    <textarea id="description" name="description" class="form-control"  rows="4" cols="20"></textarea>
                 </td>
             </tr>
 			<tr>
