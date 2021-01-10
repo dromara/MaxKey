@@ -68,6 +68,7 @@ public class SocialSignOnListController {
 				socialSignOnProvider.setProvider(ssop.getProvider());
 				socialSignOnProvider.setProviderName(ssop.getProviderName());
 				socialSignOnProvider.setIcon(ssop.getIcon());
+				socialSignOnProvider.setSortOrder(ssop.getSortOrder());
 				for(SocialsAssociate ssout :listSocialSignOnUserToken){
 					if(ssout.getProvider().equals(ssop.getProvider())){
 						socialSignOnProvider.setUserBind(true);
@@ -75,13 +76,6 @@ public class SocialSignOnListController {
 					}
 				}
 				listBindSocialSignOnProvider.add(socialSignOnProvider);
-			}
-			
-			if(listBindSocialSignOnProvider.size()%4>0){
-				for(int i=0;i<=listBindSocialSignOnProvider.size()%4;i++){
-					listBindSocialSignOnProvider.add(new SocialSignOnProvider());
-				}
-				
 			}
 			
 			modelAndView.addObject("listSocialSignOnProvider", listBindSocialSignOnProvider);

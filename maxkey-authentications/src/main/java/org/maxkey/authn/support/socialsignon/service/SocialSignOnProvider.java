@@ -29,7 +29,10 @@ public class SocialSignOnProvider {
 	private String clientId;
 	private String clientSecret;
 	private String accountId;
+	private String bindTime;
+	private String unBindTime;
 	private int sortOrder;
+	
 	
 	
 	private boolean userBind;
@@ -104,6 +107,23 @@ public class SocialSignOnProvider {
 	public void setUserBind(boolean userBind) {
 		this.userBind = userBind;
 	}
+
+	
+    public String getBindTime() {
+        return bindTime;
+    }
+
+    public void setBindTime(String bindTime) {
+        this.bindTime = bindTime;
+    }
+
+    public String getUnBindTime() {
+        return unBindTime;
+    }
+
+    public void setUnBindTime(String unBindTime) {
+        this.unBindTime = unBindTime;
+    }
 
     @Override
     public String toString() {
