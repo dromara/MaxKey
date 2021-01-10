@@ -87,6 +87,7 @@ public class AppsOAuth20Details extends Apps {
         this.setSortIndex(application.getSortIndex());
         this.setVendor(application.getVendor());
         this.setVendorUrl(application.getVendorUrl());
+        this.setVisible(application.getVisible());
 
         this.clientSecret = baseClientDetails.getClientSecret();
         this.scope = baseClientDetails.getScope().toString();
