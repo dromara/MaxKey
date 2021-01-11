@@ -37,6 +37,8 @@ public class SocialsAssociate extends JpaBaseDomain {
 	private String socialUserInfo;
 	private String accessToken;
 	private String exAttribute; 
+    private String createdDate;
+    private String updatedDate;
 	
 	public SocialsAssociate() {}
 
@@ -110,11 +112,46 @@ public class SocialsAssociate extends JpaBaseDomain {
 		this.exAttribute = exAttribute;
 	}
 
-	@Override
-	public String toString() {
-		return "SocialSignOnUserToken [provider=" + provider + ", uid=" + uid
-				+ ", socialuid=" + socialuid + ", socialUserInfo="
-				+ socialUserInfo + ", accessToken=" + accessToken
-				+ ", exAttribute=" + exAttribute + "]";
-	}
+	public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(String updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("SocialsAssociate [id=");
+        builder.append(id);
+        builder.append(", provider=");
+        builder.append(provider);
+        builder.append(", uid=");
+        builder.append(uid);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", socialuid=");
+        builder.append(socialuid);
+        builder.append(", socialUserInfo=");
+        builder.append(socialUserInfo);
+        builder.append(", accessToken=");
+        builder.append(accessToken);
+        builder.append(", exAttribute=");
+        builder.append(exAttribute);
+        builder.append(", createdDate=");
+        builder.append(createdDate);
+        builder.append(", updatedDate=");
+        builder.append(updatedDate);
+        builder.append("]");
+        return builder.toString();
+    }
 }

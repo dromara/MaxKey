@@ -72,6 +72,8 @@ public class SocialSignOnListController {
 				for(SocialsAssociate ssout :listSocialSignOnUserToken){
 					if(ssout.getProvider().equals(ssop.getProvider())){
 						socialSignOnProvider.setUserBind(true);
+						socialSignOnProvider.setBindTime(ssout.getCreatedDate());
+						socialSignOnProvider.setLastLoginTime(ssout.getUpdatedDate());
 						_logger.debug("binded provider : "+ssout.getProvider());
 					}
 				}

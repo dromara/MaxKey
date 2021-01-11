@@ -33,9 +33,9 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 	
 	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = "INSERT INTO  MXK_SOCIALS_ASSOCIATE(ID, UID , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE )VALUES( ? , ? , ? , ? , ?, ? , ? , ?)";
 	
-	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "SELECT ID, UID , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE  FROM MXK_SOCIALS_ASSOCIATE WHERE PROVIDER = ?  AND SOCIALUID = ?";
+	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "SELECT ID, UID , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE , CREATEDDATE , UPDATEDDATE  FROM MXK_SOCIALS_ASSOCIATE WHERE PROVIDER = ?  AND SOCIALUID = ?";
 	
-	private static final String DEFAULT_DEFAULT_BIND_SELECT_STATEMENT = "SELECT ID, UID , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE  FROM MXK_SOCIALS_ASSOCIATE WHERE UID = ?" ;
+	private static final String DEFAULT_DEFAULT_BIND_SELECT_STATEMENT = "SELECT ID, UID , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE , CREATEDDATE , UPDATEDDATE  FROM MXK_SOCIALS_ASSOCIATE WHERE UID = ?" ;
 	
 	private static final String DEFAULT_DEFAULT_DELETE_STATEMENT = "DELETE FROM  MXK_SOCIALS_ASSOCIATE WHERE  UID = ? AND PROVIDER = ?";
 	
@@ -119,6 +119,8 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 			socialsAssociate.setAccessToken(rs.getString(6));
 			socialsAssociate.setSocialUserInfo(rs.getString(7));
 			socialsAssociate.setExAttribute(rs.getString(8));
+			socialsAssociate.setCreatedDate(rs.getString(9));
+			socialsAssociate.setUpdatedDate(rs.getString(10));
 			return socialsAssociate;
 		}
 	}

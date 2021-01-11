@@ -31,6 +31,7 @@ public class SocialSignOnProvider {
 	private String accountId;
 	private String bindTime;
 	private String unBindTime;
+	private String lastLoginTime;
 	private int sortOrder;
 	
 	
@@ -125,11 +126,41 @@ public class SocialSignOnProvider {
         this.unBindTime = unBindTime;
     }
 
+    public String getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(String lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
     @Override
     public String toString() {
-        return "SocialSignOnProvider [provider=" + provider + ", providerName=" + providerName + ", icon=" + icon
-                + ", clientId=" + clientId + ", clientSecret=" + clientSecret + ", accountId=" + accountId
-                + ", sortOrder=" + sortOrder + ", userBind=" + userBind + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("SocialSignOnProvider [provider=");
+        builder.append(provider);
+        builder.append(", providerName=");
+        builder.append(providerName);
+        builder.append(", icon=");
+        builder.append(icon);
+        builder.append(", clientId=");
+        builder.append(clientId);
+        builder.append(", clientSecret=");
+        builder.append(clientSecret);
+        builder.append(", accountId=");
+        builder.append(accountId);
+        builder.append(", bindTime=");
+        builder.append(bindTime);
+        builder.append(", unBindTime=");
+        builder.append(unBindTime);
+        builder.append(", lastLoginTime=");
+        builder.append(lastLoginTime);
+        builder.append(", sortOrder=");
+        builder.append(sortOrder);
+        builder.append(", userBind=");
+        builder.append(userBind);
+        builder.append("]");
+        return builder.toString();
     }
 	
 	

@@ -14,6 +14,8 @@
           <th><@locale code="login.social.sortorder" /></th>
           <th><@locale code="login.social.icon" /></th>
           <th><@locale code="login.social.provider" /></th>
+          <th><@locale code="login.social.bindtime" /></th>
+          <th><@locale code="login.social.lastLoginTime" /></th>
           <th><@locale code="login.social.action" /></th>
         </tr>
       </thead>
@@ -22,7 +24,9 @@
         <tr>
           <td>${socialSignOnProvider.sortOrder}</td>
           <td><img src="<@base />/static/${socialSignOnProvider.icon}" title="${socialSignOnProvider.providerName}" width="32px;" height="32px;"/></td>
-           <td>${socialSignOnProvider.providerName}</td>
+          <td>${socialSignOnProvider.providerName}</td>
+          <td>${socialSignOnProvider.bindTime!}</td>
+          <td>${socialSignOnProvider.lastLoginTime!}</td>
           <td>
 			<#if false==socialSignOnProvider.userBind>
 				<a  href="<@base/>/logon/oauth20/bind/${socialSignOnProvider.provider}"><@locale code="login.social.link" /></a>
