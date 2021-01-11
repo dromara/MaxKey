@@ -69,7 +69,9 @@ public class SocialSignOnProviderService{
 			authRequest = new AuthLinkedinRequest(authConfig);
 		}else if(provider.equalsIgnoreCase("DingTalk")) {
 			authRequest = new AuthDingTalkRequest(authConfig);
-		}
+		}else if(provider.equalsIgnoreCase("gitee")) {
+            authRequest = new AuthGiteeRequest(authConfig);
+        }
 		
 		
 		

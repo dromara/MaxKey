@@ -364,7 +364,7 @@
 					      		</tr>
 					      		
 					      		<#list ssopList as ssop>
-					      			<#if (ssop_index)%3==0>
+					      			<#if (ssop_index)%4==0>
 						      			<tr>
 						      		</#if>
 						      			<td align="center" nowrap style="height: 40px;">
@@ -372,11 +372,11 @@
 								      				<img src="<@base />/static/${ssop.icon}" title="${ssop.providerName}"  style="width=:32px;height:32px;border:0;"/>
 								      			</a>&nbsp;&nbsp;
 						      			</td>
-						      		<#if (ssop_index +1)%3==0>
+						      		<#if (ssop_index +1)%4==0>
 						      		</tr>
 						      		</#if>
 						      	</#list>
-						      	<#if (ssopList?size)%3!=0>
+						      	<#if (ssopList?size)%4!=0>
 						      		</tr>
 						      	</#if>
 					      	</table>
