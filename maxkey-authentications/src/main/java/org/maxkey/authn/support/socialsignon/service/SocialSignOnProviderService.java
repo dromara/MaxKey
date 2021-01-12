@@ -71,9 +71,37 @@ public class SocialSignOnProviderService{
 			authRequest = new AuthDingTalkRequest(authConfig);
 		}else if(provider.equalsIgnoreCase("gitee")) {
             authRequest = new AuthGiteeRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Baidu")) {
+            authRequest = new AuthBaiduRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Douyin")) {
+            authRequest = new AuthDouyinRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Eleme")) {
+            authRequest = new AuthElemeRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Feishu")) {
+            authRequest = new AuthFeishuRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Github")) {
+            authRequest = new AuthGithubRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Gitlab")) {
+            authRequest = new AuthGitlabRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Huawei")) {
+            authRequest = new AuthHuaweiRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("jd")) {
+            authRequest = new AuthJdRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Meituan")) {
+            authRequest = new AuthMeituanRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Mi")) {
+            authRequest = new AuthMiRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Oschina")) {
+            authRequest = new AuthOschinaRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Taobao")) {
+            authRequest = new AuthTaobaoRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("Toutiao")) {
+            authRequest = new AuthToutiaoRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("WeChatQyQrcode")) {
+            authRequest = new AuthWeChatEnterpriseQrcodeRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("WeChatQyWeb")) {
+            authRequest = new AuthWeChatEnterpriseWebRequest(authConfig);
         }
-		
-		
 		
 		return authRequest;
 	}
