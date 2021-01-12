@@ -91,6 +91,9 @@ subprojects {
 	}
    repositories {  
         mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven { url "https://repo.spring.io/plugins-release/" }
+        maven { url "https://repo.spring.io/milestone" }
         mavenCentral()
         jcenter()
 		maven { url "https://repo1.maven.org/maven2/" }
@@ -99,8 +102,6 @@ subprojects {
         maven { url "http://jcenter.bintray.com" }
         maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases"}
         maven { url "https://plugins.gradle.org/m2/" }        
-        maven { url "https://repo.spring.io/plugins-release/" }
-        maven { url "https://repo.spring.io/milestone" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://maven.repository.redhat.com/ga/" }
 		maven { url "https://repository.apache.org/content/repositories/releases/" }
@@ -224,7 +225,7 @@ subprojects {
          compile group: 'net.minidev', name: 'asm', version: '1.0.2'
          //oauth third party JustAuth
          compile group: 'com.xkcoding.http', name: 'simple-http', version: '1.0.3'
-         compile group: 'me.zhyd.oauth', name: 'JustAuth', version: '1.15.8'
+         compile group: 'me.zhyd.oauth', name: 'JustAuth', version: '1.15.9'
          //common
          compile group: 'org.javassist', name: 'javassist', version: '3.23.0-GA'
          compile group: 'org.owasp.esapi', name: 'esapi', version: '2.2.0.0'
