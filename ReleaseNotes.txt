@@ -2,10 +2,28 @@
 	*(MAXKEY-210101)  动态用户组实现优化，增加时间段控制
 	*(MAXKEY-210102)  官方网站优化，取消加载动态图表；增加统计功能
 	*(MAXKEY-210103)  优化社交登录的图标
-	*(MAXKEY-210104)  语言选择位置调整
-	*(MAXKEY-210105)  短信验证码存储Redis修复
-	*(MAXKEY-210106)  OAuthDetail修复Visible
-	
+	*(MAXKEY-210104)  社交账号支持Gitee和微信
+	*(MAXKEY-210105)  社交账号绑定列表化，显示绑定时间和最近登录时间，绑定的操作，支持多个OAuth第三方，参见JustAuth
+	*(MAXKEY-210106)  语言选择位置调整
+	*(MAXKEY-210107)  短信验证码存储Redis修复
+	*(MAXKEY-210108)  OAuthDetail修复Visible
+	*(MAXKEY-210109)  镜像加速gradle默认使用阿里云aliyun 
+	*(MAXKEY-201025)  依赖jar引用、更新和升级
+		spring		5.3.3
+		springBoot  2.4.2
+		jedis		3.4.1
+		druid		1.2.4
+		JustAuth 	1.15.9
+		joda-time	2.10.9
+		zxing		3.4.1
+		jackson		2.12.1
+		guava		30.1-jre
+		mybatis		3.5.6
+		mybatis-spring	2.0.6
+		hibernate	6.2.0.Final
+		jibGradlePlugin	2.7.0
+		nimbus-jose-jwt	9.4.1
+		tomcat-embed-core	9.0.41
 	
 MaxKey v 2.4.0 GA	2021/01/01
 	*(MAXKEY-201001)  动态用户组实现(基于用户属性或机构)
