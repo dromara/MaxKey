@@ -94,17 +94,17 @@ subprojects {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         maven { url "https://repo.spring.io/plugins-release/" }
         maven { url "https://repo.spring.io/milestone" }
-        mavenCentral()
-        jcenter()
-		maven { url "https://repo1.maven.org/maven2/" }
+        maven { url "https://repo1.maven.org/maven2/" }
 		maven { url "https://build.shibboleth.net/nexus/content/repositories/releases/" }
-		maven { url "https://mvnrepository.com/repos/central/" }
+		maven { url "https://mvnrepository.com/repos/central/" }		
         maven { url "http://jcenter.bintray.com" }
         maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases"}
         maven { url "https://plugins.gradle.org/m2/" }        
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://maven.repository.redhat.com/ga/" }
 		maven { url "https://repository.apache.org/content/repositories/releases/" }
+		mavenCentral()
+        jcenter()
     }  
 	
 	//all dependencies
@@ -213,6 +213,10 @@ subprojects {
          //spring-session
          compile group: 'org.springframework.session', name: 'spring-session-core', version: "${springSessionVersion}"
          compile group: 'org.springframework.session', name: 'spring-session-data-redis', version: "${springSessionVersion}"
+         
+         compile group: 'org.springframework.plugin', name: 'spring-plugin-core', version: '2.0.0.RELEASE'
+         compile group: 'org.springframework.plugin', name: 'spring-plugin-metadata', version: '2.0.0.RELEASE'
+         
          //saml 
          compile group: 'org.opensaml', name: 'opensaml', version: '2.6.6'
          compile group: 'org.opensaml', name: 'openws', version: '1.5.6'
@@ -256,6 +260,10 @@ subprojects {
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonVersion}"
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonVersion}"
          compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"
+         compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: "${jacksonVersion}"
+         compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: "${jacksonVersion}"
+         compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: "${jacksonVersion}"
+         
          compile group: 'com.fasterxml', name: 'classmate', version: '1.5.0'
 		 compile group: 'com.alibaba', name: 'fastjson', version: '1.2.74'
          //reactive
@@ -296,7 +304,38 @@ subprojects {
 		 compile group: 'org.ogce', name: 'xpp3', version: '1.1.6'
 		 compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
 		 compile group: 'org.passay', name: 'passay', version: '1.6.0'
-		
+		 
+		 //docs
+		 compile group: 'org.mapstruct', name: 'mapstruct', version: '1.4.1.Final'
+		 compile group: 'io.swagger', name: 'swagger-annotations', version: "${swaggerVersion}"
+		 compile group: 'io.swagger', name: 'swagger-models', version: "${swaggerVersion}"
+		 compile group: 'io.swagger.core.v3', name: 'swagger-annotations', version: "${swaggerV3Version}"
+		 compile group: 'io.swagger.core.v3', name: 'swagger-core', version: "${swaggerV3Version}"
+		 compile group: 'io.swagger.core.v3', name: 'swagger-integration', version: "${swaggerV3Version}"
+		 compile group: 'io.swagger.core.v3', name: 'swagger-models', version: "${swaggerV3Version}"
+		 //springfox
+		 compile group: 'io.springfox', name: 'springfox-bean-validators', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-core', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-data-rest', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-spi', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-oas', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-schema', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-swagger2', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-swagger-ui', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-swagger-common', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-spring-webmvc', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-spring-web', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-spring-webflux', version: "${springfoxVersion}"
+		 compile group: 'io.springfox', name: 'springfox-boot-starter', version: "${springfoxVersion}"
+		 //knife4j
+		 compile group: 'com.github.xiaoymin', name: 'knife4j-annotations', version: "${knife4jVersion}"
+		 compile group: 'com.github.xiaoymin', name: 'knife4j-core', version: "${knife4jVersion}"
+		 compile group: 'com.github.xiaoymin', name: 'knife4j-spring-mvc', version: "${knife4jVersion}"
+		 compile group: 'com.github.xiaoymin', name: 'knife4j-spring', version: "${knife4jVersion}"
+		 compile group: 'com.github.xiaoymin', name: 'knife4j-spring-ui', version: "${knife4jVersion}"
+		 compile group: 'com.github.xiaoymin', name: 'knife4j-spring-boot-starter', version: "${knife4jVersion}"
+		 compile group: 'com.github.xiaoymin', name: 'knife4j-spring-boot-autoconfigure', version: "${knife4jVersion}"
+		 		 
     	 //local jars
     	 compile fileTree(dir: "${rootDir}/maxkey-lib/", include: '*.jar')
     	 //阿里云

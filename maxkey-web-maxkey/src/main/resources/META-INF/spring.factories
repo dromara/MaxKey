@@ -8,4 +8,7 @@ org.maxkey.autoconfigure.CasAutoConfiguration,\
 org.maxkey.autoconfigure.Oauth20AutoConfiguration,\
 org.maxkey.autoconfigure.Saml20AutoConfiguration,\
 org.maxkey.autoconfigure.SocialSignOnAutoConfiguration,\
+org.maxkey.autoconfigure.SwaggerConfig,\
 org.maxkey.MaxKeyMvcConfig
+
+

@@ -37,7 +37,7 @@ import org.maxkey.crypto.KeyPairType;
  * @author Crystal.Sea
  *
  */
-public final class DsaSigner implements Signer {
+public final class DsaSigner implements ISigner {
 
 	// ����ǩ����Կ�㷨
 	public static final KeyPairType KEY_ALGORITHM = KeyPairType.DSA;

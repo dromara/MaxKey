@@ -34,10 +34,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author Crystal.Sea
  * https://apereo.github.io/cas/6.2.x/protocol/CAS-Protocol-Specification.html
  */
+@Api(tags = "CAS API文档模块")
 @Controller
 public class Cas10AuthorizeEndpoint   extends CasBaseAuthorizeEndpoint{
 
@@ -77,6 +81,7 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
 			no<LF>
 			<LF>
 	 */
+	@ApiOperation(value = "CAS 1.0 ticket验证接口", notes = "通过ticket获取当前登录用户信息",httpMethod="POST")
 	@RequestMapping("/authz/cas/validate")
 	@ResponseBody
 	public String validate(

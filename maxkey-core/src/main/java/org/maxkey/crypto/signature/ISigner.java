@@ -34,7 +34,7 @@ package org.maxkey.crypto.signature;
  * @author Crystal.Sea
  *
  */
-public  interface  Signer {
+public  interface  ISigner {
 	
 	public byte[] sign(byte[] data,byte[] privateKey)throws Exception;
 	

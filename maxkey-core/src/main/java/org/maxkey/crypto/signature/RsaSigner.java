@@ -39,7 +39,7 @@ import org.maxkey.crypto.KeyPairType;
  *
  */
 
-public final class RsaSigner implements Signer {
+public final class RsaSigner implements ISigner {
 
 	public static final KeyPairType KEY_ALGORTHM = KeyPairType.RSA;
 
