@@ -73,13 +73,16 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/templates/**")
                 .addResourceLocations("classpath:/templates/");
         
+        _logger.debug("add swagger");
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
         
+        _logger.debug("add knife4j");
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        
         _logger.debug("add addResourceHandler");
     }
 
