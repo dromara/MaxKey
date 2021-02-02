@@ -43,10 +43,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author Crystal.Sea
  *
  */
+@Api(tags = "TokenBased接口文档模块")
 @Controller
 public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
@@ -59,6 +63,7 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	@Autowired
 	ApplicationConfig applicationConfig;
 	
+	@ApiOperation(value = "TokenBased认证接口", notes = "传递参数应用ID",httpMethod="GET")
 	@RequestMapping("/authz/tokenbased/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,

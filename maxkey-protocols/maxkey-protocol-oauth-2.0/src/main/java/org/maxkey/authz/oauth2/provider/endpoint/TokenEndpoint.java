@@ -52,6 +52,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * <p>
  * Endpoint for token requests as described in the OAuth2 spec. Clients post requests with a <code>grant_type</code>
@@ -69,6 +72,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Dave Syer
  * 
  */
+@Api(tags = "OAuth v2.0 API文档模块")
 @Controller
 public class TokenEndpoint extends AbstractEndpoint {
 
@@ -84,6 +88,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 	 * @return OAuth2AccessToken Entity
 	 * @throws HttpRequestMethodNotSupportedException
 	 */
+	@ApiOperation(value = "OAuth 2.0 获取AccessToken接口", notes = "传递参数token等",httpMethod="GET")
 	@RequestMapping(value = "/oauth/v20/token", method=RequestMethod.GET)
 	public ResponseEntity<OAuth2AccessToken> getAccessToken(@RequestParam
 	Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
@@ -93,7 +98,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 		return postAccessToken(parameters);
 	}
 	
-	
+	@ApiOperation(value = "OAuth 2.0 获取AccessToken接口", notes = "传递参数token等",httpMethod="POST")
 	@RequestMapping(value = "/oauth/v20/token", method=RequestMethod.POST)
 	public ResponseEntity<OAuth2AccessToken> postAccessToken(@RequestParam
 	Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {

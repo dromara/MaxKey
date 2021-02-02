@@ -40,10 +40,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author Crystal.Sea
  *
  */
+@Api(tags = "Desktop接口文档模块")
 @Controller
 public class DesktopAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(DesktopAuthorizeEndpoint.class);
@@ -53,6 +57,7 @@ public class DesktopAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	
 	DesktopDefaultAdapter defaultDesktopAdapter=new DesktopDefaultAdapter();
 	
+	@ApiOperation(value = "Desktop认证接口", notes = "传递参数应用ID",httpMethod="GET")
 	@RequestMapping("/authz/desktop/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,

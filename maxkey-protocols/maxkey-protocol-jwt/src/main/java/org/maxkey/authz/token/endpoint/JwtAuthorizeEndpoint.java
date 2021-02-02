@@ -43,10 +43,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author Crystal.Sea
  *
  */
+@Api(tags = "JWT接口文档模块")
 @Controller
 public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
@@ -60,6 +64,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	@Autowired
 	ApplicationConfig applicationConfig;
 	
+	@ApiOperation(value = "JWT认证地址接口", notes = "参数应用ID",httpMethod="GET")
 	@RequestMapping("/authz/jwt/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,

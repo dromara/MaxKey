@@ -45,6 +45,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(tags = "SAML v2.0 API文档模块")
 @Controller
 public class SingleSignOnEndpoint {
 	private final static Logger logger = LoggerFactory.getLogger(SingleSignOnEndpoint.class);
@@ -74,6 +78,7 @@ public class SingleSignOnEndpoint {
 	@Autowired
 	private AppsSaml20DetailsService saml20DetailsService;
 
+	@ApiOperation(value = "SAML 2.0 SP Init接收接口", notes = "传递参数应用ID",httpMethod="POST")
 	@RequestMapping(value = "/authz/saml20/{appid}", method=RequestMethod.POST)
 	public ModelAndView authorizePost(
 			HttpServletRequest request,
@@ -83,6 +88,7 @@ public class SingleSignOnEndpoint {
 		return extractSAMLRequest(extractPostBindingAdapter,appId,request);
 	}
 	
+	@ApiOperation(value = "SAML 2.0 SP Init接收接口", notes = "传递参数应用ID",httpMethod="GET")
 	@RequestMapping(value = "/authz/saml20/{appid}", method=RequestMethod.GET)
 	public ModelAndView authorizeRedirect(
 			HttpServletRequest request,

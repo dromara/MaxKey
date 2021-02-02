@@ -34,16 +34,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author Crystal.Sea
  *
  */
+@Api(tags = "总认证地址文档模块")
 @Controller
 public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 	@Autowired
 	AppsCasDetailsService casDetailsService;
 	
 	//all single sign on url
+	@ApiOperation(value = "总认证地址接口", notes = "参数应用ID，分发到不同应用的认证地址",httpMethod="GET")
 	@RequestMapping("/authz/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,

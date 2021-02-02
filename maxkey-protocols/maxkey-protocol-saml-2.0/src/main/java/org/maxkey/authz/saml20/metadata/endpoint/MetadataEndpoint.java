@@ -49,7 +49,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(tags = "SAML v2.0 API文档模块")
 @Controller
 @RequestMapping(value = { "/metadata/saml20/" })
 public class MetadataEndpoint {
@@ -72,6 +75,7 @@ public class MetadataEndpoint {
 	
 	public static String IDP_METADATA_PREFIX = "Idp_Metadata_";
 
+	@ApiOperation(value = "SAML 2.0 元数据接口", notes = "参数Idp_Metadata_应用ID",httpMethod="GET")
 	@RequestMapping(value = "/{appid}.xml",produces = "application/xml")
 	@ResponseBody
 	public String  metadata(HttpServletRequest request,

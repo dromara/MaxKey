@@ -70,6 +70,10 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriTemplate;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 
 /**
@@ -89,6 +93,7 @@ import org.maxkey.authz.oauth2.provider.ClientDetailsService;
  * @author Vladimir Kryachko
  * 
  */
+@Api(tags = "OAuth v2.0 API文档模块")
 @Controller
 @SessionAttributes("authorizationRequest")
 public class AuthorizationEndpoint extends AbstractEndpoint {
@@ -126,6 +131,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		this.errorPage = errorPage;
 	}
 
+	@ApiOperation(value = "OAuth 2.0 认证接口", notes = "传递参数client_id,response_type,redirect_uri等",httpMethod="GET")
 	@RequestMapping(value = "/oauth/v20/authorize", method = RequestMethod.GET)
 	public ModelAndView authorize(Map<String, Object> model, @RequestParam Map<String, String> parameters,
 			SessionStatus sessionStatus) {
@@ -507,6 +513,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		this.oauth2RequestValidator = oauth2RequestValidator;
 	}
 
+	@ApiOperation(value = "OAuth 2.0 认证接口", notes = "传递参数应用ID，自动完成跳转认证拼接",httpMethod="GET")
 	@RequestMapping("/authz/oauthv20/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,

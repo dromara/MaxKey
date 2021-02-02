@@ -67,8 +67,13 @@ import com.nimbusds.jwt.EncryptedJWT;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTClaimsSet.Builder;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 import com.nimbusds.jwt.SignedJWT;
 
+@Api(tags = "OAuth v2.0 API文档模块")
 @Controller
 @RequestMapping(value = { "/api" })
 public class UserInfoEndpoint {
@@ -108,6 +113,7 @@ public class UserInfoEndpoint {
 	
 	OAuthDefaultUserInfoAdapter defaultOAuthUserInfoAdapter=new OAuthDefaultUserInfoAdapter();
 	
+	@ApiOperation(value = "OAuth 2.0 用户信息接口", notes = "传递参数access_token",httpMethod="GET")
 	@RequestMapping(value="/oauth/v20/me") 
 	@ResponseBody
 	public String apiV20UserInfo(
@@ -148,7 +154,7 @@ public class UserInfoEndpoint {
 			}
 	}
 	
-	
+	@ApiOperation(value = "OIDC 用户信息接口", notes = "传递Authorization参数access_token",httpMethod="GET")
 	@RequestMapping(value="/connect/v10/userinfo")
 	@ResponseBody
 	public String connect10aUserInfo(

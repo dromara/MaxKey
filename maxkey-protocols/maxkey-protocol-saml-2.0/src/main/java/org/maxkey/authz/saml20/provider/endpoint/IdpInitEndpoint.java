@@ -40,12 +40,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * idp init  not need extract SAML request message
  * AuthnRequestInfo use default init
  * @author Crystal.Sea
  *
  */
+@Api(tags = "SAML v2.0 API文档模块")
 @Controller
 public class IdpInitEndpoint {
 	private final static Logger logger = LoggerFactory.getLogger(IdpInitEndpoint.class);
@@ -81,6 +85,7 @@ public class IdpInitEndpoint {
 	 * 
 	 *
 	 */
+	@ApiOperation(value = "SAML 2.0 IDP Init接口", notes = "传递参数应用ID",httpMethod="GET")
 	@RequestMapping(value = "/authz/saml20/idpinit/{appid}", method=RequestMethod.GET)
 	public ModelAndView authorizeIdpInit(
 				HttpServletRequest request,

@@ -48,6 +48,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(tags = "单点注销接口文档模块")
 @Controller
 public class LogoutEndpoint {
 	
@@ -66,6 +70,7 @@ public class LogoutEndpoint {
     @Qualifier("onlineTicketServices")
     protected OnlineTicketServices onlineTicketServices;
 	
+	@ApiOperation(value = "单点注销接口", notes = "reLoginUrl跳转地址",httpMethod="GET")
  	@RequestMapping(value={"/logout"})
  	public ModelAndView logout(
  					HttpServletRequest request, 
@@ -75,6 +80,7 @@ public class LogoutEndpoint {
  		return logoutModelAndView(request,response,"loggedout",reLoginUrl);
  	}
  	
+	@ApiOperation(value = "登录超时接口", notes = "",httpMethod="GET")
  	@RequestMapping(value={"/timeout"})
  	public ModelAndView timeout(HttpServletRequest request, HttpServletResponse response){
  		return logoutModelAndView(request,response,"timeout",null);

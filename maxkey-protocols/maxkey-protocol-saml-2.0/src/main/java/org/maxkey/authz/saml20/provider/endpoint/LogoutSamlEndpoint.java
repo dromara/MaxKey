@@ -37,6 +37,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(tags = "SAML v2.0 API文档模块")
 @Controller
 public class LogoutSamlEndpoint {
     private final static Logger logger = LoggerFactory.getLogger(LogoutSamlEndpoint.class);
@@ -49,7 +53,7 @@ public class LogoutSamlEndpoint {
     @Qualifier("samlValidaotrSuite")
     private SAML2ValidatorSuite validatorSuite;
     
-    
+    @ApiOperation(value = "SAML单点注销地址接口", notes = "",httpMethod="GET")
     @SuppressWarnings("rawtypes")
     @RequestMapping(value = "/logout/saml", method=RequestMethod.GET)
     public ModelAndView samlRedirectLogout(
