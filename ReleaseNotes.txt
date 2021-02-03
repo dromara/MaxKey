@@ -7,8 +7,11 @@
 	*(MAXKEY-210106)  语言选择位置调整
 	*(MAXKEY-210107)  短信验证码存储Redis修复
 	*(MAXKEY-210108)  OAuthDetail修复Visible
-	*(MAXKEY-210109)  镜像加速gradle默认使用阿里云aliyun 
-	*(MAXKEY-201025)  依赖jar引用、更新和升级
+	*(MAXKEY-210109)   镜像加速gradle默认使用阿里云aliyun 
+	*(MAXKEY-210110)  Swagger文档支持 maxkey/swagger-ui/index.html#/
+	*(MAXKEY-210111)  knife4j文档支持 maxkey/doc.html
+	*(MAXKEY-210112)  登录界面加密处理
+	*(MAXKEY-201025)   依赖jar引用、更新和升级
 		spring		5.3.3
 		springBoot  2.4.2
 		jedis		3.4.1
@@ -24,6 +27,10 @@
 		jibGradlePlugin	2.7.0
 		nimbus-jose-jwt	9.4.1
 		tomcat-embed-core	9.0.41
+		swagger		1.6.2
+		swagger3 	2.1.6
+		springfox	3.0.0
+		knife4j 	3.0.2
 	
 MaxKey v 2.4.0 GA	2021/01/01
 	*(MAXKEY-201001)  动态用户组实现(基于用户属性或机构)
