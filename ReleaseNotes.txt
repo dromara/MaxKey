@@ -11,7 +11,7 @@
 	*(MAXKEY-210110)  Swagger文档支持 maxkey/swagger-ui/index.html#/
 	*(MAXKEY-210111)  knife4j文档支持 maxkey/doc.html
 	*(MAXKEY-210112)  登录界面加密处理
-	*(MAXKEY-201013)   依赖jar引用、更新和升级
+	*(MAXKEY-210113)   依赖jar引用、更新和升级
 		spring		5.3.3
 		springBoot  2.4.2
 		jedis		3.4.1
