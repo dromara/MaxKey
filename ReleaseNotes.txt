@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿MaxKey v 2.4.5 RC	2021/**/**
+﻿﻿﻿﻿﻿MaxKey v 2.4.5 GA	2021/02/05
 	*(MAXKEY-210101)  动态用户组实现优化，增加时间段控制
 	*(MAXKEY-210102)  官方网站优化，取消加载动态图表；增加统计功能
 	*(MAXKEY-210103)  优化社交登录的图标
@@ -11,7 +11,7 @@
 	*(MAXKEY-210110)  Swagger文档支持 maxkey/swagger-ui/index.html#/
 	*(MAXKEY-210111)  knife4j文档支持 maxkey/doc.html
 	*(MAXKEY-210112)  登录界面加密处理
-	*(MAXKEY-201025)   依赖jar引用、更新和升级
+	*(MAXKEY-201013)   依赖jar引用、更新和升级
 		spring		5.3.3
 		springBoot  2.4.2
 		jedis		3.4.1

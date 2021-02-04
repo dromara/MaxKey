@@ -94,7 +94,7 @@ QQ交流群：<b>434469201</b>
 当前版本百度网盘下载,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> 历史版本</a>
 | 版本    | 日期   |  下载地址  |  提取码  |
 | --------| :-----  | :----  | :----:  |
-| v 2.4.0 GA | 2021/01/01   |  <a href="https://pan.baidu.com/s/19gQad5us_ShvKyBg1NskWw" target="_blank">链接下载</a>  |  **i5xb**  |
+| v 2.5.0 GA | 2021/02/05   |  <a href="https://pan.baidu.com/s/1B0h8vzE4hDAFvuYlED9pAw" target="_blank">链接下载</a>  |  **sppq**  |
 
 
 # Roadmap
