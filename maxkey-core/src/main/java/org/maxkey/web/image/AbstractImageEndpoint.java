@@ -45,7 +45,7 @@ public class AbstractImageEndpoint {
 
     @Autowired
     @Qualifier("applicationConfig")
-    ApplicationConfig applicationConfig;
+    protected ApplicationConfig applicationConfig;
 
     /**
      * producerImage.

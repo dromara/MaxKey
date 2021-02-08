@@ -68,6 +68,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    	_logger.debug("addResourceHandlers");
         _logger.debug("add statics");
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
@@ -85,7 +86,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         
-        _logger.debug("add addResourceHandler");
+        _logger.debug("addResourceHandler finished .");
     }
 
     @Override

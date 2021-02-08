@@ -6,7 +6,10 @@ rootProject.name = 'MaxKey'
 //Common
 include 'maxkey-core'
 include 'maxkey-persistence'
-include 'maxkey-authentications'
+//include 'maxkey-authentications'
+include 'maxkey-authentications:maxkey-authentication-core'
+include 'maxkey-authentications:maxkey-authentication-captcha'
+include 'maxkey-authentications:maxkey-authentication-social'
 
 //identity
 include 'maxkey-identitys:maxkey-identity-scim'

@@ -15,13 +15,14 @@
  */
  
 
-package org.maxkey.web.image;
+package org.maxkey.web.contorller;
 
 import com.google.code.kaptcha.Producer;
 import java.awt.image.BufferedImage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.maxkey.web.WebConstants;
+import org.maxkey.web.image.AbstractImageEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -70,7 +70,9 @@ public class SocialSignOnAutoConfiguration implements InitializingBean {
             socialSignOnProvider.setClientId(clientId);
             socialSignOnProvider.setClientSecret(clientSecret);
             socialSignOnProvider.setSortOrder(Integer.valueOf(sortOrder));
-            _logger.debug("socialSignOnProvider " + socialSignOnProvider);
+            _logger.debug("socialSignOnProvider " + socialSignOnProvider.getProvider() 
+            								+ "(" + socialSignOnProvider.getProviderName()+")");
+            _logger.trace("socialSignOnProvider " + socialSignOnProvider);
             socialSignOnProviderList.add(socialSignOnProvider);            
         }
         socialSignOnProviderService.setSocialSignOnProviders(socialSignOnProviderList);
