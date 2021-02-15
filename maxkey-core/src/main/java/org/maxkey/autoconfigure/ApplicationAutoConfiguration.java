@@ -23,17 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
-
-import org.maxkey.authn.AbstractAuthenticationProvider;
-import org.maxkey.authn.RealmAuthenticationProvider;
-import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
-import org.maxkey.authn.online.InMemoryOnlineTicketServices;
-import org.maxkey.authn.online.OnlineTicketServices;
-import org.maxkey.authn.online.RedisOnlineTicketServices;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
-import org.maxkey.authn.support.rememberme.InMemoryRemeberMeService;
-import org.maxkey.authn.support.rememberme.RedisRemeberMeService;
-import org.maxkey.constants.ConstantsPersistence;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.password.LdapShaPasswordEncoder;
@@ -43,14 +32,11 @@ import org.maxkey.crypto.password.MessageDigestPasswordEncoder;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.crypto.password.SM3PasswordEncoder;
 import org.maxkey.crypto.password.StandardPasswordEncoder;
-import org.maxkey.persistence.db.PasswordPolicyValidator;
-import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -66,8 +52,6 @@ import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
-import org.maxkey.persistence.db.LoginService;
-import org.maxkey.persistence.db.LoginHistoryService;
 
 
 @Configuration
@@ -115,16 +99,6 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
         return new PasswordReciprocal();
     }
     
-    @Bean(name = "savedRequestSuccessHandler")
-    public SavedRequestAwareAuthenticationSuccessHandler 
-            savedRequestAwareAuthenticationSuccessHandler() {
-        return new SavedRequestAwareAuthenticationSuccessHandler();
-    }
-    
-    @Bean(name = "authenticationProvider")
-    public AbstractAuthenticationProvider authenticationProvider() {
-        return new RealmAuthenticationProvider();
-    }
     
     @Bean(name = "jdbcTemplate")
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
@@ -134,20 +108,6 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     @Bean(name = "transactionManager")
     public DataSourceTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
-    }
-    
-    @Bean(name = "passwordPolicyValidator")
-    public PasswordPolicyValidator passwordPolicyValidator(JdbcTemplate jdbcTemplate,MessageSource messageSource) {
-        return new PasswordPolicyValidator(jdbcTemplate,messageSource);
-    }
-    
-    @Bean(name = "loginService")
-    public LoginService LoginService(JdbcTemplate jdbcTemplate) {
-        return new LoginService(jdbcTemplate);
-    }
-    @Bean(name = "loginHistoryService")
-    public LoginHistoryService loginHistoryService(JdbcTemplate jdbcTemplate) {
-        return new LoginHistoryService(jdbcTemplate);
     }
     
     
@@ -182,48 +142,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
         
         return passwordEncoder;
     }
-    
-    /**
-     * remeberMeService .
-     * @return
-     */
-    @Bean(name = "remeberMeService")
-    public AbstractRemeberMeService remeberMeService(
-            @Value("${config.server.persistence}") int persistence,
-            @Value("${config.login.remeberme.validity}") int validity,
-            JdbcTemplate jdbcTemplate,
-            RedisConnectionFactory redisConnFactory) {
-        AbstractRemeberMeService remeberMeService = null;
-        if (persistence == ConstantsPersistence.INMEMORY) {
-            remeberMeService = new InMemoryRemeberMeService();
-            _logger.debug("InMemoryRemeberMeService");
-        } else if (persistence == ConstantsPersistence.JDBC) {
-            //remeberMeService = new JdbcRemeberMeService(jdbcTemplate);
-            _logger.debug("JdbcRemeberMeService not support "); 
-        } else if (persistence == ConstantsPersistence.REDIS) {
-            remeberMeService = new RedisRemeberMeService(redisConnFactory);
-            _logger.debug("RedisRemeberMeService");
-        }
-        return remeberMeService;
-    }
-    
-    @Bean(name = "onlineTicketServices")
-    public OnlineTicketServices onlineTicketServices(
-            @Value("${config.server.persistence}") int persistence,
-            JdbcTemplate jdbcTemplate,
-            RedisConnectionFactory redisConnFactory) {
-        OnlineTicketServices onlineTicketServices = null;
-        if (persistence == ConstantsPersistence.INMEMORY) {
-            onlineTicketServices = new InMemoryOnlineTicketServices();
-            _logger.debug("InMemoryOnlineTicketServices");
-        } else if (persistence == ConstantsPersistence.JDBC) {
-            _logger.debug("OnlineTicketServices not support "); 
-        } else if (persistence == ConstantsPersistence.REDIS) {
-            onlineTicketServices = new RedisOnlineTicketServices(redisConnFactory);
-            _logger.debug("RedisOnlineTicketServices");
-        }
-        return onlineTicketServices;
-    }
+
     
     /**
      * keyStoreLoader .

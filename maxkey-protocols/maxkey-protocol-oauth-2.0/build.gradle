@@ -8,5 +8,5 @@ dependencies {
     compile project(":maxkey-core")
     compile project(":maxkey-persistence")
     compile project(":maxkey-protocols:maxkey-protocol-authorize")
-   
+    compile project(":maxkey-authentications:maxkey-authentication-core")
 }
