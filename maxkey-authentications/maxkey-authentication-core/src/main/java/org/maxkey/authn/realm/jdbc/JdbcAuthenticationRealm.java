@@ -17,9 +17,14 @@
 
 package org.maxkey.authn.realm.jdbc;
 
+import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
+import org.maxkey.persistence.db.LoginHistoryService;
+import org.maxkey.persistence.db.LoginService;
+import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * JdbcAuthenticationRealm.
@@ -36,5 +41,23 @@ public class JdbcAuthenticationRealm extends DefaultJdbcAuthenticationRealm {
     public JdbcAuthenticationRealm(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+    
+    public JdbcAuthenticationRealm(
+    		PasswordEncoder passwordEncoder,
+    		PasswordPolicyValidator passwordPolicyValidator,
+    		LoginService loginService,
+    		LoginHistoryService loginHistoryService,
+    		AbstractRemeberMeService remeberMeService,
+    	    JdbcTemplate jdbcTemplate) {
+    	
+    	this.passwordEncoder =passwordEncoder;
+    	this.passwordPolicyValidator=passwordPolicyValidator;
+    	this.loginService = loginService;
+    	this.loginHistoryService = loginHistoryService;
+    	this.remeberMeService = remeberMeService;
+        this.jdbcTemplate = jdbcTemplate;
+    }
+    
+    
 
 }

@@ -26,9 +26,11 @@ import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
 import org.maxkey.authn.online.InMemoryOnlineTicketServices;
 import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.authn.online.RedisOnlineTicketServices;
+import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.InMemoryRemeberMeService;
 import org.maxkey.authn.support.rememberme.RedisRemeberMeService;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsPersistence;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.password.LdapShaPasswordEncoder;
@@ -37,6 +39,7 @@ import org.maxkey.crypto.password.NoOpPasswordEncoder;
 import org.maxkey.crypto.password.MessageDigestPasswordEncoder;
 import org.maxkey.crypto.password.SM3PasswordEncoder;
 import org.maxkey.crypto.password.StandardPasswordEncoder;
+import org.maxkey.crypto.password.otp.AbstractOtpAuthn;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
@@ -74,8 +77,22 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     }
     
     @Bean(name = "authenticationProvider")
-    public AbstractAuthenticationProvider authenticationProvider() {
-        return new RealmAuthenticationProvider();
+    public AbstractAuthenticationProvider authenticationProvider(
+    		AbstractAuthenticationRealm authenticationRealm,
+    		ApplicationConfig applicationConfig,
+    	    AbstractOtpAuthn tfaOptAuthn,
+    	    AbstractRemeberMeService remeberMeService,
+    	    OnlineTicketServices onlineTicketServices
+    		) {
+    	
+        return new RealmAuthenticationProvider(
+        		authenticationRealm,
+        		applicationConfig,
+        		tfaOptAuthn,
+        		remeberMeService,
+        		onlineTicketServices
+        		);
+        
     }
     
     @Bean(name = "transactionManager")

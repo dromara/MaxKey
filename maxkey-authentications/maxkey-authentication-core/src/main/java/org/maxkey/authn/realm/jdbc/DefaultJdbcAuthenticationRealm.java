@@ -24,7 +24,6 @@ import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,8 +37,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class DefaultJdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     private static Logger _logger = LoggerFactory.getLogger(DefaultJdbcAuthenticationRealm.class);
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+    protected PasswordEncoder passwordEncoder;
 
     public DefaultJdbcAuthenticationRealm() {
 

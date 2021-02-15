@@ -20,6 +20,11 @@ package org.maxkey.authn;
 import java.util.ArrayList;
 
 import org.maxkey.authn.online.OnlineTicket;
+import org.maxkey.authn.online.OnlineTicketServices;
+import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
+import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.crypto.password.otp.AbstractOtpAuthn;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -46,8 +51,27 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     protected String getProviderName() {
         return "RealmAuthenticationProvider";
     }
+    
 
-    @Override
+    public RealmAuthenticationProvider() {
+		super();
+	}
+
+
+    public RealmAuthenticationProvider(
+    		AbstractAuthenticationRealm authenticationRealm,
+    		ApplicationConfig applicationConfig,
+    	    AbstractOtpAuthn tfaOptAuthn,
+    	    AbstractRemeberMeService remeberMeService,
+    	    OnlineTicketServices onlineTicketServices) {
+		this.authenticationRealm = authenticationRealm;
+		this.applicationConfig = applicationConfig;
+		this.tfaOptAuthn = tfaOptAuthn;
+		this.remeberMeService =  remeberMeService;
+		this.onlineTicketServices = onlineTicketServices;
+	}
+
+	@Override
     protected Authentication doInternalAuthenticate(LoginCredential loginCredential) {
 
         _logger.debug("authentication " + loginCredential);

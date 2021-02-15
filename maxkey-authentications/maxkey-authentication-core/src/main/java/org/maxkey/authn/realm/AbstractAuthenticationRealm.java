@@ -49,17 +49,12 @@ public abstract class AbstractAuthenticationRealm {
     
     protected boolean provisioning;
     
-    @Autowired
     protected PasswordPolicyValidator passwordPolicyValidator;
     
-    @Autowired
     protected LoginService loginService;
-    
-    @Autowired
+
     protected LoginHistoryService loginHistoryService;
 
-    @Autowired
-    @Qualifier("remeberMeService")
     protected AbstractRemeberMeService remeberMeService;
 
     /**

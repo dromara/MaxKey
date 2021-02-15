@@ -27,6 +27,7 @@ import org.maxkey.authn.realm.activedirectory.ActiveDirectoryAuthenticationRealm
 import org.maxkey.authn.realm.activedirectory.ActiveDirectoryServer;
 import org.maxkey.authn.support.kerberos.KerberosProxy;
 import org.maxkey.authn.support.kerberos.RemoteKerberosService;
+import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.constants.ConstantsPersistence;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.password.otp.AbstractOtpAuthn;
@@ -38,6 +39,9 @@ import org.maxkey.crypto.password.otp.impl.sms.SmsOtpAuthnAliyun;
 import org.maxkey.crypto.password.otp.impl.sms.SmsOtpAuthnTencentCloud;
 import org.maxkey.crypto.password.otp.impl.sms.SmsOtpAuthnYunxin;
 import org.maxkey.crypto.password.otp.token.RedisOtpTokenStore;
+import org.maxkey.persistence.db.LoginHistoryService;
+import org.maxkey.persistence.db.LoginService;
+import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
 import org.maxkey.persistence.ldap.LdapUtils;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
@@ -45,12 +49,15 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
@@ -105,8 +112,21 @@ public class MaxKeyConfig  implements InitializingBean {
     //可以在此实现其他的登陆认证方式，请实现AbstractAuthenticationRealm
     @Bean(name = "authenticationRealm")
     public JdbcAuthenticationRealm authenticationRealm(
+    			PasswordEncoder passwordEncoder,
+	    		PasswordPolicyValidator passwordPolicyValidator,
+	    		LoginService loginService,
+	    		LoginHistoryService loginHistoryService,
+	    		AbstractRemeberMeService remeberMeService,
                 JdbcTemplate jdbcTemplate) {
-        JdbcAuthenticationRealm authenticationRealm = jdbcAuthenticationRealm(jdbcTemplate);
+    	
+        JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
+        		passwordEncoder,
+        		passwordPolicyValidator,
+        		loginService,
+        		loginHistoryService,
+        		remeberMeService,
+        		jdbcTemplate);
+        
         return authenticationRealm;
     }
     

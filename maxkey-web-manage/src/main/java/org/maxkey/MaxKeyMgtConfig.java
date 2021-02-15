@@ -27,6 +27,9 @@ import org.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.password.otp.impl.TimeBasedOtpAuthn;
 import org.maxkey.jobs.DynamicGroupsJob;
+import org.maxkey.persistence.db.LoginHistoryService;
+import org.maxkey.persistence.db.LoginService;
+import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.maxkey.persistence.service.GroupsService;
 import org.opensaml.xml.ConfigurationException;
@@ -39,6 +42,7 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.TriggerBuilder;
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
+import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -105,11 +109,24 @@ public class MaxKeyMgtConfig  implements InitializingBean {
     }
     
 	
-	//以下内容可以注释掉后再xml中配置,xml引入在MaxKeyMgtApplication中
+	//浠ヤ笅鍐呭鍙互娉ㄩ噴鎺夊悗鍐峹ml涓厤缃�,xml寮曞叆鍦∕axKeyMgtApplication涓�
 	@Bean(name = "authenticationRealm")
-    public JdbcAuthenticationRealm JdbcAuthenticationRealm(
-                JdbcTemplate jdbcTemplate) {
-        JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(jdbcTemplate);
+	public JdbcAuthenticationRealm authenticationRealm(
+ 			PasswordEncoder passwordEncoder,
+	    		PasswordPolicyValidator passwordPolicyValidator,
+	    		LoginService loginService,
+	    		LoginHistoryService loginHistoryService,
+	    		AbstractRemeberMeService remeberMeService,
+             JdbcTemplate jdbcTemplate) {
+		
+        JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
+        		passwordEncoder,
+        		passwordPolicyValidator,
+        		loginService,
+        		loginHistoryService,
+        		remeberMeService,
+        		jdbcTemplate);
+        
         _logger.debug("JdbcAuthenticationRealm inited.");
         return authenticationRealm;
     }

@@ -32,8 +32,6 @@ import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -50,24 +48,14 @@ public abstract class AbstractAuthenticationProvider {
     private static final Logger _logger = 
             LoggerFactory.getLogger(AbstractAuthenticationProvider.class);
 
-    @Autowired
-    @Qualifier("applicationConfig")
     protected ApplicationConfig applicationConfig;
 
-    @Autowired
-    @Qualifier("authenticationRealm")
     protected AbstractAuthenticationRealm authenticationRealm;
 
-    @Autowired
-    @Qualifier("tfaOptAuthn")
     protected AbstractOtpAuthn tfaOptAuthn;
 
-    @Autowired
-    @Qualifier("remeberMeService")
     protected AbstractRemeberMeService remeberMeService;
     
-    @Autowired
-    @Qualifier("onlineTicketServices")
     protected OnlineTicketServices onlineTicketServices;
     
     public static  ArrayList<GrantedAuthority> grantedAdministratorsAuthoritys = new ArrayList<GrantedAuthority>();
