@@ -47,13 +47,13 @@ allprojects {
 	compileJava.options.encoding = 'UTF-8'
 	
 	eclipse {
-		/*第一次时请注释这段eclipse设置，可能报错*/
-//		jdt  {
-//		    File f = file('.settings/org.eclipse.core.resources.prefs')
-//		    f.write('eclipse.preferences.version=1\n')
-//		    f.append('encoding/<project>=UTF-8') //use UTF-8
-//		}
-		
+		/*第一次时请注释这段eclipse设置，可能报错
+		jdt  {
+		    File f = file('.settings/org.eclipse.core.resources.prefs')
+		    f.write('eclipse.preferences.version=1\n')
+		    f.append('encoding/<project>=UTF-8') //use UTF-8
+		}
+		*/
 		
 		/*
 		wtp {

@@ -25,7 +25,7 @@ import org.maxkey.authz.oauth2.provider.token.store.InMemoryTokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.JdbcTokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
 import org.maxkey.constants.ConstantsProperties;
-import org.maxkey.crypto.password.opt.impl.TimeBasedOtpAuthn;
+import org.maxkey.crypto.password.otp.impl.TimeBasedOtpAuthn;
 import org.maxkey.jobs.DynamicGroupsJob;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.maxkey.persistence.service.GroupsService;
@@ -113,7 +113,7 @@ public class MaxKeyMgtConfig  implements InitializingBean {
         _logger.debug("JdbcAuthenticationRealm inited.");
         return authenticationRealm;
     }
-	
+
 	@Bean(name = "tfaOptAuthn")
     public TimeBasedOtpAuthn tfaOptAuthn() {
 	    TimeBasedOtpAuthn tfaOptAuthn = new TimeBasedOtpAuthn();

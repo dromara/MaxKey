@@ -61,12 +61,14 @@ jib {
 */
 
 dependencies {
+	compile project(":maxkey-common")
 	compile project(":maxkey-core")
 	compile project(":maxkey-persistence")
    	
    	compile project(":maxkey-authentications:maxkey-authentication-core")
    	compile project(":maxkey-authentications:maxkey-authentication-social")
    	compile project(":maxkey-authentications:maxkey-authentication-captcha")
+   	compile project(":maxkey-authentications:maxkey-authentication-otp")
    	
 	
    	compile project(":maxkey-protocols:maxkey-protocol-authorize")

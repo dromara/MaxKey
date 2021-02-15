@@ -20,7 +20,7 @@ package org.maxkey.web.contorller;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.maxkey.crypto.password.opt.AbstractOptAuthn;
+import org.maxkey.crypto.password.otp.AbstractOtpAuthn;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;
@@ -63,11 +63,11 @@ public class ForgotPasswordContorller {
 
     @Autowired
     @Qualifier("tfaMailOptAuthn")
-    protected AbstractOptAuthn tfaMailOptAuthn;
+    protected AbstractOtpAuthn tfaMailOptAuthn;
     
     @Autowired
     @Qualifier("tfaMobileOptAuthn")
-    protected AbstractOptAuthn tfaMobileOptAuthn;
+    protected AbstractOtpAuthn tfaMobileOptAuthn;
     
 
     @RequestMapping(value = { "/forward" })

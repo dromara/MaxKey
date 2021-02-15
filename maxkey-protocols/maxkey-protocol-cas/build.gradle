@@ -13,7 +13,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.pac4j/pac4j-cas
 	testCompile group: 'org.pac4j', name: 'pac4j-cas', version: '3.8.3'
 	
-	
+	compile project(":maxkey-common")
 	compile project(":maxkey-core")
 	compile project(":maxkey-persistence")
    	compile project(":maxkey-protocols:maxkey-protocol-authorize")

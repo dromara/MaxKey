@@ -26,7 +26,7 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.password.PasswordReciprocal;
-import org.maxkey.crypto.password.opt.AbstractOptAuthn;
+import org.maxkey.crypto.password.otp.AbstractOtpAuthn;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -60,7 +60,7 @@ public abstract class AbstractAuthenticationProvider {
 
     @Autowired
     @Qualifier("tfaOptAuthn")
-    protected AbstractOptAuthn tfaOptAuthn;
+    protected AbstractOtpAuthn tfaOptAuthn;
 
     @Autowired
     @Qualifier("remeberMeService")
@@ -332,7 +332,7 @@ public abstract class AbstractAuthenticationProvider {
         this.authenticationRealm = authenticationRealm;
     }
 
-    public void setTfaOptAuthn(AbstractOptAuthn tfaOptAuthn) {
+    public void setTfaOptAuthn(AbstractOtpAuthn tfaOptAuthn) {
         this.tfaOptAuthn = tfaOptAuthn;
     }
 

@@ -45,3 +45,4 @@ classpath-data.json
 /.gradle/*
 /build/
 setEnvVars.bat
+/bin/
