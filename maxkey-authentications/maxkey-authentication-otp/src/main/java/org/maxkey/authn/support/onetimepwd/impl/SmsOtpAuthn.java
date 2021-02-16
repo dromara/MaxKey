@@ -15,12 +15,13 @@
  */
  
 
-package org.maxkey.crypto.password.otp.impl;
+package org.maxkey.authn.support.onetimepwd.impl;
 
 import java.io.IOException;
 import java.util.Properties;
+
+import org.maxkey.authn.support.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.constants.ConstantsProperties;
-import org.maxkey.crypto.password.otp.AbstractOtpAuthn;
 import org.maxkey.domain.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

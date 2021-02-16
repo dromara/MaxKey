@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.crypto.password.otp.token;
+package org.maxkey.authn.support.onetimepwd.token;
 
 import org.maxkey.domain.UserInfo;
 

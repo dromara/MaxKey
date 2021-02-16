@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.crypto.password.otp.impl.sms;
+package org.maxkey.authn.support.onetimepwd.impl.sms;
 
 import java.security.MessageDigest;
 

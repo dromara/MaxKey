@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.crypto.password.otp.impl.sms;
+package org.maxkey.authn.support.onetimepwd.impl.sms;
 
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.profile.ClientProfile;
@@ -26,7 +26,7 @@ import com.tencentcloudapi.sms.v20190711.models.SendSmsResponse;
 
 import java.io.IOException;
 
-import org.maxkey.crypto.password.otp.impl.SmsOtpAuthn;
+import org.maxkey.authn.support.onetimepwd.impl.SmsOtpAuthn;
 import org.maxkey.domain.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

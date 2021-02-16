@@ -15,14 +15,14 @@
  */
  
 
-package org.maxkey.crypto.password.otp.impl;
+package org.maxkey.authn.support.onetimepwd.impl;
 
 import java.text.MessageFormat;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.SimpleEmail;
+import org.maxkey.authn.support.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.configuration.EmailConfig;
-import org.maxkey.crypto.password.otp.AbstractOtpAuthn;
 import org.maxkey.domain.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

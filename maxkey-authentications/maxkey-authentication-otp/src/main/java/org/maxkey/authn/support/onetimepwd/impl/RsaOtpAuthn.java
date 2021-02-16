@@ -15,17 +15,27 @@
  */
  
 
-package org.maxkey.crypto.password.otp.impl;
+package org.maxkey.authn.support.onetimepwd.impl;
 
-import org.maxkey.crypto.password.otp.AbstractOtpAuthn;
+import org.maxkey.authn.support.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.domain.UserInfo;
 
-public class MobileOtpAuthn extends AbstractOtpAuthn {
+/**
+ * Chip Authentication Program EMV stands for Europay, MasterCard and Visa, a
+ * global standard for inter-operation of integrated circuit cards (IC cards or
+ * "chip cards") and IC card capable point of sale (POS) terminals and automated
+ * teller machines (ATMs), for authenticating credit and debit card
+ * transactions.
+ * 
+ * @author Crystal.Sea
+ *
+ */
+public class RsaOtpAuthn extends AbstractOtpAuthn {
 
     
     
-    public MobileOtpAuthn() {
-        optType = OptTypes.SMS;
+    public RsaOtpAuthn() {
+        optType = OptTypes.RSA_OPT;
     }
 
     @Override

@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.crypto.password.otp.algorithm;
+package org.maxkey.authn.support.onetimepwd.algorithm;
 
 import java.util.Arrays;
 import java.util.Random;

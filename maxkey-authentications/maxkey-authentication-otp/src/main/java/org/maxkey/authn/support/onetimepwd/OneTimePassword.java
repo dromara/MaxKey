@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.crypto.password.otp;
+package org.maxkey.authn.support.onetimepwd;
 
 import java.io.Serializable;
 

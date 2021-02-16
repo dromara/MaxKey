@@ -15,9 +15,9 @@
  */
  
 
-package org.maxkey.crypto.password.otp.impl;
+package org.maxkey.authn.support.onetimepwd.impl;
 
-import org.maxkey.crypto.password.otp.AbstractOtpAuthn;
+import org.maxkey.authn.support.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.domain.UserInfo;
 
 /**
@@ -30,12 +30,12 @@ import org.maxkey.domain.UserInfo;
  * @author Crystal.Sea
  *
  */
-public class RsaOtpAuthn extends AbstractOtpAuthn {
+public class CapOtpAuthn extends AbstractOtpAuthn {
 
     
     
-    public RsaOtpAuthn() {
-        optType = OptTypes.RSA_OPT;
+    public CapOtpAuthn() {
+        optType = OptTypes.CAP_OPT;
     }
 
     @Override
