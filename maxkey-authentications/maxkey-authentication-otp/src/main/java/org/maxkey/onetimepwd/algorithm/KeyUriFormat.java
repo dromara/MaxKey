@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authn.support.onetimepwd.algorithm;
+package org.maxkey.onetimepwd.algorithm;
 
 public class KeyUriFormat {
 

@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authn.support.onetimepwd.algorithm;
+package org.maxkey.onetimepwd.algorithm;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;

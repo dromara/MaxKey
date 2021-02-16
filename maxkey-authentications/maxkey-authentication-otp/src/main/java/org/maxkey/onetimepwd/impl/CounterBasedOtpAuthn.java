@@ -15,13 +15,13 @@
  */
  
 
-package org.maxkey.authn.support.onetimepwd.impl;
+package org.maxkey.onetimepwd.impl;
 
 import org.apache.commons.codec.binary.Hex;
-import org.maxkey.authn.support.onetimepwd.AbstractOtpAuthn;
-import org.maxkey.authn.support.onetimepwd.algorithm.TimeBasedOTP;
 import org.maxkey.crypto.Base32Utils;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.onetimepwd.algorithm.TimeBasedOTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authn.support.onetimepwd.impl.sms;
+package org.maxkey.onetimepwd.impl.sms;
 
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
@@ -26,8 +26,8 @@ import com.aliyuncs.profile.DefaultProfile;
 
 import java.io.IOException;
 
-import org.maxkey.authn.support.onetimepwd.impl.SmsOtpAuthn;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.onetimepwd.impl.SmsOtpAuthn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

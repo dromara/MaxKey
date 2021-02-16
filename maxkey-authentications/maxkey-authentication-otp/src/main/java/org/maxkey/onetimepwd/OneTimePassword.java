@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authn.support.onetimepwd;
+package org.maxkey.onetimepwd;
 
 import java.io.Serializable;
 

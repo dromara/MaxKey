@@ -15,14 +15,14 @@
  */
  
 
-package org.maxkey.authn.support.onetimepwd.impl;
+package org.maxkey.onetimepwd.impl;
 
 import java.io.IOException;
 import java.util.Properties;
 
-import org.maxkey.authn.support.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.onetimepwd.AbstractOtpAuthn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;

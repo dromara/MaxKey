@@ -15,10 +15,10 @@
  */
  
 
-package org.maxkey.authn.support.onetimepwd.impl;
+package org.maxkey.onetimepwd.impl;
 
-import org.maxkey.authn.support.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.domain.UserInfo;
+import org.maxkey.onetimepwd.AbstractOtpAuthn;
 
 /**
  * Chip Authentication Program EMV stands for Europay, MasterCard and Visa, a
