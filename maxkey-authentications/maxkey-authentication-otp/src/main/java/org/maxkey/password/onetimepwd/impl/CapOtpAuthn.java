@@ -15,10 +15,10 @@
  */
  
 
-package org.maxkey.onetimepwd.impl;
+package org.maxkey.password.onetimepwd.impl;
 
 import org.maxkey.domain.UserInfo;
-import org.maxkey.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 
 /**
  * Chip Authentication Program EMV stands for Europay, MasterCard and Visa, a
@@ -30,12 +30,12 @@ import org.maxkey.onetimepwd.AbstractOtpAuthn;
  * @author Crystal.Sea
  *
  */
-public class RsaOtpAuthn extends AbstractOtpAuthn {
+public class CapOtpAuthn extends AbstractOtpAuthn {
 
     
     
-    public RsaOtpAuthn() {
-        optType = OptTypes.RSA_OPT;
+    public CapOtpAuthn() {
+        optType = OptTypes.CAP_OPT;
     }
 
     @Override

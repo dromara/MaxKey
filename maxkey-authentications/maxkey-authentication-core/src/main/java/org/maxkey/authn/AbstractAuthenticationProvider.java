@@ -27,7 +27,7 @@ import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;

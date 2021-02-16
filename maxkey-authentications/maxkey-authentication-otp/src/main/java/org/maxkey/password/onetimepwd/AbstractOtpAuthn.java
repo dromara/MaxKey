@@ -15,11 +15,11 @@
  */
  
 
-package org.maxkey.onetimepwd;
+package org.maxkey.password.onetimepwd;
 
 import org.maxkey.domain.UserInfo;
-import org.maxkey.onetimepwd.token.AbstractOtpTokenStore;
-import org.maxkey.onetimepwd.token.InMemoryOtpTokenStore;
+import org.maxkey.password.onetimepwd.token.AbstractOtpTokenStore;
+import org.maxkey.password.onetimepwd.token.InMemoryOtpTokenStore;
 import org.maxkey.util.StringGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

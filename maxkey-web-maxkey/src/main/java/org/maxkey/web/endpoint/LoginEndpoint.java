@@ -33,7 +33,7 @@ import org.maxkey.authn.support.wsfederation.WsFederationConstants;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebConstants;

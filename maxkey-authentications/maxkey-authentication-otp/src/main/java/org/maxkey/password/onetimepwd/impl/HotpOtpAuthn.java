@@ -15,15 +15,15 @@
  */
  
 
-package org.maxkey.onetimepwd.impl;
+package org.maxkey.password.onetimepwd.impl;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 import org.maxkey.crypto.Base32Utils;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.onetimepwd.AbstractOtpAuthn;
-import org.maxkey.onetimepwd.algorithm.HOTP;
+import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.algorithm.HOTP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.onetimepwd.token;
+package org.maxkey.password.onetimepwd.token;
 
 import org.ehcache.UserManagedCache;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
@@ -25,7 +25,7 @@ import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.onetimepwd.OneTimePassword;
+import org.maxkey.password.onetimepwd.OneTimePassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

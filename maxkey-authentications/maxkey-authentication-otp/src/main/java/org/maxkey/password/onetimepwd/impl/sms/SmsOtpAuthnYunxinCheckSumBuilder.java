@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.onetimepwd.impl.sms;
+package org.maxkey.password.onetimepwd.impl.sms;
 
 import java.security.MessageDigest;
 

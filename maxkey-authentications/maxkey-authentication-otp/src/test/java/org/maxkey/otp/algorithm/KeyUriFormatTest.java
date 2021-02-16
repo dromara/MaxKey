@@ -19,7 +19,7 @@ package org.maxkey.otp.algorithm;
 
 import java.io.File;
 
-import org.maxkey.onetimepwd.algorithm.KeyUriFormat;
+import org.maxkey.password.onetimepwd.algorithm.KeyUriFormat;
 import org.maxkey.util.QRCode;
 
 import com.google.zxing.BarcodeFormat;

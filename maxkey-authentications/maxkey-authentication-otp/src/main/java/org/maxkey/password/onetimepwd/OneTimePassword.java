@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.onetimepwd;
+package org.maxkey.password.onetimepwd;
 
 import java.io.Serializable;
 

@@ -15,12 +15,12 @@
  */
  
 
-package org.maxkey.onetimepwd.token;
+package org.maxkey.password.onetimepwd.token;
 
 import org.joda.time.DateTime;
 import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.onetimepwd.OneTimePassword;
+import org.maxkey.password.onetimepwd.OneTimePassword;
 import org.maxkey.persistence.redis.RedisConnection;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 

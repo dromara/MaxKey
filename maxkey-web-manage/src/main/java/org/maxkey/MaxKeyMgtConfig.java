@@ -26,7 +26,7 @@ import org.maxkey.authz.oauth2.provider.token.store.JdbcTokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.jobs.DynamicGroupsJob;
-import org.maxkey.onetimepwd.impl.TimeBasedOtpAuthn;
+import org.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
 import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.LoginService;
 import org.maxkey.persistence.db.PasswordPolicyValidator;

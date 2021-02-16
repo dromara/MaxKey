@@ -39,7 +39,7 @@ import org.maxkey.crypto.password.NoOpPasswordEncoder;
 import org.maxkey.crypto.password.MessageDigestPasswordEncoder;
 import org.maxkey.crypto.password.SM3PasswordEncoder;
 import org.maxkey.crypto.password.StandardPasswordEncoder;
-import org.maxkey.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;

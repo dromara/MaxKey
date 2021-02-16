@@ -15,29 +15,13 @@
  */
  
 
-package org.maxkey.onetimepwd.impl;
+package org.maxkey.password.onetimepwd.token;
 
 import org.maxkey.domain.UserInfo;
-import org.maxkey.onetimepwd.AbstractOtpAuthn;
 
-public class MobileOtpAuthn extends AbstractOtpAuthn {
-
+public abstract class AbstractOtpTokenStore {
     
+    public abstract void store(UserInfo userInfo, String token, String receiver, String type);
     
-    public MobileOtpAuthn() {
-        optType = OptTypes.SMS;
-    }
-
-    @Override
-    public boolean produce(UserInfo userInfo) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean validate(UserInfo userInfo, String token) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
+    public abstract boolean validate(UserInfo userInfo, String token, String type,int interval);
 }

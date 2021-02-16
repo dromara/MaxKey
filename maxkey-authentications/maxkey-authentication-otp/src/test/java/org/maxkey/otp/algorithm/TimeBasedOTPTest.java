@@ -26,7 +26,7 @@ import java.util.TimeZone;
 import org.apache.commons.codec.binary.Hex;
 import org.maxkey.crypto.Base32Utils;
 import org.maxkey.crypto.HexUtils;
-import org.maxkey.onetimepwd.algorithm.TimeBasedOTP;
+import org.maxkey.password.onetimepwd.algorithm.TimeBasedOTP;
 /**
  * goole 
  * @author Crystal.Sea

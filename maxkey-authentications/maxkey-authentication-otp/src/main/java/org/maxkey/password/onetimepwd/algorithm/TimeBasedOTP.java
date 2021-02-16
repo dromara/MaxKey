@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.onetimepwd.algorithm;
+package org.maxkey.password.onetimepwd.algorithm;
 
 import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigInteger;

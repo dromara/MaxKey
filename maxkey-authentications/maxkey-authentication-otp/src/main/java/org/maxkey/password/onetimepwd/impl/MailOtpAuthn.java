@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.onetimepwd.impl;
+package org.maxkey.password.onetimepwd.impl;
 
 import java.text.MessageFormat;
 import org.apache.commons.mail.DefaultAuthenticator;
@@ -23,7 +23,7 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.SimpleEmail;
 import org.maxkey.configuration.EmailConfig;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
