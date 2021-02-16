@@ -61,12 +61,12 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     public RealmAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
-    	    AbstractOtpAuthn tfaOptAuthn,
+    	    AbstractOtpAuthn tfaOtpAuthn,
     	    AbstractRemeberMeService remeberMeService,
     	    OnlineTicketServices onlineTicketServices) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
-		this.tfaOptAuthn = tfaOptAuthn;
+		this.tfaOtpAuthn = tfaOtpAuthn;
 		this.remeberMeService =  remeberMeService;
 		this.onlineTicketServices = onlineTicketServices;
 	}

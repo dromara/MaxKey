@@ -52,7 +52,7 @@ public abstract class AbstractAuthenticationProvider {
 
     protected AbstractAuthenticationRealm authenticationRealm;
 
-    protected AbstractOtpAuthn tfaOptAuthn;
+    protected AbstractOtpAuthn tfaOtpAuthn;
 
     protected AbstractRemeberMeService remeberMeService;
     
@@ -227,7 +227,7 @@ public abstract class AbstractAuthenticationProvider {
             validUserInfo.setSharedSecret(sharedSecret);
             validUserInfo.setSharedCounter(userInfo.getSharedCounter());
             validUserInfo.setId(userInfo.getId());
-            if (otpCaptcha == null || !tfaOptAuthn.validate(validUserInfo, otpCaptcha)) {
+            if (otpCaptcha == null || !tfaOtpAuthn.validate(validUserInfo, otpCaptcha)) {
                 String message = WebContext.getI18nValue("login.error.captcha");
                 _logger.debug("login captcha valid error.");
                 throw new BadCredentialsException(message);
@@ -320,8 +320,8 @@ public abstract class AbstractAuthenticationProvider {
         this.authenticationRealm = authenticationRealm;
     }
 
-    public void setTfaOptAuthn(AbstractOtpAuthn tfaOptAuthn) {
-        this.tfaOptAuthn = tfaOptAuthn;
+    public void setTfaOtpAuthn(AbstractOtpAuthn tfaOtpAuthn) {
+        this.tfaOtpAuthn = tfaOtpAuthn;
     }
 
     public void setRemeberMeService(AbstractRemeberMeService remeberMeService) {

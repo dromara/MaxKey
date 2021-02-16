@@ -92,8 +92,8 @@ public class LoginEndpoint {
 	AbstractAuthenticationProvider authenticationProvider ;
 	
 	@Autowired
-    @Qualifier("tfaOptAuthn")
-    protected AbstractOtpAuthn tfaOptAuthn;
+    @Qualifier("tfaOtpAuthn")
+    protected AbstractOtpAuthn tfaOtpAuthn;
 	
 	/*
 	@Autowired
@@ -151,8 +151,8 @@ public class LoginEndpoint {
 			modelAndView.addObject("isKerberos", applicationConfig.getLoginConfig().isKerberos());
 			modelAndView.addObject("isMfa", applicationConfig.getLoginConfig().isMfa());
 			if(applicationConfig.getLoginConfig().isMfa()) {
-			    modelAndView.addObject("optType", tfaOptAuthn.getOtpType());
-			    modelAndView.addObject("optInterval", tfaOptAuthn.getInterval());
+			    modelAndView.addObject("otpType", tfaOtpAuthn.getOtpType());
+			    modelAndView.addObject("otpInterval", tfaOtpAuthn.getInterval());
 			}
 			
 			if( applicationConfig.getLoginConfig().isKerberos()){
@@ -218,7 +218,7 @@ public class LoginEndpoint {
         userInfo.setUsername(username);
         UserInfo queryUserInfo=userInfoService.loadByUsername(username);//(userInfo);
         if(queryUserInfo!=null) {
-            tfaOptAuthn.produce(queryUserInfo);
+        	tfaOtpAuthn.produce(queryUserInfo);
             return "ok";
         }
         

@@ -60,7 +60,7 @@
 		strTime+=(seconds<10?"0"+seconds:seconds);
 	}
 	
-	<#if true==isMfa && "TOPT"==optType>
+	<#if true==isMfa && "TOPT"==otpType>
 	function currentTime(){
 		seconds++;
 		if(seconds>59){
@@ -85,10 +85,10 @@
 	<#--timeBase Token  Interval default is 30s-->
 	var timeBaseCount;
 	function getTimeBaseCount(){
-		if(seconds<${optInterval}){
-			timeBaseCount=${optInterval}-seconds;
+		if(seconds<${otpInterval}){
+			timeBaseCount=${otpInterval}-seconds;
 		}else{
-			timeBaseCount=${optInterval}-(seconds-${optInterval});
+			timeBaseCount=${otpInterval}-(seconds-${otpInterval});
 		}
 		$("#tfa_j_otp_captcha_button").val("<@locale code="login.text.login.twofactor.validTime"/>("+timeBaseCount+")<@locale code="login.text.login.twofactor.validTime.unit"/>");
 	};
@@ -125,7 +125,7 @@
 	};
 	
 	$(function(){
-		<#if true==isMfa && "TOPT"==optType>
+		<#if true==isMfa && "TOPT"==otpType>
 		setInterval("currentTime()", 1000);
 		</#if>
 		<#--on captcha image click ,new a captcha code-->
@@ -298,7 +298,7 @@
 											<td><input required="" class="form-control"  type='password' id='tfa_j_password'  name='password' value=""  tabindex="2" /></td>
 										</tr>
 										<#if true==isMfa >
-										<#if "TOPT"==optType >
+										<#if "TOPT"==otpType >
 										<tr>
 											<td><@locale code="login.text.currenttime"/>：</td>
 											<td>

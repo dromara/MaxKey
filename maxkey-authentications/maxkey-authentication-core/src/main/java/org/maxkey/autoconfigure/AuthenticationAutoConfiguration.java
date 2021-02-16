@@ -80,7 +80,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     public AbstractAuthenticationProvider authenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
-    	    AbstractOtpAuthn tfaOptAuthn,
+    	    AbstractOtpAuthn tfaOtpAuthn,
     	    AbstractRemeberMeService remeberMeService,
     	    OnlineTicketServices onlineTicketServices
     		) {
@@ -88,7 +88,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         return new RealmAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
-        		tfaOptAuthn,
+        		tfaOtpAuthn,
         		remeberMeService,
         		onlineTicketServices
         		);

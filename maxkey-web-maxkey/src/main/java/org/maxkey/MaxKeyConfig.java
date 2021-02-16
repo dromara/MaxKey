@@ -176,49 +176,49 @@ public class MaxKeyConfig  implements InitializingBean {
         return authenticationRealm;
     }
     
-	@Bean(name = "tfaOptAuthn")
+	@Bean(name = "tfaOtpAuthn")
     public TimeBasedOtpAuthn tfaOptAuthn() {
-	    TimeBasedOtpAuthn tfaOptAuthn = new TimeBasedOtpAuthn();
+	    TimeBasedOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn();
 	    _logger.debug("TimeBasedOtpAuthn inited.");
-        return tfaOptAuthn;
+        return tfaOtpAuthn;
     }
     
-    //default tfaOptAuthn
-    @Bean(name = "tfaOptAuthn")
+    //default tfaOtpAuthn
+    @Bean(name = "tfaOtpAuthn")
     public AbstractOtpAuthn tfaOptAuthn(
             @Value("${config.login.mfa.type}")String mfaType,
             @Value("${config.server.persistence}") int persistence,
-            MailOtpAuthn tfaMailOptAuthn,
+            MailOtpAuthn tfaMailOtpAuthn,
             RedisConnectionFactory redisConnFactory) {    
         
-        AbstractOtpAuthn tfaOptAuthn  = null;
+        AbstractOtpAuthn tfaOtpAuthn  = null;
         if(mfaType.equalsIgnoreCase("SmsOtpAuthnAliyun")) {
-            tfaOptAuthn = new SmsOtpAuthnAliyun();
+        	tfaOtpAuthn = new SmsOtpAuthnAliyun();
             _logger.debug("SmsOtpAuthnAliyun inited.");
         }else if(mfaType.equalsIgnoreCase("SmsOtpAuthnTencentCloud")) {
-            tfaOptAuthn = new SmsOtpAuthnTencentCloud();
+        	tfaOtpAuthn = new SmsOtpAuthnTencentCloud();
             _logger.debug("SmsOtpAuthnTencentCloud inited.");
         }else if(mfaType.equalsIgnoreCase("SmsOtpAuthnYunxin")) {
-            tfaOptAuthn = new SmsOtpAuthnYunxin();
+        	tfaOtpAuthn = new SmsOtpAuthnYunxin();
             _logger.debug("SmsOtpAuthnYunxin inited.");
         }else if(mfaType.equalsIgnoreCase("MailOtpAuthn")) {
-            tfaOptAuthn = tfaMailOptAuthn;
+        	tfaOtpAuthn = tfaMailOtpAuthn;
             _logger.debug("MailOtpAuthn inited.");
         }else {
-            tfaOptAuthn = new TimeBasedOtpAuthn();
+        	tfaOtpAuthn = new TimeBasedOtpAuthn();
             _logger.debug("TimeBasedOtpAuthn inited.");
         }
         
         if (persistence == ConstantsPersistence.REDIS) {
             RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);
-            tfaOptAuthn.setOptTokenStore(redisOptTokenStore);
+            tfaOtpAuthn.setOptTokenStore(redisOptTokenStore);
         }
         
-        tfaOptAuthn.initPropertys();
-        return tfaOptAuthn;
+        tfaOtpAuthn.initPropertys();
+        return tfaOtpAuthn;
     }
     
-    @Bean(name = "tfaMailOptAuthn")
+    @Bean(name = "tfaMailOtpAuthn")
     public MailOtpAuthn mailOtpAuthn(
             @Value("${spring.mail.properties.mailotp.message.subject}")
             String messageSubject,
@@ -228,11 +228,11 @@ public class MaxKeyConfig  implements InitializingBean {
         MailOtpAuthn mailOtpAuthn = new MailOtpAuthn();
         mailOtpAuthn.setSubject(messageSubject);
         mailOtpAuthn.setMessageTemplate(messageTemplate);
-        _logger.debug("tfaMailOptAuthn inited.");
+        _logger.debug("tfaMailOtpAuthn inited.");
         return mailOtpAuthn;
     }
     
-    @Bean(name = "tfaMobileOptAuthn")
+    @Bean(name = "tfaMobileOtpAuthn")
     public SmsOtpAuthn smsOtpAuthn(
             @Value("${config.otp.sms}")String optSmsProvider,
             @Value("${config.server.persistence}") int persistence,
