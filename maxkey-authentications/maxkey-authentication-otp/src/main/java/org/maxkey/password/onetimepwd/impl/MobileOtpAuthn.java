@@ -25,7 +25,7 @@ public class MobileOtpAuthn extends AbstractOtpAuthn {
     
     
     public MobileOtpAuthn() {
-        optType = OptTypes.SMS;
+        otpType = OtpTypes.SMS;
     }
 
     @Override

@@ -44,9 +44,9 @@ public abstract class AbstractOtpAuthn {
 
     StringGenerator stringGenerator;
     
-    protected String optType = OptTypes.TIMEBASED_OPT;
+    protected String otpType = OtpTypes.TIMEBASED_OTP;
 
-    public static final class OptTypes {
+    public static final class OtpTypes {
         // 手机
         public static String  MOBILE = "MOBILE";
         // 短信
@@ -54,13 +54,13 @@ public abstract class AbstractOtpAuthn {
         // 邮箱
         public static String EMAIL = "EMAIL";
         //TIMEBASED_OPT
-        public static String TIMEBASED_OPT = "TOPT";
+        public static String TIMEBASED_OTP = "TOPT";
         // HmacOTP
-        public static String HOTP_OPT = "HOTP";
+        public static String HOTP_OTP = "HOTP";
 
-        public static String RSA_OPT = "RSA";
+        public static String RSA_OTP = "RSA";
         
-        public static String CAP_OPT = "CAP";
+        public static String CAP_OTP = "CAP";
 
     }
 
@@ -134,12 +134,12 @@ public abstract class AbstractOtpAuthn {
         this.crypto = crypto;
     }
 
-    public String getOptType() {
-        return optType;
+    public String getOtpType() {
+        return otpType;
     }
 
-    public void setOptType(String optType) {
-        this.optType = optType;
+    public void setOtpType(String optType) {
+        this.otpType = optType;
     }
 
     public void setOptTokenStore(AbstractOtpTokenStore optTokenStore) {

@@ -35,7 +35,7 @@ public class RsaOtpAuthn extends AbstractOtpAuthn {
     
     
     public RsaOtpAuthn() {
-        optType = OptTypes.RSA_OPT;
+        otpType = OtpTypes.RSA_OTP;
     }
 
     @Override

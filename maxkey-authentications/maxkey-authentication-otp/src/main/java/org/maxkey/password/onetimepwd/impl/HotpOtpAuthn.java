@@ -34,7 +34,7 @@ public class HotpOtpAuthn extends AbstractOtpAuthn {
     int truncation = -1;
 
     public HotpOtpAuthn() {
-        optType = OptTypes.HOTP_OPT;
+        otpType = OtpTypes.HOTP_OTP;
     }
 
     @Override

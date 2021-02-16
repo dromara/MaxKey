@@ -42,7 +42,7 @@ public class SmsOtpAuthnAliyun extends SmsOtpAuthn {
     private static final  Logger logger = LoggerFactory.getLogger(SmsOtpAuthnAliyun.class);
     
     public SmsOtpAuthnAliyun() {
-        optType = OptTypes.SMS;
+        otpType = OtpTypes.SMS;
     }
 
     //请替换你在管理后台应用下申请的accessKeyId
@@ -83,7 +83,7 @@ public class SmsOtpAuthnAliyun extends SmsOtpAuthn {
                             userInfo, 
                             token, 
                             userInfo.getMobile(), 
-                            OptTypes.SMS);
+                            OtpTypes.SMS);
                     return true;
                 }
             } catch  (Exception e) {
@@ -95,7 +95,7 @@ public class SmsOtpAuthnAliyun extends SmsOtpAuthn {
 
     @Override
     public boolean validate(UserInfo userInfo, String token) {
-        return this.optTokenStore.validate(userInfo, token, OptTypes.SMS, interval);
+        return this.optTokenStore.validate(userInfo, token, OtpTypes.SMS, interval);
     }
 
     public String getAccessKeyId() {

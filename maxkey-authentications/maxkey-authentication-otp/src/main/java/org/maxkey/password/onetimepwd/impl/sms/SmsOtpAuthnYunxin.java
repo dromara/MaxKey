@@ -45,7 +45,7 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
     private static final  Logger logger = LoggerFactory.getLogger(SmsOtpAuthnYunxin.class);
     
     public SmsOtpAuthnYunxin() {
-        optType = OptTypes.SMS;
+        otpType = OtpTypes.SMS;
     }
 
     //发送验证码的请求路径URL
@@ -122,7 +122,7 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
                                         userInfo, 
                                         yunxinSms.getObj(), 
                                         userInfo.getMobile(), 
-                                        OptTypes.SMS);
+                                        OtpTypes.SMS);
                 return true;
             } catch  (Exception e) {
                 logger.error(" produce code error ", e);
@@ -137,7 +137,7 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
 
     @Override
     public boolean validate(UserInfo userInfo, String token) {
-        return this.optTokenStore.validate(userInfo, token, OptTypes.SMS, interval);
+        return this.optTokenStore.validate(userInfo, token, OtpTypes.SMS, interval);
     }
 
     

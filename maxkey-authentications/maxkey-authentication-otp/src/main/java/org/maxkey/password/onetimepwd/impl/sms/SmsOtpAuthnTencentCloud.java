@@ -52,7 +52,7 @@ public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
     String sign;
     
     public SmsOtpAuthnTencentCloud() {
-        optType = OptTypes.SMS;
+        otpType = OtpTypes.SMS;
     }
     
 
@@ -89,7 +89,7 @@ public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
                             userInfo, 
                             token, 
                             userInfo.getMobile(), 
-                            OptTypes.SMS);
+                            OtpTypes.SMS);
                     return true;
                 }
                
@@ -102,7 +102,7 @@ public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
 
     @Override
     public boolean validate(UserInfo userInfo, String token) {
-        return this.optTokenStore.validate(userInfo, token, OptTypes.SMS, interval);
+        return this.optTokenStore.validate(userInfo, token, OtpTypes.SMS, interval);
     }
 
 

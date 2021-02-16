@@ -35,7 +35,7 @@ public class CapOtpAuthn extends AbstractOtpAuthn {
     
     
     public CapOtpAuthn() {
-        optType = OptTypes.CAP_OPT;
+        otpType = OtpTypes.CAP_OTP;
     }
 
     @Override

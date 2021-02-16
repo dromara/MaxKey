@@ -151,7 +151,7 @@ public class LoginEndpoint {
 			modelAndView.addObject("isKerberos", applicationConfig.getLoginConfig().isKerberos());
 			modelAndView.addObject("isMfa", applicationConfig.getLoginConfig().isMfa());
 			if(applicationConfig.getLoginConfig().isMfa()) {
-			    modelAndView.addObject("optType", tfaOptAuthn.getOptType());
+			    modelAndView.addObject("optType", tfaOptAuthn.getOtpType());
 			    modelAndView.addObject("optInterval", tfaOptAuthn.getInterval());
 			}
 			

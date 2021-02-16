@@ -30,7 +30,7 @@ public class CounterBasedOtpAuthn extends AbstractOtpAuthn {
 
 
     public CounterBasedOtpAuthn() {
-        optType = OptTypes.HOTP_OPT;
+        otpType = OtpTypes.HOTP_OTP;
     }
 
     @Override

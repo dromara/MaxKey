@@ -38,7 +38,7 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
     String messageTemplate = "{0} You Token is {1} , it validity in {2}  minutes.";
     
     public MailOtpAuthn() {
-        optType = OptTypes.EMAIL;
+        otpType = OtpTypes.EMAIL;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
                     userInfo, 
                     token, 
                     userInfo.getMobile(), 
-                    OptTypes.EMAIL);
+                    OtpTypes.EMAIL);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,7 +78,7 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
 
     @Override
     public boolean validate(UserInfo userInfo, String token) {
-        return this.optTokenStore.validate(userInfo, token, OptTypes.EMAIL, interval);
+        return this.optTokenStore.validate(userInfo, token, OtpTypes.EMAIL, interval);
     }
 
     public void setEmailConfig(EmailConfig emailConfig) {
