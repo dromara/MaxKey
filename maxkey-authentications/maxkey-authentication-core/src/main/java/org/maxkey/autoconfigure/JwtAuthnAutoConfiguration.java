@@ -23,7 +23,6 @@ import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
 import org.maxkey.constants.ConstantsProperties;
@@ -126,11 +125,9 @@ public class JwtAuthnAutoConfiguration implements InitializingBean {
     @Bean(name = "jwtLoginService")
     public JwtLoginService jwtLoginService(
             DefaultJwtSigningAndValidationService jwtSignerValidationService,
-            OIDCProviderMetadataDetails oidcProviderMetadata,
-            AbstractAuthenticationProvider authenticationProvider) {
+            OIDCProviderMetadataDetails oidcProviderMetadata) {
         
         JwtLoginService jwtLoginService = new JwtLoginService(
-                authenticationProvider,
                 oidcProviderMetadata,
                 jwtSignerValidationService
                 );

@@ -22,10 +22,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.joda.time.DateTime;
-import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.Base64Utils;
 import org.maxkey.crypto.ReciprocalUtils;
@@ -47,10 +44,6 @@ public abstract class AbstractRemeberMeService {
     @Autowired
     @Qualifier("applicationConfig")
     protected ApplicationConfig applicationConfig;
-    
-    @Autowired
-    @Qualifier("authenticationProvider")
-    AbstractAuthenticationProvider authenticationProvider ;
 
     // follow function is for persist
     public abstract void save(RemeberMe remeberMe);
@@ -95,38 +88,6 @@ public abstract class AbstractRemeberMeService {
             request.getSession().removeAttribute(WebConstants.REMEBER_ME_SESSION);
         }
         return true;
-    }
-
-    public boolean login(String remeberMe, HttpServletResponse response) {
-        _logger.debug("RemeberMe : " + remeberMe);
-
-        remeberMe = new String(Base64Utils.base64UrlDecode(remeberMe));
-
-        remeberMe = ReciprocalUtils.decoder(remeberMe);
-
-        _logger.debug("decoder RemeberMe : " + remeberMe);
-        RemeberMe remeberMeCookie = new RemeberMe();
-        remeberMeCookie = (RemeberMe) JsonUtils.json2Object(remeberMe, remeberMeCookie);
-        _logger.debug("Remeber Me Cookie : " + remeberMeCookie);
-
-        RemeberMe storeRemeberMe = read(remeberMeCookie);
-        if (storeRemeberMe == null)  {
-            return false;
-        }
-        DateTime loginDate = new DateTime(storeRemeberMe.getLastLogin());
-        DateTime expiryDate = loginDate.plusSeconds(getRemeberMeValidity());
-        DateTime now = new DateTime();
-        if (now.isBefore(expiryDate)) {
-            authenticationProvider.trustAuthentication(
-                    storeRemeberMe.getUsername(), 
-                    ConstantsLoginType.REMEBER_ME, 
-                    "", 
-                    "", 
-                    "success");
-            return updateRemeberMe(remeberMeCookie, response);
-
-        }
-        return false;
     }
 
     public boolean updateRemeberMe(RemeberMe remeberMe, HttpServletResponse response) {

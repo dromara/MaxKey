@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.support.kerberos.KerberosService;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.wsfederation.WsFederationConstants;
 import org.maxkey.configuration.ApplicationConfig;
@@ -44,7 +43,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,8 +59,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginEndpoint {
 	private static Logger _logger = LoggerFactory.getLogger(LoginEndpoint.class);
 	
-	
-	
 	@Autowired
   	@Qualifier("applicationConfig")
   	ApplicationConfig applicationConfig;
@@ -70,10 +66,6 @@ public class LoginEndpoint {
 	@Autowired
 	@Qualifier("socialSignOnProviderService")
 	SocialSignOnProviderService socialSignOnProviderService;
-	
-	@Autowired
-	@Qualifier("remeberMeService")
-	AbstractRemeberMeService remeberMeService;
 	
 	@Autowired
 	@Qualifier("kerberosService")
@@ -95,11 +87,6 @@ public class LoginEndpoint {
     @Qualifier("tfaOtpAuthn")
     protected AbstractOtpAuthn tfaOtpAuthn;
 	
-	/*
-	@Autowired
-	@Qualifier("jwtLoginService")
-	JwtLoginService jwtLoginService;
-	*/
 	/**
 	 * init login
 	 * @return
@@ -108,7 +95,6 @@ public class LoginEndpoint {
 	public ModelAndView login(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			@CookieValue(value=WebConstants.REMEBER_ME_COOKIE,required=false) String remeberMe,
 			@RequestParam(value=WebConstants.CAS_SERVICE_PARAMETER,required=false) String casService,
 			@RequestParam(value=WebConstants.KERBEROS_TOKEN_PARAMETER,required=false) String kerberosToken,
 			@RequestParam(value=WebConstants.KERBEROS_USERDOMAIN_PARAMETER,required=false) String kerberosUserDomain,
@@ -119,13 +105,6 @@ public class LoginEndpoint {
 		ModelAndView modelAndView = new ModelAndView("login");
 		
 		boolean isAuthenticated= WebContext.isAuthenticated();
-		//for RemeberMe login
-		if(!isAuthenticated){
-			if(applicationConfig.getLoginConfig().isRemeberMe()&&remeberMe!=null&& !remeberMe.equals("")){
-				_logger.debug("Try RemeberMe login ");
-				isAuthenticated=remeberMeService.login(remeberMe,response);
-			}
-		}
 		//for Kerberos login
 		if(!isAuthenticated){
 			if(applicationConfig.getLoginConfig().isKerberos()&&

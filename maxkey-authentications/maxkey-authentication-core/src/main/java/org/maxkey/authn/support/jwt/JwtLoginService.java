@@ -28,11 +28,8 @@ import com.nimbusds.jwt.PlainJWT;
 import com.nimbusds.jwt.SignedJWT;
 import java.util.Date;
 import java.util.UUID;
-import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
-import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
-import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -47,76 +44,13 @@ public class JwtLoginService {
 
     DefaultJwtSigningAndValidationService jwtSignerValidationService;
     
-    AbstractAuthenticationProvider authenticationProvider ;
-
-    
-    public JwtLoginService(AbstractAuthenticationProvider authenticationProvider,
+    public JwtLoginService(
             OIDCProviderMetadataDetails jwtProviderMetadata,
             DefaultJwtSigningAndValidationService jwtSignerValidationService
             ) {
-        this.authenticationProvider = authenticationProvider;
         this.jwtProviderMetadata = jwtProviderMetadata;
         this.jwtSignerValidationService = jwtSignerValidationService;
         
-    }
-    public boolean login(String jwt, HttpServletResponse response) {
-        _logger.debug("jwt : " + jwt);
-
-        String username = null;
-        SignedJWT signedJWT = null;
-
-        boolean loginResult = false;
-        JWTClaimsSet jwtClaimsSet = null;
-        try {
-
-            RSASSAVerifier rsaSSAVerifier = new RSASSAVerifier(((RSAKey) jwtSignerValidationService.getAllPublicKeys()
-                    .get(jwtSignerValidationService.getDefaultSignerKeyId())).toRSAPublicKey());
-
-            signedJWT = SignedJWT.parse(jwt);
-            if (signedJWT.verify(rsaSSAVerifier)) {
-                loginResult = true;
-            } else {
-                _logger.debug("verify false ");
-                return false;
-            }
-            jwtClaimsSet = signedJWT.getJWTClaimsSet();
-
-            _logger.debug("" + signedJWT.getPayload());
-            _logger.debug("jwtClaimsSet Issuer " + jwtClaimsSet.getIssuer());
-            _logger.debug("Metadata Issuer " + jwtProviderMetadata.getIssuer());
-
-            if (loginResult && jwtClaimsSet.getIssuer().equals(jwtProviderMetadata.getIssuer())) {
-                loginResult = true;
-                _logger.debug("Issuer equals ");
-            } else {
-                _logger.debug("Issuer not equals ");
-                return false;
-            }
-
-            _logger.debug("username " + jwtClaimsSet.getSubject());
-
-            if (loginResult && jwtClaimsSet.getSubject() != null) {
-                username = jwtClaimsSet.getSubject();
-            } else {
-                return false;
-            }
-
-            DateTime now = new DateTime();
-
-            if (loginResult && now.isBefore(jwtClaimsSet.getExpirationTime().getTime())) {
-                authenticationProvider.trustAuthentication(username, ConstantsLoginType.JWT, "", "", "success");
-                return true;
-            }
-        } catch (java.text.ParseException e) {
-            // Invalid signed JWT encoding
-            _logger.error("Invalid signed JWT encoding ");
-        } catch (JOSEException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            _logger.error("JOSEException ");
-        }
-
-        return false;
     }
 
     public String buildLoginJwt() {
@@ -144,10 +78,8 @@ public class JwtLoginService {
         return tokenString;
     }
 
-    public boolean jwtTokenValidation(String jwt) {
+    public SignedJWT jwtTokenValidation(String jwt) {
         SignedJWT signedJWT = null;
-
-        boolean loginResult = false;
         JWTClaimsSet jwtClaimsSet = null;
         try {
 
@@ -156,44 +88,34 @@ public class JwtLoginService {
 
             signedJWT = SignedJWT.parse(jwt);
             if (signedJWT.verify(rsaSSAVerifier)) {
-                loginResult = true;
+            	 jwtClaimsSet = signedJWT.getJWTClaimsSet();
+                 _logger.debug("" + signedJWT.getPayload());
+                 _logger.debug("username " + jwtClaimsSet.getSubject());
+                 _logger.debug("jwtClaimsSet Issuer " + jwtClaimsSet.getIssuer());
+                 _logger.debug("Metadata Issuer " + jwtProviderMetadata.getIssuer());
+                 if ( jwtClaimsSet.getIssuer().equals(jwtProviderMetadata.getIssuer())) {
+                     _logger.debug("Issuer equals ");
+                     DateTime now = new DateTime();
+                     if (now.isBefore(jwtClaimsSet.getExpirationTime().getTime())) {
+                         _logger.debug("ExpirationTime  Validation " + now.isBefore(jwtClaimsSet.getExpirationTime().getTime()));
+                        return signedJWT;
+                     } 
+                 } else {
+                     _logger.debug("Issuer not equals ");
+                 }
             } else {
                 _logger.debug("verify false ");
             }
-            jwtClaimsSet = signedJWT.getJWTClaimsSet();
-
-            _logger.debug("" + signedJWT.getPayload());
-
-            _logger.debug("username " + jwtClaimsSet.getSubject());
-
-            _logger.debug("jwtClaimsSet Issuer " + jwtClaimsSet.getIssuer());
-            _logger.debug("Metadata Issuer " + jwtProviderMetadata.getIssuer());
-
-            if (loginResult && jwtClaimsSet.getIssuer().equals(jwtProviderMetadata.getIssuer())) {
-                loginResult = true;
-                _logger.debug("Issuer equals ");
-            } else {
-                _logger.debug("Issuer not equals ");
-                return false;
-            }
-
-            DateTime now = new DateTime();
-
-            if (loginResult && now.isBefore(jwtClaimsSet.getExpirationTime().getTime())) {
-                _logger.debug("ExpirationTime  Validation " + now.isBefore(jwtClaimsSet.getExpirationTime().getTime()));
-                loginResult = true;
-            } else {
-                return false;
-            }
+           
         } catch (java.text.ParseException e) {
             // Invalid signed JWT encoding
-            _logger.debug("Invalid signed JWT encoding ");
+            _logger.error("Invalid signed JWT encoding ",e);
         } catch (JOSEException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            _logger.debug("JOSEException ");
+            _logger.error("JOSEException ",e);
         }
-        return loginResult;
+        return null;
     }
 
 
@@ -205,8 +127,13 @@ public class JwtLoginService {
         this.jwtSignerValidationService = jwtSignerValidationService;
     }
 
-    public void setAuthenticationProvider(AbstractAuthenticationProvider authenticationProvider) {
-        this.authenticationProvider = authenticationProvider;
-    }
+	public OIDCProviderMetadataDetails getJwtProviderMetadata() {
+		return jwtProviderMetadata;
+	}
+	public DefaultJwtSigningAndValidationService getJwtSignerValidationService() {
+		return jwtSignerValidationService;
+	}
+    
+    
 
 }

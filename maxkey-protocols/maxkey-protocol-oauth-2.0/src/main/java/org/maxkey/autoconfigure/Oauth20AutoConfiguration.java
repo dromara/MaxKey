@@ -23,8 +23,6 @@ import java.security.spec.InvalidKeySpecException;
 
 import javax.servlet.Filter;
 import javax.sql.DataSource;
-
-import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.OAuth2UserDetailsService;
@@ -168,11 +166,9 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     @Bean(name = "jwtLoginService")
     public JwtLoginService jwtLoginService(
             DefaultJwtSigningAndValidationService jwtSignerValidationService,
-            OIDCProviderMetadataDetails oidcProviderMetadata,
-            AbstractAuthenticationProvider authenticationProvider) {
+            OIDCProviderMetadataDetails oidcProviderMetadata) {
         
         JwtLoginService jwtLoginService = new JwtLoginService(
-                authenticationProvider,
                 oidcProviderMetadata,
                 jwtSignerValidationService
                 );

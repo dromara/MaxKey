@@ -17,8 +17,12 @@
 
 package org.maxkey;
 
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.basic.BasicEntryPoint;
 import org.maxkey.authn.support.httpheader.HttpHeaderEntryPoint;
+import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
+import org.maxkey.authn.support.rememberme.HttpRemeberMeEntryPoint;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.web.interceptor.HistoryLoginAppAdapter;
 import org.maxkey.web.interceptor.HistoryLogsAdapter;
@@ -27,6 +31,7 @@ import org.maxkey.web.interceptor.PreLoginAppAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -41,6 +46,18 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 @PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class MaxKeyMvcConfig implements WebMvcConfigurer {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMvcConfig.class);
+    
+    @Autowired
+  	@Qualifier("applicationConfig")
+  	ApplicationConfig applicationConfig;
+    
+    @Autowired
+    @Qualifier("authenticationProvider")
+    AbstractAuthenticationProvider authenticationProvider ;
+    
+    @Autowired
+	@Qualifier("remeberMeService")
+	AbstractRemeberMeService remeberMeService;
     
     @Autowired
     PermissionAdapter permissionAdapter;
@@ -93,6 +110,23 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //addPathPatterns 用于添加拦截规则 ， 先把所有路径都加入拦截， 再一个个排除
         //excludePathPatterns 表示改路径不用拦截
+        _logger.debug("add HttpRemeberMeEntryPoint");
+        registry.addInterceptor(new HttpRemeberMeEntryPoint(
+        			authenticationProvider,remeberMeService,applicationConfig,true))
+        		.addPathPatterns("/login");
+        
+        if(httpHeaderEnable) {
+            registry.addInterceptor(new HttpHeaderEntryPoint(httpHeaderName,httpHeaderEnable))
+                    .addPathPatterns("/*");
+            _logger.debug("add HttpHeaderEntryPoint");
+        }
+        
+        if(basicEnable) {
+            registry.addInterceptor(new BasicEntryPoint(basicEnable))
+                    .addPathPatterns("/*");
+            _logger.debug("add BasicEntryPoint");
+        }
+        
         registry.addInterceptor(permissionAdapter)
                 .addPathPatterns("/index/**")
                 .addPathPatterns("/logs/**")
@@ -176,17 +210,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(localeChangeInterceptor);
         _logger.debug("add LocaleChangeInterceptor");
         
-        if(httpHeaderEnable) {
-            registry.addInterceptor(new HttpHeaderEntryPoint(httpHeaderName,httpHeaderEnable))
-                    .addPathPatterns("/*");
-            _logger.debug("add HttpHeaderEntryPoint");
-        }
-        
-        if(basicEnable) {
-            registry.addInterceptor(new BasicEntryPoint(basicEnable))
-                    .addPathPatterns("/*");
-            _logger.debug("add BasicEntryPoint");
-        }
+
     }
 
 }

@@ -130,20 +130,20 @@ public class InitializeContext extends HttpServlet {
                         + databaseMetaData.getDatabaseProductName());
                 _logger.debug("DatabaseProductVersion:   " 
                         + databaseMetaData.getDatabaseProductVersion());
-                _logger.debug("DatabaseMajorVersion  :   " 
+                _logger.trace("DatabaseMajorVersion  :   " 
                         + databaseMetaData.getDatabaseMajorVersion());
-                _logger.debug("DatabaseMinorVersion  :   " 
+                _logger.trace("DatabaseMinorVersion  :   " 
                         + databaseMetaData.getDatabaseMinorVersion());
-                _logger.debug("supportsTransactions  :   " 
+                _logger.trace("supportsTransactions  :   " 
                         + databaseMetaData.supportsTransactions());
-                _logger.debug("DefaultTransaction    :   " 
+                _logger.trace("DefaultTransaction    :   " 
                         + databaseMetaData.getDefaultTransactionIsolation());
-                _logger.debug("MaxConnections        :   " 
+                _logger.trace("MaxConnections        :   " 
                         + databaseMetaData.getMaxConnections());
-                _logger.debug("");
-                _logger.debug("JDBCMajorVersion      :   " 
+                _logger.trace("");
+                _logger.trace("JDBCMajorVersion      :   " 
                         + databaseMetaData.getJDBCMajorVersion());
-                _logger.debug("JDBCMinorVersion      :   " 
+                _logger.trace("JDBCMinorVersion      :   " 
                         + databaseMetaData.getJDBCMinorVersion());
                 _logger.debug("DriverName            :   " 
                         + databaseMetaData.getDriverName());
@@ -157,6 +157,7 @@ public class InitializeContext extends HttpServlet {
                 _logger.debug("-----------------------------------------------------------");
             } catch (SQLException e) {
                 e.printStackTrace();
+                _logger.error("DatabaseMetaData Variables Error .",e);
             }
         }
     }
