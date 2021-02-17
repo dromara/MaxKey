@@ -33,18 +33,15 @@ import org.maxkey.authz.oauth2.provider.approval.controller.OAuth20UserApprovalH
 import org.maxkey.authz.oauth2.provider.client.ClientDetailsUserDetailsService;
 import org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
 import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;
-import org.maxkey.authz.oauth2.provider.code.InMemoryAuthorizationCodeServices;
-import org.maxkey.authz.oauth2.provider.code.RedisAuthorizationCodeServices;
+import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServicesFactory;
 import org.maxkey.authz.oauth2.provider.endpoint.TokenEndpointAuthenticationFilter;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.token.TokenStore;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
-import org.maxkey.authz.oauth2.provider.token.store.InMemoryTokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
+import org.maxkey.authz.oauth2.provider.token.store.TokenStoreFactory;
 import org.maxkey.authz.oidc.idtoken.OIDCIdTokenEnhancer;
 import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
-import org.maxkey.constants.ConstantsPersistence;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
@@ -212,19 +209,8 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     public AuthorizationCodeServices oauth20AuthorizationCodeServices(
             @Value("${config.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
-            RedisConnectionFactory redisConnFactory) {
-        AuthorizationCodeServices authorizationCodeServices = null;
-        if (persistence == ConstantsPersistence.INMEMORY) {
-            authorizationCodeServices = new InMemoryAuthorizationCodeServices();
-            _logger.debug("InMemoryAuthorizationCodeServices");
-        } else if (persistence == ConstantsPersistence.JDBC) {
-            //authorizationCodeServices = new JdbcAuthorizationCodeServices(jdbcTemplate);
-            _logger.debug("JdbcAuthorizationCodeServices not support "); 
-        } else if (persistence == ConstantsPersistence.REDIS) {
-            authorizationCodeServices = new RedisAuthorizationCodeServices(redisConnFactory);
-            _logger.debug("RedisAuthorizationCodeServices");
-        }
-        return authorizationCodeServices;
+            RedisConnectionFactory redisConnFactory) {        
+        return new AuthorizationCodeServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
     }
     
     /**
@@ -237,18 +223,8 @@ public class Oauth20AutoConfiguration implements InitializingBean {
             @Value("${config.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
-        TokenStore tokenStore = null;
-        if (persistence == ConstantsPersistence.INMEMORY) {
-            tokenStore = new InMemoryTokenStore();
-            _logger.debug("InMemoryTokenStore");
-        } else if (persistence == ConstantsPersistence.JDBC) {
-            //tokenStore = new JdbcTokenStore(jdbcTemplate);
-            _logger.debug("JdbcTokenStore not support "); 
-        } else if (persistence == ConstantsPersistence.REDIS) {
-            tokenStore = new RedisTokenStore(redisConnFactory);
-            _logger.debug("RedisTokenStore");
-        }
-        return tokenStore;
+        
+        return new TokenStoreFactory().getTokenStore(persistence, jdbcTemplate, redisConnFactory);
     }
     
     /**

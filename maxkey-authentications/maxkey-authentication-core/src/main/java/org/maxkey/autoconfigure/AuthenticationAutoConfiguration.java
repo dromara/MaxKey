@@ -23,15 +23,12 @@ import javax.sql.DataSource;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
-import org.maxkey.authn.online.InMemoryOnlineTicketServices;
 import org.maxkey.authn.online.OnlineTicketServices;
-import org.maxkey.authn.online.RedisOnlineTicketServices;
+import org.maxkey.authn.online.OnlineTicketServicesFactory;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
-import org.maxkey.authn.support.rememberme.InMemoryRemeberMeService;
-import org.maxkey.authn.support.rememberme.RedisRemeberMeService;
+import org.maxkey.authn.support.rememberme.RemeberMeServiceFactory;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsPersistence;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.password.LdapShaPasswordEncoder;
 import org.maxkey.crypto.password.Md4PasswordEncoder;
@@ -84,7 +81,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     	    AbstractRemeberMeService remeberMeService,
     	    OnlineTicketServices onlineTicketServices
     		) {
-    	
+    	_logger.debug("init authenticationProvider .");
         return new RealmAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
@@ -121,6 +118,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
      */
     @Bean(name = "passwordEncoder")
     public PasswordEncoder passwordEncoder() {
+    	_logger.debug("init passwordEncoder .");
         String idForEncode = "bcrypt";
         Map<String ,PasswordEncoder > encoders = new HashMap<String ,PasswordEncoder>();
         encoders.put(idForEncode, new BCryptPasswordEncoder());
@@ -157,18 +155,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
             @Value("${config.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
-        AbstractRemeberMeService remeberMeService = null;
-        if (persistence == ConstantsPersistence.INMEMORY) {
-            remeberMeService = new InMemoryRemeberMeService();
-            _logger.debug("InMemoryRemeberMeService");
-        } else if (persistence == ConstantsPersistence.JDBC) {
-            //remeberMeService = new JdbcRemeberMeService(jdbcTemplate);
-            _logger.debug("JdbcRemeberMeService not support "); 
-        } else if (persistence == ConstantsPersistence.REDIS) {
-            remeberMeService = new RedisRemeberMeService(redisConnFactory);
-            _logger.debug("RedisRemeberMeService");
-        }
-        return remeberMeService;
+        return new RemeberMeServiceFactory().getService(persistence, jdbcTemplate, redisConnFactory);
     }
     
     @Bean(name = "onlineTicketServices")
@@ -176,17 +163,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
             @Value("${config.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
-        OnlineTicketServices onlineTicketServices = null;
-        if (persistence == ConstantsPersistence.INMEMORY) {
-            onlineTicketServices = new InMemoryOnlineTicketServices();
-            _logger.debug("InMemoryOnlineTicketServices");
-        } else if (persistence == ConstantsPersistence.JDBC) {
-            _logger.debug("OnlineTicketServices not support "); 
-        } else if (persistence == ConstantsPersistence.REDIS) {
-            onlineTicketServices = new RedisOnlineTicketServices(redisConnFactory);
-            _logger.debug("RedisOnlineTicketServices");
-        }
-        return onlineTicketServices;
+        return new OnlineTicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
     }
     
     @Override

@@ -17,12 +17,9 @@
 
 package org.maxkey.autoconfigure;
 
-import org.maxkey.authz.cas.endpoint.ticket.service.InMemoryTicketGrantingTicketServices;
-import org.maxkey.authz.cas.endpoint.ticket.service.InMemoryTicketServices;
-import org.maxkey.authz.cas.endpoint.ticket.service.RedisTicketGrantingTicketServices;
-import org.maxkey.authz.cas.endpoint.ticket.service.RedisTicketServices;
+import org.maxkey.authz.cas.endpoint.ticket.service.TicketGrantingTicketServicesFactory;
 import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
-import org.maxkey.constants.ConstantsPersistence;
+import org.maxkey.authz.cas.endpoint.ticket.service.TicketServicesFactory;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
@@ -55,18 +52,8 @@ public class CasAutoConfiguration implements InitializingBean {
             @Value("${config.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
-        TicketServices casTicketServices = null;
-        if (persistence == ConstantsPersistence.INMEMORY) {
-            casTicketServices = new InMemoryTicketServices();
-            _logger.debug("InMemoryTicketServices");
-        } else if (persistence == ConstantsPersistence.JDBC) {
-            //casTicketServices = new JdbcTicketServices(jdbcTemplate);
-            _logger.debug("JdbcTicketServices not support ");
-        } else if (persistence == ConstantsPersistence.REDIS) {
-            casTicketServices = new RedisTicketServices(redisConnFactory);
-            _logger.debug("RedisTicketServices");
-        }
-        return casTicketServices;
+    	_logger.debug("init casTicketServices.");
+        return new TicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
     }
    
     /**
@@ -81,19 +68,8 @@ public class CasAutoConfiguration implements InitializingBean {
             @Value("${config.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
-        TicketServices casTicketServices = null;
-        if (persistence == ConstantsPersistence.INMEMORY) {
-            casTicketServices = new InMemoryTicketGrantingTicketServices();
-            _logger.debug("InMemoryTicketGrantingTicketServices");
-        } else if (persistence == ConstantsPersistence.JDBC) {
-            //
-            //casTicketServices = new JdbcTicketGrantingTicketServices(jdbcTemplate);
-            _logger.debug("JdbcTicketGrantingTicketServices not support ");
-        } else if (persistence == ConstantsPersistence.REDIS) {
-            casTicketServices = new RedisTicketGrantingTicketServices(redisConnFactory);
-            _logger.debug("RedisTicketServices");
-        }
-        return casTicketServices;
+    	_logger.debug("init casTicketGrantingTicketServices.");
+        return new TicketGrantingTicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
     }
     
     @Override
