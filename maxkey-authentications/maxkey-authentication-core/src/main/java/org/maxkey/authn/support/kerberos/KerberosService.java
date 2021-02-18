@@ -17,9 +17,11 @@
 
 package org.maxkey.authn.support.kerberos;
 
+import java.util.List;
+
 public interface KerberosService {
 	
-	public boolean login(String kerberosTokenString,String kerberosUserDomain);
+	public List<KerberosProxy> getKerberosProxys();
 	
 	public  String buildKerberosProxys( );
 	

@@ -17,7 +17,12 @@
 
 package org.maxkey.web.contorller;
 
+import java.io.IOException;
 import java.util.Date;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
@@ -31,7 +36,10 @@ import org.maxkey.domain.UserInfo;
 import org.maxkey.persistence.service.RegistrationService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.DateUtils;
+import org.maxkey.util.StringUtils;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
+import org.maxkey.web.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +50,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -174,5 +183,51 @@ public class RegistrationController {
 		return  modelAndView;
 	}
 	
+	
+	/**
+	 * view register
+	 * @return
+	 */
+ 	@RequestMapping(value={"/register"})
+	public ModelAndView register(HttpServletRequest request,HttpServletResponse response) {
+		_logger.debug("/register.");
+		ModelAndView modelAndView = new ModelAndView("registration/register");
+		Object loginErrorMessage=WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
+        modelAndView.addObject("loginErrorMessage", loginErrorMessage==null?"":loginErrorMessage);
+        WebContext.removeAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
+		return modelAndView;
+	}
+ 	
+ 	@RequestMapping(value={"/registeron"})
+ 	@ResponseBody
+	public Message registeron(UserInfo userInfo,@RequestParam String emailMobile) throws ServletException, IOException {
+ 		if(StringUtils.isNullOrBlank(emailMobile)) {
+ 			return new Message(WebContext.getI18nValue("register.emailMobile.error"),"1");
+ 		}
+ 		if(StringUtils.isValidEmail(emailMobile)) {
+ 			userInfo.setEmail(emailMobile);
+ 		}
+ 		if(StringUtils.isValidMobileNo(emailMobile)) {
+ 			userInfo.setMobile(emailMobile);
+ 		}
+ 		if(!(StringUtils.isValidEmail(emailMobile)||StringUtils.isValidMobileNo(emailMobile))) {
+ 			return new Message(WebContext.getI18nValue("register.emailMobile.error"),"1");
+ 		}
+ 		UserInfo temp=userInfoService.queryUserInfoByEmailMobile(emailMobile);
+ 		if(temp!=null) {
+ 			return new Message(WebContext.getI18nValue("register.emailMobile.exist"),"1");
+ 		}
+ 		
+ 		temp=userInfoService.loadByUsername(userInfo.getUsername());
+ 		if(temp!=null) {
+ 			return new Message(WebContext.getI18nValue("register.user.error"),"1");
+ 		}
+ 		userInfo.setStatus(ConstantsStatus.ACTIVE);
+ 		if(userInfoService.insert(userInfo)) {
+ 			return new Message(WebContext.getI18nValue("login.text.register.success"),"0");
+ 		}
+ 		return new Message(WebContext.getI18nValue("login.text.register.error"),"1");
+ 		
+ 	}
 
 }

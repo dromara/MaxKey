@@ -15,18 +15,16 @@
  */
  
 
-package org.maxkey.authn.support.rememberme;
+package org.maxkey.authn.support.kerberos;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.joda.time.DateTime;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
-import org.maxkey.crypto.Base64Utils;
 import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -35,8 +33,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 
-public class HttpRemeberMeEntryPoint implements AsyncHandlerInterceptor {
-	private static final Logger _logger = LoggerFactory.getLogger(HttpRemeberMeEntryPoint.class);
+public class HttpKerberosEntryPoint implements AsyncHandlerInterceptor {
+	private static final Logger _logger = LoggerFactory.getLogger(HttpKerberosEntryPoint.class);
 	
     boolean enable;
     
@@ -44,21 +42,21 @@ public class HttpRemeberMeEntryPoint implements AsyncHandlerInterceptor {
     
     AbstractAuthenticationProvider authenticationProvider ;
     
-	AbstractRemeberMeService remeberMeService;
+	KerberosService kerberosService;
 	
 	 @Override
 	 public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 boolean isAuthenticated= WebContext.isAuthenticated();
-		 Cookie readRemeberMeCookie = WebContext.readCookieByName(request,WebConstants.REMEBER_ME_COOKIE);
+		 String kerberosTokenString = request.getParameter(WebConstants.KERBEROS_TOKEN_PARAMETER);
+		 String kerberosUserDomain = request.getParameter(WebConstants.KERBEROS_USERDOMAIN_PARAMETER);
 		 
 		 if(!enable 
 				 || isAuthenticated 
-				 || readRemeberMeCookie==null 
-				 || !applicationConfig.getLoginConfig().isRemeberMe()){
+				 || kerberosTokenString == null){
 			 return true;
 		 }
 		 
-		 _logger.debug("RemeberMe Login Start ...");
+		 _logger.debug("Kerberos Login Start ...");
 		 _logger.info("Request url : "+ request.getRequestURL());
 		 _logger.info("Request URI : "+ request.getRequestURI());
 		 _logger.info("Request ContextPath : "+ request.getContextPath());
@@ -75,56 +73,50 @@ public class HttpRemeberMeEntryPoint implements AsyncHandlerInterceptor {
 		 
 		 _logger.info("getSession.getId : "+ request.getSession().getId());
 
-		_logger.debug("Try RemeberMe login ");
-		String remeberMe = readRemeberMeCookie.getValue();
-		 _logger.debug("RemeberMe : " + remeberMe);
-
-        remeberMe = new String(Base64Utils.base64UrlDecode(remeberMe));
-
-        remeberMe = ReciprocalUtils.decoder(remeberMe);
-
-        _logger.debug("decoder RemeberMe : " + remeberMe);
-        RemeberMe remeberMeCookie = new RemeberMe();
-        remeberMeCookie = (RemeberMe) JsonUtils.json2Object(remeberMe, remeberMeCookie);
-        _logger.debug("Remeber Me Cookie : " + remeberMeCookie);
-
-        RemeberMe storeRemeberMe = remeberMeService.read(remeberMeCookie);
-        if (storeRemeberMe != null)  {
-	        DateTime loginDate = new DateTime(storeRemeberMe.getLastLogin());
-	        DateTime expiryDate = loginDate.plusSeconds(remeberMeService.getRemeberMeValidity());
-	        DateTime now = new DateTime();
-	        if (now.isBefore(expiryDate)) {
-	            authenticationProvider.trustAuthentication(
-	                    storeRemeberMe.getUsername(), 
-	                    ConstantsLoginType.REMEBER_ME, 
-	                    "", 
-	                    "", 
-	                    "success");
-	            remeberMeService.updateRemeberMe(remeberMeCookie, response);
-	            _logger.debug("RemeberMe Logined in , username " + storeRemeberMe.getUsername());
-	        }
-        }
+		//for Kerberos Login
+		_logger.debug("Try Kerberos login ");
+		_logger.debug("encoder Kerberos Token "+kerberosTokenString);
+		_logger.debug("kerberos UserDomain "+kerberosUserDomain);
 		
-		 return true;
+		String decoderKerberosToken=null;
+		for(KerberosProxy kerberosProxy : kerberosService.getKerberosProxys()){
+			if(kerberosProxy.getUserdomain().equalsIgnoreCase(kerberosUserDomain)){
+				decoderKerberosToken=ReciprocalUtils.aesDecoder(kerberosTokenString, kerberosProxy.getCrypto());
+				break;
+			}
+		}
+		_logger.debug("decoder Kerberos Token "+decoderKerberosToken);
+		KerberosToken  kerberosToken=new KerberosToken();
+		kerberosToken=(KerberosToken)JsonUtils.json2Object(decoderKerberosToken, kerberosToken);
+		_logger.debug("Kerberos Token "+kerberosToken);
+		
+		DateTime notOnOrAfter=DateUtils.toUtcDate(kerberosToken.getNotOnOrAfter());
+		_logger.debug("Kerberos Token is After Now  "+notOnOrAfter.isAfterNow());
+		
+		if(notOnOrAfter.isAfterNow()){
+	    	authenticationProvider.trustAuthentication(kerberosToken.getPrincipal(),ConstantsLoginType.KERBEROS,kerberosUserDomain,"","success");
+	    	_logger.debug("Kerberos Logined in , username " + kerberosToken.getPrincipal());
+		}
+		
+		return true;
 	}
 
-	 public HttpRemeberMeEntryPoint() {
+	 public HttpKerberosEntryPoint() {
 	        super();
 	 }
 
-    public HttpRemeberMeEntryPoint (boolean enable) {
+    public HttpKerberosEntryPoint (boolean enable) {
         super();
         this.enable = enable;
     }
 
-    public HttpRemeberMeEntryPoint(
-			AbstractAuthenticationProvider authenticationProvider, AbstractRemeberMeService remeberMeService,
-			ApplicationConfig applicationConfig,boolean enable) {
+    public HttpKerberosEntryPoint(AbstractAuthenticationProvider authenticationProvider, KerberosService kerberosService,
+			ApplicationConfig applicationConfig, boolean enable) {
 		super();
-		this.enable = enable;
-		this.applicationConfig = applicationConfig;
 		this.authenticationProvider = authenticationProvider;
-		this.remeberMeService = remeberMeService;
+		this.kerberosService = kerberosService;
+		this.applicationConfig = applicationConfig;
+		this.enable = enable;
 	}
 
 	public boolean isEnable() {
@@ -143,9 +135,6 @@ public class HttpRemeberMeEntryPoint implements AsyncHandlerInterceptor {
 		this.authenticationProvider = authenticationProvider;
 	}
 
-	public void setRemeberMeService(AbstractRemeberMeService remeberMeService) {
-		this.remeberMeService = remeberMeService;
-	}
-	 
+
 	
 }

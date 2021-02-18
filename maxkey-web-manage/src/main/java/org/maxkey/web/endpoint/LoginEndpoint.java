@@ -17,9 +17,6 @@
 
 package org.maxkey.web.endpoint;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.configuration.ApplicationConfig;
@@ -56,26 +53,19 @@ public class LoginEndpoint {
 	 * @return
 	 */
  	@RequestMapping(value={"/login"})
-	public ModelAndView login(
-			HttpServletRequest request,
-			HttpServletResponse response) {
- 		
+	public ModelAndView login() {
 		_logger.debug("LoginController /login.");
-		ModelAndView modelAndView = new ModelAndView();
 		
 		boolean isAuthenticated= WebContext.isAuthenticated();
-		
 		//for normal login
-		if(!isAuthenticated){
-			modelAndView.addObject("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
-			
-			modelAndView.addObject("isCaptcha", applicationConfig.getLoginConfig().isCaptcha());
-			modelAndView.addObject("sessionid", WebContext.getSession().getId());
+		if(isAuthenticated){
+			return WebContext.redirect("/main");
 		}
 		
-		if(WebContext.isAuthenticated()){
- 			return WebContext.redirect("/main");
-		}
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
+		modelAndView.addObject("isCaptcha", applicationConfig.getLoginConfig().isCaptcha());
+		modelAndView.addObject("sessionid", WebContext.getSession().getId());
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}

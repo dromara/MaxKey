@@ -46,9 +46,11 @@ public class HttpJwtEntryPoint implements AsyncHandlerInterceptor {
 	 @Override
 	 public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 boolean isAuthenticated= WebContext.isAuthenticated();
-		 
 		 String jwt = request.getParameter(WebConstants.JWT_TOKEN_PARAMETER);
-		 if(!enable || isAuthenticated || jwt == null){
+		 
+		 if(!enable 
+				 || isAuthenticated 
+				 || jwt == null){
 			 return true;
 		 }
 		 
@@ -70,16 +72,14 @@ public class HttpJwtEntryPoint implements AsyncHandlerInterceptor {
 		 _logger.info("getSession.getId : "+ request.getSession().getId());
 
 		//for jwt Login
-		if(!isAuthenticated){
-			 _logger.debug("jwt : " + jwt);
+		 _logger.debug("jwt : " + jwt);
 
-			 SignedJWT signedJWT = jwtLoginService.jwtTokenValidation(jwt);
-			 if(signedJWT != null) {
-				 String username =signedJWT.getJWTClaimsSet().getSubject();
-				 authenticationProvider.trustAuthentication(username, ConstantsLoginType.JWT, "", "", "success"); 
-			 }
-	           
-		}
+		 SignedJWT signedJWT = jwtLoginService.jwtTokenValidation(jwt);
+		 if(signedJWT != null) {
+			 String username =signedJWT.getJWTClaimsSet().getSubject();
+			 authenticationProvider.trustAuthentication(username, ConstantsLoginType.JWT, "", "", "success"); 
+			 _logger.debug("JWT Logined in , username " + username);
+		 }
 		
 		return true;
 	}

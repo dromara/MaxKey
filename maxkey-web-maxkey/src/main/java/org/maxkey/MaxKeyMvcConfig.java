@@ -20,6 +20,8 @@ package org.maxkey;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.basic.BasicEntryPoint;
 import org.maxkey.authn.support.httpheader.HttpHeaderEntryPoint;
+import org.maxkey.authn.support.kerberos.HttpKerberosEntryPoint;
+import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.HttpRemeberMeEntryPoint;
 import org.maxkey.configuration.ApplicationConfig;
@@ -58,6 +60,10 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     @Autowired
 	@Qualifier("remeberMeService")
 	AbstractRemeberMeService remeberMeService;
+    
+    @Autowired
+	@Qualifier("kerberosService")
+    KerberosService kerberosService;
     
     @Autowired
     PermissionAdapter permissionAdapter;
@@ -114,6 +120,12 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new HttpRemeberMeEntryPoint(
         			authenticationProvider,remeberMeService,applicationConfig,true))
         		.addPathPatterns("/login");
+        
+        _logger.debug("add HttpKerberosEntryPoint");
+        registry.addInterceptor(new HttpKerberosEntryPoint(
+    			authenticationProvider,kerberosService,applicationConfig,true))
+    		.addPathPatterns("/login");
+        
         
         if(httpHeaderEnable) {
             registry.addInterceptor(new HttpHeaderEntryPoint(httpHeaderName,httpHeaderEnable))

@@ -21,12 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.joda.time.DateTime;
-import org.maxkey.authn.AbstractAuthenticationProvider;
-import org.maxkey.constants.ConstantsLoginType;
-import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,36 +28,6 @@ import org.slf4j.LoggerFactory;
 public class RemoteKerberosService  implements KerberosService{
 	private static Logger _logger = LoggerFactory.getLogger(RemoteKerberosService.class);
 	List<KerberosProxy> kerberosProxys;
-	
-	AbstractAuthenticationProvider authenticationProvider ;
-	
-	public boolean login(String kerberosTokenString,String kerberosUserDomain){
-		_logger.debug("encoder Kerberos Token "+kerberosTokenString);
-		_logger.debug("kerberos UserDomain "+kerberosUserDomain);
-		
-		String decoderKerberosToken=null;
-		for(KerberosProxy kerberosProxy : kerberosProxys){
-			if(kerberosProxy.getUserdomain().equalsIgnoreCase(kerberosUserDomain)){
-				decoderKerberosToken=ReciprocalUtils.aesDecoder(kerberosTokenString, kerberosProxy.getCrypto());
-				break;
-			}
-		}
-		_logger.debug("decoder Kerberos Token "+decoderKerberosToken);
-		KerberosToken  kerberosToken=new KerberosToken();
-		kerberosToken=(KerberosToken)JsonUtils.json2Object(decoderKerberosToken, kerberosToken);
-		_logger.debug("Kerberos Token "+kerberosToken);
-		
-		DateTime notOnOrAfter=DateUtils.toUtcDate(kerberosToken.getNotOnOrAfter());
-		_logger.debug("Kerberos Token is After Now  "+notOnOrAfter.isAfterNow());
-		if(notOnOrAfter.isAfterNow()){
-	    	authenticationProvider.trustAuthentication(kerberosToken.getPrincipal(),ConstantsLoginType.KERBEROS,kerberosUserDomain,"","success");
-	    	return true;
-		}else{
-			
-			return false;
-		}
-			
-	}
 
 	public List<KerberosProxy> getKerberosProxys() {
 		return kerberosProxys;
