@@ -82,7 +82,7 @@ $(function(){
 <div class="row">
 <div class="col-md-2"></div>
 <div class="col-md-8">
-				<form action="<@base/>/register.do" method="post"   class="needs-validation" novalidate>
+				<form action="<@base/>/registration/registeron" method="post"   class="needs-validation" novalidate>
 					<table  class="table table-bordered">
 						<tr>
 							<td><@locale code="forgotpassword.emailmobile"/></td>

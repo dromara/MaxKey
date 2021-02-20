@@ -175,7 +175,7 @@
 			captchaCountTimer=setInterval("getCaptchaCount()", 1000);
 		});
 		$('#register').on('click',function(){
-			window.location.href="<@base />/register";
+			window.location.href="<@base />/registration/forward";
 		});
 		
 	});

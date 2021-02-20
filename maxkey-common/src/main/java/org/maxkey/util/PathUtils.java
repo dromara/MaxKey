@@ -83,7 +83,7 @@ public class PathUtils {
         System.setProperty("CLASSES_PATH", classPath);
 
         _logger.trace("PathUtils  App   Path  : " + appPath);
-        _logger.debug("PathUtils  Class Path  : " + classPath);
+        _logger.trace("PathUtils  Class Path  : " + classPath);
     }
 
     public String getAppPath() {

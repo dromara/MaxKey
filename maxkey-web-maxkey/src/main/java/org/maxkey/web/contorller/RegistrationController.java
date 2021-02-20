@@ -19,11 +19,7 @@ package org.maxkey.web.contorller;
 
 import java.io.IOException;
 import java.util.Date;
-
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
@@ -37,7 +33,6 @@ import org.maxkey.persistence.service.RegistrationService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
-import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.slf4j.Logger;
@@ -82,7 +77,7 @@ public class RegistrationController {
 		return  new ModelAndView("registration/register");
 	}
 	
-	
+	//邮件验证注册
 	@RequestMapping(value={"/register"})
 	public ModelAndView reg(@ModelAttribute("registration") Registration registration) {
 		_logger.debug("Registration  /registration/register.");
@@ -182,22 +177,8 @@ public class RegistrationController {
 		}
 		return  modelAndView;
 	}
-	
-	
-	/**
-	 * view register
-	 * @return
-	 */
- 	@RequestMapping(value={"/register"})
-	public ModelAndView register(HttpServletRequest request,HttpServletResponse response) {
-		_logger.debug("/register.");
-		ModelAndView modelAndView = new ModelAndView("registration/register");
-		Object loginErrorMessage=WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
-        modelAndView.addObject("loginErrorMessage", loginErrorMessage==null?"":loginErrorMessage);
-        WebContext.removeAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
-		return modelAndView;
-	}
  	
+	//直接注册
  	@RequestMapping(value={"/registeron"})
  	@ResponseBody
 	public Message registeron(UserInfo userInfo,@RequestParam String emailMobile) throws ServletException, IOException {
