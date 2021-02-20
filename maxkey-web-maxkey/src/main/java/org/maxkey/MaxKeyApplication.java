@@ -24,6 +24,7 @@ import org.apache.ibatis.io.VFS;
 import org.apache.mybatis.jpa.SpringBootVFS;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.InitializeContext;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -33,6 +34,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
+@MapperScan("org.maxkey.persistence.mapper,")
 public class MaxKeyApplication extends SpringBootServletInitializer {
     private static final Logger _logger = LoggerFactory.getLogger(MaxKeyApplication.class);
 

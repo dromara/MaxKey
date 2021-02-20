@@ -1,7 +1,6 @@
 package org.maxkey.autoconfigure;
 
 import java.util.ArrayList;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +20,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableOpenApi
 @EnableKnife4j
-@MapperScan(basePackages = {"org.maxkey"})
 public class SwaggerConfig {
 
     @Value("${maxkey.swagger.title}")
