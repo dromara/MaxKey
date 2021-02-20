@@ -44,7 +44,7 @@
  	<!-- Datastore configuration  -->
  	<import resource="applicationContext-persist.xml"/>
  
- 	<bean id="kafkaProvisioningService" class="org.maxkey.identity.kafka.KafkaProvisioningService"></bean>
+ 	<bean id="kafkaPersistService" class="org.maxkey.persistence.kafka.KafkaPersistService"></bean>
 	
 	<bean id="applicationConfig" class="org.maxkey.configuration.ApplicationConfig"></bean>
 	

@@ -18,20 +18,12 @@
 package org.apache.mybatis.jpa.test;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import org.apache.mybatis.jpa.util.WebContext;
 import org.junit.Before;
 import org.junit.Test;
-import org.maxkey.domain.Accounts;
 import org.maxkey.domain.apps.Apps;
-import org.maxkey.domain.apps.AppsFormBasedDetails;
-import org.maxkey.persistence.service.AccountsService;
-import org.maxkey.persistence.service.AppsFormBasedDetailsService;
 import org.maxkey.persistence.service.AppsService;
-import org.maxkey.util.PathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;

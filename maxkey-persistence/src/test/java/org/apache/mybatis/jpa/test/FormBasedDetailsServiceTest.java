@@ -27,7 +27,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.maxkey.domain.apps.AppsFormBasedDetails;
 import org.maxkey.persistence.service.AppsFormBasedDetailsService;
-import org.maxkey.util.PathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
