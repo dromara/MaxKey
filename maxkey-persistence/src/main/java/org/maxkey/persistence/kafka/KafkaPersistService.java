@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.identity.kafka;
+package org.maxkey.persistence.kafka;
 
 import java.util.UUID;
 
@@ -29,9 +29,9 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KafkaProvisioningService {
+public class KafkaPersistService {
     
-    private static final Logger _logger = LoggerFactory.getLogger(KafkaProvisioningService.class);
+    private static final Logger _logger = LoggerFactory.getLogger(KafkaPersistService.class);
     
     @Autowired
     protected ApplicationConfig applicationConfig;

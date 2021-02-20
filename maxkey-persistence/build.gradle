@@ -6,5 +6,4 @@ dependencies {
     	
     compile project(":maxkey-common")
     compile project(":maxkey-core")
-    compile project(":maxkey-identitys:maxkey-identity-kafka")
 }

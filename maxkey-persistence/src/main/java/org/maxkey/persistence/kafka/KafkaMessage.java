@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.identity.kafka;
+package org.maxkey.persistence.kafka;
 
 public class KafkaMessage {
 

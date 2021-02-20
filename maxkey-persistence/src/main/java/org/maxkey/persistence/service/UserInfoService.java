@@ -40,10 +40,10 @@ import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.domain.ChangePassword;
 import org.maxkey.domain.UserInfo;
-import org.maxkey.identity.kafka.KafkaIdentityAction;
-import org.maxkey.identity.kafka.KafkaIdentityTopic;
-import org.maxkey.identity.kafka.KafkaProvisioningService;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
+import org.maxkey.persistence.kafka.KafkaIdentityAction;
+import org.maxkey.persistence.kafka.KafkaIdentityTopic;
+import org.maxkey.persistence.kafka.KafkaPersistService;
 import org.maxkey.persistence.mapper.UserInfoMapper;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
@@ -76,7 +76,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	PasswordPolicyValidator passwordPolicyValidator;
 	
 	@Autowired
-	KafkaProvisioningService kafkaProvisioningService;
+	KafkaPersistService kafkaPersistService;
 	
 	 @Autowired
 	 protected JdbcTemplate jdbcTemplate;
@@ -96,7 +96,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean insert(UserInfo userInfo) {
         userInfo = passwordEncoder(userInfo);
         if (super.insert(userInfo)) {
-            kafkaProvisioningService.send(
+        	kafkaPersistService.send(
                     KafkaIdentityTopic.USERINFO_TOPIC, 
                     userInfo,
                     KafkaIdentityAction.CREATE_ACTION);
@@ -109,7 +109,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean update(UserInfo userInfo) {
         userInfo = passwordEncoder(userInfo);
         if (super.update(userInfo)) {
-            kafkaProvisioningService.send(
+        	kafkaPersistService.send(
                     KafkaIdentityTopic.USERINFO_TOPIC, 
                     userInfo,
                     KafkaIdentityAction.UPDATE_ACTION);
@@ -122,7 +122,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
 	public boolean delete(UserInfo userInfo) {
 		if( super.delete(userInfo)){
-		    kafkaProvisioningService.send(
+			kafkaPersistService.send(
 		            KafkaIdentityTopic.USERINFO_TOPIC, 
 		            userInfo, 
 		            KafkaIdentityAction.DELETE_ACTION);
@@ -283,7 +283,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
             changePassword.setUsername(userInfo.getUsername());
             changePassword.setDecipherable(userInfo.getDecipherable());
             changePassword.setPassword(userInfo.getPassword());
-            kafkaProvisioningService.send(
+            kafkaPersistService.send(
                     KafkaIdentityTopic.PASSWORD_TOPIC, 
                     changePassword, 
                     KafkaIdentityAction.PASSWORD_ACTION);

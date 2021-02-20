@@ -34,9 +34,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.maxkey.domain.Organizations;
-import org.maxkey.identity.kafka.KafkaIdentityAction;
-import org.maxkey.identity.kafka.KafkaIdentityTopic;
-import org.maxkey.identity.kafka.KafkaProvisioningService;
+import org.maxkey.persistence.kafka.KafkaIdentityAction;
+import org.maxkey.persistence.kafka.KafkaIdentityTopic;
+import org.maxkey.persistence.kafka.KafkaPersistService;
 import org.maxkey.persistence.mapper.OrganizationsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +49,7 @@ import com.google.common.collect.Lists;
 public class OrganizationsService  extends JpaBaseService<Organizations>{
 
     @Autowired
-    KafkaProvisioningService kafkaProvisioningService;
+    KafkaPersistService kafkaPersistService;
     
 	public OrganizationsService() {
 		super(OrganizationsMapper.class);
@@ -66,7 +66,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	
 	 public boolean insert(Organizations organization) {
 	     if(super.insert(organization)){
-             kafkaProvisioningService.send(
+	    	 kafkaPersistService.send(
                      KafkaIdentityTopic.ORG_TOPIC, organization, KafkaIdentityAction.CREATE_ACTION);
              return true;
          }
@@ -75,7 +75,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	 
 	 public boolean update(Organizations organization) {
 	     if(super.update(organization)){
-             kafkaProvisioningService.send(
+	    	 kafkaPersistService.send(
                      KafkaIdentityTopic.ORG_TOPIC, organization, KafkaIdentityAction.UPDATE_ACTION);
              return true;
          }
@@ -84,7 +84,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
  
 	 public boolean delete(Organizations organization) {
 	     if(super.delete(organization)){
-             kafkaProvisioningService.send(
+	    	 kafkaPersistService.send(
                      KafkaIdentityTopic.ORG_TOPIC, organization, KafkaIdentityAction.DELETE_ACTION);
              return true;
          }

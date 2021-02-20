@@ -15,17 +15,16 @@
  */
  
 
-package org.maxkey.identity.kafka;
+package org.maxkey.persistence.kafka;
 
-public class KafkaIdentityTopic {
+public class KafkaIdentityAction {
     
-    public final static String  USERINFO_TOPIC  = "IDENTITY_USERINFO_TOPIC";
+    public static String  CREATE_ACTION     = "CREATE_ACTION";
     
-    public final  static String  ORG_TOPIC      = "IDENTITY_ORG_TOPIC";
+    public static String  DELETE_ACTION     = "DELETE_ACTION";
     
-    public final  static String  GROUP_TOPIC    = "IDENTITY_GROUP_TOPIC";
+    public static String  UPDATE_ACTION     = "UPDATE_ACTION";
     
-    public final  static String  PASSWORD_TOPIC = "IDENTITY_PASSWORD_TOPIC";
-    
+    public static String  PASSWORD_ACTION   = "PASSWORD_ACTION";
     
 }
