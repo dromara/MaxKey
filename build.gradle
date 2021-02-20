@@ -157,7 +157,7 @@ subprojects {
          compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.13'
          compile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
          compile group: 'velocity', name: 'velocity-dep', version: '1.4'
-         compile group: 'org.freemarker', name: 'freemarker', version: '2.3.30'
+         compile group: 'org.freemarker', name: 'freemarker', version: '2.3.31'
          compile group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.0.1'
          compile group: 'org.apache.commons', name: 'commons-compress', version: '1.20'
          compile group: 'org.apache.poi', name: 'poi', version: "${poiVersion}"
@@ -360,7 +360,7 @@ subprojects {
     	 compile group: 'com.tencentcloudapi', name: 'tencentcloud-sdk-java', version: '3.1.33'
     	 
     	 //tomcat embed Core Tomcat implementation
-    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.41'
+    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.43'
     	 //JULI logging implementation for embedded Tomcat
     	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '8.5.2'
     }

@@ -36,7 +36,7 @@ public class PathUtils {
     public static synchronized PathUtils getInstance() {
         if (instance == null) {
             instance = new PathUtils();
-            PathUtils._logger.debug("getInstance()" + " new PathUtils instance");
+            PathUtils._logger.trace("getInstance()" + " new PathUtils instance");
         }
         return instance;
     }
@@ -50,13 +50,13 @@ public class PathUtils {
                     PathUtils.class.getResource(PATH_FILE_NAME).getFile(),
                     "UTF-8"
             );
-            _logger.debug("PathUtils() PathUtils " + classPath);
+            _logger.trace("PathUtils() PathUtils " + classPath);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         String fileProtocol = PathUtils.class.getResource(PATH_FILE_NAME).getProtocol();
-        _logger.info("Properties Protocol:" 
+        _logger.trace("Properties Protocol:" 
                 + PathUtils.class.getResource("PathUtils.properties").getProtocol());
 
         if (fileProtocol.equalsIgnoreCase("file") && classPath.indexOf("file:") == 0) {
@@ -70,7 +70,7 @@ public class PathUtils {
             classPath = classPath.substring(5, classPath.length());
         }
 
-        _logger.info("PathUtils  Class Path  : " + classPath);
+        _logger.trace("PathUtils  Class Path  : " + classPath);
         classPath = classPath.substring(0, 
                 classPath.indexOf("/org/maxkey/util/" + PATH_FILE_NAME));
         if (classPath.indexOf(WEB_INFO) == -1) {
@@ -82,8 +82,8 @@ public class PathUtils {
         System.setProperty("APP_PATH", appPath);
         System.setProperty("CLASSES_PATH", classPath);
 
-        _logger.info("PathUtils  App   Path  : " + appPath);
-        _logger.info("PathUtils  Class Path  : " + classPath);
+        _logger.trace("PathUtils  App   Path  : " + appPath);
+        _logger.debug("PathUtils  Class Path  : " + classPath);
     }
 
     public String getAppPath() {
