@@ -55,21 +55,21 @@ public class HttpJwtEntryPoint implements AsyncHandlerInterceptor {
 		 }
 		 
 		 _logger.debug("JWT Login Start ...");
-		 _logger.info("Request url : "+ request.getRequestURL());
-		 _logger.info("Request URI : "+ request.getRequestURI());
-		 _logger.info("Request ContextPath : "+ request.getContextPath());
-		 _logger.info("Request ServletPath : "+ request.getServletPath());
-		 _logger.debug("RequestSessionId : "+ request.getRequestedSessionId());
-		 _logger.debug("isRequestedSessionIdValid : "+ request.isRequestedSessionIdValid());
-		 _logger.debug("getSession : "+ request.getSession(false));
+		 _logger.trace("Request url : "+ request.getRequestURL());
+		 _logger.trace("Request URI : "+ request.getRequestURI());
+		 _logger.trace("Request ContextPath : "+ request.getContextPath());
+		 _logger.trace("Request ServletPath : "+ request.getServletPath());
+		 _logger.trace("RequestSessionId : "+ request.getRequestedSessionId());
+		 _logger.trace("isRequestedSessionIdValid : "+ request.isRequestedSessionIdValid());
+		 _logger.trace("getSession : "+ request.getSession(false));
 		 
 		// session not exists，session timeout，recreate new session
 		 if(request.getSession(false) == null) {
-		    _logger.info("recreate new session .");
+		    _logger.trace("recreate new session .");
 			request.getSession(true);
 		 }
 		 
-		 _logger.info("getSession.getId : "+ request.getSession().getId());
+		 _logger.trace("getSession.getId : "+ request.getSession().getId());
 
 		//for jwt Login
 		 _logger.debug("jwt : " + jwt);

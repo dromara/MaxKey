@@ -54,18 +54,18 @@ public class HttpHeaderEntryPoint implements AsyncHandlerInterceptor {
 			 return true;
 		 }
 		 String requestPath=request.getServletPath();
-		 _logger.debug("HttpHeader Login Start ...");
-		 _logger.info("Request url : "+ request.getRequestURL());
-		 _logger.info("Request URI : "+ request.getRequestURI());
-		 _logger.info("Request ContextPath : "+ request.getContextPath());
-		 _logger.info("Request ServletPath : "+ request.getServletPath());
-		 _logger.debug("RequestSessionId : "+ request.getRequestedSessionId());
-		 _logger.debug("isRequestedSessionIdValid : "+ request.isRequestedSessionIdValid());
-		 _logger.debug("getSession : "+ request.getSession(false));
+		 _logger.trace("HttpHeader Login Start ...");
+		 _logger.trace("Request url : "+ request.getRequestURL());
+		 _logger.trace("Request URI : "+ request.getRequestURI());
+		 _logger.trace("Request ContextPath : "+ request.getContextPath());
+		 _logger.trace("Request ServletPath : "+ request.getServletPath());
+		 _logger.trace("RequestSessionId : "+ request.getRequestedSessionId());
+		 _logger.trace("isRequestedSessionIdValid : "+ request.isRequestedSessionIdValid());
+		 _logger.trace("getSession : "+ request.getSession(false));
 		 
 		 for(int i=0;i<skipRequestURI.length;i++){
 			 if(skipRequestURI[i].indexOf(requestPath)>-1){
-				 _logger.info("skip uri : "+ requestPath);
+				 _logger.trace("skip uri : "+ requestPath);
 				 return true;
 			 }
 		 }
@@ -74,14 +74,14 @@ public class HttpHeaderEntryPoint implements AsyncHandlerInterceptor {
 		 
 		// session not exists，session timeout，recreate new session
 		 if(request.getSession(false) == null) {
-		    _logger.info("recreate new session .");
+		    _logger.trace("recreate new session .");
 			request.getSession(true);
 		 }
 		 
-		 _logger.info("getSession.getId : "+ request.getSession().getId());
+		 _logger.trace("getSession.getId : "+ request.getSession().getId());
 		 String httpHeaderUsername = request.getHeader(headerName);
 
-		 _logger.info("HttpHeader username : " + httpHeaderUsername);
+		 _logger.trace("HttpHeader username : " + httpHeaderUsername);
 		
 		
 		 if(httpHeaderUsername==null||httpHeaderUsername.equals("")){
