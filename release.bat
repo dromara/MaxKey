@@ -18,6 +18,8 @@ call %GRADLE_HOME%/bin/gradle buildRelease
 
 call %GRADLE_HOME%/bin/gradle copyDepJars
 
+call %GRADLE_HOME%/bin/gradle buildReleaseCopy
+
 cd build
 rd /q /s libs
 
