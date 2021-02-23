@@ -24,6 +24,7 @@ import java.util.List;
 import javax.servlet.Filter;
 
 import org.maxkey.constants.ConstantsProperties;
+import org.maxkey.constants.ConstantsTimeInterval;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -70,7 +71,7 @@ public class MvcAutoConfiguration implements InitializingBean {
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setCookieName("maxkey_lang");
         cookieLocaleResolver.setCookieDomain(domainName);
-        cookieLocaleResolver.setCookieMaxAge(604800);
+        cookieLocaleResolver.setCookieMaxAge(ConstantsTimeInterval.TWO_WEEK);
         return cookieLocaleResolver;
     }
     

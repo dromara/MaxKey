@@ -87,7 +87,9 @@ public class LoginEndpoint {
 		if(isAuthenticated){
 			return  WebContext.redirect("/forwardindex");
 		}
-				
+		
+		_logger.trace("Session Timeout MaxInactiveInterval " + WebContext.getRequest().getSession().getMaxInactiveInterval());
+		
 		//for normal login
 		ModelAndView modelAndView = new ModelAndView("login");
 		modelAndView.addObject("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());

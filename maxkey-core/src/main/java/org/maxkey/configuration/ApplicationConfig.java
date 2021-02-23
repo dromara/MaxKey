@@ -70,6 +70,9 @@ public class ApplicationConfig {
 
     @Value("${server.port:8080}")
     private int port;
+    
+    @Value("${server.servlet.session.timeout:1800}")
+    private int sessionTimeout;
 
     @Value("${config.identity.kafkasupport:false}")
     private boolean kafkaSupport;
@@ -196,7 +199,15 @@ public class ApplicationConfig {
         this.maxKeyUri = maxKeyUri;
     }
 
-    @Override
+    public int getSessionTimeout() {
+		return sessionTimeout;
+	}
+
+	public void setSessionTimeout(int sessionTimeout) {
+		this.sessionTimeout = sessionTimeout;
+	}
+
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("ApplicationConfig [emailConfig=");
