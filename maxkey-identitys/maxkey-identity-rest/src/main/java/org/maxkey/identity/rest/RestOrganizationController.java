@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping(value={"/identity/api/org"})
+@RequestMapping(value={"/im/api/Organization"})
 public class RestOrganizationController {
 
     @Autowired

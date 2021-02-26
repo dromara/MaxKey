@@ -26,7 +26,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @RestController
-@RequestMapping(value = "/identity/scim/v2/ServiceProviderConfig")
+@RequestMapping(value = "/im/scim/v2/ServiceProviderConfig")
 public class ScimServiceProviderConfigController {
 
     public static final int MAX_RESULTS = 100;

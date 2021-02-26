@@ -44,7 +44,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * http://tools.ietf.org/html/draft-ietf-scim-api-00#section-3
  */
 @RestController
-@RequestMapping(value = "/identity/scim/v2/Users")
+@RequestMapping(value = "/im/scim/v2/Users")
 public class ScimUserController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

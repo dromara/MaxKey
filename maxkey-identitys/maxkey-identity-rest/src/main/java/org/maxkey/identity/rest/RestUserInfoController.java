@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping(value={"/identity/api/userinfo"})
+@RequestMapping(value={"/im/api/Users"})
 public class RestUserInfoController {
 
     @Autowired
@@ -65,6 +65,24 @@ public class RestUserInfoController {
             userInfoService.insert(userInfo);
         }
         return userInfo;
+    }
+    
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    public String changePassword(
+                                                      @RequestParam(required = true) String username,
+                                                      @RequestParam(required = true) String password,
+                                                      UriComponentsBuilder builder) throws IOException {
+        UserInfo loadUserInfo = userInfoService.loadByUsername(username);
+        if(loadUserInfo != null) {
+        	UserInfo changePassword  = new UserInfo();
+        	changePassword.setId(loadUserInfo.getId());
+        	changePassword.setUsername(username);
+        	changePassword.setPassword(password);
+        	changePassword.setDecipherable(loadUserInfo.getDecipherable());
+            userInfoService.changePassword(changePassword);
+        }
+        return "true";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
