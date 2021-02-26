@@ -67,7 +67,7 @@ public class RestUserInfoController {
         return userInfo;
     }
     
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/changePassword",method = RequestMethod.POST)
     @ResponseBody
     public String changePassword(
                                                       @RequestParam(required = true) String username,
