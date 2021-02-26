@@ -147,7 +147,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
         
         
         registry.addInterceptor(restApiPermissionAdapter)
-                .addPathPatterns("/identity/api/**")
+                .addPathPatterns("/im/api/**")
                 ;
 
         _logger.debug("add RestApiPermissionAdapter");
