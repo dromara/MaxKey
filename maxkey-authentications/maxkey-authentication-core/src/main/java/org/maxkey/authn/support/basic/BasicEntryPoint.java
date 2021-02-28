@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.util.AuthorizationHeaderCredential;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,8 +79,6 @@ public class BasicEntryPoint implements   AsyncHandlerInterceptor {
 			 }
 		 }
 		
-		
-		 
 		// session not exists，session timeout，recreate new session
 		 if(request.getSession(false) == null) {
 		    _logger.info("recreate new session .");
@@ -95,20 +94,19 @@ public class BasicEntryPoint implements   AsyncHandlerInterceptor {
 			 _logger.info("Authentication fail header Authorization is null . ");
 			 return false;
 		 }
-		 String username=null;
-		 String password=null;
+		 
+		 AuthorizationHeaderCredential headerCredential = null;
+		 
 		 if(AuthorizationHeaderUtils.isBasic(basicCredential)){
-			 String []usernamePassword=AuthorizationHeaderUtils.resolveBasic(basicCredential);
-			 username=usernamePassword[0];
-			 password=usernamePassword[1];
+			 headerCredential=AuthorizationHeaderUtils.resolve(basicCredential);
 		 }else{
 			 return false;
 		 }
-		 if(username==null||username.equals("")){
+		 if(headerCredential.getUsername()==null||headerCredential.getUsername().equals("")){
 			 _logger.info("Authentication fail username is null . ");
 			 return false;
 		 }
-		 if(password==null||password.equals("")){
+		 if(headerCredential.getCredential()==null||headerCredential.getCredential().equals("")){
 			 _logger.info("Authentication fail password is null . ");
 			 return false;
 		 }
@@ -123,7 +121,7 @@ public class BasicEntryPoint implements   AsyncHandlerInterceptor {
 			 UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 			 String lastSessionUserName = authenticationToken.getPrincipal().toString();
 			 _logger.info("Authentication Principal : " + lastSessionUserName);
-			 if (lastSessionUserName != null && !lastSessionUserName.equals(username)) {
+			 if (lastSessionUserName != null && !lastSessionUserName.equals(headerCredential.getUsername())) {
 				isAuthenticated=false;
 			 }else{
 				isAuthenticated=true;
@@ -131,8 +129,8 @@ public class BasicEntryPoint implements   AsyncHandlerInterceptor {
 		 }
 		 
 		 if(!isAuthenticated){
-			authenticationProvider.trustAuthentication(username,ConstantsLoginType.BASIC,"","","success");
-				_logger.info("Authentication  "+username+" successful .");
+			authenticationProvider.trustAuthentication(headerCredential.getUsername(),ConstantsLoginType.BASIC,"","","success");
+				_logger.info("Authentication  "+headerCredential.getUsername()+" successful .");
 		 }
 		
 		 return true;

@@ -17,14 +17,20 @@
 
 package org.maxkey.web.interceptor;
 
+import java.time.Duration;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.ehcache.UserManagedCache;
+import org.ehcache.config.builders.ExpiryPolicyBuilder;
+import org.ehcache.config.builders.UserManagedCacheBuilder;
+import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.domain.apps.Apps;
 import org.maxkey.persistence.service.AppsService;
+import org.maxkey.util.AuthorizationHeaderCredential;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +48,15 @@ import org.springframework.web.servlet.AsyncHandlerInterceptor;
 public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	private static final Logger _logger = LoggerFactory.getLogger(RestApiPermissionAdapter.class);
 	
+    protected static final UserManagedCache<String, Apps> appsCacheStore = 
+            UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, Apps.class)
+                .withExpiry(
+                    ExpiryPolicyBuilder.timeToLiveExpiration(
+                        Duration.ofMinutes(ConstantsTimeInterval.ONE_HOUR)
+                    )
+                )
+                .build(true);
+    
 	@Autowired
     AppsService appsService;
 	
@@ -61,15 +76,21 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 		 _logger.trace("RestApiPermissionAdapter preHandle");
 		String  authorization = request.getHeader(AuthorizationHeaderUtils.AUTHORIZATION_HEADERNAME);
 		 
-		 String [] basicUserPass = AuthorizationHeaderUtils.resolveBasic(authorization);
+		AuthorizationHeaderCredential headerCredential = AuthorizationHeaderUtils.resolve(authorization);
 		 
 		//判断应用的AppId和Secret
-		if(basicUserPass != null && basicUserPass.length==2){
-		    _logger.trace(""+ basicUserPass[0]+":"+basicUserPass[1]);
-		    Apps app = appsService.get(basicUserPass[0]);
+		if(headerCredential != null){
+			String appId = headerCredential.getUsername();
+			String appSecret = headerCredential.getCredential();
+		    _logger.trace("appId "+ appId+" , appSecret " + appSecret);
+		    Apps app = appsCacheStore.get(appId);
+		    if (app == null) {
+		    	app = appsService.get(appId);
+		    	appsCacheStore.put(appId, app);
+		    }
 		    
 		    _logger.debug("App Info "+ app.getSecret());
-		    if(app != null && passwordReciprocal.encode(basicUserPass[1]).equalsIgnoreCase(app.getSecret())) {
+		    if(app != null && passwordReciprocal.matches(appSecret, app.getSecret())) {
 		        return true;
 		    }
 		}

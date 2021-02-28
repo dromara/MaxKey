@@ -18,15 +18,24 @@
 package org.maxkey.rest;
 
 import org.junit.Test;
+import org.maxkey.util.AuthorizationHeaderCredential;
 import org.maxkey.util.AuthorizationHeaderUtils;
 
 public class AuthorizationHeaderTest {
 	
 	@Test
 	public void test()  {
+		
 		String basic =AuthorizationHeaderUtils.createBasic("Aladdin", "open sesame");
 		System.out.println(basic);
-		String []rb=AuthorizationHeaderUtils.resolveBasic(basic);
-		System.out.println(rb[0]+":"+rb[1]);
+		
+		String ahc_basic ="Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==";
+		System.out.println(AuthorizationHeaderUtils.resolve(ahc_basic));
+		
+		AuthorizationHeaderCredential ahc =new AuthorizationHeaderCredential("Aladdin");
+		System.out.println(ahc.transform());
+		
+		System.out.println(AuthorizationHeaderUtils.resolve(ahc.transform()));
+		
 	}
 }

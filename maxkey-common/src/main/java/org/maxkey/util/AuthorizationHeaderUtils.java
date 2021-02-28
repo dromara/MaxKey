@@ -27,32 +27,32 @@ public class AuthorizationHeaderUtils {
 
     public static final String AUTHORIZATION_HEADERNAME = "Authorization";
 
-    public static final String BASIC = "Basic ";
-
-    public static final String BEARER = "Bearer ";
-
     public static String createBasic(String username, String password) {
         String authUserPass = username + ":" + password;
         String encodedAuthUserPass = Base64Utils.encode(authUserPass);
-        return BASIC + encodedAuthUserPass;
+        return AuthorizationHeaderCredential.Credential.BASIC + encodedAuthUserPass;
     }
 
-    public static String[] resolveBasic(String basic) {
-        if (isBasic(basic)) {
-            String[] userPass = basic.split(" ");
-            String decodeUserPass = Base64Utils.decode(userPass[1]);
-            return decodeUserPass.split(":");
+    public static AuthorizationHeaderCredential resolve(String authorization) {
+        if (isBasic(authorization)) {
+            String decodeUserPass = Base64Utils.decode(authorization.split(" ")[1]);
+            String []userPass =decodeUserPass.split(":");
+            return new AuthorizationHeaderCredential(userPass[0],userPass[1]);
         } else {
-            return null;
+            return new AuthorizationHeaderCredential(resolveBearer(authorization));
         }
     }
 
     public static boolean isBasic(String basic) {
-        if (basic.startsWith(BASIC)) {
+        if (basic.startsWith(AuthorizationHeaderCredential.Credential.BASIC)) {
             return true;
         } else {
             return false;
         }
+    }
+    
+    public static String createBearer(String bearer) {
+        return AuthorizationHeaderCredential.Credential.BEARER + bearer;
     }
 
     public static String resolveBearer(String bearer) {
@@ -62,13 +62,9 @@ public class AuthorizationHeaderUtils {
             return null;
         }
     }
-
-    public static String createBearer(String bearer) {
-        return BEARER + bearer;
-    }
-
+    
     public static boolean isBearer(String bearer) {
-        if (bearer.startsWith(BEARER)) {
+        if (bearer.startsWith(AuthorizationHeaderCredential.Credential.BEARER)) {
             return true;
         } else {
             return false;
