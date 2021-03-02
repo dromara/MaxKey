@@ -49,19 +49,19 @@ public class RedisAutoConfiguration implements InitializingBean {
     public RedisConnectionFactory redisConnFactory(
             @Value("${spring.redis.host}")
             String host,
-            @Value("${spring.redis.port}")
+            @Value("${spring.redis.port:6379}")
             int port,
-            @Value("${spring.redis.timeout}")
+            @Value("${spring.redis.timeout:10000}")
             int timeout,
             @Value("${spring.redis.password}")
             String password,
-            @Value("${spring.redis.lettuce.pool.max-active}")
+            @Value("${spring.redis.lettuce.pool.max-active:-1}")
             int maxActive,
-            @Value("${spring.redis.jedis.pool.max-wait}")
+            @Value("${spring.redis.jedis.pool.max-wait:1000}")
             int maxWait,
-            @Value("${spring.redis.jedis.pool.max-idle}")
+            @Value("${spring.redis.jedis.pool.max-idle:100}")
             int maxIdle,
-            @Value("${spring.redis.lettuce.pool.min-idle}")
+            @Value("${spring.redis.lettuce.pool.min-idle:0}")
             int minIdle) {
         _logger.debug("redisConnFactory init .");
         RedisConnectionFactory factory = new RedisConnectionFactory();

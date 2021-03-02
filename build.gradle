@@ -201,9 +201,9 @@ subprojects {
 		 
 		 //kafka support
 		 // https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
-		 compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.5.0'
+		 compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.6.1'
 		 // https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
-		 compile group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.5.2.RELEASE'
+		 compile group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.6.6'
 		 // https://mvnrepository.com/artifact/org.springframework.retry/spring-retry
 		 compile group: 'org.springframework.retry', name: 'spring-retry', version: '1.3.0'
 		 
@@ -215,6 +215,8 @@ subprojects {
          compile group: 'org.springframework.boot', name: 'spring-boot', version: "${springBootVersion}"
          compile group: 'org.springframework.boot', name: 'spring-boot-starter', version:  "${springBootVersion}"
          compile group: 'org.springframework.boot', name: 'spring-boot-actuator', version:  "${springBootVersion}"
+         compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version:  "${springBootVersion}"
+         compile group: 'org.springframework.boot', name: 'spring-boot-actuator-autoconfigure', version:  "${springBootVersion}"
          compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version:  "${springBootVersion}"
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-freemarker', version:  "${springBootVersion}"
          compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version:  "${springBootVersion}"
@@ -320,7 +322,10 @@ subprojects {
 		 compile group: 'org.ogce', name: 'xpp3', version: '1.1.6'
 		 compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
 		 compile group: 'org.passay', name: 'passay', version: '1.6.0'
-		 
+		 compile group: 'io.micrometer', name: 'micrometer-core', version: '1.6.4'
+		 compile group: 'org.latencyutils', name: 'LatencyUtils', version: '2.0.3'
+		 compile group: 'org.codehaus.woodstox', name: 'stax2-api', version: '4.2.1'
+		 		 
 		 //docs
 		 compile group: 'org.mapstruct', name: 'mapstruct', version: '1.4.1.Final'
 		 compile group: 'io.swagger', name: 'swagger-annotations', version: "${swaggerVersion}"

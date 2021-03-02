@@ -35,10 +35,10 @@ public class EmailConfig {
     @Value("${spring.mail.host}")
     private String smtpHost;
     
-    @Value("${spring.mail.port}")
+    @Value("${spring.mail.port:465}")
     private Integer port;
     
-    @Value("${spring.mail.properties.ssl}")
+    @Value("${spring.mail.properties.ssl:false}")
     private boolean ssl;
     
     @Value("${spring.mail.properties.sender}")

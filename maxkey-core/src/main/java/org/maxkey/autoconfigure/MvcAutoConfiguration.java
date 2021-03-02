@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.actuate.endpoint.http.ActuatorMediaType;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -174,6 +175,8 @@ public class MvcAutoConfiguration implements InitializingBean {
                 new MappingJackson2HttpMessageConverter();
         ArrayList<MediaType> mediaTypesList = new ArrayList<MediaType>();
         mediaTypesList.add(MediaType.APPLICATION_JSON);
+        mediaTypesList.add(MediaType.valueOf(ActuatorMediaType.V2_JSON));
+        mediaTypesList.add(MediaType.valueOf(ActuatorMediaType.V3_JSON));
         //mediaTypesList.add(MediaType.TEXT_PLAIN);
         mappingJacksonHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
         return mappingJacksonHttpMessageConverter;

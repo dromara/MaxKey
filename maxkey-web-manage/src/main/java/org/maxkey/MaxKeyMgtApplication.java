@@ -19,7 +19,6 @@ package org.maxkey;
 
 import java.util.Date;
 import javax.servlet.ServletException;
-
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.InitializeContext;
 import org.mybatis.spring.annotation.MapperScan;
@@ -32,7 +31,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
 @ComponentScan(basePackages = {
     "org.maxkey.MaxKeyMgtConfig",
     "org.maxkey.MaxKeyMgtMvcConfig",
@@ -54,6 +52,7 @@ import org.springframework.context.annotation.ComponentScan;
     "org.maxkey.identity.rest"
 })
 @MapperScan("org.maxkey.persistence.mapper,")
+@SpringBootApplication
 public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 	private static final Logger _logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
 
