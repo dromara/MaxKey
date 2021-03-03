@@ -17,7 +17,7 @@
 
 package org.maxkey.authz.cas.endpoint.ticket;
 
-import org.maxkey.authz.cas.endpoint.ticket.proxy.ProxyGrantingTicket;
+import org.maxkey.authz.cas.endpoint.ticket.pgt.ProxyGrantingTicket;
 import org.springframework.security.core.Authentication;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

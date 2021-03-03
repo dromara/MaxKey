@@ -80,13 +80,14 @@ public abstract class SingleLogout {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
+            _logger.debug("Post Message \n" + 
+                    httpPost.getEntity().toString()
+                 );
         }
         
         
         try {
-            _logger.debug("Post URL " + url + " , Post Message \n" + 
-                            httpPost.getEntity().toString()
-                         );
+        	 _logger.debug("Post URL " + url  );
             // httpClient对象执行post请求,并返回响应参数对象
             httpResponse = httpClient.execute(httpPost);
             // 从响应对象中获取响应内容

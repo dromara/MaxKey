@@ -15,9 +15,7 @@
  */
  
 
-package org.maxkey.authz.cas.endpoint.ticket.service;
-
-import org.maxkey.authz.cas.endpoint.ticket.Ticket;
+package org.maxkey.authz.cas.endpoint.ticket;
 
 public interface TicketServices {
 

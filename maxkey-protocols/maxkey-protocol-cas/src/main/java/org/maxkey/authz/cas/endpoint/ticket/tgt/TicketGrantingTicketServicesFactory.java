@@ -1,5 +1,6 @@
-package org.maxkey.authz.cas.endpoint.ticket.service;
+package org.maxkey.authz.cas.endpoint.ticket.tgt;
 
+import org.maxkey.authz.cas.endpoint.ticket.TicketServices;
 import org.maxkey.constants.ConstantsPersistence;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;

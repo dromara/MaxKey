@@ -15,10 +15,8 @@
  */
  
 
-package org.maxkey.authz.cas.endpoint.ticket.service;
+package org.maxkey.authz.cas.endpoint.ticket;
 
-import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
-import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.maxkey.authz.cas.endpoint.ticket.generator.DefaultUniqueTicketIdGenerator;
 
 
@@ -43,9 +41,15 @@ public abstract class RandomServiceTicketServices implements TicketServices {
 			ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_TICKET_PREFIX);
 		}else if(ticket.getClass().getSimpleName().equalsIgnoreCase("TicketGrantingTicketImpl")){
 			ticketId = generator.getNewTicketId(CasConstants.PREFIX.TICKET_GRANTING_TICKET_PREFIX);
+		}else if(ticket.getClass().getSimpleName().equalsIgnoreCase("ProxyGrantingTicketImpl")){
+			ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_GRANTING_TICKET_PREFIX);
+		}else if(ticket.getClass().getSimpleName().equalsIgnoreCase("ProxyGrantingTicketIOUImpl")){
+			ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_GRANTING_TICKET_IOU_PREFIX);
+			return ticketId;
 		}else {
-			ticketId = generator.getNewTicketId(CasConstants.PREFIX.PROXY_TICKET_PREFIX);
+			ticketId = generator.getNewTicketId(CasConstants.PREFIX.SERVICE_TICKET_PREFIX);
 		}
+		
 		store(ticketId, ticket);
 		return ticketId;
 	}

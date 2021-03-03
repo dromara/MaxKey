@@ -17,9 +17,10 @@
 
 package org.maxkey.autoconfigure;
 
-import org.maxkey.authz.cas.endpoint.ticket.service.TicketGrantingTicketServicesFactory;
-import org.maxkey.authz.cas.endpoint.ticket.service.TicketServices;
-import org.maxkey.authz.cas.endpoint.ticket.service.TicketServicesFactory;
+import org.maxkey.authz.cas.endpoint.ticket.TicketServices;
+import org.maxkey.authz.cas.endpoint.ticket.pgt.ProxyGrantingTicketServicesFactory;
+import org.maxkey.authz.cas.endpoint.ticket.st.TicketServicesFactory;
+import org.maxkey.authz.cas.endpoint.ticket.tgt.TicketGrantingTicketServicesFactory;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
@@ -71,6 +72,17 @@ public class CasAutoConfiguration implements InitializingBean {
     	_logger.debug("init casTicketGrantingTicketServices.");
         return new TicketGrantingTicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
     }
+    
+    @Bean(name = "casProxyGrantingTicketServices")
+    public TicketServices casProxyGrantingTicketServices(
+            @Value("${config.server.persistence}") int persistence,
+            @Value("${config.login.remeberme.validity}") int validity,
+            JdbcTemplate jdbcTemplate,
+            RedisConnectionFactory redisConnFactory) {
+    	_logger.debug("init casTicketGrantingTicketServices.");
+        return new ProxyGrantingTicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
+    }
+    
     
     @Override
     public void afterPropertiesSet() throws Exception {

@@ -22,4 +22,4 @@
  * @author Administrator
  *
  */
-package org.maxkey.authz.cas.endpoint.ticket.service;
+package org.maxkey.authz.cas.endpoint.ticket.st;

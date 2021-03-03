@@ -15,24 +15,26 @@
  */
  
 
-package org.maxkey.authz.cas.endpoint.ticket.service;
+package org.maxkey.authz.cas.endpoint.ticket.pgt;
 
+import org.maxkey.authz.cas.endpoint.ticket.RandomServiceTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.maxkey.persistence.redis.RedisConnection;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 
 
-public class RedisTicketGrantingTicketServices extends RandomServiceTicketServices {
+public class RedisProxyGrantingTicketServices extends RandomServiceTicketServices {
 
-    protected int serviceTicketValiditySeconds = 60 * 60 * 24 * 2; //default 2 day.
+	
+	protected int serviceTicketValiditySeconds = 60 * 60; //default 60 minutes.
 	
 	RedisConnectionFactory connectionFactory;
 	
-	public static String PREFIX="REDIS_CAS_TICKET_TGT_";
+	public static String PREFIX="REDIS_CAS_TICKET_PGT_";
 	/**
 	 * @param connectionFactory
 	 */
-	public RedisTicketGrantingTicketServices(RedisConnectionFactory connectionFactory) {
+	public RedisProxyGrantingTicketServices(RedisConnectionFactory connectionFactory) {
 		super();
 		this.connectionFactory = connectionFactory;
 	}
@@ -40,7 +42,7 @@ public class RedisTicketGrantingTicketServices extends RandomServiceTicketServic
 	/**
 	 * 
 	 */
-	public RedisTicketGrantingTicketServices() {
+	public RedisProxyGrantingTicketServices() {
 		
 	}
 

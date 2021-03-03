@@ -15,13 +15,14 @@
  */
  
 
-package org.maxkey.authz.cas.endpoint.ticket.service;
+package org.maxkey.authz.cas.endpoint.ticket.tgt;
 
 import java.time.Duration;
 
 import org.ehcache.UserManagedCache;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.UserManagedCacheBuilder;
+import org.maxkey.authz.cas.endpoint.ticket.RandomServiceTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 
 

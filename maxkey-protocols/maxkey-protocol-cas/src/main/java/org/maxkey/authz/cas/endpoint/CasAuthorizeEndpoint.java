@@ -36,15 +36,12 @@ import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -105,8 +102,6 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	        @AuthenticationPrincipal Object user,
 			HttpServletRequest request,
 			HttpServletResponse response){
-		
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		AppsCasDetails casDetails=(AppsCasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
 		ServiceTicketImpl serviceTicket=new ServiceTicketImpl(WebContext.getAuthentication(),casDetails);
 		

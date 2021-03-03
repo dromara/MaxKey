@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authz.cas.endpoint.ticket.proxy;
+package org.maxkey.authz.cas.endpoint.ticket.pgt;
 
 import org.maxkey.authz.cas.endpoint.ticket.ServiceTicket;
 

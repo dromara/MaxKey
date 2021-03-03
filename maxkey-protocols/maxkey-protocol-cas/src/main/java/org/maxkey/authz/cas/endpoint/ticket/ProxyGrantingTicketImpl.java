@@ -21,18 +21,18 @@ import org.maxkey.domain.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 
 /**
- * The {@link ProxyTicketImpl} is a concrete implementation of the {@link ProxyTicket}.
+ * The {@link ProxyGrantingTicketImpl} is a concrete implementation of the {@link ProxyTicket}.
  *
  * @author Misagh Moayyed
  * @since 4.2
  */
-public class ProxyTicketImpl extends ServiceTicketImpl implements Ticket {
+public class ProxyGrantingTicketImpl extends ServiceTicketImpl implements Ticket {
     private static final long serialVersionUID = -4469960563289285371L;
 
     /**
      * Instantiates a new Proxy ticket.
      */
-    public ProxyTicketImpl() {
+    public ProxyGrantingTicketImpl() {
     }
 
     /**
@@ -44,12 +44,12 @@ public class ProxyTicketImpl extends ServiceTicketImpl implements Ticket {
      * @param credentialProvided the credential that prompted this ticket. Could be false.
      * @param policy             the expiration policy
      */
-    public ProxyTicketImpl(final String id,  final Service service,
+    public ProxyGrantingTicketImpl(final String id,  final Service service,
                            final boolean credentialProvided) {
 
     }
     
-    public ProxyTicketImpl(Authentication authentication,  AppsCasDetails casDetails) {
+    public ProxyGrantingTicketImpl(Authentication authentication,  AppsCasDetails casDetails) {
     	this.authentication=authentication;
     	this.casDetails=casDetails;
     }

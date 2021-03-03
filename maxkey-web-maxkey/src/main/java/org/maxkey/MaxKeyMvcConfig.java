@@ -170,9 +170,11 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 //cas2.0 Validate
                 .excludePathPatterns("/authz/cas/serviceValidate")
                 .excludePathPatterns("/authz/cas/proxyValidate")
+                .excludePathPatterns("/authz/cas/proxy")
                 //cas3.0 Validate
                 .excludePathPatterns("/authz/cas/p3/serviceValidate")
                 .excludePathPatterns("/authz/cas/p3/proxyValidate")
+                .excludePathPatterns("/authz/cas/p3/proxy")
                 //rest
                 .excludePathPatterns("/authz/cas/v1/tickets")
                 .excludePathPatterns("/authz/cas/v1/tickets/*")
