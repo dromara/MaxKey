@@ -27,11 +27,14 @@ public class ProxyServiceResponseBuilder extends  ServiceResponseBuilder{
 
 	@Override
 	public String  serviceResponseBuilder() {
+		String responseString = "";
 		if(format.equalsIgnoreCase(CasConstants.FORMAT_TYPE.XML)){
-			return serviceResponseXmlBuilder();
+			responseString = serviceResponseXmlBuilder();
 		}else{
-			return serviceResponseJsonBuilder();
+			responseString =serviceResponseJsonBuilder();
 		}
+		_logger.trace("Response String : "+responseString);
+		return responseString;
 	}
 	
 	@Override

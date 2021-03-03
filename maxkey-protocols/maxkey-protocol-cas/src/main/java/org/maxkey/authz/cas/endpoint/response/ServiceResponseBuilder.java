@@ -36,7 +36,7 @@ public class ServiceResponseBuilder extends CasServiceResponse {
 			responseString= serviceResponseJsonBuilder();
 		}
 		
-		_logger.debug("Response String : "+responseString);
+		_logger.trace("Response String : "+responseString);
 		return responseString;
 	}
 	
