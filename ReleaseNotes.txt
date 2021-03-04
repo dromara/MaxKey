@@ -1,4 +1,37 @@
-﻿﻿﻿﻿﻿MaxKey v 2.5.0 GA	2021/02/05
+﻿﻿﻿﻿﻿﻿﻿﻿﻿MaxKey v 2.6.0 GA	2021/03/**
+	*(MAXKEY-210201)  官方网站的优化
+	*(MAXKEY-210202)  CAS代理模式实现的优化，完成demo的测试
+	*(MAXKEY-210203)  CAS代理模式Demo开发和实现
+	*(MAXKEY-210204)  LINUX版安装指南优化，升级MySQL到8.0
+	*(MAXKEY-210205)  构建优化，实现自动打包到Build Release
+	*(MAXKEY-210206)  springboot-actuator优化
+	*(MAXKEY-210207)  登录模式的拆分和整合
+	*(MAXKEY-210208)  模块的重组和优化，拆分出通用模块maxkey-common，captcha，otp，social等
+	*(MAXKEY-210209)  REST API优化,增加密码修改功能
+	*(MAXKEY-210210)  session及cookie参数的优化
+	*(MAXKEY-210211)  kafka供应服务移动到org.maxkey.persistence.kafka
+	*(MAXKEY-210212)  用户注册功能优化
+	*(MAXKEY-210213)  日志信息输出优化
+	*(MAXKEY-210214)  简化MaxKey banner输出
+	*(MAXKEY-210215)  token工厂模式的实现Factorys
+	*(MAXKEY-210216)  OTP的优化
+	*(MAXKEY-210217)  MapperScan重复优化
+	*(MAXKEY-210218)  maxkey-mgt端口号调整9527,wiki端口号调整9521
+	*(MAXKEY-210219)  依赖jar引用、更新和升级
+		spring         	 5.3.4
+		springBoot     	 2.4.3
+		springSecurity 	 5.4.5
+		tomcat			 9.0.41
+		freemarker		 2.3.31
+		kafka-clients	 2.6.1
+		spring-kafka	 2.6.6
+		micrometer		 1.6.4
+		latencyutils	 2.0.3
+		stax2-api 		 4.2.1
+		druid			 1.2.5
+		
+
+MaxKey v 2.5.0 GA	2021/02/05
 	*(MAXKEY-210101)  动态用户组实现优化，增加时间段控制
 	*(MAXKEY-210102)  官方网站优化，取消加载动态图表；增加统计功能
 	*(MAXKEY-210103)  优化社交登录的图标
