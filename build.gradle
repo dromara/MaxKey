@@ -402,8 +402,8 @@ project('maxkey-common')  {
 	task copyDepJars(type: Copy){
 		def paths = ["$rootDir/build/MaxKey-v${project.version}GA",
 		             "$rootDir/build/MaxKey-v${project.version}GA/maxkey",
-		             "$rootDir/build/MaxKey-v${project.version}GA/maxkey-mgt",
-		             "$rootDir/build/MaxKey-v${project.version}GA/maxkey-lib"];
+		             "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt",
+		             "$rootDir/build/MaxKey-v${project.version}GA/maxkey_lib"];
 		//遍历数组，调用createDir闭包，创建目录
 		
         paths.forEach(){path->
@@ -414,15 +414,14 @@ project('maxkey-common')  {
             }
         };
         
-		println  "copy Dep Jars to $rootDir/build/MaxKey-v${project.version}GA/maxkey-lib"
+		println  "copy Dep Jars to $rootDir/build/MaxKey-v${project.version}GA/maxkey_lib"
 		
 		from configurations.runtime
-		into "$rootDir/build/MaxKey-v${project.version}GA/maxkey-lib";
+		into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_lib";
 	}
 }
 
 task copyMaxKey(type: Copy) {
-    from "$rootDir/build/maxkey-jars/maxkey-authentication-otp-${project.version}.jar"
     from "$rootDir/build/maxkey-jars/maxkey-authentication-social-${project.version}.jar"
     from "$rootDir/build/maxkey-jars/maxkey-web-maxkey-${project.version}.jar"
 	into "$rootDir/build/MaxKey-v${project.version}GA/maxkey/";
@@ -432,10 +431,11 @@ task copyMaxKeyMgt(type: Copy) {
 	from "$rootDir/build/maxkey-jars/maxkey-identity-rest-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-identity-scim-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-web-manage-${project.version}.jar"
-	into "$rootDir/build/MaxKey-v${project.version}GA/maxkey-mgt/";
+	into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt/";
 }
 
 task copyMaxKeyLibs(type: Copy) {
+	from "$rootDir/build/maxkey-jars/maxkey-authentication-otp-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-authentication-captcha-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-authentication-core-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-common-${project.version}.jar"
@@ -450,7 +450,7 @@ task copyMaxKeyLibs(type: Copy) {
 	from "$rootDir/build/maxkey-jars/maxkey-protocol-oauth-2.0-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-protocol-saml-2.0-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-protocol-tokenbased-${project.version}.jar"
-	into "$rootDir/build/MaxKey-v${project.version}GA/maxkey-lib";
+	into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_lib";
 }
 
 task copyMaxKeyShellScript(type: Copy) {
