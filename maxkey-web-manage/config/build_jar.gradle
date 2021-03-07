@@ -1,0 +1,56 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+	}
+	dependencies {
+		//springboot jar
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version "${springBootVersion}"
+	id "io.spring.dependency-management" version "1.0.11.RELEASE"
+}
+
+description = "maxkey-web-manage"
+
+//springboot jar
+apply plugin: 'io.spring.dependency-management'
+
+//add support for Java
+apply plugin: 'java'
+
+
+
+bootJar {
+	dependsOn jar
+	baseName = 'maxkey-mgt-boot'
+    version = "${project.version}-ga"
+    mainClass = 'org.maxkey.MaxKeyMgtApplication'
+	manifest {
+	        attributes(
+						"Implementation-Title": project.name,
+	                	"Implementation-Vendor": project.vendor,
+	                	"Created-By": project.author,
+	                	"Implementation-Date": java.time.ZonedDateTime.now(),
+	                	"Implementation-Version": project.version
+	           )
+	    }	
+}
+
+dependencies {
+	compile project(":maxkey-common")
+	compile project(":maxkey-core")
+	compile project(":maxkey-persistence")
+	
+	compile project(":maxkey-authentications:maxkey-authentication-core")
+	compile project(":maxkey-authentications:maxkey-authentication-captcha")
+	compile project(":maxkey-authentications:maxkey-authentication-otp")
+   	
+   	compile project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
+   	compile project(":maxkey-protocols:maxkey-protocol-saml-2.0")   
+   	compile project(":maxkey-identitys:maxkey-identity-scim")   
+   	compile project(":maxkey-identitys:maxkey-identity-rest")
+}

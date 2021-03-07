@@ -1,0 +1,54 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+	}
+}
+//docker
+plugins {
+	id 'java'
+	id 'com.google.cloud.tools.jib' version "${jibGradlePluginVersion}"
+	id 'org.springframework.boot' version "${springBootVersion}"
+}
+
+
+apply plugin: 'com.google.cloud.tools.jib'
+
+description = "maxkey-web-manage"
+
+jib {
+	from {
+		image = 'openjdk:8-jre-alpine'
+	}
+	to {
+		//https://registry.hub.docker.com/repository/docker/maxkeytop/maxkey-mgt
+		image = "maxkeytop/maxkey-mgt"
+		tags = ["${project.version}".toString(), 'latest']
+		auth {
+			username = "maxkeytop"
+			password = "password"
+		}
+		
+	}
+	container {
+		mainClass 	= "org.maxkey.MaxKeyMgtApplication"
+		jvmFlags 	= ['-Dfile.encoding=utf-8', '-Dserver.port=9527','-Duser.timezone=Asia/Shanghai']
+		ports	 	= ['9527']
+	}
+}
+
+dependencies {
+	compile project(":maxkey-common")
+	compile project(":maxkey-core")
+	compile project(":maxkey-persistence")
+	
+	compile project(":maxkey-authentications:maxkey-authentication-core")
+	compile project(":maxkey-authentications:maxkey-authentication-captcha")
+	compile project(":maxkey-authentications:maxkey-authentication-otp")
+   	
+   	compile project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
+   	compile project(":maxkey-protocols:maxkey-protocol-saml-2.0")   
+   	compile project(":maxkey-identitys:maxkey-identity-scim")   
+   	compile project(":maxkey-identitys:maxkey-identity-rest")
+   	
+}
