@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -64,7 +64,7 @@ import com.google.common.collect.Lists;
  * @author Crystal.Sea
  *
  */
-@Service
+@Repository
 public class UserInfoService extends JpaBaseService<UserInfo> {
 	final static Logger _logger = LoggerFactory.getLogger(UserInfoService.class);
 	

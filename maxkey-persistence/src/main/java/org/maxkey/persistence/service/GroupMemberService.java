@@ -21,9 +21,9 @@ import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.GroupMember;
 import org.maxkey.domain.Groups;
 import org.maxkey.persistence.mapper.GroupMemberMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class GroupMemberService  extends JpaBaseService<GroupMember>{
 	
 	public GroupMemberService() {

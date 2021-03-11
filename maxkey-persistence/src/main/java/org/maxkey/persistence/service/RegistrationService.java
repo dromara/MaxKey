@@ -23,9 +23,9 @@ import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.Registration;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.persistence.mapper.RegistrationMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class RegistrationService  extends JpaBaseService<Registration>{
 
 	public RegistrationService() {

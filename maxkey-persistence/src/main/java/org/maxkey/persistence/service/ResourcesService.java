@@ -22,9 +22,9 @@ import java.util.List;
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.Resources;
 import org.maxkey.persistence.mapper.ResourcesMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class ResourcesService  extends JpaBaseService<Resources>{
 	
 	public ResourcesService() {

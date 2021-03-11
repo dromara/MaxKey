@@ -20,9 +20,9 @@ package org.maxkey.persistence.service;
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.Accounts;
 import org.maxkey.persistence.mapper.AccountsMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class AccountsService  extends JpaBaseService<Accounts>{
 
 	public AccountsService() {

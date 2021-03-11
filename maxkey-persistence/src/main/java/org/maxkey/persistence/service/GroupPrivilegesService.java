@@ -20,9 +20,9 @@ package org.maxkey.persistence.service;
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.GroupPrivileges;
 import org.maxkey.persistence.mapper.GroupPrivilegesMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class GroupPrivilegesService  extends JpaBaseService<GroupPrivileges>{
 	
 	public GroupPrivilegesService() {

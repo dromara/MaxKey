@@ -20,9 +20,9 @@ package org.maxkey.persistence.service;
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.PasswordPolicy;
 import org.maxkey.persistence.mapper.PasswordPolicyMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class PasswordPolicyService  extends JpaBaseService<PasswordPolicy>{
 
 	public PasswordPolicyService() {

@@ -23,9 +23,9 @@ import java.util.Map;
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.persistence.mapper.ReportMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class ReportService  extends JpaBaseService<JpaBaseDomain>{
 
 	public Integer analysisDay(String reportParameter) {

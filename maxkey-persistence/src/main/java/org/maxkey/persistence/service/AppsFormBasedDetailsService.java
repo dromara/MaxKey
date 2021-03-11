@@ -20,9 +20,9 @@ package org.maxkey.persistence.service;
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.apps.AppsFormBasedDetails;
 import org.maxkey.persistence.mapper.AppsFormBasedDetailsMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class AppsFormBasedDetailsService  extends JpaBaseService<AppsFormBasedDetails>{
 
 	public AppsFormBasedDetailsService() {

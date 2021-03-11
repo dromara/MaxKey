@@ -39,13 +39,13 @@ import org.maxkey.persistence.kafka.KafkaIdentityTopic;
 import org.maxkey.persistence.kafka.KafkaPersistService;
 import org.maxkey.persistence.mapper.OrganizationsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Lists;
 
-@Service
+@Repository
 public class OrganizationsService  extends JpaBaseService<Organizations>{
 
     @Autowired

@@ -21,9 +21,9 @@ import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.RoleMember;
 import org.maxkey.domain.Roles;
 import org.maxkey.persistence.mapper.RoleMemberMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class RoleMemberService  extends JpaBaseService<RoleMember>{
 	
 	public RoleMemberService() {

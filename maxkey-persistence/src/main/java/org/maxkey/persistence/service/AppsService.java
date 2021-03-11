@@ -23,9 +23,9 @@ import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.domain.apps.Apps;
 import org.maxkey.domain.apps.UserApps;
 import org.maxkey.persistence.mapper.AppsMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
+@Repository
 public class AppsService  extends JpaBaseService<Apps>{
 
 	public AppsService() {
