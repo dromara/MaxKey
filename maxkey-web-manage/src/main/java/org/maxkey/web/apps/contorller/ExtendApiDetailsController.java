@@ -62,7 +62,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 		
 		transform(extendApiDetails);
 		
-		if (appsService.insert(extendApiDetails)) {
+		if (appsService.insertApp(extendApiDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
@@ -95,7 +95,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 		_logger.debug("-update  extendApiDetails :" + extendApiDetails);
 		transform(extendApiDetails);
 		
-		if (appsService.update(extendApiDetails)) {
+		if (appsService.updateApp(extendApiDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
