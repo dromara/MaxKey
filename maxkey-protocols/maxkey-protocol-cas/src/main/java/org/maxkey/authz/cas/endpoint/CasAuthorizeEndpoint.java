@@ -147,4 +147,19 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		
 		return WebContext.redirect(callbackUrl.toString());
 	}
+	
+	/**
+	 * for cas logout then redirect to logout
+	 * @param request
+	 * @param response
+	 * @param casService
+	 * @return
+	 */
+	@RequestMapping("/authz/cas/logout")
+	public ModelAndView logout(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService){
+		return WebContext.redirect("/logout?reLoginUrl=" + casService);
+	}
 }
