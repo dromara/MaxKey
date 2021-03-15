@@ -19,6 +19,7 @@ package org.maxkey.authz.oauth2.provider.userinfo.endpoint;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
@@ -44,6 +45,7 @@ import org.maxkey.domain.apps.Apps;
 import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.util.Instance;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;
@@ -117,10 +119,23 @@ public class UserInfoEndpoint {
 	@RequestMapping(value="/oauth/v20/me") 
 	@ResponseBody
 	public String apiV20UserInfo(
-			@RequestParam(value = "access_token", required = true) String access_token,
+			@RequestParam(value = "access_token", required = false) String access_token,
+			@RequestHeader(value = "authorization", required = false) String authorization_bearer,
             HttpServletRequest request, 
             HttpServletResponse response) {
 	        response.setContentType(ContentType.APPLICATION_JSON_UTF8);
+	        if(access_token == null && authorization_bearer!= null) {
+	        	access_token = AuthorizationHeaderUtils.resolveBearer(authorization_bearer);
+	        }
+	        if(_logger.isTraceEnabled()) {
+	        	_logger.trace("getRequestURL : "+request.getRequestURL());
+		        Enumeration<String> headerNames = request.getHeaderNames();
+		        while (headerNames.hasMoreElements()) {
+		          String key = (String) headerNames.nextElement();
+		          String value = request.getHeader(key);
+		          _logger.trace("Header key "+key +" , value " + value);
+		        }
+	        }
 			String principal="";
 			if (!StringGenerator.uuidMatches(access_token)) {
 				return JsonUtils.gson2Json(accessTokenFormatError(access_token));
