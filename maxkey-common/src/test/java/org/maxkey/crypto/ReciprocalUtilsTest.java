@@ -48,6 +48,8 @@ public class ReciprocalUtilsTest {
 		 String urldecodeString="http://exchange.connsec.com/owa/?ae=Item&a=Open&t=IPM.Note&id=RgAAAABPKgpqnlfYQ7BVC%2fBfH2XIBwCS0xhUjzMYSLVky9bw7LddAAAAjov5AACS0xhUjzMYSLVky9bw7LddAAADzoy%2fAAAA&pspid=_1428036768398_867461813";
 		 String   urldcode   =   java.net.URLDecoder.decode(urldecodeString,   "utf-8");   
 		 
+		
+		 
 		 
 				 
 				
@@ -65,6 +67,8 @@ public class ReciprocalUtilsTest {
 	    encoderString="ead67db5c4f55eace090ab0044682451";
 		encoderString=ReciprocalUtils.decoder(encoderString);
 		System.out.println(encoderString );
+		
+		
 		 
 	 }
 }

@@ -34,8 +34,10 @@ import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.Boolean;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.Instance;
+import org.maxkey.web.ResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -169,7 +171,7 @@ INTERNAL_ERROR - an internal error occurred during ticket validation
 For all error codes, it is RECOMMENDED that CAS provide a more detailed message as the body of the \<cas:authenticationFailure\> block of the XML response.
 	 */
 	@ApiOperation(value = "CAS 2.0 ticket验证接口", notes = "通过ticket获取当前登录用户信息",httpMethod="POST")
-	@RequestMapping("/authz/cas/serviceValidate")
+	@RequestMapping(value="/authz/cas/serviceValidate",produces =MediaType.APPLICATION_XML_VALUE)
 	@ResponseBody
 	public String serviceValidate(
 			HttpServletRequest request,
@@ -178,7 +180,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
+			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=ResponseConstants.FORMAT_TYPE.XML) String format){
 	    _logger.debug("serviceValidate " 
                 + " ticket " + ticket 
                 +" , service " + service 
@@ -186,8 +188,6 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
                 +" , renew " + renew
                 +" , format " + format
         );
-	    
-	    setContentType(request,response,format);
 	    
 		Ticket storedTicket=null;
 		if(ticket.startsWith(CasConstants.PREFIX.SERVICE_TICKET_PREFIX)) {
@@ -215,7 +215,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 				serviceResponseBuilder.success().setTicket(proxyGrantingTicketIOU);
 				serviceResponseBuilder.success().setProxy(pgtUrl);
 			
-				postMessage(pgtUrl+"?pgtId="+proxyGrantingTicket+"&pgtIou="+proxyGrantingTicketIOU,null);		
+				httpRequestAdapter.post(pgtUrl+"?pgtId="+proxyGrantingTicket+"&pgtIou="+proxyGrantingTicketIOU,null);		
 			}
 			
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
@@ -294,7 +294,7 @@ Response on ticket validation failure:
 	 */
 	
 	@ApiOperation(value = "CAS 2.0 ticket代理验证接口", notes = "通过ticket获取当前登录用户信息",httpMethod="POST")
-	@RequestMapping("/authz/cas/proxyValidate")
+	@RequestMapping(value="/authz/cas/proxyValidate",produces =MediaType.APPLICATION_XML_VALUE)
 	@ResponseBody
 	public String proxy(
 			HttpServletRequest request,
@@ -303,7 +303,7 @@ Response on ticket validation failure:
 			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
+			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=ResponseConstants.FORMAT_TYPE.XML) String format){
 	    _logger.debug("proxyValidate " 
                 + " ticket " + ticket 
                 +" , service " + service 
@@ -311,7 +311,6 @@ Response on ticket validation failure:
                 +" , renew " + renew
                 +" , format " + format
         );
-	    setContentType(request,response,format);
 		
 		Ticket storedTicket=null;
 		if(ticket.startsWith(CasConstants.PREFIX.PROXY_TICKET_PREFIX)) {
@@ -396,28 +395,29 @@ INTERNAL_ERROR - an internal error occurred during ticket validation
 
 For all error codes, it is RECOMMENDED that CAS provide a more detailed message as the body of the <cas:authenticationFailure> block of the XML response.
 	 */
-	@RequestMapping("/authz/cas/proxy")
+	@RequestMapping(value="/authz/cas/proxy" ,produces =MediaType.APPLICATION_XML_VALUE)
 	@ResponseBody
 	public String proxy(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_GRANTING_TICKET) String pgt,
 			@RequestParam(value = CasConstants.PARAMETER.TARGET_SERVICE) String targetService,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
+			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=ResponseConstants.FORMAT_TYPE.XML) String format){
 	    _logger.debug("proxy " 
                 + " pgt " + pgt 
                 +" , targetService " + targetService 
                 +" , format " + format
         );
-	    setContentType(request,response,format);
+	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder();
+	    
 	    ProxyGrantingTicketImpl proxyGrantingTicketImpl = (ProxyGrantingTicketImpl)casProxyGrantingTicketServices.get(pgt);
 	    if(proxyGrantingTicketImpl != null) {
 	    	ProxyTicketImpl ProxyTicketImpl = new ProxyTicketImpl(proxyGrantingTicketImpl.getAuthentication(),proxyGrantingTicketImpl.getCasDetails());
 	    	String proxyTicket =ticketServices.createTicket(ProxyTicketImpl);
-	    	ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder();
-	 		return proxyServiceResponseBuilder.success().setTicket(proxyTicket).setFormat(format).serviceResponseBuilder();
+	 		proxyServiceResponseBuilder.success().setTicket(proxyTicket).setFormat(format);
+	    }else {
+	    	proxyServiceResponseBuilder.success().setTicket("").setFormat(format);
 	    }
-	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder();
-		return proxyServiceResponseBuilder.success().setTicket("").setFormat(format).serviceResponseBuilder();
+		return proxyServiceResponseBuilder.serviceResponseBuilder();
 	}
 }

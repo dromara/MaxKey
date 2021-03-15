@@ -63,17 +63,6 @@ public class CasConstants {
 		public static final String REST_PASSWORD = "password";
 	}
 	
-	public  static final class  FORMAT_TYPE {
-	    /**
-	     * Default CAS XML response.
-	     */
-		public static final String XML="xml";
-	    /**
-	     * Render response in JSON.
-	     */
-		public static final String JSON="json";
-	}
-	
 	/* CAS Protocol PREFIX */
 	public static final class PREFIX{
 		/** Proxy ticket prefix applied to unique ids. */

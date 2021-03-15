@@ -19,8 +19,7 @@ package org.maxkey.authz.cas.endpoint.response;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
+import org.maxkey.web.ResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +31,7 @@ public class CasServiceResponse {
 	protected boolean result=false;
 	protected String user;
 	protected String ticket;
-	protected String format=CasConstants.FORMAT_TYPE.XML;
+	protected String format=ResponseConstants.FORMAT_TYPE.XML;
 	protected ArrayList<String >proxies=new ArrayList<String>();
 	
 	protected HashMap<String,ArrayList<String>>casAttributes=new HashMap<String,ArrayList<String>>();

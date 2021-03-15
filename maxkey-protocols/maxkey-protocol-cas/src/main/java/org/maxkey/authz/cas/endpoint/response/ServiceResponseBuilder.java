@@ -19,8 +19,7 @@ package org.maxkey.authz.cas.endpoint.response;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
+import org.maxkey.web.ResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +29,7 @@ public class ServiceResponseBuilder extends CasServiceResponse {
 	@Override
 	public String  serviceResponseBuilder() {
 		String responseString = "";
-		if(format.equalsIgnoreCase(CasConstants.FORMAT_TYPE.XML)){
+		if(format.equalsIgnoreCase(ResponseConstants.FORMAT_TYPE.XML)){
 			responseString= serviceResponseXmlBuilder();
 		}else{
 			responseString= serviceResponseJsonBuilder();

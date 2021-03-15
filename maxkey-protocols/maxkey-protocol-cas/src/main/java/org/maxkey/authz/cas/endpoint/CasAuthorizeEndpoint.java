@@ -112,9 +112,10 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		    callbackUrl.append("?");
 		}
 		
-		if(callbackUrl.indexOf("&") != -1) {
+		if(callbackUrl.indexOf("&") != -1 ||callbackUrl.indexOf("=") != -1) {
 		    callbackUrl.append("&");
 		}
+		
 		
 		//append ticket
 		callbackUrl.append(CasConstants.PARAMETER.TICKET).append("=").append(ticket);

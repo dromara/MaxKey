@@ -35,13 +35,12 @@ import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.Boolean;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.Instance;
+import org.maxkey.web.ResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -56,16 +55,15 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(Cas30AuthorizeEndpoint.class);
 
 	@ApiOperation(value = "CAS 3.0 ticket验证接口", notes = "通过ticket获取当前登录用户信息",httpMethod="POST")
-	@RequestMapping("/authz/cas/p3/serviceValidate")
-	@ResponseBody
-	public String serviceValidate(
+	@RequestMapping(value="/authz/cas/p3/serviceValidate")
+	public void serviceValidate(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = CasConstants.PARAMETER.TICKET) String ticket,
 			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
+			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=ResponseConstants.FORMAT_TYPE.XML) String format){
 	    _logger.debug("serviceValidate " 
 	                    + " ticket " + ticket 
 	                    +" , service " + service 
@@ -73,8 +71,6 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	                    +" , renew " + renew
 	                    +" , format " + format
 	            );
-	    
-setContentType(request,response,format);
 	    
 		Ticket storedTicket=null;
 		if(ticket.startsWith(CasConstants.PREFIX.SERVICE_TICKET_PREFIX)) {
@@ -102,7 +98,7 @@ setContentType(request,response,format);
 				serviceResponseBuilder.success().setTicket(proxyGrantingTicketIOU);
 				serviceResponseBuilder.success().setProxy(pgtUrl);
 			
-				postMessage(pgtUrl+"?pgtId="+proxyGrantingTicket+"&pgtIou="+proxyGrantingTicketIOU,null);		
+				httpRequestAdapter.post(pgtUrl+"?pgtId="+proxyGrantingTicket+"&pgtIou="+proxyGrantingTicketIOU,null);		
 			}
 			
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
@@ -116,46 +112,45 @@ setContentType(request,response,format);
 				.setDescription("Ticket "+ticket+" not recognized");
 		}
 	
-		return serviceResponseBuilder.serviceResponseBuilder();
+		httpResponseAdapter.write(response,serviceResponseBuilder.serviceResponseBuilder(),format);
 	}
 	
 	@ApiOperation(value = "CAS 3.0 ProxyTicket代理验证接口", notes = "通过ProxyGrantingTicket获取ProxyTicket",httpMethod="POST")
 	@RequestMapping("/authz/cas/p3/proxy")
-	@ResponseBody
-	public String proxy(
+	public void proxy(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_GRANTING_TICKET) String pgt,
 			@RequestParam(value = CasConstants.PARAMETER.TARGET_SERVICE) String targetService,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
+			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=ResponseConstants.FORMAT_TYPE.XML) String format){
 	    _logger.debug("proxy " 
                 + " pgt " + pgt 
                 +" , targetService " + targetService 
                 +" , format " + format
         );
-	    setContentType(request,response,format);
+	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder();
 	    ProxyGrantingTicketImpl proxyGrantingTicketImpl = (ProxyGrantingTicketImpl)casProxyGrantingTicketServices.get(pgt);
 	    if(proxyGrantingTicketImpl != null) {
 	    	ProxyTicketImpl ProxyTicketImpl = new ProxyTicketImpl(proxyGrantingTicketImpl.getAuthentication(),proxyGrantingTicketImpl.getCasDetails());
 	    	String proxyTicket =ticketServices.createTicket(ProxyTicketImpl);
-	    	ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder();
-	 		return proxyServiceResponseBuilder.success().setTicket(proxyTicket).setFormat(format).serviceResponseBuilder();
+	 		proxyServiceResponseBuilder.success().setTicket(proxyTicket).setFormat(format);
+	    }else {
+	    	proxyServiceResponseBuilder.success().setTicket("").setFormat(format);
 	    }
-	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder();
-		return proxyServiceResponseBuilder.success().setTicket("").setFormat(format).serviceResponseBuilder();
+	    
+	    httpResponseAdapter.write(response,proxyServiceResponseBuilder.serviceResponseBuilder(),format);
 	}
 	
 	@ApiOperation(value = "CAS 3.0 ticket代理验证接口", notes = "通过ProxyTicket获取当前登录用户信息",httpMethod="POST")
 	@RequestMapping("/authz/cas/p3/proxyValidate")
-	@ResponseBody
-	public String proxy(
+	public void proxy(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = CasConstants.PARAMETER.TICKET) String ticket,
 			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=CasConstants.FORMAT_TYPE.XML) String format){
+			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=ResponseConstants.FORMAT_TYPE.XML) String format){
 	    _logger.debug("proxyValidate " 
                 + " ticket " + ticket 
                 +" , service " + service 
@@ -163,7 +158,6 @@ setContentType(request,response,format);
                 +" , renew " + renew
                 +" , format " + format
         );
-	    setContentType(request,response,format);
 		
 		Ticket storedTicket=null;
 		if(ticket.startsWith(CasConstants.PREFIX.PROXY_TICKET_PREFIX)) {
@@ -191,7 +185,6 @@ setContentType(request,response,format);
 				.setCode(CasConstants.ERROR_CODE.INVALID_TICKET)
 				.setDescription("Ticket "+ticket+" not recognized");
 		}
-	
-		return serviceResponseBuilder.serviceResponseBuilder();
+		httpResponseAdapter.write(response,serviceResponseBuilder.serviceResponseBuilder(),format);
 	}
 }
