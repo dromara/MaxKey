@@ -12,7 +12,7 @@ QQ Community: <b> 434469201 </b>
 
 email: <b> maxkeysupport@163.com </b>
 
-Code Hosting <a href="https://github.com/MaxKeyTop/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a>
+Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a>
 
 What is  <b> Single Sign On </b>, referred to as <b> SSO </b >?
 
