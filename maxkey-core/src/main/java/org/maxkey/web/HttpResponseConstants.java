@@ -17,7 +17,7 @@
 
 package org.maxkey.web;
 
-public class ResponseConstants {
+public class HttpResponseConstants {
 	
 	public  static final class  FORMAT_TYPE {
 	    /**

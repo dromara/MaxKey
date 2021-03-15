@@ -34,7 +34,7 @@ import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.Boolean;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.Instance;
-import org.maxkey.web.ResponseConstants;
+import org.maxkey.web.HttpResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -180,7 +180,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=ResponseConstants.FORMAT_TYPE.XML) String format){
+			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
 	    _logger.debug("serviceValidate " 
                 + " ticket " + ticket 
                 +" , service " + service 
@@ -303,7 +303,7 @@ Response on ticket validation failure:
 			@RequestParam(value = CasConstants.PARAMETER.SERVICE) String service,
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_CALLBACK_URL,required=false) String pgtUrl,
 			@RequestParam(value = CasConstants.PARAMETER.RENEW,required=false) String renew,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=ResponseConstants.FORMAT_TYPE.XML) String format){
+			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
 	    _logger.debug("proxyValidate " 
                 + " ticket " + ticket 
                 +" , service " + service 
@@ -402,7 +402,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			HttpServletResponse response,
 			@RequestParam(value = CasConstants.PARAMETER.PROXY_GRANTING_TICKET) String pgt,
 			@RequestParam(value = CasConstants.PARAMETER.TARGET_SERVICE) String targetService,
-			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=ResponseConstants.FORMAT_TYPE.XML) String format){
+			@RequestParam(value = CasConstants.PARAMETER.FORMAT,required=false,defaultValue=HttpResponseConstants.FORMAT_TYPE.XML) String format){
 	    _logger.debug("proxy " 
                 + " pgt " + pgt 
                 +" , targetService " + targetService 

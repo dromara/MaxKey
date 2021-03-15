@@ -31,7 +31,7 @@ import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
 import org.maxkey.authz.cas.endpoint.ticket.TicketGrantingTicketImpl;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.AppsCasDetails;
-import org.maxkey.web.ResponseConstants;
+import org.maxkey.web.HttpResponseConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -196,7 +196,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             HttpHeaders headers = new HttpHeaders();
             headers.add("location", location);
             ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
-            serviceResponseBuilder.setFormat(ResponseConstants.FORMAT_TYPE.JSON);
+            serviceResponseBuilder.setFormat(HttpResponseConstants.FORMAT_TYPE.JSON);
             //for user
             serviceResponseBuilder.setAttribute("uid", userInfo.getId());
             serviceResponseBuilder.setAttribute("displayName",userInfo.getDisplayName());

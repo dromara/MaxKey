@@ -17,7 +17,7 @@
 
 package org.maxkey.authz.cas.endpoint.response;
 
-import org.maxkey.web.ResponseConstants;
+import org.maxkey.web.HttpResponseConstants;
 
 public class ProxyServiceResponseBuilder extends  ServiceResponseBuilder{
 
@@ -28,7 +28,7 @@ public class ProxyServiceResponseBuilder extends  ServiceResponseBuilder{
 	@Override
 	public String  serviceResponseBuilder() {
 		String responseString = "";
-		if(format.equalsIgnoreCase(ResponseConstants.FORMAT_TYPE.XML)){
+		if(format.equalsIgnoreCase(HttpResponseConstants.FORMAT_TYPE.XML)){
 			responseString = serviceResponseXmlBuilder();
 		}else{
 			responseString =serviceResponseJsonBuilder();
