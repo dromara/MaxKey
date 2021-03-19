@@ -47,12 +47,12 @@ allprojects {
 	compileJava.options.encoding = 'UTF-8'
 	
 	eclipse {
-		/*第一次时请注释这段eclipse设置，可能报错*/
+		/*第一次时请注释这段eclipse设置，可能报错
 		jdt  {
 		    File f = file('.settings/org.eclipse.core.resources.prefs')
 		    f.write('eclipse.preferences.version=1\n')
 		    f.append('encoding/<project>=UTF-8') //use UTF-8
-		}
+		}*/
 		
 		
 		/*
@@ -360,7 +360,7 @@ subprojects {
     	 compile group: 'com.tencentcloudapi', name: 'tencentcloud-sdk-java', version: '3.1.33'
     	 
     	 //tomcat embed Core Tomcat implementation
-    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.43'
+    	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: "${tomcatVersion}"
     	 //JULI logging implementation for embedded Tomcat
     	 compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '8.5.2'
     }
