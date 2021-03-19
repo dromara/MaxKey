@@ -37,7 +37,7 @@ public  interface AppsMapper extends IJpaBaseMapper<Apps> {
 	
 	public int updateApp(Apps app);
 	
-	@Update("UPDATE APPS SET ISEXTENDATTR=#{isExtendAttr},	EXTENDATTR=#{extendAttr} WHERE id = #{id}")
+	@Update("UPDATE MXK_APPS SET ISEXTENDATTR=#{isExtendAttr},	EXTENDATTR=#{extendAttr} WHERE id = #{id}")
 	public int updateExtendAttr(Apps app);  
 	
 

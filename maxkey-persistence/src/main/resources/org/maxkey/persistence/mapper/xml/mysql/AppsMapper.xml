@@ -131,9 +131,10 @@
 			SHAREDUSERNAME		=	#{sharedUsername},
 			SHAREDPASSWORD		=	#{sharedPassword},
 			SYSTEMUSERATTR		=	#{systemUserAttr},
-			
+			<!--
 			ISEXTENDATTR		=	#{isExtendAttr},
 			EXTENDATTR			=	#{extendAttr},
+			-->
 			USERPROPERTYS		=	#{userPropertys},
 			ISSIGNATURE			=	#{isSignature},
 			
