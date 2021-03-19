@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2021] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,21 +29,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 /**
- * https://www.zentao.net/book/zentaopmshelp/344.html
- * http://www.zentao.net/api.php?m=user&f=apilogin&account=account&code=test&time=timestamp&token=token
  * 
- * $code  = 'test';
- * $key   = 'a5246932b0f371263c252384076cd3f0';
- * $time  = '1557034496';
- * $token = md5($code . $key . $time);
+ * http://target.maxkey.org/demo/login?code=maxkey&time=timestamp&token=token
+ * login url http://target.maxkey.org/demo/login?code=%s&timestamp=%s&token=%s
  * 
- * @author shimi
+ * $code  		= 'maxkey';
+ * $key   		= 'a5246932b0f371263c252384076cd3f0';
+ * $timestamp  	= '1557034496';
+ * $token 		= md5($code . $key . $time);
+ * 
+ * @author shimingxy
  *
  */
-public class ExtendApiZentaoDefaultAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(ExtendApiZentaoDefaultAdapter.class);
-	static String login_url_template="api.php?m=user&f=apilogin&account=%s&code=%s&time=%s&token=%s";
-	static String login_url_m_template="account=%s&code=%s&time=%s&token=%s";
+public class ExtendApiTimestampSignAdapter extends AbstractAuthorizeAdapter {
+	final static Logger _logger = LoggerFactory.getLogger(ExtendApiTimestampSignAdapter.class);
 	
 	@Override
 	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
@@ -58,32 +57,34 @@ public class ExtendApiZentaoDefaultAdapter extends AbstractAuthorizeAdapter {
 	@Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
 		Apps details=(Apps)app;
+		
+		String code = details.getPrincipal();
+		String key   = details.getCredentials();
+		String timestamp  = ""+Instant.now().getEpochSecond();
+		String token =DigestUtils.md5Hex(code+key+timestamp);
+		
 		//extraAttrs from Applications
 		ExtraAttrs extraAttrs=null;
 		if(details.getIsExtendAttr()==1){
 			extraAttrs=new ExtraAttrs(details.getExtendAttr());
+			if(extraAttrs.get("sign") == null || extraAttrs.get("sign").equalsIgnoreCase("md5")) {
+				
+			}else if(extraAttrs.get("sign").equalsIgnoreCase("sha") || extraAttrs.get("sign").equalsIgnoreCase("sha1")) {
+				token =DigestUtils.shaHex(code+key+timestamp);
+			}else if(extraAttrs.get("sign").equalsIgnoreCase("sha256")) {
+				token =DigestUtils.sha256Hex(code+key+timestamp);
+			}else if(extraAttrs.get("sign").equalsIgnoreCase("sha384")) {
+				token =DigestUtils.sha384Hex(code+key+timestamp);
+			}else if(extraAttrs.get("sign").equalsIgnoreCase("sha512")) {
+				token =DigestUtils.sha512Hex(code+key+timestamp);
+			}
 		}
-		String code = details.getPrincipal();
-		String key   = details.getCredentials();
-		String time  = ""+Instant.now().getEpochSecond();
-
-		String token =DigestUtils.md5Hex(code+key+time);
 		
 		_logger.debug(""+token);
 		String account = userInfo.getUsername();
 		
-		String redirec_uri = details.getLoginUrl();
-		if(redirec_uri.indexOf("api.php?")<0) {
-			if(redirec_uri.endsWith("/")) {
-				redirec_uri += String.format(login_url_template,account,code,time,token);
-			}else {
-				redirec_uri +="/" + String.format(login_url_template,account,code,time,token);
-			}
-		}else if(redirec_uri.endsWith("&")){
-			redirec_uri += String.format(login_url_m_template,account,code,time,token);
-		}else {
-			redirec_uri += "&" +String.format(login_url_m_template,account,code,time,token);
-		}
+		String redirec_uri = String.format(details.getLoginUrl(),account,code,timestamp,token);
+
 		
 		_logger.debug("redirec_uri : "+redirec_uri);
 		

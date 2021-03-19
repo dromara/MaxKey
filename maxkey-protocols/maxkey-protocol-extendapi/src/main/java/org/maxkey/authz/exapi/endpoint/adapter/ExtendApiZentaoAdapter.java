@@ -17,13 +17,10 @@
 
 package org.maxkey.authz.exapi.endpoint.adapter;
 
-import java.util.HashMap;
-
+import java.time.Instant;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.client.oauth.OAuthClient;
-import org.maxkey.client.oauth.model.Token;
-import org.maxkey.util.JsonUtils;
+import org.maxkey.crypto.DigestUtils;
 import org.maxkey.domain.ExtraAttrs;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.domain.apps.Apps;
@@ -31,12 +28,22 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
-
-public class ExtendApiQQExmailDefaultAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(ExtendApiQQExmailDefaultAdapter.class);
-	static String login_url_template="https://exmail.qq.com/cgi-bin/login?fun=bizopenssologin&method=bizauth&agent=%s&user=%s&ticket=%s";
-	static String token_uri="https://exmail.qq.com/cgi-bin/token";
-	static String authkey_uri="http://openapi.exmail.qq.com:12211/openapi/mail/authkey";
+/**
+ * https://www.zentao.net/book/zentaopmshelp/344.html
+ * http://www.zentao.net/api.php?m=user&f=apilogin&account=account&code=test&time=timestamp&token=token
+ * 
+ * $code  = 'test';
+ * $key   = 'a5246932b0f371263c252384076cd3f0';
+ * $time  = '1557034496';
+ * $token = md5($code . $key . $time);
+ * 
+ * @author shimi
+ *
+ */
+public class ExtendApiZentaoAdapter extends AbstractAuthorizeAdapter {
+	final static Logger _logger = LoggerFactory.getLogger(ExtendApiZentaoAdapter.class);
+	static String login_url_template="api.php?m=user&f=apilogin&account=%s&code=%s&time=%s&token=%s";
+	static String login_url_m_template="account=%s&code=%s&time=%s&token=%s";
 	
 	@Override
 	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
@@ -56,22 +63,32 @@ public class ExtendApiQQExmailDefaultAdapter extends AbstractAuthorizeAdapter {
 		if(details.getIsExtendAttr()==1){
 			extraAttrs=new ExtraAttrs(details.getExtendAttr());
 		}
-		OAuthClient tokenRestClient=new OAuthClient(token_uri);
-		tokenRestClient.addParameter("grant_type", "client_credentials");
-		tokenRestClient.addBasicAuthorization(details.getPrincipal(), details.getCredentials());
-		Token token =tokenRestClient.requestAccessToken();
+		String code = details.getPrincipal();
+		String key   = details.getCredentials();
+		String time  = ""+Instant.now().getEpochSecond();
+
+		String token =DigestUtils.md5Hex(code+key+time);
+		
 		_logger.debug(""+token);
+		String account = userInfo.getUsername();
 		
-		OAuthClient authkeyRestClient=new OAuthClient(authkey_uri);
-		authkeyRestClient.addBearerAuthorization(token.getAccess_token());
-		authkeyRestClient.addParameter("Alias", details.getAppUser().getRelatedUsername());
+		String redirec_uri = details.getLoginUrl();
+		if(redirec_uri.indexOf("api.php?")<0) {
+			if(redirec_uri.endsWith("/")) {
+				redirec_uri += String.format(login_url_template,account,code,time,token);
+			}else {
+				redirec_uri +="/" + String.format(login_url_template,account,code,time,token);
+			}
+		}else if(redirec_uri.endsWith("&")){
+			redirec_uri += String.format(login_url_m_template,account,code,time,token);
+		}else {
+			redirec_uri += "&" +String.format(login_url_m_template,account,code,time,token);
+		}
 		
-		HashMap<String, String> authKey=JsonUtils.gson2Object(authkeyRestClient.execute().getBody(), HashMap.class);
-		_logger.debug("authKey : "+authKey);
-		
-		String redirec_uri=String.format(login_url_template,details.getPrincipal(),details.getAppUser().getRelatedUsername(),authKey.get("auth_key"));
 		_logger.debug("redirec_uri : "+redirec_uri);
+		
 		return WebContext.redirect(redirec_uri);
 	}
 
 }
+
