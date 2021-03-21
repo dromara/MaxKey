@@ -40,21 +40,6 @@ public class LdapUtils {
     public static final  String propertyDomain = "domain";
     public static final  String propertyTrustStore = "trustStore";
     public static final  String propertyTrustStorePassword = "trustStorePassword";
-            
-    public static final  String uid = "uid";
-    public static final  String userPassword = "userPassword";
-    public static final  String cn = "cn";
-    public static final  String displayName = "displayName";
-    public static final  String givenName = "givenName";
-    public static final  String sn = "sn";
-    public static final  String mobile = "mobile";
-    public static final  String mail = "mail";
-    public static final  String employeeNumber = "employeeNumber";
-    public static final  String ou = "ou";
-    public static final  String manager = "manager";
-    public static final  String department = "department";
-    public static final  String departmentNumber = "departmentNumber";
-    public static final  String title = "title";
 
     protected DirContext ctx;
     protected String baseDN;

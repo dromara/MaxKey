@@ -122,5 +122,10 @@ public class InetOrgPerson {
 	/**inetOrgPerson x500uniqueIdentifier*/
 	public static final String X500UNIQUEIDENTIFIER          = "x500uniqueIdentifier";
 	
+	//MaxKey EXTEND
+	public static final String mobile 						 = "mobile";
+	public static final String manager 				    	 = "manager";
+    public static final String department 				     = "department";
+	
 
 }

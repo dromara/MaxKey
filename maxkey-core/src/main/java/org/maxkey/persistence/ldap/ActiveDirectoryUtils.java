@@ -33,14 +33,6 @@ import org.slf4j.LoggerFactory;
 public class ActiveDirectoryUtils extends LdapUtils {
     private final static Logger _logger = LoggerFactory.getLogger(ActiveDirectoryUtils.class);
 
-    public final static String sAMAccountName = "sAMAccountName";
-    public final static String unicodePwd = "unicodePwd";
-    public final static String CN = "CN";
-
-    public final static String servicePrincipalName = "servicePrincipalName";
-    public final static String userPrincipalName = "userPrincipalName";
-    public final static String userAccountControl = "userAccountControl";
-
     protected String domain;
 
     /**
