@@ -16,6 +16,10 @@
  
 
 package org.maxkey.constants.ldap;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * GroupOfUniqueNames objectclass attribute
  * top
@@ -23,7 +27,7 @@ package org.maxkey.constants.ldap;
  *
  */
 public class GroupOfUniqueNames {
-
+	public static ArrayList<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "groupOfUniqueNames"));
 	public static final String CN                            = "cn";
 	public static final String UNIQUEMEMBER                  = "uniqueMember";
 	public static final String BUSINESSCATEGORY              = "businessCategory";

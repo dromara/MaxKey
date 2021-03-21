@@ -17,6 +17,9 @@
 
 package org.maxkey.constants.ldap;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * InetOrgPerson objectclass attribute
  * top ->  person -> organizationalPerson -> inetOrgPerson
@@ -24,7 +27,7 @@ package org.maxkey.constants.ldap;
  *
  */
 public class InetOrgPerson {
-	
+	public static ArrayList<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "person","organizationalPerson","inetOrgPerson"));
 	//person sup top
 	/**person sn MUST*/
 	public static final String SN                            = "sn";

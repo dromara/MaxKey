@@ -17,6 +17,9 @@
 
 package org.maxkey.constants.ldap;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Organization objectclass attribute
  * top
@@ -24,7 +27,7 @@ package org.maxkey.constants.ldap;
  *
  */
 public class Organization {
-	
+	public static ArrayList<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "organization"));
 	/**Organization o*/
 	public static final String O                          	 = "o";
 	/**Organization userPassword*/

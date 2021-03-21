@@ -18,6 +18,8 @@
 package org.maxkey.constants.ldap;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * ActiveDirectoryUser objectclass attribute
@@ -27,7 +29,7 @@ import java.io.UnsupportedEncodingException;
  */
 
 public class ActiveDirectoryUser {
-	
+	public static ArrayList<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "person", "organizationalPerson", "user"));
 	/** userAccountControl值得说明
 	 * http://support.microsoft.com/zh-cn/kb/305144
 	 * https://docs.microsoft.com/en-us/troubleshoot/windows-server/identity/useraccountcontrol-manipulate-account-properties
