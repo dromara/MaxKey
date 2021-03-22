@@ -233,6 +233,7 @@ public class UserInfo extends JpaBaseDomain {
 
     protected int online;
 
+    @Column
     protected String ldapDn;
 
     protected int gridList;
