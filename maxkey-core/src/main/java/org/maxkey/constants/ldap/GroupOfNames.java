@@ -28,6 +28,7 @@ import java.util.Arrays;
  */
 public class GroupOfNames {
 	public static ArrayList<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "groupOfNames"));
+	public static final String DISTINGUISHEDNAME 			 = "distinguishedname";
 	public static final String CN                            = "cn";
 	public static final String MEMBER                  		 = "member";
 	public static final String BUSINESSCATEGORY              = "businessCategory";

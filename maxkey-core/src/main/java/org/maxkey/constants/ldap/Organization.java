@@ -28,6 +28,9 @@ import java.util.Arrays;
  */
 public class Organization {
 	public static ArrayList<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "organization"));
+	
+	public static final String DISTINGUISHEDNAME 			 = "distinguishedname";
+	
 	/**Organization o*/
 	public static final String O                          	 = "o";
 	/**Organization userPassword*/

@@ -17,6 +17,7 @@
 package org.maxkey.authz.oauth2.provider.endpoint;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -39,6 +40,8 @@ import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.OAuth2Request;
 import org.maxkey.authz.oauth2.provider.OAuth2RequestFactory;
+import org.maxkey.util.AuthorizationHeaderCredential;
+import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.web.WebContext;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -213,13 +216,30 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 	
 	public Authentication ClientCredentials(HttpServletRequest request, HttpServletResponse response)
 				throws AuthenticationException, IOException, ServletException {
-
 			if (allowOnlyPost && !"POST".equalsIgnoreCase(request.getMethod())) {
 				throw new HttpRequestMethodNotSupportedException(request.getMethod(), new String[] { "POST" });
 			}
 
 			String clientId = request.getParameter("client_id");
 			String clientSecret = request.getParameter("client_secret");
+			if(clientId == null) {
+				if(logger.isTraceEnabled()) {
+					logger.trace("getRequestURL : "+request.getRequestURL());
+			        Enumeration<String> headerNames = request.getHeaderNames();
+			        while (headerNames.hasMoreElements()) {
+			          String key = (String) headerNames.nextElement();
+			          String value = request.getHeader(key);
+			          logger.trace("Header key "+key +" , value " + value);
+			        }
+				}
+				//for header authorization basic
+				String authorization_bearer =request.getHeader("authorization");
+				AuthorizationHeaderCredential ahc=AuthorizationHeaderUtils.resolve(authorization_bearer);
+				clientId =ahc.getUsername();
+				clientSecret=ahc.getCredential();
+			}
+			
+			 logger.trace("clientId "+clientId +" , clientSecret " + clientSecret);
 
 			// If the request is already authenticated we can assume that this
 			// filter is not needed

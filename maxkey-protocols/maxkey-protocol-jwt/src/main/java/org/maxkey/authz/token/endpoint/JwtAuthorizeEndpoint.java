@@ -50,7 +50,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Crystal.Sea
  *
  */
-@Api(tags = "JWT接口文档模块")
+@Api(tags = "JWT浠ょ墝鎺ュ彛")
 @Controller
 public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
@@ -64,7 +64,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	@Autowired
 	ApplicationConfig applicationConfig;
 	
-	@ApiOperation(value = "JWT认证地址接口", notes = "参数应用ID",httpMethod="GET")
+	@ApiOperation(value = "JWT锟斤拷证锟斤拷址锟接匡拷", notes = "锟斤拷锟斤拷应锟斤拷ID",httpMethod="GET")
 	@RequestMapping("/authz/jwt/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,

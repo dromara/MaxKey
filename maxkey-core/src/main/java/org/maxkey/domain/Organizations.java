@@ -80,6 +80,8 @@ public class Organizations extends JpaBaseDomain implements Serializable {
     @Column
     private String sortIndex;
     @Column
+    private String ldapDn;
+    @Column
     private String description;
     
     private String status;
@@ -292,7 +294,15 @@ public class Organizations extends JpaBaseDomain implements Serializable {
     
     
 
-    public String getStatus() {
+    public String getLdapDn() {
+		return ldapDn;
+	}
+
+	public void setLdapDn(String ldapDn) {
+		this.ldapDn = ldapDn;
+	}
+
+	public String getStatus() {
         return status;
     }
 
@@ -301,59 +311,63 @@ public class Organizations extends JpaBaseDomain implements Serializable {
     }
 
     @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Organizations [id=");
-        builder.append(id);
-        builder.append(", code=");
-        builder.append(code);
-        builder.append(", name=");
-        builder.append(name);
-        builder.append(", fullName=");
-        builder.append(fullName);
-        builder.append(", parentId=");
-        builder.append(parentId);
-        builder.append(", parentName=");
-        builder.append(parentName);
-        builder.append(", type=");
-        builder.append(type);
-        builder.append(", codePath=");
-        builder.append(codePath);
-        builder.append(", namePath=");
-        builder.append(namePath);
-        builder.append(", level=");
-        builder.append(level);
-        builder.append(", hasChild=");
-        builder.append(hasChild);
-        builder.append(", division=");
-        builder.append(division);
-        builder.append(", country=");
-        builder.append(country);
-        builder.append(", region=");
-        builder.append(region);
-        builder.append(", locality=");
-        builder.append(locality);
-        builder.append(", street=");
-        builder.append(street);
-        builder.append(", address=");
-        builder.append(address);
-        builder.append(", contact=");
-        builder.append(contact);
-        builder.append(", postalCode=");
-        builder.append(postalCode);
-        builder.append(", phone=");
-        builder.append(phone);
-        builder.append(", fax=");
-        builder.append(fax);
-        builder.append(", email=");
-        builder.append(email);
-        builder.append(", sortIndex=");
-        builder.append(sortIndex);
-        builder.append(", description=");
-        builder.append(description);
-        builder.append("]");
-        return builder.toString();
-    }
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Organizations [id=");
+		builder.append(id);
+		builder.append(", code=");
+		builder.append(code);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", fullName=");
+		builder.append(fullName);
+		builder.append(", parentId=");
+		builder.append(parentId);
+		builder.append(", parentName=");
+		builder.append(parentName);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", codePath=");
+		builder.append(codePath);
+		builder.append(", namePath=");
+		builder.append(namePath);
+		builder.append(", level=");
+		builder.append(level);
+		builder.append(", hasChild=");
+		builder.append(hasChild);
+		builder.append(", division=");
+		builder.append(division);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", region=");
+		builder.append(region);
+		builder.append(", locality=");
+		builder.append(locality);
+		builder.append(", street=");
+		builder.append(street);
+		builder.append(", address=");
+		builder.append(address);
+		builder.append(", contact=");
+		builder.append(contact);
+		builder.append(", postalCode=");
+		builder.append(postalCode);
+		builder.append(", phone=");
+		builder.append(phone);
+		builder.append(", fax=");
+		builder.append(fax);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", sortIndex=");
+		builder.append(sortIndex);
+		builder.append(", ldapDn=");
+		builder.append(ldapDn);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append("]");
+		return builder.toString();
+	}
 
 
 

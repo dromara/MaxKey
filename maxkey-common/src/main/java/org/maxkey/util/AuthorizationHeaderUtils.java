@@ -64,7 +64,7 @@ public class AuthorizationHeaderUtils {
     }
     
     public static boolean isBearer(String bearer) {
-        if (bearer.startsWith(AuthorizationHeaderCredential.Credential.BEARER)) {
+        if (bearer.toLowerCase().startsWith(AuthorizationHeaderCredential.Credential.BEARER.toLowerCase())) {
             return true;
         } else {
             return false;

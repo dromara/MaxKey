@@ -49,6 +49,7 @@ import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.util.Instance;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;
+import org.maxkey.web.HttpResponseAdapter;
 import org.maxkey.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,39 +107,42 @@ public class UserInfoEndpoint {
 	private JwtEncryptionAndDecryptionService jwtEnDecryptionService; 
 	
 	
+	
 	private SymmetricSigningAndValidationServiceBuilder symmetricJwtSignerServiceBuilder
 					=new SymmetricSigningAndValidationServiceBuilder();
 
 	private RecipientJwtEncryptionAndDecryptionServiceBuilder recipientJwtEnDecryptionServiceBuilder
 					=new RecipientJwtEncryptionAndDecryptionServiceBuilder();
 
-	
 	OAuthDefaultUserInfoAdapter defaultOAuthUserInfoAdapter=new OAuthDefaultUserInfoAdapter();
+	
+    @Autowired
+    protected HttpResponseAdapter httpResponseAdapter;
 	
 	@ApiOperation(value = "OAuth 2.0 用户信息接口", notes = "传递参数access_token",httpMethod="GET")
 	@RequestMapping(value="/oauth/v20/me") 
-	@ResponseBody
-	public String apiV20UserInfo(
+	public void apiV20UserInfo(
 			@RequestParam(value = "access_token", required = false) String access_token,
 			@RequestHeader(value = "authorization", required = false) String authorization_bearer,
             HttpServletRequest request, 
-            HttpServletResponse response) {
-	        response.setContentType(ContentType.APPLICATION_JSON_UTF8);
+            HttpServletResponse response) {	        
 	        if(access_token == null && authorization_bearer!= null) {
+	        	if(_logger.isTraceEnabled()) {
+		        	_logger.trace("getRequestURL : "+request.getRequestURL());
+			        Enumeration<String> headerNames = request.getHeaderNames();
+			        while (headerNames.hasMoreElements()) {
+			          String key = (String) headerNames.nextElement();
+			          String value = request.getHeader(key);
+			          _logger.trace("Header key "+key +" , value " + value);
+			        }
+		        }
+	        	//for header authorization bearer
 	        	access_token = AuthorizationHeaderUtils.resolveBearer(authorization_bearer);
 	        }
-	        if(_logger.isTraceEnabled()) {
-	        	_logger.trace("getRequestURL : "+request.getRequestURL());
-		        Enumeration<String> headerNames = request.getHeaderNames();
-		        while (headerNames.hasMoreElements()) {
-		          String key = (String) headerNames.nextElement();
-		          String value = request.getHeader(key);
-		          _logger.trace("Header key "+key +" , value " + value);
-		        }
-	        }
+	        
 			String principal="";
 			if (!StringGenerator.uuidMatches(access_token)) {
-				return JsonUtils.gson2Json(accessTokenFormatError(access_token));
+				httpResponseAdapter.write(response,JsonUtils.gson2Json(accessTokenFormatError(access_token)),"json"); 
 			}
 			OAuth2Authentication oAuth2Authentication =null;
 			try{
@@ -160,12 +164,12 @@ public class UserInfoEndpoint {
 				String jsonData=adapter.generateInfo(
 				        (SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal(),
 				        userInfo, app);
-				return jsonData;
+				httpResponseAdapter.write(response,jsonData,"json"); 
 			}catch(OAuth2Exception e){
 				HashMap<String,Object>authzException=new HashMap<String,Object>();
 				authzException.put(OAuth2Exception.ERROR, e.getOAuth2ErrorCode());
 				authzException.put(OAuth2Exception.DESCRIPTION,e.getMessage());
-				return JsonUtils.gson2Json(authzException);
+				httpResponseAdapter.write(response,JsonUtils.gson2Json(authzException),"json"); 
 			}
 	}
 	
