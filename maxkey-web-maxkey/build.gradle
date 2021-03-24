@@ -15,7 +15,6 @@ dependencies {
    	
    	compile project(":maxkey-protocols:maxkey-protocol-authorize")
    	compile project(":maxkey-protocols:maxkey-protocol-cas")
-	compile project(":maxkey-protocols:maxkey-protocol-desktop")
 	compile project(":maxkey-protocols:maxkey-protocol-extendapi")
 	compile project(":maxkey-protocols:maxkey-protocol-formbased")
 	compile project(":maxkey-protocols:maxkey-protocol-tokenbased")

@@ -27,7 +27,7 @@ include 'maxkey-protocols:maxkey-protocol-jwt'
 include 'maxkey-protocols:maxkey-protocol-formbased'
 include 'maxkey-protocols:maxkey-protocol-tokenbased'
 include 'maxkey-protocols:maxkey-protocol-extendapi'
-include 'maxkey-protocols:maxkey-protocol-desktop'
+
 
 //include 'maxkey-webs'
 //maxkey

@@ -23,7 +23,6 @@
 	protocolArray["Extend_API"]="extendapi";
 	protocolArray["CAS"]="cas";
 	protocolArray["Basic"]="basic";
-	protocolArray["Desktop"]="desktop";
 	protocolArray["JWT"]="jwt";
 	
 	$(function () {
@@ -140,7 +139,6 @@
 								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/jwt/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.jwt" /></a>
 								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/tokenbased/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.tokenbased" /></a>
 							 		 <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/extendapi/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.extendapi" /></a>
-								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/desktop/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.desktop" /></a>
 							 		 <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/basic/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.basic" /></a>
 								  </div>
 							</div>
