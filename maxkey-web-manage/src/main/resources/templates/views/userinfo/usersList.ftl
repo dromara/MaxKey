@@ -22,8 +22,9 @@ function onClick (event, treeId, treeNode) {
 
 //adjunctUserIdRef
 function beforeWindow( ){
-	if($('#datagrid').bootstrapTable('getSelections')){
-		$("#adjunctUserIdRef").val($('#datagrid').bootstrapTable('getSelections')[0].id);
+	var selData = $('#datagrid').bootstrapTable('getSelections');
+	if(selData && selData[0] != null){
+		$("#adjunctUserIdRef").val(selData[0].id);
 	}
 }
 
