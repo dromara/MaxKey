@@ -35,7 +35,7 @@
 			</tr>
 			<tr>
 				<td  colspan="2">
-					<a href="<@base/>/static/template/excel/Users_Import_Template.xlsx" ><@locale code="import.template.download" /></>
+					<a href="<@base/>/static/template/excel/Orgs_Import_Template.xlsx" ><@locale code="import.template.download" /></>
 				</td>
 			</tr>
 			<tr>
