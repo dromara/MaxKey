@@ -43,6 +43,7 @@ import org.springframework.context.annotation.ComponentScan;
     "org.maxkey.web.contorller",
     "org.maxkey.web.apps.contorller",
     "org.maxkey.web.endpoint",
+    "org.maxkey.web.api.endpoint",
     "org.maxkey.authn",
     "org.maxkey.persistence",
     "org.maxkey.web",

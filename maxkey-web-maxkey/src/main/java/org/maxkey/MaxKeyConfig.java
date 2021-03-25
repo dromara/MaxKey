@@ -164,8 +164,8 @@ public class MaxKeyConfig  implements InitializingBean {
         return authenticationRealm;
     }
     
-	@Bean(name = "tfaOtpAuthn")
-    public TimeBasedOtpAuthn tfaOptAuthn() {
+	@Bean(name = "timeBasedOtpAuthn")
+    public TimeBasedOtpAuthn timeBasedOtpAuthn() {
 	    TimeBasedOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn();
 	    _logger.debug("TimeBasedOtpAuthn inited.");
         return tfaOtpAuthn;
