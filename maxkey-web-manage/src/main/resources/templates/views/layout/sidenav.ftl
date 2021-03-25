@@ -92,7 +92,7 @@
            <li>
              <a class="side-nav-menu" href="<@base />/apps/adapters/list/">
                 <@locale code="navs.adapters"/>  
-                <span class="fa fa-fw fa-shield"></span>
+                <span class="fa fa-fw fa-chain"></span>
              </a>
            </li>
            <li>
