@@ -28,10 +28,11 @@
 	<div id="tool_box">
 	 		<table   class="datatable">
  				<tr>
-		 			<td width="120px"><@locale code="role.name"/>:</td>
+		 			<td width="120px"><@locale code="apps.adapter.name"/>:</td>
 		 			<td width="374px">
 		 				<form id="basic_search_form">
 				 			<input class="form-control" type="text" name="name" style ="width:150px;float: left;">
+				 			<input class="form-control" type="hidden" name="protocol" style ="width:150px;float: left;" value="${protocol!}">
 				 			<input class="button btn btn-success mr-3"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
 				 		</form>
 		 			</td>
@@ -62,7 +63,7 @@
 		<thead>
 			<tr>
 				<th data-checkbox="true"></th>
-				<th data-sortable="true" data-field="id"   data-visible="1false"><@locale code="common.text.id"/></th>
+				<th data-sortable="true" data-field="id"   data-visible="false"><@locale code="common.text.id"/></th>
 				<th data-field="name"><@locale code="apps.adapter.name"/></th>
 				<th data-field="protocol" ><@locale code="apps.adapter.protocol"/></th>
 				<th data-field="adapter"       data-visible="false"><@locale code="apps.adapter.adapter"/></th>

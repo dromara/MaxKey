@@ -32,6 +32,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,8 +54,10 @@ public class AdaptersController {
 	}
 	
 	@RequestMapping(value={"/selectAdaptersList"})
-	public ModelAndView selectRolesList(){
-		return new ModelAndView("apps/adapters/selectAdaptersList");
+	public ModelAndView selectAdaptersList(@RequestParam(name="protocol",required=false) String protocol){
+		ModelAndView modelAndView=new ModelAndView("apps/adapters/selectAdaptersList");
+		modelAndView.addObject("protocol", protocol);
+		return modelAndView;
 	}
 	
 	

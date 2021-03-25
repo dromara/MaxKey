@@ -105,7 +105,7 @@
 			
 			<input class="button btn btn-success mr-3 window" style="float: left;" id="selectAdaptersBtn" type="button" 
          			value="<@locale code="button.text.select"/>" 
-		 		    wurl="<@base/>/apps/adapters/selectAdaptersList"
+		 		    wurl="<@base/>/apps/adapters/selectAdaptersList?protocol=${model.protocol!}"
 		 		    wwidth="750"
 		 		    wheight="600"
 	 		    	target="window">
