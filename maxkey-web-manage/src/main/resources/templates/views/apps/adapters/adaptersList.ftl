@@ -100,6 +100,7 @@
 				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
 				<th data-field="name"><@locale code="apps.adapter.name"/></th>
 				<th data-field="protocol" ><@locale code="apps.adapter.protocol"/></th>
+				<th data-field="sortIndex"><@locale code="common.text.sortindex"/></th>
 				<th data-field="description"><@locale code="common.text.description"/></th>
 				<th data-field="createdBy"    data-visible="false"><@locale code="common.text.createdby"/></th>
 				<th data-field="createdDate"  data-visible="false"><@locale code="common.text.createddate"/></th>
