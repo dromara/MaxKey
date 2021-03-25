@@ -27,10 +27,10 @@ public class WebXssRequestFilter  extends GenericFilterBean {
           String key = (String) parameterNames.nextElement();
           String value = request.getParameter(key);
           _logger.trace("parameter name "+key +" , value " + value);
-          String tempValue = value.toLowerCase().replace(" ", "");
+          String tempValue = value;
           if(!StringEscapeUtils.escapeHtml4(tempValue).equals(value)
-        		  ||tempValue.indexOf("script")>-1
-        		  ||tempValue.indexOf("eval(")>-1) {
+        		  ||tempValue.toLowerCase().indexOf("script")>-1
+        		  ||tempValue.toLowerCase().replace(" ", "").indexOf("eval(")>-1) {
         	  isWebXss = true;
         	  _logger.error("parameter name "+key +" , value " + value 
         			  		+ ", contains dangerous content ! ");
