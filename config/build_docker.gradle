@@ -133,6 +133,7 @@ subprojects {
          compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
          compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
          //compile group: 'org.apache.commons', name: 'commons-csv', version: '1.7'
+         compile group: 'org.apache.commons', name: 'commons-text', version: '1.9'
          compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.6.0'
          compile group: 'commons-dbutils', name: 'commons-dbutils', version: '1.7'
          compile group: 'org.apache.commons', name: 'commons-digester3', version: '3.2'

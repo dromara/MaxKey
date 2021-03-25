@@ -25,6 +25,7 @@ import javax.servlet.Filter;
 
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.web.WebXssRequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -258,6 +259,17 @@ public class MvcAutoConfiguration implements InitializingBean {
     public SecurityContextHolderAwareRequestFilter securityContextHolderAwareRequestFilter() {
         _logger.debug("securityContextHolderAwareRequestFilter init ");
         return new SecurityContextHolderAwareRequestFilter();
+    }
+    
+    
+    @Bean
+    public FilterRegistrationBean<Filter> webXssRequestFilter() {
+        _logger.debug("delegatingFilterProxy init for /* ");
+        FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>(new WebXssRequestFilter());
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setName("webXssRequestFilter");
+        registrationBean.setOrder(2);
+        return registrationBean;
     }
     
     @Bean
