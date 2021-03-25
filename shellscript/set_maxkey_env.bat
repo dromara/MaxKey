@@ -1,7 +1,7 @@
 @echo off
 echo ===============================================================================
 echo ==    Maxkey Sigle Sign On  System                                           ==
-echo ==    MaxKey  Version 2.6.0 GA                                              ==
+echo ==    MaxKey  Version 2.7.0 GA                                              ==
 echo ==    Set JAVA_HOME  ....                                                    ==
 echo ==    JAVA_HOME   JDK                                                        ==
 SET JAVA_HOME=%cd%/jre
