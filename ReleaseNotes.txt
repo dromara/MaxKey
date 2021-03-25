@@ -1,4 +1,37 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿MaxKey v 2.6.0 GA	2021/03/05
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿MaxKey v 2.7.0 GA	2021/04/**
+	*(MAXKEY-210301)  加入Dromara开源组织，官方网站的优化，文档优化
+	*(MAXKEY-210302)  BootJar，Docker，Standard三种打包方式的配置优化
+	*(MAXKEY-210303)  数据库访问注释由@Service改为@Repository
+	*(MAXKEY-210304)  cas logout优化支持
+	*(MAXKEY-210305)  CAS单点注销及返回数据类型适配器的优化
+	*(MAXKEY-210306)  CAS返回数据类重构
+	*(MAXKEY-210307)  ExtendApi标准优化
+	*(MAXKEY-210308)  增加基于时间签名的ExtendApi适配器
+	*(MAXKEY-210309)  返回数据Constants整合
+	*(MAXKEY-210310)  扩展数据配置优化
+	*(MAXKEY-210311)  LDAP和MS AD固定属性Constants
+	*(MAXKEY-210312)  SpringSecurity OAuth 2客户端登录适配
+	*(MAXKEY-210313)  移除Desktop的支持，后续可以开发FormBase的适配器定制
+	*(MAXKEY-210314)  application.properties profiles的优化，不同环境启动更加简单
+	*(MAXKEY-210315)  增加适配器注册功能，在配置应用时只需选择对应的适配器
+	*(MAXKEY-210316)  增加Synchronizer接口同步的功能
+	*(MAXKEY-210317)  增加TimeBased OTP接口支持
+	*(MAXKEY-210318)  XSS安全防护功能
+	*(MAXKEY-210319)  禅道项目管理系统单点登录适配
+	*(MAXKEY-210320)  GitLab单点登录适配
+	*(MAXKEY-210321)  云速邮箱单点登录适配
+	*(MAXKEY-210322)  JumpServer开源堡垒机单点登录适配
+	*(MAXKEY-210323)  华为云单点登录适配
+	*(MAXKEY-210324)  Jenkins单点登录适配
+	*(MAXKEY-210324)  查询参数优化
+	*(MAXKEY-210226)  依赖jar引用、更新和升级
+		log4j 		2.14.1
+		spring		5.3.5
+		springBoot  2.4.4
+		tomcat		9.0.44
+	
+
+MaxKey v 2.6.0 GA	2021/03/05
 	*(MAXKEY-210201)  官方网站的优化
 	*(MAXKEY-210202)  CAS代理模式实现的优化，完成demo的测试
 	*(MAXKEY-210203)  CAS代理模式Demo开发和实现

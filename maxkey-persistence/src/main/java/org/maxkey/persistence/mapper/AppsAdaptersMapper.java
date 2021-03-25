@@ -21,13 +21,13 @@
 package org.maxkey.persistence.mapper;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.Accounts;
+import org.maxkey.domain.apps.AppsAdapters;
 
 /**
  * @author Crystal.sea
  *
  */
-public  interface AccountsMapper extends IJpaBaseMapper<Accounts> {
+public  interface AppsAdaptersMapper extends IJpaBaseMapper<AppsAdapters> {
 	
 
 }

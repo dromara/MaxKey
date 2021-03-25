@@ -15,19 +15,26 @@
  */
  
 
-/**
- * 
- */
-package org.maxkey.persistence.mapper;
+package org.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.Accounts;
+import org.apache.mybatis.jpa.persistence.JpaBaseService;
+import org.maxkey.domain.apps.AppsAdapters;
+import org.maxkey.persistence.mapper.AppsAdaptersMapper;
+import org.springframework.stereotype.Repository;
 
-/**
- * @author Crystal.sea
- *
- */
-public  interface AccountsMapper extends IJpaBaseMapper<Accounts> {
-	
+@Repository
+public class AppsAdaptersService  extends JpaBaseService<AppsAdapters>{
 
+	public AppsAdaptersService() {
+		super(AppsAdaptersMapper.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.connsec.db.service.BaseService#getMapper()
+	 */
+	@Override
+	public AppsAdaptersMapper getMapper() {
+		// TODO Auto-generated method stub
+		return (AppsAdaptersMapper)super.getMapper();
+	}
 }

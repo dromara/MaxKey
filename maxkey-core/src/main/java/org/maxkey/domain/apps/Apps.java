@@ -18,6 +18,7 @@
 package org.maxkey.domain.apps;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -132,6 +133,12 @@ public class Apps extends JpaBaseDomain implements Serializable {
     private int isSignature;
     @Column
     private int isAdapter;
+    @Column
+    private String adapterId;
+    
+    @Column
+    private String adapterName;
+    
     @Column
     private String adapter;
 
@@ -561,75 +568,103 @@ public class Apps extends JpaBaseDomain implements Serializable {
         this.onlineTicket = onlineTicket;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Apps [id=");
-        builder.append(id);
-        builder.append(", name=");
-        builder.append(name);
-        builder.append(", loginUrl=");
-        builder.append(loginUrl);
-        builder.append(", category=");
-        builder.append(category);
-        builder.append(", protocol=");
-        builder.append(protocol);
-        builder.append(", secret=");
-        builder.append(secret);
-        builder.append(", visible=");
-        builder.append(visible);
-        builder.append(", inducer=");
-        builder.append(inducer);
-        builder.append(", vendor=");
-        builder.append(vendor);
-        builder.append(", vendorUrl=");
-        builder.append(vendorUrl);
-        builder.append(", credential=");
-        builder.append(credential);
-        builder.append(", sharedUsername=");
-        builder.append(sharedUsername);
-        builder.append(", sharedPassword=");
-        builder.append(sharedPassword);
-        builder.append(", systemUserAttr=");
-        builder.append(systemUserAttr);
-        builder.append(", principal=");
-        builder.append(principal);
-        builder.append(", credentials=");
-        builder.append(credentials);
-        builder.append(", logoutUrl=");
-        builder.append(logoutUrl);
-        builder.append(", logoutType=");
-        builder.append(logoutType);
-        builder.append(", isExtendAttr=");
-        builder.append(isExtendAttr);
-        builder.append(", extendAttr=");
-        builder.append(extendAttr);
-        builder.append(", userPropertys=");
-        builder.append(userPropertys);
-        builder.append(", isSignature=");
-        builder.append(isSignature);
-        builder.append(", isAdapter=");
-        builder.append(isAdapter);
-        builder.append(", adapter=");
-        builder.append(adapter);
-        builder.append(", appUser=");
-        builder.append(appUser);
-        builder.append(", sortIndex=");
-        builder.append(sortIndex);
-        builder.append(", status=");
-        builder.append(status);
-        builder.append(", createdBy=");
-        builder.append(createdBy);
-        builder.append(", createdDate=");
-        builder.append(createdDate);
-        builder.append(", modifiedBy=");
-        builder.append(modifiedBy);
-        builder.append(", modifiedDate=");
-        builder.append(modifiedDate);
-        builder.append(", description=");
-        builder.append(description);
-        builder.append("]");
-        return builder.toString();
-    }
+    public String getAdapterId() {
+		return adapterId;
+	}
+
+	public void setAdapterId(String adapterId) {
+		this.adapterId = adapterId;
+	}
+
+	public String getAdapterName() {
+		return adapterName;
+	}
+
+	public void setAdapterName(String adapterName) {
+		this.adapterName = adapterName;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Apps [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", loginUrl=");
+		builder.append(loginUrl);
+		builder.append(", category=");
+		builder.append(category);
+		builder.append(", protocol=");
+		builder.append(protocol);
+		builder.append(", secret=");
+		builder.append(secret);
+		builder.append(", icon=");
+		builder.append(Arrays.toString(icon));
+		builder.append(", iconFile=");
+		builder.append(iconFile);
+		builder.append(", visible=");
+		builder.append(visible);
+		builder.append(", inducer=");
+		builder.append(inducer);
+		builder.append(", vendor=");
+		builder.append(vendor);
+		builder.append(", vendorUrl=");
+		builder.append(vendorUrl);
+		builder.append(", credential=");
+		builder.append(credential);
+		builder.append(", sharedUsername=");
+		builder.append(sharedUsername);
+		builder.append(", sharedPassword=");
+		builder.append(sharedPassword);
+		builder.append(", systemUserAttr=");
+		builder.append(systemUserAttr);
+		builder.append(", principal=");
+		builder.append(principal);
+		builder.append(", credentials=");
+		builder.append(credentials);
+		builder.append(", logoutUrl=");
+		builder.append(logoutUrl);
+		builder.append(", logoutType=");
+		builder.append(logoutType);
+		builder.append(", isExtendAttr=");
+		builder.append(isExtendAttr);
+		builder.append(", extendAttr=");
+		builder.append(extendAttr);
+		builder.append(", userPropertys=");
+		builder.append(userPropertys);
+		builder.append(", isSignature=");
+		builder.append(isSignature);
+		builder.append(", isAdapter=");
+		builder.append(isAdapter);
+		builder.append(", adapterId=");
+		builder.append(adapterId);
+		builder.append(", adapterName=");
+		builder.append(adapterName);
+		builder.append(", adapter=");
+		builder.append(adapter);
+		builder.append(", appUser=");
+		builder.append(appUser);
+		builder.append(", sortIndex=");
+		builder.append(sortIndex);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", createdBy=");
+		builder.append(createdBy);
+		builder.append(", createdDate=");
+		builder.append(createdDate);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
+		builder.append(", modifiedDate=");
+		builder.append(modifiedDate);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", loginDateTime=");
+		builder.append(loginDateTime);
+		builder.append(", onlineTicket=");
+		builder.append(onlineTicket);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

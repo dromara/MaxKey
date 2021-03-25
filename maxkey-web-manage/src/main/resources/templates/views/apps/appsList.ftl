@@ -160,14 +160,13 @@
 		 			<td width="374px">
 		 				<select name="protocol" class="form-control">
 		 					<option value=""  selected>Select</option>
-		 					<option value="<%=PROTOCOLS.FORMBASED%>"><%=PROTOCOLS.FORMBASED%></option>
-		 					<option value="<%=PROTOCOLS.OPEN_ID_CONNECT%>"><%=PROTOCOLS.OPEN_ID_CONNECT%></option>
-		 					<option value="<%=PROTOCOLS.OAUTH20%>"><%=PROTOCOLS.OAUTH20%></option>
-		 					<option value="<%=PROTOCOLS.SAML20%>"><%=PROTOCOLS.SAML20%></option>
-		 					<option value="<%=PROTOCOLS.TOKENBASED%>"><%=PROTOCOLS.TOKENBASED%></option>
-		 					<option value="<%=PROTOCOLS.DESKTOP%>"><%=PROTOCOLS.DESKTOP%></option>
-		 					<option value="<%=PROTOCOLS.BASIC%>"><%=PROTOCOLS.BASIC%></option>
-		 					
+		 					<option value="OAuth_v2.0"><@locale code="apps.protocol.oauth2.0" /></option>
+		 					<option value="SAML_v2.0"><@locale code="apps.protocol.saml2.0" /></option>
+		 					<option value="CAS"><@locale code="apps.protocol.cas" /></option>
+		 					<option value="JWT"><@locale code="apps.protocol.jwt" /></option>
+		 					<option value="Token_Based"><@locale code="apps.protocol.tokenbased" /></option>
+		 					<option value="Extend_API"><@locale code="apps.protocol.extendapi" /></option>
+		 					<option value="Form_Based"><@locale code="apps.protocol.formbased" /></option>
 		 				</select>
 		 			</td>
 		 			<td width="120px"><@locale code="apps.vendor"/></td>

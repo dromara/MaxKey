@@ -187,7 +187,7 @@ public class ConsumerEndpoint {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("username", username);
 
-		mav.setViewName("redirect:/consumer/saml/v20/forward/webseal/eai");
+		mav.setViewName("redirect:/appList");
 		return mav;
 	}
 

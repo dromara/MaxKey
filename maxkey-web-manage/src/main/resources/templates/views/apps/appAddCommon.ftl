@@ -97,14 +97,25 @@
 				<option value="1"><@locale code="apps.isAdapter.yes" /></option>
 			</select>
 		</td>
+		<th><@locale code="apps.adapter" />：</th>
 		<td >
+			<input type="hidden" class="form-control"   id="adapterId" name="adapterId"  title="" value=""/>
+			<input type="text"  class="form-control"    id="adapterName" name="adapterName"  title="" value="" style="width: 80%;float: left;"/>
+			<input type="hidden" class="form-control"   id="adapter" name="adapter"  title="" value=""/>
+			
+			<input class="button btn btn-success mr-3 window" style="float: left;" id="selectAdaptersBtn" type="button" 
+         			value="<@locale code="button.text.select"/>" 
+		 		    wurl="<@base/>/apps/adapters/selectAdaptersList"
+		 		    wwidth="750"
+		 		    wheight="600"
+	 		    	target="window">
 		</td>
 	</tr>
 	<tr>
-		<th><@locale code="apps.adapter" />：</th>
-		<td colspan =3>
-			<input type="text" class="form-control"   id="adapter" name="adapter"  title="" value=""/>
-		</td>
-	</tr>
+         <th><@locale code="common.text.description"/>：</th>
+         <td colspan =3>
+            <input  type="text"  class="form-control" id="description" name="description"  title="" value=""/>
+         </td>
+      </tr>
    </tbody>
 </table>

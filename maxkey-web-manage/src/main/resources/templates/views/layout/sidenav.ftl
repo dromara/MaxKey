@@ -64,6 +64,7 @@
        		<span class="fa fa-fw fa-cogs fa-lg"></span>
      	</a>
      	<ul>
+     		
 	       <li>
              <a class="side-nav-menu" href="<@base />/roles/list/">
                 <@locale code="navs.roles"/>  
@@ -86,6 +87,12 @@
              <a class="side-nav-menu" href="<@base />/permissions/list/">
                  <@locale code="navs.role.permissions"/>
                  <span class="fa fa-fw fa-check-square"></span>
+             </a>
+           </li>
+           <li>
+             <a class="side-nav-menu" href="<@base />/apps/adapters/list/">
+                <@locale code="navs.adapters"/>  
+                <span class="fa fa-fw fa-shield"></span>
              </a>
            </li>
            <li>
