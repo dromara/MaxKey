@@ -101,9 +101,9 @@ public class LdapUtils {
 
     // connect to ldap server
     public DirContext openConnection() {
-        _logger.info("PROVIDER_URL:" + providerUrl);
-        _logger.info("SECURITY_PRINCIPAL:" + principal);
-        _logger.info("SECURITY_CREDENTIALS:" + credentials);
+        _logger.debug("PROVIDER_URL:" + providerUrl);
+        _logger.debug("SECURITY_PRINCIPAL:" + principal);
+        _logger.trace("SECURITY_CREDENTIALS:" + credentials);
         // LDAP
         Properties props = new Properties();
         props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");

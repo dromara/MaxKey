@@ -53,9 +53,13 @@ public class DefaultJdbcAuthenticationRealm extends AbstractAuthenticationRealm 
      */
     public boolean passwordMatches(UserInfo userInfo, String password) {
         boolean passwordMatches = false;
-        _logger.info("password : " 
-                + PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), password));
-        passwordMatches = passwordEncoder.matches(password,userInfo.getPassword());
+        if(ldapSupport) {
+        	passwordMatches =this.ldapAuthenticationRealm.passwordMatches(userInfo, password);
+        }else {
+	        _logger.debug("password : " 
+	                + PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), password));
+	        passwordMatches = passwordEncoder.matches(password,userInfo.getPassword());
+        }
         _logger.debug("passwordvalid : " + passwordMatches);
         if (!passwordMatches) {
             passwordPolicyValidator.setBadPasswordCount(userInfo);

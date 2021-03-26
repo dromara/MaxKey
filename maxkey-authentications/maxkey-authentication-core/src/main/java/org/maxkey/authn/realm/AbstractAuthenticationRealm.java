@@ -54,6 +54,12 @@ public abstract class AbstractAuthenticationRealm {
     protected LoginHistoryService loginHistoryService;
 
     protected AbstractRemeberMeService remeberMeService;
+    
+    protected boolean ldapSupport;
+    
+    protected  AbstractAuthenticationRealm ldapAuthenticationRealm;
+    
+   
 
     /**
      * 

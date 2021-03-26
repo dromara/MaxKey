@@ -17,6 +17,7 @@
 
 package org.maxkey.authn.realm.jdbc;
 
+import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.LoginService;
@@ -56,6 +57,28 @@ public class JdbcAuthenticationRealm extends DefaultJdbcAuthenticationRealm {
     	this.loginHistoryService = loginHistoryService;
     	this.remeberMeService = remeberMeService;
         this.jdbcTemplate = jdbcTemplate;
+    }
+    
+    
+    public JdbcAuthenticationRealm(
+    		PasswordEncoder passwordEncoder,
+    		PasswordPolicyValidator passwordPolicyValidator,
+    		LoginService loginService,
+    		LoginHistoryService loginHistoryService,
+    		AbstractRemeberMeService remeberMeService,
+    	    JdbcTemplate jdbcTemplate,
+    	    AbstractAuthenticationRealm ldapAuthenticationRealm,
+    	    boolean ldapSupport
+    	    ) {
+    	
+    	this.passwordEncoder =passwordEncoder;
+    	this.passwordPolicyValidator=passwordPolicyValidator;
+    	this.loginService = loginService;
+    	this.loginHistoryService = loginHistoryService;
+    	this.remeberMeService = remeberMeService;
+        this.jdbcTemplate = jdbcTemplate;
+        this.ldapAuthenticationRealm = ldapAuthenticationRealm;
+        this.ldapSupport = ldapSupport;
     }
     
     

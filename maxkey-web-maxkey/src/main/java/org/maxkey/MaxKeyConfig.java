@@ -22,6 +22,7 @@ import java.util.List;
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealm;
 import org.maxkey.authn.realm.ldap.LdapServer;
+import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.realm.IAuthenticationServer;
 import org.maxkey.authn.realm.activedirectory.ActiveDirectoryAuthenticationRealm;
 import org.maxkey.authn.realm.activedirectory.ActiveDirectoryServer;
@@ -45,7 +46,6 @@ import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
 import org.maxkey.persistence.ldap.LdapUtils;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
-import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -104,6 +104,48 @@ public class MaxKeyConfig  implements InitializingBean {
         return keyUriFormat;
     }
     
+    public AbstractAuthenticationRealm ldapAuthenticationRealm(
+    			boolean ldapSupport,
+    			boolean ldapJit,
+    			String providerUrl,
+    			String principal,
+    			String credentials,
+    			String filter,
+    			String baseDN,
+    			String domain,
+    			String product,
+                JdbcTemplate jdbcTemplate) {
+    	
+    	AbstractAuthenticationRealm authenticationRealm =null;
+    	if(ldapSupport) {
+	    	if(product.equalsIgnoreCase("activedirectory")) {
+	    		ActiveDirectoryAuthenticationRealm activeDirectoryAuthenticationRealm = new ActiveDirectoryAuthenticationRealm(jdbcTemplate);
+	            ActiveDirectoryServer ldapServer=new ActiveDirectoryServer();
+	            ActiveDirectoryUtils ldapUtils = new ActiveDirectoryUtils(providerUrl,principal,credentials,domain);
+	            ldapServer.setActiveDirectoryUtils(ldapUtils);
+	            
+	            List<IAuthenticationServer> ldapServers = new ArrayList<IAuthenticationServer>();
+	            ldapServers.add(ldapServer);
+	            activeDirectoryAuthenticationRealm.setActiveDirectoryServers(ldapServers);
+	            authenticationRealm = activeDirectoryAuthenticationRealm;
+	            _logger.debug("ActiveDirectoryAuthenticationRealm inited.");
+	    	}else {
+	    		LdapAuthenticationRealm ldapAuthenticationRealm = new LdapAuthenticationRealm(jdbcTemplate);
+		        LdapServer ldapServer=new LdapServer();
+		        LdapUtils ldapUtils = new LdapUtils(providerUrl,principal,credentials,baseDN);
+		        ldapServer.setLdapUtils(ldapUtils);
+		        ldapServer.setFilterAttribute(filter);
+		        List<IAuthenticationServer> ldapServers = new ArrayList<IAuthenticationServer>();
+		        ldapServers.add(ldapServer);
+		        ldapAuthenticationRealm.setLdapServers(ldapServers);
+		        authenticationRealm = ldapAuthenticationRealm;
+		        _logger.debug("LdapAuthenticationRealm inited.");
+	    	}
+    	}
+        return authenticationRealm;
+        
+    }
+    
     //可以在此实现其他的登陆认证方式，请实现AbstractAuthenticationRealm
     @Bean(name = "authenticationRealm")
     public JdbcAuthenticationRealm authenticationRealm(
@@ -112,7 +154,16 @@ public class MaxKeyConfig  implements InitializingBean {
 	    		LoginService loginService,
 	    		LoginHistoryService loginHistoryService,
 	    		AbstractRemeberMeService remeberMeService,
-                JdbcTemplate jdbcTemplate) {
+                JdbcTemplate jdbcTemplate,
+                @Value("${maxkey.support.ldap.enable:false}")boolean ldapSupport,
+    			@Value("${maxkey.support.ldap.jit:false}")boolean ldapJit,
+    			@Value("${maxkey.support.ldap.providerurl}")String providerUrl,
+    			@Value("${maxkey.support.ldap.principal}")String principal,
+    			@Value("${maxkey.support.ldap.credentials}")String credentials,
+    			@Value("${maxkey.support.ldap.filter}")String filter,
+    			@Value("${maxkey.support.ldap.basedn}")String baseDN,
+    			@Value("${maxkey.support.ldap.domain}")String domain,
+    			@Value("${maxkey.support.ldap.product:openldap}")String product) {
     	
         JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
         		passwordEncoder,
@@ -120,48 +171,18 @@ public class MaxKeyConfig  implements InitializingBean {
         		loginService,
         		loginHistoryService,
         		remeberMeService,
-        		jdbcTemplate);
+        		jdbcTemplate,
+        		ldapAuthenticationRealm(
+        				ldapSupport,ldapJit,
+        				providerUrl,principal,credentials,
+        				filter,baseDN,domain,product,
+        				jdbcTemplate),
+        		ldapSupport);
         
         return authenticationRealm;
     }
     
-    //LdapAuthenticationRealm
-    public LdapAuthenticationRealm ldapAuthenticationRealm(
-                JdbcTemplate jdbcTemplate) {
-        LdapAuthenticationRealm authenticationRealm = new LdapAuthenticationRealm(jdbcTemplate);
-        LdapServer ldapServer=new LdapServer();
-        String providerUrl = "ldap://localhost:389";
-        String principal = "cn=root";
-        String credentials = "maxkey";
-        String baseDN = "dc=maxkey,dc=top";
-        LdapUtils ldapUtils = new LdapUtils(providerUrl,principal,credentials,baseDN);
-        ldapServer.setLdapUtils(ldapUtils);
-        ldapServer.setFilterAttribute("uid");
-        List<IAuthenticationServer> ldapServers = new ArrayList<IAuthenticationServer>();
-        ldapServers.add(ldapServer);
-        authenticationRealm.setLdapServers(ldapServers);
-        _logger.debug("LdapAuthenticationRealm inited.");
-        return authenticationRealm;
-    }
     
-    //ActiveDirectoryAuthenticationRealm
-    public ActiveDirectoryAuthenticationRealm activeDirectoryAuthenticationRealm(
-                JdbcTemplate jdbcTemplate) {
-        ActiveDirectoryAuthenticationRealm authenticationRealm = new ActiveDirectoryAuthenticationRealm(jdbcTemplate);
-        ActiveDirectoryServer ldapServer=new ActiveDirectoryServer();
-        String providerUrl = "ldap://localhost:389";
-        String principal = "cn=root";
-        String credentials = "maxkey";
-        String domain = "maxkey";
-        ActiveDirectoryUtils ldapUtils = new ActiveDirectoryUtils(providerUrl,principal,credentials,domain);
-        ldapServer.setActiveDirectoryUtils(ldapUtils);
-        
-        List<IAuthenticationServer> ldapServers = new ArrayList<IAuthenticationServer>();
-        ldapServers.add(ldapServer);
-        authenticationRealm.setActiveDirectoryServers(ldapServers);
-        _logger.debug("LdapAuthenticationRealm inited.");
-        return authenticationRealm;
-    }
     
 	@Bean(name = "timeBasedOtpAuthn")
     public TimeBasedOtpAuthn timeBasedOtpAuthn() {

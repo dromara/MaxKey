@@ -46,7 +46,7 @@ public final class LdapServer implements IAuthenticationServer {
 	 */
 	@Override
 	public boolean authenticate(String username, String password) {
-		String queryFilter = "("+filterAttribute+"="+username+")";
+		String queryFilter = String.format(filterAttribute, username);
 		_logger.info(" filter : " + queryFilter);
 		String dn="";
 		SearchControls constraints = new SearchControls();
@@ -69,7 +69,7 @@ public final class LdapServer implements IAuthenticationServer {
 		} catch (NamingException e) {
 			_logger.error("query throw NamingException:" + e.getMessage());
 		} finally {
-			ldapUtils.close();
+			//ldapUtils.close();
 		}
 		
 		LdapUtils ldapPassWordValid=new LdapUtils(ldapUtils.getProviderUrl(),dn,password);
