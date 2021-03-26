@@ -13,18 +13,19 @@
 	*(MAXKEY-210312)  SpringSecurity OAuth 2客户端登录适配
 	*(MAXKEY-210313)  移除Desktop的支持，后续可以开发FormBase的适配器定制
 	*(MAXKEY-210314)  application.properties profiles的优化，不同环境启动更加简单
-	*(MAXKEY-210315)  增加适配器注册功能，在配置应用时只需选择对应的适配器
-	*(MAXKEY-210316)  增加Synchronizer接口同步的功能
-	*(MAXKEY-210317)  增加TimeBased OTP接口支持
-	*(MAXKEY-210318)  XSS安全防护功能
-	*(MAXKEY-210319)  禅道项目管理系统单点登录适配
-	*(MAXKEY-210320)  GitLab单点登录适配
-	*(MAXKEY-210321)  云速邮箱单点登录适配
-	*(MAXKEY-210322)  JumpServer开源堡垒机单点登录适配
-	*(MAXKEY-210323)  华为云单点登录适配
-	*(MAXKEY-210324)  Jenkins单点登录适配
-	*(MAXKEY-210324)  查询参数优化
-	*(MAXKEY-210226)  依赖jar引用、更新和升级
+	*(MAXKEY-210315)  删除maxkey.properties，配置整合到 application.properties
+	*(MAXKEY-210316)  增加适配器注册功能，在配置应用时只需选择对应的适配器
+	*(MAXKEY-210317)  增加Synchronizer接口同步的功能
+	*(MAXKEY-210318)  增加TimeBased OTP接口支持
+	*(MAXKEY-210319)  XSS安全防护功能
+	*(MAXKEY-210320)  禅道项目管理系统单点登录适配
+	*(MAXKEY-210321)  GitLab单点登录适配
+	*(MAXKEY-210322)  云速邮箱单点登录适配
+	*(MAXKEY-210323)  JumpServer开源堡垒机单点登录适配
+	*(MAXKEY-210324)  华为云单点登录适配
+	*(MAXKEY-210325)  Jenkins单点登录适配
+	*(MAXKEY-210326)  查询参数优化
+	*(MAXKEY-210227)  依赖jar引用、更新和升级
 		log4j 		2.14.1
 		spring		5.3.5
 		springBoot  2.4.4
