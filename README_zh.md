@@ -51,7 +51,8 @@ QQ交流群：<b>434469201</b>
 | 2.3     | 短信认证  腾讯云短信/阿里云短信/网易云信 	|
 | 2.4     | 登录易/Google/Microsoft Authenticator/FreeOTP/支持TOTP或者HOTP |
 | 2.5     | Kerberos/SPNEGO/AD域|
-| 2.6     | 社交账号 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
+| 2.6     | OpenLDAP/ActiveDirectory/标准LDAP服务器|
+| 2.7     | 社交账号 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
 
 
 3. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。

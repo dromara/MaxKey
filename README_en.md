@@ -49,7 +49,8 @@ Key Functions
 | 2.3     | SMS  Tencent SMS / Alibaba SMS / NetEaseYunXin 	|
 | 2.4     | Denglu1/Google/Microsoft Authenticator/FreeOTP/Support TOTP or HOTP |
 | 2.5     | Kerberos/SPNEGO/AD domain|
-| 2.6     | Social Account WeChat/QQ/ Weibo/Dingding/Google/Facebook/other  | 
+| 2.6     | OpenLDAP/ActiveDirectory/Standard LDAP Server|
+| 2.7     | Social Account WeChat/QQ/ Weibo/Dingding/Google/Facebook/other  | 
 
 
 3. Standard Authentication Protocols for applications to integrate sso, secure mobile access, secure API, third-party authentication and Internet authentication.
