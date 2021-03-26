@@ -40,7 +40,6 @@ echo JAVA_CONF      :  $JAVA_CONF
 echo JAVA_OPTS      :  $JAVA_OPTS
 echo JAVA_HOME      :  $JAVA_HOME  
 echo JAVA           :  $JAVA_EXEC}
-${JAVA_EXEC} -version
 echo ""
 echo "-------------------------------------------------------------------------------"
 echo ""

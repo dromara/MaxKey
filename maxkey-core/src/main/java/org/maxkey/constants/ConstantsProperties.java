@@ -24,9 +24,6 @@ public class ConstantsProperties {
     public static final String applicationPropertySource = 
             "classpath:/application.properties";
     
-    public static final String maxKeyPropertySource      = 
-            "classpath:/maxkey.properties";
-    
     public static final String kaptchaPropertySource      = 
             "classpath:/kaptcha.properties";
     
@@ -34,8 +31,16 @@ public class ConstantsProperties {
         return propertySource.replaceAll("classpath:","");
     }
     
+    public static String classPathResource(String propertySource,String active) {
+    	if(active == null || active.equals("")) {
+    		return propertySource.replaceAll("classpath:","");
+    	}
+        return propertySource.replace(".", "-"+active+".").replaceAll("classpath:","");
+    }
+    
     @Test
     public void classPathResourceTest() {
-        System.out.println(classPathResource(maxKeyPropertySource));
+        System.out.println(classPathResource(applicationPropertySource));
+        System.out.println(classPathResource(applicationPropertySource,"active"));
     }
 }

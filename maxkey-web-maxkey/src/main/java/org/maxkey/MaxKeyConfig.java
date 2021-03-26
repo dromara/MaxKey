@@ -60,7 +60,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 //@ImportResource(locations = { "classpath:spring/maxkey.xml" })
 @PropertySource(ConstantsProperties.applicationPropertySource)
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
 @ComponentScan(basePackages = {
         "org.maxkey.configuration",
         "org.maxkey.domain",
@@ -84,15 +83,15 @@ public class MaxKeyConfig  implements InitializingBean {
 
     @Bean(name = "keyUriFormat")
     public KeyUriFormat keyUriFormat(
-            @Value("${config.otp.keyuri.format.type:totp}")
+            @Value("${maxkey.otp.keyuri.format.type:totp}")
             String keyuriFormatType,
-            @Value("${config.otp.keyuri.format.domain:MaxKey.top}")
+            @Value("${maxkey.otp.keyuri.format.domain:MaxKey.top}")
             String keyuriFormatDomain,
-            @Value("${config.otp.keyuri.format.issuer:MaxKey}")
+            @Value("${maxkey.otp.keyuri.format.issuer:MaxKey}")
             String keyuriFormatIssuer,
-            @Value("${config.otp.keyuri.format.digits:6}")
+            @Value("${maxkey.otp.keyuri.format.digits:6}")
             int keyuriFormatDigits,
-            @Value("${config.otp.keyuri.format.period:30}")
+            @Value("${maxkey.otp.keyuri.format.period:30}")
             int keyuriFormatPeriod) {
         
         KeyUriFormat keyUriFormat=new KeyUriFormat();
@@ -174,8 +173,8 @@ public class MaxKeyConfig  implements InitializingBean {
     //default tfaOtpAuthn
     @Bean(name = "tfaOtpAuthn")
     public AbstractOtpAuthn tfaOptAuthn(
-            @Value("${config.login.mfa.type}")String mfaType,
-            @Value("${config.server.persistence}") int persistence,
+            @Value("${maxkey.login.mfa.type}")String mfaType,
+            @Value("${maxkey.server.persistence}") int persistence,
             MailOtpAuthn tfaMailOtpAuthn,
             RedisConnectionFactory redisConnFactory) {    
         
@@ -222,8 +221,8 @@ public class MaxKeyConfig  implements InitializingBean {
     
     @Bean(name = "tfaMobileOtpAuthn")
     public SmsOtpAuthn smsOtpAuthn(
-            @Value("${config.otp.sms}")String optSmsProvider,
-            @Value("${config.server.persistence}") int persistence,
+            @Value("${maxkey.otp.sms}")String optSmsProvider,
+            @Value("${maxkey.server.persistence}") int persistence,
             RedisConnectionFactory redisConnFactory) {
         SmsOtpAuthn smsOtpAuthn = null;
         if(optSmsProvider.equalsIgnoreCase("SmsOtpAuthnAliyun")) {
@@ -246,13 +245,13 @@ public class MaxKeyConfig  implements InitializingBean {
     
     @Bean(name = "kerberosService")
     public RemoteKerberosService kerberosService(
-            @Value("${config.support.kerberos.default.userdomain}")
+            @Value("${maxkey.support.kerberos.default.userdomain}")
             String userDomain,
-            @Value("${config.support.kerberos.default.fulluserdomain}")
+            @Value("${maxkey.support.kerberos.default.fulluserdomain}")
             String fullUserDomain,
-            @Value("${config.support.kerberos.default.crypto}")
+            @Value("${maxkey.support.kerberos.default.crypto}")
             String crypto,
-            @Value("${config.support.kerberos.default.redirecturi}")
+            @Value("${maxkey.support.kerberos.default.redirecturi}")
             String redirectUri
             ) {
         RemoteKerberosService kerberosService = new RemoteKerberosService();

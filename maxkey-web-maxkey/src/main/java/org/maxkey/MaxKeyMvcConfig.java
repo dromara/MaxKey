@@ -45,7 +45,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 @Configuration
 @EnableWebMvc
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
+@PropertySource(ConstantsProperties.applicationPropertySource)
 public class MaxKeyMvcConfig implements WebMvcConfigurer {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMvcConfig.class);
     
@@ -80,13 +80,13 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     @Autowired
     HistoryLoginAppAdapter historyLoginAppAdapter;
     
-    @Value("${config.support.httpheader.enable:false}")
+    @Value("${maxkey.support.httpheader.enable:false}")
     private boolean httpHeaderEnable;
     
-    @Value("${config.support.httpheader.headername:iv-user}")
+    @Value("${maxkey.support.httpheader.headername:iv-user}")
     private String httpHeaderName;
     
-    @Value("${config.support.basic.enable:false}")
+    @Value("${maxkey.support.basic.enable:false}")
     private boolean basicEnable;
     
     @Override

@@ -37,7 +37,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @ComponentScan(basePackages = {
         "org.maxkey.authz.cas.endpoint"
 })
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
+@PropertySource(ConstantsProperties.applicationPropertySource)
 public class CasAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(CasAutoConfiguration.class);
     
@@ -49,8 +49,8 @@ public class CasAutoConfiguration implements InitializingBean {
      */
     @Bean(name = "casTicketServices")
     public TicketServices casTicketServices(
-            @Value("${config.server.persistence}") int persistence,
-            @Value("${config.login.remeberme.validity}") int validity,
+            @Value("${maxkey.server.persistence}") int persistence,
+            @Value("${maxkey.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
     	_logger.debug("init casTicketServices.");
@@ -65,8 +65,8 @@ public class CasAutoConfiguration implements InitializingBean {
      */
     @Bean(name = "casTicketGrantingTicketServices")
     public TicketServices casTicketGrantingTicketServices(
-            @Value("${config.server.persistence}") int persistence,
-            @Value("${config.login.remeberme.validity}") int validity,
+            @Value("${maxkey.server.persistence}") int persistence,
+            @Value("${maxkey.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
     	_logger.debug("init casTicketGrantingTicketServices.");
@@ -75,8 +75,8 @@ public class CasAutoConfiguration implements InitializingBean {
     
     @Bean(name = "casProxyGrantingTicketServices")
     public TicketServices casProxyGrantingTicketServices(
-            @Value("${config.server.persistence}") int persistence,
-            @Value("${config.login.remeberme.validity}") int validity,
+            @Value("${maxkey.server.persistence}") int persistence,
+            @Value("${maxkey.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
     	_logger.debug("init casTicketGrantingTicketServices.");

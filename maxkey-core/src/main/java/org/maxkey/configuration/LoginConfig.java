@@ -23,31 +23,31 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
+@PropertySource(ConstantsProperties.applicationPropertySource)
 public class LoginConfig {
-    @Value("${config.login.captcha}")
+    @Value("${maxkey.login.captcha}")
     boolean captcha;
     
     //验证码类型 text 文本 ， arithmetic算术验证码
-    @Value("${config.login.captcha.type:text}")
+    @Value("${maxkey.login.captcha.type:text}")
     String captchaType;
     
-    @Value("${config.login.mfa}")
+    @Value("${maxkey.login.mfa}")
     boolean mfa;
     
-    @Value("${config.login.socialsignon}")
+    @Value("${maxkey.login.socialsignon}")
     boolean socialSignOn;
     
-    @Value("${config.login.kerberos}")
+    @Value("${maxkey.login.kerberos}")
     boolean kerberos;
     
-    @Value("${config.login.remeberme}")
+    @Value("${maxkey.login.remeberme}")
     boolean remeberMe;
     
-    @Value("${config.login.wsfederation}")
+    @Value("${maxkey.login.wsfederation}")
     boolean wsFederation;
     
-    @Value("${config.login.default.uri}")
+    @Value("${maxkey.login.default.uri}")
     String defaultUri;
 
     /**

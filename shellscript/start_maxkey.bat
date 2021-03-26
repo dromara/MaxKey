@@ -46,8 +46,6 @@ echo JAVA_HOME      =  %JAVA_HOME%
 echo JAVA           =  %JAVA_EXEC%  
 echo JAVA           =  %JAVA_MAINCLASS%  
 echo.  
-%JAVA_EXEC% -version
-echo.  
 echo ===============================================================================  
 echo.  
   

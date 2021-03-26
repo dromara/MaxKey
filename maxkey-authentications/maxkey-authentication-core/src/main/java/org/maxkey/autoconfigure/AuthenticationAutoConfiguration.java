@@ -61,7 +61,6 @@ import org.maxkey.persistence.db.LoginHistoryService;
 
 @Configuration
 @PropertySource(ConstantsProperties.applicationPropertySource)
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class AuthenticationAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = 
             LoggerFactory.getLogger(AuthenticationAutoConfiguration.class);
@@ -151,8 +150,8 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
      */
     @Bean(name = "remeberMeService")
     public AbstractRemeberMeService remeberMeService(
-            @Value("${config.server.persistence}") int persistence,
-            @Value("${config.login.remeberme.validity}") int validity,
+            @Value("${maxkey.server.persistence}") int persistence,
+            @Value("${maxkey.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
         return new RemeberMeServiceFactory().getService(persistence, jdbcTemplate, redisConnFactory);
@@ -160,7 +159,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     
     @Bean(name = "onlineTicketServices")
     public OnlineTicketServices onlineTicketServices(
-            @Value("${config.server.persistence}") int persistence,
+            @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
         return new OnlineTicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);

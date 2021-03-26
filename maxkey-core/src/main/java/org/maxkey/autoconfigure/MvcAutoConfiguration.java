@@ -58,7 +58,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 @Configuration
 @PropertySource(ConstantsProperties.applicationPropertySource)
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class MvcAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MvcAutoConfiguration.class);
    
@@ -68,7 +67,7 @@ public class MvcAutoConfiguration implements InitializingBean {
      */
     @Bean (name = "localeResolver")
     public CookieLocaleResolver cookieLocaleResolver(
-            @Value("${config.server.domain:maxkey.top}")String domainName) {
+            @Value("${maxkey.server.domain:maxkey.top}")String domainName) {
         _logger.debug("DomainName " + domainName);
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setCookieName("maxkey_lang");

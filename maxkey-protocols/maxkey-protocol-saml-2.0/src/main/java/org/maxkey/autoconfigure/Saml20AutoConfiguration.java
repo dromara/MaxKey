@@ -59,7 +59,6 @@ import org.springframework.ui.velocity.VelocityEngineFactoryBean;
         "org.maxkey.authz.saml20.metadata.endpoint",
 })
 @PropertySource(ConstantsProperties.applicationPropertySource)
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class Saml20AutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(Saml20AutoConfiguration.class);
     
@@ -110,7 +109,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "authnResponseGenerator")
     public AuthnResponseGenerator authnResponseGenerator(TimeService timeService,IDService idService,
-            @Value("${config.saml.v20.idp.issuer}") String issuerEntityName) {
+            @Value("${maxkey.saml.v20.idp.issuer}") String issuerEntityName) {
         AuthnResponseGenerator generator = new AuthnResponseGenerator(issuerEntityName,timeService,idService);
         return generator;
     }
@@ -121,7 +120,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "issuerEntityName")
     public String issuerEntityName(
-            @Value("${config.saml.v20.idp.issuer}") String issuerEntityName) {
+            @Value("${maxkey.saml.v20.idp.issuer}") String issuerEntityName) {
         return issuerEntityName;
     }
     
@@ -131,15 +130,15 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "saml20Metadata")
     public Saml20Metadata saml20Metadata(
-            @Value("${config.saml.v20.metadata.orgName}") String orgName,
-            @Value("${config.saml.v20.metadata.orgDisplayName}") String orgDisplayName,
-            @Value("${config.saml.v20.metadata.orgURL}") String orgURL,
-            @Value("${config.saml.v20.metadata.company}") String company,
-            @Value("${config.saml.v20.metadata.contactType}") String contactType,
-            @Value("${config.saml.v20.metadata.givenName}") String givenName,
-            @Value("${config.saml.v20.metadata.surName}") String surName,
-            @Value("${config.saml.v20.metadata.emailAddress}") String emailAddress,
-            @Value("${config.saml.v20.metadata.telephoneNumber}") String telephoneNumber) {
+            @Value("${maxkey.saml.v20.metadata.orgName}") String orgName,
+            @Value("${maxkey.saml.v20.metadata.orgDisplayName}") String orgDisplayName,
+            @Value("${maxkey.saml.v20.metadata.orgURL}") String orgURL,
+            @Value("${maxkey.saml.v20.metadata.company}") String company,
+            @Value("${maxkey.saml.v20.metadata.contactType}") String contactType,
+            @Value("${maxkey.saml.v20.metadata.givenName}") String givenName,
+            @Value("${maxkey.saml.v20.metadata.surName}") String surName,
+            @Value("${maxkey.saml.v20.metadata.emailAddress}") String emailAddress,
+            @Value("${maxkey.saml.v20.metadata.telephoneNumber}") String telephoneNumber) {
         Saml20Metadata metadata = new Saml20Metadata();
         metadata.setOrgName(orgName);
         metadata.setOrgDisplayName(orgDisplayName);
@@ -197,7 +196,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "replayCache")
     public ReplayCache replayCache(MapBasedStorageService mapBasedStorageService,
-            @Value("${config.saml.v20.replay.cache.life.in.millis}") long duration) {
+            @Value("${maxkey.saml.v20.replay.cache.life.in.millis}") long duration) {
         ReplayCache replayCache = new ReplayCache(mapBasedStorageService,duration);
         return replayCache;
     }
@@ -218,7 +217,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "samlParserPool")
     public BasicParserPool samlParserPool(
-            @Value("${config.saml.v20.max.parser.pool.size}") int maxPoolSize) {
+            @Value("${maxkey.saml.v20.max.parser.pool.size}") int maxPoolSize) {
         BasicParserPool samlParserPool = new BasicParserPool();
         samlParserPool.setMaxPoolSize(maxPoolSize);
         return samlParserPool;
@@ -230,8 +229,8 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "issueInstantRule")
     public IssueInstantRule issueInstantRule(
-            @Value("${config.saml.v20.issue.instant.check.clock.skew.in.seconds}") int newClockSkew,
-            @Value("${config.saml.v20.issue.instant.check.validity.time.in.seconds}") int newExpires) {
+            @Value("${maxkey.saml.v20.issue.instant.check.clock.skew.in.seconds}") int newClockSkew,
+            @Value("${maxkey.saml.v20.issue.instant.check.validity.time.in.seconds}") int newExpires) {
         IssueInstantRule decoder = new IssueInstantRule(newClockSkew,newExpires);
         decoder.setRequiredRule(true);
         return decoder;
@@ -243,7 +242,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "openHTTPPostSimpleSignDecoder")
     public OpenHTTPPostSimpleSignDecoder openHTTPPostSimpleSignDecoder(BasicParserPool samlParserPool,
-            @Value("${config.saml.v20.idp.receiver.endpoint}") String receiverEndpoint) {
+            @Value("${maxkey.saml.v20.idp.receiver.endpoint}") String receiverEndpoint) {
         OpenHTTPPostSimpleSignDecoder decoder = new OpenHTTPPostSimpleSignDecoder(samlParserPool);
         decoder.setReceiverEndpoint(receiverEndpoint);
         return decoder;
@@ -255,7 +254,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "openHTTPPostDecoder")
     public OpenHTTPPostDecoder openHTTPPostDecoder(BasicParserPool samlParserPool,
-            @Value("${config.saml.v20.idp.receiver.endpoint}") String receiverEndpoint) {
+            @Value("${maxkey.saml.v20.idp.receiver.endpoint}") String receiverEndpoint) {
         OpenHTTPPostDecoder decoder = new OpenHTTPPostDecoder(samlParserPool);
         decoder.setReceiverEndpoint(receiverEndpoint);
         return decoder;
@@ -267,7 +266,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "openHTTPRedirectDecoder")
     public OpenHTTPRedirectDecoder openHTTPRedirectDecoder(BasicParserPool samlParserPool,
-            @Value("${config.saml.v20.idp.receiver.endpoint}") String receiverEndpoint) {
+            @Value("${maxkey.saml.v20.idp.receiver.endpoint}") String receiverEndpoint) {
         OpenHTTPRedirectDecoder decoder = new OpenHTTPRedirectDecoder(samlParserPool);
         decoder.setReceiverEndpoint(receiverEndpoint);
         return decoder;
@@ -308,7 +307,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "postSimpleSignBindingAdapter")
     public PostSimpleSignBindingAdapter postSimpleSignBindingAdapter(VelocityEngine velocityEngine,
-            @Value("${config.saml.v20.idp.issuer}") String issuerEntityName) {
+            @Value("${maxkey.saml.v20.idp.issuer}") String issuerEntityName) {
         PostSimpleSignBindingAdapter adapter = new PostSimpleSignBindingAdapter();
         adapter.setVelocityEngine(velocityEngine);
         adapter.setIssuerEntityName(issuerEntityName);
@@ -321,7 +320,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "postBindingAdapter")
     public PostBindingAdapter postBindingAdapter(VelocityEngine velocityEngine,
-            @Value("${config.saml.v20.idp.issuer}") String issuerEntityName) {
+            @Value("${maxkey.saml.v20.idp.issuer}") String issuerEntityName) {
         PostBindingAdapter adapter = new PostBindingAdapter();
         adapter.setVelocityEngine(velocityEngine);
         adapter.setIssuerEntityName(issuerEntityName);

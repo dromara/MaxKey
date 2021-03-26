@@ -41,7 +41,6 @@ import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 @PropertySource(ConstantsProperties.applicationPropertySource)
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class JwtAuthnAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(JwtAuthnAutoConfiguration.class);
     
@@ -52,13 +51,13 @@ public class JwtAuthnAutoConfiguration implements InitializingBean {
      */
     @Bean(name = "oidcProviderMetadata")
     public OIDCProviderMetadataDetails OIDCProviderMetadataDetails(
-            @Value("${config.oidc.metadata.issuer}")
+            @Value("${maxkey.oidc.metadata.issuer}")
             String issuer,
-            @Value("${config.oidc.metadata.authorizationEndpoint}")
+            @Value("${maxkey.oidc.metadata.authorizationEndpoint}")
             URI authorizationEndpoint,
-            @Value("${config.oidc.metadata.tokenEndpoint}")
+            @Value("${maxkey.oidc.metadata.tokenEndpoint}")
             URI tokenEndpoint,
-            @Value("${config.oidc.metadata.userinfoEndpoint}")
+            @Value("${maxkey.oidc.metadata.userinfoEndpoint}")
             URI userinfoEndpoint) {
         _logger.debug("RedisConnectionFactory init .");
         OIDCProviderMetadataDetails oidcProviderMetadata = new OIDCProviderMetadataDetails();

@@ -51,7 +51,7 @@ public class SmsOtpAuthn extends AbstractOtpAuthn {
         Resource resource = new ClassPathResource(
                 ConstantsProperties.classPathResource(
                         ConstantsProperties.classPathResource(
-                                ConstantsProperties.maxKeyPropertySource)));
+                                ConstantsProperties.applicationPropertySource)));
         properties = new Properties();
         properties.load(resource.getInputStream());
     }

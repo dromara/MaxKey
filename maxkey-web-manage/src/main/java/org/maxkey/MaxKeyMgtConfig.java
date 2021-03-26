@@ -77,7 +77,7 @@ public class MaxKeyMgtConfig  implements InitializingBean {
      */
     @Bean(name = "oauth20TokenStore")
     public TokenStore oauth20TokenStore(
-            @Value("${config.server.persistence}") int persistence,
+            @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory jedisConnectionFactory) {
         TokenStore tokenStore = null;
@@ -149,7 +149,7 @@ public class MaxKeyMgtConfig  implements InitializingBean {
     public Scheduler schedulerJobs(
             SchedulerFactoryBean schedulerFactoryBean,
             GroupsService groupsService,
-            @Value("${config.job.cron.dynamicgroups}") String cronScheduleDynamicGroups
+            @Value("${maxkey.job.cron.dynamicgroups}") String cronScheduleDynamicGroups
             ) throws SchedulerException {
        
         Scheduler scheduler = schedulerFactoryBean.getScheduler();

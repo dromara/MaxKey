@@ -71,7 +71,6 @@ import com.nimbusds.jose.JWEAlgorithm;
         "org.maxkey.authz.oauth2.provider.approval.controller"
 })
 @PropertySource(ConstantsProperties.applicationPropertySource)
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class Oauth20AutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(Oauth20AutoConfiguration.class);
     
@@ -93,13 +92,13 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "oidcProviderMetadata")
     public OIDCProviderMetadataDetails OIDCProviderMetadataDetails(
-            @Value("${config.oidc.metadata.issuer}")
+            @Value("${maxkey.oidc.metadata.issuer}")
             String issuer,
-            @Value("${config.oidc.metadata.authorizationEndpoint}")
+            @Value("${maxkey.oidc.metadata.authorizationEndpoint}")
             URI authorizationEndpoint,
-            @Value("${config.oidc.metadata.tokenEndpoint}")
+            @Value("${maxkey.oidc.metadata.tokenEndpoint}")
             URI tokenEndpoint,
-            @Value("${config.oidc.metadata.userinfoEndpoint}")
+            @Value("${maxkey.oidc.metadata.userinfoEndpoint}")
             URI userinfoEndpoint) {
         _logger.debug("OIDCProviderMetadataDetails init .");
         OIDCProviderMetadataDetails oidcProviderMetadata = new OIDCProviderMetadataDetails();
@@ -203,7 +202,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "oauth20AuthorizationCodeServices")
     public AuthorizationCodeServices oauth20AuthorizationCodeServices(
-            @Value("${config.server.persistence}") int persistence,
+            @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {        
         return new AuthorizationCodeServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
@@ -216,7 +215,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "oauth20TokenStore")
     public TokenStore oauth20TokenStore(
-            @Value("${config.server.persistence}") int persistence,
+            @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
         

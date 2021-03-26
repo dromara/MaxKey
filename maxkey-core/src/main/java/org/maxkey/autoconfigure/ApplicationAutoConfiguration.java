@@ -56,7 +56,6 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 @Configuration
 @PropertySource(ConstantsProperties.applicationPropertySource)
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
 public class ApplicationAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = 
             LoggerFactory.getLogger(ApplicationAutoConfiguration.class);
@@ -76,19 +75,18 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     @Bean (name = "propertySourcesPlaceholderConfigurer")
     public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer()
             throws IOException {
-        ClassPathResource classPathResource1 = 
+        ClassPathResource classPathApplicationPropertySource = 
                 new ClassPathResource(ConstantsProperties.classPathResource(
                         ConstantsProperties.applicationPropertySource));
-        ClassPathResource classPathResource2 = 
-                new ClassPathResource(ConstantsProperties.classPathResource(
-                        ConstantsProperties.maxKeyPropertySource));
+
 
         PropertySourcesPlaceholderConfigurer configurer = 
                 new PropertySourcesPlaceholderConfigurer();
-        configurer.setLocations(
+        configurer.setLocations(classPathApplicationPropertySource);
+        /*configurer.setLocations(
                 classPathResource1,
                 classPathResource2
-        );
+        );*/
         configurer.setIgnoreUnresolvablePlaceholders(true);
         _logger.debug("PropertySourcesPlaceholderConfigurer init");
         return configurer;
@@ -150,9 +148,9 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
      */
     @Bean(name = "keyStoreLoader")
     public KeyStoreLoader keyStoreLoader(
-            @Value("${config.saml.v20.idp.issuing.entity.id}") String entityName,
-            @Value("${config.saml.v20.idp.keystore.password}") String keystorePassword,
-            @Value("${config.saml.v20.idp.keystore}") Resource keystoreFile) {
+            @Value("${maxkey.saml.v20.idp.issuing.entity.id}") String entityName,
+            @Value("${maxkey.saml.v20.idp.keystore.password}") String keystorePassword,
+            @Value("${maxkey.saml.v20.idp.keystore}") Resource keystoreFile) {
         KeyStoreLoader keyStoreLoader = new KeyStoreLoader();
         keyStoreLoader.setEntityName(entityName);
         keyStoreLoader.setKeystorePassword(keystorePassword);
@@ -166,9 +164,9 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
      */
     @Bean(name = "spKeyStoreLoader")
     public KeyStoreLoader spKeyStoreLoader(
-            @Value("${config.saml.v20.sp.issuing.entity.id}") String entityName,
-            @Value("${config.saml.v20.sp.keystore.password}") String keystorePassword,
-            @Value("${config.saml.v20.sp.keystore}") Resource keystoreFile) {
+            @Value("${maxkey.saml.v20.sp.issuing.entity.id}") String entityName,
+            @Value("${maxkey.saml.v20.sp.keystore.password}") String keystorePassword,
+            @Value("${maxkey.saml.v20.sp.keystore}") Resource keystoreFile) {
         KeyStoreLoader keyStoreLoader = new KeyStoreLoader();
         keyStoreLoader.setEntityName(entityName);
         keyStoreLoader.setKeystorePassword(keystorePassword);
@@ -182,7 +180,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
      */
     @Bean(name = "spIssuingEntityName")
     public String spIssuingEntityName(
-            @Value("${config.saml.v20.sp.issuing.entity.id}") String spIssuingEntityName) {
+            @Value("${maxkey.saml.v20.sp.issuing.entity.id}") String spIssuingEntityName) {
         return spIssuingEntityName;
     }
 

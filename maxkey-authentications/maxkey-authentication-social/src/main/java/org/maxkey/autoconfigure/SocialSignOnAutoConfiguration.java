@@ -29,6 +29,7 @@ import org.maxkey.constants.ConstantsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -42,27 +43,34 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @ComponentScan(basePackages = {
         "org.maxkey.authn.support.socialsignon"
 })
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
+@PropertySource(ConstantsProperties.applicationPropertySource)
 public class SocialSignOnAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(SocialSignOnAutoConfiguration.class);
     
     @Bean(name = "socialSignOnProviderService")
     @ConditionalOnClass(SocialSignOnProvider.class)
-    public SocialSignOnProviderService socialSignOnProviderService() throws IOException {
+    public SocialSignOnProviderService socialSignOnProviderService(
+    		@Value("${spring.profiles.active}")String profilesActive) throws IOException {
         SocialSignOnProviderService socialSignOnProviderService = new SocialSignOnProviderService();
         
+        _logger.trace("spring.profiles.active " + profilesActive);
+        
         Resource resource = new ClassPathResource(
-                ConstantsProperties.classPathResource(ConstantsProperties.classPathResource(ConstantsProperties.maxKeyPropertySource)));
+                    ConstantsProperties.classPathResource(
+                    		ConstantsProperties.classPathResource(
+                    				ConstantsProperties.applicationPropertySource,
+                    				profilesActive)));
+        
         Properties properties = new Properties();
         properties.load(resource.getInputStream());
-        String [] providerList =properties.get("config.login.socialsignon.providers").toString().split(",");
+        String [] providerList =properties.get("maxkey.login.socialsignon.providers").toString().split(",");
         List<SocialSignOnProvider> socialSignOnProviderList = new ArrayList<SocialSignOnProvider>();
         for(String provider : providerList) {
-            String providerName = properties.getProperty("config.socialsignon."+provider+".provider.name");
-            String icon=properties.getProperty("config.socialsignon."+provider+".icon");
-            String clientId=properties.getProperty("config.socialsignon."+provider+".client.id");
-            String clientSecret=properties.getProperty("config.socialsignon."+provider+".client.secret");
-            String sortOrder = properties.getProperty("config.socialsignon."+provider+".sortorder");
+            String providerName = properties.getProperty("maxkey.socialsignon."+provider+".provider.name");
+            String icon=properties.getProperty("maxkey.socialsignon."+provider+".icon");
+            String clientId=properties.getProperty("maxkey.socialsignon."+provider+".client.id");
+            String clientSecret=properties.getProperty("maxkey.socialsignon."+provider+".client.secret");
+            String sortOrder = properties.getProperty("maxkey.socialsignon."+provider+".sortorder");
             SocialSignOnProvider socialSignOnProvider = new SocialSignOnProvider();
             socialSignOnProvider.setProvider(provider);
             socialSignOnProvider.setProviderName(providerName);

@@ -36,7 +36,6 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-@PropertySource(ConstantsProperties.maxKeyPropertySource)
 @PropertySource(ConstantsProperties.applicationPropertySource)
 public class ApplicationConfig {
     private static final Logger _logger = LoggerFactory.getLogger(ApplicationConfig.class);
@@ -50,22 +49,22 @@ public class ApplicationConfig {
     @Autowired
     LoginConfig loginConfig;
 
-    @Value("${config.server.basedomain}")
+    @Value("${maxkey.server.basedomain}")
     String baseDomainName;
 
-    @Value("${config.server.domain}")
+    @Value("${maxkey.server.domain}")
     String domainName;
 
-    @Value("${config.server.name}")
+    @Value("${maxkey.server.name}")
     String serverName;
 
-    @Value("${config.server.uri}")
+    @Value("${maxkey.server.uri}")
     String serverPrefix;
 
-    @Value("${config.server.default.uri}")
+    @Value("${maxkey.server.default.uri}")
     String defaultUri;
 
-    @Value("${config.server.management.uri}")
+    @Value("${maxkey.server.management.uri}")
     String managementUri;
 
     @Value("${server.port:8080}")
@@ -74,10 +73,10 @@ public class ApplicationConfig {
     @Value("${server.servlet.session.timeout:1800}")
     private int sessionTimeout;
 
-    @Value("${config.identity.kafkasupport:false}")
+    @Value("${maxkey.identity.kafkasupport:false}")
     private boolean kafkaSupport;
     
-    @Value("${config.maxkey.uri}")
+    @Value("${maxkey.maxkey.uri}")
     private String maxKeyUri;
     
     public int getPort() {
