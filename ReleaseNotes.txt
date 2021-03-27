@@ -25,8 +25,9 @@
 	*(MAXKEY-210324)  JumpServer开源堡垒机单点登录适配
 	*(MAXKEY-210325)  华为云单点登录适配
 	*(MAXKEY-210326)  Jenkins单点登录适配
-	*(MAXKEY-210227)  查询参数优化
-	*(MAXKEY-210228)  依赖jar引用、更新和升级
+	*(MAXKEY-210227)  通知公告简单功能实现
+	*(MAXKEY-210228)  查询参数优化
+	*(MAXKEY-210229)  依赖jar引用、更新和升级
 		log4j 		2.14.1
 		spring		5.3.5
 		springBoot  2.4.4
