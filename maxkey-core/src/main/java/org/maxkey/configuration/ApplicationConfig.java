@@ -79,6 +79,10 @@ public class ApplicationConfig {
     @Value("${maxkey.maxkey.uri}")
     private String maxKeyUri;
     
+    @Value("${maxkey.notices.visible:false}")
+    private boolean noticesVisible;
+    
+    
     public int getPort() {
         return port;
     }
@@ -204,6 +208,14 @@ public class ApplicationConfig {
 
 	public void setSessionTimeout(int sessionTimeout) {
 		this.sessionTimeout = sessionTimeout;
+	}
+
+	public boolean isNoticesVisible() {
+		return noticesVisible;
+	}
+
+	public void setNoticesVisible(boolean noticesVisible) {
+		this.noticesVisible = noticesVisible;
 	}
 
 	@Override

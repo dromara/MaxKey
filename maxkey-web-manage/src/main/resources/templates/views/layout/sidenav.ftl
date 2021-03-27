@@ -90,6 +90,12 @@
              </a>
            </li>
            <li>
+             <a class="side-nav-menu" href="<@base />/notices/list/">
+                <@locale code="navs.notices"/>  
+                <span class="fa fa-fw fa-bell"></span>
+             </a>
+           </li>
+           <li>
              <a class="side-nav-menu" href="<@base />/apps/adapters/list/">
                 <@locale code="navs.adapters"/>  
                 <span class="fa fa-fw fa-chain"></span>

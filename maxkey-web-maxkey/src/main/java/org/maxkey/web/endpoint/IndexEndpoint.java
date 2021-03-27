@@ -32,6 +32,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.maxkey.persistence.service.NoticesService;
 
 /**
  * Index
@@ -41,6 +42,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class IndexEndpoint {
 	private static Logger _logger = LoggerFactory.getLogger(IndexEndpoint.class);
+	
+	@Autowired
+	NoticesService noticesService;
 	
 	@Autowired
   	@Qualifier("applicationConfig")
@@ -69,6 +73,15 @@ public class IndexEndpoint {
 	public ModelAndView index() {
 		_logger.debug("IndexEndpoint /.");
 		return  new ModelAndView("index");
+		
+	}
+	
+	@RequestMapping(value={"/lastedNotices"})
+	public ModelAndView lastedNotices() {
+		_logger.debug("notices /notices.");
+		ModelAndView modelAndView = new ModelAndView("notices");
+		modelAndView.addObject("notice", noticesService.queryLastedNotices());
+		return  modelAndView;
 		
 	}
 }

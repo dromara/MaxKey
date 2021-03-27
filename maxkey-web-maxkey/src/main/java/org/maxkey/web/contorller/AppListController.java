@@ -19,6 +19,8 @@ package org.maxkey.web.contorller;
 
 import java.security.Principal;
 import java.util.List;
+
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
@@ -53,6 +55,9 @@ public class AppListController {
     static final Logger _logger = LoggerFactory.getLogger(AppListController.class);
 
     @Autowired
+  	protected ApplicationConfig applicationConfig;
+    
+    @Autowired
     private UserInfoService userInfoService;
 
     @Autowired
@@ -72,6 +77,7 @@ public class AppListController {
         ModelAndView modelAndView = new ModelAndView("main/appList");
         userInfoService.updateGridList(gridList);
         modelAndView.addObject("appList", queryAccessableApps());
+        modelAndView.addObject("noticesVisible", applicationConfig.isNoticesVisible());
         return modelAndView;
     }
 
@@ -79,6 +85,7 @@ public class AppListController {
     public ModelAndView appConfigList() {
         ModelAndView modelAndView = new ModelAndView("main/appConfigList");
         modelAndView.addObject("appList", queryAccessableApps());
+        
         return modelAndView;
     }
 
