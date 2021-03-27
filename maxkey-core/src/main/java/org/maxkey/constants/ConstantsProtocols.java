@@ -24,8 +24,6 @@ package org.maxkey.constants;
  */
 public final class ConstantsProtocols {
 
-    public static final String DESKTOP = "Desktop";
-
     public static final String BASIC = "Basic";
 
     public static final String EXTEND_API = "Extend_API";

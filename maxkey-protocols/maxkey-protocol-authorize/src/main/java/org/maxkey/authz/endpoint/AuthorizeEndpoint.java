@@ -41,14 +41,14 @@ import io.swagger.annotations.ApiOperation;
  * @author Crystal.Sea
  *
  */
-@Api(tags = "总认证地址文档模块")
+@Api(tags = "认证总地址文档模块")
 @Controller
 public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 	@Autowired
 	AppsCasDetailsService casDetailsService;
 	
 	//all single sign on url
-	@ApiOperation(value = "总认证地址接口", notes = "参数应用ID，分发到不同应用的认证地址",httpMethod="GET")
+	@ApiOperation(value = "认证总地址接口", notes = "参数应用ID，分发到不同应用的认证地址",httpMethod="GET")
 	@RequestMapping("/authz/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,
@@ -75,9 +75,7 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 			modelAndView=WebContext.forward("/authz/cas/"+id);
 		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.JWT)){
             modelAndView=WebContext.forward("/authz/jwt/"+id);
-        }else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.DESKTOP)){
-			modelAndView=WebContext.forward("/authz/desktop/"+id);
-		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.BASIC)){
+        }else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.BASIC)){
 			modelAndView=WebContext.redirect(application.getLoginUrl());
 		}
 		

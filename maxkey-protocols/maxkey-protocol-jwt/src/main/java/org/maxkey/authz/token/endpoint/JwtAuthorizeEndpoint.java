@@ -64,7 +64,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	@Autowired
 	ApplicationConfig applicationConfig;
 	
-	@ApiOperation(value = "JWT��֤��ַ�ӿ�", notes = "����Ӧ��ID",httpMethod="GET")
+	@ApiOperation(value = "JWT应用ID认证接口", notes = "应用ID",httpMethod="GET")
 	@RequestMapping("/authz/jwt/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,

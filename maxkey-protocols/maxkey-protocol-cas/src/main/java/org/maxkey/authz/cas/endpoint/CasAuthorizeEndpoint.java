@@ -156,6 +156,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	 * @param casService
 	 * @return
 	 */
+	@ApiOperation(value = "CAS注销接口", notes = "CAS注销接口",httpMethod="GET")
 	@RequestMapping("/authz/cas/logout")
 	public ModelAndView logout(
 			HttpServletRequest request,

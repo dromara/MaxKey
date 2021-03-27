@@ -191,8 +191,9 @@ public class AppListController {
         UserInfo userInfo = WebContext.getUserInfo();
         if (credential == Apps.CREDENTIALS.USER_DEFINED) {
             appUsers = appUsersService.load(new Accounts(userInfo.getId(), appId));
-            if (protocol.equalsIgnoreCase(ConstantsProtocols.DESKTOP) || protocol.equalsIgnoreCase(ConstantsProtocols.FORMBASED)
-                    || protocol.equalsIgnoreCase(ConstantsProtocols.BASIC) || protocol.equalsIgnoreCase(ConstantsProtocols.EXTEND_API)) {
+            if (protocol.equalsIgnoreCase(ConstantsProtocols.FORMBASED)
+                    || protocol.equalsIgnoreCase(ConstantsProtocols.BASIC) 
+                    || protocol.equalsIgnoreCase(ConstantsProtocols.EXTEND_API)) {
 
                 modelAndView.addObject("username", true);
                 modelAndView.addObject("password", true);
