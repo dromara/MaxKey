@@ -41,7 +41,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Crystal.Sea
  *
  */
-@Api(tags = "认证总地址文档模块")
+@Api(tags = "1-2认证总地址文档模块")
 @Controller
 public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 	@Autowired

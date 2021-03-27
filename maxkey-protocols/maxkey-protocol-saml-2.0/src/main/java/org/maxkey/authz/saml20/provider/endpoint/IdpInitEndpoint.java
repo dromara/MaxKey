@@ -49,7 +49,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Crystal.Sea
  *
  */
-@Api(tags = "SAML v2.0 API文档模块")
+@Api(tags = "2-2-SAML v2.0 API文档模块")
 @Controller
 public class IdpInitEndpoint {
 	private final static Logger logger = LoggerFactory.getLogger(IdpInitEndpoint.class);

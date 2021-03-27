@@ -43,7 +43,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Crystal.Sea
  *
  */
-@Api(tags = "ExtendApi接口文档模块")
+@Api(tags = "2-8-ExtendApi接口文档模块")
 @Controller
 public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(ExtendApiAuthorizeEndpoint.class);

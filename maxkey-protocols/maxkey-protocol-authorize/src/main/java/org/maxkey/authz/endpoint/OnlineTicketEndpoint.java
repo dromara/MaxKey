@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(tags = "在线ticket文档模块")
+@Api(tags = "3-1-在线ticket文档模块")
 @Controller
 @RequestMapping(value={"/onlineticket"})
 public class OnlineTicketEndpoint {

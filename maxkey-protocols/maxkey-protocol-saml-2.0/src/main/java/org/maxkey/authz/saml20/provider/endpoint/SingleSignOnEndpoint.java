@@ -48,7 +48,7 @@ import org.springframework.web.servlet.ModelAndView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(tags = "SAML v2.0 API文档模块")
+@Api(tags = "2-2-SAML v2.0 API文档模块")
 @Controller
 public class SingleSignOnEndpoint {
 	private final static Logger logger = LoggerFactory.getLogger(SingleSignOnEndpoint.class);

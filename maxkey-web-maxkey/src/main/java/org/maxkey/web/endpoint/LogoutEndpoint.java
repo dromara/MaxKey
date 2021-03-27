@@ -51,7 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(tags = "单点注销接口文档模块")
+@Api(tags = "1-3-单点注销接口文档模块")
 @Controller
 public class LogoutEndpoint {
 	

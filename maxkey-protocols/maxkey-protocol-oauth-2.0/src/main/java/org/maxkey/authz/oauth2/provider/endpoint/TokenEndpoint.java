@@ -72,7 +72,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Dave Syer
  * 
  */
-@Api(tags = "OAuth v2.0 API文档模块")
+@Api(tags = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class TokenEndpoint extends AbstractEndpoint {
 

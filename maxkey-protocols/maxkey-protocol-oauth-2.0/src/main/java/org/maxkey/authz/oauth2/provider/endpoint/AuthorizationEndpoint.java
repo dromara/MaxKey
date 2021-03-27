@@ -93,7 +93,7 @@ import org.maxkey.authz.oauth2.provider.ClientDetailsService;
  * @author Vladimir Kryachko
  * 
  */
-@Api(tags = "OAuth v2.0 API文档模块")
+@Api(tags = "2-1-OAuth v2.0 API文档模块")
 @Controller
 @SessionAttributes("authorizationRequest")
 public class AuthorizationEndpoint extends AbstractEndpoint {

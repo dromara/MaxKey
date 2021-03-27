@@ -49,7 +49,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Crystal.Sea
  * https://apereo.github.io/cas/6.2.x/protocol/CAS-Protocol.html
  */
-@Api(tags = "CAS API文档模块")
+@Api(tags = "2-3-CAS API文档模块")
 @Controller
 public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 

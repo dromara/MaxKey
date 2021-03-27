@@ -50,7 +50,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Crystal.Sea
  *
  */
-@Api(tags = "TokenBased接口文档模块")
+@Api(tags = "2-6-TokenBased接口文档模块")
 @Controller
 public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 

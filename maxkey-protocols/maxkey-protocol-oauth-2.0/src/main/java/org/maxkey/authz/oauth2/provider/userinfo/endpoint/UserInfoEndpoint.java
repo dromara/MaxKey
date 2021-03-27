@@ -76,7 +76,7 @@ import io.swagger.annotations.ApiOperation;
 
 import com.nimbusds.jwt.SignedJWT;
 
-@Api(tags = "OAuth v2.0 API文档模块")
+@Api(tags = "2-1-OAuth v2.0 API文档模块")
 @Controller
 @RequestMapping(value = { "/api" })
 public class UserInfoEndpoint {

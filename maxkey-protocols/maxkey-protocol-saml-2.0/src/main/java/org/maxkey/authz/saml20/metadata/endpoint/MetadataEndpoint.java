@@ -52,7 +52,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(tags = "SAML v2.0 API文档模块")
+@Api(tags = "2-2-SAML v2.0 API文档模块")
 @Controller
 @RequestMapping(value = { "/metadata/saml20/" })
 public class MetadataEndpoint {

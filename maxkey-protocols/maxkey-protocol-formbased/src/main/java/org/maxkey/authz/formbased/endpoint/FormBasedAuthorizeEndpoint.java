@@ -47,7 +47,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Crystal.Sea
  *
  */
-@Api(tags = "FormBased接口文档模块")
+@Api(tags = "2-7-FormBased接口文档模块")
 @Controller
 public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(FormBasedAuthorizeEndpoint.class);

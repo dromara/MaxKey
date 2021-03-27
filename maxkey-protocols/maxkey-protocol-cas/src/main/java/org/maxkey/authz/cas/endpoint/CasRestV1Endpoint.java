@@ -56,7 +56,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Crystal.Sea
  * https://apereo.github.io/cas/6.2.x/protocol/REST-Protocol.html
  */
-@Api(tags = "CAS REST API文档模块")
+@Api(tags = "2-4-CAS REST API文档模块")
 @Controller
 public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
     final static Logger _logger = LoggerFactory.getLogger(CasRestV1Endpoint.class);

@@ -50,7 +50,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Crystal.Sea
  *
  */
-@Api(tags = "JWT令牌接口")
+@Api(tags = "2-5-JWT令牌接口")
 @Controller
 public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
