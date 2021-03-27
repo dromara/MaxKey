@@ -298,14 +298,6 @@
 											<td><input required="" class="form-control"  type='password' id='tfa_j_password'  name='password' value=""  tabindex="2" /></td>
 										</tr>
 										<#if true==isMfa >
-										<#if "TOPT"==otpType >
-										<tr>
-											<td><@locale code="login.text.currenttime"/>：</td>
-											<td>
-												<input  class="form-control"  readonly type='text' id="currentTime" name="currentTime"  tabindex="3"  value="" />
-											</td>
-										</tr>
-										</#if>
 										<tr>
 											<td><@locale code="login.text.captcha"/>：</td>
 											<td>
@@ -314,6 +306,14 @@
 												
 											</td>
 										</tr>
+										<#if "TOPT"==otpType >
+										<tr>
+											<td><@locale code="login.text.currenttime"/>：</td>
+											<td>
+												<input  class="form-control"  readonly type='text' id="currentTime" name="currentTime"  tabindex="3"  value="" />
+											</td>
+										</tr>
+										</#if>
 										<tr>
 											<td></td>
 											<td>
