@@ -52,10 +52,6 @@ public class RestTimeBasedOtpController {
     	
     	UserInfo validUserInfo = userInfoService.loadByUsername(username);
     	if(validUserInfo != null) {
-    		 String sharedSecret = 
-                     PasswordReciprocal.getInstance().decoder(validUserInfo.getSharedSecret());
-             validUserInfo.setSharedSecret(sharedSecret);
-             validUserInfo.setSharedCounter(validUserInfo.getSharedCounter());
     		if(timeBasedOtpAuthn.validate(validUserInfo, token)) {
     			return true;
     		}

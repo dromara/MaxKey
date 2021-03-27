@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import org.apache.commons.codec.binary.Hex;
 import org.maxkey.crypto.Base32Utils;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.algorithm.TimeBasedOTP;
@@ -46,7 +47,9 @@ public class TimeBasedOtpAuthn extends AbstractOtpAuthn {
     public boolean validate(UserInfo userInfo, String token) {
         _logger.debug("utcTime : " + dateFormat.format(new Date()));
         long currentTimeSeconds = System.currentTimeMillis() / 1000;
-        byte[] byteSharedSecret = Base32Utils.decode(userInfo.getSharedSecret());
+        String sharedSecret = 
+                PasswordReciprocal.getInstance().decoder(userInfo.getSharedSecret());
+        byte[] byteSharedSecret = Base32Utils.decode(sharedSecret);
         String hexSharedSecret = Hex.encodeHexString(byteSharedSecret);
         String timeBasedToken = "";
         if (crypto.equalsIgnoreCase("HmacSHA1")) {

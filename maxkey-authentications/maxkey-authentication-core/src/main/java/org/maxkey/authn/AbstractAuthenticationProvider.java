@@ -25,7 +25,6 @@ import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
-import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.web.WebConstants;
@@ -222,9 +221,7 @@ public abstract class AbstractAuthenticationProvider {
         if (applicationConfig.getLoginConfig().isMfa() && authType.equalsIgnoreCase("tfa")) {
             UserInfo validUserInfo = new UserInfo();
             validUserInfo.setUsername(userInfo.getUsername());
-            String sharedSecret = 
-                    PasswordReciprocal.getInstance().decoder(userInfo.getSharedSecret());
-            validUserInfo.setSharedSecret(sharedSecret);
+            validUserInfo.setSharedSecret(userInfo.getSharedSecret());
             validUserInfo.setSharedCounter(userInfo.getSharedCounter());
             validUserInfo.setId(userInfo.getId());
             if (otpCaptcha == null || !tfaOtpAuthn.validate(validUserInfo, otpCaptcha)) {
