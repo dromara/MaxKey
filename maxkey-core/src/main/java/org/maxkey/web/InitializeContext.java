@@ -145,9 +145,9 @@ public class InitializeContext extends HttpServlet {
                         + databaseMetaData.getJDBCMajorVersion());
                 _logger.trace("JDBCMinorVersion      :   " 
                         + databaseMetaData.getJDBCMinorVersion());
-                _logger.debug("DriverName            :   " 
+                _logger.trace("DriverName            :   " 
                         + databaseMetaData.getDriverName());
-                _logger.debug("DriverVersion         :   " 
+                _logger.trace("DriverVersion         :   " 
                         + databaseMetaData.getDriverVersion());
                 _logger.debug("");
                 _logger.debug("DBMS  URL             :   " 
