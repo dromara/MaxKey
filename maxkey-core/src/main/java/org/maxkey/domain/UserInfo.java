@@ -166,6 +166,8 @@ public class UserInfo extends JpaBaseDomain {
     protected String workPostalCode;
     @Column
     protected String workFax;
+    
+    protected String workOfficeName;
     // for home
     @Column
     protected String homeCountry;
@@ -417,7 +419,15 @@ public class UserInfo extends JpaBaseDomain {
         this.password = password;
     }
 
-    public String getDecipherable() {
+    public String getWorkOfficeName() {
+		return workOfficeName;
+	}
+
+	public void setWorkOfficeName(String workOfficeName) {
+		this.workOfficeName = workOfficeName;
+	}
+
+	public String getDecipherable() {
         return decipherable;
     }
 

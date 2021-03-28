@@ -70,8 +70,13 @@ public class OrganizationalUnit {
 	/**OrganizationalUnit physicalDeliveryOfficeName*/
 	public static final String PHYSICALDELIVERYOFFICENAME    = "physicalDeliveryOfficeName";
 	/**OrganizationalUnit st*/
-	public static final String ST                            = "st";
+	public static final String ST                            = "st";//省/州
 	/**OrganizationalUnit l*/
-	public static final String L                             = "l";
+	public static final String L                             = "l";//县市
+
+	public static final String CO                            = "co"; //中国
+	public static final String C                             = "c"; //CN
+	public static final String COUNTRYCODE                   = "countryCode";//156
+	public static final String NAME                   		 = "name";
 	
 }

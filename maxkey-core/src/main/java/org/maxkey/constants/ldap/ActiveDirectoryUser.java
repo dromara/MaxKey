@@ -115,6 +115,8 @@ public class ActiveDirectoryUser {
      *	主要组			Set Primary Group 	primaryGroupID
 	 */
 
+	public static final String CN 							= "cn";
+	public static final String NAME 						= "name";
 	
 	public static final String GIVENNAME 					= "givenName";
 	public static final String SN 							= "sn";
@@ -123,6 +125,7 @@ public class ActiveDirectoryUser {
 	public static final String PHYSICALDELIVERYOFFICENAME 	= "physicalDeliveryOfficeName";
 	public static final String MAIL 						= "mail";
 	public static final String WWWHOMEPAGE 					= "wwwHomePage";
+	public static final String DISPLAYNAME 					= "displayName";
 
 	public static final String TELEPHONENUMBER 				= "telephoneNumber";
 	public static final String OTHERTELEPHONE 				= "otherTelephone";
@@ -135,6 +138,8 @@ public class ActiveDirectoryUser {
 	public static final String IPPHONE 						= "ipPhone";
 	public static final String OTHERIPPHONE 				= "otherIpPhone";
 	public static final String INFO 						= "info";
+	public static final String HOMEPHONE 					= "homePhone";
+	
 
 	public static final String USERPRINCIPALNAME 			= "userPrincipalName";
 	public static final String SAMACCOUNTNAME 				= "sAMAccountname";
@@ -143,17 +148,19 @@ public class ActiveDirectoryUser {
 	public static final String USERACCOUNTCONTROL		 	= "userAccountControl   ";
 	public static final String PWDLASTSET 					= "pwdLastSet";
 	public static final String ACCOUNTEXPIRES 				= "accountExpires";
-
+	
+	public static final String CO 							= "co";
+	public static final String C 							= "c";
+	public static final String COUNTRYCODE 					= "countryCode";
+	public static final String ST 							= "st";
+	public static final String L 							= "l";
 	public static final String STREETADDRESS 				= "streetAddress";
 	public static final String POSTOFFICEBOX 				= "postOfficeBox";
 	public static final String POSTALCODE 					= "postalCode";
-	public static final String L 							= "l";
-	public static final String ST 							= "st";
-	public static final String C 							= "c";
 
 	public static final String TITLE 						= "title";
-	public static final String DEPARTMENT 					= "department";
 	public static final String COMPANY 						= "company";
+	public static final String DEPARTMENT 					= "department";
 	public static final String MANAGER 						= "manager";
 	public static final String DIRECTREPORTS 				= "directReports";
 

@@ -273,9 +273,12 @@ public class LdapUtils {
         try {
             if (attrs.get(elem) != null) {
                 for (int i = 0; i < attrs.get(elem).size(); i++) {
-                    value += "," + attrs.get(elem).get(i).toString();
+                	if(i == 0) {
+                		value += attrs.get(elem).get(i).toString();
+                	}else {
+                		value += "," + attrs.get(elem).get(i).toString();
+                	}
                 }
-                value = value.substring(1);
             }
         } catch (NamingException e) {
             e.printStackTrace();
