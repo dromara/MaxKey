@@ -17,10 +17,12 @@
 
 package org.maxkey.persistence.ldap;
 
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
@@ -286,4 +288,13 @@ public class LdapUtils {
         }
         return value;
     }
+    
+    public static String getAttributeStringValue(String attribute ,HashMap<String,Attribute> attributeMap) throws NamingException {
+		attribute= attribute.toLowerCase();
+		if(null != attributeMap.get(attribute)  && null != attributeMap.get(attribute).get()) {
+			return attributeMap.get(attribute).get().toString();
+		}else {
+			return "";
+		}
+	}
 }
