@@ -31,6 +31,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -44,13 +45,13 @@ import org.springframework.stereotype.Component;
 public class HttpRequestAdapter {
 	private static final Logger _logger = LoggerFactory.getLogger(HttpRequestAdapter.class);
 	 
-	public void post(String url,Map<String, Object> parameterMap) {
+	public String post(String url,Map<String, Object> parameterMap) {
 		HashMap<String,String> headers = new HashMap<String,String>();
 		headers.put("Content-Type", "application/x-www-form-urlencoded");
-		post(url , parameterMap , headers);
+		return post(url , parameterMap , headers);
 	}
 	
-    public void post(String url,Map<String, Object> parameterMap,HashMap<String,String> headers) {
+    public String post(String url,Map<String, Object> parameterMap,HashMap<String,String> headers) {
         // 创建httpClient实例
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse httpResponse = null;
@@ -105,10 +106,12 @@ public class HttpRequestAdapter {
             httpResponse = httpClient.execute(httpPost);
             // 从响应对象中获取响应内容
             HttpEntity entity = httpResponse.getEntity();
+            String content = EntityUtils.toString(entity);
             _logger.debug("Http Response StatusCode " + 
                     httpResponse.getStatusLine().getStatusCode()+
-                    " , Content " +EntityUtils.toString(entity)
+                    " , Content " + content
             );
+            return content;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -128,6 +131,72 @@ public class HttpRequestAdapter {
                 }
             }
         }
+        return null;
+    }
+    
+    
+	public String get(String url) {
+		HashMap<String,String> headers = new HashMap<String,String>();
+		headers.put("Content-Type", "application/x-www-form-urlencoded");
+		return get(url ,  headers);
+	}
+	
+    public String get(String url,HashMap<String,String> headers) {
+        // 创建httpClient实例
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse httpResponse = null;
+        // 创建httpPost远程连接实例
+        HttpGet httpGet = new HttpGet(url);
+        // 配置请求参数实例
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(35000)// 设置连接主机服务超时时间
+                .setConnectionRequestTimeout(35000)// 设置连接请求超时时间
+                .setSocketTimeout(60000)// 设置读取数据连接超时时间
+                .build();
+        // 为httpGet实例设置配置
+        httpGet.setConfig(requestConfig);
+        // 设置请求头
+        if (null != headers && headers.size() > 0) {
+        	  Set<Entry<String, String>> entrySet = headers.entrySet();
+              // 循环遍历，获取迭代器
+              Iterator<Entry<String, String>> iterator = entrySet.iterator();
+              while (iterator.hasNext()) {
+                  Entry<String, String> mapEntry = iterator.next();
+                  _logger.trace("Name " + mapEntry.getKey() + " , Value " +mapEntry.getValue());
+                  httpGet.addHeader(mapEntry.getKey(), mapEntry.getValue());
+              }
+        }        
+        
+        try {
+            // httpClient对象执行post请求,并返回响应参数对象
+            httpResponse = httpClient.execute(httpGet);
+            // 从响应对象中获取响应内容
+            HttpEntity entity = httpResponse.getEntity();
+            String content = EntityUtils.toString(entity);
+            _logger.debug("Http Response StatusCode " + 
+                    httpResponse.getStatusLine().getStatusCode()+
+                    " , Content " + content
+            );
+            return content;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭资源
+            if (null != httpResponse) {
+                try {
+                    httpResponse.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != httpClient) {
+                try {
+                    httpClient.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
     
 }
