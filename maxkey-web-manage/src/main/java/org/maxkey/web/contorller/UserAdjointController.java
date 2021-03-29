@@ -48,7 +48,7 @@ public class UserAdjointController {
 	
 	@RequestMapping(value={"/list/{userId}"})
 	public ModelAndView userinfoAdjointList(@PathVariable("userId") String userId){
-	    ModelAndView modelAndView=new ModelAndView("userinfo/userinfoAdjointList");
+	    ModelAndView modelAndView=new ModelAndView("/userinfo/userinfoAdjointList");
 	    modelAndView.addObject("userId", userId);
 		return modelAndView;
 	}
@@ -64,14 +64,14 @@ public class UserAdjointController {
 	
 	@RequestMapping(value = { "/forwardAdd/{userId}" })
 	public ModelAndView forwardAdd(@PathVariable("userId") String userId) {
-	    ModelAndView modelAndView=new ModelAndView("userinfo/userinfoAdjointAdd");
+	    ModelAndView modelAndView=new ModelAndView("/userinfo/userinfoAdjointAdd");
         modelAndView.addObject("userId", userId);
         return modelAndView;
 	}
 	
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
-		ModelAndView modelAndView=new ModelAndView("userinfo/userinfoAdjointUpdate");
+		ModelAndView modelAndView=new ModelAndView("/userinfo/userinfoAdjointUpdate");
 		UserInfoAdjoint userInfoAdjoint=userInfoAdjointService.get(id);
 		modelAndView.addObject("model",userInfoAdjoint);
 		return modelAndView;
