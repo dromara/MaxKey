@@ -56,9 +56,18 @@ public class LoginService {
 
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "SELECT * FROM  MXK_USERINFO WHERE USERNAME = ?";
     
+    private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE = "SELECT * FROM  MXK_USERINFO WHERE USERNAME = ? OR MOBILE = ? ";
+    
+    private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL = "SELECT * FROM  MXK_USERINFO WHERE USERNAME = ? OR MOBILE = ? OR EMAIL = ? ";
+    
     private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "SELECT DISTINCT APP.ID,APP.NAME FROM MXK_APPS APP,MXK_GROUP_PRIVILEGES GP,MXK_GROUPS G  WHERE APP.ID=GP.APPID AND GP.GROUPID=G.ID AND G.ID IN(%s)";
     
     protected JdbcTemplate jdbcTemplate;
+    
+    /**
+     * 1 (USERNAME)  2 (USERNAME | MOBILE) 3 (USERNAME | MOBILE | EMAIL)
+     */
+    public  static  int LOGIN_ATTRIBUTE_TYPE = 1;
     
     public LoginService(){
         
@@ -69,8 +78,28 @@ public class LoginService {
     }
     
     public UserInfo loadUserInfo(String username, String password) {
-        List<UserInfo> listUserInfo = jdbcTemplate.query(DEFAULT_USERINFO_SELECT_STATEMENT, new UserInfoRowMapper(),
-                username);
+    	
+        List<UserInfo> listUserInfo = null ;
+        if( LOGIN_ATTRIBUTE_TYPE == 1) {
+	        listUserInfo = jdbcTemplate.query(
+	        			DEFAULT_USERINFO_SELECT_STATEMENT, 
+	        			new UserInfoRowMapper(),
+	        			username
+	        		);
+        }else if( LOGIN_ATTRIBUTE_TYPE == 2) {
+        	 listUserInfo = jdbcTemplate.query(
+        			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE, 
+	        			new UserInfoRowMapper(),
+	        			username,username
+	        		);
+        }else if( LOGIN_ATTRIBUTE_TYPE == 3) {
+        	 listUserInfo = jdbcTemplate.query(
+        			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL, 
+	        			new UserInfoRowMapper(),
+	        			username,username,username
+	        		);
+        }
+        
         UserInfo userInfo = null;
         if (listUserInfo != null && listUserInfo.size() > 0) {
             userInfo = listUserInfo.get(0);
