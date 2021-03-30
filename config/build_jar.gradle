@@ -46,27 +46,16 @@ allprojects {
 	targetCompatibility	= 1.8
 	compileJava.options.encoding = 'UTF-8'
 	
+	/*
 	eclipse {
-		/*第一次时请注释这段eclipse设置，可能报错*/
+		第一次时请注释这段eclipse设置，可能报错，设置工程字符集
 		jdt  {
 		    File f = file('.settings/org.eclipse.core.resources.prefs')
 		    f.write('eclipse.preferences.version=1\n')
 		    f.append('encoding/<project>=UTF-8') //use UTF-8
 		}
-		
-		
-		/*
-		wtp {
-	        facet {
-	            facet name: 'jst.web', type: Facet.FacetType.fixed
-	            facet name: 'wst.jsdt.web', type: Facet.FacetType.fixed
-	            facet name: 'jst.java', type: Facet.FacetType.fixed
-	            facet name: 'jst.web', version: '3.0'
-	            facet name: 'jst.java', version: '1.7'
-	            facet name: 'wst.jsdt.web', version: '1.0'
-	        }
-	    }*/
 	}
+	*/
 
     
 }
@@ -89,6 +78,16 @@ repositories {
 
 
 subprojects {  	
+	/*
+	eclipse {
+		第一次时请注释这段eclipse设置，可能报错，设置工程字符集
+		jdt  {
+		    File f = file('.settings/org.eclipse.core.resources.prefs')
+		    f.write('eclipse.preferences.version=1\n')
+		    f.append('encoding/<project>=UTF-8') //use UTF-8
+		}
+	}
+	*/
 	sourceSets {
 	    main {
 	        java {
