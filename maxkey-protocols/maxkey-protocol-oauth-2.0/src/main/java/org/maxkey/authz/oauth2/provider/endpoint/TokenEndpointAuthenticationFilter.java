@@ -133,13 +133,37 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 		final HttpServletRequest request = (HttpServletRequest) req;
 		final HttpServletResponse response = (HttpServletResponse) res;
 
+		if(logger.isTraceEnabled()) {
+			logger.trace("getRequestURL : "+request.getRequestURL());
+			logger.trace("getMethod : "+request.getMethod());
+	        Enumeration<String> headerNames = request.getHeaderNames();
+	        while (headerNames.hasMoreElements()) {
+	          String key = (String) headerNames.nextElement();
+	          String value = request.getHeader(key);
+	          logger.trace("Header key "+key +" , value " + value);
+	        }
+	        
+	        Enumeration<String> parameterNames = request.getParameterNames();
+	        while (parameterNames.hasMoreElements()) {
+	          String key = (String) parameterNames.nextElement();
+	          String value = request.getParameter(key);
+	          logger.trace("Parameter "+key +" , value " + value);
+	        }
+		}
+		
 		try {
 			String grantType = request.getParameter("grant_type");
 			if (grantType != null && grantType.equals("password")) {
 				usernamepassword(request,response);
 			}else {
 				Authentication authentication=ClientCredentials(request,response);
-				SigninPrincipal auth =new SigninPrincipal((User)authentication.getPrincipal());
+				logger.trace("getPrincipal " + authentication.getPrincipal().getClass());
+				SigninPrincipal auth = null;
+				if(authentication.getPrincipal() instanceof SigninPrincipal) {
+					auth = (SigninPrincipal)authentication.getPrincipal();
+				}else {
+					auth =new SigninPrincipal((User)authentication.getPrincipal());
+				}
 				auth.setAuthenticated(true);
 				UsernamePasswordAuthenticationToken simpleUserAuthentication = new UsernamePasswordAuthenticationToken(auth, authentication.getCredentials(), authentication.getAuthorities());
 				WebContext.setAuthentication(simpleUserAuthentication);
@@ -223,15 +247,6 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 			String clientId = request.getParameter("client_id");
 			String clientSecret = request.getParameter("client_secret");
 			if(clientId == null) {
-				if(logger.isTraceEnabled()) {
-					logger.trace("getRequestURL : "+request.getRequestURL());
-			        Enumeration<String> headerNames = request.getHeaderNames();
-			        while (headerNames.hasMoreElements()) {
-			          String key = (String) headerNames.nextElement();
-			          String value = request.getHeader(key);
-			          logger.trace("Header key "+key +" , value " + value);
-			        }
-				}
 				//for header authorization basic
 				String authorization_bearer =request.getHeader("authorization");
 				AuthorizationHeaderCredential ahc=AuthorizationHeaderUtils.resolve(authorization_bearer);
