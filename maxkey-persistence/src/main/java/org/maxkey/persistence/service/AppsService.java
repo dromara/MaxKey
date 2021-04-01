@@ -17,17 +17,26 @@
 
 package org.maxkey.persistence.service;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
+import org.ehcache.UserManagedCache;
+import org.ehcache.config.builders.ExpiryPolicyBuilder;
+import org.ehcache.config.builders.UserManagedCacheBuilder;
 import org.maxkey.domain.apps.Apps;
 import org.maxkey.domain.apps.UserApps;
 import org.maxkey.persistence.mapper.AppsMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AppsService  extends JpaBaseService<Apps>{
+public class AppsService extends JpaBaseService<Apps>{
 
+	protected final static  UserManagedCache<String, Apps> appsDetailsStore = 
+			UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, Apps.class)
+				.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofHours(1)))
+				.build(true);
+	
 	public AppsService() {
 		super(AppsMapper.class);
 	}
@@ -54,5 +63,15 @@ public class AppsService  extends JpaBaseService<Apps>{
 	
     public List<UserApps> queryMyApps(UserApps userApplications){
         return getMapper().queryMyApps(userApplications);
+    }
+    
+    //cache for running
+    public void storeCacheAppDetails(String appId, Apps appDetails) {
+    	appsDetailsStore.put(appId, appDetails);
+	}
+	
+    public Apps getCacheAppDetails(String appId) {
+    	Apps appDetails=appsDetailsStore.get(appId); 
+        return appDetails;
     }
 }
