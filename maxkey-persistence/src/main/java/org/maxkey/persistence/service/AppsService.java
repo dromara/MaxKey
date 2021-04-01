@@ -32,9 +32,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AppsService extends JpaBaseService<Apps>{
 
-	protected final static  UserManagedCache<String, Apps> appsDetailsStore = 
+	protected final static  UserManagedCache<String, Apps> appsDetailsCacheStore = 
 			UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, Apps.class)
-				.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofHours(1)))
+				.withExpiry(
+					ExpiryPolicyBuilder.timeToLiveExpiration(
+							Duration.ofHours(1)
+					)
+				)
 				.build(true);
 	
 	public AppsService() {
@@ -67,11 +71,11 @@ public class AppsService extends JpaBaseService<Apps>{
     
     //cache for running
     public void storeCacheAppDetails(String appId, Apps appDetails) {
-    	appsDetailsStore.put(appId, appDetails);
+    	appsDetailsCacheStore.put(appId, appDetails);
 	}
 	
     public Apps getCacheAppDetails(String appId) {
-    	Apps appDetails=appsDetailsStore.get(appId); 
+    	Apps appDetails=appsDetailsCacheStore.get(appId); 
         return appDetails;
     }
 }
