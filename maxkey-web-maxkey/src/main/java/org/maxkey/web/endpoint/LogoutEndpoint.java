@@ -112,32 +112,38 @@ public class LogoutEndpoint {
  		_logger.debug("re Login URL : "+ reLoginUrl);
  		
  		modelAndView.addObject("reloginUrl",reLoginUrl);
- 		String onlineTicketId = ((SigninPrincipal)WebContext.getAuthentication().getPrincipal()).getOnlineTicket().getTicketId();
- 		OnlineTicket onlineTicket = onlineTicketServices.get(onlineTicketId);
  		
- 		Set<Entry<String, Apps>> entrySet = onlineTicket.getAuthorizedApps().entrySet();
- 
-        Iterator<Entry<String, Apps>> iterator = entrySet.iterator();
-        while (iterator.hasNext()) {
-            Entry<String, Apps> mapEntry = iterator.next();
-            _logger.debug("App Id : "+ mapEntry.getKey()+ " , " +mapEntry.getValue());
-            if( mapEntry.getValue().getLogoutType() == LogoutType.BACK_CHANNEL){
-                SingleLogout singleLogout;
-                if(mapEntry.getValue().getProtocol().equalsIgnoreCase(ConstantsProtocols.CAS)) {
-                    singleLogout =new SamlSingleLogout();
-                }else {
-                    singleLogout = new DefaultSingleLogout();
-                }
-                singleLogout.sendRequest(onlineTicket.getAuthentication(), mapEntry.getValue());
-            }
-        }
- 		onlineTicketServices.remove(onlineTicketId);
- 		
+ 		//if logined in have onlineTicket ,need remove or logout back
+ 		if(WebContext.getAuthentication() != null) {
+ 			String onlineTicketId = ((SigninPrincipal)WebContext.getAuthentication().getPrincipal()).getOnlineTicket().getTicketId();
+ 	 		OnlineTicket onlineTicket = onlineTicketServices.get(onlineTicketId);
+ 	 		if(onlineTicket != null) {
+		 		Set<Entry<String, Apps>> entrySet = onlineTicket.getAuthorizedApps().entrySet();
+		 
+		        Iterator<Entry<String, Apps>> iterator = entrySet.iterator();
+		        while (iterator.hasNext()) {
+		            Entry<String, Apps> mapEntry = iterator.next();
+		            _logger.debug("App Id : "+ mapEntry.getKey()+ " , " +mapEntry.getValue());
+		            if( mapEntry.getValue().getLogoutType() == LogoutType.BACK_CHANNEL){
+		                SingleLogout singleLogout;
+		                if(mapEntry.getValue().getProtocol().equalsIgnoreCase(ConstantsProtocols.CAS)) {
+		                    singleLogout =new SamlSingleLogout();
+		                }else {
+		                    singleLogout = new DefaultSingleLogout();
+		                }
+		                singleLogout.sendRequest(onlineTicket.getAuthentication(), mapEntry.getValue());
+		            }
+		        }
+		 		onlineTicketServices.remove(onlineTicketId);
+ 	 		}
+ 		}
  		//remove ONLINE_TICKET cookie
- 		WebContext.expiryCookie(WebContext.getResponse(), 
-                this.applicationConfig.getBaseDomainName(), 
-                WebConstants.ONLINE_TICKET_NAME, 
-                UUID.randomUUID().toString());
+ 		WebContext.expiryCookie(
+ 					WebContext.getResponse(), 
+ 					this.applicationConfig.getBaseDomainName(), 
+ 					WebConstants.ONLINE_TICKET_NAME, 
+ 					UUID.randomUUID().toString()
+ 		);
  		
  		request.getSession().invalidate();
  		SecurityContextHolder.clearContext();

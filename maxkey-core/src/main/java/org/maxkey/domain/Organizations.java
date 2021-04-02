@@ -85,9 +85,13 @@ public class Organizations extends JpaBaseDomain implements Serializable {
     private String description;
     
     private String status;
+    @Column
+    private String extId;
+    @Column
+    private String extParentId;
 
     public Organizations() {
-        // TODO Auto-generated constructor stub
+        //
     }
 
     public String getId() {
@@ -309,8 +313,24 @@ public class Organizations extends JpaBaseDomain implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    public String getExtId() {
+		return extId;
+	}
 
-    @Override
+	public void setExtId(String extId) {
+		this.extId = extId;
+	}
+
+	public String getExtParentId() {
+		return extParentId;
+	}
+
+	public void setExtParentId(String extParentId) {
+		this.extParentId = extParentId;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Organizations [id=");
@@ -365,6 +385,10 @@ public class Organizations extends JpaBaseDomain implements Serializable {
 		builder.append(description);
 		builder.append(", status=");
 		builder.append(status);
+		builder.append(", extId=");
+		builder.append(extId);
+		builder.append(", extParentId=");
+		builder.append(extParentId);
 		builder.append("]");
 		return builder.toString();
 	}
