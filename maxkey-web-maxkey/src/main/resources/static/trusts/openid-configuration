@@ -1,10 +1,10 @@
 {
-    "issuer": "http://login.connsec.com", 
-    "authorization_endpoint": "http://login.connsec.com/sec/oauth/v20/authorize", 
-    "token_endpoint": "http://login.connsec.com/sec/oauth/v20/token", 
-    "userinfo_endpoint": "http://login.connsec.com/sec/api/connect/v10/userinfo",
+    "issuer": "http://sso.maxkey.top", 
+    "authorization_endpoint": "http://sso.maxkey.top/maxkey/authz/oauth/v20/authorize", 
+    "token_endpoint": "http://sso.maxkey.top/maxkey/authz/oauth/v20/token", 
+    "userinfo_endpoint": "http://sso.maxkey.top/maxkey/api/connect/v10/userinfo",
     "revocation_endpoint": "", 
-    "jwks_uri": "http://login.connsec.com/sec/key/jwk", 
+    "jwks_uri": "http://sso.maxkey.top/maxkey/key/jwk", 
     "display_values_supported": [
         "page", 
         "popup", 

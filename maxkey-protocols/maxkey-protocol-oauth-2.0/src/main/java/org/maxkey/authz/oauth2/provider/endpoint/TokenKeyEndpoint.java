@@ -34,6 +34,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -69,7 +70,7 @@ public class TokenKeyEndpoint {
      * @param principal the currently authenticated user if there is one
      * @return the key used to verify tokens
      */
-    @RequestMapping(value = "/oauth/token_key", method = RequestMethod.GET)
+    @RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN_KEY, method = RequestMethod.GET)
     @ResponseBody
     public Map<String, String> getKey(Principal principal) {
         if ((principal == null || principal instanceof AnonymousAuthenticationToken) && !converter.isPublic()) {

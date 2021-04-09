@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
@@ -77,7 +78,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
  * @author Dave Syer
  * 
  */
-@WebFilter(filterName = "TokenEndpointAuthenticationFilter", urlPatterns = "/oauth/v20/token/*")
+@WebFilter(filterName = "TokenEndpointAuthenticationFilter", urlPatterns = OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN+"/*")
 public class TokenEndpointAuthenticationFilter implements Filter {
 
 	private static final Log logger = LogFactory.getLog(TokenEndpointAuthenticationFilter.class);

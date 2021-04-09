@@ -64,7 +64,7 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.FORMBASED)){
 			 modelAndView=WebContext.forward("/authz/formbased/"+id);
 		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH20)){
-			 modelAndView=WebContext.forward("/authz/oauthv20/"+application.getId());
+			 modelAndView=WebContext.forward("/authz/oauth/v20/"+application.getId());
 		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.OPEN_ID_CONNECT)){
 			// modelAndView=new ModelAndView("openid connect");
 		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.SAML20)){

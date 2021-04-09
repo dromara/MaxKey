@@ -22,6 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
@@ -73,7 +74,7 @@ public class OAuth20AccessConfirmationController {
      * @return
      * throws Exception  
      */
-    @RequestMapping("/oauth/v20/approval_confirm")
+    @RequestMapping(OAuth2Constants.ENDPOINT.ENDPOINT_APPROVAL_CONFIRM)
     public ModelAndView getAccessConfirmation(
             @RequestParam Map<String, Object> model) throws Exception {
         model.remove("authorizationRequest");
@@ -123,7 +124,7 @@ public class OAuth20AccessConfirmationController {
      * @return
      * throws Exception
      */
-    @RequestMapping("/oauth/v20/error")
+    @RequestMapping(OAuth2Constants.ENDPOINT.ENDPOINT_ERROR)
     public String handleError(Map<String, Object> model) throws Exception {
         // We can add more stuff to the model here for JSP rendering. If the client was
         // a machine then

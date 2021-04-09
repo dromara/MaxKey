@@ -25,6 +25,7 @@ import java.util.Set;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.oauth2.common.DefaultOAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidClientException;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidGrantException;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidRequestException;
@@ -89,7 +90,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 	 * @throws HttpRequestMethodNotSupportedException
 	 */
 	@ApiOperation(value = "OAuth 2.0 获取AccessToken接口", notes = "传递参数token等",httpMethod="GET")
-	@RequestMapping(value = "/oauth/v20/token", method=RequestMethod.GET)
+	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN, method=RequestMethod.GET)
 	public ResponseEntity<OAuth2AccessToken> getAccessToken(@RequestParam
 	Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
 		if (!allowedRequestMethods.contains(HttpMethod.GET)) {
@@ -99,7 +100,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 	}
 	
 	@ApiOperation(value = "OAuth 2.0 获取AccessToken接口", notes = "传递参数token等",httpMethod="POST")
-	@RequestMapping(value = "/oauth/v20/token", method=RequestMethod.POST)
+	@RequestMapping(value =  OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN, method=RequestMethod.POST)
 	public ResponseEntity<OAuth2AccessToken> postAccessToken(@RequestParam
 	Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
 		// TokenEndpointAuthenticationFilter

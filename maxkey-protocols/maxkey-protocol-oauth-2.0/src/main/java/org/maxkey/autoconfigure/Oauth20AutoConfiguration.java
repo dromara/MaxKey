@@ -24,6 +24,7 @@ import java.security.spec.InvalidKeySpecException;
 import javax.servlet.Filter;
 import javax.sql.DataSource;
 import org.maxkey.authn.support.jwt.JwtLoginService;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.OAuth2UserDetailsService;
 import org.maxkey.authz.oauth2.provider.approval.TokenApprovalStore;
@@ -79,7 +80,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         _logger.debug("TokenEndpointAuthenticationFilter init ");
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<Filter>();
         registration.setFilter(new TokenEndpointAuthenticationFilter());
-        registration.addUrlPatterns("/oauth/v20/token/*");
+        registration.addUrlPatterns(OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN + "/*");
         registration.setName("TokenEndpointAuthenticationFilter");
         registration.setOrder(1);
         return registration;

@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidClientException;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidRequestException;
 import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
@@ -99,7 +100,7 @@ import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 public class AuthorizationEndpoint extends AbstractEndpoint {
 	final static Logger _logger = LoggerFactory.getLogger(AuthorizationEndpoint.class);
 	
-	private static final String OAUTH_V20_AUTHORIZATION_URL = "%s/oauth/v20/authorize?client_id=%s&response_type=code&redirect_uri=%s&approval_prompt=auto";
+	private static final String OAUTH_V20_AUTHORIZATION_URL = "%s" + OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE + "?client_id=%s&response_type=code&redirect_uri=%s&approval_prompt=auto";
 	
 	@Autowired
 	@Qualifier("oauth20JdbcClientDetailsService")
@@ -117,9 +118,9 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 	private OAuth2RequestValidator oauth2RequestValidator = new DefaultOAuth2RequestValidator();
 
-	private String userApprovalPage = "forward:/oauth/v20/approval_confirm";
+	private String userApprovalPage = "forward:" + OAuth2Constants.ENDPOINT.ENDPOINT_APPROVAL_CONFIRM;
 
-	private String errorPage = "forward:/oauth/error";
+	private String errorPage = "forward:" + OAuth2Constants.ENDPOINT.ENDPOINT_ERROR;
 	
 	private Object implicitLock = new Object();
 
@@ -132,7 +133,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	}
 
 	@ApiOperation(value = "OAuth 2.0 认证接口", notes = "传递参数client_id,response_type,redirect_uri等",httpMethod="GET")
-	@RequestMapping(value = "/oauth/v20/authorize", method = RequestMethod.GET)
+	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE, method = RequestMethod.GET)
 	public ModelAndView authorize(Map<String, Object> model, @RequestParam Map<String, String> parameters,
 			SessionStatus sessionStatus) {
 		 Principal principal=(Principal)WebContext.getAuthentication();
@@ -211,7 +212,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 	}
 
-	@RequestMapping(value = "/oauth/v20/authorize", method = RequestMethod.POST, params = OAuth2Utils.USER_OAUTH_APPROVAL)
+	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE, method = RequestMethod.POST, params = OAuth2Utils.USER_OAUTH_APPROVAL)
 	public View approveOrDeny(@RequestParam Map<String, String> approvalParameters, Map<String, ?> model,
 			SessionStatus sessionStatus) {
 		Principal principal=(Principal)WebContext.getAuthentication();
@@ -514,7 +515,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	}
 
 	@ApiOperation(value = "OAuth 2.0 认证接口", notes = "传递参数应用ID，自动完成跳转认证拼接",httpMethod="GET")
-	@RequestMapping("/authz/oauthv20/{id}")
+	@RequestMapping(OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,
 			HttpServletResponse response,

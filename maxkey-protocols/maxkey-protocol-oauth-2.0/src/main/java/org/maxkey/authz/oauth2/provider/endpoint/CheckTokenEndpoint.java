@@ -34,6 +34,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidTokenException;
 import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
@@ -81,7 +82,7 @@ public class CheckTokenEndpoint {
 	}
 
 	@ApiOperation(value = "OAuth 2.0 token检查接口", notes = "传递参数token",httpMethod="POST")
-	@RequestMapping(value = "/oauth/v20/check_token")
+	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_CHECK_TOKEN)
 	@ResponseBody
 	public Map<String, ?> checkToken(@RequestParam("token") String value) {
 
