@@ -55,7 +55,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(Cas30AuthorizeEndpoint.class);
 
 	@ApiOperation(value = "CAS 3.0 ticket验证接口", notes = "通过ticket获取当前登录用户信息",httpMethod="POST")
-	@RequestMapping(value="/authz/cas/p3/serviceValidate")
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE_V3)
 	public void serviceValidate(
 			HttpServletRequest request,
 			HttpServletResponse response,
@@ -116,7 +116,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	}
 	
 	@ApiOperation(value = "CAS 3.0 ProxyTicket代理验证接口", notes = "通过ProxyGrantingTicket获取ProxyTicket",httpMethod="POST")
-	@RequestMapping("/authz/cas/p3/proxy")
+	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_PROXY_V3)
 	public void proxy(
 			HttpServletRequest request,
 			HttpServletResponse response,
@@ -142,7 +142,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	}
 	
 	@ApiOperation(value = "CAS 3.0 ticket代理验证接口", notes = "通过ProxyTicket获取当前登录用户信息",httpMethod="POST")
-	@RequestMapping("/authz/cas/p3/proxyValidate")
+	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_PROXY_VALIDATE_V3)
 	public void proxy(
 			HttpServletRequest request,
 			HttpServletResponse response,

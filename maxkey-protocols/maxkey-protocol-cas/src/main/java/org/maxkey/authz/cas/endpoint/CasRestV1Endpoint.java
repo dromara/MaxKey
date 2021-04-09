@@ -66,7 +66,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
     AbstractAuthenticationProvider authenticationProvider ;
     
     @ApiOperation(value = "CAS REST认证接口", notes = "通过用户名密码获取TGT",httpMethod="POST")
-	@RequestMapping(value="/authz/cas/v1/tickets", 
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1, 
 	        method=RequestMethod.POST, 
 	        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> casLoginRestTickets(
@@ -87,9 +87,11 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
             
             String ticket=casTicketGrantingTicketServices.createTicket(ticketGrantingTicket);
-            String location = applicationConfig.getServerPrefix()+"/authz/cas/v1/tickets/" + ticket;
+            String location = applicationConfig.getServerPrefix()+CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1 +"/" + ticket;
             HttpHeaders headers = new HttpHeaders();
             headers.add("location", location);
+            _logger.trace("ticket "+ticket);
+            _logger.trace("location "+location);
             return new ResponseEntity<>("Location: " + location, headers ,HttpStatus.CREATED);
  
 	    } catch (final AuthenticationException e) {
@@ -103,7 +105,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
 	}
 	
     @ApiOperation(value = "CAS REST认证接口", notes = "通过TGT获取ST",httpMethod="POST")
-	@RequestMapping(value="/authz/cas/v1/tickets/{ticketGrantingTicket}", 
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1+"/{ticketGrantingTicket}", 
 	            method=RequestMethod.POST, 
 	            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> requestServiceTicket(
@@ -131,7 +133,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
 	       return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
 	   }
     @ApiOperation(value = "CAS REST认证接口", notes = "检查TGT状态",httpMethod="GET")
-    @RequestMapping(value="/authz/cas/v1/tickets/{ticketGrantingTicket}", 
+    @RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1 + "/{ticketGrantingTicket}", 
 	            method=RequestMethod.GET)
     public ResponseEntity<String> verifyTicketGrantingTicketStatus(
 	            @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
@@ -151,7 +153,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
 	}
     
     @ApiOperation(value = "CAS REST认证接口", notes = "注销TGT状态",httpMethod="DELETE")
-    @RequestMapping(value="/authz/cas/v1/tickets/{ticketGrantingTicket}", 
+    @RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1+"/{ticketGrantingTicket}", 
             method=RequestMethod.DELETE)
     public ResponseEntity<String> destroyTicketGrantingTicket(
             @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
@@ -171,7 +173,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
     }
 	   
     @ApiOperation(value = "CAS REST认证接口", notes = "用户名密码登录接口",httpMethod="POST")   
-	@RequestMapping(value="/authz/cas/v1/users", 
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_USERS_V1, 
             method=RequestMethod.POST, 
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> casLoginRestUsers(
@@ -192,7 +194,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
             
             String ticket=casTicketGrantingTicketServices.createTicket(ticketGrantingTicket);
-            String location = applicationConfig.getServerPrefix()+"/authz/cas/v1/tickets/" + ticket;
+            String location = applicationConfig.getServerPrefix() + CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1 + ticket;
             HttpHeaders headers = new HttpHeaders();
             headers.add("location", location);
             ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();

@@ -83,7 +83,7 @@ public class CasConstants {
 	/* CAS Protocol Error Codes. **/
 	public static class ERROR_CODE{
 		/** Constant representing an invalid request for validation. */
-		public static String INVALID_REQUEST		=	"INVALID_REQUEST";
+		public static  String INVALID_REQUEST		=	"INVALID_REQUEST";
 		/** Constant representing an invalid pgt request. */
 		public static String INVALID_REQUEST_PROXY 	= 	"INVALID_REQUEST_PROXY";
 		public static String INVALID_TICKET_SPEC	=	"INVALID_TICKET_SPEC";
@@ -98,5 +98,62 @@ public class CasConstants {
 		public static String UNAUTHORIZED_SERVICE_PROXY	=	"UNAUTHORIZED_SERVICE_PROXY";
 		/** Constant representing an invalid service request. */
 		public static String UNAUTHORIZED_SERVICE		 = 	"UNAUTHORIZED_SERVICE";
+	}
+	
+	/* CAS Protocol endpoint. **/
+	public static class ENDPOINT{
+		public static final  String ENDPOINT_BASE = "/authz/cas";
+	    /**
+	     * Constant representing login.
+	     */
+		public static final  String ENDPOINT_LOGIN = ENDPOINT_BASE + "/login";
+	
+	    /**
+	     * Constant representing logout.
+	     */
+		public static final  String ENDPOINT_LOGOUT = ENDPOINT_BASE + "/logout";
+	
+	    /**
+	     * Constant representing proxy validate.
+	     */
+		public static final  String ENDPOINT_PROXY_VALIDATE = ENDPOINT_BASE + "/proxyValidate";
+	
+	    /**
+	     * Constant representing v3 proxy validate.
+	     */
+		public static final  String ENDPOINT_PROXY_VALIDATE_V3 = ENDPOINT_BASE + "/p3/proxyValidate";
+	
+	    /**
+	     * Constant representing legacy validate.
+	     */
+		public static final  String ENDPOINT_VALIDATE = ENDPOINT_BASE + "/validate";
+	
+	    /**
+	     * Constant representing service validate.
+	     */
+		public static  final String ENDPOINT_SERVICE_VALIDATE = ENDPOINT_BASE + "/serviceValidate";
+	
+	    /**
+	     * Constant representing v3 service validate.
+	     */
+	    public static final  String ENDPOINT_SERVICE_VALIDATE_V3 = ENDPOINT_BASE + "/p3/serviceValidate";
+	
+	    /**
+	     * Constant representing proxy endpoint.
+	     */
+	    public static final  String ENDPOINT_PROXY = ENDPOINT_BASE + "/proxy";
+	    
+	    /**
+	     * Constant representing v3 proxy endpoint.
+	     */
+	    public static final  String ENDPOINT_PROXY_V3 = ENDPOINT_BASE + "/p3/proxy";
+	    
+	    public static final  String ENDPOINT_SERVICE_TICKET_GRANTING = ENDPOINT_BASE + "/granting";
+	    
+	    public static final  String ENDPOINT_REST_TICKET_V1 = ENDPOINT_BASE + "/v1/tickets";
+	    
+	    public static final  String ENDPOINT_REST_USERS_V1 = ENDPOINT_BASE + "/v1/users";
+	    
+	    
 	}
 }

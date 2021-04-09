@@ -171,7 +171,7 @@ INTERNAL_ERROR - an internal error occurred during ticket validation
 For all error codes, it is RECOMMENDED that CAS provide a more detailed message as the body of the \<cas:authenticationFailure\> block of the XML response.
 	 */
 	@ApiOperation(value = "CAS 2.0 ticket验证接口", notes = "通过ticket获取当前登录用户信息",httpMethod="POST")
-	@RequestMapping(value="/authz/cas/serviceValidate",produces =MediaType.APPLICATION_XML_VALUE)
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE,produces =MediaType.APPLICATION_XML_VALUE)
 	@ResponseBody
 	public String serviceValidate(
 			HttpServletRequest request,
@@ -294,7 +294,7 @@ Response on ticket validation failure:
 	 */
 	
 	@ApiOperation(value = "CAS 2.0 ticket代理验证接口", notes = "通过ticket获取当前登录用户信息",httpMethod="POST")
-	@RequestMapping(value="/authz/cas/proxyValidate",produces =MediaType.APPLICATION_XML_VALUE)
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY_VALIDATE,produces =MediaType.APPLICATION_XML_VALUE)
 	@ResponseBody
 	public String proxy(
 			HttpServletRequest request,
@@ -395,7 +395,7 @@ INTERNAL_ERROR - an internal error occurred during ticket validation
 
 For all error codes, it is RECOMMENDED that CAS provide a more detailed message as the body of the <cas:authenticationFailure> block of the XML response.
 	 */
-	@RequestMapping(value="/authz/cas/proxy" ,produces =MediaType.APPLICATION_XML_VALUE)
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY ,produces =MediaType.APPLICATION_XML_VALUE)
 	@ResponseBody
 	public String proxy(
 			HttpServletRequest request,

@@ -56,7 +56,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(CasAuthorizeEndpoint.class);
 	
 	@ApiOperation(value = "CAS页面跳转service认证接口", notes = "传递参数service",httpMethod="GET")
-	@RequestMapping("/authz/cas/login")
+	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_LOGIN)
 	public ModelAndView casLogin(
 			HttpServletRequest request,
 			HttpServletResponse response,
@@ -69,7 +69,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	}
 	
 	@ApiOperation(value = "CAS页面跳转应用ID认证接口", notes = "传递参数应用ID",httpMethod="GET")
-	@RequestMapping("/authz/cas/{id}")
+	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_BASE + "/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,
 			HttpServletResponse response,
@@ -94,10 +94,10 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		WebContext.setAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS, casDetails);
 		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, casDetails.getId());
 		WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP,casDetails);
-		return WebContext.redirect("/authz/cas/granting");
+		return WebContext.redirect(CasConstants.ENDPOINT.ENDPOINT_SERVICE_TICKET_GRANTING);
 	}
 	
-	@RequestMapping("/authz/cas/granting")
+	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_SERVICE_TICKET_GRANTING)
 	public ModelAndView grantingTicket(Principal principal,
 	        @AuthenticationPrincipal Object user,
 			HttpServletRequest request,
@@ -157,7 +157,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	 * @return
 	 */
 	@ApiOperation(value = "CAS注销接口", notes = "CAS注销接口",httpMethod="GET")
-	@RequestMapping("/authz/cas/logout")
+	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_LOGOUT)
 	public ModelAndView logout(
 			HttpServletRequest request,
 			HttpServletResponse response,

@@ -82,7 +82,7 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
 			<LF>
 	 */
 	@ApiOperation(value = "CAS 1.0 ticket验证接口", notes = "通过ticket获取当前登录用户信息",httpMethod="POST")
-	@RequestMapping("/authz/cas/validate")
+	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_VALIDATE)
 	@ResponseBody
 	public String validate(
 			HttpServletRequest request,

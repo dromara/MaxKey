@@ -40,7 +40,7 @@ public class RestTestClient {
         final String casUrlPrefix = "http://sso.maxkey.top/maxkey/authz/cas/";
         String username ="admin";
         String password ="maxkey";
-        String serviceUrl = "http://cas.demo.maxkey.top:8080/demo-cas/";
+        String serviceUrl = "http://cas.demo.maxkey.top:9521/demo-cas/";
         CasConfiguration casConfiguration = new CasConfiguration(casUrlPrefix);
         final CasRestAuthenticator authenticator = new CasRestAuthenticator(casConfiguration);
         final CasRestFormClient client = new CasRestFormClient(casConfiguration,"username","password");
