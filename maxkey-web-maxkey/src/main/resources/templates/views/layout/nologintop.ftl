@@ -14,10 +14,10 @@
 							<td ><@locale code="global.change.language"/> :</td>
 							<td >
 								<div > 
-									<a href="<@basePath />/login?language=en">
+									<a href="<@currUrl/>?language=en">
 										<@locale code="global.change.language.en"/>
 									</a>|
-									<a href="<@basePath />/login?language=zh_CN">
+									<a href="<@currUrl/>?language=zh_CN">
 										<@locale code="global.change.language.zh"/>
 									</a>
 								</div>

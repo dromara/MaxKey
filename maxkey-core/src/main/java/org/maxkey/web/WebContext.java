@@ -59,6 +59,8 @@ public final class WebContext {
     
     public static ApplicationContext applicationContext;
     
+    public final static String  ipAddressRegex = "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}";
+    
     public static ArrayList<String> sessionAttributeNameList = new ArrayList<String>();
     
     static {
@@ -199,13 +201,20 @@ public final class WebContext {
         _logger.trace("Config DomainName " + applicationConfig.getDomainName());
         _logger.trace("ServerName " + httpServletRequest.getServerName());
         
-        String scheme = httpServletRequest.getScheme().toLowerCase();
-        String httpContextPath = scheme + "://"+httpServletRequest.getServerName();
-        int port = httpServletRequest.getServerPort();
-        if(!(port==80 || port==443)){
-            httpContextPath    +=  ":"+port;
+        String httpContextPath ="";
+        
+        if (httpServletRequest.getServerName().matches(ipAddressRegex)
+        		||httpServletRequest.getServerName().equalsIgnoreCase("localhost")) {
+        	String scheme = httpServletRequest.getScheme().toLowerCase();
+            httpContextPath = scheme + "://"+httpServletRequest.getServerName();
+	        int port = httpServletRequest.getServerPort();
+	        if(!(port==80 || port==443)){
+	            httpContextPath    +=  ":"+port;
+	        }
+	        httpContextPath += httpServletRequest.getContextPath() + "";
+        }else {
+        	 httpContextPath = applicationConfig.getServerName() + httpServletRequest.getContextPath() + "";
         }
-        httpContextPath += httpServletRequest.getContextPath() + "";
         
         _logger.trace("httpContextPath " + httpContextPath);
         return httpContextPath;

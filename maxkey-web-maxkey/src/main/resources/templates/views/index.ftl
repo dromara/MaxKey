@@ -8,6 +8,6 @@
 		<link type="text/css" rel="stylesheet" href="<@base url="/style.css"/>" />
 	</head>
 	<body>
-		<script type="text/javascript">window.top.location.href="<@basePath />/forwardindex";</script>
+		<script type="text/javascript">window.top.location.href="<@base />/forwardindex";</script>
 	</body>
 </html>
