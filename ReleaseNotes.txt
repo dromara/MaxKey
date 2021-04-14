@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿MaxKey v 2.7.0 GA	2021/04/**
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿MaxKey v 2.7.0 GA	2021/04/15
     *(MAXKEY-210301)  加入Dromara开源组织，官方网站的优化，文档优化
     *(MAXKEY-210302)  BootJar，Docker，Standard三种打包方式的配置优化
     *(MAXKEY-210303)  openldap,activedirectory密码验证支持
@@ -34,8 +34,9 @@
     *(MAXKEY-210333)  SDK优化
     *(MAXKEY-210334)  依赖jar引用、更新和升级
     	log4j 		2.14.1
-		spring		5.3.5
+		spring		5.3.6
 		springBoot  2.4.4
+		springSecurity 5.4.6
 		tomcat		9.0.44
 	
 MaxKey v 2.6.0 GA	2021/03/05

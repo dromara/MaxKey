@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>  
-<!--DOCTYPE log4j:configuration SYSTEM "log4j.dtd" -->
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
-	 status="INFO"  monitorInterval="300"
->   
-    <appenders>  
-    	
+<Configuration status="INFO"  monitorInterval="300">  
+    <Appenders>      	
         <Console name="consolePrint" target="SYSTEM_OUT">  
             <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss,SSS} %-5level [%t] %logger{36}:%L - %msg%n" />  
         </Console>
@@ -21,17 +17,17 @@
 		     </Policies>
 		     <DefaultRolloverStrategy max="100"/>
 		</RollingFile>
-	 </appenders>  
+	 </Appenders>  
 	 
-    <loggers>  
-    	<Logger name="org.springframework" level="INFO"></Logger>
-    	<Logger name="org.apache.logging" level="INFO"></Logger>
-    	<Logger name="org.maxkey" level="DEBUG"></Logger>
-    	<Logger name="org.apache.mybatis.jpa" level="DEBUG"></Logger>
+    <Loggers>  
+    	<Logger level="INFO" 	name="org.springframework" ></Logger>
+    	<Logger level="INFO" 	name="org.apache.logging" ></Logger>
+    	<Logger level="DEBUG" 	name="org.maxkey" ></Logger>
+    	<Logger level="DEBUG"	name="org.apache.mybatis.jpa" ></Logger>
     	
-        <root level="INFO">  
-            <appender-ref ref="consolePrint" />
-            <appender-ref ref="RollingFile" /> 
-        </root>  
-    </loggers>  
-</log4j:configuration>
+        <Root level="INFO">  
+            <AppenderRef ref="consolePrint" />
+            <AppenderRef ref="RollingFile" /> 
+        </Root>  
+    </Loggers>  
+</Configuration>
