@@ -93,7 +93,7 @@ App Management UI
 Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> history version</a>
 | Version    | ReleaseDate   |  Download URL  |  Code  |
 | --------| :-----  | :----  | :----:  |
-| v 2.6.0 GA | 2021/03/05   |  <a href="https://pan.baidu.com/s/1q5hzNeWweu4cpVOO-VopIw" target="_blank">Download</a>  |  **0x24**  |
+| v 2.7.0 GA | 2021/04/15   |  <a href="https://pan.baidu.com/s/1shP3ld63r39ugyZCG5f1lQ" target="_blank">Download</a>  |  **hf73**  |
 
 
 # Roadmap
