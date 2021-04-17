@@ -137,10 +137,15 @@ public class PermissionAdapter  implements AsyncHandlerInterceptor  {
 
         boolean hasAccess = true;
         
-        if(authentication.getPrincipal() instanceof SigninPrincipal) {
-            SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal();
-            OnlineTicket onlineTicket = signinPrincipal.getOnlineTicket();
-            onlineTicketServices.refresh(onlineTicket.getTicketId());
+        try {
+	        if(authentication.getPrincipal() instanceof SigninPrincipal) {
+	            SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal();
+	            OnlineTicket onlineTicket = signinPrincipal.getOnlineTicket();
+	            onlineTicketServices.refresh(onlineTicket.getTicketId());
+	        }
+        }catch(Exception e) {
+        	RequestDispatcher dispatcher = request.getRequestDispatcher("/logout");
+        	dispatcher.forward(request, response); 
         }
         /*
          * boolean preHandler = super.preHandle(request, response, handler);
