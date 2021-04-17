@@ -124,8 +124,6 @@ subprojects {
 		//for Test and Compile
 		 testImplementation 'junit:junit:4.11' 
     	 compileOnly 'junit:junit:4.11'  
-    	 testImplementation group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
-    	 compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
          testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
          testImplementation group: 'xmlunit', name: 'xmlunit', version: '1.6'
          //apache
