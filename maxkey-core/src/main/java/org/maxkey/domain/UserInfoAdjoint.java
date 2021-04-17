@@ -37,7 +37,7 @@ public class UserInfoAdjoint extends JpaBaseDomain {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     String id;
     
     protected String displayName;

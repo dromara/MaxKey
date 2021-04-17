@@ -114,7 +114,7 @@ public class RoleMemberController {
 			
 			for (int i = 0; i < arrMemberIds.length; i++) {
 				RoleMember newRoleMember = new RoleMember(groupId,roleMember.getRoleName(), arrMemberIds[i], arrMemberNames[i],"USER");
-				newRoleMember.setId(newRoleMember.generateId());
+				newRoleMember.setId(WebContext.genId());
 				result = roleMemberService.insert(newRoleMember);
 			}
 			if(!result) {

@@ -32,7 +32,7 @@ public class Resources  extends JpaBaseDomain implements Serializable {
     private static final long serialVersionUID = 2567171742999638608L;
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO,generator = "snowflakeid")
     String id;
     @Column
     String name;

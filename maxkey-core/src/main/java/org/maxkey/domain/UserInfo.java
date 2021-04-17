@@ -43,7 +43,7 @@ public class UserInfo extends JpaBaseDomain {
     //
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     String id;
     @Column
     protected String username;

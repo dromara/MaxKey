@@ -37,7 +37,7 @@ public class HistoryLogs extends JpaBaseDomain implements Serializable {
     private static final long serialVersionUID = 6560201093784960493L;
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     String id;
     @Column
     String serviceName;

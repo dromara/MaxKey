@@ -128,7 +128,7 @@ public class GroupMemberController {
 			
 			for (int i = 0; i < arrMemberIds.length; i++) {
 				GroupMember newGroupMember = new GroupMember(groupId,groupMember.getGroupName(), arrMemberIds[i], arrMemberNames[i],"USER");
-				newGroupMember.setId(newGroupMember.generateId());
+				newGroupMember.setId(WebContext.genId());
 				result = groupMemberService.insert(newGroupMember);
 			}
 			if(!result) {

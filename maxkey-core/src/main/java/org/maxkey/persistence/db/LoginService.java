@@ -38,29 +38,29 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 public class LoginService {
     private static Logger _logger = LoggerFactory.getLogger(LoginService.class);
 
-    private static final String LOCK_USER_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET ISLOCKED = ?  , UNLOCKTIME = ? WHERE ID = ?";
+    private static final String LOCK_USER_UPDATE_STATEMENT = "update mxk_userinfo set islocked = ?  , unlocktime = ? where id = ?";
 
-    private static final String UNLOCK_USER_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET ISLOCKED = ? , UNLOCKTIME = ? WHERE ID = ?";
+    private static final String UNLOCK_USER_UPDATE_STATEMENT = "update mxk_userinfo set islocked = ? , unlocktime = ? where id = ?";
 
-    private static final String BADPASSWORDCOUNT_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET BADPASSWORDCOUNT = ? , BADPASSWORDTIME = ?  WHERE ID = ?";
+    private static final String BADPASSWORDCOUNT_UPDATE_STATEMENT = "update mxk_userinfo set badpasswordcount = ? , badpasswordtime = ?  where id = ?";
 
-    private static final String BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET BADPASSWORDCOUNT = ? , ISLOCKED = ? ,UNLOCKTIME = ?  WHERE ID = ?";
+    private static final String BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT = "update mxk_userinfo set badpasswordcount = ? , islocked = ? ,unlocktime = ?  where id = ?";
 
-    private static final String LOGIN_USERINFO_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET LASTLOGINTIME = ?  , LASTLOGINIP = ? , LOGINCOUNT = ?, ONLINE = "
-            + UserInfo.ONLINE.ONLINE + "  WHERE ID = ?";
+    private static final String LOGIN_USERINFO_UPDATE_STATEMENT = "update mxk_userinfo set lastlogintime = ?  , lastloginip = ? , logincount = ?, online = "
+            + UserInfo.ONLINE.ONLINE + "  where id = ?";
 
-    private static final String LOGOUT_USERINFO_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET LASTLOGOFFTIME = ? , ONLINE = "
-            + UserInfo.ONLINE.OFFLINE + "  WHERE ID = ?";
+    private static final String LOGOUT_USERINFO_UPDATE_STATEMENT = "update mxk_userinfo set lastlogofftime = ? , online = "
+            + UserInfo.ONLINE.OFFLINE + "  where id = ?";
 
-    private static final String GROUPS_SELECT_STATEMENT = "SELECT DISTINCT G.ID,G.NAME FROM MXK_USERINFO U,`MXK_GROUPS` G,MXK_GROUP_MEMBER GM WHERE U.ID = ?  AND U.ID=GM.MEMBERID AND GM.GROUPID=G.ID ";
+    private static final String GROUPS_SELECT_STATEMENT = "select distinct g.id,g.name from mxk_userinfo u,`mxk_groups` g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
 
-    private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "SELECT * FROM  MXK_USERINFO WHERE USERNAME = ?";
+    private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "select * from  mxk_userinfo where username = ?";
     
-    private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE = "SELECT * FROM  MXK_USERINFO WHERE USERNAME = ? OR MOBILE = ? ";
+    private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE = "select * from  mxk_userinfo where username = ? or mobile = ? ";
     
-    private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL = "SELECT * FROM  MXK_USERINFO WHERE USERNAME = ? OR MOBILE = ? OR EMAIL = ? ";
+    private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL = "select * from  mxk_userinfo where username = ? or mobile = ? or email = ? ";
     
-    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "SELECT DISTINCT APP.ID,APP.NAME FROM MXK_APPS APP,MXK_GROUP_PRIVILEGES GP,MXK_GROUPS G  WHERE APP.ID=GP.APPID AND GP.GROUPID=G.ID AND G.ID IN(%s)";
+    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.name from mxk_apps app,mxk_group_privileges gp,mxk_groups g  where app.id=gp.appid and gp.groupid=g.id and g.id in(%s)";
     
     protected JdbcTemplate jdbcTemplate;
     

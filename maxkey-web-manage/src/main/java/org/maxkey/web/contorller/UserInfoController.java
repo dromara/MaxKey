@@ -116,7 +116,7 @@ public class UserInfoController {
 			// new Message(WebContext.getValidErrorText(),result);
 		}
 		
-		userInfo.setId(userInfo.generateId());
+		userInfo.setId(WebContext.genId());
 		//userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
 		//userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
 		if( userInfoService.insert(userInfo)) {

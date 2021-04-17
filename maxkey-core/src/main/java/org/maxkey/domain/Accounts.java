@@ -42,7 +42,7 @@ public class Accounts extends JpaBaseDomain implements Serializable {
     private static final long serialVersionUID = 6829592256223630307L;
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     private String id;
     @Column
     private String uid;

@@ -43,7 +43,7 @@ public class HistoryLogin  extends JpaBaseDomain  implements Serializable{
 	private static final long serialVersionUID = -1321470643357719383L;
 	@Id
 	@Column
-	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="snowflakeid")
 	String id;
 	@Column
 	String sessionId;

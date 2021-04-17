@@ -32,6 +32,9 @@ import org.maxkey.crypto.password.MessageDigestPasswordEncoder;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.crypto.password.SM3PasswordEncoder;
 import org.maxkey.crypto.password.StandardPasswordEncoder;
+import org.maxkey.util.IdGenerator;
+import org.maxkey.util.SnowFlakeId;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -182,6 +185,23 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     public String spIssuingEntityName(
             @Value("${maxkey.saml.v20.sp.issuing.entity.id}") String spIssuingEntityName) {
         return spIssuingEntityName;
+    }
+    
+    
+    /**
+     * spKeyStoreLoader .
+     * @return
+     */
+    @Bean(name = "idGenerator")
+    public IdGenerator idGenerator(
+            @Value("${maxkey.id.strategy:SnowFlake}") String strategy,
+            @Value("${maxkey.id.datacenterId:0}") int datacenterId,
+            @Value("${maxkey.id.machineId:0}") int machineId) {
+    	IdGenerator idGenerator = new IdGenerator(strategy);
+    	SnowFlakeId SnowFlakeId = new SnowFlakeId(datacenterId,machineId);
+    	idGenerator.setSnowFlakeId(SnowFlakeId);
+    	WebContext.idGenerator = idGenerator;
+        return idGenerator;
     }
 
 

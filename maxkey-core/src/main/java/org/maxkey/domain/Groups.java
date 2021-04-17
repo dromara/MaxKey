@@ -33,7 +33,7 @@ public class Groups extends JpaBaseDomain implements Serializable {
     private static final long serialVersionUID = 4660258495864814777L;
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     String id;
 
     @Length(max = 60)

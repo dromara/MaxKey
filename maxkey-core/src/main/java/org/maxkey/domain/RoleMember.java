@@ -37,7 +37,7 @@ public class RoleMember extends UserInfo implements Serializable {
     private static final long serialVersionUID = -8059639972590554760L;
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     String id;
     @Column
     private String roleId;

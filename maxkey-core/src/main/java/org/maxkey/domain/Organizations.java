@@ -33,7 +33,7 @@ public class Organizations extends JpaBaseDomain implements Serializable {
     
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     private String id;
     @Column
     private String code;

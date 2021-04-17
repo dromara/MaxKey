@@ -37,7 +37,7 @@ public class HistoryLoginApps extends JpaBaseDomain {
 	private static final long serialVersionUID = 5085201575292304749L;
 	@Id
 	@Column
-	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="snowflakeid")
 	String id;
 	@Column
 	private String sessionId;

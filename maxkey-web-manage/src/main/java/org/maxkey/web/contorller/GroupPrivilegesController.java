@@ -110,7 +110,7 @@ public class GroupPrivilegesController {
 			
 			for (int i = 0; i < arrAppIds.length; i++) {
 				GroupPrivileges newGroupApp = new GroupPrivileges(groupId, arrAppIds[i]);
-				newGroupApp.setId(newGroupApp.generateId());
+				newGroupApp.setId(WebContext.genId());
 				result = groupPrivilegesService.insert(newGroupApp);
 			}
 			if(!result) {

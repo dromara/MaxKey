@@ -26,6 +26,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
 import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.web.WebContext;
 
 @Entity
 @Table(name = "MXK_ROLE_PERMISSIONS")
@@ -34,7 +35,7 @@ public class RolePermissions  extends JpaBaseDomain implements Serializable {
     
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     String id;
     @Column
     String appId;
@@ -60,7 +61,7 @@ public class RolePermissions  extends JpaBaseDomain implements Serializable {
      * @param resourceId String
      */
     public RolePermissions(String appId, String roleId, String resourceId) {
-        this.id = this.generateId();
+        this.id = WebContext.genId();
         this.appId = appId;
         this.roleId = roleId;
         this.resourceId = resourceId;

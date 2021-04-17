@@ -92,15 +92,15 @@ public class PasswordPolicyValidator {
     
     private static final String PASSWORD_POLICY_KEY = "PASSWORD_POLICY_KEY";
     
-    private static final String LOCK_USER_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET ISLOCKED = ?  , UNLOCKTIME = ? WHERE ID = ?";
+    private static final String LOCK_USER_UPDATE_STATEMENT = "update mxk_userinfo set islocked = ?  , unlocktime = ? where id = ?";
 
-    private static final String PASSWORD_POLICY_SELECT_STATEMENT = "SELECT * FROM MXK_PASSWORD_POLICY ";
+    private static final String PASSWORD_POLICY_SELECT_STATEMENT = "select * from mxk_password_policy ";
 
-    private static final String UNLOCK_USER_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET ISLOCKED = ? , UNLOCKTIME = ? WHERE ID = ?";
+    private static final String UNLOCK_USER_UPDATE_STATEMENT = "update mxk_userinfo set islocked = ? , unlocktime = ? where id = ?";
 
-    private static final String BADPASSWORDCOUNT_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET BADPASSWORDCOUNT = ? , BADPASSWORDTIME = ?  WHERE ID = ?";
+    private static final String BADPASSWORDCOUNT_UPDATE_STATEMENT = "update mxk_userinfo set badpasswordcount = ? , badpasswordtime = ?  where id = ?";
 
-    private static final String BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT = "UPDATE MXK_USERINFO SET BADPASSWORDCOUNT = ? , ISLOCKED = ? ,UNLOCKTIME = ?  WHERE ID = ?";
+    private static final String BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT = "update mxk_userinfo set badpasswordcount = ? , islocked = ? ,unlocktime = ?  where id = ?";
 
     public PasswordPolicyValidator() {
     }

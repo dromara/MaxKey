@@ -88,7 +88,6 @@ public class HistoryLoginAppAdapter  implements AsyncHandlerInterceptor  {
         final UserInfo userInfo = WebContext.getUserInfo();
         _logger.debug("sessionId : " + sessionId + " ,appId : " + app.getId());
         HistoryLoginApps historyLoginApps = new HistoryLoginApps();
-        historyLoginApps.setId(historyLoginApps.generateId());
         historyLoginApps.setAppId(app.getId());
         historyLoginApps.setSessionId(sessionId);
         historyLoginApps.setAppName(app.getName());

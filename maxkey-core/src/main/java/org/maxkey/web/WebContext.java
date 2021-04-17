@@ -32,7 +32,7 @@ import org.apache.commons.logging.LogFactory;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.domain.UserInfo;
 import org.maxkey.util.DateUtils;
-import org.maxkey.util.StringGenerator;
+import org.maxkey.util.IdGenerator;
 import org.maxkey.web.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,6 +62,8 @@ public final class WebContext {
     public final static String  ipAddressRegex = "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}";
     
     public static ArrayList<String> sessionAttributeNameList = new ArrayList<String>();
+    
+    public static IdGenerator idGenerator;
     
     static {
         sessionAttributeNameList.add(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
@@ -518,7 +520,10 @@ public final class WebContext {
      * @return String
      */
     public static String genId() {
-        return (new StringGenerator()).uuidGenerate();
+    	if(idGenerator == null) {
+    		idGenerator = new IdGenerator();
+    	}
+        return idGenerator.generate();
     }
 
     public static ModelAndView redirect(String redirectUrl) {

@@ -45,7 +45,7 @@ public class GroupPrivileges extends Apps implements Serializable{
 	private static final long serialVersionUID = 8634166407201007340L;
 	@Id
 	@Column
-	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="snowflakeid")
 	String id;
 	@Column
 	private String groupId;

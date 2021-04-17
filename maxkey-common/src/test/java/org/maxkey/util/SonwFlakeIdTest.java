@@ -15,31 +15,18 @@
  */
  
 
-/**
- * 
- */
-package org.maxkey.persistence.mapper;
+package org.maxkey.util;
 
-import java.util.List;
+import org.junit.Test;
 
-import org.apache.ibatis.annotations.Update;
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.apps.Apps;
-import org.maxkey.domain.apps.UserApps;
+public class SonwFlakeIdTest {
 
-/**
- * @author Crystal.sea
- *
- */
-public  interface AppsMapper extends IJpaBaseMapper<Apps> {
 	
-	public int insertApp(Apps app);
-	
-	public int updateApp(Apps app);
-	
-	@Update("update mxk_apps set isextendattr=#{isExtendAttr},	extendattr=#{extendAttr} where id = #{id}")
-	public int updateExtendAttr(Apps app);  
-	
-
-    public List<UserApps> queryMyApps(UserApps userApplications);
+	@Test
+	public void UidGenerator()  {
+		SnowFlakeId snowFlake = new SnowFlakeId(2, 3);
+		long seq = snowFlake.nextId();
+		System.out.println(seq);
+		System.out.println(snowFlake.parse(seq));
+	}
 }
