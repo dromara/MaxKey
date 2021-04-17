@@ -14,11 +14,11 @@ call %GRADLE_HOME%/bin/gradle clean
 
 echo start clean complete . 
 
-call %GRADLE_HOME%/bin/gradle buildRelease
+call %GRADLE_HOME%/bin/gradle buildRelease --stacktrace  --warning-mode all
 
-call %GRADLE_HOME%/bin/gradle copyDepJars
+call %GRADLE_HOME%/bin/gradle copyDepJars --stacktrace  --warning-mode all
 
-call %GRADLE_HOME%/bin/gradle buildReleaseCopy
+call %GRADLE_HOME%/bin/gradle buildReleaseCopy --stacktrace  --warning-mode all
 
 cd build
 rd /q /s libs

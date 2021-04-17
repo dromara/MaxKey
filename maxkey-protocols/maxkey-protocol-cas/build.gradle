@@ -4,19 +4,19 @@ description = "maxkey-protocol-cas"
 
 dependencies {
 	//local jars
-	compile fileTree(dir: '../maxkey-lib/*/', include: '*.jar')
+	implementation fileTree(dir: '../maxkey-lib/*/', include: '*.jar')
 	
 	// https://mvnrepository.com/artifact/org.jasig.cas.client/cas-client-core
-	testCompile group: 'org.jasig.cas.client', name: 'cas-client-core', version: '3.6.1'
+	testImplementation group: 'org.jasig.cas.client', name: 'cas-client-core', version: '3.6.1'
 	
-	testCompile group: 'org.pac4j', name: 'pac4j-core', version: '3.8.3'
+	testImplementation group: 'org.pac4j', name: 'pac4j-core', version: '3.8.3'
 	// https://mvnrepository.com/artifact/org.pac4j/pac4j-cas
-	testCompile group: 'org.pac4j', name: 'pac4j-cas', version: '3.8.3'
+	testImplementation group: 'org.pac4j', name: 'pac4j-cas', version: '3.8.3'
 	
-	compile project(":maxkey-common")
-	compile project(":maxkey-core")
-	compile project(":maxkey-persistence")
-   	compile project(":maxkey-protocols:maxkey-protocol-authorize")
-   	compile project(":maxkey-authentications:maxkey-authentication-core")
+	implementation project(":maxkey-common")
+	implementation project(":maxkey-core")
+	implementation project(":maxkey-persistence")
+   	implementation project(":maxkey-protocols:maxkey-protocol-authorize")
+   	implementation project(":maxkey-authentications:maxkey-authentication-core")
    
 }

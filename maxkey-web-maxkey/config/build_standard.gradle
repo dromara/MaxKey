@@ -4,22 +4,22 @@ description = "maxkey-web-maxkey"
 apply plugin: 'java'
 
 dependencies {
-	compile project(":maxkey-common")
-	compile project(":maxkey-core")
-	compile project(":maxkey-persistence")
+	implementation project(":maxkey-common")
+	implementation project(":maxkey-core")
+	implementation project(":maxkey-persistence")
    	
-   	compile project(":maxkey-authentications:maxkey-authentication-core")
-   	compile project(":maxkey-authentications:maxkey-authentication-social")
-   	compile project(":maxkey-authentications:maxkey-authentication-captcha")
-   	compile project(":maxkey-authentications:maxkey-authentication-otp")
+   	implementation project(":maxkey-authentications:maxkey-authentication-core")
+   	implementation project(":maxkey-authentications:maxkey-authentication-social")
+   	implementation project(":maxkey-authentications:maxkey-authentication-captcha")
+   	implementation project(":maxkey-authentications:maxkey-authentication-otp")
    	
-   	compile project(":maxkey-protocols:maxkey-protocol-authorize")
-   	compile project(":maxkey-protocols:maxkey-protocol-cas")
-	compile project(":maxkey-protocols:maxkey-protocol-desktop")
-	compile project(":maxkey-protocols:maxkey-protocol-extendapi")
-	compile project(":maxkey-protocols:maxkey-protocol-formbased")
-	compile project(":maxkey-protocols:maxkey-protocol-tokenbased")
-   	compile project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
-   	compile project(":maxkey-protocols:maxkey-protocol-saml-2.0")
-	compile project(":maxkey-protocols:maxkey-protocol-jwt")
+   	implementation project(":maxkey-protocols:maxkey-protocol-authorize")
+   	implementation project(":maxkey-protocols:maxkey-protocol-cas")
+	implementation project(":maxkey-protocols:maxkey-protocol-desktop")
+	implementation project(":maxkey-protocols:maxkey-protocol-extendapi")
+	implementation project(":maxkey-protocols:maxkey-protocol-formbased")
+	implementation project(":maxkey-protocols:maxkey-protocol-tokenbased")
+   	implementation project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
+   	implementation project(":maxkey-protocols:maxkey-protocol-saml-2.0")
+	implementation project(":maxkey-protocols:maxkey-protocol-jwt")
 }

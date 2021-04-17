@@ -1,6 +1,5 @@
 buildscript {
 	repositories {
-		jcenter()
 		maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
 	}
 }
@@ -38,17 +37,17 @@ jib {
 }
 
 dependencies {
-	compile project(":maxkey-common")
-	compile project(":maxkey-core")
-	compile project(":maxkey-persistence")
+	implementation project(":maxkey-common")
+	implementation project(":maxkey-core")
+	implementation project(":maxkey-persistence")
 	
-	compile project(":maxkey-authentications:maxkey-authentication-core")
-	compile project(":maxkey-authentications:maxkey-authentication-captcha")
-	compile project(":maxkey-authentications:maxkey-authentication-otp")
+	implementation project(":maxkey-authentications:maxkey-authentication-core")
+	implementation project(":maxkey-authentications:maxkey-authentication-captcha")
+	implementation project(":maxkey-authentications:maxkey-authentication-otp")
    	
-   	compile project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
-   	compile project(":maxkey-protocols:maxkey-protocol-saml-2.0")   
-   	compile project(":maxkey-identitys:maxkey-identity-scim")   
-   	compile project(":maxkey-identitys:maxkey-identity-rest")
+   	implementation project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
+   	implementation project(":maxkey-protocols:maxkey-protocol-saml-2.0")   
+   	implementation project(":maxkey-identitys:maxkey-identity-scim")   
+   	implementation project(":maxkey-identitys:maxkey-identity-rest")
    	
 }

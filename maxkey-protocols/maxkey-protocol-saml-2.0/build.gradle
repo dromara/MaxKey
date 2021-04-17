@@ -2,10 +2,10 @@ description = "maxkey-protocol-saml-2.0"
 
 dependencies {
 	//local jars
-	compile fileTree(dir: '../maxkey-lib/*/', include: '*.jar')
+	implementation fileTree(dir: '../maxkey-lib/*/', include: '*.jar')
 	
-	compile project(":maxkey-common")
-    compile project(":maxkey-core")
-    compile project(":maxkey-persistence")
-    compile project(":maxkey-authentications:maxkey-authentication-core")
+	implementation project(":maxkey-common")
+    implementation project(":maxkey-core")
+    implementation project(":maxkey-persistence")
+    implementation project(":maxkey-authentications:maxkey-authentication-core")
 }

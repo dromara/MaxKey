@@ -1,9 +1,9 @@
 description = "maxkey-core"
 
 dependencies {
-	compile project(":maxkey-common")
+	implementation project(":maxkey-common")
 	
 	//local jars
-	compile fileTree(dir: '../maxkey-lib/', include: '*/*.jar')
+	implementation fileTree(dir: '../maxkey-lib/', include: '*/*.jar')
 	
 }
