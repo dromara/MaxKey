@@ -3,16 +3,16 @@
 <mapper namespace="org.maxkey.persistence.mapper.AppsTokenBasedDetailsMapper">
 
 <select id="getAppDetails" parameterType="string" resultType="AppsTokenBasedDetails">
-    	SELECT 
+    	select 
 			*
-    	FROM 
-    		MXK_APPS_TOKEN_BASED_DETAILS TBD,
-    		MXK_APPS APP
-    	WHERE 	
-    		APP.ID	=	#{value}
-    		AND TBD.ID	=	#{value}
-    		AND TBD.ID	=	APP.ID
-    		AND STATUS	=	1
+    	from 
+    		mxk_apps_token_based_details tbd,
+    		mxk_apps app
+    	where 	
+    		app.id	=	#{value}
+    		and tbd.id	=	#{value}
+    		and tbd.id	=	app.id
+    		and status	=	1
     </select>
 	
 </mapper>

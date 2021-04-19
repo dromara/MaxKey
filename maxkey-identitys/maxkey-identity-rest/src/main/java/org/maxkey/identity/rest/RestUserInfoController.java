@@ -19,7 +19,7 @@ package org.maxkey.identity.rest;
 
 import java.io.IOException;
 
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.IdGenerator;
 import org.maxkey.web.message.Message;

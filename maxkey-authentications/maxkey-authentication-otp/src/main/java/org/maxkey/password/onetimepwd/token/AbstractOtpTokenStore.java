@@ -17,7 +17,7 @@
 
 package org.maxkey.password.onetimepwd.token;
 
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 
 public abstract class AbstractOtpTokenStore {
     

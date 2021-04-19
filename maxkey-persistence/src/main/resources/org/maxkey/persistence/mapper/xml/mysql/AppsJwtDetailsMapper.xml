@@ -3,16 +3,16 @@
 <mapper namespace="org.maxkey.persistence.mapper.AppsJwtDetailsMapper">
 
 <select id="getAppDetails" parameterType="string" resultType="AppsJwtDetails">
-    	SELECT 
+    	select 
 			*
-    	FROM 
-    		MXK_APPS_JWT_DETAILS JD,
-    		MXK_APPS APP
-    	WHERE 	
-    		APP.ID	=	#{value}
-    		AND JD.ID	=	#{value}
-    		AND JD.ID	=	APP.ID
-    		AND STATUS	=	1
+    	from 
+    		mxk_apps_jwt_details jd,
+    		mxk_apps app
+    	where 	
+    		app.id	=	#{value}
+    		and jd.id	=	#{value}
+    		and jd.id	=	app.id
+    		and status	=	1
     </select>
 	
 </mapper>

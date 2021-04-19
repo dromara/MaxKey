@@ -34,7 +34,7 @@ import org.maxkey.authz.singlelogout.LogoutType;
 import org.maxkey.authz.singlelogout.SingleLogout;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsProtocols;
-import org.maxkey.domain.apps.Apps;
+import org.maxkey.entity.apps.Apps;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;

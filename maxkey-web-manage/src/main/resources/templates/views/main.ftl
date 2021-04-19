@@ -149,7 +149,7 @@
 										<div id="morris-line-example">
 											<table  class="table table-bordered" >
 												<tr><td><@locale code="main.rpt.app"/></td><td><@locale code="main.rpt.count"/></td></tr>
-												<#list rptApp as apps><tr><td>${apps.APPNAME}</td><td>${apps.REPORTCOUNT}</td></tr></#list>
+												<#list rptApp as apps><tr><td>${apps.appname}</td><td>${apps.reportcount}</td></tr></#list>
 											</table>
 										</div>
 									</div>
@@ -174,7 +174,7 @@
 										<div id="morris-line-example">
 											<table  class="table table-bordered" >
 												<tr><td><@locale code="main.rpt.browser"/></td><td><@locale code="main.rpt.count"/></td></tr>
-												<#list rptBrowser as browser><tr><td>${browser.REPORTSTRING}</td><td>${browser.REPORTCOUNT}</td></tr></#list>
+												<#list rptBrowser as browser><tr><td>${browser.reportstring}</td><td>${browser.reportcount}</td></tr></#list>
 											</table>
 										</div>
 									</div>
@@ -185,13 +185,13 @@
 	var configMonth = {
 		type: 'line',
 		data: {
-			labels: [<#list rptMonth as month>'${month.REPORTSTRING}',</#list>],
+			labels: [<#list rptMonth as month>'${month.reportstring}',</#list>],
 			datasets: [{
 				label:'<@locale code="main.rpt.count"/>',
 				backgroundColor: 'rgb(75, 192, 192)',
 				borderColor: 'rgb(75, 192, 192)',
 				fill: false,
-				data: [<#list rptMonth as month>${month.REPORTCOUNT},</#list>],
+				data: [<#list rptMonth as month>${month.reportcount},</#list>],
 			}]
 		},
 		options: {
@@ -214,13 +214,13 @@
 	var configDayHour = {
 			type: 'line',
 			data: {
-				labels: [<#list rptDayHour as dayHour>'${dayHour.REPORTSTRING}',</#list>],
+				labels: [<#list rptDayHour as dayHour>'${dayHour.reportstring}',</#list>],
 				datasets: [{
 					label:'<@locale code="main.rpt.count"/>',
 					backgroundColor: 'rgb(178 ,34, 34)',
 					borderColor: 'rgb(178 ,34, 34)',
 					fill: false,
-					data: [<#list rptDayHour as dayHour>${dayHour.REPORTCOUNT},</#list>],
+					data: [<#list rptDayHour as dayHour>${dayHour.reportcount},</#list>],
 				}]
 			},
 			options: {

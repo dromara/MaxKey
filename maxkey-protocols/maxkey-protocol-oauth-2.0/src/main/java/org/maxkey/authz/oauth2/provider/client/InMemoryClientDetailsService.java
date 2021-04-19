@@ -22,7 +22,7 @@ import java.util.Map;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.ClientRegistrationException;
 import org.maxkey.authz.oauth2.provider.NoSuchClientException;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 
 /**
  * Basic, in-memory implementation of the client details service.

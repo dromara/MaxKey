@@ -24,7 +24,7 @@ import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;

@@ -21,8 +21,8 @@ import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.Boolean;
 import org.maxkey.crypto.DigestUtils;
-import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.AppsFormBasedDetails;
+import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.apps.AppsFormBasedDetails;
 import org.maxkey.web.WebContext;
 import org.springframework.web.servlet.ModelAndView;
 

@@ -18,7 +18,7 @@
 package org.maxkey.web.api.endpoint;
 
 import org.maxkey.crypto.password.PasswordReciprocal;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.persistence.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;

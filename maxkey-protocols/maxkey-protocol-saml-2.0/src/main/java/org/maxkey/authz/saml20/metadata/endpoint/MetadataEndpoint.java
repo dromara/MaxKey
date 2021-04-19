@@ -25,7 +25,7 @@ import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.authz.saml20.metadata.MetadataGenerator;
 import org.maxkey.constants.ContentType;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
-import org.maxkey.domain.Saml20Metadata;
+import org.maxkey.entity.Saml20Metadata;
 import org.maxkey.web.WebContext;
 import org.opensaml.common.xml.SAMLConstants;
 import org.opensaml.saml2.core.NameIDType;

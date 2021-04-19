@@ -3,250 +3,250 @@
 <mapper namespace="org.maxkey.persistence.mapper.UserInfoMapper">
 	
 	<select id="loadByUsername" parameterType="string" resultType="UserInfo">
-    	SELECT 
+    	select 
 			*
-    	FROM
-			MXK_USERINFO
-		WHERE	USERNAME = #{value}
+    	from
+			mxk_userinfo
+		where	username = #{value}
     </select>
     
 	<select id="queryPageResults" parameterType="UserInfo" resultType="UserInfo">
-		SELECT
-			ID,
-			USERNAME,
-			USERTYPE,
-			WINDOWSACCOUNT,
+		select
+			id,
+			username,
+			usertype,
+			windowsaccount,
 			
-			DISPLAYNAME ,
-			NICKNAME ,
-			NAMEZHSPELL,
-			NAMEZHSHORTSPELL,
-			GIVENNAME ,
-			MIDDLENAME ,
-			FAMILYNAME ,
+			displayname ,
+			nickname ,
+			namezhspell,
+			namezhshortspell,
+			givenname ,
+			middlename ,
+			familyname ,
 			
-			GENDER,
+			gender,
 
-			AUTHNTYPE,
-			MOBILE,
-			EMAIL,
-			WORKEMAIL,
-			WORKPHONENUMBER,
+			authntype,
+			mobile,
+			email,
+			workemail,
+			workphonenumber,
 
-			EMPLOYEENUMBER,
-			DIVISION,
-			COSTCENTER,
-			ORGANIZATION,
-			DEPARTMENTID,
-			DEPARTMENT,
-			JOBTITLE,
-			JOBLEVEL,
+			employeenumber,
+			division,
+			costcenter,
+			organization,
+			departmentid,
+			department,
+			jobtitle,
+			joblevel,
 			
 			
-			CREATEDBY,
-			CREATEDDATE,
-			MODIFIEDBY,
-			MODIFIEDDATE,
+			createdby,
+			createddate,
+			modifiedby,
+			modifieddate,
 			
-			STATUS
-		FROM
-			MXK_USERINFO
-		WHERE
+			status
+		from
+			mxk_userinfo
+		where
 			 (1=1)	
 		<if test="username != null and username != ''">
-			AND USERNAME = #{username}
+			and username = #{username}
 		</if>
 		<if test="employeeNumber != null and employeeNumber != ''">
-			AND EMPLOYEENUMBER = #{employeeNumber}
+			and employeenumber = #{employeeNumber}
 		</if>
 		<if test="userType != null and userType != ''">
-			AND USERTYPE = #{userType}
+			and usertype = #{userType}
 		</if>
 		<if test="displayName != null and displayName != ''">
-			AND DISPLAYNAME   LIKE  '%${displayName}%'
+			and displayname   like  '%${displayName}%'
 		</if>
 		<if test="departmentId != null and departmentId != ''">
-			AND DEPARTMENTID = #{departmentId}
+			and departmentid = #{departmentId}
 		</if>
-		ORDER BY SORTORDER 
+		order by sortorder 
 	</select>
 	
     <update id="locked" parameterType="UserInfo" >
-    	UPDATE MXK_USERINFO SET
+    	update mxk_userinfo set
     		<if test="isLocked != null">
-    		ISLOCKED		=	#{isLocked},
+    		islocked		=	#{isLocked},
 			</if>
-			MODIFIEDDATE		=	current_timestamp
-		WHERE 
-			ID	=	#{id}
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
     </update>
     
     <update id="lockout" parameterType="UserInfo" >
-    	UPDATE MXK_USERINFO SET
+    	update mxk_userinfo set
     		<if test="isLocked != null">
-    		ISLOCKED		=	#{isLocked},
-    		BADPWDCOUNT		=	0,
+    		islocked		=	#{isLocked},
+    		badpwdcount		=	0,
 			</if>
-			UNLOCKDATE			=	current_timestamp,
-			MODIFIEDDATE		=	current_timestamp
-		WHERE 
-			ID	=	#{id}
+			unlockdate			=	current_timestamp,
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
     </update>
     	
 	<update id="changePassword" parameterType="UserInfo" >
-    	UPDATE MXK_USERINFO SET
+    	update mxk_userinfo set
     		<if test="password != null">
-    		PASSWORD			=	#{password},
-			DECIPHERABLE		=	#{decipherable},
+    		password			=	#{password},
+			decipherable		=	#{decipherable},
 			</if>
-			PASSWORDSETTYPE			=	0,
-			PASSWORDLASTSETTIME		=	current_timestamp
-		WHERE 
-			ID	=	#{id}
+			passwordsettype			=	0,
+			passwordlastsettime		=	current_timestamp
+		where 
+			id	=	#{id}
     </update>
     
     <update id="changeSharedSecret" parameterType="UserInfo" >
-    	UPDATE MXK_USERINFO SET
+    	update mxk_userinfo set
     		<if test="sharedSecret != null">
-    		SHAREDSECRET		=	#{sharedSecret},
-			SHAREDCOUNTER		=	#{sharedCounter},
+    		sharedsecret		=	#{sharedSecret},
+			sharedcounter		=	#{sharedCounter},
 			</if>
-			MODIFIEDDATE		=	current_timestamp
-		WHERE 
-			ID	=	#{id}
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
     </update>
     
     <update id="changeAppLoginPassword" parameterType="UserInfo" >
-    	UPDATE MXK_USERINFO SET
+    	update mxk_userinfo set
     		<if test="appLoginPassword != null">
-    		APPLOGINPASSWORD		=	#{appLoginPassword},
+    		apploginpassword		=	#{appLoginPassword},
 			</if>
-			MODIFIEDDATE		=	current_timestamp
-		WHERE 
-			ID	=	#{id}
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
     </update>
     
     <update id="updateProtectedApps" parameterType="UserInfo" >
-    	UPDATE MXK_USERINFO SET
+    	update mxk_userinfo set
     		<if test="protectedApps != null">
-    		PROTECTEDAPPS		=	#{protectedApps},
+    		protectedapps		=	#{protectedApps},
 			</if>
-			MODIFIEDDATE		=	current_timestamp
-		WHERE 
-			ID	=	#{id}
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
     </update>
     
     <update id="changePasswordQuestion" parameterType="UserInfo" >
-    	UPDATE MXK_USERINFO SET
+    	update mxk_userinfo set
     		<if test="passwordAnswer != null">
-    		PASSWORDQUESTION	=	#{passwordQuestion},
-			PASSWORDANSWER		=	#{passwordAnswer},
+    		passwordquestion	=	#{passwordQuestion},
+			passwordanswer		=	#{passwordAnswer},
 			</if>
-			MODIFIEDDATE		=	current_timestamp
-		WHERE 
-			ID	=	#{id}
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
     </update>
 	
 	<update id="changeAuthnType" parameterType="UserInfo" >
-    	UPDATE MXK_USERINFO SET
+    	update mxk_userinfo set
     		<if test="authnType != null">
-    		AUTHNTYPE	=	#{authnType},
+    		authntype	=	#{authnType},
 			</if>
-			MODIFIEDDATE		=	current_timestamp
-		WHERE 
-			ID	=	#{id}
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
     </update>
     
     <update id="changeEmail" parameterType="UserInfo" >
-    	UPDATE MXK_USERINFO SET
+    	update mxk_userinfo set
     		<if test="email != null">
-    		EMAIL	=	#{email},
+    		email	=	#{email},
 			</if>
 			<if test="emailVerified != null">
-    		EMAILVERIFIED	=	#{emailVerified},
+    		emailverified	=	#{emailVerified},
 			</if>
 			<if test="theme != null">
-            THEME   =   #{theme},
+            theme   =   #{theme},
             </if>
-			MODIFIEDDATE		=	current_timestamp
-		WHERE 
-			ID	=	#{id}
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
     </update>
     
     <update id="changeMobile" parameterType="UserInfo" >
-    	UPDATE MXK_USERINFO SET
+    	update mxk_userinfo set
     		<if test="mobile != null">
-    		MOBILE			=	#{mobile},
+    		mobile			=	#{mobile},
 			</if>
 			<if test="mobileVerified != null">
-    		MOBILEVERIFIED	=	#{mobileVerified},
+    		mobileverified	=	#{mobileVerified},
 			</if>
-			MODIFIEDDATE		=	current_timestamp
-		WHERE 
-			ID	=	#{id}
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
     </update>
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	UPDATE MXK_USERINFO SET STATUS='2' WHERE ID IN
+    	update mxk_userinfo set status='2' where id in
     		<foreach item="item" collection="list" open="(" separator="," close=")">
 				#{item}
     		</foreach>
 	</update>
 	
     <update id="updateProfile" parameterType="UserInfo" >
-        UPDATE MXK_USERINFO SET
-            DISPLAYNAME     =   #{displayName},
-            NICKNAME        =   #{nickName},
-            NAMEZHSPELL     =   #{nameZhSpell},
-            NAMEZHSHORTSPELL=   #{nameZhShortSpell},
-            GIVENNAME       =   #{givenName},
-            MIDDLENAME      =   #{middleName},
-            FAMILYNAME      =   #{familyName},
-            HONORIFICPREFIX =   #{honorificPrefix},
-            HONORIFICSUFFIX =   #{honorificSuffix},
-            FORMATTEDNAME   =   #{formattedName} ,
-            MARRIED         =   #{married},
-            GENDER          =   #{gender},
-            BIRTHDATE       =   #{birthDate},
+        update mxk_userinfo set
+            displayname     =   #{displayName},
+            nickname        =   #{nickName},
+            namezhspell     =   #{nameZhSpell},
+            namezhshortspell=   #{nameZhShortSpell},
+            givenname       =   #{givenName},
+            middlename      =   #{middleName},
+            familyname      =   #{familyName},
+            honorificprefix =   #{honorificPrefix},
+            honorificsuffix =   #{honorificSuffix},
+            formattedname   =   #{formattedName} ,
+            married         =   #{married},
+            gender          =   #{gender},
+            birthdate       =   #{birthDate},
             <if test="picture != null">
-            PICTURE         =   #{picture},
+            picture         =   #{picture},
             </if>
-            IDTYPE          =   #{idType},
-            IDCARDNO        =   #{idCardNo},
-            WEBSITE         =   #{webSite},
+            idtype          =   #{idType},
+            idcardno        =   #{idCardNo},
+            website         =   #{webSite},
 
-            LOCALE          =   #{locale},
-            TIMEZONE        =   #{timeZone},
-            PREFERREDLANGUAGE=  #{preferredLanguage},
+            locale          =   #{locale},
+            timezone        =   #{timeZone},
+            preferredlanguage=  #{preferredLanguage},
 
-            WINDOWSACCOUNT  =   #{windowsAccount},
+            windowsaccount  =   #{windowsAccount},
             
-            WORKCOUNTRY     =   #{workCountry},
-            WORKREGION      =   #{workRegion},
-            WORKLOCALITY    =   #{workLocality},
-            WORKSTREETADDRESS=  #{workStreetAddress},
-            WORKADDRESSFORMATTED=   #{workAddressFormatted},
-            WORKEMAIL       =   #{workEmail},
-            WORKPHONENUMBER =   #{workPhoneNumber},
-            WORKPOSTALCODE  =   #{workPostalCode},
-            WORKFAX         =   #{workFax},
+            workcountry     =   #{workCountry},
+            workregion      =   #{workRegion},
+            worklocality    =   #{workLocality},
+            workstreetaddress=  #{workStreetAddress},
+            workaddressformatted=   #{workAddressFormatted},
+            workemail       =   #{workEmail},
+            workphonenumber =   #{workPhoneNumber},
+            workpostalcode  =   #{workPostalCode},
+            workfax         =   #{workFax},
             
-            HOMECOUNTRY     =   #{homeCountry},
-            HOMEREGION      =   #{homeRegion},
-            HOMELOCALITY    =   #{homeLocality},
-            HOMESTREETADDRESS=  #{homeStreetAddress},
-            HOMEADDRESSFORMATTED=   #{homeAddressFormatted},
-            HOMEEMAIL       =   #{homeEmail},
-            HOMEPHONENUMBER=    #{homePhoneNumber},
-            HOMEPOSTALCODE  =   #{homePostalCode},
-            HOMEFAX         =   #{homeFax},
+            homecountry     =   #{homeCountry},
+            homeregion      =   #{homeRegion},
+            homelocality    =   #{homeLocality},
+            homestreetaddress=  #{homeStreetAddress},
+            homeaddressformatted=   #{homeAddressFormatted},
+            homeemail       =   #{homeEmail},
+            homephonenumber=    #{homePhoneNumber},
+            homepostalcode  =   #{homePostalCode},
+            homefax         =   #{homeFax},
             
-            EXTRAATTRIBUTE  =   #{extraAttribute},
+            extraattribute  =   #{extraAttribute},
             
-            MODIFIEDBY      =   #{modifiedBy},
-            MODIFIEDDATE    =   current_timestamp       
-        WHERE 
-            ID  =   #{id}
+            modifiedby      =   #{modifiedBy},
+            modifieddate    =   current_timestamp       
+        where 
+            id  =   #{id}
     </update>
  
 </mapper>

@@ -23,7 +23,7 @@ package org.maxkey.persistence.mapper;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.GroupPrivileges;
+import org.maxkey.entity.GroupPrivileges;
 
 /**
  * @author Crystal.sea

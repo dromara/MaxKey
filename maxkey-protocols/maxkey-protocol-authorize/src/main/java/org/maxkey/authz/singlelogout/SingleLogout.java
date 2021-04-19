@@ -18,7 +18,8 @@
 package org.maxkey.authz.singlelogout;
 
 import java.util.Map;
-import org.maxkey.domain.apps.Apps;
+
+import org.maxkey.entity.apps.Apps;
 import org.maxkey.web.HttpRequestAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

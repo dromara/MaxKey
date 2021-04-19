@@ -20,7 +20,7 @@ package org.maxkey.authn.realm.jdbc;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.password.PasswordReciprocal;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

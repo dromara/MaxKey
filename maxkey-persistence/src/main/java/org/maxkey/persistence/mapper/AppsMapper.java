@@ -24,8 +24,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Update;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.apps.Apps;
-import org.maxkey.domain.apps.UserApps;
+import org.maxkey.entity.apps.Apps;
+import org.maxkey.entity.apps.UserApps;
 
 /**
  * @author Crystal.sea

@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.maxkey.domain.apps.AppsCasDetails;
+import org.maxkey.entity.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 
 /**

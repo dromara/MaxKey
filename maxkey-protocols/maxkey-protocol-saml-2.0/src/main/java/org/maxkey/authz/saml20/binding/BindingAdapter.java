@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authz.saml.common.AuthnRequestInfo;
-import org.maxkey.domain.apps.AppsSAML20Details;
+import org.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.common.SignableSAMLObject;
 import org.opensaml.saml2.metadata.Endpoint;
 import org.opensaml.ws.message.encoder.MessageEncodingException;

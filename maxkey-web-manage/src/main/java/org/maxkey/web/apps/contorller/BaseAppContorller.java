@@ -25,7 +25,7 @@ import java.io.IOException;
 import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
-import org.maxkey.domain.apps.Apps;
+import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.maxkey.authn.online.OnlineTicket;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

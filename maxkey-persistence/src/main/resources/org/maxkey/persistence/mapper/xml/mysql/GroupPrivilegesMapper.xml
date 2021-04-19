@@ -4,56 +4,56 @@
 
 	<sql id="where_statement">
     	<if test="id != null and id != ''">
-			AND	APPS.ID	=	#{id}
+			and	apps.id	=	#{id}
 		</if> 
 		<if test="name != null and name != ''">
-			AND APPS.NAME LIKE  '%${name}%'
+			and apps.name like  '%${name}%'
 		</if>
 		<if test="protocol != null and protocol != ''">
-			AND APPS.PROTOCOL = #{protocol}
+			and apps.protocol = #{protocol}
 		</if>
 		<if test="category != null and category != ''">
-			AND APPS.CATEGORY = #{category}
+			and apps.category = #{category}
 		</if>
     </sql>
 	
 	<!-- AppGroup -->
 	<select id="appsInGroup" parameterType="GroupPrivileges" resultType="GroupPrivileges">
-		SELECT
-			GP.ID,
-			GP.GROUPID,
-			GP.APPID,
-			APPS.NAME,
-            APPS.ICON,
-            APPS.LOGINURL,
-            APPS.PROTOCOL,
-            APPS.CATEGORY,
-            APPS.DESCRIPTION,
-            APPS.VENDOR,
-            APPS.VENDORURL
-		FROM
-			MXK_APPS APPS,
-			MXK_GROUP_PRIVILEGES    GP
-		WHERE
-			GP.APPID=APPS.ID
-			AND GP.GROUPID	=	#{groupId}
+		select
+			gp.id,
+			gp.groupid,
+			gp.appid,
+			apps.name,
+            apps.icon,
+            apps.loginurl,
+            apps.protocol,
+            apps.category,
+            apps.description,
+            apps.vendor,
+            apps.vendorurl
+		from
+			mxk_apps apps,
+			mxk_group_privileges    gp
+		where
+			gp.appid=apps.id
+			and gp.groupid	=	#{groupId}
 		<include refid="where_statement"/>
 	</select>
 	
 	<select id="appsNotInGroup" parameterType="GroupPrivileges" resultType="GroupPrivileges">
-		SELECT
+		select
 			*
-		FROM
-			MXK_APPS APPS
-		WHERE
+		from
+			mxk_apps apps
+		where
 			 1	=	1
-			AND  APPS.ID NOT IN(
-				SELECT 
-					APPID
-				FROM
-					MXK_GROUP_PRIVILEGES
-				WHERE 
-					GROUPID	=	#{groupId}
+			and  apps.id not in(
+				select 
+					appid
+				from
+					mxk_group_privileges
+				where 
+					groupid	=	#{groupId}
 			)
 		<include refid="where_statement"/>
 	</select>

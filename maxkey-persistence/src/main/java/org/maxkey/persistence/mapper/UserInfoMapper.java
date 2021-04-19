@@ -19,7 +19,7 @@ package org.maxkey.persistence.mapper;
 
 import org.apache.ibatis.annotations.Select;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 
 
 /**

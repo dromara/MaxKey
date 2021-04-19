@@ -18,7 +18,7 @@
 package org.maxkey.persistence.mapper;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.UserInfoAdjoint;
+import org.maxkey.entity.UserInfoAdjoint;
 
 
 /**

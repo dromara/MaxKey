@@ -25,7 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.authz.saml20.binding.ExtractBindingAdapter;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
-import org.maxkey.domain.apps.AppsSAML20Details;
+import org.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.common.binding.BasicSAMLMessageContext;
 import org.opensaml.common.binding.SAMLMessageContext;
 import org.opensaml.common.binding.decoding.SAMLMessageDecoder;

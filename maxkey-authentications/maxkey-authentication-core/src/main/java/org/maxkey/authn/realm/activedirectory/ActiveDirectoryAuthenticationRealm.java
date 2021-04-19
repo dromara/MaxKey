@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.realm.IAuthenticationServer;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

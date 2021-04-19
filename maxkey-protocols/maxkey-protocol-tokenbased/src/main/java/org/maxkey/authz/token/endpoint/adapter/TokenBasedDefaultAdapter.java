@@ -22,8 +22,8 @@ import java.util.HashMap;
 
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.AppsTokenBasedDetails;
+import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.apps.AppsTokenBasedDetails;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;

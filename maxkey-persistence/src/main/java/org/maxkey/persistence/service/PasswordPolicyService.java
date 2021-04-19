@@ -18,7 +18,7 @@
 package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.domain.PasswordPolicy;
+import org.maxkey.entity.PasswordPolicy;
 import org.maxkey.persistence.mapper.PasswordPolicyMapper;
 import org.springframework.stereotype.Repository;
 

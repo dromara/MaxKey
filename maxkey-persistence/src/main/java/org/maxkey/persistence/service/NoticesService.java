@@ -18,7 +18,7 @@
 package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.domain.Notices;
+import org.maxkey.entity.Notices;
 import org.maxkey.persistence.mapper.NoticesMapper;
 import org.springframework.stereotype.Repository;
 

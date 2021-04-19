@@ -19,7 +19,7 @@ package org.maxkey.authz.cas.endpoint.ticket;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.pgt.ProxyGrantingTicket;
-import org.maxkey.domain.apps.AppsCasDetails;
+import org.maxkey.entity.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 
 import javax.persistence.Column;

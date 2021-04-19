@@ -46,7 +46,7 @@ import org.maxkey.authz.oauth2.provider.implicit.ImplicitTokenRequest;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestValidator;
 import org.maxkey.util.HttpEncoder;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

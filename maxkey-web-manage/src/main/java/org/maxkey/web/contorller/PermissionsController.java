@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.domain.RolePermissions;
+import org.maxkey.entity.RolePermissions;
 import org.maxkey.persistence.service.RolesService;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;

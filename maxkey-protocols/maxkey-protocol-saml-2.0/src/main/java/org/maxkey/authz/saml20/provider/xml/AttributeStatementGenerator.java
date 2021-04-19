@@ -25,9 +25,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.maxkey.constants.Boolean;
-import org.maxkey.domain.ExtraAttr;
-import org.maxkey.domain.ExtraAttrs;
-import org.maxkey.domain.apps.AppsSAML20Details;
+import org.maxkey.entity.ExtraAttr;
+import org.maxkey.entity.ExtraAttrs;
+import org.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.Configuration;
 import org.opensaml.saml2.core.Attribute;
 import org.opensaml.saml2.core.AttributeStatement;

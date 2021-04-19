@@ -4,51 +4,51 @@
 
 	<sql id="dao_where_statement">
     	<if test="id != null and id != ''">
-			AND	ID	=	#{id}
+			and	id	=	#{id}
 		</if> 
 		<if test="sessionId != null and sessionId != ''">
-			AND	SESSIONID	=	#{sessionId}
+			and	sessionid	=	#{sessionId}
 		</if> 
 		<if test="appId != null and appId != ''">
-			AND	APPID	=	#{appId}
+			and	appid	=	#{appId}
 		</if>
 		<if test="appName != null and appName != ''">
-			AND	APPNAME	LIKE CONCAT('%',#{appName},'%')
+			and	appname	like concat('%',#{appName},'%')
 		</if> 
 		<if test="uid != null and uid != ''">
-			AND	UID	=	#{uid}
+			and	uid	=	#{uid}
 		</if> 
 		<if test="username != null and username != ''">
-			AND	USERNAME	LIKE CONCAT('%',#{username},'%')
+			and	username	like concat('%',#{username},'%')
 		</if> 
 		<if test="displayName != null and displayName != ''">
-			AND	DISPLAYNAME	LIKE CONCAT('%',#{displayName},'%')
+			and	displayname	like concat('%',#{displayName},'%')
 		</if> 
 		<if test="startDate != null and startDate != ''">
-			AND	LOGINTIME	>=	#{startDate}
+			and	logintime	>=	#{startDate}
 		</if>
 		<if test="endDate != null and endDate != ''">
-			AND	 #{endDate}	>=	LOGINTIME
+			and	 #{endDate}	>=	logintime
 		</if>
 		
     </sql>
     
      <select id="queryPageResults" parameterType="HistoryLoginApps" resultType="HistoryLoginApps">
-    	SELECT 
-			ID,
-			SESSIONID,
-			APPID,
-			APPNAME,
-			UID,
-			USERNAME,
-			DISPLAYNAME,
-			DATE_FORMAT(LOGINTIME, '%Y-%m-%d  %H:%i:%s') AS LOGINTIME
+    	select 
+			id,
+			sessionid,
+			appid,
+			appname,
+			uid,
+			username,
+			displayname,
+			date_format(logintime, '%Y-%m-%d  %H:%i:%s') as logintime
 			 
-    	FROM MXK_HISTORY_LOGIN_APPS
-    	WHERE	1	=	1
+    	from mxk_history_login_apps
+    	where	1	=	1
     	<include refid="dao_where_statement"/>
     	
-    	ORDER BY LOGINTIME DESC
+    	order by logintime desc
     </select>
   
     

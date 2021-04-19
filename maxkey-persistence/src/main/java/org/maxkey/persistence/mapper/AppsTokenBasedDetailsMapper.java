@@ -21,7 +21,7 @@
 package org.maxkey.persistence.mapper;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.apps.AppsTokenBasedDetails;
+import org.maxkey.entity.apps.AppsTokenBasedDetails;
 
 /**
  * @author Crystal.sea

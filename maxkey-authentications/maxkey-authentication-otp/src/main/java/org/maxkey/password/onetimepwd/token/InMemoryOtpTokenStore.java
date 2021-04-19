@@ -24,7 +24,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.maxkey.constants.ConstantsTimeInterval;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.OneTimePassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

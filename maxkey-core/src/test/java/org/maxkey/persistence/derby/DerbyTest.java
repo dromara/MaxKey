@@ -55,7 +55,7 @@ public class DerbyTest {
 		/*interact with Derby*/
 		Statement s = conn.createStatement();
 
-		ResultSet rs = s.executeQuery("SELECT * FROM SECONDTABLE");
+		ResultSet rs = s.executeQuery("select * from secondtable");
 		
 		while(rs.next()){
 			System.out.println("key : "+rs.getInt("ID")+" ,name : "+rs.getString("NAME"));

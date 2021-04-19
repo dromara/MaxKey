@@ -31,7 +31,7 @@ import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.OAuth2Request;
 import org.maxkey.authz.oauth2.provider.OAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.token.TokenStore;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.Assert;

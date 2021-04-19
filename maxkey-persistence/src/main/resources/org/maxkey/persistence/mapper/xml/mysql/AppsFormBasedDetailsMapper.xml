@@ -3,15 +3,15 @@
 <mapper namespace="org.maxkey.persistence.mapper.AppsFormBasedDetailsMapper">
 
 	<select id="getAppDetails" parameterType="string" resultType="AppsFormBasedDetails">
-    	SELECT 
+    	select 
 			*
-    	FROM 
-    		MXK_APPS_FORM_BASED_DETAILS FBD,
-    		MXK_APPS APP
-    	WHERE 	
-    		APP.ID	=	#{value}
-    		AND FBD.ID	=	#{value}
-    		AND FBD.ID	=	APP.ID
-    		AND STATUS	=	1
+    	from 
+    		mxk_apps_form_based_details fbd,
+    		mxk_apps app
+    	where 	
+    		app.id	=	#{value}
+    		and fbd.id	=	#{value}
+    		and fbd.id	=	app.id
+    		and status	=	1
     </select>
 </mapper>

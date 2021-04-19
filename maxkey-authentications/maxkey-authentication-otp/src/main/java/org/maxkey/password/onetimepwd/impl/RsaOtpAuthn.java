@@ -17,7 +17,7 @@
 
 package org.maxkey.password.onetimepwd.impl;
 
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 
 /**

@@ -36,8 +36,8 @@ import org.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionServic
 import org.maxkey.crypto.jwt.encryption.service.impl.RecipientJwtEncryptionAndDecryptionServiceBuilder;
 import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
 import org.maxkey.crypto.jwt.signer.service.impl.SymmetricSigningAndValidationServiceBuilder;
-import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.JsonUtils;

@@ -20,7 +20,7 @@ package org.maxkey.web.apps.contorller;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.domain.apps.AppsCasDetails;
+import org.maxkey.entity.apps.AppsCasDetails;
 import org.maxkey.persistence.service.AppsCasDetailsService;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;

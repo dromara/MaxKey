@@ -21,8 +21,8 @@ import java.util.Date;
 
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.AppsTokenBasedDetails;
+import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.apps.AppsTokenBasedDetails;
 import org.maxkey.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

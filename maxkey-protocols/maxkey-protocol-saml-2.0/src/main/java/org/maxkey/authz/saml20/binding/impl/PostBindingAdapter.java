@@ -30,7 +30,7 @@ import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.binding.ExtractBindingAdapter;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
-import org.maxkey.domain.apps.AppsSAML20Details;
+import org.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.common.SignableSAMLObject;
 import org.opensaml.common.binding.BasicSAMLMessageContext;
 import org.opensaml.common.binding.decoding.SAMLMessageDecoder;

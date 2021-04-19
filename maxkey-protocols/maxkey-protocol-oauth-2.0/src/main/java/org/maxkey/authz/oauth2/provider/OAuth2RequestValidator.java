@@ -20,7 +20,7 @@ package org.maxkey.authz.oauth2.provider;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidScopeException;
 import org.maxkey.authz.oauth2.provider.endpoint.AuthorizationEndpoint;
 import org.maxkey.authz.oauth2.provider.endpoint.TokenEndpoint;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 
 /**
  * Validation interface for OAuth2 requests to the {@link AuthorizationEndpoint} and {@link TokenEndpoint}.

@@ -20,8 +20,8 @@ package org.maxkey.persistence.service;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.domain.RolePermissions;
-import org.maxkey.domain.Roles;
+import org.maxkey.entity.RolePermissions;
+import org.maxkey.entity.Roles;
 import org.maxkey.persistence.mapper.RolesMapper;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;

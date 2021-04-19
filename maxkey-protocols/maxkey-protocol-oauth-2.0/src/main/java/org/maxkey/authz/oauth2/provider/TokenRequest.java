@@ -24,7 +24,7 @@ import java.util.Map;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.endpoint.AuthorizationEndpoint;
 import org.maxkey.authz.oauth2.provider.endpoint.TokenEndpoint;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 
 /**
  * Represents an OAuth2 token request, made at the {@link TokenEndpoint}. The requestParameters map should contain the

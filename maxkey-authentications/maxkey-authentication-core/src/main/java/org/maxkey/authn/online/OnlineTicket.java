@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.HashMap;
 
-import org.maxkey.domain.apps.Apps;
+import org.maxkey.entity.apps.Apps;
 import org.springframework.security.core.Authentication;
 
 public class OnlineTicket implements Serializable{

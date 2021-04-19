@@ -3,21 +3,21 @@
 <mapper namespace="org.maxkey.persistence.mapper.RegistrationMapper">
 	
 	<select id="queryUserInfoByEmail" parameterType="string" resultType="UserInfo">
-		SELECT
-			ID,
-			EMAIL
-		FROM
-			USERINFO
-		WHERE
-			EMAIL = #{value}
-		UNION
-		SELECT 
-			ID,
-			WORKEMAIL EAMIL
-		FROM
-			MXK_REGISTRATION
-		WHERE 
-			WORKEMAIL = #{value}
+		select
+			id,
+			email
+		from
+			userinfo
+		where
+			email = #{value}
+		union
+		select 
+			id,
+			workemail eamil
+		from
+			mxk_registration
+		where 
+			workemail = #{value}
 	</select>
 	
 </mapper>

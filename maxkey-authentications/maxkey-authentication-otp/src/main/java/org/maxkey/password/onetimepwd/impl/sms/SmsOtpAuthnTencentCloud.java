@@ -26,7 +26,7 @@ import com.tencentcloudapi.sms.v20190711.models.SendSmsResponse;
 
 import java.io.IOException;
 
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.impl.SmsOtpAuthn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

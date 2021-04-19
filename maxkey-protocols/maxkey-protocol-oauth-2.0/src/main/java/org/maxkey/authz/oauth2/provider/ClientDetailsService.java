@@ -16,7 +16,7 @@
 
 package org.maxkey.authz.oauth2.provider;
 
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 
 /**
  * A service that provides the details about an OAuth2 client.

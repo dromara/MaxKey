@@ -17,7 +17,7 @@ package org.maxkey.authz.oauth2.provider;
 
 import java.util.List;
 
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 
 /**
  * Interface for client registration, handling add, update and remove of {@link ClientDetails} from an Authorization

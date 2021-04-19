@@ -19,7 +19,7 @@ package org.maxkey.persistence.db;
 
 import java.sql.Types;
 
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

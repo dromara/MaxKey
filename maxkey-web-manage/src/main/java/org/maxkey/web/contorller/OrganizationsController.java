@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.domain.ExcelImport;
-import org.maxkey.domain.Organizations;
+import org.maxkey.entity.ExcelImport;
+import org.maxkey.entity.Organizations;
 import org.maxkey.persistence.service.OrganizationsService;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.component.TreeNode;

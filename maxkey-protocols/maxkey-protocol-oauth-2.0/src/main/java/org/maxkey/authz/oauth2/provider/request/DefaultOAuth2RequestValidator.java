@@ -23,7 +23,7 @@ import org.maxkey.authz.oauth2.common.exceptions.InvalidScopeException;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.OAuth2RequestValidator;
 import org.maxkey.authz.oauth2.provider.TokenRequest;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 
 /**
  * Default implementation of {@link OAuth2RequestValidator}. 

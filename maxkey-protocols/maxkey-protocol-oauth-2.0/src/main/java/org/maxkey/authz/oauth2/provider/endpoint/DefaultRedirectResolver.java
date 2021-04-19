@@ -26,7 +26,7 @@ import org.maxkey.authz.oauth2.common.exceptions.InvalidGrantException;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidRequestException;
 import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
 import org.maxkey.authz.oauth2.common.exceptions.RedirectMismatchException;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 

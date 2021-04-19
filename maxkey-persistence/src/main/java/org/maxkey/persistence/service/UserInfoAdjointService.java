@@ -18,7 +18,7 @@
 package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.domain.UserInfoAdjoint;
+import org.maxkey.entity.UserInfoAdjoint;
 import org.maxkey.persistence.mapper.UserInfoAdjointMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

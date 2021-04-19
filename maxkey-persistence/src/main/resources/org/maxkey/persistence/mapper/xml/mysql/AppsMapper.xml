@@ -4,77 +4,77 @@
 
 	<sql id="where_statement">
 		<if test="id != null and id != ''">
-			AND ID = #{id}
+			and id = #{id}
 		</if>
 		<if test="name != null and name != ''">
-			AND NAME  LIKE  '%${name}%'
+			and name  like  '%${name}%'
 		</if>
 		<if test="protocol != null and protocol != ''">
-			AND PROTOCOL = #{protocol}
+			and protocol = #{protocol}
 		</if>
 		<if test="credential != null and credential != ''">
-			AND CREDENTIAL = #{credential}
+			and credential = #{credential}
 		</if>
 		<if test="category != null and category != ''">
-			AND CATEGORY = #{category}
+			and category = #{category}
 		</if>
 		<if test="vendor != null and vendor != ''">
-			AND VENDOR = #{vendor}
+			and vendor = #{vendor}
 		</if>
 	</sql>
 	
 	
 	<select id="queryPageResults" parameterType="Apps" resultType="Apps">
-		SELECT
+		select
 			*
-		FROM
-			MXK_APPS
-		WHERE
+		from
+			mxk_apps
+		where
 			 (1=1)	
 		<include refid="where_statement"/>
-		ORDER BY SORTINDEX 
+		order by sortindex 
 	</select>
 	
 		
 	<insert id="insertApp" parameterType="Apps">
-		INSERT INTO MXK_APPS(
-			ID,
-			NAME,
-			ICON,
-			LOGINURL,
-			PROTOCOL,
-			CATEGORY,
-			SECRET,
-			DESCRIPTION,
-			VENDOR,
-			VENDORURL,
+		insert into mxk_apps(
+			id,
+			name,
+			icon,
+			loginurl,
+			protocol,
+			category,
+			secret,
+			description,
+			vendor,
+			vendorurl,
 			
-			CREDENTIAL,
-			SHAREDUSERNAME,
-			SHAREDPASSWORD,
-			SYSTEMUSERATTR,
+			credential,
+			sharedusername,
+			sharedpassword,
+			systemuserattr,
 			
-			ISEXTENDATTR,
-			EXTENDATTR,
-			USERPROPERTYS,
+			isextendattr,
+			extendattr,
+			userpropertys,
 			
-			ISSIGNATURE,
+			issignature,
 			
-			ISADAPTER,
-			ADAPTER,
+			isadapter,
+			adapter,
 			
-			PRINCIPAL,
-			CREDENTIALS,
+			principal,
+			credentials,
 			
-			VISIBLE,
+			visible,
 			
-			SORTINDEX,
+			sortindex,
 			
-			CREATEDBY,
-			CREATEDDATE,
+			createdby,
+			createddate,
 			
-			STATUS
-		)VALUES(
+			status
+		)values(
 			#{id},
 			#{name},
 			#{icon},
@@ -114,75 +114,75 @@
 	</insert>
 	
 	<update id="updateApp" parameterType="Apps" >
-    	UPDATE MXK_APPS SET
-    		NAME			=	#{name},
+    	update mxk_apps set
+    		name			=	#{name},
     		<if test="icon != null">
-			ICON			=	#{icon},
+			icon			=	#{icon},
 			</if>
-			LOGINURL		=	#{loginUrl},
-			PROTOCOL		=	#{protocol},
-			CATEGORY		=	#{category},
-			SECRET 			=	#{secret},
-			DESCRIPTION		=	#{description},
-			VENDOR			=	#{vendor},
-			VENDORURL		=	#{vendorUrl},
+			loginurl		=	#{loginUrl},
+			protocol		=	#{protocol},
+			category		=	#{category},
+			secret 			=	#{secret},
+			description		=	#{description},
+			vendor			=	#{vendor},
+			vendorurl		=	#{vendorUrl},
 			
-			CREDENTIAL			=	#{credential},
-			SHAREDUSERNAME		=	#{sharedUsername},
-			SHAREDPASSWORD		=	#{sharedPassword},
-			SYSTEMUSERATTR		=	#{systemUserAttr},
+			credential			=	#{credential},
+			sharedusername		=	#{sharedUsername},
+			sharedpassword		=	#{sharedPassword},
+			systemuserattr		=	#{systemUserAttr},
 			<!--
-			ISEXTENDATTR		=	#{isExtendAttr},
-			EXTENDATTR			=	#{extendAttr},
+			isextendattr		=	#{isExtendAttr},
+			extendattr			=	#{extendAttr},
 			-->
-			USERPROPERTYS		=	#{userPropertys},
-			ISSIGNATURE			=	#{isSignature},
+			userpropertys		=	#{userPropertys},
+			issignature			=	#{isSignature},
 			
 			<if test="adapter != null">
-			ISADAPTER			=	#{isAdapter},
-			ADAPTER				=	#{adapter},
+			isadapter			=	#{isAdapter},
+			adapter				=	#{adapter},
 			</if>
-			PRINCIPAL		=	#{principal},
-			CREDENTIALS		=	#{credentials},
-			VISIBLE				=	#{visible},
-			SORTINDEX			=	#{sortIndex},
+			principal		=	#{principal},
+			credentials		=	#{credentials},
+			visible				=	#{visible},
+			sortindex			=	#{sortIndex},
 			
-			MODIFIEDBY		=	#{modifiedBy},
-			MODIFIEDDATE	=	#{modifiedDate},
+			modifiedby		=	#{modifiedBy},
+			modifieddate	=	#{modifiedDate},
 			
-			STATUS			=	#{status}
-    	WHERE 
+			status			=	#{status}
+    	where 
 			ID	=	#{id}
     </update>
     
     <select id="queryMyApps" parameterType="UserApps" resultType="UserApps">
-        SELECT DISTINCT
-            APP.*
-        FROM
-            MXK_APPS APP,MXK_GROUP_PRIVILEGES GP,MXK_GROUPS G
-        WHERE
-            APP.ID=GP.APPID
-            AND GP.GROUPID=G.ID
-            AND APP.VISIBLE != 0
-            AND (
-            	 G.ID='ROLE_ALL_USER'
-                 OR G.ID IN(
-                      SELECT 
-                        GM.GROUPID 
-                      FROM 
-                        MXK_GROUP_MEMBER GM,MXK_USERINFO U 
-                      WHERE GM.MEMBERID    =   U.ID 
+        select distinct
+            app.*
+        from
+            mxk_apps app,mxk_group_privileges gp,mxk_groups g
+        where
+            app.id=gp.appid
+            and gp.groupid=g.id
+            and app.visible != 0
+            and (
+            	 g.id='ROLE_ALL_USER'
+                 or g.id in(
+                      select 
+                        gm.groupid 
+                      from 
+                        mxk_group_member gm,mxk_userinfo u 
+                      where gm.memberid    =   u.id 
                         <if test="userId != null and userId != ''">
-                            AND U.ID        =   #{userId}
+                            and u.id        =   #{userId}
                         </if>
                         <if test="username != null and username != ''">
-                            AND  U.USERNAME =   #{username}
+                            and  u.username =   #{username}
                         </if>
                     )
             )
         <if test="name != null and name != ''">
-            AND NAME    =   #{name}
+            and name    =   #{name}
         </if>
-        ORDER BY SORTINDEX
+        order by sortindex
     </select>
 </mapper>

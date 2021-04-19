@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.maxkey.persistence.mapper.AppsCasDetailsMapper">
 	<select id="getAppDetails" parameterType="string" resultType="AppsCasDetails">
-    	SELECT 
+    	select 
 			*
-    	FROM 
-    		MXK_APPS_CAS_DETAILS CD,
-    		MXK_APPS APP
-    	WHERE 	
-    		STATUS	=	1
-    		AND CD.ID	=	APP.ID
-    		AND (
-    			APP.ID	=	#{value}
-    			OR  LOWER(CD.SERVICE) = LOWER(SUBSTRING(#{value},1,LENGTH(CD.SERVICE)))
+    	from 
+    		mxk_apps_cas_details cd,
+    		mxk_apps app
+    	where 	
+    		status	=	1
+    		and cd.id	=	app.id
+    		and (
+    			app.id	=	#{value}
+    			or  lower(cd.service) = lower(substring(#{value},1,length(cd.service)))
     		)
     </select>
 </mapper>

@@ -4,257 +4,257 @@
 
 	<sql id="where_statement">
     	<if test="id != null and id != ''">
-			AND	ID	=	#{id}
+			and	id	=	#{id}
 		</if> 
 		<if test="name != null and name != ''">
-			AND NAME = #{name}
+			and name = #{name}
 		</if>
     </sql>
     
 
     <!-- GROUP_MEMBER  User Member-->
     <select id="allMemberInGroup" parameterType="GroupMember" resultType="GroupMember">
-		    SELECT	DISTINCT
-					U.ID,
-					U.USERNAME,
-					U.USERTYPE,
-					U.WINDOWSACCOUNT,
+		    select	distinct
+					u.id,
+					u.username,
+					u.usertype,
+					u.windowsaccount,
 					
-					U.DISPLAYNAME ,
-					U.NICKNAME ,
-					U.NAMEZHSPELL,
-					U.NAMEZHSHORTSPELL,
-					U.GIVENNAME ,
-					U.MIDDLENAME ,
-					U.FAMILYNAME ,
+					u.displayname ,
+					u.nickname ,
+					u.namezhspell,
+					u.namezhshortspell,
+					u.givenname ,
+					u.middlename ,
+					u.familyname ,
 					
-					U.GENDER,
+					u.gender,
 		
-					U.AUTHNTYPE,
-					U.MOBILE,
-					U.EMAIL,
-					U.WORKEMAIL,
-					U.WORKPHONENUMBER,
+					u.authntype,
+					u.mobile,
+					u.email,
+					u.workemail,
+					u.workphonenumber,
 		
-					U.EMPLOYEENUMBER,
-					U.DIVISION,
-					U.COSTCENTER,
-					U.ORGANIZATION,
-					U.DEPARTMENTID,
-					U.DEPARTMENT,
-					U.JOBTITLE,
-					U.JOBLEVEL,
+					u.employeenumber,
+					u.division,
+					u.costcenter,
+					u.organization,
+					u.departmentid,
+					u.department,
+					u.jobtitle,
+					u.joblevel,
 					
 					
-					U.CREATEDBY,
-					U.CREATEDDATE,
-					U.MODIFIEDBY,
-					U.MODIFIEDDATE,
+					u.createdby,
+					u.createddate,
+					u.modifiedby,
+					u.modifieddate,
 					
-					U.STATUS
-				FROM
-					MXK_USERINFO U
-			WHERE	1	=	1
+					u.status
+				from
+					mxk_userinfo u
+			where	1	=	1
 	</select>
 	
     <select id="memberInGroup" parameterType="GroupMember" resultType="GroupMember">
-			SELECT	DISTINCT
-				GM.ID,
-				U.USERNAME,
-				U.USERTYPE,
-				U.WINDOWSACCOUNT,
+			select	distinct
+				gm.id,
+				u.username,
+				u.usertype,
+				u.windowsaccount,
 				
-				U.DISPLAYNAME ,
-				U.NICKNAME ,
-				U.NAMEZHSPELL,
-				U.NAMEZHSHORTSPELL,
-				U.GIVENNAME ,
-				U.MIDDLENAME ,
-				U.FAMILYNAME ,
+				u.displayname ,
+				u.nickname ,
+				u.namezhspell,
+				u.namezhshortspell,
+				u.givenname ,
+				u.middlename ,
+				u.familyname ,
 				
-				U.GENDER,
+				u.gender,
 	
-				U.AUTHNTYPE,
-				U.MOBILE,
-				U.EMAIL,
-				U.WORKEMAIL,
-				U.WORKPHONENUMBER,
+				u.authntype,
+				u.mobile,
+				u.email,
+				u.workemail,
+				u.workphonenumber,
 	
-				U.EMPLOYEENUMBER,
-				U.DIVISION,
-				U.COSTCENTER,
-				U.ORGANIZATION,
-				U.DEPARTMENTID,
-				U.DEPARTMENT,
-				U.JOBTITLE,
-				U.JOBLEVEL,
+				u.employeenumber,
+				u.division,
+				u.costcenter,
+				u.organization,
+				u.departmentid,
+				u.department,
+				u.jobtitle,
+				u.joblevel,
 				
 				
-				U.CREATEDBY,
-				U.CREATEDDATE,
-				U.MODIFIEDBY,
-				U.MODIFIEDDATE,
+				u.createdby,
+				u.createddate,
+				u.modifiedby,
+				u.modifieddate,
 				
-				U.STATUS
-			FROM
-				MXK_USERINFO U,
-				`MXK_GROUPS` G,
-				MXK_GROUP_MEMBER GM
-			WHERE	1	=	1
+				u.status
+			from
+				mxk_userinfo u,
+				`mxk_groups` g,
+				mxk_group_member gm
+			where	1	=	1
 				<if test="groupId != null and groupId != ''">
-					AND GM.GROUPID = #{groupId}
-					AND G.ID = #{groupId}
+					and gm.groupid = #{groupId}
+					and g.id = #{groupId}
 				</if>
 				<if test="groupName != null and groupName != ''">
-					AND G.NAME = #{groupName}
+					and g.name = #{groupName}
 				</if>
 				<if test="username != null and username != ''">
-					AND U.USERNAME = #{username}
+					and u.username = #{username}
 				</if>
 				<if test="displayName != null and displayName != ''">
-					AND U.DISPLAYNAME   LIKE  '%${displayName}%'
+					and u.displayname   like  '%${displayName}%'
 				</if>
-				AND	GM.TYPE		IN(	'USER','USER-DYNAMIC')
-				AND	GM.GROUPID	=	G.ID	
-				AND	GM.MEMBERID	=	U.ID
+				and	gm.type		in(	'USER','USER-DYNAMIC')
+				and	gm.groupid	=	g.id	
+				and	gm.memberid	=	u.id
 	</select>
 	
 	
 	<select id="memberNotInGroup" parameterType="GroupMember" resultType="GroupMember">
-		SELECT	DISTINCT
-			U.ID,
-			U.USERNAME,
-			U.USERTYPE,
-			U.WINDOWSACCOUNT,
+		select	distinct
+			u.id,
+			u.username,
+			u.usertype,
+			u.windowsaccount,
 			
-			U.DISPLAYNAME ,
-			U.NICKNAME ,
-			U.NAMEZHSPELL,
-			U.NAMEZHSHORTSPELL,
-			U.GIVENNAME ,
-			U.MIDDLENAME ,
-			U.FAMILYNAME ,
+			u.displayname ,
+			u.nickname ,
+			u.namezhspell,
+			u.namezhshortspell,
+			u.givenname ,
+			u.middlename ,
+			u.familyname ,
 			
-			U.GENDER,
+			u.gender,
 
-			U.AUTHNTYPE,
-			U.MOBILE,
-			U.EMAIL,
-			U.WORKEMAIL,
-			U.WORKPHONENUMBER,
+			u.authntype,
+			u.mobile,
+			u.email,
+			u.workemail,
+			u.workphonenumber,
 
-			U.EMPLOYEENUMBER,
-			U.DIVISION,
-			U.COSTCENTER,
-			U.ORGANIZATION,
-			U.DEPARTMENTID,
-			U.DEPARTMENT,
-			U.JOBTITLE,
-			U.JOBLEVEL,
+			u.employeenumber,
+			u.division,
+			u.costcenter,
+			u.organization,
+			u.departmentid,
+			u.department,
+			u.jobtitle,
+			u.joblevel,
 			
 			
-			U.CREATEDBY,
-			U.CREATEDDATE,
-			U.MODIFIEDBY,
-			U.MODIFIEDDATE,
+			u.createdby,
+			u.createddate,
+			u.modifiedby,
+			u.modifieddate,
 			
-			U.STATUS
-		FROM
-			MXK_USERINFO U
-		WHERE
-			U.ID NOT IN(
-       			 SELECT GM.MEMBERID 
-       			 FROM 	`MXK_GROUPS` G,MXK_GROUP_MEMBER GM
-			     WHERE  1  =  1
+			u.status
+		from
+			mxk_userinfo u
+		where
+			u.id not in(
+       			 select gm.memberid 
+       			 from 	`mxk_groups` g,mxk_group_member gm
+			     where  1  =  1
 			     <if test="groupId != null and groupId != ''">
-					AND GM.GROUPID = #{groupId}
-					AND G.ID = #{groupId}
+					and gm.groupid = #{groupId}
+					and g.id = #{groupId}
 				</if>
 				<if test="groupName != null and groupName != ''">
-					AND G.NAME = #{groupName}
+					and g.name = #{groupName}
 				</if>
-					AND	GM.TYPE		IN(	'USER','USER-DYNAMIC')
-			     	AND GM.GROUPID	=	G.ID
+					and	gm.type		in(	'USER','USER-DYNAMIC')
+			     	and gm.groupid	=	g.id
 			)
 		<if test="username != null and username != ''">
-			AND U.USERNAME = #{username}
+			and u.username = #{username}
 		</if>
 		<if test="displayName != null and displayName != ''">
-			AND U.DISPLAYNAME   LIKE  '%${displayName}%'
+			and u.displayname   like  '%${displayName}%'
 		</if>
 	</select>
 	
 	
 	<!-- GROUP_MEMBER  Group Member-->
 	<select id="groupMemberInGroup" parameterType="GroupMember" resultType="Groups">
-		SELECT	DISTINCT
-			IG.*
-		FROM
-			`MXK_GROUPS` IG,
-			`MXK_GROUPS` G,
-			MXK_GROUP_MEMBER GM
-		WHERE
+		select	distinct
+			ig.*
+		from
+			`mxk_groups` ig,
+			`mxk_groups` g,
+			mxk_group_member gm
+		where
 			 1	=	1
-			AND GM.GROUPID	=	G.ID	
-			AND	GM.MEMBERID	=	IG.ID
-			AND	GM.TYPE		=	'GROUP'
+			and gm.groupid	=	g.id	
+			and	gm.memberid	=	ig.id
+			and	gm.type		=	'GROUP'
 		<if test="groupId != null and groupId != ''">
-			AND GM.GROUPID = #{groupId}
-			AND G.ID = #{groupId}
+			and gm.groupid = #{groupId}
+			and g.id = #{groupId}
 		</if>
 		<if test="groupName != null and groupName != ''">
-			AND G.NAME = #{groupName}
+			and g.name = #{groupName}
 		</if>
 	</select>
 
 	<update id="addDynamicGroupMember" parameterType="Groups" >
-    	INSERT INTO MXK_GROUP_MEMBER(
-    		ID,
-    		GROUPID,
-    		MEMBERID,
-    		TYPE
+    	insert into mxk_group_member(
+    		id,
+    		groupid,
+    		memberid,
+    		type
     	)
-    	SELECT 
-    		CONCAT_WS('-','UD','${id}',U.ID) ID,
-    		'${id}' GROUPID,
-    		U.ID MEMBERID,
+    	select 
+    		concat_ws('-','UD','${id}',u.id) id,
+    		'${id}' groupid,
+    		u.id memberid,
     		'USER-DYNAMIC' TYPE
-    	FROM MXK_USERINFO U
-		WHERE NOT EXISTS(
-				SELECT  1 FROM MXK_GROUP_MEMBER GM 
-				WHERE GM.GROUPID=#{id}
-					AND GM.MEMBERID=U.ID
-					AND GM.TYPE='USER-DYNAMIC'
+    	from mxk_userinfo u
+		where not exists(
+				select  1 from mxk_group_member gm 
+				where gm.groupid=#{id}
+					and gm.memberid=u.id
+					and gm.type='USER-DYNAMIC'
 			)
 		<if test="filters != null and filters != ''">
-				AND (${filters})
+				and (${filters})
 		</if>
 		<if test="orgIdsList != null and orgIdsList != ''">
-				AND U.DEPARTMENTID IN( ${orgIdsList})
+				and u.departmentid in( ${orgIdsList})
 		</if>
     </update>
     
     <delete id="deleteDynamicGroupMember" parameterType="Groups" >
-    	DELETE FROM MXK_GROUP_MEMBER GM
-    	WHERE TYPE = 'USER-DYNAMIC'
-    		AND GM.GROUPID=#{id}
-    		AND NOT EXISTS(
-		    	SELECT 1
-		    	FROM MXK_USERINFO U
-		    	WHERE 1 = 1 
-		    		AND U.ID=GM.MEMBERID
+    	delete from mxk_group_member gm
+    	where type = 'user-dynamic'
+    		and gm.groupid=#{id}
+    		and not exists(
+		    	select 1
+		    	from mxk_userinfo u
+		    	where 1 = 1 
+		    		and u.id=gm.memberid
 				<if test="filters != null and filters != ''">
-						AND (${filters})
+						and (${filters})
 				</if>
 				<if test="orgIdsList != null and orgIdsList != ''">
-						AND U.DEPARTMENTID IN ( ${orgIdsList})
+						and u.departmentid in ( ${orgIdsList})
 				</if>
 			)
     </delete>
     
     <delete id="deleteByGroupId" parameterType="string" >
-    	DELETE FROM MXK_GROUP_MEMBER GM
-    	WHERE  GM.GROUPID=#{value}
+    	delete from mxk_group_member gm
+    	where  gm.groupid=#{value}
     </delete>
 	
 </mapper>

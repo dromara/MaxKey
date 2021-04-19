@@ -24,7 +24,7 @@ import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.StringUtils;

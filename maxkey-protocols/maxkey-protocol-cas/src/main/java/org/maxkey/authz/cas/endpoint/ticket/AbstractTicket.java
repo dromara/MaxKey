@@ -18,7 +18,7 @@
 package org.maxkey.authz.cas.endpoint.ticket;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.maxkey.domain.apps.AppsCasDetails;
+import org.maxkey.entity.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.Assert;
 

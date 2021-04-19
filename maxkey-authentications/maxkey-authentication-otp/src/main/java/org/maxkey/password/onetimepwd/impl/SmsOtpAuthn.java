@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.maxkey.constants.ConstantsProperties;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

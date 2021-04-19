@@ -19,7 +19,7 @@ package org.maxkey.persistence.mapper;
 
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.HistoryLogin;
+import org.maxkey.entity.HistoryLogin;
 
 /**
  * @author Crystal.sea

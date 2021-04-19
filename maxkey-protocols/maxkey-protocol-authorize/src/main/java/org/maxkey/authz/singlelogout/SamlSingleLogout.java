@@ -20,7 +20,7 @@ package org.maxkey.authz.singlelogout;
 import java.util.HashMap;
 import java.util.UUID;
 
-import org.maxkey.domain.apps.Apps;
+import org.maxkey.entity.apps.Apps;
 import org.maxkey.util.DateUtils;
 import org.springframework.security.core.Authentication;
 

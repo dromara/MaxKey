@@ -36,7 +36,7 @@ import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.OAuth2RequestValidator;
 import org.maxkey.authz.oauth2.provider.TokenRequest;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestValidator;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.util.StringGenerator;
 import org.maxkey.web.WebContext;
 import org.springframework.http.HttpHeaders;

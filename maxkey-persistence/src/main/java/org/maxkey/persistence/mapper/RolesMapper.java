@@ -23,8 +23,8 @@ package org.maxkey.persistence.mapper;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.RolePermissions;
-import org.maxkey.domain.Roles;
+import org.maxkey.entity.RolePermissions;
+import org.maxkey.entity.Roles;
 
 /**
  * @author Crystal.sea

@@ -25,8 +25,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.maxkey.constants.ConstantsStatus;
-import org.maxkey.domain.Groups;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.Groups;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

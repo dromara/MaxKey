@@ -22,7 +22,7 @@ import java.util.List;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.domain.apps.AppsFormBasedDetails;
+import org.maxkey.entity.apps.AppsFormBasedDetails;
 import org.maxkey.persistence.service.AppsFormBasedDetailsService;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;

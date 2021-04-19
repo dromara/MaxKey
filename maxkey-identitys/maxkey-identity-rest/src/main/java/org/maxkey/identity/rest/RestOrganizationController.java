@@ -19,7 +19,7 @@ package org.maxkey.identity.rest;
 
 import java.io.IOException;
 
-import org.maxkey.domain.Organizations;
+import org.maxkey.entity.Organizations;
 import org.maxkey.persistence.service.OrganizationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

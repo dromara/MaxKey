@@ -24,8 +24,8 @@ import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.ehcache.UserManagedCache;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.UserManagedCacheBuilder;
-import org.maxkey.domain.apps.Apps;
-import org.maxkey.domain.apps.UserApps;
+import org.maxkey.entity.apps.Apps;
+import org.maxkey.entity.apps.UserApps;
 import org.maxkey.persistence.mapper.AppsMapper;
 import org.springframework.stereotype.Repository;
 

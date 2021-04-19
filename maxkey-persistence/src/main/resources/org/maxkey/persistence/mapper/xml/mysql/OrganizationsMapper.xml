@@ -4,16 +4,16 @@
 
 	<sql id="dao_where_statement">
     	<if test="id != null and id != ''">
-			AND	ID	=	#{id} 	
+			and	id	=	#{id} 	
 		</if> 
 		<if test="name != null and name != '' ">
-			AND	NAME	like	'%#{name}%'
+			and	name	like  '%#{name}%'
 		</if>
 		<if test="parentId != null and parentId != '' ">
-			AND	PARENTID	=	#{parentId}
+			and	parentid	=	#{parentId}
 		</if>
 		<if test="parentName != null and parentName != ''">
-			AND	PARENTNAME	like	'%#{parentName}%'
+			and	parentname	like	'%#{parentName}%'
 		</if>
 
     </sql>
@@ -21,28 +21,28 @@
     
     
      <select id="queryPageResults" parameterType="Organizations" resultType="Organizations">
-    	SELECT 
+    	select 
 			*
-    	FROM MXK_ORGANIZATIONS 
-    	WHERE	1	=	1
+    	from mxk_organizations 
+    	where	1	=	1
     	<include refid="dao_where_statement"/>
     </select>
     
   
     <update id="logisticDelete" parameterType="Organizations" >
-    	UPDATE MXK_ORGANIZATIONS SET STATUS	=	'2'  
-    		WHERE	1	=	1
+    	update mxk_organizations set status	=	'2'  
+    		where	1	=	1
     	<if test="id != null and id != '' ">
-			AND	ID	=	#{id}
+			and	id	=	#{id}
 		</if>
 		<if test="name != name">
-			ADN	NAME	=	#{name}
+			and	name	=	#{name}
 		</if>
 		<if test="enable != null">
-			ADN	STATUS	=	'1'
+			and	status	=	'1'
 		</if>
 		<if test="codePath != null">
-			ADN	CODEPATH	=	#{codePath}
+			and	codepath	=	#{codePath}
 		</if>
     </update>
     

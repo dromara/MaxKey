@@ -22,7 +22,7 @@ import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.ClientRegistrationException;
 import org.maxkey.authz.oauth2.provider.approval.ApprovalStoreUserApprovalHandler;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.springframework.security.core.Authentication;
 
 /**

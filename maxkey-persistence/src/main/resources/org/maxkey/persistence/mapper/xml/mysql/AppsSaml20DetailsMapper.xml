@@ -3,32 +3,32 @@
 <mapper namespace="org.maxkey.persistence.mapper.AppsSaml20DetailsMapper">
 
 	<select id="getAppDetails" parameterType="string" resultType="AppsSaml20Details">
-    	SELECT 
-    		SVD.CERTISSUER,
-    		SVD.CERTSUBJECT,
-    		SVD.CERTEXPIRATION,
-    		SVD.KEYSTORE,
-    		SVD.SPACSURL ,
-    		SVD.ISSUER,
-    		SVD.ENTITYID,
-    		SVD.AUDIENCE,
-    		SVD.VALIDITYINTERVAL ,
-    		SVD.NAMEIDFORMAT,
-    		SVD.ENCRYPTED,
-    		SVD.BINDING,
-    		SVD.NAMEIDCONVERT,
-    		SVD.SIGNATURE,
-    		SVD.DIGESTMETHOD,
-    		SVD.METAURL,
-			APP.*
-    	FROM 
-    		MXK_APPS_SAML_V20_DETAILS SVD,
-    		MXK_APPS APP
-    	WHERE 	
-    		APP.ID			=	#{value}
-    		AND SVD.ID		=	#{value}
-    		AND SVD.ID		=	APP.ID
-    		AND APP.STATUS	=	1
+    	select 
+    		svd.certissuer,
+    		svd.certsubject,
+    		svd.certexpiration,
+    		svd.keystore,
+    		svd.spacsurl ,
+    		svd.issuer,
+    		svd.entityid,
+    		svd.audience,
+    		svd.validityinterval ,
+    		svd.nameidformat,
+    		svd.encrypted,
+    		svd.binding,
+    		svd.nameidconvert,
+    		svd.signature,
+    		svd.digestmethod,
+    		svd.metaurl,
+			app.*
+    	from 
+    		mxk_apps_saml_v20_details svd,
+    		mxk_apps app
+    	where 	
+    		app.id			=	#{value}
+    		and svd.id		=	#{value}
+    		and svd.id		=	app.id
+    		and app.status	=	1
     </select>
     
 </mapper>

@@ -21,7 +21,7 @@
 package org.maxkey.persistence.mapper;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.PasswordPolicy;
+import org.maxkey.entity.PasswordPolicy;
 
 /**
  * @author Crystal.sea

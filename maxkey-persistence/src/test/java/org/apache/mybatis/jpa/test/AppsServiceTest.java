@@ -22,7 +22,7 @@ import java.util.Date;
 import org.apache.mybatis.jpa.util.WebContext;
 import org.junit.Before;
 import org.junit.Test;
-import org.maxkey.domain.apps.Apps;
+import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.AppsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

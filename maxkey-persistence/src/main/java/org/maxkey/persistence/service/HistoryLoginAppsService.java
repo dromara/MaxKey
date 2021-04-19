@@ -18,7 +18,7 @@
 package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.domain.HistoryLoginApps;
+import org.maxkey.entity.HistoryLoginApps;
 import org.maxkey.persistence.mapper.HistoryLoginAppsMapper;
 import org.springframework.stereotype.Repository;
 

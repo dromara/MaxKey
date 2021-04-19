@@ -36,7 +36,7 @@ import org.maxkey.authz.saml20.provider.xml.AuthnResponseGenerator;
 import org.maxkey.authz.saml20.xml.SAML2ValidatorSuite;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
-import org.maxkey.domain.Saml20Metadata;
+import org.maxkey.entity.Saml20Metadata;
 import org.opensaml.common.binding.security.IssueInstantRule;
 import org.opensaml.common.binding.security.MessageReplayRule;
 import org.opensaml.util.storage.MapBasedStorageService;

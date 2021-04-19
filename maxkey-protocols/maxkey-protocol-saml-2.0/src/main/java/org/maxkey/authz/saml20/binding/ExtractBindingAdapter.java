@@ -23,7 +23,7 @@ import java.security.KeyStore;
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.crypto.keystore.KeyStoreLoader;
-import org.maxkey.domain.apps.AppsSAML20Details;
+import org.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.common.binding.SAMLMessageContext;
 import org.opensaml.ws.message.decoder.MessageDecodingException;
 import org.opensaml.ws.security.SecurityPolicyResolver;

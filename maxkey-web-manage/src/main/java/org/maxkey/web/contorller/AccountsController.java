@@ -20,7 +20,7 @@ package org.maxkey.web.contorller;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.domain.Accounts;
+import org.maxkey.entity.Accounts;
 import org.maxkey.persistence.service.AccountsService;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.persistence.service.UserInfoService;

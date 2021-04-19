@@ -21,8 +21,8 @@ package org.maxkey.authz.saml20.provider.xml;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authz.saml.service.TimeService;
-import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.AppsSAML20Details;
+import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.apps.AppsSAML20Details;
 import org.maxkey.web.WebContext;
 import org.opensaml.saml2.core.NameID;
 import org.opensaml.saml2.core.NameIDType;

@@ -26,7 +26,7 @@ import org.maxkey.authz.saml.service.TimeService;
 import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.xml.IssuerGenerator;
 import org.maxkey.constants.Boolean;
-import org.maxkey.domain.apps.AppsSAML20Details;
+import org.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.Configuration;
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.EncryptedAssertion;

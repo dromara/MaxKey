@@ -20,7 +20,7 @@ package org.maxkey.web.contorller;
 import javax.validation.Valid;
 
 import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.domain.PasswordPolicy;
+import org.maxkey.entity.PasswordPolicy;
 import org.maxkey.persistence.service.PasswordPolicyService;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;

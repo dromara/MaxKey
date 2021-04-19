@@ -21,9 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.domain.HistoryLoginApps;
-import org.maxkey.domain.HistoryLogin;
-import org.maxkey.domain.HistoryLogs;
+import org.maxkey.entity.HistoryLogin;
+import org.maxkey.entity.HistoryLoginApps;
+import org.maxkey.entity.HistoryLogs;
 import org.maxkey.persistence.service.HistoryLoginAppsService;
 import org.maxkey.persistence.service.HistoryLoginService;
 import org.maxkey.persistence.service.HistoryLogsService;

@@ -4,69 +4,69 @@
 
 	<sql id="dao_where_statement">
     	<if test="id != null and id != ''">
-			AND	ID	=	#{id}
+			and	id	=	#{id}
 		</if> 
 		<if test="uid != null and uid != ''">
-			AND	UID	=	#{uid}
+			and	uid	=	#{uid}
 		</if> 
 		<if test="username != null and username != '' ">
-			AND LOWER(USERNAME) LIKE LOWER(CONCAT('%',#{username},'%'))
+			and lower(username) like lower(concat('%',#{username},'%'))
 		</if>
 		<if test="message != null and message != '' ">
-			AND LOWER(MESSAGE) LIKE LOWER(CONCAT('%',#{message},'%'))
+			and lower(message) like lower(concat('%',#{message},'%'))
 		</if>
 		<if test="displayName != null and displayName != '' ">
-			AND LOWER(DISPLAYNAME) LIKE LOWER(CONCAT('%',#{displayName},'%'))
+			and lower(displayname) like lower(concat('%',#{displayName},'%'))
 		</if>
 
 		<if test="startDate != null and startDate != ''">
-			AND	LOGINTIME	>=	#{startDate}
+			and	logintime	>=	#{startDate}
 		</if>
 		<if test="endDate != null and endDate != ''">
-			AND	 #{endDate}	>=	LOGINTIME
+			and	 #{endDate}	>=	logintime
 		</if>
 		<if test="sessionId != null and sessionId != ''">
-			AND	SESSIONID	=	#{sessionId}
+			and	sessionid	=	#{sessionId}
 		</if> 
 		<if test="loginType != null and loginType != ''">
-			AND	LOGINTYPE	=	#{loginType}
+			and	logintype	=	#{loginType}
 		</if>
 		<if test="sourceIp != null and sourceIp != ''">
-			AND	SOURCEIP	=	#{sourceIp}
+			and	sourceip	=	#{sourceIp}
 		</if>
     </sql>
 	
    
     
      <select id="queryPageResults" parameterType="HistoryLogin" resultType="HistoryLogin">
-    	SELECT 
-			ID,
-	   		SESSIONID,
-			UID,
-			USERNAME,
-			DISPLAYNAME,
-			LOGINTYPE,
-			MESSAGE,
-			CODE,
-			PROVIDER,
-			SOURCEIP,
-			BROWSER,
-			PLATFORM,
-			APPLICATION,
-			LOGINURL,
-			DATE_FORMAT(LOGINTIME, '%Y-%m-%d  %H:%i:%s') AS LOGINTIME,
-			DATE_FORMAT(LOGOUTTIME, '%Y-%m-%d  %H:%i:%s') AS LOGOUTTIME
-    	FROM MXK_HISTORY_LOGIN
-    	WHERE	1	=	1
+    	select 
+			id,
+	   		sessionid,
+			uid,
+			username,
+			displayname,
+			logintype,
+			message,
+			code,
+			provider,
+			sourceip,
+			browser,
+			platform,
+			application,
+			loginurl,
+			date_format(logintime, '%Y-%m-%d  %H:%i:%s') as logintime,
+			date_format(logouttime, '%Y-%m-%d  %H:%i:%s') as logouttime
+    	from mxk_history_login
+    	where	1	=	1
     	<include refid="dao_where_statement"/>
     	
-    	ORDER BY LOGINTIME DESC
+    	order by logintime desc
     </select>
     
     <update id="logout" parameterType="java.lang.String" >
-    	UPDATE MXK_HISTORY_LOGIN SET
-			LOGOUTTIME			=	current_timestamp() 
-		WHERE
-			SESSIONID	=	#{value}
+    	update mxk_history_login set
+			logouttime			=	current_timestamp() 
+		where
+			sessionid	=	#{value}
     </update>
 </mapper>

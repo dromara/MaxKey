@@ -19,9 +19,9 @@ package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.domain.GroupMember;
-import org.maxkey.domain.Groups;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.GroupMember;
+import org.maxkey.entity.Groups;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.GroupMemberService;
 import org.maxkey.persistence.service.GroupsService;
 import org.maxkey.web.WebContext;

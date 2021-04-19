@@ -23,8 +23,8 @@ package org.maxkey.persistence.mapper;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.Registration;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.Registration;
+import org.maxkey.entity.UserInfo;
 
 /**
  * @author Crystal.sea

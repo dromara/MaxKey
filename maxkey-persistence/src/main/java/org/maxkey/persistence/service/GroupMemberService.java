@@ -18,8 +18,8 @@
 package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.domain.GroupMember;
-import org.maxkey.domain.Groups;
+import org.maxkey.entity.GroupMember;
+import org.maxkey.entity.Groups;
 import org.maxkey.persistence.mapper.GroupMemberMapper;
 import org.springframework.stereotype.Repository;
 

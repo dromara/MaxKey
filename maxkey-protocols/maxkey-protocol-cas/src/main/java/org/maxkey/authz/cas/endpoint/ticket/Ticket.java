@@ -20,7 +20,7 @@ package org.maxkey.authz.cas.endpoint.ticket;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-import org.maxkey.domain.apps.AppsCasDetails;
+import org.maxkey.entity.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 
 /**

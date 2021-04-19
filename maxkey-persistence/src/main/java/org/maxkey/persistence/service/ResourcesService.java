@@ -20,7 +20,7 @@ package org.maxkey.persistence.service;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.domain.Resources;
+import org.maxkey.entity.Resources;
 import org.maxkey.persistence.mapper.ResourcesMapper;
 import org.springframework.stereotype.Repository;
 

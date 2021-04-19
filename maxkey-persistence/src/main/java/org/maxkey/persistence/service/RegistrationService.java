@@ -20,8 +20,8 @@ package org.maxkey.persistence.service;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.domain.Registration;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.Registration;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.mapper.RegistrationMapper;
 import org.springframework.stereotype.Repository;
 

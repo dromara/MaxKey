@@ -17,7 +17,7 @@
 
 package org.maxkey.persistence.mapper;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.domain.Organizations;
+import org.maxkey.entity.Organizations;
 
 public interface OrganizationsMapper extends IJpaBaseMapper<Organizations> {
 

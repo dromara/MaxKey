@@ -4,48 +4,48 @@
 
 	<sql id="where_statement">
     	<if test="id != null and id != ''">
-			AND	RES.ID	=	#{id}
+			and	res.id	=	#{id}
 		</if> 
 		<if test="appId != null and appId != ''">
-            AND RES.APPID  =   #{appId}
+            and res.appid  =   #{appId}
         </if> 
         <if test="parentId != null and parentId != ''">
-            AND RES.PARENTID  =   #{parentId}
+            and res.parentid  =   #{parentId}
         </if> 
 		<if test="name != null and name != ''">
-			AND RES.NAME LIKE '%${name}%'
+			and res.name like '%${name}%'
 		</if>
     </sql>
     
 	
 	
 	<select id="queryPageResults" parameterType="Resources" resultType="Resources">
-		SELECT
-			RES.*,APP.NAME APPNAME
-		FROM
-			MXK_RESOURCES RES, MXK_APPS APP
-		WHERE
-			 (1=1)	AND RES.APPID=APP.ID
+		select
+			res.*,app.name appname
+		from
+			mxk_resources res, mxk_apps app
+		where
+			 (1=1)	and res.appid=app.id
 		<include refid="where_statement"/>
-		ORDER BY RES.SORTINDEX 
+		order by res.sortindex 
 	</select>
 	
 	
 	<update id="logisticDelete" parameterType="Resources" >
-    	UPDATE MXK_RESOURCES SET
-    		STATUS	=	'2'  
-    	WHERE	1	=	1
+    	update mxk_resources set
+    		status	=	'2'  
+    	where	1	=	1
     	<if test="id != null">
-			AND	ID	=	#{id}
+			and	id	=	#{id}
 		</if>
 		<if test="name != name">
-			ADN	NAME	=	#{name}
+			and	name	=	#{name}
 		</if>
     </update>
     
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	UPDATE MXK_RESOURCES SET STATUS='2' WHERE ID IN
+    	update mxk_resources set status='2' where id in
     		<foreach item="item" collection="list" open="(" separator="," close=")">
 				#{item}
     		</foreach>

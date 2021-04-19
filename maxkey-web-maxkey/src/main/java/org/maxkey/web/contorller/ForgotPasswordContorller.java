@@ -20,7 +20,7 @@ package org.maxkey.web.contorller;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;

@@ -19,7 +19,7 @@ package org.maxkey.web.apps.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.domain.apps.AppsAdapters;
+import org.maxkey.entity.apps.AppsAdapters;
 import org.maxkey.persistence.service.AppsAdaptersService;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;

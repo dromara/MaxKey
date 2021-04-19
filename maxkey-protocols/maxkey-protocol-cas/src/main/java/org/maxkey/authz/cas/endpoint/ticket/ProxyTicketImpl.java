@@ -17,7 +17,7 @@
 
 package org.maxkey.authz.cas.endpoint.ticket;
 
-import org.maxkey.domain.apps.AppsCasDetails;
+import org.maxkey.entity.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 
 /**

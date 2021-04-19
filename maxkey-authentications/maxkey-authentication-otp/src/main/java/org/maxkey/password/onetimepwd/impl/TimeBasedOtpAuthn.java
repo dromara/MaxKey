@@ -24,7 +24,7 @@ import java.util.TimeZone;
 import org.apache.commons.codec.binary.Hex;
 import org.maxkey.crypto.Base32Utils;
 import org.maxkey.crypto.password.PasswordReciprocal;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.algorithm.TimeBasedOTP;
 import org.slf4j.Logger;

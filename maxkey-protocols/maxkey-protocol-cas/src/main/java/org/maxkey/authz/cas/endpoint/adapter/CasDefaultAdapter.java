@@ -23,7 +23,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.web.WebConstants;
 import org.springframework.web.servlet.ModelAndView;
 

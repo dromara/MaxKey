@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.SessionAttributes;
 

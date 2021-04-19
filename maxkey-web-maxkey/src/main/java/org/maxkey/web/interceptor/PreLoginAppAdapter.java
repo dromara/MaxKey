@@ -19,7 +19,8 @@ package org.maxkey.web.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.maxkey.domain.UserInfo;
+
+import org.maxkey.entity.UserInfo;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;

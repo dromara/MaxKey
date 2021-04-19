@@ -18,7 +18,7 @@
 package org.maxkey.authz.oauth2.provider.endpoint;
 
 import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 
 /**
  * Basic interface for determining the redirect URI for a user agent.

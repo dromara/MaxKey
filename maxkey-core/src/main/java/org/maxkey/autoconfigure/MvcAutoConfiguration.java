@@ -142,7 +142,7 @@ public class MvcAutoConfiguration implements InitializingBean {
     @Bean (name = "jaxb2Marshaller")
     public Jaxb2Marshaller jaxb2Marshaller() {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller.setClassesToBeBound(org.maxkey.domain.xml.UserInfoXML.class);;
+        jaxb2Marshaller.setClassesToBeBound(org.maxkey.entity.xml.UserInfoXML.class);;
         return jaxb2Marshaller;
     }
     

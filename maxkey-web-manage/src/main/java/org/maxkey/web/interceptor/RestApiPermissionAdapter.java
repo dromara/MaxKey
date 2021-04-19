@@ -28,7 +28,7 @@ import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.UserManagedCacheBuilder;
 import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.password.PasswordReciprocal;
-import org.maxkey.domain.apps.Apps;
+import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.util.AuthorizationHeaderCredential;
 import org.maxkey.util.AuthorizationHeaderUtils;

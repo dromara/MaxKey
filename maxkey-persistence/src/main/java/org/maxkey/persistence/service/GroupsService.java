@@ -22,7 +22,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.domain.Groups;
+import org.maxkey.entity.Groups;
 import org.maxkey.persistence.mapper.GroupsMapper;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;

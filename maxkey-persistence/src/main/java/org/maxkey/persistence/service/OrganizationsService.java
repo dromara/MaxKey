@@ -33,7 +33,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.maxkey.domain.Organizations;
+import org.maxkey.entity.Organizations;
 import org.maxkey.persistence.kafka.KafkaIdentityAction;
 import org.maxkey.persistence.kafka.KafkaIdentityTopic;
 import org.maxkey.persistence.kafka.KafkaPersistService;

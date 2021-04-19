@@ -32,7 +32,7 @@ import org.maxkey.authz.oauth2.provider.OAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.TokenRequest;
 import org.maxkey.authz.oauth2.provider.token.AbstractTokenGranter;
 import org.maxkey.authz.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.maxkey.domain.apps.oauth2.provider.ClientDetails;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.springframework.security.core.Authentication;
 
 /**

@@ -27,7 +27,7 @@ import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;

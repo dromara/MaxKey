@@ -19,8 +19,8 @@ package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.domain.RoleMember;
-import org.maxkey.domain.Roles;
+import org.maxkey.entity.RoleMember;
+import org.maxkey.entity.Roles;
 import org.maxkey.persistence.service.RoleMemberService;
 import org.maxkey.persistence.service.RolesService;
 import org.maxkey.web.WebContext;

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.online.OnlineTicket;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.db.LoginService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;

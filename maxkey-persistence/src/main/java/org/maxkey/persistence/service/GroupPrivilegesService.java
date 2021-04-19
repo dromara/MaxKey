@@ -18,7 +18,7 @@
 package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.domain.GroupPrivileges;
+import org.maxkey.entity.GroupPrivileges;
 import org.maxkey.persistence.mapper.GroupPrivilegesMapper;
 import org.springframework.stereotype.Repository;
 

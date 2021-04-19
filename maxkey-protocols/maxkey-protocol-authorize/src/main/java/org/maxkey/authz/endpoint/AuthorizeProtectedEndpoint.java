@@ -23,7 +23,7 @@ package org.maxkey.authz.endpoint;
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.springframework.stereotype.Controller;

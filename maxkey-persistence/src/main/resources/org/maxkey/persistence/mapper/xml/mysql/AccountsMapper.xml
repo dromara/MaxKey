@@ -4,27 +4,27 @@
 
 	<sql id="where_statement">
     	<if test="id != null and id != ''">
-			AND	ID	=	#{id}
+			and	id	=	#{id}
 		</if> 
 		<if test="appId != null and appId != ''">
-			AND	APPID	=	#{appId}
+			and	appid	=	#{appId}
 		</if> 
 		<if test="username != null and username != ''">
-			AND	USERNAME	=	#{username}
+			and	username	=	#{username}
 		</if> 
 		<if test="relatedUsername != null and relatedUsername != ''">
-			AND	RELATEDUSERNAME	=	#{relatedUsername}
+			and	relatedusername	=	#{relatedUsername}
 		</if> 
     </sql>
     
 	
 	
 	<select id="queryPageResults" parameterType="Accounts" resultType="Accounts">
-		SELECT
+		select
 			*
-		FROM
-			MXK_ACCOUNTS
-		WHERE
+		from
+			mxk_accounts
+		where
 			 (1=1)	
 		<include refid="where_statement"/>
 	</select>

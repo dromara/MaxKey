@@ -33,7 +33,7 @@ import org.maxkey.authz.cas.endpoint.ticket.ProxyTicketImpl;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.Boolean;
-import org.maxkey.domain.UserInfo;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.util.Instance;
 import org.maxkey.web.HttpResponseConstants;
 import org.slf4j.Logger;

@@ -19,7 +19,7 @@ package org.maxkey.jobs;
 
 import java.util.List;
 
-import org.maxkey.domain.Groups;
+import org.maxkey.entity.Groups;
 import org.maxkey.persistence.service.GroupsService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

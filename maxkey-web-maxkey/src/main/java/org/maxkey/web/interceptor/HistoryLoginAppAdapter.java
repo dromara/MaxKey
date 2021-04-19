@@ -22,9 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
-import org.maxkey.domain.HistoryLoginApps;
-import org.maxkey.domain.UserInfo;
-import org.maxkey.domain.apps.Apps;
+import org.maxkey.entity.HistoryLoginApps;
+import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.persistence.service.HistoryLoginAppsService;
 import org.maxkey.web.WebConstants;

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 import org.maxkey.constants.ConstantsProtocols;
-import org.maxkey.domain.apps.Apps;
+import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.AppsCasDetailsService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;

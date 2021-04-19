@@ -18,7 +18,7 @@
 package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.domain.apps.AppsFormBasedDetails;
+import org.maxkey.entity.apps.AppsFormBasedDetails;
 import org.maxkey.persistence.mapper.AppsFormBasedDetailsMapper;
 import org.springframework.stereotype.Repository;
 

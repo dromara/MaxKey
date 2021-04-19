@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.domain.Resources;
+import org.maxkey.entity.Resources;
 import org.maxkey.persistence.service.ResourcesService;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.component.TreeNode;
