@@ -16,7 +16,7 @@ QQ交流群：<b>434469201</b>
 代码托管 <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a> | <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitHub</b></a>
 
  
-什么是<b>单点登录(Single Sign On）</b>，简称为<b>SSO</b>？
+什么是<b>单点登录(Single Sign On）</b>，简称为<b>SSO</b>。
 
 用户只需要登录认证中心一次就可以访问所有相互信任的应用系统，无需再次登录。
   
