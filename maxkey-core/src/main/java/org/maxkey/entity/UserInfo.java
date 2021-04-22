@@ -26,7 +26,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.maxkey.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "MXK_USERINFO")
-public class UserInfo extends JpaBaseDomain {
+public class UserInfo extends JpaBaseEntity {
     private static final long serialVersionUID = 6402443942083382236L;
     //
     @Id

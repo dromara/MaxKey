@@ -20,13 +20,13 @@ package org.maxkey.persistence.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.persistence.mapper.ReportMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReportService  extends JpaBaseService<JpaBaseDomain>{
+public class ReportService  extends JpaBaseService<JpaBaseEntity>{
 
 	public Integer analysisDay(String reportParameter) {
 		return getMapper().analysisDay(reportParameter);

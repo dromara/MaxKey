@@ -17,14 +17,14 @@
 
 package org.maxkey.web;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.web.message.Message;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
-public interface BasicController  <T extends JpaBaseDomain> {
+public interface BasicController  <T extends JpaBaseEntity> {
 
 	public JpaPageResults<T> pageResults(@ModelAttribute("modelAttribute") T modelAttribute);
 	

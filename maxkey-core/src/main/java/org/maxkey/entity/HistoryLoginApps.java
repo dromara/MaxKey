@@ -24,7 +24,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 /**
  * @author Crystal.Sea
@@ -32,7 +32,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  */
 @Entity
 @Table(name = "MXK_HISTORY_LOGIN_APPS")  
-public class HistoryLoginApps extends JpaBaseDomain {
+public class HistoryLoginApps extends JpaBaseEntity {
 	
 	private static final long serialVersionUID = 5085201575292304749L;
 	@Id

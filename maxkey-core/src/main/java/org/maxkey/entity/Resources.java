@@ -24,11 +24,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 @Entity
 @Table(name = "MXK_RESOURCES")
-public class Resources  extends JpaBaseDomain implements Serializable {
+public class Resources  extends JpaBaseEntity implements Serializable {
     private static final long serialVersionUID = 2567171742999638608L;
     @Id
     @Column

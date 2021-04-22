@@ -27,14 +27,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.maxkey.constants.Boolean;
 import org.maxkey.entity.Accounts;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "MXK_APPS")
-public class Apps extends JpaBaseDomain implements Serializable {
+public class Apps extends JpaBaseEntity implements Serializable {
 
     /**
      * 

@@ -26,7 +26,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 
 /**
@@ -35,7 +35,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  */
 @Entity
 @Table(name = "MXK_HISTORY_LOGIN")  
-public class HistoryLogin  extends JpaBaseDomain  implements Serializable{
+public class HistoryLogin  extends JpaBaseEntity  implements Serializable{
 	
 	/**
 	 * 

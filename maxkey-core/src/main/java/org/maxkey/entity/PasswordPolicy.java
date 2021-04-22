@@ -24,7 +24,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.maxkey.constants.ConstantsServiceMessage;
 import org.maxkey.exception.PasswordPolicyException;
 
@@ -35,7 +35,7 @@ import org.maxkey.exception.PasswordPolicyException;
 
 @Entity
 @Table(name = "MXK_PASSWORD_POLICY")
-public class PasswordPolicy extends JpaBaseDomain implements java.io.Serializable {
+public class PasswordPolicy extends JpaBaseEntity implements java.io.Serializable {
 
     private static final long serialVersionUID = -4797776994287829182L;
     @Id

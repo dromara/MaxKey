@@ -17,9 +17,9 @@
 
 package org.maxkey.entity;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
-public class Registration extends JpaBaseDomain{
+public class Registration extends JpaBaseEntity{
 	
 	/**
 	 * 

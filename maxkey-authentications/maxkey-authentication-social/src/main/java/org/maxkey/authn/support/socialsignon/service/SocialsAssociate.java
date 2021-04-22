@@ -17,13 +17,13 @@
 
 package org.maxkey.authn.support.socialsignon.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 /**
  * 
  * @author Crystal.Sea
  */
-public class SocialsAssociate extends JpaBaseDomain {
+public class SocialsAssociate extends JpaBaseEntity {
 	
 	/**
 	 * 

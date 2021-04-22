@@ -24,11 +24,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 @Entity
 @Table(name = "MXK_ROLES")
-public class Roles extends JpaBaseDomain implements Serializable {
+public class Roles extends JpaBaseEntity implements Serializable {
     private static final long serialVersionUID = -7515832728504943821L;
     
     @Id

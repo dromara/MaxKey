@@ -45,6 +45,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Lists;
 
+
 @Repository
 public class OrganizationsService  extends JpaBaseService<Organizations>{
 

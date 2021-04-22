@@ -17,9 +17,9 @@
 
 package org.maxkey.entity;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
-public class ChangePassword extends JpaBaseDomain{
+public class ChangePassword extends JpaBaseEntity{
 
 	/**
 	 * 

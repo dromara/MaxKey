@@ -24,11 +24,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 @Entity
 @Table(name = "MXK_APPS_ADAPTERS")
-public class AppsAdapters extends JpaBaseDomain implements Serializable {
+public class AppsAdapters extends JpaBaseEntity implements Serializable {
 
     /**
      * 

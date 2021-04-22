@@ -22,7 +22,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -30,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Crystal.Sea
  * 
  */
-public class ExcelImport extends JpaBaseDomain {
+public class ExcelImport extends JpaBaseEntity {
 
     /**
      * 

@@ -22,7 +22,7 @@ package org.maxkey.entity;
 
 import java.util.ArrayList;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 
 
@@ -31,7 +31,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  * @author Crystal.Sea
  *
  */
-public class Navigations extends JpaBaseDomain  implements java.io.Serializable {
+public class Navigations extends JpaBaseEntity  implements java.io.Serializable {
 
 	/**
 	 * 

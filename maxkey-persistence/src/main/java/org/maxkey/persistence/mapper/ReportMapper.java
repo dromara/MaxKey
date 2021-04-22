@@ -24,14 +24,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 
 /**
  * @author Crystal.sea
  *
  */
-public  interface ReportMapper extends IJpaBaseMapper<JpaBaseDomain> {
+public  interface ReportMapper extends IJpaBaseMapper<JpaBaseEntity> {
 	
 	public Integer analysisDay(String reportParameter);
 	public Integer analysisNewUsers(String reportParameter);

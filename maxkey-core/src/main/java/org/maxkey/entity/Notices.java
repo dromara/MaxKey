@@ -26,11 +26,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 @Entity
 @Table(name = "MXK_NOTICES")
-public class Notices  extends JpaBaseDomain implements Serializable {
+public class Notices  extends JpaBaseEntity implements Serializable {
 
     /**
 	 * 

@@ -19,7 +19,8 @@ package org.maxkey.entity.xml;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 /**
  * xml can not include array , MultipartFile
@@ -27,7 +28,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
  *
  */
 @XmlRootElement
-public class UserInfoXML extends JpaBaseDomain {
+public class UserInfoXML extends JpaBaseEntity {
 
 	/**
 	 * 

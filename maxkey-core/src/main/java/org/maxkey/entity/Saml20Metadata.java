@@ -18,14 +18,14 @@
 package org.maxkey.entity;
 
 import java.io.Serializable;
-import org.apache.mybatis.jpa.persistence.JpaBaseDomain;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 /**
  * Saml20Metadata.
  * @author Crystal.Sea
  *
  */
-public class Saml20Metadata extends JpaBaseDomain implements Serializable {
+public class Saml20Metadata extends JpaBaseEntity implements Serializable {
     private static final long serialVersionUID = -403743150268165622L;
     
     public static  final class ContactPersonType {
