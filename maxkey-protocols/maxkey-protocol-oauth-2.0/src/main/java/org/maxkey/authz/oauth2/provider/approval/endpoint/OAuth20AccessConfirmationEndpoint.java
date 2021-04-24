@@ -15,13 +15,11 @@
  */
  
 
-package org.maxkey.authz.oauth2.provider.approval.controller;
+package org.maxkey.authz.oauth2.provider.approval.endpoint;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.maxkey.authn.SigninPrincipal;
-import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
@@ -34,6 +32,8 @@ import org.maxkey.authz.oauth2.provider.approval.ApprovalStore;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -50,8 +50,9 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @SessionAttributes("authorizationRequest")
-public class OAuth20AccessConfirmationController {
-
+public class OAuth20AccessConfirmationEndpoint {
+	static final Logger _logger = LoggerFactory.getLogger(OAuth20AccessConfirmationEndpoint.class);
+	 
     @Autowired
     @Qualifier("appsService")
     protected AppsService appsService;
@@ -78,10 +79,6 @@ public class OAuth20AccessConfirmationController {
     public ModelAndView getAccessConfirmation(
             @RequestParam Map<String, Object> model) throws Exception {
         model.remove("authorizationRequest");
-        Map<String, String> modelRequest = new HashMap<String, String>();
-        for (Object key : model.keySet()) {
-            modelRequest.put(key.toString(), model.get(key).toString());
-        }
         
         // Map<String, Object> model
         AuthorizationRequest clientAuth = 
@@ -111,9 +108,18 @@ public class OAuth20AccessConfirmationController {
                         approval.getStatus() == ApprovalStatus.APPROVED ? "true" : "false");
             }
         }
+        
         model.put("scopes", scopes);
 
+        if(!model.containsKey(OAuth2Constants.PARAMETER.APPROVAL_PROMPT)) {
+        	model.put(OAuth2Constants.PARAMETER.APPROVAL_PROMPT, client.getApprovalPrompt());
+        }
+        
         ModelAndView modelAndView = new ModelAndView("authorize/oauth_access_confirmation");
+        _logger.debug("Confirmation details ");
+        for (Object key : model.keySet()) {
+            _logger.debug("key " + key +"=" + model.get(key));
+        }
         modelAndView.addObject("model", model);
         return modelAndView;
     }

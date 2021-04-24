@@ -133,7 +133,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 			if (!StringUtils.hasText(tokenRequest.getGrantType())) {
 				throw new InvalidRequestException("Missing grant type");
 			}
-			if (tokenRequest.getGrantType().equals("implicit")) {
+			if (tokenRequest.getGrantType().equals(OAuth2Constants.PARAMETER.GRANT_TYPE_IMPLICIT)) {
 				throw new InvalidGrantException("Implicit grant type not supported from token endpoint");
 			}
 	
@@ -150,7 +150,8 @@ public class TokenEndpoint extends AbstractEndpoint {
 			/**crystal.sea
 			 * code must uuid format
 			 */
-			 if (parameters.get("code") != null &&!StringGenerator.uuidMatches(parameters.get("code"))) {
+			 if (parameters.get(OAuth2Constants.PARAMETER.CODE) != null 
+					 &&!StringGenerator.uuidMatches(parameters.get(OAuth2Constants.PARAMETER.CODE))) {
 			    	throw new InvalidRequestException("The code is not valid format .");
 			}
 			 
@@ -221,11 +222,11 @@ public class TokenEndpoint extends AbstractEndpoint {
 	}
 
 	private boolean isRefreshTokenRequest(Map<String, String> parameters) {
-		return "refresh_token".equals(parameters.get("grant_type")) && parameters.get("refresh_token") != null;
+		return "refresh_token".equals(parameters.get(OAuth2Constants.PARAMETER.GRANT_TYPE)) && parameters.get("refresh_token") != null;
 	}
 
 	private boolean isAuthCodeRequest(Map<String, String> parameters) {
-		return "authorization_code".equals(parameters.get("grant_type")) && parameters.get("code") != null;
+		return "authorization_code".equals(parameters.get(OAuth2Constants.PARAMETER.GRANT_TYPE)) && parameters.get(OAuth2Constants.PARAMETER.CODE) != null;
 	}
 
 	public void setOAuth2RequestValidator(OAuth2RequestValidator oAuth2RequestValidator) {

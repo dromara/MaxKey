@@ -110,6 +110,10 @@ public class DefaultAccessTokenConverter implements AccessTokenConverter {
 		if (clientToken.getResourceIds() != null && !clientToken.getResourceIds().isEmpty()) {
 			response.put(AUD, clientToken.getResourceIds());
 		}
+		
+		//default 
+		response.put("active", Boolean.TRUE);
+		
 		return response;
 	}
 

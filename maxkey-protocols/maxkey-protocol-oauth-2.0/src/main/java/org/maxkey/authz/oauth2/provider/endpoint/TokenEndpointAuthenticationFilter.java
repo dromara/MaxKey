@@ -153,8 +153,8 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 		}
 		
 		try {
-			String grantType = request.getParameter("grant_type");
-			if (grantType != null && grantType.equals("password")) {
+			String grantType = request.getParameter(OAuth2Constants.PARAMETER.GRANT_TYPE);
+			if (grantType != null && grantType.equals(OAuth2Constants.PARAMETER.GRANT_TYPE_PASSWORD)) {
 				usernamepassword(request,response);
 			}else {
 				Authentication authentication=ClientCredentials(request,response);
@@ -198,8 +198,8 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 			Authentication authResult = authenticationManager.authenticate(credentials);
 	
 			logger.debug("Authentication success: " + authResult.getName());
-			String clientId = request.getParameter("client_id");
-	        String clientSecret = request.getParameter("client_secret");
+			String clientId = request.getParameter(OAuth2Constants.PARAMETER.CLIENT_ID);
+	        String clientSecret = request.getParameter(OAuth2Constants.PARAMETER.CLIENT_SECRET);
 	        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(clientId,
 	                clientSecret);
 	        Authentication clientAuth = oauth20ClientAuthenticationManager.authenticate(authRequest);
@@ -245,8 +245,8 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 				throw new HttpRequestMethodNotSupportedException(request.getMethod(), new String[] { "POST" });
 			}
 
-			String clientId = request.getParameter("client_id");
-			String clientSecret = request.getParameter("client_secret");
+			String clientId = request.getParameter(OAuth2Constants.PARAMETER.CLIENT_ID);
+			String clientSecret = request.getParameter(OAuth2Constants.PARAMETER.CLIENT_SECRET);
 			if(clientId == null) {
 				//for header authorization basic
 				String authorization_bearer =request.getHeader("authorization");
@@ -305,8 +305,8 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 	 * @return an authentication for validation (or null if there is no further authentication)
 	 */
 	protected Authentication extractCredentials(HttpServletRequest request) {
-		String grantType = request.getParameter("grant_type");
-		if (grantType != null && grantType.equals("password")) {
+		String grantType = request.getParameter(OAuth2Constants.PARAMETER.GRANT_TYPE);
+		if (grantType != null && grantType.equals(OAuth2Constants.PARAMETER.GRANT_TYPE_PASSWORD)) {
 			UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(
 					request.getParameter("username"), request.getParameter("password"));
 			result.setDetails(authenticationDetailsSource.buildDetails(request));
@@ -316,7 +316,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 	}
 
 	private Set<String> getScope(HttpServletRequest request) {
-		return OAuth2Utils.parseParameterList(request.getParameter("scope"));
+		return OAuth2Utils.parseParameterList(request.getParameter(OAuth2Constants.PARAMETER.SCOPE));
 	}
 	
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -346,7 +346,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 				uri = uri.substring(0, pathParamIndex);
 			}
 
-			String clientId = request.getParameter("client_id");
+			String clientId = request.getParameter(OAuth2Constants.PARAMETER.CLIENT_ID);
 
 			if (clientId == null) {
 				// Give basic auth a chance to work instead (it's preferred anyway)

@@ -20,10 +20,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidClientException;
@@ -62,8 +60,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.DefaultSessionAttributeStore;
-import org.springframework.web.bind.support.SessionAttributeStore;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
@@ -71,10 +67,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriTemplate;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 
 /**
@@ -114,8 +108,6 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 	private UserApprovalHandler userApprovalHandler = new DefaultUserApprovalHandler();
 
-	private SessionAttributeStore sessionAttributeStore = new DefaultSessionAttributeStore();
-
 	private OAuth2RequestValidator oauth2RequestValidator = new DefaultOAuth2RequestValidator();
 
 	private String userApprovalPage = "forward:" + OAuth2Constants.ENDPOINT.ENDPOINT_APPROVAL_CONFIRM;
@@ -124,9 +116,6 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	
 	private Object implicitLock = new Object();
 
-	public void setSessionAttributeStore(SessionAttributeStore sessionAttributeStore) {
-		this.sessionAttributeStore = sessionAttributeStore;
-	}
 
 	public void setErrorPage(String errorPage) {
 		this.errorPage = errorPage;
@@ -144,7 +133,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 		Set<String> responseTypes = authorizationRequest.getResponseTypes();
 
-		if (!responseTypes.contains("token") && !responseTypes.contains("code")) {
+		if (!responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN) && !responseTypes.contains(OAuth2Constants.PARAMETER.CODE)) {
 			throw new UnsupportedResponseTypeException("Unsupported response types: " + responseTypes);
 		}
 
@@ -188,10 +177,10 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 			// Validation is all done, so we can check for auto approval...
 			if (authorizationRequest.isApproved()) {
-				if (responseTypes.contains("token")) {
+				if (responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)) {
 					return getImplicitGrantResponse(authorizationRequest);
 				}
-				if (responseTypes.contains("code")) {
+				if (responseTypes.contains(OAuth2Constants.PARAMETER.CODE)) {
 					return new ModelAndView(getAuthorizationCodeResponse(authorizationRequest,
 							(Authentication) principal));
 				}
@@ -245,11 +234,11 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 			if (!authorizationRequest.isApproved()) {
 				return new RedirectView(getUnsuccessfulRedirect(authorizationRequest,
-						new UserDeniedAuthorizationException("User denied access"), responseTypes.contains("token")),
+						new UserDeniedAuthorizationException("User denied access"), responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)),
 						false, true, false);
 			}
 
-			if (responseTypes.contains("token")) {
+			if (responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)) {
 				return getImplicitGrantResponse(authorizationRequest).getView();
 			}
 
@@ -326,26 +315,26 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			url.append("#");
 		}
 
-		url.append("access_token={access_token}");
-		url.append("&token_type={token_type}");
-		vars.put("access_token", accessToken.getValue());
-		vars.put("token_type", accessToken.getTokenType());
+		url.append(templateUrlVar(OAuth2Constants.PARAMETER.ACCESS_TOKEN));
+		url.append("&").append(templateUrlVar(OAuth2Constants.PARAMETER.TOKEN_TYPE));
+		vars.put(OAuth2Constants.PARAMETER.ACCESS_TOKEN, accessToken.getValue());
+		vars.put(OAuth2Constants.PARAMETER.TOKEN_TYPE, accessToken.getTokenType());
 		String state = authorizationRequest.getState();
 
 		if (state != null) {
-			url.append("&state={state}");
-			vars.put("state", state);
+			url.append("&").append(templateUrlVar(OAuth2Constants.PARAMETER.STATE));
+			vars.put(OAuth2Constants.PARAMETER.STATE, state);
 		}
 		Date expiration = accessToken.getExpiration();
 		if (expiration != null) {
 			long expires_in = (expiration.getTime() - System.currentTimeMillis()) / 1000;
-			url.append("&expires_in={expires_in}");
-			vars.put("expires_in", expires_in);
+			url.append("&").append(templateUrlVar(OAuth2Constants.PARAMETER.EXPIRES_IN));
+			vars.put(OAuth2Constants.PARAMETER.EXPIRES_IN, expires_in);
 		}
 		String originalScope = authorizationRequest.getRequestParameters().get(OAuth2Utils.SCOPE);
 		if (originalScope == null || !OAuth2Utils.parseParameterList(originalScope).equals(accessToken.getScope())) {
-			url.append("&" + OAuth2Utils.SCOPE + "={scope}");
-			vars.put("scope", OAuth2Utils.formatParameterList(accessToken.getScope()));
+			url.append("&").append(templateUrlVar(OAuth2Constants.PARAMETER.SCOPE));
+			vars.put(OAuth2Constants.PARAMETER.SCOPE, OAuth2Utils.formatParameterList(accessToken.getScope()));
 		}
 		Map<String, Object> additionalInformation = accessToken.getAdditionalInformation();
 		for (String key : additionalInformation.keySet()) {
@@ -358,6 +347,10 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		UriTemplate template = new UriTemplate(url.toString());
 		// Do not include the refresh token (even if there is one)
 		return template.expand(vars).toString();
+	}
+	
+	public String templateUrlVar(String parameterName) {
+		return parameterName + "={" + parameterName + "}";
 	}
 
 	private String generateCode(AuthorizationRequest authorizationRequest, Authentication authentication)
@@ -376,7 +369,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		catch (OAuth2Exception e) {
 
 			if (authorizationRequest.getState() != null) {
-				e.addAdditionalInformation("state", authorizationRequest.getState());
+				e.addAdditionalInformation(OAuth2Constants.PARAMETER.STATE, authorizationRequest.getState());
 			}
 
 			throw e;
@@ -391,11 +384,11 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		}
 
 		Map<String, String> query = new LinkedHashMap<String, String>();
-		query.put("code", authorizationCode);
+		query.put(OAuth2Constants.PARAMETER.CODE, authorizationCode);
 
 		String state = authorizationRequest.getState();
 		if (state != null) {
-			query.put("state", state);
+			query.put(OAuth2Constants.PARAMETER.STATE, state);
 		}
 		
 		//this is for cas
@@ -421,7 +414,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		query.put("error_description", failure.getMessage());
 
 		if (authorizationRequest.getState() != null) {
-			query.put("state", authorizationRequest.getState());
+			query.put(OAuth2Constants.PARAMETER.STATE, authorizationRequest.getState());
 		}
 
 		if (failure.getAdditionalInformation() != null) {

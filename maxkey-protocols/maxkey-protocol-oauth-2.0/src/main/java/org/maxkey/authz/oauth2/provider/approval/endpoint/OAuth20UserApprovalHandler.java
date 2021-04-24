@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.maxkey.authz.oauth2.provider.approval.controller;
+package org.maxkey.authz.oauth2.provider.approval.endpoint;
 
 import java.util.Collection;
 

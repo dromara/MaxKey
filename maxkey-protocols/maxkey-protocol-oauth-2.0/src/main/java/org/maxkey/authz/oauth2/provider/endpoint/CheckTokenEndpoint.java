@@ -84,7 +84,7 @@ public class CheckTokenEndpoint {
 	@ApiOperation(value = "OAuth 2.0 token检查接口", notes = "传递参数token",httpMethod="POST")
 	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_CHECK_TOKEN)
 	@ResponseBody
-	public Map<String, ?> checkToken(@RequestParam("token") String value) {
+	public Map<String, ?> checkToken(@RequestParam(OAuth2Constants.PARAMETER.TOKEN) String value) {
 
 		OAuth2AccessToken token = resourceServerTokenServices.readAccessToken(value);
 		if (token == null) {

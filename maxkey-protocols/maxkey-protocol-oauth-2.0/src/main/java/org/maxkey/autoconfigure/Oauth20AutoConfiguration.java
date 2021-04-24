@@ -28,7 +28,7 @@ import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.OAuth2UserDetailsService;
 import org.maxkey.authz.oauth2.provider.approval.TokenApprovalStore;
-import org.maxkey.authz.oauth2.provider.approval.controller.OAuth20UserApprovalHandler;
+import org.maxkey.authz.oauth2.provider.approval.endpoint.OAuth20UserApprovalHandler;
 import org.maxkey.authz.oauth2.provider.client.ClientDetailsUserDetailsService;
 import org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
 import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;

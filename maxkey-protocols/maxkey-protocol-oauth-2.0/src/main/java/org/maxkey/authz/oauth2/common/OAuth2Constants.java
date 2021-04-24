@@ -39,6 +39,12 @@ public class OAuth2Constants {
 
 		public static final String CODE = "code";
 		
+		
+		
+		public static final String TOKEN = "token";
+		
+		public static final String TOKEN_TYPE = "token_type";
+		
 		public static final String EXPIRES_IN = "expires_in";
 		
 		/**
@@ -65,8 +71,16 @@ public class OAuth2Constants {
 		 * Constant to use while parsing and formatting parameter maps for OAuth2 requests
 		 */
 		public static final String GRANT_TYPE = "grant_type";
+		public static final String GRANT_TYPE_CODE = "code";
+		public static final String GRANT_TYPE_PASSWORD = "password";
+		public static final String GRANT_TYPE_IMPLICIT = "implicit";
+		public static final String GRANT_TYPE_AUTHORIZATION_CODE = "authorization_code";
+		public static final String GRANT_TYPE_CLIENT_CREDENTIALS = "client_credentials";
+		
 		
 		public static final String ACCESS_TOKEN = "access_token";
+		
+		public static final String APPROVAL_PROMPT = "approval_prompt";
 	}
 	
 	public static class ENDPOINT{
