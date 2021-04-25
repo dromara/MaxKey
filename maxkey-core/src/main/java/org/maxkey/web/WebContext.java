@@ -208,7 +208,6 @@ public final class WebContext {
         		||httpServletRequest.getServerName().equalsIgnoreCase("localhost")) {
             httpContextPath = httpServletRequest.getScheme().toLowerCase() 
             					+ "://"+httpServletRequest.getServerName();
-	        httpContextPath += httpServletRequest.getContextPath();
         }else {
         	 httpContextPath = applicationConfig.getServerName() ;
         }
