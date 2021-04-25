@@ -204,19 +204,21 @@ public final class WebContext {
         _logger.trace("ServerName " + httpServletRequest.getServerName());
         
         String httpContextPath ="";
-        
         if (httpServletRequest.getServerName().matches(ipAddressRegex)
         		||httpServletRequest.getServerName().equalsIgnoreCase("localhost")) {
-        	String scheme = httpServletRequest.getScheme().toLowerCase();
-            httpContextPath = scheme + "://"+httpServletRequest.getServerName();
-	        int port = httpServletRequest.getServerPort();
-	        if(!(port==80 || port==443)){
-	            httpContextPath    +=  ":"+port;
-	        }
-	        httpContextPath += httpServletRequest.getContextPath() + "";
+            httpContextPath = httpServletRequest.getScheme().toLowerCase() 
+            					+ "://"+httpServletRequest.getServerName();
+	        httpContextPath += httpServletRequest.getContextPath();
         }else {
-        	 httpContextPath = applicationConfig.getServerName() + httpServletRequest.getContextPath() + "";
+        	 httpContextPath = applicationConfig.getServerName() ;
         }
+        
+        int port = httpServletRequest.getServerPort();
+        if(!(port==80 || port==443)){
+            httpContextPath    +=  ":"+port;
+        }
+        
+        httpContextPath += httpServletRequest.getContextPath() + "";
         
         _logger.trace("httpContextPath " + httpContextPath);
         return httpContextPath;
