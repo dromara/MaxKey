@@ -73,7 +73,10 @@
 			createdby,
 			createddate,
 			
-			status
+			status,
+			
+			logouturl,
+			logouttype
 		)values(
 			#{id},
 			#{name},
@@ -155,8 +158,8 @@
 			
 			status			=	#{status},
 
-			LOGOUTURL			=	#{logoutUrl},
-			LOGOUTTYPE			=	#{logoutType}
+			logouturl			=	#{logoutUrl},
+			logouttype			=	#{logoutType}
     	where 
 			ID	=	#{id}
     </update>
