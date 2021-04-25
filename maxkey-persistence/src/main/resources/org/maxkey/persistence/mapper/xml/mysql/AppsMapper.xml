@@ -109,7 +109,10 @@
 			#{createdBy},
 			#{createdDate} ,
 			
-			#{status}
+			#{status},
+
+			#{logoutUrl},
+			#{logoutType}
 		)
 	</insert>
 	
@@ -150,7 +153,10 @@
 			modifiedby		=	#{modifiedBy},
 			modifieddate	=	#{modifiedDate},
 			
-			status			=	#{status}
+			status			=	#{status},
+
+			LOGOUTURL			=	#{logoutUrl},
+			LOGOUTTYPE			=	#{logoutType}
     	where 
 			ID	=	#{id}
     </update>
