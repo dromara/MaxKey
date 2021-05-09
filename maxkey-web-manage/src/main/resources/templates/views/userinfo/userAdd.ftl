@@ -65,23 +65,39 @@
 			<td style="width:35%;">
 				<input class="form-control"  type="text" id="employeeNumber" name="employeeNumber"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.userType" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.windowsAccount" />：</td>
 			<td style="width:35%;">
-	
-				<select name="userType"   class="form-control" >
-						<option value="EMPLOYEE"  selected><@locale code="userinfo.userType.employee" /></option>
-						<option value="CONTRACTOR"  selected><@locale code="userinfo.userType.contractor" /></option>
-						<option value="CUSTOMER"  selected><@locale code="userinfo.userType.customer" /></option>
-						<option value="DEALER"  selected><@locale code="userinfo.userType.dealer" /></option>
-						<option value="SUPPLIER"  selected><@locale code="userinfo.userType.supplier" /></option>
-						<option value="PARTNER"  selected><@locale code="userinfo.userType.partner" /></option>
-						<option value="EXTERNAL"  selected><@locale code="userinfo.userType.external" /></option>
-						<option value="INTERN"  selected><@locale code="userinfo.userType.intern" /></option>
-						<option value="TEMP"  selected><@locale code="userinfo.userType.temp" /></option>
-				</select>
+				<input class="form-control"  type="text" id="windowsAccount" name="windowsAccount"  title="" value=""/>
 			</td>
-			
 		</tr>
+		
+	<tr>
+		<td><@locale code="userinfo.userType" />：</td>
+		<td style="width:35%;">
+
+			<select name="userType"   class="form-control" >
+					<option value="EMPLOYEE"  selected><@locale code="userinfo.userType.employee" /></option>
+					<option value="CONTRACTOR"  ><@locale code="userinfo.userType.contractor" /></option>
+					<option value="CUSTOMER"  ><@locale code="userinfo.userType.customer" /></option>
+					<option value="DEALER"  ><@locale code="userinfo.userType.dealer" /></option>
+					<option value="SUPPLIER"  ><@locale code="userinfo.userType.supplier" /></option>
+					<option value="PARTNER"  ><@locale code="userinfo.userType.partner" /></option>
+					<option value="EXTERNAL"  ><@locale code="userinfo.userType.external" /></option>
+					<option value="INTERN"  ><@locale code="userinfo.userType.intern" /></option>
+					<option value="TEMP"  ><@locale code="userinfo.userType.temp" /></option>
+			</select>
+		</td>
+		<td><@locale code="userinfo.userstate" />：</td>
+		<td style="width:35%;">
+			<select name="userState"   class="form-control" >
+					<option value="RESIDENT"  selected ><@locale code="userinfo.userstate.resident" /></option>
+					<option value="WITHDRAWN"  	><@locale code="userinfo.userstate.withdrawn" /></option>
+					<option value="RETIREE"  	><@locale code="userinfo.userstate.retiree" /></option>
+					<option value="INACTIVE"  	><@locale code="userinfo.userstate.inactive" /></option>
+			</select>
+		</td>
+		
+	</tr>
 	<tr>
 		<td colspan="4">&nbsp;
 		</td>
@@ -92,8 +108,8 @@
 		<td>
 			<input class="form-control"  type="text" required="" id="displayName" name="displayName"  title="" value=""/>
 		</td>
-		<td rowspan="4"><@locale code="userinfo.picture" />：</td>
-		<td rowspan="4">
+		<td rowspan="3"><@locale code="userinfo.picture" />：</td>
+		<td rowspan="3">
 			<img id="picture" width="150px" height="150px" src="<@base/>/static/images/uploadimage.jpg" />
 			<input type="file" id="pictureFile" name="pictureFile" style="display:none" />
 					</td>
@@ -115,18 +131,11 @@
 		<td>
 			<input class="form-control"  type="text" id="middleName" name="middleName"  title="" value=""/>
 		</td>
-		
-		
-	</tr>
-	<tr>
 		<td><@locale code="userinfo.nickName" />：</td>
 		<td>
 			<input class="form-control"  type="text" id="nickName" name="nickName"  title="" value=""/>
 		</td>
-		<td style="width:15%;"><@locale code="userinfo.windowsAccount" />：</td>
-			<td style="width:35%;">
-				<input class="form-control"  type="text" id="windowsAccount" name="windowsAccount"  title="" value=""/>
-		</td>
+		
 	</tr>
 	<tr>
 		<td><@locale code="userinfo.gender" />：</td>

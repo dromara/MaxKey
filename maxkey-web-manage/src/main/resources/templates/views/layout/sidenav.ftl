@@ -60,7 +60,7 @@
    	</li> 
    	<li>
      	<a class="side-nav-menu has-arrow" href="#">
-       		<@locale code="navs.conf"/>
+       		<@locale code="navs.role.permissions"/>
        		<span class="fa fa-fw fa-cogs fa-lg"></span>
      	</a>
      	<ul>
@@ -89,10 +89,24 @@
                  <span class="fa fa-fw fa-check-square"></span>
              </a>
            </li>
+	    </ul>
+	</li>
+	<li>
+     	<a class="side-nav-menu has-arrow" href="#">
+       		<@locale code="navs.conf"/>
+       		<span class="fa fa-fw fa-cogs fa-lg"></span>
+     	</a>
+     	<ul>
            <li>
              <a class="side-nav-menu" href="<@base />/notices/list/">
                 <@locale code="navs.notices"/>  
                 <span class="fa fa-fw fa-bell"></span>
+             </a>
+           </li>
+           <li>
+             <a class="side-nav-menu" href="<@base />/synchronizers/list/">
+                <@locale code="navs.synchronizers"/>  
+                <span class="fa fa-fw fa-chain"></span>
              </a>
            </li>
            <li>

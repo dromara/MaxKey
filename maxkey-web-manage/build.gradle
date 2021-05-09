@@ -14,6 +14,10 @@ dependencies {
 	
    	implementation project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
    	implementation project(":maxkey-protocols:maxkey-protocol-saml-2.0")   
+   	
+   	//identity
    	implementation project(":maxkey-identitys:maxkey-identity-scim")   
    	implementation project(":maxkey-identitys:maxkey-identity-rest")	
+   	implementation project(":maxkey-identitys:maxkey-synchronizers")
+   	
 }

@@ -47,6 +47,12 @@
 					</td>
 				</tr>
 				<tr>
+					<th style="width:15%;"><@locale code="userinfo.userstate" />：</th>
+					<td  style="width:35%;">
+						<input  class="form-control"  readonly type="text" id="userState" name="userState"  title="" value="${model.userState !}"/>
+					</td>
+				</tr>
+				<tr>
 					<th><@locale code="userinfo.displayName" />：</th>
 					<td>
 						<input class="form-control"  type="text" id="displayName" name="displayName"  title="" value="${model.displayName!}"  required="" />

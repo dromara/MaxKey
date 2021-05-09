@@ -128,7 +128,7 @@ $(function(){
 		}, settings || {});
 
 		var winContent="<iframe " +
-							"scrolling='no' " +
+							"scrolling='yes' " +
 							"frameborder='0' " +
 							"width='"+settings.width+"' " +
 							"height='"+settings.height+"' " +
@@ -439,6 +439,8 @@ $(function(){
 			
 			if($(this).attr("target")&&$(this).attr("target")=="forward"){
 				$.forward($(this).attr("wurl")+"/"+selectId);	
+			}if($(this).attr("target")&&$(this).attr("target")=="_blank"){
+				window.open($(this).attr("wurl")+"/"+selectId);	
 			}else{
 				var settings={
 						url		:	$(this).attr("wurl")+"/"+selectId,//window url

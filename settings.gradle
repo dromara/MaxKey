@@ -16,6 +16,7 @@ include 'maxkey-authentications:maxkey-authentication-otp'
 //identity
 include 'maxkey-identitys:maxkey-identity-scim'
 include 'maxkey-identitys:maxkey-identity-rest'
+include 'maxkey-identitys:maxkey-synchronizers'
 
 //Protocol
 //include 'maxkey-protocols'

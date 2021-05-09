@@ -54,20 +54,15 @@
 		<td style="width:35%;">
 			<select name="status"  id="status" class="form-control" >
 						<option value="1"   <#if 1==model.status>selected</#if>><@locale code="userinfo.status.active" /></option>
-						<option value="2"   <#if 2==model.status>selected</#if>><@locale code="userinfo.status.withdrawn" /></option>
-						<option value="3"   <#if 3==model.status>selected</#if>><@locale code="userinfo.status.inactive" /></option>
-						<option value="4"   <#if 4==model.status>selected</#if>><@locale code="userinfo.status.retiree" /></option>
+						<option value="2"   <#if 2==model.status>selected</#if>><@locale code="userinfo.status.inactive" /></option>
+						<option value="5"   <#if 5==model.status>selected</#if>><@locale code="userinfo.status.lock" /></option>
+						<option value="9"   <#if 9==model.status>selected</#if>><@locale code="userinfo.status.delete" /></option>
 				</select>
 		</td>
 	</tr>
 	<tr>
-			<td style="width:15%;"><@locale code="userinfo.employeeNumber" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.userType" />：</td>
 			<td style="width:35%;">
-				<input class="form-control"  type="text" id="employeeNumber" name="employeeNumber"  title="" value="${model.employeeNumber!""!""}"/>
-			</td>
-			<td><@locale code="userinfo.userType" />：</td>
-			<td style="width:35%;">
-	
 				<select name="userType"   class="form-control" >
 						<option value="EMPLOYEE"  	<#if 'EMPLOYEE'==model.userType>selected</#if> ><@locale code="userinfo.userType.employee" /></option>
 						<option value="CONTRACTOR"  <#if 'CONTRACTOR'==model.userType>selected</#if>><@locale code="userinfo.userType.contractor" /></option>
@@ -80,8 +75,28 @@
 						<option value="TEMP"  		<#if 'TEMP'==model.userType>selected</#if>><@locale code="userinfo.userType.temp" /></option>
 				</select>
 			</td>
+			<td><@locale code="userinfo.userstate" />：</td>
+			<td style="width:35%;">
+				<select name="userState"   class="form-control" >
+						<option value="RESIDENT"  	<#if 'RESIDENT'==model.userState>selected</#if> ><@locale code="userinfo.userstate.resident" /></option>
+						<option value="WITHDRAWN"  	<#if 'WITHDRAWN'==model.userState>selected</#if>><@locale code="userinfo.userstate.withdrawn" /></option>
+						<option value="RETIREE"  	<#if 'RETIREE'==model.userState>selected</#if>><@locale code="userinfo.userstate.retiree" /></option>
+						<option value="INACTIVE"  	<#if 'INACTIVE'==model.userState>selected</#if>><@locale code="userinfo.userstate.inactive" /></option>
+				</select>
+			</td>
 			
-		</tr>
+	</tr>
+		<tr>
+			<td style="width:15%;"><@locale code="userinfo.employeeNumber" />：</td>
+			<td style="width:35%;">
+				<input class="form-control"  type="text" id="employeeNumber" name="employeeNumber"  title="" value="${model.employeeNumber!""!""}"/>
+			</td>
+			<td><@locale code="userinfo.windowsAccount" />：</td>
+			<td style="width:35%;">
+				<input class="form-control"  type="text" id="windowsAccount" name="windowsAccount"  title="" value="${model.windowsAccount!""}"/>
+			</td>
+			
+	</tr>
 	<tr>
 		<td colspan="4">&nbsp;
 		</td>
@@ -92,8 +107,8 @@
 		<td>
 			<input class="form-control"  type="text" id="displayName" name="displayName"  title="" value="${model.displayName!""}"/>
 		</td>
-		<td rowspan="4"><@locale code="userinfo.picture" />：</td>
-		<td rowspan="4">
+		<td rowspan="3"><@locale code="userinfo.picture" />：</td>
+		<td rowspan="3">
 			<img id="picture" width="150px" height="150px" src="<@base/>/static/images/uploadimage.jpg" />
 			<input type="file" id="pictureFile" name="pictureFile" style="display:none" />
 					</td>
@@ -115,18 +130,11 @@
 		<td>
 			<input class="form-control"  type="text" id="middleName" name="middleName"  title="" value="${model.middleName!""}"/>
 		</td>
-		
-		
-	</tr>
-	<tr>
 		<td><@locale code="userinfo.nickName" />：</td>
 		<td>
 			<input class="form-control"  type="text" id="nickName" name="nickName"  title="" value="${model.nickName!""}"/>
 		</td>
-		<td style="width:15%;"><@locale code="userinfo.windowsAccount" />：</td>
-			<td style="width:35%;">
-				<input class="form-control"  type="text" id="windowsAccount" name="windowsAccount"  title="" value="${model.windowsAccount!""}"/>
-		</td>
+		
 	</tr>
 	<tr>
 		<td><@locale code="userinfo.gender" />：</td>

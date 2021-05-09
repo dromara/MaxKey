@@ -52,6 +52,13 @@ $(function(){
 								</td>
 							</tr>
 							<tr>
+								<th style="width:15%;"><@locale code="apps.cas.expires"/>：</th>
+								<td  colspan=3>
+									<input type="text" class="form-control" id="expires" name="expires"  title="" value=""  required="30"  />
+								</td>
+							</tr>
+							
+							<tr>
 								<td  colspan=4>
 									<input class="button"  id="status" type="hidden" name="status"  value="1"/>
     								<input class="button btn btn-primary mr-3"  id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>

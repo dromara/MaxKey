@@ -18,6 +18,7 @@
 package org.maxkey.constants;
 
 public final class ConstantsStatus {
+	
     public static final int ACTIVE = 1;
 
     public static final int INACTIVE = 2;
@@ -42,8 +43,10 @@ public final class ConstantsStatus {
 
     public static final int STOP = 12;
 
-    public static final int APPROVED = 13;
+    public static final int APPLY = 13;
     
-    public static final int QUITED = 14;
+    public static final int APPROVED = 14;
+    
+    public static final int QUITED = 15;
 
 }

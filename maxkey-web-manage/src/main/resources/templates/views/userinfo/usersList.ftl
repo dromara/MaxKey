@@ -11,6 +11,21 @@
    			return '<@locale code="userinfo.gender.male" />';
    		}
 	};
+	function statusFormatter(value, row, index){
+   		if(value==1){
+   			return '<@locale code="userinfo.status.active" />';
+   		}else if(value==2){
+   			return '<@locale code="userinfo.status.inactive" />';
+   		}else if(value==5){
+   			return '<@locale code="userinfo.status.lock" />';
+   		}else if(value==9){
+   			return '<@locale code="userinfo.status.delete" />';
+   		}else {
+   			return '<@locale code="userinfo.status.inactive" />';
+   		}
+	};
+	
+	
 		
 function onClick (event, treeId, treeNode) {
 	$("#departmentId").val(treeNode.data.id)
@@ -222,13 +237,13 @@ $(function () {
 						 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/userinfo/forwardAdd"
 						 		    wwidth="960"
-						 		    wheight="600"
+						 		    wheight="620"
 					 		    	target="window">	    	
 					 		    	
 					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
 					 				wurl="<@base/>/userinfo/forwardUpdate"
 					 				wwidth="960"
-						 		    wheight="600"
+						 		    wheight="620"
 					 		    	target="window"> 
 					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
 					 				wurl="<@base/>/userinfo/delete" />
@@ -305,6 +320,7 @@ $(function () {
 				<th data-field="mobile"  data-visible="false"><@locale code="userinfo.mobile"/></th>
 				<th data-field="email"   data-visible="false"><@locale code="userinfo.email"/></th>
 				<th data-field="gender" data-formatter="genderFormatter" ><@locale code="userinfo.gender"/></th>
+				<th data-field="status" data-formatter="statusFormatter" ><@locale code="userinfo.status"/></th>
 				</tr>
 			</thead>
 		</table>
