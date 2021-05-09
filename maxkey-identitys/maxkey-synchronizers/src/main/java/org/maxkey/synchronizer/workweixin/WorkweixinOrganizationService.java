@@ -18,6 +18,7 @@
 package org.maxkey.synchronizer.workweixin;
 
 import org.maxkey.entity.Organizations;
+import org.maxkey.entity.Synchronizers;
 import org.maxkey.persistence.service.OrganizationsService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.maxkey.synchronizer.workweixin.entity.WorkWeixinDepts;
@@ -101,6 +102,12 @@ public class WorkweixinOrganizationService implements ISynchronizerService{
 
 	public void setOrganizationsService(OrganizationsService organizationsService) {
 		this.organizationsService = organizationsService;
+	}
+
+	@Override
+	public void setSynchronizer(Synchronizers synchronizer) {
+		
+		
 	}
 
 }

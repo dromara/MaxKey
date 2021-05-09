@@ -18,7 +18,7 @@
 package org.maxkey.synchronizer.dingding;
 
 import org.maxkey.entity.Organizations;
-import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
+import org.maxkey.entity.Synchronizers;
 import org.maxkey.persistence.service.OrganizationsService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
@@ -103,6 +103,12 @@ public class DingdingOrganizationService   implements ISynchronizerService{
 
 	public void setOrganizationsService(OrganizationsService organizationsService) {
 		this.organizationsService = organizationsService;
+	}
+
+	@Override
+	public void setSynchronizer(Synchronizers Synchronizer) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

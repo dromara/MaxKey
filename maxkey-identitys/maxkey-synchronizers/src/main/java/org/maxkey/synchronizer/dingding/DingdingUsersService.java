@@ -19,6 +19,7 @@ package org.maxkey.synchronizer.dingding;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.maxkey.entity.Synchronizers;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.synchronizer.ISynchronizerService;
@@ -122,6 +123,12 @@ public class DingdingUsersService   implements ISynchronizerService{
 
 	public DingdingOrganizationService getOrganizationService() {
 		return organizationService;
+	}
+
+	@Override
+	public void setSynchronizer(Synchronizers Synchronizer) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

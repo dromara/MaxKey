@@ -50,7 +50,8 @@ import org.springframework.context.annotation.ComponentScan;
     "org.maxkey.web.tag",
     "org.maxkey.identity.kafka",
     "org.maxkey.identity.scim.controller",
-    "org.maxkey.identity.rest"
+    "org.maxkey.identity.rest",
+    "org.maxkey.synchronizer"
 })
 @MapperScan("org.maxkey.persistence.mapper,")
 @SpringBootApplication

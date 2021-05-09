@@ -17,10 +17,14 @@
 
 package org.maxkey.web.contorller;
 
+import java.util.HashMap;
+import java.util.List;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.entity.Synchronizers;
 import org.maxkey.persistence.service.SynchronizersService;
+import org.maxkey.synchronizer.ISynchronizerService;
+import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -32,6 +36,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,8 +49,15 @@ public class SynchronizersController {
 	@Autowired
 	@Qualifier("synchronizersService")
 	SynchronizersService synchronizerssService;
-
 	
+	private static HashMap<String,String> synchronizerMap =new HashMap<String,String>();
+
+	static {
+		synchronizerMap.put("1", "ldapSynchronizerService");
+		synchronizerMap.put("2", "activeDirectorySynchronizerService");
+		synchronizerMap.put("3", "dingdingSynchronizerService");
+		synchronizerMap.put("4", "workweixinSynchronizerService");
+	}
 	
 	@RequestMapping(value={"/list"})
 	public ModelAndView groupsList(){
@@ -91,6 +103,32 @@ public class SynchronizersController {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		
+	}
+	
+	/**
+	 * 修改
+	 * @param group
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value={"/sync"})  
+	public Message sync(@RequestParam("id") String id) {
+		_logger.debug("-update  synchronizers ids :" + id);
+		
+		List<String> ids = StringUtils.string2List(id, ",");
+		try {
+			for(String sysId : ids) {
+				Synchronizers  synchronizer  = synchronizerssService.get(sysId);
+				_logger.debug("synchronizer " + synchronizer);
+				ISynchronizerService synchronizerService = (ISynchronizerService)WebContext.getBean(synchronizerMap.get(sysId));
+				synchronizerService.setSynchronizer(synchronizer);
+				synchronizerService.sync();
+			}
+		}catch(Exception e) {
+			_logger.error("synchronizer Exception " , e);
+			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+		}
+		return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 	}
 
 }

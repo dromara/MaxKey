@@ -224,6 +224,29 @@ $(function(){
 	 	$(".d-footer").show();
 	};
 	
+	//get Selections Rows Data
+	$.dataGridSelRowsData=function(dataGridElement){
+		return $(dataGridElement).bootstrapTable('getSelections');
+	};
+	
+	//get Selections Rows Data
+	$.gridSelectedData=function(dataGridElement){
+		return $(dataGridElement).bootstrapTable('getSelections');
+	};
+	
+	//get Selections Rows Ids
+	$.gridSelectedIds=function(dataGridElement){
+		var selectIds="";
+		if($(dataGridElement).length>0){//get grid list selected ids
+			var selRows =  $(dataGridElement).bootstrapTable('getSelections');
+			for (var i=0;i<selRows.length; i++){
+				selectIds=selectIds+","+selRows[i].id;
+			}
+			selectIds=selectIds.substring(1);
+		}
+		return selectIds;
+	};
+	
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
 	// For actionForm use ajax submit
     var forms = $(".needs-validation");
@@ -305,28 +328,61 @@ $(function(){
     
 	//window open by element is window style
 	$(".window").on("click",function(){
+		//before open action
 		if (typeof(beforeWindow) == "function"){
-			beforeWindow();///before open action
+			beforeWindow();
 		}
-		
 		var url=$(this).attr("wurl");
-		
-		
-		if($(this).attr("ref")){
-			if($("#"+$(this).attr("ref")).val()==""){
+		var refObject = $(this).attr("ref");
+		var refData = "";
+		if(refObject){
+			if(refObject=="datagrid" && $.gridSelectedData("#datagrid").length>0){
+				refData= $.gridSelectedData("#datagrid")[0].id;
+			}else if($("#"+refObject).val()!=""){
+				refData = $("#"+refObject).val();
+			}
+			if( refData == null || refData == ""){
 				$.alert({content:$.platform.messages.select.alertText});
 				return;
 			}
-			url=url+"/"+$("#"+$(this).attr("ref")).val();
+			url = url + "/"+ refData;
+		}
+		$.window({
+					url		:	url,//window url
+					title	:	$(this).attr("wtitle"),//title
+					width	:	$(this).attr("wwidth"),//width
+					height	:	$(this).attr("wheight")//height
+		});//open window
+	});
+	
+	//click Btn Submit data to server 
+	$(".sendBtn").on("click",function(){
+		var url=$(this).attr("wurl");
+		var refObject = $(this).attr("ref");
+		
+		if(refObject){
+			if(refObject=="datagrid"){
+				var selectIds= $.gridSelectedIds("#datagrid");
+				if(selectIds == null || selectIds == "") {
+					return;
+				}
+				url = url+"?id="+selectIds;
+			}else if($("#"+refObject).val()!=""){
+				url=url+"/"+$("#"+refObject).val();
+			}else{
+				$.alert({content:$.platform.messages.select.alertText});
+				return;
+			}
 		}
 		
-		var settings={
-				url		:	url,//window url
-				title	:	$(this).attr("wtitle"),//title
-				width	:	$(this).attr("wwidth"),//width
-				height	:	$(this).attr("wheight")//height
-			};
-		$.window(settings);//open window
+		$.post(url, {currTime:(new Date()).getTime()}, function(data) {
+			//alert result
+			$.alert({content:data.message,type:$.platform.messages.messageType[data.messageType]});
+			//refresh grid list
+			if($("#datagrid")[0]){
+				$("#datagrid").bootstrapTable("refresh");
+			}
+	 	}); 
 	});
 	
 	//forward to url, by forward style
@@ -420,22 +476,11 @@ $(function(){
 			if (typeof(beforeUpdate) == "function"){
 				beforeUpdate(this);
 			}
-			
-			var selectId="";
-			if($("#datagrid").length>0){//get grid list selected ids
-				var selRows = $('#datagrid').bootstrapTable('getSelections');
-				for (var i=0;i<selRows.length; i++){
-					selectId=selectId+","+selRows[i].id;
-					break;
-				}
-				selectId=selectId.substring(1);
-			}
-			
+			var selectId= $.gridSelectedIds("#datagrid");
 			if(selectId == null || selectId == "") {
 				$.alert({content:$.platform.messages.select.alertText});
 				return;
 			}
-			
 			
 			if($(this).attr("target")&&$(this).attr("target")=="forward"){
 				$.forward($(this).attr("wurl")+"/"+selectId);	
@@ -454,59 +499,12 @@ $(function(){
 		
 	});
 
-	//view button
-	$("#viewBtn").click(function(){
-		if (typeof(viewAction) == "function"){
-			document.location.href=viewAction(this);//自定义跳转
-		}else {
-			if (typeof(beforeView) == "function"){
-				beforeView(this);//自定义跳转
-			}
-			var selectId="";
-			if($("#list2").length>0){//get grid list selected ids
-				selectId=$("#list2").jqGrid("getGridParam", "selrow");
-				if(selectId ==	null ||	selectId	==	""){
-					$.alert({content:$.platform.messages.select.alertText});
-					return;
-				}
-				var rowData = $("#list2").jqGrid("getRowData", selectId);
-				selectId=rowData.id;
-			}else if($("#list").length>0){//get grid list selected ids
-				selectId=$("#list").jqGrid("getGridParam", "selrow");
-				if(selectId ==	null ||	selectId	==	""){
-					$.alert({content:$.platform.messages.select.alertText});
-					return;
-				}
-				var rowData = $("#list").jqGrid("getRowData", selectId);
-				selectId=rowData.id;
-			}
-			if($(this).attr("target")&&$(this).attr("target")=="forward"){
-				$.forward($(this).attr("wurl")+"/"+selectId);	
-			}else{
-				var settings={
-						url		:	$(this).attr("wurl")+"/"+selectId,//window url
-						title	:	$(this).attr("wtitle"),//title
-						width	:	$(this).attr("wwidth"),//width
-						height	:	$(this).attr("wheight")//height
-					};
-				$.window(settings);//open window
-			}
-		}
-	});
-
 	//delete and batch delete button
 	$("#deleteBtn").click(function(){
 		if (typeof(beforeDelete) == "function"){
 			beforeDelete(this);//before function
 		}
-		var selectIds="";
-		if($("#datagrid").length>0){//get grid list selected ids
-			var selRows = $('#datagrid').bootstrapTable('getSelections');
-			for (var i=0;i<selRows.length; i++){
-				selectIds=selectIds+","+selRows[i].id;
-			}
-			selectIds=selectIds.substring(1);
-		}
+		var selectIds=$.gridSelectedIds("#datagrid");
 		if(selectIds == null || selectIds == "") {
 			$.alert({content:$.platform.messages.select.alertText});
 			return;
@@ -562,18 +560,6 @@ $(function(){
 		}
 		
 	});
-	
-	//form json url init all ways not used
-	if($("#actionForm")){//actionForm exist
-		if($("#actionForm").attr("loadaction")){//init form
-	    	$("#actionForm").json2form({url	:	$("#actionForm").attr("loadaction")});//init #actionForm with loadaction url
-	    	$("#actionForm").removeAttr('loadaction'); //is need init
-		}
-	};
-	
-	$.dataGridSelRowsData=function(dataGridElement){
-		return $(dataGridElement).bootstrapTable('getSelections');
-	};
 	
 	var curExpandNode = null;
 	$.tree=function (treeSettings){

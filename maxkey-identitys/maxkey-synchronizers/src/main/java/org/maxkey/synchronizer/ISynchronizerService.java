@@ -17,7 +17,11 @@
 
 package org.maxkey.synchronizer;
 
+import org.maxkey.entity.Synchronizers;
+
 public interface ISynchronizerService {
 
 	public void sync() throws Exception ;
+	
+	public void setSynchronizer(Synchronizers synchronizer);
 }

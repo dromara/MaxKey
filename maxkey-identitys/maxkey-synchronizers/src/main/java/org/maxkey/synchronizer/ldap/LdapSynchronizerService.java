@@ -17,6 +17,7 @@
 
 package org.maxkey.synchronizer.ldap;
 
+import org.maxkey.entity.Synchronizers;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class LdapSynchronizerService  implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(LdapSynchronizerService.class);
+	
+	Synchronizers synchronizer;
 	
 	@Autowired
 	LdapUsersService ldapUsersService;
@@ -57,6 +60,12 @@ public class LdapSynchronizerService  implements ISynchronizerService{
 
 	public void setLdapOrganizationService(LdapOrganizationService ldapOrganizationService) {
 		this.ldapOrganizationService = ldapOrganizationService;
+	}
+
+	@Override
+	public void setSynchronizer(Synchronizers synchronizer) {
+		this.synchronizer = synchronizer;
+		
 	}
 
 	

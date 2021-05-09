@@ -33,7 +33,9 @@ public class DingdingAccessTokenService {
 	
 	String appsecret;
 	
-	
+	public DingdingAccessTokenService() {
+		
+	}
 	public DingdingAccessTokenService(String appkey, String appsecret) {
 		super();
 		this.appkey = appkey;

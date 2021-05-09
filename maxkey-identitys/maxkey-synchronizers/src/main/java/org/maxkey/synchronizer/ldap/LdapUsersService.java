@@ -24,6 +24,7 @@ import javax.naming.directory.Attribute;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import org.maxkey.constants.ldap.InetOrgPerson;
+import org.maxkey.entity.Synchronizers;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.ldap.LdapUtils;
 import org.maxkey.persistence.service.UserInfoService;
@@ -138,6 +139,12 @@ public class LdapUsersService  implements ISynchronizerService{
 
 	public void setUserInfoService(UserInfoService userInfoService) {
 		this.userInfoService = userInfoService;
+	}
+
+	@Override
+	public void setSynchronizer(Synchronizers Synchronizer) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

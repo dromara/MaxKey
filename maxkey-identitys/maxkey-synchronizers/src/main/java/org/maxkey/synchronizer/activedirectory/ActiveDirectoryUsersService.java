@@ -24,6 +24,7 @@ import javax.naming.directory.Attribute;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import org.maxkey.constants.ldap.ActiveDirectoryUser;
+import org.maxkey.entity.Synchronizers;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
 import org.maxkey.persistence.ldap.LdapUtils;
@@ -146,6 +147,12 @@ public class ActiveDirectoryUsersService   implements ISynchronizerService{
 
 	public void setUserInfoService(UserInfoService userInfoService) {
 		this.userInfoService = userInfoService;
+	}
+
+	@Override
+	public void setSynchronizer(Synchronizers Synchronizer) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

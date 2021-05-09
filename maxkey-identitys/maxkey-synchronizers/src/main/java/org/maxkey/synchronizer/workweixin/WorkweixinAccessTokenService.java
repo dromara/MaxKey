@@ -33,7 +33,9 @@ public class WorkweixinAccessTokenService {
 	public static String TOKEN_URL="https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
 
 
-
+	public WorkweixinAccessTokenService() {}
+	
+	
 	public WorkweixinAccessTokenService(String corpid, String corpsecret) {
 		super();
 		this.corpid = corpid;

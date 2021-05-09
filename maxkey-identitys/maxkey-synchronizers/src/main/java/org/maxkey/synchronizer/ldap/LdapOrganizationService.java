@@ -26,6 +26,7 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import org.maxkey.constants.ldap.OrganizationalUnit;
 import org.maxkey.entity.Organizations;
+import org.maxkey.entity.Synchronizers;
 import org.maxkey.persistence.ldap.LdapUtils;
 import org.maxkey.persistence.service.OrganizationsService;
 import org.maxkey.synchronizer.ISynchronizerService;
@@ -121,6 +122,12 @@ public class LdapOrganizationService  implements ISynchronizerService{
 
 	public void setOrganizationsService(OrganizationsService organizationsService) {
 		this.organizationsService = organizationsService;
+	}
+
+	@Override
+	public void setSynchronizer(Synchronizers Synchronizer) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

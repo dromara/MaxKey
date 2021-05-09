@@ -17,17 +17,17 @@
 
 package org.maxkey.synchronizer.workweixin;
 
+import org.maxkey.entity.Synchronizers;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.taobao.api.ApiException;
-
 @Service
 public class WorkweixinSynchronizerService  implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(WorkweixinSynchronizerService.class);
+	Synchronizers synchronizer;
 	
 	@Autowired
 	WorkweixinUsersService workweixinUsersService;
@@ -36,7 +36,7 @@ public class WorkweixinSynchronizerService  implements ISynchronizerService{
 	WorkweixinOrganizationService workweixinOrganizationService;
 	
 
-	WorkweixinAccessTokenService workweixinAccessTokenService;
+	WorkweixinAccessTokenService workweixinAccessTokenService = new WorkweixinAccessTokenService();
 	
 	public WorkweixinSynchronizerService() {
 		super();
@@ -44,7 +44,8 @@ public class WorkweixinSynchronizerService  implements ISynchronizerService{
 
 	public void sync() throws Exception {
 		_logger.info("Sync ...");
-		
+		workweixinAccessTokenService.setCorpid(synchronizer.getPrincipal());
+		workweixinAccessTokenService.setCorpsecret(synchronizer.getCredentials());
 		String access_token=workweixinAccessTokenService.requestToken();
 		
 		workweixinOrganizationService.setAccess_token(access_token);
@@ -76,6 +77,12 @@ public class WorkweixinSynchronizerService  implements ISynchronizerService{
 
 	public void setWorkweixinAccessTokenService(WorkweixinAccessTokenService workweixinAccessTokenService) {
 		this.workweixinAccessTokenService = workweixinAccessTokenService;
+	}
+
+	@Override
+	public void setSynchronizer(Synchronizers synchronizer) {
+		this.synchronizer = synchronizer;
+		
 	}
 
 }

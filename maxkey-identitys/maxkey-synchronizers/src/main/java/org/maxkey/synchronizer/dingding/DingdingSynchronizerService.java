@@ -17,6 +17,7 @@
 
 package org.maxkey.synchronizer.dingding;
 
+import org.maxkey.entity.Synchronizers;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import com.taobao.api.ApiException;
 @Service
 public class DingdingSynchronizerService  implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(DingdingSynchronizerService.class);
+	Synchronizers synchronizer;
 	
 	@Autowired
 	DingdingUsersService dingdingUsersService;
@@ -36,7 +38,7 @@ public class DingdingSynchronizerService  implements ISynchronizerService{
 	DingdingOrganizationService dingdingOrganizationService;
 	
 
-	DingdingAccessTokenService dingdingAccessTokenService;
+	DingdingAccessTokenService dingdingAccessTokenService = new DingdingAccessTokenService();
 	
 	public DingdingSynchronizerService() {
 		super();
@@ -44,6 +46,8 @@ public class DingdingSynchronizerService  implements ISynchronizerService{
 
 	public void sync() throws ApiException {
 		_logger.info("Sync ...");
+		dingdingAccessTokenService.setAppkey(synchronizer.getPrincipal());
+		dingdingAccessTokenService.setAppsecret(synchronizer.getCredentials());
 		
 		String access_token=dingdingAccessTokenService.requestToken();
 		
@@ -76,6 +80,12 @@ public class DingdingSynchronizerService  implements ISynchronizerService{
 
 	public void setDingdingAccessTokenService(DingdingAccessTokenService dingdingAccessTokenService) {
 		this.dingdingAccessTokenService = dingdingAccessTokenService;
+	}
+
+	@Override
+	public void setSynchronizer(Synchronizers synchronizer) {
+		this.synchronizer = synchronizer;
+		
 	}
 
 }

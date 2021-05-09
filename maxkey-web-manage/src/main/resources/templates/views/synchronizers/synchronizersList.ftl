@@ -55,6 +55,9 @@
 		 			</td>
 		 			<td colspan="2">
 		 				<div id="tool_box_right">
+		 				 <input class="button btn btn-success mr-3 sendBtn" id="syncBtn" type="button" value="<@locale code="button.text.sync"/>" 
+						 		    wurl="<@base/>/synchronizers/sync" ref="datagrid"
+						 		    />
 					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
 					 				wurl="<@base/>/synchronizers/forwardUpdate"
 					 				wwidth="550"

@@ -17,6 +17,7 @@
 
 package org.maxkey.synchronizer.workweixin;
 
+import org.maxkey.entity.Synchronizers;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.synchronizer.ISynchronizerService;
@@ -109,6 +110,12 @@ public class WorkweixinUsersService  implements ISynchronizerService{
 
 	public WorkweixinOrganizationService getOrganizationService() {
 		return organizationService;
+	}
+
+	@Override
+	public void setSynchronizer(Synchronizers Synchronizer) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
