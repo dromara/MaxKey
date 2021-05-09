@@ -28,7 +28,6 @@
 	<script src ="<@base />/static/jquery/jquery.cookie.js" type="text/javascript" ></script>
 	<#-- form -->
 	<script src ="<@base />/static/jquery/jquery.form.js" type="text/javascript" ></script>
-	<script src ="<@base />/static/jquery/json2form/json2form.js" type="text/javascript" ></script>
 	<#-- blockUI -->
 	<script src ="<@base />/static/jquery/jquery.blockUI.js" type="text/javascript" ></script>
 	<#-- serializeObject -->
