@@ -8,6 +8,12 @@ call %GRADLE_HOME%/bin/gradle -version
 
 echo start clean . . .
 
+call %GRADLE_HOME%/bin/gradle cleanEclipseWtp
+
+call %GRADLE_HOME%/bin/gradle cleanEclipse
+
+pause
+
 call %GRADLE_HOME%/bin/gradle eclipseWtp
 
 call %GRADLE_HOME%/bin/gradle eclipse
