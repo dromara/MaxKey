@@ -30,7 +30,7 @@ Key Functions
 1.  Standard Protocols
 
 | No.     | Protocols   |  Support  |
-| --------| :-----  | :----:  |
+| --------| :-----  	| :----:  	|
 | 1.1     | OAuth 2.0/OpenID Connect   	| HIGH  |
 | 1.2     | SAML 2.0   				 	| HIGH  |
 | 1.3     | JWT  					    | HIGH  |
@@ -42,15 +42,15 @@ Key Functions
 
 2. Authentication
 
-| No.     | SignIn Support   | 
-| --------| :-----  |
-| 2.1     | Captcha : letter / number / arithmetic 	| 
-| 2.2     | Two Factor Authentication   	| 
-| 2.3     | SMS  Tencent SMS / Alibaba SMS / NetEaseYunXin 	|
-| 2.4     | Denglu1/Google/Microsoft Authenticator/FreeOTP/Support TOTP or HOTP |
-| 2.5     | Kerberos/SPNEGO/AD domain|
-| 2.6     | OpenLDAP/ActiveDirectory/Standard LDAP Server|
-| 2.7     | Social Account WeChat/QQ/ Weibo/Dingding/Google/Facebook/other  | 
+| No.     | SignIn Support  | Support   |
+| --------| :-----  		| :----:  	|
+| 2.1     | Captcha			| letter / number / arithmetic 	| 
+| 2.2     | Two Factor Authentication  | SMS / TOPT/ Mail     |
+| 2.3     | SMS				| Tencent SMS / Alibaba SMS / NetEaseYunXin 	|
+| 2.4     | TOTP			| Denglu1/Google/Microsoft Authenticator/FreeOTP/Support TOTP or HOTP |
+| 2.5     | Domain          | Kerberos/SPNEGO/AD domain|
+| 2.6     | LDAP 			| OpenLDAP/ActiveDirectory/Standard LDAP Server |
+| 2.7     | Social Account  | WeChat/QQ/ Weibo/Dingding/Google/Facebook/other  | 
 
 
 3. Standard Authentication Protocols for applications to integrate sso, secure mobile access, secure API, third-party authentication and Internet authentication.
