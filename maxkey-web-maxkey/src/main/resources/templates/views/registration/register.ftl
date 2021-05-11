@@ -6,71 +6,9 @@
 <#include  "../layout/common.cssjs.ftl">
 <script type="text/javascript"> 
 $(function(){
-
 	$('#j_captchaimg').click(function () {//
            $(this).attr("src", "<@base />/captcha"); 
 	}); 
-	
-	$('#btn_save').on('click',function(){
-		if($('#emailMobile').val()==''){
-		 	alert('<@locale code="forgotpassword.emailmobile"/>'+': empty');
-		 	return false;
-		}
-		if($('#username').val()==''){
-		 	alert('<@locale code="userinfo.username"/>'+': empty');
-		 	return false;
-		}
-		if($('#displayName').val()==''){
-		 	alert('<@locale code="userinfo.displayName"/>'+': empty');
-		 	return false;
-		}
-		
-		
-		if($('#password').val()==''){
-		 	alert('<@locale code="login.text.password"/>'+': empty');
-		 	return false;
-		}
-		if($('#confirmpassword').val()==''){
-		 	alert('<@locale code="login.password.confirmPassword"/>'+': empty');
-		 	return false;
-		}
-		if($('#password').val()!=$('#confirmpassword').val()){
-			alert('<@locale code="login.password.confirmPassword"/>'+'、'+'<@locale code="login.text.password"/>'+': error');
-		 	return false;
-		}
-		formSubmit();
-		
-	})
-	
-	function formSubmit(){
-		var uname=$('#username').val();
-		var pwd=$('#password').val();
-		var eMobile=$('#emailMobile').val();
-		var dName=$('#displayName').val();
-		$.ajax({ 
-	        type:"POST", 
-	        url:"<@base/>/registeron",
-	        data:{
-	        	username:uname,
-	        	password:pwd,
-	        	emailMobile:eMobile,
-	        	displayName:dName
-	        },
-	        success:function(data){ 
-	           if(data.code=='0'){ 
-	               alert(data.message);
-	               window.location.href="<@base/>/login";
-	           }else{ 
-	          	 alert(data.message);
-	           } 
-	        }, 
-	        error:function(jqXHR){ 
-	           alert("error："+ jqXHR.status); 
-	        } 
-		}); 
-	}
-	
-	
 });
 </script>
 </head>
@@ -82,7 +20,10 @@ $(function(){
 <div class="row">
 <div class="col-md-2"></div>
 <div class="col-md-8">
-				<form action="<@base/>/registration/registeron" method="post"   class="needs-validation" novalidate>
+				<form id="actionForm" 
+					action="<@base/>/registration/registeron"
+					forward="<@base/>/login"
+					method="post"   class="needs-validation" novalidate>
 					<table  class="table table-bordered">
 						<tr>
 							<td><@locale code="forgotpassword.emailmobile"/></td>
@@ -110,7 +51,7 @@ $(function(){
 							<td><input  required="" class="form-control"   type='password' id="confirmpassword" name="confirmpassword"  tabindex="2"  value="" /></td>
 						</tr>
 						<tr>
-							<td  colspan="2"><input id="btn_save"  class="button btn btn-lg btn-primary btn-block" type="button" value="<@locale code="login.text.register" />"/></td>
+							<td  colspan="2"><input   class="button btn btn-lg btn-primary btn-block" type="submit" value="<@locale code="login.text.register" />"/></td>
 						</tr>					
 					</table>
 				</form>
