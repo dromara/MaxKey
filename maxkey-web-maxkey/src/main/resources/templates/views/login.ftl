@@ -128,12 +128,6 @@
 		<#if true==isMfa && "TOPT"==otpType>
 		setInterval("currentTime()", 1000);
 		</#if>
-		<#--on captcha image click ,new a captcha code-->
-		<#if true==isCaptcha>
-		$('#j_captchaimg').click(function () {//
-	           $(this).attr("src", "<@base />/captcha?"+(new Date()).getTime()); 
-		}); 
-		</#if>
 	
 		<#--submit loginForme-->
 		$("#loginSubmit").on("click",function(){
@@ -242,7 +236,7 @@
 											<td>
 												<div  class="wrapper">
 		                                        	<i class="fa fa-lock fa-2"></i>
-													<input required="" class="form-control"  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" src="<@base/>/captcha"/>
+													<input required="" class="form-control "  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha"/>
 												</div >
 											</td>
 											

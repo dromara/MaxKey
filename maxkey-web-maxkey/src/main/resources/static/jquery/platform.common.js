@@ -20,7 +20,33 @@ function dataGridQueryParams(params) {
 
  //jquery begin
 $(function(){
-
+	//on captcha image click ,new a captcha code
+	$('.captcha-image').click(function () {//
+		$(this).attr("src", webContextPath + "/captcha?"+(new Date()).getTime()); 
+	});
+	
+	$.datetimepicker.setLocale(webLocale.substring(0, 2));
+	$(".datetimepicker").datetimepicker({format:'Y-m-d H:i'});
+	$(".datepicker").datetimepicker({timepicker:false,format:'Y-m-d'});
+	$(".timepicker").datetimepicker({datepicker:false,format:'H:i',step:10});
+	
+	//switch_tab
+	$(".switch_tab_class").on("click",function(){
+		if($(".switch_tab_current").attr("id")==(this.id)){
+			return;
+		}
+		
+		$(".switch_tab .switch_tab_class").removeClass("switch_tab_current");
+		$(this).addClass("switch_tab_current");
+		$(".switch_tab li").each(function(){
+		    $("#"+$(this).attr("value")).hide();
+		});
+		
+		$("#"+$(this).attr("value")).show();
+		if (typeof(switchTab) == "function"){
+			switchTab($(this).attr("value"));//user define after switch Tab
+		}
+	});
 	//document forward
 	$.forward=function(config){
 		if(config.url){//to url

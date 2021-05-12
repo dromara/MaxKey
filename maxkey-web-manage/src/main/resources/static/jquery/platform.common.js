@@ -13,6 +13,48 @@ function dataGridQueryParams(params) {
 
  //jquery begin
 $(function(){
+	$.datetimepicker.setLocale(webLocale.substring(0, 2));
+	$(".datetimepicker").datetimepicker({format:'Y-m-d H:i'});
+	$(".datepicker").datetimepicker({timepicker:false,format:'Y-m-d'});
+	$(".timepicker").datetimepicker({datepicker:false,format:'H:i',step:10});
+	
+	$(".multipleselect").multipleSelect({}); 
+			
+	//on captcha image click ,new a captcha code
+	$('.captcha-image').click(function () {//
+		$(this).attr("src", webContextPath + "/captcha?"+(new Date()).getTime()); 
+	});
+	/*side-nav-menu*/
+	 $(".sidenav-fold-toggler").on("click",function(e) {
+    	   $(".app").toggleClass("side-nav-folded");
+           e.preventDefault();
+     });
+     
+     $('.side-nav-menu').each(function(){
+           var href = $(this).attr('href');
+           if(window.location.href.indexOf(href) > 0){
+                $(this).parents("li").addClass("mm-active");
+                
+           }
+     });
+	/** switch_tab*/
+	$(".switch_tab_class").on("click",function(){
+		if($(".switch_tab_current").attr("id")==(this.id)){
+			return;
+		}
+		
+		$(".switch_tab .switch_tab_class").removeClass("switch_tab_current");
+		$(this).addClass("switch_tab_current");
+		$(".switch_tab li").each(function(){
+		    $("#"+$(this).attr("value")).hide();
+		});
+		
+		$("#"+$(this).attr("value")).show();
+		if (typeof(switchTab) == "function"){
+			switchTab($(this).attr("value"));//user define after switch Tab
+		}
+	});
+	
 	//document forward
 	$.forward=function(config){
 		if(config.target){

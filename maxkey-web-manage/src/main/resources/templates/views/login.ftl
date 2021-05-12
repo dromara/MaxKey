@@ -3,15 +3,6 @@
 <head>
 	<#include  "layout/header.ftl"/>
 	<#include  "layout/common.cssjs.ftl"/>
-	<script type="text/javascript"> 
-	$(function(){
-		<#if true==isCaptcha>
-			$('#j_captchaimg').click(function () {//
-		           $(this).attr("src", "<@base />/captcha?"+(new Date()).getTime()); 
-			}); 
-		 </#if>
-	});
-	</script>
 </head>
 <body >
 <#include  "layout/nologintop.ftl"/>
@@ -51,7 +42,7 @@
                                             <span class="input-group-text fa fa-refresh"></span>
                                         </div>
                                         <input id="j_captcha" name="captcha" class="form-control" value="" type="text" required="" placeholder="<@locale code="login.text.captcha"/>"> 
-                                        <img id="j_captchaimg" src="<@base/>/captcha" />
+                                        <img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha" />
                                     </span>
 									
 								</div>

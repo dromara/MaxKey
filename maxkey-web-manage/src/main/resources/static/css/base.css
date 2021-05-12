@@ -448,4 +448,106 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 }
 
 
+/*switch_tab*/
+.switch_tab{
+	list-style: none;
+	border: 0;
+	cellspacing:0;
+}
+
+.switch_tab_class{
+	float:left;
+	height:36px;
+	text-align: center;
+	display: inline-block;
+}
+
+.switch_tab_class a{
+	text-decoration: none;
+	display: inline-block;
+	height: 14px;
+	color: #333;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 8px 0;
+	vertical-align: central;
+}
+
+.switch_tab_current{
+	background-color: #8bc8de;
+	border-right: 1px solid #e3e3e3;
+	border-bottom: 1px solid #e3e3e3;
+}
+
+/*maxkey login*/
+
+#tableform{
+	border: 1px solid #e9eeed;
+	cellspacing:0;
+}
+
+.login_form_table{
+	width:358px;
+	border:0;
+}
+#j_username,#j_password,#tfa_j_username,#tfa_j_password,#currentTime{
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#j_captcha{
+	width	:70%;
+	font-size: 14px;
+	font-weight: bold;
+	float: left; 
+}
+
+#tfa_j_otp_captcha{
+	width	:100px;
+	/*width	:230px;*/
+	font-size: 14px;
+	font-weight: bold;	
+}
+
+#tfa_j_otp_captcha_button{
+	width	:130px;
+	height: 34px;
+	font-size: 14px;
+	font-weight: bold;	
+}
+
+#j_captchaimg{
+	width:70px;
+	height: 33px;
+	vertical-align: top;
+}
+
+#switch_commonLogin,#switch_tfaLogin{
+	width	:49%;
+}
+
+#div_tfaLogin{
+	display: none;
+}
+
+.login_button{
+	width:80%;
+}
+#register{
+	font-size: 14px;
+	font-weight: bold;
+	height: 33px;
+	color: white;
+	background-color: #4D4E54;
+}
+#register a{
+	font-weight: bold;
+	color: white;
+}
+
+.login_error_message{
+	height:37px;
+	background-color: #FFE5E5;
+	font-weight: bold;
+}
 

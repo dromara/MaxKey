@@ -4,13 +4,6 @@
 
 <#include  "../layout/header.ftl">
 <#include  "../layout/common.cssjs.ftl">
-<script type="text/javascript"> 
-$(function(){
-	$('#j_captchaimg').click(function () {//
-           $(this).attr("src", "<@base />/captcha"); 
-	}); 
-});
-</script>
 </head>
 <body  >
 <div id="top">
@@ -31,7 +24,7 @@ $(function(){
 						</tr>
 						<tr>
 								<td><@locale code="login.text.captcha"/>：</td>
-								<td><input  required="" class="form-control"  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" src="<@base/>/captcha"/></td>
+								<td><input  required="" class="form-control"  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha"/></td>
 								
 						</tr>
 						<tr>
