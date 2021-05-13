@@ -13,6 +13,8 @@ classpath-data.json
 /.metadata
 */.metadata/*
 
+.idea
+
 /.settings
 */.settings/*
 /*/.settings/*
