@@ -168,10 +168,6 @@
 			<#--todo:send captcha-->
 			captchaCountTimer=setInterval("getCaptchaCount()", 1000);
 		});
-		$('#register').on('click',function(){
-			window.location.href="<@base />/registration/forward";
-		});
-		
 	});
 </script>
 </head>
@@ -377,7 +373,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td id="register"><@locale code="login.text.register"/></td>
+						<td id="register"><a href="<@base />/registration/forward"><div><@locale code="login.text.register"/></div></a></td>
 					</tr>
 				</table>
 						</td>
