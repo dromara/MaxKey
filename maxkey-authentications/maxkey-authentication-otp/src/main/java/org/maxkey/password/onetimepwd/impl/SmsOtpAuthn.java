@@ -47,13 +47,12 @@ public class SmsOtpAuthn extends AbstractOtpAuthn {
         return true;
     }
     
-    protected void loadProperties() throws IOException {
-        Resource resource = new ClassPathResource(
-                ConstantsProperties.classPathResource(
-                        ConstantsProperties.classPathResource(
-                                ConstantsProperties.applicationPropertySource)));
-        properties = new Properties();
-        properties.load(resource.getInputStream());
+    public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
+
+	protected void loadProperties() throws IOException {
+
     }
     
     public void initPropertys() {

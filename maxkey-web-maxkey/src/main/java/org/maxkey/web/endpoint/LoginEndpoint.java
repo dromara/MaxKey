@@ -19,6 +19,8 @@ package org.maxkey.web.endpoint;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.regex.Pattern;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,6 +80,13 @@ public class LoginEndpoint {
 	@Autowired
     @Qualifier("tfaOtpAuthn")
     protected AbstractOtpAuthn tfaOtpAuthn;
+	
+	@Autowired
+    @Qualifier("smsOtpAuthn")
+    protected AbstractOtpAuthn smsOtpAuthn;
+	
+	Pattern mobileRegex = Pattern.compile(
+	            "^(13[4,5,6,7,8,9]|15[0,8,9,1,7]|188|187)\\\\d{8}$");
 	
 	/**
 	 * init login
@@ -154,14 +163,12 @@ public class LoginEndpoint {
  		return authnType;
  	}
  	
- 	@RequestMapping("/login/otp/{username}")
+ 	@RequestMapping("/login/sendsms/{mobile}")
     @ResponseBody
-    public String produceOtp(@PathVariable("username") String username) {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUsername(username);
-        UserInfo queryUserInfo=userInfoService.loadByUsername(username);//(userInfo);
+    public String produceOtp(@PathVariable("mobile") String mobile) {
+        UserInfo queryUserInfo=userInfoService.queryUserInfoByEmailMobile(mobile);
         if(queryUserInfo!=null) {
-        	tfaOtpAuthn.produce(queryUserInfo);
+        	smsOtpAuthn.produce(queryUserInfo);
             return "ok";
         }
         

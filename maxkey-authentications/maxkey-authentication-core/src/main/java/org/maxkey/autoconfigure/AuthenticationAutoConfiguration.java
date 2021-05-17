@@ -51,7 +51,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
@@ -77,14 +76,17 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    AbstractOtpAuthn tfaOtpAuthn,
+    	    AbstractOtpAuthn smsOtpAuthn,
     	    AbstractRemeberMeService remeberMeService,
     	    OnlineTicketServices onlineTicketServices
     		) {
+       
     	_logger.debug("init authenticationProvider .");
         return new RealmAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
         		tfaOtpAuthn,
+        		smsOtpAuthn,
         		remeberMeService,
         		onlineTicketServices
         		);

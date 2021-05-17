@@ -47,11 +47,18 @@ public abstract class AbstractAuthenticationProvider {
     private static final Logger _logger = 
             LoggerFactory.getLogger(AbstractAuthenticationProvider.class);
 
+    public class AuthType{
+    	public final static String NORMAL 	= "normal";
+    	public final static String TFA 		= "tfa";
+    	public final static String MOBILE 	= "mobile";
+    }
     protected ApplicationConfig applicationConfig;
 
     protected AbstractAuthenticationRealm authenticationRealm;
 
     protected AbstractOtpAuthn tfaOtpAuthn;
+    
+    protected AbstractOtpAuthn smsOtpAuthn;
 
     protected AbstractRemeberMeService remeberMeService;
     
@@ -176,8 +183,10 @@ public abstract class AbstractAuthenticationProvider {
     protected void authTypeValid(String authType) {
         _logger.debug("Login AuthN Type  " + authType);
         if (authType != null && (
-                authType.equalsIgnoreCase("basic") 
-                || authType.equalsIgnoreCase("tfa"))
+                authType.equalsIgnoreCase(AuthType.NORMAL) 
+                || authType.equalsIgnoreCase(AuthType.TFA)
+                || authType.equalsIgnoreCase(AuthType.MOBILE)
+        		)
             ) {
             return;
         }
@@ -195,7 +204,8 @@ public abstract class AbstractAuthenticationProvider {
      */
     protected void captchaValid(String captcha, String authType) {
         // for basic
-        if (applicationConfig.getLoginConfig().isCaptcha() && authType.equalsIgnoreCase("basic")) {
+        if (applicationConfig.getLoginConfig().isCaptcha() 
+        		&& authType.equalsIgnoreCase(AuthType.NORMAL)) {
             _logger.info("captcha : "
                     + WebContext.getSession().getAttribute(
                             WebConstants.KAPTCHA_SESSION_KEY).toString());
@@ -218,13 +228,36 @@ public abstract class AbstractAuthenticationProvider {
      */
     protected void tftcaptchaValid(String otpCaptcha, String authType, UserInfo userInfo) {
         // for one time password 2 factor
-        if (applicationConfig.getLoginConfig().isMfa() && authType.equalsIgnoreCase("tfa")) {
+        if (applicationConfig.getLoginConfig().isMfa() 
+        		&& authType.equalsIgnoreCase(AuthType.TFA)) {
             UserInfo validUserInfo = new UserInfo();
             validUserInfo.setUsername(userInfo.getUsername());
             validUserInfo.setSharedSecret(userInfo.getSharedSecret());
             validUserInfo.setSharedCounter(userInfo.getSharedCounter());
             validUserInfo.setId(userInfo.getId());
             if (otpCaptcha == null || !tfaOtpAuthn.validate(validUserInfo, otpCaptcha)) {
+                String message = WebContext.getI18nValue("login.error.captcha");
+                _logger.debug("login captcha valid error.");
+                throw new BadCredentialsException(message);
+            }
+        }
+    }
+    
+    /**
+     * mobile validate.
+     * 
+     * @param otpCaptcha String
+     * @param authType   String
+     * @param userInfo   UserInfo
+     */
+    protected void mobilecaptchaValid(String password, String authType, UserInfo userInfo) {
+        // for mobile password
+        if (applicationConfig.getLoginConfig().isMfa() 
+        		&& authType.equalsIgnoreCase(AuthType.MOBILE)) {
+            UserInfo validUserInfo = new UserInfo();
+            validUserInfo.setUsername(userInfo.getUsername());
+            validUserInfo.setId(userInfo.getId());
+            if (password == null || !smsOtpAuthn.validate(validUserInfo, password)) {
                 String message = WebContext.getI18nValue("login.error.captcha");
                 _logger.debug("login captcha valid error.");
                 throw new BadCredentialsException(message);
@@ -328,7 +361,8 @@ public abstract class AbstractAuthenticationProvider {
     public void setOnlineTicketServices(OnlineTicketServices onlineTicketServices) {
         this.onlineTicketServices = onlineTicketServices;
     }
-    
-    
 
+	public void setSmsOtpAuthn(AbstractOtpAuthn smsOtpAuthn) {
+		this.smsOtpAuthn = smsOtpAuthn;
+	}
 }

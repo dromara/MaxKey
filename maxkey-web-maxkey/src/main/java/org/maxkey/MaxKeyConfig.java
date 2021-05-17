@@ -19,6 +19,8 @@ package org.maxkey;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealm;
 import org.maxkey.authn.realm.ldap.LdapServer;
@@ -164,7 +166,13 @@ public class MaxKeyConfig  implements InitializingBean {
     			@Value("${maxkey.support.ldap.basedn}")String baseDN,
     			@Value("${maxkey.support.ldap.domain}")String domain,
     			@Value("${maxkey.support.ldap.product:openldap}")String product) {
-    	
+    	AbstractAuthenticationRealm ldapAuthenticationRealm = 
+    			ldapAuthenticationRealm(
+					ldapSupport,ldapJit,
+					providerUrl,principal,credentials,
+					filter,baseDN,domain,product,
+					jdbcTemplate
+				);
         JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
         		passwordEncoder,
         		passwordPolicyValidator,
@@ -172,17 +180,12 @@ public class MaxKeyConfig  implements InitializingBean {
         		loginHistoryService,
         		remeberMeService,
         		jdbcTemplate,
-        		ldapAuthenticationRealm(
-        				ldapSupport,ldapJit,
-        				providerUrl,principal,credentials,
-        				filter,baseDN,domain,product,
-        				jdbcTemplate),
-        		ldapSupport);
+        		ldapAuthenticationRealm,
+        		ldapSupport
+        	);
         
         return authenticationRealm;
     }
-    
-    
     
 	@Bean(name = "timeBasedOtpAuthn")
     public TimeBasedOtpAuthn timeBasedOtpAuthn() {
@@ -191,32 +194,14 @@ public class MaxKeyConfig  implements InitializingBean {
         return tfaOtpAuthn;
     }
     
-    //default tfaOtpAuthn
     @Bean(name = "tfaOtpAuthn")
     public AbstractOtpAuthn tfaOptAuthn(
             @Value("${maxkey.login.mfa.type}")String mfaType,
             @Value("${maxkey.server.persistence}") int persistence,
-            MailOtpAuthn tfaMailOtpAuthn,
             RedisConnectionFactory redisConnFactory) {    
-        
-        AbstractOtpAuthn tfaOtpAuthn  = null;
-        if(mfaType.equalsIgnoreCase("SmsOtpAuthnAliyun")) {
-        	tfaOtpAuthn = new SmsOtpAuthnAliyun();
-            _logger.debug("SmsOtpAuthnAliyun inited.");
-        }else if(mfaType.equalsIgnoreCase("SmsOtpAuthnTencentCloud")) {
-        	tfaOtpAuthn = new SmsOtpAuthnTencentCloud();
-            _logger.debug("SmsOtpAuthnTencentCloud inited.");
-        }else if(mfaType.equalsIgnoreCase("SmsOtpAuthnYunxin")) {
-        	tfaOtpAuthn = new SmsOtpAuthnYunxin();
-            _logger.debug("SmsOtpAuthnYunxin inited.");
-        }else if(mfaType.equalsIgnoreCase("MailOtpAuthn")) {
-        	tfaOtpAuthn = tfaMailOtpAuthn;
-            _logger.debug("MailOtpAuthn inited.");
-        }else {
-        	tfaOtpAuthn = new TimeBasedOtpAuthn();
-            _logger.debug("TimeBasedOtpAuthn inited.");
-        }
-        
+        AbstractOtpAuthn tfaOtpAuthn  = new TimeBasedOtpAuthn();
+        _logger.debug("TimeBasedOtpAuthn inited.");
+
         if (persistence == ConstantsPersistence.REDIS) {
             RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);
             tfaOtpAuthn.setOptTokenStore(redisOptTokenStore);
@@ -226,7 +211,7 @@ public class MaxKeyConfig  implements InitializingBean {
         return tfaOtpAuthn;
     }
     
-    @Bean(name = "tfaMailOtpAuthn")
+    @Bean(name = "mailOtpAuthn")
     public MailOtpAuthn mailOtpAuthn(
             @Value("${spring.mail.properties.mailotp.message.subject}")
             String messageSubject,
@@ -236,14 +221,15 @@ public class MaxKeyConfig  implements InitializingBean {
         MailOtpAuthn mailOtpAuthn = new MailOtpAuthn();
         mailOtpAuthn.setSubject(messageSubject);
         mailOtpAuthn.setMessageTemplate(messageTemplate);
-        _logger.debug("tfaMailOtpAuthn inited.");
+        _logger.debug("MailOtpAuthn inited.");
         return mailOtpAuthn;
     }
     
-    @Bean(name = "tfaMobileOtpAuthn")
+    @Bean(name = "smsOtpAuthn")
     public SmsOtpAuthn smsOtpAuthn(
             @Value("${maxkey.otp.sms}")String optSmsProvider,
             @Value("${maxkey.server.persistence}") int persistence,
+            Properties applicationProperty,
             RedisConnectionFactory redisConnFactory) {
         SmsOtpAuthn smsOtpAuthn = null;
         if(optSmsProvider.equalsIgnoreCase("SmsOtpAuthnAliyun")) {
@@ -257,6 +243,7 @@ public class MaxKeyConfig  implements InitializingBean {
             RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);
             smsOtpAuthn.setOptTokenStore(redisOptTokenStore);
         }
+        smsOtpAuthn.setProperties(applicationProperty);
         smsOtpAuthn.initPropertys();
         
         _logger.debug("SmsOtpAuthn inited.");

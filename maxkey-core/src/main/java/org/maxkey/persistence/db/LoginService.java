@@ -67,7 +67,7 @@ public class LoginService {
     /**
      * 1 (USERNAME)  2 (USERNAME | MOBILE) 3 (USERNAME | MOBILE | EMAIL)
      */
-    public  static  int LOGIN_ATTRIBUTE_TYPE = 1;
+    public  static  int LOGIN_ATTRIBUTE_TYPE = 2;
     
     public LoginService(){
         

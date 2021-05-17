@@ -62,11 +62,13 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    AbstractOtpAuthn tfaOtpAuthn,
+    	    AbstractOtpAuthn smsOtpAuthn,
     	    AbstractRemeberMeService remeberMeService,
     	    OnlineTicketServices onlineTicketServices) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
 		this.tfaOtpAuthn = tfaOtpAuthn;
+		this.smsOtpAuthn = smsOtpAuthn;
 		this.remeberMeService =  remeberMeService;
 		this.onlineTicketServices = onlineTicketServices;
 	}
@@ -96,9 +98,12 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 
         tftcaptchaValid(loginCredential.getOtpCaptcha(),loginCredential.getAuthType(),userInfo);
 
-        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
-
-        authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
+        if(loginCredential.getAuthType().equalsIgnoreCase(AuthType.MOBILE)) {
+        	mobilecaptchaValid(loginCredential.getPassword(),loginCredential.getAuthType(),userInfo);
+        }else {
+        	authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
+        	authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
+        }
         
         UsernamePasswordAuthenticationToken authenticationToken = setOnline(loginCredential,userInfo);
         //RemeberMe Config check then set  RemeberMe cookies

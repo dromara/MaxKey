@@ -35,16 +35,16 @@ $(function(){
 		if($(".switch_tab_current").attr("id")==(this.id)){
 			return;
 		}
-		
+
 		$(".switch_tab .switch_tab_class").removeClass("switch_tab_current");
 		$(this).addClass("switch_tab_current");
 		$(".switch_tab li").each(function(){
-		    $("#"+$(this).attr("value")).hide();
+		    $("#div_"+$(this).attr("id")).hide();
 		});
 		
-		$("#"+$(this).attr("value")).show();
+		$("#div_"+$(this).attr("id")).show();
 		if (typeof(switchTab) == "function"){
-			switchTab($(this).attr("value"));//user define after switch Tab
+			switchTab($(this).attr("id"));//user define after switch Tab
 		}
 	});
 	//document forward

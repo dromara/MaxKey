@@ -31,12 +31,12 @@
 	var captchaCountTimer;
 	var captchaCount=60;
 	function getCaptchaCount(){
-		$("#tfa_j_otp_captcha_button").val("<@locale code="login.text.login.twofactor.obtain.valid"/>("+captchaCount+")<@locale code="login.text.login.twofactor.obtain.valid.unit"/>");
+		$("#mobile_j_otp_captcha_button").val("<@locale code="login.text.login.mobile.obtain.valid"/>("+captchaCount+")<@locale code="login.text.login.mobile.obtain.valid.unit"/>");
 		
 		
 		captchaCount--;
 		if(captchaCount==0){
-			$("#tfa_j_otp_captcha_button").val("<@locale code="login.text.login.twofactor.obtain"/>");
+			$("#mobile_j_otp_captcha_button").val("<@locale code="login.text.login.mobile.obtain"/>");
 			captchaCount=60;
 			clearInterval(captchaCountTimer);
 		}
@@ -93,26 +93,20 @@
 		$("#tfa_j_otp_captcha_button").val("<@locale code="login.text.login.twofactor.validTime"/>("+timeBaseCount+")<@locale code="login.text.login.twofactor.validTime.unit"/>");
 	};
 	</#if>
-	var currentSwitchTab="div_commonLogin";
+	var currentSwitchTab="normalLogin";
 	<#--submit form-->		
 	function doLoginSubmit(){
-		if(currentSwitchTab=="div_commonLogin"){
-			$.cookie("username", $("#loginForm input[name=j_username]").val(), { expires: 7 });
-			$.cookie("switch_form", 1, { expires: 7 });
-			$("#loginSubmitButton").click();
-		}else{
-			$.cookie("username", $("#tfaLoginForm input[name=j_username]").val(), { expires: 7 });
-			$.cookie("switch_form", 2, { expires: 7 });
-			$("#tfaLoginSubmitButton").click();
-		}
+		$.cookie("username", $("#"+currentSwitchTab+"Form input[name=username]").val(), { expires: 7 });
+		$("#"+currentSwitchTab+"SubmitButton").click();
+		$.cookie("switch_tab", currentSwitchTab, { expires: 7 });
 	};
 	
-	<#--switch LoginForm && tfaLoginForm-->
+	<#--switch Login Form-->
 	function switchTab(id){
-		if($("#"+id+" input[name=j_username]").val()==""){
-			$("#"+id+" input[name=j_username]").focus();
+		if($("#"+id+"Form  input[name=username]").val()==""){
+			$("#"+id+"Form input[name=username]").focus();
 		}else{
-			$("#"+id+" input[name=j_password]").focus();
+			$("#"+id+"Form  input[name=password]").focus();
 		}
 		currentSwitchTab=id;
 	}
@@ -130,39 +124,30 @@
 		</#if>
 	
 		<#--submit loginForme-->
-		$("#loginSubmit").on("click",function(){
-				doLoginSubmit();
-		});
-		<#--submit tfaLoginForme-->	
-		$("#tfa_loginSubmit").on("click",function(){
+		$(".doLoginSubmit").on("click",function(){
 				doLoginSubmit();
 		});
 		
 		<#--read username cookie for login e-->		
 		if($.cookie("username")!=undefined&&$.cookie("username")!=""){
-			$("input[name=j_username]").val($.cookie("username")==undefined?"":$.cookie("username"));
-			$("input[name=j_password]").val("");
-			var switch_tab=$.cookie("switch_tab")==undefined?1:$.cookie("switch_tab");
-			if(switch_tab==2){
-				switchTab("switch_tfaLogin");
-			}else{
-				$("#div_commonLogin input[name=j_password]").focus();
-			}
-				
+			var switch_tab=$.cookie("switch_tab")==undefined?"normalLogin":$.cookie("switch_tab");
+			$("#"+switch_tab).click();
+			$("#"+switch_tab+"Form input[name=username]").val($.cookie("username")==undefined?"":$.cookie("username"));
+			$("#div_"+switch_tab+" input[name=password]").focus();
 		}else{
-			$("#div_commonLogin input[name=j_username]").focus();
+			$("#div_normalLogin input[name=username]").focus();
 		}
 		<#--resend  captchae-->	
-		$("#tfa_j_otp_captcha_button").on("click",function(){	
+		$("#mobile_j_otp_captcha_button").on("click",function(){	
 			if(captchaCount<60){
 				return;
 			}
-			var loginName=$("#tfa_j_username").val();
+			var loginName=$("#mobile_j_username").val();
 			if(loginName==""){
 				return;
 			}
-			$.get("<@base />/login/otp/"+loginName,function(data,status){
-	    		alert("Data: " + data + "\nStatus: " + status);
+			$.get("<@base />/login/sendsms/"+loginName,function(data,status){
+	    		//alert("Data: " + data + "\nStatus: " + status);
 	  		});
 			
 			<#--todo:send captcha-->
@@ -190,159 +175,37 @@
 					<tr>
 						<td>
 							<ul id="switch_tab" class="switch_tab">
-								<li id="switch_commonLogin" value="div_commonLogin" class="switch_tab_class switch_tab_current"><a href="javascript:void(0);">
-									<@locale code="login.text.login.normal"/></a></li>
-								<li id="switch_tfaLogin"  value="div_tfaLogin"  class="switch_tab_class"><a href="javascript:void(0);">
-									<@locale code="login.text.login.twofactor"/></a></li>
+								<li id="normalLogin" class="switch_tab_class switch_tab_current">
+									<a href="javascript:void(0);">
+										<@locale code="login.text.login.normal"/>
+									</a>
+								</li>
+								<!--
+								<li id="tfaLogin"  class="switch_tab_class">
+									<a href="javascript:void(0);">
+									<@locale code="login.text.login.twofactor"/>
+									</a>
+								</li>-->
+								<!---->
+								<li id="mobileLogin"   class="switch_tab_class">
+									<a href="javascript:void(0);">
+									<@locale code="login.text.login.mobile"/>
+									</a>
+								</li>
 							</ul>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<div id="div_commonLogin" >
-								<form id="loginForm" name="loginForm" action="<@base />/logon.do" method="post" class="needs-validation" novalidate>
-									<input type="hidden" name="authType" value="basic"/>
-									<table  class="table login_form_table">
-										<tr  class="loginErrorMessage"  <#if ''==loginErrorMessage>style="display:none;"</#if>>
-											<td  colspan="2" style="color:red;">
-												${loginErrorMessage!}
-											</td>
-										</tr>
-										<tr>
-											<td><@locale code="login.text.username"/>：</td>
-											<td>
-											 	<div  class="wrapper">
-		                                        	<i class="fa fa-user"></i>
-													<input required="" class="form-control" type='text' id='j_username'  name='username' value="admin" tabindex="1"/>
-												</div >
-											</td>
-										</tr>
-										<tr>
-											<td><@locale code="login.text.password"/>：</td>
-											<td>
-												<div  class="wrapper">
-		                                        	<i class="fa fa-key fa-2" style="color: #FFD700;"></i>
-													<input required="" class="form-control"  type='password' id='j_password'  name='password' value="maxkey"  tabindex="2"/>
-												</div >
-											</td>
-										</tr>
-										<#if true==isCaptcha> 
-										<tr>
-											<td><@locale code="login.text.captcha"/>：</td>
-											<td>
-												<div  class="wrapper">
-		                                        	<i class="fa fa-lock fa-2"></i>
-													<input required="" class="form-control "  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha"/>
-												</div >
-											</td>
-											
-										</tr>
-										</#if>
-										<#if true==isRemeberMe>
-										<tr>
-											<td colspan="2">
-												<table  style="width:100%">
-													<tr>
-														<td style="width:50%">
-															<span class="form_checkbox_label">
-																<input type='checkbox' id="remeberMe" name="remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
-																<@locale code="login.text.remeberme"/>
-															</span>
-														</td>
-														<td style="width:50%"><a href="<@base />/forgotpassword/forward"><@locale code="login.text.forgotpassword"/></a></td>
-													</tr>
-												</table>
-											</td>								
-										</tr>
-										</#if>
-										<tr   style="display:none">
-											<td>sessionid：</td>
-											<td><input  class="form-control"  type='text' id="j_sessionid" name="sessionId" value="${sessionid}" /></td>
-											
-										</tr>
-										<tr >
-											<td colspan="2">
-											 <input type="submit" id="loginSubmitButton" style="display: none;" />
-											 <input id="loginSubmit" type="button"  tabindex="5"  style="width: 100%;" class="button btn btn-lg btn-primary btn-block"  value="<@locale code="login.button.login"/>"/></td>
-											
-										</tr>
-									</table>
-									<div class="clear"></div>
-								    </form>
-								</div>
-								<div id="div_tfaLogin" >
-								<form id="tfaLoginForm" name="tfaLoginForm" action="<@base />/logon.do" method="post"  class="needs-validation" novalidate>
-									<input type="hidden" name="authType" value="tfa"/>
-									<table  class="login_form_table">
-										<tr class="loginErrorMessage" <#if ''==loginErrorMessage>style="display:none;"</#if>>
-											<td  colspan="2" style="color:red;">
-												${loginErrorMessage!}
-											</td>
-										</tr>
-										<tr>
-											<td><@locale code="login.text.username"/>：</td>
-											<td><input required="" class="form-control"  type='text' id='tfa_j_username'  name='username' value="" tabindex="1"/></td>
-										</tr>
-										<tr> 
-											<td><@locale code="login.text.password"/>：</td>
-											<td><input required="" class="form-control"  type='password' id='tfa_j_password'  name='password' value=""  tabindex="2" /></td>
-										</tr>
-										<#if true==isMfa >
-										<tr>
-											<td><@locale code="login.text.captcha"/>：</td>
-											<td>
-												<input required="" class="form-control"  type='text' id="tfa_j_otp_captcha" name="otpCaptcha"  tabindex="3"  value=""   style="float: left;"/>
-												<input class="form-control"  id="tfa_j_otp_captcha_button" type="button"  tabindex="5" class="button"  value="获取动态验证码"/>
-												
-											</td>
-										</tr>
-										<#if "TOPT"==otpType >
-										<tr>
-											<td><@locale code="login.text.currenttime"/>：</td>
-											<td>
-												<input  class="form-control"  readonly type='text' id="currentTime" name="currentTime"  tabindex="3"  value="" />
-											</td>
-										</tr>
-										</#if>
-										<tr>
-											<td></td>
-											<td>
-												<div id="currentTime"></div>
-											</td>
-										</tr>
-										</#if>
-										<#if true==isRemeberMe>
-										<tr> 
-											<td colspan="2">
-												<table  style="width:100%">
-													<tr>
-														<td style="width:50%">
-															<span class="form_checkbox_label">
-																<input type='checkbox' id="tfa_remeberMe" name="remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
-																<@locale code="login.text.remeberme"/>
-															</span>
-														</td>
-														<td style="width:50%"><a href="<@base />/forgotpassword/forward"><@locale code="login.text.forgotpassword"/></a></td>
-													</tr>
-												</table>
-											</td>								
-										</tr>
-										</#if>
-										<tr   style="display:none">
-											<td>sessionid：</td>
-											<td><input class="form-control"  type='text' id="tfa_sessionid" name="sessionId" value="${sessionid}" /></td>
-											
-										</tr>
-										<tr >
-											<td colspan="2">
-											 <input type="submit" id="tfaLoginSubmitButton" style="display: none;" />
-											<input id="tfa_loginSubmit" type="button" style="width: 100%;" tabindex="5" class="button btn btn-lg btn-primary btn-block"  value="<@locale code="login.button.login"/>"/></td>
-											
-										</tr>
-									</table>
-									<div class="clear"></div>
-								    </form>
-								</div>
+							<div id="div_normalLogin" >
+								<#include "loginnormal.ftl">
+							</div>
+							<div id="div_tfaLogin" >
+								<#include "logintfa.ftl">
+							</div>
+							<div id="div_mobileLogin" >
+								<#include "loginmobile.ftl">
+							</div>
 						</td>
 					</tr>
 					<tr>

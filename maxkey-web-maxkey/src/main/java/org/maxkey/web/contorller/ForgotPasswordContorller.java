@@ -62,12 +62,12 @@ public class ForgotPasswordContorller {
     private UserInfoService userInfoService;
 
     @Autowired
-    @Qualifier("tfaMailOtpAuthn")
-    protected AbstractOtpAuthn tfaMailOtpAuthn;
+    @Qualifier("mailOtpAuthn")
+    protected AbstractOtpAuthn mailOtpAuthn;
     
     @Autowired
-    @Qualifier("tfaMobileOtpAuthn")
-    protected AbstractOtpAuthn tfaMobileOtpAuthn;
+    @Qualifier("smsOtpAuthn")
+    protected AbstractOtpAuthn smsOtpAuthn;
     
 
     @RequestMapping(value = { "/forward" })
@@ -89,10 +89,10 @@ public class ForgotPasswordContorller {
             
             Matcher matcher = emailRegex.matcher(emailMobile);
             if (matcher.matches() && null != userInfo) {
-                tfaMailOtpAuthn.produce(userInfo);
+            	mailOtpAuthn.produce(userInfo);
                 forgotType = ForgotType.EMAIL;
             }else if (null != userInfo) {
-                tfaMobileOtpAuthn.produce(userInfo);
+            	smsOtpAuthn.produce(userInfo);
                 forgotType = ForgotType.MOBILE;
             }
            
@@ -126,8 +126,8 @@ public class ForgotPasswordContorller {
             userInfo.setUsername(username);
             userInfo.setPassword(password);
             userInfo.setDecipherable(password);
-            if ((forgotType == ForgotType.EMAIL && tfaMailOtpAuthn.validate(userInfo, captcha)) ||
-                    (forgotType == ForgotType.MOBILE && tfaMobileOtpAuthn.validate(userInfo, captcha))
+            if ((forgotType == ForgotType.EMAIL && mailOtpAuthn.validate(userInfo, captcha)) ||
+                    (forgotType == ForgotType.MOBILE && smsOtpAuthn.validate(userInfo, captcha))
                 ) {
                 userInfoService.changePassword(userInfo);
                 modelAndView.addObject("passwordResetResult", PasswordResetResult.SUCCESS);

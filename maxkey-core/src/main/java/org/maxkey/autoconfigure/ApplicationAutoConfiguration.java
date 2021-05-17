@@ -21,6 +21,7 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 import org.maxkey.constants.ConstantsProperties;
@@ -82,18 +83,29 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
                 new ClassPathResource(ConstantsProperties.classPathResource(
                         ConstantsProperties.applicationPropertySource));
 
-
         PropertySourcesPlaceholderConfigurer configurer = 
                 new PropertySourcesPlaceholderConfigurer();
         configurer.setLocations(classPathApplicationPropertySource);
-        /*configurer.setLocations(
-                classPathResource1,
-                classPathResource2
-        );*/
         configurer.setIgnoreUnresolvablePlaceholders(true);
         _logger.debug("PropertySourcesPlaceholderConfigurer init");
+        
         return configurer;
     }
+    
+    @Bean (name = "applicationProperty")
+    public Properties applicationProperty(
+    		@Value("${spring.profiles.active:}")String profilesActive) throws IOException {
+    	 Resource resource = new ClassPathResource(
+                 ConstantsProperties.classPathResource(
+                 		ConstantsProperties.classPathResource(
+                 				ConstantsProperties.applicationPropertySource,
+                 				profilesActive)));
+     
+    	 Properties properties = new Properties();
+    	 properties.load(resource.getInputStream());
+    	 return properties;
+    }
+    
     
     @Bean(name = "passwordReciprocal")
     public PasswordReciprocal passwordReciprocal() {

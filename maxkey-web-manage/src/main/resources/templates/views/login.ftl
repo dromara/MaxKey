@@ -48,7 +48,7 @@
 								</div>
 								</#if>
 								<div class="form-group text-center m-t-20">
-									<input type="hidden" name="authType" value="basic" /> 
+									<input type="hidden" name="authType" value="normal" /> 
 									<input type='hidden' id="sessionid" name="sessionId" value="${sessionid}" />
 									<button id="loginSubmit" class="button btn-primary btn btn-common btn-block" type="submit">
 										<@locale code="login.button.login" />

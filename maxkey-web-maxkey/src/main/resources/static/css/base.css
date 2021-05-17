@@ -310,15 +310,14 @@ body{
 	font-weight: bold;
 }
 
-#tfa_j_otp_captcha{
-	width	:120px;
-	/*width	:230px;*/
+#tfa_j_otp_captcha,#mobile_j_password{
+	width	:110px;
 	font-size: 14px;
 	font-weight: bold;	
 }
 
-#tfa_j_otp_captcha_button{
-	width	:130px;
+#tfa_j_otp_captcha_button,#mobile_j_otp_captcha_button{
+	width	:120px;
 	height: 34px;
 	font-size: 14px;
 	font-weight: bold;	
@@ -330,11 +329,11 @@ body{
 	vertical-align: top;
 }
 
-#switch_commonLogin,#switch_tfaLogin{
+#normalLogin,#tfaLogin,#mobileLogin{
 	width	:49%;
 }
 
-#div_tfaLogin{
+#div_tfaLogin , #div_mobileLogin{
 	display: none;
 }
 

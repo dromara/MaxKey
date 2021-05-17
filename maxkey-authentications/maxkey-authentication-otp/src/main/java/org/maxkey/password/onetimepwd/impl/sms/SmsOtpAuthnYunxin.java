@@ -78,7 +78,7 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
                     ).randomGenerate();
                 String checkSum = SmsOtpAuthnYunxinCheckSumBuilder
                         .getCheckSum(appSecret, nonce, curTime);
-        
+                logger.debug("AppKey " +appKey+" ,Nonce "+nonce+", CurTime "+curTime+" ,checkSum "+checkSum);
                 // 设置请求的header
                 httpPost.addHeader("AppKey", appKey);
                 httpPost.addHeader("Nonce", nonce);
@@ -118,9 +118,11 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
                 YunxinSms  yunxinSms = 
                         JsonUtils.gson2Object(responseString,YunxinSms.class);
                 logger.debug("responseEntity code " + yunxinSms.getObj());
+                nonce = yunxinSms.getObj() == null ?nonce:yunxinSms.getObj();
+                logger.debug("nonce " + nonce);
                 this.optTokenStore.store(
                                         userInfo, 
-                                        yunxinSms.getObj(), 
+                                        nonce, 
                                         userInfo.getMobile(), 
                                         OtpTypes.SMS);
                 return true;
@@ -210,9 +212,9 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
             e.printStackTrace();
         }
         
-        this.appKey = this.properties.getProperty("config.otp.sms.yunxin.appkey");
-        this.appSecret = this.properties.getProperty("config.otp.sms.yunxin.appsecret");
-        this.templateId = this.properties.getProperty("config.otp.sms.yunxin.templateid");
+        this.appKey = this.properties.getProperty("maxkey.otp.sms.yunxin.appkey");
+        this.appSecret = this.properties.getProperty("maxkey.otp.sms.yunxin.appsecret");
+        this.templateId = this.properties.getProperty("maxkey.otp.sms.yunxin.templateid");
     }
     
     /**
