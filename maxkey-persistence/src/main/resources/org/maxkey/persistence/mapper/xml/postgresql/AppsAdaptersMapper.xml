@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.AppsAdaptersMapper">
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	id = #{id}
+		</if> 
+		<if test="name != null and name != ''">
+			and name like '%${name}%'
+		</if> 
+		<if test="protocol != null and protocol != ''">
+			and	protocol = #{protocol}
+		</if> 
+    </sql>
+    
+	
+	
+	<select id="queryPageResults" parameterType="AppsAdapters" resultType="AppsAdapters">
+		select
+			*
+		from
+			mxk_apps_adapters
+		where
+			 (1=1)	
+		<include refid="where_statement"/>
+		order by sortindex
+	</select>
+	
+</mapper>

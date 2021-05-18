@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.AppsMapper">
+
+	<sql id="where_statement">
+		<if test="id != null and id != ''">
+			and id = #{id}
+		</if>
+		<if test="name != null and name != ''">
+			and name  like  '%${name}%'
+		</if>
+		<if test="protocol != null and protocol != ''">
+			and protocol = #{protocol}
+		</if>
+		<if test="credential != null and credential != ''">
+			and credential = #{credential}
+		</if>
+		<if test="category != null and category != ''">
+			and category = #{category}
+		</if>
+		<if test="vendor != null and vendor != ''">
+			and vendor = #{vendor}
+		</if>
+	</sql>
+	
+	
+	<select id="queryPageResults" parameterType="Apps" resultType="Apps">
+		select
+			*
+		from
+			mxk_apps
+		where
+			 (1=1)	
+		<include refid="where_statement"/>
+		order by sortindex
+	</select>
+	
+		
+	<insert id="insertApp" parameterType="Apps">
+		insert into mxk_apps(
+			id,
+			name,
+			icon,
+			loginurl,
+			protocol,
+			category,
+			secret,
+			description,
+			vendor,
+			vendorurl,
+			
+			credential,
+			sharedusername,
+			sharedpassword,
+			systemuserattr,
+			
+			isextendattr,
+			extendattr,
+			userpropertys,
+			
+			issignature,
+			
+			isadapter,
+			adapter,
+			
+			principal,
+			credentials,
+			
+			visible,
+			
+			sortindex,
+			
+			createdby,
+			createddate,
+			
+			status,
+			
+			logouturl,
+			logouttype
+		)values(
+			#{id},
+			#{name},
+			#{icon},
+			#{loginUrl},
+			#{protocol},
+			#{category},
+			#{secret},
+			#{description},
+			#{vendor} ,
+			#{vendorUrl},
+			
+			#{credential},
+			#{sharedUsername},
+			#{sharedPassword},
+			#{systemUserAttr},
+			
+			#{isExtendAttr},
+			#{extendAttr},
+			#{userPropertys},
+			#{isSignature},
+			
+			#{isAdapter},
+			#{adapter},
+			
+			#{principal},
+			#{credentials},
+			
+			#{visible},
+			
+			#{sortIndex},
+			
+			#{createdBy},
+			#{createdDate} ,
+			
+			#{status},
+
+			#{logoutUrl},
+			#{logoutType}
+		)
+	</insert>
+	
+	<update id="updateApp" parameterType="Apps" >
+    	update mxk_apps set
+    		name			=	#{name},
+    		<if test="icon != null">
+			icon			=	#{icon},
+			</if>
+			loginurl		=	#{loginUrl},
+			protocol		=	#{protocol},
+			category		=	#{category},
+			secret 			=	#{secret},
+			description		=	#{description},
+			vendor			=	#{vendor},
+			vendorurl		=	#{vendorUrl},
+			
+			credential			=	#{credential},
+			sharedusername		=	#{sharedUsername},
+			sharedpassword		=	#{sharedPassword},
+			systemuserattr		=	#{systemUserAttr},
+			<!--
+			isextendattr		=	#{isExtendAttr},
+			extendattr			=	#{extendAttr},
+			-->
+			userpropertys		=	#{userPropertys},
+			issignature			=	#{isSignature},
+			
+			<if test="adapter != null">
+			isadapter			=	#{isAdapter},
+			adapter				=	#{adapter},
+			</if>
+			principal		=	#{principal},
+			credentials		=	#{credentials},
+			visible				=	#{visible},
+			sortindex			=	#{sortIndex},
+			
+			modifiedby		=	#{modifiedBy},
+			modifieddate	=	#{modifiedDate},
+			
+			status			=	#{status},
+
+			logouturl			=	#{logoutUrl},
+			logouttype			=	#{logoutType}
+    	where 
+			id	=	#{id}
+    </update>
+    
+    <select id="queryMyApps" parameterType="UserApps" resultType="UserApps">
+        select distinct
+            app.*
+        from
+            mxk_apps app,mxk_group_privileges gp,mxk_groups g
+        where
+            app.id=gp.appid
+            and gp.groupid=g.id
+            and app.visible != 0
+            and (
+            	 g.id='ROLE_ALL_USER'
+                 or g.id in(
+                      select 
+                        gm.groupid 
+                      from 
+                        mxk_group_member gm,mxk_userinfo u 
+                      where gm.memberid    =   u.id 
+                        <if test="userId != null and userId != ''">
+                            and u.id        =   #{userId}
+                        </if>
+                        <if test="username != null and username != ''">
+                            and  u.username =   #{username}
+                        </if>
+                    )
+            )
+        <if test="name != null and name != ''">
+            and name    =   #{name}
+        </if>
+        order by sortindex
+    </select>
+</mapper>

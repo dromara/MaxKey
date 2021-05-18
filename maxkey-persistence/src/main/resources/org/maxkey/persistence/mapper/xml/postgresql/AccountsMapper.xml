@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.AccountsMapper">
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	id = #{id}
+		</if> 
+		<if test="appId != null and appId != ''">
+			and	appid =	#{appId}
+		</if> 
+		<if test="username != null and username != ''">
+			and	username = #{username}
+		</if> 
+		<if test="relatedUsername != null and relatedUsername != ''">
+			and	relatedusername	= #{relatedUsername}
+		</if> 
+    </sql>
+    
+	
+	
+	<select id="queryPageResults" parameterType="Accounts" resultType="Accounts">
+		select
+			*
+		from
+			mxk_accounts
+		where
+			 (1=1)	
+		<include refid="where_statement"/>
+	</select>
+	
+</mapper>
