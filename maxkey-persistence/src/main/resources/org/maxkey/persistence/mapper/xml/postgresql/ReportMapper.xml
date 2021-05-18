@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.ReportMapper" >
+ 	<!-- DAY  COUNT 一天访问量 -->
+	<select id="analysisDay" resultType="Integer">
+    	select 
+    		count(id) reportcount
+    	from mxk_history_login 
+     	where 
+    		date(logintime) =current_date
+    </select>
+    <!-- 本月新用户统计 -->
+    <select id="analysisNewUsers" parameterType="String" resultType="Integer">
+    	select 
+			count(*) reportcount 
+		from mxk_userinfo 
+		where to_char(createddate,'YYYY-MM')=to_char(current_date,'YYYY-MM')
+    </select>
+    <!-- 在线用户统计 -->
+    <select id="analysisOnlineUsers" parameterType="String" resultType="Integer">
+    	    select 
+				count(*) reportcount 
+			from mxk_userinfo 
+			where 
+			lastlogintime >lastlogofftime 
+    </select>
+    <!-- 30天活跃用户统计 -->
+    <select id="analysisActiveUsers" parameterType="String" resultType="Integer">
+    	select 
+			count(*) reportcount 
+		from mxk_userinfo 
+		where 
+		date(lastlogintime) >(current_date - interval '30 day')
+    </select> 
+    
+    <!-- DAY HOUR COUNT 当天每小时 -->
+	<select id="analysisDayHour" parameterType="String" resultType="Map">
+    	select 
+    		count(id) reportcount, 
+			to_char(logintime,'HH24') reportstring
+    	from mxk_history_login 
+    	where 
+    		date(logintime) =current_date
+    	group by reportstring
+    	order by reportstring
+    </select>
+    <!-- 30 DAY COUNT 最近30天每天访问量-->   
+    <select id="analysisMonth" parameterType="String" resultType="Map">
+    	select 
+    		count(id) reportcount, 
+			date(logintime) reportstring 
+    	from mxk_history_login 
+    	 where 
+    		date(logintime) >(current_date - interval '30 day')
+    	group by reportstring
+    	order by reportstring
+    </select>
+    
+    <!-- 30天浏览器的访问统计 -->
+    <select id="analysisBrowser" parameterType="Map" resultType="Map">
+    	select 
+    		count(id) reportcount, 
+			browser reportstring 
+    	from mxk_history_login 
+    	 where 
+    		date(logintime) >(current_date - interval '30 day')
+    	group by reportstring
+    	order by reportcount desc
+    </select>
+    
+    <!-- 30天应用单点登录的访问统计 -->
+	<select id="analysisApp" parameterType="Map" resultType="Map">
+    	select 
+			count(id) reportcount,
+			appname 
+    	from mxk_history_login_apps
+    	where 
+    		date(logintime) >(current_date - interval '30 day')
+    	group by appname order by reportcount desc
+    </select>
+
+</mapper>

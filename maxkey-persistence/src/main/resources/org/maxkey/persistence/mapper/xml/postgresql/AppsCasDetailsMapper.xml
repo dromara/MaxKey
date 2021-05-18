@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.AppsCasDetailsMapper">
+	<select id="getAppDetails" parameterType="string" resultType="AppsCasDetails">
+    	select 
+			*
+    	from 
+    		mxk_apps_cas_details cd,
+    		mxk_apps app
+    	where 	
+    		status = 1
+    		and cd.id =	app.id
+    		and (
+    			app.id = #{value}
+    			or  lower(cd.service) = lower(substring(#{value},1,length(cd.service)))
+    		)
+    </select>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.ResourcesMapper">
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	res.id	=	#{id}
+		</if> 
+		<if test="appId != null and appId != ''">
+            and res.appid  =   #{appId}
+        </if> 
+        <if test="parentId != null and parentId != ''">
+            and res.parentid  =   #{parentId}
+        </if> 
+		<if test="name != null and name != ''">
+			and res.name like '%${name}%'
+		</if>
+    </sql>
+    
+	
+	
+	<select id="queryPageResults" parameterType="Resources" resultType="Resources">
+		select
+			res.*,app.name appname
+		from
+			mxk_resources res, mxk_apps app
+		where
+			 (1=1)	and res.appid=app.id
+		<include refid="where_statement"/>
+		order by res.sortindex 
+	</select>
+	
+	
+	<update id="logisticDelete" parameterType="Resources" >
+    	update mxk_resources set
+    		status	=	'2'  
+    	where	1	=	1
+    	<if test="id != null">
+			and	id	=	#{id}
+		</if>
+		<if test="name != name">
+			and	name	=	#{name}
+		</if>
+    </update>
+    
+    
+    <update id="logisticBatchDelete" parameterType="java.util.List">
+    	update mxk_resources set status='2' where id in
+    		<foreach item="item" collection="list" open="(" separator="," close=")">
+				#{item}
+    		</foreach>
+    </update>
+    
+   
+</mapper>

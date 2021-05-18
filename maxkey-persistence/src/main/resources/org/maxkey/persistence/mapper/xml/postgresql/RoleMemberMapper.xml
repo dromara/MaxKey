@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.RoleMemberMapper">
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	id	=	#{id}
+		</if> 
+		<if test="name != null and name != ''">
+			and name = #{name}
+		</if>
+    </sql>
+    
+
+    <!-- ROLE_MEMBER  User Member-->
+    <select id="allMemberInRole" parameterType="RoleMember" resultType="RoleMember">
+		    select	distinct
+					u.id,
+					u.username,
+					u.usertype,
+					u.windowsaccount,
+					
+					u.displayname ,
+					u.nickname ,
+					u.namezhspell,
+					u.namezhshortspell,
+					u.givenname ,
+					u.middlename ,
+					u.familyname ,
+					
+					u.gender,
+		
+					u.authntype,
+					u.mobile,
+					u.email,
+					u.workemail,
+					u.workphonenumber,
+		
+					u.employeenumber,
+					u.division,
+					u.costcenter,
+					u.organization,
+					u.departmentid,
+					u.department,
+					u.jobtitle,
+					u.joblevel,
+					
+					
+					u.createdby,
+					u.createddate,
+					u.modifiedby,
+					u.modifieddate,
+					
+					u.status
+				from
+					mxk_userinfo u
+			where	1	=	1
+	</select>
+	
+    <select id="memberInRole" parameterType="RoleMember" resultType="RoleMember">
+			select	distinct
+				rm.id,
+				u.username,
+				u.usertype,
+				u.windowsaccount,
+				
+				u.displayname ,
+				u.nickname ,
+				u.namezhspell,
+				u.namezhshortspell,
+				u.givenname ,
+				u.middlename ,
+				u.familyname ,
+				
+				u.gender,
+	
+				u.authntype,
+				u.mobile,
+				u.email,
+				u.workemail,
+				u.workphonenumber,
+	
+				u.employeenumber,
+				u.division,
+				u.costcenter,
+				u.organization,
+				u.departmentid,
+				u.department,
+				u.jobtitle,
+				u.joblevel,
+				
+				
+				u.createdby,
+				u.createddate,
+				u.modifiedby,
+				u.modifieddate,
+				
+				u.status
+			from
+				mxk_userinfo u,
+				mxk_roles r,
+				mxk_role_member rm
+			where	1	=	1
+				<if test="roleId != null and roleId != ''">
+					and rm.roleid = #{roleId}
+					and r.id = #{roleId}
+				</if>
+				<if test="roleName != null and roleName != ''">
+					and r.name = #{roleName}
+				</if>
+				<if test="username != null and username != ''">
+					and u.username = #{username}
+				</if>
+				<if test="displayName != null and displayName != ''">
+					and u.displayname   like  '%${displayName}%'
+				</if>
+				and	rm.type		in(	'USER','USER-DYNAMIC')
+				and	rm.roleid	=	r.id	
+				and	rm.memberid	=	u.id
+	</select>
+	
+	
+	<select id="memberNotInRole" parameterType="RoleMember" resultType="RoleMember">
+		select	distinct
+			u.id,
+			u.username,
+			u.usertype,
+			u.windowsaccount,
+			
+			u.displayname ,
+			u.nickname ,
+			u.namezhspell,
+			u.namezhshortspell,
+			u.givenname ,
+			u.middlename ,
+			u.familyname ,
+			
+			u.gender,
+
+			u.authntype,
+			u.mobile,
+			u.email,
+			u.workemail,
+			u.workphonenumber,
+
+			u.employeenumber,
+			u.division,
+			u.costcenter,
+			u.organization,
+			u.departmentid,
+			u.department,
+			u.jobtitle,
+			u.joblevel,
+			
+			
+			u.createdby,
+			u.createddate,
+			u.modifiedby,
+			u.modifieddate,
+			
+			u.status
+		from
+			mxk_userinfo u
+		where
+			u.id not in(
+       			 select rm.memberid 
+       			 from 	mxk_roles r,mxk_role_member rm
+			     where  1  =  1
+			     <if test="roleId != null and roleId != ''">
+					and rm.roleid = #{roleId}
+					and r.id = #{roleId}
+				</if>
+				<if test="roleName != null and roleName != ''">
+					and r.name = #{roleName}
+				</if>
+				
+					and	rm.type		in(	'USER','USER-DYNAMIC')
+			     	and rm.roleid	=	r.id
+			)
+		<if test="username != null and username != ''">
+			and u.username = #{username}
+		</if>
+		<if test="displayName != null and displayName != ''">
+			and u.displayname   like  '%${displayName}%'
+		</if>
+	</select>
+	
+	
+	<!-- ROLE_MEMBER  Roles Member-->
+	<select id="roleMemberInRole" parameterType="RoleMember" resultType="Roles">
+		select	distinct
+			ir.*
+		from
+			mxk_roles ir,
+			mxk_roles r,
+			mxk_role_member rm
+		where
+			 1	=	1
+			and rm.groupid	=	r.id	
+			and	rm.memberid	=	ir.id
+			and	rm.type		in(	'USER','USER-DYNAMIC')
+		<if test="roleId != null and roleId != ''">
+			and rm.roleid = #{roleId}
+			and r.id = #{roleId}
+		</if>
+		<if test="roleName != null and roleName != ''">
+			and r.name = #{roleName}
+		</if>
+	</select>
+
+	<update id="addDynamicRoleMember" parameterType="Roles" >
+    	insert into mxk_role_member(
+    		id,
+    		roleid,
+    		memberid,
+    		type
+    	)
+    	select 
+    		concat_ws('-','UD','${id}',u.id) id,
+    		'${id}' ROLEID,
+    		u.id memberid,
+    		'USER-DYNAMIC' type
+    	from mxk_userinfo u
+		where not exists(
+				select  1 from mxk_role_member rm 
+				where rm.roleid=#{id}
+					and rm.memberid=u.id
+					and rm.type='USER-DYNAMIC'
+			)
+		<if test="filters != null and filters != ''">
+				${filters}
+		</if>
+		<if test="orgIdsList != null and orgIdsList != ''">
+				and u.departmentid in( ${orgIdsList})
+		</if>
+    </update>
+    
+    <delete id="deleteDynamicRoleMember" parameterType="Roles" >
+    	delete from mxk_role_member rm
+    	where type = 'USER-DYNAMIC'
+    		and rm.roleid = #{id}
+    		and not exists(
+		    	select 1
+		    	from mxk_userinfo u
+		    	where 1 = 1 
+		    		and u.id=rm.memberid
+				<if test="filters != null and filters != ''">
+						${filters}
+				</if>
+				<if test="orgIdsList != null and orgIdsList != ''">
+						and u.departmentid in( ${orgIdsList})
+				</if>
+			)
+    </delete>
+    
+    <delete id="deleteByRoleId" parameterType="string" >
+    	delete from mxk_role_member rm
+    	where  rm.roleid=#{value}
+    </delete>
+	
+</mapper>

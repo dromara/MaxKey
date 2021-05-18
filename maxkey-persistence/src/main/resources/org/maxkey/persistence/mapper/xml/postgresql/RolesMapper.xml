@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.RolesMapper">
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	id	=	#{id}
+		</if> 
+		<if test="name != null and name != ''">
+			and name like '%${name}%'
+		</if>
+    </sql>
+    
+	<select id="queryDynamicRoles" parameterType="Roles" resultType="Roles">
+		select
+			*
+		from
+			mxk_groups
+		where
+			 dynamic = '1'
+		<include refid="where_statement"/>
+	</select>
+	
+	<select id="queryPageResults" parameterType="Roles" resultType="Roles">
+		select
+			*
+		from
+			mxk_roles
+		where
+			 (1=1)	
+		<include refid="where_statement"/>
+	</select>
+	
+	
+	<update id="logisticDelete" parameterType="Roles" >
+    	update mxk_roles set
+    		status	=	'2'  
+    	where	1	=	1
+    	<if test="id != null">
+			and	id	=	#{id}
+		</if>
+		<if test="name != name">
+			and	name	=	#{name}
+		</if>
+    </update>
+    
+    
+    <update id="logisticBatchDelete" parameterType="java.util.List">
+    	update mxk_roles set status='2' where id in
+    		<foreach item="item" collection="list" open="(" separator="," close=")">
+				#{item}
+    		</foreach>
+    </update>
+    
+    
+    <select id="queryRolePermissions" parameterType="RolePermissions" resultType="RolePermissions">
+        select
+            *
+        from
+            mxk_role_permissions
+        where
+             status = 1
+       <if test="id != null and id != ''">
+            and id  =   #{id}
+        </if> 
+        <if test="roleId != null and roleId != ''">
+            and roleid  =   #{roleId}
+        </if> 
+        <if test="appId != null and appId != ''">
+            and appid  =   #{appId}
+        </if> 
+        
+    </select>
+    
+    <update id="logisticDeleteRolePermissions" parameterType="java.util.List">
+        update mxk_role_permissions set status=9 where id in
+            <foreach item="item" collection="list" open="(" separator="," close=")">
+                #{item.id}
+            </foreach>
+    </update>
+    
+    <insert id="insertRolePermissions"  parameterType="java.util.List">
+	    insert into mxk_role_permissions ( id,appid,roleid,resourceid,status) 
+	    values 
+	    <foreach collection="list" item="item" index="index" separator=",">
+	        (#{item.id},#{item.appId},#{item.roleId},#{item.resourceId},#{item.status})
+	    </foreach>
+	</insert>
+	
+	
+   
+</mapper>
