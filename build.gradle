@@ -382,14 +382,14 @@ subprojects {
 	    }
 	}
 	
-	task copyjar2Release(type: Copy) {
+	task copyjar2Release(type: Copy,dependsOn:['build','jar'] ) {
 		println "$buildDir/libs/ to $rootDir/build/maxkey-jars/"
 		into "$rootDir/build/maxkey-jars/"
 	    from "$buildDir/libs/"
 	    include '*.jar'
 	}
 
-	task buildRelease(dependsOn:['build','jar'])  {
+	task buildRelease(dependsOn:['copyjar2Release'])  {
 		//项目名 项目所在的group version 版本号
 		println  "project " + project.name + ", group " + project.group +" , version " + project.version
 	}
