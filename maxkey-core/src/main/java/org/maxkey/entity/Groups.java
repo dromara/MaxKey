@@ -67,7 +67,7 @@ public class Groups extends JpaBaseEntity implements Serializable {
     @Column
     String modifiedDate;
     @Column
-    String status;
+    int status;
 
     public Groups() {
     }
@@ -153,11 +153,11 @@ public class Groups extends JpaBaseEntity implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

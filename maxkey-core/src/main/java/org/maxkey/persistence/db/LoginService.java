@@ -52,7 +52,7 @@ public class LoginService {
     private static final String LOGOUT_USERINFO_UPDATE_STATEMENT = "update mxk_userinfo set lastlogofftime = ? , online = "
             + UserInfo.ONLINE.OFFLINE + "  where id = ?";
 
-    private static final String GROUPS_SELECT_STATEMENT = "select distinct g.id,g.name from mxk_userinfo u,`mxk_groups` g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
+    private static final String GROUPS_SELECT_STATEMENT = "select distinct g.id,g.name from mxk_userinfo u,mxk_groups g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
 
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "select * from  mxk_userinfo where username = ?";
     

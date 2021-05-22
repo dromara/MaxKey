@@ -283,6 +283,7 @@ subprojects {
          implementation  group: 'org.quartz-scheduler', name: 'quartz', version: "${quartzVersion}"
 		 //database
 		 implementation  group: 'mysql', name: 'mysql-connector-java', version: "${mysqlconnectorjavaVersion}"
+		 implementation  group: 'org.postgresql', name: 'postgresql', version: "${postgresqlVersion}"
 		 implementation  group: 'com.alibaba', name: 'druid', version: "${druidVersion}"
 		 implementation  group: 'com.alibaba', name: 'druid-spring-boot-starter', version: "${druidspringbootstarterVersion}"
          implementation  group: 'redis.clients', name: 'jedis', version: "${jedisVersion}"

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.GroupsMapper">
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	id	=	#{id}
+		</if> 
+		<if test="name != null and name != ''">
+			and name like '%${name}%'
+		</if>
+    </sql>
+    
+	
+	
+	<select id="queryPageResults" parameterType="Groups" resultType="Groups">
+		select
+			*
+		from
+			mxk_groups
+		where
+			 (1=1)	
+		<include refid="where_statement"/>
+	</select>
+	
+	<select id="queryDynamicGroups" parameterType="Groups" resultType="Groups">
+		select
+			*
+		from
+			mxk_groups
+		where
+			 dynamic = '1'
+		<include refid="where_statement"/>
+	</select>
+	
+	
+	<update id="logisticDelete" parameterType="Groups" >
+    	update mxk_groups set
+    		status	=	'2'  
+    	where	1	=	1
+    	<if test="id != null">
+			and	id	=	#{id}
+		</if>
+		<if test="name != name">
+			and	name	=	#{name}
+		</if>
+    </update>
+    
+    
+    <update id="logisticBatchDelete" parameterType="java.util.List">
+    	update mxk_groups set status='2' where id in
+    		<foreach item="item" collection="list" open="(" separator="," close=")">
+				#{item}
+    		</foreach>
+    </update>
+    
+   
+</mapper>

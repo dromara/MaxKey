@@ -218,7 +218,7 @@
     		concat_ws('-','UD','${id}',u.id) id,
     		'${id}' groupid,
     		u.id memberid,
-    		'USER-DYNAMIC' type
+    		'USER-DYNAMIC' as type
     	from mxk_userinfo u
 		where not exists(
 				select  1 from mxk_group_member gm 

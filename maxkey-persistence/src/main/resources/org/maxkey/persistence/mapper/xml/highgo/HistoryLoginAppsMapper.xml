@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.HistoryLoginAppsMapper" >
+
+	<sql id="dao_where_statement">
+    	<if test="id != null and id != ''">
+			and	id	=	#{id}
+		</if> 
+		<if test="sessionId != null and sessionId != ''">
+			and	sessionid	=	#{sessionId}
+		</if> 
+		<if test="appId != null and appId != ''">
+			and	appid	=	#{appId}
+		</if>
+		<if test="appName != null and appName != ''">
+			and	appname	like concat('%',#{appName},'%')
+		</if> 
+		<if test="uid != null and uid != ''">
+			and	uid	=	#{uid}
+		</if> 
+		<if test="username != null and username != ''">
+			and	username	like concat('%',#{username},'%')
+		</if> 
+		<if test="displayName != null and displayName != ''">
+			and	displayname	like concat('%',#{displayName},'%')
+		</if> 
+		<if test="startDate != null and startDate != ''">
+			and	logintime	>=	#{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and	 #{endDate}	>=	logintime
+		</if>
+		
+    </sql>
+    
+     <select id="queryPageResults" parameterType="HistoryLoginApps" resultType="HistoryLoginApps">
+    	select 
+			id,
+			sessionid,
+			appid,
+			appname,
+			uid,
+			username,
+			displayname,
+			to_char(logintime,'YYYY-MM-DD HH24:MI:SS') as logintime
+    	from mxk_history_login_apps
+    	where	1	=	1
+    	<include refid="dao_where_statement"/>
+    	
+    	order by logintime desc
+    </select>
+  
+    
+</mapper>

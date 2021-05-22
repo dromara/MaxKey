@@ -78,13 +78,13 @@ public class Organizations extends JpaBaseEntity implements Serializable {
     @Column
     private String email;
     @Column
-    private String sortIndex;
+    private long sortIndex;
     @Column
     private String ldapDn;
     @Column
     private String description;
     
-    private String status;
+    private int status;
     @Column
     private String extId;
     @Column
@@ -256,14 +256,6 @@ public class Organizations extends JpaBaseEntity implements Serializable {
         this.email = email;
     }
 
-    public String getSortOrder() {
-        return sortOrder;
-    }
-
-    public void setSortOrder(String sortOrder) {
-        this.sortOrder = sortOrder;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -288,11 +280,11 @@ public class Organizations extends JpaBaseEntity implements Serializable {
         this.namePath = namePath;
     }
 
-    public String getSortIndex() {
+    public long getSortIndex() {
         return sortIndex;
     }
 
-    public void setSortIndex(String sortIndex) {
+    public void setSortIndex(long sortIndex) {
         this.sortIndex = sortIndex;
     }
     
@@ -306,11 +298,11 @@ public class Organizations extends JpaBaseEntity implements Serializable {
 		this.ldapDn = ldapDn;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
     

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.UserInfoMapper">
+	
+	<select id="loadByUsername" parameterType="string" resultType="UserInfo">
+    	select 
+			*
+    	from
+			mxk_userinfo
+		where	username = #{value}
+    </select>
+    
+	<select id="queryPageResults" parameterType="UserInfo" resultType="UserInfo">
+		select
+			id,
+			username,
+			usertype,
+			windowsaccount,
+			
+			displayname ,
+			nickname ,
+			namezhspell,
+			namezhshortspell,
+			givenname ,
+			middlename ,
+			familyname ,
+			
+			gender,
+
+			authntype,
+			mobile,
+			email,
+			workemail,
+			workphonenumber,
+
+			employeenumber,
+			division,
+			costcenter,
+			organization,
+			departmentid,
+			department,
+			jobtitle,
+			joblevel,
+			
+			
+			createdby,
+			createddate,
+			modifiedby,
+			modifieddate,
+			
+			status
+		from
+			mxk_userinfo
+		where
+			 (1=1)	
+		<if test="username != null and username != ''">
+			and username = #{username}
+		</if>
+		<if test="employeeNumber != null and employeeNumber != ''">
+			and employeenumber = #{employeeNumber}
+		</if>
+		<if test="userType != null and userType != ''">
+			and usertype = #{userType}
+		</if>
+		<if test="displayName != null and displayName != ''">
+			and displayname   like  '%${displayName}%'
+		</if>
+		<if test="departmentId != null and departmentId != ''">
+			and departmentid = #{departmentId}
+		</if>
+		order by sortorder 
+	</select>
+	
+    <update id="locked" parameterType="UserInfo" >
+    	update mxk_userinfo set
+    		<if test="isLocked != null">
+    		islocked		=	#{isLocked},
+			</if>
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
+    </update>
+    
+    <update id="lockout" parameterType="UserInfo" >
+    	update mxk_userinfo set
+    		<if test="isLocked != null">
+    		islocked		=	#{isLocked},
+    		badpwdcount		=	0,
+			</if>
+			unlockdate			=	current_timestamp,
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
+    </update>
+    	
+	<update id="changePassword" parameterType="UserInfo" >
+    	update mxk_userinfo set
+    		<if test="password != null">
+    		password			=	#{password},
+			decipherable		=	#{decipherable},
+			</if>
+			passwordsettype			=	0,
+			passwordlastsettime		=	current_timestamp
+		where 
+			id	=	#{id}
+    </update>
+    
+    <update id="changeSharedSecret" parameterType="UserInfo" >
+    	update mxk_userinfo set
+    		<if test="sharedSecret != null">
+    		sharedsecret		=	#{sharedSecret},
+			sharedcounter		=	#{sharedCounter},
+			</if>
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
+    </update>
+    
+    <update id="changeAppLoginPassword" parameterType="UserInfo" >
+    	update mxk_userinfo set
+    		<if test="appLoginPassword != null">
+    		apploginpassword		=	#{appLoginPassword},
+			</if>
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
+    </update>
+    
+    <update id="updateProtectedApps" parameterType="UserInfo" >
+    	update mxk_userinfo set
+    		<if test="protectedApps != null">
+    		protectedapps		=	#{protectedApps},
+			</if>
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
+    </update>
+    
+    <update id="changePasswordQuestion" parameterType="UserInfo" >
+    	update mxk_userinfo set
+    		<if test="passwordAnswer != null">
+    		passwordquestion	=	#{passwordQuestion},
+			passwordanswer		=	#{passwordAnswer},
+			</if>
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
+    </update>
+	
+	<update id="changeAuthnType" parameterType="UserInfo" >
+    	update mxk_userinfo set
+    		<if test="authnType != null">
+    		authntype	=	#{authnType},
+			</if>
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
+    </update>
+    
+    <update id="changeEmail" parameterType="UserInfo" >
+    	update mxk_userinfo set
+    		<if test="email != null">
+    		email	=	#{email},
+			</if>
+			<if test="emailVerified != null">
+    		emailverified	=	#{emailVerified},
+			</if>
+			<if test="theme != null">
+            theme   =   #{theme},
+            </if>
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
+    </update>
+    
+    <update id="changeMobile" parameterType="UserInfo" >
+    	update mxk_userinfo set
+    		<if test="mobile != null">
+    		mobile			=	#{mobile},
+			</if>
+			<if test="mobileVerified != null">
+    		mobileverified	=	#{mobileVerified},
+			</if>
+			modifieddate		=	current_timestamp
+		where 
+			id	=	#{id}
+    </update>
+    
+    <update id="logisticBatchDelete" parameterType="java.util.List">
+    	update mxk_userinfo set status='2' where id in
+    		<foreach item="item" collection="list" open="(" separator="," close=")">
+				#{item}
+    		</foreach>
+	</update>
+	
+    <update id="updateProfile" parameterType="UserInfo" >
+        update mxk_userinfo set
+            displayname     =   #{displayName},
+            nickname        =   #{nickName},
+            namezhspell     =   #{nameZhSpell},
+            namezhshortspell=   #{nameZhShortSpell},
+            givenname       =   #{givenName},
+            middlename      =   #{middleName},
+            familyname      =   #{familyName},
+            honorificprefix =   #{honorificPrefix},
+            honorificsuffix =   #{honorificSuffix},
+            formattedname   =   #{formattedName} ,
+            married         =   #{married},
+            gender          =   #{gender},
+            birthdate       =   #{birthDate},
+            <if test="picture != null">
+            picture         =   #{picture},
+            </if>
+            idtype          =   #{idType},
+            idcardno        =   #{idCardNo},
+            website         =   #{webSite},
+
+            locale          =   #{locale},
+            timezone        =   #{timeZone},
+            preferredlanguage=  #{preferredLanguage},
+
+            windowsaccount  =   #{windowsAccount},
+            
+            workcountry     =   #{workCountry},
+            workregion      =   #{workRegion},
+            worklocality    =   #{workLocality},
+            workstreetaddress=  #{workStreetAddress},
+            workaddressformatted=   #{workAddressFormatted},
+            workemail       =   #{workEmail},
+            workphonenumber =   #{workPhoneNumber},
+            workpostalcode  =   #{workPostalCode},
+            workfax         =   #{workFax},
+            
+            homecountry     =   #{homeCountry},
+            homeregion      =   #{homeRegion},
+            homelocality    =   #{homeLocality},
+            homestreetaddress=  #{homeStreetAddress},
+            homeaddressformatted=   #{homeAddressFormatted},
+            homeemail       =   #{homeEmail},
+            homephonenumber=    #{homePhoneNumber},
+            homepostalcode  =   #{homePostalCode},
+            homefax         =   #{homeFax},
+            
+            extraattribute  =   #{extraAttribute},
+            
+            modifiedby      =   #{modifiedBy},
+            modifieddate    =   current_timestamp       
+        where 
+            id  =   #{id}
+    </update>
+ 
+</mapper>

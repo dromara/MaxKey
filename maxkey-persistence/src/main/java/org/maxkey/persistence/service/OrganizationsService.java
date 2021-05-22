@@ -176,7 +176,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	                                // 排序
 	                                Cell cell = row.getCell(k);
 	                                String sortIndex=getValue(cell);
-	                                organization.setSortIndex(sortIndex.equals("") ? "1" : sortIndex);
+	                                organization.setSortIndex(sortIndex.equals("") ? 1 : Integer.parseInt(sortIndex));
 	                            } else if (k == 11) {
 	                                // 联系人
 	                                Cell cell = row.getCell(k);
@@ -219,7 +219,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	                                organization.setDescription(getValue(cell));
 	                            }
 	                        }
-	                        organization.setStatus("1");
+	                        organization.setStatus(1);
 	                        orgsList.add(organization);
 	                    }
 	                    

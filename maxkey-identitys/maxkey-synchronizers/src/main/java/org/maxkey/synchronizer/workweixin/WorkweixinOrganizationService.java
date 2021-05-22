@@ -76,7 +76,7 @@ public class WorkweixinOrganizationService implements ISynchronizerService{
 		org.setId(dept.getId()+"");
 		org.setName(dept.getName());
 		org.setParentId(dept.getParentid()+"");
-		org.setSortIndex(dept.getOrder()+"");
+		org.setSortIndex(dept.getOrder());
 		return org;
 	}
 
