@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.HistorySynchronizerMapper" >
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	id	=	#{id}
+		</if> 
+    </sql>
+	
+    
+     <select id="queryPageResults" parameterType="HistorySynchronizer" resultType="HistorySynchronizer">
+    	select 
+			*
+    	from mxk_history_synchronizer 
+    	where	1	=	1
+    	<include refid="where_statement"/>
+    	
+    	order by synctime desc
+    </select>
+  
+</mapper>

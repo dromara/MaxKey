@@ -18,6 +18,7 @@
 package org.maxkey.synchronizer.ldap;
 
 import org.maxkey.entity.Synchronizers;
+import org.maxkey.persistence.ldap.LdapUtils;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,8 +43,22 @@ public class LdapSynchronizerService  implements ISynchronizerService{
 
 	public void sync() {
 		_logger.info("Sync ...");
+		LdapUtils ldapUtils = new LdapUtils(
+		        synchronizer.getProviderUrl(),
+		        synchronizer.getPrincipal(),
+		        synchronizer.getCredentials(),
+		        synchronizer.getBasedn());
+		ldapUtils.openConnection();
+		ldapOrganizationService.setSynchronizer(synchronizer);
+		ldapUsersService.setSynchronizer(synchronizer);
+		
+		ldapOrganizationService.setLdapUtils(ldapUtils);
+		ldapUsersService.setLdapUtils(ldapUtils);
+		
+		
 		ldapOrganizationService.sync();
 		ldapUsersService.sync();
+		ldapUtils.close();
 	}
 
 	public LdapUsersService getLdapUsersService() {

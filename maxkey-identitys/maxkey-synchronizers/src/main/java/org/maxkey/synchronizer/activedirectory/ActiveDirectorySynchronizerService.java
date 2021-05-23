@@ -18,6 +18,7 @@
 package org.maxkey.synchronizer.activedirectory;
 
 import org.maxkey.entity.Synchronizers;
+import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,11 +43,23 @@ public class ActiveDirectorySynchronizerService   implements ISynchronizerServic
 
 	public void sync() {
 		_logger.info("Sync ...");
+		ActiveDirectoryUtils ldapUtils = new ActiveDirectoryUtils(
+		        synchronizer.getProviderUrl(),
+		        synchronizer.getPrincipal(),
+		        synchronizer.getCredentials(),
+		        synchronizer.getBasedn(),
+		        synchronizer.getMsadDomain());
+		ldapUtils.openConnection();
 		
+		activeDirectoryOrganizationService.setSynchronizer(synchronizer);
+		activeDirectoryOrganizationService.setLdapUtils(ldapUtils);
 		activeDirectoryOrganizationService.sync();
 		
+		activeDirectoryUsersService.setSynchronizer(synchronizer);
+		activeDirectoryUsersService.setLdapUtils(ldapUtils);
 		activeDirectoryUsersService.sync();
 		
+		ldapUtils.close();
 	}
 
 	public ActiveDirectoryUsersService getActiveDirectoryUsersService() {

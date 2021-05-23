@@ -24,27 +24,24 @@ import javax.naming.directory.Attribute;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import org.maxkey.constants.ldap.OrganizationalUnit;
+import org.maxkey.entity.HistorySynchronizer;
 import org.maxkey.entity.Organizations;
-import org.maxkey.entity.Synchronizers;
 import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
 import org.maxkey.persistence.ldap.LdapUtils;
-import org.maxkey.persistence.service.OrganizationsService;
+import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ActiveDirectoryOrganizationService   implements ISynchronizerService{
+public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerService  implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(ActiveDirectoryOrganizationService.class);
 
 	ActiveDirectoryUtils ldapUtils;
 	
-	@Autowired
-	OrganizationsService organizationsService;
-	
 	public void sync() {
+	    loadOrgsById("1");
 		_logger.info("Sync Organizations ...");
 		try {
 			SearchControls constraints = new SearchControls();
@@ -85,8 +82,35 @@ public class ActiveDirectoryOrganizationService   implements ISynchronizerServic
 	}
 	
 	public Organizations buildOrganization(HashMap<String,Attribute> attributeMap,String name,String nameInNamespace) {
-		Organizations org = new Organizations();
+		if("OU=Domain Controllers,DC=maxkey,DC=top".endsWith(nameInNamespace)) {
+		    _logger.info("to skip.");
+		    return null;
+		}
+	    Organizations org = new Organizations();
 		org.setLdapDn(nameInNamespace);
+		nameInNamespace = nameInNamespace.replaceAll(",OU=", "/").replaceAll("OU=", "/");
+		nameInNamespace = nameInNamespace.substring(0, nameInNamespace.length() - ldapUtils.getBaseDN().length() - 1);
+		String []namePaths = nameInNamespace.split("/");
+		String namePah= "/"+rootOrganization.getName();
+		for(int i = namePaths.length -1 ; i>=0 ;i--) {
+		    namePah = namePah + "/"+namePaths[i];
+		}
+		namePah = namePah.substring(0, namePah.length() -1);
+		String parentNamePath= namePah.substring(0, namePah.lastIndexOf("/"));
+		
+		if(orgsNamePathMap.get(namePah)!=null) {
+		    _logger.info("org  " + orgsNamePathMap.get(namePah).getNamePath()+" exists.");
+		    return null;
+		}
+		
+		Organizations  parentOrg = orgsNamePathMap.get(parentNamePath);
+		org.setId(org.generateId());
+		org.setNamePath(namePah);
+		org.setParentId(parentOrg.getId());
+		org.setParentName(parentOrg.getName());
+		org.setCodePath(parentOrg.getCodePath()+"/"+org.getId());
+		_logger.info("parentNamePath " + parentNamePath+" , namePah " + namePah);
+		
 		try {
 			org.setName(LdapUtils.getAttributeStringValue(OrganizationalUnit.OU,attributeMap));
 
@@ -96,12 +120,24 @@ public class ActiveDirectoryOrganizationService   implements ISynchronizerServic
 			org.setStreet(LdapUtils.getAttributeStringValue(OrganizationalUnit.STREET,attributeMap));
 			org.setPostalCode(LdapUtils.getAttributeStringValue(OrganizationalUnit.POSTALCODE,attributeMap));
 			org.setDescription(LdapUtils.getAttributeStringValue(OrganizationalUnit.DESCRIPTION,attributeMap));
-			
+			orgsNamePathMap.put(org.getNamePath(), org);
+			_logger.info("org " + org);
+			organizationsService.insert(org);
+			HistorySynchronizer historySynchronizer =new HistorySynchronizer();
+            historySynchronizer.setId(historySynchronizer.generateId());
+            historySynchronizer.setSyncId(this.synchronizer.getId());
+            historySynchronizer.setSyncName(this.synchronizer.getName());
+            historySynchronizer.setObjectId(org.getId());
+            historySynchronizer.setObjectName(org.getName());
+            historySynchronizer.setObjectType(Organizations.class.getSimpleName());
+            historySynchronizer.setResult("success");
+            this.historySynchronizerService.insert(historySynchronizer);
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 		return org;
 	}
+	
 	
 
 	public ActiveDirectoryUtils getLdapUtils() {
@@ -112,18 +148,5 @@ public class ActiveDirectoryOrganizationService   implements ISynchronizerServic
 		this.ldapUtils = ldapUtils;
 	}
 
-	public OrganizationsService getOrganizationsService() {
-		return organizationsService;
-	}
-
-	public void setOrganizationsService(OrganizationsService organizationsService) {
-		this.organizationsService = organizationsService;
-	}
-
-	@Override
-	public void setSynchronizer(Synchronizers Synchronizer) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

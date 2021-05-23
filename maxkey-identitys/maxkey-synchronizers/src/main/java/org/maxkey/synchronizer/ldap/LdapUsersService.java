@@ -24,27 +24,25 @@ import javax.naming.directory.Attribute;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import org.maxkey.constants.ldap.InetOrgPerson;
-import org.maxkey.entity.Synchronizers;
+import org.maxkey.entity.HistorySynchronizer;
+import org.maxkey.entity.Organizations;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.ldap.LdapUtils;
-import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LdapUsersService  implements ISynchronizerService{
+public class LdapUsersService extends AbstractSynchronizerService  implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(LdapUsersService.class);
 
 	LdapUtils ldapUtils;
 	
-	@Autowired
-	UserInfoService userInfoService;
-	
 	public void sync() {
 		_logger.info("Sync Users...");
+		loadOrgsById("1");
 		try {
 			SearchControls constraints = new SearchControls();
 			constraints.setSearchScope(ldapUtils.getSearchScope());
@@ -85,8 +83,23 @@ public class LdapUsersService  implements ISynchronizerService{
 	public UserInfo buildUserInfo(HashMap<String,Attribute> attributeMap,String name,String nameInNamespace) {
 		UserInfo userInfo = new  UserInfo();
 		userInfo.setLdapDn(nameInNamespace);
-		
+		nameInNamespace = nameInNamespace.replaceAll(",ou=", "/").replaceAll("ou=", "/").replaceAll("uid=", "/").replaceAll("cn=", "/");
+        nameInNamespace = nameInNamespace.substring(0, nameInNamespace.length() - ldapUtils.getBaseDN().length() - 1);
+        _logger.info("nameInNamespace  " + nameInNamespace);
+        String []namePaths = nameInNamespace.split("/");
+        String namePah= "/"+rootOrganization.getName();
+        for(int i = namePaths.length -1 ; i>=1 ;i--) {
+            namePah = namePah + "/"+namePaths[i];
+        }
+        //namePah = namePah.substring(0, namePah.length());
+        String deptNamePath= namePah.substring(0, namePah.lastIndexOf("/"));
+        _logger.info("deptNamePath  " + deptNamePath);
+        Organizations  deptOrg = orgsNamePathMap.get(deptNamePath);
+        userInfo.setDepartment(deptOrg.getName());
+        userInfo.setDepartmentId(deptOrg.getId());
+        
 		try {
+		    userInfo.setId(userInfo.generateId());
 			userInfo.setFormattedName(LdapUtils.getAttributeStringValue(InetOrgPerson.CN,attributeMap));//閸忋劌鎮�
 			//鐠愶附鍩�
 			userInfo.setUsername(LdapUtils.getAttributeStringValue(InetOrgPerson.UID,attributeMap));//鐠愶箑褰�
@@ -97,8 +110,8 @@ public class LdapUsersService  implements ISynchronizerService{
 			userInfo.setDisplayName(LdapUtils.getAttributeStringValue(InetOrgPerson.DISPLAYNAME,attributeMap));//閺勫墽銇氶崥宥囆�
 			
 			userInfo.setEmployeeNumber(LdapUtils.getAttributeStringValue(InetOrgPerson.EMPLOYEENUMBER,attributeMap));
-			userInfo.setDepartment(LdapUtils.getAttributeStringValue(InetOrgPerson.OU,attributeMap));
-			userInfo.setDepartmentId(LdapUtils.getAttributeStringValue(InetOrgPerson.DEPARTMENTNUMBER,attributeMap));
+			//userInfo.setDepartment(LdapUtils.getAttributeStringValue(InetOrgPerson.OU,attributeMap));
+			//userInfo.setDepartmentId(LdapUtils.getAttributeStringValue(InetOrgPerson.DEPARTMENTNUMBER,attributeMap));
 			userInfo.setJobTitle(LdapUtils.getAttributeStringValue(InetOrgPerson.TITLE,attributeMap));//閼卞苯濮�
 			userInfo.setWorkOfficeName(LdapUtils.getAttributeStringValue(InetOrgPerson.PHYSICALDELIVERYOFFICENAME,attributeMap));//閸旂偛鍙曠�癸拷
 			userInfo.setWorkEmail(LdapUtils.getAttributeStringValue(InetOrgPerson.MAIL,attributeMap));//闁喕娆�
@@ -112,12 +125,37 @@ public class LdapUsersService  implements ISynchronizerService{
 			userInfo.setHomePhoneNumber(LdapUtils.getAttributeStringValue(InetOrgPerson.HOMEPHONE,attributeMap));//鐎硅泛娑甸悽浣冪樈
 			userInfo.setHomeAddressFormatted(LdapUtils.getAttributeStringValue(InetOrgPerson.HOMEPOSTALADDRESS,attributeMap));//閻絻鐦芥径鍥ㄦ暈
 			
-			userInfo.setMobile(LdapUtils.getAttributeStringValue(InetOrgPerson.MOBILE,attributeMap));//閹靛婧�
+			if(LdapUtils.getAttributeStringValue(InetOrgPerson.MOBILE,attributeMap).equals("")) {
+			    userInfo.setMobile(userInfo.getId());
+			}else {
+			    userInfo.setMobile(LdapUtils.getAttributeStringValue(InetOrgPerson.MOBILE,attributeMap));//閹靛婧�
+            }
 			
 			userInfo.setPreferredLanguage(LdapUtils.getAttributeStringValue(InetOrgPerson.PREFERREDLANGUAGE,attributeMap));//鐠囶叀鈻�
 			
 			userInfo.setDescription(LdapUtils.getAttributeStringValue(InetOrgPerson.DESCRIPTION,attributeMap));//閹诲繗鍫�
-			
+			userInfo.setUserState("RESIDENT");
+			userInfo.setUserType("EMPLOYEE");
+			userInfo.setTimeZone("Asia/Shanghai");
+			userInfo.setStatus(1);
+			UserInfo quser=new UserInfo();
+            quser.setUsername(userInfo.getUsername());
+            UserInfo loadedUser=userInfoService.load(quser);
+            if(loadedUser == null) {
+                userInfo.setPassword(userInfo.generateId());
+                userInfoService.insert(userInfo);
+                HistorySynchronizer historySynchronizer =new HistorySynchronizer();
+                historySynchronizer.setId(historySynchronizer.generateId());
+                historySynchronizer.setSyncId(this.synchronizer.getId());
+                historySynchronizer.setSyncName(this.synchronizer.getName());
+                historySynchronizer.setObjectId(userInfo.getId());
+                historySynchronizer.setObjectName(userInfo.getUsername());
+                historySynchronizer.setObjectType(Organizations.class.getSimpleName());
+                historySynchronizer.setResult("success");
+                this.historySynchronizerService.insert(historySynchronizer);
+            }else {
+                _logger.info("username  " + userInfo.getUsername()+" exists.");
+            }
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -132,20 +170,5 @@ public class LdapUsersService  implements ISynchronizerService{
 	public void setLdapUtils(LdapUtils ldapUtils) {
 		this.ldapUtils = ldapUtils;
 	}
-
-	public UserInfoService getUserInfoService() {
-		return userInfoService;
-	}
-
-	public void setUserInfoService(UserInfoService userInfoService) {
-		this.userInfoService = userInfoService;
-	}
-
-	@Override
-	public void setSynchronizer(Synchronizers Synchronizer) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	
 }
