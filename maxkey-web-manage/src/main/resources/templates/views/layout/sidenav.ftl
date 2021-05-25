@@ -142,6 +142,12 @@
 	         </a>
 	       </li>
 	       <li>
+             <a class="side-nav-menu" href="<@base />/logs/historySynchronizerList/">
+                 <@locale code="navs.audit.synchronizer"/>
+                 <span class="fa fa-fw fa-eraser"></span>
+             </a>
+           </li>
+	       <li>
 	         <a class="side-nav-menu" href="<@base />/logs/list/">
 	         	  <@locale code="navs.audit.operate"/>
 	         	  <span class="fa fa-fw fa-eraser"></span>

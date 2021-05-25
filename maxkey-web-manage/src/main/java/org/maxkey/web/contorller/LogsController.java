@@ -24,13 +24,16 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.HistoryLoginApps;
 import org.maxkey.entity.HistoryLogs;
+import org.maxkey.entity.HistorySynchronizer;
 import org.maxkey.persistence.service.HistoryLoginAppsService;
 import org.maxkey.persistence.service.HistoryLoginService;
 import org.maxkey.persistence.service.HistoryLogsService;
+import org.maxkey.persistence.service.HistorySynchronizerService;
 import org.maxkey.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -59,6 +62,10 @@ final static Logger _logger = LoggerFactory.getLogger(LogsController.class);
 	
 	@Autowired
 	HistoryLogsService logsService;
+	
+	@Autowired
+    @Qualifier("historySynchronizerService")
+	HistorySynchronizerService historySynchronizerService;
 	
 	/**
 	 * 查询操作日志
@@ -90,7 +97,7 @@ final static Logger _logger = LoggerFactory.getLogger(LogsController.class);
 	@RequestMapping(value={"/loginHistory/grid"})
 	@ResponseBody
 	public JpaPageResults<HistoryLogin> logAuthsGrid(@ModelAttribute("loginHistory") HistoryLogin loginHistory){
-		_logger.debug("logs/loginHistory/datagrid/ logsGrid() "+loginHistory);
+		_logger.debug("logs/loginHistory/datagrid/ "+loginHistory);
 		return loginHistoryService.queryPageResults(loginHistory);
 	}
 	
@@ -109,10 +116,26 @@ final static Logger _logger = LoggerFactory.getLogger(LogsController.class);
 	@RequestMapping(value={"/loginAppsHistory/grid"})
 	@ResponseBody
 	public JpaPageResults<HistoryLoginApps> loginAppsHistoryGrid(@ModelAttribute("loginAppsHistory") HistoryLoginApps loginAppsHistory){
-		_logger.debug("logs/loginAppsHistory/datagrid/ logsGrid() "+loginAppsHistory);
+		_logger.debug("logs/loginAppsHistory/datagrid/  "+loginAppsHistory);
 		loginAppsHistory.setId(null);
 		return loginAppsHistoryService.queryPageResults(loginAppsHistory);
 	}
+	
+	@RequestMapping(value={"/historySynchronizerList"})
+    public String historySynchronizerList(){
+        return "logs/historySynchronizerList";
+    }
+	
+	/**
+     * @param historySynchronizer
+     * @return
+     */
+    @RequestMapping(value={"/historySynchronizer/grid"})
+    @ResponseBody
+    public JpaPageResults<HistorySynchronizer> historySynchronizerGrid(@ModelAttribute("historySynchronizer") HistorySynchronizer historySynchronizer){
+        _logger.debug("logs/historySynchronizer/grid/ "+historySynchronizer);
+        return historySynchronizerService.queryPageResults(historySynchronizer);
+    }
 	
 	
 	@RequestMapping(value={"/provisioningEventList"})

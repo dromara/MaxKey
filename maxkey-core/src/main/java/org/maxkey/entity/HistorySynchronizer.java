@@ -37,6 +37,9 @@ public class HistorySynchronizer  extends JpaBaseEntity  implements Serializable
     @Column
     String result;
     
+    String startDate;
+    String endDate;
+    
     public String getId() {
         return id;
     }
@@ -87,6 +90,19 @@ public class HistorySynchronizer  extends JpaBaseEntity  implements Serializable
     }
     public HistorySynchronizer() {
         super();
+    }
+    
+    public String getStartDate() {
+        return startDate;
+    }
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+    public String getEndDate() {
+        return endDate;
+    }
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
     @Override
     public String toString() {
