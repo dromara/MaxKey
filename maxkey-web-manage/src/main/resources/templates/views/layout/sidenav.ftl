@@ -130,25 +130,25 @@
      	</a>
      	<ul>
 	       <li>
-	         <a class="side-nav-menu" href="<@base />/logs/loginHistoryList/">
+	         <a class="side-nav-menu" href="<@base />/historys/loginHistoryList/">
 	         	<@locale code="navs.audit.login"/>
 	         	<span class="fa fa-fw fa-eraser"></span>
 	         </a>
 	       </li>
 	       <li>
-	         <a class="side-nav-menu" href="<@base />/logs/loginAppsHistoryList/">
+	         <a class="side-nav-menu" href="<@base />/historys/loginAppsHistoryList/">
 	         	 <@locale code="navs.audit.loginapps"/>
 	         	 <span class="fa fa-fw fa-eraser"></span>
 	         </a>
 	       </li>
 	       <li>
-             <a class="side-nav-menu" href="<@base />/logs/historySynchronizerList/">
+             <a class="side-nav-menu" href="<@base />/historys/synchronizerHistoryList/">
                  <@locale code="navs.audit.synchronizer"/>
                  <span class="fa fa-fw fa-eraser"></span>
              </a>
            </li>
 	       <li>
-	         <a class="side-nav-menu" href="<@base />/logs/list/">
+	         <a class="side-nav-menu" href="<@base />/historys/systemLogsList/">
 	         	  <@locale code="navs.audit.operate"/>
 	         	  <span class="fa fa-fw fa-eraser"></span>
 	         </a>

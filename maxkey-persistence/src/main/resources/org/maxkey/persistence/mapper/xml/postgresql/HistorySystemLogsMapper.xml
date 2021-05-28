@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.HistorySystemLogsMapper" >
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	id	=	#{id}
+		</if> 
+		<if test="serviceName != null and serviceName != '' ">
+			and	 lower(servicename) like lower(concat('%',#{serviceName},'%'))
+		</if>
+		<if test="message != null and message != '' ">
+			and	 lower(message) like lower(concat('%',#{message},'%'))
+		</if>
+		<if test="startDate != null  and startDate != '' ">
+			and createddate  between 	#{startDate} and	#{endDate}
+		</if>
+		<if test="createdBy != null and createdBy != ''">
+			and	createdby	=	#{createdBy}
+		</if>
+
+		<if test="username != null and username != ''">
+			and	 lower(username) like lower(concat('%',#{username},'%'))
+		</if>
+		<if test="messageType != null and messageType != ''">
+			and	messagetype	=	#{messageType}
+		</if>
+		<if test="operateType != null and operateType != ''">
+			and	operatetype	=	#{operateType}
+		</if>
+    </sql>
+	
+    
+     <select id="queryPageResults" parameterType="HistoryLogs" resultType="HistoryLogs">
+    	select 
+			id,
+			tid,
+			tname,
+			servicename ,
+			code,
+			message ,
+			content,
+			operatetype,
+			messagetype,
+			username,
+			createddate,
+			createdby
+    	from mxk_history_logs 
+    	where	1	=	1
+    	<include refid="where_statement"/>
+    	
+    	order by createddate desc
+    </select>
+  
+</mapper>

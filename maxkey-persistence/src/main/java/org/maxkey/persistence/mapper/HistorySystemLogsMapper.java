@@ -15,27 +15,19 @@
  */
  
 
-package org.maxkey.persistence.service;
+/**
+ * 
+ */
+package org.maxkey.persistence.mapper;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
+import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.entity.HistoryLogs;
-import org.maxkey.persistence.mapper.HistoryLogsMapper;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public class HistoryLogsService  extends JpaBaseService<HistoryLogs>{
-
-	public HistoryLogsService() {
-		super(HistoryLogsMapper.class);
-		
-	}
+/**
+ * @author Crystal.sea
+ *
+ */
+public  interface HistorySystemLogsMapper extends IJpaBaseMapper<HistoryLogs> {
 	
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
-	@Override
-	public HistoryLogsMapper getMapper() {
-		// TODO Auto-generated method stub
-		return (HistoryLogsMapper)super.getMapper();
-	}
+
 }

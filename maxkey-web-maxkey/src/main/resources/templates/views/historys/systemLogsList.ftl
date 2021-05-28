@@ -35,7 +35,7 @@
 
 <div class="mainwrap" id="main">
 	
-	<table  data-url="<@base />/historys/logs/grid"
+	<table  data-url="<@base />/historys/systemLogsList/grid"
 			id="datagrid"
 			data-toggle="table"
 			data-classes="table table-bordered table-hover table-striped"

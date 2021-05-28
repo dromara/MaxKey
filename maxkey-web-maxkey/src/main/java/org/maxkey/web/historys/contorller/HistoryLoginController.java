@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.web.contorller;
+package org.maxkey.web.historys.contorller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +25,7 @@ import org.maxkey.entity.HistoryLoginApps;
 import org.maxkey.entity.HistoryLogs;
 import org.maxkey.persistence.service.HistoryLoginAppsService;
 import org.maxkey.persistence.service.HistoryLoginService;
-import org.maxkey.persistence.service.HistoryLogsService;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * 登录日志和操作日志查询.
+ * 登录日志查询.
  * 
  * @author Crystal.sea
  *
@@ -48,37 +48,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = { "/historys" })
-public class HistorysController {
-    static final Logger _logger = LoggerFactory.getLogger(HistorysController.class);
+public class HistoryLoginController {
+    static final Logger _logger = LoggerFactory.getLogger(HistoryLoginController.class);
 
     @Autowired
     HistoryLoginService historyLoginService;
-
-    @Autowired
-    protected HistoryLoginAppsService historyLoginAppsService;
-
-    @Autowired
-    HistoryLogsService historyLogsService;
-
-    @RequestMapping(value = { "/logs" })
-    public String List() {
-        return "historys/logsList";
-    }
-
-    /**
-     * 查询操作日志.
-     * 
-     * @param logs
-     * @return
-     */
-    @RequestMapping(value = { "/logs/grid" })
-    @ResponseBody
-    public JpaPageResults<HistoryLogs> logsDataGrid(@ModelAttribute("historyLogs") HistoryLogs historyLogs) {
-        _logger.debug("history/logs/grid/ logsGrid() " + historyLogs);
-        return historyLogsService.queryPageResults(historyLogs);
-    }
-
-    @RequestMapping(value = { "/login" })
+    
+    @RequestMapping(value = { "/loginList" })
     public String authList() {
         return "historys/loginList";
     }
@@ -89,7 +65,7 @@ public class HistorysController {
      * @param logsAuth
      * @return
      */
-    @RequestMapping(value = { "/login/grid" })
+    @RequestMapping(value = { "/loginList/grid" })
     @ResponseBody
     public JpaPageResults<HistoryLogin> logAuthsGrid(@ModelAttribute("historyLogin") HistoryLogin historyLogin) {
         _logger.debug("history/login/grid/ logsGrid() " + historyLogin);
@@ -97,27 +73,6 @@ public class HistorysController {
         return historyLoginService.queryPageResults(historyLogin);
     }
 
-    @RequestMapping(value = { "/loginApps" })
-    public String loginAppHistoryList() {
-        return "historys/loginAppsList";
-    }
-
-    /**
-     * 查询单点登录日志.
-     * 
-     * @param logsSso
-     * @return
-     */
-    @RequestMapping(value = { "/loginApps/grid" })
-    @ResponseBody
-    public JpaPageResults<HistoryLoginApps> logsSsoGrid(
-            @ModelAttribute("historyLoginApps") HistoryLoginApps historyLoginApps) {
-        _logger.debug("history/loginApps/grid/ logsGrid() " + historyLoginApps);
-        historyLoginApps.setId(null);
-
-        return historyLoginAppsService.queryPageResults(historyLoginApps);
-
-    }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

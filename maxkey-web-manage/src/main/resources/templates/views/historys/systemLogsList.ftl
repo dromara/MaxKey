@@ -24,13 +24,13 @@
 
 						<div class="breadcrumb-wrapper row">
 							<div class="col-12 col-lg-3 col-md-6">
-								<h4 class="page-title"><@locale code="navs.audit.loginapps"/></h4>
+								<h4 class="page-title"><@locale code="navs.audit.operate"/></h4>
 							</div>
 							<div class="col-12 col-lg-9 col-md-6">
 								<ol class="breadcrumb float-right">
 									<li><a href="<@base/>/main"><@locale code="navs.home"/></a></li>
 									<li class="inactive" >/ <@locale code="navs.audit"/></li>
-									<li class="active">/ <@locale code="navs.audit.loginapps"/></li>
+									<li class="active">/ <@locale code="navs.audit.operate"/></li>
 								</ol>
 							</div>
 						</div>
@@ -94,31 +94,34 @@
 			</table>
  		</form>
  	</div>
- 	<table 	data-url="<@base />/logs/loginAppsHistory/grid"
-				id="datagrid"
-				data-toggle="table"
-				data-classes="table table-bordered table-hover table-striped"
-				data-pagination="true"
-				data-total-field="records"
-				data-page-list="[10, 25, 50, 100]"
-				data-search="false"
-				data-locale="zh-CN"
-				data-query-params="dataGridQueryParams"
-				data-query-params-type="pageSize"
-				data-side-pagination="server">
-			<thead>
-				<tr>
-					<th data-sortable="true" data-field="id"  data-visible="false"><@locale code="log.loginappshistory.id" /></th>
-					<th data-field="sessionId" ><@locale code="log.loginappshistory.sessionId" /></th>
-					<th data-field="uid"   data-visible="false"><@locale	code="log.loginappshistory.uid" /></th>
-					<th data-field="username" ><@locale	code="log.loginappshistory.username" /></th>
-					<th data-field="displayName" ><@locale	code="log.loginappshistory.displayName" /></th>
-					<th data-field="appId"   data-visible="false"><@locale	code="log.loginappshistory.appId" /></th>
-					<th data-field="appName" ><@locale	code="log.loginappshistory.appName" /></th>
-					<th data-field="loginTime" ><@locale  code="log.loginappshistory.loginTime" /></th>
-				</tr>
-			</thead>
-		</table>
+ 	<table  data-url="<@base />/historys/systemLogsList/grid"
+			id="datagrid"
+			data-toggle="table"
+			data-classes="table table-bordered table-hover table-striped"
+			data-pagination="true"
+			data-total-field="records"
+			data-page-list="[10, 25, 50, 100]"
+			data-search="false"
+			data-locale="zh-CN"
+			data-query-params="dataGridQueryParams"
+			data-query-params-type="pageSize"
+			data-side-pagination="server">
+		<thead>
+			<tr>
+				<th data-sortable="true" data-field="id"   data-visible="false">id</th>
+				<th data-field="serviceName"><@locale code="log.operate.servicename"/></th>
+				<th data-field="message"><@locale code="log.operate.message"/></th>
+				<th data-field="view"><@locale code="log.operate.content"/></th>
+				<th data-field="messageType"><@locale code="log.operate.messageType"/></th>
+				<th data-field="operateType"><@locale code="log.operate.operateType"/></th>
+				<th data-field="username"><@locale code="log.operate.username"/></th>
+				<th data-field="createdBy"><@locale code="common.text.createdby"/></th>
+				<th data-field="createdDate"><@locale code="common.text.createddate"/></th>
+				<th data-field="modifiedBy"><@locale code="common.text.modifiedby"/></th>
+				<th data-field="modifiedDate"><@locale code="common.text.modifieddate"/></th>
+			</tr>
+		</thead>
+	</table>
 </div>
 	
 </div>

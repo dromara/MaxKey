@@ -19,10 +19,9 @@ package org.maxkey.web.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.maxkey.entity.HistoryLogs;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.service.HistoryLogsService;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
@@ -30,7 +29,6 @@ import org.maxkey.web.message.MessageScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,8 +46,7 @@ public class HistoryLogsAdapter  implements AsyncHandlerInterceptor  {
     private static final Logger _logger = LoggerFactory.getLogger(HistoryLogsAdapter.class);
 
     @Autowired
-    @Qualifier("historyLogsService")
-    private HistoryLogsService historyLogsService;
+    private HistorySystemLogsService historySystemLogsService;
 
     /**
      *  after the handler is executed.
@@ -79,7 +76,7 @@ public class HistoryLogsAdapter  implements AsyncHandlerInterceptor  {
                                         ""
                         );
                 _logger.debug("insert db historyLogs content : " + historyLogs);
-                historyLogsService.insert(historyLogs);//日志插入数据库
+                historySystemLogsService.insert(historyLogs);//日志插入数据库
                 //message类型仅插入数据库
                 if (message.getMessageScope() == MessageScope.DB) {
                     WebContext.clearMessage();//清除message

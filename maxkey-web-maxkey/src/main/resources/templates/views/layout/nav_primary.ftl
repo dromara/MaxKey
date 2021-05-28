@@ -49,24 +49,24 @@
 			</li>
 			<!--日志审计-->
 			<li  id="nav_primay_15"  class="nav_primay_level primaryleft"  xpath="">
-				<a   href="<@base/>/historys/login"><@locale code="navs.audit"/></a>
+				<a   href="<@base/>/historys/loginList"><@locale code="navs.audit"/></a>
 				<div id="nav_child_1501"  class="nav_second_child">
 					<ul>
 						<!--登录日志-->
 						<li id="nav_second_1501" class="nav_second_level">
-							<a   href="<@base/>/historys/login"><@locale code="navs.audit.login"/></a>
+							<a   href="<@base/>/historys/loginList"><@locale code="navs.audit.login"/></a>
 						</li>
 					</ul>
 					<ul>
 						<!--访问日志-->
 						<li id="nav_second_1502" class="nav_second_level">
-							<a   href="<@base/>/historys/loginApps"><@locale code="navs.audit.signon"/></a>
+							<a   href="<@base/>/historys/loginAppsList"><@locale code="navs.audit.signon"/></a>
 						</li>
 					</ul>
 					<ul>
 						<!--操作日志-->
 						<li id="nav_second_1503" class="nav_second_level">
-							<a   href="<@base/>/historys/logs"><@locale code="navs.audit.operation"/></a>
+							<a   href="<@base/>/historys/systemLogsList"><@locale code="navs.audit.operation"/></a>
 						</li>
 					</ul>
 				</div>
