@@ -1,13 +1,34 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿MaxKey v 2.8.0 GA  2021/06/**
-    *(MAXKEY-210401)  国产数据库瀚高DB的适配支持
-    *(MAXKEY-210402)  Gradle 7支持
-    *(MAXKEY-210402)  数据库底层适配优化支持，id采用雪花算法
-    *(MAXKEY-210402)  登录超时退出优化
-    *(MAXKEY-210402)  org.maxkey.domain调整为org.maxkey.entity
-    *(MAXKEY-210402)  数据查询SQL语句改成小写
-    *(MAXKEY-210402)  OAuth2.0单点登录确认界面配置优化
-    *(MAXKEY-210402)  应用配置保存时logoutUrl和logoutType丢失修复
-    
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿MaxKey v 2.8.0 RC1  2021/06/01
+    *(MAXKEY-210401)  国产数据库瀚高DB的适配
+	*(MAXKEY-210402)  增加手机登录功能，用户可获取手机验证码完成登录
+	*(MAXKEY-210403)  同步器支持，定义标准的机构和用户接口，方便其他系统同步机构和用户信息
+	*(MAXKEY-210404)  Microsoft Active Directory 机构和用户同步支持
+	*(MAXKEY-210405)  标准LDAP协议服务器机构和用户同步支持
+    *(MAXKEY-210406)  Gradle 7支持
+    *(MAXKEY-210407)  数据库底层适配优化支持，id采用雪花算法
+	*(MAXKEY-210408)  用户注册功能优化，修复脚本错误
+	*(MAXKEY-210409)  登录界面优化及调整
+    *(MAXKEY-210410)  登录超时退出优化
+    *(MAXKEY-210411)  org.maxkey.domain调整为org.maxkey.entity
+    *(MAXKEY-210412)  数据查询SQL语句改成小写
+    *(MAXKEY-210413)  OAuth2.0单点登录确认界面配置优化
+    *(MAXKEY-210414)  应用配置保存时logoutUrl和logoutType丢失修复
+	*(MAXKEY-210415)  同步器历史同步日志审计功能
+	*(MAXKEY-210416)  删除json2form插件，优化CSS，整合javacript脚本
+	*(MAXKEY-210417)  增加用户状态USERSTATE的属性（在职、退休、离职等），status用做活动/锁定/禁用等状态
+	*(MAXKEY-210418)  构建时依赖问题修复
+	*(MAXKEY-210419)  依赖jar的版本统一配置gradle.properties
+	*(MAXKEY-210420)  依赖jar引用、更新和升级
+        spring			5.3.7
+		springBoot  	2.4.5
+		springSecurity 	5.5.0
+		tomcat		   	9.0.46
+		jibGradle		2.7.1
+		springData		2.5.1
+		springSession	2.5.0
+		druid			1.2.5
+		jedis			3.6.0
+		mybatis			3.5.7
 
 MaxKey v 2.7.0 GA	2021/04/15
     *(MAXKEY-210301)  加入Dromara开源组织，官方网站的优化，文档优化
