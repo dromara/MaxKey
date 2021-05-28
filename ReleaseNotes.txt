@@ -1,4 +1,15 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿MaxKey v 2.7.0 GA	2021/04/15
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿MaxKey v 2.8.0 GA  2021/06/**
+    *(MAXKEY-210401)  国产数据库瀚高DB的适配支持
+    *(MAXKEY-210402)  Gradle 7支持
+    *(MAXKEY-210402)  数据库底层适配优化支持，id采用雪花算法
+    *(MAXKEY-210402)  登录超时退出优化
+    *(MAXKEY-210402)  org.maxkey.domain调整为org.maxkey.entity
+    *(MAXKEY-210402)  数据查询SQL语句改成小写
+    *(MAXKEY-210402)  OAuth2.0单点登录确认界面配置优化
+    *(MAXKEY-210402)  应用配置保存时logoutUrl和logoutType丢失修复
+    
+
+MaxKey v 2.7.0 GA	2021/04/15
     *(MAXKEY-210301)  加入Dromara开源组织，官方网站的优化，文档优化
     *(MAXKEY-210302)  BootJar，Docker，Standard三种打包方式的配置优化
     *(MAXKEY-210303)  openldap,activedirectory密码验证支持
