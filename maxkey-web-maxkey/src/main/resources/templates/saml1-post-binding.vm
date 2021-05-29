@@ -1,0 +1,41 @@
+##
+## Velocity Template for SAML 1 HTTP-POST binding
+##
+## Velocity context may contain the following properties
+## action - String - the action URL for the form
+## binding - String - the SAML binding type in use
+## TARGET - String - the relay state for the message
+## SAMLResponse - String - the Base64 encoded SAML Response
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+    <head>
+    #parse ( "/templates/add-html-head-content.vm" )
+    </head>
+
+    <body onload="document.forms[0].submit()">
+        <noscript>
+            <p>
+                <strong>Note:</strong> Since your browser does not support JavaScript,
+                you must press the Continue button once to proceed.
+            </p>
+        </noscript>
+        
+        <form action="${action}" method="post">
+            <div>                
+                #if($SAMLResponse)<input type="hidden" name="SAMLResponse" value="${SAMLResponse}"/>#end
+                
+                #if($TARGET)<input type="hidden" name="TARGET" value="${TARGET}"/>#end
+                
+            </div>
+            <noscript>
+                <div>
+                    <input type="submit" value="Continue"/>
+                </div>
+            </noscript>
+        </form>
+
+        #parse ( "/templates/add-html-body-content.vm" )
+        
+    </body>
+</html>

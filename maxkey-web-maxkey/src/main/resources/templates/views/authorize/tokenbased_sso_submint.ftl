@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-  <#include  "formbased_common.ftl">
-  <title>Token-Based SSO Submit</title>
-  
+    <title>Token-Based Single Sign-On</title>
+    <#include  "authorize_common.ftl">
 </head>
 
 <body  onload="document.forms[0].submit()"  style="display:none">

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-  <#include  "formbased_common.ftl">
-  <title>Token-Based SSO Submit</title>
+  <#include  "authorize_common.ftl">
+  <title>JWT Single Sign-On</title>
 
 </head>
 
 <body  onload="document.forms[0].submit()"  style="display:none">
-<form id="tokenbasedsubmit" name="tokenbasedsubmit" action="${action}" method="post">
+<form id="jwt_sso_form" name="jwt_sso_form" action="${action}" method="post">
 		<table style="width:100%">
 			<tr>
 				<td>token</td>

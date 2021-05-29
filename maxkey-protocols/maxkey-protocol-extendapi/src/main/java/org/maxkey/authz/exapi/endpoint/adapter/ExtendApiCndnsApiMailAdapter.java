@@ -19,19 +19,16 @@ package org.maxkey.authz.exapi.endpoint.adapter;
 
 import java.time.Instant;
 import java.util.HashMap;
-
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.client.http.HttpVerb;
 import org.maxkey.client.oauth.OAuthClient;
-import org.maxkey.client.oauth.model.Token;
 import org.maxkey.crypto.DigestUtils;
 import org.maxkey.entity.ExtraAttrs;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.util.HttpsTrusts;
 import org.maxkey.util.JsonUtils;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -90,7 +87,7 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
 		
 		String tokenMd5 =DigestUtils.md5Hex(details.getCredentials());
 		HashMap<String,String > requestParamenter =new HashMap<String,String >();
-		String redirec_uri = "";
+		String redirect_uri = "";
 		if(action.equalsIgnoreCase("getDomailUrl")) {
 			String sign =DigestUtils.md5Hex
 					(String.format(
@@ -102,7 +99,7 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
 			authkeyRestClient.addRestObject(requestParamenter);
 			
 			HashMap<String, String> authKey=JsonUtils.gson2Object(authkeyRestClient.execute().getBody(), HashMap.class);
-			redirec_uri=authKey.get("adminUrl");
+			redirect_uri=authKey.get("adminUrl");
 			
 		}else {
 			String sign =DigestUtils.md5Hex
@@ -115,11 +112,14 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
 			authkeyRestClient.addRestObject(requestParamenter);
 			
 			HashMap<String, String> authKey=JsonUtils.gson2Object(authkeyRestClient.execute().getBody(), HashMap.class);
-			redirec_uri=authKey.get("webmailUrl");
+			redirect_uri=authKey.get("webmailUrl");
 		}
 		
-		_logger.debug("redirec_uri : "+redirec_uri);
-		return WebContext.redirect(redirec_uri);
+		_logger.debug("redirect_uri : "+redirect_uri);
+		
+        modelAndView.addObject("redirect_uri", redirect_uri);
+        
+        return modelAndView;
 	}
 
 }

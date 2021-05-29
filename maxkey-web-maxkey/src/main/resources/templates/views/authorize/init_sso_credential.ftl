@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-  	<#include  "formbased_common.ftl">
+  	<#include  "authorize_common.ftl">
   	<title>SSO Credential Init</title>
 </head>
 

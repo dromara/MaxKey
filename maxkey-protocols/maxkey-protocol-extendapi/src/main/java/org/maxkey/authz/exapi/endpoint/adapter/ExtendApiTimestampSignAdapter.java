@@ -24,7 +24,6 @@ import org.maxkey.crypto.DigestUtils;
 import org.maxkey.entity.ExtraAttrs;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -83,12 +82,14 @@ public class ExtendApiTimestampSignAdapter extends AbstractAuthorizeAdapter {
 		_logger.debug(""+token);
 		String account = userInfo.getUsername();
 		
-		String redirec_uri = String.format(details.getLoginUrl(),account,code,timestamp,token);
+		String redirect_uri = String.format(details.getLoginUrl(),account,code,timestamp,token);
 
+		_logger.debug("redirect_uri : "+redirect_uri);
 		
-		_logger.debug("redirec_uri : "+redirec_uri);
-		
-		return WebContext.redirect(redirec_uri);
+        modelAndView.addObject("redirect_uri", redirect_uri);
+        
+        return modelAndView;
+        
 	}
 
 }

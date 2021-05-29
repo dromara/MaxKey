@@ -146,7 +146,9 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		
 		_logger.debug("redirect to CAS Client URL " + callbackUrl);
 		
-		return WebContext.redirect(callbackUrl.toString());
+		ModelAndView modelAndView=new ModelAndView("authorize/cas_sso_submint");
+		modelAndView.addObject("callbackUrl", callbackUrl.toString());
+		return modelAndView;
 	}
 	
 	/**

@@ -18,7 +18,6 @@
 package org.maxkey.authz.exapi.endpoint.adapter;
 
 import java.util.HashMap;
-
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.client.oauth.OAuthClient;
@@ -28,7 +27,6 @@ import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.util.HttpsTrusts;
 import org.maxkey.util.JsonUtils;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -76,9 +74,12 @@ public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
 		HashMap<String, String> authKey=JsonUtils.gson2Object(authkeyRestClient.execute().getBody(), HashMap.class);
 		_logger.debug("authKey : "+authKey);
 		
-		String redirec_uri=authKey.get("login_url");
-		_logger.debug("redirec_uri : "+redirec_uri);
-		return WebContext.redirect(redirec_uri);
+		String redirect_uri=authKey.get("login_url");
+		_logger.debug("redirect_uri : "+redirect_uri);
+		
+        modelAndView.addObject("redirect_uri", redirect_uri);
+        
+        return modelAndView;
 	}
 
 }

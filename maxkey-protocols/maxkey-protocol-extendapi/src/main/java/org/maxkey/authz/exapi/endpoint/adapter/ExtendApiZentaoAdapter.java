@@ -24,7 +24,6 @@ import org.maxkey.crypto.DigestUtils;
 import org.maxkey.entity.ExtraAttrs;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -72,22 +71,24 @@ public class ExtendApiZentaoAdapter extends AbstractAuthorizeAdapter {
 		_logger.debug(""+token);
 		String account = userInfo.getUsername();
 		
-		String redirec_uri = details.getLoginUrl();
-		if(redirec_uri.indexOf("api.php?")<0) {
-			if(redirec_uri.endsWith("/")) {
-				redirec_uri += String.format(login_url_template,account,code,time,token);
+		String redirect_uri = details.getLoginUrl();
+		if(redirect_uri.indexOf("api.php?")<0) {
+			if(redirect_uri.endsWith("/")) {
+			    redirect_uri += String.format(login_url_template,account,code,time,token);
 			}else {
-				redirec_uri +="/" + String.format(login_url_template,account,code,time,token);
+			    redirect_uri +="/" + String.format(login_url_template,account,code,time,token);
 			}
-		}else if(redirec_uri.endsWith("&")){
-			redirec_uri += String.format(login_url_m_template,account,code,time,token);
+		}else if(redirect_uri.endsWith("&")){
+		    redirect_uri += String.format(login_url_m_template,account,code,time,token);
 		}else {
-			redirec_uri += "&" +String.format(login_url_m_template,account,code,time,token);
+		    redirect_uri += "&" +String.format(login_url_m_template,account,code,time,token);
 		}
 		
-		_logger.debug("redirec_uri : "+redirec_uri);
+		_logger.debug("redirect_uri : "+redirect_uri);
+		modelAndView=new ModelAndView("authorize/redirect_sso_submit");
+        modelAndView.addObject("redirect_uri", redirect_uri);
 		
-		return WebContext.redirect(redirec_uri);
+		return modelAndView;
 	}
 
 }

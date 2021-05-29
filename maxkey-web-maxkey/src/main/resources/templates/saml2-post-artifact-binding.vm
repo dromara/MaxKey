@@ -1,0 +1,41 @@
+##
+## Velocity Template for SAML 2 HTTP-POST binding
+##
+## Velocity context may contain the following properties
+## action - String - the action URL for the form
+## binding - String - the SAML binding type in use
+## RelayState - String - the relay state for the message
+## SAMLArt - String - SAML 2 artifact
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+    #parse ( "/templates/add-html-head-content.vm" )
+    </head>
+    <body onload="document.forms[0].submit()">
+        <noscript>
+            <p>
+                <strong>Note:</strong> Since your browser does not support JavaScript,
+                you must press the Continue button once to proceed.
+            </p>
+        </noscript>
+        
+        <form action="${action}" method="post">
+            <div>
+                #if($RelayState)
+                <input type="hidden" name="RelayState" value="${RelayState}"/>
+                #end
+                
+                <input type="hidden" name="SAMLart" value="${SAMLArt}"/>
+            </div>
+            <noscript>
+                <div>
+                    <input type="submit" value="Continue"/>
+                </div>
+            </noscript>
+        </form>
+        #parse ( "/templates/add-html-body-content.vm" )
+    </body>
+</html>

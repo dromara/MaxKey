@@ -51,10 +51,10 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	@ApiOperation(value = "ExtendApi认证地址接口", notes = "参数应用ID",httpMethod="GET")
 	@RequestMapping("/authz/api/{id}")
 	public ModelAndView authorize(HttpServletRequest request,@PathVariable("id") String id){
-		
+	    
+	    ModelAndView modelAndView=new ModelAndView("authorize/redirect_sso_submit");
 		Apps apps=getApp(id);
 		_logger.debug(""+apps);
-		
 		if(Boolean.isTrue(apps.getIsAdapter())){
 			Accounts appUser=getAccounts(apps);
 			
@@ -62,8 +62,6 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 				return generateInitCredentialModelAndView(id,"/authorize/api/"+id);
 			}
 
-			ModelAndView modelAndView=new ModelAndView();
-			
 			AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(apps.getAdapter());
 			
 			apps.setAppUser(appUser);
@@ -75,8 +73,9 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 					modelAndView);
 			return modelAndView;
 		}else{
-			String redirec_uri=getApp(id).getLoginUrl();
-			return WebContext.redirect(redirec_uri);
+	        modelAndView.addObject("redirect_uri", getApp(id).getLoginUrl());
+	        
+	        return modelAndView;
 		}
 		
 	}
