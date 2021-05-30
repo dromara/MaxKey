@@ -1,4 +1,5 @@
-	<#-- javascript js begin  -->
+
+	<!-- javascript js begin  -->
 	<script type="text/javascript">var webContextPath = "<@base />";var webLocale = '<@locale/>';</script>
 	<#-- jquery base -->
 	<script src ="<@base />/static/jquery/jquery-3.5.0.min.js"  type="text/javascript"></script>
@@ -45,8 +46,10 @@
 	<#-- platform common script -->	
 	<script src ="<@base />/static/jquery/locale/common.<@locale/>.js" type="text/javascript" ></script>
 	<script src ="<@base />/static/jquery/platform.common.js" type="text/javascript" ></script>
-	<#-- common js end  -->
-	<#-- common css begin -->
+	<!-- common js end  -->
+	
+	<!-- common css begin -->
 	<#-- if browser is not msie 6.0,follow styles over ie 6.0 style -->
 	<link type="text/css" rel="stylesheet"  href="<@base />/static/css/base.css"/>
-	<#-- common css end -->
+	<!-- common css end -->
+	

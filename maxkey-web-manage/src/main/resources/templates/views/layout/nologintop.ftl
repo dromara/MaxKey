@@ -1,3 +1,5 @@
+
+<!--top-->
 <div id="topBar"  > 
 	<div class="container">
 		<div style="float:left;margin-left:20px;margin-top: 5px;"><IMG SRC="<@base/>/static/images/logo.jpg" style="width:55px;heigth:55px"></div>
@@ -21,3 +23,4 @@
 		</div>
 	</div>
 </div>
+<!--top end-->

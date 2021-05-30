@@ -1,4 +1,5 @@
-     <#-- footer -->
+
+    <!-- footer -->
  	<div class="row" >
 	    <div class="container">
 		    <table cellpadding="2" cellspacing="0" style="margin-top: 30px;width:100%;height:100%; border:0;">
@@ -12,3 +13,5 @@
 		    </table> 
 	    </div>
 	 </div>
+	 <!-- footer end-->
+	 

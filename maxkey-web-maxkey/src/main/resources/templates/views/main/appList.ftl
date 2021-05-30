@@ -3,11 +3,13 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
-	<!--notices -->
+	
 	<#if noticesVisible >
+	<!--notices -->
 	<script>
 		window.open('<@base/>/lastedNotices','<@locale code="home.notices"/>','width=300,height=300');
 	</script>
+	<!--notices end-->
 	</#if>
 </head>
 <body>

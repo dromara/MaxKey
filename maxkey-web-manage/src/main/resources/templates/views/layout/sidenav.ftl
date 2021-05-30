@@ -1,3 +1,5 @@
+
+<!--side navigation-->
 <div  dir="rtl">
 <ul class="metismenu" id="side-nav-menu" >
 	<li>
@@ -164,3 +166,4 @@ $(function(){
 });
 </script>
 </div>
+<!--side navigation end-->
