@@ -8,7 +8,7 @@ JAVA_OPTS="${JAVA_OPTS} -Dfile.encoding=UTF-8"
 JAVA_OPTS="${JAVA_OPTS} -DjavaMark=${JAVA_MARK}"
 
 JAVA_CONF=./maxkey_mgt
-JAVA_LIBPATH=./maxkey_lib
+JAVA_LIBPATH=./lib
 JAVA_LIBMAXKEYPATH=./maxkey_mgt
 JAVA_CLASSPATH=./classes:./bin:$JAVA_CONF:
 JAVA_MAINCLASS=org.maxkey.MaxKeyMgtApplication

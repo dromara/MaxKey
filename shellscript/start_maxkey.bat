@@ -10,7 +10,7 @@ rem SET JAVA_OPTS="%JAVA_OPTS% -Dfile.encoding=GBK"
 SET JAVA_OPTS=%JAVA_OPTS% -DjavaMark=%JAVA_MARK%
 
 SET JAVA_CONF=./maxkey
-SET JAVA_LIBPATH=./maxkey_lib
+SET JAVA_LIBPATH=./lib
 SET JAVA_LIBMAXKEYPATH=./maxkey
 SET JAVA_CLASSPATH=./classes;./bin;%JAVA_CONF%
 SET JAVA_MAINCLASS=org.maxkey.MaxKeyApplication

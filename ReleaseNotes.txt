@@ -17,10 +17,12 @@
 	*(MAXKEY-210416)  同步器历史同步日志审计功能
 	*(MAXKEY-210417)  删除json2form插件，优化CSS，整合javacript脚本
 	*(MAXKEY-210418)  增加用户状态USERSTATE的属性（在职、退休、离职等），status用做活动/锁定/禁用等状态
-	*(MAXKEY-210419)  模板布局优化及段落注释说明
-	*(MAXKEY-210420)  构建时依赖问题修复
-	*(MAXKEY-210421)  依赖jar的版本统一配置gradle.properties
-	*(MAXKEY-210422)  依赖jar引用、更新和升级
+	*(MAXKEY-210419)  分离角色权限管理模块，未来和其他系统集成适配，实现权限的统一管理
+	*(MAXKEY-210420)  模板布局优化及段落注释说明
+	*(MAXKEY-210421)  优化启动脚本，解决长度过长问题
+	*(MAXKEY-210422)  构建时依赖问题修复
+	*(MAXKEY-210423)  依赖jar的版本统一配置gradle.properties
+	*(MAXKEY-210424)  依赖jar引用、更新和升级
         spring			5.3.7
 		springBoot  	2.4.5
 		springSecurity 	5.5.0

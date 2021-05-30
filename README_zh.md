@@ -96,7 +96,7 @@ QQ交流群：<b>434469201</b>
 
 | 版本    | 日期   |  下载地址  |  提取码  |
 | --------| :-----  | :----  | :----:  |
-| v 2.7.0 GA | 2021/04/15   |  <a href="https://pan.baidu.com/s/1shP3ld63r39ugyZCG5f1lQ" target="_blank">链接下载</a>  |  **hf73**  |
+| v 2.8.0 RC1 | 2021/06/01   |  <a href="https://pan.baidu.com/s/1fMr45bhahVWpdcTxXDxP9Q" target="_blank">链接下载</a>  |  **06ms**  |
 
 
 # Roadmap

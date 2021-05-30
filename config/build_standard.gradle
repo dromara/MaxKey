@@ -398,7 +398,7 @@ project('maxkey-common')  {
 		def paths = ["$rootDir/build/MaxKey-v${project.version}GA",
 		             "$rootDir/build/MaxKey-v${project.version}GA/maxkey",
 		             "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt",
-		             "$rootDir/build/MaxKey-v${project.version}GA/maxkey_lib"];
+		             "$rootDir/build/MaxKey-v${project.version}GA/lib"];
 		//遍历数组，调用createDir闭包，创建目录
 		
         paths.forEach(){path->
@@ -409,10 +409,10 @@ project('maxkey-common')  {
             }
         };
         
-		println  "copy Dep Jars to $rootDir/build/MaxKey-v${project.version}GA/maxkey_lib"
+		println  "copy Dep Jars to $rootDir/build/MaxKey-v${project.version}GA/lib"
 		
 		from configurations.runtimeClasspath
-		into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_lib";
+		into "$rootDir/build/MaxKey-v${project.version}GA/lib";
 	}
 }
 
@@ -445,7 +445,7 @@ task copyMaxKeyLibs(type: Copy) {
 	from "$rootDir/build/maxkey-jars/maxkey-protocol-oauth-2.0-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-protocol-saml-2.0-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-protocol-tokenbased-${project.version}.jar"
-	into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_lib";
+	into "$rootDir/build/MaxKey-v${project.version}GA/lib";
 }
 
 task copyMaxKeyShellScript(type: Copy) {
