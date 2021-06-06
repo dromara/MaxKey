@@ -4,7 +4,7 @@
 
 # Overview
 
-<b>Maxkey </b> Single Sign On system, which means the Maximum key, <b>Leading-Edge  Enterprise-Class open source IAM Identity and Access management product </b>, Support OAuth 2.0/OPENID CONNECT, SAML 2.0, JWT, CAS, SCIM and other standard protocols, and provide <b> Simple, Standard, Secure and Open </b> Identity management (IDM), Access management (AM), Single Sign On (SSO), RBAC permission management and Resource management.
+<b>Maxkey </b> Single Sign On system, which means the Maximum key, <b>Leading-Edge Enterprise-Class IAM Identity and Access management product </b>, Support OAuth 2.0/OPENID CONNECT, SAML 2.0, JWT, CAS, SCIM and other standard protocols, and provide <b> Simple, Standard, Secure and Open </b> Identity management (IDM), Access management (AM), Single Sign On (SSO), RBAC permission management and Resource management.
 
 Official Website <a href="https://www.maxkey.top" target="_blank"><b>Official</b></a> |  <a href="https://maxkeytop.gitee.io" target="_blank"><b>Line2</b></a>
 
@@ -14,7 +14,7 @@ email: <b> maxkeysupport@163.com </b>
 
 Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a>
 
-What is  <b> Single Sign On </b>, referred to as <b> SSO </b >.
+<b> Single Sign On </b>, referred to as <b> SSO </b >.
 
 Users only need to login to the authentication center once , access all the trusted application systems without logging in again.
 
