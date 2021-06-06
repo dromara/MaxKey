@@ -2,7 +2,7 @@ MaxKey单点登录认证系统(Single Sign On System)，MaxKey中文谐音为马
 支持OAuth 2.0/OpenID Connect、SAML 2.0、JWT、CAS、SCIM等标准协议；
 提供简单、标准、安全和开放的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、资源管理和权限管理等
 
-MaxKey声明
+MaxKey声明 
 
 可直接商用无需授权，必须保留本作品及源码中的所有版权、专利、商标和归属声明。
 
