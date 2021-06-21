@@ -107,7 +107,7 @@ Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/d
 
 <a href="https://github.com/dromara/MaxKey/issues/40" target="_blank"> Click to register </a> as MaxKey user and contribute to MaxKey!
 
-以下为接入或测试中的用户
+以下为部分接入或测试中的用户
 | 序号    | 单位   	|  性质   |
 | --------| :-----  | :----:  |
 | 1.1     | 兰州现代职业学院						 	|  教育  |
