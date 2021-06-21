@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.22, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: maxkey
 -- ------------------------------------------------------
@@ -615,7 +615,7 @@ CREATE TABLE `mxk_synchronizers` (
   `filters` varchar(400) DEFAULT NULL,
   `basedn` varchar(45) DEFAULT NULL,
   `msaddomain` varchar(45) DEFAULT NULL,
-  `ssl` varchar(45) DEFAULT NULL,
+  `sslswitch` varchar(45) DEFAULT NULL,
   `truststore` varchar(45) DEFAULT NULL,
   `truststorepassword` varchar(45) DEFAULT NULL,
   `STATUS` varchar(45) DEFAULT NULL,
@@ -793,4 +793,4 @@ CREATE TABLE `mxk_userinfo_adjunct` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-23 21:14:54
+-- Dump completed on 2021-06-21 22:55:38
