@@ -119,7 +119,7 @@
 		<tr>
 			<th><@locale code="synchronizers.ssl" />：</th>
 			<td nowrap>
-				<input type="text" id="ssl" name="ssl" class="form-control" title="" value="${model.ssl!}"  />
+				<input type="text" id="sslSwitch" name="sslSwitch" class="form-control" title="" value="${model.sslSwitch!}"  />
 			</td>
 		</tr>
 		<tr>

@@ -62,7 +62,7 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
     @Column
     String msadDomain;
     @Column
-    String ssl;
+    String sslSwitch;
     @Column
     String trustStore;
     @Column
@@ -193,15 +193,17 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 		this.msadDomain = msadDomain;
 	}
 
-	public String getSsl() {
-		return ssl;
-	}
+	
 
-	public void setSsl(String ssl) {
-		this.ssl = ssl;
-	}
+	public String getSslSwitch() {
+        return sslSwitch;
+    }
 
-	public String getTrustStore() {
+    public void setSslSwitch(String sslSwitch) {
+        this.sslSwitch = sslSwitch;
+    }
+
+    public String getTrustStore() {
 		return trustStore;
 	}
 
@@ -294,8 +296,8 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 		builder.append(basedn);
 		builder.append(", msadDomain=");
 		builder.append(msadDomain);
-		builder.append(", ssl=");
-		builder.append(ssl);
+		builder.append(", sslSwitch=");
+		builder.append(sslSwitch);
 		builder.append(", trustStore=");
 		builder.append(trustStore);
 		builder.append(", trustStorePassword=");
