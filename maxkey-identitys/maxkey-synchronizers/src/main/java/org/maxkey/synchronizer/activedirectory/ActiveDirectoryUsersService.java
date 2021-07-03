@@ -44,6 +44,7 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 	public void sync() {
 		_logger.info("Sync Users...");
 		loadOrgsById("1");
+		genSessionId();
 		try {
 			SearchControls constraints = new SearchControls();
 			constraints.setSearchScope(ldapUtils.getSearchScope());
@@ -160,6 +161,7 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 			    userInfoService.insert(userInfo);
 			    HistorySynchronizer historySynchronizer =new HistorySynchronizer();
 	            historySynchronizer.setId(historySynchronizer.generateId());
+	            historySynchronizer.setSessionId(this.getSessionId());
 	            historySynchronizer.setSyncId(this.synchronizer.getId());
 	            historySynchronizer.setSyncName(this.synchronizer.getName());
 	            historySynchronizer.setObjectId(userInfo.getId());

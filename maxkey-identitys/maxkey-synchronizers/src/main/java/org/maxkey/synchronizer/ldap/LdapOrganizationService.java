@@ -43,6 +43,7 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 	public void sync() {
 		_logger.info("Sync Organizations ...");
 		loadOrgsById("1");
+		genSessionId();
 		try {
 			SearchControls constraints = new SearchControls();
 			constraints.setSearchScope(ldapUtils.getSearchScope());
@@ -123,6 +124,7 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
             HistorySynchronizer historySynchronizer =new HistorySynchronizer();
             historySynchronizer.setId(historySynchronizer.generateId());
             historySynchronizer.setSyncId(this.synchronizer.getId());
+            historySynchronizer.setSessionId(this.getSessionId());
             historySynchronizer.setSyncName(this.synchronizer.getName());
             historySynchronizer.setObjectId(org.getId());
             historySynchronizer.setObjectName(org.getName());

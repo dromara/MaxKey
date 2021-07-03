@@ -30,6 +30,7 @@ import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
 import org.maxkey.persistence.ldap.LdapUtils;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -40,9 +41,11 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 
 	ActiveDirectoryUtils ldapUtils;
 	
+	
 	public void sync() {
 	    loadOrgsById("1");
 		_logger.info("Sync Organizations ...");
+		genSessionId();
 		try {
 			SearchControls constraints = new SearchControls();
 			constraints.setSearchScope(ldapUtils.getSearchScope());
@@ -125,6 +128,7 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 			organizationsService.insert(org);
 			HistorySynchronizer historySynchronizer =new HistorySynchronizer();
             historySynchronizer.setId(historySynchronizer.generateId());
+            historySynchronizer.setSessionId(this.getSessionId());
             historySynchronizer.setSyncId(this.synchronizer.getId());
             historySynchronizer.setSyncName(this.synchronizer.getName());
             historySynchronizer.setObjectId(org.getId());

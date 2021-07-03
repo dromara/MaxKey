@@ -25,6 +25,10 @@ public class HistorySynchronizer  extends JpaBaseEntity  implements Serializable
     String id;
     @Column
     String syncId;
+    
+    @Column
+    String sessionId;
+    
     @Column
     String syncName;
     @Column
@@ -104,6 +108,12 @@ public class HistorySynchronizer  extends JpaBaseEntity  implements Serializable
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+    public String getSessionId() {
+        return sessionId;
+    }
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -111,6 +121,8 @@ public class HistorySynchronizer  extends JpaBaseEntity  implements Serializable
         builder.append(id);
         builder.append(", syncId=");
         builder.append(syncId);
+        builder.append(", sessionId=");
+        builder.append(sessionId);
         builder.append(", syncName=");
         builder.append(syncName);
         builder.append(", objectId=");
@@ -123,6 +135,10 @@ public class HistorySynchronizer  extends JpaBaseEntity  implements Serializable
         builder.append(syncTime);
         builder.append(", result=");
         builder.append(result);
+        builder.append(", startDate=");
+        builder.append(startDate);
+        builder.append(", endDate=");
+        builder.append(endDate);
         builder.append("]");
         return builder.toString();
     }
