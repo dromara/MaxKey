@@ -28,7 +28,7 @@ Key Functions
 1.  Standard Protocols
 
 | No.     | Protocols   |  Support  |
-| --------| :-----  	| :----:  	|
+| --------| :-----  	| :----  	|
 | 1.1     | OAuth 2.0/OpenID Connect   	| HIGH  |
 | 1.2     | SAML 2.0   				 	| HIGH  |
 | 1.3     | JWT  					    | HIGH  |
@@ -41,7 +41,7 @@ Key Functions
 2. Authentication
 
 | No.     | SignIn Support  | Support   |
-| --------| :-----  		| :----:  	|
+| --------| :-----  		| :----  	|
 | 2.1     | Captcha			| letter / number / arithmetic 	| 
 | 2.2     | Two Factor Authentication  | SMS / TOPT/ Mail     |
 | 2.3     | SMS				| Tencent SMS / Alibaba SMS / NetEaseYunXin 	|
@@ -91,7 +91,7 @@ App Management UI
 Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> history version</a>
 
 | Version    | ReleaseDate   |  Download URL  |  Code  |
-| --------| :-----  | :----  | :----:  |
+| --------| :-----  | :----  | :----  |
 | v 2.8.1 GA | 2021/06/25    |  <a href="https://pan.baidu.com/s/1XXzqEMZqBIaUAzRIDm9iSg" target="_blank">Download</a>  |  **dplq**  |
  
 
@@ -107,7 +107,7 @@ Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/d
 
 以下为部分接入或测试中的用户
 | 序号    | 单位   	|  行业   |
-| --------| :-----  | :----:  |
+| --------| :-----  | :----  |
 | 1.1     | 兰州现代职业学院						 	|  院校  |
 | 1.2     | 无锡立信高等职业技术学校				    |  院校  |
 | 2.1     | 武汉英特沃科技有限公司   				 	|  科技  |
