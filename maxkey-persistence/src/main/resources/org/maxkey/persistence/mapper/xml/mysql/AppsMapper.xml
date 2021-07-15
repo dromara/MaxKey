@@ -61,6 +61,8 @@
 			issignature,
 			
 			isadapter,
+			adapterid,
+			adaptername,
 			adapter,
 			
 			principal,
@@ -100,6 +102,8 @@
 			#{isSignature},
 			
 			#{isAdapter},
+			#{adapterId},
+			#{adapterName},
 			#{adapter},
 			
 			#{principal},
@@ -146,6 +150,8 @@
 			
 			<if test="adapter != null">
 			isadapter			=	#{isAdapter},
+			adapterid			=   #{adapterId},
+			adaptername			=	#{adapterName},
 			adapter				=	#{adapter},
 			</if>
 			principal		=	#{principal},
