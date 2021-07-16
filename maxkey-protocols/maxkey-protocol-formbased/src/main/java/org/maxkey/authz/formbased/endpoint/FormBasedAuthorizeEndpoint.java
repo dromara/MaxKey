@@ -73,7 +73,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		
 		_logger.debug("Accounts "+appUser);
 		if(appUser	==	null){
-			return generateInitCredentialModelAndView(id,"/authorize/formbased/"+id);
+			return generateInitCredentialModelAndView(id,"/authz/formbased/"+id);
 			
 		}else{
 			formBasedDetails.setAppUser(appUser);

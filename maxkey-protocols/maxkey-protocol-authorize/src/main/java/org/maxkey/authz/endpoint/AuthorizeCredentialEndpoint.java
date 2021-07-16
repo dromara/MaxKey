@@ -49,6 +49,7 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 		modelAndView.addObject("setpassword", true);
 		modelAndView.addObject("uid", WebContext.getUserInfo().getId());
 		modelAndView.addObject("appId", appId);
+		modelAndView.addObject("appName",getApp(appId).getName());
 		modelAndView.addObject("redirect_uri", redirect_uri);
 		return modelAndView;
 	}
