@@ -47,6 +47,8 @@ public class AppsFormBasedDetails  extends Apps {
 	@Column
 	private String passwordMapping;
 	@Column
+	private String passwordAlgorithm;
+	@Column
 	private String authorizeView;
 
 
@@ -123,7 +125,17 @@ public class AppsFormBasedDetails  extends Apps {
 	}
 
 
-	@Override
+	public String getPasswordAlgorithm() {
+        return passwordAlgorithm;
+    }
+
+
+    public void setPasswordAlgorithm(String passwordAlgorithm) {
+        this.passwordAlgorithm = passwordAlgorithm;
+    }
+
+
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("AppsFormBasedDetails [id=");

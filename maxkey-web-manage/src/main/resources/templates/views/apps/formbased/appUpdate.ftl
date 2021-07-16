@@ -81,8 +81,9 @@ $(function(){
 						</select>	
 						
 					</td>
-					<th></th>
-					<td  >
+					<th><@locale code="apps.formbased.passwordAlgorithm"/>：</th>
+					<td>
+					   <input type="text" class="form-control" id="passwordAlgorithm" name="passwordAlgorithm"  title="" value="${model.passwordAlgorithm!}"/>
 					</td>
 				</tr>
 				<tr>

@@ -17,6 +17,8 @@
 
 package org.maxkey.authz.formbased.endpoint.adapter;
 
+import java.time.Instant;
+
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.Boolean;
@@ -44,28 +46,23 @@ public class FormBasedRedirectAdapter extends AbstractAuthorizeAdapter {
 		modelAndView.setViewName("authorize/formbased_redirect_submint");
 		AppsFormBasedDetails details=(AppsFormBasedDetails)app;
 		
+		String password = details.getAppUser().getRelatedPassword();
+        if(null==details.getPasswordAlgorithm()||details.getPasswordAlgorithm().equals("")){
+        }else if(details.getPasswordAlgorithm().indexOf("HEX")>-1){
+            password = DigestUtils.digestHex(details.getAppUser().getRelatedPassword(),details.getPasswordAlgorithm().substring(0, details.getPasswordAlgorithm().indexOf("HEX")));
+        }else{
+            password = DigestUtils.digestBase64(details.getAppUser().getRelatedPassword(),details.getPasswordAlgorithm());
+        }
+        
 		modelAndView.addObject("id", details.getId());
 		modelAndView.addObject("action", details.getRedirectUri());
+		modelAndView.addObject("redirectUri", details.getRedirectUri());
 		modelAndView.addObject("loginUrl", details.getLoginUrl());
 		modelAndView.addObject("usernameMapping", details.getUsernameMapping());
-		
-		String passwordAlgorithm=null;
-		String passwordMapping=details.getPasswordMapping();
-		if(passwordMapping.indexOf(":")>-1){
-			passwordAlgorithm=passwordMapping.substring(passwordMapping.indexOf(":")+1).toUpperCase();
-			details.setPasswordMapping(passwordMapping.substring(0, passwordMapping.indexOf(":")));
-		}
 		modelAndView.addObject("passwordMapping", details.getPasswordMapping());
-		
 		modelAndView.addObject("username", details.getAppUser().getRelatedUsername());
-		if(null==passwordAlgorithm){
-			modelAndView.addObject("password",  details.getAppUser().getRelatedPassword());
-		}else if(passwordAlgorithm.indexOf("HEX")>-1){
-			modelAndView.addObject("password",  DigestUtils.digestHex(details.getAppUser().getRelatedPassword(),passwordAlgorithm.substring(0, passwordAlgorithm.indexOf("HEX"))));
-		}else{
-			modelAndView.addObject("password",  DigestUtils.digestBase64(details.getAppUser().getRelatedPassword(),passwordAlgorithm));
-		}
-		
+        modelAndView.addObject("password",  password);
+        modelAndView.addObject("timestamp",  ""+Instant.now().getEpochSecond());
 		
 		if(WebContext.getAttribute("formbased_redirect_submint")==null){
 			modelAndView.setViewName("authorize/formbased_redirect_submint");

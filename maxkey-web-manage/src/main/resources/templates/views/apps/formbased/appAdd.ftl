@@ -78,9 +78,10 @@ $(function(){
 						<@locale code="apps.credential.system"/>
 						<b class="orange">*</b><label for="credential"></label>
 					</td>
-					<th></th>
-					<td>
-					</td>
+					<th><@locale code="apps.formbased.passwordAlgorithm"/>：</th>
+                    <td>
+                       <input type="text" class="form-control" id="passwordAlgorithm" name="passwordAlgorithm"  title="" value=""/>
+                    </td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.formbased.authorizeView"/>：</th>
