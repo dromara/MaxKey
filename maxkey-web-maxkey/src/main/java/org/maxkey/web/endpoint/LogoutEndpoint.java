@@ -95,9 +95,9 @@ public class LogoutEndpoint {
  		ModelAndView modelAndView = new ModelAndView();
  		authenticationRealm.logout(response);
  		
- 		if(reLoginUrl==null){
+ 		if(reLoginUrl==null ||reLoginUrl.equals("")){
 	 		SavedRequest  firstSavedRequest = (SavedRequest)WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
-	 		reLoginUrl=WebContext.getHttpContextPath()+"/login";
+	 		reLoginUrl="/login";
 	 		if(firstSavedRequest!=null){
 	 			reLoginUrl= firstSavedRequest.getRedirectUrl();
 	 			WebContext.removeAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
@@ -106,7 +106,11 @@ public class LogoutEndpoint {
  		
  		//not start with http or https
  		if(reLoginUrl!=null && !reLoginUrl.toLowerCase().startsWith("http")) {
- 		   reLoginUrl=WebContext.getHttpContextPath()+"/"+reLoginUrl;
+ 		    if(reLoginUrl.startsWith("/")) {
+ 		        reLoginUrl=request.getContextPath()+reLoginUrl;
+ 		    }else {
+ 		       reLoginUrl=request.getContextPath()+"/"+reLoginUrl;
+ 		    }
  		}
  		
  		_logger.debug("re Login URL : "+ reLoginUrl);

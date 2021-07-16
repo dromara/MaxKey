@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -37,19 +38,35 @@ public class LogoutEndpoint {
 	
 	private static Logger _logger = LoggerFactory.getLogger(LogoutEndpoint.class);
 	
+	public static final String RE_LOGIN_URL    =   "reLoginUrl";
+	
 	@Autowired
 	@Qualifier("authenticationRealm")
 	AbstractAuthenticationRealm authenticationRealm;
 	
  	@RequestMapping(value={"/logout"})
- 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response){
+ 	public ModelAndView logout( HttpServletRequest request, 
+ 	                            HttpServletResponse response,
+ 	                            @RequestParam(value=RE_LOGIN_URL,required=false) String reLoginUrl){
  		ModelAndView modelAndView = new ModelAndView();
  		authenticationRealm.logout(response);
  		SavedRequest  firstSavedRequest = (SavedRequest)WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
- 		String reLoginUrl=WebContext.getHttpContextPath()+"/login";
+ 		
+ 		if(reLoginUrl==null ||reLoginUrl.equals("")) {
+ 		    reLoginUrl="/login";
+ 		}
+ 		
  		if(firstSavedRequest!=null){
  			reLoginUrl= firstSavedRequest.getRedirectUrl();
  		}
+ 		
+ 		if(reLoginUrl!=null && !reLoginUrl.toLowerCase().startsWith("http")) {
+            if(reLoginUrl.startsWith("/")) {
+                reLoginUrl=request.getContextPath()+reLoginUrl;
+            }else {
+               reLoginUrl=request.getContextPath()+"/"+reLoginUrl;
+            }
+        }
  		_logger.debug("re Login URL : "+ reLoginUrl);
  		modelAndView.addObject("reloginUrl",reLoginUrl);
  		request.getSession().invalidate();
