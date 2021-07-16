@@ -1,7 +1,6 @@
 #!/bin/bash
 echo "-------------------------------------------------------------------------------"
 echo "--    Maxkey Sigle Sign On  System                                           --"
-echo "--    MaxKey  Version 2.8.0 GA                                               --"
 echo "--    Set JAVA_HOME  ....                                                    --"
 echo "--    JAVA_HOME   JDK                                                        --"
 
