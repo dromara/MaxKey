@@ -60,6 +60,8 @@ public class Accounts extends JpaBaseEntity implements Serializable {
     private String relatedUsername;
     @Column
     private String relatedPassword;
+    
+    UserInfo userInfo;
 
     public Accounts() {
         super();
@@ -144,6 +146,14 @@ public class Accounts extends JpaBaseEntity implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 
     @Override

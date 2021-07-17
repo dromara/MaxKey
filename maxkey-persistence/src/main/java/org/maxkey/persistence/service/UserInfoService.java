@@ -68,7 +68,6 @@ import com.google.common.collect.Lists;
 public class UserInfoService extends JpaBaseService<UserInfo> {
 	final static Logger _logger = LoggerFactory.getLogger(UserInfoService.class);
 	
-	final static  String UPDATE_GRIDLIST_SQL = "UPDATE MXK_USERINFO SET GRIDLIST = ? WHERE ID = ?";
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -96,10 +95,14 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean insert(UserInfo userInfo) {
         userInfo = passwordEncoder(userInfo);
         if (super.insert(userInfo)) {
-        	kafkaPersistService.send(
-                    KafkaIdentityTopic.USERINFO_TOPIC, 
-                    userInfo,
-                    KafkaIdentityAction.CREATE_ACTION);
+            if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
+                UserInfo loadUserInfo = loadUserRelated(userInfo.getId());
+                kafkaPersistService.send(
+                        KafkaIdentityTopic.USERINFO_TOPIC, 
+                        loadUserInfo,
+                        KafkaIdentityAction.CREATE_ACTION);
+            }
+            
             return true;
         }
 
@@ -109,11 +112,13 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean update(UserInfo userInfo) {
         userInfo = passwordEncoder(userInfo);
         if (super.update(userInfo)) {
-        	kafkaPersistService.send(
-                    KafkaIdentityTopic.USERINFO_TOPIC, 
-                    userInfo,
-                    KafkaIdentityAction.UPDATE_ACTION);
-           
+            if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
+                UserInfo loadUserInfo = loadUserRelated(userInfo.getId());
+                kafkaPersistService.send(
+                        KafkaIdentityTopic.USERINFO_TOPIC, 
+                        loadUserInfo,
+                        KafkaIdentityAction.UPDATE_ACTION);
+            }
             changePasswordProvisioning(userInfo);
             return true;
         }
@@ -121,23 +126,33 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     }
 	
 	public boolean delete(UserInfo userInfo) {
+	    UserInfo loadUserInfo = null;
+	    if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
+	        loadUserInfo = loadUserRelated(userInfo.getId());
+	    }
+	    
 		if( super.delete(userInfo)){
 			kafkaPersistService.send(
 		            KafkaIdentityTopic.USERINFO_TOPIC, 
-		            userInfo, 
+		            loadUserInfo, 
 		            KafkaIdentityAction.DELETE_ACTION);
 			 return true;
 		}
 		return false;
 	}
 
+	public UserInfo loadUserRelated(String userId) {
+	    UserInfo loadUserInfo =this.get(userId);
+	    loadUserInfo.setDepts(getMapper().loadDeptsByUserId(userId));
+	    loadUserInfo.setAdjoints(getMapper().loadAdjointsByUserId(userId));
+	    return loadUserInfo;
+	}
+	
 	public boolean updateGridList(String gridList) {
 	    try {
     	    if (gridList != null && !gridList.equals("")) {
-                int intGridList = Integer.parseInt(gridList);
-                jdbcTemplate.update(UPDATE_GRIDLIST_SQL, intGridList,
-                        WebContext.getUserInfo().getId());
-                WebContext.getUserInfo().setGridList(intGridList);
+                WebContext.getUserInfo().setGridList(Integer.parseInt(gridList));
+                getMapper().updateGridList(WebContext.getUserInfo());
             }
 	    }catch(Exception e) {
             e.printStackTrace();

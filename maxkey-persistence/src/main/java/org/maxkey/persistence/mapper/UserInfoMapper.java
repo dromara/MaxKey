@@ -17,9 +17,14 @@
 
 package org.maxkey.persistence.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
+import org.maxkey.entity.Organizations;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.UserInfoAdjoint;
 
 
 /**
@@ -59,8 +64,14 @@ public interface UserInfoMapper  extends IJpaBaseMapper<UserInfo>{
 	public int changeMobile(UserInfo userInfo);
 	
 	public int updateProfile(UserInfo userInfo);
+	
+	public List<Organizations> loadDeptsByUserId(String userId);
+	
+	public List<UserInfoAdjoint> loadAdjointsByUserId(String userId);
 	   
     @Select("select * from  mxk_userinfo where   email = #{value} or mobile= #{value}")
     public UserInfo queryUserInfoByEmailMobile(String emailMobile);
-	
+    
+    @Update("update mxk_userinfo set gridlist =  #{gridList} where id = #{id}")
+	public int updateGridList(UserInfo userInfo) ;
 }

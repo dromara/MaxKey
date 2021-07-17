@@ -21,6 +21,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -258,7 +260,9 @@ public class UserInfo extends JpaBaseEntity {
     @Column
     String description;
 
+    List<Organizations> depts;
     
+    List<UserInfoAdjoint> adjoints;
     
     public static class ONLINE {
         // 在线
@@ -1240,7 +1244,23 @@ public class UserInfo extends JpaBaseEntity {
 		this.userState = userState;
 	}
 
-	@Override
+    public List<Organizations> getDepts() {
+        return depts;
+    }
+
+    public void setDepts(List<Organizations> depts) {
+        this.depts = depts;
+    }
+
+    public List<UserInfoAdjoint> getAdjoints() {
+        return adjoints;
+    }
+
+    public void setAdjoints(List<UserInfoAdjoint> adjoints) {
+        this.adjoints = adjoints;
+    }
+
+    @Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("UserInfo [id=");

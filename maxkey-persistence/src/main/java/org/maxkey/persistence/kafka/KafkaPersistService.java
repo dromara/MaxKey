@@ -47,6 +47,10 @@ public class KafkaPersistService {
         this.kafkaTemplate = kafkaTemplate;
     }
     
+    public ApplicationConfig getApplicationConfig() {
+        return applicationConfig;
+    }
+
     /**
      * send  msg to kafka
      * @param topic kafka TOPIC

@@ -89,6 +89,8 @@ public class Organizations extends JpaBaseEntity implements Serializable {
     private String extId;
     @Column
     private String extParentId;
+    
+    private int isPrimary = 0;
 
     public Organizations() {
         //
@@ -322,7 +324,15 @@ public class Organizations extends JpaBaseEntity implements Serializable {
 		this.extParentId = extParentId;
 	}
 
-	@Override
+	public int getIsPrimary() {
+        return isPrimary;
+    }
+
+    public void setIsPrimary(int isPrimary) {
+        this.isPrimary = isPrimary;
+    }
+
+    @Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Organizations [id=");
