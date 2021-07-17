@@ -19,13 +19,26 @@ package org.maxkey.persistence.kafka;
 
 public class KafkaIdentityTopic {
     
-    public final static String  USERINFO_TOPIC  = "IDENTITY_USERINFO_TOPIC";
+    public final static String   USERINFO_TOPIC                     = "MXK_IDENTITY_USERINFO_TOPIC";
     
-    public final  static String  ORG_TOPIC      = "IDENTITY_ORG_TOPIC";
+    public final  static String  PASSWORD_TOPIC                     = "MXK_IDENTITY_USERINFO_PASSWORD_TOPIC";
     
-    public final  static String  GROUP_TOPIC    = "IDENTITY_GROUP_TOPIC";
+    public final  static String  ORG_TOPIC                          = "MXK_IDENTITY_ORG_TOPIC";
     
-    public final  static String  PASSWORD_TOPIC = "IDENTITY_PASSWORD_TOPIC";
+    public final  static String  GROUP_TOPIC                        = "MXK_IDENTITY_GROUP_TOPIC";
     
+    public final  static String  GROUP_MEMBER_TOPIC                 = "MXK_IDENTITY_GROUP_MEMBER_TOPIC";
     
+    public final  static String  ACCOUNT_TOPIC                      = "MXK_IDENTITY_ACCOUNT_TOPIC";
+    
+    public final  static String  AUTHORITY_ROLE_TOPIC               = "MXK_AUTHORITY_ROLE_TOPIC";
+    
+    public final  static String  AUTHORITY_ROLE_MEMBER_TOPIC        = "MXK_AUTHORITY_ROLE_MEMBER_TOPIC";
+    
+    public final  static String  AUTHORITY_RESOURCE_TOPIC           = "MXK_AUTHORITY_RESOURCE_TOPIC";
+    
+    public final  static String  AUTHORITY_ROLE_PERMISSION_TOPIC    = "MXK_AUTHORITY_ROLE_PERMISSION_TOPIC";
+    
+    public final  static String  CONNECTOR_HISTORY_TOPIC            = "MXK_CONNECTOR_HISTORY_TOPIC";
+     
 }
