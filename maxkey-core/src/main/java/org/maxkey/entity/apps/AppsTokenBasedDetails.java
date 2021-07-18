@@ -42,7 +42,7 @@ public class AppsTokenBasedDetails  extends Apps {
 
 	@Id
 	@Column
-	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="snowflakeid")
 	protected String id;
 	/**
 	 * 

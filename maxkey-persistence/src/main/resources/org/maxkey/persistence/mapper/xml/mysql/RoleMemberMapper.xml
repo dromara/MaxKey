@@ -45,11 +45,7 @@
 					u.jobtitle,
 					u.joblevel,
 					
-					
-					u.createdby,
 					u.createddate,
-					u.modifiedby,
-					u.modifieddate,
 					
 					u.status
 				from
@@ -90,10 +86,7 @@
 				u.joblevel,
 				
 				
-				u.createdby,
-				u.createddate,
-				u.modifiedby,
-				u.modifieddate,
+				rm.createddate,
 				
 				u.status
 			from

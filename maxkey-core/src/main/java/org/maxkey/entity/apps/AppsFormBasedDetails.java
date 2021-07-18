@@ -37,7 +37,7 @@ public class AppsFormBasedDetails  extends Apps {
 	private static final long serialVersionUID = 563313247706861431L;
 	@Id
 	@Column
-	@GeneratedValue(strategy=GenerationType.AUTO,generator="uuid")
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="snowflakeid")
 	protected String id;
 	
 	@Column

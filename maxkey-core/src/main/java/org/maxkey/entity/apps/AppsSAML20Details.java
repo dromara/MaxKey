@@ -42,7 +42,7 @@ public class AppsSAML20Details extends Apps {
     private static final long serialVersionUID = -291159876339333345L;
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     protected String id;
     @Column
     private String certIssuer;

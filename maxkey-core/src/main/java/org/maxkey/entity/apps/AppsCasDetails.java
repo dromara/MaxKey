@@ -34,7 +34,7 @@ public class AppsCasDetails extends Apps {
     private static final long serialVersionUID = -4272290765948322084L;
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     private String id;
     @Column
     private String service;

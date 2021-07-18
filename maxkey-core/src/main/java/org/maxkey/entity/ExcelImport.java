@@ -39,7 +39,7 @@ public class ExcelImport extends JpaBaseEntity {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     String id;
  
     @JsonIgnore

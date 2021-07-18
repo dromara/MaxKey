@@ -37,7 +37,7 @@ public class AppsAdapters extends JpaBaseEntity implements Serializable {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     protected String id;
     /**
      * 

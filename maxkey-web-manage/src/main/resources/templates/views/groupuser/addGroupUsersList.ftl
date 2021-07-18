@@ -10,7 +10,14 @@
   }
 </style>
 <script type="text/javascript">	
-	
+    function genderFormatter(value, row, index){
+        if(value==1){
+            return '<@locale code="userinfo.gender.female" />';
+        }else{
+            return '<@locale code="userinfo.gender.male" />';
+        }
+    };
+    	
 	function afterSubmit(data){
 		//$("#list").trigger('reloadGrid');
 	}
@@ -89,11 +96,11 @@
 				<th data-checkbox="true"></th>
 				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
 				<th data-field="username"><@locale code="userinfo.username"/></th>
-				<th data-field="displayName"><@locale code="userinfo.displayName"/></th>
-				<th data-field="createdBy"><@locale code="common.text.createdby"/></th>
-				<th data-field="createdDate"><@locale code="common.text.createddate"/></th>
-				<th data-field="modifiedBy"><@locale code="common.text.modifiedby"/></th>
-				<th data-field="modifiedDate"><@locale code="common.text.modifieddate"/></th>
+                <th data-field="displayName"><@locale code="userinfo.displayName"/></th>
+                <th data-field="gender"  data-formatter="genderFormatter" ><@locale code="userinfo.gender"/></th>
+                <th data-field="userType"><@locale code="userinfo.userType"/></th>
+                <th data-field="jobTitle"><@locale code="userinfo.jobTitle"/></th>
+                <th data-field="department"><@locale code="userinfo.department"/></th>
 	
 			</tr>
 		</thead>

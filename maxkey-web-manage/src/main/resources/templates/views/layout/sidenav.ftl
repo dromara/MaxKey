@@ -149,6 +149,12 @@
                  <span class="fa fa-fw fa-eraser"></span>
              </a>
            </li>
+           <li>
+             <a class="side-nav-menu" href="<@base />/historys/connectorHistoryList/">
+                 <@locale code="navs.audit.connector"/>
+                 <span class="fa fa-fw fa-eraser"></span>
+             </a>
+           </li>
 	       <li>
 	         <a class="side-nav-menu" href="<@base />/historys/systemLogsList/">
 	         	  <@locale code="navs.audit.operate"/>

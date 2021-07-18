@@ -45,11 +45,7 @@
 					u.jobtitle,
 					u.joblevel,
 					
-					
-					u.createdby,
 					u.createddate,
-					u.modifiedby,
-					u.modifieddate,
 					
 					u.status
 				from
@@ -89,16 +85,12 @@
 				u.jobtitle,
 				u.joblevel,
 				
-				
-				u.createdby,
-				u.createddate,
-				u.modifiedby,
-				u.modifieddate,
+				gm.createddate,
 				
 				u.status
 			from
 				mxk_userinfo u,
-				`mxk_groups` g,
+				mxk_groups   g,
 				mxk_group_member gm
 			where	1	=	1
 				<if test="groupId != null and groupId != ''">

@@ -40,7 +40,7 @@ public class PasswordPolicy extends JpaBaseEntity implements java.io.Serializabl
     private static final long serialVersionUID = -4797776994287829182L;
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     String id;
     /**
      * minimum password lengths

@@ -4,7 +4,14 @@
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
 <script type="text/javascript">	
-	
+	function genderFormatter(value, row, index){
+        if(value==1){
+            return '<@locale code="userinfo.gender.female" />';
+        }else{
+            return '<@locale code="userinfo.gender.male" />';
+        }
+    };
+    
 	function afterSubmit(data){
 		$("#list").trigger('reloadGrid');
 	}
@@ -96,21 +103,16 @@
  			<form id="advanced_search_form">
 		 		<table  class="datatable">
 		 			<tr>
-			 			<td width="120px"><@locale code="apps.protocol"/></td>
+			 			<td width="120px"><@locale code="userinfo.username" />：</td>
 			 			<td width="360px">
+			 			     <input class="form-control"  type="text"  id="username" name="username"  title="" value=""/>
 			 			</td>
-			 			<td width="120px"><@locale code="apps.protocol"/></td>
+			 			<td width="120px"><@locale code="userinfo.displayName" />：</td>
 			 			<td width="360px">
-			 			</td>
-			 		</tr>
-			 		<tr>
-			 			<td width="120px"><@locale code="apps.protocol"/></td>
-			 			<td width="360px">
-			 			</td>
-			 			<td width="120px"><@locale code="apps.protocol"/></td>
-			 			<td width="360px">
+			 			     <input class="form-control"  type="text"  id="displayName" name="displayName"  title="" value=""/>
 			 			</td>
 			 		</tr>
+			 		
 			 	</table>
 		 	</form>
 		 </div>
@@ -135,11 +137,11 @@
 				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
 				<th data-field="username"><@locale code="userinfo.username"/></th>
 				<th data-field="displayName"><@locale code="userinfo.displayName"/></th>
-				<th data-field="createdBy"><@locale code="common.text.createdby"/></th>
+				<th data-field="gender"  data-formatter="genderFormatter" ><@locale code="userinfo.gender"/></th>
+				<th data-field="userType"><@locale code="userinfo.userType"/></th>
+				<th data-field="jobTitle"><@locale code="userinfo.jobTitle"/></th>
+				<th data-field="department"><@locale code="userinfo.department"/></th>
 				<th data-field="createdDate"><@locale code="common.text.createddate"/></th>
-				<th data-field="modifiedBy"><@locale code="common.text.modifiedby"/></th>
-				<th data-field="modifiedDate"><@locale code="common.text.modifieddate"/></th>
-	
 			</tr>
 		</thead>
 	</table>
