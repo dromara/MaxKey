@@ -204,10 +204,15 @@
 				xAxes: [{
 					display: true,
 				}],
-				yAxes: [{
-					display: true,
-					stacked: true
-				}]
+				y: {
+                        title: {
+                            display: true
+                          },
+                         ticks: {
+                            precision : 0
+                        },
+                        beginAtZero: true
+                    }
 			}
 		}
 	};
@@ -231,21 +236,34 @@
 				},
 				scales: {
 					xAxes: [{
-						display: true,
+						display: true
 					}],
-					yAxes: [{
-						display: true,
-						stacked: true
-					}]
+					y: {
+					    title: {
+                            display: true
+                          },
+                         ticks: {
+                            precision : 0
+                         /*
+                            callback: function(value, index, values) {
+                                return  parseInt(value);
+                            }*/
+                        },
+                        beginAtZero: true
+                    }
 				}
 			}
 		};
+		
 	window.onload = function() {
+	    var ctxdh = document.getElementById('canvasDayHour').getContext('2d');
+        window.myLineDayHour = new Chart(ctxdh, configDayHour);
+        
+        
 		var ctx = document.getElementById('canvasMonth').getContext('2d');
 		window.myLineMonth = new Chart(ctx, configMonth);
 		
-		var ctxdh = document.getElementById('canvasDayHour').getContext('2d');
-		window.myLineDayHour = new Chart(ctxdh, configDayHour);
+		
 	};
 
 	</script>	

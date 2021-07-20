@@ -38,7 +38,7 @@
 	<link   href="<@base />/static/jquery/metisMenu-v3.0.6/css/mm-vertical.css"  rel="stylesheet" >
 	<link   href="<@base />/static/jquery/metisMenu-v3.0.6/metisMenu.min.css"  rel="stylesheet" >
 	<script src ="<@base />/static/jquery/metisMenu-v3.0.6/metisMenu.min.js" type="text/javascript" ></script>
-	<script src ="<@base />/static/js/Chart.min.js" type="text/javascript" ></script>
+	<script src ="<@base />/static/js/chart.min.js" type="text/javascript" ></script>
 	<#-- multiple-select-1.5.2 -->
 	<script type="text/javascript" src="<@base />/static/jquery/multiple-select-1.5.2/multiple-select.min.js"></script>
 	<script type="text/javascript" src="<@base />/static/jquery/multiple-select-1.5.2/locale/multiple-select-<@locale/>.js"></script>

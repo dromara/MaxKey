@@ -18,7 +18,6 @@
 package org.maxkey.entity.apps;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -599,8 +598,6 @@ public class Apps extends JpaBaseEntity implements Serializable {
 		builder.append(protocol);
 		builder.append(", secret=");
 		builder.append(secret);
-		builder.append(", icon=");
-		builder.append(Arrays.toString(icon));
 		builder.append(", iconFile=");
 		builder.append(iconFile);
 		builder.append(", visible=");
