@@ -53,13 +53,25 @@ public class DefaultJdbcAuthenticationRealm extends AbstractAuthenticationRealm 
      */
     public boolean passwordMatches(UserInfo userInfo, String password) {
         boolean passwordMatches = false;
-        if(ldapSupport) {
+        //jdbc password check
+        _logger.debug("password : " 
+                + PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), password));
+        passwordMatches = passwordEncoder.matches(password,userInfo.getPassword());
+        
+        //passwordMatches == false and ldapSupport ==true
+        //validate password with LDAP
+        if(!passwordMatches && ldapSupport) {
         	passwordMatches =this.ldapAuthenticationRealm.passwordMatches(userInfo, password);
-        }else {
-	        _logger.debug("password : " 
-	                + PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), password));
-	        passwordMatches = passwordEncoder.matches(password,userInfo.getPassword());
+        	if(passwordMatches) {
+        	    //init password to local Realm
+        	    UserInfo changePasswordUser = new UserInfo();
+        	    changePasswordUser.setId(userInfo.getId());
+        	    changePasswordUser.setUsername(userInfo.getUsername());
+        	    changePasswordUser.setPassword(password);
+        	    userInfoService.changePassword(changePasswordUser, false);
+        	}
         }
+        
         _logger.debug("passwordvalid : " + passwordMatches);
         if (!passwordMatches) {
             passwordPolicyValidator.setBadPasswordCount(userInfo);

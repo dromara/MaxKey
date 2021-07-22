@@ -229,7 +229,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	        if(newPassword.equals(confirmPassword)){
 	            if(oldPassword==null || 
 	                    passwordEncoder.matches(oldPassword, userInfo.getPassword())){
-	                if(changePassword(changeUserInfo) ){
+	                if(changePassword(changeUserInfo,true) ){
 	                    userInfo.setPassword(changeUserInfo.getPassword());
                         userInfo.setDecipherable(changeUserInfo.getDecipherable());
 	                    return true;
@@ -256,19 +256,18 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		return false;
 	}
 	
-    public boolean changePassword(UserInfo changeUserInfo) {
+    public boolean changePassword(UserInfo changeUserInfo,boolean passwordPolicy) {
         try {
             _logger.debug("decipherable old : " + changeUserInfo.getDecipherable());
             _logger.debug("decipherable new : " + ReciprocalUtils.encode(PasswordReciprocal.getInstance()
                     .rawPassword(changeUserInfo.getUsername(), changeUserInfo.getPassword())));
 
-            if (passwordPolicyValidator.validator(changeUserInfo) == false) {
+            if (passwordPolicy && passwordPolicyValidator.validator(changeUserInfo) == false) {
                 return false;
             }
 
             if (WebContext.getUserInfo() != null) {
                 changeUserInfo.setModifiedBy(WebContext.getUserInfo().getId());
-
             }
 
             changeUserInfo = passwordEncoder(changeUserInfo);

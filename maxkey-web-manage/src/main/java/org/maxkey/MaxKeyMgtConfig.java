@@ -33,6 +33,7 @@ import org.maxkey.persistence.db.LoginService;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.maxkey.persistence.service.GroupsService;
+import org.maxkey.persistence.service.UserInfoService;
 import org.opensaml.xml.ConfigurationException;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
@@ -118,6 +119,7 @@ public class MaxKeyMgtConfig  implements InitializingBean {
 	    		LoginService loginService,
 	    		LoginHistoryService loginHistoryService,
 	    		AbstractRemeberMeService remeberMeService,
+	    		UserInfoService userInfoService,
              JdbcTemplate jdbcTemplate) {
 		
         JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
@@ -126,6 +128,7 @@ public class MaxKeyMgtConfig  implements InitializingBean {
         		loginService,
         		loginHistoryService,
         		remeberMeService,
+        		userInfoService,
         		jdbcTemplate);
         
         _logger.debug("JdbcAuthenticationRealm inited.");

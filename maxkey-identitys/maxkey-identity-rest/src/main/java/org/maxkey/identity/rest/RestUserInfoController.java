@@ -80,7 +80,7 @@ public class RestUserInfoController {
         	changePassword.setUsername(username);
         	changePassword.setPassword(password);
         	changePassword.setDecipherable(loadUserInfo.getDecipherable());
-            userInfoService.changePassword(changePassword);
+            userInfoService.changePassword(changePassword,true);
         }
         return "true";
     }

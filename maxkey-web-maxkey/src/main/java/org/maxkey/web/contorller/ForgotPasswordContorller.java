@@ -129,7 +129,7 @@ public class ForgotPasswordContorller {
             if ((forgotType == ForgotType.EMAIL && mailOtpAuthn.validate(userInfo, captcha)) ||
                     (forgotType == ForgotType.MOBILE && smsOtpAuthn.validate(userInfo, captcha))
                 ) {
-                userInfoService.changePassword(userInfo);
+                userInfoService.changePassword(userInfo,true);
                 modelAndView.addObject("passwordResetResult", PasswordResetResult.SUCCESS);
             } else {
                 modelAndView.addObject("passwordResetResult", PasswordResetResult.CAPTCHAERROR);

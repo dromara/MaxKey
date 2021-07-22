@@ -48,6 +48,7 @@ import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
 import org.maxkey.persistence.ldap.LdapUtils;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
+import org.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -156,6 +157,7 @@ public class MaxKeyConfig  implements InitializingBean {
 	    		LoginService loginService,
 	    		LoginHistoryService loginHistoryService,
 	    		AbstractRemeberMeService remeberMeService,
+	    		UserInfoService userInfoService,
                 JdbcTemplate jdbcTemplate,
                 @Value("${maxkey.support.ldap.enable:false}")boolean ldapSupport,
     			@Value("${maxkey.support.ldap.jit:false}")boolean ldapJit,
@@ -179,6 +181,7 @@ public class MaxKeyConfig  implements InitializingBean {
         		loginService,
         		loginHistoryService,
         		remeberMeService,
+        		userInfoService,
         		jdbcTemplate,
         		ldapAuthenticationRealm,
         		ldapSupport

@@ -264,7 +264,7 @@ public class UserInfoController {
 	@RequestMapping(value="/changePassword")  
 	public Message changePassword( @ModelAttribute("userInfo")UserInfo userInfo) {
 		_logger.debug(userInfo.getId());
-		if(userInfoService.changePassword(userInfo)) {
+		if(userInfoService.changePassword(userInfo,true)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {

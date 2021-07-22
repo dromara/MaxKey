@@ -26,6 +26,7 @@ import org.maxkey.entity.Groups;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
+import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.persistence.db.LoginService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.web.WebConstants;
@@ -58,6 +59,8 @@ public abstract class AbstractAuthenticationRealm {
     protected boolean ldapSupport;
     
     protected  AbstractAuthenticationRealm ldapAuthenticationRealm;
+    
+    protected UserInfoService userInfoService;
     
    
 

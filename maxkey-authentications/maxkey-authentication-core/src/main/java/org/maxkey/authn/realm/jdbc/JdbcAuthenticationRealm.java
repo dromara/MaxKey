@@ -22,6 +22,7 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.LoginService;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
+import org.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -49,6 +50,7 @@ public class JdbcAuthenticationRealm extends DefaultJdbcAuthenticationRealm {
     		LoginService loginService,
     		LoginHistoryService loginHistoryService,
     		AbstractRemeberMeService remeberMeService,
+    		UserInfoService userInfoService,
     	    JdbcTemplate jdbcTemplate) {
     	
     	this.passwordEncoder =passwordEncoder;
@@ -56,6 +58,7 @@ public class JdbcAuthenticationRealm extends DefaultJdbcAuthenticationRealm {
     	this.loginService = loginService;
     	this.loginHistoryService = loginHistoryService;
     	this.remeberMeService = remeberMeService;
+    	 this.userInfoService = userInfoService;
         this.jdbcTemplate = jdbcTemplate;
     }
     
@@ -66,6 +69,7 @@ public class JdbcAuthenticationRealm extends DefaultJdbcAuthenticationRealm {
     		LoginService loginService,
     		LoginHistoryService loginHistoryService,
     		AbstractRemeberMeService remeberMeService,
+    		UserInfoService userInfoService,
     	    JdbcTemplate jdbcTemplate,
     	    AbstractAuthenticationRealm ldapAuthenticationRealm,
     	    boolean ldapSupport
@@ -78,6 +82,7 @@ public class JdbcAuthenticationRealm extends DefaultJdbcAuthenticationRealm {
     	this.remeberMeService = remeberMeService;
         this.jdbcTemplate = jdbcTemplate;
         this.ldapAuthenticationRealm = ldapAuthenticationRealm;
+        this.userInfoService = userInfoService;
         this.ldapSupport = ldapSupport;
     }
     
