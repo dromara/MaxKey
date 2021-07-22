@@ -41,8 +41,13 @@ public final class ActiveDirectoryServer implements IAuthenticationServer {
 	 */
 	@Override
 	public boolean authenticate(String username, String password) {
-		ActiveDirectoryUtils ldapPassWordValid = new ActiveDirectoryUtils(activeDirectoryUtils.getProviderUrl(),
-				activeDirectoryUtils.getDomain()+"\\" + username, password,activeDirectoryUtils.getDomain());
+		ActiveDirectoryUtils ldapPassWordValid = 
+    		        new ActiveDirectoryUtils(
+    		                activeDirectoryUtils.getProviderUrl(),
+    		                username, 
+    		                password,
+    		                activeDirectoryUtils.getDomain()
+    		         );
 		ldapPassWordValid.openConnection();
 		if(ldapPassWordValid.getCtx()!=null){
 			_logger.debug("Active Directory user " + username + "  is validate .");
