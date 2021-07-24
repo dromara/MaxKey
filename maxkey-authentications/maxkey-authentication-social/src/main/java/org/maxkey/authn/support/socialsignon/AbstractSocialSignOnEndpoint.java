@@ -24,6 +24,7 @@ import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,6 +78,9 @@ public class AbstractSocialSignOnEndpoint {
 	@Autowired
     @Qualifier("authenticationProvider")
 	AbstractAuthenticationProvider authenticationProvider ;
+	
+	@Autowired
+	ApplicationConfig applicationConfig;
  	
   	protected AuthRequest buildAuthRequest(String provider){
   		
@@ -84,7 +88,7 @@ public class AbstractSocialSignOnEndpoint {
 		_logger.debug("socialSignOn Provider : "+socialSignOnProvider);
 		
 		if(socialSignOnProvider!=null){
-			authRequest=socialSignOnProviderService.getAuthRequest(provider);
+			authRequest=socialSignOnProviderService.getAuthRequest(provider,applicationConfig);
 			WebContext.setAttribute(SOCIALSIGNON_OAUTH_SERVICE_SESSION, authRequest);
 			WebContext.setAttribute(SOCIALSIGNON_PROVIDER_SESSION, socialSignOnProvider);
 			return authRequest;

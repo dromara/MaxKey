@@ -22,7 +22,9 @@ package org.maxkey.authn.support.socialsignon;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -33,9 +35,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import me.zhyd.oauth.utils.AuthStateUtils;
 
 /**
  * @author Crystal.Sea
@@ -46,25 +47,26 @@ import me.zhyd.oauth.utils.AuthStateUtils;
 public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(SocialSignOnEndpoint.class);
 	
-    public  ModelAndView socialSignOnAuthorize(String provider){
+    public  ModelAndView socialSignOnAuthorize(HttpServletRequest request,String provider){
     	_logger.debug("SocialSignOn provider : "+provider);
-    	String authorizationUrl=buildAuthRequest(provider).authorize(AuthStateUtils.createState());
+    	String authorizationUrl=buildAuthRequest(provider).authorize(request.getSession().getId());
 		_logger.debug("authorize SocialSignOn : "+authorizationUrl);
 		return WebContext.redirect(authorizationUrl);
     }
     
 	@RequestMapping(value={"/authorize/{provider}"}, method = RequestMethod.GET)
-	public ModelAndView authorize(@PathVariable String provider) {
+	public ModelAndView authorize(HttpServletRequest request,
+									@PathVariable String provider) {
 		WebContext.setAttribute(SOCIALSIGNON_TYPE_SESSION, SOCIALSIGNON_TYPE.SOCIALSIGNON_TYPE_LOGON);
-		return socialSignOnAuthorize(provider);
+		return socialSignOnAuthorize(request,provider);
 	}
 	
 	@RequestMapping(value={"/bind/{provider}"}, method = RequestMethod.GET)
 	public ModelAndView bind(HttpServletRequest request,
-				@PathVariable String provider) {
+								@PathVariable String provider) {
 		WebContext.setAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI, request.getParameter(SOCIALSIGNON_REDIRECT_URI));
 		WebContext.setAttribute(SOCIALSIGNON_TYPE_SESSION, SOCIALSIGNON_TYPE.SOCIALSIGNON_TYPE_BIND);
-		return socialSignOnAuthorize(provider);
+		return socialSignOnAuthorize(request,provider);
 	}
 	
 	@RequestMapping(value={"/unbind/{provider}"}, method = RequestMethod.GET)
@@ -88,10 +90,23 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	}
 	
 	@RequestMapping(value={"/authorize/{provider}/{appid}"}, method = RequestMethod.GET)
-	public ModelAndView authorize2AppId(@PathVariable("provider") String provider,
-			@PathVariable("appid") String appid) {
+	public ModelAndView authorize2AppId(HttpServletRequest request,
+										@PathVariable("provider") String provider,
+										@PathVariable("appid") String appid) {
 		WebContext.setAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI, "/authorize/"+appid);
-		return authorize(provider);
+		return authorize(request,provider);
+	}
+	
+	@RequestMapping(value={"/scanqrcode/{provider}"}, method = RequestMethod.GET)
+	@ResponseBody
+	public SocialSignOnProvider scanQRCode(
+							HttpServletRequest request,
+							@PathVariable("provider") String provider) {
+		socialSignOnAuthorize(request,provider);
+		SocialSignOnProvider socialSignOnProvider = socialSignOnProviderService.get(provider);
+		socialSignOnProvider.setState(request.getSession().getId());
+		socialSignOnProvider.setRedirectUri(applicationConfig.getServerPrefix()+ "/logon/oauth20/callback/"+provider);
+		return socialSignOnProvider;
 	}
 	
 	

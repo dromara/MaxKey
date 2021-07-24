@@ -28,13 +28,14 @@ public class SocialSignOnProvider {
 	private String icon;
 	private String clientId;
 	private String clientSecret;
+	private String redirectUri;
+	private String agentId;
 	private String accountId;
 	private String bindTime;
 	private String unBindTime;
 	private String lastLoginTime;
+	private String state;
 	private int sortOrder;
-	
-	
 	
 	private boolean userBind;
 	
@@ -134,34 +135,58 @@ public class SocialSignOnProvider {
         this.lastLoginTime = lastLoginTime;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("SocialSignOnProvider [provider=");
-        builder.append(provider);
-        builder.append(", providerName=");
-        builder.append(providerName);
-        builder.append(", icon=");
-        builder.append(icon);
-        builder.append(", clientId=");
-        builder.append(clientId);
-        builder.append(", clientSecret=");
-        builder.append(clientSecret);
-        builder.append(", accountId=");
-        builder.append(accountId);
-        builder.append(", bindTime=");
-        builder.append(bindTime);
-        builder.append(", unBindTime=");
-        builder.append(unBindTime);
-        builder.append(", lastLoginTime=");
-        builder.append(lastLoginTime);
-        builder.append(", sortOrder=");
-        builder.append(sortOrder);
-        builder.append(", userBind=");
-        builder.append(userBind);
-        builder.append("]");
-        return builder.toString();
-    }
+    public String getRedirectUri() {
+		return redirectUri;
+	}
+
+	public void setRedirectUri(String redirectUri) {
+		this.redirectUri = redirectUri;
+	}
+
+	public String getAgentId() {
+		return agentId;
+	}
+
+	public void setAgentId(String agentId) {
+		this.agentId = agentId;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SocialSignOnProvider [provider=");
+		builder.append(provider);
+		builder.append(", providerName=");
+		builder.append(providerName);
+		builder.append(", clientId=");
+		builder.append(clientId);
+		builder.append(", clientSecret=");
+		builder.append(clientSecret);
+		builder.append(", agentId=");
+		builder.append(agentId);
+		builder.append(", accountId=");
+		builder.append(accountId);
+		builder.append(", bindTime=");
+		builder.append(bindTime);
+		builder.append(", unBindTime=");
+		builder.append(unBindTime);
+		builder.append(", lastLoginTime=");
+		builder.append(lastLoginTime);
+		builder.append(", sortOrder=");
+		builder.append(sortOrder);
+		builder.append(", userBind=");
+		builder.append(userBind);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 	
 

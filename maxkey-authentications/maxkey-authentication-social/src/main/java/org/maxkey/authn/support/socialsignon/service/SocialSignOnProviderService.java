@@ -20,6 +20,7 @@ package org.maxkey.authn.support.socialsignon.service;
 import java.util.HashMap;
 import java.util.List;
 
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,12 +44,12 @@ public class SocialSignOnProviderService{
 		return socialSignOnProviderMaps.get(provider);
 	}
 	
-	public AuthRequest  getAuthRequest(String provider) {
+	public AuthRequest  getAuthRequest(String provider,ApplicationConfig applicationConfig) {
 		AuthRequest authRequest = null;
 		AuthConfig authConfig = AuthConfig.builder()
 				.clientId(this.get(provider).getClientId())
 				.clientSecret(this.get(provider).getClientSecret())
-				.redirectUri(WebContext.getHttpContextPath()+ "/logon/oauth20/callback/"+provider)
+				.redirectUri(applicationConfig.getServerPrefix()+ "/logon/oauth20/callback/"+provider)
 				.build();
 		
 		if(provider.equalsIgnoreCase("WeChatOpen")) {
@@ -99,7 +100,7 @@ public class SocialSignOnProviderService{
             authRequest = new AuthToutiaoRequest(authConfig);
         }else if(provider.equalsIgnoreCase("WeChatQyQrcode")) {
             authRequest = new AuthWeChatEnterpriseQrcodeRequest(authConfig);
-        }else if(provider.equalsIgnoreCase("WeChatQyWeb")) {
+        }else if(provider.equalsIgnoreCase("workweixin")) {
             authRequest = new AuthWeChatEnterpriseWebRequest(authConfig);
         }
 		

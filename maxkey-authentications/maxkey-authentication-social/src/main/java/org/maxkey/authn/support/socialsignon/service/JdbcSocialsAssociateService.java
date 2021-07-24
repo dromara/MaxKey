@@ -1,6 +1,6 @@
 /*
  * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -33,24 +33,34 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 	
 	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = "INSERT INTO  MXK_SOCIALS_ASSOCIATE(ID, UID , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE )VALUES( ? , ? , ? , ? , ?, ? , ? , ?)";
 	
-	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "SELECT ID, UID , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE , CREATEDDATE , UPDATEDDATE  FROM MXK_SOCIALS_ASSOCIATE WHERE PROVIDER = ?  AND SOCIALUID = ?";
+	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE = "INSERT INTO  MXK_SOCIALS_ASSOCIATE(ID, \"UID\" , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE )VALUES( ? , ? , ? , ? , ?, ? , ? , ?)";
 	
-	private static final String DEFAULT_DEFAULT_BIND_SELECT_STATEMENT = "SELECT ID, UID , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE , CREATEDDATE , UPDATEDDATE  FROM MXK_SOCIALS_ASSOCIATE WHERE UID = ?" ;
+	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "SELECT ID, \"UID\" , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE , CREATEDDATE , UPDATEDDATE  FROM MXK_SOCIALS_ASSOCIATE WHERE PROVIDER = ?  AND SOCIALUID = ?";
 	
-	private static final String DEFAULT_DEFAULT_DELETE_STATEMENT = "DELETE FROM  MXK_SOCIALS_ASSOCIATE WHERE  UID = ? AND PROVIDER = ?";
+	private static final String DEFAULT_DEFAULT_BIND_SELECT_STATEMENT = "SELECT ID, \"UID\" , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE , CREATEDDATE , UPDATEDDATE  FROM MXK_SOCIALS_ASSOCIATE WHERE \"UID\" = ?" ;
+	
+	private static final String DEFAULT_DEFAULT_DELETE_STATEMENT = "DELETE FROM  MXK_SOCIALS_ASSOCIATE WHERE  \"UID\" = ? AND PROVIDER = ?";
 	
 	private static final String DEFAULT_DEFAULT_UPDATE_STATEMENT= "UPDATE MXK_SOCIALS_ASSOCIATE  SET ACCESSTOKEN  = ? , SOCIALUSERINFO = ? , EXATTRIBUTE = ? ,UPDATEDDATE = ?  WHERE ID = ?";
 
 	private final JdbcTemplate jdbcTemplate;
 	
+	private String jdbcType;
+	
 	public JdbcSocialsAssociateService(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate=jdbcTemplate;	
+		try {
+    		jdbcType = jdbcTemplate.getDataSource().getConnection().getMetaData().getDatabaseProductName();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public boolean insert(SocialsAssociate socialsAssociate) {
 		socialsAssociate.setId(socialsAssociate.generateId());
-		jdbcTemplate.update(DEFAULT_DEFAULT_INSERT_STATEMENT, 
+		jdbcTemplate.update("Oracle".equals(jdbcType)?DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE:DEFAULT_DEFAULT_INSERT_STATEMENT, 
 				new Object[] { 
 					socialsAssociate.getId(),
 					socialsAssociate.getUid(),
