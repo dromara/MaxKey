@@ -17,8 +17,8 @@
 
 package org.maxkey.web.contorller;
 
-import java.util.HashMap;
 import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.entity.Synchronizers;
@@ -48,16 +48,7 @@ public class SynchronizersController {
 	
 	@Autowired
 	@Qualifier("synchronizersService")
-	SynchronizersService synchronizerssService;
-	
-	private static HashMap<String,String> synchronizerMap =new HashMap<String,String>();
-
-	static {
-		synchronizerMap.put("1", "ldapSynchronizerService");
-		synchronizerMap.put("2", "activeDirectorySynchronizerService");
-		synchronizerMap.put("3", "dingdingSynchronizerService");
-		synchronizerMap.put("4", "workweixinSynchronizerService");
-	}
+	SynchronizersService synchronizersService;
 	
 	@RequestMapping(value={"/list"})
 	public ModelAndView groupsList(){
@@ -70,7 +61,7 @@ public class SynchronizersController {
 	@ResponseBody
 	public JpaPageResults<Synchronizers> queryDataGrid(@ModelAttribute("synchronizers") Synchronizers synchronizers) {
 		_logger.debug(""+synchronizers);
-		return synchronizerssService.queryPageResults(synchronizers);
+		return synchronizersService.queryPageResults(synchronizers);
 	}
 
 	
@@ -79,7 +70,7 @@ public class SynchronizersController {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("synchronizers/synchronizerUpdate");
-		Synchronizers synchronizers=synchronizerssService.get(id);
+		Synchronizers synchronizers=synchronizersService.get(id);
 		modelAndView.addObject("model",synchronizers);
 		return modelAndView;
 	}
@@ -96,7 +87,7 @@ public class SynchronizersController {
 	public Message update(@ModelAttribute("synchronizers") Synchronizers synchronizers) {
 		_logger.debug("-update  synchronizers :" + synchronizers);
 		
-		if (synchronizerssService.update(synchronizers)) {
+		if (synchronizersService.update(synchronizers)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -118,9 +109,9 @@ public class SynchronizersController {
 		List<String> ids = StringUtils.string2List(id, ",");
 		try {
 			for(String sysId : ids) {
-				Synchronizers  synchronizer  = synchronizerssService.get(sysId);
+				Synchronizers  synchronizer  = synchronizersService.get(sysId);
 				_logger.debug("synchronizer " + synchronizer);
-				ISynchronizerService synchronizerService = (ISynchronizerService)WebContext.getBean(synchronizerMap.get(sysId));
+				ISynchronizerService synchronizerService = (ISynchronizerService)WebContext.getBean(synchronizer.getService());
 				synchronizerService.setSynchronizer(synchronizer);
 				synchronizerService.sync();
 			}

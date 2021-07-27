@@ -40,7 +40,7 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
     @Column
     String name;
     @Column
-    String filters ;
+    String filters;
     @Column
     String sourceType;
     @Column
@@ -49,6 +49,11 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
     String suspendTime;
     @Column
     String scheduler;
+
+    //同步时间范围（单位天）
+	@Column
+	Integer syncStartTime;
+
     @Column
     String providerUrl;
     @Column
@@ -79,17 +84,27 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
     String modifiedDate;
     @Column
     String status;
+    
+    String service;
 
     public Synchronizers() {
     }
+
+
 
     public Synchronizers(String id) {
         this.id = id;
     }
 
+	public Integer getSyncStartTime() {
+		return syncStartTime;
+	}
 
+	public void setSyncStartTime(Integer syncStartTime) {
+		this.syncStartTime = syncStartTime;
+	}
 
-    public String getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -266,6 +281,18 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public String getService() {
+		return service;
+	}
+
+
+
+	public void setService(String service) {
+		this.service = service;
+	}
+
+
 
 	@Override
 	public String toString() {
