@@ -34,7 +34,8 @@ public class ActiveDirectoryUtils extends LdapUtils {
     private final static Logger _logger = LoggerFactory.getLogger(ActiveDirectoryUtils.class);
 
     protected String domain;
-
+    
+    String activeDirectoryDomain;
     /**
      * 
      */
@@ -78,21 +79,26 @@ public class ActiveDirectoryUtils extends LdapUtils {
         props.setProperty(Context.SECURITY_AUTHENTICATION, "simple");
 
         props.setProperty(Context.PROVIDER_URL, providerUrl);
-        if (domain.indexOf(".") > -1) {
-            domain = domain.substring(0, domain.indexOf("."));
+        
+        if (activeDirectoryDomain == null && domain.indexOf(".") > -1) {
+        	activeDirectoryDomain = domain.substring(0, domain.indexOf("."));
+        }else {
+        	activeDirectoryDomain = domain;
         }
-        _logger.info("PROVIDER_DOMAIN:" + domain);
-        String activeDirectoryPrincipal = domain + "\\" + principal;
+        
+        _logger.info("PROVIDER_DOMAIN:" + activeDirectoryDomain + " for " + domain);
+        String activeDirectoryPrincipal = activeDirectoryDomain + "\\" + principal;
         _logger.debug("Active Directory SECURITY_PRINCIPAL : " + activeDirectoryPrincipal);
         props.setProperty(Context.SECURITY_PRINCIPAL, activeDirectoryPrincipal);
         props.setProperty(Context.SECURITY_CREDENTIALS, credentials);
 
         if (ssl && providerUrl.toLowerCase().startsWith("ldaps")) {
+        	_logger.info("ldaps security protocol.");
             System.setProperty("javax.net.ssl.trustStore", trustStore);
             System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
             props.put(Context.SECURITY_PROTOCOL, "ssl");
-            props.put(Context.REFERRAL, "follow");
         }
+        props.put(Context.REFERRAL, "follow");
 
         return InitialDirContext(props);
     }

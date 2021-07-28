@@ -28,6 +28,7 @@ import java.util.Arrays;
  */
 public class OrganizationalUnit {
 	public static ArrayList<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "OrganizationalUnit"));
+	public static String	   objectClass				 	 = "OrganizationalUnit";
 	public static final String DISTINGUISHEDNAME 			 = "distinguishedname";
 	/**OrganizationalUnit ou*/
 	public static final String OU                         	 = "ou";
@@ -78,5 +79,8 @@ public class OrganizationalUnit {
 	public static final String C                             = "c"; //CN
 	public static final String COUNTRYCODE                   = "countryCode";//156
 	public static final String NAME                   		 = "name";
+	
+	//for id
+	public static final String CN                   		 = "cn";
 	
 }

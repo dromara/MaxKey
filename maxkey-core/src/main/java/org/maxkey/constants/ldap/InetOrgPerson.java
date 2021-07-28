@@ -28,6 +28,8 @@ import java.util.Arrays;
  */
 public class InetOrgPerson {
 	public static ArrayList<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "person","organizationalPerson","inetOrgPerson"));
+	
+	public static String	   objectClass				 	 = "inetOrgPerson";
 	public static final String DISTINGUISHEDNAME 			 = "distinguishedname";
 	//person sup top
 	/**person sn MUST*/

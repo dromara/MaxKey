@@ -30,6 +30,8 @@ import java.util.Arrays;
 
 public class ActiveDirectoryUser {
 	public static ArrayList<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "person", "organizationalPerson", "user"));
+	
+	public static String	   objectClass				 	 = "user";
 	/** userAccountControl值得说明
 	 * http://support.microsoft.com/zh-cn/kb/305144
 	 * https://docs.microsoft.com/en-us/troubleshoot/windows-server/identity/useraccountcontrol-manipulate-account-properties
@@ -117,6 +119,7 @@ public class ActiveDirectoryUser {
 
 	public static final String CN 							= "cn";
 	public static final String NAME 						= "name";
+	public static final String UID 							= "uid";
 	
 	public static final String GIVENNAME 					= "givenName";
 	public static final String SN 							= "sn";
@@ -145,7 +148,7 @@ public class ActiveDirectoryUser {
 	public static final String SAMACCOUNTNAME 				= "sAMAccountname";
 	public static final String LOGONHOURS 					= "logonHours";
 	public static final String LOGONWORKSTATION 			= "logonWorkstation";
-	public static final String USERACCOUNTCONTROL		 	= "userAccountControl   ";
+	public static final String USERACCOUNTCONTROL		 	= "userAccountControl";
 	public static final String PWDLASTSET 					= "pwdLastSet";
 	public static final String ACCOUNTEXPIRES 				= "accountExpires";
 	
@@ -161,6 +164,10 @@ public class ActiveDirectoryUser {
 	public static final String TITLE 						= "title";
 	public static final String COMPANY 						= "company";
 	public static final String DEPARTMENT 					= "department";
+	public static final String EMPLOYEENUMBER 				= "employeeNumber";
+	public static final String OU 							= "ou";
+	public static final String DEPARTMENTNUMBER 			= "departmentNumber";
+	
 	public static final String MANAGER 						= "manager";
 	public static final String DIRECTREPORTS 				= "directReports";
 
