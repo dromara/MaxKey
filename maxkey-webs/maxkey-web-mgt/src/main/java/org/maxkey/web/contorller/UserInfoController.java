@@ -27,6 +27,7 @@ import javax.validation.Valid;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.entity.ExcelImport;
 import org.maxkey.entity.UserInfo;
@@ -264,6 +265,7 @@ public class UserInfoController {
 	@RequestMapping(value="/changePassword")  
 	public Message changePassword( @ModelAttribute("userInfo")UserInfo userInfo) {
 		_logger.debug(userInfo.getId());
+		userInfo.setPasswordSetType(ConstantsPasswordSetType.PASSWORD_NORMAL);
 		if(userInfoService.changePassword(userInfo,true)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

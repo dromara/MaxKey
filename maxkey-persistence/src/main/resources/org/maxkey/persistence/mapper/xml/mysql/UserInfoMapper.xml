@@ -95,12 +95,12 @@
     	
 	<update id="changePassword" parameterType="UserInfo" >
     	update mxk_userinfo set
-    		<if test="password != null">
-    		password			=	#{password},
-			decipherable		=	#{decipherable},
-			</if>
-			passwordsettype			=	0,
-			passwordlastsettime		=	current_timestamp
+    	<if test="password != null">
+    		password              = #{password},
+			decipherable          = #{decipherable},
+			passwordsettype       = #{passwordSetType},
+		</if>
+			passwordlastsettime	  =  current_timestamp
 		where 
 			id	=	#{id}
     </update>

@@ -64,7 +64,7 @@ public class SafeController {
 			@RequestParam("newPassword") String newPassword,
 			@RequestParam("confirmPassword") String confirmPassword) {
 		
-			if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword)) {
+			if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword,ConstantsPasswordSetType.PASSWORD_NORMAL)) {
 				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			}else {
 				return  new Message(
@@ -82,7 +82,7 @@ public class SafeController {
 			ModelAndView modelAndView=new ModelAndView("passwordExpired");
 	        if(newPassword ==null ||newPassword.equals("")) {
 	            
-	        }else if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword)){
+	        }else if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword,ConstantsPasswordSetType.PASSWORD_NORMAL)){
 	            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
 				return WebContext.redirect("/index");
 			}
@@ -103,7 +103,7 @@ public class SafeController {
 		ModelAndView modelAndView=new ModelAndView("passwordInitial");
         if(newPassword ==null ||newPassword.equals("")) {
             
-        }else if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword)){
+        }else if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword,ConstantsPasswordSetType.PASSWORD_NORMAL)){
             WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
 			return WebContext.redirect("/index");
 		}

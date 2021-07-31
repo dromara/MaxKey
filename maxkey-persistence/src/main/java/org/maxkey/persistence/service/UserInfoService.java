@@ -214,9 +214,10 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	}
 	
 	
-	public boolean changePassword(String oldPassword,
-            String newPassword,
-            String confirmPassword) {
+	public boolean changePassword(  String oldPassword,
+                                    String newPassword,
+                                    String confirmPassword,
+                                    int passwordSetType) {
 		try {
 		    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, "");
 	        UserInfo userInfo = WebContext.getUserInfo();
@@ -225,6 +226,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	        changeUserInfo.setPassword(newPassword);
 	        changeUserInfo.setId(userInfo.getId());
 	        changeUserInfo.setDecipherable(userInfo.getDecipherable());
+	        changeUserInfo.setPasswordSetType(passwordSetType);
 	        
 	        if(newPassword.equals(confirmPassword)){
 	            if(oldPassword==null || 
