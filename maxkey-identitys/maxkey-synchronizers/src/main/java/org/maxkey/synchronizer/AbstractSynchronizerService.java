@@ -8,7 +8,6 @@ import org.maxkey.entity.Synchronizers;
 import org.maxkey.persistence.service.HistorySynchronizerService;
 import org.maxkey.persistence.service.OrganizationsService;
 import org.maxkey.persistence.service.UserInfoService;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,6 @@ public abstract class AbstractSynchronizerService {
      
     protected Organizations rootOrganization = null;
     
-    protected String sessionId;
     
     public void loadOrgsById(String orgId) {
         List<Organizations> orgsList = organizationsService.query(null);
@@ -125,19 +123,6 @@ public abstract class AbstractSynchronizerService {
 
     public void setHistorySynchronizerService(HistorySynchronizerService historySynchronizerService) {
         this.historySynchronizerService = historySynchronizerService;
-    }
-
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public void genSessionId(){
-        this.sessionId =  WebContext.genId();
     }
     
     

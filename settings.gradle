@@ -17,6 +17,10 @@ include 'maxkey-authentications:maxkey-authentication-otp'
 include 'maxkey-identitys:maxkey-identity-scim'
 include 'maxkey-identitys:maxkey-identity-rest'
 include 'maxkey-identitys:maxkey-synchronizers'
+include 'maxkey-identitys:maxkey-synchronizers-activedirectory'
+include 'maxkey-identitys:maxkey-synchronizers-ldap'
+include 'maxkey-identitys:maxkey-synchronizers-dingding'
+include 'maxkey-identitys:maxkey-synchronizers-workweixin'
 
 //Protocol
 //include 'maxkey-protocols'
@@ -33,6 +37,9 @@ include 'maxkey-protocols:maxkey-protocol-extendapi'
 //include 'maxkey-webs'
 //maxkey
 include 'maxkey-web-maxkey'
+include 'maxkey-web-maxkey-static'
 
+//management
 //maxkey-mgt
-include 'maxkey-web-manage'
+include 'maxkey-web-mgt'
+include 'maxkey-web-mgt-static'

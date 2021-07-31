@@ -424,13 +424,20 @@ project('maxkey-common')  {
 task copyMaxKey(type: Copy) {
     from "$rootDir/build/maxkey-jars/maxkey-authentication-social-${project.version}.jar"
     from "$rootDir/build/maxkey-jars/maxkey-web-maxkey-${project.version}.jar"
+    from "$rootDir/build/maxkey-jars/maxkey-web-maxkey-static-${project.version}.jar"
 	into "$rootDir/build/MaxKey-v${project.version}GA/maxkey/";
 }
 
 task copyMaxKeyMgt(type: Copy) {
 	from "$rootDir/build/maxkey-jars/maxkey-identity-rest-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-identity-scim-${project.version}.jar"
-	from "$rootDir/build/maxkey-jars/maxkey-web-manage-${project.version}.jar"
+	from "$rootDir/build/maxkey-jars/maxkey-web-mgt-${project.version}.jar"
+	from "$rootDir/build/maxkey-jars/maxkey-web-mgt-static-${project.version}.jar"
+	from "$rootDir/build/maxkey-jars/maxkey-synchronizers-${project.version}.jar"
+	from "$rootDir/build/maxkey-jars/maxkey-synchronizers-activedirectory-${project.version}.jar"
+	from "$rootDir/build/maxkey-jars/maxkey-synchronizers-ldap-${project.version}.jar"
+	from "$rootDir/build/maxkey-jars/maxkey-synchronizers-dingding-${project.version}.jar"
+	from "$rootDir/build/maxkey-jars/maxkey-synchronizers-workweixin-${project.version}.jar"
 	into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt/";
 }
 
