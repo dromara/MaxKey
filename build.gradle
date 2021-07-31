@@ -423,6 +423,7 @@ project('maxkey-common')  {
 
 task copyMaxKey(type: Copy) {
     from "$rootDir/build/maxkey-jars/maxkey-authentication-social-${project.version}.jar"
+    from "$rootDir/build/maxkey-jars/maxkey-web-static-${project.version}.jar"
     from "$rootDir/build/maxkey-jars/maxkey-web-maxkey-${project.version}.jar"
     from "$rootDir/build/maxkey-jars/maxkey-web-maxkey-static-${project.version}.jar"
 	into "$rootDir/build/MaxKey-v${project.version}GA/maxkey/";
@@ -431,6 +432,7 @@ task copyMaxKey(type: Copy) {
 task copyMaxKeyMgt(type: Copy) {
 	from "$rootDir/build/maxkey-jars/maxkey-identity-rest-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-identity-scim-${project.version}.jar"
+	from "$rootDir/build/maxkey-jars/maxkey-web-static-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-web-mgt-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-web-mgt-static-${project.version}.jar"
 	from "$rootDir/build/maxkey-jars/maxkey-synchronizers-${project.version}.jar"

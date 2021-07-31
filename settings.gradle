@@ -7,6 +7,7 @@ rootProject.name = 'MaxKey'
 include 'maxkey-common'
 include 'maxkey-core'
 include 'maxkey-persistence'
+
 //include 'maxkey-authentications'
 include 'maxkey-authentications:maxkey-authentication-core'
 include 'maxkey-authentications:maxkey-authentication-captcha'
@@ -35,11 +36,11 @@ include 'maxkey-protocols:maxkey-protocol-extendapi'
 
 
 //include 'maxkey-webs'
+//static
+include 'maxkey-webs:maxkey-web-static'
 //maxkey
-include 'maxkey-web-maxkey'
-include 'maxkey-web-maxkey-static'
-
-//management
-//maxkey-mgt
-include 'maxkey-web-mgt'
-include 'maxkey-web-mgt-static'
+include 'maxkey-webs:maxkey-web-maxkey'
+include 'maxkey-webs:maxkey-web-maxkey-static'
+//maxkey-mgt management
+include 'maxkey-webs:maxkey-web-mgt'
+include 'maxkey-webs:maxkey-web-mgt-static'
