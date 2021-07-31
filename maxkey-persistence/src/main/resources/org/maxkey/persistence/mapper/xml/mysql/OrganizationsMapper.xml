@@ -26,7 +26,7 @@
     	from mxk_organizations 
     	where	1	=	1
     	<include refid="dao_where_statement"/>
-    	order by sortindex
+    	order by sortindex,id
     </select>
     
     
@@ -36,7 +36,7 @@
     	from mxk_organizations 
     	where	1	=	1
     	<include refid="dao_where_statement"/>
-    	order by sortindex
+    	order by sortindex,id
     </select>
   
     <update id="logisticDelete" parameterType="Organizations" >
