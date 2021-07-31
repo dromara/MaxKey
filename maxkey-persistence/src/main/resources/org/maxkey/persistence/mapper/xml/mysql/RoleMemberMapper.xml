@@ -209,7 +209,7 @@
     		type
     	)
     	select 
-    		concat_ws('-','UD','${id}',u.id) id,
+    		concat('${id}',u.id) id,
     		'${id}' ROLEID,
     		u.id memberid,
     		'USER-DYNAMIC' type

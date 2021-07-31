@@ -20,14 +20,24 @@
 	
     
     
-     <select id="queryPageResults" parameterType="Organizations" resultType="Organizations">
+     <select id="queryOrgs" parameterType="Organizations" resultType="Organizations">
     	select 
 			*
     	from mxk_organizations 
     	where	1	=	1
     	<include refid="dao_where_statement"/>
+    	order by sortindex
     </select>
     
+    
+   <select id="queryPageResults" parameterType="Organizations" resultType="Organizations">
+    	select 
+			*
+    	from mxk_organizations 
+    	where	1	=	1
+    	<include refid="dao_where_statement"/>
+    	order by sortindex
+    </select>
   
     <update id="logisticDelete" parameterType="Organizations" >
     	update mxk_organizations set status	=	'2'  

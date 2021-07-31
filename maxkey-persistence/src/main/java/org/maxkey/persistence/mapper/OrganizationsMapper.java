@@ -16,9 +16,12 @@
  
 
 package org.maxkey.persistence.mapper;
+import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.entity.Organizations;
 
 public interface OrganizationsMapper extends IJpaBaseMapper<Organizations> {
 
+	public List<Organizations> queryOrgs(Organizations organization);
 }

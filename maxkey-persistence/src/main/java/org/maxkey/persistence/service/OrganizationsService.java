@@ -83,6 +83,10 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
          return false;
      }
  
+	 public List<Organizations> queryOrgs(Organizations organization){
+		 return getMapper().queryOrgs(organization);
+	 }
+	 
 	 public boolean delete(Organizations organization) {
 	     if(super.delete(organization)){
 	    	 kafkaPersistService.send(

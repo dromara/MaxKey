@@ -59,7 +59,7 @@ public class OrganizationsController {
   public List<HashMap<String, Object>> organizationsTree(@RequestParam(value = "id", required = false) String id) {
     _logger.debug("organizationsTree id :" + id);
     Organizations queryOrg = new Organizations();
-    List<Organizations> organizationsList = this.organizationsService.query(queryOrg);
+    List<Organizations> organizationsList = this.organizationsService.queryOrgs(queryOrg);
     TreeNodeList treeNodeList = new TreeNodeList();
     
     for (Organizations org : organizationsList) {

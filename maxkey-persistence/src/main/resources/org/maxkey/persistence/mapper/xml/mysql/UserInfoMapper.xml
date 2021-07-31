@@ -68,7 +68,7 @@
 		<if test="departmentId != null and departmentId != ''">
 			and departmentid = #{departmentId}
 		</if>
-		order by sortorder 
+		order by sortorder,id 
 	</select>
 	
     <update id="locked" parameterType="UserInfo" >
