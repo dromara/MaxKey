@@ -1,8 +1,0 @@
-description = "maxkey-web-maxkey-static"
-
-//add support for Java
-apply plugin: 'java'
-
-dependencies {
-
-}

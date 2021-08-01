@@ -1,8 +1,0 @@
-description = "maxkey-web-mgt-static"
-
-//add support for Java
-apply plugin: 'java'
-
-dependencies {
-   	
-}

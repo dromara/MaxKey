@@ -50,6 +50,6 @@
 	
 	<!-- common css begin -->
 	<#-- if browser is not msie 6.0,follow styles over ie 6.0 style -->
-	<link type="text/css" rel="stylesheet"  href="<@base />/static/css/base.css"/>
+	<link type="text/css" rel="stylesheet"  href="<@base />/static/css_mgt/base.css"/>
 	<!-- common css end -->
 	
