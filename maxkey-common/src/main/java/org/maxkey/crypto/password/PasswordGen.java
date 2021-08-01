@@ -17,6 +17,9 @@
 
 package org.maxkey.crypto.password;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -69,8 +72,9 @@ public class PasswordGen {
         password.append(gen(CHAR_UPPERCASE, upperCase));
         password.append(gen(CHAR_SPECIAL, special));
         password.append(gen(CHAR_DEFAULT, length - lowerCase - upperCase - numbers -special));
+        
         // random generator String by sequence password
-        return gen(password.toString(), password.length());
+        return shuffle(password.toString());
     }
 
     /**
@@ -95,4 +99,22 @@ public class PasswordGen {
         }
         return password.toString();
     }
+    
+    public String shuffle(final String charString) {
+    	StringBuffer password = new StringBuffer("");
+    	List<String> list = new ArrayList<String>();
+    	for (int i = 0; i < charString.length(); i++) {
+    		list.add(charString.charAt(i) + "");
+    	}
+    	
+    	for (int i = 0; i < length / 2; i++) {
+    		Collections.shuffle(list);
+    	}
+    	
+    	for(String chr : list) {
+    		password.append(chr);
+    	}
+    	return password.toString();
+    }
+    
 }
