@@ -39,7 +39,7 @@
 				<input type="text" id="scheduler" name="scheduler" class="form-control" title="" value="${model.scheduler!}"   />
 			</td>
 		</tr>
-	<#if "DINGDING"==model.sourceType || "WORKWEIXIN"==model.sourceType>
+	<#if "LDAP"!=model.sourceType && "MSAD"!=model.sourceType && "JDBC"!=model.sourceType>
 		<tr>
 			<th><@locale code="synchronizers.principal" />：</th>
 			<td nowrap>
@@ -141,6 +141,13 @@
 			</td>
 		</tr>
 	</#if>
+	
+		<tr>
+				<th><@locale code="synchronizers.syncStartTime" />：</th>
+				<td nowrap>
+					<input type="text" id="syncStartTime" name="syncStartTime" class="form-control" title="" value="${model.syncStartTime!}"   />
+				</td>
+		</tr>
 		<tr>
 				<th><@locale code="synchronizers.resumeTime" />：</th>
 				<td nowrap>

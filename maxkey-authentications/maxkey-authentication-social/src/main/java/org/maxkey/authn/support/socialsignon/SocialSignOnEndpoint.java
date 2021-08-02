@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
-import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -48,9 +47,9 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(SocialSignOnEndpoint.class);
 	
     public  ModelAndView socialSignOnAuthorize(HttpServletRequest request,String provider){
-    	_logger.debug("SocialSignOn provider : "+provider);
+    	_logger.trace("SocialSignOn provider : "+provider);
     	String authorizationUrl=buildAuthRequest(provider).authorize(request.getSession().getId());
-		_logger.debug("authorize SocialSignOn : "+authorizationUrl);
+		_logger.trace("authorize SocialSignOn : "+authorizationUrl);
 		return WebContext.redirect(authorizationUrl);
     }
     
@@ -111,12 +110,10 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	
 	
 	@RequestMapping(value={"/callback/{provider}"}, method = RequestMethod.GET)
-	public ModelAndView callback(@PathVariable String provider
-			) {
-	    
-	    SocialsAssociate socialsAssociate = null;
-	    //auth call back may exception 
+	public ModelAndView callback(@PathVariable String provider) {
+		 //auth call back may exception 
 	    try {
+	    	SocialsAssociate socialsAssociate = null;
     		this.provider=provider;
     		this.authCallback();
     		_logger.debug(this.accountId);
@@ -124,29 +121,30 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
     		socialsAssociate.setProvider(provider);
     		socialsAssociate.setSocialuid(this.accountId);
     		
+    		//for login
+    		String socialSignOnType= "";
+    		if(WebContext.getAttribute(SOCIALSIGNON_TYPE_SESSION)!=null){
+    			socialSignOnType=WebContext.getAttribute(SOCIALSIGNON_TYPE_SESSION).toString();
+    		}
+    		
+    		if(socialSignOnType.equals(SOCIALSIGNON_TYPE.SOCIALSIGNON_TYPE_LOGON)||socialSignOnType.equals("")){
+    			socialSignOn(socialsAssociate);
+    			return WebContext.redirect("/index");
+    		}else{
+    			socialBind(socialsAssociate);
+    		}
+    		
+    		if(WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI)!=null){
+    			return WebContext.redirect(WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI).toString());
+    		}else{
+    			return WebContext.forward("/socialsignon/list");
+    		}
+    		
 	    }catch(Exception e) {
 	        _logger.error("callback Exception  ",e);
 	    }
-		
-		//for login
-		String socialSignOnType= "";
-		if(WebContext.getAttribute(SOCIALSIGNON_TYPE_SESSION)!=null){
-			socialSignOnType=WebContext.getAttribute(SOCIALSIGNON_TYPE_SESSION).toString();
-		}
-		
-		if(socialSignOnType.equals(SOCIALSIGNON_TYPE.SOCIALSIGNON_TYPE_LOGON)||socialSignOnType.equals("")){
-			socialSignOn(socialsAssociate);
-			return WebContext.redirect("/index");
-		}else{
-			socialBind(socialsAssociate);
-		}
-		
-		if(WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI)!=null){
-			return WebContext.redirect(WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI).toString());
-		}else{
-			return WebContext.forward("/socialsignon/list");
-		}
-		
+	    
+	    return WebContext.redirect("/login");
 	}
 	
 	public boolean socialBind(SocialsAssociate socialsAssociate){

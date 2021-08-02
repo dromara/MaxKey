@@ -83,20 +83,23 @@ public class AbstractSocialSignOnEndpoint {
 	ApplicationConfig applicationConfig;
  	
   	protected AuthRequest buildAuthRequest(String provider){
-  		
-		SocialSignOnProvider socialSignOnProvider = socialSignOnProviderService.get(provider);
-		_logger.debug("socialSignOn Provider : "+socialSignOnProvider);
-		
-		if(socialSignOnProvider!=null){
-			authRequest=socialSignOnProviderService.getAuthRequest(provider,applicationConfig);
-			WebContext.setAttribute(SOCIALSIGNON_OAUTH_SERVICE_SESSION, authRequest);
-			WebContext.setAttribute(SOCIALSIGNON_PROVIDER_SESSION, socialSignOnProvider);
-			return authRequest;
-		}
+  		try {
+			SocialSignOnProvider socialSignOnProvider = socialSignOnProviderService.get(provider);
+			_logger.debug("socialSignOn Provider : "+socialSignOnProvider);
+			
+			if(socialSignOnProvider!=null){
+				authRequest=socialSignOnProviderService.getAuthRequest(provider,applicationConfig);
+				WebContext.setAttribute(SOCIALSIGNON_OAUTH_SERVICE_SESSION, authRequest);
+				WebContext.setAttribute(SOCIALSIGNON_PROVIDER_SESSION, socialSignOnProvider);
+				return authRequest;
+			}
+  		}catch(Exception e) {
+  			_logger.debug("buildAuthRequest Exception ",e);
+  		}
 		return null;
 	}
     	
-	protected String  authCallback() {
+	protected String  authCallback()  throws Exception {
  		authRequest=(AuthRequest)WebContext.getAttribute(SOCIALSIGNON_OAUTH_SERVICE_SESSION);
  		socialSignOnProvider=(SocialSignOnProvider)WebContext.getAttribute(SOCIALSIGNON_PROVIDER_SESSION);
   		WebContext.removeAttribute(SOCIALSIGNON_OAUTH_SERVICE_SESSION);

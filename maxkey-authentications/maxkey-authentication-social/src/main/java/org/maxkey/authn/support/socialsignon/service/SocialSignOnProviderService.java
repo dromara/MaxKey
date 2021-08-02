@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +43,7 @@ public class SocialSignOnProviderService{
 		return socialSignOnProviderMaps.get(provider);
 	}
 	
-	public AuthRequest  getAuthRequest(String provider,ApplicationConfig applicationConfig) {
+	public AuthRequest  getAuthRequest(String provider,ApplicationConfig applicationConfig)  throws Exception {
 		AuthRequest authRequest = null;
 		AuthConfig authConfig = AuthConfig.builder()
 				.clientId(this.get(provider).getClientId())
@@ -107,7 +106,7 @@ public class SocialSignOnProviderService{
 		return authRequest;
 	}
 	
-	public String getAccountId(String provider,AuthResponse<?> authResponse) {
+	public String getAccountId(String provider,AuthResponse<?> authResponse)  throws Exception {
 		if(provider.equalsIgnoreCase("WeChatOpen")) {
 			return ((AuthUser)authResponse.getData()).getUuid();
 		}else if(provider.equalsIgnoreCase("sinaweibo")) {
