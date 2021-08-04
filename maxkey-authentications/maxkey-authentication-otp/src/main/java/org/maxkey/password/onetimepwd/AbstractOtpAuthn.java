@@ -42,6 +42,8 @@ public abstract class AbstractOtpAuthn {
 
     protected String crypto = "HmacSHA1";
 
+    protected String defaultEncoding ="utf-8";
+    
     StringGenerator stringGenerator;
     
     protected String otpType = OtpTypes.TIMEBASED_OTP;
@@ -148,6 +150,14 @@ public abstract class AbstractOtpAuthn {
 
     public void initPropertys() {
         
+    }
+
+    public String getDefaultEncoding() {
+        return defaultEncoding;
+    }
+
+    public void setDefaultEncoding(String defaultEncoding) {
+        this.defaultEncoding = defaultEncoding;
     }
  
 }

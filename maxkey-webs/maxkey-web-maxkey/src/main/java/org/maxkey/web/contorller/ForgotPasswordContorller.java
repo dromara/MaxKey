@@ -17,11 +17,12 @@
 
 package org.maxkey.web.contorller;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.maxkey.configuration.EmailConfig;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -44,6 +45,9 @@ public class ForgotPasswordContorller {
     
     Pattern mobileRegex = Pattern.compile(
             "^(13[4,5,6,7,8,9]|15[0,8,9,1,7]|188|187)\\\\d{8}$");
+    
+    @Autowired
+    EmailConfig emailConfig;
     
     public class ForgotType{
         public final static int NOTFOUND = 1;
@@ -84,16 +88,24 @@ public class ForgotPasswordContorller {
         UserInfo userInfo = null;
         if (captcha != null && captcha
                 .equals(WebContext.getSession().getAttribute(
-                                WebConstants.KAPTCHA_SESSION_KEY).toString())) {
+                                WebConstants.KAPTCHA_SESSION_KEY).toString())) {            
+            if(mobileRegex.matcher(emailMobile).matches()) {
+            	forgotType = ForgotType.MOBILE;
+            }else if(emailRegex.matcher(emailMobile).matches()) {
+            	forgotType = ForgotType.EMAIL;
+            }else {
+            	forgotType = ForgotType.EMAIL;
+            	emailMobile =emailMobile + "@" + emailConfig.getSmtpHost().substring(emailConfig.getSmtpHost().indexOf(".")+1);
+            }
+            
             userInfo = userInfoService.queryUserInfoByEmailMobile(emailMobile);
             
-            Matcher matcher = emailRegex.matcher(emailMobile);
-            if (matcher.matches() && null != userInfo) {
-            	mailOtpAuthn.produce(userInfo);
-                forgotType = ForgotType.EMAIL;
-            }else if (null != userInfo) {
-            	smsOtpAuthn.produce(userInfo);
-                forgotType = ForgotType.MOBILE;
+            if(null != userInfo) {
+	            if (forgotType == ForgotType.EMAIL ) {
+	            	mailOtpAuthn.produce(userInfo);
+	            }else if (forgotType == ForgotType.MOBILE) {
+	            	smsOtpAuthn.produce(userInfo);
+	            }
             }
            
         }else {
@@ -129,8 +141,13 @@ public class ForgotPasswordContorller {
             if ((forgotType == ForgotType.EMAIL && mailOtpAuthn.validate(userInfo, captcha)) ||
                     (forgotType == ForgotType.MOBILE && smsOtpAuthn.validate(userInfo, captcha))
                 ) {
-                userInfoService.changePassword(userInfo,true);
-                modelAndView.addObject("passwordResetResult", PasswordResetResult.SUCCESS);
+                if(userInfoService.changePassword(userInfo,true)) {
+                	modelAndView.addObject("passwordResetResult", PasswordResetResult.SUCCESS);
+                }else {
+                	;
+                	modelAndView.addObject("validate_result", WebContext.getAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT));
+                	modelAndView.addObject("passwordResetResult", PasswordResetResult.PASSWORDERROR);
+                }
             } else {
                 modelAndView.addObject("passwordResetResult", PasswordResetResult.CAPTCHAERROR);
             }

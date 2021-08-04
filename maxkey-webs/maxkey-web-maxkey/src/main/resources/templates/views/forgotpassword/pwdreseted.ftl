@@ -15,7 +15,8 @@
 <div class="col-md-8">
   <#if 3 == passwordResetResult>
   	<@locale code="forgotpassword.pwdreseted.password"/>
-  	<a href="javascript:history.go(-1);"><@locale code="forgotpassword.backstep"/></a >
+  	<a href="<@base/>/forgotpassword/forward"><@locale code="forgotpassword.backstep"/></a >
+    <br>${validate_result}
   	
   </#if>
   <#if 2 == passwordResetResult>

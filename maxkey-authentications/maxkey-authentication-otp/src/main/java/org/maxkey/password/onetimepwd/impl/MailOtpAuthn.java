@@ -20,7 +20,7 @@ package org.maxkey.password.onetimepwd.impl;
 import java.text.MessageFormat;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
-import org.apache.commons.mail.SimpleEmail;
+import org.apache.commons.mail.HtmlEmail;
 import org.maxkey.configuration.EmailConfig;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
@@ -45,7 +45,8 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
     public boolean produce(UserInfo userInfo) {
         try {
             String token = this.genToken(userInfo);
-            Email email = new SimpleEmail();
+            Email email = new HtmlEmail();
+            email.setCharset(this.defaultEncoding);
             email.setHostName(emailConfig.getSmtpHost());
             email.setSmtpPort(emailConfig.getPort());
             email.setSSLOnConnect(emailConfig.isSsl());

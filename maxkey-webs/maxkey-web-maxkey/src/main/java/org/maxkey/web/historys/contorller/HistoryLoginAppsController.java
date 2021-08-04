@@ -23,6 +23,7 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.entity.HistoryLoginApps;
 import org.maxkey.persistence.service.HistoryLoginAppsService;
 import org.maxkey.util.DateUtils;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class HistoryLoginAppsController {
             @ModelAttribute("historyLoginApps") HistoryLoginApps historyLoginApps) {
         _logger.debug("history/loginApps/grid/ logsGrid() " + historyLoginApps);
         historyLoginApps.setId(null);
-
+        historyLoginApps.setUsername(WebContext.getUserInfo().getUsername());
         return historyLoginAppsService.queryPageResults(historyLoginApps);
 
     }

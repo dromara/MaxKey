@@ -31,17 +31,17 @@ import org.springframework.jdbc.core.RowMapper;
 public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 	private static final Logger _logger = LoggerFactory.getLogger(JdbcSocialsAssociateService.class);
 	
-	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = "INSERT INTO  MXK_SOCIALS_ASSOCIATE(ID, UID , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE )VALUES( ? , ? , ? , ? , ?, ? , ? , ?)";
+	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = "insert into  mxk_socials_associate(id, uid , username , provider , socialuid , accesstoken , socialuserinfo , exattribute )values( ? , ? , ? , ? , ?, ? , ? , ?)";
 	
-	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE = "INSERT INTO  MXK_SOCIALS_ASSOCIATE(ID, \"UID\" , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE )VALUES( ? , ? , ? , ? , ?, ? , ? , ?)";
+	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE = "insert into  mxk_socials_associate(id, uid , username , provider , socialuid , accesstoken , socialuserinfo , exattribute )values( ? , ? , ? , ? , ?, ? , ? , ?)";
 	
-	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "SELECT ID, \"UID\" , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE , CREATEDDATE , UPDATEDDATE  FROM MXK_SOCIALS_ASSOCIATE WHERE PROVIDER = ?  AND SOCIALUID = ?";
+	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "select id, uid , username , provider , socialuid , accesstoken , socialuserinfo , exattribute , createddate , updateddate  from mxk_socials_associate where provider = ?  and socialuid = ?";
 	
-	private static final String DEFAULT_DEFAULT_BIND_SELECT_STATEMENT = "SELECT ID, \"UID\" , USERNAME , PROVIDER , SOCIALUID , ACCESSTOKEN , SOCIALUSERINFO , EXATTRIBUTE , CREATEDDATE , UPDATEDDATE  FROM MXK_SOCIALS_ASSOCIATE WHERE \"UID\" = ?" ;
+	private static final String DEFAULT_DEFAULT_BIND_SELECT_STATEMENT = "select id, uid , username , provider , socialuid , accesstoken , socialuserinfo , exattribute , createddate , updateddate  from mxk_socials_associate where uid = ?" ;
 	
-	private static final String DEFAULT_DEFAULT_DELETE_STATEMENT = "DELETE FROM  MXK_SOCIALS_ASSOCIATE WHERE  \"UID\" = ? AND PROVIDER = ?";
+	private static final String DEFAULT_DEFAULT_DELETE_STATEMENT = "delete from  mxk_socials_associate where  uid = ? and provider = ?";
 	
-	private static final String DEFAULT_DEFAULT_UPDATE_STATEMENT= "UPDATE MXK_SOCIALS_ASSOCIATE  SET ACCESSTOKEN  = ? , SOCIALUSERINFO = ? , EXATTRIBUTE = ? ,UPDATEDDATE = ?  WHERE ID = ?";
+	private static final String DEFAULT_DEFAULT_UPDATE_STATEMENT= "update mxk_socials_associate  set accesstoken  = ? , socialuserinfo = ? , exattribute = ? ,updateddate = ?  where id = ?";
 
 	private final JdbcTemplate jdbcTemplate;
 	

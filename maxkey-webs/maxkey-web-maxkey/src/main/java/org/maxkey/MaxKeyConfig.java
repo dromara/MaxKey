@@ -17,9 +17,13 @@
 
 package org.maxkey;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealm;
@@ -31,6 +35,7 @@ import org.maxkey.authn.realm.activedirectory.ActiveDirectoryServer;
 import org.maxkey.authn.support.kerberos.KerberosProxy;
 import org.maxkey.authn.support.kerberos.RemoteKerberosService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
+import org.maxkey.configuration.EmailConfig;
 import org.maxkey.constants.ConstantsPersistence;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
@@ -57,6 +62,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -216,14 +223,32 @@ public class MaxKeyConfig  implements InitializingBean {
     
     @Bean(name = "mailOtpAuthn")
     public MailOtpAuthn mailOtpAuthn(
+            EmailConfig emailConfig,
             @Value("${spring.mail.properties.mailotp.message.subject}")
             String messageSubject,
             @Value("${spring.mail.properties.mailotp.message.template}")
-            String messageTemplate
+            String messageTemplate,
+            @Value("${spring.mail.properties.mailotp.message.validity}")
+            int messageValidity,
+            @Value("${spring.mail.properties.mailotp.message.type}")
+            String messageType
             ) {
+        if(messageType!= null && messageType.equalsIgnoreCase("html")) {
+            Resource resource = new ClassPathResource("messages/email/forgotpassword.html");
+            try {
+                BufferedReader bufferedReader =new BufferedReader(new InputStreamReader(resource.getInputStream()));
+                messageTemplate = bufferedReader.lines().collect(Collectors.joining("\n"));
+                bufferedReader.close();
+            } catch (IOException e) {
+                 _logger.error("mailOtpAuthn IOException ",e);
+            }
+        }
+        _logger.trace("messageTemplate \n" +messageTemplate);
         MailOtpAuthn mailOtpAuthn = new MailOtpAuthn();
         mailOtpAuthn.setSubject(messageSubject);
         mailOtpAuthn.setMessageTemplate(messageTemplate);
+        mailOtpAuthn.setEmailConfig(emailConfig);
+        mailOtpAuthn.setInterval(messageValidity);
         _logger.debug("MailOtpAuthn inited.");
         return mailOtpAuthn;
     }

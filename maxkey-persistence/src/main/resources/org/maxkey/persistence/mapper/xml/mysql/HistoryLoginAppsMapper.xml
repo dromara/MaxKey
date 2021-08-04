@@ -19,7 +19,7 @@
 			and	uid	=	#{uid}
 		</if> 
 		<if test="username != null and username != ''">
-			and	username	like concat('%',#{username},'%')
+			and	username	=   #{username}
 		</if> 
 		<if test="displayName != null and displayName != ''">
 			and	displayname	like concat('%',#{displayName},'%')
