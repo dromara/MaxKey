@@ -24,6 +24,6 @@ dependencies {
    	implementation project(":maxkey-identitys:maxkey-synchronizers-workweixin")
    	implementation project(":maxkey-identitys:maxkey-synchronizers-dingding")
    	
-   	implementation project(":maxkey-webs:maxkey-web-static")
+   	implementation project(":maxkey-webs:maxkey-web-resources")
    	
 }

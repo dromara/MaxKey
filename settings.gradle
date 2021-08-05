@@ -37,7 +37,7 @@ include 'maxkey-protocols:maxkey-protocol-extendapi'
 
 //include 'maxkey-webs'
 //static
-include 'maxkey-webs:maxkey-web-static'
+include 'maxkey-webs:maxkey-web-resources'
 //maxkey
 include 'maxkey-webs:maxkey-web-maxkey'
 //maxkey-mgt management
