@@ -68,7 +68,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-//@ImportResource(locations = { "classpath:spring/maxkey.xml" })
 @PropertySource(ConstantsProperties.applicationPropertySource)
 @ComponentScan(basePackages = {
         "org.maxkey.configuration",
