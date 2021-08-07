@@ -153,6 +153,8 @@
 			<#--todo:send captcha-->
 			captchaCountTimer=setInterval("getCaptchaCount()", 1000);
 		});
+		
+
 	});
 </script>
 </head>
@@ -192,6 +194,11 @@
 									<@locale code="login.text.login.mobile"/>
 									</a>
 								</li>
+								<li id="qrcodelogin"   class="switch_tab_class">
+                                    <a href="javascript:void(0);">
+                                    <@locale code="login.text.login.qrcode"/>
+                                    </a>
+                                </li>
 							</ul>
 						</td>
 					</tr>
@@ -205,6 +212,10 @@
 							</div>
 							<div id="div_mobileLogin" >
 								<#include "loginmobile.ftl">
+							</div>
+							<div id="div_qrcodelogin">
+							     <#include "loginworkweixin.ftl"> 
+							     <#-- <#include "logindingtalk.ftl">-->
 							</div>
 						</td>
 					</tr>

@@ -329,8 +329,8 @@ body{
 	vertical-align: top;
 }
 
-#normalLogin,#tfaLogin,#mobileLogin{
-	width	:49%;
+#normalLogin,#tfaLogin,#mobileLogin,#qrcodelogin{
+	width	:33.3%;
 }
 
 #div_tfaLogin , #div_mobileLogin{

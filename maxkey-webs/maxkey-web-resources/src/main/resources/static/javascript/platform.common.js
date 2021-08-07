@@ -38,22 +38,22 @@ $(function(){
            }
      });
 	/** switch_tab*/
-	$(".switch_tab_class").on("click",function(){
-		if($(".switch_tab_current").attr("id")==(this.id)){
-			return;
-		}
-		
-		$(".switch_tab .switch_tab_class").removeClass("switch_tab_current");
-		$(this).addClass("switch_tab_current");
-		$(".switch_tab li").each(function(){
-		    $("#"+$(this).attr("value")).hide();
-		});
-		
-		$("#"+$(this).attr("value")).show();
-		if (typeof(switchTab) == "function"){
-			switchTab($(this).attr("value"));//user define after switch Tab
-		}
-	});
+    $(".switch_tab_class").on("click",function(){
+        if($(".switch_tab_current").attr("id")==(this.id)){
+            return;
+        }
+
+        $(".switch_tab .switch_tab_class").removeClass("switch_tab_current");
+        $(this).addClass("switch_tab_current");
+        $(".switch_tab li").each(function(){
+            $("#div_"+$(this).attr("id")).hide();
+        });
+        
+        $("#div_"+$(this).attr("id")).show();
+        if (typeof(switchTab) == "function"){
+            switchTab($(this).attr("id"));//user define after switch Tab
+        }
+    });
 	
 	//document forward
 	$.forward=function(config){
