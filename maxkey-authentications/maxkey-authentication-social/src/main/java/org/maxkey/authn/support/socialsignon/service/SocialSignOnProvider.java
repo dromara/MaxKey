@@ -36,6 +36,7 @@ public class SocialSignOnProvider {
 	private String lastLoginTime;
 	private String state;
 	private int sortOrder;
+	private boolean hidden;
 	
 	private boolean userBind;
 	
@@ -159,7 +160,15 @@ public class SocialSignOnProvider {
 		this.state = state;
 	}
 
-	@Override
+	public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    @Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("SocialSignOnProvider [provider=");

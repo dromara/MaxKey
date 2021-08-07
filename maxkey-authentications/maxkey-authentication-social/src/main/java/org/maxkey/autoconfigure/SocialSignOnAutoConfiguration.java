@@ -58,6 +58,7 @@ public class SocialSignOnAutoConfiguration implements InitializingBean {
             String clientSecret=applicationProperty.getProperty("maxkey.socialsignon."+provider+".client.secret");
             String sortOrder = applicationProperty.getProperty("maxkey.socialsignon."+provider+".sortorder");
             String agentId = applicationProperty.getProperty("maxkey.socialsignon."+provider+".agent.id");
+            String hidden = applicationProperty.getProperty("maxkey.socialsignon."+provider+".hidden");
             
             SocialSignOnProvider socialSignOnProvider = new SocialSignOnProvider();
             socialSignOnProvider.setProvider(provider);
@@ -67,6 +68,12 @@ public class SocialSignOnAutoConfiguration implements InitializingBean {
             socialSignOnProvider.setClientSecret(clientSecret);
             socialSignOnProvider.setSortOrder(Integer.valueOf(sortOrder));
             socialSignOnProvider.setAgentId(agentId);
+            
+            if(hidden == null || hidden.equalsIgnoreCase("false")) {
+                socialSignOnProvider.setHidden(false);
+            }else if(hidden.equalsIgnoreCase("true")){
+                socialSignOnProvider.setHidden(true);
+            }
             
             _logger.debug("socialSignOnProvider " + socialSignOnProvider.getProvider() 
             								+ "(" + socialSignOnProvider.getProviderName()+")");

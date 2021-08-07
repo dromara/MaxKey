@@ -17,6 +17,7 @@
 
 package org.maxkey.authn.support.socialsignon.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,7 +35,7 @@ import me.zhyd.oauth.request.*;
 public class SocialSignOnProviderService{
 	private static Logger _logger = LoggerFactory.getLogger(SocialSignOnProviderService.class);
 	
-	List<SocialSignOnProvider> socialSignOnProviders;
+	List<SocialSignOnProvider> socialSignOnProviders = new ArrayList<SocialSignOnProvider>();
 	
 	HashMap<String ,SocialSignOnProvider>socialSignOnProviderMaps=new HashMap<String ,SocialSignOnProvider>();
 	
@@ -135,14 +136,16 @@ public class SocialSignOnProviderService{
 
 	public void setSocialSignOnProviders(
 			List<SocialSignOnProvider> socialSignOnProviders) {
-		
-		this.socialSignOnProviders = socialSignOnProviders;
-		
+	    
 		for(SocialSignOnProvider socialSignOnProvider : socialSignOnProviders){
-			socialSignOnProviderMaps.put(socialSignOnProvider.getProvider(), socialSignOnProvider);
+		    socialSignOnProviderMaps.put(socialSignOnProvider.getProvider(), socialSignOnProvider);
+		    
+		    if(!socialSignOnProvider.isHidden()) {
+		        this.socialSignOnProviders.add(socialSignOnProvider);
+		    }
 		}
 		
-		_logger.debug(""+socialSignOnProviders);
+		_logger.debug(""+this.socialSignOnProviders);
 	}
 	
 }

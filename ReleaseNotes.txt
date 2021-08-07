@@ -1,4 +1,42 @@
-﻿MaxKey v 2.8.1 GA 2021/06/25
+﻿MaxKey v 2.9.0 GA 2021/08/**
+    *(MAXKEY-210601) 企业微信扫描登录
+    *(MAXKEY-210602) 钉钉扫描登录
+    *(MAXKEY-210603) 第三方登录异常问题修复
+    *(MAXKEY-210604) 新建maxkey-webs目录，包含maxkey-web-maxkey、maxkey-web-mgt、maxkey-web-resources
+    *(MAXKEY-210605) 静态文件的合并到maxkey-web-resources
+    *(MAXKEY-210606) 腾讯企业邮箱适配器优化
+    *(MAXKEY-210607) 移除*.xml的spring配置文件
+    *(MAXKEY-210608) 后台管理员自动生成密码的问题修复
+    *(MAXKEY-210609) 密码重置接口的优化
+    *(MAXKEY-210610) KAFKA数据同步接口优化，重新定义同步TOPIC
+    *(MAXKEY-210611) LDAP及ActiveDirectory属性和连接的优化
+    *(MAXKEY-210612) Synchronizers同步器的模块化，分成activedirectory、ldap、dingding、workweixin
+    *(MAXKEY-210613) Synchronizers增加定时同步功能
+    *(MAXKEY-210614) 后台用户和机构查询排序优化
+    *(MAXKEY-210615) 增加连接器日志查询
+    *(MAXKEY-210616) 增加同步器日志查询
+    *(MAXKEY-210617) 应用配置适配器不生效修复
+    *(MAXKEY-210618) FormBased认证功能的优化
+    *(MAXKEY-210619) FormBased密码首次初始化问题修复
+    *(MAXKEY-210620) 重新登录地址优化
+    *(MAXKEY-210621) 实体类型的ID全部调整为雪花ID
+    *(MAXKEY-210622) 后台报表优化
+    *(MAXKEY-210623) 底层数据库mybatis-jpa-extra优化及问题修复
+    *(MAXKEY-210624) 登录模块的模块化
+    *(MAXKEY-210625) LDAP登录成功，密码自动同步到MaxKey
+    *(MAXKEY-210626) 社交账号企业微信LOGO
+    *(MAXKEY-210627) 找回密码时密码不匹配问题修复
+    *(MAXKEY-210628) SHELL脚本优化
+    *(MAXKEY-210629) 官方网站优化
+    *(MAXKEY-210630) 依赖jar引用、更新和升级
+        spring          5.3.9
+        springBoot      2.5.3
+        springSession   2.5.1
+        tomcat          9.0.50
+        JustAuth        1.16.2
+        
+        
+MaxKey v 2.8.1 GA 2021/06/25
 	*(MAXKEY-210501) 官方网站内容优化
 	*(MAXKEY-210502) 修复同步器LDAP保存保存问题
 	*(MAXKEY-210503) ReadMe内容优化
