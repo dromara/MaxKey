@@ -48,7 +48,8 @@ Key Functions
 | 2.4     | TOTP			| Denglu1/Google/Microsoft Authenticator/FreeOTP/Support TOTP or HOTP |
 | 2.5     | Domain          | Kerberos/SPNEGO/AD domain|
 | 2.6     | LDAP 			| OpenLDAP/ActiveDirectory/Standard LDAP Server |
-| 2.7     | Social Account  | WeChat/QQ/ Weibo/Dingding/Google/Facebook/other  | 
+| 2.7     | Social Account  | WeChat/QQ/ Weibo/DingTalk/Google/Facebook/other  | 
+| 2.8     | Scan QR Code    | WorkWeiXin/DingTalk Scan QR Code | 
 
 
 3. Standard Authentication Protocols for applications to integrate sso, secure mobile access, secure API, third-party authentication and Internet authentication.
