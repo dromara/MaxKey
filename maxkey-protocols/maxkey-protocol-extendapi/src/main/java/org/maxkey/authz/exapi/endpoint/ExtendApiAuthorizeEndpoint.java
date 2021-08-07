@@ -26,6 +26,7 @@ import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.Boolean;
 import org.maxkey.entity.Accounts;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.util.Instance;
 import org.maxkey.web.WebContext;
@@ -55,21 +56,46 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	    ModelAndView modelAndView=new ModelAndView("authorize/redirect_sso_submit");
 		Apps apps=getApp(id);
 		_logger.debug(""+apps);
+		UserInfo userInfo = WebContext.getUserInfo();
 		if(Boolean.isTrue(apps.getIsAdapter())){
-			Accounts appUser=getAccounts(apps);
 			
-			if(appUser	==	null){
-				return generateInitCredentialModelAndView(id,"/authorize/api/"+id);
-			}
-
 			AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(apps.getAdapter());
-			
-			apps.setAppUser(appUser);
+			String username ="";
+			String password ="";
+			if(apps.getCredential()==1) {
+				if(apps.getSystemUserAttr().equalsIgnoreCase("uid")) {
+					username = userInfo.getId();
+				}else if(apps.getSystemUserAttr().equalsIgnoreCase("username")) {
+					username = userInfo.getUsername();
+				}else if(apps.getSystemUserAttr().equalsIgnoreCase("email")) {
+					username = userInfo.getEmail();
+				}else if(apps.getSystemUserAttr().equalsIgnoreCase("employeeNumber")) {
+					username = userInfo.getEmployeeNumber();
+				}else if(apps.getSystemUserAttr().equalsIgnoreCase("windowsaccount")) {
+					username = userInfo.getWindowsAccount();
+				}else if(apps.getSystemUserAttr().equalsIgnoreCase("mobile")) {
+					username = userInfo.getMobile();
+				}else if(apps.getSystemUserAttr().equalsIgnoreCase("workEmail")) {
+					username = userInfo.getWorkEmail();
+				}else {
+					username = userInfo.getEmail();
+				}
+					
+			} else if(apps.getCredential()==2) {
+				username = apps.getSharedUsername();
+				password = apps.getSharedPassword();
+			}else if(apps.getCredential()==3) {
+				Accounts appUser=getAccounts(apps);
+				if(appUser	==	null){
+						return generateInitCredentialModelAndView(id,"/authorize/api/"+id);
+				}
+				apps.setAppUser(appUser);
+			}
 			
 			modelAndView=adapter.authorize(
 					WebContext.getUserInfo(), 
 					apps, 
-					appUser.getRelatedUsername()+"."+appUser.getRelatedPassword(), 
+					username+"="+password, 
 					modelAndView);
 			return modelAndView;
 		}else{

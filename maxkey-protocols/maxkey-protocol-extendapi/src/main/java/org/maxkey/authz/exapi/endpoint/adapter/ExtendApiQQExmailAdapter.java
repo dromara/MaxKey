@@ -58,6 +58,8 @@ public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
 		HttpsTrusts.beforeConnection();
 		
 		Apps details=(Apps)app;
+		String username = data.substring(0, data.indexOf("="));
+		String password = data.substring(data.indexOf("=") + 1);
 		//extraAttrs from Applications
 		ExtraAttrs extraAttrs=null;
 		if(details.getIsExtendAttr()==1){
@@ -69,7 +71,7 @@ public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
 		_logger.debug(""+token);
 		
 		OAuthClient authkeyRestClient=new OAuthClient(
-				String.format(AUTHKEY_URI,token.getAccess_token(),details.getAppUser().getRelatedUsername()));
+				String.format(AUTHKEY_URI,token.getAccess_token(),username));
 		
 		HashMap<String, String> authKey=JsonUtils.gson2Object(authkeyRestClient.execute().getBody(), HashMap.class);
 		_logger.debug("authKey : "+authKey);
