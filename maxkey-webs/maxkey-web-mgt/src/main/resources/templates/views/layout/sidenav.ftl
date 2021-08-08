@@ -20,13 +20,6 @@
        		<span class="fa fa-fw fa-user fa-lg"></span>
      	</a>
    	</li>
-   	<li>
-     	<a class="side-nav-menu" href="<@base />/apps/list/">
-       		<@locale code="navs.apps"/>
-       		<span class="fa fa-fw fa-globe fa-lg"></span>
-     	</a>
-   	</li>
-   	
  	<li>
      	<a class="side-nav-menu" href="<@base />/app/accounts/list/">
       		
@@ -35,8 +28,14 @@
      	</a>
    	</li>  	
    	<li>
+        <a class="side-nav-menu" href="<@base />/apps/list/">
+            <@locale code="navs.apps"/>
+            <span class="fa fa-fw fa-globe fa-lg"></span>
+        </a>
+    </li>
+   	<li>
      	<a class="side-nav-menu has-arrow" href="#">
-       		<@locale code="navs.groups"/>
+       		<@locale code="navs.privileges"/>
        		<span class="fa fa-fw fa-cubes fa-lg"></span>
      	</a>
      	<ul>
