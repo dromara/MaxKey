@@ -28,7 +28,9 @@
     *(MAXKEY-210627) 找回密码时密码不匹配问题修复
     *(MAXKEY-210628) SHELL脚本优化
     *(MAXKEY-210629) 官方网站优化
-    *(MAXKEY-210630) 依赖jar引用、更新和升级
+    *(MAXKEY-210630) 标准构建优化
+    *(MAXKEY-210631) maxkey-web-mgt配置文件分离，方便后续不同环境的切换
+    *(MAXKEY-210632) 依赖jar引用、更新和升级
         spring          5.3.9
         springBoot      2.5.3
         springSession   2.5.1

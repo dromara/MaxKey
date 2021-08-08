@@ -65,42 +65,41 @@ public class ActiveDirectoryUtils extends LdapUtils {
         this.ctx = dirContext;
     }
 
-    // connect to ActiveDirectory server
     @Override
-    public DirContext openConnection() {
-        _logger.info("PROVIDER_URL:" + providerUrl);
-        _logger.info("SECURITY_PRINCIPAL:" + principal);
-        _logger.info("SECURITY_CREDENTIALS:" + credentials);
-        // LDAP
-        Properties props = new Properties();
-        props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        props.setProperty(Context.URL_PKG_PREFIXES, "com.sun.jndi.url");
-        props.setProperty(Context.REFERRAL, referral);
-        props.setProperty(Context.SECURITY_AUTHENTICATION, "simple");
-
-        props.setProperty(Context.PROVIDER_URL, providerUrl);
-        
-        if (activeDirectoryDomain == null && domain.indexOf(".") > -1) {
-        	activeDirectoryDomain = domain.substring(0, domain.indexOf("."));
-        }else {
-        	activeDirectoryDomain = domain;
-        }
-        
-        _logger.info("PROVIDER_DOMAIN:" + activeDirectoryDomain + " for " + domain);
-        String activeDirectoryPrincipal = activeDirectoryDomain + "\\" + principal;
-        _logger.debug("Active Directory SECURITY_PRINCIPAL : " + activeDirectoryPrincipal);
-        props.setProperty(Context.SECURITY_PRINCIPAL, activeDirectoryPrincipal);
-        props.setProperty(Context.SECURITY_CREDENTIALS, credentials);
-
-        if (ssl && providerUrl.toLowerCase().startsWith("ldaps")) {
-        	_logger.info("ldaps security protocol.");
-            System.setProperty("javax.net.ssl.trustStore", trustStore);
-            System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
-            props.put(Context.SECURITY_PROTOCOL, "ssl");
-        }
-        props.put(Context.REFERRAL, "follow");
-
-        return InitialDirContext(props);
+    protected void initEnvironment() {
+    	 if(props == null) {
+ 	        _logger.info("PROVIDER_URL:" + providerUrl);
+ 	        _logger.info("SECURITY_PRINCIPAL:" + principal);
+ 	        _logger.info("SECURITY_CREDENTIALS:" + credentials);
+ 	        // LDAP
+ 	        props = new Properties();
+ 	        props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+ 	        props.setProperty(Context.URL_PKG_PREFIXES, "com.sun.jndi.url");
+ 	        props.setProperty(Context.REFERRAL, referral);
+ 	        props.setProperty(Context.SECURITY_AUTHENTICATION, "simple");
+ 	
+ 	        props.setProperty(Context.PROVIDER_URL, providerUrl);
+ 	        
+ 	        if (domain.indexOf(".") > -1) {
+ 	        	activeDirectoryDomain = domain.substring(0, domain.indexOf("."));
+ 	        }else {
+ 	        	activeDirectoryDomain = domain;
+ 	        }
+ 	        
+ 	        _logger.info("PROVIDER_DOMAIN:" + activeDirectoryDomain + " for " + domain);
+ 	        String activeDirectoryPrincipal = activeDirectoryDomain + "\\" + principal;
+ 	        _logger.debug("Active Directory SECURITY_PRINCIPAL : " + activeDirectoryPrincipal);
+ 	        props.setProperty(Context.SECURITY_PRINCIPAL, activeDirectoryPrincipal);
+ 	        props.setProperty(Context.SECURITY_CREDENTIALS, credentials);
+ 	
+ 	        if (ssl && providerUrl.toLowerCase().startsWith("ldaps")) {
+ 	        	_logger.info("ldaps security protocol.");
+ 	            System.setProperty("javax.net.ssl.trustStore", trustStore);
+ 	            System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
+ 	            props.put(Context.SECURITY_PROTOCOL, "ssl");
+ 	        }
+ 	        props.put(Context.REFERRAL, "follow");
+     	 }
     }
 
     public String getDomain() {

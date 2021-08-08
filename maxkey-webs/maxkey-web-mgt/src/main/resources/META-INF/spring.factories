@@ -6,5 +6,6 @@ org.maxkey.autoconfigure.MvcAutoConfiguration,\
 org.maxkey.autoconfigure.JwtAuthnAutoConfiguration,\
 org.maxkey.autoconfigure.RedisAutoConfiguration,\
 org.maxkey.autoconfigure.AuthenticationAutoConfiguration,\
+org.maxkey.synchronizer.autoconfigure.SynchronizerAutoConfiguration,\
 org.maxkey.MaxKeyMgtConfig,\
 org.maxkey.MaxKeyMgtMvcConfig

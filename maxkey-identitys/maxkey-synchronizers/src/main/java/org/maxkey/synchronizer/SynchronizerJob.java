@@ -17,6 +17,8 @@
 
 package org.maxkey.synchronizer;
 
+import org.apache.mybatis.jpa.util.WebContext;
+import org.maxkey.entity.Synchronizers;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
@@ -44,10 +46,13 @@ public class SynchronizerJob  implements Job {
         _logger.debug("SynchronizerJob is running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
-        	ISynchronizerService service =
-        			(ISynchronizerService)context.getMergedJobDataMap().get("synchronizerService");
+        	Synchronizers synchronizer = (Synchronizers)context.getMergedJobDataMap().get("synchronizer");
+        	_logger.debug("synchronizer : " + synchronizer.getName()+"("+synchronizer.getId()+"_"+synchronizer.getSourceType()+")");
+    		_logger.debug("synchronizer service : " + synchronizer.getService());
+    		_logger.debug("synchronizer Scheduler : " + synchronizer.getScheduler());
+        	ISynchronizerService service = (ISynchronizerService)WebContext.getBean(synchronizer.getService());
+        	service.setSynchronizer(synchronizer);
         	service.sync();
-            Thread.sleep(10 *1000);
             
             _logger.debug("SynchronizerJob is success  " );
         }catch(Exception e) {

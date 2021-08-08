@@ -33,6 +33,9 @@ public class HistoryConnector  extends JpaBaseEntity  implements Serializable{
     String conType;
     
     @Column
+    String conAction;
+    
+    @Column
     String sourceId;
     
     @Column
@@ -178,36 +181,48 @@ public class HistoryConnector  extends JpaBaseEntity  implements Serializable{
     }
 
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("HistoryConnector [id=");
-        builder.append(id);
-        builder.append(", conName=");
-        builder.append(conName);
-        builder.append(", conType=");
-        builder.append(conType);
-        builder.append(", sourceId=");
-        builder.append(sourceId);
-        builder.append(", sourceName=");
-        builder.append(sourceName);
-        builder.append(", objectId=");
-        builder.append(objectId);
-        builder.append(", objectName=");
-        builder.append(objectName);
-        builder.append(", description=");
-        builder.append(description);
-        builder.append(", syncTime=");
-        builder.append(syncTime);
-        builder.append(", result=");
-        builder.append(result);
-        builder.append(", startDate=");
-        builder.append(startDate);
-        builder.append(", endDate=");
-        builder.append(endDate);
-        builder.append("]");
-        return builder.toString();
-    }
+    public String getConAction() {
+		return conAction;
+	}
+
+
+	public void setConAction(String conAction) {
+		this.conAction = conAction;
+	}
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("HistoryConnector [id=");
+		builder.append(id);
+		builder.append(", conName=");
+		builder.append(conName);
+		builder.append(", conType=");
+		builder.append(conType);
+		builder.append(", conAction=");
+		builder.append(conAction);
+		builder.append(", sourceId=");
+		builder.append(sourceId);
+		builder.append(", sourceName=");
+		builder.append(sourceName);
+		builder.append(", objectId=");
+		builder.append(objectId);
+		builder.append(", objectName=");
+		builder.append(objectName);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", syncTime=");
+		builder.append(syncTime);
+		builder.append(", result=");
+		builder.append(result);
+		builder.append(", startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append("]");
+		return builder.toString();
+	}
     
     
 }

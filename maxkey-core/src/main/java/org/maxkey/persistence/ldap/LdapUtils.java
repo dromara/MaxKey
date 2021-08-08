@@ -53,6 +53,7 @@ public class LdapUtils {
     protected String trustStorePassword;
     protected boolean ssl;
     protected int searchScope;
+    protected Properties props;
 
     /**
      * 
@@ -90,41 +91,59 @@ public class LdapUtils {
     }
 
     protected DirContext InitialDirContext(Properties properties) {
+    	if(ctx == null) {
+    		ctx =createDirContext(properties);
+    	}
+        return ctx;
+    }
+    
+    protected DirContext createDirContext(Properties properties) {
+    	DirContext ctx = null;
         try {
-            ctx = new InitialDirContext(properties);
+        	ctx = new InitialDirContext(properties);
             _logger.info("connect to ldap " + providerUrl + " seccessful.");
         } catch (NamingException e) {
             _logger.error("connect to ldap " + providerUrl + " fail.");
-            e.printStackTrace();
             _logger.error(e.getMessage());
         }
         return ctx;
     }
+    
+    protected void initEnvironment() {
+    	// LDAP
+        if(props == null) {
+        	 _logger.debug("PROVIDER_URL:" + providerUrl);
+             _logger.debug("SECURITY_PRINCIPAL:" + principal);
+             _logger.trace("SECURITY_CREDENTIALS:" + credentials);
+	        props = new Properties();
+	        props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+	        props.setProperty(Context.URL_PKG_PREFIXES, "com.sun.jndi.url");
+	        props.setProperty(Context.REFERRAL, referral);
+	        props.setProperty(Context.SECURITY_AUTHENTICATION, "simple");
+	
+	        props.setProperty(Context.PROVIDER_URL, providerUrl);
+	        props.setProperty(Context.SECURITY_PRINCIPAL, principal);
+	        props.setProperty(Context.SECURITY_CREDENTIALS, credentials);
+	
+	        if (ssl && providerUrl.toLowerCase().startsWith("ldaps")) {
+	            System.setProperty("javax.net.ssl.trustStore", trustStore);
+	            System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
+	            props.put(Context.SECURITY_PROTOCOL, "ssl");
+	            props.put(Context.REFERRAL, "follow");
+	        }
+        }
+    }
 
     // connect to ldap server
     public DirContext openConnection() {
-        _logger.debug("PROVIDER_URL:" + providerUrl);
-        _logger.debug("SECURITY_PRINCIPAL:" + principal);
-        _logger.trace("SECURITY_CREDENTIALS:" + credentials);
-        // LDAP
-        Properties props = new Properties();
-        props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        props.setProperty(Context.URL_PKG_PREFIXES, "com.sun.jndi.url");
-        props.setProperty(Context.REFERRAL, referral);
-        props.setProperty(Context.SECURITY_AUTHENTICATION, "simple");
-
-        props.setProperty(Context.PROVIDER_URL, providerUrl);
-        props.setProperty(Context.SECURITY_PRINCIPAL, principal);
-        props.setProperty(Context.SECURITY_CREDENTIALS, credentials);
-
-        if (ssl && providerUrl.toLowerCase().startsWith("ldaps")) {
-            System.setProperty("javax.net.ssl.trustStore", trustStore);
-            System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
-            props.put(Context.SECURITY_PROTOCOL, "ssl");
-            props.put(Context.REFERRAL, "follow");
-        }
-
+    	initEnvironment();
         return InitialDirContext(props);
+    }
+    
+ // connect to ldap server
+    public DirContext createConnection() {
+    	initEnvironment();
+        return createDirContext(props);
     }
 
     public boolean authenticate() {

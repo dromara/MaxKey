@@ -459,6 +459,7 @@ task copyMaxKeyLibs(type: Copy) {
     from "$rootDir/build/maxkey-jars/maxkey-protocol-oauth-2.0-${project.version}.jar"
     from "$rootDir/build/maxkey-jars/maxkey-protocol-saml-2.0-${project.version}.jar"
     from "$rootDir/build/maxkey-jars/maxkey-protocol-tokenbased-${project.version}.jar"
+    from "$rootDir/build/maxkey-jars/maxkey-web-resources-${project.version}.jar"
     into "$rootDir/build/MaxKey-v${project.version}GA/lib";
 }
 

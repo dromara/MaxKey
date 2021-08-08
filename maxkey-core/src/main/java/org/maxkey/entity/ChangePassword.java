@@ -29,6 +29,10 @@ public class ChangePassword extends JpaBaseEntity{
 	private String id;
 	private String uid;
 	private String username;
+	private String email;
+	private String mobile;
+	private String windowsAccount;
+	private String employeeNumber;
 	private String displayName;
 	private String oldPassword;
 	private String password;
@@ -155,6 +159,16 @@ public class ChangePassword extends JpaBaseEntity{
 	}
 
 
+	public String getMobile() {
+		return mobile;
+	}
+
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+
 	public String getDisplayName() {
 		return displayName;
 	}
@@ -162,6 +176,36 @@ public class ChangePassword extends JpaBaseEntity{
 
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getWindowsAccount() {
+		return windowsAccount;
+	}
+
+
+	public void setWindowsAccount(String windowsAccount) {
+		this.windowsAccount = windowsAccount;
+	}
+
+
+	public String getEmployeeNumber() {
+		return employeeNumber;
+	}
+
+
+	public void setEmployeeNumber(String employeeNumber) {
+		this.employeeNumber = employeeNumber;
 	}
 
 
