@@ -264,54 +264,55 @@ $('#datagrid').on('click-row.bs.table', function (row, element, field) {
                         </form>
                     </td>
 		 			<td >
-		 				<div id="tool_box_right" style="width:100px;">
+		 				<div id="tool_box_right" >
 					 	     <input class="button btn btn-success mr-3 "  id="savePermBtn" type="button" value="<@locale code="button.text.save"/>"/>
 						</div>
 		 			</td>
 		 		</tr>
 		 	</table>
-		
+		<div id="advanced_search">
+            <form id="advanced_search_form">
+                
+            </form>
+        </div>
+        
+       <table class="datatable"   width="100%" >
+       <tr>
+          <td valign="top"  class="td_1" style="vertical-align: top;width:450px;">
+                <table  data-url="<@base/>/roles/grid"
+                        id="datagrid"
+                            data-toggle="table"
+                            data-classes="table table-bordered table-hover table-striped"
+                            data-click-to-select="true"
+                            data-pagination="true"
+                            data-total-field="records"
+                            data-page-list="[10, 25, 50, 100]"
+                            data-search="false"
+                            data-single-select="true"
+                            data-locale="zh-CN"
+                            data-query-params="dataGridQueryParams"
+                            data-query-params-type="pageSize"
+                            data-side-pagination="server">
+                    <thead>
+                        <tr>
+                            <th data-checkbox="true"></th>
+                            <th data-sortable="true" data-field="id"   data-visible="false">Id</th>
+                            <th data-field="name"><@locale code="role.name"/></th>
+                            <th data-field="description"><@locale code="common.text.description"/></th>
+                
+                        </tr>
+                    </thead>
+                </table>
+          </td>
+          <td  valign="top"  class="td_1" style="vertical-align: top;">
+            <div id="resourcesTree" class="ztree"><b><@locale code="apps.select.tip"/></b></div>
+         </td>
+           </tr>
+        </table>
 		 		
  	</div>
  	
- 	<div id="advanced_search">
- 		<form id="advanced_search_form">
-	 		
-	 	</form>
- 	</div>
- 	 <table class="datatable"   width="100%" >
-   <tr>
-      <td valign="top"  class="td_1" style="vertical-align: top;width:450px;">
-            <table  data-url="<@base/>/roles/grid"
-                    id="datagrid"
-                        data-toggle="table"
-                        data-classes="table table-bordered table-hover table-striped"
-                        data-click-to-select="true"
-                        data-pagination="true"
-                        data-total-field="records"
-                        data-page-list="[10, 25, 50, 100]"
-                        data-search="false"
-                        data-single-select="true"
-                        data-locale="zh-CN"
-                        data-query-params="dataGridQueryParams"
-                        data-query-params-type="pageSize"
-                        data-side-pagination="server">
-                <thead>
-                    <tr>
-                        <th data-checkbox="true"></th>
-                        <th data-sortable="true" data-field="id"   data-visible="false">Id</th>
-                        <th data-field="name"><@locale code="role.name"/></th>
-                        <th data-field="description"><@locale code="common.text.description"/></th>
-            
-                    </tr>
-                </thead>
-            </table>
-      </td>
-      <td  valign="top"  class="td_1" style="vertical-align: top;">
-        <div id="resourcesTree" class="ztree"></div>
-	 </td>
-       </tr>
-    </table>
+ 	
 	
 </div>
 					</div>

@@ -9,7 +9,7 @@ website:	http://code.google.com/p/jquerytree/
 -------------------------------------*/
 
 .ztree * {padding:0; margin:0; font-size:12px; font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif}
-.ztree {margin:0; padding:5px; color:#333}
+.ztree {margin:0; padding:5px;min-height: 505px; min-width: 250px; color:#333;border:1px solid rgba(0,0,0,.125);}
 .ztree li{padding:0; margin:0; list-style:none; line-height:14px; text-align:left; white-space:nowrap; outline:0}
 .ztree li ul{ margin:0; padding:0 0 0 18px}
 .ztree li ul.line{ background:url(./img/line_conn.gif) 0 0 repeat-y;}

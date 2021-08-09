@@ -205,66 +205,76 @@ $(function () {
 				<td  width="375px">
 					<form id="basic_search_form">
 						<input  class="form-control"   id="departmentId"  name="departmentId" type="hidden">
-				 			<input  class="form-control"  name="username" type="text" style ="width:150px;float:left;">
-				 			
-				 			
-				 			<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-				 			<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
-					 	</form>
+				 			<input  class="form-control"  name="username" type="text" >
+				 			</form>
 				</td>
 				<td colspan="2"> 
 					 <div id="tool_box_right">    
-						 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
-						 		    wurl="<@base/>/userinfo/forwardAdd"
-						 		    wwidth="960"
-						 		    wheight="620"
-					 		    	target="window">	    	
-					 		    	
-					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
-					 				wurl="<@base/>/userinfo/forwardUpdate"
-					 				wwidth="960"
-						 		    wheight="620"
-					 		    	target="window"> 
-					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
-					 				wurl="<@base/>/userinfo/delete" />
-					 	<input  class="button btn btn-secondary"  id="moreBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">	    	
-					 </div>
-					 <div id="tool_box_right_more" style="display:none;">
-					 	<input class="button btn btn-warning mr-3 window" id="changepwdBtn" type="button"
-						 value="<@locale code="login.password.changepassword"/>" 
-						 		    wurl="<@base/>/userinfo/forwardChangePassword/" wwidth="600px" wheight="250px" ref="datagrid"/>
-						
-						 <input class="button btn btn-info mr-3 window" id="userAdjointBtn" type="button" 
-						 		value="<@locale code="button.text.adjunct"/>"  ref="datagrid"
-						 		    wurl="<@base/>/useradjoint/list" wwidth="900px" wheight="600px" />
-						 <input  id="adjunctUserIdRef" 		type="hidden" />     		    
-						 <input class="button btn btn-success mr-3 window" id="usersImportBtn" type="button" 
-						 		value="<@locale code="button.text.import"/>" 
-						 		    wurl="<@base/>/userinfo/import" wwidth="400px" wheight="250px" />
+						 <input  class="button btn mr-3 btn-primary"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+                         <input  class="button btn mr-3 btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+                        
 					</div>
 				</td>
 			</tr>
 		</table>
- 		
 		
+		<div id="advanced_search">
+            <form id="advanced_search_form">
+                <table    class="table table-bordered">
+                    <tr>
+                        <td width="120px"><@locale code="userinfo.displayName"/></td>
+                        <td width="360px">
+                            <input  class="form-control"  name="displayName" type="text" >
+                        </td>
+                        <td width="120px"><@locale code="userinfo.employeeNumber"/></td>
+                        <td width="360px">
+                            <input class="form-control"  type="text" id="employeeNumber" name="employeeNumber"  title="" value=""/>
+                            </td>
+                 </tr>
+                </table>
+            </form>
+        </div>
  	</div>
  	
- 	<div id="advanced_search">
- 		<form id="advanced_search_form">
- 			<table    class="table table-bordered">
-	 			<tr>
-	 				<td width="120px"><@locale code="userinfo.displayName"/></td>
-		 			<td width="360px">
-		 				<input  class="form-control"  name="displayName" type="text" >
-		 			</td>
-		 			<td width="120px"><@locale code="userinfo.employeeNumber"/></td>
-		 			<td width="360px">
-						<input class="form-control"  type="text" id="employeeNumber" name="employeeNumber"  title="" value=""/>
-			 			</td>
-			 </tr>
-			</table>
- 		</form>
- 	</div>
+ 	
+ 	
+ 	<div  class="toolbox">
+        <table   class="table table-bordered">
+            <tr>
+                <td > 
+                     <div class="buttonList">    
+                         <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
+                                    wurl="<@base/>/userinfo/forwardAdd"
+                                    wwidth="960"
+                                    wheight="620"
+                                    target="window">            
+                                    
+                        <input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
+                                    wurl="<@base/>/userinfo/forwardUpdate"
+                                    wwidth="960"
+                                    wheight="620"
+                                    target="window"> 
+                        <input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
+                                    wurl="<@base/>/userinfo/delete" />
+                      
+                        <input class="button btn btn-warning mr-3 window" id="changepwdBtn" type="button"
+                         value="<@locale code="login.password.changepassword"/>" 
+                                    wurl="<@base/>/userinfo/forwardChangePassword/" wwidth="600px" wheight="250px" ref="datagrid"/>
+                        
+                         <input class="button btn btn-info mr-3 window" id="userAdjointBtn" type="button" 
+                                value="<@locale code="button.text.adjunct"/>"  ref="datagrid"
+                                    wurl="<@base/>/useradjoint/list" wwidth="900px" wheight="600px" />
+                         <input  id="adjunctUserIdRef"      type="hidden" />                
+                         <input class="button btn btn-success mr-3 window" id="usersImportBtn" type="button" 
+                                value="<@locale code="button.text.import"/>" 
+                                    wurl="<@base/>/userinfo/import" wwidth="400px" wheight="250px" />
+                   </div>
+                </td>
+            </tr>
+        </table>
+        
+        
+    </div>
  	     <!-- content -->  
  <table class="datatable"   width="100%" >
    <tr>

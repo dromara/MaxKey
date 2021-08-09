@@ -41,7 +41,7 @@
 			<div class="col-12 grid-margin">
 				<div class="card">
 					<div class="card-body">
-		
+		<div id="tool_box">    
 			<table  class="table table-bordered">
  				<tr>
 		 			<td width="120px"><@locale code="group.name"/>:</td>
@@ -73,43 +73,45 @@
 		 			</td>
 		 		</tr>
 		 	</table>
-		
-		 		
+		      <div id="advanced_search">
+                <form id="advanced_search_form">
+                    
+                </form>
+            </div>
+		 </div>		
+		 
+		 <table  data-url="<@base/>/groups/grid"
+                id="datagrid"
+                    data-toggle="table"
+                    data-classes="table table-bordered table-hover table-striped"
+                    data-click-to-select="true"
+                    data-pagination="true"
+                    data-total-field="records"
+                    data-page-list="[10, 25, 50, 100]"
+                    data-search="false"
+                    data-locale="zh-CN"
+                    data-query-params="dataGridQueryParams"
+                    data-query-params-type="pageSize"
+                    data-side-pagination="server">
+            <thead>
+                <tr>
+                    <th data-checkbox="true"></th>
+                    <th data-sortable="true" data-field="id"   data-visible="false">Id</th>
+                    <th data-field="name"><@locale code="group.name"/></th>
+                    <th data-field="dynamic"  data-formatter="dynamicFormatter"><@locale code="group.dynamic"/></th>
+                    <th data-field="description"><@locale code="common.text.description"/></th>
+                    <th data-field="createdBy"    data-visible="false"><@locale code="common.text.createdby"/></th>
+                    <th data-field="createdDate"  data-visible="false"><@locale code="common.text.createddate"/></th>
+                    <th data-field="modifiedBy"   data-visible="false"><@locale code="common.text.modifiedby"/></th>
+                    <th data-field="modifiedDate" data-visible="false"><@locale code="common.text.modifieddate"/></th>
+        
+                </tr>
+            </thead>
+        </table>
  	</div>
  	
- 	<div id="advanced_search">
- 		<form id="advanced_search_form">
-	 		
-	 	</form>
- 	</div>
-		<table  data-url="<@base/>/groups/grid"
-			id="datagrid"
-				data-toggle="table"
-				data-classes="table table-bordered table-hover table-striped"
-				data-click-to-select="true"
-				data-pagination="true"
-				data-total-field="records"
-				data-page-list="[10, 25, 50, 100]"
-				data-search="false"
-				data-locale="zh-CN"
-				data-query-params="dataGridQueryParams"
-				data-query-params-type="pageSize"
-				data-side-pagination="server">
-		<thead>
-			<tr>
-				<th data-checkbox="true"></th>
-				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
-				<th data-field="name"><@locale code="group.name"/></th>
-				<th data-field="dynamic"  data-formatter="dynamicFormatter"><@locale code="group.dynamic"/></th>
-				<th data-field="description"><@locale code="common.text.description"/></th>
-				<th data-field="createdBy"    data-visible="false"><@locale code="common.text.createdby"/></th>
-				<th data-field="createdDate"  data-visible="false"><@locale code="common.text.createddate"/></th>
-				<th data-field="modifiedBy"   data-visible="false"><@locale code="common.text.modifiedby"/></th>
-				<th data-field="modifiedDate" data-visible="false"><@locale code="common.text.modifieddate"/></th>
-	
-			</tr>
-		</thead>
-	</table>
+
+		
 	
 	
 </div>

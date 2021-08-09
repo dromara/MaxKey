@@ -63,7 +63,7 @@
 						<div class="card">
 							<div class="card-body">
 	<div id="tool_box">
-	 		<table   class="datatable">
+	 		<table   class="table table-bordered">
  				<tr>
 		 			<td width="120px"><@locale code="group.name"/>:</td>
 		 			<td  width="450px">
@@ -80,7 +80,7 @@
 						
 				 		</form>
 		 			</td>
-				 	<td colspan="2"> <div id="tool_box_right"  style="width:400px">
+				 	<td colspan="2"> <div id="tool_box_right" >
 				 		<input class="button btn btn-success mr-3" id="addGroupAppsBtn" type="button" value="<@locale code="button.text.add.member"/>">
 						<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete.member"/>"
 							wurl="<@base/>/groupPrivileges/delete" />

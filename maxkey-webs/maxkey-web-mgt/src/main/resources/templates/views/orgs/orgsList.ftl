@@ -179,7 +179,7 @@ $(function () {
 				 			<input  class="form-control"  name="name" type="text" style ="width:150px;float:left;">
 				 			<input id="pId"  class="form-control"  name="parentId" type="hidden" style ="width:150px;float:left;">
 				 			<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-				 			<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+				 			<!--<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">-->
 					 	</form>
 				</td>
 				<td colspan="2"> 

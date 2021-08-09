@@ -188,7 +188,7 @@ $(function () {
 					 	</form>
 		 			</td>
 		 			<td colspan="2">
-		 				<div id="tool_box_right" style="width:350px;">
+		 				<div id="tool_box_right" >
 		 					 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/resources/forwardAdd"
 						 		    wwidth="500"
@@ -207,51 +207,51 @@ $(function () {
 		 			</td>
 		 		</tr>
 		 	</table>
-		
+	   
+            <div id="advanced_search">
+                <form id="advanced_search_form">
+                    
+                </form>
+            </div>
+             <table class="datatable"   width="100%" >
+           <tr>
+              <td valign="top"  class="td_1" style="vertical-align: top;width:400px;">
+                <div id="resourcesTree" class="ztree"><b><@locale code="apps.select.tip"/></b></div>
+                 
+              </td>
+              <td  valign="top"  class="td_1" style="vertical-align: top;">
+                <table  data-url="<@base/>/resources/grid"
+                    id="datagrid"
+                        data-toggle="table"
+                        data-classes="table table-bordered table-hover table-striped"
+                        data-click-to-select="true"
+                        data-pagination="true"
+                        data-total-field="records"
+                        data-page-list="[10, 25, 50, 100]"
+                        data-search="false"
+                        data-locale="zh-CN"
+                        data-query-params="dataGridQueryParams"
+                        data-query-params-type="pageSize"
+                        data-side-pagination="server">
+                <thead>
+                    <tr>
+                        <th data-checkbox="true"></th>
+                        <th data-sortable="true" data-field="id"   data-visible="false">Id</th>
+                        <th data-field="appName"><@locale code="apps.name"/></th>
+                        <th data-field="name"><@locale code="resource.name"/></th>
+                        <th data-field="resourceType"><@locale code="resource.resourceType"/></th>
+                        <th data-field="sortIndex"><@locale code="common.text.sortindex"/></th>
+                        <th data-field="resourceAction"><@locale code="resource.resourceAction"/></th>
+                        <th data-field="description"><@locale code="common.text.description"/></th>
+                    </tr>
+                </thead>
+            </table>
+             </td>
+               </tr>
+            </table>	
 		 		
  	</div>
- 	
- 	<div id="advanced_search">
- 		<form id="advanced_search_form">
-	 		
-	 	</form>
- 	</div>
- 	 <table class="datatable"   width="100%" >
-   <tr>
-      <td valign="top"  class="td_1" style="vertical-align: top;width:400px;">
-        <div id="resourcesTree" class="ztree"></div>
-         
-      </td>
-      <td  valign="top"  class="td_1" style="vertical-align: top;">
-		<table  data-url="<@base/>/resources/grid"
-			id="datagrid"
-				data-toggle="table"
-				data-classes="table table-bordered table-hover table-striped"
-				data-click-to-select="true"
-				data-pagination="true"
-				data-total-field="records"
-				data-page-list="[10, 25, 50, 100]"
-				data-search="false"
-				data-locale="zh-CN"
-				data-query-params="dataGridQueryParams"
-				data-query-params-type="pageSize"
-				data-side-pagination="server">
-		<thead>
-			<tr>
-				<th data-checkbox="true"></th>
-				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
-				<th data-field="appName"><@locale code="apps.name"/></th>
-				<th data-field="name"><@locale code="resource.name"/></th>
-				<th data-field="resourceType"><@locale code="resource.resourceType"/></th>
-				<th data-field="sortIndex"><@locale code="common.text.sortindex"/></th>
-				<th data-field="resourceAction"><@locale code="resource.resourceAction"/></th>
-				<th data-field="description"><@locale code="common.text.description"/></th>
-			</tr>
-		</thead>
-	</table>
-	 </td>
-       </tr>
-    </table>
+ 
 	
 </div>
 					</div>

@@ -27,6 +27,10 @@ body{
     -o-transition: all .2s ease;
     -ms-transition: all .2s ease;
 }
+
+
+
+
 .swlink {
     text-indent: -9999px;
     height: 0;
@@ -299,6 +303,17 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 	border: 1px solid #e5e5e5;
 }
 
+
+#tool_box  .table td, .table th {
+    vertical-align: middle;
+    padding: .40rem;
+}
+
+.toolbox  .table td, .table th {
+    vertical-align: middle;
+    padding: .40rem;
+}
+
 #tool_box_left {
 	padding-left: 10px;
 	float: left;
@@ -309,16 +324,11 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 }
 
 #tool_box_right {
-	height:46px;
 	text-align: right;
-	padding-right: 10px;
-	width:484px;
 }
 #tool_box_right_more{
-	height:46px;
 	text-align: right;
 	padding-right: 10px;
-	width:484px;
 }
 
 #advanced_search {
@@ -330,6 +340,9 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 	display: none;
 }
 
+.buttonList{
+	float: right;
+}
 #logout{
 	width: 45px;
   	background: #c00 ;
