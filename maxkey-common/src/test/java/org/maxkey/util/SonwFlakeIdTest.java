@@ -33,4 +33,16 @@ public class SonwFlakeIdTest {
 		System.out.println(seq);
 		System.out.println(snowFlake.parse(seq).getDateTime());
 	}
+	
+	@Test
+	public void performance()  {
+        SnowFlakeId snowFlake = new SnowFlakeId(1, 1);
+    
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1000000; i++) {
+            System.out.println(snowFlake.nextId());
+        }
+    
+        System.out.println(System.currentTimeMillis() - start);
+	}
 }

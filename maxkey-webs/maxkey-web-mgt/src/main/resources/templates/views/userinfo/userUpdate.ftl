@@ -31,9 +31,9 @@
 	 <div class="" style="width:100%;">
 		<div class="top">
 			<ul class="switch_tab"  style="width:100%" >
-				<li id="switch_basic" value="table_switch_basic" style="width:30%" class="switch_tab_class switch_tab_current"><a href="javascript:void(0);"><@locale code="userinfo.tab.basic" /></a></li>
-				<li id="switch_company"  value="table_switch_company" style="width:30%" class="switch_tab_class"><a href="javascript:void(0);"><@locale code="userinfo.tab.business" /></a></li>
-				<li id="switch_home"  value="table_switch_home" style="width:30%" class="switch_tab_class"><a href="javascript:void(0);"><@locale code="userinfo.tab.personal" /></a></li>
+				<li id="table_switch_basic"   style="width:30%" class="switch_tab_class switch_tab_current"><a href="javascript:void(0);"><@locale code="userinfo.tab.basic" /></a></li>
+				<li id="table_switch_company" style="width:30%" class="switch_tab_class"><a href="javascript:void(0);"><@locale code="userinfo.tab.business" /></a></li>
+				<li id="table_switch_home"    style="width:30%" class="switch_tab_class"><a href="javascript:void(0);"><@locale code="userinfo.tab.personal" /></a></li>
 				
 			</ul>
 		</div>
@@ -42,7 +42,7 @@
 	    <div class="mainin">			 
   	        <!-- content -->    
   	      	<!--table-->
-			 <table id="table_switch_basic" width="980" class="table table-bordered" >
+			 <table id="div_table_switch_basic" width="980" class="table table-bordered" >
 	<tbody>				
 	<tr>
 		<td style="width:15%;"><@locale code="userinfo.username" />：</td>
@@ -283,7 +283,7 @@
 	</tr>
 	</tbody>
  </table>
- <table  class="table table-bordered"  style="display:none" id="table_switch_company" width="980">
+ <table  class="table table-bordered"  style="display:none" id="div_table_switch_company" width="980">
 	<tbody>				
 		<tr>
 			<td style="width:15%;"><@locale code="userinfo.organization" />：</td>
@@ -396,7 +396,7 @@
 		</tr>					
 	</tbody>
 </table>
-<table  class="table table-bordered"  style="display:none" id="table_switch_home" width="980">
+<table  class="table table-bordered"  style="display:none" id="div_table_switch_home" width="980">
 	<tbody>				
 		<tr>
 			<td style="width:15%;"><@locale code="userinfo.idtype" />：</td>

@@ -203,17 +203,4 @@ public class SnowFlakeId {
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
-
-	public static void main(String[] args) {
-        SnowFlakeId snowFlake = new SnowFlakeId(20, 30);
-
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < 1000000; i++) {
-            System.out.println(snowFlake.nextId());
-        }
-
-        System.out.println(System.currentTimeMillis() - start);
-
-
-    }
 }
