@@ -101,8 +101,12 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         if(loginCredential.getAuthType().equalsIgnoreCase(AuthType.MOBILE)) {
         	mobilecaptchaValid(loginCredential.getPassword(),loginCredential.getAuthType(),userInfo);
         }else {
-        	authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
+            //Validate PasswordPolicy
+            authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
+            //Match password 
         	authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
+        	//apply PasswordSetType and resetBadPasswordCount
+        	authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
         }
         
         UsernamePasswordAuthenticationToken authenticationToken = setOnline(loginCredential,userInfo);

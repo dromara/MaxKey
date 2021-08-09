@@ -281,45 +281,52 @@ public class PasswordPolicyValidator {
                                 );
         }
 
-        //initial password need change
-        if(userInfo.getLoginCount()<=0) {
-            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
-                    ConstantsPasswordSetType.INITIAL_PASSWORD);
-        }
         
-        if (userInfo.getPasswordSetType() != ConstantsPasswordSetType.PASSWORD_NORMAL) {
-            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
-                        userInfo.getPasswordSetType());
-            return true;
-        } else {
-            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
-                    ConstantsPasswordSetType.PASSWORD_NORMAL);
-        }
-
-        /*
-         * check password is Expired,Expiration is Expired date ,if Expiration equals 0,not need check
-         *
-         */
-        if (passwordPolicy.getExpiration() > 0) {
-            String passwordLastSetTimeString = userInfo.getPasswordLastSetTime().substring(0, 19);
-            _logger.info("last password set date " + passwordLastSetTimeString);
-
-            DateTime changePwdDateTime = DateTime.parse(passwordLastSetTimeString,
-                    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
-            Duration duration = new Duration(changePwdDateTime, currentdateTime);
-            int intDuration = Integer.parseInt(duration.getStandardDays() + "");
-            _logger.debug("password Last Set duration day " + intDuration
-                    + " , password policy Expiration " +passwordPolicy.getExpiration()
-                    +" , validate result " + (intDuration <= passwordPolicy.getExpiration()));
-            if (intDuration > passwordPolicy.getExpiration()) {
-                WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
-                        ConstantsPasswordSetType.PASSWORD_EXPIRED);
-            }
-        }
         
         return true;
     }
    
+   public void applyPasswordPolicy(UserInfo userInfo) {
+       getPasswordPolicy();
+       DateTime currentdateTime = new DateTime();
+       //initial password need change
+       if(userInfo.getLoginCount()<=0) {
+           WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
+                   ConstantsPasswordSetType.INITIAL_PASSWORD);
+       }
+       
+       if (userInfo.getPasswordSetType() != ConstantsPasswordSetType.PASSWORD_NORMAL) {
+           WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
+                       userInfo.getPasswordSetType());
+           return;
+       } else {
+           WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
+                   ConstantsPasswordSetType.PASSWORD_NORMAL);
+       }
+
+       /*
+        * check password is Expired,Expiration is Expired date ,if Expiration equals 0,not need check
+        *
+        */
+       if (passwordPolicy.getExpiration() > 0) {
+           String passwordLastSetTimeString = userInfo.getPasswordLastSetTime().substring(0, 19);
+           _logger.info("last password set date " + passwordLastSetTimeString);
+
+           DateTime changePwdDateTime = DateTime.parse(passwordLastSetTimeString,
+                   DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+           Duration duration = new Duration(changePwdDateTime, currentdateTime);
+           int intDuration = Integer.parseInt(duration.getStandardDays() + "");
+           _logger.debug("password Last Set duration day " + intDuration
+                   + " , password policy Expiration " +passwordPolicy.getExpiration()
+                   +" , validate result " + (intDuration <= passwordPolicy.getExpiration()));
+           if (intDuration > passwordPolicy.getExpiration()) {
+               WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
+                       ConstantsPasswordSetType.PASSWORD_EXPIRED);
+           }
+       }
+       
+       resetBadPasswordCount(userInfo);
+   }
    
    /**
     * lockUser
@@ -379,19 +386,29 @@ public class PasswordPolicyValidator {
     * 
     * @param userInfo
     */
-   public void setBadPasswordCount(UserInfo userInfo) {
+   private void setBadPasswordCount(String userId,int badPasswordCount) {
        try {
-           if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-               int badPasswordCount = userInfo.getBadPasswordCount() + 1;
-               userInfo.setBadPasswordCount(badPasswordCount);
-               jdbcTemplate.update(BADPASSWORDCOUNT_UPDATE_STATEMENT,
-                       new Object[] { badPasswordCount, new Date(), userInfo.getId() },
-                       new int[] { Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
-               
-           }
+           jdbcTemplate.update(BADPASSWORDCOUNT_UPDATE_STATEMENT,
+                   new Object[] { badPasswordCount, new Date(), userId },
+                   new int[] { Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
        } catch (Exception e) {
            e.printStackTrace();
            _logger.error(e.getMessage());
+       }
+   }
+   
+   public void plusBadPasswordCount(UserInfo userInfo) {
+       if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
+           setBadPasswordCount(userInfo.getId(),userInfo.getBadPasswordCount() + 1);
+           
+       }
+   }
+   
+   public void resetBadPasswordCount(UserInfo userInfo) {
+       if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
+           if(userInfo.getBadPasswordCount()>0) {
+               setBadPasswordCount(userInfo.getId(),0);
+           } 
        }
    }
    

@@ -42,6 +42,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class AuthorizeBaseEndpoint {
 	final static Logger _logger = LoggerFactory.getLogger(AuthorizeBaseEndpoint.class);
 	
+	//maxkey-mgt
+	public final static String MGT_APP_ID = "622076759805923328";
+	
 	@Autowired 
     @Qualifier("applicationConfig")
     protected ApplicationConfig applicationConfig;
@@ -58,6 +61,7 @@ public class AuthorizeBaseEndpoint {
 		Apps  app=(Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
 		//session中为空或者id不一致重新加载
 		if(app==null||!app.getId().equalsIgnoreCase(id)) {
+		    id = id.equalsIgnoreCase("maxkey_mgt") ? MGT_APP_ID : id;
 			app=appsService.get(id);
 			WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
 		}

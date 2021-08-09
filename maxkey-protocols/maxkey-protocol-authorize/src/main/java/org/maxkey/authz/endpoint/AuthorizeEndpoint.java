@@ -53,11 +53,10 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 	public ModelAndView authorize(
 			HttpServletRequest request,
 			@PathVariable("id") String id){
-		
 		ModelAndView modelAndView=null;
-		
 		Apps  application=getApp(id);
-		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, id);
+		id = application.getId();
+		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, application.getId());
 		
 		if(application.getProtocol().equalsIgnoreCase(ConstantsProtocols.EXTEND_API)){
 			modelAndView=WebContext.forward("/authz/api/"+id);

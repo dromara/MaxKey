@@ -17,6 +17,7 @@
 
 package org.maxkey.util;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 
 public class SonwFlakeIdTest {
@@ -24,9 +25,12 @@ public class SonwFlakeIdTest {
 	
 	@Test
 	public void UidGenerator()  {
-		SnowFlakeId snowFlake = new SnowFlakeId(2, 3);
+	    DateTime d= new DateTime("2020-01-01T01:01:01");
+	    System.out.println("time "+d.getMillis());
+		SnowFlakeId snowFlake = new SnowFlakeId(1, 1,8,d.getMillis());
 		long seq = snowFlake.nextId();
+		
 		System.out.println(seq);
-		System.out.println(snowFlake.parse(seq));
+		System.out.println(snowFlake.parse(seq).getDateTime());
 	}
 }
