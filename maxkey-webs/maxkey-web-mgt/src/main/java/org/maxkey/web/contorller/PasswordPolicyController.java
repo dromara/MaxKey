@@ -102,10 +102,11 @@ public class PasswordPolicyController {
 				result.addError(fe);
 				return new Message(result);
 			}
+			
 			if(passwordPolicy.getDigits() + passwordPolicy.getLowerCase() + passwordPolicy.getUpperCase() + passwordPolicy.getSpecialChar() < passwordPolicy.getMinLength()) {
 				FieldError fe = new FieldError("passwordPolicy", "specialChar",
-						passwordPolicy.getMinLength(), true,
-						new String[]{"ui.passwordpolicy.xe00000003"},//密码包含小写字母、大写字母、数字、特殊字符的个数不能小于密码的最小长度
+						2, true,
+						new String[]{"ui.passwordpolicy.xe00000003"},//密码包含小写字母、大写字母、数字、特殊字符的个数不能小于2
 						null, null);
 				result.addError(fe);
 				return new Message(result);
