@@ -25,6 +25,8 @@ import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.approval.Approval.ApprovalStatus;
 import org.maxkey.authz.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.maxkey.authz.oauth2.provider.token.TokenStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An {@link ApprovalStore} that works with an existing {@link TokenStore}, extracting implicit {@link Approval
@@ -38,6 +40,8 @@ import org.maxkey.authz.oauth2.provider.token.TokenStore;
  */
 public class TokenApprovalStore implements ApprovalStore {
 
+	static final Logger _logger = LoggerFactory.getLogger(TokenApprovalStore.class);
+			
 	private TokenStore store;
 
 	/**
@@ -55,6 +59,7 @@ public class TokenApprovalStore implements ApprovalStore {
 	 */
 	@Override
 	public boolean addApprovals(Collection<Approval> approvals) {
+		_logger.debug("add Approvals...");
 		return true;
 	}
 
@@ -65,6 +70,7 @@ public class TokenApprovalStore implements ApprovalStore {
 	 */
 	@Override
 	public boolean revokeApprovals(Collection<Approval> approvals) {
+		_logger.debug("revoke Approvals " + approvals);
 		boolean success = true;
 		for (Approval approval : approvals) {
 			Collection<OAuth2AccessToken> tokens = store.findTokensByClientIdAndUserName(approval.getClientId(), approval.getUserId());
@@ -87,14 +93,22 @@ public class TokenApprovalStore implements ApprovalStore {
 	 */
 	@Override
 	public Collection<Approval> getApprovals(String userId, String clientId) {
+		_logger.trace("userId " + userId+" , clientId " + clientId);
 		Collection<Approval> result = new HashSet<Approval>();
 		Collection<OAuth2AccessToken> tokens = store.findTokensByClientIdAndUserName(clientId, userId);
+		_logger.trace("tokens Collection " + tokens);
 		for (OAuth2AccessToken token : tokens) {
-			OAuth2Authentication authentication = store.readAuthentication(token);
-			if (authentication != null) {
-				Date expiresAt = token.getExpiration();
-				for (String scope : token.getScope()) {
-					result.add(new Approval(userId, clientId, scope, expiresAt, ApprovalStatus.APPROVED));
+			_logger.trace("token " + token);
+			if(token != null) {
+				OAuth2Authentication authentication = store.readAuthentication(token);
+				_logger.trace("authentication " + authentication);
+				if (authentication != null) {
+					Date expiresAt = token.getExpiration();
+					for (String scope : token.getScope()) {
+						Approval approval = new Approval(userId, clientId, scope, expiresAt, ApprovalStatus.APPROVED);
+						result.add(approval);
+						_logger.trace("add approval " + approval);
+					}
 				}
 			}
 		}

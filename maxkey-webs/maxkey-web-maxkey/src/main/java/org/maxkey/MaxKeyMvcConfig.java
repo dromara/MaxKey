@@ -211,12 +211,13 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(historyLoginAppAdapter)
                 .addPathPatterns("/authz/basic/*")
                 .addPathPatterns("/authz/ltpa/*")
-                .addPathPatterns("/authz/desktop/*")
+                .addPathPatterns("/authz/api/*")
                 .addPathPatterns("/authz/formbased/*")
                 .addPathPatterns("/authz/tokenbased/*")
                 .addPathPatterns("/authz/saml20/idpinit/*")
                 .addPathPatterns("/authz/saml20/assertion")
                 .addPathPatterns("/authz/cas/granting")
+                .addPathPatterns("/authz/oauth/v20/approval_confirm")
         ;
         _logger.debug("add HistoryLoginAppAdapter");
         

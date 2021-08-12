@@ -77,48 +77,52 @@ public class OAuth20AccessConfirmationEndpoint {
      */
     @RequestMapping(OAuth2Constants.ENDPOINT.ENDPOINT_APPROVAL_CONFIRM)
     public ModelAndView getAccessConfirmation(
-            @RequestParam Map<String, Object> model) throws Exception {
-        model.remove("authorizationRequest");
-        
-        // Map<String, Object> model
-        AuthorizationRequest clientAuth = 
-                (AuthorizationRequest) WebContext.getAttribute("authorizationRequest");
-        ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
-        Apps  app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
-        //session中为空或者id不一致重新加载
-        if (app == null || !app.getId().equalsIgnoreCase(clientAuth.getClientId())) {
-            app = appsService.get(clientAuth.getClientId()); 
-            WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
-            WebContext.setAttribute(app.getId(), app.getIcon());
-        }
-       
-        model.put("auth_request", clientAuth);
-        model.put("client", client);
-        model.put("app", app);
-        model.put("oauth_version", "oauth 2.0");
-        Map<String, String> scopes = new LinkedHashMap<String, String>();
-        for (String scope : clientAuth.getScope()) {
-            scopes.put(OAuth2Utils.SCOPE_PREFIX + scope, "false");
-        }
-        String principal = 
-                ((SigninPrincipal) WebContext.getAuthentication().getPrincipal()).getUsername();
-        for (Approval approval : approvalStore.getApprovals(principal, client.getClientId())) {
-            if (clientAuth.getScope().contains(approval.getScope())) {
-                scopes.put(OAuth2Utils.SCOPE_PREFIX + approval.getScope(),
-                        approval.getStatus() == ApprovalStatus.APPROVED ? "true" : "false");
-            }
-        }
-        
-        model.put("scopes", scopes);
-
-        if(!model.containsKey(OAuth2Constants.PARAMETER.APPROVAL_PROMPT)) {
-        	model.put(OAuth2Constants.PARAMETER.APPROVAL_PROMPT, client.getApprovalPrompt());
-        }
-        
+            @RequestParam Map<String, Object> model) {
+    	try {
+	        model.remove("authorizationRequest");
+	        
+	        // Map<String, Object> model
+	        AuthorizationRequest clientAuth = 
+	                (AuthorizationRequest) WebContext.getAttribute("authorizationRequest");
+	        ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
+	        Apps  app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
+	        //session中为空或者id不一致重新加载
+	        if (app == null || !app.getId().equalsIgnoreCase(clientAuth.getClientId())) {
+	            app = appsService.get(clientAuth.getClientId()); 
+	            WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
+	            WebContext.setAttribute(app.getId(), app.getIcon());
+	        }
+	       
+	        model.put("auth_request", clientAuth);
+	        model.put("client", client);
+	        model.put("app", app);
+	        model.put("oauth_version", "oauth 2.0");
+	        Map<String, String> scopes = new LinkedHashMap<String, String>();
+	        for (String scope : clientAuth.getScope()) {
+	            scopes.put(OAuth2Utils.SCOPE_PREFIX + scope, "false");
+	        }
+	        String principal = 
+	                ((SigninPrincipal) WebContext.getAuthentication().getPrincipal()).getUsername();
+	        for (Approval approval : approvalStore.getApprovals(principal, client.getClientId())) {
+	            if (clientAuth.getScope().contains(approval.getScope())) {
+	                scopes.put(OAuth2Utils.SCOPE_PREFIX + approval.getScope(),
+	                        approval.getStatus() == ApprovalStatus.APPROVED ? "true" : "false");
+	            }
+	        }
+	        
+	        model.put("scopes", scopes);
+	
+	        if(!model.containsKey(OAuth2Constants.PARAMETER.APPROVAL_PROMPT)) {
+	        	model.put(OAuth2Constants.PARAMETER.APPROVAL_PROMPT, client.getApprovalPrompt());
+	        }
+    	}catch(Exception e) {
+    		 _logger.debug("OAuth Access Confirmation process error." ,e);
+    	}
+	        
         ModelAndView modelAndView = new ModelAndView("authorize/oauth_access_confirmation");
-        _logger.debug("Confirmation details ");
+        _logger.trace("Confirmation details ");
         for (Object key : model.keySet()) {
-            _logger.debug("key " + key +"=" + model.get(key));
+            _logger.trace("key " + key +"=" + model.get(key));
         }
         modelAndView.addObject("model", model);
         return modelAndView;
