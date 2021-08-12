@@ -54,7 +54,7 @@ public class DefaultJdbcAuthenticationRealm extends AbstractAuthenticationRealm 
     public boolean passwordMatches(UserInfo userInfo, String password) {
         boolean passwordMatches = false;
         //jdbc password check
-        _logger.debug("password : " 
+        _logger.trace("password : " 
                 + PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), password));
         passwordMatches = passwordEncoder.matches(password,userInfo.getPassword());
         
