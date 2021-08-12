@@ -131,7 +131,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
     		parameterMap.remove(CasConstants.PARAMETER.TICKET);
     		parameterMap.remove(CasConstants.PARAMETER.SERVICE);
     		for (String key : parameterMap.keySet()) {
-    		    callbackUrl.append("&").append(key).append(parameterMap.get(key));
+    		    callbackUrl.append("&").append(key).append("=").append(parameterMap.get(key));
     		}
 		}
 		
