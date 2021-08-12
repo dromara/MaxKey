@@ -9,7 +9,7 @@
 	<div class="wrapper-page">
 		<div class="container">
 			<div class="row justify-content-center">
-				<div class="col-lg-5 col-md-12 col-xs-12">
+				<div class="col-lg-4 col-md-12 col-xs-12">
 					<div class="card">
 						<div class="card-header border-bottom text-center">
 							<h4 class="card-title">
