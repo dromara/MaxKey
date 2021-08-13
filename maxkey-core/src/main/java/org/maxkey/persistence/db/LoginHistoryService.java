@@ -43,10 +43,10 @@ public class LoginHistoryService {
         jdbcTemplate.update(HISTORY_LOGIN_INSERT_STATEMENT,
                 new Object[] { WebContext.genId(), sessionId, userInfo.getId(), userInfo.getUsername(),
                         userInfo.getDisplayName(), type, message, code, provider, userInfo.getLastLoginIp(), browser, platform,
-                        "Browser", userInfo.getLastLoginTime() },
+                        "Browser", WebContext.getRequest().getRequestURI() },
                 new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
                         Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-                        Types.VARCHAR, Types.TIMESTAMP });
+                        Types.VARCHAR, Types.VARCHAR });
         
 
     }
