@@ -391,6 +391,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
                 throw new RuntimeException("maxKey用户导入没有Excel类型");
             }
 
+            int recordCount = 0;
             int sheetSize = wb.getNumberOfSheets();
             //遍历sheet页
             for (int i = 0; i < sheetSize; i++) {
@@ -407,7 +408,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
                         //其他行是数据行
                         UserInfo userInfo = new UserInfo();
                         userInfo.setCreatedDate(DateUtils.formatDateTime(new Date()));
-
+                        
                         for (int k = 0; k < columnSize; k++) {
                             if (k == 0) {
                                 // 登录账号
@@ -602,6 +603,8 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
                         }
                         userInfo.setStatus(1);
                         userInfoList.add(passwordEncoder(userInfo));
+                        recordCount ++;
+                        _logger.debug("record {} user {} account {}",recordCount,userInfo.getDisplayName(),userInfo.getUsername());
                     }
                 }
             }
