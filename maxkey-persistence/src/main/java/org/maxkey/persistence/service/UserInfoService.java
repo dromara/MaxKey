@@ -20,6 +20,8 @@ package org.maxkey.persistence.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -638,13 +640,19 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
      * @return
      */
     public static String getValue(Cell cell) {
+        
         if (cell == null) {
             return "";
         } else if (cell.getCellType() == CellType.BOOLEAN) {
             return String.valueOf(cell.getBooleanCellValue());
         } else if (cell.getCellType() == CellType.NUMERIC) {
-            cell.setBlank();
-            return String.valueOf(cell.getStringCellValue().trim());
+            if("General".equals(cell.getCellStyle().getDataFormatString())){
+                return new DecimalFormat("0").format(cell.getNumericCellValue());
+            }else if("m/d/yy".equals(cell.getCellStyle().getDataFormatString())){
+               return new SimpleDateFormat("yyyy-MM-dd").format(cell.getDateCellValue());
+            }else{
+                return new DecimalFormat("0").format(cell.getNumericCellValue());
+            }
         } else {
             return String.valueOf(cell.getStringCellValue().trim());
         }
