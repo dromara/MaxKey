@@ -166,6 +166,8 @@ subprojects {
          //implementation  group: 'org.apache.commons', name: 'not-yet-commons-ssl', version: "${notyetcommonssslVersion}"
          //tomcat embed Core Tomcat implementation
          implementation  group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: "${tomcatVersion}"
+         implementation  group: 'org.apache.tomcat.embed', name: 'tomcat-embed-el', version: "${tomcatVersion}"
+         implementation  group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: "${tomcatVersion}"
          //JULI logging implementation for embedded Tomcat
          implementation  group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: "${tomcatembedloggingjuliVersion}"
          //apache logs
@@ -189,7 +191,7 @@ subprojects {
          implementation  group: 'org.springframework', name: 'spring-context-support', version: "${springVersion}"
          implementation  group: 'org.springframework', name: 'spring-expression', version: "${springVersion}"
          //implementation  group: 'org.springframework', name: 'spring-instrument', version: "${springVersion}"
-         //implementation  group: 'org.springframework', name: 'spring-jcl', version: "${springVersion}"
+         implementation  group: 'org.springframework', name: 'spring-jcl', version: "${springVersion}"
          implementation  group: 'org.springframework', name: 'spring-jdbc', version: "${springVersion}"
          //implementation  group: 'org.springframework', name: 'spring-jms', version: "${springVersion}"
          implementation  group: 'org.springframework', name: 'spring-messaging', version: "${springVersion}"
@@ -197,7 +199,7 @@ subprojects {
          implementation  group: 'org.springframework', name: 'spring-oxm', version: "${springVersion}"
          implementation  group: 'org.springframework', name: 'spring-tx', version: "${springVersion}"
          implementation  group: 'org.springframework', name: 'spring-web', version: "${springVersion}"
-         //implementation  group: 'org.springframework', name: 'spring-webflux', version: "${springVersion}"
+         implementation  group: 'org.springframework', name: 'spring-webflux', version: "${springVersion}"
          implementation  group: 'org.springframework', name: 'spring-webmvc', version: "${springVersion}"
          //implementation  group: 'org.springframework', name: 'spring-websocket', version: "${springVersion}"
          testImplementation  group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
@@ -222,11 +224,19 @@ subprojects {
          implementation  group: 'org.springframework.boot', name: 'spring-boot-actuator-autoconfigure', version:  "${springBootVersion}"
          implementation  group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version:  "${springBootVersion}"
          implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-freemarker', version:  "${springBootVersion}"
+         implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-json', version: "${springBootVersion}"
          implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version:  "${springBootVersion}"
+         implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: "${springBootVersion}"
          implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:  "${springBootVersion}"
          implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version:  "${springBootVersion}"
+         implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: "${springBootVersion}"
+         implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: "${springBootVersion}"
          implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: "${springBootVersion}"
+         implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive', version: "${springBootVersion}"
          testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:  "${springBootVersion}"
+         //spring-boot-admin
+         implementation group: 'de.codecentric', name: 'spring-boot-admin-client', version: '2.5.0'
+         implementation group: 'de.codecentric', name: 'spring-boot-admin-starter-client', version: "${springbootadminVersion}"
          //spring-data
          implementation  group: 'org.springframework.data', name: 'spring-data-commons', version: "${springDataVersion}"
          implementation  group: 'org.springframework.data', name: 'spring-data-keyvalue', version: "${springDataVersion}"
@@ -330,9 +340,11 @@ subprojects {
          implementation  group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonVersion}"
          implementation  group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonVersion}"
          implementation  group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"
+         implementation  group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: "${jacksonVersion}"
          implementation  group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: "${jacksonVersion}"
          implementation  group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: "${jacksonVersion}"
          implementation  group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: "${jacksonVersion}"
+         implementation  group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: "${jacksonVersion}"
          implementation  group: 'com.fasterxml', name: 'classmate', version: "${classmateVersion}"
          implementation  group: 'com.alibaba', name: 'fastjson', version: "${fastjsonVersion}"
          //docs

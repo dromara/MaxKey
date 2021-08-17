@@ -17,6 +17,7 @@
 
 package org.maxkey.persistence.service;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -31,9 +32,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Repository
-public class GroupsService  extends JpaBaseService<Groups>{
+public class GroupsService  extends JpaBaseService<Groups> implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4156671926199393550L;
+    
     final static Logger _logger = LoggerFactory.getLogger(GroupsService.class);
+    @JsonIgnore
     @Autowired
     @Qualifier("groupMemberService")
     GroupMemberService groupMemberService;
@@ -109,6 +118,14 @@ public class GroupsService  extends JpaBaseService<Groups>{
                 groupMemberService.addDynamicGroupMember(dynamicGroup);
             }
 	    }
+    }
+
+    public GroupMemberService getGroupMemberService() {
+        return groupMemberService;
+    }
+
+    public void setGroupMemberService(GroupMemberService groupMemberService) {
+        this.groupMemberService = groupMemberService;
     }
 	
 

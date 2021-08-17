@@ -17,6 +17,7 @@
 
 package org.maxkey.jobs;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.maxkey.entity.Groups;
@@ -26,7 +27,14 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DynamicGroupsJob  implements Job {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+public class DynamicGroupsJob  implements Job , Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8831626240807856084L;
+
     final static Logger _logger = LoggerFactory.getLogger(DynamicGroupsJob.class);
     
     private static  GroupsService groupsService = null;
@@ -67,7 +75,6 @@ public class DynamicGroupsJob  implements Job {
         jobStatus = JOBSTATUS.FINISHED;
         _logger.debug("DynamicGroupsJob is finished . " );
     }
-    
-    
+
 
 }

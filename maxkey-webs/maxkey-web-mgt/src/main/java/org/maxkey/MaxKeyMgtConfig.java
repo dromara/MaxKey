@@ -149,7 +149,7 @@ public class MaxKeyMgtConfig  implements InitializingBean {
      * @throws SchedulerException 
      */
     @Bean(name = "schedulerJobs")
-    public Scheduler schedulerJobs(
+    public String  schedulerJobs(
             SchedulerFactoryBean schedulerFactoryBean,
             GroupsService groupsService,
             @Value("${maxkey.job.cron.dynamicgroups}") String cronScheduleDynamicGroups
@@ -158,7 +158,7 @@ public class MaxKeyMgtConfig  implements InitializingBean {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         dynamicGroupsJob(scheduler,cronScheduleDynamicGroups,groupsService);
         
-        return scheduler;
+        return "schedulerJobs";
     }
     
 	

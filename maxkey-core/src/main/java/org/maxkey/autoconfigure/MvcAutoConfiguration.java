@@ -37,6 +37,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.HttpStatus;
@@ -198,6 +199,7 @@ public class MvcAutoConfiguration implements InitializingBean {
      * requestMappingHandlerAdapter .
      * @return requestMappingHandlerAdapter
      */
+    @DependsOn("stringHttpMessageConverter")
     @Bean (name = "requestMappingHandlerAdapter")
     public RequestMappingHandlerAdapter requestMappingHandlerAdapter(
             MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter,

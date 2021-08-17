@@ -52,7 +52,7 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 	public static final String SYNCHRONIZERS_SELECT_STATEMENT = "select * from mxk_synchronizers where status ='1'";
 	
 	 @Bean(name = "schedulerSynchronizerJobs")
-	public Scheduler schedulerSynchronizerJobs(
+	public String schedulerSynchronizerJobs(
 				JdbcTemplate  jdbcTemplate,
 	            SchedulerFactoryBean schedulerFactoryBean,
 	            @Value("${maxkey.job.cron.enable}") boolean jobCronEnable
@@ -70,7 +70,7 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 		    	 }
 		     }
 		 }
-		 return scheduler;
+		 return "schedulerSynchronizerJobs";
 	}
 	    
 		
