@@ -240,13 +240,13 @@ public class LoginService {
     public void setLastLoginInfo(UserInfo userInfo) {
         jdbcTemplate.update(LOGIN_USERINFO_UPDATE_STATEMENT,
                 new Object[] { userInfo.getLastLoginTime(), userInfo.getLastLoginIp(), userInfo.getLoginCount() + 1, userInfo.getId() },
-                new int[] { Types.TIMESTAMP, Types.VARCHAR, Types.INTEGER, Types.VARCHAR });
+                new int[] { Types.VARCHAR, Types.VARCHAR, Types.INTEGER, Types.VARCHAR });
     }
     
     
     public void setLastLogoffInfo(UserInfo userInfo) {
         jdbcTemplate.update(LOGOUT_USERINFO_UPDATE_STATEMENT, new Object[] { userInfo.getLastLogoffTime(), userInfo.getId() },
-                new int[] { Types.TIMESTAMP, Types.VARCHAR });
+                new int[] { Types.VARCHAR, Types.VARCHAR });
    
     }
     

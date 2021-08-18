@@ -26,15 +26,19 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.HttpRemeberMeEntryPoint;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsProperties;
+import org.maxkey.persistence.db.LoginHistoryService;
+import org.maxkey.persistence.db.LoginService;
 import org.maxkey.web.interceptor.HistoryLoginAppAdapter;
 import org.maxkey.web.interceptor.HistoryLogsAdapter;
 import org.maxkey.web.interceptor.PermissionAdapter;
 import org.maxkey.web.interceptor.PreLoginAppAdapter;
+import org.maxkey.web.interceptor.SessionListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -227,5 +231,17 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         
 
     }
+    
+    @Bean(name = "sessionListenerAdapter")
+    public SessionListenerAdapter sessionListenerAdapter(
+                LoginService loginService,
+                LoginHistoryService loginHistoryService
+            ) {
+        SessionListenerAdapter sessionListenerAdapter =new SessionListenerAdapter();
+        sessionListenerAdapter.setLoginService(loginService);
+        sessionListenerAdapter.setLoginHistoryService(loginHistoryService);
+        return sessionListenerAdapter;
+    }
+    
 
 }

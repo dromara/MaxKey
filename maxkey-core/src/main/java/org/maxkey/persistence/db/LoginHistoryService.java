@@ -55,6 +55,6 @@ public class LoginHistoryService {
         _logger.debug(" sessionId " +sessionId +" , lastlogofftime " + lastLogoffTime);
         jdbcTemplate.update(HISTORY_LOGOUT_UPDATE_STATEMENT,
                 new Object[] { lastLogoffTime, sessionId },                           
-                new int[] { Types.TIMESTAMP, Types.VARCHAR });
+                new int[] { Types.VARCHAR, Types.VARCHAR });
     }
 }

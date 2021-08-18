@@ -135,10 +135,12 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
             authenticationRealm.passwordMatches(loadeduserInfo, loginCredential.getPassword());
 
             authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(loadeduserInfo);
-
+            
+            Authentication authentication = setOnline(loginCredential,loadeduserInfo);
+            
             authenticationRealm.insertLoginHistory(loadeduserInfo, loginCredential.getAuthType(), "", "", "SUCCESS");
                         
-            return setOnline(loginCredential,loadeduserInfo);
+            return authentication;
         }else {
             String message = WebContext.getI18nValue("login.error.username");
             _logger.debug("login user  " + loginCredential.getUsername() + " not in this System ." + message);
@@ -166,9 +168,11 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
             LoginCredential loginCredential = new LoginCredential();
             loginCredential.setUsername(loadeduserInfo.getUsername());
             
+            Authentication authentication = setOnline(loginCredential,loadeduserInfo);
+            
             authenticationRealm.insertLoginHistory(loadeduserInfo, type, provider, code, message);
             
-            return setOnline(loginCredential,loadeduserInfo);
+            return authentication;
         }else {
             String i18nMessage = WebContext.getI18nValue("login.error.username");
             _logger.debug("login user  " + username + " not in this System ." + i18nMessage);
@@ -178,7 +182,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     
     public UsernamePasswordAuthenticationToken setOnline(LoginCredential credential,UserInfo userInfo) {
         //Online Tickit Id
-        String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + java.util.UUID.randomUUID().toString().toLowerCase();
+        String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" +WebContext.genId();
         _logger.debug("set online Tickit Cookie " + onlineTickitId + " on domain "+ this.applicationConfig.getBaseDomainName());
         
         OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId);

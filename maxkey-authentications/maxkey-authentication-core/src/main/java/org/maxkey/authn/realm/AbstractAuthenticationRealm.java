@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.entity.Groups;
 import org.maxkey.entity.UserInfo;
@@ -34,6 +37,7 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -134,7 +138,18 @@ public abstract class AbstractAuthenticationRealm {
      */
     public boolean insertLoginHistory(UserInfo userInfo, String type, String provider, String code, String message) {
         String sessionId = WebContext.genId();
+        OnlineTicket onlineTicket = null ;
+        Authentication authentication = WebContext.getAuthentication();
+        if(authentication.getPrincipal() instanceof SigninPrincipal) {
+            SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal();
+            onlineTicket = signinPrincipal.getOnlineTicket();
+            sessionId = onlineTicket.getTicketId().substring(3);
+        }
+        
         WebContext.setAttribute(WebConstants.CURRENT_USER_SESSION_ID, sessionId);
+        
+        _logger.debug("user session id is {} , online ticket {} ",sessionId,(onlineTicket == null ? "" : onlineTicket.getTicketId()));
+        
         userInfo.setLastLoginTime(DateUtils.formatDateTime(new Date()));
         userInfo.setLastLoginIp(WebContext.getRequestIpAddress());
         String platform = "";
@@ -202,6 +217,8 @@ public abstract class AbstractAuthenticationRealm {
             
             _logger.debug("Session " + WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID) + ", user "
                     + userInfo.getUsername() + " Logout, datetime " + userInfo.getLastLogoffTime() + " .");
+          //remove login user session id
+            WebContext.removeAttribute(WebConstants.CURRENT_USER_SESSION_ID);
         }
         return true;
 

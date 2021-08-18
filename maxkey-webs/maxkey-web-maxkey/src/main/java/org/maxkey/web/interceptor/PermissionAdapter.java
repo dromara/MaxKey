@@ -79,7 +79,7 @@ public class PermissionAdapter  implements AsyncHandlerInterceptor  {
             HttpServletResponse response, Object handler)
             throws Exception {
         _logger.trace("PermissionAdapter preHandle");
-        
+        _logger.trace("PermissionAdapter " + request.getSession().getId());
         Object passwordSetTypeAttribute=WebContext.getSession().getAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
         
         if(passwordSetTypeAttribute != null) {
@@ -140,10 +140,12 @@ public class PermissionAdapter  implements AsyncHandlerInterceptor  {
         try {
 	        if(authentication.getPrincipal() instanceof SigninPrincipal) {
 	            SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal();
+	            //if onlineTicket refresh is removed or timeout then Exception 
 	            OnlineTicket onlineTicket = signinPrincipal.getOnlineTicket();
 	            onlineTicketServices.refresh(onlineTicket.getTicketId());
 	        }
         }catch(Exception e) {
+            _logger.debug("Online Ticket timeout ... forward to /login");
         	RequestDispatcher dispatcher = request.getRequestDispatcher("/logout");
         	dispatcher.forward(request, response); 
         }

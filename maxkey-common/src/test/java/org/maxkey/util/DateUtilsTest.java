@@ -74,6 +74,8 @@ public class DateUtilsTest {
 		
 		System.out.println(DateUtils.toUtcLocal("2015-11-04T16:00:22.875Z"));
 		System.out.println(DateUtils.toUtcLocal("2015-11-04T23:58:14.286+08:00"));
+		
+		System.out.println(DateUtils.formatDateTime(new Date()));
 	
 	}
 }

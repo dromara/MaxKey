@@ -143,8 +143,6 @@ public abstract class AbstractAuthenticationProvider {
             WebContext.setAttribute(attributeName, sessionAttributeMap.get(attributeName));
         }
         
-        WebContext.setAttribute(
-                WebConstants.CURRENT_USER_SESSION_ID, WebContext.getSession().getId());
         _logger.debug("Login Success Session {}.", WebContext.getSession().getId());
     }
    

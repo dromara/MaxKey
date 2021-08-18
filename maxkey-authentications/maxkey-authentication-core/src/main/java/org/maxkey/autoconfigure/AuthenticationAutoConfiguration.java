@@ -163,8 +163,14 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     public OnlineTicketServices onlineTicketServices(
             @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
-            RedisConnectionFactory redisConnFactory) {
-        return new OnlineTicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
+            RedisConnectionFactory redisConnFactory,
+            @Value("${server.servlet.session.timeout:1800}") int timeout
+            ) {
+        OnlineTicketServices  onlineTicketServices  = 
+                new OnlineTicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
+        onlineTicketServices.setValiditySeconds(timeout);
+        _logger.trace("onlineTicket timeout " + timeout);
+        return onlineTicketServices;
     }
     
     @Override
