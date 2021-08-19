@@ -63,6 +63,33 @@
     	order by logintime desc
     </select>
     
+    
+    <select id="queryOnlineSession" parameterType="HistoryLogin" resultType="HistoryLogin">
+        select 
+            sessionid id,
+            sessionid,
+            uid,
+            username,
+            displayname,
+            logintype,
+            message,
+            code,
+            provider,
+            sourceip,
+            browser,
+            platform,
+            application,
+            loginurl,
+            date_format(logintime, '%Y-%m-%d  %H:%i:%s') as logintime,
+            date_format(logouttime, '%Y-%m-%d  %H:%i:%s') as logouttime
+        from mxk_history_login
+        where   sessionstatus = 1
+        
+        <include refid="dao_where_statement"/>
+        
+        order by logintime desc
+    </select>
+    
     <update id="logout" parameterType="java.lang.String" >
     	update mxk_history_login set
 			logouttime			=	current_timestamp() 

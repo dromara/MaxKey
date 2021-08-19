@@ -52,6 +52,12 @@
 			<li  id="nav_primay_15"  class="nav_primay_level primaryleft"  xpath="">
 				<a   href="<@base/>/historys/loginList"><@locale code="navs.audit"/></a>
 				<div id="nav_child_1501"  class="nav_second_child">
+				    <ul>
+                        <!--登录日志-->
+                        <li id="nav_second_1501" class="nav_second_level">
+                            <a   href="<@base/>/loginsession/loginSessionList"><@locale code="navs.audit.loginsession"/></a>
+                        </li>
+                    </ul>
 					<ul>
 						<!--登录日志-->
 						<li id="nav_second_1501" class="nav_second_level">

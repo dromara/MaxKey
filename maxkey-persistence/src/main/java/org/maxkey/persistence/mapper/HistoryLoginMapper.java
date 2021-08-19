@@ -18,6 +18,8 @@
 package org.maxkey.persistence.mapper;
 
 
+import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.entity.HistoryLogin;
 
@@ -26,5 +28,7 @@ import org.maxkey.entity.HistoryLogin;
  *
  */
 public interface HistoryLoginMapper extends IJpaBaseMapper<HistoryLogin> {
-
+    
+    public List<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin);
+    
 }

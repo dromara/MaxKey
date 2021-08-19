@@ -331,6 +331,7 @@ public abstract class AbstractAuthenticationProvider {
             _logger.debug("login user  " + username + " not in this System ." + message);
             UserInfo loginUser = new UserInfo(username);
             loginUser.setId(loginUser.generateId());
+            loginUser.setUsername(username);
             loginUser.setDisplayName("not exist");
             loginUser.setLoginCount(0);
             authenticationRealm.insertLoginHistory(loginUser, ConstantsLoginType.LOCAL, "",

@@ -94,7 +94,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 
         userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
 
-        userinfoValid(userInfo, loginCredential.getPassword());
+        userinfoValid(userInfo, loginCredential.getUsername());
 
         tftcaptchaValid(loginCredential.getOtpCaptcha(),loginCredential.getAuthType(),userInfo);
 

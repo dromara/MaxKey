@@ -139,14 +139,15 @@ public abstract class AbstractAuthenticationRealm {
     public boolean insertLoginHistory(UserInfo userInfo, String type, String provider, String code, String message) {
         String sessionId = WebContext.genId();
         OnlineTicket onlineTicket = null ;
+        int sessionStatus = 7;
         Authentication authentication = WebContext.getAuthentication();
-        if(authentication.getPrincipal() instanceof SigninPrincipal) {
+        if(authentication !=null && authentication.getPrincipal() instanceof SigninPrincipal) {
+            sessionStatus = 1;
             SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal();
             onlineTicket = signinPrincipal.getOnlineTicket();
             sessionId = onlineTicket.getTicketId().substring(3);
+            WebContext.setAttribute(WebConstants.CURRENT_USER_SESSION_ID, sessionId);
         }
-        
-        WebContext.setAttribute(WebConstants.CURRENT_USER_SESSION_ID, sessionId);
         
         _logger.debug("user session id is {} , online ticket {} ",sessionId,(onlineTicket == null ? "" : onlineTicket.getTicketId()));
         
@@ -189,7 +190,7 @@ public abstract class AbstractAuthenticationRealm {
 
         }
 
-        loginHistoryService.login(userInfo,sessionId, type, message, code, provider, browser, platform);
+        loginHistoryService.login(userInfo,sessionId, type, message, code, provider, browser, platform,sessionStatus);
         
         loginService.setLastLoginInfo(userInfo);
 

@@ -28,9 +28,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class LoginHistoryService {
     private static Logger _logger = LoggerFactory.getLogger(LoginHistoryService.class);
     
-    private static final String HISTORY_LOGIN_INSERT_STATEMENT = "insert into mxk_history_login (id , sessionid , uid , username , displayname , logintype , message , code , provider , sourceip , browser , platform , application , loginurl )values( ? , ? , ? , ? , ?, ? , ? , ?, ? , ? , ?, ? , ? , ?)";
+    private static final String HISTORY_LOGIN_INSERT_STATEMENT = "insert into mxk_history_login (id , sessionid , uid , username , displayname , logintype , message , code , provider , sourceip , browser , platform , application , loginurl , sessionstatus)values( ? , ? , ? , ? , ? , ?, ? , ? , ?, ? , ? , ?, ? , ? , ?)";
 
-    private static final String HISTORY_LOGOUT_UPDATE_STATEMENT = "update mxk_history_login set logouttime = ?  where  sessionid = ?";
+    private static final String HISTORY_LOGOUT_UPDATE_STATEMENT = "update mxk_history_login set logouttime = ? ,sessionstatus = 7 where  sessionid = ?";
 
     protected JdbcTemplate jdbcTemplate;
     
@@ -39,14 +39,14 @@ public class LoginHistoryService {
     }
     
     public void login(UserInfo userInfo,String sessionId,
-            String type, String message, String code, String provider,String browser, String platform) {
+            String type, String message, String code, String provider,String browser, String platform,int sessionStatus) {
         jdbcTemplate.update(HISTORY_LOGIN_INSERT_STATEMENT,
                 new Object[] { WebContext.genId(), sessionId, userInfo.getId(), userInfo.getUsername(),
                         userInfo.getDisplayName(), type, message, code, provider, userInfo.getLastLoginIp(), browser, platform,
-                        "Browser", WebContext.getRequest().getRequestURI() },
+                        "Browser", WebContext.getRequest().getRequestURI() , sessionStatus},
                 new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
                         Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-                        Types.VARCHAR, Types.VARCHAR });
+                        Types.VARCHAR, Types.VARCHAR ,Types.INTEGER});
         
 
     }

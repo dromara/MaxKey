@@ -18,6 +18,7 @@
 package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
+import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.entity.HistoryLogin;
 import org.maxkey.persistence.mapper.HistoryLoginMapper;
 import org.springframework.stereotype.Repository;
@@ -36,5 +37,9 @@ public class HistoryLoginService  extends JpaBaseService<HistoryLogin>{
 	public HistoryLoginMapper getMapper() {
 		// TODO Auto-generated method stub
 		return (HistoryLoginMapper)super.getMapper();
+	}
+	
+	public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin) {
+	    return this.queryPageResults("queryOnlineSession",historyLogin);
 	}
 }
