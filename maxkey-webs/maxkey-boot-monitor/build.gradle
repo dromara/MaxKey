@@ -24,7 +24,6 @@ dependencies {
    	
    	implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
    	implementation group: 'com.hazelcast', name: 'hazelcast', version: "${hazelcastVersion}"
-   	implementation group: 'jakarta.annotation', name: 'jakarta.annotation-api', version: "${jakartaannotationVersion}"
    	implementation group: 'org.attoparser', name: 'attoparser', version: "${attoparserVersion}"
    	implementation group: 'org.unbescape', name: 'unbescape', version: "${unbescapeVersion}"
 }

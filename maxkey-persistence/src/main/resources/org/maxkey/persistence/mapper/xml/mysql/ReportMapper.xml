@@ -24,7 +24,6 @@
 			from mxk_userinfo 
 			where 	online = 1
 				and now() - lastlogintime between 1 and 10000   
-             	and lastlogintime  > lastlogofftime
     </select>
     <!-- 30天活跃用户统计 -->
     <select id="analysisActiveUsers" parameterType="String" resultType="Integer">

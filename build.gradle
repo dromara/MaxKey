@@ -267,6 +267,8 @@ subprojects {
          // https://mvnrepository.com/artifact/org.eclipse.persistence/javax.persistence
          // for mybatis-jpa-extra
          implementation  group: 'org.eclipse.persistence', name: 'javax.persistence', version: "${javaxpersistenceVersion}"
+         implementation  group: 'jakarta.annotation', name: 'jakarta.annotation-api', version: "${jakartaannotationVersion}"
+         implementation  group: 'jakarta.validation', name: 'jakarta.validation-api', version: "${jakartavalidationapiVersion}"
          implementation  group: 'javax.activation', name: 'activation', version: "${activationVersion}"
          implementation  group: 'javax.annotation', name: 'javax.annotation-api', version: "${javaxannotationapiVersion}"
          implementation  group: 'javax.transaction', name: 'jta', version: "${jtaVersion}"
