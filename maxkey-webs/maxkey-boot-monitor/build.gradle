@@ -1,0 +1,30 @@
+description = "maxkey-boot-monitor"
+
+//add support for Java
+apply plugin: 'java'
+
+dependencies {
+    implementation project(":maxkey-common")
+    
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: "${springBootVersion}"
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "${springBootVersion}"
+    implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.5.1'
+    
+    implementation group: 'de.codecentric', name: 'spring-boot-admin-server', version: "${springbootadminVersion}"
+    implementation group: 'de.codecentric', name: 'spring-boot-admin-server-ui', version: "${springbootadminVersion}"
+    implementation group: 'de.codecentric', name: 'spring-boot-admin-starter-server', version: "${springbootadminVersion}"
+    
+    implementation group: 'org.thymeleaf', name: 'thymeleaf', version: "${thymeleafVersion}"
+    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: "${thymeleafVersion}"
+    
+   	implementation group: 'io.projectreactor.netty', name: 'reactor-netty', version: "${reactornettyVersion}"
+   	implementation group: 'io.projectreactor.netty', name: 'reactor-netty-http', version: "${reactornettyVersion}"
+   	implementation group: 'io.projectreactor.netty', name: 'reactor-netty-core', version: "${reactornettyVersion}"
+   	implementation group: 'io.projectreactor.addons', name: 'reactor-extra', version: "${reactorextraVersion}"
+   	
+   	implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
+   	implementation group: 'com.hazelcast', name: 'hazelcast', version: "${hazelcastVersion}"
+   	implementation group: 'jakarta.annotation', name: 'jakarta.annotation-api', version: "${jakartaannotationVersion}"
+   	implementation group: 'org.attoparser', name: 'attoparser', version: "${attoparserVersion}"
+   	implementation group: 'org.unbescape', name: 'unbescape', version: "${unbescapeVersion}"
+}
