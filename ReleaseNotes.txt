@@ -50,7 +50,6 @@
 		springkafka			2.7.6
         JustAuth        	1.16.3
 		kafkaclients		2.6.2
-		poi					5.0.0
 		tomcat          	9.0.52
 		gson				2.8.7
 		jbosslogging		3.4.2.Final
