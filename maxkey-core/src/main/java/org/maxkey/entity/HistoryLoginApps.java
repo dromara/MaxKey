@@ -46,7 +46,7 @@ public class HistoryLoginApps extends JpaBaseEntity {
 	@Column
 	private String appName;
 	@Column
-	private String uid;
+	private String userId;
 	@Column
 	private String username;
 	@Column
@@ -144,18 +144,18 @@ public class HistoryLoginApps extends JpaBaseEntity {
 
 
 	/**
-	 * @return the uid
+	 * @return the userId
 	 */
-	public String getUid() {
-		return uid;
+	public String getUserId() {
+		return userId;
 	}
 
 
 	/**
 	 * @param uid the uid to set
 	 */
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setUserId(String uid) {
+		this.userId = uid;
 	}
 
 
@@ -222,8 +222,8 @@ public class HistoryLoginApps extends JpaBaseEntity {
         builder.append(appId);
         builder.append(", appName=");
         builder.append(appName);
-        builder.append(", uid=");
-        builder.append(uid);
+        builder.append(", userId=");
+        builder.append(userId);
         builder.append(", username=");
         builder.append(username);
         builder.append(", displayName=");

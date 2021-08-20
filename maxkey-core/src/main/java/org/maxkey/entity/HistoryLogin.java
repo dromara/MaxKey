@@ -48,7 +48,7 @@ public class HistoryLogin  extends JpaBaseEntity  implements Serializable{
 	@Column
 	String sessionId;
 	@Column
-	String uid;
+	String userId;
 	@Column
 	String username;
 	@Column
@@ -99,12 +99,12 @@ public class HistoryLogin  extends JpaBaseEntity  implements Serializable{
 		this.sessionId = sessionId;
 	}
 
-	public String getUid() {
-		return uid;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getUsername() {
@@ -234,8 +234,8 @@ public class HistoryLogin  extends JpaBaseEntity  implements Serializable{
         builder.append(id);
         builder.append(", sessionId=");
         builder.append(sessionId);
-        builder.append(", uid=");
-        builder.append(uid);
+        builder.append(", userId=");
+        builder.append(userId);
         builder.append(", username=");
         builder.append(username);
         builder.append(", displayName=");

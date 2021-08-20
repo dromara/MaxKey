@@ -24,14 +24,14 @@ DROP TABLE IF EXISTS `mxk_accounts`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mxk_accounts` (
   `ID` varchar(45) NOT NULL COMMENT '主键',
-  `UID` varchar(45) DEFAULT NULL COMMENT '用户ID',
+  `USERID` varchar(45) DEFAULT NULL COMMENT '用户ID',
+  `USERNAME` varchar(45) DEFAULT NULL COMMENT '用户名',
+  `DISPLAYNAME` varchar(45) DEFAULT NULL COMMENT '用户显示名',
   `APPID` varchar(45) DEFAULT NULL COMMENT '应用ID',
+  `APPNAME` varchar(100) DEFAULT NULL COMMENT '应用名称',
   `RELATEDUSERNAME` varchar(200) DEFAULT NULL COMMENT '用户名',
   `RELATEDPASSWORD` varchar(200) DEFAULT NULL COMMENT '密码',
   `MODIFIEDDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `APPNAME` varchar(100) DEFAULT NULL COMMENT '应用名称',
-  `USERNAME` varchar(45) DEFAULT NULL COMMENT '用户名',
-  `DISPLAYNAME` varchar(45) DEFAULT NULL COMMENT '用户显示名',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户账号表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -322,6 +322,23 @@ CREATE TABLE `mxk_history_connector` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `mxk_history_event`
+--
+
+DROP TABLE IF EXISTS `mxk_history_event`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mxk_history_event` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `eventname` varchar(45) DEFAULT NULL,
+  `datatype` varchar(45) DEFAULT NULL,
+  `datacount` int DEFAULT NULL,
+  `executedatetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `mxk_history_login`
 --
 
@@ -330,21 +347,22 @@ DROP TABLE IF EXISTS `mxk_history_login`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mxk_history_login` (
   `ID` varchar(45) NOT NULL COMMENT 'ID',
+  `SESSIONID` varchar(45) DEFAULT NULL COMMENT 'SESSIONID',
+  `USERID` varchar(45) NOT NULL COMMENT 'USERID',
   `USERNAME` varchar(200) NOT NULL COMMENT 'USERNAME',
   `DISPLAYNAME` varchar(45) DEFAULT NULL COMMENT 'DISPLAYNAME',
   `MESSAGE` varchar(200) DEFAULT NULL COMMENT 'MESSAGE',
   `SOURCEIP` varchar(45) DEFAULT NULL COMMENT 'LOGIN SOURCEIP ',
-  `LOGINTIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'LOGINTIME',
   `LOGINTYPE` varchar(45) DEFAULT NULL COMMENT 'LOGINTYPE',
-  `UID` varchar(45) NOT NULL COMMENT 'UID',
   `CODE` varchar(45) DEFAULT NULL COMMENT 'CODE',
   `PROVIDER` varchar(45) DEFAULT NULL COMMENT 'PROVIDER',
-  `SESSIONID` varchar(45) DEFAULT NULL COMMENT 'SESSIONID',
   `BROWSER` varchar(45) DEFAULT NULL COMMENT 'BROWSER',
   `PLATFORM` varchar(45) DEFAULT NULL COMMENT 'PLATFORM',
   `APPLICATION` varchar(45) DEFAULT NULL COMMENT 'APPLICATION',
   `LOGINURL` varchar(450) DEFAULT NULL COMMENT 'LOGINURL',
-  `LOGOUTTIME` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'LOGOUTTIME',
+  `LOGINTIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'LOGINTIME',
+  `LOGOUTTIME` varchar(50) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'LOGOUTTIME',
+  `SESSIONSTATUS` int DEFAULT '1',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='history_login';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -362,7 +380,7 @@ CREATE TABLE `mxk_history_login_apps` (
   `LOGINTIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'LOGINTIME',
   `APPID` varchar(45) NOT NULL COMMENT 'ACCESS APPID',
   `APPNAME` varchar(45) DEFAULT NULL COMMENT 'APPNAME',
-  `UID` varchar(45) DEFAULT NULL COMMENT 'UID',
+  `USERID` varchar(45) DEFAULT NULL COMMENT 'USERID',
   `USERNAME` varchar(45) DEFAULT NULL COMMENT 'USERNAME',
   `DISPLAYNAME` varchar(45) DEFAULT NULL COMMENT 'DISPLAYNAME',
   PRIMARY KEY (`ID`)
@@ -402,12 +420,12 @@ DROP TABLE IF EXISTS `mxk_history_synchronizer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mxk_history_synchronizer` (
   `ID` varchar(45) NOT NULL COMMENT 'ID',
-  `SYNCID` varchar(45) NOT NULL COMMENT 'ACCESS APPID',
-  `SYNCNAME` varchar(45) DEFAULT NULL COMMENT 'APPNAME',
-  `OBJECTID` varchar(45) DEFAULT NULL COMMENT 'UID',
-  `OBJECTNAME` varchar(45) DEFAULT NULL COMMENT 'USERNAME',
-  `OBJECTTYPE` varchar(45) DEFAULT NULL COMMENT 'DISPLAYNAME',
-  `SYNCTIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'LOGINTIME',
+  `SYNCID` varchar(45) NOT NULL COMMENT 'SYNCID',
+  `SYNCNAME` varchar(45) DEFAULT NULL COMMENT 'SYNCNAME',
+  `OBJECTID` varchar(45) DEFAULT NULL COMMENT 'OBJECTID',
+  `OBJECTNAME` varchar(45) DEFAULT NULL COMMENT 'OBJECTNAME',
+  `OBJECTTYPE` varchar(45) DEFAULT NULL COMMENT 'OBJECTTYPE',
+  `SYNCTIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'SYNCTIME',
   `RESULT` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='synchronizer logs';
@@ -605,15 +623,16 @@ DROP TABLE IF EXISTS `mxk_socials_associate`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mxk_socials_associate` (
   `ID` varchar(45) NOT NULL,
-  `UID` varchar(45) NOT NULL COMMENT 'UID',
+  `USERID` varchar(45) NOT NULL COMMENT 'USERID',
+  `USERNAME` varchar(45) NOT NULL DEFAULT 'automatic',
   `PROVIDER` varchar(45) NOT NULL COMMENT 'PROVIDER',
   `SOCIALUSERINFO` text COMMENT 'SOCIALUSERINFO',
-  `SOCIALUID` varchar(100) NOT NULL COMMENT 'SOCIALUID',
+  `SOCIALUSERID` varchar(100) NOT NULL COMMENT 'SOCIALUSERID',
   `EXATTRIBUTE` text,
   `ACCESSTOKEN` text,
   `CREATEDDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `UPDATEDDATE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `USERNAME` varchar(45) NOT NULL,
+  `TRANSMISSION` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='socialsignon USER BIND';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -819,4 +838,4 @@ CREATE TABLE `mxk_userinfo_adjunct` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-09 22:41:07
+-- Dump completed on 2021-08-20  9:07:27

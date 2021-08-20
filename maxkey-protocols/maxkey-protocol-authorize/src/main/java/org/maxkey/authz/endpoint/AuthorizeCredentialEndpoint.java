@@ -47,7 +47,7 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 		modelAndView.addObject("username", "");
 		modelAndView.addObject("password", "");
 		modelAndView.addObject("setpassword", true);
-		modelAndView.addObject("uid", WebContext.getUserInfo().getId());
+		modelAndView.addObject("userId", WebContext.getUserInfo().getId());
 		modelAndView.addObject("appId", appId);
 		modelAndView.addObject("appName",getApp(appId).getName());
 		modelAndView.addObject("redirect_uri", redirect_uri);
@@ -57,7 +57,7 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 	@RequestMapping("/authz/credential")
 	public ModelAndView authorizeCredential(
 			HttpServletRequest request,
-			@RequestParam("uid") String uid,
+			@RequestParam("userId") String userId,
 			@RequestParam("appId") String appId,
 			@RequestParam("identity_username") String identity_username,
 			@RequestParam("identity_password") String identity_password,
@@ -68,7 +68,7 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 			UserInfo userInfo=WebContext.getUserInfo();
 			appUser.setId(appUser.generateId());
 			
-			appUser.setUid(userInfo.getId());
+			appUser.setUserId(userInfo.getId());
 			appUser.setUsername(userInfo.getUsername());
 			appUser.setDisplayName(userInfo.getDisplayName());
 			

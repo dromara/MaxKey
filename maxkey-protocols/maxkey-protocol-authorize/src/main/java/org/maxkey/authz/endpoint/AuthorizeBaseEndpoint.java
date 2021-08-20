@@ -89,7 +89,7 @@ public class AuthorizeBaseEndpoint {
 			
 		}else if(application.getCredential()==Apps.CREDENTIALS.SYSTEM){
 			
-			if(application.getSystemUserAttr().equalsIgnoreCase("uid")){
+			if(application.getSystemUserAttr().equalsIgnoreCase("userId")){
 				account.setUsername(userInfo.getId());
 			}else if(application.getSystemUserAttr().equalsIgnoreCase("username")){
 				account.setUsername(userInfo.getUsername());

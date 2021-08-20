@@ -200,7 +200,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
             serviceResponseBuilder.setFormat(HttpResponseConstants.FORMAT_TYPE.JSON);
             //for user
-            serviceResponseBuilder.setAttribute("uid", userInfo.getId());
+            serviceResponseBuilder.setAttribute("userId", userInfo.getId());
             serviceResponseBuilder.setAttribute("displayName",userInfo.getDisplayName());
             serviceResponseBuilder.setAttribute("firstName", userInfo.getGivenName());
             serviceResponseBuilder.setAttribute("lastname", userInfo.getFamilyName());

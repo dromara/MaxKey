@@ -93,7 +93,7 @@ $(function(){
 					<th><@locale code="apps.systemUserAttr"/>：</th>
 					<td colspan="3">
 						<select id="systemUserAttr" name="systemUserAttr"  class="form-control" >
-							<option value="uid">
+							<option value="userId">
 								<@locale code="userinfo.id"/></option>
 							<option value="employeeNumber">
 								<@locale code="userinfo.employeeNumber"/></option>

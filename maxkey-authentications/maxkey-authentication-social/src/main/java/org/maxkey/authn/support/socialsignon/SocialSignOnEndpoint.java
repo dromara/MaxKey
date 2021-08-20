@@ -74,7 +74,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		WebContext.setAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI, request.getParameter(SOCIALSIGNON_REDIRECT_URI));
 		SocialsAssociate socialSignOnUser =new SocialsAssociate();
 		socialSignOnUser.setProvider(provider);
-		socialSignOnUser.setUid(WebContext.getUserInfo().getId());
+		socialSignOnUser.setUserId(WebContext.getUserInfo().getId());
 		socialSignOnUser.setUsername(WebContext.getUserInfo().getUsername());
 		_logger.debug("Social Sign On unbind "+provider+" from user "+WebContext.getUserInfo().getUsername());
 		
@@ -119,7 +119,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
     		_logger.debug(this.accountId);
     		socialsAssociate =new SocialsAssociate();
     		socialsAssociate.setProvider(provider);
-    		socialsAssociate.setSocialuid(this.accountId);
+    		socialsAssociate.setSocialUserId(this.accountId);
     		
     		//for login
     		String socialSignOnType= "";
@@ -153,7 +153,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	    }
 	    
 	    socialsAssociate.setSocialUserInfo(accountJsonString);
-	    socialsAssociate.setUid(WebContext.getUserInfo().getId());
+	    socialsAssociate.setUserId(WebContext.getUserInfo().getId());
 		socialsAssociate.setUsername(WebContext.getUserInfo().getUsername());
 		//socialsAssociate.setAccessToken(JsonUtils.object2Json(accessToken));
 		//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));

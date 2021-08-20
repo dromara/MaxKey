@@ -32,7 +32,7 @@
 			
 			<tr style="display:none">
 				<td>uid</td>
-				<td><input  class="form-control"  type="text" id="uid" name="uid" value="${uid}"  /></td>
+				<td><input  class="form-control"  type="text" id="userId" name="userId" value="${userId}"  /></td>
 			</tr>
 			<tr style="display:none">
 				<td>appId</td>

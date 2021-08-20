@@ -63,7 +63,7 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			String username ="";
 			String password ="";
 			if(apps.getCredential()==1) {
-				if(apps.getSystemUserAttr().equalsIgnoreCase("uid")) {
+				if(apps.getSystemUserAttr().equalsIgnoreCase("userId")) {
 					username = userInfo.getId();
 				}else if(apps.getSystemUserAttr().equalsIgnoreCase("username")) {
 					username = userInfo.getUsername();

@@ -91,7 +91,7 @@ public class HistoryLoginAppAdapter  implements AsyncHandlerInterceptor  {
         historyLoginApps.setAppId(app.getId());
         historyLoginApps.setSessionId(sessionId);
         historyLoginApps.setAppName(app.getName());
-        historyLoginApps.setUid(userInfo.getId());
+        historyLoginApps.setUserId(userInfo.getId());
         historyLoginApps.setUsername(userInfo.getUsername());
         historyLoginApps.setDisplayName(userInfo.getDisplayName());
         historyLoginAppsService.insert(historyLoginApps);

@@ -96,7 +96,7 @@ $(function(){
 					<th><@locale code="apps.systemUserAttr"/>：</th>
 					<td colspan="3">
 						<select id="systemUserAttr" name="systemUserAttr" class="form-control">
-							<option value="uid"   <#if 'uid'==model.systemUserAttr>selected</#if> >
+							<option value="userId"   <#if 'userId'==model.systemUserAttr>selected</#if> >
 								<@locale code="userinfo.id"/></option>
 							<option value="employeeNumber" <#if 'employeeNumber'==model.systemUserAttr>selected</#if> >
 								<@locale code="userinfo.employeeNumber"/></option>

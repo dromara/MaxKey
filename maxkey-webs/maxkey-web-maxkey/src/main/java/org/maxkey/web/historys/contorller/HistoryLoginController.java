@@ -69,7 +69,7 @@ public class HistoryLoginController {
     @ResponseBody
     public JpaPageResults<HistoryLogin> logAuthsGrid(@ModelAttribute("historyLogin") HistoryLogin historyLogin) {
         _logger.debug("history/login/grid/ logsGrid() " + historyLogin);
-        historyLogin.setUid(WebContext.getUserInfo().getId());
+        historyLogin.setUserId(WebContext.getUserInfo().getId());
         return historyLoginService.queryPageResults(historyLogin);
     }
 

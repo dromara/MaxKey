@@ -27,7 +27,7 @@ public class ChangePassword extends JpaBaseEntity{
 	private static final long serialVersionUID = -2362608803392892403L;
 
 	private String id;
-	private String uid;
+	private String userId;
 	private String username;
 	private String email;
 	private String mobile;
@@ -66,16 +66,16 @@ public class ChangePassword extends JpaBaseEntity{
 	/**
 	 * @return the uid
 	 */
-	public String getUid() {
-		return uid;
+	public String getUserId() {
+		return userId;
 	}
 
 
 	/**
 	 * @param uid the uid to set
 	 */
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setUserId(String uid) {
+		this.userId = uid;
 	}
 
 
@@ -215,7 +215,7 @@ public class ChangePassword extends JpaBaseEntity{
         builder.append("ChangePassword [id=");
         builder.append(id);
         builder.append(", uid=");
-        builder.append(uid);
+        builder.append(userId);
         builder.append(", username=");
         builder.append(username);
         builder.append(", displayName=");

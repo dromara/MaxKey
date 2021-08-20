@@ -58,7 +58,7 @@ public class SocialSignOnListController {
 			List<SocialSignOnProvider>  listSocialSignOnProvider= socialSignOnProviderService.getSocialSignOnProviders();
 			
 			SocialsAssociate socialSignOnUser=new SocialsAssociate();
-			socialSignOnUser.setUid(WebContext.getUserInfo().getId());
+			socialSignOnUser.setUserId(WebContext.getUserInfo().getId());
 			List<SocialsAssociate>  listSocialSignOnUserToken= socialSignOnUserService.query(socialSignOnUser);
 			List<SocialSignOnProvider>  listBindSocialSignOnProvider=new ArrayList<SocialSignOnProvider>();
 			_logger.debug("list SocialSignOnProvider : "+listSocialSignOnProvider);

@@ -1,5 +1,5 @@
 <select id="userPropertys" name="userPropertys" class="form-control multipleselect"  multiple="multiple"  >
-	<option value="uid"  <#if model.userPropertys?contains("uid")>selected</#if> >
+	<option value="userId"  <#if model.userPropertys?contains("userId")>selected</#if> >
 		<@locale code="userinfo.id" />
 	</option>
 	<option value="username"  <#if model.userPropertys?contains("username")>selected</#if> >

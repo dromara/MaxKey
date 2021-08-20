@@ -37,7 +37,7 @@ public class TokenBasedSimpleAdapter extends AbstractAuthorizeAdapter {
 		String tokenUsername = userInfo.getUsername();
 		
 		if(details.getUserPropertys()!=null && !details.getUserPropertys().equals("")) {
-    		if(details.getUserPropertys().indexOf("uid")>-1){
+    		if(details.getUserPropertys().indexOf("userId")>-1){
     			tokenUsername=userInfo.getId();
     		}else if(details.getUserPropertys().indexOf("username")>-1){
     			tokenUsername= userInfo.getUsername();	

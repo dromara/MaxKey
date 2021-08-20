@@ -15,8 +15,8 @@
 		<if test="appName != null and appName != ''">
 			and	appname	like concat('%',#{appName},'%')
 		</if> 
-		<if test="uid != null and uid != ''">
-			and	uid	=	#{uid}
+		<if test="userId != null and userId != ''">
+			and	userId	=	#{userId}
 		</if> 
 		<if test="username != null and username != ''">
 			and	username	like concat('%',#{username},'%')
@@ -39,7 +39,7 @@
 			sessionid,
 			appid,
 			appname,
-			uid,
+			userId,
 			username,
 			displayname,
 			to_char(logintime,'YYYY-MM-DD HH24:MI:SS') as logintime

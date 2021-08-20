@@ -45,7 +45,7 @@ public class Accounts extends JpaBaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     private String id;
     @Column
-    private String uid;
+    private String userId;
     @Column
     private String username;
     @Column
@@ -72,22 +72,22 @@ public class Accounts extends JpaBaseEntity implements Serializable {
     }
 
     public Accounts(String uid, String appId) {
-        this.uid = uid;
+        this.userId = uid;
         this.appId = appId;
     }
 
     public Accounts(String uid, String appId, String password) {
-        this.uid = uid;
+        this.userId = uid;
         this.appId = appId;
         this.relatedPassword = password;
     }
 
-    public String getUid() {
-        return uid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUserId(String uid) {
+        this.userId = uid;
     }
 
     public String getUsername() {
@@ -158,7 +158,7 @@ public class Accounts extends JpaBaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "AppAccounts [uid=" + uid + ", username=" + username + ", displayName=" + displayName + ", appId="
+        return "AppAccounts [uid=" + userId + ", username=" + username + ", displayName=" + displayName + ", appId="
                 + appId + ", appName=" + appName + ", relatedUsername=" + relatedUsername + ", relatedPassword="
                 + relatedPassword + "]";
     }

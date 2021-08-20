@@ -42,8 +42,8 @@ public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 		beanMap.put("randomId",(new StringGenerator()).uuidGenerate());
 		if(details.getUserPropertys()!=null && !details.getUserPropertys().equals("")) {
 		    
-    		if(details.getUserPropertys().indexOf("uid")>-1){
-                beanMap.put("uid",userInfo.getId());
+    		if(details.getUserPropertys().indexOf("userId")>-1){
+                beanMap.put("userId",userInfo.getId());
             }
     		
     		if(details.getUserPropertys().indexOf("username")>-1){

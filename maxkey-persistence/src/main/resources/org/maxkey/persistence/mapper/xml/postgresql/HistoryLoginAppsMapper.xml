@@ -15,8 +15,8 @@
 		<if test="appName != null and appName != ''">
 			and	appname	like concat('%',#{appName},'%')
 		</if> 
-		<if test="uid != null and uid != ''">
-			and	uid	=	#{uid}
+		<if test="userId != null and userId != ''">
+			and	userId	=	#{userId}
 		</if> 
 		<if test="username != null and username != ''">
 			and	username	like concat('%',#{username},'%')

@@ -32,7 +32,7 @@
 			console.log(seldata[0].id+" - "+seldata[0].fullName);
 			$(".username", window.parent.document).val(seldata[0].username);
 			$(".displayName", window.parent.document).val(seldata[0].displayName);
-			$(".uid", window.parent.document).val(seldata[0].id);
+			$(".userId", window.parent.document).val(seldata[0].id);
 			$.closeWindow();
 		});
 

@@ -77,9 +77,9 @@
 				<th data-field="logoutTime"><@locale code="log.loginhistory.logoutTime"/></th>
 				<th data-field="platform"><@locale code="log.loginhistory.platform"/></th>
 				<th data-field="application"><@locale code="log.loginhistory.application"/></th>
-				<th data-field="loginUrl"><@locale code="log.loginhistory.loginUrl"/></th>
-				<th data-field="code"><@locale code="log.loginhistory.code"/></th>
-				<th data-field="rpUserInfo"><@locale code="log.loginhistory.rpUserInfo"/></th>
+				<th data-field="loginUrl" data-visible="false"><@locale code="log.loginhistory.loginUrl"/></th>
+				<th data-field="code" data-visible="false"><@locale code="log.loginhistory.code"/></th>
+				<th data-field="rpUserInfo" data-visible="false"><@locale code="log.loginhistory.rpUserInfo"/></th>
 	
 			</tr>
 		</thead>

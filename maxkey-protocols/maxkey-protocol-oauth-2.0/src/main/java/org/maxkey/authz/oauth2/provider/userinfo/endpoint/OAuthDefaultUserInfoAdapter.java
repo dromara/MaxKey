@@ -33,7 +33,7 @@ public class OAuthDefaultUserInfoAdapter extends AbstractAuthorizeAdapter {
 	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
 		HashMap<String, Object> beanMap = new HashMap<String, Object>();
 		beanMap.put("randomId",(new StringGenerator()).uuidGenerate());
-		beanMap.put("uid", userInfo.getId());
+		beanMap.put("userId", userInfo.getId());
 		//for spring security oauth2
 		beanMap.put("user", userInfo.getUsername());
 		beanMap.put("username", userInfo.getUsername());

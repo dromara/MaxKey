@@ -31,15 +31,15 @@ import org.springframework.jdbc.core.RowMapper;
 public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 	private static final Logger _logger = LoggerFactory.getLogger(JdbcSocialsAssociateService.class);
 	
-	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = "insert into  mxk_socials_associate(id, uid , username , provider , socialuid , accesstoken , socialuserinfo , exattribute )values( ? , ? , ? , ? , ?, ? , ? , ?)";
+	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = "insert into  mxk_socials_associate(id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute )values( ? , ? , ? , ? , ?, ? , ? , ?)";
 	
-	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE = "insert into  mxk_socials_associate(id, uid , username , provider , socialuid , accesstoken , socialuserinfo , exattribute )values( ? , ? , ? , ? , ?, ? , ? , ?)";
+	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE = "insert into  mxk_socials_associate(id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute )values( ? , ? , ? , ? , ?, ? , ? , ?)";
 	
-	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "select id, uid , username , provider , socialuid , accesstoken , socialuserinfo , exattribute , createddate , updateddate  from mxk_socials_associate where provider = ?  and socialuid = ?";
+	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "select id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , createddate , updateddate  from mxk_socials_associate where provider = ?  and socialuserid = ?";
 	
-	private static final String DEFAULT_DEFAULT_BIND_SELECT_STATEMENT = "select id, uid , username , provider , socialuid , accesstoken , socialuserinfo , exattribute , createddate , updateddate  from mxk_socials_associate where uid = ?" ;
+	private static final String DEFAULT_DEFAULT_BIND_SELECT_STATEMENT = "select id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , createddate , updateddate  from mxk_socials_associate where userid = ?" ;
 	
-	private static final String DEFAULT_DEFAULT_DELETE_STATEMENT = "delete from  mxk_socials_associate where  uid = ? and provider = ?";
+	private static final String DEFAULT_DEFAULT_DELETE_STATEMENT = "delete from  mxk_socials_associate where  userid = ? and provider = ?";
 	
 	private static final String DEFAULT_DEFAULT_UPDATE_STATEMENT= "update mxk_socials_associate  set accesstoken  = ? , socialuserinfo = ? , exattribute = ? ,updateddate = ?  where id = ?";
 
@@ -63,10 +63,10 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 		jdbcTemplate.update("Oracle".equals(jdbcType)?DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE:DEFAULT_DEFAULT_INSERT_STATEMENT, 
 				new Object[] { 
 					socialsAssociate.getId(),
-					socialsAssociate.getUid(),
+					socialsAssociate.getUserId(),
 					socialsAssociate.getUsername(),
 					socialsAssociate.getProvider(),
-					socialsAssociate.getSocialuid(),
+					socialsAssociate.getSocialUserId(),
 					socialsAssociate.getAccessToken(),
 					socialsAssociate.getSocialUserInfo(),
 					socialsAssociate.getExAttribute()},
@@ -78,7 +78,7 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 	public boolean delete(SocialsAssociate socialsAssociate) {
 		jdbcTemplate.update(DEFAULT_DEFAULT_DELETE_STATEMENT, 
 				new Object[] { 
-					socialsAssociate.getUid(),
+					socialsAssociate.getUserId(),
 					socialsAssociate.getProvider()
 					},
 				new int[] {Types.VARCHAR, Types.VARCHAR});
@@ -91,7 +91,7 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 					DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT, 
 					new SocialsAssociateRowMapper(),
 					socialsAssociate.getProvider(),
-					socialsAssociate.getSocialuid());
+					socialsAssociate.getSocialUserId());
 		_logger.debug("list socialsAssociate "+listsocialsAssociate);
 		return (listsocialsAssociate.size()>0)?listsocialsAssociate.get(0):null;
 	}
@@ -102,7 +102,7 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 		List<SocialsAssociate> listsocialsAssociate=jdbcTemplate.query(
 					DEFAULT_DEFAULT_BIND_SELECT_STATEMENT,
 					new SocialsAssociateRowMapper(),
-					socialsAssociate.getUid());
+					socialsAssociate.getUserId());
 		_logger.debug("query bind  SocialSignOnUser "+listsocialsAssociate);
 		return listsocialsAssociate;
 	}
@@ -122,10 +122,10 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 				throws SQLException {
 			SocialsAssociate socialsAssociate=new SocialsAssociate();
 			socialsAssociate.setId(rs.getString(1));
-			socialsAssociate.setUid(rs.getString(2));
+			socialsAssociate.setUserId(rs.getString(2));
 			socialsAssociate.setUsername(rs.getString(3));
 			socialsAssociate.setProvider(rs.getString(4));
-			socialsAssociate.setSocialuid(rs.getString(5));
+			socialsAssociate.setSocialUserId(rs.getString(5));
 			socialsAssociate.setAccessToken(rs.getString(6));
 			socialsAssociate.setSocialUserInfo(rs.getString(7));
 			socialsAssociate.setExAttribute(rs.getString(8));

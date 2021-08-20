@@ -297,7 +297,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	    if(userInfo.getPassword()!=null && !userInfo.getPassword().equals("")) {
     	    ChangePassword changePassword=new ChangePassword();
             changePassword.setId(userInfo.getId());
-            changePassword.setUid(userInfo.getId());
+            changePassword.setUserId(userInfo.getId());
             changePassword.setUsername(userInfo.getUsername());
             changePassword.setDecipherable(userInfo.getDecipherable());
             changePassword.setPassword(userInfo.getPassword());

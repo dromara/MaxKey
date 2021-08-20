@@ -71,7 +71,7 @@
 				<td colspan="2"  class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
 					<input id="status" type="hidden" name="status"  value="1"/>
-					<input type="hidden" id="uid" name="uid" class="uid" title="" value="${model.uid!}"/>
+					<input type="hidden" id="userId" name="userId" class="userId" title="" value="${model.userId!}"/>
 					<input type="hidden" id="appId" name="appId" class="appId" title="" value="${model.appId!}"/>
 			   		<input class="button btn btn-primary mr-3"  type="submit"    id="submitBtn" value="<@locale code="button.text.save" />"/>
 					<input class="button btn btn-secondary mr-3"  type="button"    id="closeBtn" value="<@locale code="button.text.cancel" /> "/>	

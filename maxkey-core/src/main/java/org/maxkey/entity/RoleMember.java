@@ -28,7 +28,7 @@ import javax.persistence.Table;
 /*
    ID                   varchar(40)                    not null,
    APPROLEID            varchar(40)                    null,
-   UID	                varchar(40)	                   null
+   USERID	                varchar(40)	                   null
    constraint PK_ROLES primary key clustered (ID)
  */
 @Entity

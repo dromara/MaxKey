@@ -22,8 +22,8 @@
 				<td><input required="" class="form-control"  type="password" id="identity_password" name="identity_password" value="" /></td>
 			</tr>
 			<tr  style="display:none">
-				<td>uid</td>
-				<td><input type="text" id="uid" name="uid" value="${uid}" /></td>
+				<td>userId</td>
+				<td><input type="text" id="userId" name="userId" value="${userId}" /></td>
 			</tr>
 			<tr  style="display:none">
 				<td>appId</td>

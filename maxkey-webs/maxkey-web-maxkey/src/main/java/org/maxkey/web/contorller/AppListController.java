@@ -120,7 +120,7 @@ public class AppListController {
         } else {
             modelAndView.addObject("protectedappId", false);
         }
-        modelAndView.addObject("uid", userInfo.getId());
+        modelAndView.addObject("userId", userInfo.getId());
         modelAndView.addObject("appId", appId);
         modelAndView.addObject("protocol", protocol);
         modelAndView.addObject("credential", credential);
@@ -223,7 +223,7 @@ public class AppListController {
             modelAndView.addObject("password", false);
         }
 
-        modelAndView.addObject("uid", userInfo.getId());
+        modelAndView.addObject("userId", userInfo.getId());
         modelAndView.addObject("appId", appId);
         modelAndView.addObject("protocol", protocol);
         modelAndView.addObject("credential", credential);
@@ -242,7 +242,7 @@ public class AppListController {
 
         Accounts appUsers = new Accounts();
         appUsers.setAppId(appId);
-        appUsers.setUid(userInfo.getId());
+        appUsers.setUserId(userInfo.getId());
 
         if (identity_password != null && !identity_password.equals("") && credential == Apps.CREDENTIALS.USER_DEFINED) {
             appUsers = appUsersService.load(new Accounts(userInfo.getId(), appId));
@@ -251,7 +251,7 @@ public class AppListController {
                 appUsers.setId(appUsers.generateId());
                 appUsers.setAppId(appId);
                 appUsers.setAppName(app.getName());
-                appUsers.setUid(userInfo.getId());
+                appUsers.setUserId(userInfo.getId());
                 appUsers.setUsername(userInfo.getUsername());
                 appUsers.setDisplayName(userInfo.getDisplayName());
 

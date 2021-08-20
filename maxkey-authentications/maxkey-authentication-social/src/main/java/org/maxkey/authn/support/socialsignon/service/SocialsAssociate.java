@@ -31,9 +31,9 @@ public class SocialsAssociate extends JpaBaseEntity {
 	private static final long serialVersionUID = 2151179554190800162L;
 	private String id;
 	private String provider;
-	private String uid;
+	private String userId;
 	private String username;
-	private String socialuid;
+	private String socialUserId;
 	private String socialUserInfo;
 	private String accessToken;
 	private String exAttribute; 
@@ -64,16 +64,16 @@ public class SocialsAssociate extends JpaBaseEntity {
 		this.provider = provider;
 	}
 
-	public String getUid() {
-		return uid;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setUserId(String uid) {
+		this.userId = uid;
 	}
 
-	public String getSocialuid() {
-		return socialuid;
+	public String getSocialUserId() {
+		return socialUserId;
 	}
 
 	public String getUsername() {
@@ -84,8 +84,8 @@ public class SocialsAssociate extends JpaBaseEntity {
 		this.username = username;
 	}
 
-	public void setSocialuid(String socialuid) {
-		this.socialuid = socialuid;
+	public void setSocialUserId(String socialUserId) {
+		this.socialUserId = socialUserId;
 	}
 
 	public String getSocialUserInfo() {
@@ -136,11 +136,11 @@ public class SocialsAssociate extends JpaBaseEntity {
         builder.append(", provider=");
         builder.append(provider);
         builder.append(", uid=");
-        builder.append(uid);
+        builder.append(userId);
         builder.append(", username=");
         builder.append(username);
         builder.append(", socialuid=");
-        builder.append(socialuid);
+        builder.append(socialUserId);
         builder.append(", socialUserInfo=");
         builder.append(socialUserInfo);
         builder.append(", accessToken=");

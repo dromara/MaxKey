@@ -271,9 +271,9 @@ public class OpenIdConnectUserInfoEndpoint {
 		return atfe;
 	}
 
-	public  UserInfo queryUserInfo(String uid){
-		_logger.debug("uid : "+uid);
-		UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(uid);
+	public  UserInfo queryUserInfo(String userId){
+		_logger.debug("userId : "+userId);
+		UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(userId);
 		return userInfo;
 	}
 

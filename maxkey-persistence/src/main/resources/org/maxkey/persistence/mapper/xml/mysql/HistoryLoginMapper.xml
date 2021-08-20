@@ -6,8 +6,8 @@
     	<if test="id != null and id != ''">
 			and	id	=	#{id}
 		</if> 
-		<if test="uid != null and uid != ''">
-			and	uid	=	#{uid}
+		<if test="userId != null and userId != ''">
+			and	userId	=	#{userId}
 		</if> 
 		<if test="username != null and username != '' ">
 			and lower(username) like lower(concat('%',#{username},'%'))
@@ -42,7 +42,7 @@
     	select 
 			id,
 	   		sessionid,
-			uid,
+			userId,
 			username,
 			displayname,
 			logintype,
@@ -68,7 +68,7 @@
         select 
             sessionid id,
             sessionid,
-            uid,
+            userId,
             username,
             displayname,
             logintype,

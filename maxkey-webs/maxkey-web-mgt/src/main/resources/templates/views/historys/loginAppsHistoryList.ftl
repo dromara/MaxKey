@@ -110,7 +110,7 @@
 				<tr>
 					<th data-sortable="true" data-field="id"  data-visible="false"><@locale code="log.loginappshistory.id" /></th>
 					<th data-field="sessionId" ><@locale code="log.loginappshistory.sessionId" /></th>
-					<th data-field="uid"   data-visible="false"><@locale	code="log.loginappshistory.uid" /></th>
+					<th data-field="userId"   data-visible="false"><@locale	code="log.loginappshistory.uid" /></th>
 					<th data-field="username" ><@locale	code="log.loginappshistory.username" /></th>
 					<th data-field="displayName" ><@locale	code="log.loginappshistory.displayName" /></th>
 					<th data-field="appId"   data-visible="false"><@locale	code="log.loginappshistory.appId" /></th>

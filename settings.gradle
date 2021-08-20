@@ -42,3 +42,7 @@ include 'maxkey-webs:maxkey-web-resources'
 include 'maxkey-webs:maxkey-web-maxkey'
 //maxkey-mgt management
 include 'maxkey-webs:maxkey-web-mgt'
+//maxkey-boot-monitor
+include 'maxkey-webs:maxkey-boot-monitor'
+
+include 'maxkey-gataway'
