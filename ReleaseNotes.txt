@@ -1,8 +1,8 @@
-﻿MaxKey v 2.9.0 GA 2021/08/**
+﻿MaxKey v 2.9.0 GA 2021/08/25
     *(MAXKEY-210601) 企业微信扫描登录
     *(MAXKEY-210602) 钉钉扫描登录
     *(MAXKEY-210603) 第三方登录异常问题修复
-    *(MAXKEY-210604) 新建maxkey-webs目录，包含maxkey-web-maxkey、maxkey-web-mgt、maxkey-web-resources
+    *(MAXKEY-210604) 新建maxkey-webs目录，包含maxkey-web-maxkey、maxkey-web-mgt、maxkey-web-resources、maxkey-boot-monitor
     *(MAXKEY-210605) 静态文件的合并到maxkey-web-resources
     *(MAXKEY-210606) 腾讯企业邮箱适配器优化
     *(MAXKEY-210607) 移除*.xml的spring配置文件
@@ -34,12 +34,38 @@
     *(MAXKEY-210633) 登录密码错误n次,n小于设定的次数，后一次登录密码正确，设置密码错误次数为0
     *(MAXKEY-210634) CAS参数优化及认证参数bug修复
     *(MAXKEY-210635) Redis集群时OAUTH2登录Approval空值bug修复
-    *(MAXKEY-210636) 依赖jar引用、更新和升级
-        spring          5.3.9
-        springBoot      2.5.3
-        springSession   2.5.1
-        tomcat          9.0.50
-        JustAuth        1.16.2
+	*(MAXKEY-210636) maxkey-boot-monitor Spring Boot Admin服务监控 
+	*(MAXKEY-210637) 用户会话管理及优化
+	*(MAXKEY-210638) 会话结束事件监听控制管理
+	*(MAXKEY-210639) 定时任务功能优化
+	*(MAXKEY-210640) 登录时间，注销时间等相关时间不一致修复
+	*(MAXKEY-210641) 统一用户在线会话ID和在线令牌
+	*(MAXKEY-210642) 字段uid统一改为userid
+    *(MAXKEY-210643) 依赖jar引用、更新和升级
+        spring          	5.3.9
+        springBoot      	2.5.4
+        springSession   	2.5.2
+        springSecurity		2.5.2
+		springData			2.5.2
+		springkafka			2.7.6
+        JustAuth        	1.16.3
+		kafkaclients		2.6.2
+		poi					5.0.0
+		tomcat          	9.0.52
+		gson				2.8.7
+		jbosslogging		3.4.2.Final
+		hibernate			7.0.1.Final
+		swaggerV3			2.1.10
+		knife4j				3.0.3
+		druid				1.2.6
+		jedis				3.6.3
+		ehcache				3.9.5
+		slf4j				1.7.32
+		jackson				2.12.4
+		fastjson			1.2.78
+		jodatime			2.10.10
+		snakeyaml			1.29
+		mybatis-jpa-extra 	2.4
         
         
 MaxKey v 2.8.1 GA 2021/06/25
