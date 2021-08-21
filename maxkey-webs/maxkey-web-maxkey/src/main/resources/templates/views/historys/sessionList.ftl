@@ -25,7 +25,7 @@
 				    <div id="tool_box_right">
 					   <input id="deleteBtn" type="button" class="button btn btn-danger mr-3 "   
 					       value="<@locale code="button.text.terminate"/>" 
-					       wurl="<@base/>/loginsession/terminate" />
+					       wurl="<@base/>/session/terminate" />
 				    </div>
 				</td>
 			</tr>
@@ -53,7 +53,7 @@
  	
 <div class="mainwrap" id="main">
 
-	<table  data-url="<@base />/loginsession/loginSessionList/grid"
+	<table  data-url="<@base />/session/sessionList/grid"
 			id="datagrid"
 			data-toggle="table"
 			data-classes="table table-bordered table-hover table-striped"

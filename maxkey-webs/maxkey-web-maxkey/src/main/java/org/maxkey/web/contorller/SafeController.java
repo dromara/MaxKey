@@ -83,7 +83,7 @@ public class SafeController {
 	        if(newPassword ==null ||newPassword.equals("")) {
 	            
 	        }else if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword,ConstantsPasswordSetType.PASSWORD_NORMAL)){
-	            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
+	            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
 				return WebContext.redirect("/index");
 			}
 	        
@@ -104,7 +104,7 @@ public class SafeController {
         if(newPassword ==null ||newPassword.equals("")) {
             
         }else if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword,ConstantsPasswordSetType.PASSWORD_NORMAL)){
-            WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
+            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
 			return WebContext.redirect("/index");
 		}
 		

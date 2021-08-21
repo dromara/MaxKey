@@ -80,7 +80,7 @@ public class PermissionAdapter  implements AsyncHandlerInterceptor  {
             throws Exception {
         _logger.trace("PermissionAdapter preHandle");
         _logger.trace("PermissionAdapter " + request.getSession().getId());
-        Object passwordSetTypeAttribute=WebContext.getSession().getAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE);
+        Object passwordSetTypeAttribute=WebContext.getSession().getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE);
         
         if(passwordSetTypeAttribute != null) {
             Integer passwordSetType=(Integer)passwordSetTypeAttribute;

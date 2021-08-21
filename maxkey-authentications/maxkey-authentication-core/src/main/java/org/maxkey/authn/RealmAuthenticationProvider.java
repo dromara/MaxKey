@@ -181,8 +181,9 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     }
     
     public UsernamePasswordAuthenticationToken setOnline(LoginCredential credential,UserInfo userInfo) {
+        String currentUserSessionId = WebContext.genId();
         //Online Tickit Id
-        String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" +WebContext.genId();
+        String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + currentUserSessionId;
         _logger.debug("set online Tickit Cookie " + onlineTickitId + " on domain "+ this.applicationConfig.getBaseDomainName());
         
         OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId);
@@ -226,10 +227,11 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         /*
          *  put userInfo to current session context
          */
-        WebContext.setAuthentication(authenticationToken);
-        
         WebContext.setUserInfo(userInfo);
         
+        WebContext.setAuthentication(authenticationToken);
+        
+        WebContext.setAttribute(WebConstants.CURRENT_USER_SESSION_ID, currentUserSessionId);
         return authenticationToken;
     }
   

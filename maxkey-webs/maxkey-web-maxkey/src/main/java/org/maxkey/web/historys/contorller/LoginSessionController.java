@@ -20,21 +20,16 @@ package org.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.authn.SigninPrincipal;
-import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.entity.HistoryLogin;
-import org.maxkey.entity.HistoryLoginApps;
-import org.maxkey.entity.HistoryLogs;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.LoginService;
-import org.maxkey.persistence.service.HistoryLoginAppsService;
 import org.maxkey.persistence.service.HistoryLoginService;
-import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -42,7 +37,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -59,7 +53,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping(value = { "/loginsession" })
+@RequestMapping(value = { "/session" })
 public class LoginSessionController {
     static final Logger _logger = LoggerFactory.getLogger(LoginSessionController.class);
 
@@ -74,9 +68,9 @@ public class LoginSessionController {
     @Autowired
     OnlineTicketServices onlineTicketServices;
     
-    @RequestMapping(value = { "/loginSessionList" })
+    @RequestMapping(value = { "/sessionList" })
     public String authList() {
-        return "historys/loginSessionList";
+        return "historys/sessionList";
     }
 
     /**
@@ -85,10 +79,10 @@ public class LoginSessionController {
      * @param logsAuth
      * @return
      */
-    @RequestMapping(value = { "/loginSessionList/grid" })
+    @RequestMapping(value = { "/sessionList/grid" })
     @ResponseBody
     public JpaPageResults<HistoryLogin> loginSessionListGrid(@ModelAttribute("historyLogin") HistoryLogin historyLogin) {
-        _logger.debug("history/loginsession/ loginSessionListGrid() " + historyLogin);
+        _logger.debug("history/session/ sessionListGrid() " + historyLogin);
         historyLogin.setUserId(WebContext.getUserInfo().getId());
         return historyLoginService.queryOnlineSession(historyLogin);
     }
@@ -101,17 +95,13 @@ public class LoginSessionController {
         _logger.debug(ids);
         boolean isTerminated = false;
         try {
-            OnlineTicket onlineTicket = null;
-            Authentication authentication = WebContext.getAuthentication();
-            if(authentication.getPrincipal() instanceof SigninPrincipal) {
-                SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal();
-                //onlineTicket 
-                onlineTicket = signinPrincipal.getOnlineTicket();
-                
+            String currentUserSessionId = "";
+            if(WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID) != null) {
+                currentUserSessionId = WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID).toString();
             }
             for(String sessionId : StringUtils.string2List(ids, ",")) {
                 _logger.trace("terminate session Id {} ",sessionId);
-                if(onlineTicket.getTicketId().contains(sessionId)) {
+                if(currentUserSessionId.contains(sessionId)) {
                     //skip current session
                     continue;
                 }

@@ -291,16 +291,16 @@ public class PasswordPolicyValidator {
        DateTime currentdateTime = new DateTime();
        //initial password need change
        if(userInfo.getLoginCount()<=0) {
-           WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
+           WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
                    ConstantsPasswordSetType.INITIAL_PASSWORD);
        }
        
        if (userInfo.getPasswordSetType() != ConstantsPasswordSetType.PASSWORD_NORMAL) {
-           WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
+           WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
                        userInfo.getPasswordSetType());
            return;
        } else {
-           WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
+           WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
                    ConstantsPasswordSetType.PASSWORD_NORMAL);
        }
 
@@ -320,7 +320,7 @@ public class PasswordPolicyValidator {
                    + " , password policy Expiration " +passwordPolicy.getExpiration()
                    +" , validate result " + (intDuration <= passwordPolicy.getExpiration()));
            if (intDuration > passwordPolicy.getExpiration()) {
-               WebContext.getSession().setAttribute(WebConstants.CURRENT_LOGIN_USER_PASSWORD_SET_TYPE,
+               WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
                        ConstantsPasswordSetType.PASSWORD_EXPIRED);
            }
        }

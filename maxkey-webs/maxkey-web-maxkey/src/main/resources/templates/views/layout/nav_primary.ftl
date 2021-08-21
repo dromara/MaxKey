@@ -55,24 +55,24 @@
 				    <ul>
                         <!--登录日志-->
                         <li id="nav_second_1501" class="nav_second_level">
-                            <a   href="<@base/>/loginsession/loginSessionList"><@locale code="navs.audit.loginsession"/></a>
+                            <a   href="<@base/>/session/sessionList"><@locale code="navs.audit.loginsession"/></a>
                         </li>
                     </ul>
 					<ul>
 						<!--登录日志-->
-						<li id="nav_second_1501" class="nav_second_level">
+						<li id="nav_second_1502" class="nav_second_level">
 							<a   href="<@base/>/historys/loginList"><@locale code="navs.audit.login"/></a>
 						</li>
 					</ul>
 					<ul>
 						<!--访问日志-->
-						<li id="nav_second_1502" class="nav_second_level">
+						<li id="nav_second_1503" class="nav_second_level">
 							<a   href="<@base/>/historys/loginAppsList"><@locale code="navs.audit.signon"/></a>
 						</li>
 					</ul>
 					<ul>
 						<!--操作日志-->
-						<li id="nav_second_1503" class="nav_second_level">
+						<li id="nav_second_1504" class="nav_second_level">
 							<a   href="<@base/>/historys/systemLogsList"><@locale code="navs.audit.operation"/></a>
 						</li>
 					</ul>
