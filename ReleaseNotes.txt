@@ -41,7 +41,8 @@
 	*(MAXKEY-210640) 登录时间，注销时间等相关时间不一致修复
 	*(MAXKEY-210641) 统一用户在线会话ID和在线令牌
 	*(MAXKEY-210642) 字段uid统一改为userid
-    *(MAXKEY-210643) 依赖jar引用、更新和升级
+	*(MAXKEY-210643) CHINER元数建模ER模型设计
+    *(MAXKEY-210644) 依赖jar引用、更新和升级
         spring          	5.3.9
         springBoot      	2.5.4
         springSession   	2.5.2
