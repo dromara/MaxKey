@@ -108,11 +108,11 @@ public class SavedRequestAwareAuthenticationSuccessHandler
         // Use the DefaultSavedRequest URL
         String targetUrl = savedRequest.getRedirectUrl();
 
-        // is cas login , with service parameter
-        logger.info("CAS " + request.getParameter(WebConstants.CAS_SERVICE_PARAMETER));
+     // is cas login , with service parameter
+        logger.trace("CAS " + request.getParameter(WebConstants.CAS_SERVICE_PARAMETER));
         if (request.getParameter(WebConstants.CAS_SERVICE_PARAMETER) != null
                 && request.getParameter(WebConstants.CAS_SERVICE_PARAMETER).startsWith("http")) {
-            targetUrl = WebContext.getHttpContextPath() + "/authorize/cas/login?service="
+            targetUrl = WebContext.getHttpContextPath() + "/authz/cas/login?service="
                     + request.getParameter(WebConstants.CAS_SERVICE_PARAMETER);
         }
         targetUrl = targetUrl == null ? "/forwardindex" : targetUrl;
