@@ -435,6 +435,28 @@ project('maxkey-common')  {
     }
 }
 
+//copy Dep Jars to /build/maxkey-depjars,only maxkey-boot-monitor deps
+project('maxkey-webs:maxkey-boot-monitor')  {
+    task copyDepJars(type: Copy){
+        def paths = ["$rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor"];
+        //遍历数组，调用createDir闭包，创建目录
+        
+        paths.forEach(){path->
+            File dir=new File(path);
+            if (!dir.exists()){
+                print("create "+path+"\n")
+                dir.mkdirs();
+            }
+        };
+        
+        println  "copy Dep Jars to $rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor"
+        
+        from configurations.runtimeClasspath
+        into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor";
+    }
+}
+
+
 task copyMaxKey(type: Copy) {
     from "$rootDir/build/maxkey-jars/maxkey-authentication-social-${project.version}.jar"
     from "$rootDir/build/maxkey-jars/maxkey-web-static-${project.version}.jar"
@@ -457,6 +479,11 @@ task copyMaxKeyMgt(type: Copy) {
     into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt/";
 }
 
+task copyMaxKeyMonitor(type: Copy) {
+    from "$rootDir/build/maxkey-jars/maxkey-boot-monitor-${project.version}.jar"
+    into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor/";
+}
+
 task copyMaxKeyLibs(type: Copy) {
     from "$rootDir/build/maxkey-jars/maxkey-authentication-otp-${project.version}.jar"
     from "$rootDir/build/maxkey-jars/maxkey-authentication-captcha-${project.version}.jar"
@@ -477,12 +504,13 @@ task copyMaxKeyLibs(type: Copy) {
     into "$rootDir/build/MaxKey-v${project.version}GA/lib";
 }
 
+
 task copyMaxKeyShellScript(type: Copy) {
     from "$rootDir/shellscript"
     into "$rootDir/build/MaxKey-v${project.version}GA/";
 }
 
-task buildReleaseCopy(dependsOn:['copyMaxKey','copyMaxKeyMgt','copyMaxKeyLibs','copyMaxKeyShellScript'])  {
+task buildReleaseCopy(dependsOn:['copyMaxKey','copyMaxKeyMgt','copyMaxKeyMonitor','copyMaxKeyLibs','copyMaxKeyShellScript'])  {
     //项目名
     println  "project ReleaseCopy  ."
 

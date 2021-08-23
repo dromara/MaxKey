@@ -93,7 +93,7 @@ Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/d
 
 | Version    | Date   |  URL  |  Code  |
 | --------| :-----  | :----  | :----  |
-| v 2.9.0 RC1 | 2021/08/10   |  <a href="https://pan.baidu.com/s/1cfe8NHH_yqUn2uk4VR-AvQ" target="_blank">Download</a>  |  **63v1**  |
+| v 2.9.0 GA | 2021/08/24   |  <a href="https://pan.baidu.com/s/1fYkTHDk2PQ9iAP05PmuPAg" target="_blank">Download</a>  |  **mxk9**  |
 
 
 # Roadmap
