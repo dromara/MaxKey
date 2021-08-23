@@ -19,13 +19,17 @@ package org.maxkey.authn.realm.jdbc;
 
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
+import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.LoginService;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -33,9 +37,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author Crystal.Sea
  *
  */
-public class JdbcAuthenticationRealm extends DefaultJdbcAuthenticationRealm {
+public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     private static Logger _logger = LoggerFactory.getLogger(JdbcAuthenticationRealm.class);
 
+    protected PasswordEncoder passwordEncoder;
+    
     public JdbcAuthenticationRealm() {
         _logger.debug("init . ");
     }
@@ -86,6 +92,37 @@ public class JdbcAuthenticationRealm extends DefaultJdbcAuthenticationRealm {
         this.ldapSupport = ldapSupport;
     }
     
-    
+    /**
+     * passwordMatches.
+     */
+    public boolean passwordMatches(UserInfo userInfo, String password) {
+        boolean passwordMatches = false;
+        //jdbc password check
+        //_logger.trace("password : " 
+        //        + PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), password));
+        passwordMatches = passwordEncoder.matches(password,userInfo.getPassword());
+        
+        //passwordMatches == false and ldapSupport ==true
+        //validate password with LDAP
+        if(!passwordMatches && ldapSupport) {
+            passwordMatches =this.ldapAuthenticationRealm.passwordMatches(userInfo, password);
+            if(passwordMatches) {
+                //init password to local Realm
+                UserInfo changePasswordUser = new UserInfo();
+                changePasswordUser.setId(userInfo.getId());
+                changePasswordUser.setUsername(userInfo.getUsername());
+                changePasswordUser.setPassword(password);
+                userInfoService.changePassword(changePasswordUser, false);
+            }
+        }
+        
+        _logger.debug("passwordvalid : " + passwordMatches);
+        if (!passwordMatches) {
+            passwordPolicyValidator.plusBadPasswordCount(userInfo);
+            insertLoginHistory(userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", "password error");
+            throw new BadCredentialsException(WebContext.getI18nValue("login.error.password"));
+        }
+        return passwordMatches;
+    }
 
 }

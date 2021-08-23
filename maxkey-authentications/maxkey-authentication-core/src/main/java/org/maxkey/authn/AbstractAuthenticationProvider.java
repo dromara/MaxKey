@@ -134,6 +134,7 @@ public abstract class AbstractAuthenticationProvider {
         HashMap<String,Object> sessionAttributeMap = new HashMap<String,Object>();
         for(String attributeName : WebContext.sessionAttributeNameList) {
             sessionAttributeMap.put(attributeName, WebContext.getAttribute(attributeName));
+            WebContext.removeAttribute(attributeName);
         }
         
         //new Session        
@@ -143,7 +144,9 @@ public abstract class AbstractAuthenticationProvider {
             WebContext.setAttribute(attributeName, sessionAttributeMap.get(attributeName));
         }
         
-        _logger.debug("Login Success Session {}.", WebContext.getSession().getId());
+        _logger.debug("Login Success Session {} Mapping to user Session {}.",
+                        WebContext.getSession().getId(),
+                        WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID));
     }
    
 

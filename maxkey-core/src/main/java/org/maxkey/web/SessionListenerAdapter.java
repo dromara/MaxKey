@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.maxkey.web.interceptor;
+package org.maxkey.web;
 
 import java.util.Date;
 
@@ -27,7 +27,6 @@ import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.LoginService;
 import org.maxkey.util.DateUtils;
-import org.maxkey.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

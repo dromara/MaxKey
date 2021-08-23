@@ -185,8 +185,8 @@ public class LoginCredential  implements Authentication {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("BasicAuthentication [username=").append(username)
-                .append(", password=").append(password)
+        builder.append("LoginCredential [username=").append(username)
+                .append(", password=").append("******")
                 .append(", sessionId=").append(sessionId)
                 .append(", captcha=").append(captcha)
                 .append(", otpCaptcha=").append(otpCaptcha)

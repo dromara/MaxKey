@@ -1267,10 +1267,6 @@ public class UserInfo extends JpaBaseEntity {
 		builder.append(id);
 		builder.append(", username=");
 		builder.append(username);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append(", decipherable=");
-		builder.append(decipherable);
 		builder.append(", sharedSecret=");
 		builder.append(sharedSecret);
 		builder.append(", sharedCounter=");

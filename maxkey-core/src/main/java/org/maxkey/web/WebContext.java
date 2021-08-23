@@ -76,6 +76,8 @@ public final class WebContext {
         sessionAttributeNameList.add(WebConstants.CURRENT_USER_SESSION_ID);
         
         sessionAttributeNameList.add(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
+        
+        sessionAttributeNameList.add(WebConstants.REMEBER_ME_SESSION);
     }
      
     /**
@@ -451,7 +453,7 @@ public final class WebContext {
         if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getRemoteAddr();
         }
-        LogFactory.getLog(WebContext.class).debug(
+        LogFactory.getLog(WebContext.class).trace(
                 "getRequestIpAddress() RequestIpAddress:" + ipAddress);
         return ipAddress;
     }

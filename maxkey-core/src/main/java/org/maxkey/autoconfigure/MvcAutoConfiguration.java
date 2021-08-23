@@ -25,6 +25,9 @@ import javax.servlet.Filter;
 
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.persistence.db.LoginHistoryService;
+import org.maxkey.persistence.db.LoginService;
+import org.maxkey.web.SessionListenerAdapter;
 import org.maxkey.web.WebXssRequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -284,6 +287,17 @@ public class MvcAutoConfiguration implements InitializingBean {
         registrationBean.setOrder(1);
         
         return registrationBean;
+    }
+    
+    @Bean(name = "sessionListenerAdapter")
+    public SessionListenerAdapter sessionListenerAdapter(
+                LoginService loginService,
+                LoginHistoryService loginHistoryService
+            ) {
+        SessionListenerAdapter sessionListenerAdapter =new SessionListenerAdapter();
+        sessionListenerAdapter.setLoginService(loginService);
+        sessionListenerAdapter.setLoginHistoryService(loginHistoryService);
+        return sessionListenerAdapter;
     }
     
     @Override

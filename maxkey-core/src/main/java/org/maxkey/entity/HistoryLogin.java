@@ -76,6 +76,8 @@ public class HistoryLogin  extends JpaBaseEntity  implements Serializable{
 	@Column
 	String logoutTime;
 	
+	int sessionStatus;
+	
 	String startDate;
 	String endDate;
 	
@@ -227,7 +229,15 @@ public class HistoryLogin  extends JpaBaseEntity  implements Serializable{
 		this.endDate = endDate;
 	}
 
-	@Override
+	public int getSessionStatus() {
+        return sessionStatus;
+    }
+
+    public void setSessionStatus(int sessionStatus) {
+        this.sessionStatus = sessionStatus;
+    }
+
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("HistoryLogin [id=");

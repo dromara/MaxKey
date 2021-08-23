@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.entity.Groups;
+import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
@@ -134,55 +135,32 @@ public abstract class AbstractAuthenticationRealm {
      * @param message
      */
     public boolean insertLoginHistory(UserInfo userInfo, String type, String provider, String code, String message) {
-        String sessionId = WebContext.genId();
-        int sessionStatus = 7;
+        HistoryLogin historyLogin = new HistoryLogin();
+        historyLogin.setSessionId(WebContext.genId());
+        historyLogin.setSessionStatus(7);
         if(WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID) !=null) {
-            sessionStatus = 1;
-            sessionId = WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID).toString();
+            historyLogin.setSessionStatus(1);
+            historyLogin.setSessionId(WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID).toString());
         }
         
-        _logger.debug("user session id is {} . ",sessionId);
+        _logger.debug("user session id is {} . ",historyLogin.getSessionId());
         
         userInfo.setLastLoginTime(DateUtils.formatDateTime(new Date()));
         userInfo.setLastLoginIp(WebContext.getRequestIpAddress());
-        String platform = "";
-        String browser = "";
-        String userAgent = WebContext.getRequest().getHeader("User-Agent");
-        String[] arrayUserAgent = null;
-        if (userAgent.indexOf("MSIE") > 0) {
-            arrayUserAgent = userAgent.split(";");
-            browser = arrayUserAgent[1].trim();
-            platform = arrayUserAgent[2].trim();
-        } else if (userAgent.indexOf("Trident") > 0) {
-            arrayUserAgent = userAgent.split(";");
-            browser = "MSIE/" + arrayUserAgent[3].split("\\)")[0];
-            ;
-            platform = arrayUserAgent[0].split("\\(")[1];
-        } else if (userAgent.indexOf("Chrome") > 0) {
-            arrayUserAgent = userAgent.split(" ");
-            // browser=arrayUserAgent[8].trim();
-            for (int i = 0; i < arrayUserAgent.length; i++) {
-                if (arrayUserAgent[i].contains("Chrome")) {
-                    browser = arrayUserAgent[i].trim();
-                    browser = browser.substring(0, browser.indexOf('.'));
-                }
-            }
-            platform = (arrayUserAgent[1].substring(1) + " " + arrayUserAgent[2] + " "
-                    + arrayUserAgent[3].substring(0, arrayUserAgent[3].length() - 1)).trim();
-        } else if (userAgent.indexOf("Firefox") > 0) {
-            arrayUserAgent = userAgent.split(" ");
-            for (int i = 0; i < arrayUserAgent.length; i++) {
-                if (arrayUserAgent[i].contains("Firefox")) {
-                    browser = arrayUserAgent[i].trim();
-                    browser = browser.substring(0, browser.indexOf('.'));
-                }
-            }
-            platform = (arrayUserAgent[1].substring(1) + " " + arrayUserAgent[2] + " "
-                    + arrayUserAgent[3].substring(0, arrayUserAgent[3].length() - 1)).trim();
-
-        }
-
-        loginHistoryService.login(userInfo,sessionId, type, message, code, provider, browser, platform,sessionStatus);
+        
+        Browser browser = resolveBrowser();
+        historyLogin.setBrowser(browser.getName());
+        historyLogin.setPlatform(browser.getPlatform());
+        historyLogin.setSourceIp(userInfo.getLastLoginIp());
+        historyLogin.setProvider(provider);
+        historyLogin.setCode(code);
+        historyLogin.setLoginType(type);
+        historyLogin.setMessage(message);
+        historyLogin.setUserId(userInfo.getId());
+        historyLogin.setUsername(userInfo.getUsername());
+        historyLogin.setDisplayName(userInfo.getDisplayName());
+        
+        loginHistoryService.login(historyLogin);
         
         loginService.setLastLoginInfo(userInfo);
 
@@ -217,5 +195,68 @@ public abstract class AbstractAuthenticationRealm {
 
     }
     
+    
+    public Browser  resolveBrowser() {
+        Browser browser =new Browser();
+        String userAgent = WebContext.getRequest().getHeader("User-Agent");
+        String[] arrayUserAgent = null;
+        if (userAgent.indexOf("MSIE") > 0) {
+            arrayUserAgent = userAgent.split(";");
+            browser.setName(arrayUserAgent[1].trim());
+            browser.setPlatform(arrayUserAgent[2].trim());
+        } else if (userAgent.indexOf("Trident") > 0) {
+            arrayUserAgent = userAgent.split(";");
+            browser.setName( "MSIE/" + arrayUserAgent[3].split("\\)")[0]);
+
+            browser.setPlatform( arrayUserAgent[0].split("\\(")[1]);
+        } else if (userAgent.indexOf("Chrome") > 0) {
+            arrayUserAgent = userAgent.split(" ");
+            // browser=arrayUserAgent[8].trim();
+            for (int i = 0; i < arrayUserAgent.length; i++) {
+                if (arrayUserAgent[i].contains("Chrome")) {
+                    browser.setName( arrayUserAgent[i].trim());
+                    browser.setName( browser.getName().substring(0, browser.getName().indexOf('.')));
+                }
+            }
+            browser.setPlatform( (arrayUserAgent[1].substring(1) + " " + arrayUserAgent[2] + " "
+                    + arrayUserAgent[3].substring(0, arrayUserAgent[3].length() - 1)).trim());
+        } else if (userAgent.indexOf("Firefox") > 0) {
+            arrayUserAgent = userAgent.split(" ");
+            for (int i = 0; i < arrayUserAgent.length; i++) {
+                if (arrayUserAgent[i].contains("Firefox")) {
+                    browser.setName( arrayUserAgent[i].trim());
+                    browser.setName(browser.getName().substring(0, browser.getName().indexOf('.')));
+                }
+            }
+            browser.setPlatform( (arrayUserAgent[1].substring(1) + " " + arrayUserAgent[2] + " "
+                    + arrayUserAgent[3].substring(0, arrayUserAgent[3].length() - 1)).trim());
+
+        }
+        
+        return browser;
+    }
+    
+    
+    public class Browser{
+        
+        private  String platform;
+        
+        private  String name;
+        
+        public String getPlatform() {
+            return platform;
+        }
+        public void setPlatform(String platform) {
+            this.platform = platform;
+        }
+        public String getName() {
+            return name;
+        }
+        public void setName(String browser) {
+            this.name = browser;
+        }
+        
+        
+    }
     
 }
