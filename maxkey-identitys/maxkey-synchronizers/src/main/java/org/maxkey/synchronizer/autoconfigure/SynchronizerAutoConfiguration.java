@@ -21,7 +21,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.entity.Synchronizers;
 import org.maxkey.synchronizer.SynchronizerJob;
 import org.quartz.CronExpression;
@@ -39,13 +38,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 @Configuration
-@PropertySource(ConstantsProperties.applicationPropertySource)
 public class SynchronizerAutoConfiguration   implements InitializingBean {
 	private static final  Logger _logger = 
             LoggerFactory.getLogger(SynchronizerAutoConfiguration.class);

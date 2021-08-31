@@ -59,7 +59,6 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 
 @Configuration
-@PropertySource(ConstantsProperties.applicationPropertySource)
 public class ApplicationAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = 
             LoggerFactory.getLogger(ApplicationAutoConfiguration.class);
@@ -76,7 +75,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
      * @return propertySourcesPlaceholderConfigurer
      * @throws IOException  null
      */
-    @Bean (name = "propertySourcesPlaceholderConfigurer")
+    /*@Bean (name = "propertySourcesPlaceholderConfigurer")
     public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer()
             throws IOException {
         ClassPathResource classPathApplicationPropertySource = 
@@ -105,7 +104,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     	 properties.load(resource.getInputStream());
     	 return properties;
     }
-    
+    */
     
     @Bean(name = "passwordReciprocal")
     public PasswordReciprocal passwordReciprocal() {

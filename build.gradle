@@ -46,16 +46,16 @@ allprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
     compileJava.options.encoding = 'UTF-8'
-    /*
+    
     eclipse {
-        第一次时请注释这段eclipse设置，可能报错，设置工程字符集
+       /* 第一次时请注释这段eclipse设置，可能报错，设置工程字符集
         jdt  {
             File f = file('.settings/org.eclipse.core.resources.prefs')
             f.write('eclipse.preferences.version=1\n')
             f.append('encoding/<project>=UTF-8') //use UTF-8
-        }
+        }*/
     }
-    */
+    
 
     
 }
@@ -149,11 +149,13 @@ subprojects {
          implementation  group: 'commons-httpclient', name: 'commons-httpclient', version: "${commonshttpclientVersion}"
          implementation  group: 'commons-fileupload', name: 'commons-fileupload', version: "${commonsfileuploadVersion}"
          implementation  group: 'org.apache.commons', name: 'commons-email', version: "${commonsemailVersion}"
+         implementation  group: 'org.apache.httpcomponents', name: 'httpasyncclient', version: "${httpasyncclientVersion}"
          implementation  group: 'org.apache.httpcomponents', name: 'httpclient', version: "${httpcomponentsVersion}"
          implementation  group: 'org.apache.httpcomponents', name: 'fluent-hc', version: "${httpcomponentsVersion}"
          implementation  group: 'org.apache.httpcomponents', name: 'httpclient-cache', version: "${httpcomponentsVersion}"
          implementation  group: 'org.apache.httpcomponents', name: 'httpmime', version: "${httpcomponentsVersion}"
          implementation  group: 'org.apache.httpcomponents', name: 'httpcore', version: "${httpcoreVersion}"
+         implementation  group: 'org.apache.httpcomponents', name: 'httpcore-nio', version: "${httpcoreVersion}"
          implementation  group: 'org.apache.velocity', name: 'velocity', version: "${velocityVersion}"
          implementation  group: 'velocity', name: 'velocity-dep', version: "${velocitydepVersion}"
          implementation  group: 'org.freemarker', name: 'freemarker', version: "${freemarkerVersion}"
@@ -233,9 +235,11 @@ subprojects {
          implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: "${springBootVersion}"
          implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: "${springBootVersion}"
          implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive', version: "${springBootVersion}"
+         implementation  group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: "${springBootVersion}"
+         
          testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:  "${springBootVersion}"
          //spring-boot-admin
-         implementation group: 'de.codecentric', name: 'spring-boot-admin-client', version: '2.5.0'
+         implementation group: 'de.codecentric', name: 'spring-boot-admin-client', version: "${springbootadminVersion}"
          implementation group: 'de.codecentric', name: 'spring-boot-admin-starter-client', version: "${springbootadminVersion}"
          //spring-data
          implementation  group: 'org.springframework.data', name: 'spring-data-commons', version: "${springDataVersion}"
@@ -247,6 +251,19 @@ subprojects {
          
          implementation  group: 'org.springframework.plugin', name: 'spring-plugin-core', version: "${springplugincoreVersion}"
          implementation  group: 'org.springframework.plugin', name: 'spring-plugin-metadata', version: "${springpluginmetadataVersion}"
+         //spring cloud
+         implementation  group: 'org.springframework.cloud', name: 'spring-cloud-commons', version: "${springcloudVersion}"
+         implementation  group: 'org.springframework.cloud', name: 'spring-cloud-context', version: "${springcloudVersion}"
+         implementation  group: 'org.springframework.cloud', name: 'spring-cloud-starter', version: "${springcloudVersion}"
+         implementation  group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap', version: "${springcloudVersion}"
+         //spring-cloud-alibaba
+         implementation  group: 'com.alibaba.spring', name: 'spring-context-support', version: "${springcloudalibabaspringVersion}"
+         implementation  group: 'com.alibaba.cloud', name: 'spring-cloud-alibaba-commons', version: "${springcloudalibabaVersion}"
+         //alibaba nacos
+         implementation  group: 'com.alibaba.nacos', name: 'nacos-client', version: "${alibabanacosclientVersion}"
+         implementation  group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-discovery', version: "${springcloudalibabaVersion}"
+         implementation  group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-config', version: "${springcloudalibabaVersion}"
+         
          //saml 
          implementation  group: 'org.opensaml', name: 'opensaml', version: "${opensamlVersion}"
          implementation  group: 'org.opensaml', name: 'openws', version: "${openwsVersion}"
@@ -267,6 +284,7 @@ subprojects {
          // https://mvnrepository.com/artifact/org.eclipse.persistence/javax.persistence
          // for mybatis-jpa-extra
          implementation  group: 'org.eclipse.persistence', name: 'javax.persistence', version: "${javaxpersistenceVersion}"
+         implementation  group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '3.0.0'
          implementation  group: 'jakarta.annotation', name: 'jakarta.annotation-api', version: "${jakartaannotationVersion}"
          implementation  group: 'jakarta.validation', name: 'jakarta.validation-api', version: "${jakartavalidationapiVersion}"
          implementation  group: 'javax.activation', name: 'activation', version: "${activationVersion}"
@@ -334,6 +352,9 @@ subprojects {
          implementation  group: 'io.micrometer', name: 'micrometer-core', version: "${micrometercoreVersion}"
          implementation  group: 'org.latencyutils', name: 'LatencyUtils', version: "${LatencyUtilsVersion}"
          implementation  group: 'org.codehaus.woodstox', name: 'stax2-api', version: "${stax2apiVersion}"
+         implementation  group: 'org.reflections', name: 'reflections', version: '0.9.11'
+         implementation  group: 'io.prometheus', name: 'simpleclient', version: '0.5.0'
+         
           //阿里云
          implementation  group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: "${aliyunjavasdkcoreVersion}"
          //腾讯云

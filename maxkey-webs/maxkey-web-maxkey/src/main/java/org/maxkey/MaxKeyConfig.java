@@ -37,7 +37,6 @@ import org.maxkey.authn.support.kerberos.RemoteKerberosService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.EmailConfig;
 import org.maxkey.constants.ConstantsPersistence;
-import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.algorithm.KeyUriFormat;
 import org.maxkey.password.onetimepwd.impl.MailOtpAuthn;
@@ -61,14 +60,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@PropertySource(ConstantsProperties.applicationPropertySource)
 @ComponentScan(basePackages = {
         "org.maxkey.configuration",
         "org.maxkey.domain",
@@ -172,7 +169,7 @@ public class MaxKeyConfig  implements InitializingBean {
     			@Value("${maxkey.support.ldap.credentials}")String credentials,
     			@Value("${maxkey.support.ldap.filter}")String filter,
     			@Value("${maxkey.support.ldap.basedn}")String baseDN,
-    			@Value("${maxkey.support.ldap.domain}")String domain,
+    			@Value("${maxkey.support.ldap.activedirectory.domain}")String domain,
     			@Value("${maxkey.support.ldap.product:openldap}")String product) {
     	AbstractAuthenticationRealm ldapAuthenticationRealm = 
     			ldapAuthenticationRealm(

@@ -24,7 +24,6 @@ import org.maxkey.authz.oauth2.provider.token.TokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.InMemoryTokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.JdbcTokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
-import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.jobs.DynamicGroupsJob;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
@@ -51,13 +50,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@PropertySource(ConstantsProperties.applicationPropertySource)
 public class MaxKeyMgtConfig  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMgtConfig.class);
     

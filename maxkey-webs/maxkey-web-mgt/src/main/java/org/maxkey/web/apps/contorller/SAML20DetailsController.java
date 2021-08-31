@@ -108,7 +108,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		decoderSecret(saml20Details);
 		WebContext.setAttribute(saml20Details.getId(), saml20Details.getIcon());
 		modelAndView.addObject("model",saml20Details);
-		modelAndView.addObject("maxKeyURI",applicationConfig.getMaxKeyUri());
+		modelAndView.addObject("authzURI",applicationConfig.getAuthzUri());
 		return modelAndView;
 	}
 	/**

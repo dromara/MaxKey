@@ -31,9 +31,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 @MapperScan("org.maxkey.persistence.mapper,")
 public class MaxKeyApplication extends SpringBootServletInitializer {
     private static final Logger _logger = LoggerFactory.getLogger(MaxKeyApplication.class);

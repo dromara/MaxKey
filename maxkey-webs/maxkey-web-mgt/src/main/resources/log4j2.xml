@@ -24,6 +24,7 @@
     	<Logger level="INFO" 	name="org.apache.logging" ></Logger>
     	<Logger level="DEBUG" 	name="org.maxkey" ></Logger>
     	<Logger level="DEBUG"	name="org.apache.mybatis.jpa" ></Logger>
+    	<Logger level="ERROR"	name="org.reflections.Reflections" ></Logger>
     	
         <Root level="INFO">  
             <AppenderRef ref="consolePrint" />

@@ -21,13 +21,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+
+import org.joda.time.DateTime;
 import org.maxkey.cache.CacheFactory;
 import org.maxkey.util.PathUtils;
 import org.slf4j.Logger;
@@ -36,6 +36,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.env.StandardEnvironment;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -172,21 +174,15 @@ public class InitializeContext extends HttpServlet {
             PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = 
                     ((PropertySourcesPlaceholderConfigurer) applicationContext
                     .getBean("propertySourcesPlaceholderConfigurer"));
-            WebContext.properties = (Properties) propertySourcesPlaceholderConfigurer
+            
+            WebContext.properties =  (StandardEnvironment) propertySourcesPlaceholderConfigurer
                     .getAppliedPropertySources()
-                    .get(PropertySourcesPlaceholderConfigurer.LOCAL_PROPERTIES_PROPERTY_SOURCE_NAME)
+                    .get(PropertySourcesPlaceholderConfigurer.ENVIRONMENT_PROPERTIES_PROPERTY_SOURCE_NAME)
                     .getSource();
-            Set<Object> keyValue = WebContext.properties.keySet();
-            SortedSet<String> keyValueSet = new TreeSet<String>();
-            // sort key
-            for (Iterator<Object> it = keyValue.iterator(); it.hasNext();) {
-                String key = (String) it.next();
-                keyValueSet.add(key);
-            }
-            // out
-            for (Iterator<String> it = keyValueSet.iterator(); it.hasNext();) {
-                String key = (String) it.next();
-                _logger.trace(key + "   =   " + WebContext.properties.get(key));
+  
+            Iterator<PropertySource<?>> it =WebContext.properties.getPropertySources().iterator();
+            while(it.hasNext()) {
+            	 _logger.debug("propertySource " + it.next());
             }
             _logger.trace("-----------------------------------------------------------");
         }
@@ -223,7 +219,9 @@ public class InitializeContext extends HttpServlet {
         _logger.info("+                           Version "
                     + WebContext.properties.getProperty("application.formatted-version"));
         _logger.info("+");
-        _logger.info("+                  "+  ((char)0xA9) + "Copyright 2018-2021 https://www.maxkey.top/");
+        _logger.info("+                  "+  ((char)0xA9) + "Copyright 2018-"
+        			+ (new DateTime().getYear())
+        			+ " https://www.maxkey.top/");
         _logger.info("+                 Licensed under the Apache License, Version 2.0 ");
         _logger.info("-----------------------------------------------------------");
     }

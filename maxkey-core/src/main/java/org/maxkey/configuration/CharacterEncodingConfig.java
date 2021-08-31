@@ -19,10 +19,8 @@ package org.maxkey.configuration;
 
 import java.io.UnsupportedEncodingException;
 
-import org.maxkey.constants.ConstantsProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 /**
  * 字符集转换及转换配置.
@@ -31,7 +29,6 @@ import org.springframework.context.annotation.PropertySource;
  *
  */
 @Configuration
-@PropertySource(ConstantsProperties.applicationPropertySource)
 public class CharacterEncodingConfig {
 
     /**

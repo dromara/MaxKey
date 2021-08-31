@@ -23,7 +23,6 @@ import java.util.List;
 
 import javax.servlet.Filter;
 
-import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.LoginService;
@@ -41,7 +40,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -61,7 +60,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 
 @Configuration
-@PropertySource(ConstantsProperties.applicationPropertySource)
 public class MvcAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MvcAutoConfiguration.class);
    
@@ -69,12 +67,13 @@ public class MvcAutoConfiguration implements InitializingBean {
      * cookieLocaleResolver .
      * @return cookieLocaleResolver
      */
+    @Primary
     @Bean (name = "localeResolver")
     public CookieLocaleResolver cookieLocaleResolver(
             @Value("${maxkey.server.domain:maxkey.top}")String domainName) {
         _logger.debug("DomainName " + domainName);
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-        cookieLocaleResolver.setCookieName("maxkey_lang");
+        cookieLocaleResolver.setCookieName("maxkey_locale");
         cookieLocaleResolver.setCookieDomain(domainName);
         cookieLocaleResolver.setCookieMaxAge(ConstantsTimeInterval.TWO_WEEK);
         return cookieLocaleResolver;

@@ -25,7 +25,6 @@ import java.security.spec.InvalidKeySpecException;
 
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
-import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
@@ -35,12 +34,10 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 
 
 @Configuration
-@PropertySource(ConstantsProperties.applicationPropertySource)
 public class JwtAuthnAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(JwtAuthnAutoConfiguration.class);
     

@@ -17,12 +17,11 @@
 
 package org.maxkey.configuration;
 
-import org.maxkey.constants.ConstantsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,7 +35,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-@PropertySource(ConstantsProperties.applicationPropertySource)
+@Configuration
 public class ApplicationConfig {
     private static final Logger _logger = LoggerFactory.getLogger(ApplicationConfig.class);
 
@@ -64,8 +63,11 @@ public class ApplicationConfig {
     @Value("${maxkey.server.default.uri}")
     String defaultUri;
 
-    @Value("${maxkey.server.management.uri}")
-    String managementUri;
+    @Value("${maxkey.server.mgt.uri}")
+    String mgtUri;
+    
+    @Value("${maxkey.server.authz.uri}")
+    private String authzUri;
 
     @Value("${server.port:8080}")
     private int port;
@@ -75,9 +77,6 @@ public class ApplicationConfig {
 
     @Value("${maxkey.identity.kafkasupport:false}")
     private boolean kafkaSupport;
-    
-    @Value("${maxkey.maxkey.uri}")
-    private String maxKeyUri;
     
     @Value("${maxkey.notices.visible:false}")
     private boolean noticesVisible;
@@ -170,13 +169,7 @@ public class ApplicationConfig {
         this.emailConfig = emailConfig;
     }
 
-    public String getManagementUri() {
-        return managementUri;
-    }
-
-    public void setManagementUri(String managementUri) {
-        this.managementUri = managementUri;
-    }
+ 
 
     public String getDefaultUri() {
         return defaultUri;
@@ -194,15 +187,23 @@ public class ApplicationConfig {
         this.kafkaSupport = kafkaSupport;
     }
 
-    public String getMaxKeyUri() {
-        return maxKeyUri;
-    }
+    public String getMgtUri() {
+		return mgtUri;
+	}
 
-    public void setMaxKeyUri(String maxKeyUri) {
-        this.maxKeyUri = maxKeyUri;
-    }
+	public void setMgtUri(String mgtUri) {
+		this.mgtUri = mgtUri;
+	}
 
-    public int getSessionTimeout() {
+	public String getAuthzUri() {
+		return authzUri;
+	}
+
+	public void setAuthzUri(String authzUri) {
+		this.authzUri = authzUri;
+	}
+
+	public int getSessionTimeout() {
 		return sessionTimeout;
 	}
 
@@ -238,13 +239,13 @@ public class ApplicationConfig {
         builder.append(", defaultUri=");
         builder.append(defaultUri);
         builder.append(", managementUri=");
-        builder.append(managementUri);
+        builder.append(mgtUri);
         builder.append(", port=");
         builder.append(port);
         builder.append(", kafkaSupport=");
         builder.append(kafkaSupport);
         builder.append(", maxKeyUri=");
-        builder.append(maxKeyUri);
+        builder.append(authzUri);
         builder.append("]");
         return builder.toString();
     }

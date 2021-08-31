@@ -25,7 +25,6 @@ import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.HttpRemeberMeEntryPoint;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.web.interceptor.HistoryLoginAppAdapter;
 import org.maxkey.web.interceptor.HistoryLogsAdapter;
 import org.maxkey.web.interceptor.PermissionAdapter;
@@ -36,7 +35,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -45,7 +43,6 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 @Configuration
 @EnableWebMvc
-@PropertySource(ConstantsProperties.applicationPropertySource)
 public class MaxKeyMvcConfig implements WebMvcConfigurer {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMvcConfig.class);
     

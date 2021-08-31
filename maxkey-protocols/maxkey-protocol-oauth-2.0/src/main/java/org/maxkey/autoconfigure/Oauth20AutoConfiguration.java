@@ -41,7 +41,6 @@ import org.maxkey.authz.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.maxkey.authz.oauth2.provider.token.store.TokenStoreFactory;
 import org.maxkey.authz.oidc.idtoken.OIDCIdTokenEnhancer;
 import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
-import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
@@ -55,7 +54,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.ProviderManager;
@@ -71,7 +69,6 @@ import com.nimbusds.jose.JWEAlgorithm;
         "org.maxkey.authz.oauth2.provider.userinfo.endpoint",
         "org.maxkey.authz.oauth2.provider.approval.controller"
 })
-@PropertySource(ConstantsProperties.applicationPropertySource)
 public class Oauth20AutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(Oauth20AutoConfiguration.class);
     

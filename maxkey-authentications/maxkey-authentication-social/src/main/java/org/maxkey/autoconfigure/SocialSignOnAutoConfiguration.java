@@ -20,11 +20,9 @@ package org.maxkey.autoconfigure;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import org.maxkey.authn.support.socialsignon.service.JdbcSocialsAssociateService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
-import org.maxkey.constants.ConstantsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -32,33 +30,40 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.StandardEnvironment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 @ComponentScan(basePackages = {
         "org.maxkey.authn.support.socialsignon"
 })
-@PropertySource(ConstantsProperties.applicationPropertySource)
 public class SocialSignOnAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(SocialSignOnAutoConfiguration.class);
     
     @Bean(name = "socialSignOnProviderService")
     @ConditionalOnClass(SocialSignOnProvider.class)
     public SocialSignOnProviderService socialSignOnProviderService(
-    		Properties applicationProperty) throws IOException {
+    		PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer) throws IOException {
         SocialSignOnProviderService socialSignOnProviderService = new SocialSignOnProviderService();
-   
-        String [] providerList =applicationProperty.get("maxkey.login.socialsignon.providers").toString().split(",");
+
+        StandardEnvironment properties = (StandardEnvironment) propertySourcesPlaceholderConfigurer
+                .getAppliedPropertySources()
+                .get(PropertySourcesPlaceholderConfigurer.ENVIRONMENT_PROPERTIES_PROPERTY_SOURCE_NAME)
+                .getSource();
+        
         List<SocialSignOnProvider> socialSignOnProviderList = new ArrayList<SocialSignOnProvider>();
+       
+        String [] providerList =properties.getProperty("maxkey.login.socialsignon.providers").toString().split(",");
+        
         for(String provider : providerList) {
-            String providerName = applicationProperty.getProperty("maxkey.socialsignon."+provider+".provider.name");
-            String icon=applicationProperty.getProperty("maxkey.socialsignon."+provider+".icon");
-            String clientId=applicationProperty.getProperty("maxkey.socialsignon."+provider+".client.id");
-            String clientSecret=applicationProperty.getProperty("maxkey.socialsignon."+provider+".client.secret");
-            String sortOrder = applicationProperty.getProperty("maxkey.socialsignon."+provider+".sortorder");
-            String agentId = applicationProperty.getProperty("maxkey.socialsignon."+provider+".agent.id");
-            String hidden = applicationProperty.getProperty("maxkey.socialsignon."+provider+".hidden");
+            String providerName = properties.getProperty("maxkey.socialsignon."+provider+".provider.name");
+            String icon=properties.getProperty("maxkey.socialsignon."+provider+".icon");
+            String clientId=properties.getProperty("maxkey.socialsignon."+provider+".client.id");
+            String clientSecret=properties.getProperty("maxkey.socialsignon."+provider+".client.secret");
+            String sortOrder = properties.getProperty("maxkey.socialsignon."+provider+".sortorder");
+            String agentId = properties.getProperty("maxkey.socialsignon."+provider+".agent.id");
+            String hidden = properties.getProperty("maxkey.socialsignon."+provider+".hidden");
             
             SocialSignOnProvider socialSignOnProvider = new SocialSignOnProvider();
             socialSignOnProvider.setProvider(provider);

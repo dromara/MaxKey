@@ -17,13 +17,8 @@
 
 package org.maxkey.constants;
 
-import org.junit.Test;
-
 public class ConstantsProperties {
 
-    public static final String applicationPropertySource = 
-            "classpath:/application.properties";
-    
     public static final String kaptchaPropertySource      = 
             "classpath:/kaptcha.properties";
     
@@ -38,9 +33,5 @@ public class ConstantsProperties {
         return propertySource.replace(".", "-"+active+".").replaceAll("classpath:","");
     }
     
-    @Test
-    public void classPathResourceTest() {
-        System.out.println(classPathResource(applicationPropertySource));
-        System.out.println(classPathResource(applicationPropertySource,"active"));
-    }
+
 }

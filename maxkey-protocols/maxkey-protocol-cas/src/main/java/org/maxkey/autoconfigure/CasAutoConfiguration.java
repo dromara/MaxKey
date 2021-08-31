@@ -21,7 +21,6 @@ import org.maxkey.authz.cas.endpoint.ticket.TicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.pgt.ProxyGrantingTicketServicesFactory;
 import org.maxkey.authz.cas.endpoint.ticket.st.TicketServicesFactory;
 import org.maxkey.authz.cas.endpoint.ticket.tgt.TicketGrantingTicketServicesFactory;
-import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +29,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 @ComponentScan(basePackages = {
         "org.maxkey.authz.cas.endpoint"
 })
-@PropertySource(ConstantsProperties.applicationPropertySource)
 public class CasAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(CasAutoConfiguration.class);
     

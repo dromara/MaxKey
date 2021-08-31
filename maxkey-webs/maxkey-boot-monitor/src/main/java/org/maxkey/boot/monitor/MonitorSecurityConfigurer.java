@@ -14,24 +14,24 @@ public class MonitorSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // µÇÂ¼³É¹¦´¦ÀíÀà
+        // ç™»å½•æˆåŠŸå¤„ç†ç±»
         SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
         successHandler.setTargetUrlParameter("redirectTo");
         successHandler.setDefaultTargetUrl("/");
 
         http.authorizeRequests()
-                //ÎŞĞèÈÏÖ¤
+                //æ— éœ€è®¤è¯
                 .antMatchers(
-                            "/login",           //µÇÂ¼Ò³Ãæ
-                            "/assets/**",       //¾²Ì¬ÎÄ¼şÔÊĞí·ÃÎÊ
-                            "/actuator/**",     //springboot-admin¼à¿ØµÄÇëÇó
-                            "/instances/**"     //springboot-admin¼à¿ØµÄÊµÀıĞÅÏ¢ÇëÇó
+                            "/login",           //ç™»å½•é¡µé¢
+                            "/assets/**",       //é™æ€æ–‡ä»¶å…è®¸è®¿é—®
+                            "/actuator/**",     //springboot-adminç›‘æ§çš„è¯·æ±‚
+                            "/instances/**"     //springboot-adminç›‘æ§çš„å®ä¾‹ä¿¡æ¯è¯·æ±‚
                 ).permitAll()
-                //ÆäËûËùÓĞÇëÇóĞèÒªµÇÂ¼
+                //å…¶ä»–æ‰€æœ‰è¯·æ±‚éœ€è¦ç™»å½•
                 .anyRequest().authenticated()
-                //µÇÂ¼
+                //ç™»å½•
                 .and().formLogin().loginPage("/login").successHandler(successHandler)
-                //µÇ³ö
+                //ç™»å‡º
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login")
                 .and().httpBasic()
                 .and().csrf()
