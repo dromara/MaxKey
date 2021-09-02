@@ -107,7 +107,7 @@
            <li>
              <a class="side-nav-menu" href="<@base />/synchronizers/list/">
                 <@locale code="navs.synchronizers"/>  
-                <span class="fa fa-fw fa-chain"></span>
+                <span class="fa fa-fw fa-share-alt-square"></span>
              </a>
            </li>
            <li>
@@ -128,8 +128,14 @@
      	<a class="side-nav-menu has-arrow" href="#">
        		<@locale code="navs.audit"/>
        		<span class="fa fa-fw fa-eye fa-lg"></span>
-     	</a>
+     	</a> 
      	<ul>
+     		<li>
+	         <a class="side-nav-menu" href="<@base/>/session/sessionList/">
+	         	<@locale code="navs.audit.loginsession"/>
+	         	<span class="fa fa-fw fa-eye"></span>
+	         </a>
+	       </li>
 	       <li>
 	         <a class="side-nav-menu" href="<@base />/historys/loginHistoryList/">
 	         	<@locale code="navs.audit.login"/>

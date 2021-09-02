@@ -124,6 +124,10 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/permissions/**")
                 .addPathPatterns("/config/**")
                 .addPathPatterns("/logs/**")
+                .addPathPatterns("/historys/**")
+                .addPathPatterns("/historys/**/**")
+                .addPathPatterns("/session/**")
+                
                 ;
         
         _logger.debug("add PermissionAdapter");
