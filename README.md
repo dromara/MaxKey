@@ -123,7 +123,8 @@ Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/d
 | 2.10    | 宁波金融资产交易中心    					|  金融  |
 | 2.11    | 武汉英特沃科技有限公司   				 	|  科技  |
 | 2.12    | 江苏创致信息科技有限公司  					|  科技  |
-| 2.13    | NGROK(ngrok.io)					  			|  科技  |
+| 2.13    | 江西云车科技有限公司   				 	|  科技  |
+| 2.14    | NGROK(ngrok.io)					  			|  科技  |
 | 3.1     | 王朔日记    								|  个人  |
 | 3.2     | 一席南风（张彬）    						|  个人  |
 | 3.3     | glzpcw    									|  个人  |
