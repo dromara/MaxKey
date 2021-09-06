@@ -61,7 +61,7 @@
     <select id="analysisBrowser" parameterType="Map" resultType="Map">
     	select 
     		count(id) reportcount, 
-			browser reportstring 
+			coalesce(browser,'Other') reportstring 
     	from mxk_history_login 
     	where 
     		date(logintime) >date_add(curdate(), interval - day(curdate()) -31 day)
