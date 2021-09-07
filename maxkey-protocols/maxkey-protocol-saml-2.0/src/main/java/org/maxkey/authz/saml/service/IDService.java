@@ -23,6 +23,6 @@ import java.util.UUID;
 public class IDService {
 
 	public String generateID() {
-		return UUID.randomUUID().toString();
+		return "MXK_" + UUID.randomUUID().toString();
 	}
 }
