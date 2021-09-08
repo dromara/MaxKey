@@ -1,4 +1,4 @@
-description = "maxkey-web-manage"
+description = "maxkey-web-mgt"
 
 //add support for Java
 apply plugin: 'java'

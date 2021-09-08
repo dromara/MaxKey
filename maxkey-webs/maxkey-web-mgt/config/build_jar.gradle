@@ -13,7 +13,7 @@ plugins {
 	id "io.spring.dependency-management" version "1.0.11.RELEASE"
 }
 
-description = "maxkey-web-manage"
+description = "maxkey-web-mgt"
 
 //springboot jar
 apply plugin: 'io.spring.dependency-management'

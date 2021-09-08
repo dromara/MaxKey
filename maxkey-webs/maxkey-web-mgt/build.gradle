@@ -25,5 +25,4 @@ dependencies {
    	implementation project(":maxkey-identitys:maxkey-synchronizers-dingding")
    	
    	implementation project(":maxkey-webs:maxkey-web-resources")
-   	
 }

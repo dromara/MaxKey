@@ -424,13 +424,15 @@ subprojects {
     }
     
 	tasks.register("buildRelease",Copy) {
-		
+		dependsOn	assemble
 		//项目名 项目所在的group version 版本号
 		println  "subproject " + project.name + ", group " + project.group +" , version " + project.version
+	
 		//copy
 		into "$rootDir/build/maxkey-jars/"
 		from "$buildDir/libs/"
 		include '*.jar'
+
     }
 	
 	assemble.configure { finalizedBy buildRelease }
@@ -565,6 +567,7 @@ tasks.register("copyShellScript",Copy) {
 	
 	from "$rootDir/shellscript/"
 	into "$rootDir/build/MaxKey-v${project.version}GA/shellscript/";
+
 }
 
 tasks.register("copyWindowsShellScript",Copy) {

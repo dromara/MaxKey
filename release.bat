@@ -16,6 +16,8 @@ echo clean complete .
 
 rem call %GRADLE_HOME%/bin/gradle build -x test
 call %GRADLE_HOME%/bin/gradle build -x test
+rem for docker
+rem call %GRADLE_HOME%/bin/gradle build jib -x test
 
 cd build
 rd /q /s libs

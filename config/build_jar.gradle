@@ -103,19 +103,21 @@ subprojects {
 	
 	repositories {  
         mavenLocal()
-        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/'}
+        maven { url "https://maven.aliyun.com/repository/central/"}
+        maven { url "https://maven.aliyun.com/repository/public/"}
+        maven { url "https://maven.aliyun.com/repository/spring/"}
         maven { url "https://repo.spring.io/plugins-release/" }
         maven { url "https://repo.spring.io/milestone" }
         maven { url "https://repo1.maven.org/maven2/" }
-		maven { url "https://build.shibboleth.net/nexus/content/repositories/releases/" }
-		maven { url "https://mvnrepository.com/repos/central/" }		
+        maven { url "https://build.shibboleth.net/nexus/content/repositories/releases/" }
+        maven { url "https://mvnrepository.com/repos/central/" }        
         maven { url "https://jcenter.bintray.com" }
         maven { url "https://mvn.gt.igexin.com/nexus/content/repositories/releases"}
         maven { url "https://plugins.gradle.org/m2/" }        
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://maven.repository.redhat.com/ga/" }
-		maven { url "https://repository.apache.org/content/repositories/releases/" }
-		mavenCentral()
+        maven { url "https://repository.apache.org/content/repositories/releases/" }
+        mavenCentral()
     }  
 	
 	//all dependencies
@@ -415,26 +417,24 @@ subprojects {
 	    }
 	}
 	
-	task buildRelease(dependsOn:['build','jar'])  {
+	task buildRelease()  {
+		dependsOn	assemble
 		//项目名
-		println  "project " + project.name + " environment ..."
+		println  "subproject " + project.name + ", group " + project.group +" , version " + project.version
 	}
+	
+	assemble.configure { finalizedBy buildRelease }
 
 }
 
-task buildRelease(dependsOn:['build'])  {
-	//项目名
-	println  "project " + project.name + " environment ..."
-	//项目所在的group version 版本号
-	println "project group " + project.group +" , version " + project.version
-	//项目相对路径
-	println "project path " + project.path
-	//项目的绝对路径
-	println "project projectDir " + project.projectDir
-	//项目的build文件绝对路径
-	println "project buildDir " + project.buildDir
-	println 'Build MaxKey '+project.name +' '
+tasks.register("buildRelease")  {
+    //项目名 项目所在的group version 版本号
+    println  "Root project " + project.name + ", group " + project.group +" , version " + project.version
+    //项目的绝对路径 to 项目的build文件绝对路径
+    println "Root project projectDir " + project.projectDir +" to " + project.buildDir
 }
+
+build.configure { finalizedBy buildRelease }
 
 // In this section you declare the dependencies for your production and test code
 dependencies {

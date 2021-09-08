@@ -1,7 +1,6 @@
 buildscript {
 	repositories {
-		jcenter()
-		maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+		maven { url 'https://maven.aliyun.com/nexus/content/groups/public/'}
 	}
 }
 
@@ -18,15 +17,15 @@ description = "maxkey-web-maxkey"
 //docker
 jib {
 	from {
-		image = 'openjdk:8-jre-alpine'
+		image = "${jibFromImage}"
 	}
 	to {
 		//https://registry.hub.docker.com/repository/docker/maxkeytop/maxkey
-		image = "maxkeytop/maxkey"
+		image = "${jibToImage}/maxkey"
 		tags = ["${project.version}".toString(), 'latest']
 		auth {
-			username = "maxkeytop"
-			password = "password"
+			username = "${jibToAuthUsername}"
+			password = "${jibToAuthPassword}"
 		}
 	}
 	container {
@@ -35,6 +34,9 @@ jib {
 		ports 		= ['443']
 	}
 }
+
+
+//build.configure { finalizedBy jib }
 
 dependencies {
 	implementation project(":maxkey-common")
