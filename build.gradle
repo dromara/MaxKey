@@ -74,6 +74,10 @@ repositories {
     
 }
 
+// In this section you declare the dependencies for your production and test code
+dependencies {
+ 
+}
 
 
 subprojects {
@@ -419,22 +423,22 @@ subprojects {
         }
     }
     
-    task copyjar2Release(type: Copy,dependsOn:['build','jar'] ) {
-        println "$buildDir/libs/ to $rootDir/build/maxkey-jars/"
-        into "$rootDir/build/maxkey-jars/"
-        from "$buildDir/libs/"
-        include '*.jar'
+	tasks.register("buildRelease",Copy) {
+		
+		//项目名 项目所在的group version 版本号
+		println  "subproject " + project.name + ", group " + project.group +" , version " + project.version
+		//copy
+		into "$rootDir/build/maxkey-jars/"
+		from "$buildDir/libs/"
+		include '*.jar'
     }
-
-    task buildRelease(dependsOn:['copyjar2Release'])  {
-        //项目名 项目所在的group version 版本号
-        println  "project " + project.name + ", group " + project.group +" , version " + project.version
-    }
+	
+	assemble.configure { finalizedBy buildRelease }
 }
 
 //copy Dep Jars to /build/maxkey-depjars,only maxkey-common deps
 project('maxkey-common')  {
-    task copyDepJars(type: Copy){
+    task createReleaseDir(type: Copy){
         def paths = ["$rootDir/build/MaxKey-v${project.version}GA",
                      "$rootDir/build/MaxKey-v${project.version}GA/maxkey",
                      "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt",
@@ -448,17 +452,22 @@ project('maxkey-common')  {
                 dir.mkdirs();
             }
         };
-        
-        println  "copy Dep Jars to $rootDir/build/MaxKey-v${project.version}GA/lib"
-        
-        from configurations.runtimeClasspath
-        into "$rootDir/build/MaxKey-v${project.version}GA/lib";
     }
+	
+	task copyDepJars (type: Copy){
+		dependsOn	assemble
+		println  "copy Dep Jars to $rootDir/build/MaxKey-v${project.version}GA/lib"
+		
+		from configurations.runtimeClasspath
+		into "$rootDir/build/MaxKey-v${project.version}GA/lib";
+	}
+	
+	build.configure { finalizedBy copyDepJars }
 }
 
 //copy Dep Jars to /build/maxkey-depjars,only maxkey-boot-monitor deps
 project('maxkey-webs:maxkey-boot-monitor')  {
-    task copyDepJars(type: Copy){
+    task createReleaseDir(type: Copy){
         def paths = ["$rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor"];
         //遍历数组，调用createDir闭包，创建目录
         
@@ -469,85 +478,99 @@ project('maxkey-webs:maxkey-boot-monitor')  {
                 dir.mkdirs();
             }
         };
-        
-        println  "copy Dep Jars to $rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor"
-        
-        from configurations.runtimeClasspath
-        into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor";
     }
+
+	task copyDepJars(type:Copy) {
+		dependsOn	assemble
+		//项目名 项目所在的group version 版本号
+		println  "subproject " + project.name + ", group " + project.group +" , version " + project.version
+		//copy
+		from "$buildDir/libs/"   include '*.jar'
+		from configurations.runtimeClasspath
+		into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor";
+    }
+	
+	build.configure { finalizedBy copyDepJars }
+	
+}
+
+project('maxkey-webs:maxkey-web-maxkey')  {
+	
+	task copyDepJars (type: Copy){
+		println  "project copyMaxKey .";
+	
+		from "$rootDir/build/maxkey-jars/maxkey-authentication-social-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-web-maxkey-${project.version}.jar"
+		into "$rootDir/build/MaxKey-v${project.version}GA/maxkey/";
+	}
+	
+	//common lib jars
+	task copyMaxKeyLibs(type: Copy) {
+		from "$rootDir/build/maxkey-jars/maxkey-authentication-otp-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-authentication-captcha-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-authentication-core-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-common-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-core-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-persistence-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-protocol-authorize-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-protocol-cas-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-protocol-desktop-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-protocol-extendapi-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-protocol-formbased-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-protocol-jwt-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-protocol-oauth-2.0-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-protocol-saml-2.0-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-protocol-tokenbased-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-web-resources-${project.version}.jar"
+		into "$rootDir/build/MaxKey-v${project.version}GA/lib";
+	}
+	
+	build.configure { finalizedBy copyDepJars }
+	
+	copyDepJars.configure { finalizedBy copyMaxKeyLibs }
+	
 }
 
 
-task copyMaxKey(type: Copy) {
-    from "$rootDir/build/maxkey-jars/maxkey-authentication-social-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-web-static-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-web-maxkey-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-web-maxkey-static-${project.version}.jar"
-    into "$rootDir/build/MaxKey-v${project.version}GA/maxkey/";
-}
-
-task copyMaxKeyMgt(type: Copy) {
-    from "$rootDir/build/maxkey-jars/maxkey-identity-rest-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-identity-scim-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-web-static-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-web-mgt-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-web-mgt-static-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-synchronizers-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-synchronizers-activedirectory-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-synchronizers-ldap-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-synchronizers-dingding-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-synchronizers-workweixin-${project.version}.jar"
-    into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt/";
-}
-
-task copyMaxKeyMonitor(type: Copy) {
-    from "$rootDir/build/maxkey-jars/maxkey-boot-monitor-${project.version}.jar"
-    into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor/";
-}
-
-task copyMaxKeyLibs(type: Copy) {
-    from "$rootDir/build/maxkey-jars/maxkey-authentication-otp-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-authentication-captcha-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-authentication-core-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-common-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-core-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-persistence-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-protocol-authorize-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-protocol-cas-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-protocol-desktop-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-protocol-extendapi-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-protocol-formbased-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-protocol-jwt-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-protocol-oauth-2.0-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-protocol-saml-2.0-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-protocol-tokenbased-${project.version}.jar"
-    from "$rootDir/build/maxkey-jars/maxkey-web-resources-${project.version}.jar"
-    into "$rootDir/build/MaxKey-v${project.version}GA/lib";
+project('maxkey-webs:maxkey-web-mgt')  {
+	
+	task copyDepJars (type: Copy){
+		println  "project copyMaxKeyMgt .";
+		from "$rootDir/build/maxkey-jars/maxkey-identity-rest-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-identity-scim-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-web-mgt-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-synchronizers-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-synchronizers-activedirectory-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-synchronizers-ldap-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-synchronizers-dingding-${project.version}.jar"
+		from "$rootDir/build/maxkey-jars/maxkey-synchronizers-workweixin-${project.version}.jar"
+		into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt/";
+	}
+	
+	build.configure { finalizedBy copyDepJars }
 }
 
 
-task copyMaxKeyShellScript(type: Copy) {
-    from "$rootDir/shellscript"
-    into "$rootDir/build/MaxKey-v${project.version}GA/";
-}
-
-task buildReleaseCopy(dependsOn:['copyMaxKey','copyMaxKeyMgt','copyMaxKeyMonitor','copyMaxKeyLibs','copyMaxKeyShellScript'])  {
-    //项目名
-    println  "project ReleaseCopy  ."
-
-}
-
-task buildRelease(dependsOn:['build'])  {
+tasks.register("buildRelease")  {
+	dependsOn 'copyShellScript','copyWindowsShellScript'
+	
     //项目名 项目所在的group version 版本号
-    println  "project " + project.name + ", group " + project.group +" , version " + project.version
-    //项目的绝对路径
-    println "project projectDir " + project.projectDir
-    //项目的build文件绝对路径
-    println "project buildDir   " + project.buildDir
-
+    println  "Root project " + project.name + ", group " + project.group +" , version " + project.version
+    //项目的绝对路径 to 项目的build文件绝对路径
+    println "Root project projectDir " + project.projectDir +" to " + project.buildDir
 }
 
-// In this section you declare the dependencies for your production and test code
-dependencies {
- 
+tasks.register("copyShellScript",Copy) {
+	println  "project copyMaxKeyShellScript .";
+	
+	from "$rootDir/shellscript/"
+	into "$rootDir/build/MaxKey-v${project.version}GA/shellscript/";
 }
+
+tasks.register("copyWindowsShellScript",Copy) {
+	println  "project copyMaxKeyWindowsShellScript .";
+	from "$rootDir/shellscript/windows"
+	into "$rootDir/build/MaxKey-v${project.version}GA/";
+}
+
+build.configure { finalizedBy buildRelease }

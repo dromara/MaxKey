@@ -12,13 +12,10 @@ echo start clean . . .
 
 call %GRADLE_HOME%/bin/gradle clean
 
-echo start clean complete . 
+echo clean complete . 
 
-call %GRADLE_HOME%/bin/gradle buildRelease --stacktrace  --warning-mode all
-
-call %GRADLE_HOME%/bin/gradle copyDepJars --stacktrace  --warning-mode all
-
-call %GRADLE_HOME%/bin/gradle buildReleaseCopy --stacktrace  --warning-mode all
+rem call %GRADLE_HOME%/bin/gradle build -x test
+call %GRADLE_HOME%/bin/gradle build -x test
 
 cd build
 rd /q /s libs
