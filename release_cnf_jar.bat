@@ -6,6 +6,6 @@ call %JAVA_HOME%/bin/java -version
 
 call %GRADLE_HOME%/bin/gradle -version
 
-call %GRADLE_HOME%/bin/gradle -b build_cnf_jar.gradle
+call %GRADLE_HOME%/bin/gradle configBuildJar -b build_cnf.gradle
 
 pause
