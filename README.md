@@ -91,10 +91,10 @@ App Management UI
 
 Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> history version</a>
 
-| Version    | ReleaseDate   |  Download URL  |  Code  |
-| --------| :-----  | :----  | :----  |
-| v 2.9.0 GA  | 2021/08/24   |  <a href="https://pan.baidu.com/s/1fYkTHDk2PQ9iAP05PmuPAg" target="_blank">Download</a>  |  **mxk9**  |
- 
+| Version    | Date   |  Docker  |  Pan URL  |  Pan Code  |
+| --------| :-----  | :----  | :----  | :----   |
+| v 2.9.0 GA | 2021/08/24   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |  <a href="https://pan.baidu.com/s/1fYkTHDk2PQ9iAP05PmuPAg" target="_blank">Download</a>  |  **mxk9**  |
+
 
 # Roadmap
 

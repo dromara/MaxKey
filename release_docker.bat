@@ -11,8 +11,8 @@ call %GRADLE_HOME%/bin/gradle clean
 
 echo clean complete . 
 
-rem run task build
-call %GRADLE_HOME%/bin/gradle build -x test
+rem for docker , run task  build and jib
+call %GRADLE_HOME%/bin/gradle build jib -x test
 
 set END_TIME="%date:~0,10% %time:~0,2%:%time:~3,5%"
 
