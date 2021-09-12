@@ -6,9 +6,8 @@
 classpath-data.json
 .myumldata
 
-
-*/bin/*
-/*/*/bin/*
+**/bin
+**/bin/**
 
 /.metadata
 */.metadata/*
@@ -16,32 +15,27 @@ classpath-data.json
 .idea
 
 /.settings
-*/.settings/*
-/*/.settings/*
-/*/*/.settings/*
+**/.settings
+**/.settings/**
 
 /.sts4-cache
-*/.sts4-cache/*
+**/.sts4-cache/**
 
 # Log file
 *.log
 *.log.*
-*/logs/*
-/log
-/log/*
+**/logs/**
 
 */jdk/*
 
-*/org/apache/mybatis/jpa/*
+*/org/apache/mybatis/jpa/**
 
-/build/*
-*/build/*
-/*/*/build/*/*
-/*/build/*/*
+**/build
+**/build/**
+
 
 */META-INF/MANIFEST.MF
-/*/*/.gitignore
-/*/.gitignore
+**/.gitignore
 
 /.gradle/
 /.gradle/*
