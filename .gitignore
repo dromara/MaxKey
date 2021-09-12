@@ -5,6 +5,7 @@
 .project
 classpath-data.json
 .myumldata
+setEnvVars.bat
 
 **/bin
 **/bin/**
@@ -39,6 +40,3 @@ classpath-data.json
 
 /.gradle/
 /.gradle/*
-/build/
-setEnvVars.bat
-/bin/
