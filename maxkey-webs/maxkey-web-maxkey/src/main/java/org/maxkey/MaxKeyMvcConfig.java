@@ -151,9 +151,12 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 
                 .addPathPatterns("/authz/basic/*")
                 .addPathPatterns("/authz/ltpa/*")
-                .addPathPatterns("/authz/desktop/*")
+                //Form based
                 .addPathPatterns("/authz/formbased/*")
+                //Token based
                 .addPathPatterns("/authz/tokenbased/*")
+                //JWT
+                .addPathPatterns("/authz/jwt/*")
                 //SAML
                 .addPathPatterns("/authz/saml20/idpinit/*")
                 .addPathPatterns("/authz/saml20/assertion")
@@ -197,11 +200,16 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(preLoginAppAdapter)
                 .addPathPatterns("/authz/basic/*")
                 .addPathPatterns("/authz/ltpa/*")
-                .addPathPatterns("/authz/desktop/*")
+                //Form based
                 .addPathPatterns("/authz/formbased/*")
+                //Token based
                 .addPathPatterns("/authz/tokenbased/*")
+                //JWT
+                .addPathPatterns("/authz/jwt/*")
+                //SAML
                 .addPathPatterns("/authz/saml20/idpinit/*")
                 .addPathPatterns("/authz/saml20/assertion")
+                //CAS
                 .addPathPatterns("/authz/cas/login")
                 .addPathPatterns("/authz/cas/granting")
         ;
@@ -210,12 +218,20 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(historyLoginAppAdapter)
                 .addPathPatterns("/authz/basic/*")
                 .addPathPatterns("/authz/ltpa/*")
+                //Extend api
                 .addPathPatterns("/authz/api/*")
+                //Form based
                 .addPathPatterns("/authz/formbased/*")
+                //Token based
                 .addPathPatterns("/authz/tokenbased/*")
+                //JWT
+                .addPathPatterns("/authz/jwt/*")
+                //SAML
                 .addPathPatterns("/authz/saml20/idpinit/*")
                 .addPathPatterns("/authz/saml20/assertion")
+                //CAS
                 .addPathPatterns("/authz/cas/granting")
+                //OAuth
                 .addPathPatterns("/authz/oauth/v20/approval_confirm")
         ;
         _logger.debug("add HistoryLoginAppAdapter");
