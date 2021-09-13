@@ -109,7 +109,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         	authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
         }
         
-        UsernamePasswordAuthenticationToken authenticationToken = setOnline(loginCredential,userInfo);
+        UsernamePasswordAuthenticationToken authenticationToken = createOnlineSession(loginCredential,userInfo);
         //RemeberMe Config check then set  RemeberMe cookies
         if (applicationConfig.getLoginConfig().isRemeberMe()) {
             if (loginCredential.getRemeberMe() != null && loginCredential.getRemeberMe().equals("remeberMe")) {
@@ -136,7 +136,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 
             authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(loadeduserInfo);
             
-            Authentication authentication = setOnline(loginCredential,loadeduserInfo);
+            Authentication authentication = createOnlineSession(loginCredential,loadeduserInfo);
             
             authenticationRealm.insertLoginHistory(loadeduserInfo, loginCredential.getAuthType(), "", "", "SUCCESS");
                         
@@ -168,7 +168,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
             LoginCredential loginCredential = new LoginCredential();
             loginCredential.setUsername(loadeduserInfo.getUsername());
             
-            Authentication authentication = setOnline(loginCredential,loadeduserInfo);
+            Authentication authentication = createOnlineSession(loginCredential,loadeduserInfo);
             
             authenticationRealm.insertLoginHistory(loadeduserInfo, type, provider, code, message);
             
@@ -180,7 +180,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         }
     }
     
-    public UsernamePasswordAuthenticationToken setOnline(LoginCredential credential,UserInfo userInfo) {
+    public UsernamePasswordAuthenticationToken createOnlineSession(LoginCredential credential,UserInfo userInfo) {
         String currentUserSessionId = WebContext.genId();
         //Online Tickit Id
         String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + currentUserSessionId;
