@@ -1,0 +1,54 @@
+#端口号
+application:
+  name: maxkey-gateway-server
+  formatted-version: v2.9.0 GA
+server:
+  port: 9000
+spring:
+  application:
+    name: maxkey-gateway-server
+  cloud:
+    gateway:
+      routes:
+#nacos健康检查端口8080
+        - id: maxkeys_route
+          uri: lb://maxkey
+          filters:
+            - PrefixPath=/
+          predicates:
+            - Path=/maxkey/**
+        - id: maxkey_mgts_route
+          uri: lb://maxkey-mgt
+          filters:
+            - PrefixPath=/
+          predicates:
+            - Path=/maxkey-mgt/**
+#      default-filters:
+#       - name: Hystrix
+#          args:
+#            name: default
+#            fallbackUri: 'forward:/defaultFallback'
+
+    nacos:
+      discovery:
+        server-addr: ${NACOS_DISCOVERY_SERVER_ADDR:127.0.0.1:8848}
+        enabled: ${NACOS_DISCOVERY_ENABLED:true}
+      config:
+#        file-extension: yaml
+#        server-addr: 127.0.0.1:8848
+        username: ${NACOS_CONFIG_USERNAME:nacos}
+        password: ${NACOS_CONFIG_PASSWORD:nacos}
+        
+  main:
+    web-application-type: reactive
+#spring.main.web-application-type=reactive
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            #1分钟服务无响应则直接熔断
+            timeoutInMilliseconds: 60000
+            

@@ -1,0 +1,52 @@
+description = "maxkey-gateway"
+
+//add support for Java
+apply plugin: 'java'
+
+
+dependencies {
+         implementation project(":maxkey-common")
+         
+         //spring-cloud gateway server
+         implementation group: 'org.springframework.cloud', name: 'spring-cloud-gateway-server', version: "${springcloudVersion}"
+         implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway', version: "${springcloudVersion}"
+         //spring-cloud loadbalancer
+         implementation group: 'org.springframework.cloud', name: 'spring-cloud-loadbalancer', version: "${springcloudVersion}"
+         implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-loadbalancer', version: "${springcloudVersion}"
+         //spring-cloud netflix-hystrix
+         implementation group: 'org.springframework.cloud', name: 'spring-cloud-netflix-hystrix', version: '2.2.9.RELEASE'
+         implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.9.RELEASE'
+         
+         //spring-cloud-alibaba
+         implementation group: 'com.alibaba.cloud', name: 'spring-cloud-circuitbreaker-sentinel', version: "${springcloudalibabaVersion}"
+         implementation group: 'com.alibaba.cloud', name: 'spring-cloud-alibaba-sentinel-datasource', version: "${springcloudalibabaVersion}"
+         implementation group: 'com.alibaba.cloud', name: 'spring-cloud-alibaba-sentinel-gateway', version: "${springcloudalibabaVersion}"
+         implementation group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-sentinel', version: "${springcloudalibabaVersion}"
+   
+         //spring-cloud-alibaba sentinel
+         implementation group: 'com.alibaba.csp', name: 'sentinel-annotation-aspectj', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-api-gateway-adapter-common', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-core', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-cluster-common-default', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-cluster-client-default', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-cluster-server-default', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-datasource-extension', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-parameter-flow-control', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-reactor-adapter', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-transport-common', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-transport-simple-http', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-spring-cloud-gateway-adapter', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-spring-webflux-adapter', version: "${springcloudalibabacsplVersion}"
+         implementation group: 'com.alibaba.csp', name: 'sentinel-spring-webmvc-adapter', version: "${springcloudalibabacsplVersion}"
+         //netty
+         implementation group: 'io.projectreactor.netty', name: 'reactor-netty', version: "${reactornettyVersion}"
+         implementation group: 'io.projectreactor.netty', name: 'reactor-netty-http', version: "${reactornettyVersion}"
+         implementation group: 'io.projectreactor.netty', name: 'reactor-netty-core', version: "${reactornettyVersion}"
+         implementation group: 'io.projectreactor.addons', name: 'reactor-extra', version: "${reactorextraVersion}"
+         
+         implementation group: 'com.googlecode.concurrentlinkedhashmap', name: 'concurrentlinkedhashmap-lru', version: "${concurrentlinkedhashmaplruVersion}"
+         implementation group: 'com.stoyanr', name: 'evictor', version: "${evictorVersion}"
+         implementation group: 'jakarta.annotation', name: 'jakarta.annotation-api', version: "${jakartaannotationVersion}"
+         implementation group: 'io.lettuce', name: 'lettuce-core', version: "${lettuceVersion}"
+         implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
+}
