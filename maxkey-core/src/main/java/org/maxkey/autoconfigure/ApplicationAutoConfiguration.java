@@ -18,13 +18,9 @@
 package org.maxkey.autoconfigure;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-
 import javax.sql.DataSource;
-import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.password.LdapShaPasswordEncoder;
 import org.maxkey.crypto.password.Md4PasswordEncoder;
@@ -44,9 +40,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -69,42 +62,6 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     public DataSource dataSource() {
         return DruidDataSourceBuilder.create().build();
     }
-    
-    /**
-     * propertySourcesPlaceholderConfigurer .
-     * @return propertySourcesPlaceholderConfigurer
-     * @throws IOException  null
-     */
-    /*@Bean (name = "propertySourcesPlaceholderConfigurer")
-    public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer()
-            throws IOException {
-        ClassPathResource classPathApplicationPropertySource = 
-                new ClassPathResource(ConstantsProperties.classPathResource(
-                        ConstantsProperties.applicationPropertySource));
-
-        PropertySourcesPlaceholderConfigurer configurer = 
-                new PropertySourcesPlaceholderConfigurer();
-        configurer.setLocations(classPathApplicationPropertySource);
-        configurer.setIgnoreUnresolvablePlaceholders(true);
-        _logger.debug("PropertySourcesPlaceholderConfigurer init");
-        
-        return configurer;
-    }
-    
-    @Bean (name = "applicationProperty")
-    public Properties applicationProperty(
-    		@Value("${spring.profiles.active:}")String profilesActive) throws IOException {
-    	 Resource resource = new ClassPathResource(
-                 ConstantsProperties.classPathResource(
-                 		ConstantsProperties.classPathResource(
-                 				ConstantsProperties.applicationPropertySource,
-                 				profilesActive)));
-     
-    	 Properties properties = new Properties();
-    	 properties.load(resource.getInputStream());
-    	 return properties;
-    }
-    */
     
     @Bean(name = "passwordReciprocal")
     public PasswordReciprocal passwordReciprocal() {
@@ -151,7 +108,14 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
         //idForEncode is default for encoder
         PasswordEncoder passwordEncoder =
             new DelegatingPasswordEncoder(idForEncode, encoders);
-        
+       
+        if(_logger.isDebugEnabled()) {
+        	 _logger.debug("Password Encoders :");
+	        for (String key : encoders.keySet()) {
+	            _logger.debug(key + "=" + encoders.get(key));
+	        }
+        }
+        _logger.debug("default encoder " + idForEncode);
         return passwordEncoder;
     }
 

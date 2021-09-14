@@ -75,7 +75,7 @@ public class ApplicationConfig {
     @Value("${server.servlet.session.timeout:1800}")
     private int sessionTimeout;
 
-    @Value("${maxkey.identity.kafkasupport:false}")
+    @Value("${maxkey.server.kafka.support:false}")
     private boolean kafkaSupport;
     
     @Value("${maxkey.notices.visible:false}")
