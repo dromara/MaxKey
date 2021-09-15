@@ -112,7 +112,6 @@ Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/d
 | 1.1     | 兰州现代职业学院						 	|  院校  |
 | 1.2     | 长春职业技术学院						    |  院校  |
 | 1.3     | 德清智慧教育平台						    |  教育  |
-
 | 2.1     | 深圳市金溢科技股份有限公司    				|  企业  |
 | 2.2     | 之江实验室				    				|  企业  |
 | 2.3     | 深圳市中悦科技有限公司						|  企业  |
@@ -127,8 +126,6 @@ Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/d
 | 3.9     | 河南新辰环保科技有限公司					|  企业  |
 | 3.10     | 广州思迈特软件有限公司    				 	|  科技  |
 | 3.11     | 尚企云链			    				 	|  科技  |
-
-
 | 4.1     | 北京博亚思科技有限公司   				 	|  科技  |
 | 4.2     | 武汉英特沃科技有限公司   				 	|  科技  |
 | 4.3     | 江苏创致信息科技有限公司  					|  科技  |
