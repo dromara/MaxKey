@@ -28,26 +28,26 @@ Key Functions
 1.  Standard Protocols
 
 | No.     | Protocols   |  Support  |
-| --------| :-----  	| :----  	|
-| 1.1     | OAuth 2.0/OpenID Connect   	| HIGH  |
-| 1.2     | SAML 2.0   				 	| HIGH  |
-| 1.3     | JWT  					    | HIGH  |
-| 1.4     | CAS						 	| HIGH  |
-| 1.5     | FormBased				    | MIDDLE|
-| 1.6     | TokenBased(Post/Cookie)    	| MIDDLE|
-| 1.7     | ExtendApi				    | LOW   |
-| 1.8     | EXT						 	| LOW   |
+| --------| :-----      | :----     |
+| 1.1     | OAuth 2.0/OpenID Connect    | HIGH  |
+| 1.2     | SAML 2.0                    | HIGH  |
+| 1.3     | JWT                         | HIGH  |
+| 1.4     | CAS                         | HIGH  |
+| 1.5     | FormBased                   | MIDDLE|
+| 1.6     | TokenBased(Post/Cookie)     | MIDDLE|
+| 1.7     | ExtendApi                   | LOW   |
+| 1.8     | EXT                         | LOW   |
 
 2. Authentication
 
 | No.     | SignIn Support  | Support   |
-| --------| :-----  		| :----  	|
-| 2.1     | Captcha			| letter / number / arithmetic 	| 
+| --------| :-----          | :----     |
+| 2.1     | Captcha         | letter / number / arithmetic  | 
 | 2.2     | Two Factor Authentication  | SMS / TOPT/ Mail     |
-| 2.3     | SMS				| Tencent SMS / Alibaba SMS / NetEaseYunXin 	|
-| 2.4     | TOTP			| Denglu1/Google/Microsoft Authenticator/FreeOTP/Support TOTP or HOTP |
+| 2.3     | SMS             | Tencent SMS / Alibaba SMS / NetEaseYunXin     |
+| 2.4     | TOTP            | Denglu1/Google/Microsoft Authenticator/FreeOTP/Support TOTP or HOTP |
 | 2.5     | Domain          | Kerberos/SPNEGO/AD domain|
-| 2.6     | LDAP 			| OpenLDAP/ActiveDirectory/Standard LDAP Server |
+| 2.6     | LDAP            | OpenLDAP/ActiveDirectory/Standard LDAP Server |
 | 2.7     | Social Account  | WeChat/QQ/ Weibo/DingTalk/Google/Facebook/other  | 
 | 2.8     | Scan QR Code    | WorkWeiXin/DingTalk Scan QR Code | 
 
@@ -92,46 +92,55 @@ App Management UI
 Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> history version</a>
 
 | Version    | Date   |  Docker  |  Pan URL  |  Pan Code  |
-| --------| :-----  | :----  | :----  | :----   |
+| --------   | :----- | :----    | :----     | :----      |
 | v 2.9.0 GA | 2021/08/24   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |  <a href="https://pan.baidu.com/s/1fYkTHDk2PQ9iAP05PmuPAg" target="_blank">Download</a>  |  **mxk9**  |
 
 
 # Roadmap
 
-1. Zero trust scenario integration
+| No.     | Plan    |  Date   |
+| --------| :-----  | :----  |
+| 1     | Maxkey-Cloud (micro service support)                      |  2021Q3  |
+| 2     | Zero trust scenario integration                           |  2021Q4  |
+| 3     | React, and Ant Design                                     |  2021Q4  |
+| 4     | OAuth 2.1                                                 |  2022Q1  |
+| 5     | OpenID Connect optimize                                   |  2022Q2  |
+| 6     | Java 17+                                                  |  2022Q3  |
+| 7     | Jakarta EE 9+                                             |  2022Q3  |
+| 8     | Spring Framework 6                                        |  2022Q4  |
+| 9     | Spring Boot 3                                             |  2022Q4  |
 
-2. Maxkey-Cloud (micro service version)-2021
 
 # User Registration
 
 <a href="https://github.com/dromara/MaxKey/issues/40" target="_blank"> Click to register </a> as MaxKey user and contribute to MaxKey!
 
 以下为部分接入或测试中的用户
-| 序号    | 单位   	|  行业   |
-| --------| :-----  | :----  |
-| 1.1     | 兰州现代职业学院						 	|  院校  |
-| 1.2     | 长春职业技术学院						    |  院校  |
-| 1.3     | 德清智慧教育平台						    |  教育  |
-| 2.1     | 深圳市金溢科技股份有限公司    				|  企业  |
-| 2.2     | 之江实验室				    				|  企业  |
-| 2.3     | 深圳市中悦科技有限公司						|  企业  |
-| 3.1     | 国元证券			    					|  金融  |
-| 3.2     | 华夏金融租赁有限公司    					|  金融  |
-| 3.3     | 宁波金融资产交易中心    					|  金融  |
-| 3.4     | 北京银泰置业有限公司    					|  企业  |
-| 3.5     | 遂宁市经济大数据平台    					|  企业  |
-| 3.6     | 同方节能工程技术有限公司    				|  企业  |
-| 3.7     | 云南航天工程物探检测股份有限公司    		|  企业  |
-| 3.8     | 山东港口陆海国际物流集团有限公司    		|  企业  |
-| 3.9     | 河南新辰环保科技有限公司					|  企业  |
-| 3.10     | 广州思迈特软件有限公司    				 	|  科技  |
-| 3.11     | 尚企云链			    				 	|  科技  |
-| 4.1     | 北京博亚思科技有限公司   				 	|  科技  |
-| 4.2     | 武汉英特沃科技有限公司   				 	|  科技  |
-| 4.3     | 江苏创致信息科技有限公司  					|  科技  |
-| 4.4     | 江西云车科技有限公司   				 	    |  科技  |
-| 4.5     | NGROK(ngrok.io)					  			|  科技  |
-| 5.1     | 王朔日记    								|  个人  |
-| 5.2     | 一席南风（张彬）    						|  个人  |
-| 5.3     | glzpcw    									|  个人  |
-| 5.4     | ynduck    									|  个人  |
+| 序号    | 单位    |  行业   |
+| --------| :-----  | :----   |
+| 1.1     | 兰州现代职业学院                            |  院校  |
+| 1.2     | 长春职业技术学院                            |  院校  |
+| 1.3     | 德清智慧教育平台                            |  教育  |
+| 2.1     | 深圳市金溢科技股份有限公司                  |  企业  |
+| 2.2     | 之江实验室                                  |  企业  |
+| 2.3     | 深圳市中悦科技有限公司                      |  企业  |
+| 3.1     | 国元证券                                    |  金融  |
+| 3.2     | 华夏金融租赁有限公司                        |  金融  |
+| 3.3     | 宁波金融资产交易中心                        |  金融  |
+| 3.4     | 北京银泰置业有限公司                        |  企业  |
+| 3.5     | 遂宁市经济大数据平台                        |  企业  |
+| 3.6     | 同方节能工程技术有限公司                    |  企业  |
+| 3.7     | 云南航天工程物探检测股份有限公司            |  企业  |
+| 3.8     | 山东港口陆海国际物流集团有限公司            |  企业  |
+| 3.9     | 河南新辰环保科技有限公司                    |  企业  |
+| 3.10     | 广州思迈特软件有限公司                     |  科技  |
+| 3.11     | 尚企云链                                   |  科技  |
+| 4.1     | 北京博亚思科技有限公司                      |  科技  |
+| 4.2     | 武汉英特沃科技有限公司                      |  科技  |
+| 4.3     | 江苏创致信息科技有限公司                    |  科技  |
+| 4.4     | 江西云车科技有限公司                        |  科技  |
+| 4.5     | NGROK(ngrok.io)                             |  科技  |
+| 5.1     | 王朔日记                                    |  个人  |
+| 5.2     | 一席南风（张彬）                            |  个人  |
+| 5.3     | glzpcw                                      |  个人  |
+| 5.4     | ynduck                                      |  个人  |
