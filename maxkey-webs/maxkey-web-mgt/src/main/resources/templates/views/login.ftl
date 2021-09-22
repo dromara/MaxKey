@@ -54,9 +54,11 @@
 										<@locale code="login.button.login" />
 									</button>
 								</div>
+								<#if ''!=loginErrorMessage >
 								<div class="form-group">
-									
+									<div class="error" ><span>${loginErrorMessage!''}</span></div>
 								</div>
+								</#if>
 							</form>
 						</div>
 					</div>

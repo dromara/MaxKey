@@ -1,4 +1,41 @@
-﻿MaxKey v 2.9.0 GA 2021/08/24
+﻿MaxKey v 3.0.0 GA 2021/09/29
+    *(MAXKEY-210701) 好雨科技Rainbond适配
+    *(MAXKEY-210702) 制定MaxKey技术路线图
+    *(MAXKEY-210703) CHINER元数建模构建MaxKEY ER模型完善，数据库字段说明完善
+    *(MAXKEY-210704) Nacos配置中心支持
+    *(MAXKEY-210705) springcloud &springcloud alibaba支持
+    *(MAXKEY-210706) spring cloud gateway支持
+    *(MAXKEY-210707) application.properties参数调整和优化，支持外部Docker及环境变量的配置
+    *(MAXKEY-210708) 同步器定时任务功能优化
+    *(MAXKEY-210709) mgt增加会话管理功能
+    *(MAXKEY-210710) mgt报表功能优化
+    *(MAXKEY-210711) SAML ID调整为MXK_开头，修复类型匹配的bug，增加常用的用户字段
+    *(MAXKEY-210712) JWT单点登录的权限控制，修复bug
+    *(MAXKEY-210713) Gradle升级7.2
+    *(MAXKEY-210714) Gradle 标准、JAR、Docker编译打包脚本优化
+    *(MAXKEY-210715) Shell启动脚本优化
+    *(MAXKEY-210716) 新增MySql Docker支持及初始化脚本
+    *(MAXKEY-210717) Readme优化，增加MaxKey Docker的仓库地址
+    *(MAXKEY-210718) 产品介绍pdf的优化
+    *(MAXKEY-210719) mgt批量删除的优化
+    *(MAXKEY-210720) Jira SAML集成指南
+    *(MAXKEY-210721) 官方网站内容的优化，增加同类产品的比较，用户构建指南，完善集成应用列表
+    *(MAXKEY-210722) 日志信息的完善，包括登录过程日志，初始化日志，单点登录日志等
+    *(MAXKEY-210723) 依赖jar引用、更新和升级
+        spring              5.3.10
+        tomcat              9.0.53
+        kafkaclients        2.8.1
+        jibGradlePlugin     3.1.4
+        gson                2.8.8
+        mysqlconnector      8.0.26
+        jedis               3.7.0
+        ehcache             3.9.6
+        spring-cloud        3.0.3
+        springcloudalibabacspl 1.8.2
+        nacos               2.0.3
+        httpasyncclient     4.1.4
+    
+MaxKey v 2.9.0 GA 2021/08/24
     *(MAXKEY-210601) 企业微信扫描登录
     *(MAXKEY-210602) 钉钉扫描登录
     *(MAXKEY-210603) 第三方登录异常问题修复
@@ -34,125 +71,125 @@
     *(MAXKEY-210633) 登录密码错误n次,n小于设定的次数，后一次登录密码正确，设置密码错误次数为0
     *(MAXKEY-210634) CAS参数优化及认证参数bug修复
     *(MAXKEY-210635) Redis集群时OAUTH2登录Approval空值bug修复
-	*(MAXKEY-210636) maxkey-boot-monitor Spring Boot Admin服务监控 
-	*(MAXKEY-210637) 用户会话管理及优化
-	*(MAXKEY-210638) 会话结束事件监听控制管理
-	*(MAXKEY-210639) 定时任务功能优化
-	*(MAXKEY-210640) 登录时间，注销时间等相关时间不一致修复
-	*(MAXKEY-210641) 统一用户在线会话ID和在线令牌
-	*(MAXKEY-210642) 字段uid统一改为userid
-	*(MAXKEY-210643) CHINER元数建模ER模型设计
+    *(MAXKEY-210636) maxkey-boot-monitor Spring Boot Admin服务监控 
+    *(MAXKEY-210637) 用户会话管理及优化
+    *(MAXKEY-210638) 会话结束事件监听控制管理
+    *(MAXKEY-210639) 定时任务功能优化
+    *(MAXKEY-210640) 登录时间，注销时间等相关时间不一致修复
+    *(MAXKEY-210641) 统一用户在线会话ID和在线令牌
+    *(MAXKEY-210642) 字段uid统一改为userid
+    *(MAXKEY-210643) CHINER元数建模ER模型设计
     *(MAXKEY-210644) 依赖jar引用、更新和升级
-        spring          	5.3.9
-        springBoot      	2.5.4
-        springSession   	2.5.2
-        springSecurity		2.5.2
-		springData			2.5.2
-		springkafka			2.7.6
-        JustAuth        	1.16.3
-		kafkaclients		2.6.2
-		tomcat          	9.0.52
-		gson				2.8.7
-		jbosslogging		3.4.2.Final
-		hibernate			7.0.1.Final
-		swaggerV3			2.1.10
-		knife4j				3.0.3
-		druid				1.2.6
-		jedis				3.6.3
-		ehcache				3.9.5
-		slf4j				1.7.32
-		jackson				2.12.4
-		fastjson			1.2.78
-		jodatime			2.10.10
-		snakeyaml			1.29
-		mybatis-jpa-extra 	2.4
+        spring              5.3.9
+        springBoot          2.5.4
+        springSession       2.5.2
+        springSecurity      2.5.2
+        springData          2.5.2
+        springkafka         2.7.6
+        JustAuth            1.16.3
+        kafkaclients        2.6.2
+        tomcat              9.0.52
+        gson                2.8.7
+        jbosslogging        3.4.2.Final
+        hibernate           7.0.1.Final
+        swaggerV3           2.1.10
+        knife4j             3.0.3
+        druid               1.2.6
+        jedis               3.6.3
+        ehcache             3.9.5
+        slf4j               1.7.32
+        jackson             2.12.4
+        fastjson            1.2.78
+        jodatime            2.10.10
+        snakeyaml           1.29
+        mybatis-jpa-extra   2.4
         
         
 MaxKey v 2.8.1 GA 2021/06/25
-	*(MAXKEY-210501) 官方网站内容优化
-	*(MAXKEY-210502) 修复同步器LDAP保存保存问题
-	*(MAXKEY-210503) ReadMe内容优化
-	*(MAXKEY-210504) 依赖jar引用、更新和升级
-		spring			5.3.8
-		springBoot  	2.5.1
-		springSecurity 	5.5.1
-		JustAuth 		1.16.1
+    *(MAXKEY-210501) 官方网站内容优化
+    *(MAXKEY-210502) 修复同步器LDAP保存保存问题
+    *(MAXKEY-210503) ReadMe内容优化
+    *(MAXKEY-210504) 依赖jar引用、更新和升级
+        spring          5.3.8
+        springBoot      2.5.1
+        springSecurity  5.5.1
+        JustAuth        1.16.1
 
 MaxKey v 2.8.0 GA 2021/06/18
-	*(MAXKEY-210401) 国产数据库瀚高DB的适配
-	*(MAXKEY-210402) 增加手机登录功能，用户可获取手机验证码完成登录
-	*(MAXKEY-210403) 同步器支持，定义标准的机构和用户接口，方便其他系统同步机构和用户信息
-	*(MAXKEY-210404) Microsoft Active Directory 机构和用户同步支持
-	*(MAXKEY-210405) 标准LDAP协议服务器机构和用户同步支持
-	*(MAXKEY-210406) Gradle 7支持
-	*(MAXKEY-210407) 数据库底层适配优化支持，id采用雪花算法
-	*(MAXKEY-210408) 用户注册功能优化，修复脚本错误
-	*(MAXKEY-210409) 登录界面优化及调整
-	*(MAXKEY-210410) 单点登录认证页面及脚本整合及优化
-	*(MAXKEY-210411) 登录超时退出优化
-	*(MAXKEY-210412) org.maxkey.domain调整为org.maxkey.entity
-	*(MAXKEY-210413) 数据查询SQL语句改成小写
-	*(MAXKEY-210414) OAuth2.0单点登录确认界面配置优化
-	*(MAXKEY-210415) 应用配置保存时logoutUrl和logoutType丢失修复
-	*(MAXKEY-210416) 同步器历史同步日志审计功能
-	*(MAXKEY-210417) 删除json2form插件，优化CSS，整合javacript脚本
-	*(MAXKEY-210418) 增加用户状态USERSTATE的属性（在职、退休、离职等），status用做活动/锁定/禁用等状态
-	*(MAXKEY-210419) 分离角色权限管理模块，未来和其他系统集成适配，实现权限的统一管理
-	*(MAXKEY-210420) 模板布局优化及段落注释说明
-	*(MAXKEY-210421) 优化启动脚本，解决长度过长问题
-	*(MAXKEY-210422) 构建时依赖问题修复
-	*(MAXKEY-210423) 官方网站优化，修复有误内容
-	*(MAXKEY-210424) 项目使用jars的版本及协议的更新
-	*(MAXKEY-210425) 依赖jar的版本统一配置gradle.properties
-	*(MAXKEY-210426) 依赖jar引用、更新和升级
-		spring 5.3.8
-		springBoot 2.5.1
-		springSecurity 5.5.0
-		tomcat 9.0.46
-		jibGradle 2.7.1
-		springData 2.5.1
-		springSession 2.5.0
-		druid 1.2.5
-		jedis 3.6.0
-		mybatis 3.5.7
+    *(MAXKEY-210401) 国产数据库瀚高DB的适配
+    *(MAXKEY-210402) 增加手机登录功能，用户可获取手机验证码完成登录
+    *(MAXKEY-210403) 同步器支持，定义标准的机构和用户接口，方便其他系统同步机构和用户信息
+    *(MAXKEY-210404) Microsoft Active Directory 机构和用户同步支持
+    *(MAXKEY-210405) 标准LDAP协议服务器机构和用户同步支持
+    *(MAXKEY-210406) Gradle 7支持
+    *(MAXKEY-210407) 数据库底层适配优化支持，id采用雪花算法
+    *(MAXKEY-210408) 用户注册功能优化，修复脚本错误
+    *(MAXKEY-210409) 登录界面优化及调整
+    *(MAXKEY-210410) 单点登录认证页面及脚本整合及优化
+    *(MAXKEY-210411) 登录超时退出优化
+    *(MAXKEY-210412) org.maxkey.domain调整为org.maxkey.entity
+    *(MAXKEY-210413) 数据查询SQL语句改成小写
+    *(MAXKEY-210414) OAuth2.0单点登录确认界面配置优化
+    *(MAXKEY-210415) 应用配置保存时logoutUrl和logoutType丢失修复
+    *(MAXKEY-210416) 同步器历史同步日志审计功能
+    *(MAXKEY-210417) 删除json2form插件，优化CSS，整合javacript脚本
+    *(MAXKEY-210418) 增加用户状态USERSTATE的属性（在职、退休、离职等），status用做活动/锁定/禁用等状态
+    *(MAXKEY-210419) 分离角色权限管理模块，未来和其他系统集成适配，实现权限的统一管理
+    *(MAXKEY-210420) 模板布局优化及段落注释说明
+    *(MAXKEY-210421) 优化启动脚本，解决长度过长问题
+    *(MAXKEY-210422) 构建时依赖问题修复
+    *(MAXKEY-210423) 官方网站优化，修复有误内容
+    *(MAXKEY-210424) 项目使用jars的版本及协议的更新
+    *(MAXKEY-210425) 依赖jar的版本统一配置gradle.properties
+    *(MAXKEY-210426) 依赖jar引用、更新和升级
+        spring 5.3.8
+        springBoot 2.5.1
+        springSecurity 5.5.0
+        tomcat 9.0.46
+        jibGradle 2.7.1
+        springData 2.5.1
+        springSession 2.5.0
+        druid 1.2.5
+        jedis 3.6.0
+        mybatis 3.5.7
 
 ﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿MaxKey v 2.8.0 RC1  2021/06/01
     *(MAXKEY-210401)  国产数据库瀚高DB的适配
-	*(MAXKEY-210402)  增加手机登录功能，用户可获取手机验证码完成登录
-	*(MAXKEY-210403)  同步器支持，定义标准的机构和用户接口，方便其他系统同步机构和用户信息
-	*(MAXKEY-210404)  Microsoft Active Directory 机构和用户同步支持
-	*(MAXKEY-210405)  标准LDAP协议服务器机构和用户同步支持
+    *(MAXKEY-210402)  增加手机登录功能，用户可获取手机验证码完成登录
+    *(MAXKEY-210403)  同步器支持，定义标准的机构和用户接口，方便其他系统同步机构和用户信息
+    *(MAXKEY-210404)  Microsoft Active Directory 机构和用户同步支持
+    *(MAXKEY-210405)  标准LDAP协议服务器机构和用户同步支持
     *(MAXKEY-210406)  Gradle 7支持
     *(MAXKEY-210407)  数据库底层适配优化支持，id采用雪花算法
-	*(MAXKEY-210408)  用户注册功能优化，修复脚本错误
-	*(MAXKEY-210409)  登录界面优化及调整
-	*(MAXKEY-210410)  单点登录认证页面及脚本整合及优化
+    *(MAXKEY-210408)  用户注册功能优化，修复脚本错误
+    *(MAXKEY-210409)  登录界面优化及调整
+    *(MAXKEY-210410)  单点登录认证页面及脚本整合及优化
     *(MAXKEY-210411)  登录超时退出优化
     *(MAXKEY-210412)  org.maxkey.domain调整为org.maxkey.entity
     *(MAXKEY-210413)  数据查询SQL语句改成小写
     *(MAXKEY-210414)  OAuth2.0单点登录确认界面配置优化
     *(MAXKEY-210415)  应用配置保存时logoutUrl和logoutType丢失修复
-	*(MAXKEY-210416)  同步器历史同步日志审计功能
-	*(MAXKEY-210417)  删除json2form插件，优化CSS，整合javacript脚本
-	*(MAXKEY-210418)  增加用户状态USERSTATE的属性（在职、退休、离职等），status用做活动/锁定/禁用等状态
-	*(MAXKEY-210419)  分离角色权限管理模块，未来和其他系统集成适配，实现权限的统一管理
-	*(MAXKEY-210420)  模板布局优化及段落注释说明
-	*(MAXKEY-210421)  优化启动脚本，解决长度过长问题
-	*(MAXKEY-210422)  构建时依赖问题修复
-	*(MAXKEY-210423)  依赖jar的版本统一配置gradle.properties
-	*(MAXKEY-210424)  依赖jar引用、更新和升级
-        spring			5.3.7
-		springBoot  	2.4.5
-		springSecurity 	5.5.0
-		tomcat		   	9.0.46
-		jibGradle		2.7.1
-		springData		2.5.1
-		springSession	2.5.0
-		druid			1.2.5
-		jedis			3.6.0
-		mybatis			3.5.7
+    *(MAXKEY-210416)  同步器历史同步日志审计功能
+    *(MAXKEY-210417)  删除json2form插件，优化CSS，整合javacript脚本
+    *(MAXKEY-210418)  增加用户状态USERSTATE的属性（在职、退休、离职等），status用做活动/锁定/禁用等状态
+    *(MAXKEY-210419)  分离角色权限管理模块，未来和其他系统集成适配，实现权限的统一管理
+    *(MAXKEY-210420)  模板布局优化及段落注释说明
+    *(MAXKEY-210421)  优化启动脚本，解决长度过长问题
+    *(MAXKEY-210422)  构建时依赖问题修复
+    *(MAXKEY-210423)  依赖jar的版本统一配置gradle.properties
+    *(MAXKEY-210424)  依赖jar引用、更新和升级
+        spring          5.3.7
+        springBoot      2.4.5
+        springSecurity  5.5.0
+        tomcat          9.0.46
+        jibGradle       2.7.1
+        springData      2.5.1
+        springSession   2.5.0
+        druid           1.2.5
+        jedis           3.6.0
+        mybatis         3.5.7
 
-MaxKey v 2.7.0 GA	2021/04/15
+MaxKey v 2.7.0 GA   2021/04/15
     *(MAXKEY-210301)  加入Dromara开源组织，官方网站的优化，文档优化
     *(MAXKEY-210302)  BootJar，Docker，Standard三种打包方式的配置优化
     *(MAXKEY-210303)  openldap,activedirectory密码验证支持
@@ -187,323 +224,323 @@ MaxKey v 2.7.0 GA	2021/04/15
     *(MAXKEY-210332)  查询参数优化
     *(MAXKEY-210333)  SDK优化
     *(MAXKEY-210334)  依赖jar引用、更新和升级
-    	log4j 		2.14.1
-		spring		5.3.6
-		springBoot  2.4.4
-		springSecurity 5.4.6
-		tomcat		9.0.44
-	
-MaxKey v 2.6.0 GA	2021/03/05
-	*(MAXKEY-210201)  官方网站的优化
-	*(MAXKEY-210202)  CAS代理模式实现的优化，完成demo的测试
-	*(MAXKEY-210203)  CAS代理模式Demo开发和实现
-	*(MAXKEY-210204)  LINUX版安装指南优化，升级MySQL到8.0
-	*(MAXKEY-210205)  构建优化，实现自动打包到Build Release
-	*(MAXKEY-210206)  springboot-actuator优化
-	*(MAXKEY-210207)  登录模式的拆分和整合
-	*(MAXKEY-210208)  模块的重组和优化，拆分出通用模块maxkey-common，captcha，otp，social等
-	*(MAXKEY-210209)  REST API优化,增加密码修改功能
-	*(MAXKEY-210210)  session及cookie参数的优化
-	*(MAXKEY-210211)  kafka供应服务移动到org.maxkey.persistence.kafka
-	*(MAXKEY-210212)  用户注册功能优化
-	*(MAXKEY-210213)  日志信息输出优化
-	*(MAXKEY-210214)  简化MaxKey banner输出
-	*(MAXKEY-210215)  token工厂模式的实现Factorys
-	*(MAXKEY-210216)  OTP的优化
-	*(MAXKEY-210217)  MapperScan重复优化
-	*(MAXKEY-210218)  maxkey-mgt端口号调整9527,wiki端口号调整9521
-	*(MAXKEY-210219)  依赖jar引用、更新和升级
-		spring         	 5.3.4
-		springBoot     	 2.4.3
-		springSecurity 	 5.4.5
-		tomcat			 9.0.41
-		freemarker		 2.3.31
-		kafka-clients	 2.6.1
-		spring-kafka	 2.6.6
-		micrometer		 1.6.4
-		latencyutils	 2.0.3
-		stax2-api 		 4.2.1
-		druid			 1.2.5
-		
+        log4j       2.14.1
+        spring      5.3.6
+        springBoot  2.4.4
+        springSecurity 5.4.6
+        tomcat      9.0.44
+    
+MaxKey v 2.6.0 GA   2021/03/05
+    *(MAXKEY-210201)  官方网站的优化
+    *(MAXKEY-210202)  CAS代理模式实现的优化，完成demo的测试
+    *(MAXKEY-210203)  CAS代理模式Demo开发和实现
+    *(MAXKEY-210204)  LINUX版安装指南优化，升级MySQL到8.0
+    *(MAXKEY-210205)  构建优化，实现自动打包到Build Release
+    *(MAXKEY-210206)  springboot-actuator优化
+    *(MAXKEY-210207)  登录模式的拆分和整合
+    *(MAXKEY-210208)  模块的重组和优化，拆分出通用模块maxkey-common，captcha，otp，social等
+    *(MAXKEY-210209)  REST API优化,增加密码修改功能
+    *(MAXKEY-210210)  session及cookie参数的优化
+    *(MAXKEY-210211)  kafka供应服务移动到org.maxkey.persistence.kafka
+    *(MAXKEY-210212)  用户注册功能优化
+    *(MAXKEY-210213)  日志信息输出优化
+    *(MAXKEY-210214)  简化MaxKey banner输出
+    *(MAXKEY-210215)  token工厂模式的实现Factorys
+    *(MAXKEY-210216)  OTP的优化
+    *(MAXKEY-210217)  MapperScan重复优化
+    *(MAXKEY-210218)  maxkey-mgt端口号调整9527,wiki端口号调整9521
+    *(MAXKEY-210219)  依赖jar引用、更新和升级
+        spring           5.3.4
+        springBoot       2.4.3
+        springSecurity   5.4.5
+        tomcat           9.0.41
+        freemarker       2.3.31
+        kafka-clients    2.6.1
+        spring-kafka     2.6.6
+        micrometer       1.6.4
+        latencyutils     2.0.3
+        stax2-api        4.2.1
+        druid            1.2.5
+        
 
-MaxKey v 2.5.0 GA	2021/02/05
-	*(MAXKEY-210101)  动态用户组实现优化，增加时间段控制
-	*(MAXKEY-210102)  官方网站优化，取消加载动态图表；增加统计功能
-	*(MAXKEY-210103)  优化社交登录的图标
-	*(MAXKEY-210104)  社交账号支持Gitee和微信
-	*(MAXKEY-210105)  社交账号绑定列表化，显示绑定时间和最近登录时间，绑定的操作，支持多个OAuth第三方，参见JustAuth
-	*(MAXKEY-210106)  语言选择位置调整
-	*(MAXKEY-210107)  短信验证码存储Redis修复
-	*(MAXKEY-210108)  OAuthDetail修复Visible
-	*(MAXKEY-210109)   镜像加速gradle默认使用阿里云aliyun 
-	*(MAXKEY-210110)  Swagger文档支持 maxkey/swagger-ui/index.html#/
-	*(MAXKEY-210111)  knife4j文档支持 maxkey/doc.html
-	*(MAXKEY-210112)  登录界面加密处理
-	*(MAXKEY-210113)   依赖jar引用、更新和升级
-		spring		5.3.3
-		springBoot  2.4.2
-		jedis		3.4.1
-		druid		1.2.4
-		JustAuth 	1.15.9
-		joda-time	2.10.9
-		zxing		3.4.1
-		jackson		2.12.1
-		guava		30.1-jre
-		mybatis		3.5.6
-		mybatis-spring	2.0.6
-		hibernate	6.2.0.Final
-		jibGradlePlugin	2.7.0
-		nimbus-jose-jwt	9.4.1
-		tomcat-embed-core	9.0.41
-		swagger		1.6.2
-		swagger3 	2.1.6
-		springfox	3.0.0
-		knife4j 	3.0.2
-	
-MaxKey v 2.4.0 GA	2021/01/01
-	*(MAXKEY-201001)  动态用户组实现(基于用户属性或机构)
-	*(MAXKEY-201002)  任职机构和兼职机构
-	*(MAXKEY-201003)  登录会话切换的优化
-	*(MAXKEY-201004)  我的应用界面隐藏visible = 0的应用
-	*(MAXKEY-201005)  构建脚本的优化和更新
-	*(MAXKEY-201006)  全新的版本号定义，正式版本jar不再添加 RELEASE 后缀声明，author由shimingxy改为maxkeyTop
-	*(MAXKEY-201007)  SAML2.0 SP登录引导的优化
-	*(MAXKEY-201008)  SAML2.0 SP DEMO,案例参见 https://github.com/MaxKeyTop/spring-boot-security-saml-sample
-	*(MAXKEY-201009)  docker支持的优化
-	*(MAXKEY-201010)  源代码增加LICENSE声明
-	*(MAXKEY-201011)  JWT的分离成protocols下子项目
-	*(MAXKEY-201012)  密码策略提示参数问题修复
-	*(MAXKEY-201013)  SAML 2.0 Metadata优化
-	*(MAXKEY-201014)  HandlerInterceptorAdapter@deprecated  调整为 AsyncHandlerInterceptor 
-	*(MAXKEY-201015)  mybatis-jpa升级，添加@Entity和@Transient支持，优化update时字段为null的处理，SQL代码优化 
-	*(MAXKEY-201016)  README更新及中文和英文支持
-	*(MAXKEY-201017)  认证失败时，authentication 空指针异常
-	*(MAXKEY-201018)  SAML Metadata URL配置读取
-	*(MAXKEY-201019)  添加组和角色时按登录名查询成员
-	*(MAXKEY-201020)  firefox点击验证码无更新修复
-	*(MAXKEY-201021)  官网内容更新
-	*(MAXKEY-201022)  管理MGT样式调整优化
-	*(MAXKEY-201023)  OAuth2.0 password认证失败是返回异常问题
-	*(MAXKEY-201024)  OAuth2.0 password获取用户信息，类型无法转换错误
-	*(MAXKEY-201025)  依赖jar引用、更新和升级
-		not-yet-commons-ssl 0.3.9
-		log4j          	 	2.14.0
-		spring         	 	5.3.2
-		springBoot     	 	2.4.1
-		springSecurity 	 	5.4.1
-		springData    	 	2.4.1
-		springSession    	2.4.1
-		mybatis-jpa-extra	2.2
-		opensaml 	        2.6.6
-		
+MaxKey v 2.5.0 GA   2021/02/05
+    *(MAXKEY-210101)  动态用户组实现优化，增加时间段控制
+    *(MAXKEY-210102)  官方网站优化，取消加载动态图表；增加统计功能
+    *(MAXKEY-210103)  优化社交登录的图标
+    *(MAXKEY-210104)  社交账号支持Gitee和微信
+    *(MAXKEY-210105)  社交账号绑定列表化，显示绑定时间和最近登录时间，绑定的操作，支持多个OAuth第三方，参见JustAuth
+    *(MAXKEY-210106)  语言选择位置调整
+    *(MAXKEY-210107)  短信验证码存储Redis修复
+    *(MAXKEY-210108)  OAuthDetail修复Visible
+    *(MAXKEY-210109)   镜像加速gradle默认使用阿里云aliyun 
+    *(MAXKEY-210110)  Swagger文档支持 maxkey/swagger-ui/index.html#/
+    *(MAXKEY-210111)  knife4j文档支持 maxkey/doc.html
+    *(MAXKEY-210112)  登录界面加密处理
+    *(MAXKEY-210113)   依赖jar引用、更新和升级
+        spring      5.3.3
+        springBoot  2.4.2
+        jedis       3.4.1
+        druid       1.2.4
+        JustAuth    1.15.9
+        joda-time   2.10.9
+        zxing       3.4.1
+        jackson     2.12.1
+        guava       30.1-jre
+        mybatis     3.5.6
+        mybatis-spring  2.0.6
+        hibernate   6.2.0.Final
+        jibGradlePlugin 2.7.0
+        nimbus-jose-jwt 9.4.1
+        tomcat-embed-core   9.0.41
+        swagger     1.6.2
+        swagger3    2.1.6
+        springfox   3.0.0
+        knife4j     3.0.2
+    
+MaxKey v 2.4.0 GA   2021/01/01
+    *(MAXKEY-201001)  动态用户组实现(基于用户属性或机构)
+    *(MAXKEY-201002)  任职机构和兼职机构
+    *(MAXKEY-201003)  登录会话切换的优化
+    *(MAXKEY-201004)  我的应用界面隐藏visible = 0的应用
+    *(MAXKEY-201005)  构建脚本的优化和更新
+    *(MAXKEY-201006)  全新的版本号定义，正式版本jar不再添加 RELEASE 后缀声明，author由shimingxy改为maxkeyTop
+    *(MAXKEY-201007)  SAML2.0 SP登录引导的优化
+    *(MAXKEY-201008)  SAML2.0 SP DEMO,案例参见 https://github.com/MaxKeyTop/spring-boot-security-saml-sample
+    *(MAXKEY-201009)  docker支持的优化
+    *(MAXKEY-201010)  源代码增加LICENSE声明
+    *(MAXKEY-201011)  JWT的分离成protocols下子项目
+    *(MAXKEY-201012)  密码策略提示参数问题修复
+    *(MAXKEY-201013)  SAML 2.0 Metadata优化
+    *(MAXKEY-201014)  HandlerInterceptorAdapter@deprecated  调整为 AsyncHandlerInterceptor 
+    *(MAXKEY-201015)  mybatis-jpa升级，添加@Entity和@Transient支持，优化update时字段为null的处理，SQL代码优化 
+    *(MAXKEY-201016)  README更新及中文和英文支持
+    *(MAXKEY-201017)  认证失败时，authentication 空指针异常
+    *(MAXKEY-201018)  SAML Metadata URL配置读取
+    *(MAXKEY-201019)  添加组和角色时按登录名查询成员
+    *(MAXKEY-201020)  firefox点击验证码无更新修复
+    *(MAXKEY-201021)  官网内容更新
+    *(MAXKEY-201022)  管理MGT样式调整优化
+    *(MAXKEY-201023)  OAuth2.0 password认证失败是返回异常问题
+    *(MAXKEY-201024)  OAuth2.0 password获取用户信息，类型无法转换错误
+    *(MAXKEY-201025)  依赖jar引用、更新和升级
+        not-yet-commons-ssl 0.3.9
+        log4j               2.14.0
+        spring              5.3.2
+        springBoot          2.4.1
+        springSecurity      5.4.1
+        springData          2.4.1
+        springSession       2.4.1
+        mybatis-jpa-extra   2.2
+        opensaml            2.6.6
+        
 
-MaxKey v 2.3.0 GA	2020/11/12
- 	*(MAXKEY-200901)  基于spring session的集群会话共享功能 
+MaxKey v 2.3.0 GA   2020/11/12
+    *(MAXKEY-200901)  基于spring session的集群会话共享功能 
     *(MAXKEY-200902) 单点注销功能，应用可以配置为NONE/BACK_CHANNEL/FRONT_CHANNEL三种方式，支持CAS/SAML/Default
-	*(MAXKEY-200903)  用户在线实时更新功能
-	*(MAXKEY-200904)  定制用户模板，实现批量Excel用户导入功能
-	*(MAXKEY-200905)   定制机构模板，实现批量Excel机构导入功能
-	*(MAXKEY-200906)  用户注册功能
-	*(MAXKEY-200907)  用户状态修改
-	*(MAXKEY-200908)  用户详情显示问题
-	*(MAXKEY-200909)  应用修改时数字大于4为长度格式化问题
-	*(MAXKEY-200910)  注销后，点击重新登陆跳转问题
-	*(MAXKEY-200911)  增加SP登录跳转功能，支持knox的认证
-	*(MAXKEY-200912)  构建脚本的优化和更新
-	*(MAXKEY-200913)  管理员权限控制 RoleAdministrators 
-	*(MAXKEY-200914)  社交账号登录优化
-	*(MAXKEY-200915)  列表界面中未”选择“情况下，弹出界面错误
-	*(MAXKEY-200916) jib(docker) 支持 ，感谢https://github.com/alanland
-	*(MAXKEY-200917)  登录过程的优化
-	*(MAXKEY-200918)  认证的优化，支持@Principal的注入
-	*(MAXKEY-200919) 应用单点登录时，用户访问权限控制
-	*(MAXKEY-200920) maxkey-mgt 项目配置文件的验证码启用不启用配置未生效
-	*(MAXKEY-200921) 登录图标改进
-	*(MAXKEY-200922)  官方网站的优化
-	*(MAXKEY-200923)  依赖jar引用、更新和升级
-	    druid 1.2.1
-	    JustAuth 1.15.8
-	    simple-http 1.0.3
-	    spring-session 2.3.1.RELEASE
-	    druid-spring-boot-starter 1.2.1
-	    xmlbeans  3.0.1
-	    commons-compress 1.20
-	    poi 4.1.2
-	    commons-collections4 4.4
+    *(MAXKEY-200903)  用户在线实时更新功能
+    *(MAXKEY-200904)  定制用户模板，实现批量Excel用户导入功能
+    *(MAXKEY-200905)   定制机构模板，实现批量Excel机构导入功能
+    *(MAXKEY-200906)  用户注册功能
+    *(MAXKEY-200907)  用户状态修改
+    *(MAXKEY-200908)  用户详情显示问题
+    *(MAXKEY-200909)  应用修改时数字大于4为长度格式化问题
+    *(MAXKEY-200910)  注销后，点击重新登陆跳转问题
+    *(MAXKEY-200911)  增加SP登录跳转功能，支持knox的认证
+    *(MAXKEY-200912)  构建脚本的优化和更新
+    *(MAXKEY-200913)  管理员权限控制 RoleAdministrators 
+    *(MAXKEY-200914)  社交账号登录优化
+    *(MAXKEY-200915)  列表界面中未”选择“情况下，弹出界面错误
+    *(MAXKEY-200916) jib(docker) 支持 ，感谢https://github.com/alanland
+    *(MAXKEY-200917)  登录过程的优化
+    *(MAXKEY-200918)  认证的优化，支持@Principal的注入
+    *(MAXKEY-200919) 应用单点登录时，用户访问权限控制
+    *(MAXKEY-200920) maxkey-mgt 项目配置文件的验证码启用不启用配置未生效
+    *(MAXKEY-200921) 登录图标改进
+    *(MAXKEY-200922)  官方网站的优化
+    *(MAXKEY-200923)  依赖jar引用、更新和升级
+        druid 1.2.1
+        JustAuth 1.15.8
+        simple-http 1.0.3
+        spring-session 2.3.1.RELEASE
+        druid-spring-boot-starter 1.2.1
+        xmlbeans  3.0.1
+        commons-compress 1.20
+        poi 4.1.2
+        commons-collections4 4.4
  
-MaxKey v 2.2.0 GA	2020/09/24
-	*(MAXKEY-200801)  官方网站内容调整，初步增加英文版支持，增加新闻、合作伙伴及与CAS等开源产品对比
-	*(MAXKEY-200802)  国际化I18N内容优化
-	*(MAXKEY-200803)  使用Passay增强密码策略，分离静态密码策略和动态密码策略
-	*(MAXKEY-200804)  修复登录失败的提示消息，支持国际化
-	*(MAXKEY-200805)  密码@Deprecated从spring移到maxkey并去掉@Deprecated
-	*(MAXKEY-200806)  默认管理员登录名和密码admin/maxkey
-	*(MAXKEY-200807)  优化密码修改的过程，增加密码策略匹配及提示消息
-	*(MAXKEY-200808)  密码错误次数大于6次后，超过设定时间自动解锁
-	*(MAXKEY-200809)  修复初始化密码和密码过期修改后错误问题
-	*(MAXKEY-200810)  修复SHAREDSECRET为空令牌显示报错
-	*(MAXKEY-200811)  登录代码优化与整合
-	*(MAXKEY-200812)  优化开发集成指南
-	*(MAXKEY-200813)  删除冗余的文件和文件夹
-	*(MAXKEY-200814)  优化应用适配器支持
-	*(MAXKEY-200815)  Maven版本支持
-	*(MAXKEY-200816)  CAS REST-Protocol支持及客户端demo
-	*(MAXKEY-200817)  修复CAS返回参数为空时BASE64编码报错
-	*(MAXKEY-200818)  修复CAS SERVICE参数过长的不一致问题，截取与数据参数等长，然后比较
-	*(MAXKEY-200819)  CAS协议增加自定义参数回传
-	*(MAXKEY-200820)  CAS spring boot demo
-	*(MAXKEY-200821)  MGT管理访问找不到页面修复
-	*(MAXKEY-200822)  MGT管理密码修改增加自动密码生成
-	*(MAXKEY-200823)  优化TOKENBASED令牌内容的配置
-	*(MAXKEY-200824)  修复OAuth 2.0管理端的跳过确认提示不能修改
-	*(MAXKEY-200825)  应用管理修改时关闭修正
-	*(MAXKEY-200826)  MGT管理首页统计优化
-	*(MAXKEY-200827)  审计查询功能优化
-	*(MAXKEY-200828)  修复日期控件显示问题
-	*(MAXKEY-200829)  SCIM 2服务端功能优化
-	*(MAXKEY-200830)  注销时的跳转修复
-	*(MAXKEY-200831)  MySQL时间问题，参见https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html
-	*(MAXKEY-200832)  OAuth2 Password模式修复
-	*(MAXKEY-200833)  MGT管理SAML上传问题、IDP元数据链接优化、主键生成修复、元数据参数配置调整
-	*(MAXKEY-200834)  SAML 2添加多种NameId的支持，支持后缀的配置，NameId支持大小写转换
-	*(MAXKEY-200835)  MGT管理TOKENBASED令牌主键生成修复
-	*(MAXKEY-200836)  依赖jar升级
-						tomcat 9.0.38
-						passay 1.6.0
-						springBootVersion  2.3.4.RELEASE
-						springVersion   5.2.9.RELEASE
-						springSecurityVersion	5.4.0
-						guava  29.0-jre
-						joda-time 2.10.6
-						ehcache 3.9.0
-						alibaba druid 1.1.24
-						fastjson 1.2.73
-						jackson 2.11.2
-						tink 1.4.0
-						JustAuth 1.15.7
-						nimbus-jose-jwt 9.0.1
-						commons-lang3 3.11
-						commons-io 2.8.0
-						commons-codec 1.15
-						hibernate	6.1.5.Final
-						multiple-select-1.5.2
-	
-	
-MaxKey v 2.1.0 GA	2020/08/01
-	*(MAXKEY-200701)  官方网站升级，清晰简洁的界面，全新的页面导航
-	*(MAXKEY-200702) Mysql升级到8.0.21GA
-	*(MAXKEY-200703) MaxKey认证服务手机支持
-	*(MAXKEY-200704)   取消MaxKey认证系统双端口的启动，解决登录时session不一致问题
-	*(MAXKEY-200705)   强化密码验证的功能，适配多种密码结构
-	*(MAXKEY-200706) RBAC权限功能增强，支持多种资源类型
-	*(MAXKEY-200707) Connector连接器从主项目分离，专注与KAFKA的适配
-	*(MAXKEY-200708) SDK主项目分离，增加用户管理API适配功能
-	*(MAXKEY-200709)  依赖jar升级,消除非必要依赖
-	                spring 5.2.8.RELEASE
-					springBoot 2.3.2.RELEASE
-					MySql  8.0.21GA
-					
-					
-MaxKey v 2.0.0 GA	2020/07/13 
-	*(MAXKEY-200601) RBAC 基于角色的访问控制(Role-Based Access Control)支持
-	*(MAXKEY-200602) xml配置改为Spring annotation，提升模块间的组件化
-	*(MAXKEY-200603) 管理MGT界面优化及增加菜单图标，认证Maxkey主题切换支持-黑色经典|薄荷清新|激情紫荆
-	*(MAXKEY-200604) 修复用户组访问权限删除问题
-	*(MAXKEY-200605) Javascript验证及AJAX提交优化
-	*(MAXKEY-200606) DAO层整合
-	*(MAXKEY-200607) 社交账号关联调整及优化
-	*(MAXKEY-200608) 数据库表字段的注释修复
-	*(MAXKEY-200609) 官方网站优化
-	*(MAXKEY-200610) properties优化
-	*(MAXKEY-200611) 访问控制修复，访问重定向的问题修复
-	*(MAXKEY-200612) String类型数据转换JSON修复
-	*(MAXKEY-200613) OAuth2授权页面优化，显示目标系统图标和相关授权提示
-	*(MAXKEY-200614) OAuth2 secret修改后登陆错误修复
-	*(MAXKEY-200615) CAS单点登陆后进行验证空指针的异常处理，原因权限调整
-	*(MAXKEY-200616) LINUX操作系统支持
-	*(MAXKEY-200617) 修改测试域名为sso.maxkey.top
-	*(MAXKEY-200618) 修复更新应用时状态问题
-	*(MAXKEY-200619) REST API 机构和用户接口实现
-	*(MAXKEY-200620) 代码优化及命名调整
-	*(MAXKEY-200621) CAS协议增强
-	*(MAXKEY-200622) 机构变更时JSON序列化错误修复
-	*(MAXKEY-200623) 官方网站、SDK、连接器Connectors分离成独立项目
-	*(MAXKEY-200624) 依赖jar升级,消除非必要依赖
-	                spring 5.2.7.RELEASE
-					springBoot 2.3.1.RELEASE
-					springSecurity 5.3.2.RELEASE
-					jackson  2.11.0
-					log4j 2.13.3
-					font-awesome 4.7.0
-					tomcat-embed 9.0.35
-					mybatis 3.5.5
-					mybatis-jpa-extra 2.1
-					tomcat-embed 9.0.36
-					simple-http 1.0.2
-					JustAuth  1.15.6
-	
-MaxKey v 1.4.0 GA	2020/05/01  
-	*(MAXKEY-200501) 登录错误修复
-	*(MAXKEY-200502) 登录无验证码登录
-	*(MAXKEY-200503) 短信验证码SMS
-						腾讯云短信验证码
-						阿里云短信验证码
-						网易云信验证码
-	*(MAXKEY-200504) 找回密码，支持邮件找回和短信找回
-	*(MAXKEY-200505) 验证增强，增加算术验证码支持
-						config/applicationConfig.properties
-						#text字符验证码,arithmetic算术验证码
-						config.login.captcha.type=text
-	*(MAXKEY-200506) 修复新增用户时错误
-	*(MAXKEY-200507) 修复操作日志错误
-	*(MAXKEY-200508) 修改应用添加错误，增加不为空验证功能
-	*(MAXKEY-200509) 用户组增加不为空验证功能
-	*(MAXKEY-200510) 机构增加不为空验证功能,排序显示
-	*(MAXKEY-200511) 国际化操作提示
-	*(MAXKEY-200512) SAML2.0增加签名和摘要配置
-	*(MAXKEY-200513) 优化界面，强化提交表单验证功能
-	*(MAXKEY-200514) 官方地址域名解析www.maxkey.top
-	*(MAXKEY-200515) 组件版本升级
-						mybatis-jpa-extra v2.0
-						JustAuth 1.15.1
-						log4j 2.13.2
-						bootstrap 4.4.1
-						bootstrap-table v1.16.0
-						jquery 3.5.0
+MaxKey v 2.2.0 GA   2020/09/24
+    *(MAXKEY-200801)  官方网站内容调整，初步增加英文版支持，增加新闻、合作伙伴及与CAS等开源产品对比
+    *(MAXKEY-200802)  国际化I18N内容优化
+    *(MAXKEY-200803)  使用Passay增强密码策略，分离静态密码策略和动态密码策略
+    *(MAXKEY-200804)  修复登录失败的提示消息，支持国际化
+    *(MAXKEY-200805)  密码@Deprecated从spring移到maxkey并去掉@Deprecated
+    *(MAXKEY-200806)  默认管理员登录名和密码admin/maxkey
+    *(MAXKEY-200807)  优化密码修改的过程，增加密码策略匹配及提示消息
+    *(MAXKEY-200808)  密码错误次数大于6次后，超过设定时间自动解锁
+    *(MAXKEY-200809)  修复初始化密码和密码过期修改后错误问题
+    *(MAXKEY-200810)  修复SHAREDSECRET为空令牌显示报错
+    *(MAXKEY-200811)  登录代码优化与整合
+    *(MAXKEY-200812)  优化开发集成指南
+    *(MAXKEY-200813)  删除冗余的文件和文件夹
+    *(MAXKEY-200814)  优化应用适配器支持
+    *(MAXKEY-200815)  Maven版本支持
+    *(MAXKEY-200816)  CAS REST-Protocol支持及客户端demo
+    *(MAXKEY-200817)  修复CAS返回参数为空时BASE64编码报错
+    *(MAXKEY-200818)  修复CAS SERVICE参数过长的不一致问题，截取与数据参数等长，然后比较
+    *(MAXKEY-200819)  CAS协议增加自定义参数回传
+    *(MAXKEY-200820)  CAS spring boot demo
+    *(MAXKEY-200821)  MGT管理访问找不到页面修复
+    *(MAXKEY-200822)  MGT管理密码修改增加自动密码生成
+    *(MAXKEY-200823)  优化TOKENBASED令牌内容的配置
+    *(MAXKEY-200824)  修复OAuth 2.0管理端的跳过确认提示不能修改
+    *(MAXKEY-200825)  应用管理修改时关闭修正
+    *(MAXKEY-200826)  MGT管理首页统计优化
+    *(MAXKEY-200827)  审计查询功能优化
+    *(MAXKEY-200828)  修复日期控件显示问题
+    *(MAXKEY-200829)  SCIM 2服务端功能优化
+    *(MAXKEY-200830)  注销时的跳转修复
+    *(MAXKEY-200831)  MySQL时间问题，参见https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html
+    *(MAXKEY-200832)  OAuth2 Password模式修复
+    *(MAXKEY-200833)  MGT管理SAML上传问题、IDP元数据链接优化、主键生成修复、元数据参数配置调整
+    *(MAXKEY-200834)  SAML 2添加多种NameId的支持，支持后缀的配置，NameId支持大小写转换
+    *(MAXKEY-200835)  MGT管理TOKENBASED令牌主键生成修复
+    *(MAXKEY-200836)  依赖jar升级
+                        tomcat 9.0.38
+                        passay 1.6.0
+                        springBootVersion  2.3.4.RELEASE
+                        springVersion   5.2.9.RELEASE
+                        springSecurityVersion   5.4.0
+                        guava  29.0-jre
+                        joda-time 2.10.6
+                        ehcache 3.9.0
+                        alibaba druid 1.1.24
+                        fastjson 1.2.73
+                        jackson 2.11.2
+                        tink 1.4.0
+                        JustAuth 1.15.7
+                        nimbus-jose-jwt 9.0.1
+                        commons-lang3 3.11
+                        commons-io 2.8.0
+                        commons-codec 1.15
+                        hibernate   6.1.5.Final
+                        multiple-select-1.5.2
+    
+    
+MaxKey v 2.1.0 GA   2020/08/01
+    *(MAXKEY-200701)  官方网站升级，清晰简洁的界面，全新的页面导航
+    *(MAXKEY-200702) Mysql升级到8.0.21GA
+    *(MAXKEY-200703) MaxKey认证服务手机支持
+    *(MAXKEY-200704)   取消MaxKey认证系统双端口的启动，解决登录时session不一致问题
+    *(MAXKEY-200705)   强化密码验证的功能，适配多种密码结构
+    *(MAXKEY-200706) RBAC权限功能增强，支持多种资源类型
+    *(MAXKEY-200707) Connector连接器从主项目分离，专注与KAFKA的适配
+    *(MAXKEY-200708) SDK主项目分离，增加用户管理API适配功能
+    *(MAXKEY-200709)  依赖jar升级,消除非必要依赖
+                    spring 5.2.8.RELEASE
+                    springBoot 2.3.2.RELEASE
+                    MySql  8.0.21GA
+                    
+                    
+MaxKey v 2.0.0 GA   2020/07/13 
+    *(MAXKEY-200601) RBAC 基于角色的访问控制(Role-Based Access Control)支持
+    *(MAXKEY-200602) xml配置改为Spring annotation，提升模块间的组件化
+    *(MAXKEY-200603) 管理MGT界面优化及增加菜单图标，认证Maxkey主题切换支持-黑色经典|薄荷清新|激情紫荆
+    *(MAXKEY-200604) 修复用户组访问权限删除问题
+    *(MAXKEY-200605) Javascript验证及AJAX提交优化
+    *(MAXKEY-200606) DAO层整合
+    *(MAXKEY-200607) 社交账号关联调整及优化
+    *(MAXKEY-200608) 数据库表字段的注释修复
+    *(MAXKEY-200609) 官方网站优化
+    *(MAXKEY-200610) properties优化
+    *(MAXKEY-200611) 访问控制修复，访问重定向的问题修复
+    *(MAXKEY-200612) String类型数据转换JSON修复
+    *(MAXKEY-200613) OAuth2授权页面优化，显示目标系统图标和相关授权提示
+    *(MAXKEY-200614) OAuth2 secret修改后登陆错误修复
+    *(MAXKEY-200615) CAS单点登陆后进行验证空指针的异常处理，原因权限调整
+    *(MAXKEY-200616) LINUX操作系统支持
+    *(MAXKEY-200617) 修改测试域名为sso.maxkey.top
+    *(MAXKEY-200618) 修复更新应用时状态问题
+    *(MAXKEY-200619) REST API 机构和用户接口实现
+    *(MAXKEY-200620) 代码优化及命名调整
+    *(MAXKEY-200621) CAS协议增强
+    *(MAXKEY-200622) 机构变更时JSON序列化错误修复
+    *(MAXKEY-200623) 官方网站、SDK、连接器Connectors分离成独立项目
+    *(MAXKEY-200624) 依赖jar升级,消除非必要依赖
+                    spring 5.2.7.RELEASE
+                    springBoot 2.3.1.RELEASE
+                    springSecurity 5.3.2.RELEASE
+                    jackson  2.11.0
+                    log4j 2.13.3
+                    font-awesome 4.7.0
+                    tomcat-embed 9.0.35
+                    mybatis 3.5.5
+                    mybatis-jpa-extra 2.1
+                    tomcat-embed 9.0.36
+                    simple-http 1.0.2
+                    JustAuth  1.15.6
+    
+MaxKey v 1.4.0 GA   2020/05/01  
+    *(MAXKEY-200501) 登录错误修复
+    *(MAXKEY-200502) 登录无验证码登录
+    *(MAXKEY-200503) 短信验证码SMS
+                        腾讯云短信验证码
+                        阿里云短信验证码
+                        网易云信验证码
+    *(MAXKEY-200504) 找回密码，支持邮件找回和短信找回
+    *(MAXKEY-200505) 验证增强，增加算术验证码支持
+                        config/applicationConfig.properties
+                        #text字符验证码,arithmetic算术验证码
+                        config.login.captcha.type=text
+    *(MAXKEY-200506) 修复新增用户时错误
+    *(MAXKEY-200507) 修复操作日志错误
+    *(MAXKEY-200508) 修改应用添加错误，增加不为空验证功能
+    *(MAXKEY-200509) 用户组增加不为空验证功能
+    *(MAXKEY-200510) 机构增加不为空验证功能,排序显示
+    *(MAXKEY-200511) 国际化操作提示
+    *(MAXKEY-200512) SAML2.0增加签名和摘要配置
+    *(MAXKEY-200513) 优化界面，强化提交表单验证功能
+    *(MAXKEY-200514) 官方地址域名解析www.maxkey.top
+    *(MAXKEY-200515) 组件版本升级
+                        mybatis-jpa-extra v2.0
+                        JustAuth 1.15.1
+                        log4j 2.13.2
+                        bootstrap 4.4.1
+                        bootstrap-table v1.16.0
+                        jquery 3.5.0
 
 MaxKey v 1.3.0 GA   2020/04/04  
-	*(MAXKEY-200401) 记住登录修复，RememberMe fix
-	*(MAXKEY-200402) 应用账号配置修复
-	*(MAXKEY-200403) 内部缓存使用改用ehcache，同时支持redis
-	*(MAXKEY-200404) 社交账号登录使用JustAuth 1.14.0，支持更多的第三方社交集成
-	*(MAXKEY-200405) 代码使用checkstyle
-	*(MAXKEY-200406) 完善gradle编译脚本，并升级到gradle-6.0
-	*(MAXKEY-200407) 依赖jar升级,消除非必要依赖
-						spring->5.2.5.RELEASE,
-						springBoot->2.2.6.RELEASE
-						mybatis->3.5.4
-						log4j->2.13.1
-						httpcomponents->4.5.12
-	*(MAXKEY-200408) 其他漏洞修正
+    *(MAXKEY-200401) 记住登录修复，RememberMe fix
+    *(MAXKEY-200402) 应用账号配置修复
+    *(MAXKEY-200403) 内部缓存使用改用ehcache，同时支持redis
+    *(MAXKEY-200404) 社交账号登录使用JustAuth 1.14.0，支持更多的第三方社交集成
+    *(MAXKEY-200405) 代码使用checkstyle
+    *(MAXKEY-200406) 完善gradle编译脚本，并升级到gradle-6.0
+    *(MAXKEY-200407) 依赖jar升级,消除非必要依赖
+                        spring->5.2.5.RELEASE,
+                        springBoot->2.2.6.RELEASE
+                        mybatis->3.5.4
+                        log4j->2.13.1
+                        httpcomponents->4.5.12
+    *(MAXKEY-200408) 其他漏洞修正
 
 MaxKey v 1.2.1 GA   2020/02/29   
-	*(MAXKEY-200201) SAML 2.0 optimization,support 阿里云、腾讯云 SSO
-	*(MAXKEY-200202) maxkey-mgt main report
-	*(MAXKEY-200203) APPS ExtraAttr
-	*(MAXKEY-200204) fix ui bugs
-	*(MAXKEY-200205) remove maxkey-jose-jwt
-	*(MAXKEY-200206) dep com.nimbusds nimbus-jose-jwt
-	*(MAXKEY-200207) dep net.jcip jcip-annotations
-	*(MAXKEY-200208) dep net.minidev json-smart
-	*(MAXKEY-200209) dep net.minidev asm 
-	
+    *(MAXKEY-200201) SAML 2.0 optimization,support 阿里云、腾讯云 SSO
+    *(MAXKEY-200202) maxkey-mgt main report
+    *(MAXKEY-200203) APPS ExtraAttr
+    *(MAXKEY-200204) fix ui bugs
+    *(MAXKEY-200205) remove maxkey-jose-jwt
+    *(MAXKEY-200206) dep com.nimbusds nimbus-jose-jwt
+    *(MAXKEY-200207) dep net.jcip jcip-annotations
+    *(MAXKEY-200208) dep net.minidev json-smart
+    *(MAXKEY-200209) dep net.minidev asm 
+    
 MaxKey v 1.2.0 GA   2020/01/18 
-	*(MAXKEY-200101) 升级到bootstrap-4.3.1
-	*(MAXKEY-200102) 升级表格为Bootstrap Table 1.14.2
-	*(MAXKEY-200103) 升级js树插件到zTree-v3.5.40
-	*(MAXKEY-200104) 菜单组件升级为metisMenu-v3.0.4
-	*(MAXKEY-200105) 修复系统错误
-	*(MAXKEY-200105) 修复日志的输出
-	
+    *(MAXKEY-200101) 升级到bootstrap-4.3.1
+    *(MAXKEY-200102) 升级表格为Bootstrap Table 1.14.2
+    *(MAXKEY-200103) 升级js树插件到zTree-v3.5.40
+    *(MAXKEY-200104) 菜单组件升级为metisMenu-v3.0.4
+    *(MAXKEY-200105) 修复系统错误
+    *(MAXKEY-200105) 修复日志的输出
+    
 MaxKey v 1.0 GA     2019/12/06  
-	*(MAXKEY-191201) 基于SpringBoot重新构建1.0 GA 
+    *(MAXKEY-191201) 基于SpringBoot重新构建1.0 GA 

@@ -564,3 +564,7 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 	font-weight: bold;
 }
 
+.error{
+    color: red;
+    text-align: center;
+}
