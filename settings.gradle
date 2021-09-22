@@ -44,5 +44,5 @@ include 'maxkey-webs:maxkey-web-maxkey'
 include 'maxkey-webs:maxkey-web-mgt'
 //maxkey-boot-monitor
 include 'maxkey-webs:maxkey-boot-monitor'
-
-//#include 'maxkey-gataway'
+//maxkey-gataway
+include 'maxkey-gataway'
