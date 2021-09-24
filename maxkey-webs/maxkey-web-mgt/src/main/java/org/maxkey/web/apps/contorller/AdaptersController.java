@@ -139,7 +139,7 @@ public class AdaptersController {
 	public Message delete(@ModelAttribute("appsAdapter") AppsAdapters appsAdapter) {
 		_logger.debug("-delete  appsAdapter :" + appsAdapter);
 		
-		if (appsAdaptersService.remove(appsAdapter.getId())) {
+		if (appsAdaptersService.batchDelete(appsAdapter.getId())) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

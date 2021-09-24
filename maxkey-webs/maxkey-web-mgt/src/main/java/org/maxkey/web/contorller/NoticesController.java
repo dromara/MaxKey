@@ -129,7 +129,7 @@ public class NoticesController {
 	public Message delete(@ModelAttribute("notice")Notices notice) {
 		_logger.debug("-delete  notice :" + notice);
 		
-		if (noticesService.remove(notice.getId())) {
+		if (noticesService.batchDelete(notice.getId())) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

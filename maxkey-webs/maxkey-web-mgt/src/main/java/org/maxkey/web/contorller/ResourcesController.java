@@ -142,7 +142,7 @@ public class ResourcesController {
 	public Message delete(@ModelAttribute("resource") Resources resource) {
 		_logger.debug("-delete  resource :" + resource);
 		
-		if (resourcesService.remove(resource.getId())) {
+		if (resourcesService.batchDelete(resource.getId())) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

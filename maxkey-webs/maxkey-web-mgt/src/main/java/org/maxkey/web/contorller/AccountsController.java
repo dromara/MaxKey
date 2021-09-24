@@ -135,10 +135,7 @@ public class AccountsController {
 		
 		_logger.debug("-delete  AppAccounts :" + appAccounts);
 		
-		String[] appAccountsds=appAccounts.getId().split(",");
-		for(int i=0;i<appAccountsds.length;i++){
-			accountsService.remove(appAccountsds[i]);
-		}
+		accountsService.batchDelete(appAccounts.getId());
 		
 		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 		

@@ -102,8 +102,7 @@ public class LoginSessionController {
             for(String sessionId : StringUtils.string2List(ids, ",")) {
                 _logger.trace("terminate session Id {} ",sessionId);
                 if(currentUserSessionId.contains(sessionId)) {
-                    //skip current session
-                    continue;
+                    continue;//skip current session
                 }
                 UserInfo userInfo = WebContext.getUserInfo();
                 String lastLogoffTime = DateUtils.formatDateTime(new Date());

@@ -146,18 +146,11 @@ public class GroupMemberController {
 		if (groupMember == null || groupMember.getId() == null) {
 			return  new Message("传入参数为空",MessageType.error);
 		}
-		boolean result = true;
-		String groupMemberIds = groupMember.getId();
-		if (groupMemberIds != null) {
-			String[] arrMemberIds = groupMemberIds.split(",");
-			for (int i = 0; i < arrMemberIds.length; i++) {
-				groupMemberService.remove(arrMemberIds[i]);
-			}
-			if(!result) {
-				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
-			}
-			
+		
+		if(groupMemberService.batchDelete(groupMember.getId())) {
+		    return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
 		}
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
+		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);	
+		
 	}
 }

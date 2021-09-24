@@ -222,7 +222,7 @@ public class UserInfoController {
 	@RequestMapping(value="/delete")  
 	public Message deleteUsersById(@RequestParam("id") String id) {
 		_logger.debug(id);
-		if(userInfoService.batchDelete(StringUtils.string2List(id, ","))) {
+		if(userInfoService.batchDelete(id)) {
 			//provisioningPrepare.prepare(userInfo, OPERATEACTION.DELETE_ACTION);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 		} else {

@@ -40,6 +40,7 @@ import org.opensaml.common.binding.security.IssueInstantRule;
 import org.opensaml.common.binding.security.MessageReplayRule;
 import org.opensaml.util.storage.MapBasedStorageService;
 import org.opensaml.util.storage.ReplayCache;
+import org.opensaml.util.storage.ReplayCacheEntry;
 import org.opensaml.xml.ConfigurationException;
 import org.opensaml.xml.parse.BasicParserPool;
 import org.slf4j.Logger;
@@ -195,7 +196,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      * @return replayCache
      */
     @Bean(name = "replayCache")
-    public ReplayCache replayCache(MapBasedStorageService mapBasedStorageService,
+    public ReplayCache replayCache(MapBasedStorageService<String, ReplayCacheEntry> mapBasedStorageService,
             @Value("${maxkey.saml.v20.replay.cache.life.in.millis}") long duration) {
         ReplayCache replayCache = new ReplayCache(mapBasedStorageService,duration);
         return replayCache;

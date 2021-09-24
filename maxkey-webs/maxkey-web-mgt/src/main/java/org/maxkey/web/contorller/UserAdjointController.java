@@ -134,9 +134,8 @@ public class UserAdjointController {
 	public Message delete(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
 		_logger.debug("-delete  group :" + userInfoAdjoint);
 		
-		if (userInfoAdjointService.remove(userInfoAdjoint.getId())) {
+		if (userInfoAdjointService.batchDelete(userInfoAdjoint.getId())) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
-			
 		} else {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}

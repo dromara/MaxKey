@@ -51,7 +51,7 @@ public class ScimOrganizationController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public MappingJacksonValue getOrganization(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
-        Organization user = null;
+        //Organization user = null;
         return null;
     }
 

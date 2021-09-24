@@ -185,7 +185,7 @@ public class OrganizationsController {
   @RequestMapping({"/delete"})
   public Message delete(@ModelAttribute("org") Organizations org) {
     _logger.debug("-delete  organization :" + org);
-    if (this.organizationsService.remove(org.getId())) {
+    if (this.organizationsService.batchDelete(org.getId())) {
       return new Message(WebContext.getI18nValue("message.action.delete.success"), MessageType.success);
     }
     

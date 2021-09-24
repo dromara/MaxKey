@@ -127,22 +127,12 @@ public class GroupPrivilegesController {
 		if (groupApp == null || groupApp.getId() == null) {
 			return  new Message("传入参数为空",MessageType.error);
 		}
-		String privilegesIds = groupApp.getId();
-		
-		
-		boolean result = true;
-		if (privilegesIds != null) {
-			String[] arrPrivilegesIds = privilegesIds.split(",");
-			
-			for (int i = 0; i < arrPrivilegesIds.length; i++) {
-				result = groupPrivilegesService.remove(arrPrivilegesIds[i]);
-			}
-			if(!result) {
-				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
-			}
-			
+	
+		if(groupPrivilegesService.batchDelete(groupApp.getId())) {
+		    return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
 		}
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
+		
+		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
 	}
 	
 	

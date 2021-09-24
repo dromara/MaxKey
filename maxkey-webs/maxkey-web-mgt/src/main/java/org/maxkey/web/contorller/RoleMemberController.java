@@ -133,18 +133,10 @@ public class RoleMemberController {
 		if (roleMember == null || roleMember.getId() == null) {
 			return  new Message("传入参数为空",MessageType.error);
 		}
-		boolean result = true;
-		String roleMemberIds = roleMember.getId();
-		if (roleMemberIds != null) {
-			String[] arrMemberIds = roleMemberIds.split(",");
-			for (int i = 0; i < arrMemberIds.length; i++) {
-				roleMemberService.remove(arrMemberIds[i]);
-			}
-			if(!result) {
-				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
-			}
-			
+		
+		if(roleMemberService.batchDelete(roleMember.getId())) {
+		    return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
 		}
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
+		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
 	}
 }
