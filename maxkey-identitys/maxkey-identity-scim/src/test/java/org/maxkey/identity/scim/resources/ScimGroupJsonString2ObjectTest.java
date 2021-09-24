@@ -17,10 +17,6 @@
 
 package org.maxkey.identity.scim.resources;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.maxkey.pretty.impl.JsonPretty;
 import org.maxkey.util.JsonUtils;
 

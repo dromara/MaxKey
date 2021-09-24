@@ -52,6 +52,7 @@ public class SwaggerConfig {
     }
     
     //    配置swagger信息
+    @SuppressWarnings(value = { })
     private ApiInfo apiInfo() {
         Contact contact = new Contact(
                                 "MaxKey.top", 
@@ -66,6 +67,6 @@ public class SwaggerConfig {
                 contact,
                 "Apache License, Version 2.0",
                 "http://www.apache.org/licenses/LICENSE-2.0",
-                new ArrayList());
+                new ArrayList<>());
     }
 }

@@ -22,8 +22,6 @@ package org.maxkey.cache;
 
 import java.util.Random;
 
-import org.maxkey.cache.AbstractCache;
-
 /**
  * @author amarsoft
  *

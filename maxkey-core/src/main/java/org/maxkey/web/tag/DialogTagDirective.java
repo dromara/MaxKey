@@ -22,7 +22,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.maxkey.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import freemarker.core.Environment;
@@ -53,6 +52,7 @@ public class DialogTagDirective implements TemplateDirectiveModel {
 	private String text;
 	
 	@Override
+	@SuppressWarnings("rawtypes")
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
 			throws TemplateException, IOException {
 		

@@ -20,10 +20,7 @@ package org.maxkey.web.tag;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.maxkey.util.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -39,10 +36,9 @@ import freemarker.template.TemplateModel;
 
 @FreemarkerTag("date")
 public class DateTagDirective implements TemplateDirectiveModel {
-	@Autowired
-    private HttpServletRequest request;
-	
+
 	@Override
+	@SuppressWarnings("rawtypes")
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
 			throws TemplateException, IOException {
 		String dateValue = params.get("value").toString();

@@ -18,18 +18,12 @@
 package org.maxkey.web.tag;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.support.RequestContext;
-import org.springframework.web.servlet.tags.RequestContextAwareTag;
-
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
@@ -51,6 +45,7 @@ public class RedirectTagDirective implements TemplateDirectiveModel {
 	private String basePath = null;
 	
 	@Override
+	@SuppressWarnings("rawtypes")
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
 			throws TemplateException, IOException {
 			String location=params.get("url").toString();

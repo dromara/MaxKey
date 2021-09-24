@@ -107,6 +107,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
     @Bean(name = "authnResponseGenerator")
     public AuthnResponseGenerator authnResponseGenerator(TimeService timeService,IDService idService,
             @Value("${maxkey.saml.v20.idp.issuer}") String issuerEntityName) {
+        _logger.debug("issuerEntityName " + issuerEntityName);
         AuthnResponseGenerator generator = new AuthnResponseGenerator(issuerEntityName,timeService,idService);
         return generator;
     }
@@ -163,6 +164,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      * MapBasedStorageService.
      * @return mapBasedStorageService
      */
+    @SuppressWarnings("rawtypes")
     @Bean(name = "mapBasedStorageService")
     public MapBasedStorageService mapBasedStorageService() {
         MapBasedStorageService mapBasedStorageService = new MapBasedStorageService();
@@ -175,6 +177,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      * @throws IOException 
      * @throws VelocityException 
      */
+    @SuppressWarnings({ "deprecation"})
     @Bean(name = "velocityEngine")
     public VelocityEngine velocityEngine() throws VelocityException, IOException {
         VelocityEngineFactoryBean factory = new VelocityEngineFactoryBean();

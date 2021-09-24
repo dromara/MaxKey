@@ -94,12 +94,8 @@ public class FormBasedDetailsServiceTest {
 		
 		_logger.info("queryPageResults...");
 		AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
-		 //student.setId("af04d610-6092-481e-9558-30bd63ef783c");
-		// student.setStdGender("M");
-		 //student.setStdMajor(政治");
-		 //student.setPageResults(10);
-		 //student.setPage(2);
-		 //_logger.info("queryPageResults "+service.queryPageResults(formBasedDetails));
+		 formBasedDetails.setPageNumber(2);
+		 _logger.info("queryPageResults "+service.queryPageResults(formBasedDetails));
 	}
 	
 	@Test
@@ -107,12 +103,10 @@ public class FormBasedDetailsServiceTest {
 
 		_logger.info("queryPageResults by mapperId...");
 		 AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
-		// student.setStdGender("M");
-		 //student.setStdMajor(政治");
-		// student.setPageResults(10);
-		// student.setPage(2);
+
+		 formBasedDetails.setPageNumber(2);
 		 
-		 //_logger.info("queryPageResults by mapperId "+service.queryPageResults("queryPageResults1",formBasedDetails));
+		 _logger.info("queryPageResults by mapperId "+service.queryPageResults("queryPageResults1",formBasedDetails));
 		 
 	}
 	

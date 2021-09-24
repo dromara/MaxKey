@@ -41,7 +41,7 @@ public class TimeBasedOTPTest {
     	
     	 byte[]byteseed= Base32Utils.decode("DCGAGPE2BCDBD6D3FG4NX2QGACVIHXP4");//HexUtils.hex2Bytes( "a1270caecf007f2303cc9db12597a9694ff541aa");
          String seed=Base32Utils.encode(byteseed);
-         
+         System.out.println(seed);
          String hexString=Hex.encodeHexString(byteseed);
          //String hexString=HexUtils.bytes2HexString(byteseed);
          System.out.println(hexString);

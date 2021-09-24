@@ -31,7 +31,7 @@ package org.maxkey.authz.cas.endpoint.ticket;
  * </p>
  */
 public interface Service {
-	 boolean getId();
+	 String getId();
 
     boolean matches(Service service);
 }

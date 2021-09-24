@@ -45,10 +45,10 @@ public class HmacOTP {
             return generateOTP(seed, count, digits);
         } catch (InvalidKeyException e) {
             e.printStackTrace();
-            LoggerFactory.getLogger(HmacOTP.class).error(e.getMessage());
+            logger.error(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            LoggerFactory.getLogger(HmacOTP.class).error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return "";
     }

@@ -43,20 +43,22 @@ import java.util.Date;
 public class RedisTokenStore implements TokenStore {
 	static final Logger _logger = LoggerFactory.getLogger(RedisTokenStore.class);
 	
-	private static final String ACCESS = "REDIS_OAUTH_V20_ACCESS_";
-	private static final String AUTH_TO_ACCESS = "REDIS_OAUTH_V20_AUTH_TO_ACCESS_";
-	private static final String AUTH = "REDIS_OAUTH_V20_AUTH_";
-	private static final String REFRESH_AUTH = "REDIS_OAUTH_V20_REFRESH_AUTH_";
-	private static final String ACCESS_TO_REFRESH = "REDIS_OAUTH_V20_ACCESS_TO_REFRESH_";
-	private static final String REFRESH = "REDIS_OAUTH_V20_REFRESH_";
-	private static final String REFRESH_TO_ACCESS = "REDIS_OAUTH_V20_REFRESH_TO_ACCESS_";
-	private static final String CLIENT_ID_TO_ACCESS = "REDIS_OAUTH_V20_CLIENT_ID_TO_ACCESS_";
-	private static final String UNAME_TO_ACCESS = "REDIS_OAUTH_V20_UNAME_TO_ACCESS_";
+	private static final String PREFIX                 = "REDIS_OAUTH_V20_";
+	
+	private static final String ACCESS                 = PREFIX + "ACCESS_";
+	private static final String AUTH_TO_ACCESS         = PREFIX + "AUTH_TO_ACCESS_";
+	private static final String AUTH                   = PREFIX + "AUTH_";
+	private static final String REFRESH_AUTH           = PREFIX + "REFRESH_AUTH_";
+	private static final String ACCESS_TO_REFRESH      = PREFIX + "ACCESS_TO_REFRESH_";
+	private static final String REFRESH                = PREFIX + "REFRESH_";
+	private static final String REFRESH_TO_ACCESS      = PREFIX + "REFRESH_TO_ACCESS_";
+	private static final String CLIENT_ID_TO_ACCESS    = PREFIX + "CLIENT_ID_TO_ACCESS_";
+	private static final String UNAME_TO_ACCESS        = PREFIX + "UNAME_TO_ACCESS_";
 
 	private final RedisConnectionFactory connectionFactory;
 	private AuthenticationKeyGenerator authenticationKeyGenerator = new DefaultAuthenticationKeyGenerator();
 	
-	private String prefix = "";
+	
 
 	public RedisTokenStore(RedisConnectionFactory connectionFactory) {
 		this.connectionFactory = connectionFactory;
@@ -64,11 +66,6 @@ public class RedisTokenStore implements TokenStore {
 
 	public void setAuthenticationKeyGenerator(AuthenticationKeyGenerator authenticationKeyGenerator) {
 		this.authenticationKeyGenerator = authenticationKeyGenerator;
-	}
-
-	
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
 	}
 
 	private RedisConnection getConnection() {

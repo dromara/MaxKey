@@ -62,6 +62,7 @@ public class ExtendApiZentaoAdapter extends AbstractAuthorizeAdapter {
 		if(details.getIsExtendAttr()==1){
 			extraAttrs=new ExtraAttrs(details.getExtendAttr());
 		}
+		_logger.trace("Extra Attrs " + extraAttrs);
 		String code = details.getPrincipal();
 		String key   = details.getCredentials();
 		String time  = ""+Instant.now().getEpochSecond();

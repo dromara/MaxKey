@@ -20,7 +20,6 @@ package org.maxkey.entity.xml;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 /**
  * xml can not include array , MultipartFile

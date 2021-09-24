@@ -61,7 +61,7 @@ public class RedisConnectionFactory {
         /**
          * 默认过期时间
          */
-        public static int DEFAULT_LIFETIME = 600;
+        public static long DEFAULT_LIFETIME = 600;
     }
 
     JedisPoolConfig poolConfig;

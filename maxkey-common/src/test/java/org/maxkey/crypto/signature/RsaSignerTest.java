@@ -24,7 +24,6 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.maxkey.crypto.KeyPairUtil;
-import org.maxkey.crypto.signature.RsaSigner;
 
 
 public final class RsaSignerTest  {

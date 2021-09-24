@@ -18,7 +18,6 @@
 package org.maxkey.crypto;
 
 import org.junit.Test;
-import org.maxkey.crypto.Base64Utils;
 
 public class Base64UtilsTest {
 

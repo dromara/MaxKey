@@ -59,7 +59,8 @@ public class SocialSignOnProviderService{
 		}else if(provider.equalsIgnoreCase("qq")) {
 			authRequest = new AuthQqRequest(authConfig);
 		}else if(provider.equalsIgnoreCase("Alipay")) {
-			authRequest = new AuthAlipayRequest(authConfig);
+		    String alipayPublicKey = "";
+			authRequest = new AuthAlipayRequest(authConfig,alipayPublicKey);
 		}else if(provider.equalsIgnoreCase("Twitter")) {
 			authRequest = new AuthTwitterRequest(authConfig);
 		}else if(provider.equalsIgnoreCase("google")) {

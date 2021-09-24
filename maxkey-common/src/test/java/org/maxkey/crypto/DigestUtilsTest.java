@@ -18,10 +18,7 @@
 package org.maxkey.crypto;
 
 import java.time.Instant;
-import java.util.Date;
-
 import org.junit.Test;
-import org.maxkey.crypto.DigestUtils;
 
 public class DigestUtilsTest {
 /*

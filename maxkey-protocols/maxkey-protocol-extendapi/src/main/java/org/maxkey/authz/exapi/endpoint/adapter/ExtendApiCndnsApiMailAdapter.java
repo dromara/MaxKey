@@ -64,7 +64,8 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
 		return null;
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
+    @Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
 		HttpsTrusts.beforeConnection();
 		

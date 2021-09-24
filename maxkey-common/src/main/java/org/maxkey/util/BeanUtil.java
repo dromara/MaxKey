@@ -167,7 +167,8 @@ public class BeanUtil {
 		return Instance.newInstance(className, args);
 	}
 	
-	public static <T> T newInstance(Class<T> cls, Object[] args) {
+	@SuppressWarnings("unchecked")
+    public static <T> T newInstance(Class<T> cls, Object[] args) {
 		return (T) Instance.newInstance(cls, args);
 	}
 	public static Object invokeMethod(Object bean, String methodName, Object[] args)
@@ -201,7 +202,7 @@ public class BeanUtil {
 		Map<String, String> map = new HashMap<String, String>();
 		for (int i = 0; i < flds.length; i++) {
 			String name = flds[i].getName();
-			map.put(flds[i].getName(), flds[i].getType().getName());
+			map.put(name, flds[i].getType().getName());
 		}
 		return map;
 	}
@@ -311,10 +312,10 @@ public class BeanUtil {
 		}
 	}
 	
-	public static Class[] getMethodParameterTypes(Class<?> c,String methodName){
+	public static Class<?>[] getMethodParameterTypes(Class<?> c,String methodName){
 		Method []methods=c.getMethods();
 		for (Method method : methods) {
-		  Class[] parameterTypes = method.getParameterTypes();
+		  Class<?>[] parameterTypes = method.getParameterTypes();
 		  if(method.getName().equals(methodName)){
 			  return parameterTypes;
 		  }

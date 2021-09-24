@@ -50,7 +50,7 @@ public class ScimUserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public MappingJacksonValue getUser(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
-        User user = null;
+        //User user = null;
         return null;
     }
 
@@ -58,7 +58,7 @@ public class ScimUserController {
     public ResponseEntity<MappingJacksonValue> create(@RequestBody  User user,
                                                       @RequestParam(required = false) String attributes,
                                                       UriComponentsBuilder builder) throws IOException {
-        User createdUser = null;
+        //User createdUser = null;
         return null;
     }
 
@@ -67,7 +67,7 @@ public class ScimUserController {
                                                        @RequestBody User user,
                                                        @RequestParam(required = false) String attributes)
             throws IOException {
-        User createdUser = null;
+        //User createdUser = null;
         return null;
     }
 
@@ -85,7 +85,7 @@ public class ScimUserController {
 
     @RequestMapping(value = "/.search", method = RequestMethod.POST)
     public MappingJacksonValue searchWithPost(@RequestParam Map<String, String> requestParameters) {
-        ScimSearchResult<User> scimSearchResult = null;
+        //ScimSearchResult<User> scimSearchResult = null;
         /*
                 requestParameters.get("filter"),
                 requestParameters.get("sortBy"),
@@ -93,7 +93,7 @@ public class ScimUserController {
                 Integer.parseInt(requestParameters.getOrDefault("count", "" + ScimServiceProviderConfigController.MAX_RESULTS)),
                 Integer.parseInt(requestParameters.getOrDefault("startIndex", "1")); // scim default
 */
-        String attributes = (requestParameters.containsKey("attributes") ? requestParameters.get("attributes") : "");
+        //String attributes = (requestParameters.containsKey("attributes") ? requestParameters.get("attributes") : "");
         return null;
     }
 }

@@ -20,7 +20,6 @@ package org.maxkey.authz.oauth2.provider.code;
 import java.util.UUID;
 
 import org.maxkey.authz.oauth2.common.exceptions.InvalidGrantException;
-import org.maxkey.authz.oauth2.common.util.RandomValueStringGenerator;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 
 /**
@@ -32,7 +31,7 @@ import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 public abstract class RandomValueAuthorizationCodeServices implements AuthorizationCodeServices {
 
 	//default Random code Generator
-	private RandomValueStringGenerator generator = new RandomValueStringGenerator();
+	//private RandomValueStringGenerator generator = new RandomValueStringGenerator();
 
 	protected abstract void store(String code, OAuth2Authentication authentication);
 

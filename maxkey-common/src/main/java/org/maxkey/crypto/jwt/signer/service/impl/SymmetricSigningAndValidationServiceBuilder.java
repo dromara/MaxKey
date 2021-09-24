@@ -30,9 +30,6 @@ import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
 import com.google.common.collect.ImmutableMap;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.KeyUse;
-import com.nimbusds.jose.jwk.OctetSequenceKey;
-import com.nimbusds.jose.util.Base64URL;
 
 /**
  * @author Crystal.Sea

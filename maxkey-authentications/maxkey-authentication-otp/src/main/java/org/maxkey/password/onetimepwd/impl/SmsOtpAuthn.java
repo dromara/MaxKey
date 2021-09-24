@@ -20,13 +20,10 @@ package org.maxkey.password.onetimepwd.impl;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 public class SmsOtpAuthn extends AbstractOtpAuthn {
     private static final  Logger logger = LoggerFactory.getLogger(SmsOtpAuthn.class);

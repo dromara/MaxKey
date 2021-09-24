@@ -18,7 +18,6 @@
 package org.maxkey.util;
 
 import java.util.HashMap;
-import org.maxkey.util.ObjectTransformer;
 
 public class ObjectTransformerTest {
 

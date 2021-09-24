@@ -33,8 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractWebApplicationService  {
 
-    private static final long serialVersionUID = 610105280927740076L;
-
     /** Logger instance. **/
     protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractWebApplicationService.class);
 

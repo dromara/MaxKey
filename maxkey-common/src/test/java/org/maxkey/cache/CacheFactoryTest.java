@@ -22,11 +22,8 @@ package org.maxkey.cache;
 
 import java.util.ArrayList;
 
-import org.maxkey.cache.AbstractCache;
-import org.maxkey.cache.CacheFactory;
-
 /**
- * @author amarsoft
+ * @author Crystal.sea
  *
  */
 public class CacheFactoryTest {

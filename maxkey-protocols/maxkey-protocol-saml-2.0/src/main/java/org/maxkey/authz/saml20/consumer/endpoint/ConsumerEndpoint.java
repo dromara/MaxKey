@@ -35,6 +35,7 @@ import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.authz.saml.service.IDService;
 import org.maxkey.authz.saml.service.TimeService;
+import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.binding.ExtractBindingAdapter;
 import org.maxkey.authz.saml20.consumer.AuthnRequestGenerator;
 import org.maxkey.authz.saml20.consumer.spring.IdentityProviderAuthenticationException;
@@ -51,6 +52,7 @@ import org.opensaml.common.binding.security.MessageReplayRule;
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.Response;
 import org.opensaml.saml2.core.StatusCode;
+import org.opensaml.ws.message.decoder.MessageDecodingException;
 import org.opensaml.xml.security.CriteriaSet;
 import org.opensaml.xml.security.SecurityException;
 import org.opensaml.xml.security.credential.Credential;
@@ -77,6 +79,8 @@ public class ConsumerEndpoint {
 
 	private final static Logger logger = LoggerFactory.getLogger(ConsumerEndpoint.class);
 
+	private BindingAdapter bindingAdapter;
+	
 	@Autowired
 	@Qualifier("spKeyStoreLoader")
 	private KeyStoreLoader keyStoreLoader;
@@ -129,8 +133,8 @@ public class ConsumerEndpoint {
 		initCredential(spId);
 
 		SAMLMessageContext messageContext=null;
-
-		/*try {
+		/*
+		try {
 			messageContext = bindingAdapter.extractSAMLMessageContext(request);
 		} catch (MessageDecodingException me) {
 			logger.error("Could not decode SAML Response", me);

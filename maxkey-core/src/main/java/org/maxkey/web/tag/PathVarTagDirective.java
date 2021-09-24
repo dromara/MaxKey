@@ -45,6 +45,7 @@ public class PathVarTagDirective implements TemplateDirectiveModel {
 	String pathVariable;
 
 	@Override
+	@SuppressWarnings("rawtypes")
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
 			throws TemplateException, IOException {
 		

@@ -21,13 +21,11 @@ import java.security.Key;
 import java.util.Map;
 
 import org.junit.Test;
-import org.maxkey.crypto.Base64Utils;
-import org.maxkey.crypto.HexUtils;
-import org.maxkey.crypto.RSAUtils;
+
 
 public class RSAUtilsTest {
 
-	//@Test
+	@Test
 	public void test() throws Exception {
 
 		// ˽Կ���ܡ�����Կ����

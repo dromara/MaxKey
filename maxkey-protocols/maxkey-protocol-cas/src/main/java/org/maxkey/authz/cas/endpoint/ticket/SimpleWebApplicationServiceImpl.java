@@ -26,8 +26,6 @@ package org.maxkey.authz.cas.endpoint.ticket;
  */
 public final class SimpleWebApplicationServiceImpl extends AbstractWebApplicationService {
 
-    private static final long serialVersionUID = 8334068957483758042L;
-
     public SimpleWebApplicationServiceImpl(final String id) {
         this(id, id, null);
     }

@@ -20,7 +20,6 @@ package org.maxkey.web.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.entity.UserInfo;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -38,7 +37,6 @@ public class PreLoginAppAdapter  implements AsyncHandlerInterceptor {
             HttpServletResponse response, Object handler)
             throws Exception {
         _logger.debug("preHandle");
-        UserInfo userInfo = WebContext.getUserInfo();
         String redirect_uri = request.getRequestURL().toString();
         String appId = getAppIdFromRequestUrl(request);
         _logger.debug("preHandle app Id " + appId);
@@ -47,6 +45,7 @@ public class PreLoginAppAdapter  implements AsyncHandlerInterceptor {
             return true;
         }
         /*
+         * UserInfo userInfo = WebContext.getUserInfo();
          * if(userInfo.getProtectedAppsMap().get(appId)!=null){
          * 
          * request.setAttribute("redirect_uri",redirect_uri);

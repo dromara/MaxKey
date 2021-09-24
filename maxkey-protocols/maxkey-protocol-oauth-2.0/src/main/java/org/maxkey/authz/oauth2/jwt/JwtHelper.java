@@ -113,7 +113,7 @@ class JwtHeaderHelper {
 	static HeaderParameters parseParams(byte[] header) {
 		JsonParser jp = null;
 		try {
-			jp = f.createJsonParser(header);
+			jp = f.createParser(header);
 			String alg = null, enc = null, iv = null;
 			jp.nextToken();
 			while (jp.nextToken() != JsonToken.END_OBJECT) {
@@ -163,7 +163,7 @@ class JwtHeaderHelper {
 		JsonGenerator g = null;
 
 		try {
-			g = f.createJsonGenerator(baos);
+			g = f.createGenerator(baos);
 			g.writeStartObject();
 			g.writeStringField("alg", params.alg);
 			if (params.enc != null) {

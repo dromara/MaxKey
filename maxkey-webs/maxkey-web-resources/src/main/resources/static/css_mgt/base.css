@@ -90,11 +90,10 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 }
 
 .sidenav-fold-toggler{
-	
+	text-align: inherit;
 }
 [class^=lni-], [class*=" lni-"] {
     font-family: lineicons!important;
-    speak: none;
     font-style: normal;
     font-weight: 400;
     font-variant: normal;
@@ -251,7 +250,7 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 	text-shadow: 0 1px 0 #fff;
 	border-bottom: 1px solid #e5e5e5;
 	min-width: 100%;
-	align:left;
+	text-align:left;
 	height:60px;
 	margin-bottom: 1px;
 }
@@ -272,6 +271,7 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 }
 #nav_third{
 	/*border-top: 1px solid #e5e5e5;*/
+	text-align: inherit;
 }
 
 #mainFrame{
@@ -280,7 +280,7 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 	margin-right: auto;
 	display: block;
 	width:990px;
-	align:center;
+	text-align:center
 }
 
 #footer{
@@ -465,14 +465,13 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 .switch_tab{
 	list-style: none;
 	border: 0;
-	cellspacing:0;
+	border-collapse:collapse
 }
 
 .switch_tab_class{
 	float:left;
 	height:36px;
 	text-align: center;
-	display: inline-block;
 }
 
 .switch_tab_class a{
@@ -496,7 +495,7 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 
 #tableform{
 	border: 1px solid #e9eeed;
-	cellspacing:0;
+	border-collapse:collapse
 }
 
 .login_form_table{

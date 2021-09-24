@@ -649,6 +649,11 @@ final class Base64Codec {
 
 class InvalidBase64CharacterException extends IllegalArgumentException {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -616861303718228577L;
+
     InvalidBase64CharacterException(String message) {
         super(message);
     }

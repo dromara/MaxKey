@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.actuate.endpoint.http.ActuatorMediaType;
+import org.springframework.boot.actuate.endpoint.ApiVersion;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -164,6 +164,7 @@ public class MvcAutoConfiguration implements InitializingBean {
         mediaTypesList.add(MediaType.APPLICATION_XML);
         mediaTypesList.add(MediaType.TEXT_XML);
         mediaTypesList.add(MediaType.TEXT_PLAIN);
+        _logger.debug("marshallingHttpMessageConverter MediaTypes " + mediaTypesList);
         marshallingHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
         return marshallingHttpMessageConverter;
     }
@@ -178,9 +179,10 @@ public class MvcAutoConfiguration implements InitializingBean {
                 new MappingJackson2HttpMessageConverter();
         ArrayList<MediaType> mediaTypesList = new ArrayList<MediaType>();
         mediaTypesList.add(MediaType.APPLICATION_JSON);
-        mediaTypesList.add(MediaType.valueOf(ActuatorMediaType.V2_JSON));
-        mediaTypesList.add(MediaType.valueOf(ActuatorMediaType.V3_JSON));
+        mediaTypesList.add(MediaType.valueOf(ApiVersion.V2.getProducedMimeType().toString()));
+        mediaTypesList.add(MediaType.valueOf(ApiVersion.V3.getProducedMimeType().toString()));
         //mediaTypesList.add(MediaType.TEXT_PLAIN);
+        _logger.debug("mappingJacksonHttpMessageConverter MediaTypes " + mediaTypesList);
         mappingJacksonHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
         return mappingJacksonHttpMessageConverter;
     }
@@ -191,8 +193,8 @@ public class MvcAutoConfiguration implements InitializingBean {
      */
     @Bean (name = "stringHttpMessageConverter")
     public HttpMessageConverter<String> responseBodyConverter() {
-        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter(
-                Charset.forName("UTF-8"));
+        StringHttpMessageConverter stringHttpMessageConverter = 
+                new StringHttpMessageConverter(Charset.forName("UTF-8"));
         return stringHttpMessageConverter;
     }
     

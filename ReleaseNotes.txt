@@ -24,6 +24,10 @@
 	*(MAXKEY-210723) mgt登录错误提示信息
     *(MAXKEY-210724) 依赖jar引用、更新和升级
         spring              5.3.10
+        springBoot          2.5.5
+        springkafka         2.7.7
+        spring-cloud        3.0.4
+        springcloudalibabacspl 1.8.2
         tomcat              9.0.53
         kafkaclients        2.8.1
         jibGradlePlugin     3.1.4
@@ -31,10 +35,10 @@
         mysqlconnector      8.0.26
         jedis               3.7.0
         ehcache             3.9.6
-        spring-cloud        3.0.3
-        springcloudalibabacspl 1.8.2
         nacos               2.0.3
+        jacksonVersion      2.12.5
         httpasyncclient     4.1.4
+        JustAuth            1.16.4
     
 MaxKey v 2.9.0 GA 2021/08/24
     *(MAXKEY-210601) 企业微信扫描登录

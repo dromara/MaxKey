@@ -30,7 +30,6 @@ import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.crypto.cert.NameUtil;
 import org.maxkey.crypto.cert.X509CertUtils;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
@@ -182,7 +181,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
     		samlDetails.setCertSubject(samlDetails.getTrustCert().getSubjectDN().getName());
     		samlDetails.setCertExpiration(samlDetails.getTrustCert().getNotAfter().toString());
     
-    		samlDetails.setCertIssuer(NameUtil.getCommonName(samlDetails.getTrustCert().getIssuerX500Principal()));
+    		samlDetails.setCertIssuer(X509CertUtils.getCommonName(samlDetails.getTrustCert().getIssuerX500Principal()));
     		
     		KeyStore keyStore = KeyStoreUtil.clone(idpKeyStoreLoader.getKeyStore(),idpKeyStoreLoader.getKeystorePassword());
     

@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.SigninPrincipal;
-import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.entity.HistoryLoginApps;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;

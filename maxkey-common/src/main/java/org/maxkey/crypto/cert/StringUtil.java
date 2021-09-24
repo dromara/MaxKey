@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.util.Locale;
 
-import org.bouncycastle.asn1.DERInteger;
+import org.bouncycastle.asn1.ASN1Integer;
 
 /**
  * String utilities.
@@ -64,9 +64,9 @@ public class StringUtil
 		{
 			bigInt = new BigInteger(1, (byte[]) obj);
 		}
-		else if (obj instanceof DERInteger)
+		else if (obj instanceof ASN1Integer)
 		{
-			bigInt = ((DERInteger) obj).getValue();
+			bigInt = ((ASN1Integer) obj).getValue();
 		}
 		else
 		{

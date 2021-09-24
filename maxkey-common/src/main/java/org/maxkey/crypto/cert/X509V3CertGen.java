@@ -61,12 +61,16 @@ public final class X509V3CertGen {
 		PrivateKey privateKey=keyPair.getPrivate();
 		 
 		SubjectPublicKeyInfo subjectPublicKeyInfo = null;  
+		ASN1InputStream publicKeyInputStream =null;
 		try {
-    		Object aiStream=new ASN1InputStream(publicKey.getEncoded()).readObject();
+		    publicKeyInputStream =new ASN1InputStream(publicKey.getEncoded());
+    		Object aiStream=publicKeyInputStream.readObject();
     		subjectPublicKeyInfo = SubjectPublicKeyInfo.getInstance(aiStream);  
 		} catch (IOException e1) {  
 			e1.printStackTrace();  
-		}  
+		} finally {
+		    if(publicKeyInputStream !=null)publicKeyInputStream.close();
+		}
 	        
 	        
 		X509v3CertificateBuilder certBuilder = new X509v3CertificateBuilder(x500Name,

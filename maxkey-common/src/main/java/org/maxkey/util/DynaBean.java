@@ -59,7 +59,8 @@ public class DynaBean {
 		beanMap.remove(name);
 	}
 	
-	public void displayValues(){
+	@SuppressWarnings("rawtypes")
+    public void displayValues(){
 		Iterator<?> beanMapit = beanMap.entrySet().iterator(); 
 		int i=1;
 		LogFactory.getLog(DynaBean.class).debug("displayValues() *******************************************");
@@ -84,7 +85,8 @@ public class DynaBean {
 		return beanMap;
 	}
 	
-	public DynaBean mapToDynaBean(Map<String, Object> map){
+	@SuppressWarnings("rawtypes")
+    public DynaBean mapToDynaBean(Map<String, Object> map){
 		
 		if(map.getClass().getName()=="java.util.HashMap"){
 			beanMap=(HashMap<String, Object>)map;

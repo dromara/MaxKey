@@ -17,9 +17,6 @@
 
 package org.maxkey.authz.cas.endpoint.ticket.generator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.net.InetAddress;
 
 /**
@@ -29,8 +26,7 @@ import java.net.InetAddress;
  * @since 5.0.0
  */
 public final class InetAddressUtils {
-    private static final Logger logger = LoggerFactory.getLogger(InetAddressUtils.class);
-
+   
     private InetAddressUtils() {
     }
 

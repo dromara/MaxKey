@@ -45,6 +45,7 @@ public class BasePathTagDirective implements TemplateDirectiveModel {
     private HttpServletRequest request;
 	
 	@Override
+	@SuppressWarnings("rawtypes")
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
 			throws TemplateException, IOException {
 	    

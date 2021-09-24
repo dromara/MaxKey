@@ -33,6 +33,7 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Base64;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -62,7 +63,6 @@ import org.maxkey.authz.oauth2.provider.token.AccessTokenConverter;
 import org.maxkey.authz.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.maxkey.authz.oauth2.provider.token.TokenEnhancer;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.util.Assert;
 
 /**
@@ -144,7 +144,7 @@ public class JwtAccessTokenConverter implements TokenEnhancer, AccessTokenConver
         signer = new RsaSigner((RSAPrivateKey) privateKey);
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         verifier = new RsaVerifier(publicKey);
-        verifierKey = "-----BEGIN PUBLIC KEY-----\n" + new String(Base64.encode(publicKey.getEncoded()))
+        verifierKey = "-----BEGIN PUBLIC KEY-----\n" + new String(Base64.getMimeEncoder().encodeToString(publicKey.getEncoded()))
                 + "\n-----END PUBLIC KEY-----";
     }
 
@@ -155,7 +155,7 @@ public class JwtAccessTokenConverter implements TokenEnhancer, AccessTokenConver
      * @param key the key to be used for signing JWTs.
      */
     public void setSigningKey(String key) {
-        Assert.hasText(key);
+        Assert.hasText(key,"key must not be empty");
         key = key.trim();
 
         this.signingKey = key;

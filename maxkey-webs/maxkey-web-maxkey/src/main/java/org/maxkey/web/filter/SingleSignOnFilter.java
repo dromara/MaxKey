@@ -25,7 +25,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebConstants;
@@ -47,7 +46,6 @@ public class SingleSignOnFilter implements Filter {
             ServletResponse response, FilterChain chain)throws IOException, ServletException {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession();
         // 浠巗ession涓幏鍙栧瓨鏀剧殑appid
         String appId = (String) session.getAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID);

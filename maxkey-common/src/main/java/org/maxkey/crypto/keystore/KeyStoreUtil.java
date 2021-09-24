@@ -56,6 +56,8 @@ import org.maxkey.crypto.Base64Utils;
 import org.maxkey.crypto.cert.CryptoException;
 import org.maxkey.crypto.cert.X509CertUtils;
 import org.maxkey.crypto.cert.X509V3CertGen;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 
 /**
@@ -64,7 +66,8 @@ import org.springframework.core.io.Resource;
  * UBER type keystores.
  */
 public final class KeyStoreUtil {
-
+    private static final Logger _logger = LoggerFactory.getLogger(KeyStoreUtil.class);
+    
     public static final String X509 = "X.509";
 
     /** Map of available keystore types */
@@ -536,15 +539,15 @@ public final class KeyStoreUtil {
         try {
 
             sMatchAlias = X509CertUtils.matchCertificate(keyStore, trustCert);
-            System.out.println("sMatchAlias : " + sMatchAlias);
+            _logger.debug("sMatchAlias : " + sMatchAlias);
             if (sMatchAlias != null) {
-                System.out.println("The certificate already exists in the Keystore under alias ''" + sMatchAlias
+                _logger.debug("\nThe certificate already exists in the Keystore under alias ''" + sMatchAlias
                         + "''.\nDo you still want to import it?");
             } else {
                 KeyStore[] keyStores = { keyStore };
                 if (X509CertUtils.establishTrust(keyStores, trustCert) == null) {
-                    System.out.println(
-                            "Could not establish a trust path for the certficate.\nThe certficate information will now be displayed after\nwhich you may confirm whether or not you trust the\ncertificate.");
+                    _logger.debug(
+                            "\nCould not establish a trust path for the certficate.\nThe certficate information will now be displayed after\nwhich you may confirm whether or not you trust the certificate.");
                 }
 
                 // Delete old entry first

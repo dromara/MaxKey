@@ -18,7 +18,6 @@
 package org.maxkey.util;
 
 import org.junit.Test;
-import org.maxkey.util.PathUtils;
 
 public class PathUtilsTest {
 	@Test

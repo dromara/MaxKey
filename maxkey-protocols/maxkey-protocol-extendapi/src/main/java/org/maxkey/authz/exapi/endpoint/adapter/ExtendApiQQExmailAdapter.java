@@ -53,18 +53,21 @@ public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
 		return null;
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
+    @Override
 	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
 		HttpsTrusts.beforeConnection();
 		
 		Apps details=(Apps)app;
 		String username = data.substring(0, data.indexOf("="));
 		String password = data.substring(data.indexOf("=") + 1);
+		_logger.trace("username " + username +" password " + password);
 		//extraAttrs from Applications
 		ExtraAttrs extraAttrs=null;
 		if(details.getIsExtendAttr()==1){
 			extraAttrs=new ExtraAttrs(details.getExtendAttr());
 		}
+		_logger.debug("Extra Attrs "+extraAttrs);
 		OAuthClient tokenRestClient=new OAuthClient(
 				String.format(TOKEN_URI,details.getPrincipal(),details.getCredentials()));
 		Token token =tokenRestClient.requestAccessToken();

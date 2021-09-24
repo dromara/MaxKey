@@ -17,8 +17,6 @@
 
 package org.maxkey.web.apps.contorller;
 
-import java.util.List;
-
 import org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsProtocols;

@@ -47,6 +47,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Strings;
+import com.nimbusds.jose.Algorithm;
 import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWEHeader;
@@ -164,7 +165,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 					logger.error("Couldn't create Jwt Encryption Service");
 				}
 			} else {
-				if (signingAlg==null||signingAlg.equals("none")) {
+				if (signingAlg==null||signingAlg.equals(Algorithm.NONE)) {
 					// unsigned ID token
 					idToken = new PlainJWT(builder.build());
 				} else {

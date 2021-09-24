@@ -150,7 +150,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
                     throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
         DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
                 new DefaultJwtEncryptionAndDecryptionService(jwtSetKeyStore);
-        jwtEncryptionService.setDefaultAlgorithm(JWEAlgorithm.RSA1_5);//RSA1_5
+        jwtEncryptionService.setDefaultAlgorithm(JWEAlgorithm.RSA_OAEP_256);//RSA1_5
         jwtEncryptionService.setDefaultDecryptionKeyId("maxkey_rsa");
         jwtEncryptionService.setDefaultEncryptionKeyId("maxkey_rsa");
         return jwtEncryptionService;

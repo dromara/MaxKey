@@ -20,7 +20,6 @@ package org.maxkey.util;
 import java.util.UUID;
 
 import org.junit.Test;
-import org.maxkey.util.StringGenerator;
 
 public class StringGeneratorTest {
 	@Test

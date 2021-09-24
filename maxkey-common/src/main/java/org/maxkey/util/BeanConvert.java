@@ -58,6 +58,8 @@ public class BeanConvert {
 		LogFactory.getLog(BeanConvert.class).debug("bean2Map() *******************************************");
 		return mapBean;
 	}
+	
+	
 	public static <T> Object map2Bean(T bean,HashMap<?, ?> valueMap){
 		Map<?, ?> beanFiledMap=null;
 		try {
@@ -71,6 +73,7 @@ public class BeanConvert {
 		LogFactory.getLog(BeanConvert.class).debug("map2Bean() "+bean.getClass().getName());
 		int i=1;
         while (fieldit.hasNext()) {
+            @SuppressWarnings("rawtypes")
             Map.Entry entry = (Map.Entry) fieldit.next();
             String fieldName = entry.getKey().toString();
             Object value = null;

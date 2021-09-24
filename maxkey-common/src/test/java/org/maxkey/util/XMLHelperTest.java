@@ -17,24 +17,8 @@
 
 package org.maxkey.util;
 
-import java.io.OutputStream;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.Map;
-
 import org.junit.Test;
-import org.maxkey.pretty.PrettyFactory;
 import org.maxkey.pretty.impl.XMLHelper;
-import org.w3c.dom.DOMConfiguration;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.ls.DOMImplementationLS;
-import org.w3c.dom.ls.LSOutput;
-import org.w3c.dom.ls.LSSerializer;
-import org.w3c.dom.ls.LSSerializerFilter;
-
-import net.shibboleth.utilities.java.support.collection.LazyMap;
 
 public class XMLHelperTest {
 

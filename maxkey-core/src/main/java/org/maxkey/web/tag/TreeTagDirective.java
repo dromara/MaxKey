@@ -59,6 +59,7 @@ public class TreeTagDirective implements TemplateDirectiveModel {
 	
 
 	@Override
+	@SuppressWarnings("rawtypes")
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
 			throws TemplateException, IOException {
 		 id = params.get("id").toString();

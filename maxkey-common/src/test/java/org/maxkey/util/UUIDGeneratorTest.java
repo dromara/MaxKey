@@ -22,7 +22,6 @@ import java.util.Date;
 
 import org.maxkey.uuid.UUID;
 import org.junit.Test;
-import org.maxkey.util.UUIDGenerator;
 
 public class UUIDGeneratorTest {
 	

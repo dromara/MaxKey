@@ -26,11 +26,10 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
-import org.maxkey.crypto.cert.X509V3CertGen;
 
 public class X509V3CertGenTest {
 
-	//@Test
+	@Test
 	public void generateV3() throws Exception {
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 		KeyPair keyPair =X509V3CertGen.genRSAKeyPair();

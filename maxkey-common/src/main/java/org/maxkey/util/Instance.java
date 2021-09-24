@@ -62,7 +62,7 @@ public class Instance {
 		Class<?> newClass;
 		try {
 			newClass = Class.forName(className);
-			Class[] argsClass = new Class[args.length];
+			Class<?>[] argsClass = new Class[args.length];
 
 			for (int i = 0, j = args.length; i < j; i++) {
 				argsClass[i] = args[i].getClass();
@@ -79,7 +79,7 @@ public class Instance {
 
 	public static <T> Object newInstance(Class<T> cls, Object[] args) {
 		try {
-			Class[] argsClass = new Class[args.length];
+			Class<?>[] argsClass = new Class[args.length];
 
 			for (int i = 0, j = args.length; i < j; i++) {
 				argsClass[i] = args[i].getClass();

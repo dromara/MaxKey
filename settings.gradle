@@ -1,48 +1,61 @@
 /*
- * in the user guide at https://docs.gradle.org
+ * Copyright [2021] [MaxKey of copyright http://www.maxkey.top]
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+ 
+/*
+ * project name and include subprojects 
+ */
+ 
 rootProject.name = 'MaxKey'
 
+include (
 //Common
-include 'maxkey-common'
-include 'maxkey-core'
-include 'maxkey-persistence'
-
-//include 'maxkey-authentications'
-include 'maxkey-authentications:maxkey-authentication-core'
-include 'maxkey-authentications:maxkey-authentication-captcha'
-include 'maxkey-authentications:maxkey-authentication-social'
-include 'maxkey-authentications:maxkey-authentication-otp'
-
+'maxkey-common',
+'maxkey-core',
+'maxkey-persistence',
+//authentications
+'maxkey-authentications:maxkey-authentication-core',
+'maxkey-authentications:maxkey-authentication-captcha',
+'maxkey-authentications:maxkey-authentication-social',
+'maxkey-authentications:maxkey-authentication-otp',
 //identity
-include 'maxkey-identitys:maxkey-identity-scim'
-include 'maxkey-identitys:maxkey-identity-rest'
-include 'maxkey-identitys:maxkey-synchronizers'
-include 'maxkey-identitys:maxkey-synchronizers-activedirectory'
-include 'maxkey-identitys:maxkey-synchronizers-ldap'
-include 'maxkey-identitys:maxkey-synchronizers-dingding'
-include 'maxkey-identitys:maxkey-synchronizers-workweixin'
-
+'maxkey-identitys:maxkey-identity-scim',
+'maxkey-identitys:maxkey-identity-rest',
+'maxkey-identitys:maxkey-synchronizers',
+'maxkey-identitys:maxkey-synchronizers-activedirectory',
+'maxkey-identitys:maxkey-synchronizers-ldap',
+'maxkey-identitys:maxkey-synchronizers-dingding',
+'maxkey-identitys:maxkey-synchronizers-workweixin',
 //Protocol
-//include 'maxkey-protocols'
-include 'maxkey-protocols:maxkey-protocol-authorize'
-include 'maxkey-protocols:maxkey-protocol-oauth-2.0'
-include 'maxkey-protocols:maxkey-protocol-saml-2.0'
-include 'maxkey-protocols:maxkey-protocol-cas'
-include 'maxkey-protocols:maxkey-protocol-jwt'
-include 'maxkey-protocols:maxkey-protocol-formbased'
-include 'maxkey-protocols:maxkey-protocol-tokenbased'
-include 'maxkey-protocols:maxkey-protocol-extendapi'
-
-
-//include 'maxkey-webs'
+'maxkey-protocols:maxkey-protocol-authorize',
+'maxkey-protocols:maxkey-protocol-oauth-2.0',
+'maxkey-protocols:maxkey-protocol-saml-2.0',
+'maxkey-protocols:maxkey-protocol-cas',
+'maxkey-protocols:maxkey-protocol-jwt',
+'maxkey-protocols:maxkey-protocol-formbased',
+'maxkey-protocols:maxkey-protocol-tokenbased',
+'maxkey-protocols:maxkey-protocol-extendapi',
+//webs
 //static
-include 'maxkey-webs:maxkey-web-resources'
+'maxkey-webs:maxkey-web-resources',
 //maxkey
-include 'maxkey-webs:maxkey-web-maxkey'
-//maxkey-mgt management
-include 'maxkey-webs:maxkey-web-mgt'
-//maxkey-boot-monitor
-include 'maxkey-webs:maxkey-boot-monitor'
-//maxkey-gataway
-include 'maxkey-gataway'
+'maxkey-webs:maxkey-web-maxkey',
+//management(mgt)
+'maxkey-webs:maxkey-web-mgt',
+//monitor
+'maxkey-webs:maxkey-boot-monitor',
+//gataway
+'maxkey-gataway'
+)

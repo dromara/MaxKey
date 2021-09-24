@@ -20,7 +20,6 @@ package org.maxkey.mail;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.SimpleEmail;
-import org.junit.Test;
 
 public class MailTest {
 	

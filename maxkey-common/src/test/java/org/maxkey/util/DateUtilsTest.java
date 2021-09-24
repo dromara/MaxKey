@@ -19,8 +19,6 @@ package org.maxkey.util;
 
 import java.util.Date;
 
-import org.maxkey.util.DateUtils;
-
 public class DateUtilsTest {
 	
 	/**

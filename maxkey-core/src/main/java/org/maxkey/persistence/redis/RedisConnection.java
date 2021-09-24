@@ -67,7 +67,7 @@ public class RedisConnection {
 	 * @param seconds
 	 * @param value
 	 */
-	public  void setex(String key,int seconds, String value){
+	public  void setex(String key,long seconds, String value){
 		if(seconds==0){
 			conn.setex(key, RedisConnectionFactory.DEFAULT_CONFIG.DEFAULT_LIFETIME, value);
 		}else{
@@ -103,7 +103,7 @@ public class RedisConnection {
 		return null;
 	}
 	
-	public void expire(String key,int seconds){
+	public void expire(String key,long seconds){
 		conn.expire(key, seconds);
 	}
 	

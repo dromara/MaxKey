@@ -23,6 +23,7 @@ import org.maxkey.authz.oauth2.common.util.JsonDateDeserializer;
 import org.maxkey.authz.oauth2.common.util.JsonDateSerializer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -31,7 +32,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * @author Vidya Val
  *
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Approval {
 
 	private String userId;
@@ -97,7 +98,8 @@ public class Approval {
 		this.scope = scope == null ? "" : scope;
 	}
 
-	@JsonSerialize(using = JsonDateSerializer.class, include = JsonSerialize.Inclusion.NON_NULL)
+	@JsonSerialize(using = JsonDateSerializer.class)
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	public Date getExpiresAt() {
 		return expiresAt;
 	}
@@ -112,7 +114,8 @@ public class Approval {
 		this.expiresAt = expiresAt;
 	}
 
-	@JsonSerialize(using = JsonDateSerializer.class, include = JsonSerialize.Inclusion.NON_NULL)
+	@JsonSerialize(using = JsonDateSerializer.class)
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	public Date getLastUpdatedAt() {
 		return lastUpdatedAt;
 	}

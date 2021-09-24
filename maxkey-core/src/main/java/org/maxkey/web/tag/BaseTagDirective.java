@@ -42,6 +42,7 @@ public class BaseTagDirective implements TemplateDirectiveModel {
     private HttpServletRequest request;
 
 	@Override
+	@SuppressWarnings("rawtypes")
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
 			throws TemplateException, IOException {
 		//String url = params.get(URL).toString();

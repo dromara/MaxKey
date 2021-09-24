@@ -45,6 +45,7 @@ public class ParameterTagDirective implements TemplateDirectiveModel {
 	
 
 	@Override
+	@SuppressWarnings("rawtypes")
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
 			throws TemplateException, IOException {
 			name=params.get("name").toString();

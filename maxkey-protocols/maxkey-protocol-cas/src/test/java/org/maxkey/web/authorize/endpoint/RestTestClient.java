@@ -42,7 +42,6 @@ public class RestTestClient {
         String password ="maxkey";
         String serviceUrl = "http://cas.demo.maxkey.top:9521/demo-cas/";
         CasConfiguration casConfiguration = new CasConfiguration(casUrlPrefix);
-        final CasRestAuthenticator authenticator = new CasRestAuthenticator(casConfiguration);
         final CasRestFormClient client = new CasRestFormClient(casConfiguration,"username","password");
         final MockHttpServletRequest request = new MockHttpServletRequest();
         final MockHttpServletResponse response = new MockHttpServletResponse();
@@ -61,7 +60,7 @@ public class RestTestClient {
         
         Map<String,Object> attributes = casProfile.getAttributes();
         Set<Map.Entry<String,Object>> mapEntries = attributes.entrySet();
-        for (Map.Entry entry : mapEntries) {
+        for (Map.Entry<String,Object> entry : mapEntries) {
             System.out.println(entry.getKey() + ":" + entry.getValue());
         }
         client.destroyTicketGrantingTicket(profile,webContext);

@@ -25,8 +25,6 @@ package org.maxkey.authz.cas.endpoint.ticket;
  * @since 4.2.0
  */
 public abstract class AbstractTicketException{
-    private static final long serialVersionUID = -5128676415951733624L;
-
     String code;
     String msg;
     Throwable throwable;

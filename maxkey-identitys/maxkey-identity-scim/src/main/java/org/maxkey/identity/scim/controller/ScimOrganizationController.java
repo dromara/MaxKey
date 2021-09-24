@@ -59,7 +59,7 @@ public class ScimOrganizationController {
     public ResponseEntity<MappingJacksonValue> create(@RequestBody  Organization user,
                                                       @RequestParam(required = false) String attributes,
                                                       UriComponentsBuilder builder) throws IOException {
-        Organization createdUser = null;
+        //Organization createdUser = null;
         return null;
     }
 
@@ -68,7 +68,7 @@ public class ScimOrganizationController {
                                                        @RequestBody Organization user,
                                                        @RequestParam(required = false) String attributes)
             throws IOException {
-        Organization createdUser = null;
+        //Organization createdUser = null;
         return null;
     }
 
@@ -86,7 +86,7 @@ public class ScimOrganizationController {
 
     @RequestMapping(value = "/.search", method = RequestMethod.POST)
     public MappingJacksonValue searchWithPost(@RequestParam Map<String, String> requestParameters) {
-        ScimSearchResult<User> scimSearchResult = null;
+        //ScimSearchResult<User> scimSearchResult = null;
         /*
                 requestParameters.get("filter"),
                 requestParameters.get("sortBy"),
@@ -94,7 +94,8 @@ public class ScimOrganizationController {
                 Integer.parseInt(requestParameters.getOrDefault("count", "" + ScimServiceProviderConfigController.MAX_RESULTS)),
                 Integer.parseInt(requestParameters.getOrDefault("startIndex", "1")); // scim default
 */
-        String attributes = (requestParameters.containsKey("attributes") ? requestParameters.get("attributes") : "");
+        //String attributes = (requestParameters.containsKey("attributes") ? requestParameters.get("attributes") : "");
+        
         return null;
     }
 }

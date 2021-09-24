@@ -38,7 +38,7 @@ public class MethodInvoke {
 	public static Object invokeMethod(Object bean, String methodName,
 			Object[] args) throws Exception {
 		Class<? extends Object> beanClass = bean.getClass();
-		Class[] argsClass = new Class[args.length];
+		Class<?>[] argsClass = new Class[args.length];
 		for (int i = 0, j = args.length; i < j; i++) {
 			argsClass[i] = args[i].getClass();
 			//LogFactory.getLog(MethodInvoke.class).debug("invokeMethod args : "+args[i]+" argsClass:"+argsClass[i]);
@@ -59,7 +59,7 @@ public class MethodInvoke {
 
 	public static Object invokeStaticMethod(Class<?> beanClass, String methodName,
 			Object[] args) throws Exception {
-		Class[] argsClass = new Class[args.length];
+		Class<?>[] argsClass = new Class[args.length];
 		for (int i = 0, j = args.length; i < j; i++) {
 			argsClass[i] = args[i].getClass();
 			//LogFactory.getLog(MethodInvoke.class).debug("invokeStaticMethod args : "+args[i]+" argsClass:"+argsClass[i]);

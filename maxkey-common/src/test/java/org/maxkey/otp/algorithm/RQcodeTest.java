@@ -95,6 +95,7 @@ END:VCARD
         	 "REV:2008-04-24T19:52:43Z\n" +
         	 "END:VCARD\n" ;
         	 
+        	 System.out.println(str);
             //String str = "CN:男;COP:公司;ZW:职务";// 二维码内容  
             String path = "D:\\hwy.png";  
             BitMatrix byteMatrix;  

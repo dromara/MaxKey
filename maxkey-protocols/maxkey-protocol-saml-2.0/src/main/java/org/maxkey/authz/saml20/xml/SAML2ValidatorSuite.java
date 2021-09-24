@@ -21,7 +21,6 @@ import org.opensaml.xml.Configuration;
 import org.opensaml.xml.XMLObject;
 import org.opensaml.xml.validation.ValidationException;
 import org.opensaml.xml.validation.ValidatorSuite;
-import org.springframework.beans.factory.InitializingBean;
 
 public class SAML2ValidatorSuite  {
 
