@@ -41,6 +41,7 @@
         nacos               2.0.3
         jacksonVersion      2.12.5
         httpasyncclient     4.1.4
+        bouncycastle        1.69
         JustAuth            1.16.4
     
 MaxKey v 2.9.0 GA 2021/08/24
