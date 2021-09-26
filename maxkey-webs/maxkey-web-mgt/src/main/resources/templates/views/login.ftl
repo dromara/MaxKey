@@ -13,7 +13,7 @@
 					<div class="card">
 						<div class="card-header border-bottom text-center">
 							<h4 class="card-title">
-								<locale code="login.text.login.normal" />
+								<!-- <@locale code="login.text.login.normal" /> -->
 							</h4>
 						</div>
 						<div class="card-body">
