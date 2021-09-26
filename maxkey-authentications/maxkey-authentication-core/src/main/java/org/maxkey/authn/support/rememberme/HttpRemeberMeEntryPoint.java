@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
 import org.maxkey.authn.AbstractAuthenticationProvider;
+import org.maxkey.authn.LoginCredential;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.Base64Utils;
@@ -94,12 +95,8 @@ public class HttpRemeberMeEntryPoint implements AsyncHandlerInterceptor {
 	        DateTime expiryDate = loginDate.plusSeconds(remeberMeService.getRemeberMeValidity());
 	        DateTime now = new DateTime();
 	        if (now.isBefore(expiryDate)) {
-	            authenticationProvider.trustAuthentication(
-	                    storeRemeberMe.getUsername(), 
-	                    ConstantsLoginType.REMEBER_ME, 
-	                    "", 
-	                    "", 
-	                    "success");
+	            LoginCredential loginCredential =new LoginCredential(storeRemeberMe.getUsername(),"",ConstantsLoginType.REMEBER_ME);
+	            authenticationProvider.authentication(loginCredential,true);
 	            remeberMeService.updateRemeberMe(remeberMeCookie, response);
 	            _logger.debug("RemeberMe Logined in , username " + storeRemeberMe.getUsername());
 	        }

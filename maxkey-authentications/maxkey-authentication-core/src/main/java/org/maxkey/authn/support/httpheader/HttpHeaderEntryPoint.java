@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
+import org.maxkey.authn.LoginCredential;
 import org.maxkey.constants.ConstantsLoginType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,7 +108,8 @@ public class HttpHeaderEntryPoint implements AsyncHandlerInterceptor {
 		 }
 		 
 		 if(!isAuthenticated){
-			authenticationProvider.trustAuthentication(httpHeaderUsername,ConstantsLoginType.HTTPHEADER,"","","success");
+			LoginCredential loginCredential =new LoginCredential(httpHeaderUsername,"",ConstantsLoginType.HTTPHEADER);
+            authenticationProvider.authentication(loginCredential,true);
 			_logger.info("Authentication  "+httpHeaderUsername+" successful .");
 		 }
 		

@@ -74,14 +74,7 @@ public abstract class AbstractAuthenticationProvider {
 
     protected abstract Authentication doInternalAuthenticate(LoginCredential authentication);
     
-    public abstract Authentication basicAuthenticate(LoginCredential authentication) ;
-
-    public abstract Authentication trustAuthentication(
-                                    String username, 
-                                    String type, 
-                                    String provider, 
-                                    String code,
-                                    String message);
+    public    abstract Authentication authentication(LoginCredential loginCredential,boolean isTrusted);
     
     @SuppressWarnings("rawtypes")
     public boolean supports(Class authentication) {

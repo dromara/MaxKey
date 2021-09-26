@@ -82,7 +82,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
     	    
     	    LoginCredential loginCredential =new LoginCredential(username,password,"CASREST");
     	    
-    	    authenticationProvider.basicAuthenticate(loginCredential);
+    	    authenticationProvider.authentication(loginCredential,false);
             
             TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
             
@@ -189,7 +189,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             
             LoginCredential loginCredential =new LoginCredential(username,password,"CASREST");
             
-            authenticationProvider.basicAuthenticate(loginCredential);
+            authenticationProvider.authentication(loginCredential,false);
             UserInfo userInfo =WebContext.getUserInfo();
             TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",WebContext.getAuthentication(),null);
             

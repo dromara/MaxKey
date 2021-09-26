@@ -64,7 +64,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	    
 		AppsCasDetails  casDetails=casDetailsService.getAppDetails(casService);
 		
-		return buildCasModelAndView(request,response,casDetails);
+		return buildCasModelAndView(request,response,casDetails,casService);
 		
 	}
 	
@@ -77,20 +77,34 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		
 		AppsCasDetails casDetails=casDetailsService.getAppDetails(id);
 		
-		return buildCasModelAndView(request,response,casDetails);
+		return buildCasModelAndView(request,response,casDetails,casDetails.getCallbackUrl());
 	}
 	
 	private  ModelAndView buildCasModelAndView(
 	                HttpServletRequest request,
 	                HttpServletResponse response,
-	                AppsCasDetails casDetails){
+	                AppsCasDetails casDetails,
+	                String casService){
 		
 		_logger.debug(""+casDetails);
-
+		Map<String, String> parameterMap = WebContext.getRequestParameterMap(request);
+		String service = casService;
+		_logger.debug("CAS Parameter service = " + service);
+		if(casService.indexOf("?") >-1 ) {
+		    service = casService.substring(casService.indexOf("?") + 1);
+		    if(service.indexOf("=") > -1) {
+		        String [] parameterValues = service.split("=");
+		        if(parameterValues.length == 2) {
+		            parameterMap.put(parameterValues[0], parameterValues[1]);
+		        }
+		    }
+		    _logger.debug("CAS service with Parameter : " + service);
+		}
 		WebContext.setAttribute(
     		        CasConstants.PARAMETER.PARAMETER_MAP, 
-    		        WebContext.getRequestParameterMap(request)
+    		        parameterMap
 		        );
+
 		WebContext.setAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS, casDetails);
 		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, casDetails.getId());
 		WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP,casDetails);
@@ -115,7 +129,6 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		if(callbackUrl.indexOf("&") != -1 ||callbackUrl.indexOf("=") != -1) {
 		    callbackUrl.append("&");
 		}
-		
 		
 		//append ticket
 		callbackUrl.append(CasConstants.PARAMETER.TICKET).append("=").append(ticket);

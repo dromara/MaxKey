@@ -5,7 +5,13 @@
     <#include  "authorize_common.ftl">
     <script type="text/javascript">
         function redirectToLogin(){
-            window.top.location.href ="${callbackUrl}";
+            var srcUrl = window.top.location.href;
+            srcUrl = srcUrl.substring(srcUrl.indexOf("#"));
+            var callbackUrl = "${callbackUrl}";
+            if(srcUrl.indexOf("#") >-1 ){
+                callbackUrl =callbackUrl.replace("?",srcUrl + "&");
+            }
+            window.top.location.href = callbackUrl;
        }
     </script>
 </head>

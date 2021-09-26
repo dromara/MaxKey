@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
+import org.maxkey.authn.LoginCredential;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.util.AuthorizationHeaderCredential;
 import org.maxkey.util.AuthorizationHeaderUtils;
@@ -129,8 +130,9 @@ public class BasicEntryPoint implements   AsyncHandlerInterceptor {
 		 }
 		 
 		 if(!isAuthenticated){
-			authenticationProvider.trustAuthentication(headerCredential.getUsername(),ConstantsLoginType.BASIC,"","","success");
-				_logger.info("Authentication  "+headerCredential.getUsername()+" successful .");
+		     LoginCredential loginCredential =new LoginCredential(headerCredential.getUsername(),"",ConstantsLoginType.BASIC);
+			 authenticationProvider.authentication(loginCredential,true);
+			 _logger.info("Authentication  "+headerCredential.getUsername()+" successful .");
 		 }
 		
 		 return true;

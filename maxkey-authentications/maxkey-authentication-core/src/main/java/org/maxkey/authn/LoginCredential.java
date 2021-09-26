@@ -38,6 +38,10 @@ public class LoginCredential  implements Authentication {
     String authType;
     String jwtToken;
     String onlineTicket;
+    String provider;
+    String code;
+    String message="SUCCESS";
+    
     ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;
     boolean roleAdministrators;
@@ -180,6 +184,30 @@ public class LoginCredential  implements Authentication {
 
     public void setRoleAdministrators(boolean roleAdministrators) {
         this.roleAdministrators = roleAdministrators;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override

@@ -20,6 +20,7 @@ package org.maxkey.authn.support.wsfederation;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.maxkey.authn.AbstractAuthenticationProvider;
+import org.maxkey.authn.LoginCredential;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.util.StringUtils;
@@ -97,11 +98,9 @@ public class HttpWsFederationEntryPoint implements AsyncHandlerInterceptor {
                     			wsFederationCredential.getAttributes(),
                     			wsFederationService.getWsFederationConfiguration().getUpnSuffix());
                     }
-
-                    authenticationProvider.trustAuthentication(
-                    		wsFederationCredential.getAttributes().get("").toString(),
-                    		ConstantsLoginType.WSFEDERATION,
-                    		"","","success");
+                    LoginCredential loginCredential =new LoginCredential(
+                            wsFederationCredential.getAttributes().get("").toString(),"",ConstantsLoginType.WSFEDERATION);
+                    authenticationProvider.authentication(loginCredential,true);
                     return true;
                 } else {
                     _logger.warn("SAML assertions are blank or no longer valid.");

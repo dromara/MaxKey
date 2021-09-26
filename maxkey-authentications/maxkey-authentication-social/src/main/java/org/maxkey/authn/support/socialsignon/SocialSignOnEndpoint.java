@@ -22,6 +22,7 @@ package org.maxkey.authn.support.socialsignon;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
 import org.maxkey.constants.ConstantsLoginType;
@@ -176,8 +177,11 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		
 		_logger.debug("Social Sign On from "+socialsAssociate.getProvider()+" mapping to user "+socialsAssociate.getUsername());
 		
-		authenticationProvider.trustAuthentication(socialsAssociate.getUsername(), ConstantsLoginType.SOCIALSIGNON,this.socialSignOnProvider.getProviderName(),"xe00000004","success");
-		//socialsAssociate.setAccessToken(JsonUtils.object2Json(this.accessToken));
+		LoginCredential loginCredential =new LoginCredential(
+		        socialsAssociate.getUsername(),"",ConstantsLoginType.SOCIALSIGNON);
+		loginCredential.setProvider(this.socialSignOnProvider.getProviderName());
+        authenticationProvider.authentication(loginCredential,true);
+        //socialsAssociate.setAccessToken(JsonUtils.object2Json(this.accessToken));
 		socialsAssociate.setSocialUserInfo(accountJsonString);
 		//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
 		

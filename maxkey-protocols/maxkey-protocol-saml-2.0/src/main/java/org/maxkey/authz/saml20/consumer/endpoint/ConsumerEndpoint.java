@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.maxkey.authn.AbstractAuthenticationProvider;
+import org.maxkey.authn.LoginCredential;
 import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.authz.saml.service.IDService;
@@ -185,8 +186,9 @@ public class ConsumerEndpoint {
 		
 	
 		logger.debug("assertion.getID() ", assertion.getAuthnStatements());
-		
-		authenticationProvider.trustAuthentication(username, ConstantsLoginType.SAMLTRUST,"","","success");
+		LoginCredential loginCredential =new LoginCredential(
+		        username,"",ConstantsLoginType.SAMLTRUST);
+        authenticationProvider.authentication(loginCredential,true);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("username", username);

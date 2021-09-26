@@ -95,19 +95,19 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
 
         userinfoValid(userInfo, loginCredential.getUsername());
-
+        //mfa 
         tftcaptchaValid(loginCredential.getOtpCaptcha(),loginCredential.getAuthType(),userInfo);
-
+        
+        //Validate PasswordPolicy
+        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
         if(loginCredential.getAuthType().equalsIgnoreCase(AuthType.MOBILE)) {
         	mobilecaptchaValid(loginCredential.getPassword(),loginCredential.getAuthType(),userInfo);
-        }else {
-            //Validate PasswordPolicy
-            authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
+        }else {            
             //Match password 
         	authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
-        	//apply PasswordSetType and resetBadPasswordCount
-        	authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
         }
+        //apply PasswordSetType and resetBadPasswordCount
+        authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
         
         UsernamePasswordAuthenticationToken authenticationToken = createOnlineSession(loginCredential,userInfo);
         //RemeberMe Config check then set  RemeberMe cookies
@@ -127,26 +127,6 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         
         return  authenticationToken;
     }
-    
-    @Override
-    public Authentication basicAuthenticate(LoginCredential loginCredential) {
-        UserInfo loadeduserInfo = loadUserInfo(loginCredential.getUsername(), "");
-        if (loadeduserInfo != null) {
-            authenticationRealm.passwordMatches(loadeduserInfo, loginCredential.getPassword());
-
-            authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(loadeduserInfo);
-            
-            Authentication authentication = createOnlineSession(loginCredential,loadeduserInfo);
-            
-            authenticationRealm.insertLoginHistory(loadeduserInfo, loginCredential.getAuthType(), "", "", "SUCCESS");
-                        
-            return authentication;
-        }else {
-            String message = WebContext.getI18nValue("login.error.username");
-            _logger.debug("login user  " + loginCredential.getUsername() + " not in this System ." + message);
-            throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
-        }
-    }
 
     /**
      * trustAuthentication.
@@ -158,24 +138,29 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
      * @return boolean
      */
     @Override
-    public  Authentication trustAuthentication(String username, 
-                                            String type, 
-                                            String provider, 
-                                            String code,
-                                            String message) {
-        UserInfo loadeduserInfo = loadUserInfo(username, "");
+    public  Authentication authentication(LoginCredential loginCredential,boolean isTrusted) {
+        UserInfo loadeduserInfo = loadUserInfo(loginCredential.getUsername(), "");
         if (loadeduserInfo != null) {
-            LoginCredential loginCredential = new LoginCredential();
-            loginCredential.setUsername(loadeduserInfo.getUsername());
-            
+            //Validate PasswordPolicy
+            authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(loadeduserInfo);
+            if(!isTrusted) {
+                authenticationRealm.passwordMatches(loadeduserInfo, loginCredential.getPassword());
+            }
+            //apply PasswordSetType and resetBadPasswordCount
+            authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(loadeduserInfo);
             Authentication authentication = createOnlineSession(loginCredential,loadeduserInfo);
             
-            authenticationRealm.insertLoginHistory(loadeduserInfo, type, provider, code, message);
+            authenticationRealm.insertLoginHistory( loadeduserInfo, 
+                                                    loginCredential.getAuthType(), 
+                                                    loginCredential.getProvider(), 
+                                                    loginCredential.getCode(), 
+                                                    loginCredential.getMessage()
+                                                );
             
             return authentication;
         }else {
             String i18nMessage = WebContext.getI18nValue("login.error.username");
-            _logger.debug("login user  " + username + " not in this System ." + i18nMessage);
+            _logger.debug("login user  " + loginCredential.getUsername() + " not in this System ." + i18nMessage);
             throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
         }
     }
