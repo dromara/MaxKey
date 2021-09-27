@@ -50,7 +50,7 @@ public class SingleSignOnFilter implements Filter {
         // 浠巗ession涓幏鍙栧瓨鏀剧殑appid
         String appId = (String) session.getAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID);
         // 鑾峰彇鏈�鍚庝竴涓�"/"鐨勬暟鎹綔涓篴ppid锛屼繚瀛樺湪session涓�
-        if (StringUtils.isNullOrBlank(appId)) {
+        if (StringUtils.isEmpty(appId)) {
             String uir = httpServletRequest.getRequestURI();
             session.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, 
                                 uir.substring(uir.lastIndexOf("/") + 1));

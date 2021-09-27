@@ -1,9 +1,9 @@
 ﻿MaxKey v 3.0.0 GA 2021/09/29
-    *(MAXKEY-210701) 好雨科技Rainbond适配
+    *(MAXKEY-210701) 好雨科技Rainbond适配，实现基于Rainbond应用商店的快速部署
     *(MAXKEY-210702) 制定MaxKey技术路线图
     *(MAXKEY-210703) CHINER元数建模构建MaxKEY ER模型完善，数据库字段说明完善
-    *(MAXKEY-210704) Nacos配置中心支持
-    *(MAXKEY-210705) springcloud &springcloud alibaba支持
+    *(MAXKEY-210704) Nacos配置中心支持，可选支持本地和Nacos配置中心配置，配置更加灵活
+    *(MAXKEY-210705) springcloud &springcloud alibaba微服务支持
     *(MAXKEY-210706) spring cloud gateway支持
     *(MAXKEY-210707) application.properties参数调整和优化，支持外部Docker及环境变量的配置
     *(MAXKEY-210708) 同步器定时任务功能优化
@@ -24,7 +24,10 @@
     *(MAXKEY-210723) mgt登录错误提示信息
     *(MAXKEY-210724) 警告提示信息修复
     *(MAXKEY-210725) 工具类增强和优化
-    *(MAXKEY-210726) 依赖jar引用、更新和升级
+    *(MAXKEY-210726) 登录认证优化，增加密码策略应用和验证
+    *(MAXKEY-210727) CAS登录中参数回传的修复，增加'#'停止符的优化
+	*(MAXKEY-210728) StringUtils优化，直接继承org.apache.commons.lang3.StringUtils，增加自有逻辑
+    *(MAXKEY-210729) 依赖jar引用、更新和升级
         spring              5.3.10
         springBoot          2.5.5
         springkafka         2.7.7

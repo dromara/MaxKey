@@ -292,7 +292,7 @@ public class UserInfoController {
 		binder.registerCustomEditor(String.class, new PropertyEditorSupport() {
 		    @Override
 			public void setAsText(String value) {
-		        	if(StringUtils.isNullOrBlank(value)){
+		        	if(StringUtils.isEmpty(value)){
 		        		setValue(null);
 		        	}else{
 		        		setValue(value);

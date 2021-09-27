@@ -135,7 +135,7 @@ public class SafeController {
 		_logger.debug("App Login Password : "+userInfo.getAppLoginPassword());
 		_logger.debug("App Login new Password : "+ReciprocalUtils.encode(newPassword));
 		if(newPassword.equals(confirmPassword)){
-			if(StringUtils.isNullOrBlank(userInfo.getAppLoginPassword())||userInfo.getAppLoginPassword().equals(ReciprocalUtils.encode(oldPassword))){
+			if(StringUtils.isEmpty(userInfo.getAppLoginPassword())||userInfo.getAppLoginPassword().equals(ReciprocalUtils.encode(oldPassword))){
 				userInfo.setAppLoginPassword(ReciprocalUtils.encode(newPassword));
 				boolean change= userInfoService.changeAppLoginPassword(userInfo);
 				_logger.debug(""+change);

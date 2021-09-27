@@ -27,41 +27,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class StringUtils {
-
-    /**
-     * avoid null, and return value trim.
-     * 
-     * @param value string value.
-     * @return the trim of value.
-     */
-    public static String avoidNull(String value) {
-        return (value == null) ? "" : value.trim();
-    }
-
-    public static boolean isNull(String value) {
-        return value == null;
-    }
-
-    /**
-     * @param value string value
-     * @return value
-     */
-    public static boolean isNullOrBlank(String value) {
-        return value == null || "".equals(value.trim());
-    }
-
-    public static boolean isNotEmpty(String value) {
-        return !isNullOrBlank(value);
-    }
-
-    public static boolean isNotNullAndEquals(String value, String equalString) {
-        return !isNullOrBlank(value) && value.equals(equalString);
-    }
-
-    public static boolean isNotNullAndEqualsIgnoreCase(String value, String equalString) {
-        return !isNullOrBlank(value) && value.equalsIgnoreCase(equalString);
-    }
+public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /*
      * 获取指定UTF-8模式字节长度的字符串
@@ -441,20 +407,20 @@ public final class StringUtils {
      * catch (BadHanyuPinyinOutputFormatCombination e) { e.printStackTrace(); }
      * }else{ pinyin += nameChar[i]; } } return pinyin; }
      */
-    public static Map<String, String> aduserName2Map(String aduserName) {
-        if (isNullOrBlank(aduserName)) {
+    public static Map<String, String> aduserName2Map(String activeDirectoryUserName) {
+        if (isEmpty(activeDirectoryUserName)) {
             return null;
         }
         Map<String, String> map = new HashMap<String, String>();
         int index = 0;
-        if ((index = aduserName.indexOf("\\")) > 0) {
-            map.put("domain", aduserName.substring(0, index));
-            map.put("userName", aduserName.substring(index + 1, aduserName.length()));
-        } else if ((index = aduserName.indexOf("@")) > 0) {
-            map.put("userName", aduserName.substring(0, index));
-            map.put("domain", aduserName.substring(index + 1));
+        if ((index = activeDirectoryUserName.indexOf("\\")) > 0) {
+            map.put("domain", activeDirectoryUserName.substring(0, index));
+            map.put("userName", activeDirectoryUserName.substring(index + 1, activeDirectoryUserName.length()));
+        } else if ((index = activeDirectoryUserName.indexOf("@")) > 0) {
+            map.put("userName", activeDirectoryUserName.substring(0, index));
+            map.put("domain", activeDirectoryUserName.substring(index + 1));
         } else {
-            map.put("userName", aduserName);
+            map.put("userName", activeDirectoryUserName);
         }
         return map;
     }
@@ -465,16 +431,16 @@ public final class StringUtils {
      * @param str
      * @return
      */
-    public static String takeoffDomain(String aduserName) {
-        Map<String, String> map = aduserName2Map(aduserName);
+    public static String takeoffDomain(String activeDirectoryUserName) {
+        Map<String, String> map = aduserName2Map(activeDirectoryUserName);
         if (BeanUtil.isNotNull(map)) {
             return map.get("userName");
         }
         return null;
     }
 
-    public static String getAdDomin(String aduserName) {
-        Map<String, String> map = aduserName2Map(aduserName);
+    public static String getActiveDirectoryDomin(String activeDirectoryUserName) {
+        Map<String, String> map = aduserName2Map(activeDirectoryUserName);
         if (BeanUtil.isNotNull(map)) {
             return map.get("domain");
         }

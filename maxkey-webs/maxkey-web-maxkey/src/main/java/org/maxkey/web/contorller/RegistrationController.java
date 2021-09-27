@@ -182,7 +182,7 @@ public class RegistrationController {
  	@RequestMapping(value={"/registeron"})
  	@ResponseBody
 	public Message registeron(UserInfo userInfo,@RequestParam String emailMobile) throws ServletException, IOException {
- 		if(StringUtils.isNullOrBlank(emailMobile)) {
+ 		if(StringUtils.isEmpty(emailMobile)) {
  			return new Message(WebContext.getI18nValue("register.emailMobile.error"),"1");
  		}
  		if(StringUtils.isValidEmail(emailMobile)) {
