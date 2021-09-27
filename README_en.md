@@ -93,7 +93,7 @@ Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/d
 
 | Version    | Date   |  Docker  |  Pan URL  |  Pan Code  |
 | --------   | :----- | :----    | :----     | :----      |
-| v 2.9.0 GA | 2021/08/24   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |  <a href="https://pan.baidu.com/s/1fYkTHDk2PQ9iAP05PmuPAg" target="_blank">Download</a>  |  **mxk9**  |
+| v 3.0.0 GA | 2021/09/29   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |  <a href="https://pan.baidu.com/s/1UtEgLD1Pz7FQXZePZaP9Tw" target="_blank">Download</a>  |  **mxk9**  |
 
 
 # Roadmap
@@ -138,7 +138,8 @@ Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/d
 | 4.2     | 武汉英特沃科技有限公司                      |  科技  |
 | 4.3     | 江苏创致信息科技有限公司                    |  科技  |
 | 4.4     | 江西云车科技有限公司                        |  科技  |
-| 4.5     | NGROK(ngrok.io)                             |  科技  |
+| 4.5     | 无锡市陶都巨龙软件有限责任公司              |  科技  |
+| 4.6     | NGROK(ngrok.io)                             |  科技  |
 | 5.1     | 王朔日记                                    |  个人  |
 | 5.2     | 一席南风（张彬）                            |  个人  |
 | 5.3     | glzpcw                                      |  个人  |
