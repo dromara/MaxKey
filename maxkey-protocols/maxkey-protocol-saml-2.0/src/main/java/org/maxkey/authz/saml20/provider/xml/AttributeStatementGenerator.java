@@ -25,9 +25,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ldap.ActiveDirectoryUser;
 import org.maxkey.entity.ExtraAttr;
 import org.maxkey.entity.ExtraAttrs;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsSAML20Details;
+import org.maxkey.web.WebContext;
 import org.opensaml.Configuration;
 import org.opensaml.saml2.core.Attribute;
 import org.opensaml.saml2.core.AttributeStatement;
@@ -61,6 +64,8 @@ public class AttributeStatementGenerator {
 		
 		Attribute attributeGrantedAuthority=builderGrantedAuthority(grantedAuthoritys);
 		attributeStatement.getAttributes().add(attributeGrantedAuthority);
+		
+		putUserAttributes(attributeMap);
 		
 		if(null!=attributeMap){
 			Iterator<Entry<String, String>> iterator = attributeMap.entrySet().iterator();
@@ -121,6 +126,29 @@ public class AttributeStatementGenerator {
 		return xsStringValue;
 	}
 	
-	
+	public HashMap <String,String> putUserAttributes(HashMap <String,String> attributeMap){
+        UserInfo userInfo = WebContext.getUserInfo();
+        attributeMap.put(ActiveDirectoryUser.USERNAME, userInfo.getUsername());
+        attributeMap.put(ActiveDirectoryUser.UID, userInfo.getUsername());
+        
+        attributeMap.put(ActiveDirectoryUser.EMPLOYEENUMBER, userInfo.getEmployeeNumber());
+        attributeMap.put(ActiveDirectoryUser.DEPARTMENTNUMBER, userInfo.getDepartmentId());
+        attributeMap.put(ActiveDirectoryUser.DEPARTMENT, userInfo.getDepartment());
+        attributeMap.put(ActiveDirectoryUser.COMPANY, userInfo.getDivision());
+        attributeMap.put(ActiveDirectoryUser.TITLE, userInfo.getJobTitle());
+        attributeMap.put(ActiveDirectoryUser.MANAGER, userInfo.getManagerId());
+        attributeMap.put(ActiveDirectoryUser.MANAGERNAME, userInfo.getManager());
+        
+        attributeMap.put(ActiveDirectoryUser.DISPLAYNAME, userInfo.getDisplayName());
+        attributeMap.put(ActiveDirectoryUser.GIVENNAME, userInfo.getGivenName());
+        attributeMap.put(ActiveDirectoryUser.SN, userInfo.getFamilyName());
+        attributeMap.put(ActiveDirectoryUser.GENDER, userInfo.getGender() + "");
+        attributeMap.put(ActiveDirectoryUser.MAIL, userInfo.getEmail());
+        attributeMap.put(ActiveDirectoryUser.MOBILE, userInfo.getMobile());
+        
+        attributeMap.put(ActiveDirectoryUser.USERSTATUS, userInfo.getStatus() + "");
+        
+        return attributeMap;
+    }
 
 }

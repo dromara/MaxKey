@@ -178,6 +178,13 @@ public class ActiveDirectoryUser {
 	public static final String UNICODEPWD 					= "unicodePwd";
 	public static final String DISTINGUISHEDNAME 			= "distinguishedname";
 	
+	//MaxKey EXTEND
+	public static final String MANAGERNAME                  = "managerName";
+	public static final String USERNAME                     = "username";
+	public static final String USERTYPE                     = "userType";
+	public static final String GENDER                       = "gender";
+	public static final String USERSTATUS                   = "status";
+	
 	
 	public static byte[] encodePassword(String password) throws UnsupportedEncodingException {
 	        return ("\"" + password + "\"").getBytes("UTF-16LE");
