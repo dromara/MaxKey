@@ -252,7 +252,7 @@ public class JwtAccessTokenConverter implements TokenEnhancer, AccessTokenConver
             Map<String, Object> map = objectMapper.parseMap(content);
             if (map.containsKey(EXP) && map.get(EXP) instanceof Integer) {
                 Integer intValue = (Integer) map.get(EXP);
-                map.put(EXP, new Long(intValue));
+                map.put(EXP, Integer.toUnsignedLong(intValue));
             }
             return map;
         } catch (Exception e) {

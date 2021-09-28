@@ -90,7 +90,7 @@ public class BeanConvert {
             }else if(fieldType.equals("long")){
             	value=Long.parseLong(fillValue);
             }else if(fieldType.equals("java.lang.Long")){
-            	value=new Long(fillValue);
+            	value= Long.parseLong(fillValue);
             }else if(fieldType.equals("double")){
             	value=(double)Double.valueOf(fillValue);
             }else if(fieldType.equals("java.lang.Double")){
