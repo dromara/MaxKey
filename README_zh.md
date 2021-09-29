@@ -62,7 +62,7 @@ QQ交流群：<b>434469201</b>
 
 6. 多种认证机制并存，各应用系统可保留原有认证机制，同时集成认证中心的认证；应用具有高度独立性，不依赖认证中心，又可用使用认证中心的认证，实现单点登录。
 
-7. 基于Java平台开发，采用Spring、MySQL、Tomcat、Apache Kafka、Redis等开源技术，支持微服务，扩展性强。  
+7. 基于Java EE平台，采用Spring、MySQL、Tomcat、Redis、Apache Kafka等开源技术，基于微服务架构，扩展性强。  
 
 8. 开源、安全、自主可控，许可证 Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey版权声明</a>。 
 

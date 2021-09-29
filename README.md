@@ -60,7 +60,7 @@ Key Functions
 
 6. Variety of authentication mechanisms coexist, each application system can retain the original authentication mechanism, and integrate the authentication of the MaxKey; the application has a high degree of independence, does not rely on the MaxKey, and can use the authentication of the MaxKey to realize single sign on.
 
-7. Based on Java platform, Adopts Spring, MySQL, Tomcat, Apache Kafka, Redis and other open source technologies, supports microservices, and has strong scalability.
+7. Based on Java EE platform, Adopts Spring, MySQL, Tomcat, Redis , Apache Kafka and other open source technologies, supports microservices, and has strong scalability.
 
 8. Open Source, Secure,  Independent and Controllable , License Under Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright</a> . 
 
