@@ -54,10 +54,8 @@
 			<tr>
 				<td colspan="2"  class="center">
 					<input id="_method" type="hidden" name="_method"  value="post"/>
-					<input type="submit" id="submitButton" style="display: none;" />
-		    		<input id="submitBtn" class="button btn btn-primary" style="width:100px"  type="button"     value="<@locale code="button.text.save" />"/>
-					
-				</td>
+					<input id="submitBtn" class="button btn btn-primary" style="width:100px"  type="submit"     value="<@locale code="button.text.save" />"/>
+			     </td>
 			</tr>
 		</tbody>
 	  </table>
