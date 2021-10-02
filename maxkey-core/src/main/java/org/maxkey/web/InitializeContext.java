@@ -27,6 +27,8 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.lang3.ArchUtils;
 import org.joda.time.DateTime;
 import org.maxkey.cache.CacheFactory;
 import org.maxkey.util.PathUtils;
@@ -206,7 +208,21 @@ public class InitializeContext extends HttpServlet {
             _logger.trace(key + "   =   " + map.get(key));
         }
         _logger.debug("APP_HOME" + "   =   " + PathUtils.getInstance().getAppPath());
+        _logger.debug("OS      : "+SystemUtils.OS_NAME +
+                    "("+SystemUtils.OS_ARCH+" " +ArchUtils.getProcessor().getType()+"),"+
+                    " version " +SystemUtils.OS_VERSION+""
+                );
+        _logger.debug("COMPUTER: "+map.get("COMPUTERNAME") +", "+
+                        "USERNAME : "+map.get("USERNAME")
+                );
+        _logger.debug("JAVA    :");
+        _logger.debug(SystemUtils.JAVA_VENDOR+
+                    " java version "+SystemUtils.JAVA_VERSION +", class "+SystemUtils.JAVA_CLASS_VERSION);
+        _logger.debug(SystemUtils.JAVA_VM_NAME+
+                    " (build "+SystemUtils.JAVA_VM_VERSION +", "+ SystemUtils.JAVA_VM_INFO+")");
+    
         _logger.debug("-----------------------------------------------------------");
+        
     }
 
     /**
