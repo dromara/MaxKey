@@ -53,6 +53,16 @@ public final class ReciprocalUtils {
         public static final String AES = "AES";
     }
 
+    static {
+        if(System.getProperty("java.version").startsWith("1.8")) {
+            try {
+                Security.addProvider(new com.sun.crypto.provider.SunJCE());
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
     public static byte[] encode(byte[] simpleBytes, SecretKey secretKey, String algorithm) {
         // Create the ciphers
         Cipher ecipher;
@@ -155,7 +165,6 @@ public final class ReciprocalUtils {
 
     public static SecretKey generatorDefaultKey(String algorithm) {
         try {
-            Security.addProvider(new com.sun.crypto.provider.SunJCE());
             String secretKey = defaultKey;
             if (algorithm.equals(Algorithm.DES)) {
                 secretKey = defaultKey.substring(0, 8);
