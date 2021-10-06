@@ -212,9 +212,9 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
             e.printStackTrace();
         }
         
-        this.appKey = this.properties.getProperty("maxkey.otp.sms.yunxin.appkey");
-        this.appSecret = this.properties.getProperty("maxkey.otp.sms.yunxin.appsecret");
-        this.templateId = this.properties.getProperty("maxkey.otp.sms.yunxin.templateid");
+        this.appKey         = properties.getProperty("maxkey.otp.sms.yunxin.appkey");
+        this.appSecret      = properties.getProperty("maxkey.otp.sms.yunxin.appsecret");
+        this.templateId     = properties.getProperty("maxkey.otp.sms.yunxin.templateid");
     }
     
     /**

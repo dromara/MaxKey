@@ -17,7 +17,7 @@
 
 package org.maxkey.password.onetimepwd.algorithm;
 
-public class KeyUriFormat {
+public class OtpKeyUriFormat {
 
     public class Types {
         public static final String HOTP = "hotp";
@@ -38,7 +38,7 @@ public class KeyUriFormat {
 
     String account;
 
-    public KeyUriFormat() {
+    public OtpKeyUriFormat() {
 
     }
 
@@ -46,7 +46,7 @@ public class KeyUriFormat {
      * @param type
      * @param secret
      */
-    public KeyUriFormat(String type, String secret) {
+    public OtpKeyUriFormat(String type, String secret) {
         this.type = type;
         this.secret = secret;
     }
@@ -56,10 +56,33 @@ public class KeyUriFormat {
      * @param secret
      * @param issuer
      */
-    public KeyUriFormat(String type, String secret, String issuer) {
+    public OtpKeyUriFormat(String type, String secret, String issuer) {
         this.type = type;
         this.secret = secret;
         this.issuer = issuer;
+    }
+
+    public OtpKeyUriFormat(String crypto, String type, String secret, String issuer, String domain, int digits,
+            Long counter, int period, String account) {
+        super();
+        this.crypto = crypto;
+        this.type = type;
+        this.secret = secret;
+        this.issuer = issuer;
+        this.domain = domain;
+        this.digits = digits;
+        this.counter = counter;
+        this.period = period;
+        this.account = account;
+    }
+
+    public OtpKeyUriFormat(String type,  String issuer, String domain, int digits,int period) {
+        super();
+        this.type = type;
+        this.issuer = issuer;
+        this.domain = domain;
+        this.digits = digits;
+        this.period = period;
     }
 
     /**

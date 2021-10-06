@@ -18,17 +18,17 @@
 package org.maxkey.password.onetimepwd.impl;
 
 import java.io.IOException;
-import java.util.Properties;
 
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.StandardEnvironment;
 
 public class SmsOtpAuthn extends AbstractOtpAuthn {
     private static final  Logger logger = LoggerFactory.getLogger(SmsOtpAuthn.class);
     
-    protected Properties properties;
+    protected StandardEnvironment properties;
     
     
     @Override
@@ -44,7 +44,7 @@ public class SmsOtpAuthn extends AbstractOtpAuthn {
         return true;
     }
     
-    public void setProperties(Properties properties) {
+    public void setProperties(StandardEnvironment properties) {
 		this.properties = properties;
 	}
 

@@ -19,7 +19,7 @@ package org.maxkey.otp.algorithm;
 
 import java.io.File;
 
-import org.maxkey.password.onetimepwd.algorithm.KeyUriFormat;
+import org.maxkey.password.onetimepwd.algorithm.OtpKeyUriFormat;
 import org.maxkey.util.QRCode;
 
 import com.google.zxing.BarcodeFormat;
@@ -29,7 +29,7 @@ import com.google.zxing.common.BitMatrix;
 public class KeyUriFormatTest {
 	public static void main(String[] args) { 
         try {  
-        	KeyUriFormat kuf=new KeyUriFormat(KeyUriFormat.Types.TOTP,
+        	OtpKeyUriFormat kuf=new OtpKeyUriFormat(OtpKeyUriFormat.Types.TOTP,
         			"GIWVWOL7EI5WLVZPDMROEPSTFBEVO77Q",
         			"connsec.com");
         	kuf.setPeriod(60);

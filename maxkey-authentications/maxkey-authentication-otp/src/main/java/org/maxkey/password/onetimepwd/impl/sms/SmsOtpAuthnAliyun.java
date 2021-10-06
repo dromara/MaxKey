@@ -138,10 +138,10 @@ public class SmsOtpAuthnAliyun extends SmsOtpAuthn {
             e.printStackTrace();
         }
         
-        this.accessKeyId = this.properties.getProperty("maxkey.otp.sms.aliyun.accesskeyid");
-        this.accessSecret = this.properties.getProperty("maxkey.otp.sms.aliyun.accesssecret");
-        this.templateCode = this.properties.getProperty("maxkey.otp.sms.aliyun.templatecode");
-        this.signName = this.properties.getProperty("maxkey.otp.sms.aliyun.signname");
+        this.accessKeyId    = properties.getProperty("maxkey.otp.sms.aliyun.accesskeyid");
+        this.accessSecret   = properties.getProperty("maxkey.otp.sms.aliyun.accesssecret");
+        this.templateCode   = properties.getProperty("maxkey.otp.sms.aliyun.templatecode");
+        this.signName       = properties.getProperty("maxkey.otp.sms.aliyun.signname");
     }
     
 }

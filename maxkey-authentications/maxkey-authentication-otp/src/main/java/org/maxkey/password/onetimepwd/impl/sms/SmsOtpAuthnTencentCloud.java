@@ -55,7 +55,6 @@ public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
         otpType = OtpTypes.SMS;
     }
     
-
     
     
     @Override
@@ -181,11 +180,11 @@ public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
             e.printStackTrace();
         }
         
-        this.secretId = this.properties.getProperty("maxkey.otp.sms.tencentcloud.secretid");
-        this.secretKey = this.properties.getProperty("maxkey.otp.sms.tencentcloud.secretkey");
-        this.smsSdkAppid = this.properties.getProperty("maxkey.otp.sms.tencentcloud.smssdkappid");
-        this.templateId = this.properties.getProperty("maxkey.otp.sms.tencentcloud.templateid");
-        this.sign = this.properties.getProperty("maxkey.otp.sms.tencentcloud.sign");
+        this.secretId       = properties.getProperty("maxkey.otp.sms.tencentcloud.secretid");
+        this.secretKey      = properties.getProperty("maxkey.otp.sms.tencentcloud.secretkey");
+        this.smsSdkAppid    = properties.getProperty("maxkey.otp.sms.tencentcloud.smssdkappid");
+        this.templateId     = properties.getProperty("maxkey.otp.sms.tencentcloud.templateid");
+        this.sign           = properties.getProperty("maxkey.otp.sms.tencentcloud.sign");
     }
     
 }

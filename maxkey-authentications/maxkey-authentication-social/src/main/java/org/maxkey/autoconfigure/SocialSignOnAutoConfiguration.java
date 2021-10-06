@@ -30,7 +30,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -44,26 +43,21 @@ public class SocialSignOnAutoConfiguration implements InitializingBean {
     @Bean(name = "socialSignOnProviderService")
     @ConditionalOnClass(SocialSignOnProvider.class)
     public SocialSignOnProviderService socialSignOnProviderService(
-    		PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer) throws IOException {
+            StandardEnvironment environment) throws IOException {
         SocialSignOnProviderService socialSignOnProviderService = new SocialSignOnProviderService();
-
-        StandardEnvironment properties = (StandardEnvironment) propertySourcesPlaceholderConfigurer
-                .getAppliedPropertySources()
-                .get(PropertySourcesPlaceholderConfigurer.ENVIRONMENT_PROPERTIES_PROPERTY_SOURCE_NAME)
-                .getSource();
         
         List<SocialSignOnProvider> socialSignOnProviderList = new ArrayList<SocialSignOnProvider>();
        
-        String [] providerList =properties.getProperty("maxkey.login.socialsignon.providers").toString().split(",");
+        String [] providerList =environment.getProperty("maxkey.login.socialsignon.providers").toString().split(",");
         
         for(String provider : providerList) {
-            String providerName = properties.getProperty("maxkey.socialsignon."+provider+".provider.name");
-            String icon=properties.getProperty("maxkey.socialsignon."+provider+".icon");
-            String clientId=properties.getProperty("maxkey.socialsignon."+provider+".client.id");
-            String clientSecret=properties.getProperty("maxkey.socialsignon."+provider+".client.secret");
-            String sortOrder = properties.getProperty("maxkey.socialsignon."+provider+".sortorder");
-            String agentId = properties.getProperty("maxkey.socialsignon."+provider+".agent.id");
-            String hidden = properties.getProperty("maxkey.socialsignon."+provider+".hidden");
+            String providerName = environment.getProperty("maxkey.socialsignon."+provider+".provider.name");
+            String icon=environment.getProperty("maxkey.socialsignon."+provider+".icon");
+            String clientId=environment.getProperty("maxkey.socialsignon."+provider+".client.id");
+            String clientSecret=environment.getProperty("maxkey.socialsignon."+provider+".client.secret");
+            String sortOrder = environment.getProperty("maxkey.socialsignon."+provider+".sortorder");
+            String agentId = environment.getProperty("maxkey.socialsignon."+provider+".agent.id");
+            String hidden = environment.getProperty("maxkey.socialsignon."+provider+".hidden");
             
             SocialSignOnProvider socialSignOnProvider = new SocialSignOnProvider();
             socialSignOnProvider.setProvider(provider);

@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
@@ -38,7 +37,7 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.EmailConfig;
 import org.maxkey.constants.ConstantsPersistence;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
-import org.maxkey.password.onetimepwd.algorithm.KeyUriFormat;
+import org.maxkey.password.onetimepwd.algorithm.OtpKeyUriFormat;
 import org.maxkey.password.onetimepwd.impl.MailOtpAuthn;
 import org.maxkey.password.onetimepwd.impl.SmsOtpAuthn;
 import org.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
@@ -60,6 +59,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -87,27 +87,22 @@ public class MaxKeyConfig  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyConfig.class);
     
 
-    @Bean(name = "keyUriFormat")
-    public KeyUriFormat keyUriFormat(
-            @Value("${maxkey.otp.keyuri.format.type:totp}")
-            String keyuriFormatType,
-            @Value("${maxkey.otp.keyuri.format.domain:MaxKey.top}")
-            String keyuriFormatDomain,
-            @Value("${maxkey.otp.keyuri.format.issuer:MaxKey}")
-            String keyuriFormatIssuer,
-            @Value("${maxkey.otp.keyuri.format.digits:6}")
-            int keyuriFormatDigits,
-            @Value("${maxkey.otp.keyuri.format.period:30}")
-            int keyuriFormatPeriod) {
+    @Bean(name = "otpKeyUriFormat")
+    public OtpKeyUriFormat otpKeyUriFormat(
+                @Value("${maxkey.otp.policy.type:totp}")
+                String type,
+                @Value("${maxkey.otp.policy.domain:MaxKey.top}")
+                String domain,
+                @Value("${maxkey.otp.policy.issuer:MaxKey}")
+                String issuer,
+                @Value("${maxkey.otp.policy.digits:6}")
+                int digits,
+                @Value("${maxkey.otp.policy.period:30}")
+                int period) {
         
-        KeyUriFormat keyUriFormat=new KeyUriFormat();
-        keyUriFormat.setType(keyuriFormatType);
-        keyUriFormat.setDomain(keyuriFormatDomain);
-        keyUriFormat.setIssuer(keyuriFormatIssuer);
-        keyUriFormat.setDigits(keyuriFormatDigits);
-        keyUriFormat.setPeriod(keyuriFormatPeriod);
-        _logger.debug("KeyUri Format " + keyUriFormat);
-        return keyUriFormat;
+        OtpKeyUriFormat otpKeyUriFormat=new OtpKeyUriFormat(type,issuer,domain,digits,period);
+        _logger.debug("OTP KeyUri Format " + otpKeyUriFormat);
+        return otpKeyUriFormat;
     }
     
     public AbstractAuthenticationRealm ldapAuthenticationRealm(
@@ -194,18 +189,26 @@ public class MaxKeyConfig  implements InitializingBean {
     }
     
 	@Bean(name = "timeBasedOtpAuthn")
-    public TimeBasedOtpAuthn timeBasedOtpAuthn() {
-	    TimeBasedOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn();
+    public TimeBasedOtpAuthn timeBasedOtpAuthn(
+                @Value("${maxkey.otp.policy.digits:6}")
+                int digits,
+                @Value("${maxkey.otp.policy.period:30}")
+                int period) {
+	    TimeBasedOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn(digits , period);
 	    _logger.debug("TimeBasedOtpAuthn inited.");
         return tfaOtpAuthn;
     }
     
     @Bean(name = "tfaOtpAuthn")
     public AbstractOtpAuthn tfaOptAuthn(
-            @Value("${maxkey.login.mfa.type}")String mfaType,
-            @Value("${maxkey.server.persistence}") int persistence,
-            RedisConnectionFactory redisConnFactory) {    
-        AbstractOtpAuthn tfaOtpAuthn  = new TimeBasedOtpAuthn();
+                @Value("${maxkey.login.mfa.type}")String mfaType,
+                @Value("${maxkey.otp.policy.digits:6}")
+                int digits,
+                @Value("${maxkey.otp.policy.period:30}")
+                int period,
+                @Value("${maxkey.server.persistence}") int persistence,
+                RedisConnectionFactory redisConnFactory) {    
+        AbstractOtpAuthn tfaOtpAuthn  = new TimeBasedOtpAuthn(digits , period);
         _logger.debug("TimeBasedOtpAuthn inited.");
 
         if (persistence == ConstantsPersistence.REDIS) {
@@ -251,14 +254,14 @@ public class MaxKeyConfig  implements InitializingBean {
     
     @Bean(name = "smsOtpAuthn")
     public SmsOtpAuthn smsOtpAuthn(
-            @Value("${maxkey.otp.sms}")String optSmsProvider,
+            @Value("${maxkey.otp.sms.provider}")String provider,
             @Value("${maxkey.server.persistence}") int persistence,
-            Properties applicationProperty,
+            StandardEnvironment environment,
             RedisConnectionFactory redisConnFactory) {
         SmsOtpAuthn smsOtpAuthn = null;
-        if(optSmsProvider.equalsIgnoreCase("SmsOtpAuthnAliyun")) {
+        if(provider.equalsIgnoreCase("aliyun")) {
             smsOtpAuthn = new SmsOtpAuthnAliyun();
-        }else if(optSmsProvider.equalsIgnoreCase("SmsOtpAuthnTencentCloud")) {
+        }else if(provider.equalsIgnoreCase("tencentcloud")) {
             smsOtpAuthn = new SmsOtpAuthnTencentCloud();
         }else {
             smsOtpAuthn = new SmsOtpAuthnYunxin();
@@ -267,10 +270,11 @@ public class MaxKeyConfig  implements InitializingBean {
             RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);
             smsOtpAuthn.setOptTokenStore(redisOptTokenStore);
         }
-        smsOtpAuthn.setProperties(applicationProperty);
+        
+        smsOtpAuthn.setProperties(environment);
         smsOtpAuthn.initPropertys();
         
-        _logger.debug("SmsOtpAuthn inited.");
+        _logger.debug("SmsOtpAuthn {} inited." ,smsOtpAuthn.getClass().getCanonicalName());
         return smsOtpAuthn;
     }
     

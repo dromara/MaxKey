@@ -38,6 +38,12 @@ public class TimeBasedOtpAuthn extends AbstractOtpAuthn {
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
+    public TimeBasedOtpAuthn(int digits , int interval) {
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        super.digits = digits;
+        super.interval = interval;
+    }
+    
     @Override
     public boolean produce(UserInfo userInfo) {
         return true;
