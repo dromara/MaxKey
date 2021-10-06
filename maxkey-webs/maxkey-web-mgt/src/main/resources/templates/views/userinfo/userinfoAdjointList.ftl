@@ -3,12 +3,7 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
-<style   type="text/css">
-  .table th, .table td {
-    padding: .2rem;
-    vertical-align: middle;
-  }
-</style>
+    <link type="text/css" rel="stylesheet"  href="<@base />/static/css/minitable.css"/>
 
 <script type="text/javascript">
 	function genderFormatter(value, row, index){

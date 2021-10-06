@@ -303,15 +303,9 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 	border: 1px solid #e5e5e5;
 }
 
-
-#tool_box  .table td, .table th {
+#tool_box  .table td, #tool_box  .table th,.toolbox .table td, .tool_box  .table th{
+    padding: 0.2rem;
     vertical-align: middle;
-    padding: .40rem;
-}
-
-.toolbox  .table td, .table th {
-    vertical-align: middle;
-    padding: .40rem;
 }
 
 #tool_box_left {

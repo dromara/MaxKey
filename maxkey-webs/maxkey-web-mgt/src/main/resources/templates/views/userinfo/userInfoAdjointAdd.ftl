@@ -16,13 +16,7 @@
       });
       //-->
 </script>
-
-<style   type="text/css">
-  .table th, .table td {
-    padding: .2rem;
-    vertical-align: middle;
-  }
-</style>
+<link type="text/css" rel="stylesheet"  href="<@base />/static/css/minitable.css"/>
 </head>
 <body>
 <form  id="actionForm"

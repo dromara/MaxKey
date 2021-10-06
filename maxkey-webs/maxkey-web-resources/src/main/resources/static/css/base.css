@@ -107,6 +107,11 @@ body{
 	border: 1px solid #e5e5e5;
 }
 
+#tool_box  .table td, #tool_box  .table th,.toolbox .table td, .tool_box  .table th{
+    padding: 0.2rem;
+    vertical-align: middle;
+}
+
 #tool_box_left {
 	padding-left: 10px;
 	float: left;

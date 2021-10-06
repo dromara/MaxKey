@@ -27,12 +27,7 @@
        		<span class="fa fa-fw fa-vcard  fa-lg"></span>
      	</a>
    	</li>  	
-   	<li>
-        <a class="side-nav-menu" href="<@base />/apps/list/">
-            <@locale code="navs.apps"/>
-            <span class="fa fa-fw fa-globe fa-lg"></span>
-        </a>
-    </li>
+   	
    	<li>
      	<a class="side-nav-menu has-arrow" href="#">
        		<@locale code="navs.privileges"/>
@@ -98,6 +93,12 @@
        		<span class="fa fa-fw fa-cogs fa-lg"></span>
      	</a>
      	<ul>
+            <li>
+                <a class="side-nav-menu" href="<@base />/apps/list/">
+                    <@locale code="navs.apps"/>
+                    <span class="fa fa-fw fa-globe fa-lg"></span>
+                </a>
+            </li>
            <li>
              <a class="side-nav-menu" href="<@base />/notices/list/">
                 <@locale code="navs.notices"/>  

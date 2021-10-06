@@ -1,0 +1,14 @@
+.table td, .table th {
+    padding: 0.2rem;
+    vertical-align: middle;
+}
+
+.bootstrap-table .fixed-table-container .table th, .bootstrap-table .fixed-table-container .table td{
+  padding: .5rem;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .th-inner {
+    padding: 0.5rem;
+}
+
+    

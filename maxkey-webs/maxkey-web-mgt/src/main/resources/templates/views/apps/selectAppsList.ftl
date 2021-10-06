@@ -3,15 +3,11 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
-<style>
-<!--
-
--->
-</style>
-
+    <link type="text/css" rel="stylesheet"  href="<@base />/static/css/minitable.css"/>
+  
 <script type="text/javascript">				
 	function iconFormatter(value, row, index){
-  			return "<img width='30' height='30' border='0px' src='<@base/>/image/"+value+"'/>";
+  			return "<img height='30' border='0px' src='<@base/>/image/"+value+"'/>";
 	};
 
 	$(function () {
@@ -62,7 +58,7 @@
 						data-click-to-select="true"
 						data-pagination="true"
 						data-total-field="records"
-						data-page-list="[10, 25, 50, 100]"
+						data-page-list="[5, 10, 25, 50]"
 						data-search="false"
 						data-locale="zh-CN"
 						data-query-params="dataGridQueryParams"
@@ -74,9 +70,9 @@
 						<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
 						<th data-field="id" data-formatter="iconFormatter"><@locale code="apps.icon"/></th>
 						<th data-field="name"><@locale code="apps.name"/></th>
-						<th data-field="protocol"><@locale code="apps.protocol"/></th>
+						<th data-field="protocol"  data-visible="false"><@locale code="apps.protocol"/></th>
 						<th data-field="category"><@locale code="apps.category"/></th>
-						<th data-field="vendor"><@locale code="apps.vendor"/></th>
+						<th data-field="vendor"  data-visible="false"><@locale code="apps.vendor"/></th>
 						<th data-field="loginUrl" data-visible="false"><@locale code="log.loginhistory.loginUrl"/></th>
 			
 					</tr>
