@@ -17,11 +17,10 @@
 
 package org.maxkey;
 
-import java.util.Date;
-
 import javax.servlet.ServletException;
 import org.apache.ibatis.io.VFS;
 import org.apache.mybatis.jpa.SpringBootVFS;
+import org.joda.time.DateTime;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.InitializeContext;
 import org.mybatis.spring.annotation.MapperScan;
@@ -55,7 +54,7 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
         } catch (ServletException e) {
             _logger.error("ServletException", e);
         }
-        _logger.info("MaxKey at " + new Date(applicationContext.getStartupDate()));
+        _logger.info("MaxKey at " + new DateTime());
         _logger.info("MaxKey Server Port "
                 +   applicationContext.getBean(ApplicationConfig.class).getPort());
         _logger.info("MaxKey started.");
