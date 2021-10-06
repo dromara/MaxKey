@@ -219,7 +219,7 @@ public class PasswordPolicyValidator {
            String passwordPolicyMessage = "";
            for (String msg : validator.getMessages(result)) {
                passwordPolicyMessage = passwordPolicyMessage + msg + "<br>";
-               _logger.debug("Rule Message " + msg);
+               _logger.debug("Rule Message {}" , msg);
            }
            WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, passwordPolicyMessage);
            return false;
@@ -250,9 +250,13 @@ public class PasswordPolicyValidator {
                     DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
             Duration duration = new Duration(badPasswordTime, currentdateTime);
             int intDuration = Integer.parseInt(duration.getStandardHours() + "");
-            _logger.debug("bad Password duration " + intDuration
-                    + " , password policy Duration "+passwordPolicy.getDuration()
-                    + " , validate result " + (intDuration > passwordPolicy.getDuration()));
+            _logger.debug("bad Password duration {} , " + 
+                          "password policy Duration {} , "+
+                          "validate result {}" ,
+                          intDuration,
+                          passwordPolicy.getDuration(), 
+                          (intDuration > passwordPolicy.getDuration())
+                    );
             //auto unlock attempts when intDuration > set Duration
             if(intDuration > passwordPolicy.getDuration()) {
                 _logger.debug("resetAttempts ...");
@@ -310,15 +314,19 @@ public class PasswordPolicyValidator {
         */
        if (passwordPolicy.getExpiration() > 0) {
            String passwordLastSetTimeString = userInfo.getPasswordLastSetTime().substring(0, 19);
-           _logger.info("last password set date " + passwordLastSetTimeString);
+           _logger.info("last password set date {}" , passwordLastSetTimeString);
 
            DateTime changePwdDateTime = DateTime.parse(passwordLastSetTimeString,
                    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
            Duration duration = new Duration(changePwdDateTime, currentdateTime);
            int intDuration = Integer.parseInt(duration.getStandardDays() + "");
-           _logger.debug("password Last Set duration day " + intDuration
-                   + " , password policy Expiration " +passwordPolicy.getExpiration()
-                   +" , validate result " + (intDuration <= passwordPolicy.getExpiration()));
+           _logger.debug("password Last Set duration day {} , " +
+                         "password policy Expiration {} , " +
+                         "validate result {}", 
+                    intDuration,
+                    passwordPolicy.getExpiration(),
+                    intDuration <= passwordPolicy.getExpiration()
+                );
            if (intDuration > passwordPolicy.getExpiration()) {
                WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
                        ConstantsPasswordSetType.PASSWORD_EXPIRED);
@@ -339,9 +347,10 @@ public class PasswordPolicyValidator {
                jdbcTemplate.update(LOCK_USER_UPDATE_STATEMENT,
                        new Object[] { ConstantsStatus.LOCK, new Date(), userInfo.getId() },
                        new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
+               userInfo.setIsLocked(ConstantsStatus.LOCK);
            }
        } catch (Exception e) {
-           e.printStackTrace();
+           _logger.error("lockUser Exception",e);
        }
    }
    
@@ -357,9 +366,10 @@ public class PasswordPolicyValidator {
                jdbcTemplate.update(UNLOCK_USER_UPDATE_STATEMENT,
                        new Object[] { ConstantsStatus.ACTIVE, new Date(), userInfo.getId() },
                        new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
+               userInfo.setIsLocked(ConstantsStatus.ACTIVE);
            }
        } catch (Exception e) {
-           e.printStackTrace();
+           _logger.error("unlockUser Exception",e);
        }
    }
 
@@ -374,10 +384,10 @@ public class PasswordPolicyValidator {
                jdbcTemplate.update(BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT,
                        new Object[] { 0, ConstantsStatus.ACTIVE, new Date(), userInfo.getId() },
                        new int[] { Types.INTEGER, Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
+               userInfo.setIsLocked(ConstantsStatus.ACTIVE);
            }
        } catch (Exception e) {
-           e.printStackTrace();
-           _logger.error(e.getMessage());
+           _logger.error("resetAttempts Exception",e);
        }
    }
 
@@ -392,8 +402,7 @@ public class PasswordPolicyValidator {
                    new Object[] { badPasswordCount, new Date(), userId },
                    new int[] { Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
        } catch (Exception e) {
-           e.printStackTrace();
-           _logger.error(e.getMessage());
+           _logger.error("setBadPasswordCount Exception",e);
        }
    }
    

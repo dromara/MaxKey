@@ -116,7 +116,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
             }
         }
         
-        _logger.debug("passwordvalid : " + passwordMatches);
+        _logger.debug("passwordvalid : {}" , passwordMatches);
         if (!passwordMatches) {
             passwordPolicyValidator.plusBadPasswordCount(userInfo);
             insertLoginHistory(userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", "password error");

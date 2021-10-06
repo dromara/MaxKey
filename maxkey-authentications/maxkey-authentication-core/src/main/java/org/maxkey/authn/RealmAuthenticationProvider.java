@@ -160,7 +160,8 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
             return authentication;
         }else {
             String i18nMessage = WebContext.getI18nValue("login.error.username");
-            _logger.debug("login user  " + loginCredential.getUsername() + " not in this System ." + i18nMessage);
+            _logger.debug("login user {} not in this System . {}" , 
+                            loginCredential.getUsername(),i18nMessage);
             throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
         }
     }
@@ -169,7 +170,10 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         String currentUserSessionId = WebContext.genId();
         //Online Tickit Id
         String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + currentUserSessionId;
-        _logger.debug("set online Tickit Cookie " + onlineTickitId + " on domain "+ this.applicationConfig.getBaseDomainName());
+        _logger.debug("set online Tickit Cookie {} on domain {}",
+                        onlineTickitId, 
+                        this.applicationConfig.getBaseDomainName()
+                    );
         
         OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId);
         
@@ -191,7 +195,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
                 _logger.trace("ROLE ADMINISTRATORS Authentication .");
             }
         }
-        _logger.debug("Granted Authority " + grantedAuthoritys);
+        _logger.debug("Granted Authority {}" , grantedAuthoritys);
         
         signinPrincipal.setGrantedAuthorityApps(authenticationRealm.queryAuthorizedApps(grantedAuthoritys));
         

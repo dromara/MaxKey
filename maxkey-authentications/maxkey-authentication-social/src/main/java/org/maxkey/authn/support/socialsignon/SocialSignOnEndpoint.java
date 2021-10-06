@@ -48,9 +48,9 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(SocialSignOnEndpoint.class);
 	
     public  ModelAndView socialSignOnAuthorize(HttpServletRequest request,String provider){
-    	_logger.trace("SocialSignOn provider : "+provider);
+    	_logger.trace("SocialSignOn provider : " + provider);
     	String authorizationUrl=buildAuthRequest(provider).authorize(request.getSession().getId());
-		_logger.trace("authorize SocialSignOn : "+authorizationUrl);
+		_logger.trace("authorize SocialSignOn : " + authorizationUrl);
 		return WebContext.redirect(authorizationUrl);
     }
     
@@ -77,12 +77,16 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		socialSignOnUser.setProvider(provider);
 		socialSignOnUser.setUserId(WebContext.getUserInfo().getId());
 		socialSignOnUser.setUsername(WebContext.getUserInfo().getUsername());
-		_logger.debug("Social Sign On unbind "+provider+" from user "+WebContext.getUserInfo().getUsername());
+		_logger.debug("Social Sign On unbind {} from user {}",
+		                provider,
+		                WebContext.getUserInfo().getUsername()
+		          );
 		
 		socialsAssociateService.delete(socialSignOnUser);
 		
-		if(WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI)!=null){
-			return WebContext.redirect(WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI).toString());
+		Object redirect_uri = WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI);
+		if(redirect_uri != null){
+			return WebContext.redirect(redirect_uri.toString());
 		}else{
 			return WebContext.forward("/socialsignon/list");
 		}
@@ -105,7 +109,8 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		socialSignOnAuthorize(request,provider);
 		SocialSignOnProvider socialSignOnProvider = socialSignOnProviderService.get(provider);
 		socialSignOnProvider.setState(request.getSession().getId());
-		socialSignOnProvider.setRedirectUri(applicationConfig.getServerPrefix()+ "/logon/oauth20/callback/"+provider);
+		socialSignOnProvider.setRedirectUri(applicationConfig.getServerPrefix()+ 
+		                                    "/logon/oauth20/callback/"+provider);
 		return socialSignOnProvider;
 	}
 	
@@ -123,20 +128,21 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
     		socialsAssociate.setSocialUserId(this.accountId);
     		
     		//for login
-    		String socialSignOnType= "";
-    		if(WebContext.getAttribute(SOCIALSIGNON_TYPE_SESSION)!=null){
-    			socialSignOnType=WebContext.getAttribute(SOCIALSIGNON_TYPE_SESSION).toString();
-    		}
+    		String socialSignOnType= 
+    		        (WebContext.getAttribute(SOCIALSIGNON_TYPE_SESSION)!=null) ? 
+    		                  (WebContext.getAttribute(SOCIALSIGNON_TYPE_SESSION).toString()) : "";
     		
-    		if(socialSignOnType.equals(SOCIALSIGNON_TYPE.SOCIALSIGNON_TYPE_LOGON)||socialSignOnType.equals("")){
+    		
+    		if(socialSignOnType.equals(SOCIALSIGNON_TYPE.SOCIALSIGNON_TYPE_LOGON)
+    		        ||socialSignOnType.equals("")){
     			socialSignOn(socialsAssociate);
     			return WebContext.redirect("/index");
     		}else{
     			socialBind(socialsAssociate);
     		}
-    		
-    		if(WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI)!=null){
-    			return WebContext.redirect(WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI).toString());
+    		Object redirect_uri = WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI);
+    		if(redirect_uri != null){
+    			return WebContext.redirect(redirect_uri.toString());
     		}else{
     			return WebContext.forward("/socialsignon/list");
     		}
@@ -171,11 +177,15 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		_logger.debug("Loaded SocialSignOn Socials Associate : "+socialsAssociate);
 		
 		if(null == socialsAssociate) {
-		    WebContext.getRequest().getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, new BadCredentialsException(WebContext.getI18nValue("login.error.social")));
+		    WebContext.getRequest().getSession().setAttribute(
+		            WebAttributes.AUTHENTICATION_EXCEPTION, 
+		            new BadCredentialsException(WebContext.getI18nValue("login.error.social"))
+		          );
             return false;
 		}
 		
-		_logger.debug("Social Sign On from "+socialsAssociate.getProvider()+" mapping to user "+socialsAssociate.getUsername());
+		_logger.debug("Social Sign On from {} mapping to user {}",
+		                socialsAssociate.getProvider(),socialsAssociate.getUsername());
 		
 		LoginCredential loginCredential =new LoginCredential(
 		        socialsAssociate.getUsername(),"",ConstantsLoginType.SOCIALSIGNON);

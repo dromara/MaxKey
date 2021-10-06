@@ -102,8 +102,8 @@ public abstract class AbstractAuthenticationProvider {
             WebContext.setAttribute(
                     WebConstants.LOGIN_ERROR_SESSION_MESSAGE, e.getMessage());
         } catch (Exception e) {
-            String message = "Unexpected exception in " + getProviderName() + " authentication:";
-            _logger.error("Login error " + message, e);
+            _logger.error("Login error Unexpected exception in {} authentication:\n{}" ,
+                            getProviderName(), e.getMessage());
         }
         
         if (authentication== null || !authentication.isAuthenticated()) {
@@ -186,7 +186,7 @@ public abstract class AbstractAuthenticationProvider {
         }
         
         final   String message = WebContext.getI18nValue("login.error.authtype");
-        _logger.debug("Login AuthN type must eq basic or tfa ， Error message is " + message);
+        _logger.debug("Login AuthN type must eq basic or tfa ， Error message is {}" , message);
         throw new BadCredentialsException(message);
     }
 

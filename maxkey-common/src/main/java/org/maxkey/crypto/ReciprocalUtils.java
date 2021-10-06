@@ -21,6 +21,7 @@
 package org.maxkey.crypto;
 
 import java.io.UnsupportedEncodingException;
+import java.security.Provider;
 import java.security.Security;
 
 import javax.crypto.Cipher;
@@ -28,6 +29,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.logging.LogFactory;
+import org.maxkey.util.Instance;
 import org.maxkey.util.StringGenerator;
 
 /**
@@ -56,11 +58,12 @@ public final class ReciprocalUtils {
     static {
         if(System.getProperty("java.version").startsWith("1.8")) {
             try {
-                Security.addProvider(new com.sun.crypto.provider.SunJCE());
+                Security.addProvider((Provider)Instance.newInstance("com.sun.crypto.provider.SunJCE"));
             }catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        //else not need to add see jdk-17\conf\security\java.security,SunJCE
     }
     
     public static byte[] encode(byte[] simpleBytes, SecretKey secretKey, String algorithm) {

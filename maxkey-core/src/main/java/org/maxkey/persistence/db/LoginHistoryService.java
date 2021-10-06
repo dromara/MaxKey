@@ -77,14 +77,16 @@ public class LoginHistoryService {
     
     
     public void logoff(String lastLogoffTime,String sessionId) {
-        _logger.debug(" sessionId " +sessionId +" , lastlogofftime " + lastLogoffTime);
+        _logger.debug(" sessionId {} , lastlogofftime {}" ,sessionId, lastLogoffTime);
         jdbcTemplate.update(HISTORY_LOGOUT_UPDATE_STATEMENT,
                 new Object[] { lastLogoffTime, sessionId },                           
                 new int[] { Types.VARCHAR, Types.VARCHAR });
     }
     
     public void logoff(HistoryLogin historyLogin) {
-        _logger.debug(" sessionId " +historyLogin.getSessionId() +" , LogoutTime " + historyLogin.getLogoutTime());
+        _logger.debug(" sessionId {} , LogoutTime {}" ,
+                    historyLogin.getSessionId(), historyLogin.getLogoutTime()
+                );
         jdbcTemplate.update(HISTORY_LOGOUT_UPDATE_STATEMENT,
                 new Object[] { historyLogin.getLogoutTime(), historyLogin.getSessionId() },                           
                 new int[] { Types.VARCHAR, Types.VARCHAR });

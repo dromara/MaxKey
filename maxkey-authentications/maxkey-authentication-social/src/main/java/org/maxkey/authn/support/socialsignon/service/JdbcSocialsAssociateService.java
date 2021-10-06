@@ -23,6 +23,7 @@ import java.sql.Types;
 import java.util.Date;
 import java.util.List;
 
+import org.maxkey.constants.ConstantsDatabase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -45,22 +46,16 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 
 	private final JdbcTemplate jdbcTemplate;
 	
-	private String jdbcType;
-	
 	public JdbcSocialsAssociateService(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate=jdbcTemplate;	
-		try {
-    		jdbcType = jdbcTemplate.getDataSource().getConnection().getMetaData().getDatabaseProductName();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Override
 	public boolean insert(SocialsAssociate socialsAssociate) {
 		socialsAssociate.setId(socialsAssociate.generateId());
-		jdbcTemplate.update("Oracle".equals(jdbcType)?DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE:DEFAULT_DEFAULT_INSERT_STATEMENT, 
+		jdbcTemplate.update(
+		        ConstantsDatabase.compare(ConstantsDatabase.ORACLE)?
+		                DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE:DEFAULT_DEFAULT_INSERT_STATEMENT, 
 				new Object[] { 
 					socialsAssociate.getId(),
 					socialsAssociate.getUserId(),
@@ -70,7 +65,10 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 					socialsAssociate.getAccessToken(),
 					socialsAssociate.getSocialUserInfo(),
 					socialsAssociate.getExAttribute()},
-				new int[] {Types.VARCHAR, Types.VARCHAR,Types.VARCHAR,Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR,Types.VARCHAR });
+				new int[] {
+				        Types.VARCHAR, Types.VARCHAR,Types.VARCHAR,Types.VARCHAR, 
+				        Types.VARCHAR,Types.VARCHAR, Types.VARCHAR,Types.VARCHAR 
+				});
 		return true;
 	}
 
@@ -111,7 +109,13 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 	@Override
 	public boolean update(SocialsAssociate socialsAssociate) {
 		jdbcTemplate.update(DEFAULT_DEFAULT_UPDATE_STATEMENT, 
-				new Object[] {socialsAssociate.getAccessToken(),socialsAssociate.getSocialUserInfo(),socialsAssociate.getExAttribute(),new Date(),socialsAssociate.getId()},
+				new Object[] {
+				        socialsAssociate.getAccessToken(),
+				        socialsAssociate.getSocialUserInfo(),
+				        socialsAssociate.getExAttribute(),
+				        new Date(),
+				        socialsAssociate.getId()
+				},
 				new int[] {Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.TIMESTAMP,Types.VARCHAR });
 		return false;
 	}

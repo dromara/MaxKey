@@ -31,6 +31,7 @@ import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang3.ArchUtils;
 import org.joda.time.DateTime;
 import org.maxkey.cache.CacheFactory;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.util.PathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -130,34 +131,36 @@ public class InitializeContext extends HttpServlet {
                         .getConnection();
 
                 java.sql.DatabaseMetaData databaseMetaData = connection.getMetaData();
-                _logger.debug("DatabaseProductName   :   " 
-                        + databaseMetaData.getDatabaseProductName());
-                _logger.debug("DatabaseProductVersion:   " 
-                        + databaseMetaData.getDatabaseProductVersion());
-                _logger.trace("DatabaseMajorVersion  :   " 
-                        + databaseMetaData.getDatabaseMajorVersion());
-                _logger.trace("DatabaseMinorVersion  :   " 
-                        + databaseMetaData.getDatabaseMinorVersion());
-                _logger.trace("supportsTransactions  :   " 
-                        + databaseMetaData.supportsTransactions());
-                _logger.trace("DefaultTransaction    :   " 
-                        + databaseMetaData.getDefaultTransactionIsolation());
-                _logger.trace("MaxConnections        :   " 
-                        + databaseMetaData.getMaxConnections());
+                ApplicationConfig.databaseProduct = databaseMetaData.getDatabaseProductName();
+                
+                _logger.debug("DatabaseProductName   :   {}", 
+                         databaseMetaData.getDatabaseProductName());
+                _logger.debug("DatabaseProductVersion:   {}" ,
+                         databaseMetaData.getDatabaseProductVersion());
+                _logger.trace("DatabaseMajorVersion  :   {}" ,
+                         databaseMetaData.getDatabaseMajorVersion());
+                _logger.trace("DatabaseMinorVersion  :   {}" ,
+                         databaseMetaData.getDatabaseMinorVersion());
+                _logger.trace("supportsTransactions  :   {}" ,
+                         databaseMetaData.supportsTransactions());
+                _logger.trace("DefaultTransaction    :   {}" ,
+                         databaseMetaData.getDefaultTransactionIsolation());
+                _logger.trace("MaxConnections        :   {}" ,
+                         databaseMetaData.getMaxConnections());
                 _logger.trace("");
-                _logger.trace("JDBCMajorVersion      :   " 
-                        + databaseMetaData.getJDBCMajorVersion());
-                _logger.trace("JDBCMinorVersion      :   " 
-                        + databaseMetaData.getJDBCMinorVersion());
-                _logger.trace("DriverName            :   " 
-                        + databaseMetaData.getDriverName());
-                _logger.trace("DriverVersion         :   " 
-                        + databaseMetaData.getDriverVersion());
+                _logger.trace("JDBCMajorVersion      :   {}" ,
+                         databaseMetaData.getJDBCMajorVersion());
+                _logger.trace("JDBCMinorVersion      :   {}" ,
+                         databaseMetaData.getJDBCMinorVersion());
+                _logger.trace("DriverName            :   {}" ,
+                         databaseMetaData.getDriverName());
+                _logger.trace("DriverVersion         :   {}" ,
+                         databaseMetaData.getDriverVersion());
                 _logger.debug("");
-                _logger.debug("DBMS  URL             :   " 
-                        + databaseMetaData.getURL());
-                _logger.debug("UserName              :   " 
-                        + databaseMetaData.getUserName());
+                _logger.debug("DBMS  URL             :   {}" ,
+                         databaseMetaData.getURL());
+                _logger.debug("UserName              :   {}" ,
+                         databaseMetaData.getUserName());
                 _logger.debug("-----------------------------------------------------------");
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -184,7 +187,7 @@ public class InitializeContext extends HttpServlet {
   
             Iterator<PropertySource<?>> it =WebContext.properties.getPropertySources().iterator();
             while(it.hasNext()) {
-            	 _logger.debug("propertySource " + it.next());
+            	 _logger.debug("propertySource {}" , it.next());
             }
             _logger.trace("-----------------------------------------------------------");
         }
@@ -205,21 +208,31 @@ public class InitializeContext extends HttpServlet {
         // out
         for (Iterator<String> it = keyValueSet.iterator(); it.hasNext();) {
             String key = (String) it.next();
-            _logger.trace(key + "   =   " + map.get(key));
+            _logger.trace(key + "   =   {}" , map.get(key));
         }
-        _logger.debug("APP_HOME" + "   =   " + PathUtils.getInstance().getAppPath());
-        _logger.debug("OS      : "+SystemUtils.OS_NAME +
-                    "("+SystemUtils.OS_ARCH+" " +ArchUtils.getProcessor().getType()+"),"+
-                    " version " +SystemUtils.OS_VERSION+""
+        _logger.debug("APP_HOME" + "   =   {}" , PathUtils.getInstance().getAppPath());
+        _logger.debug("OS      : {}({} {}), version {}",
+                    SystemUtils.OS_NAME,
+                    SystemUtils.OS_ARCH,
+                    ArchUtils.getProcessor().getType(),
+                    SystemUtils.OS_VERSION
+                    
                 );
-        _logger.debug("COMPUTER: "+map.get("COMPUTERNAME") +", "+
-                        "USERNAME : "+map.get("USERNAME")
+        _logger.debug("COMPUTER: {}, USERNAME : {}",
+                        map.get("COMPUTERNAME") ,
+                        map.get("USERNAME")
                 );
         _logger.debug("JAVA    :");
-        _logger.debug(SystemUtils.JAVA_VENDOR+
-                    " java version "+SystemUtils.JAVA_VERSION +", class "+SystemUtils.JAVA_CLASS_VERSION);
-        _logger.debug(SystemUtils.JAVA_VM_NAME+
-                    " (build "+SystemUtils.JAVA_VM_VERSION +", "+ SystemUtils.JAVA_VM_INFO+")");
+        _logger.debug("{} java version {}, class {}",
+                        SystemUtils.JAVA_VENDOR,
+                        SystemUtils.JAVA_VERSION,
+                        SystemUtils.JAVA_CLASS_VERSION
+                    );
+        _logger.debug("{} (build {}, {})",
+                        SystemUtils.JAVA_VM_NAME,
+                        SystemUtils.JAVA_VM_VERSION,
+                        SystemUtils.JAVA_VM_INFO
+                    );
     
         _logger.debug("-----------------------------------------------------------");
         
@@ -232,12 +245,12 @@ public class InitializeContext extends HttpServlet {
         _logger.info("-----------------------------------------------------------");
         _logger.info("+                                MaxKey ");
         _logger.info("+                      Single   Sign   On ( SSO ) ");
-        _logger.info("+                           Version "
-                    + WebContext.properties.getProperty("application.formatted-version"));
+        _logger.info("+                           Version {}", 
+                        WebContext.properties.getProperty("application.formatted-version"));
         _logger.info("+");
-        _logger.info("+                  "+  ((char)0xA9) + "Copyright 2018-"
-        			+ (new DateTime().getYear())
-        			+ " https://www.maxkey.top/");
+        _logger.info("+                  {}Copyright 2018-{} https://www.maxkey.top/",
+        			    (char)0xA9 , new DateTime().getYear()
+        			);
         _logger.info("+                 Licensed under the Apache License, Version 2.0 ");
         _logger.info("-----------------------------------------------------------");
     }

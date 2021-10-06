@@ -78,6 +78,8 @@ public class ApplicationConfig {
     @Value("${maxkey.notices.visible:false}")
     private boolean noticesVisible;
     
+    public static String  databaseProduct = "MySQL";
+    
     
     public int getPort() {
         return port;

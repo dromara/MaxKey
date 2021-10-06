@@ -146,7 +146,7 @@ public class SocialSignOnProviderService{
 		    }
 		}
 		
-		_logger.debug(""+this.socialSignOnProviders);
+		_logger.debug("social SignOn Providers {}" , this.socialSignOnProviders);
 	}
 	
 }

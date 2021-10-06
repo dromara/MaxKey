@@ -121,9 +121,10 @@ public class LoginService {
                 jdbcTemplate.update(LOCK_USER_UPDATE_STATEMENT,
                         new Object[] { ConstantsStatus.LOCK, new Date(), userInfo.getId() },
                         new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
+                userInfo.setIsLocked(ConstantsStatus.LOCK);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            _logger.error("lockUser Exception",e);
         }
     }
 
@@ -138,9 +139,10 @@ public class LoginService {
                 jdbcTemplate.update(UNLOCK_USER_UPDATE_STATEMENT,
                         new Object[] { ConstantsStatus.ACTIVE, new Date(), userInfo.getId() },
                         new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
+                userInfo.setIsLocked(ConstantsStatus.ACTIVE);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            _logger.error("unlockUser Exception",e);
         }
     }
 
@@ -155,10 +157,10 @@ public class LoginService {
                 jdbcTemplate.update(BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT,
                         new Object[] { 0, ConstantsStatus.ACTIVE, new Date(), userInfo.getId() },
                         new int[] { Types.INTEGER, Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
+                userInfo.setIsLocked(ConstantsStatus.ACTIVE);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            _logger.error(e.getMessage());
+            _logger.error("resetBadPasswordCountAndLockout Exception",e);
         }
     }
 
