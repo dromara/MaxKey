@@ -502,7 +502,7 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 }
 
 #j_captcha{
-	width	:70%;
+	width	:60%;
 	font-size: 14px;
 	font-weight: bold;
 	float: left; 
@@ -560,4 +560,25 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 .error{
     color: red;
     text-align: center;
+}
+
+.table > :not(:first-child) {
+    border-color: #dee2e6;
+}
+
+.float-right{
+    float: right;
+}
+
+
+.float-left{
+	float: left;
+}
+
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
 }

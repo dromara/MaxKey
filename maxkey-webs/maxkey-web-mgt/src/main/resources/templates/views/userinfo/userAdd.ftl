@@ -75,7 +75,7 @@
 		<td><@locale code="userinfo.userType" />：</td>
 		<td style="width:35%;">
 
-			<select name="userType"   class="form-control" >
+			<select name="userType"   class="form-control  form-select" >
 					<option value="EMPLOYEE"  selected><@locale code="userinfo.userType.employee" /></option>
 					<option value="CONTRACTOR"  ><@locale code="userinfo.userType.contractor" /></option>
 					<option value="CUSTOMER"  ><@locale code="userinfo.userType.customer" /></option>
@@ -89,7 +89,7 @@
 		</td>
 		<td><@locale code="userinfo.userstate" />：</td>
 		<td style="width:35%;">
-			<select name="userState"   class="form-control" >
+			<select name="userState"   class="form-control  form-select" >
 					<option value="RESIDENT"  selected ><@locale code="userinfo.userstate.resident" /></option>
 					<option value="WITHDRAWN"  	><@locale code="userinfo.userstate.withdrawn" /></option>
 					<option value="RETIREE"  	><@locale code="userinfo.userstate.retiree" /></option>
@@ -159,7 +159,7 @@
 	<tr>
 		<td><@locale code="userinfo.preferredLanguage" />：</td>
 		<td>
-			<select class="form-control"  name="preferredLanguage" id="preferredLanguage">
+			<select class="form-control  form-select"  name="preferredLanguage" id="preferredLanguage">
 				<option value="" selected="selected">Language</option>
 				<option value="en_US"  >English</option>
 				<option value="nl_NL"  >Dutch</option>
@@ -180,7 +180,7 @@
 		</td>
 		<td><@locale code="userinfo.timeZone" />：</td>
 		<td nowrap >
-			<select class="form-control"  id="timeZone" name="timeZone" tabindex="61">
+			<select class="form-control  form-select"  id="timeZone" name="timeZone" tabindex="61">
 				<option value="Pacific/Kiritimati"   >(GMT+14:00) Line Islands Time (Pacific/Kiritimati)</option>
 				<option value="Pacific/Chatham"      >(GMT+13:45) Chatham Daylight Time (Pacific/Chatham)</option>
 				<option value="Pacific/Auckland"     >(GMT+13:00) New Zealand Daylight Time (Pacific/Auckland)</option>
@@ -403,7 +403,7 @@
 		<tr>
 			<td style="width:15%;"><@locale code="userinfo.idtype" />：</td>
 			<td style="width:35%;">
-				<select name="idType"   class="form-control" >
+				<select name="idType"   class="form-control  form-select" >
 					<option value="UNKNOWN" selected ><@locale code="userinfo.idtype.unknown" /></option>
 					<option value="IDCARD"  ><@locale code="userinfo.idtype.idcard" /></option>
 					<option value="PASSPORT"  ><@locale code="userinfo.idtype.passport" /></option>
@@ -422,7 +422,7 @@
 			
 			<td><@locale code="userinfo.married" />：</td>
 			<td>
-				<select name="married"  class="form-control" >
+				<select name="married"  class="form-control  form-select" >
 					<option value="UNKNOWN" selected><@locale code="userinfo.married.unknown" /></option>
 					<option value="SINGLE" ><@locale code="userinfo.married.single" /></option>
 					<option value="MARRIED" ><@locale code="userinfo.married.married" /></option>

@@ -36,7 +36,7 @@
          </td>
          <th><@locale code="apps.logoutType"/></th>
          <td>
-         	<select  id="logoutType" name="logoutType" class="form-control" >
+         	<select  id="logoutType" name="logoutType" class="form-control  form-select" >
 				<option value="0" selected ><@locale code="apps.logoutType.none"/></option>
 				<option value="1" ><@locale code="apps.logoutType.back_channel"/></option>
 				<option value="2" ><@locale code="apps.logoutType.front_channel"/></option>
@@ -77,7 +77,7 @@
       <tr>
       	<th><@locale code="apps.visible"/></th>
          <td>
-         	<select  id="visible" name="visible" class="form-control" >
+         	<select  id="visible" name="visible" class="form-control  form-select" >
 				<option value="0" ><@locale code="apps.visible.hidden"/></option>
 				<option value="1"  selected><@locale code="apps.visible.all"/></option>
 				<option value="2" ><@locale code="apps.visible.internet"/></option>
@@ -92,7 +92,7 @@
       <tr>
 		<th><@locale code="apps.isAdapter" />：</th>
 		<td>
-			<select  id="isAdapter" name="isAdapter"  class="form-control"  >
+			<select  id="isAdapter" name="isAdapter"  class="form-control  form-select"  >
 				<option value="0"  selected><@locale code="apps.isAdapter.no" /></option>
 				<option value="1"><@locale code="apps.isAdapter.yes" /></option>
 			</select>

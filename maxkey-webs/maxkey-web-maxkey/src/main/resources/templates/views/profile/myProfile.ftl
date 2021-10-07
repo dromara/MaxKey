@@ -93,7 +93,7 @@
 				<tr>
 					<th><@locale code="userinfo.gender" />：</th>
 					<td>
-						<select class="form-control" name="gender"  class="gender">
+						<select class="form-control form-select" name="gender"  class="gender">
 								<option value="1"  <#if 1==model.gender>selected</#if> ><@locale code="userinfo.gender.female" /></option>
 								<option value="2"  <#if 2==model.gender>selected</#if> ><@locale code="userinfo.gender.male" /></option>
 						</select>
@@ -104,7 +104,7 @@
 					
 					<th><@locale code="userinfo.married" />：</th>
 					<td>
-						<select class="form-control"  name="married"  class="select_t">
+						<select class="form-control form-select"  name="married"  >
 							<option value="0"  <#if 0==model.married>selected</#if> ><@locale code="userinfo.married.unknown" /></option>
 							<option value="1"  <#if 1==model.married>selected</#if> ><@locale code="userinfo.married.single" /></option>
 							<option value="2"  <#if 2==model.married>selected</#if> ><@locale code="userinfo.married.married" /></option>
@@ -125,7 +125,7 @@
 				<tr>
 					<th><@locale code="userinfo.idtype" />：</th>
 					<td>
-						<select class="form-control"  name="idType"  class="select_t">
+						<select class="form-control form-select"  name="idType">
 							<option value="0"  <#if 0==model.idType>selected</#if> ><@locale code="userinfo.idtype.unknown" /></option>
 							<option value="1"  <#if 1==model.idType>selected</#if> ><@locale code="userinfo.idtype.idcard" /></option>
 							<option value="2"  <#if 2==model.idType>selected</#if> ><@locale code="userinfo.idtype.passport" /></option>
@@ -151,7 +151,7 @@
 				<tr>
 					<th><@locale code="userinfo.preferredLanguage" />：</th>
 					<td>
-						<select class="form-control"  name="preferredLanguage" id="preferredLanguage">
+						<select class="form-control form-select"  name="preferredLanguage" id="preferredLanguage">
 							
 							<option value="en_US"  <#if 'en_US'==model.preferredLanguage>selected</#if>  >English</option>
 							<option value="nl_NL"  <#if 'nl_NL'==model.preferredLanguage>selected</#if>  >Dutch</option>
@@ -174,7 +174,7 @@
 				<tr>
 					<th><@locale code="userinfo.timeZone" />：</th>
 					<td>
-						<select class="form-control"  id="timeZone" name="timeZone" tabindex="61">
+						<select class="form-control form-select"  id="timeZone" name="timeZone" tabindex="61">
 							<option value="Pacific/Kiritimati"   <#if 'Pacific/Kiritimati'==model.timeZone>selected</#if>>(GMT+14:00) Line Islands Time (Pacific/Kiritimati)</option>
 							<option value="Pacific/Chatham"      <#if 'Pacific/Chatham'==model.timeZone>selected</#if>>(GMT+13:45) Chatham Daylight Time (Pacific/Chatham)</option>
 							<option value="Pacific/Auckland"     <#if 'Pacific/Auckland'==model.timeZone>selected</#if>>(GMT+13:00) New Zealand Daylight Time (Pacific/Auckland)</option>
@@ -281,7 +281,7 @@
 				<tr>
 					<th><@locale code="userinfo.locale" />：</th>
 					<td>
-						<select class="form-control"  name="locale" id="locale">
+						<select class="form-control form-select"  name="locale" id="locale">
 							
 							<option value="en_US"  <#if 'en_US'==model.locale>selected</#if>  >English</option>
 							<option value="nl_NL"  <#if 'nl_NL'==model.locale>selected</#if>  >Dutch</option>
@@ -437,7 +437,7 @@
 				<tr>
 					<th><@locale code="userinfo.workCountry" />：</th>
 					<td>
-						<select  class="form-control"  id="workCountry" name="workCountry">
+						<select  class="form-control form-select"  id="workCountry" name="workCountry">
 							<option value="AFG"  <#if 'AFG'==model.workCountry>selected</#if>>Afghanistan</option>
 							<option value="ALA"  <#if 'ALA'==model.workCountry>selected</#if>>Åland Islands</option>
 							<option value="ALB"  <#if 'ALB'==model.workCountry>selected</#if>>Albania</option>
@@ -759,7 +759,7 @@
 				<tr>
 					<th><@locale code="userinfo.homeCountry" />：</th>
 					<td>
-						<select  class="form-control"  id="homeCountry" name="homeCountry">
+						<select  class="form-control form-select"  id="homeCountry" name="homeCountry">
 							<option value="AFG"  <#if 'AFG'==model.homeCountry>selected</#if>>Afghanistan</option>
 							<option value="ALA"  <#if 'ALA'==model.homeCountry>selected</#if>>Åland Islands</option>
 							<option value="ALB"  <#if 'ALB'==model.homeCountry>selected</#if>>Albania</option>

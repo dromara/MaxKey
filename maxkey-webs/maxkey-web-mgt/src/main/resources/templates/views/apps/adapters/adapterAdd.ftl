@@ -32,7 +32,7 @@
 			<tr>
 				<th><@locale code="apps.adapter.protocol" />：</th>
 				<td nowrap>
-					<select name="protocol" class="form-control">
+					<select name="protocol" class="form-control  form-select">
 	 					<option value=""  selected>Select</option>
 	 					<option value="OAuth_v2.0"><@locale code="apps.protocol.oauth2.0" /></option>
 	 					<option value="SAML_v2.0"><@locale code="apps.protocol.saml2.0" /></option>

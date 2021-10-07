@@ -11,46 +11,40 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-4 col-md-12 col-xs-12">
 					<div class="card">
-						<div class="card-header border-bottom text-center">
-							<h4 class="card-title">
-								<!-- <@locale code="login.text.login.normal" /> -->
-							</h4>
+                        <div class="card-header">
+							<@locale code="login.text.login.normal" />
 						</div>
 						<div class="card-body">
+						    <main class ="form-signin">
 							<form class="form-horizontal m-t-20 needs-validation" id="loginForm" name="loginForm" action="<@base />/logon.do" method="post"  novalidate>
-								<div class="form-group">
-								    <span class="input-group">
-                                        <div class="input-group-prepend">
-                                                      <span class="input-group-text fa fa-user"></span>
-                                        </div>
+							<div class="row g-3">
+								<div class="">
+								    <div class="input-group">
+                                        <span class="input-group-text fa fa-user"></span>
                                         <input id='j_username' name='username' value="admin" class="form-control" type="text" required="" placeholder="<@locale code="login.text.username"/>">
-                                    </span>
+                                    </div>
 									
 								</div>
-								<div class="form-group">
-								    <span class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text fa fa-key"></span>
-                                        </div>
+								<div class="">
+								    <div class="input-group">
+                                        <span class="input-group-text fa fa-key"></span>
                                         <input id='j_password' name='password' class="form-control" type="password" required="" placeholder="<@locale code="login.text.password"/>">
-									</span>
+									</div>
 								</div>
 								<#if true==isCaptcha> 
-								<div class="form-group">
-								    <span class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text fa fa-refresh"></span>
-                                        </div>
+								<div class="">
+								    <div class="input-group">
+                                        <span class="input-group-text fa fa-refresh"></span>
                                         <input id="j_captcha" name="captcha" class="form-control" value="" type="text" required="" placeholder="<@locale code="login.text.captcha"/>"> 
                                         <img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha" />
-                                    </span>
+                                    </div>
 									
 								</div>
 								</#if>
 								<div class="form-group text-center m-t-20">
 									<input type="hidden" name="authType" value="normal" /> 
 									<input type='hidden' id="sessionid" name="sessionId" value="${sessionid}" />
-									<button id="loginSubmit" class="button btn-primary btn btn-common btn-block" type="submit">
+									<button id="loginSubmit" class="w-100 btn btn-lg btn-primary" type="submit">
 										<@locale code="login.button.login" />
 									</button>
 								</div>
@@ -59,7 +53,9 @@
 									<div class="error" ><span>${loginErrorMessage!''}</span></div>
 								</div>
 								</#if>
+							</div>
 							</form>
+							</main>
 						</div>
 					</div>
 				</div>

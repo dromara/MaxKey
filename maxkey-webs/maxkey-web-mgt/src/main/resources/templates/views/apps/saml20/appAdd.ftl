@@ -67,7 +67,7 @@
 				<tr>
 					<th><@locale code="apps.saml.signature" />：</th>
 					<td>
-						  <select  id="signature" name="signature"  class="form-control" >
+						  <select  id="signature" name="signature"  class="form-control  form-select" >
                             <option value="RSAwithSHA1"  selected>RSAwithSHA1</option>
                             <option value="RSAwithSHA256" >RSAwithSHA256</option>
                             <option value="RSAwithSHA384" >RSAwithSHA384</option>
@@ -89,7 +89,7 @@
 					</td>
 					<th><@locale code="apps.saml.digestMethod" />：</th>
                     <td>
-                        <select  id="digestMethod" name="digestMethod"  class="form-control" >
+                        <select  id="digestMethod" name="digestMethod"  class="form-control  form-select" >
                             <option value="MD5"         >MD5</option>
                             <option value="SHA1"        selected>SHA1</option>
                             <option value="SHA256"      >SHA256</option>
@@ -103,7 +103,7 @@
 					
 					<th><@locale code="apps.saml.nameidFormat" />：</th>
 					<td>
-						<select  id="nameidFormat" name="nameidFormat"  class="form-control"  >
+						<select  id="nameidFormat" name="nameidFormat"  class="form-control  form-select"  >
 							<option value="persistent" selected>persistent</option>
 							<option value="transient">transient</option>
 							<option value="emailAddress">emailAddress</option>
@@ -117,7 +117,7 @@
 					</td>
 					<th><@locale code="apps.saml.nameIdConvert" />：</th>
 					<td>
-						<select  id="nameIdConvert" name="nameIdConvert"  class="form-control"  >
+						<select  id="nameIdConvert" name="nameIdConvert"  class="form-control  form-select"  >
 							<option value="0" selected>
 								<@locale code="apps.saml.nameIdConvert.original" /></option>
 							<option value="1">
@@ -132,7 +132,7 @@
 				<tr>
 					<th style="width:15%;"><@locale code="apps.saml.binding" />：</th>
 					<td style="width:35%;">
-						<select  id="binding" name="binding" class="form-control"   >
+						<select  id="binding" name="binding" class="form-control  form-select"   >
 							<option value="Redirect-Post"  selected>Redirect-Post</option>
 							<option value="Post-Post" >Post-Post</option>
 							<option value="IdpInit-Post" >IdpInit-Post</option>
@@ -151,7 +151,7 @@
 				<tr>
 					<th><@locale code="apps.saml.fileType" />：</th>
 					<td>
-						<select  id="fileType" name="fileType"  class="form-control"  >
+						<select  id="fileType" name="fileType"  class="form-control  form-select"  >
 							<option value="certificate"><@locale code="apps.saml.fileType.certificate" /></option>
 							<option value="metadata_file"  selected><@locale code="apps.saml.fileType.metadata.file" /></option>
 							<option value="metadata_url"           ><@locale code="apps.saml.fileType.metadata.url" /></option>
@@ -173,7 +173,7 @@
 				<tr>
 					<th><@locale code="apps.saml.encrypted" />：</th>
 					<td >
-						<select  id="encrypted" name="encrypted"  class="form-control"  >
+						<select  id="encrypted" name="encrypted"  class="form-control  form-select"  >
 							<option value="0"  selected>
 								<@locale code="apps.saml.encrypted.no" /></option>
 							<option value="1">

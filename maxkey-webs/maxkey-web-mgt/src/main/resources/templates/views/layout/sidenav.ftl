@@ -100,12 +100,6 @@
                 </a>
             </li>
            <li>
-             <a class="side-nav-menu" href="<@base />/notices/list/">
-                <@locale code="navs.notices"/>  
-                <span class="fa fa-fw fa-bell"></span>
-             </a>
-           </li>
-           <li>
              <a class="side-nav-menu" href="<@base />/synchronizers/list/">
                 <@locale code="navs.synchronizers"/>  
                 <span class="fa fa-fw fa-share-alt-square"></span>
@@ -115,6 +109,12 @@
              <a class="side-nav-menu" href="<@base />/apps/adapters/list/">
                 <@locale code="navs.adapters"/>  
                 <span class="fa fa-fw fa-chain"></span>
+             </a>
+           </li>
+           <li>
+             <a class="side-nav-menu" href="<@base />/notices/list/">
+                <@locale code="navs.notices"/>  
+                <span class="fa fa-fw fa-bell"></span>
              </a>
            </li>
            <li>

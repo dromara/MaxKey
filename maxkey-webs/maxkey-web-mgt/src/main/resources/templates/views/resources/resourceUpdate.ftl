@@ -47,7 +47,7 @@
             <tr>
                 <th><@locale code="resource.resourceType" />：</th>
                 <td nowrap>
-                    <select id="resourceType"  name="resourceType"   class="form-control" >
+                    <select id="resourceType"  name="resourceType"   class="form-control  form-select" >
 						<option value="MENU"    <#if 'MENU'==model.resourceType>selected</#if> 		><@locale code="resource.resourceType.Menu" /></option>
 						<option value="ELEMENT" <#if 'ELEMENT'==model.resourceType>selected</#if>	><@locale code="resource.resourceType.Element" /></option>
 						<option value="BUTTON"  <#if 'BUTTON'==model.resourceType>selected</#if>	><@locale code="resource.resourceType.Button" /></option>

@@ -192,7 +192,7 @@ function showOrgsTree() {
 		<tr>
 			<th><@locale code="group.dynamic" />：</th>
 			<td nowrap>
-				<select id="dynamic" name="dynamic"  class="form-control">
+				<select id="dynamic" name="dynamic"  class="form-control  form-select">
 					<option value="0" <#if '0'==model.dynamic>selected</#if> ><@locale code="common.text.no" /></option>
 					<option value="1" <#if '1'==model.dynamic>selected</#if> ><@locale code="common.text.yes" /></option>
 				</select>

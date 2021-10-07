@@ -74,6 +74,24 @@ public class OAuth2Request extends BaseRequest implements Serializable {
 	 * requested.
 	 */
 	private Set<String> responseTypes = new HashSet<String>();
+	
+	//support oauth 2.1, PKCE
+    /**
+     * A challenge derived from the code verifier that is sent in the
+     * authorization request, to be verified against later.
+     */
+    private String codeChallenge;
+    
+    /**
+     * A method that was used to derive code challenge.
+     * 
+     * plain
+     *      code_challenge = code_verifier
+     * 
+     * S256
+     *      code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
+     */
+    private String codeChallengeMethod = "S256";
 
 	/**
 	 * Extension point for custom processing classes which may wish to store additional information about the OAuth2
@@ -138,8 +156,17 @@ public class OAuth2Request extends BaseRequest implements Serializable {
 	public Set<String> getResourceIds() {
 		return resourceIds;
 	}
+	
 
-	public Map<String, Serializable> getExtensions() {
+	public String getCodeChallenge() {
+        return codeChallenge;
+    }
+
+    public String getCodeChallengeMethod() {
+        return codeChallengeMethod;
+    }
+
+    public Map<String, Serializable> getExtensions() {
 		return extensions;
 	}
 

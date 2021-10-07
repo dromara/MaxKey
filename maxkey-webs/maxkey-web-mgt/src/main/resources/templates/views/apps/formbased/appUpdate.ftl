@@ -68,7 +68,7 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.credential"/>：</th>
 					<td >
-						<select id="credential" name="credential"  class="form-control" >
+						<select id="credential" name="credential"  class="form-control  form-select" >
 							<option value="3"   <#if  3==model.credential >selected</#if> >
 								<@locale code="apps.credential.user-defined"/>
 							</option>
@@ -95,7 +95,7 @@ $(function(){
 				<tr id="systemconfigure"  <#if 1!=model.credential> style="display:none"</#if> >
 					<th><@locale code="apps.systemUserAttr"/>：</th>
 					<td colspan="3">
-						<select id="systemUserAttr" name="systemUserAttr" class="form-control">
+						<select id="systemUserAttr" name="systemUserAttr" class="form-control  form-select">
 							<option value="userId"   <#if 'userId'==model.systemUserAttr>selected</#if> >
 								<@locale code="userinfo.id"/></option>
 							<option value="employeeNumber" <#if 'employeeNumber'==model.systemUserAttr>selected</#if> >

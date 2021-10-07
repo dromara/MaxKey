@@ -41,7 +41,7 @@
 			<tr>
 				<th><@locale code="import.update.exist" /> </th>
 				<td>
-					<select name="updateExist"  id="updateExist" class="form-control" >
+					<select name="updateExist"  id="updateExist" class="form-control  form-select" >
 						<option value="no" selected > <@locale code="common.text.no" /></option>
 						<option value="yes"> <@locale code="common.text.yes" /> </option>
 					</select>

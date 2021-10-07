@@ -52,7 +52,7 @@
 		</td>
 		<td style="width:15%;"><@locale code="userinfo.status" />：</td>
 		<td style="width:35%;">
-			<select name="status"  id="status" class="form-control" >
+			<select name="status"  id="status" class="form-control  form-select" >
 						<option value="1"   <#if 1==model.status>selected</#if>><@locale code="userinfo.status.active" /></option>
 						<option value="2"   <#if 2==model.status>selected</#if>><@locale code="userinfo.status.inactive" /></option>
 						<option value="5"   <#if 5==model.status>selected</#if>><@locale code="userinfo.status.lock" /></option>
@@ -63,7 +63,7 @@
 	<tr>
 			<td style="width:15%;"><@locale code="userinfo.userType" />：</td>
 			<td style="width:35%;">
-				<select name="userType"   class="form-control" >
+				<select name="userType"   class="form-control  form-select" >
 						<option value="EMPLOYEE"  	<#if 'EMPLOYEE'==model.userType>selected</#if> ><@locale code="userinfo.userType.employee" /></option>
 						<option value="CONTRACTOR"  <#if 'CONTRACTOR'==model.userType>selected</#if>><@locale code="userinfo.userType.contractor" /></option>
 						<option value="CUSTOMER"  	<#if 'CUSTOMER'==model.userType>selected</#if>><@locale code="userinfo.userType.customer" /></option>
@@ -77,7 +77,7 @@
 			</td>
 			<td><@locale code="userinfo.userstate" />：</td>
 			<td style="width:35%;">
-				<select name="userState"   class="form-control" >
+				<select name="userState"   class="form-control  form-select" >
 						<option value="RESIDENT"  	<#if 'RESIDENT'==model.userState>selected</#if> ><@locale code="userinfo.userstate.resident" /></option>
 						<option value="WITHDRAWN"  	<#if 'WITHDRAWN'==model.userState>selected</#if>><@locale code="userinfo.userstate.withdrawn" /></option>
 						<option value="RETIREE"  	<#if 'RETIREE'==model.userState>selected</#if>><@locale code="userinfo.userstate.retiree" /></option>
@@ -139,7 +139,7 @@
 	<tr>
 		<td><@locale code="userinfo.gender" />：</td>
 		<td>
-			<select name="gender"   class="form-control" >
+			<select name="gender"   class="form-control  form-select" >
 					<option value="1"  <#if 1==model.gender>selected</#if> ><@locale code="userinfo.gender.female" /></option>
 					<option value="2"  <#if 2==model.gender>selected</#if> ><@locale code="userinfo.gender.male" /></option>
 			</select>
@@ -158,7 +158,7 @@
 	<tr>
 		<td><@locale code="userinfo.preferredLanguage" />：</td>
 		<td>
-			<select class="form-control"  name="preferredLanguage" id="preferredLanguage">
+			<select class="form-control  form-select"  name="preferredLanguage" id="preferredLanguage">
 				<option value="en_US"  <#if 'en_US'==model.preferredLanguage>selected</#if>  >English</option>
 				<option value="nl_NL"  <#if 'nl_NL'==model.preferredLanguage>selected</#if>  >Dutch</option>
 				<option value="fr"     <#if 'fr'==model.preferredLanguage>selected</#if>  >French</option>
@@ -178,7 +178,7 @@
 		</td>
 		<td><@locale code="userinfo.timeZone" />：</td>
 		<td nowrap >
-			<select class="form-control"  id="timeZone" name="timeZone" tabindex="61">
+			<select class="form-control  form-select"  id="timeZone" name="timeZone" tabindex="61">
 				<option value="Pacific/Kiritimati"   <#if 'Pacific/Kiritimati'==model.timeZone>selected</#if>>(GMT+14:00) Line Islands Time (Pacific/Kiritimati)</option>
 				<option value="Pacific/Chatham"      <#if 'Pacific/Chatham'==model.timeZone>selected</#if>>(GMT+13:45) Chatham Daylight Time (Pacific/Chatham)</option>
 				<option value="Pacific/Auckland"     <#if 'Pacific/Auckland'==model.timeZone>selected</#if>>(GMT+13:00) New Zealand Daylight Time (Pacific/Auckland)</option>
@@ -401,7 +401,7 @@
 		<tr>
 			<td style="width:15%;"><@locale code="userinfo.idtype" />：</td>
 			<td style="width:35%;">
-				<select name="idType"   class="form-control" >
+				<select name="idType"   class="form-control  form-select" >
 					<option value="0"  <#if 0==model.idType>selected</#if> ><@locale code="userinfo.idtype.unknown" /></option>
 					<option value="1"  <#if 1==model.idType>selected</#if> ><@locale code="userinfo.idtype.idcard" /></option>
 					<option value="2"  <#if 2==model.idType>selected</#if> ><@locale code="userinfo.idtype.passport" /></option>
@@ -420,7 +420,7 @@
 			
 			<td><@locale code="userinfo.married" />：</td>
 			<td>
-				<select name="married"  class="form-control" >
+				<select name="married"  class="form-control  form-select" >
 					<option value="0"  <#if 0==model.married>selected</#if> ><@locale code="userinfo.married.unknown" /></option>
 					<option value="1"  <#if 1==model.married>selected</#if> ><@locale code="userinfo.married.single" /></option>
 					<option value="2"  <#if 2==model.married>selected</#if> ><@locale code="userinfo.married.married" /></option>

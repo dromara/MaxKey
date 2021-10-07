@@ -71,7 +71,7 @@ $(function(){
 				<tr id="systemconfigure"  style="display:none">
 					<th><@locale code="apps.systemUserAttr"/>：</th>
 					<td colspan="3">
-						<select  class="form-control" id="systemUserAttr" name="systemUserAttr">
+						<select  class="form-control  form-select" id="systemUserAttr" name="systemUserAttr">
 							<option value="uid">
 								<@locale code="userinfo.id"/></option>
 							<option value="employeeNumber">

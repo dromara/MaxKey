@@ -98,7 +98,7 @@
 				<tr>
 					<th><@locale code="apps.oauth.connect.idTokenSigningAlgorithm" />：</th>
 					<td >
-						<select  id="idTokenSigningAlgorithm" name="idTokenSigningAlgorithm" class="form-control">
+						<select  id="idTokenSigningAlgorithm" name="idTokenSigningAlgorithm" class="form-control  form-select">
 							<option value="none"   <#if   'none' ==model.idTokenSigningAlgorithm >selected</#if>>No digital signature</option>
 							<option value="HS256"  <#if   'HS256'==model.idTokenSigningAlgorithm >selected</#if>>HMAC using SHA-256 hash algorithm</option>
 							<option value="HS384"  <#if   'HS384'==model.idTokenSigningAlgorithm >selected</#if>>HMAC using SHA-384 hash algorithm</option>
@@ -113,7 +113,7 @@
 					</td>
 					<th><@locale code="apps.oauth.connect.userInfoSigningAlgorithm" />：</th>
 					<td >
-						<select  id="userInfoSigningAlgorithm" name="userInfoSigningAlgorithm"  class="form-control">
+						<select  id="userInfoSigningAlgorithm" name="userInfoSigningAlgorithm"  class="form-control  form-select">
 							<option value="none"   <#if   'none' ==model.userInfoSigningAlgorithm >selected</#if>>No digital signature</option>
 							<option value="HS256"  <#if   'HS256'==model.userInfoSigningAlgorithm >selected</#if>>HMAC using SHA-256 hash algorithm</option>
 							<option value="HS384"  <#if   'HS384'==model.userInfoSigningAlgorithm >selected</#if>>HMAC using SHA-384 hash algorithm</option>
@@ -136,7 +136,7 @@
 				<tr>
 					<th><@locale code="apps.oauth.connect.idTokenEncryptedAlgorithm" />：</th>
 					<td >
-						<select  id="idTokenEncryptedAlgorithm" name="idTokenEncryptedAlgorithm" class="form-control">
+						<select  id="idTokenEncryptedAlgorithm" name="idTokenEncryptedAlgorithm" class="form-control  form-select">
 							<option value="none" <#if   'none'==model.idTokenEncryptedAlgorithm >selected</#if> >No encryption</option>
 							<option value="RSA1_5" <#if   'RSA1_5'==model.idTokenEncryptedAlgorithm >selected</#if> >RSAES-PKCS1-V1_5</option>
 							<option value="RSA-OAEP" <#if   'RSA-OAEP'==model.idTokenEncryptedAlgorithm >selected</#if>>RSAES using Optimal Asymmetric Encryption Padding (OAEP)</option>
@@ -151,7 +151,7 @@
 					</td>
 					<th><@locale code="apps.oauth.connect.userInfoEncryptedAlgorithm" />：</th>
 					<td >
-						<select  id="userInfoEncryptedAlgorithm" name="userInfoEncryptedAlgorithm" class="form-control">
+						<select  id="userInfoEncryptedAlgorithm" name="userInfoEncryptedAlgorithm" class="form-control  form-select">
 							<option value="none" <#if   'none'==model.userInfoEncryptedAlgorithm >selected</#if> >No encryption</option>
 							<option value="RSA1_5" <#if   'RSA1_5'==model.userInfoEncryptedAlgorithm >selected</#if> >RSAES-PKCS1-V1_5</option>
 							<option value="RSA-OAEP" <#if   'RSA-OAEP'==model.userInfoEncryptedAlgorithm >selected</#if>>RSAES using Optimal Asymmetric Encryption Padding (OAEP)</option>
@@ -169,7 +169,7 @@
 				<tr>
 					<th><@locale code="apps.oauth.connect.idTokenEncryptionMethod" />：</th>
 					<td >
-						<select  id="idTokenEncryptionMethod" name="idTokenEncryptionMethod" class="form-control">
+						<select  id="idTokenEncryptionMethod" name="idTokenEncryptionMethod" class="form-control  form-select">
 							<option value="none" <#if   'none'==model.idTokenEncryptionMethod >selected</#if>>No encryption</option>
 							<option value="A128CBC+HS256" <#if   'A128CBC+HS256'==model.idTokenEncryptionMethod >selected</#if>>Composite Authenticated Encryption algorithm using AES in Cipher Block Chaining (CBC) mode with PKCS #5 padding with an integrity calculation using HMAC SHA-256, using a 256 bit CMK (and 128 bit CEK)</option>
 							<option value="A256CBC+HS512" <#if   'A256CBC+HS512'==model.idTokenEncryptionMethod >selected</#if>>Composite Authenticated Encryption algorithm using AES in CBC mode with PKCS #5 padding with an integrity calculation using HMAC SHA-512, using a 512 bit CMK (and 256 bit CEK)</option>
@@ -179,7 +179,7 @@
 					</td>
 					<th><@locale code="apps.oauth.connect.userInfoEncryptionMethod" />：</th>
 					<td >
-						<select  id="userInfoEncryptionMethod" name="userInfoEncryptionMethod" class="form-control">
+						<select  id="userInfoEncryptionMethod" name="userInfoEncryptionMethod" class="form-control  form-select">
 							<option value="none" <#if   'none'==model.userInfoEncryptionMethod >selected</#if>>No encryption</option>
 							<option value="A128CBC+HS256" <#if   'A128CBC+HS256'==model.userInfoEncryptionMethod >selected</#if>>Composite Authenticated Encryption algorithm using AES in Cipher Block Chaining (CBC) mode with PKCS #5 padding with an integrity calculation using HMAC SHA-256, using a 256 bit CMK (and 128 bit CEK)</option>
 							<option value="A256CBC+HS512" <#if   'A256CBC+HS512'==model.userInfoEncryptionMethod >selected</#if>>Composite Authenticated Encryption algorithm using AES in CBC mode with PKCS #5 padding with an integrity calculation using HMAC SHA-512, using a 512 bit CMK (and 256 bit CEK)</option>
@@ -191,7 +191,7 @@
 				<tr>
 					<th><@locale code="apps.oauth.approvalPrompt" />：</th>
 					<td >
-						<select  id="approvalPrompt" name="approvalPrompt" class="form-control">
+						<select  id="approvalPrompt" name="approvalPrompt" class="form-control  form-select">
 							<option value="force"  <#if   ""==model.approvalPrompt?default("") >selected</#if>>
 								<@locale code="apps.oauth.approvalPrompt.force" /></option>
 							<option value="auto"  <#if   'auto'==model.approvalPrompt >selected</#if>>

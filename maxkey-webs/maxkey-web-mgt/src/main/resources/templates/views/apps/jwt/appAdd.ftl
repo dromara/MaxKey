@@ -34,7 +34,7 @@
 							<tr>
 									<th ><@locale code="apps.jwt.tokenType" />：</th>
 									<td >
-										<select id="tokenType" name="tokenType"  class="form-control">
+										<select id="tokenType" name="tokenType"  class="form-control  form-select">
 											<option value="POST">安全令牌(TOKEN POST)</option>
 											<option value="LTPA">轻量级认证(LTPA COOKIE)</option>
 										</select>
@@ -47,7 +47,7 @@
 							<tr>
 								<th style="width:15%;"><@locale code="apps.jwt.algorithm" />：</th>
 								<td style="width:35%;">
-									<select id="algorithm" name="algorithm"   class="form-control">
+									<select id="algorithm" name="algorithm"   class="form-control  form-select">
 										<option value="DES">DES</option>
 										<option value="DESede">DESede</option>
 										<option value="Blowfish">Blowfish</option>

@@ -260,6 +260,7 @@ body{
 	list-style: none;
 	border: 0;
 	cellspacing:0;
+	padding-left: 0;
 }
 
 .switch_tab_class{
@@ -335,7 +336,7 @@ body{
 }
 
 #normalLogin,#tfaLogin,#mobileLogin,#qrcodelogin{
-	width	:33.3%;
+	
 }
 
 #div_tfaLogin , #div_mobileLogin{
@@ -361,4 +362,16 @@ body{
 	height:37px;
 	background-color: #FFE5E5;
 	font-weight: bold;
+}
+
+.table > :not(:first-child) {
+	border-color: #dee2e6;
+}
+
+.float-right{
+	float: right;
+}
+
+.float-left{
+    float: left;
 }

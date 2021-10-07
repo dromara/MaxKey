@@ -18,7 +18,7 @@ $(function(){
 	$(".datepicker").datetimepicker({timepicker:false,format:'Y-m-d'});
 	$(".timepicker").datetimepicker({datepicker:false,format:'H:i',step:10});
 	
-	$(".multipleselect").multipleSelect({}); 
+	//$(".multipleselect").multipleSelect({}); 
 			
 	//on captcha image click ,new a captcha code
 	$('.captcha-image').click(function () {//

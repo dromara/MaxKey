@@ -71,7 +71,7 @@
 				<tr>
 					<th><@locale code="apps.saml.signature" />：</th>
 					<td>
-						<select  id="signature" name="signature"  class="form-control" >
+						<select  id="signature" name="signature"  class="form-control  form-select" >
                             <option value="RSAwithSHA1"  <#if 'RSAwithSHA1'==model.signature>selected</#if>>RSAwithSHA1</option>
                             <option value="RSAwithSHA256" <#if 'RSAwithSHA256'==model.signature>selected</#if>>RSAwithSHA256</option>
                             <option value="RSAwithSHA384" <#if 'RSAwithSHA384'==model.signature>selected</#if>>RSAwithSHA384</option>
@@ -93,7 +93,7 @@
 					</td>
 					<th><@locale code="apps.saml.digestMethod" />：</th>
                     <td>
-                        <select  id="digestMethod" name="digestMethod"  class="form-control" >
+                        <select  id="digestMethod" name="digestMethod"  class="form-control  form-select" >
                             <option value="MD5"         <#if 'MD5'==model.digestMethod>selected</#if>>MD5</option>
                             <option value="SHA1"        <#if 'SHA1'==model.digestMethod>selected</#if>>SHA1</option>
                             <option value="SHA256"      <#if 'SHA256'==model.digestMethod>selected</#if>>SHA256</option>
@@ -107,7 +107,7 @@
 				<tr>
 					<th style="width:15%;"><@locale code="apps.saml.nameidFormat" />：</th>
 					<td style="width:35%;">
-						<select  id="nameidFormat" name="nameidFormat"  class="form-control" >
+						<select  id="nameidFormat" name="nameidFormat"  class="form-control  form-select" >
 							<option value="persistent"  <#if 'persistent'==model.nameidFormat>selected</#if>>persistent</option>
 							<option value="transient" <#if 'transient'==model.nameidFormat>selected</#if>>transient</option>
 							<option value="emailAddress" <#if 'emailAddress'==model.nameidFormat>selected</#if>>emailAddress</option>
@@ -120,7 +120,7 @@
 					</td>
 					<th style="width:15%;"><@locale code="apps.saml.nameIdConvert" />：</th>
 					<td style="width:35%;">
-						<select  id="nameIdConvert" name="nameIdConvert"  class="form-control" >
+						<select  id="nameIdConvert" name="nameIdConvert"  class="form-control  form-select" >
 							<option value="0"  <#if 0==model.nameIdConvert>selected</#if>>
 								<@locale code="apps.saml.nameIdConvert.original" /></option>
 							<option value="1"  <#if 1==model.nameIdConvert>selected</#if>>
@@ -133,7 +133,7 @@
 				<tr>
 					<th><@locale code="apps.saml.binding" />：</th>
 					<td>
-						<select  id="binding" name="binding"  class="form-control" >
+						<select  id="binding" name="binding"  class="form-control  form-select" >
 							<option value="Redirect-Post"  <#if 'Redirect-Post'==model.binding>selected</#if>>Redirect-Post</option>
 							<option value="Post-Post" <#if 'Post-Post'==model.binding>selected</#if>>Post-Post</option>
 							<option value="IdpInit-Post" <#if 'IdpInit-Post'==model.binding>selected</#if>>IdpInit-Post</option>
@@ -152,7 +152,7 @@
 				<tr>
 					<th><@locale code="apps.saml.fileType" />：</th>
 					<td>
-						<select  id="fileType" name="fileType"  class="form-control" >
+						<select  id="fileType" name="fileType"  class="form-control  form-select" >
 							<option value="certificate" selected><@locale code="apps.saml.fileType.certificate" /></option>
 							<option value="metadata_file"><@locale code="apps.saml.fileType.metadata.file" /></option>
 							<option value="metadata_url" ><@locale code="apps.saml.fileType.metadata.url" /></option>
@@ -173,7 +173,7 @@
 				<tr>
 					<th><@locale code="apps.saml.encrypted" />：</th>
 					<td >
-						<select  id="encrypted" name="encrypted"  class="form-control" >
+						<select  id="encrypted" name="encrypted"  class="form-control  form-select" >
 							<option value="0"   <#if 0==model.encrypted>selected</#if>>
 								<@locale code="apps.saml.encrypted.no" /></option>
 							<option value="1"  <#if 1==model.encrypted>selected</#if>>

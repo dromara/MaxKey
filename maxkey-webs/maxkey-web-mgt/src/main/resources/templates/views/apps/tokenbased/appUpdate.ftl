@@ -36,7 +36,7 @@
 								<tr>
 									<th ><@locale code="apps.tokenbased.tokenType" />：</th>
 									<td >
-										<select id="tokenType" name="tokenType"  class="form-control">
+										<select id="tokenType" name="tokenType"  class="form-control  form-select">
 											<option value="POST" <#if 'POST'==model.tokenType>selected</#if> >安全令牌(TOKEN POST)</option>
 											<option value="LTPA" <#if 'LTPA'==model.tokenType>selected</#if> >轻量级认证(LTPA COOKIE)</option>
 										</select>
@@ -50,7 +50,7 @@
 								<tr>
 									<th style="width:15%;"><@locale code="apps.tokenbased.algorithm" />：</th>
 									<td style="width:35%;">
-										<select id="algorithm" name="algorithm" class="form-control" >
+										<select id="algorithm" name="algorithm" class="form-control  form-select" >
 											<option value="DES"  <#if 'DES'==model.algorithm>selected</#if> >DES</option>
 											<option value="DESede" <#if 'DESede'==model.algorithm>selected</#if>>DESede</option>
 											<option value="Blowfish" <#if 'Blowfish'==model.algorithm>selected</#if>>Blowfish</option>

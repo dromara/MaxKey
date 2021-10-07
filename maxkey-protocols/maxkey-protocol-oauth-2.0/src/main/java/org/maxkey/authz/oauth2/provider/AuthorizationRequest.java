@@ -109,6 +109,24 @@ public class AuthorizationRequest extends BaseRequest implements Serializable {
 	 * must be serializable.
 	 */
 	private Map<String, Serializable> extensions = new HashMap<String, Serializable>();
+	
+	//support oauth 2.1, PKCE
+	/**
+	 * A challenge derived from the code verifier that is sent in the
+     * authorization request, to be verified against later.
+	 */
+	private String codeChallenge;
+	
+	/**
+	 * A method that was used to derive code challenge.
+	 * 
+	 * plain
+     *      code_challenge = code_verifier
+     * 
+     * S256
+     *      code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
+	 */
+	private String codeChallengeMethod = "S256";
 
 	/**
 	 * Default constructor.
@@ -120,7 +138,7 @@ public class AuthorizationRequest extends BaseRequest implements Serializable {
 	 * Full constructor.
 	 */
 	public AuthorizationRequest(Map<String, String> authorizationParameters, Map<String, String> approvalParameters, String clientId, Set<String> scope, Set<String> resourceIds, Collection<? extends GrantedAuthority> authorities, boolean approved, String state, String redirectUri,
-	        Set<String> responseTypes) {
+	        Set<String> responseTypes,String codeChallenge,String codeChallengeMethod) {
 		setClientId(clientId);
 		setRequestParameters(authorizationParameters); // in case we need to
 													   // wrap the collection
@@ -138,6 +156,11 @@ public class AuthorizationRequest extends BaseRequest implements Serializable {
 			this.responseTypes = responseTypes;
 		}
 		this.state = state;
+		//add oauth 2.1 PKCE
+		this.codeChallenge = codeChallenge;
+		if (codeChallengeMethod != null) {
+		    this.codeChallengeMethod = codeChallengeMethod;
+		}
 	}
 
 	public OAuth2Request createOAuth2Request() {
@@ -278,7 +301,23 @@ public class AuthorizationRequest extends BaseRequest implements Serializable {
 		return redirectUri;
 	}
 
-	@Override
+	public String getCodeChallenge() {
+        return codeChallenge;
+    }
+
+    public void setCodeChallenge(String codeChallenge) {
+        this.codeChallenge = codeChallenge;
+    }
+
+    public String getCodeChallengeMethod() {
+        return codeChallengeMethod;
+    }
+
+    public void setCodeChallengeMethod(String codeChallengeMethod) {
+        this.codeChallengeMethod = codeChallengeMethod;
+    }
+
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();

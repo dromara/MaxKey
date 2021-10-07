@@ -17,6 +17,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidClientException;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
@@ -71,6 +72,9 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
 		String clientId = authorizationParameters.get(OAuth2Utils.CLIENT_ID);
 		String state = authorizationParameters.get(OAuth2Utils.STATE);
 		String redirectUri = authorizationParameters.get(OAuth2Utils.REDIRECT_URI);
+		//oauth 2.1 PKCE
+		String codeChallenge = authorizationParameters.get(OAuth2Constants.PARAMETER.CODE_CHALLENGE);
+		String codeChallengeMethod = authorizationParameters.get(OAuth2Constants.PARAMETER.CODE_CHALLENGE_METHOD);
 		Set<String> responseTypes = OAuth2Utils.parseParameterList(authorizationParameters
 				.get(OAuth2Utils.RESPONSE_TYPE));
 
@@ -78,7 +82,7 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
 		
 		AuthorizationRequest request = new AuthorizationRequest(authorizationParameters,
 				Collections.<String, String> emptyMap(), clientId, scopes, null, null, false, state, redirectUri,
-				responseTypes);
+				responseTypes,codeChallenge,codeChallengeMethod);
 
 		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);		
 		request.setResourceIdsAndAuthoritiesFromClientDetails(clientDetails);

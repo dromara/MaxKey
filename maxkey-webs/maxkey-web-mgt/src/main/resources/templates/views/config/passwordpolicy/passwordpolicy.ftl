@@ -134,7 +134,7 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.username" />：</label>
 												<div class="col-sm-9">
-													<select  class="form-control"   id="username" name="username"  >
+													<select  class="form-control  form-select"   id="username" name="username"  >
 														<option  <#if 1==model.username>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
 														<option  <#if 0==model.username>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
 													</select>
@@ -148,7 +148,7 @@
 												
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.alphabetical" />：</label>
 												<div class="col-sm-9">
-													<select  class="form-control"   id="alphabetical" name="alphabetical"  >
+													<select  class="form-control  form-select"   id="alphabetical" name="alphabetical"  >
 														<option  <#if 1==model.alphabetical>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
 														<option  <#if 0==model.alphabetical>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
 													</select>
@@ -159,7 +159,7 @@
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.numerical" />：</label>
 												<div class="col-sm-9">
-													<select  class="form-control"   id="numerical" name="numerical"  >
+													<select  class="form-control  form-select"   id="numerical" name="numerical"  >
 														<option  <#if 1==model.numerical>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
 														<option  <#if 0==model.numerical>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
 													</select>
@@ -173,7 +173,7 @@
 												
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.qwerty" />：</label>
 												<div class="col-sm-9">
-													<select  class="form-control"   id="qwerty" name="qwerty"  >
+													<select  class="form-control  form-select"   id="qwerty" name="qwerty"  >
 														<option  <#if 1==model.qwerty>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
 														<option  <#if 0==model.qwerty>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
 													</select>
@@ -185,7 +185,7 @@
 												
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.dictionary" />：</label>
 												<div class="col-sm-9">
-													<select  class="form-control"   id="dictionary" name="dictionary"  >
+													<select  class="form-control  form-select"   id="dictionary" name="dictionary"  >
 														<option  <#if 1==model.dictionary>selected</#if>  value="1"><@locale code="common.text.status.enabled"/></option>
 														<option  <#if 0==model.dictionary>selected</#if>  value="0"><@locale code="common.text.status.disabled"/></option>
 													</select>

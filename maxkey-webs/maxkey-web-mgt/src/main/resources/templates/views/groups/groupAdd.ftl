@@ -178,7 +178,7 @@ function showOrgsTree() {
 			<tr>
 				<th><@locale code="group.dynamic" />：</th>
 				<td nowrap>
-					<select id="dynamic" name="dynamic"  class="form-control">
+					<select id="dynamic" name="dynamic"  class="form-control  form-select">
 						<option value="0" selected ><@locale code="common.text.no" /></option>
 						<option value="1"          ><@locale code="common.text.yes" /></option>
 					</select>

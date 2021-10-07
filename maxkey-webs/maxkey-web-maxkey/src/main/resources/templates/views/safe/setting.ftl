@@ -34,7 +34,7 @@
 			<tr>
 				<th><@locale code="userinfo.authnType" />:</th>
 				<td nowrap>
-					<select  class="form-control"  name="authnType" id="authnType">
+					<select  class="form-control form-select"  name="authnType" id="authnType">
 						<option value="1"  <#if 0==model.authnType >selected</#if>  ><@locale code="button.text.select" /></option>
 						<option value="1"  <#if 1==model.authnType >selected</#if>  ><@locale code="userinfo.authnType.authnType.1" /></option>
 						<!-- 
@@ -85,7 +85,7 @@
 			<tr>
                 <th><@locale code="userinfo.theme" />:</th>
                 <td nowrap>
-                    <select  class="form-control"  name="theme" id="theme">
+                    <select  class="form-control form-select"  name="theme" id="theme">
                         <option value="default"  <#if "default"==model.theme >selected</#if>  ><@locale code="userinfo.theme.default" /></option>
                         <option value="minty"    <#if "minty"  ==model.theme >selected</#if>  ><@locale code="userinfo.theme.minty" /></option>
                         <option value="pulse"    <#if "pulse"  ==model.theme >selected</#if>  ><@locale code="userinfo.theme.pulse" /></option>

@@ -176,25 +176,25 @@
 				<table id="tableform">
 					<tr>
 						<td>
-							<ul id="switch_tab" class="switch_tab">
-								<li id="normalLogin" class="switch_tab_class switch_tab_current">
+							<ul id="switch_tab" class="switch_tab" style="width: 360px;">
+								<li id="normalLogin" class="switch_tab_class switch_tab_current col-md-4">
 									<a href="javascript:void(0);">
 										<@locale code="login.text.login.normal"/>
 									</a>
 								</li>
 								<!--
-								<li id="tfaLogin"  class="switch_tab_class">
+								<li id="tfaLogin"  class="switch_tab_class col-md-4">
 									<a href="javascript:void(0);">
 									<@locale code="login.text.login.twofactor"/>
 									</a>
 								</li>-->
 								<!---->
-								<li id="mobileLogin"   class="switch_tab_class">
+								<li id="mobileLogin"   class="switch_tab_class col-md-4">
 									<a href="javascript:void(0);">
 									<@locale code="login.text.login.mobile"/>
 									</a>
 								</li>
-								<li id="qrcodelogin"   class="switch_tab_class">
+								<li id="qrcodelogin"   class="switch_tab_class col-md-4">
                                     <a href="javascript:void(0);">
                                     <@locale code="login.text.login.qrcode"/>
                                     </a>

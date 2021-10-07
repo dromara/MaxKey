@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html >
 <head>
-	<#include  "../layout/header.ftl"/>
-	<#include  "../layout/common.cssjs.ftl"/>
+	<#include  "authorize_common.ftl">
 	<script type="text/javascript">
 		$(function () {
 			if("${model.approval_prompt!}"=="auto"){
@@ -37,17 +36,23 @@
                                     <@locale code="apps.oauth.approval.context"/>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div style="text-align: center;">                            
+                                    <!--<p>You hereby authorize "${model.client.clientId!}" to access your protected resources.</p>-->
+                                    <form id="confirmationForm" name="confirmationForm" action="<@base/>/authz/oauth/v20/authorize" method="post">
+                                        <input id="user_oauth_approval" name="user_oauth_approval" value="true" type="hidden"/>
+                                        <input class="button btn btn-primary mr-3" name="authorize"
+                                            value='<@locale code="apps.oauth.approval.authorize"/>' type="submit"/>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
               </table>   
-		      
-		      <!--<p>You hereby authorize "${model.client.clientId!}" to access your protected resources.</p>-->
-		      <form id="confirmationForm" name="confirmationForm" action="<@base/>/authz/oauth/v20/authorize" method="post">
-		        <input id="user_oauth_approval" name="user_oauth_approval" value="true" type="hidden"/>
-		        <label><input class="button btn btn-primary mr-3" name="authorize" value='<@locale code="apps.oauth.approval.authorize"/>' type="submit"/></label>
-		      </form>
 	    </#if>
     </div>
     <div id="footer">
-		<#include  "../layout/footer.ftl"/>
+		<#include  "authorize_footer.ftl">
 	</div>
 </body>
 </html>
