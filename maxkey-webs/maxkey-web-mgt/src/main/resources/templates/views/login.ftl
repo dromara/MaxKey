@@ -5,14 +5,14 @@
 	<#include  "layout/common.cssjs.ftl"/>
 </head>
 <body >
-<#include  "layout/nologintop.ftl"/>
+    <#include  "layout/nologintop.ftl"/>
 	<div class="wrapper-page">
 		<div class="container">
 			<div class="row justify-content-center">
-				<div class="col-lg-4 col-md-12 col-xs-12">
+				<div class="col-lg-4 col-md-6 col-xs-6">
 					<div class="card">
                         <div class="card-header">
-							<@locale code="login.text.login.normal" />
+							&nbsp;<!--<@locale code="login.text.login.normal" />-->
 						</div>
 						<div class="card-body">
 						    <main class ="form-signin">
