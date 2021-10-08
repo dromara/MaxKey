@@ -9,6 +9,7 @@
 	<div class="wrapper-page">
 		<div class="container">
 			<div class="row justify-content-center">
+			    <div class="col-sm-4"></div>
 				<div class="col-lg-4 col-md-6 col-xs-6">
 					<div class="card">
                         <div class="card-header">
@@ -59,6 +60,7 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-sm-4"></div>
 			</div>
 		</div>
 	</div>
