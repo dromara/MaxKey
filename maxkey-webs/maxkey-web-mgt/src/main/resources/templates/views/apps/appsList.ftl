@@ -127,23 +127,23 @@
 		 			</td>
 		 			<td colspan="2">
 		 				<div id="tool_box_right">
-							<div class="dropdown" style="width: 110px;float: left;">
-							 	<button class="btn btn-success dropdown-toggle  mr-3 " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		 					<div  class="btn-group" style="width: 90px;">
+							 	<button class="btn btn-success  dropdown-toggle  mr-3" type="button" id="dropdownMenuButton"  data-bs-toggle="dropdown" aria-expanded="false">
 							     	<@locale code="button.text.add"/>
 							  	</button>
-								 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								 	 <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/oauth20/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.oauth2.0" /></a>
-								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/saml20/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.saml2.0" /></a>
-								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/cas/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.cas" /></a>
-								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/formbased/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.formbased" /></a>
-								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/jwt/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.jwt" /></a>
-								     <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/tokenbased/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.tokenbased" /></a>
-							 		 <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/extendapi/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.extendapi" /></a>
-							 		 <a class="dropdown-item"  target="_blank"  href="<@base/>/apps/basic/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.basic" /></a>
-								  </div>
+								  <ul  class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
+								 	 <li><a class="dropdown-item"  target="_blank"  href="<@base/>/apps/oauth20/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.oauth2.0" /></a></li>
+								     <li><a class="dropdown-item"  target="_blank"  href="<@base/>/apps/saml20/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.saml2.0" /></a></li>
+								     <li><a class="dropdown-item"  target="_blank"  href="<@base/>/apps/cas/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.cas" /></a></li>
+								     <li><a class="dropdown-item"  target="_blank"  href="<@base/>/apps/formbased/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.formbased" /></a></li>
+								     <li><a class="dropdown-item"  target="_blank"  href="<@base/>/apps/jwt/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.jwt" /></a></li>
+								     <li><a class="dropdown-item"  target="_blank"  href="<@base/>/apps/tokenbased/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.tokenbased" /></a></li>
+							 		 <li><a class="dropdown-item"  target="_blank"  href="<@base/>/apps/extendapi/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.extendapi" /></a></li>
+							 		 <li><a class="dropdown-item"  target="_blank"  href="<@base/>/apps/basic/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.basic" /></a></li>
+								  </ul>
 							</div>
-						 	<input style="float: left;" class="button btn btn-info mr-3 " id="modifyApps" type="button" value="<@locale code="button.text.edit"/>" />
-						 	<input style="float: left;" class="button btn btn-danger mr-3 "   id="deleteApps" type="button" value="<@locale code="button.text.delete"/>" />
+						 	<input  class="button btn btn-info mr-3 " id="modifyApps" type="button" value="<@locale code="button.text.edit"/>" />
+						 	<input  class="button btn btn-danger mr-3 "   id="deleteApps" type="button" value="<@locale code="button.text.delete"/>" />
 				 		</div>
 		 			</td>
 		 		</tr>
