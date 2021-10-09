@@ -153,7 +153,7 @@
  	<input class="button btn btn-primary mr-3"  style="float: right;" id="winClose" type="button" value="<@locale code="button.text.select" />" >
  </div>
      <!-- content -->  
-  <table class="datatable"   width="100%" >
+  <table class="table table-bordered"   width="100%" >
    <tr>
       <td valign="top"  class="td_1" style="vertical-align: top;">
       	<div id="orgsTree" class="ztree"></div>

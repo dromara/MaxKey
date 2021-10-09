@@ -213,7 +213,7 @@ $(function () {
                     
                 </form>
             </div>
-             <table class="datatable"   width="100%" >
+             <table class="table table-bordered"   width="100%" >
            <tr>
               <td valign="top"  class="td_1" style="vertical-align: top;width:400px;">
                 <div id="resourcesTree" class="ztree"><b><@locale code="apps.select.tip"/></b></div>

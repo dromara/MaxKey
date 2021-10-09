@@ -103,7 +103,7 @@ public class PasswordPolicyController {
 				return new Message(result);
 			}
 			
-			if(passwordPolicy.getDigits() + passwordPolicy.getLowerCase() + passwordPolicy.getUpperCase() + passwordPolicy.getSpecialChar() < passwordPolicy.getMinLength()) {
+			if(passwordPolicy.getDigits() + passwordPolicy.getLowerCase() + passwordPolicy.getUpperCase() + passwordPolicy.getSpecialChar() < 2) {
 				FieldError fe = new FieldError("passwordPolicy", "specialChar",
 						2, true,
 						new String[]{"ui.passwordpolicy.xe00000003"},//密码包含小写字母、大写字母、数字、特殊字符的个数不能小于2

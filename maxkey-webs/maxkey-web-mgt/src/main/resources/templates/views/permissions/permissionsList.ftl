@@ -276,7 +276,7 @@ $('#datagrid').on('click-row.bs.table', function (row, element, field) {
             </form>
         </div>
         
-       <table class="datatable"   width="100%" >
+       <table class="table table-bordered"   width="100%" >
        <tr>
           <td valign="top"  class="td_1" style="vertical-align: top;width:450px;">
                 <table  data-url="<@base/>/roles/grid"

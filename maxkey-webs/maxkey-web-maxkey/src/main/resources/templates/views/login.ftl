@@ -96,9 +96,9 @@
 	var currentSwitchTab="normalLogin";
 	<#--submit form-->		
 	function doLoginSubmit(){
-		$.cookie("login_username", $("#"+currentSwitchTab+"Form input[name=username]").val(), { expires: 7 });
+		$.cookie("mxk_login_username", $("#"+currentSwitchTab+"Form input[name=username]").val(), { expires: 7 });
 		$("#"+currentSwitchTab+"SubmitButton").click();
-		$.cookie("login_switch_tab", currentSwitchTab, { expires: 7 });
+		$.cookie("mxk_login_switch_tab", currentSwitchTab, { expires: 7 });
 	};
 	
 	<#--switch Login Form-->
@@ -127,10 +127,10 @@
 		$(".doLoginSubmit").on("click",function(){
 				doLoginSubmit();
 		});
-		var cookieLoginUsername = $.cookie("login_username");
+		var cookieLoginUsername = $.cookie("mxk_login_username");
 		<#--read username cookie for login e-->		
 		if(cookieLoginUsername != undefined && cookieLoginUsername != ""){
-			var switch_tab=$.cookie("switch_tab")==undefined?"normalLogin":$.cookie("login_switch_tab");
+			var switch_tab=$.cookie("mxk_login_switch_tab")==undefined ? "normalLogin" : $.cookie("mxk_login_switch_tab");
 			$("#"+switch_tab).click();
 			$("#"+switch_tab+"Form input[name=username]").val(cookieLoginUsername ==undefined ? "" : cookieLoginUsername);
 			$("#div_"+switch_tab+" input[name=password]").focus();

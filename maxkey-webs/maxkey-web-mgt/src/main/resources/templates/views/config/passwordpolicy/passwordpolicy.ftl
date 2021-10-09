@@ -65,7 +65,7 @@
 					</div>
 					<div class="card-body">
 								<form  method="post" type="label" validate="true" action="<@base/>/config/passwordpolicy/update" id="actionForm"   class="needs-validation" novalidate>
-									<div class="row">
+									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.minlength" />：</label>
@@ -84,7 +84,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.lowercase" />：</label>
@@ -102,7 +102,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.digits" />：</label>
@@ -120,7 +120,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.occurances" />：</label>
@@ -142,7 +142,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
 												
@@ -167,7 +167,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
 												
@@ -193,7 +193,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.attempts" />：</label>
@@ -211,7 +211,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="login.passwordpolicy.expiration" />(Unit:Day)：</label>
