@@ -77,13 +77,13 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     @Autowired
     HistoryLoginAppAdapter historyLoginAppAdapter;
     
-    @Value("${maxkey.support.httpheader.enable:false}")
+    @Value("${maxkey.login.httpheader.enable:false}")
     private boolean httpHeaderEnable;
     
-    @Value("${maxkey.support.httpheader.headername:iv-user}")
+    @Value("${maxkey.login.httpheader.headername:iv-user}")
     private String httpHeaderName;
     
-    @Value("${maxkey.support.basic.enable:false}")
+    @Value("${maxkey.login.basic.enable:false}")
     private boolean basicEnable;
     
     @Override

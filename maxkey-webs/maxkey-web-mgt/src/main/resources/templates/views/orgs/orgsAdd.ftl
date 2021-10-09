@@ -31,7 +31,7 @@ $(function () {
 				</td>
      		</tr>
      		<tr><td>
-     	<table id="table_switch_common"   class="table table-bordered">
+     	<table id="div_switch_common"   class="table table-bordered">
            <tr style="display:none">
               <th ><input type="text" id="status" type="hidden" name="status"  value="1"/>
               <input type="text" id="_method" type="hidden" name="_method"  value="put"/></th>
@@ -89,7 +89,7 @@ $(function () {
               <td><input type="text"  id="description" name="description"    class="form-control"/></td>
            </tr>
         </table>
-        <table id="table_switch_extra"   class="table table-bordered"  style="display:none">
+        <table id="div_switch_extra"   class="table table-bordered"  style="display:none">
         	<tr>
               <td > <@locale code="org.contact" />：</td>
               <td><input type="text"  id="contact" name="contact"    class="form-control"/></td>

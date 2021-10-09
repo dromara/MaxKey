@@ -401,6 +401,7 @@ subprojects {
          implementation  group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: "${jacksonVersion}"
          implementation  group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: "${jacksonVersion}"
          implementation  group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: "${jacksonVersion}"
+         implementation  group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: "${jacksonVersion}"
          implementation  group: 'com.fasterxml', name: 'classmate', version: "${classmateVersion}"
          implementation  group: 'com.alibaba', name: 'fastjson', version: "${fastjsonVersion}"
          //docs

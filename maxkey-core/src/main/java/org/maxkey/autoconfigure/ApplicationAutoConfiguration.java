@@ -17,10 +17,10 @@
 
 package org.maxkey.autoconfigure;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
+
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.password.LdapShaPasswordEncoder;
 import org.maxkey.crypto.password.Md4PasswordEncoder;
@@ -36,12 +36,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
@@ -50,35 +47,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
-
 @Configuration
 public class ApplicationAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = 
             LoggerFactory.getLogger(ApplicationAutoConfiguration.class);
-    
-    @Bean
-    @Primary
-    @ConfigurationProperties("spring.datasource")
-    public DataSource dataSource() {
-        return DruidDataSourceBuilder.create().build();
-    }
-    
+
     @Bean(name = "passwordReciprocal")
     public PasswordReciprocal passwordReciprocal() {
         return new PasswordReciprocal();
-    }
-    
-    
-    @Bean(name = "jdbcTemplate")
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
     }
     
     @Bean(name = "transactionManager")
     public DataSourceTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
-    
     
     /**
      * Authentication Password Encoder .
@@ -161,7 +143,6 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
             @Value("${maxkey.saml.v20.sp.issuing.entity.id}") String spIssuingEntityName) {
         return spIssuingEntityName;
     }
-    
     
     /**
      * spKeyStoreLoader .

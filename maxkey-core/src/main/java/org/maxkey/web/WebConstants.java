@@ -77,7 +77,7 @@ public class WebConstants {
 
     public static final  String AUTHENTICATION = "current_authentication";
     
-    public static final  String THEME_COOKIE_NAME = "theme_value";
+    public static final  String THEME_COOKIE_NAME = "mxk_theme_value";
     
     public static final  String LOGIN_ERROR_SESSION_MESSAGE 
                                     = "login_error_session_message_key";

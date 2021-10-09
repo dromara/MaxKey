@@ -17,7 +17,6 @@
 
 package org.maxkey.autoconfigure;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +38,6 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -53,6 +50,8 @@ import org.springframework.security.web.servletapi.SecurityContextHolderAwareReq
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
@@ -60,24 +59,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 
 @Configuration
-public class MvcAutoConfiguration implements InitializingBean {
+public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer {
     private static final  Logger _logger = LoggerFactory.getLogger(MvcAutoConfiguration.class);
-   
-    /**
-     * cookieLocaleResolver .
-     * @return cookieLocaleResolver
-     */
-    @Primary
-    @Bean (name = "localeResolver")
-    public CookieLocaleResolver cookieLocaleResolver(
-            @Value("${maxkey.server.domain:maxkey.top}")String domainName) {
-        _logger.debug("DomainName " + domainName);
-        CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-        cookieLocaleResolver.setCookieName("maxkey_locale");
-        cookieLocaleResolver.setCookieDomain(domainName);
-        cookieLocaleResolver.setCookieMaxAge(ConstantsTimeInterval.TWO_WEEK);
-        return cookieLocaleResolver;
-    }
     
     /**
      * 消息处理，可以直接使用properties的key值，返回的是对应的value值
@@ -188,35 +171,41 @@ public class MvcAutoConfiguration implements InitializingBean {
     }
     
     /**
-     * stringHttpMessageConverter .
-     * @return stringHttpMessageConverter
+     * cookieLocaleResolver .
+     * @return cookieLocaleResolver
      */
-    @Bean (name = "stringHttpMessageConverter")
-    public HttpMessageConverter<String> responseBodyConverter() {
-        StringHttpMessageConverter stringHttpMessageConverter = 
-                new StringHttpMessageConverter(Charset.forName("UTF-8"));
-        return stringHttpMessageConverter;
+
+    @Bean(name = "cookieLocaleResolver")
+    public LocaleResolver cookieLocaleResolver(
+            @Value("${maxkey.server.domain:maxkey.top}")
+            String domainName
+        ) {
+        _logger.debug("DomainName " + domainName);
+        CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+        cookieLocaleResolver.setCookieName("mxk_locale");
+        cookieLocaleResolver.setCookieDomain(domainName);
+        cookieLocaleResolver.setCookieMaxAge(ConstantsTimeInterval.TWO_WEEK);
+        return cookieLocaleResolver;
     }
-    
+     
     /**
      * AnnotationMethodHandlerAdapter
      * requestMappingHandlerAdapter .
      * @return requestMappingHandlerAdapter
      */
-    @DependsOn("stringHttpMessageConverter")
-    @Bean (name = "requestMappingHandlerAdapter")
+    @Bean (name = "addConverterRequestMappingHandlerAdapter")
     public RequestMappingHandlerAdapter requestMappingHandlerAdapter(
             MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter,
             MarshallingHttpMessageConverter marshallingHttpMessageConverter,
-            StringHttpMessageConverter stringHttpMessageConverter) {
+            StringHttpMessageConverter stringHttpMessageConverter,
+            RequestMappingHandlerAdapter requestMappingHandlerAdapter) {
         List<HttpMessageConverter<?>> httpMessageConverterList = 
                 new ArrayList<HttpMessageConverter<?>>();
         httpMessageConverterList.add(mappingJacksonHttpMessageConverter);
         httpMessageConverterList.add(marshallingHttpMessageConverter);
         httpMessageConverterList.add(stringHttpMessageConverter);
+        _logger.debug("stringHttpMessageConverter {}",stringHttpMessageConverter.getDefaultCharset());   
         
-        RequestMappingHandlerAdapter requestMappingHandlerAdapter = 
-                new RequestMappingHandlerAdapter();
         requestMappingHandlerAdapter.setMessageConverters(httpMessageConverterList);
         return requestMappingHandlerAdapter;
     }
@@ -295,9 +284,8 @@ public class MvcAutoConfiguration implements InitializingBean {
                 LoginService loginService,
                 LoginHistoryService loginHistoryService
             ) {
-        SessionListenerAdapter sessionListenerAdapter =new SessionListenerAdapter();
-        sessionListenerAdapter.setLoginService(loginService);
-        sessionListenerAdapter.setLoginHistoryService(loginHistoryService);
+        SessionListenerAdapter sessionListenerAdapter =
+                new SessionListenerAdapter(loginService,loginHistoryService);
         return sessionListenerAdapter;
     }
     

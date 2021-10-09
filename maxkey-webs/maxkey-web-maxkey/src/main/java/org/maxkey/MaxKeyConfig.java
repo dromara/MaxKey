@@ -157,15 +157,15 @@ public class MaxKeyConfig  implements InitializingBean {
 	    		AbstractRemeberMeService remeberMeService,
 	    		UserInfoService userInfoService,
                 JdbcTemplate jdbcTemplate,
-                @Value("${maxkey.support.ldap.enable:false}")boolean ldapSupport,
-    			@Value("${maxkey.support.ldap.jit:false}")boolean ldapJit,
-    			@Value("${maxkey.support.ldap.providerurl}")String providerUrl,
-    			@Value("${maxkey.support.ldap.principal}")String principal,
-    			@Value("${maxkey.support.ldap.credentials}")String credentials,
-    			@Value("${maxkey.support.ldap.filter}")String filter,
-    			@Value("${maxkey.support.ldap.basedn}")String baseDN,
-    			@Value("${maxkey.support.ldap.activedirectory.domain}")String domain,
-    			@Value("${maxkey.support.ldap.product:openldap}")String product) {
+                @Value("${maxkey.login.ldap.enable:false}")boolean ldapSupport,
+    			@Value("${maxkey.login.ldap.jit:false}")boolean ldapJit,
+    			@Value("${maxkey.login.ldap.providerurl}")String providerUrl,
+    			@Value("${maxkey.login.ldap.principal}")String principal,
+    			@Value("${maxkey.login.ldap.credentials}")String credentials,
+    			@Value("${maxkey.login.ldap.filter}")String filter,
+    			@Value("${maxkey.login.ldap.basedn}")String baseDN,
+    			@Value("${maxkey.login.ldap.activedirectory.domain}")String domain,
+    			@Value("${maxkey.login.ldap.product:openldap}")String product) {
     	AbstractAuthenticationRealm ldapAuthenticationRealm = 
     			ldapAuthenticationRealm(
 					ldapSupport,ldapJit,
@@ -281,13 +281,13 @@ public class MaxKeyConfig  implements InitializingBean {
     
     @Bean(name = "kerberosService")
     public RemoteKerberosService kerberosService(
-            @Value("${maxkey.support.kerberos.default.userdomain}")
+            @Value("${maxkey.login.kerberos.default.userdomain}")
             String userDomain,
-            @Value("${maxkey.support.kerberos.default.fulluserdomain}")
+            @Value("${maxkey.login.kerberos.default.fulluserdomain}")
             String fullUserDomain,
-            @Value("${maxkey.support.kerberos.default.crypto}")
+            @Value("${maxkey.login.kerberos.default.crypto}")
             String crypto,
-            @Value("${maxkey.support.kerberos.default.redirecturi}")
+            @Value("${maxkey.login.kerberos.default.redirecturi}")
             String redirectUri
             ) {
         RemoteKerberosService kerberosService = new RemoteKerberosService();

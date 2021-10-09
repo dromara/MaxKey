@@ -63,7 +63,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     	    OnlineTicketServices onlineTicketServices
     		) {
        
-    	_logger.debug("init authenticationProvider .");
+    	_logger.debug("init authentication Provider .");
         return new RealmAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,

@@ -18,15 +18,11 @@
 package org.maxkey.autoconfigure;
 
 import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWEAlgorithm;
-import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
 import org.maxkey.authn.support.jwt.JwtLoginService;
-import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
-import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,94 +36,53 @@ import org.springframework.core.io.ClassPathResource;
 @Configuration
 public class JwtAuthnAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(JwtAuthnAutoConfiguration.class);
-    
-    /**
-     * OIDCProviderMetadataDetails. 
-     * Self-issued Provider Metadata
-     * http://openid.net/specs/openid-connect-core-1_0.html#SelfIssued 
-     */
-    @Bean(name = "oidcProviderMetadata")
-    public OIDCProviderMetadataDetails OIDCProviderMetadataDetails(
-            @Value("${maxkey.oidc.metadata.issuer}")
-            String issuer,
-            @Value("${maxkey.oidc.metadata.authorizationEndpoint}")
-            URI authorizationEndpoint,
-            @Value("${maxkey.oidc.metadata.tokenEndpoint}")
-            URI tokenEndpoint,
-            @Value("${maxkey.oidc.metadata.userinfoEndpoint}")
-            URI userinfoEndpoint) {
-        _logger.debug("RedisConnectionFactory init .");
-        OIDCProviderMetadataDetails oidcProviderMetadata = new OIDCProviderMetadataDetails();
-        oidcProviderMetadata.setIssuer(issuer);
-        oidcProviderMetadata.setAuthorizationEndpoint(authorizationEndpoint);
-        oidcProviderMetadata.setTokenEndpoint(tokenEndpoint);
-        oidcProviderMetadata.setUserinfoEndpoint(userinfoEndpoint);
-        return oidcProviderMetadata;
-    }
 
     /**
-     * jwtSetKeyStore.
+     * jwt Login JwkSetKeyStore.
      * @return
      */
-    @Bean(name = "jwkSetKeyStore")
-    public JWKSetKeyStore jwtSetKeyStore() {
+    @Bean(name = "jwtLoginJwkSetKeyStore")
+    public JWKSetKeyStore jwtLoginJwkSetKeyStore() {
         JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore();
-        ClassPathResource classPathResource = new ClassPathResource("/config/keystore.jwks");
+        ClassPathResource classPathResource = new ClassPathResource("/config/loginjwkkeystore.jwks");
         jwkSetKeyStore.setLocation(classPathResource);
+        _logger.debug("JWT Login JwkSet KeyStore init.");
         return jwkSetKeyStore;
     }
     
     /**
-     * jwtSetKeyStore.
+     * jwt Login ValidationService.
      * @return
      * @throws JOSEException
      * @throws InvalidKeySpecException 
      * @throws NoSuchAlgorithmException 
      */
-    @Bean(name = "jwtSignerValidationService")
-    public DefaultJwtSigningAndValidationService jwtSignerValidationService(
-            JWKSetKeyStore jwtSetKeyStore) 
+    @Bean(name = "jwtLoginValidationService")
+    public DefaultJwtSigningAndValidationService jwtLoginValidationService(
+            JWKSetKeyStore jwtLoginJwkSetKeyStore) 
                     throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
         DefaultJwtSigningAndValidationService jwtSignerValidationService = 
-                new DefaultJwtSigningAndValidationService(jwtSetKeyStore);
+                new DefaultJwtSigningAndValidationService(jwtLoginJwkSetKeyStore);
         jwtSignerValidationService.setDefaultSignerKeyId("maxkey_rsa");
         jwtSignerValidationService.setDefaultSigningAlgorithmName("RS256");
+        _logger.debug("JWT Login Signing and Validation init.");
         return jwtSignerValidationService;
     }
-    
+
     /**
-     * jwtSetKeyStore.
-     * @return
-     * @throws JOSEException 
-     * @throws InvalidKeySpecException 
-     * @throws NoSuchAlgorithmException 
-     */
-    @Bean(name = "jwtEncryptionService")
-    public DefaultJwtEncryptionAndDecryptionService jwtEncryptionService(
-            JWKSetKeyStore jwtSetKeyStore) 
-                    throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
-        DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
-                new DefaultJwtEncryptionAndDecryptionService(jwtSetKeyStore);
-        jwtEncryptionService.setDefaultAlgorithm(JWEAlgorithm.RSA_OAEP_256);//RSA1_5
-        jwtEncryptionService.setDefaultDecryptionKeyId("maxkey_rsa");
-        jwtEncryptionService.setDefaultEncryptionKeyId("maxkey_rsa");
-        return jwtEncryptionService;
-    }
-    
-    /**
-     * JwtLoginService.
+     * Jwt LoginService.
      * @return
      */
     @Bean(name = "jwtLoginService")
     public JwtLoginService jwtLoginService(
-            DefaultJwtSigningAndValidationService jwtSignerValidationService,
-            OIDCProviderMetadataDetails oidcProviderMetadata) {
-        
+            @Value("${maxkey.login.jwt.issuer}")
+            String issuer,
+            DefaultJwtSigningAndValidationService jwtLoginValidationService) {
         JwtLoginService jwtLoginService = new JwtLoginService(
-                oidcProviderMetadata,
-                jwtSignerValidationService
+                    jwtLoginValidationService,
+                    issuer
                 );
-        
+        _logger.debug("JWT Login Service init.");
         return jwtLoginService;
     }
     

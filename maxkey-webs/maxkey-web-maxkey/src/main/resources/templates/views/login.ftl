@@ -96,9 +96,9 @@
 	var currentSwitchTab="normalLogin";
 	<#--submit form-->		
 	function doLoginSubmit(){
-		$.cookie("username", $("#"+currentSwitchTab+"Form input[name=username]").val(), { expires: 7 });
+		$.cookie("login_username", $("#"+currentSwitchTab+"Form input[name=username]").val(), { expires: 7 });
 		$("#"+currentSwitchTab+"SubmitButton").click();
-		$.cookie("switch_tab", currentSwitchTab, { expires: 7 });
+		$.cookie("login_switch_tab", currentSwitchTab, { expires: 7 });
 	};
 	
 	<#--switch Login Form-->
@@ -127,12 +127,12 @@
 		$(".doLoginSubmit").on("click",function(){
 				doLoginSubmit();
 		});
-		
+		var cookieLoginUsername = $.cookie("login_username");
 		<#--read username cookie for login e-->		
-		if($.cookie("username")!=undefined&&$.cookie("username")!=""){
-			var switch_tab=$.cookie("switch_tab")==undefined?"normalLogin":$.cookie("switch_tab");
+		if(cookieLoginUsername != undefined && cookieLoginUsername != ""){
+			var switch_tab=$.cookie("switch_tab")==undefined?"normalLogin":$.cookie("login_switch_tab");
 			$("#"+switch_tab).click();
-			$("#"+switch_tab+"Form input[name=username]").val($.cookie("username")==undefined?"":$.cookie("username"));
+			$("#"+switch_tab+"Form input[name=username]").val(cookieLoginUsername ==undefined ? "" : cookieLoginUsername);
 			$("#div_"+switch_tab+" input[name=password]").focus();
 		}else{
 			$("#div_normalLogin input[name=username]").focus();
@@ -142,8 +142,8 @@
 			if(captchaCount<60){
 				return;
 			}
-			var loginName=$("#mobile_j_username").val();
-			if(loginName==""){
+			var loginName = $("#mobile_j_username").val();
+			if(loginName == ""){
 				return;
 			}
 			$.get("<@base />/login/sendsms/"+loginName,function(data,status){

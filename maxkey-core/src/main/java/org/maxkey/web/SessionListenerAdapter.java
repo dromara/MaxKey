@@ -44,6 +44,13 @@ public class SessionListenerAdapter implements HttpSessionListener {
         _logger.debug("SessionListenerAdapter inited . ");
     }
 
+    public SessionListenerAdapter(LoginService loginService, LoginHistoryService loginHistoryService) {
+        super();
+        this.loginService = loginService;
+        this.loginHistoryService = loginHistoryService;
+        _logger.debug("SessionListenerAdapter inited . ");
+    }
+
     public void init() {
         if(loginService == null ) {
             loginService = (LoginService)WebContext.getBean("loginService");

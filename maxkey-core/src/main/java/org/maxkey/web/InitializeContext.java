@@ -36,6 +36,7 @@ import org.maxkey.util.PathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -95,6 +96,14 @@ public class InitializeContext extends HttpServlet {
     }
 
     public InitializeContext(ConfigurableApplicationContext applicationContext) {
+        if(applicationContext.containsBean("localeResolver") &&
+                applicationContext.containsBean("cookieLocaleResolver")) {
+            BeanDefinitionRegistry beanFactory = (BeanDefinitionRegistry)applicationContext.getBeanFactory();
+            beanFactory.removeBeanDefinition("localeResolver");
+            beanFactory.registerBeanDefinition("localeResolver", 
+                    beanFactory.getBeanDefinition("cookieLocaleResolver"));
+            _logger.debug("cookieLocaleResolver replaced localeResolver.");
+        }
         this.applicationContext = applicationContext;
     }
 
