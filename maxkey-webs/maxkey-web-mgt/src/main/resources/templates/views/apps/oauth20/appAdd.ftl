@@ -4,6 +4,21 @@
 	<#include  "../../layout/header.ftl"/>
 	<#include  "../../layout/common.cssjs.ftl"/>
 	<#include  "../appCommonHead.ftl"/>
+	<script type="text/javascript">
+    <!--
+    $(function(){ 
+        if("OAuth_v2.0"=="${model.protocol!}") { 
+            $("#app_protocol_control").html(
+                '<select  id="protocol" name="protocol" class="form-control  form-select" >'+
+                    '<option value="OAuth_v2.0" selected >OAuth_v2.0</option>'+
+                    '<option value="OAuth_v2.1" >OAuth_v2.1</option>'+
+                    '<option value="OpenID_Connect_v1.0" >OpenID_Connect_v1.0</option>'+
+                '</select>'
+            );
+        }
+    });
+    //-->
+    </script>
 </head>
 <body>
 <form id="actionForm_app"  method="post" type="label" autoclose="true"    closeWindow="true"
@@ -93,6 +108,27 @@
 						<b class="orange">*</b><label for="refreshTokenValiditySeconds"></label>
 					</td>
 				</tr>
+				<tr>
+                    <th>PKCE：</th>
+                    <td >
+                        <select  id="pkce" name="pkce" class="form-control  form-select">
+                            <option value="yes"  >
+                                <@locale code="common.text.yes" /></option>
+                            <option value="no" selected>
+                                <@locale code="common.text.no" /></option>
+                        </select>
+                    </td>
+                    <th><@locale code="apps.oauth.approvalPrompt" />：</th>
+                    <td >
+                        <select  id="approvalPrompt" name="approvalPrompt"  class="form-control  form-select" >
+                            <option value="force" selected>
+                                <@locale code="apps.oauth.approvalPrompt.force" /></option>
+                            <option value="auto"  >
+                                <@locale code="apps.oauth.approvalPrompt.auto" /></option>
+                        </select>
+                    </td>
+                    
+                </tr>
 				<tr>
 					<td colspan=4><@locale code="apps.oauth.connect.info" /></td>
 				</tr>
@@ -189,20 +225,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr>
-					<th><@locale code="apps.oauth.approvalPrompt" />：</th>
-					<td >
-						<select  id="approvalPrompt" name="approvalPrompt"  class="form-control  form-select" >
-							<option value="force" selected>
-								<@locale code="apps.oauth.approvalPrompt.force" /></option>
-							<option value="auto"  >
-								<@locale code="apps.oauth.approvalPrompt.auto" /></option>
-						</select>
-					</td>
-					<th></th>
-					<td >
-					</td>
-				</tr>
+				
 				<tr>
 					<td colspan =4>
 						<input  id="status" type="hidden" name="status"  value="1"/>

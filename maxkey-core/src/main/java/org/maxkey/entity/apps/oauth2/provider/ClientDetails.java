@@ -147,5 +147,10 @@ public interface ClientDetails extends Serializable {
 	public String getJwksUri();
 	
 	public String getApprovalPrompt();
+	
+	public String getPkce();
+	
+	public String getProtocol();
+	
 
 }

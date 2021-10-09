@@ -62,6 +62,8 @@ public class AppsOAuth20Details extends Apps {
     private String userInfoEncryptionMethod;
 
     private String jwksUri;
+    
+    private String pkce;
 
     /**
      * 
@@ -88,7 +90,7 @@ public class AppsOAuth20Details extends Apps {
         this.setVendor(application.getVendor());
         this.setVendorUrl(application.getVendorUrl());
         this.setVisible(application.getVisible());
-
+        
         this.clientSecret = baseClientDetails.getClientSecret();
         this.scope = baseClientDetails.getScope().toString();
         this.resourceIds = baseClientDetails.getResourceIds().toString();
@@ -110,7 +112,17 @@ public class AppsOAuth20Details extends Apps {
 
         this.jwksUri = baseClientDetails.getJwksUri();
         this.approvalPrompt = baseClientDetails.getApprovalPrompt();
+        
+        this.pkce = baseClientDetails.getPkce();
 
+    }
+
+    public String getPkce() {
+        return pkce;
+    }
+
+    public void setPkce(String pkce) {
+        this.pkce = pkce;
     }
 
     /**
@@ -327,6 +339,8 @@ public class AppsOAuth20Details extends Apps {
 
         baseClientDetails.setJwksUri(this.getJwksUri());
         baseClientDetails.setApprovalPrompt(this.getApprovalPrompt());
+        baseClientDetails.setPkce(this.getPkce());
+        baseClientDetails.setProtocol(this.getProtocol());
 
         return baseClientDetails;
     }

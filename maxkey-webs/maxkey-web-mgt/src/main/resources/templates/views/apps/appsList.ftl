@@ -17,6 +17,8 @@
 	};
 	var protocolArray = new Array();	
 	protocolArray["OAuth_v2.0"]="oauth20";
+	protocolArray["OAuth_v2.1"]="oauth20";
+	protocolArray["OpenID_Connect_v1.0"]="oauth20";
 	protocolArray["SAML_v2.0"]="saml20";
 	protocolArray["Token_Based"]="tokenbased";
 	protocolArray["Form_Based"]="formbased";

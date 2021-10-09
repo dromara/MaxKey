@@ -45,7 +45,7 @@
       </tr>
       <tr>
          <th style="width:15%;"><@locale code="apps.protocol"/>：</th>
-         <td style="width:35%;">
+         <td style="width:35%;" id="app_protocol_control">
          	<span  id="protocol_text" >${model.protocol!}</span>
             <input type="hidden"class="form-control"  id="protocol" name="protocol"  title="" value="${model.protocol!}"/>
          </td>

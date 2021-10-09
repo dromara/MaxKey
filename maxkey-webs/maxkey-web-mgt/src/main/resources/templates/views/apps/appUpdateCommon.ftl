@@ -55,7 +55,7 @@
       </tr>
       <tr>
          <th><@locale code="apps.icon"/>：</th>
-         <td><img id="iconFileImg" width='30' height='30' src='<@base/>/image/${model.id!}'/>
+         <td><img id="iconFileImg" height='30' src='<@base/>/image/${model.id!}'/>
          </td>
          <th><@locale code="common.text.sortindex"/></th>
          <td>

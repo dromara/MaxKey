@@ -55,7 +55,7 @@
 								<td>phone<input type="checkbox" id="scope_phone" name="scope" value="phone" <#if   model.scope?contains('phone') >checked</#if>/></td>
 								<td>address<input type="checkbox" id="scope_address" name="scope" value="address" <#if   model.scope?contains('address') >checked</#if>/></td>
 								<td>all<input type="checkbox" id="scope_all" name="scope" value="all" <#if   model.scope?contains('all') >checked</#if>/></td>
-								<td><b class="orange">*</b><label for="scope"></label></td>
+								<td><b class="orange"></b><label for="scope"></label></td>
 							</tr>
 						</table>
 					</td>
@@ -95,6 +95,26 @@
 					
 					</td>
 				</tr>
+				<tr>
+                    <th>PKCE：</th>
+                    <td >
+                        <select  id="pkce" name="pkce" class="form-control  form-select">
+                            <option value="yes"  <#if   "yes"==model.pkce?default("yes") >selected</#if>>
+                                <@locale code="common.text.yes" /></option>
+                            <option value="no"  <#if   'no'==model.pkce >selected</#if>>
+                                <@locale code="common.text.no" /></option>
+                        </select>
+                    </td>
+                    <th><@locale code="apps.oauth.approvalPrompt" />：</th>
+                    <td >
+                        <select  id="approvalPrompt" name="approvalPrompt" class="form-control  form-select">
+                            <option value="force"  <#if   ""==model.approvalPrompt?default("") >selected</#if>>
+                                <@locale code="apps.oauth.approvalPrompt.force" /></option>
+                            <option value="auto"  <#if   'auto'==model.approvalPrompt >selected</#if>>
+                                <@locale code="apps.oauth.approvalPrompt.auto" /></option>
+                        </select>
+                    </td>
+                </tr>
 				<tr>
 					<th><@locale code="apps.oauth.connect.idTokenSigningAlgorithm" />：</th>
 					<td >
@@ -188,21 +208,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr>
-					<th><@locale code="apps.oauth.approvalPrompt" />：</th>
-					<td >
-						<select  id="approvalPrompt" name="approvalPrompt" class="form-control  form-select">
-							<option value="force"  <#if   ""==model.approvalPrompt?default("") >selected</#if>>
-								<@locale code="apps.oauth.approvalPrompt.force" /></option>
-							<option value="auto"  <#if   'auto'==model.approvalPrompt >selected</#if>>
-								<@locale code="apps.oauth.approvalPrompt.auto" /></option>
-						</select>
-					</td>
-					<th></th>
-					<td >
-
-					</td>
-				</tr>
+				
 				</tbody>
 			  </table>
   	       </td>

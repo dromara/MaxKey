@@ -94,6 +94,10 @@ public class BaseClientDetails implements ClientDetails {
 	
 	private String approvalPrompt;
 	
+	private String pkce;
+	
+	private String protocol;
+	
 	
 	public BaseClientDetails() {
 	}
@@ -369,6 +373,22 @@ public class BaseClientDetails implements ClientDetails {
 
     public void setApprovalPrompt(String approvalPrompt) {
         this.approvalPrompt = approvalPrompt;
+    }
+ 
+    public String getPkce() {
+        return pkce;
+    }
+
+    public void setPkce(String pkce) {
+        this.pkce = pkce;
+    }
+
+    public String getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
     }
 
     @Override
