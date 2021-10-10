@@ -61,6 +61,25 @@ public final class DigestUtils {
 		}
 		return cipherBASE64;
 	}
+	
+	/**
+     * @param simple
+     * @param algorithm MD5,SHA,SHA-1|SHA-256|SHA-384|SHA-512 then encodeBase64
+     * @return cipher
+     */
+    public static String digestBase64Url(String simple,String algorithm) {
+        MessageDigest messageDigest;
+        String cipherBASE64="";
+        try {
+            messageDigest = MessageDigest.getInstance(algorithm.toUpperCase());
+            messageDigest.update(simple.getBytes());
+            byte[] bCipher=messageDigest.digest();
+            cipherBASE64=Base64Utils.base64UrlEncode(bCipher);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return cipherBASE64;
+    }
 
 	//B64
 	public static String md5B64(String simple) {

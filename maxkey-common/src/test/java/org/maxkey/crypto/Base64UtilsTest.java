@@ -42,7 +42,9 @@ public class Base64UtilsTest {
 		 System.out.println(Base64Utils.decode("AAMkADU2OWY1MGQ3LWEyNWQtNDFmOC04MWFiLTI5YTE2NGM5YTZmNABGAAAAAABPKgpqnlfYQ7BVC/BfH2XIBwCS0xhUjzMYSLVky9bw7LddAAAAjov5AACS0xhUjzMYSLVky9bw7LddAAADzoyxAAA="));
 		 
 		
+		 String b = "UsWdAIe4opTqcrX6~SrIMhBu5Gc9oZKEnnSDFRx9JwBINK8XTgnXUs2A3b7QmxDM9nRu8~mGsikVEoISLg.JTIHYRwv-Bp5ljIADLwUHv9iJAWo1delBOlW0Hd7nIVF0";
 		 
+		 System.out.println(DigestUtils.digestBase64Url(b,DigestUtils.Algorithm.SHA256));
 	}
 
 }

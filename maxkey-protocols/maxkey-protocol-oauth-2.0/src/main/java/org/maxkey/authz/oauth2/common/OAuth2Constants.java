@@ -89,8 +89,20 @@ public class OAuth2Constants {
 		public static final String CODE_CHALLENGE_METHOD  = "code_challenge_method" ;
 		
 		public static final String CODE_VERIFIER          = "code_verifier" ;
+		
+		
 		 
 	}
+	
+	public static class PKCE_TYPE{
+	    public static final String PKCE_TYPE_YES          = "YES" ;
+        public static final String PKCE_TYPE_NO           = "NO" ; 
+	}
+	
+	public static class CODE_CHALLENGE_METHOD_TYPE{
+        public static final String PLAIN          = "plain" ;
+        public static final String S256           = "S256" ; 
+    }
 	
 	public static class ENDPOINT{
 		

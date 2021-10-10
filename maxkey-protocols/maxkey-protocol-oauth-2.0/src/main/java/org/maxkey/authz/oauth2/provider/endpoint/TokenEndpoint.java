@@ -157,9 +157,9 @@ public class TokenEndpoint extends AbstractEndpoint {
 			 
 			if (isRefreshTokenRequest(parameters)) {
 				// A refresh token has its own default scopes, so we should ignore any added by the factory here.
-				tokenRequest.setScope(OAuth2Utils.parseParameterList(parameters.get(OAuth2Utils.SCOPE)));
+				tokenRequest.setScope(OAuth2Utils.parseParameterList(parameters.get(OAuth2Constants.PARAMETER.SCOPE)));
 			}
-	
+			//granter grant access token
 			token = getTokenGranter().grant(tokenRequest.getGrantType(), tokenRequest);
 			if (token == null) {
 				throw new UnsupportedGrantTypeException("Unsupported grant type: " + tokenRequest.getGrantType());

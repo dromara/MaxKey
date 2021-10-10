@@ -17,6 +17,7 @@
 
 package org.maxkey.web.apps.contorller;
 
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsProtocols;
@@ -65,6 +66,9 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	public ModelAndView insert(@ModelAttribute("oauth20Details") AppsOAuth20Details oauth20Details ) {
 		_logger.debug("-Add  :" + oauth20Details);
 		
+		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH21)) {
+		    oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
+		}
 		transform(oauth20Details);
 
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
@@ -103,6 +107,9 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		//
 		_logger.debug("-update  application :" + oauth20Details);
 		_logger.debug("-update  oauth20Details use oauth20JdbcClientDetails" );
+		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH21)) {
+            oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
+        }
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
         oauth20JdbcClientDetailsService.updateClientDetails(oauth20Details.clientDetailsRowMapper());
         oauth20JdbcClientDetailsService.updateClientSecret(oauth20Details.getClientId(), oauth20Details.getClientSecret());

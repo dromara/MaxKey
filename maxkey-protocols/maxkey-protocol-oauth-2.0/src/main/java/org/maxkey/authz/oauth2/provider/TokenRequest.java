@@ -110,7 +110,7 @@ public class TokenRequest extends BaseRequest {
 		// Add grant type so it can be retrieved from OAuth2Request
 		 modifiable.put("grant_type", grantType);
 		return new OAuth2Request(modifiable, client.getClientId(), client.getAuthorities(), true, this.getScope(),
-					client.getResourceIds(), null, null, null);
+					client.getResourceIds(), null, null, null, null, null);
 	}
 
 }

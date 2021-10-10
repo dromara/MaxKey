@@ -20,11 +20,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
+import org.maxkey.authz.oauth2.common.OAuth2Constants.CODE_CHALLENGE_METHOD_TYPE;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidClientException;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidGrantException;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidRequestException;
+import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
 import org.maxkey.authz.oauth2.common.exceptions.RedirectMismatchException;
-import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.OAuth2Request;
@@ -32,6 +35,8 @@ import org.maxkey.authz.oauth2.provider.OAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.TokenRequest;
 import org.maxkey.authz.oauth2.provider.token.AbstractTokenGranter;
 import org.maxkey.authz.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.maxkey.constants.ConstantsProtocols;
+import org.maxkey.crypto.DigestUtils;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.springframework.security.core.Authentication;
 
@@ -57,13 +62,15 @@ public class AuthorizationCodeTokenGranter extends AbstractTokenGranter {
 	protected OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
 
 		Map<String, String> parameters = tokenRequest.getRequestParameters();
-		String authorizationCode = parameters.get("code");
-		String redirectUri = parameters.get(OAuth2Utils.REDIRECT_URI);
+		String authorizationCode = parameters.get(OAuth2Constants.PARAMETER.CODE);
+		String redirectUri = parameters.get(OAuth2Constants.PARAMETER.REDIRECT_URI);
+		String codeVerifier = parameters.get(OAuth2Constants.PARAMETER.CODE_VERIFIER);
 
 		if (authorizationCode == null) {
 			throw new InvalidRequestException("An authorization code must be supplied.");
 		}
-
+		//consume AuthorizationCode
+		logger.trace("consume AuthorizationCode...");
 		OAuth2Authentication storedAuth = authorizationCodeServices.consumeAuthorizationCode(authorizationCode);
 		if (storedAuth == null) {
 			throw new InvalidGrantException("Invalid authorization code: " + authorizationCode);
@@ -72,8 +79,9 @@ public class AuthorizationCodeTokenGranter extends AbstractTokenGranter {
 		OAuth2Request pendingOAuth2Request = storedAuth.getOAuth2Request();
 		// https://jira.springsource.org/browse/SECOAUTH-333
 		// This might be null, if the authorization was done without the redirect_uri parameter
-		String redirectUriApprovalParameter = pendingOAuth2Request.getRequestParameters().get(
-				OAuth2Utils.REDIRECT_URI);
+		String redirectUriApprovalParameter = 
+		        pendingOAuth2Request.getRequestParameters().get(
+		                OAuth2Constants.PARAMETER.REDIRECT_URI);
 
 		String pendingClientId = pendingOAuth2Request.getClientId();
 		String clientId = tokenRequest.getClientId();
@@ -85,7 +93,7 @@ public class AuthorizationCodeTokenGranter extends AbstractTokenGranter {
 		 */
 		Set<String> redirectUris = client.getRegisteredRedirectUri();
 		boolean redirectMismatch=false;
-		
+		//match the stored RedirectUri with request redirectUri parameter
 		for(String storedRedirectUri : redirectUris){
 			if(redirectUri.startsWith(storedRedirectUri)){
 				redirectMismatch=true;
@@ -95,8 +103,8 @@ public class AuthorizationCodeTokenGranter extends AbstractTokenGranter {
 		if ((redirectUri != null || redirectUriApprovalParameter != null)
 				&& !redirectMismatch) {
 			logger.info("storedAuth redirectUri "+pendingOAuth2Request.getRedirectUri());
-			logger.info("redirectUri "+ redirectUri);
-			logger.info("storedRedirectUri "+ redirectUris);
+			logger.info("redirectUri parameter "+ redirectUri);
+			logger.info("stored RedirectUri "+ redirectUris);
 			throw new RedirectMismatchException("Redirect URI mismatch.");
 		}
 		/*
@@ -111,6 +119,31 @@ public class AuthorizationCodeTokenGranter extends AbstractTokenGranter {
 		if (clientId != null && !clientId.equals(pendingClientId)) {
 			// just a sanity check.
 			throw new InvalidClientException("Client ID mismatch");
+		}
+		
+		//OAuth 2.1 and PKCE Support
+		logger.debug("client Protocol "+client.getProtocol()+", PKCE Support "+
+		        (client.getPkce().equalsIgnoreCase(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES)));
+		if(client.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH21)
+		        || client.getPkce().equalsIgnoreCase(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES)) {
+    		logger.trace("stored CodeChallengeMethod "+ pendingOAuth2Request.getCodeChallengeMethod());
+    		logger.trace("stored CodeChallenge "+ pendingOAuth2Request.getCodeChallenge());
+    		logger.trace("stored codeVerifier "+ codeVerifier);
+    		if(StringUtils.isBlank(codeVerifier)) {
+    		    throw new OAuth2Exception("code_verifier can not null.");
+    		}
+    		
+    		if(StringUtils.isBlank(pendingOAuth2Request.getCodeChallenge())) {
+                throw new OAuth2Exception("code_challenge can not null.");
+            }
+    		
+    		if(CODE_CHALLENGE_METHOD_TYPE.S256.equalsIgnoreCase(pendingOAuth2Request.getCodeChallengeMethod())) {
+    		    codeVerifier = DigestUtils.digestBase64Url(codeVerifier,DigestUtils.Algorithm.SHA256);
+    		}
+    		
+    		if(!codeVerifier.equals(pendingOAuth2Request.getCodeChallenge())) {
+                throw new OAuth2Exception("code_verifier not match.");
+            }
 		}
 
 		// Secret is not required in the authorization request, so it won't be available

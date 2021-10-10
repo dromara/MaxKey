@@ -123,8 +123,11 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 	@ApiOperation(value = "OAuth 2.0 认证接口", notes = "传递参数client_id,response_type,redirect_uri等",httpMethod="GET")
 	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE, method = RequestMethod.GET)
-	public ModelAndView authorize(Map<String, Object> model, @RequestParam Map<String, String> parameters,
-			SessionStatus sessionStatus) {
+	public ModelAndView authorize(
+	            Map<String, Object> model, 
+	            @RequestParam Map<String, String> parameters,
+	            SessionStatus sessionStatus) {
+	    
 		 Principal principal=(Principal)WebContext.getAuthentication();
 		// Pull out the authorization request first, using the OAuth2RequestFactory. All further logic should
 		// query off of the authorization request instead of referring back to the parameters map. The contents of the
@@ -152,7 +155,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 			// The resolved redirect URI is either the redirect_uri from the parameters or the one from
 			// clientDetails. Either way we need to store it on the AuthorizationRequest.
-			String redirectUriParameter = authorizationRequest.getRequestParameters().get(OAuth2Utils.REDIRECT_URI);
+			String redirectUriParameter = authorizationRequest.getRequestParameters().get(OAuth2Constants.PARAMETER.REDIRECT_URI);
 			String resolvedRedirect = redirectResolver.resolveRedirect(redirectUriParameter, client);
 			if (!StringUtils.hasText(resolvedRedirect)) {
 				logger.info("Client redirectUri "+resolvedRedirect);
@@ -202,8 +205,11 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	}
 
 	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE, method = RequestMethod.POST, params = OAuth2Utils.USER_OAUTH_APPROVAL)
-	public View approveOrDeny(@RequestParam Map<String, String> approvalParameters, Map<String, ?> model,
-			SessionStatus sessionStatus) {
+	public View approveOrDeny(
+	                @RequestParam Map<String, String> approvalParameters,
+	                Map<String, ?> model,
+	                SessionStatus sessionStatus) {
+	    
 		Principal principal=(Principal)WebContext.getAuthentication();
 		if (!(principal instanceof Authentication)) {
 			sessionStatus.setComplete();
@@ -233,8 +239,12 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			}
 
 			if (!authorizationRequest.isApproved()) {
-				return new RedirectView(getUnsuccessfulRedirect(authorizationRequest,
-						new UserDeniedAuthorizationException("User denied access"), responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)),
+				return new RedirectView(
+				        getUnsuccessfulRedirect(
+				            authorizationRequest,
+				            new UserDeniedAuthorizationException("User denied access"), 
+				            responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)
+				        ),
 						false, true, false);
 			}
 
@@ -268,12 +278,24 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			if (accessToken == null) {
 				throw new UnsupportedResponseTypeException("Unsupported response type: token");
 			}
-			return new ModelAndView(new RedirectView(appendAccessToken(authorizationRequest, accessToken), false, true,
-					false));
+			return new ModelAndView(
+			        new RedirectView(
+			                appendAccessToken(authorizationRequest, accessToken), 
+			                false, 
+			                true,
+			                false
+			         )
+			 );
 		}
 		catch (OAuth2Exception e) {
-			return new ModelAndView(new RedirectView(getUnsuccessfulRedirect(authorizationRequest, e, true), false,
-					true, false));
+			return new ModelAndView(
+			        new RedirectView(
+			                getUnsuccessfulRedirect(authorizationRequest, e, true), 
+			                false,
+			                true, 
+			                false
+			         )
+			 );
 		}
 	}
 
@@ -331,7 +353,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			url.append("&").append(templateUrlVar(OAuth2Constants.PARAMETER.EXPIRES_IN));
 			vars.put(OAuth2Constants.PARAMETER.EXPIRES_IN, expires_in);
 		}
-		String originalScope = authorizationRequest.getRequestParameters().get(OAuth2Utils.SCOPE);
+		String originalScope = authorizationRequest.getRequestParameters().get(OAuth2Constants.PARAMETER.SCOPE);
 		if (originalScope == null || !OAuth2Utils.parseParameterList(originalScope).equals(accessToken.getScope())) {
 			url.append("&").append(templateUrlVar(OAuth2Constants.PARAMETER.SCOPE));
 			vars.put(OAuth2Constants.PARAMETER.SCOPE, OAuth2Utils.formatParameterList(accessToken.getScope()));

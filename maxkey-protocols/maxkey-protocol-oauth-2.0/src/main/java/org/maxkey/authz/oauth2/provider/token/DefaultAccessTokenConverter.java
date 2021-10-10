@@ -161,7 +161,7 @@ public class DefaultAccessTokenConverter implements AccessTokenConverter {
 			authorities = AuthorityUtils.createAuthorityList(roles);
 		}
 		OAuth2Request request = new OAuth2Request(parameters, clientId, authorities, true, scope, resourceIds, null, null,
-				null);
+				null, null, null);
 		return new OAuth2Authentication(request, user);
 	}
 

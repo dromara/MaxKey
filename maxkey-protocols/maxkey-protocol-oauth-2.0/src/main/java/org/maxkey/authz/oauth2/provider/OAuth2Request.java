@@ -102,6 +102,7 @@ public class OAuth2Request extends BaseRequest implements Serializable {
 	public OAuth2Request(Map<String, String> requestParameters, String clientId,
 			Collection<? extends GrantedAuthority> authorities, boolean approved, Set<String> scope,
 			Set<String> resourceIds, String redirectUri, Set<String> responseTypes,
+			String codeChallenge,String codeChallengeMethod,
 			Map<String, Serializable> extensionProperties) {
 		setClientId(clientId);
 		setRequestParameters(requestParameters);
@@ -117,6 +118,8 @@ public class OAuth2Request extends BaseRequest implements Serializable {
 		if (responseTypes != null) {
 			this.responseTypes = new HashSet<String>(responseTypes);
 		}
+		this.codeChallenge = codeChallenge;
+		this.codeChallengeMethod = codeChallengeMethod;
 		this.redirectUri = redirectUri;
 		if (extensionProperties != null) {
 			this.extensions = extensionProperties;
@@ -125,8 +128,9 @@ public class OAuth2Request extends BaseRequest implements Serializable {
 
 	protected OAuth2Request(OAuth2Request other) {
 		this(other.getRequestParameters(), other.getClientId(), other.getAuthorities(), other.isApproved(), other
-				.getScope(), other.getResourceIds(), other.getRedirectUri(), other.getResponseTypes(), other
-				.getExtensions());
+				.getScope(), other.getResourceIds(), other.getRedirectUri(), other.getResponseTypes(),
+				other.getCodeChallenge(),other.getCodeChallengeMethod(),
+				other.getExtensions());
 	}
 
 	protected OAuth2Request(String clientId) {
@@ -177,7 +181,7 @@ public class OAuth2Request extends BaseRequest implements Serializable {
 	 */
 	public OAuth2Request createOAuth2Request(Map<String, String> parameters) {
 		return new OAuth2Request(parameters, getClientId(), authorities, approved, getScope(), resourceIds,
-				redirectUri, responseTypes, extensions);
+				redirectUri, responseTypes,  codeChallenge, codeChallengeMethod,extensions);
 	}
 
 	/**
@@ -189,14 +193,14 @@ public class OAuth2Request extends BaseRequest implements Serializable {
 	 */
 	public OAuth2Request narrowScope(Set<String> scope) {
 		OAuth2Request request = new OAuth2Request(getRequestParameters(), getClientId(), authorities, approved, scope,
-				resourceIds, redirectUri, responseTypes, extensions);
+				resourceIds, redirectUri, responseTypes, codeChallenge, codeChallengeMethod, extensions);
 		request.refresh = this.refresh;
 		return request;
 	}
 
 	public OAuth2Request refresh(TokenRequest tokenRequest) {
 		OAuth2Request request = new OAuth2Request(getRequestParameters(), getClientId(), authorities, approved,
-				getScope(), resourceIds, redirectUri, responseTypes, extensions);
+				getScope(), resourceIds, redirectUri, responseTypes,  codeChallenge, codeChallengeMethod,extensions);
 		request.refresh = tokenRequest;
 		return request;
 	}

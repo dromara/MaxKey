@@ -34,10 +34,13 @@ public final class ConstantsProtocols {
 
     // OAuth
     public static final String OAUTH20 = "OAuth_v2.0";
+    
+    public static final String OAUTH21 = "OAuth_v2.1";
+    
     // SAML
     public static final String SAML20 = "SAML_v2.0";
 
-    public static final String OPEN_ID_CONNECT = "OpenID_Connect";
+    public static final String OPEN_ID_CONNECT10 = "OpenID_Connect_v1.0";
 
     public static final String CAS = "CAS";
     

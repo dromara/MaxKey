@@ -164,7 +164,7 @@ public class AuthorizationRequest extends BaseRequest implements Serializable {
 	}
 
 	public OAuth2Request createOAuth2Request() {
-		return new OAuth2Request(getRequestParameters(), getClientId(), getAuthorities(), isApproved(), getScope(), getResourceIds(), getRedirectUri(), getResponseTypes(), getExtensions());
+		return new OAuth2Request(getRequestParameters(), getClientId(), getAuthorities(), isApproved(), getScope(), getResourceIds(), getRedirectUri(), getResponseTypes(), getCodeChallenge(),getCodeChallengeMethod(),getExtensions());
 	}
 
 	/**
