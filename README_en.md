@@ -29,14 +29,14 @@ Key Functions
 
 | No.     | Protocols   |  Support  |
 | --------| :-----      | :----     |
-| 1.1     | OAuth 2.0/OpenID Connect    | HIGH  |
-| 1.2     | SAML 2.0                    | HIGH  |
-| 1.3     | JWT                         | HIGH  |
-| 1.4     | CAS                         | HIGH  |
-| 1.5     | FormBased                   | MIDDLE|
-| 1.6     | TokenBased(Post/Cookie)     | MIDDLE|
-| 1.7     | ExtendApi                   | LOW   |
-| 1.8     | EXT                         | LOW   |
+| 1.1     | OAuth 2.x/OpenID Connect    	| HIGH  |
+| 1.2     | SAML 2.0                    	| HIGH  |
+| 1.3     | JWT                         	| HIGH  |
+| 1.4     | CAS                         	| HIGH  |
+| 1.5     | FormBased                   	| MIDDLE|
+| 1.6     | TokenBased(Post/Cookie)     	| MIDDLE|
+| 1.7     | ExtendApi                   	| LOW   |
+| 1.8     | EXT                         	| LOW   |
 
 2. Authentication
 

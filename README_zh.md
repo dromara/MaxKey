@@ -31,14 +31,14 @@ QQ交流群：<b>434469201</b>
 
 | 序号    | 协议    |  支持   |
 | --------| :-----  | :----   |
-| 1.1     | OAuth 2.0/OpenID Connect    |  高  |
-| 1.2     | SAML 2.0                    |  高  |
-| 1.3     | JWT                         |  高  |
-| 1.4     | CAS                         |  高  |
-| 1.5     | FormBased                   |  中  |
-| 1.6     | TokenBased(Post/Cookie)     |  中  |
-| 1.7     | ExtendApi                   |  低  |
-| 1.8     | EXT                         |  低  |
+| 1.1     | OAuth 2.x/OpenID Connect    	|  高  |
+| 1.2     | SAML 2.0                    	|  高  |
+| 1.3     | JWT                         	|  高  |
+| 1.4     | CAS                         	|  高  |
+| 1.5     | FormBased                  		|  中  |
+| 1.6     | TokenBased(Post/Cookie)     	|  中  |
+| 1.7     | ExtendApi                   	|  低  |
+| 1.8     | EXT                         	|  低  |
 
 2. 登录支持
 
