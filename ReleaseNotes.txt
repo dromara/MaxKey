@@ -1,23 +1,23 @@
 ﻿MaxKey v 3.1.0 GA 2021/10/**
     *(MAXKEY-210801) OAuth 2.1及PKCE支持
     *(MAXKEY-210802) bootstrap升级到5.1.2
-	*(MAXKEY-210803) 缓存切换成Caffeine
-	*(MAXKEY-210804) 代码初步兼容JDK 17
-	*(MAXKEY-210805) 配置文件参数的整合
-	*(MAXKEY-210806) SDK 客户端代码优化
-	*(MAXKEY-210807) 官方网站优化
-	*(MAXKEY-210808) 界面UI优化
-	*(MAXKEY-210809) 下拉菜单优化
-	*(MAXKEY-210810) 日志优化
-	*(MAXKEY-210811) 密码修改问题修复
-	*(MAXKEY-210812) 环境变量参数优化
-	*(MAXKEY-210813) 依赖jar引用、更新和升级
-		 mybatis-jpa-extra   2.6
-		 druid				 1.2.8
-		 caffeine			 2.9.2
-		 jaxbcore			 3.0.2
-		 jaxbimpl			 3.0.2
-		 jaxbxjc			 3.0.2
+    *(MAXKEY-210803) 缓存切换成Caffeine
+    *(MAXKEY-210804) 代码初步兼容JDK 17
+    *(MAXKEY-210805) 配置文件参数的整合
+    *(MAXKEY-210806) SDK 客户端代码优化
+    *(MAXKEY-210807) 官方网站优化
+    *(MAXKEY-210808) 界面UI优化
+    *(MAXKEY-210809) 下拉菜单优化
+    *(MAXKEY-210810) 日志优化
+    *(MAXKEY-210811) 密码修改问题修复
+    *(MAXKEY-210812) 环境变量参数优化
+    *(MAXKEY-210813) 依赖jar引用、更新和升级
+         mybatis-jpa-extra   2.6
+         druid               1.2.8
+         caffeine            2.9.2
+         jaxbcore            3.0.2
+         jaxbimpl            3.0.2
+         jaxbxjc             3.0.2
 
 MaxKey v 3.0.0 GA 2021/09/29
     *(MAXKEY-210701) 好雨科技Rainbond适配，实现基于Rainbond应用商店的快速部署
@@ -47,7 +47,7 @@ MaxKey v 3.0.0 GA 2021/09/29
     *(MAXKEY-210725) 工具类增强和优化
     *(MAXKEY-210726) 登录认证优化，增加密码策略应用和验证
     *(MAXKEY-210727) CAS登录中参数回传的修复，增加'#'停止符的优化
-	*(MAXKEY-210728) StringUtils优化，直接继承org.apache.commons.lang3.StringUtils，增加自有逻辑
+    *(MAXKEY-210728) StringUtils优化，直接继承org.apache.commons.lang3.StringUtils，增加自有逻辑
     *(MAXKEY-210729) 依赖jar引用、更新和升级
         spring              5.3.10
         springBoot          2.5.5
