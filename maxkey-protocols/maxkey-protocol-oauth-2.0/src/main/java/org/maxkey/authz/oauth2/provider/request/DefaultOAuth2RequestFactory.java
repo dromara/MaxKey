@@ -69,14 +69,14 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
 
 	public AuthorizationRequest createAuthorizationRequest(Map<String, String> authorizationParameters) {
 
-		String clientId = authorizationParameters.get(OAuth2Utils.CLIENT_ID);
-		String state = authorizationParameters.get(OAuth2Utils.STATE);
-		String redirectUri = authorizationParameters.get(OAuth2Utils.REDIRECT_URI);
+		String clientId = authorizationParameters.get(OAuth2Constants.PARAMETER.CLIENT_ID);
+		String state = authorizationParameters.get(OAuth2Constants.PARAMETER.STATE);
+		String redirectUri = authorizationParameters.get(OAuth2Constants.PARAMETER.REDIRECT_URI);
 		//oauth 2.1 PKCE
 		String codeChallenge = authorizationParameters.get(OAuth2Constants.PARAMETER.CODE_CHALLENGE);
 		String codeChallengeMethod = authorizationParameters.get(OAuth2Constants.PARAMETER.CODE_CHALLENGE_METHOD);
 		Set<String> responseTypes = OAuth2Utils.parseParameterList(authorizationParameters
-				.get(OAuth2Utils.RESPONSE_TYPE));
+				.get(OAuth2Constants.PARAMETER.RESPONSE_TYPE));
 
 		Set<String> scopes = extractScopes(authorizationParameters, clientId);
 		
@@ -97,7 +97,7 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
 
 	public TokenRequest createTokenRequest(Map<String, String> requestParameters, ClientDetails authenticatedClient) {
 
-		String clientId = requestParameters.get(OAuth2Utils.CLIENT_ID);
+		String clientId = requestParameters.get(OAuth2Constants.PARAMETER.CLIENT_ID);
 		if (clientId == null) {
 			// if the clientId wasn't passed in in the map, we add pull it from the authenticated client object
 			clientId = authenticatedClient.getClientId();
@@ -108,7 +108,7 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
 				throw new InvalidClientException("Given client ID does not match authenticated client");
 			}
 		}
-		String grantType = requestParameters.get(OAuth2Utils.GRANT_TYPE);
+		String grantType = requestParameters.get(OAuth2Constants.PARAMETER.GRANT_TYPE);
 
 		Set<String> scopes = extractScopes(requestParameters, clientId);
 		TokenRequest tokenRequest = new TokenRequest(requestParameters, clientId, scopes, grantType);
@@ -127,7 +127,7 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
 	}
 
 	private Set<String> extractScopes(Map<String, String> requestParameters, String clientId) {
-		Set<String> scopes = OAuth2Utils.parseParameterList(requestParameters.get(OAuth2Utils.SCOPE));
+		Set<String> scopes = OAuth2Utils.parseParameterList(requestParameters.get(OAuth2Constants.PARAMETER.SCOPE));
 		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
 
 		if ((scopes == null || scopes.isEmpty())) {

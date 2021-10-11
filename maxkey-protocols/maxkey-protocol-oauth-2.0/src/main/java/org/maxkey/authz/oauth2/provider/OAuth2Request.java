@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -228,11 +228,11 @@ public class OAuth2Request extends BaseRequest implements Serializable {
 	 * @return the grant type if known, or null otherwise
 	 */
 	public String getGrantType() {
-		if (getRequestParameters().containsKey(OAuth2Utils.GRANT_TYPE)) {
-			return getRequestParameters().get(OAuth2Utils.GRANT_TYPE);
+		if (getRequestParameters().containsKey(OAuth2Constants.PARAMETER.GRANT_TYPE)) {
+			return getRequestParameters().get(OAuth2Constants.PARAMETER.GRANT_TYPE);
 		}
-		if (getRequestParameters().containsKey(OAuth2Utils.RESPONSE_TYPE)) {
-			String response = getRequestParameters().get(OAuth2Utils.RESPONSE_TYPE);
+		if (getRequestParameters().containsKey(OAuth2Constants.PARAMETER.RESPONSE_TYPE)) {
+			String response = getRequestParameters().get(OAuth2Constants.PARAMETER.RESPONSE_TYPE);
 			if (response.contains("token")) {
 				return "implicit";
 			}

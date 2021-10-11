@@ -17,22 +17,21 @@
 
 package org.maxkey.authz.cas.endpoint.ticket.tgt;
 
-import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
-import org.ehcache.UserManagedCache;
-import org.ehcache.config.builders.ExpiryPolicyBuilder;
-import org.ehcache.config.builders.UserManagedCacheBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.RandomServiceTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
+
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 
 public class InMemoryTicketGrantingTicketServices extends RandomServiceTicketServices {
 
-	protected final static  UserManagedCache<String, Ticket> casTicketGrantingTicketStore = 
-			UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, Ticket.class)
-				.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofDays(2)))
-				.build(true);
-
+	protected final static  Cache<String, Ticket> casTicketGrantingTicketStore = 
+	        Caffeine.newBuilder()
+                .expireAfterWrite(2, TimeUnit.DAYS)
+                .build();
 	
 	@Override
 	public void store(String ticketId, Ticket ticket) {
@@ -41,14 +40,14 @@ public class InMemoryTicketGrantingTicketServices extends RandomServiceTicketSer
 
 	@Override
 	public Ticket remove(String ticketId) {
-		Ticket ticket=casTicketGrantingTicketStore.get(ticketId);	
-		casTicketGrantingTicketStore.remove(ticketId);
+		Ticket ticket=casTicketGrantingTicketStore.getIfPresent(ticketId);	
+		casTicketGrantingTicketStore.invalidate(ticketId);
 		return ticket;
 	}
 
     @Override
     public Ticket get(String ticketId) {
-        Ticket ticket=casTicketGrantingTicketStore.get(ticketId);   
+        Ticket ticket=casTicketGrantingTicketStore.getIfPresent(ticketId);   
         return ticket;
     }
 

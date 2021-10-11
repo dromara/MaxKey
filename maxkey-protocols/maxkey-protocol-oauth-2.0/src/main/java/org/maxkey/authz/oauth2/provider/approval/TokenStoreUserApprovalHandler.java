@@ -23,7 +23,7 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
-import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.ClientRegistrationException;
@@ -46,7 +46,7 @@ public class TokenStoreUserApprovalHandler implements UserApprovalHandler, Initi
 
 	private static Log logger = LogFactory.getLog(TokenStoreUserApprovalHandler.class);
 
-	private String approvalParameter = OAuth2Utils.USER_OAUTH_APPROVAL;
+	private String approvalParameter = OAuth2Constants.PARAMETER.USER_OAUTH_APPROVAL;
 	
 	private TokenStore tokenStore;
 	

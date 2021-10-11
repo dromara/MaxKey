@@ -19,7 +19,7 @@ package org.maxkey.authz.oauth2.provider.approval;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.core.Authentication;
 
@@ -31,7 +31,7 @@ import org.springframework.security.core.Authentication;
  */
 public class DefaultUserApprovalHandler implements UserApprovalHandler {
 
-	private String approvalParameter = OAuth2Utils.USER_OAUTH_APPROVAL;
+	private String approvalParameter = OAuth2Constants.PARAMETER.USER_OAUTH_APPROVAL;
 	
 	/**
 	 * @param approvalParameter the approvalParameter to set

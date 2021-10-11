@@ -27,6 +27,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
@@ -48,7 +49,7 @@ public class ApprovalStoreUserApprovalHandler implements UserApprovalHandler, In
 
 	private static Log logger = LogFactory.getLog(ApprovalStoreUserApprovalHandler.class);
 
-	private String scopePrefix = OAuth2Utils.SCOPE_PREFIX;
+	private String scopePrefix = OAuth2Constants.PARAMETER.SCOPE_PREFIX;
 
 	private ApprovalStore approvalStore;
 
@@ -232,12 +233,12 @@ public class ApprovalStoreUserApprovalHandler implements UserApprovalHandler, In
 		model.putAll(authorizationRequest.getRequestParameters());
 		Map<String, String> scopes = new LinkedHashMap<String, String>();
 		for (String scope : authorizationRequest.getScope()) {
-			scopes.put(OAuth2Utils.SCOPE_PREFIX + scope, "false");
+			scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + scope, "false");
 		}
 		for (Approval approval : approvalStore.getApprovals(userAuthentication.getName(),
 				authorizationRequest.getClientId())) {
 			if (authorizationRequest.getScope().contains(approval.getScope())) {
-				scopes.put(OAuth2Utils.SCOPE_PREFIX + approval.getScope(),
+				scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + approval.getScope(),
 						approval.getStatus() == ApprovalStatus.APPROVED ? "true" : "false");
 			}
 		}

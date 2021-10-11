@@ -17,21 +17,21 @@
 
 package org.maxkey.authz.cas.endpoint.ticket.st;
 
-import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
-import org.ehcache.UserManagedCache;
-import org.ehcache.config.builders.ExpiryPolicyBuilder;
-import org.ehcache.config.builders.UserManagedCacheBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.RandomServiceTicketServices;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
+
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 
 public class InMemoryTicketServices extends RandomServiceTicketServices {
 
-	protected final static  UserManagedCache<String, Ticket> casTicketStore = 
-			UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, Ticket.class)
-				.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(60)))
-				.build(true);
+	protected final static  Cache<String, Ticket> casTicketStore = 
+	        Caffeine.newBuilder()
+                .expireAfterWrite(60, TimeUnit.MINUTES)
+                .build();
 
 	
 	@Override
@@ -41,8 +41,8 @@ public class InMemoryTicketServices extends RandomServiceTicketServices {
 
 	@Override
 	public Ticket remove(String ticketId) {
-		Ticket ticket=casTicketStore.get(ticketId);	
-		casTicketStore.remove(ticketId);
+		Ticket ticket=casTicketStore.getIfPresent(ticketId);	
+		casTicketStore.invalidate(ticketId);
 		return ticket;
 	}
 

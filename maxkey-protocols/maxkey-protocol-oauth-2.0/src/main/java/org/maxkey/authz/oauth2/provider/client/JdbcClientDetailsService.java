@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.sql.DataSource;
 
@@ -47,12 +48,21 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
 /**
  * Basic, JDBC implementation of the client details service.
  */
 public class JdbcClientDetailsService implements ClientDetailsService, ClientRegistrationService{
 
     private static final Log logger = LogFactory.getLog(JdbcClientDetailsService.class);
+    
+    protected final static  Cache<String, ClientDetails> clientDetailsCache = 
+            Caffeine.newBuilder()
+                .expireAfterWrite(60, TimeUnit.MINUTES)
+                .maximumSize(200000)
+                .build();
 
     private JsonMapper mapper = createJsonMapper();
 
@@ -116,13 +126,16 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
     }
 
     public ClientDetails loadClientByClientId(String clientId) {
-        ClientDetails details;
-        try {
-            details = jdbcTemplate.queryForObject(selectClientDetailsSql, new ClientDetailsRowMapper(), clientId);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NoSuchClientException("No client with requested id: " + clientId);
+        //TODO: cache in memory
+        ClientDetails details = clientDetailsCache.getIfPresent(clientId);
+        if(details == null) {
+            try {
+                details = jdbcTemplate.queryForObject(selectClientDetailsSql, new ClientDetailsRowMapper(), clientId);
+                clientDetailsCache.put(clientId, details);
+            } catch (EmptyResultDataAccessException e) {
+                throw new NoSuchClientException("No client with requested id: " + clientId);
+            }
         }
-
         return details;
     }
 

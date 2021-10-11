@@ -23,17 +23,14 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
-import org.ehcache.UserManagedCache;
-import org.ehcache.config.builders.ExpiryPolicyBuilder;
-import org.ehcache.config.builders.UserManagedCacheBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.constants.ConstantsStatus;
-import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.password.PasswordGen;
 import org.maxkey.entity.PasswordPolicy;
 import org.maxkey.entity.UserInfo;
@@ -63,6 +60,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.authentication.BadCredentialsException;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
 public class PasswordPolicyValidator {
     private static Logger _logger = LoggerFactory.getLogger(PasswordPolicyValidator.class);
     
@@ -71,14 +71,10 @@ public class PasswordPolicyValidator {
             "classpath:/top_weak_password.txt";
     
     //Cache PasswordPolicy in memory ONE_HOUR
-    protected static final UserManagedCache<String, PasswordPolicy> passwordPolicyStore = 
-            UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, PasswordPolicy.class)
-                .withExpiry(
-                    ExpiryPolicyBuilder.timeToLiveExpiration(
-                            java.time.Duration.ofMinutes(ConstantsTimeInterval.ONE_HOUR)
-                    )
-                )
-                .build(true);
+    protected static final Cache<String, PasswordPolicy> passwordPolicyStore = 
+            Caffeine.newBuilder()
+                .expireAfterWrite(60, TimeUnit.MINUTES)
+                .build();
     
     protected PasswordPolicy passwordPolicy;
     
@@ -115,7 +111,7 @@ public class PasswordPolicyValidator {
      * @return
      */
     public PasswordPolicy getPasswordPolicy() {
-        passwordPolicy = passwordPolicyStore.get(PASSWORD_POLICY_KEY);
+        passwordPolicy = passwordPolicyStore.getIfPresent(PASSWORD_POLICY_KEY);
        
         if (passwordPolicy == null) {
             passwordPolicy = jdbcTemplate.queryForObject(PASSWORD_POLICY_SELECT_STATEMENT,

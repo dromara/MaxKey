@@ -34,6 +34,7 @@ import org.maxkey.authz.oauth2.provider.password.ResourceOwnerPasswordTokenGrant
 import org.maxkey.authz.oauth2.provider.refresh.RefreshTokenGranter;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.maxkey.configuration.ApplicationConfig;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,22 +57,27 @@ public class AbstractEndpoint implements InitializingBean {
 	
 	@Autowired
   	@Qualifier("oauth20TokenServices")
-	AuthorizationServerTokenServices tokenServices ;
+	protected AuthorizationServerTokenServices tokenServices ;
 	
 	@Autowired
   	@Qualifier("oauth20JdbcClientDetailsService")
-	private ClientDetailsService clientDetailsService;
-	@Autowired
-  	@Qualifier("oAuth2RequestFactory")
-	private OAuth2RequestFactory oAuth2RequestFactory;
+	protected ClientDetailsService clientDetailsService;
 	
 	@Autowired
   	@Qualifier("oAuth2RequestFactory")
-	private OAuth2RequestFactory defaultOAuth2RequestFactory;
+	protected OAuth2RequestFactory oAuth2RequestFactory;
+	
+	@Autowired
+  	@Qualifier("oAuth2RequestFactory")
+	protected OAuth2RequestFactory defaultOAuth2RequestFactory;
 
 	@Autowired
     @Qualifier("oauth20UserAuthenticationManager")
 	AuthenticationManager authenticationManager;
+	
+	@Autowired 
+    @Qualifier("applicationConfig")
+    protected ApplicationConfig applicationConfig;
 	
 	
 	public void afterPropertiesSet() throws Exception {

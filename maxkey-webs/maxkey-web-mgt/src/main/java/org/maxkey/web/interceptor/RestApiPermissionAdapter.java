@@ -17,16 +17,12 @@
 
 package org.maxkey.web.interceptor;
 
-import java.time.Duration;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.ehcache.UserManagedCache;
-import org.ehcache.config.builders.ExpiryPolicyBuilder;
-import org.ehcache.config.builders.UserManagedCacheBuilder;
-import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.AppsService;
@@ -39,6 +35,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
 /**
  * basic认证Interceptor处理.
  * @author Crystal.Sea
@@ -48,14 +47,10 @@ import org.springframework.web.servlet.AsyncHandlerInterceptor;
 public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	private static final Logger _logger = LoggerFactory.getLogger(RestApiPermissionAdapter.class);
 	
-    protected static final UserManagedCache<String, Apps> appsCacheStore = 
-            UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, Apps.class)
-                .withExpiry(
-                    ExpiryPolicyBuilder.timeToLiveExpiration(
-                        Duration.ofMinutes(ConstantsTimeInterval.ONE_HOUR)
-                    )
-                )
-                .build(true);
+    protected static final Cache<String, Apps> appsCacheStore = 
+            Caffeine.newBuilder()
+                .expireAfterWrite(60, TimeUnit.MINUTES)
+                .build();
     
 	@Autowired
     AppsService appsService;
@@ -83,7 +78,7 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 			String appId = headerCredential.getUsername();
 			String appSecret = headerCredential.getCredential();
 		    _logger.trace("appId "+ appId+" , appSecret " + appSecret);
-		    Apps app = appsCacheStore.get(appId);
+		    Apps app = appsCacheStore.getIfPresent(appId);
 		    if (app == null) {
 		    	app = appsService.get(appId);
 		    	appsCacheStore.put(appId, app);

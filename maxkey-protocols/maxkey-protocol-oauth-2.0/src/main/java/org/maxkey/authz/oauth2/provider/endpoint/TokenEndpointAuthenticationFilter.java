@@ -210,7 +210,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 			}
 			
 			Map<String, String> map = getSingleValueMap(request);
-			map.put(OAuth2Utils.CLIENT_ID, clientAuth.getName());
+			map.put(OAuth2Constants.PARAMETER.CLIENT_ID, clientAuth.getName());
 			AuthorizationRequest authorizationRequest = oAuth2RequestFactory.createAuthorizationRequest(map);
 	
 			authorizationRequest.setScope(getScope(request));

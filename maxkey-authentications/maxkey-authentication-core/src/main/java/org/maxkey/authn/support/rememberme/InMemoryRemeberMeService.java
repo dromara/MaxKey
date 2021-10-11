@@ -17,22 +17,19 @@
 
 package org.maxkey.authn.support.rememberme;
 
-import java.time.Duration;
-import org.ehcache.UserManagedCache;
-import org.ehcache.config.builders.ExpiryPolicyBuilder;
-import org.ehcache.config.builders.UserManagedCacheBuilder;
+import java.util.concurrent.TimeUnit;
+
 import org.maxkey.constants.ConstantsTimeInterval;
+
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 public class InMemoryRemeberMeService   extends AbstractRemeberMeService {
 
-    protected static final UserManagedCache<String, RemeberMe> remeberMeStore = 
-            UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, RemeberMe.class)
-                .withExpiry(
-                    ExpiryPolicyBuilder.timeToLiveExpiration(
-                        Duration.ofMinutes(ConstantsTimeInterval.TWO_WEEK)
-                    )
-                )
-                .build(true);
+    protected static final Cache<String, RemeberMe> remeberMeStore = 
+            Caffeine.newBuilder()
+                .expireAfterWrite(ConstantsTimeInterval.TWO_WEEK, TimeUnit.MINUTES)
+                .build();
     
     @Override
     public void save(RemeberMe remeberMe) {
@@ -46,12 +43,12 @@ public class InMemoryRemeberMeService   extends AbstractRemeberMeService {
 
     @Override
     public RemeberMe read(RemeberMe remeberMe) {
-        return remeberMeStore.get(remeberMe.getUsername());
+        return remeberMeStore.getIfPresent(remeberMe.getUsername());
     }
 
     @Override
     public void remove(String username) {
-        remeberMeStore.remove(username);
+        remeberMeStore.invalidate(username);
     }
 
 }

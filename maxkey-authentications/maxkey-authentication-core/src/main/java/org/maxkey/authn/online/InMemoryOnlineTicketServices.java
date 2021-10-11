@@ -19,22 +19,23 @@ package org.maxkey.authn.online;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.concurrent.TimeUnit;
 
-import org.ehcache.UserManagedCache;
-import org.ehcache.config.builders.ExpiryPolicyBuilder;
-import org.ehcache.config.builders.UserManagedCacheBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 
 public class InMemoryOnlineTicketServices implements OnlineTicketServices{
     private static final Logger _logger = LoggerFactory.getLogger(InMemoryOnlineTicketServices.class);
-    
-	protected  static  UserManagedCache<String, OnlineTicket> onlineTicketStore = 
-			UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, OnlineTicket.class)
-				.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMinutes(30)))
-				.build(true);
 
+	protected  static  Cache<String, OnlineTicket> onlineTicketStore = 
+        	        Caffeine.newBuilder()
+        	            .expireAfterWrite(30, TimeUnit.MINUTES)
+        	            .maximumSize(200000)
+        	            .build();
 	
 	public InMemoryOnlineTicketServices() {
         super();
@@ -47,27 +48,24 @@ public class InMemoryOnlineTicketServices implements OnlineTicketServices{
 
 	@Override
 	public OnlineTicket remove(String ticketId) {
-	    OnlineTicket ticket=onlineTicketStore.get(ticketId);	
-	    onlineTicketStore.remove(ticketId);
+	    OnlineTicket ticket=onlineTicketStore.getIfPresent(ticketId);	
+	    onlineTicketStore.invalidate(ticketId);
 		return ticket;
 	}
 
     @Override
     public OnlineTicket get(String ticketId) {
-        OnlineTicket ticket=onlineTicketStore.get(ticketId); 
+        OnlineTicket ticket=onlineTicketStore.getIfPresent(ticketId); 
         return ticket;
     }
 
     @Override
     public void setValiditySeconds(int validitySeconds) {
         onlineTicketStore = 
-                UserManagedCacheBuilder.
-                    newUserManagedCacheBuilder(String.class, OnlineTicket.class)
-                    .withExpiry(
-                            ExpiryPolicyBuilder.timeToLiveExpiration(
-                                    Duration.ofMinutes(validitySeconds/60))
-                     )
-                    .build(true);
+                Caffeine.newBuilder()
+                    .expireAfterWrite(validitySeconds/60, TimeUnit.MINUTES)
+                    .maximumSize(200000)
+                    .build();
         
     }
 

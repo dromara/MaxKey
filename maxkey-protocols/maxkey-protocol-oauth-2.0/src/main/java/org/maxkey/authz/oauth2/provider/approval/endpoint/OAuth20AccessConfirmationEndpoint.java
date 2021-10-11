@@ -21,7 +21,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
-import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.approval.Approval;
@@ -99,13 +98,13 @@ public class OAuth20AccessConfirmationEndpoint {
 	        model.put("oauth_version", "oauth 2.0");
 	        Map<String, String> scopes = new LinkedHashMap<String, String>();
 	        for (String scope : clientAuth.getScope()) {
-	            scopes.put(OAuth2Utils.SCOPE_PREFIX + scope, "false");
+	            scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + scope, "false");
 	        }
 	        String principal = 
 	                ((SigninPrincipal) WebContext.getAuthentication().getPrincipal()).getUsername();
 	        for (Approval approval : approvalStore.getApprovals(principal, client.getClientId())) {
 	            if (clientAuth.getScope().contains(approval.getScope())) {
-	                scopes.put(OAuth2Utils.SCOPE_PREFIX + approval.getScope(),
+	                scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + approval.getScope(),
 	                        approval.getStatus() == ApprovalStatus.APPROVED ? "true" : "false");
 	            }
 	        }

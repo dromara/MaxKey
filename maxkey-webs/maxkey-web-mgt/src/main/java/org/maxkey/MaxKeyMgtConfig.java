@@ -22,7 +22,6 @@ import org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.maxkey.authz.oauth2.provider.token.TokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.InMemoryTokenStore;
-import org.maxkey.authz.oauth2.provider.token.store.JdbcTokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
 import org.maxkey.jobs.DynamicGroupsJob;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
@@ -79,16 +78,14 @@ public class MaxKeyMgtConfig  implements InitializingBean {
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory jedisConnectionFactory) {
         TokenStore tokenStore = null;
-        if (persistence == 0) {
-            tokenStore = new InMemoryTokenStore();
-            _logger.debug("InMemoryTokenStore");
-        } else if (persistence == 1) {
-            tokenStore = new JdbcTokenStore(jdbcTemplate);
-            _logger.debug("JdbcTokenStore");
-        } else if (persistence == 2) {
+        if (persistence == 2) {
             tokenStore = new RedisTokenStore(jedisConnectionFactory);
             _logger.debug("RedisTokenStore");
+        }else {
+            tokenStore = new InMemoryTokenStore();
+            _logger.debug("InMemoryTokenStore"); 
         }
+        
         return tokenStore;
     }
     

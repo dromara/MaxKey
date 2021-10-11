@@ -18,7 +18,6 @@
 package org.maxkey.authz.oauth2.provider;
 
 import org.maxkey.authz.oauth2.common.exceptions.InvalidScopeException;
-import org.maxkey.authz.oauth2.provider.endpoint.AuthorizationEndpoint;
 import org.maxkey.authz.oauth2.provider.endpoint.TokenEndpoint;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 

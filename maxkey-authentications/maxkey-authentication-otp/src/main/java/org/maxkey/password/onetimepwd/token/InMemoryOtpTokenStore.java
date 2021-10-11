@@ -17,29 +17,26 @@
 
 package org.maxkey.password.onetimepwd.token;
 
-import org.ehcache.UserManagedCache;
-import org.ehcache.config.builders.ExpiryPolicyBuilder;
-import org.ehcache.config.builders.UserManagedCacheBuilder;
+import java.util.concurrent.TimeUnit;
+
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
-import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.OneTimePassword;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
 public class InMemoryOtpTokenStore  extends AbstractOtpTokenStore {
     private static final  Logger logger = LoggerFactory.getLogger(InMemoryOtpTokenStore.class);
     
-    protected static final UserManagedCache<String, OneTimePassword> optTokenStore = 
-            UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, OneTimePassword.class)
-                .withExpiry(
-                    ExpiryPolicyBuilder.timeToLiveExpiration(
-                        java.time.Duration.ofMinutes(ConstantsTimeInterval.ONE_MINUTE * 5)
-                    )
-                )
-                .build(true);
+    protected static final Cache<String, OneTimePassword> optTokenStore = 
+            Caffeine.newBuilder()
+                .expireAfterWrite(5, TimeUnit.MINUTES)
+                .build();
 
     @Override
     public void store(UserInfo userInfo, String token, String receiver, String type) {
@@ -57,7 +54,7 @@ public class InMemoryOtpTokenStore  extends AbstractOtpTokenStore {
 
     @Override
     public boolean validate(UserInfo userInfo, String token, String type, int interval) {
-        OneTimePassword otp = optTokenStore.get(userInfo.getUsername() + "_" + type + "_" + token);
+        OneTimePassword otp = optTokenStore.getIfPresent(userInfo.getUsername() + "_" + type + "_" + token);
         if (otp != null) {
             DateTime currentdateTime = new DateTime();
             DateTime oneCreateTime = DateTime.parse(otp.getCreateTime(),

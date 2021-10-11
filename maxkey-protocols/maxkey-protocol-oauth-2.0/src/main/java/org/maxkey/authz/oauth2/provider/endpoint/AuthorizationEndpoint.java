@@ -43,13 +43,10 @@ import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.implicit.ImplicitTokenRequest;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestValidator;
 import org.maxkey.util.HttpEncoder;
-import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -69,7 +66,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriTemplate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 
 /**
  * <p>
@@ -96,14 +92,6 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	
 	private static final String OAUTH_V20_AUTHORIZATION_URL = "%s" + OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE + "?client_id=%s&response_type=code&redirect_uri=%s&approval_prompt=auto";
 	
-	@Autowired
-	@Qualifier("oauth20JdbcClientDetailsService")
-	private ClientDetailsService clientDetailsService;
-	
-	@Autowired 
-  	@Qualifier("applicationConfig")
-  	protected ApplicationConfig applicationConfig;
-	
 	private RedirectResolver redirectResolver = new DefaultRedirectResolver();
 
 	private UserApprovalHandler userApprovalHandler = new DefaultUserApprovalHandler();
@@ -121,6 +109,30 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		this.errorPage = errorPage;
 	}
 
+    @ApiOperation(value = "OAuth 2.0 认证接口", notes = "传递参数应用ID，自动完成跳转认证拼接",httpMethod="GET")
+    @RequestMapping(OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{id}")
+    public ModelAndView authorize(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @PathVariable("id") String id){
+        ClientDetails  clientDetails =getClientDetailsService().loadClientByClientId(id);
+        _logger.debug(""+clientDetails);
+        String authorizationUrl = "";
+        try {
+            authorizationUrl = String.format(OAUTH_V20_AUTHORIZATION_URL, 
+                            applicationConfig.getServerPrefix(),
+                            clientDetails.getClientId(), 
+                            HttpEncoder.encode(clientDetails.getRegisteredRedirectUri().toArray()[0].toString())
+                    );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        _logger.debug("authorizationUrl "+authorizationUrl);
+        
+        return WebContext.redirect(authorizationUrl);
+    }
+	   
 	@ApiOperation(value = "OAuth 2.0 认证接口", notes = "传递参数client_id,response_type,redirect_uri等",httpMethod="GET")
 	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE, method = RequestMethod.GET)
 	public ModelAndView authorize(
@@ -204,7 +216,8 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 	}
 
-	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE, method = RequestMethod.POST, params = OAuth2Utils.USER_OAUTH_APPROVAL)
+	//approval must post
+	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE, method = RequestMethod.POST, params = OAuth2Constants.PARAMETER.USER_OAUTH_APPROVAL)
 	public View approveOrDeny(
 	                @RequestParam Map<String, String> approvalParameters,
 	                Map<String, ?> model,
@@ -529,28 +542,4 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		this.oauth2RequestValidator = oauth2RequestValidator;
 	}
 
-	@ApiOperation(value = "OAuth 2.0 认证接口", notes = "传递参数应用ID，自动完成跳转认证拼接",httpMethod="GET")
-	@RequestMapping(OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{id}")
-	public ModelAndView authorize(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@PathVariable("id") String id){
-		ClientDetails  clientDetails =clientDetailsService.loadClientByClientId(id);
-		_logger.debug(""+clientDetails);
-		String authorizationUrl = "";
-        try {
-            authorizationUrl = String.format(OAUTH_V20_AUTHORIZATION_URL, 
-            				applicationConfig.getServerPrefix(),
-            				clientDetails.getClientId(), 
-            				HttpEncoder.encode(clientDetails.getRegisteredRedirectUri().toArray()[0].toString())
-            		);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-		
-		_logger.debug("authorizationUrl "+authorizationUrl);
-		
-		return WebContext.redirect(authorizationUrl);
-	}
 }

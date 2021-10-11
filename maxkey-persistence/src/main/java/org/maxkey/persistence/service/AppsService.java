@@ -17,29 +17,25 @@
 
 package org.maxkey.persistence.service;
 
-import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.ehcache.UserManagedCache;
-import org.ehcache.config.builders.ExpiryPolicyBuilder;
-import org.ehcache.config.builders.UserManagedCacheBuilder;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.UserApps;
 import org.maxkey.persistence.mapper.AppsMapper;
 import org.springframework.stereotype.Repository;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
 @Repository
 public class AppsService extends JpaBaseService<Apps>{
 
-	protected final static  UserManagedCache<String, Apps> appsDetailsCacheStore = 
-			UserManagedCacheBuilder.newUserManagedCacheBuilder(String.class, Apps.class)
-				.withExpiry(
-					ExpiryPolicyBuilder.timeToLiveExpiration(
-							Duration.ofHours(1)
-					)
-				)
-				.build(true);
+	protected final static  Cache<String, Apps> appsDetailsCacheStore = 
+			Caffeine.newBuilder()
+                .expireAfterWrite(60, TimeUnit.MINUTES)
+                .build();
 	
 	public AppsService() {
 		super(AppsMapper.class);
@@ -50,7 +46,6 @@ public class AppsService extends JpaBaseService<Apps>{
 	 */
 	@Override
 	public AppsMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (AppsMapper)super.getMapper();
 	}
 	
@@ -75,7 +70,7 @@ public class AppsService extends JpaBaseService<Apps>{
 	}
 	
     public Apps getCacheAppDetails(String appId) {
-    	Apps appDetails=appsDetailsCacheStore.get(appId); 
+    	Apps appDetails=appsDetailsCacheStore.getIfPresent(appId); 
         return appDetails;
     }
 }
