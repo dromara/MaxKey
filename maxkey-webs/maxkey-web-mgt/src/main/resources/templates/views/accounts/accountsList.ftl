@@ -54,13 +54,13 @@
 				<td colspan="2"> 
 					 <div id="tool_box_right">	    
 						 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
-						 		    wurl="<@base/>/app/accounts/forwardAdd"
+						 		    wurl="<@base/>/accounts/forwardAdd"
 						 		    wwidth="960"
 						 		    wheight="600"
 					 		    	target="window">	   
 					 		    	
 					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
-					 				wurl="<@base/>/app/accounts/delete" />
+					 				wurl="<@base/>/accounts/delete" />
 					</div>
 				</td>
 			</tr>
@@ -73,9 +73,16 @@
  		<form id="advanced_search_form">
  			<table    class="table table-bordered">
 	 			<tr>
-	 				<td width="120px"><@locale code="account.displayName"/></td>
+	 				<td width="120px"><@locale code="apps.name"/></td>
 		 			<td width="360px">
-		 				<input  class="form-control"  name="displayName" type="text" >
+		 				<input class="form-control d-none appId" id="appId" name="appId" value="" type="text"  >
+                        <input class="form-control d-none" id="parentId" name="parentId" value="" type="text"  >
+                        <input class="form-control appName"    style="width:200px;float: left;" value=""    id="appName" name="appName" type="text" >
+                        <input class="button btn btn-success mr-3 window" style="float: left;" id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
+                                wurl="<@base/>/apps/select"
+                                wwidth="700"
+                                wheight="500"
+                                target="window">
 		 			</td>
 		 			<td width="120px"><@locale code="account.relatedUsername"/></td>
 		 			<td width="360px">
@@ -86,7 +93,7 @@
 			</table>
  		</form>
  	</div>
- 	<table  data-url="<@base/>/app/accounts/grid"
+ 	<table  data-url="<@base/>/accounts/grid"
 			id="datagrid"
 			data-toggle="table"
 			data-classes="table table-bordered table-hover table-striped"

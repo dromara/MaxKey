@@ -5,7 +5,9 @@
 	<#include  "../layout/common.cssjs.ftl"/>
     <link type="text/css" rel="stylesheet"  href="<@base />/static/css/minitable.css"/>
 <script type="text/javascript">	
-	
+    function dynamicFormatter(value, row, index){
+        return value=='0'? '<@locale code="common.text.no" />':'<@locale code="common.text.yes" />';
+    };
 	$(function () {
 		$("#selectBtn").on("click",function(){
 			var seldata=$.dataGridSelRowsData("#datagrid"); 
@@ -58,11 +60,12 @@
 				<th data-checkbox="true"></th>
 				<th data-sortable="true" data-field="id"   data-visible="false">Id</th>
 				<th data-field="name"><@locale code="group.name"/></th>
+				<th data-field="dynamic"  data-formatter="dynamicFormatter"><@locale code="group.dynamic"/></th>
 				<th data-field="description"><@locale code="common.text.description"/></th>
-				<th data-field="createdBy"><@locale code="common.text.createdby"/></th>
-				<th data-field="createdDate"><@locale code="common.text.createddate"/></th>
-				<th data-field="modifiedBy"><@locale code="common.text.modifiedby"/></th>
-				<th data-field="modifiedDate"><@locale code="common.text.modifieddate"/></th>
+				<th data-field="createdBy"    data-visible="false"><@locale code="common.text.createdby"/></th>
+				<th data-field="createdDate"  data-visible="false"><@locale code="common.text.createddate"/></th>
+				<th data-field="modifiedBy"   data-visible="false"><@locale code="common.text.modifiedby"/></th>
+				<th data-field="modifiedDate" data-visible="false"><@locale code="common.text.modifieddate"/></th>
 	
 			</tr>
 		</thead>

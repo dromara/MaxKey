@@ -40,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping(value={"/app/accounts"})
+@RequestMapping(value={"/accounts"})
 public class AccountsController {
 	final static Logger _logger = LoggerFactory.getLogger(AccountsController.class);
 
@@ -58,7 +58,7 @@ public class AccountsController {
 	
 	@RequestMapping(value={"/list"})
 	public ModelAndView appAccountsList(){
-		ModelAndView modelAndView=new ModelAndView("/accounts/appAccountsList");
+		ModelAndView modelAndView=new ModelAndView("/accounts/accountsList");
 		return modelAndView;
 	}
 
@@ -71,14 +71,14 @@ public class AccountsController {
 	
 	@RequestMapping(value = { "/forwardSelect/{appId}" })
 	public ModelAndView forwardSelect(@PathVariable("appId") String appId) {
-		ModelAndView modelAndView=new ModelAndView("/accounts/appAccountsAddSelect");
+		ModelAndView modelAndView=new ModelAndView("/accounts/accountsAddSelect");
 		modelAndView.addObject("appId",appId);
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd(@ModelAttribute("appAccounts") Accounts appAccounts) {
-		ModelAndView modelAndView=new ModelAndView("/accounts/appAccountsAdd");
+		ModelAndView modelAndView=new ModelAndView("/accounts/accountsAdd");
 		//Applications  app= appsService.get(appAccounts.getAppId());
 		//appAccounts.setAppName(app.getName());
 		modelAndView.addObject("model",appAccounts);
@@ -103,7 +103,7 @@ public class AccountsController {
 	
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
-		ModelAndView modelAndView=new ModelAndView("/accounts/appAccountsUpdate");
+		ModelAndView modelAndView=new ModelAndView("/accounts/accountsUpdate");
 		Accounts appAccounts =accountsService.get(id);
 		
 		appAccounts.setRelatedPassword(ReciprocalUtils.decoder(appAccounts.getRelatedPassword()));

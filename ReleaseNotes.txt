@@ -11,7 +11,10 @@
     *(MAXKEY-210810) 日志优化
     *(MAXKEY-210811) 密码修改问题修复
     *(MAXKEY-210812) 环境变量参数优化
-    *(MAXKEY-210813) 依赖jar引用、更新和升级
+    *(MAXKEY-210813) 管理端图标显示修复
+    *(MAXKEY-210814) 管理端‘应用管理’移动到‘配置管理’的菜单项
+    *(MAXKEY-210815) OAuth的数据库加载增加本地缓存
+    *(MAXKEY-210816) 依赖jar引用、更新和升级
          mybatis-jpa-extra   2.6
          druid               1.2.8
          caffeine            2.9.2

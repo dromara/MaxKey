@@ -4,7 +4,7 @@
 
 # Overview
 
-<b>Maxkey </b> Single Sign On system, which means the Maximum key, <b>Leading-Edge Enterprise-Class IAM Identity and Access management product </b>, Support OAuth 2.0/OPENID CONNECT, SAML 2.0, JWT, CAS, SCIM and other standard protocols, and provide <b> Simple, Standard, Secure and Open </b> Identity management (IDM), Access management (AM), Single Sign On (SSO), RBAC permission management and Resource management.
+<b>Maxkey </b> Single Sign On system, which means the Maximum key, <b>Leading-Edge Enterprise-Class IAM Identity and Access management product </b>, Support OAuth 2.x/OPENID CONNECT, SAML 2.0, JWT, CAS, SCIM and other standard protocols, and provide <b> Simple, Standard, Secure and Open </b> Identity management (IDM), Access management (AM), Single Sign On (SSO), RBAC permission management and Resource management.
 
 Official Website <a href="https://www.maxkey.top" target="_blank"><b>Official</b></a> |  <a href="https://maxkeytop.gitee.io" target="_blank"><b>Line2</b></a>
 
@@ -89,7 +89,7 @@ App Management UI
 
 # Download
 
-Download the current version of Baidu Pan,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> history version</a>
+Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> history version</a>
 
 | Version    | Date   |  Docker  |  Pan URL  |  Pan Code  |
 | --------   | :----- | :----    | :----     | :----      |

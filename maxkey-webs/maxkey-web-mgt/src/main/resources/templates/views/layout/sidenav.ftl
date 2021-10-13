@@ -21,7 +21,7 @@
      	</a>
    	</li>
  	<li>
-     	<a class="side-nav-menu" href="<@base />/app/accounts/list/">
+     	<a class="side-nav-menu" href="<@base />/accounts/list/">
       		
        		<@locale code="navs.accounts"/>
        		<span class="fa fa-fw fa-vcard  fa-lg"></span>
@@ -99,6 +99,13 @@
                     <span class="fa fa-fw fa-globe fa-lg"></span>
                 </a>
             </li>
+            <li>
+                <a class="side-nav-menu" href="<@base />/accountsstrategy/list/">
+                    <@locale code="navs.accounts.strategy"/>
+                    <span class="fa fa-fw fa-globe fa-lg"></span>
+                </a>
+            </li>
+            
            <li>
              <a class="side-nav-menu" href="<@base />/synchronizers/list/">
                 <@locale code="navs.synchronizers"/>  
