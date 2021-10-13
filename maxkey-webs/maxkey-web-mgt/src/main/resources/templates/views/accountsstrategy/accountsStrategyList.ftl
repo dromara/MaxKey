@@ -43,7 +43,7 @@
 		
 			<table  class="table table-bordered">
  				<tr>
-		 			<td width="120px"><@locale code="role.name"/>:</td>
+		 			<td width="120px"><@locale code="accounts.strategy.name"/>:</td>
 		 			<td width="375px">
 		 				<form id="basic_search_form">
 			 				<input class="form-control" type="text" name="name"  style ="width:150px;float:left;">
@@ -56,14 +56,14 @@
 		 				<div id="tool_box_right">
 		 					 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/accountsstrategy/forwardAdd"
-						 		    wwidth="500"
-						 		    wheight="600"
+						 		    wwidth="800"
+						 		    wheight="550"
 					 		    	target="window">	    	
 					 		    	
 					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
 					 				wurl="<@base/>/accountsstrategy/forwardUpdate"
-					 				wwidth="500"
-						 		    wheight="600"
+					 				wwidth="800"
+						 		    wheight="550"
 					 		    	target="window"> 
 					 		    	
 					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
@@ -95,8 +95,9 @@
                 <tr>
                     <th data-checkbox="true"></th>
                     <th data-sortable="true" data-field="id"   data-visible="false">Id</th>
-                    <th data-field="name"><@locale code="role.name"/></th>
-                    <th data-field="dynamic"  data-formatter="dynamicFormatter"><@locale code="group.dynamic"/></th>
+                    <th data-field="name"><@locale code="accounts.strategy.name"/></th>
+                    <th data-field="appName" ><@locale code="app.name"/></th>
+                    <th data-field="status"  data-formatter="dynamicFormatter"><@locale code="accounts.strategy.status"/></th>
                     <th data-field="description"><@locale code="common.text.description"/></th>
                     <th data-field="createdBy"    data-visible="false"><@locale code="common.text.createdby"/></th>
                     <th data-field="createdDate"  data-visible="false"><@locale code="common.text.createddate"/></th>

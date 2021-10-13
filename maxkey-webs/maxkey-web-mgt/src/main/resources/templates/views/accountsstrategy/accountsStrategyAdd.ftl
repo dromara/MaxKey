@@ -160,47 +160,76 @@ function showOrgsTree() {
 </script>
 </head>
 <body>
-<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/roles/add"  class="needs-validation" novalidate>
+<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/accountsstrategy/add"  class="needs-validation" novalidate>
 	<table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
 		<tbody>
 			<tr>
-				<th><@locale code="role.id" />：</th>
+				<th><@locale code="accounts.strategy.id" />：</th>
 				<td nowrap>
 					<input type="text" id="id" name="id" class="form-control" title="" value=""  />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="role.name" />：</th>
+				<th><@locale code="accounts.strategy.name" />：</th>
 				<td nowrap>
 					<input type="text" id="name" name="name" class="form-control" title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="role.dynamic" />：</th>
+                <th><@locale code="apps.name"/>：</th>
+                <td nowrap>
+                    <input class="form-control appId" id="appId" name="appId" value="" type="hidden"  >
+                    <input class="form-control" id="pid" name="pid" value="" type="hidden"  >
+                    <input class="form-control appName"    style="width:80%;float: left;" value=""    id="appName" name="appName" type="text" >
+                    <input class="button btn btn-success mr-3 window" style="float: left;" id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
+                            wurl="<@base/>/apps/select"
+                            wwidth="700"
+                            wheight="500"
+                            target="window">
+                </td>
+            </tr>
+			<tr>
+				<th><@locale code="accounts.strategy.mapping" />：</th>
 				<td nowrap>
-					<select id="dynamic" name="dynamic"  class="form-control  form-select">
-						<option value="0" selected ><@locale code="common.text.no" /></option>
-						<option value="1"          ><@locale code="common.text.yes" /></option>
-					</select>
+					<select id="mapping" name="mapping" class="form-control form-select"   >
+                        <option value="username"  selected >
+                            <@locale code="userinfo.username" />
+                        </option>
+                        <option value="mobile"   >
+                            <@locale code="userinfo.mobile" />
+                        </option>
+                        <option value="email"  >
+                            <@locale code="userinfo.email" />
+                        </option>
+                        <option value="employeeNumber" >
+                            <@locale code="userinfo.employeeNumber" />
+                        </option>
+                        <option value="windowsAccount"  >
+                            <@locale code="userinfo.windowsAccount" />
+                        </option>
+                        <option value="idCardNo"   >
+                            <@locale code="userinfo.idCardNo" />
+                        </option>
+                    </select>
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="role.orgidslist" />：</th>
+				<th><@locale code="accounts.strategy.orgidslist" />：</th>
 				<td nowrap>
 					<input type="text" id="orgIdsListName" name="orgIdsListName"   readonly  class="form-control" title="" value=""   onclick="showOrgsTree();"/>
 					<input type="hidden" id="orgIdsList" name="orgIdsList"   readonly  class="form-control" title="" value=""   />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="role.filters" />：</th>
+				<th><@locale code="accounts.strategy.filters" />：</th>
 				<td nowrap>
-					<textarea id="filters" name="filters" class="form-control"  rows="7" cols="20"></textarea>
+					<textarea id="filters" name="filters" class="form-control"  rows="4" cols="20"></textarea>
 				</td>
 			</tr>
 			<tr>
                 <th><@locale code="common.text.description" />：</th>
                 <td nowrap>
-                    <textarea id="description" name="description" class="form-control"  rows="6" cols="20"></textarea>
+                    <textarea id="description" name="description" class="form-control"  rows="3" cols="20"></textarea>
                 </td>
             </tr>
 			

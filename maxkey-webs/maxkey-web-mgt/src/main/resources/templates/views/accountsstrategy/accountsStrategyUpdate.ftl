@@ -174,47 +174,73 @@ function showOrgsTree() {
 </script>
 </head>
 <body>
-<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/roles/update"  class="needs-validation" novalidate>
+<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/accountsstrategy/update"  class="needs-validation" novalidate>
 	 <table  border="0" cellpadding="0" cellspacing="0" class="table table-bordered">
 		<tbody>
 		<tr>
-			<th><@locale code="role.id" />：</th>
+			<th><@locale code="accounts.strategy.id" />：</th>
 			<td nowrap>
 				<input id="id" type="text" readonly name="id"  class="form-control"   value="${model.id}"/>
 			</td>
 		</tr>
 		<tr>
-			<th><@locale code="role.name" />：</th>
+			<th><@locale code="accounts.strategy.name" />：</th>
 			<td nowrap>
 				<input type="text" id="name" name="name" class="form-control" title="" value="${model.name!}"  required="" />
 			</td>
 		</tr>
 		<tr>
-			<th><@locale code="role.dynamic" />：</th>
-			<td nowrap>
-				<select id="dynamic" name="dynamic"  class="form-control  form-select">
-					<option value="0" <#if '0'==model.dynamic>selected</#if> ><@locale code="common.text.no" /></option>
-					<option value="1" <#if '1'==model.dynamic>selected</#if> ><@locale code="common.text.yes" /></option>
-				</select>
-			</td>
-		</tr>
+            <th><@locale code="apps.name"/>：</th>
+            <td nowrap>
+                <input class="form-control appId" id="appId" name="appId" value="${model.appId!}" type="hidden"  >
+                <input class="form-control appName" readonly value="${model.appName!}"    id="appName" name="appName" type="text" >
+               
+            </td>
+        </tr>
 		<tr>
-				<th><@locale code="role.orgidslist" />：</th>
+                <th><@locale code="accounts.strategy.mapping" />：</th>
+                <td nowrap>
+                    <select id="mapping" name="mapping" class="form-control form-select"   >
+                        
+                        <option value="username"  <#if model.mapping?contains("username")>selected</#if> >
+                            <@locale code="userinfo.username" />
+                        </option>
+                        <option value="mobile"  <#if model.mapping?contains("mobile")>selected</#if> >
+                            <@locale code="userinfo.mobile" />
+                        </option>
+                        <option value="email"  <#if model.mapping?contains("email")>selected</#if> >
+                            <@locale code="userinfo.email" />
+                        </option>
+                        <option value="employeeNumber"  <#if model.mapping?contains("employeeNumber")>selected</#if> >
+                            <@locale code="userinfo.employeeNumber" />
+                        </option>
+                        <option value="windowsAccount"  <#if model.mapping?contains("windowsAccount")>selected</#if> >
+                            <@locale code="userinfo.windowsAccount" />
+                        </option>
+                        <option value="idCardNo"  <#if model.mapping?contains("idCardNo")>selected</#if> >
+                            <@locale code="userinfo.idCardNo" />
+                        </option>
+                        
+                    </select>
+                </td>
+            </tr>
+		<tr>
+				<th><@locale code="accounts.strategy.orgidslist" />：</th>
 				<td nowrap>
 					<input type="text" id="orgIdsListName" name="orgIdsListName"   readonly  class="form-control" title="" value=""   onclick="showOrgsTree();"/>
 					<input type="hidden" id="orgIdsList" name="orgIdsList"   readonly  class="form-control" title="" value="${model.orgIdsList!}"   />
 				</td>
 		</tr>
 		<tr>
-			<th><@locale code="role.filters" />：</th>
+			<th><@locale code="accounts.strategy.filters" />：</th>
 			<td nowrap>
-				<textarea id="filters" name="filters" class="form-control"  rows="7" cols="20">${model.filters!}</textarea>
+				<textarea id="filters" name="filters" class="form-control"  rows="4" cols="20">${model.filters!}</textarea>
 			</td>
 		</tr>
 		<tr>
                 <th><@locale code="common.text.description" />：</th>
                 <td nowrap>
-                	<textarea id="description" name="description" class="form-control"  rows="6" cols="20">${model.description!}</textarea>
+                	<textarea id="description" name="description" class="form-control"  rows="3" cols="20">${model.description!}</textarea>
                 </td>
             </tr>
 		<tr>
