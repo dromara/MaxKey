@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 
 public class ExtractPostBindingAdapter implements ExtractBindingAdapter, InitializingBean{
-	private final static Logger logger = LoggerFactory.getLogger(ExtractPostBindingAdapter.class);
+	private final static Logger _logger = LoggerFactory.getLogger(ExtractPostBindingAdapter.class);
 	
 	static final String SAML_REQUEST_POST_PARAM_NAME = "SAMLRequest";
 	static final String SAML_RESPONSE_POST_PARAM_NAME = "SAMLResponse";
@@ -98,7 +98,7 @@ public class ExtractPostBindingAdapter implements ExtractBindingAdapter, Initial
 		messageContext.setSecurityPolicyResolver(securityPolicyResolver);
 
 		decoder.decode(messageContext);
-		logger.debug("decode successed ");
+		_logger.debug("decode successed ");
 		return	messageContext;
 
 	}
@@ -116,7 +116,9 @@ public class ExtractPostBindingAdapter implements ExtractBindingAdapter, Initial
 	
 
 	public void buildSecurityPolicyResolver(KeyStore trustKeyStore) {
-
+	    _logger.debug("EntityName {}, KeystorePassword {}",
+	                    keyStoreLoader.getEntityName(),keyStoreLoader.getKeystorePassword());
+	    
 		TrustResolver trustResolver = new TrustResolver(trustKeyStore,
 					keyStoreLoader.getEntityName(),
 					keyStoreLoader.getKeystorePassword(), 

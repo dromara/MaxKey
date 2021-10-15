@@ -21,10 +21,10 @@
 package org.maxkey.authn.support.socialsignon;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
-import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.entity.SocialsProvider;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +59,7 @@ public class AbstractSocialSignOnEndpoint {
 	}
 	
 	
-	protected SocialSignOnProvider socialSignOnProvider;
+	protected SocialsProvider socialSignOnProvider;
 	
 	protected AuthRequest authRequest;
 	
@@ -84,7 +84,7 @@ public class AbstractSocialSignOnEndpoint {
  	
   	protected AuthRequest buildAuthRequest(String provider){
   		try {
-			SocialSignOnProvider socialSignOnProvider = socialSignOnProviderService.get(provider);
+			SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(provider);
 			_logger.debug("socialSignOn Provider : "+socialSignOnProvider);
 			
 			if(socialSignOnProvider!=null){
@@ -100,26 +100,43 @@ public class AbstractSocialSignOnEndpoint {
 	}
     	
 	protected String  authCallback()  throws Exception {
+	    AuthCallback authCallback=new AuthCallback();
+        authCallback.setCode(WebContext.getRequest().getParameter("code"));
+        authCallback.setAuth_code(WebContext.getRequest().getParameter("auth_code"));
+        authCallback.setOauth_token(WebContext.getRequest().getParameter("oauthToken"));
+        authCallback.setAuthorization_code(WebContext.getRequest().getParameter("authorization_code"));
+        authCallback.setOauth_verifier(WebContext.getRequest().getParameter("oauthVerifier"));
+        authCallback.setState(WebContext.getRequest().getParameter("state"));
+        _logger.debug("Callback OAuth code {}, auth_code {}, oauthToken {}, authorization_code {}, oauthVerifier {}", 
+                authCallback.getCode(),
+                authCallback.getAuth_code(),
+                authCallback.getOauth_token(),
+                authCallback.getAuthorization_code(),
+                authCallback.getOauth_verifier());
+        _logger.debug("Callback state {} ", 
+                    authCallback.getState()
+                );
+        
  		authRequest=(AuthRequest)WebContext.getAttribute(SOCIALSIGNON_OAUTH_SERVICE_SESSION);
- 		socialSignOnProvider=(SocialSignOnProvider)WebContext.getAttribute(SOCIALSIGNON_PROVIDER_SESSION);
+ 		socialSignOnProvider=(SocialsProvider)WebContext.getAttribute(SOCIALSIGNON_PROVIDER_SESSION);
+ 		//clear session
   		WebContext.removeAttribute(SOCIALSIGNON_OAUTH_SERVICE_SESSION);
   		WebContext.removeAttribute(SOCIALSIGNON_PROVIDER_SESSION);
-  		
-  		AuthCallback authCallback=new AuthCallback();
-  		authCallback.setCode(WebContext.getRequest().getParameter("code"));
-  		authCallback.setAuth_code(WebContext.getRequest().getParameter("auth_code"));
-  		authCallback.setOauth_token(WebContext.getRequest().getParameter("oauthToken"));
-  		authCallback.setAuthorization_code(WebContext.getRequest().getParameter("authorization_code"));
-  		authCallback.setOauth_verifier(WebContext.getRequest().getParameter("oauthVerifier"));
-  		authCallback.setState(WebContext.getRequest().getParameter("state"));
+
+  		if(authRequest == null) {//if authRequest is null renew one
+  		    authRequest=socialSignOnProviderService.getAuthRequest(provider,applicationConfig);
+  		    if(authCallback.getState() != null) {
+  		        authRequest.authorize(authCallback.getState());
+            }
+  		  _logger.debug("session authRequest is null , renew one");
+  		}
   		
   		AuthResponse<?> authResponse=authRequest.login(authCallback);
-  		_logger.debug("Response  : "+authResponse);
-  		accountId=socialSignOnProviderService.getAccountId(socialSignOnProvider.getProvider(), authResponse);
+  		_logger.debug("Response  : " + authResponse.getData());
+  		accountId=socialSignOnProviderService.getAccountId(provider, authResponse);
  		
- 		_logger.debug("getAccountId : "+accountId);
+ 		_logger.debug("getAccountId : " + accountId);
  		return accountId;
  	}
   	
-
 }

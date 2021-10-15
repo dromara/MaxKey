@@ -115,7 +115,10 @@ public class AssertionGenerator {
 		assertion.setConditions(conditions);
 		//sign Assertion
 		try{
-			
+		    if(bindingAdapter.getSigningCredential() == null) {
+		       throw new Exception("Signing Credential is null..." );
+		    }
+		    logger.debug("EntityId " + bindingAdapter.getSigningCredential().getEntityId());
 	        BasicCredential basicCredential = new BasicCredential();
 	        basicCredential.setPrivateKey(bindingAdapter.getSigningCredential().getPrivateKey());
 	        

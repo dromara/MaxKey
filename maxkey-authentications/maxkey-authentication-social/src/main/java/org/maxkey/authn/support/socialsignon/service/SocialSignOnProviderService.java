@@ -17,30 +17,42 @@
 
 package org.maxkey.authn.support.socialsignon.service;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.entity.SocialsProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.*;
 
-
-
 public class SocialSignOnProviderService{
 	private static Logger _logger = LoggerFactory.getLogger(SocialSignOnProviderService.class);
 	
-	List<SocialSignOnProvider> socialSignOnProviders = new ArrayList<SocialSignOnProvider>();
+	   private static final String DEFAULT_SELECT_STATEMENT = "select * from mxk_socials_provider where status = 1  order by sortindex";
+	    
+	   
+	List<SocialsProvider> socialSignOnProviders = new ArrayList<SocialsProvider>();
 	
-	HashMap<String ,SocialSignOnProvider>socialSignOnProviderMaps=new HashMap<String ,SocialSignOnProvider>();
+	HashMap<String ,SocialsProvider>socialSignOnProviderMaps=new HashMap<String ,SocialsProvider>();
 	
+	private final JdbcTemplate jdbcTemplate;
 	
-	public SocialSignOnProvider get(String provider){
+	public SocialSignOnProviderService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate=jdbcTemplate; 
+    }
+
+	
+	public SocialsProvider get(String provider){
 		return socialSignOnProviderMaps.get(provider);
 	}
 	
@@ -109,44 +121,85 @@ public class SocialSignOnProviderService{
 	}
 	
 	public String getAccountId(String provider,AuthResponse<?> authResponse)  throws Exception {
-		if(provider.equalsIgnoreCase("WeChatOpen")) {
-			return ((AuthUser)authResponse.getData()).getUuid();
-		}else if(provider.equalsIgnoreCase("sinaweibo")) {
-			return ((AuthUser)authResponse.getData()).getUuid();
-		}else if(provider.equalsIgnoreCase("qq")) {
-			return ((AuthUser)authResponse.getData()).getUuid();
-		}else if(provider.equalsIgnoreCase("Alipay")) {
-			return ((AuthUser)authResponse.getData()).getUuid();
-		}else if(provider.equalsIgnoreCase("Twitter")) {
-			return ((AuthUser)authResponse.getData()).getUuid();
-		}else if(provider.equalsIgnoreCase("google")) {
-			return ((AuthUser)authResponse.getData()).getUuid();
-		}else if(provider.equalsIgnoreCase("microsoft")) {
-			return ((AuthUser)authResponse.getData()).getUuid();
-		}else if(provider.equalsIgnoreCase("Linkedin")) {
-			return ((AuthUser)authResponse.getData()).getUuid();
-		}else if(provider.equalsIgnoreCase("DingTalk")) {
-			return ((AuthUser)authResponse.getData()).getUuid();
-		}else {
-		    return ((AuthUser)authResponse.getData()).getUuid();
-		}
+	    if(authResponse.getData() != null) {
+	        AuthUser authUser = (AuthUser)authResponse.getData();
+	        _logger.debug("AuthUser[{},{},{},{},{},{},{},{},{},{},{},{}]",
+	                authUser.getUuid(),
+	                authUser.getUsername(),
+	                authUser.getNickname(),
+	                authUser.getGender(),
+	                authUser.getEmail(),
+	                authUser.getCompany(),
+	                authUser.getBlog(),
+	                authUser.getLocation(),
+	                authUser.getRemark(),
+	                authUser.getSource(),
+	                authUser.getBlog(),
+	                authUser.getAvatar());
+	        _logger.debug("RawUserInfo {}",authUser.getRawUserInfo());
+    		if(provider.equalsIgnoreCase("WeChatOpen")) {
+    			return authUser.getUuid();
+    		}else if(provider.equalsIgnoreCase("sinaweibo")) {
+    			return authUser.getUuid();
+    		}else if(provider.equalsIgnoreCase("qq")) {
+    			return authUser.getUuid();
+    		}else if(provider.equalsIgnoreCase("Alipay")) {
+    			return authUser.getUuid();
+    		}else if(provider.equalsIgnoreCase("Twitter")) {
+    			return authUser.getUuid();
+    		}else if(provider.equalsIgnoreCase("google")) {
+    			return authUser.getUuid();
+    		}else if(provider.equalsIgnoreCase("microsoft")) {
+    			return authUser.getUuid();
+    		}else if(provider.equalsIgnoreCase("Linkedin")) {
+    			return authUser.getUuid();
+    		}else if(provider.equalsIgnoreCase("DingTalk")) {
+    			return authUser.getUuid();
+    		}else {
+    		    return authUser.getUuid();
+    		}
+	    }
+	    return null;
 	}
-	public List<SocialSignOnProvider> getSocialSignOnProviders() {
+	public List<SocialsProvider> getSocialSignOnProviders() {
 		return socialSignOnProviders;
 	}
-
-	public void setSocialSignOnProviders(
-			List<SocialSignOnProvider> socialSignOnProviders) {
-	    
-		for(SocialSignOnProvider socialSignOnProvider : socialSignOnProviders){
-		    socialSignOnProviderMaps.put(socialSignOnProvider.getProvider(), socialSignOnProvider);
-		    
-		    if(!socialSignOnProvider.isHidden()) {
-		        this.socialSignOnProviders.add(socialSignOnProvider);
-		    }
-		}
-		
-		_logger.debug("social SignOn Providers {}" , this.socialSignOnProviders);
+	
+	public void loadSocialsProviders() {
+	    List<SocialsProvider> listSocialsProvider=jdbcTemplate.query(
+	            DEFAULT_SELECT_STATEMENT,
+                new SocialsProviderRowMapper());
+        _logger.trace("query SocialsProvider " + listSocialsProvider);
+        
+        for(SocialsProvider socialsProvider : listSocialsProvider){
+            socialSignOnProviderMaps.put(socialsProvider.getProvider(), socialsProvider);
+            _logger.debug("Social Provider " + socialsProvider.getProvider() 
+                                             + "(" + socialsProvider.getProviderName()+")");
+            if(!socialsProvider.getHidden().equals("true")) {
+                this.socialSignOnProviders.add(socialsProvider);
+            }
+        }
+    
+    _logger.debug("social SignOn Providers {}" , this.socialSignOnProviders);
 	}
 	
+	
+	private final class SocialsProviderRowMapper  implements RowMapper<SocialsProvider> {
+        @Override
+        public SocialsProvider mapRow(ResultSet rs, int rowNum)
+                throws SQLException {
+            SocialsProvider socialsProvider=new SocialsProvider();
+            socialsProvider.setId(rs.getString("id"));
+            socialsProvider.setProvider(rs.getString("provider"));
+            socialsProvider.setProviderName(rs.getString("providername"));
+            socialsProvider.setIcon(rs.getString("icon"));
+            socialsProvider.setClientId(rs.getString("clientid"));
+            socialsProvider.setClientSecret(rs.getString("clientsecret"));
+            socialsProvider.setAgentId(rs.getString("agentId"));
+            socialsProvider.setHidden(rs.getString("hidden"));
+            socialsProvider.setSortIndex(rs.getInt("sortindex"));
+            socialsProvider.setStatus(rs.getInt("status"));
+            return socialsProvider;
+        }
+    }
 }

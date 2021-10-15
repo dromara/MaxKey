@@ -102,7 +102,13 @@
             <li>
                 <a class="side-nav-menu" href="<@base />/accountsstrategy/list/">
                     <@locale code="navs.accounts.strategy"/>
-                    <span class="fa fa-fw fa-globe fa-lg"></span>
+                    <span class="fa fa-fw fa-superpowers fa-lg"></span>
+                </a>
+            </li>
+            <li>
+                <a class="side-nav-menu" href="<@base />/socialsprovider/list/">
+                    <@locale code="navs.socials.provider"/>
+                    <span class="fa fa-fw fa-commenting fa-lg"></span>
                 </a>
             </li>
             

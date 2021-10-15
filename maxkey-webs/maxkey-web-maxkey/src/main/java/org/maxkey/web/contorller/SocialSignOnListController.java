@@ -20,11 +20,11 @@ package org.maxkey.web.contorller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.entity.SocialsProvider;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,16 +55,16 @@ public class SocialSignOnListController {
 		
 		ModelAndView modelAndView=new ModelAndView("social/socialSignOnProvider");
 		if(applicationConfig.getLoginConfig().isSocialSignOn()){
-			List<SocialSignOnProvider>  listSocialSignOnProvider= socialSignOnProviderService.getSocialSignOnProviders();
+			List<SocialsProvider>  listSocialSignOnProvider= socialSignOnProviderService.getSocialSignOnProviders();
 			
 			SocialsAssociate socialSignOnUser=new SocialsAssociate();
 			socialSignOnUser.setUserId(WebContext.getUserInfo().getId());
 			List<SocialsAssociate>  listSocialSignOnUserToken= socialSignOnUserService.query(socialSignOnUser);
-			List<SocialSignOnProvider>  listBindSocialSignOnProvider=new ArrayList<SocialSignOnProvider>();
+			List<SocialsProvider>  listBindSocialSignOnProvider=new ArrayList<SocialsProvider>();
 			_logger.debug("list SocialSignOnProvider : "+listSocialSignOnProvider);
 			_logger.debug("list SocialSignOnUserToken : "+listSocialSignOnUserToken);
-			for (SocialSignOnProvider ssop : listSocialSignOnProvider){
-				SocialSignOnProvider socialSignOnProvider=new SocialSignOnProvider();
+			for (SocialsProvider ssop : listSocialSignOnProvider){
+				SocialsProvider socialSignOnProvider=new SocialsProvider();
 				socialSignOnProvider.setProvider(ssop.getProvider());
 				socialSignOnProvider.setProviderName(ssop.getProviderName());
 				socialSignOnProvider.setIcon(ssop.getIcon());

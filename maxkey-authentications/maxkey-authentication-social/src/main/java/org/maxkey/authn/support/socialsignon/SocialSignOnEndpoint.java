@@ -23,9 +23,9 @@ package org.maxkey.authn.support.socialsignon;
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authn.LoginCredential;
-import org.maxkey.authn.support.socialsignon.service.SocialSignOnProvider;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
 import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.entity.SocialsProvider;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +37,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import me.zhyd.oauth.request.AuthRequest;
 
 /**
  * @author Crystal.Sea
@@ -103,12 +105,18 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	
 	@RequestMapping(value={"/scanqrcode/{provider}"}, method = RequestMethod.GET)
 	@ResponseBody
-	public SocialSignOnProvider scanQRCode(
+	public SocialsProvider scanQRCode(
 							HttpServletRequest request,
 							@PathVariable("provider") String provider) {
-		socialSignOnAuthorize(request,provider);
-		SocialSignOnProvider socialSignOnProvider = socialSignOnProviderService.get(provider);
-		socialSignOnProvider.setState(request.getSession().getId());
+	    AuthRequest authRequest =buildAuthRequest(provider);
+	   
+	    if(authRequest == null ) {
+	        _logger.error("build authRequest fail .");
+	    }
+	    String state = request.getSession().getId();
+	    authRequest.authorize(state);
+		SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(provider);
+		socialSignOnProvider.setState(state);
 		socialSignOnProvider.setRedirectUri(applicationConfig.getServerPrefix()+ 
 		                                    "/logon/oauth20/callback/"+provider);
 		return socialSignOnProvider;
