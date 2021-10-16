@@ -1,9 +1,9 @@
-     <script type="text/javascript" src="https://rescdn.qqmail.com/node/ww/wwopenmng/js/sso/wwLogin-1.0.0.js"></script>
+     <script type="text/javascript" src="https://wwcdn.weixin.qq.com/node/wework/wwopen/js/wwLogin-1.2.4.js"></script>
      <script type="text/javascript"> 
         $(function(){
            $("#qrcodelogin").on("click",function(){
               $.get("<@base />/logon/oauth20/scanqrcode/workweixin",function(data,status){
-                        window.WwLogin({
+                       var wwLogin = new WwLogin({
                             "id" : "div_qrcodelogin",  
                             "appid" : data.clientId,
                             "agentid" : data.agentId,

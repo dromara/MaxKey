@@ -113,8 +113,8 @@ public class AbstractSocialSignOnEndpoint {
                 authCallback.getOauth_token(),
                 authCallback.getAuthorization_code(),
                 authCallback.getOauth_verifier());
-        _logger.debug("Callback state {} ", 
-                    authCallback.getState()
+        _logger.debug("Callback state {} , sessionId {}", 
+                    authCallback.getState(),WebContext.getRequest().getSession().getId()
                 );
         
  		authRequest=(AuthRequest)WebContext.getAttribute(SOCIALSIGNON_OAUTH_SERVICE_SESSION);
@@ -124,12 +124,14 @@ public class AbstractSocialSignOnEndpoint {
   		WebContext.removeAttribute(SOCIALSIGNON_PROVIDER_SESSION);
 
   		if(authRequest == null) {//if authRequest is null renew one
-  		    authRequest=socialSignOnProviderService.getAuthRequest(provider,applicationConfig);
-  		    if(authCallback.getState() != null) {
-  		        authRequest.authorize(authCallback.getState());
-            }
-  		  _logger.debug("session authRequest is null , renew one");
+  		    authRequest=socialSignOnProviderService.getAuthRequest(provider,applicationConfig);  		    
+  		    _logger.debug("session authRequest is null , renew one");
   		}
+  		
+  		//State time out, re set
+  		if(authCallback.getState() != null) {
+            authRequest.authorize(WebContext.getRequest().getSession().getId());
+        }
   		
   		AuthResponse<?> authResponse=authRequest.login(authCallback);
   		_logger.debug("Response  : " + authResponse.getData());

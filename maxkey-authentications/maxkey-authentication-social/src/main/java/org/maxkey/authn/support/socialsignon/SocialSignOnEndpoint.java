@@ -115,11 +115,20 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	    }
 	    String state = request.getSession().getId();
 	    authRequest.authorize(state);
+	    
 		SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(provider);
-		socialSignOnProvider.setState(state);
-		socialSignOnProvider.setRedirectUri(applicationConfig.getServerPrefix()+ 
-		                                    "/logon/oauth20/callback/"+provider);
-		return socialSignOnProvider;
+		SocialsProvider scanQRCodeProvider = new SocialsProvider();
+		
+		scanQRCodeProvider.setId(socialSignOnProvider.getId());
+		scanQRCodeProvider.setProvider(socialSignOnProvider.getProvider());
+		scanQRCodeProvider.setProviderName(socialSignOnProvider.getProviderName());
+		scanQRCodeProvider.setState(state);
+		scanQRCodeProvider.setClientId(socialSignOnProvider.getClientId());
+		scanQRCodeProvider.setRedirectUri(applicationConfig.getServerPrefix()+ 
+                "/logon/oauth20/callback/"+provider);
+		scanQRCodeProvider.setAgentId(socialSignOnProvider.getAgentId());
+		
+		return scanQRCodeProvider;
 	}
 	
 	

@@ -10,21 +10,15 @@
 			<div class="col-sm-2"></div>
 			<div class="col-sm-4">
 				<div style="margin-top:30px;margin-right:10px;float:right;">
-					<table>
-						<tr >
-							<td ><@locale code="global.change.language"/> :</td>
-							<td >
-								<div > 
-									<a href="<@currUrl/>?language=en">
-										<@locale code="global.change.language.en"/>
-									</a>|
-									<a href="<@currUrl/>?language=zh_CN">
-										<@locale code="global.change.language.zh"/>
-									</a>
-								</div>
-							</td>
-						</tr>
-					</table>
+				    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownLanguage" data-bs-toggle="dropdown" aria-expanded="false">
+                            <@locale code="global.language"/> 
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownLanguage">
+                            <li><a class="dropdown-item" href="<@currUrl/>?language=zh_CN"><@locale code="global.change.language.zh"/></a></li>
+                            <li><a class="dropdown-item" href="<@currUrl/>?language=en"><@locale code="global.change.language.en"/></a></li>
+                        </ul>
+                    </div>
 				</div>
 			</div>
 	</div>
