@@ -20,9 +20,10 @@
     *(MAXKEY-210819) 调整了机构显示树的样式
     *(MAXKEY-210820) 企业微信扫码登录js更新wwLogin-1.2.4.js
     *(MAXKEY-210821) 中文切换调整为下拉菜单
-	*(MAXKEY-210822) 移除原有的缓存方案
+    *(MAXKEY-210822) 移除原有的缓存方案
     *(MAXKEY-210823) 依赖jar引用、更新和升级
          spring              5.3.11
+         tomcat              9.0.54
          mybatis-jpa-extra   2.6
          druid               1.2.8
          caffeine            2.9.2
