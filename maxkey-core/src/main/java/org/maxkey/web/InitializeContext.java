@@ -30,12 +30,10 @@ import javax.servlet.http.HttpServlet;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang3.ArchUtils;
 import org.joda.time.DateTime;
-import org.maxkey.cache.CacheFactory;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.util.PathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -80,9 +78,6 @@ public class InitializeContext extends HttpServlet {
         // List DatabaseMetaData Variables
         listDataBaseVariables();
 
-        // load caches
-        loadCaches();
-
         // Show License
         showLicense();
     }
@@ -105,26 +100,6 @@ public class InitializeContext extends HttpServlet {
             _logger.debug("cookieLocaleResolver replaced localeResolver.");
         }
         this.applicationContext = applicationContext;
-    }
-
-    /**
-     * loadCaches.
-     */
-    public void loadCaches() {
-        _logger.info("-----------------------------------------------------------");
-        _logger.info("Load Caches ");
-
-        try {
-            if (applicationContext.containsBean("cacheFactory")) {
-                CacheFactory cacheFactory = 
-                        applicationContext.getBean("cacheFactory", CacheFactory.class);
-                cacheFactory.start();
-            }
-        } catch (BeansException e) {
-            e.printStackTrace();
-        }
-        _logger.info("-----------------------------------------------------------");
-
     }
 
     /**
