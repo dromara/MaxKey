@@ -101,6 +101,7 @@ $(function () {
                     async   :   {
                         enable      :   true,
                         url         :   treeSettings.url,
+                        dataType    :   "json",
                         autoParam   :   ["id", "name=n", "level=lv"],
                         otherParam  :   {
                                             "otherParam":"zTreeAsyncTest",

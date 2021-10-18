@@ -114,6 +114,7 @@
 						enable		: 	true,
 						url			:	treeSettings.url,
 						autoParam	:	["id", "name=n", "level=lv"],
+						dataType    :   "json",
 						otherParam	:	{"otherParam":"zTreeAsyncTest",id:treeSettings.rootId},
 						dataFilter	: 	function (treeId, parentNode, childNodes) {
 											if (!childNodes) return null;

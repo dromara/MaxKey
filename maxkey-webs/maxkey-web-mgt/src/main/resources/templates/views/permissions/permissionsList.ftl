@@ -170,6 +170,7 @@ $('#datagrid').on('click-row.bs.table', function (row, element, field) {
                     async   :   {
                         enable      :   true,
                         url         :   treeSettings.url,
+                        dataType    :   "json",
                         autoParam   :   ["id", "name=n", "level=lv"],
                         otherParam  :   {
                                             "otherParam":"zTreeAsyncTest",
