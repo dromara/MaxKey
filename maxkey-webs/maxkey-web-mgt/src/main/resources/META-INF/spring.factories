@@ -7,5 +7,6 @@ org.maxkey.autoconfigure.JwtAuthnAutoConfiguration,\
 org.maxkey.autoconfigure.RedisAutoConfiguration,\
 org.maxkey.autoconfigure.AuthenticationAutoConfiguration,\
 org.maxkey.synchronizer.autoconfigure.SynchronizerAutoConfiguration,\
+org.maxkey.autoconfigure.SwaggerConfig,\
 org.maxkey.MaxKeyMgtConfig,\
 org.maxkey.MaxKeyMgtMvcConfig

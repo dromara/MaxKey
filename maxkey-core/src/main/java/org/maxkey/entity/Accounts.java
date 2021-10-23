@@ -60,6 +60,12 @@ public class Accounts extends JpaBaseEntity implements Serializable {
     private String relatedUsername;
     @Column
     private String relatedPassword;
+    @Column
+    private String createType;
+    @Column
+    private String strategyId;
+    @Column
+    private int status;
     
     UserInfo userInfo;
 
@@ -154,6 +160,31 @@ public class Accounts extends JpaBaseEntity implements Serializable {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    
+    public String getCreateType() {
+        return createType;
+    }
+
+    public void setCreateType(String createType) {
+        this.createType = createType;
+    }
+
+    public String getStrategyId() {
+        return strategyId;
+    }
+
+    public void setStrategyId(String strategyId) {
+        this.strategyId = strategyId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override

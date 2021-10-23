@@ -3,6 +3,21 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
+	<script type="text/javascript">    
+        function statusFormatter(value, row, index){
+            if(value==1){
+                return '<@locale code="userinfo.status.active" />';
+            }else if(value==2){
+                return '<@locale code="userinfo.status.inactive" />';
+            }else if(value==5){
+                return '<@locale code="userinfo.status.lock" />';
+            }else if(value==9){
+                return '<@locale code="userinfo.status.delete" />';
+            }else {
+                return '<@locale code="userinfo.status.inactive" />';
+            }
+        };   
+    </script>
 </head>
 <body> 
 <div class="app header-default side-nav-dark">
@@ -57,8 +72,12 @@
 						 		    wurl="<@base/>/accounts/forwardAdd"
 						 		    wwidth="960"
 						 		    wheight="600"
-					 		    	target="window">	   
-					 		    	
+					 		    	target="window">
+					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
+                                    wurl="<@base/>/accounts/forwardUpdate"
+                                    wwidth="700"
+                                    wheight="400"
+                                    target="window">   	
 					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
 					 				wurl="<@base/>/accounts/delete" />
 					</div>
@@ -115,6 +134,7 @@
 				<th data-field="appName"><@locale code="account.appName"/></th>
 				<th data-field="appId"   data-visible="false"><@locale code="account.appId"/></th>
 				<th data-field="relatedUsername"><@locale code="account.relatedUsername"/></th>
+				<th data-field="status"  data-formatter="statusFormatter"><@locale code="common.text.status"/></th>
 			</tr>
 		</thead>
 	</table>

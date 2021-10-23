@@ -90,6 +90,9 @@ public class AppsOAuth20Details extends Apps {
         this.setVendor(application.getVendor());
         this.setVendorUrl(application.getVendorUrl());
         this.setVisible(application.getVisible());
+        this.setAdapter(application.getAdapter());
+        this.setAdapterId(application.getAdapterId());
+        this.setAdapterName(application.getAdapterName());
         
         this.clientSecret = baseClientDetails.getClientSecret();
         this.scope = baseClientDetails.getScope().toString();
@@ -114,6 +117,7 @@ public class AppsOAuth20Details extends Apps {
         this.approvalPrompt = baseClientDetails.getApprovalPrompt();
         
         this.pkce = baseClientDetails.getPkce();
+        
 
     }
 

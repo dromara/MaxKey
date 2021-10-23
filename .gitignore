@@ -40,3 +40,4 @@ setEnvVars.bat
 
 /.gradle/
 /.gradle/*
+.vscode/settings.json

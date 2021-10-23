@@ -15,10 +15,8 @@
 	};
 
 	function onClick(event, treeId, treeNode) {
-		  $("#deptId").val(treeNode.id);
-		  $("#list").setGridParam({ postData: { deptId: treeNode.id} });
-   		  $("#list").trigger('reloadGrid', [{page:1}]);
-  			
+		  $("#departmentId").val(treeNode.id);
+  		  $("#searchBtn").click();
 	}
 				
 	$(function () {	
@@ -151,6 +149,10 @@
 </head>
 <body>
  <div>
+    <form id="basic_search_form" style="display:none">
+        <input id="departmentId"  class="form-control" name="departmentId" type="text" >
+        <input  class="button btn mr-3 btn-primary"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+    </form>
  	<input class="button btn btn-primary mr-3"  style="float: right;" id="winClose" type="button" value="<@locale code="button.text.select" />" >
  </div>
      <!-- content -->  

@@ -75,8 +75,8 @@ public class GroupsService  extends JpaBaseService<Groups> implements Serializab
 	    if(dynamicGroup.getDynamic().equals("1")) {
 	        boolean isDynamicTimeSupport = false;
 	        boolean isBetweenEffectiveTime = false;
-	        if(dynamicGroup.getResumeTime()!=null&&dynamicGroup.getResumeTime().equals("")
-	                &&dynamicGroup.getSuspendTime()!=null&&dynamicGroup.getSuspendTime().equals("")) {
+	        if(StringUtils.isNotBlank(dynamicGroup.getResumeTime())
+	                &&StringUtils.isNotBlank(dynamicGroup.getSuspendTime())) {
 	            LocalTime currentTime = LocalDateTime.now().toLocalTime();
 	            LocalTime resumeTime = LocalTime.parse(dynamicGroup.getResumeTime());
 	            LocalTime suspendTime = LocalTime.parse(dynamicGroup.getSuspendTime());
@@ -92,7 +92,7 @@ public class GroupsService  extends JpaBaseService<Groups> implements Serializab
 	            
 	        }
 	        
-    	    if(dynamicGroup.getOrgIdsList()!=null && !dynamicGroup.getOrgIdsList().equals("")) {
+    	    if(StringUtils.isNotBlank(dynamicGroup.getOrgIdsList())) {
     	        dynamicGroup.setOrgIdsList("'"+dynamicGroup.getOrgIdsList().replace(",", "','")+"'");
     	    }
     	    String filters = dynamicGroup.getFilters();

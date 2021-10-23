@@ -29,7 +29,7 @@
 </head>
 <body>
 
-<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/app/accounts/add"  class="needs-validation" novalidate>
+<form id="actionForm"  method="post" type="label" autoclose="true"  action="<@base/>/accounts/add"  class="needs-validation" novalidate>
 	<table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
 		<tbody>
 			<tr style="display:none">

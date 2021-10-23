@@ -69,13 +69,19 @@
             <tr>
                     <th><@locale code="socials.provider.hidden" />：</th>
                     <td nowrap>
-                        <input type="text" id="hidden" name="hidden" class="form-control" title="" value=""  required="" />
+                        <select  id="hidden" name="hidden" class="form-control  form-select" >
+                            <option value="true" ><@locale code="common.text.yes"/></option>
+                            <option value="false" selected><@locale code="common.text.no"/></option>
+                        </select>
                     </td>
             </tr>
             <tr>
                     <th><@locale code="common.text.status" />：</th>
                     <td nowrap>
-                        <input type="text" id="status" name="status" class="form-control" title="" value=""  required="" />
+                        <select  id="status" name="status" class="form-control  form-select" >
+                            <option value="1" selected><@locale code="common.text.status.activate"/></option>
+                            <option value="2" ><@locale code="common.text.status.inactive"/></option>
+                        </select>
                     </td>
             </tr>
 			<tr>

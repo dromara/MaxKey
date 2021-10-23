@@ -4,9 +4,20 @@
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
 	<script type="text/javascript">	
-		function dynamicFormatter(value, row, index){
-	  		return value=='0'? '<@locale code="common.text.no" />':'<@locale code="common.text.yes" />';
-		};             
+		function statusFormatter(value, row, index){
+            if(value==1){
+                return '<@locale code="userinfo.status.active" />';
+            }else if(value==2){
+                return '<@locale code="userinfo.status.inactive" />';
+            }else if(value==5){
+                return '<@locale code="userinfo.status.lock" />';
+            }else if(value==9){
+                return '<@locale code="userinfo.status.delete" />';
+            }else {
+                return '<@locale code="userinfo.status.inactive" />';
+            }
+        };   
+                
         function iconFormatter(value, row, index){
                 return "<img height='30' border='0px' src='<@base/>/static/"+value+"'/>";
         };
@@ -101,7 +112,7 @@
                         <th data-field="provider"><@locale code="socials.provider.provider"/></th>
                         <th data-field="providerName"><@locale code="socials.provider.providerName"/></th>
                         <th data-field="sortIndex"><@locale code="common.text.sortindex"/></th>
-                        <th data-field="status"><@locale code="common.text.status"/></th>
+                        <th data-field="status"  data-formatter="statusFormatter"><@locale code="common.text.status"/></th>
             
                     </tr>
                 </thead>
