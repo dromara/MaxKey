@@ -17,13 +17,19 @@
 
 package org.maxkey.persistence.service;
 
+import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
+import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.entity.Accounts;
+import org.maxkey.entity.AccountsStrategy;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.kafka.KafkaIdentityAction;
 import org.maxkey.persistence.kafka.KafkaIdentityTopic;
 import org.maxkey.persistence.kafka.KafkaPersistService;
 import org.maxkey.persistence.mapper.AccountsMapper;
+import org.maxkey.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -35,6 +41,9 @@ public class AccountsService  extends JpaBaseService<Accounts>{
     
     @Autowired
     UserInfoService  userInfoService;
+    
+    @Autowired
+    AccountsStrategyService accountsStrategyService;
     
 	public AccountsService() {
 		super(AccountsMapper.class);
@@ -98,6 +107,60 @@ public class AccountsService  extends JpaBaseService<Accounts>{
               return true;
           }
        return false;
+   }
+   
+   public void refreshByStrategy(AccountsStrategy strategy) {
+       if(StringUtils.isNotBlank(strategy.getOrgIdsList())) {
+           strategy.setOrgIdsList("'"+strategy.getOrgIdsList().replace(",", "','")+"'");
+       }
+       List<UserInfo>  userList = queryUserNotInStrategy(strategy);
+       for(UserInfo user : userList) {
+           Accounts account = new Accounts();
+           account.setAppId(strategy.getAppId());
+           account.setAppName(strategy.getAppName());
+           
+           account.setUserId(user.getId());
+           account.setUsername(user.getUsername());
+           account.setDisplayName(user.getDisplayName());
+           
+           if(strategy.getMapping().equalsIgnoreCase("username")) {
+               account.setRelatedUsername(user.getUsername());
+           }else if(strategy.getMapping().equalsIgnoreCase("mobile")) {
+               account.setRelatedUsername(user.getMobile());
+           }else if(strategy.getMapping().equalsIgnoreCase("email")) {
+               account.setRelatedUsername(user.getEmail());
+           }else if(strategy.getMapping().equalsIgnoreCase("employeeNumber")) {
+               account.setRelatedUsername(user.getEmployeeNumber());
+           }else if(strategy.getMapping().equalsIgnoreCase("windowsAccount")) {
+               account.setRelatedUsername(user.getWindowsAccount());
+           }else if(strategy.getMapping().equalsIgnoreCase("idCardNo")) {
+               account.setRelatedUsername(user.getIdCardNo());
+           }else {
+               account.setRelatedUsername(user.getUsername());
+           }
+           account.setRelatedPassword(ReciprocalUtils.encode(userInfoService.randomPassword()));
+           
+           account.setCreateType("automatic");
+           account.setStatus(ConstantsStatus.ACTIVE);
+           account.setStrategyId(strategy.getId());
+           
+           insert(account);
+       }
+       deleteByStrategy(strategy);
+   }
+   public void refreshAllByStrategy() {
+       for( AccountsStrategy strategy : accountsStrategyService.query(null)) {
+           refreshByStrategy(strategy);
+       }
+   }
+   
+   
+   public List<UserInfo> queryUserNotInStrategy(AccountsStrategy strategy){
+       return getMapper().queryUserNotInStrategy(strategy);
+   }
+   
+   public long deleteByStrategy(AccountsStrategy strategy) {
+       return getMapper().deleteByStrategy(strategy);
    }
 	
 }

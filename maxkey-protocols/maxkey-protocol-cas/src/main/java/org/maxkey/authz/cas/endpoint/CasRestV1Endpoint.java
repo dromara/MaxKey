@@ -31,6 +31,7 @@ import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
 import org.maxkey.authz.cas.endpoint.ticket.TicketGrantingTicketImpl;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsCasDetails;
+import org.maxkey.util.StringUtils;
 import org.maxkey.web.HttpResponseConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -76,7 +77,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             @RequestParam(value=CasConstants.PARAMETER.REST_USERNAME,required=true) String username,
             @RequestParam(value=CasConstants.PARAMETER.REST_PASSWORD,required=true) String password){
 	    try {
-    	    if (password == null || password.isEmpty()) {
+    	    if (StringUtils.isBlank(password)) {
                 throw new BadCredentialsException("No credentials are provided or extracted to authenticate the REST request");
             }
     	    

@@ -27,14 +27,25 @@
        		<span class="fa fa-fw fa-vcard  fa-lg"></span>
      	</a>
    	</li>  	
-   	
+   	<li>
+        <a class="side-nav-menu" href="<@base />/apps/list/">
+            <@locale code="navs.apps"/>
+            <span class="fa fa-fw fa-globe fa-lg"></span>
+        </a>
+    </li>
    	<li>
      	<a class="side-nav-menu has-arrow" href="#">
        		<@locale code="navs.privileges"/>
        		<span class="fa fa-fw fa-cubes fa-lg"></span>
      	</a>
      	<ul>
-     		<li>
+     	   <li>
+             <a class="side-nav-menu" href="<@base/>/session/sessionList/">
+                <@locale code="navs.audit.loginsession"/>
+                <span class="fa fa-fw fa-eye"></span>
+             </a>
+           </li>
+     	   <li>
 	         <a class="side-nav-menu" href="<@base />/groups/list/">
 	         	<@locale code="navs.groups"/>	
 	         	<span class="fa fa-fw fa-address-book"></span>
@@ -94,12 +105,6 @@
      	</a>
      	<ul>
             <li>
-                <a class="side-nav-menu" href="<@base />/apps/list/">
-                    <@locale code="navs.apps"/>
-                    <span class="fa fa-fw fa-globe fa-lg"></span>
-                </a>
-            </li>
-            <li>
                 <a class="side-nav-menu" href="<@base />/accountsstrategy/list/">
                     <@locale code="navs.accounts.strategy"/>
                     <span class="fa fa-fw fa-superpowers fa-lg"></span>
@@ -144,12 +149,7 @@
        		<span class="fa fa-fw fa-eye fa-lg"></span>
      	</a> 
      	<ul>
-     		<li>
-	         <a class="side-nav-menu" href="<@base/>/session/sessionList/">
-	         	<@locale code="navs.audit.loginsession"/>
-	         	<span class="fa fa-fw fa-eye"></span>
-	         </a>
-	       </li>
+     		
 	       <li>
 	         <a class="side-nav-menu" href="<@base />/historys/loginHistoryList/">
 	         	<@locale code="navs.audit.login"/>
@@ -184,11 +184,5 @@
    	</li>
    	
  </ul>
-
-<script type="text/javascript"> 
-$(function(){
-	$('#side-nav-menu').metisMenu();
-});
-</script>
 </div>
 <!--side navigation end-->

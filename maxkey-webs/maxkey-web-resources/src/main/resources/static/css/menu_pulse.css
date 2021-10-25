@@ -1,280 +1,142 @@
+/**/
 #nav_primary{
     background: #721170;
 }
 
-.menuprimary {
-	font: bold 12px Verdana;
-	margin: auto;
-	height: 41px;
+/*navMenu menu dropdown*/
+ul.navMenu {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  /*max-width: 70%;*/
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  background: #721170;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+ul.navMenu > li {
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 0;
+  height: 45px;
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 45px;
+  letter-spacing: 1px;
+  color: #e7e6f1;
+  cursor: pointer;
+  border-right: 1px solid white;
+}
+ul.navMenu > li:hover {
+  background: #63065f;
+}
+ul.navMenu > li:hover ul.dropdown {
+  visibility: visible;
+  transform: translate(0, 0);
+  opacity: 1;
+  z-index: 0;
+}
+ul.navMenu > li:hover ul.dropdown > li {
+  -webkit-animation-name: slideInLeft;
+          animation-name: slideInLeft;
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: backwards;
+          animation-fill-mode: backwards;
+}
+ul.navMenu > li:first-child {
+  /*border-top-left-radius: 6px;*/
+  border-left: 1px solid white;
+}
+ul.navMenu > li:last-child {
+  /*border-top-right-radius: 6px;*/
+  border-right: 1px solid white;
 }
 
-.menucontainer {
-	float: left;
-	margin-top: -2px;
+ul.navMenu > li a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    height: 40px;
+    font-size: 13px;
+    font-weight: bold;
 }
 
-.menuprimary ul {
-	z-index: 100;
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
+ul.navMenu > li a {
+    /*IE6 hack to get sub menu links to behave correctly*/
+    display: inline-block;
 }
 
-/*Top level list items*/
-.menuprimary ul li {
-	position: relative;
-	display: inline;
-	float: left;
+ul.navMenu > li a:link,ul.navMenu > li a:visited {
+    color: white;
 }
 
-.menuprimary ul .primaryleft {
-	border-left: 1px solid white;
+ul.navMenu > li a.selected {
+    /*CSS class that's dynamically added to the currently active menu items' LI A element*/
+    color: white;
 }
 
-/*Top level menu link items style*/
-.menuprimary ul li a {
-	display: block;
-	background: #721170; /*background of menu items (default state)*/
-	color: white;
-	padding: 10px 20px;
-	border-right: 1px solid white;
-	color: #2d2b2b;
-	text-decoration: none;
-	height: 40px;
-	font-size: 13px;
+ul.navMenu > li a:hover {
+    /*background of menu items during onmouseover (hover state)*/
+    color: white;
 }
 
-* html .menuprimary ul li a {
-	/*IE6 hack to get sub menu links to behave correctly*/
-	display: inline-block;
+ul.navMenu > li ul.dropdown {
+  visibility: hidden;
+  display: flex;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  margin: 0;
+  padding: 5px 0 0px;
+  list-style: none;
+  color: #333;
+  background: #721170;
+  /*
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  */
+  box-shadow: 1px 2px 5px -1px rgba(0, 0, 0, 0.15), 0px 4px 14px -1px rgba(0, 0, 0, 0.1);
+  transform: translate(0, -60px);
+  transition: transform 0.2s ease-out, opacity 0.2s, z-index 0s 0.2s;
+  opacity: 0;
+  z-index: -1;
+}
+ul.navMenu > li ul.dropdown > li {
+  font-size: 14px;
+  cursor: pointer;
+  border-top: 1px solid white;
+}
+ul.navMenu > li ul.dropdown > li:hover {
+  background: #63065f;
 }
 
-.menuprimary ul li a:link,.menuprimary ul li a:visited {
-	color: white;
+@-webkit-keyframes slideInLeft {
+  from {
+    transform: translate(-25%, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
 }
 
-.menuprimary ul li a.selected {
-	/*CSS class that's dynamically added to the currently active menu items' LI A element*/
-	background: #63065f !important;
-	color: white;
-}
-
-.menuprimary ul li a:hover {
-	background: #63065f;
-	/*background of menu items during onmouseover (hover state)*/
-	color: white;
-}
-
-/* sub menus */
-.menuprimary ul li ul {
-	position: absolute;
-	left: -3000px;
-	display: none; /*collapse all sub menus to begin with*/
-	visibility: hidden;
-}
-
-/*Sub level menu list items (alters style from Top level List Items)*/
-.menuprimary ul li ul li {
-	display: list-item;
-	float: none;
-}
-
-/*All subsequent sub menu levels vertical offset after 1st level sub menu */
-.menuprimary ul li ul li ul {
-	top: 0;
-}
-
-/* Sub level menu links style */
-.menuprimary ul li ul li a {
-	font: normal 13px Verdana;
-	width: 160px; /*width of sub menus*/
-	padding: 5px;
-	margin: 0;
-	border-top-width: 0;
-	border-bottom: 1px solid gray;
-	height: 90%;
-}
-
-/* Holly Hack for IE \*/
-* html .menuprimary {
-	height: 1%;
-} /*Holly Hack for IE7 and below*/
-
-/* ######### CSS classes applied to down and right arrow images  ######### */
-.downarrowclass {
-	position: absolute;
-	top: 12px;
-	right: 7px;
-}
-
-.rightarrowclass {
-	position: absolute;
-	top: 6px;
-	right: 5px;
-}
-
-/* ######### CSS for shadow added to sub menus  ######### */
-.ddshadow {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 0;
-	height: 0;
-	background-color: #ccc;
-	/* generally should be just a little lighter than the box-shadow color for CSS3 capable browsers */
-}
-
-.toplevelshadow {
-	margin: 5px 0 0 5px;
-	/* in NON CSS3 capable browsers gives the offset of the shadow */
-	opacity: 0.8;
-	/* shadow opacity mostly for NON CSS3 capable browsers. Doesn't work in IE */
-}
-
-.ddcss3support .ddshadow.toplevelshadow {
-	margin: 0;
-	/* in CSS3 capable browsers overrides offset from NON CSS3 capable browsers, allowing the box-shadow values in the next selector to govern that */
-	/* opacity: 1; */
-	/* optionally uncomment this to remove partial opacity for browsers supporting a box-shadow property which has its own slight gradient opacity */
-}
-
-.ddcss3support .ddshadow {
-	background-color: transparent;
-	box-shadow: 5px 5px 5px #aaa;
-	/* box-shadow color generally should be a little darker than that for the NON CSS3 capable browsers background-color */
-	-moz-box-shadow: 5px 5px 5px #aaa;
-	-webkit-box-shadow: 5px 5px 5px #aaa;
-}
-
-/************************************************************************************************************/
-.menusecond {
-	font: bold 12px Verdana;
-	background: white; /*background of menu bar (default state)*/
-	margin: auto;
-}
-
-.menusecond ul {
-	z-index: 100;
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-}
-
-/*Top level list items*/
-.menusecond ul li {
-	position: relative;
-	display: inline;
-	float: left;
-}
-
-/*Top level menu link items style*/
-.menusecond ul li a {
-	display: block;
-	background: white; /*background of menu items (default state)*/
-	color: #721170;
-	padding: 8px 10px;
-	border-right: 1px solid #778;
-	color: #2d2b2b;
-	text-decoration: none;
-}
-
-* html .menusecond ul li a {
-	/*IE6 hack to get sub menu links to behave correctly*/
-	display: inline-block;
-}
-
-.menusecond ul li a:link,.menusecond ul li a:visited {
-	color: #721170;
-}
-
-.menusecond ul li a.selected {
-	/*CSS class that's dynamically added to the currently active menu items' LI A element*/
-	background: #F0F0F0 !important;
-	color: #414141;
-}
-
-.menusecond ul li a:hover {
-	background: #F0F0F0;
-	/*background of menu items during onmouseover (hover state)*/
-	color: #414141;
-}
-
-/* sub menus */
-.menusecond ul li ul {
-	position: absolute;
-	left: -3000px;
-	display: none; /*collapse all sub menus to begin with*/
-	visibility: hidden;
-}
-
-/*Sub level menu list items (alters style from Top level List Items)*/
-.menusecond ul li ul li {
-	display: list-item;
-	float: none;
-}
-
-/*All subsequent sub menu levels vertical offset after 1st level sub menu */
-.menusecond ul li ul li ul {
-	top: 0;
-}
-
-/* Sub level menu links style */
-.menusecond ul li ul li a {
-	font: normal 13px Verdana;
-	width: 160px; /*width of sub menus*/
-	padding: 5px;
-	margin: 0;
-	border-top-width: 0;
-	border-bottom: 1px solid gray;
-}
-
-/* Holly Hack for IE \*/
-* html .menusecond {
-	height: 1%;
-} /*Holly Hack for IE7 and below*/
-
-/* ######### CSS classes applied to down and right arrow images  ######### */
-.downarrowclass {
-	position: absolute;
-	top: 12px;
-	right: 7px;
-}
-
-.rightarrowclass {
-	position: absolute;
-	top: 6px;
-	right: 5px;
-}
-
-/* ######### CSS for shadow added to sub menus  ######### */
-.ddshadow {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 0;
-	height: 0;
-	background-color: #ccc;
-	/* generally should be just a little lighter than the box-shadow color for CSS3 capable browsers */
-}
-
-.toplevelshadow {
-	margin: 5px 0 0 5px;
-	/* in NON CSS3 capable browsers gives the offset of the shadow */
-	opacity: 0.8;
-	/* shadow opacity mostly for NON CSS3 capable browsers. Doesn't work in IE */
-}
-
-.ddcss3support .ddshadow.toplevelshadow {
-	margin: 0;
-	/* in CSS3 capable browsers overrides offset from NON CSS3 capable browsers, allowing the box-shadow values in the next selector to govern that */
-	/* opacity: 1; */
-	/* optionally uncomment this to remove partial opacity for browsers supporting a box-shadow property which has its own slight gradient opacity */
-}
-
-.ddcss3support .ddshadow {
-	background-color: transparent;
-	box-shadow: 5px 5px 5px #aaa;
-	/* box-shadow color generally should be a little darker than that for the NON CSS3 capable browsers background-color */
-	-moz-box-shadow: 5px 5px 5px #aaa;
-	-webkit-box-shadow: 5px 5px 5px #aaa;
+@keyframes slideInLeft {
+  from {
+    transform: translate(-25%, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
 }

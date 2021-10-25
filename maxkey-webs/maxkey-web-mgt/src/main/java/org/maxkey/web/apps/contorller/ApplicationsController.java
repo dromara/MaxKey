@@ -56,13 +56,13 @@ public class ApplicationsController extends BaseAppContorller {
 	@RequestMapping(value = { "/grid" })
 	@ResponseBody
 	public JpaPageResults<Apps> queryDataGrid(@ModelAttribute("applications") Apps applications) {
-		JpaPageResults<Apps> jqGridApp=appsService.queryPageResults(applications);
-		if(jqGridApp!=null&&jqGridApp.getRows()!=null){
-			for (Apps app : jqGridApp.getRows()){
+		JpaPageResults<Apps> apps=appsService.queryPageResults(applications);
+		if(apps!=null&&apps.getRows()!=null){
+			for (Apps app : apps.getRows()){
 				WebContext.setAttribute(app.getId(), app.getIcon());
 			}
 		}
-		return jqGridApp;
+		return apps;
 	}
 	
 	@RequestMapping(value = { "/forwardAdd" })

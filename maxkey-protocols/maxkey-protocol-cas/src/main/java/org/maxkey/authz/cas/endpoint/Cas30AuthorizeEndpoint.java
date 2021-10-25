@@ -35,6 +35,7 @@ import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.Boolean;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.util.Instance;
+import org.maxkey.util.StringUtils;
 import org.maxkey.web.HttpResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +89,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			String principal=authentication.getUsername();
 			_logger.debug("principal "+principal);
 			serviceResponseBuilder.success().setUser(principal);
-			if(pgtUrl != null && !pgtUrl.equalsIgnoreCase("")) {
+			if(StringUtils.isNotBlank(pgtUrl)) {
 				ProxyGrantingTicketIOUImpl proxyGrantingTicketIOUImpl =new ProxyGrantingTicketIOUImpl();
 				String proxyGrantingTicketIOU=casProxyGrantingTicketServices.createTicket(proxyGrantingTicketIOUImpl);
 				

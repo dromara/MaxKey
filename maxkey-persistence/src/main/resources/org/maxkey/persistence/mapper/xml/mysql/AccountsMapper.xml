@@ -29,4 +29,40 @@
 		<include refid="where_statement"/>
 	</select>
 	
+	<select id="queryUserNotInStrategy" parameterType="AccountsStrategy" resultType="UserInfo">
+        select 
+            *
+        from mxk_userinfo u
+        where not exists(
+                select  1 from mxk_accounts ac 
+                where   ac.appid = #{appId}
+                    and ac.userid = u.id
+                    and ac.createtype='automatic'
+            )
+        <if test="filters != null and filters != ''">
+                and (${filters})
+        </if>
+        <if test="orgIdsList != null and orgIdsList != ''">
+                and u.departmentid in( ${orgIdsList})
+        </if>
+    </select>
+    
+	<delete id="deleteByStrategy" parameterType="AccountsStrategy" >
+        delete from mxk_accounts ac
+        where   ac.createtype = 'automatic'
+            and ac.appid = #{appId}
+            and ac.strategyid = #{id}
+            and not exists(
+                select 1
+                from mxk_userinfo u
+                where 1 = 1 
+                    and u.id=ac.userid
+                <if test="filters != null and filters != ''">
+                        and (${filters})
+                </if>
+                <if test="orgIdsList != null and orgIdsList != ''">
+                        and u.departmentid in ( ${orgIdsList})
+                </if>
+            )
+    </delete>
 </mapper>

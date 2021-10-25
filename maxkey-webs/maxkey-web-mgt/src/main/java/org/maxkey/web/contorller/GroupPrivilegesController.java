@@ -56,16 +56,16 @@ public class GroupPrivilegesController {
 	@ResponseBody
 	public JpaPageResults<GroupPrivileges> queryAppsInGroup(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
 		
-		JpaPageResults<GroupPrivileges> jqGridApp;
+		JpaPageResults<GroupPrivileges> groupPrivileges;
 		
-		jqGridApp= groupPrivilegesService.queryPageResults("appsInGroup",groupApp);
+		groupPrivileges= groupPrivilegesService.queryPageResults("appsInGroup",groupApp);
 
-		if(jqGridApp!=null&&jqGridApp.getRows()!=null){
-			for (Apps app : jqGridApp.getRows()){
+		if(groupPrivileges!=null&&groupPrivileges.getRows()!=null){
+			for (Apps app : groupPrivileges.getRows()){
 				WebContext.setAttribute(app.getId(), app.getIcon());
 			}
 		}
-		return jqGridApp;
+		return groupPrivileges;
 
 	}
 	
@@ -80,16 +80,16 @@ public class GroupPrivilegesController {
 	@RequestMapping(value = { "/queryAppsNotInGroup" })
 	@ResponseBody
 	public JpaPageResults<GroupPrivileges> queryAppsNotInGroup(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
-		JpaPageResults<GroupPrivileges> jqGridApp;
+		JpaPageResults<GroupPrivileges> groupPrivileges;
 		
-		jqGridApp= groupPrivilegesService.queryPageResults("appsNotInGroup",groupApp);
+		groupPrivileges= groupPrivilegesService.queryPageResults("appsNotInGroup",groupApp);
 
-		if(jqGridApp!=null&&jqGridApp.getRows()!=null){
-			for (Apps app : jqGridApp.getRows()){
+		if(groupPrivileges!=null&&groupPrivileges.getRows()!=null){
+			for (Apps app : groupPrivileges.getRows()){
 				WebContext.setAttribute(app.getId(), app.getIcon());
 			}
 		}
-		return jqGridApp;
+		return groupPrivileges;
 
 	}
 

@@ -20,8 +20,12 @@
  */
 package org.maxkey.persistence.mapper;
 
+import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.entity.Accounts;
+import org.maxkey.entity.AccountsStrategy;
+import org.maxkey.entity.UserInfo;
 
 /**
  * @author Crystal.sea
@@ -30,4 +34,7 @@ import org.maxkey.entity.Accounts;
 public  interface AccountsMapper extends IJpaBaseMapper<Accounts> {
 	
 
+    public List<UserInfo> queryUserNotInStrategy(AccountsStrategy strategy);
+    
+    public long deleteByStrategy(AccountsStrategy strategy);
 }

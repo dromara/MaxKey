@@ -22,14 +22,14 @@ public class LogoutType {
     /**
      * For no SLO.
      */
-    public static int NONE = 0;
+    public static int NONE              = 0;
     /**
      * For back channel SLO.
      */
-    public static  int BACK_CHANNEL = 1;
+    public static  int BACK_CHANNEL     = 1;
     /**
      * For front channel SLO.
      */
-    public static  int FRONT_CHANNEL = 2;
+    public static  int FRONT_CHANNEL    = 2;
 
 }

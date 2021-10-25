@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2021] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +18,22 @@
 package org.maxkey.jobs;
 
 import java.io.Serializable;
-import org.maxkey.persistence.service.GroupsService;
+import org.maxkey.persistence.service.AccountsService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DynamicGroupsJob  implements Job , Serializable {
-    /**
+public class AccountsStrategyJob   implements Job , Serializable {
+
+   /**
      * 
      */
-    private static final long serialVersionUID = 8831626240807856084L;
+    private static final long serialVersionUID = 167999890940939820L;
 
-    final static Logger _logger = LoggerFactory.getLogger(DynamicGroupsJob.class);
+    final static Logger _logger = LoggerFactory.getLogger(AccountsStrategyJob.class);
     
-    private static  GroupsService groupsService = null;
+    private static  AccountsService accountsService = null;
     
     public static class JOBSTATUS{
         public static int STOP = 0;
@@ -52,11 +53,11 @@ public class DynamicGroupsJob  implements Job , Serializable {
         _logger.debug("DynamicGroupsJob is running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
-            if(groupsService == null) {
-                groupsService = (GroupsService) context.getMergedJobDataMap().get("service");
+            if(accountsService == null) {
+                accountsService = (AccountsService) context.getMergedJobDataMap().get("accountsService");
             }
 
-            groupsService.refreshAllDynamicGroups();
+            accountsService.refreshAllByStrategy();
             
             Thread.sleep(10 *1000);
             _logger.debug("DynamicGroupsJob is success  " );

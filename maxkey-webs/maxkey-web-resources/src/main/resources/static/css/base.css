@@ -51,8 +51,13 @@ body{
 #nav_second{
 	height:35px;
 }
+
 #nav_third{
 	/*border-top: 1px solid #e5e5e5;*/
+}
+
+#topBar{
+    min-height: 65px;
 }
 
 #topBar .grid_list_sel{
@@ -138,14 +143,14 @@ body{
 }
 
 #logout{
-	width: 45px;
+	width: 75px;
   	background: #c00 ;
   	color: #fff;
   	font-weight: bold;	
 }
 
-#manage{
-	width: 50px;
+#myprofile{
+	width: 75px;
 	background-color: #2AA9A9;
 	font-weight: bold;	
 }
@@ -156,8 +161,9 @@ body{
 	font-weight: bold;	
 }
 
-#manage a,#logout a,#changepassword a{
-	  color: #fff;
+#myprofile a,#logout a,#changepassword a{
+	color: #fff;
+	text-decoration: none;
 }
 
 .form_radio_label, .form_checkbox_label{

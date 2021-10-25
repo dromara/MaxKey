@@ -21,8 +21,8 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.entity.AccountsStrategy;
 import org.maxkey.entity.Roles;
+import org.maxkey.persistence.service.AccountsService;
 import org.maxkey.persistence.service.AccountsStrategyService;
-import org.maxkey.persistence.service.RolesService;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -46,6 +46,9 @@ public class AccountsStrategyController {
 	@Autowired
 	@Qualifier("accountsStrategyService")
 	AccountsStrategyService accountsStrategyService;
+	
+	@Autowired
+	AccountsService accountsService;
 
 	
 	
@@ -82,6 +85,7 @@ public class AccountsStrategyController {
 		_logger.debug("-Add  :" + accountsStrategy);
 		
 		if (accountsStrategyService.insert(accountsStrategy)) {
+		    accountsService.refreshByStrategy(accountsStrategy);
 		    //rolesService.refreshDynamicRoles(role);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -121,6 +125,7 @@ public class AccountsStrategyController {
 		
 		if (accountsStrategyService.update(accountsStrategy)) {
 		   // rolesService.refreshDynamicRoles(role);
+		    accountsService.refreshByStrategy(accountsStrategy);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {

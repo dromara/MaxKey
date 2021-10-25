@@ -17,9 +17,21 @@ $(function(){
 	$(".datetimepicker").datetimepicker({format:'Y-m-d H:i'});
 	$(".datepicker").datetimepicker({timepicker:false,format:'Y-m-d'});
 	$(".timepicker").datetimepicker({datepicker:false,format:'H:i',step:10});
-	
-	//$(".multipleselect").multipleSelect({}); 
-			
+    
+	//maxkey navMenu
+    $('.navMenu').children('ul').children('li').each(function(indexCount){
+        // loop through each dropdown, count children and apply a animation delay based on their index value
+        $(this).children('ul.dropdown').children('li').each(function(index){
+            // Turn the index value into a reasonable animation delay
+            var delay = 0.1 + index*0.03;
+            // Apply the animation delay
+             $(this).css("animation-delay", delay + "s")         
+        });
+    });
+    
+	//side navigation
+    $('#side-nav-menu').metisMenu();
+    		
 	//on captcha image click ,new a captcha code
 	$('.captcha-image').click(function () {//
 		$(this).attr("src", webContextPath + "/captcha?"+(new Date()).getTime()); 

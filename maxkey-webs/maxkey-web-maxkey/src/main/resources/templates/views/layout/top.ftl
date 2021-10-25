@@ -36,21 +36,20 @@
     						<a href="<@base/>/appList?mnid=110101020000&gridList=0" ><img class="grid_list_sel"  src='<@base/>/static/images/grid_sel.png'></a>
     					</td>
     					</#if>
+    					<!--我的资料-->
+    					<td id="myprofile" nowrap>
+                            <a  href="<@base/>/profile/myProfile">
+                                <div   >&nbsp;&nbsp;<@locale code="navs.myprofile"/>&nbsp;&nbsp;</div>
+                            </a>
+                        </td>
     					<td id="changepassword" nowrap>
     						<a  href="<@base/>/safe/forward/changePasswod">
-    							<div  style="float:right;" >&nbsp;&nbsp;<@locale code="login.password.changepassword"/>&nbsp;&nbsp;</div>
+    							<div  >&nbsp;&nbsp;<@locale code="login.password.changepassword"/>&nbsp;&nbsp;</div>
     						</a>
     					</td>
-    					<#if  Session["current_authentication"].principal.roleAdministrators==true >
-    					<td id="manage" nowrap>
-    						<a target="_blank"  href="<@base/>/authz/maxkey_mgt">
-    							<div  style="float:right;" >&nbsp;&nbsp;<@locale code="global.text.manage"/>&nbsp;&nbsp;</div>
-    						</a>
-    					</td>
-    					</#if>
     					<td id="logout" class="ui-widget-header" >
     						<a  href="<@base/>/logout?reLoginUrl=login">
-    							<div  style="float:right;" >&nbsp;&nbsp;<@locale code="global.text.logout"/>&nbsp;&nbsp;</div>
+    							<div   >&nbsp;&nbsp;<@locale code="global.text.logout"/>&nbsp;&nbsp;</div>
     						</a>
     					</td>
     				</tr>

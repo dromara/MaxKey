@@ -23,6 +23,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
+import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.entity.Groups;
 import org.maxkey.persistence.mapper.GroupsMapper;
 import org.maxkey.util.StringUtils;
@@ -72,7 +73,7 @@ public class GroupsService  extends JpaBaseService<Groups> implements Serializab
 	}
 	
 	public void refreshDynamicGroups(Groups dynamicGroup){
-	    if(dynamicGroup.getDynamic().equals("1")) {
+	    if(dynamicGroup.getDynamic().equals(ConstantsStatus.ACTIVE)) {
 	        boolean isDynamicTimeSupport = false;
 	        boolean isBetweenEffectiveTime = false;
 	        if(StringUtils.isNotBlank(dynamicGroup.getResumeTime())
@@ -119,6 +120,14 @@ public class GroupsService  extends JpaBaseService<Groups> implements Serializab
             }
 	    }
     }
+	
+	public void refreshAllDynamicGroups(){
+	    List<Groups>  groupsList = queryDynamicGroups(null);
+        for(Groups group : groupsList) {
+            _logger.debug("group " + group);
+            refreshDynamicGroups(group);
+        }
+	}
 
     public GroupMemberService getGroupMemberService() {
         return groupMemberService;

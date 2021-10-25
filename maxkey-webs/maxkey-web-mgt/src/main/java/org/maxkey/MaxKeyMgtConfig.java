@@ -35,12 +35,15 @@ import org.maxkey.persistence.service.UserInfoService;
 import org.opensaml.xml.ConfigurationException;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
+import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.TriggerBuilder;
+import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.slf4j.Logger;
@@ -146,29 +149,31 @@ public class MaxKeyMgtConfig  implements InitializingBean {
     public String  schedulerJobs(
             SchedulerFactoryBean schedulerFactoryBean,
             GroupsService groupsService,
-            @Value("${maxkey.job.cron.dynamicgroups}") String cronScheduleDynamicGroups
+            @Value("${maxkey.job.cron.dynamicgroups}") String cronSchedule
             ) throws SchedulerException {
        
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        dynamicGroupsJob(scheduler,cronScheduleDynamicGroups,groupsService);
+        //dynamicGroupsJob("DynamicGroups",DynamicGroupsJob.class,scheduler,groupsService,cronSchedule);
         
         return "schedulerJobs";
     }
     
 	
-    private void dynamicGroupsJob(Scheduler scheduler ,
-                                  String cronSchedule,
-                                  GroupsService groupsService) throws SchedulerException {
+    public void dynamicGroupsJob(String jobName,
+                                  Class<Job> cls,
+                                  Scheduler scheduler,
+                                  JpaBaseService<JpaBaseEntity> service,
+                                  String cronSchedule) throws SchedulerException {
         JobDetail jobDetail = 
-                JobBuilder.newJob(DynamicGroupsJob.class) 
-                .withIdentity("DynamicGroupsJob", "DynamicGroups")
+                JobBuilder.newJob(cls) 
+                .withIdentity(jobName + "Job", jobName)
                 .build();
         JobDataMap jobDataMap = new JobDataMap();
-        jobDataMap.put("groupsService", groupsService);
+        jobDataMap.put("service", service);
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronSchedule);
         CronTrigger cronTrigger = 
                 TriggerBuilder.newTrigger()
-                .withIdentity("triggerDynamicGroups", "DynamicGroups")
+                .withIdentity("trigger" + jobName, jobName)
                 .usingJobData(jobDataMap)
                 .withSchedule(scheduleBuilder)
                 .build();
