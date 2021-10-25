@@ -30,7 +30,9 @@ $(function(){
     });
     
 	//side navigation
-    $('#side-nav-menu').metisMenu();
+    if($('#side-nav-menu')["metisMenu"]){
+        $('#side-nav-menu').metisMenu();
+    }
     		
 	//on captcha image click ,new a captcha code
 	$('.captcha-image').click(function () {//
