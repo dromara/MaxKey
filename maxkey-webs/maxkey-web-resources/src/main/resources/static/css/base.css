@@ -381,3 +381,26 @@ body{
 .float-left{
     float: left;
 }
+
+#div_normalLogin .wrapper ,
+#div_tfaLogin .wrapper ,
+#div_mobileLogin .wrapper{ 
+	position: relative; 
+}
+
+#div_normalLogin .wrapper input,
+#div_tfaLogin .wrapper input,
+#div_mobileLogin .wrapper input { 
+    text-indent: 20px;
+}
+	
+#div_normalLogin .wrapper i.fa,
+#div_tfaLogin .wrapper i.fa,
+#div_mobileLogin .wrapper i.fa{ 
+	position: absolute; 
+	top: 5px; 
+	left: 5px; 
+	font-size: 22px; 
+	color: gray;
+}
+

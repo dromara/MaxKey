@@ -1,6 +1,6 @@
 	
 	<!-- javascript js begin  -->
-	<script type="text/javascript">var webContextPath = "<@base />";var webLocale = '<@locale/>';</script>
+	<script type="text/javascript">var webContextPath = "<@base />";var webLocale = '<@locale/>';var currentDate= new Date('${.now}');</script>
 	<#-- jquery base -->
 	<script	src ="<@base />/static/javascript/jquery-3.6.0.min.js"	type="text/javascript"></script>
 	<script src ="<@base />/static/javascript/popper.min.js" type="text/javascript" ></script>

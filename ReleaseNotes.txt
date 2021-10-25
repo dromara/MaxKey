@@ -12,7 +12,7 @@
     *(MAXKEY-210811) 密码修改问题修复
     *(MAXKEY-210812) 环境变量参数优化
     *(MAXKEY-210813) 管理端图标显示修复
-    *(MAXKEY-210814) 管理端‘应用管理’移动到‘配置管理’的菜单项
+    *(MAXKEY-210814) 认证系统菜单项调整
     *(MAXKEY-210815) OAuth的数据库加载增加本地缓存
     *(MAXKEY-210816) 社交账号登录改为存储在数据库中，方便用户更改
     *(MAXKEY-210817) 账号策略管理及动态适配
@@ -21,13 +21,15 @@
     *(MAXKEY-210820) 企业微信扫码登录js更新wwLogin-1.2.4.js
     *(MAXKEY-210821) 中文切换调整为下拉菜单
     *(MAXKEY-210822) 移除原有的缓存方案
-	*(MAXKEY-210823) 应用管理OAuth适配器显示问题修复
+    *(MAXKEY-210823) 应用管理OAuth适配器显示问题修复
     *(MAXKEY-210824) 图片验证码优化，增加随机颜色的字符生成实现，干扰线优化
-    *(MAXKEY-210825) 依赖jar引用、更新和升级
+    *(MAXKEY-210825) 菜单名称的调整
+    *(MAXKEY-210826) JS脚本整合优化
+    *(MAXKEY-210827) 依赖jar引用、更新和升级
          spring              5.3.12
          springboot          2.5.6
          tomcat              9.0.54
-		 springSecurity      5.5.3
+         springSecurity      5.5.3
          springData          2.5.5
          springSession       2.5.3
          mybatis-jpa-extra   2.6
