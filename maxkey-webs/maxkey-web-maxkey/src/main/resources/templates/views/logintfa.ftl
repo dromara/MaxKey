@@ -31,39 +31,25 @@
 				<div  class="wrapper">
 					<i class="fa fa-lock fa-2"></i>
 					<input required="" class="form-control"  type='text' id="tfa_j_otp_captcha" name="otpCaptcha"  tabindex="3"  value=""   style="float: left;"/>
-					<input class="form-control"  id="tfa_j_otp_captcha_button" type="button"  tabindex="5" class="button"  value="<@locale code="login.text.login.twofactor.obtain"/>"/>
+					<button  class="btn  btn-outline-secondary"  id="tfa_j_otp_button"  tabindex="5"  type="button" >
+					   <@locale code="login.text.login.twofactor.obtain"/>
+					</button>
 				</div>
-			</td>
-		</tr>
-		<#if "TOPT"==otpType >
-		<tr>
-			<td><@locale code="login.text.currenttime"/>：</td>
-			<td>
-				<input  class="form-control"  readonly type='text' id="currentTime" name="currentTime"  tabindex="3"  value="" />
-			</td>
-		</tr>
-		</#if>
-		<tr>
-			<td></td>
-			<td>
-				<div id="currentTime"></div>
 			</td>
 		</tr>
 		</#if>
 		<#if true==isRemeberMe>
 		<tr> 
 			<td colspan="2">
-				<table  style="width:100%">
-					<tr>
-						<td style="width:50%">
-							<span class="form_checkbox_label">
-								<input type='checkbox' id="tfa_remeberMe" name="remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
-								<@locale code="login.text.remeberme"/>
-							</span>
-						</td>
-						<td style="width:50%"><a href="<@base />/forgotpassword/forward"><@locale code="login.text.forgotpassword"/></a></td>
-					</tr>
-				</table>
+			     <div class="col-sm-6 float-left" style="line-height: 30px;">
+                     <span class="form_checkbox_label">
+                        <input type='checkbox' id="tfa_remeberMe" name="remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
+                        <@locale code="login.text.remeberme"/>
+                    </span>
+                </div>
+                <div class="col-sm-6  float-left"  style="line-height: 30px;">
+                     <a href="<@base />/forgotpassword/forward"><@locale code="login.text.forgotpassword"/></a>
+                </div>
 			</td>								
 		</tr>
 		</#if>

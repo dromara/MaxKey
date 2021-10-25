@@ -39,17 +39,15 @@
 		<#if true==isRemeberMe>
 		<tr>
 			<td colspan="2">
-				<table  style="width:100%">
-					<tr>
-						<td style="width:50%">
-							<span class="form_checkbox_label">
-								<input type='checkbox' id="remeberMe" name="remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
-								<@locale code="login.text.remeberme"/>
-							</span>
-						</td>
-						<td style="width:50%"><a href="<@base />/forgotpassword/forward"><@locale code="login.text.forgotpassword"/></a></td>
-					</tr>
-				</table>
+			    <div class="col-sm-6 float-left" style="line-height: 30px;">
+			         <span class="form_checkbox_label">
+                        <input type='checkbox' id="remeberMe" name="remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
+                        <@locale code="login.text.remeberme"/>
+                    </span>
+			    </div>
+			    <div class="col-sm-6  float-left"  style="line-height: 30px;">
+			         <a href="<@base />/forgotpassword/forward"><@locale code="login.text.forgotpassword"/></a>
+                </div>
 			</td>								
 		</tr>
 		</#if>

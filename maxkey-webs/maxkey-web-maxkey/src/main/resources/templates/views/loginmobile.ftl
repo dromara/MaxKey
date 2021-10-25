@@ -21,24 +21,24 @@
 				<div  class="wrapper">
                 	<i class="fa fa-lock fa-2"></i>
 					<input required="" class="form-control"  type='password' id='mobile_j_password'  name='password' value=""  tabindex="2"  style="float: left;"/>
-					<input class="form-control"  id="mobile_j_otp_captcha_button" type="button"  tabindex="5" class="button"  value="<@locale code="login.text.login.mobile.obtain"/>"/>
+					<button  class="btn  btn-outline-secondary"  id="mobile_j_otp_button"  tabindex="5"  type="button" >
+                       <@locale code="login.text.login.mobile.obtain"/>
+                    </button>
 				</div>
 			</td>
 		</tr>
 		<#if true==isRemeberMe>
 		<tr> 
 			<td colspan="2">
-				<table  style="width:100%">
-					<tr>
-						<td style="width:50%">
-							<span class="form_checkbox_label">
-								<input type='checkbox' id="mobile_remeberMe" name="remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
-								<@locale code="login.text.remeberme"/>
-							</span>
-						</td>
-						<td style="width:50%"><a href="<@base />/forgotpassword/forward"><@locale code="login.text.forgotpassword"/></a></td>
-					</tr>
-				</table>
+			     <div class="col-sm-6 float-left" style="line-height: 30px;">
+                     <span class="form_checkbox_label">
+                        <input type='checkbox' id="mobile_remeberMe" name="remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
+                        <@locale code="login.text.remeberme"/>
+                    </span>
+                </div>
+                <div class="col-sm-6  float-left"  style="line-height: 30px;">
+                     <a href="<@base />/forgotpassword/forward"><@locale code="login.text.forgotpassword"/></a>
+                </div>
 			</td>								
 		</tr>
 		</#if>

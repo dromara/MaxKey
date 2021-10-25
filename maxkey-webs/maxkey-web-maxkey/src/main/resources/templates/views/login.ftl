@@ -36,7 +36,7 @@
 							
 						</td>
 						<td>
-				<table id="tableform">
+				<table class="logintableform">
 					<tr>
 						<td>
 							<ul id="switch_tab" class="switch_tab" style="width: 360px;">
@@ -57,6 +57,7 @@
 									<@locale code="login.text.login.mobile"/>
 									</a>
 								</li>
+								<!---->
 								<li id="qrcodelogin"   class="switch_tab_class col-md-4">
                                     <a href="javascript:void(0);">
                                     <@locale code="login.text.login.qrcode"/>
