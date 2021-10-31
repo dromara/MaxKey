@@ -25,10 +25,10 @@
     *(MAXKEY-210824) 图片验证码优化，增加随机颜色的字符生成实现，干扰线优化
     *(MAXKEY-210825) 菜单名称的调整
     *(MAXKEY-210826) JS脚本整合优化
-	*(MAXKEY-210827) 机构关系映射
-	*(MAXKEY-210828) 登录失败信息提示优化
-	*(MAXKEY-210829) 机构namepath重组
-	*(MAXKEY-210830) HttpRequestAdapter支持JSON
+    *(MAXKEY-210827) 机构关系映射
+    *(MAXKEY-210828) 登录失败信息提示优化
+    *(MAXKEY-210829) 机构namepath重组
+    *(MAXKEY-210830) HttpRequestAdapter支持JSON
     *(MAXKEY-210831) 依赖jar引用、更新和升级
          spring              5.3.12
          springboot          2.5.6
