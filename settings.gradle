@@ -34,6 +34,7 @@ include (
 'maxkey-identitys:maxkey-identity-scim',
 'maxkey-identitys:maxkey-identity-rest',
 'maxkey-identitys:maxkey-synchronizers',
+'maxkey-identitys:maxkey-synchronizers-reorgdept',
 'maxkey-identitys:maxkey-synchronizers-activedirectory',
 'maxkey-identitys:maxkey-synchronizers-ldap',
 'maxkey-identitys:maxkey-synchronizers-dingding',

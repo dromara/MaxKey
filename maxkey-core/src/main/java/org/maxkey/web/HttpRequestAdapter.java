@@ -33,10 +33,12 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -45,6 +47,20 @@ import org.springframework.stereotype.Component;
 public class HttpRequestAdapter {
 	private static final Logger _logger = LoggerFactory.getLogger(HttpRequestAdapter.class);
 	 
+    private String mediaType = MediaType.FORM;
+    
+    public static class MediaType{
+        public static String JSON   =   "JSON";
+        public static String XML    =   "XML";
+        public static String FORM   =   "FORM";
+    }
+    
+    public HttpRequestAdapter(){}
+    
+    public HttpRequestAdapter(String mediaType){
+        this.mediaType = mediaType;
+    }
+    
 	public String post(String url,Map<String, Object> parameterMap) {
 		HashMap<String,String> headers = new HashMap<String,String>();
 		headers.put("Content-Type", "application/x-www-form-urlencoded");
@@ -78,26 +94,33 @@ public class HttpRequestAdapter {
         
         // 封装post请求参数
         if (null != parameterMap && parameterMap.size() > 0) {
-            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-            // 通过map集成entrySet方法获取entity
-            Set<Entry<String, Object>> entrySet = parameterMap.entrySet();
-            // 循环遍历，获取迭代器
-            Iterator<Entry<String, Object>> iterator = entrySet.iterator();
-            while (iterator.hasNext()) {
-                Entry<String, Object> mapEntry = iterator.next();
-                _logger.debug("Name " + mapEntry.getKey() + " , Value " +mapEntry.getValue());
-                nvps.add(new BasicNameValuePair(mapEntry.getKey(), mapEntry.getValue().toString()));
-            }
+            if(mediaType.equals(MediaType.FORM)) {
+                List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+                // 通过map集成entrySet方法获取entity
+                Set<Entry<String, Object>> entrySet = parameterMap.entrySet();
+                // 循环遍历，获取迭代器
+                Iterator<Entry<String, Object>> iterator = entrySet.iterator();
+                while (iterator.hasNext()) {
+                    Entry<String, Object> mapEntry = iterator.next();
+                    _logger.debug("Name " + mapEntry.getKey() + " , Value " +mapEntry.getValue());
+                    nvps.add(new BasicNameValuePair(mapEntry.getKey(), mapEntry.getValue().toString()));
+                }
+    
+                // 为httpPost设置封装好的请求参数
+                try {
+                    httpPost.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }else if(mediaType.equals(MediaType.JSON)) {
+                String jsonString = JsonUtils.gson2Json(parameterMap);
+                StringEntity stringEntity =new StringEntity(jsonString, "UTF-8");
+                stringEntity.setContentType("text/json");
+                httpPost.setEntity(stringEntity);
 
-            // 为httpPost设置封装好的请求参数
-            try {
-                httpPost.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                
             }
-            _logger.debug("Post Message \n" + 
-                    httpPost.getEntity().toString()
-                 );
+            _logger.debug("Post Message \n{} ", httpPost.getEntity().toString());
         }
         
         
@@ -107,9 +130,9 @@ public class HttpRequestAdapter {
             // 从响应对象中获取响应内容
             HttpEntity entity = httpResponse.getEntity();
             String content = EntityUtils.toString(entity);
-            _logger.debug("Http Response StatusCode " + 
-                    httpResponse.getStatusLine().getStatusCode()+
-                    " , Content " + content
+            _logger.debug("Http Response StatusCode {} , Content {}",
+                    httpResponse.getStatusLine().getStatusCode(),
+                    content
             );
             return content;
         } catch (Exception e) {
@@ -172,9 +195,9 @@ public class HttpRequestAdapter {
             // 从响应对象中获取响应内容
             HttpEntity entity = httpResponse.getEntity();
             String content = EntityUtils.toString(entity);
-            _logger.debug("Http Response StatusCode " + 
-                    httpResponse.getStatusLine().getStatusCode()+
-                    " , Content " + content
+            _logger.debug("Http Response StatusCode {} , Content {}",
+                    httpResponse.getStatusLine().getStatusCode(),
+                    content
             );
             return content;
         } catch (Exception e) {

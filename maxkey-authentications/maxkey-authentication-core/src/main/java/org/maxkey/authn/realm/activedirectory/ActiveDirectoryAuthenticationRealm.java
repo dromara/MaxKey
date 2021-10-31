@@ -64,9 +64,6 @@ public class ActiveDirectoryAuthenticationRealm extends AbstractAuthenticationRe
             	return true;
             }
 		 }
-		if(!isAuthenticated){
-			 throw new BadCredentialsException(WebContext.getI18nValue("login.error.password"));
-		 }
 		return false;
 	}
 

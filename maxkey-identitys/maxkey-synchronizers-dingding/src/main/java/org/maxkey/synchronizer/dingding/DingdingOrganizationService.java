@@ -78,8 +78,6 @@ public class DingdingOrganizationService   implements ISynchronizerService{
 		org.setId(dept.getDeptId()+"");
 		org.setName(dept.getName());
 		org.setParentId(dept.getParentId()+"");
-		org.setExtId(dept.getDeptId()+"");	
-		org.setExtParentId(dept.getParentId()+"");
 		return org;
 	}
 

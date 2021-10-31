@@ -51,7 +51,7 @@
 				    <input class="button btn btn-primary mr-3 window"  type="button"    id="selectUserinfoBtn" value="<@locale code="button.text.select" />"
                      wurl="<@base/>/userinfo/select"
                                     wwidth="800"
-                                    wheight="500"
+                                    wheight="620"
                                     target="window"/>
                 </td>
 			</tr>
@@ -75,7 +75,7 @@
 				    <input class="button btn btn-primary mr-3 window"  type="button"    id="selectAppsubmitBtn" value="<@locale code="button.text.select" />"
                       wurl="<@base/>/apps/select"
                                     wwidth="800"
-                                    wheight="500"
+                                    wheight="620"
                                     target="window"/>
                 </td>
 			</tr>

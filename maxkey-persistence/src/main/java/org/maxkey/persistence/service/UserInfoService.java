@@ -40,6 +40,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
+import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
@@ -81,6 +82,8 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
 	 @Autowired
 	 protected JdbcTemplate jdbcTemplate;
+	 
+	 AccountsService accountsService;
 	
 	public UserInfoService() {
 		super(UserInfoMapper.class);
@@ -116,11 +119,13 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
         if (super.update(userInfo)) {
             if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
                 UserInfo loadUserInfo = loadUserRelated(userInfo.getId());
+                accountUpdate(loadUserInfo);
                 kafkaPersistService.send(
                         KafkaIdentityTopic.USERINFO_TOPIC, 
                         loadUserInfo,
                         KafkaIdentityAction.UPDATE_ACTION);
             }
+            
             changePasswordProvisioning(userInfo);
             return true;
         }
@@ -138,10 +143,27 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		            KafkaIdentityTopic.USERINFO_TOPIC, 
 		            loadUserInfo, 
 		            KafkaIdentityAction.DELETE_ACTION);
+			accountUpdate(loadUserInfo);
 			 return true;
 		}
 		return false;
 	}
+	
+    //更新账号状态
+    public void accountUpdate(UserInfo userInfo) {
+        if(userInfo.getStatus() != ConstantsStatus.ACTIVE) {
+            if(accountsService==null) {
+                accountsService = 
+                        (AccountsService)WebContext.getBean("accountsService"); 
+            }
+            Accounts queryAcount =new Accounts();
+            queryAcount.setUserId(userInfo.getId());
+            for (Accounts acount : accountsService.query(queryAcount)) {
+                acount.setStatus(ConstantsStatus.INACTIVE);
+                accountsService.update(acount);
+            }
+        }
+    }
 
 	public UserInfo loadUserRelated(String userId) {
 	    UserInfo loadUserInfo =this.get(userId);

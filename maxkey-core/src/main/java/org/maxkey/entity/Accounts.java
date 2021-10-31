@@ -18,6 +18,9 @@
 package org.maxkey.entity;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -68,6 +71,8 @@ public class Accounts extends JpaBaseEntity implements Serializable {
     private int status;
     
     UserInfo userInfo;
+    
+    private HashMap<String,OrganizationsCast> orgCast =new HashMap<String,OrganizationsCast>();
 
     public Accounts() {
         super();
@@ -185,6 +190,20 @@ public class Accounts extends JpaBaseEntity implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+    
+    public HashMap<String, OrganizationsCast> getOrgCast() {
+        return orgCast;
+    }
+
+    public void setOrgCast(HashMap<String, OrganizationsCast> orgCast) {
+        this.orgCast = orgCast;
+    }
+    
+    public void setOrgCast(List <OrganizationsCast> listOrgCast) {
+        for(OrganizationsCast cast : listOrgCast) {
+            this.orgCast.put(cast.getProvider(), cast);
+        }
     }
 
     @Override

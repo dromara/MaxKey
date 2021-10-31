@@ -24,6 +24,7 @@ import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.AccountsStrategy;
+import org.maxkey.entity.OrganizationsCast;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.kafka.KafkaIdentityAction;
 import org.maxkey.persistence.kafka.KafkaIdentityTopic;
@@ -45,6 +46,9 @@ public class AccountsService  extends JpaBaseService<Accounts>{
     @Autowired
     AccountsStrategyService accountsStrategyService;
     
+    @Autowired
+    OrganizationsCastService organizationsCastService;
+    
 	public AccountsService() {
 		super(AccountsMapper.class);
 	}
@@ -64,6 +68,10 @@ public class AccountsService  extends JpaBaseService<Accounts>{
 	            if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
 	                UserInfo loadUserInfo = userInfoService.loadUserRelated(account.getUserId());
 	                account.setUserInfo(loadUserInfo);
+	                OrganizationsCast cast = new OrganizationsCast();
+                    cast.setProvider(account.getAppId());
+                    cast.setOrgId(loadUserInfo.getDepartmentId());
+                    account.setOrgCast(organizationsCastService.query(cast));
 	                kafkaPersistService.send(
 	                        KafkaIdentityTopic.ACCOUNT_TOPIC, 
 	                        account,
@@ -80,6 +88,10 @@ public class AccountsService  extends JpaBaseService<Accounts>{
                 if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
                     UserInfo loadUserInfo = userInfoService.loadUserRelated(account.getUserId());
                     account.setUserInfo(loadUserInfo);
+                    OrganizationsCast cast = new OrganizationsCast();
+                    cast.setProvider(account.getAppId());
+                    cast.setOrgId(loadUserInfo.getDepartmentId());
+                    account.setOrgCast(organizationsCastService.query(cast));
                     kafkaPersistService.send(
                             KafkaIdentityTopic.ACCOUNT_TOPIC, 
                             account,

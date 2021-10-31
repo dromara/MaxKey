@@ -63,9 +63,6 @@ public class LdapAuthenticationRealm  extends AbstractAuthenticationRealm{
             	return true;
             }
 		 }
-		 if(!isAuthenticated){
-			 throw new BadCredentialsException(WebContext.getI18nValue("login.error.password"));
-		 }
 		return false;
 	}
 

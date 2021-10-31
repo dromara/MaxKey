@@ -83,14 +83,12 @@ public class Organizations extends JpaBaseEntity implements Serializable {
     private String ldapDn;
     @Column
     private String description;
-    
+    @Column
     private int status;
-    @Column
-    private String extId;
-    @Column
-    private String extParentId;
     
     private int isPrimary = 0;
+    
+    private boolean reorgNamePath;
 
     public Organizations() {
         //
@@ -308,22 +306,6 @@ public class Organizations extends JpaBaseEntity implements Serializable {
         this.status = status;
     }
     
-    public String getExtId() {
-		return extId;
-	}
-
-	public void setExtId(String extId) {
-		this.extId = extId;
-	}
-
-	public String getExtParentId() {
-		return extParentId;
-	}
-
-	public void setExtParentId(String extParentId) {
-		this.extParentId = extParentId;
-	}
-
 	public int getIsPrimary() {
         return isPrimary;
     }
@@ -332,68 +314,76 @@ public class Organizations extends JpaBaseEntity implements Serializable {
         this.isPrimary = isPrimary;
     }
 
+    public boolean isReorgNamePath() {
+        return reorgNamePath;
+    }
+
+    public void setReorgNamePath(boolean reorgNamePath) {
+        this.reorgNamePath = reorgNamePath;
+    }
+
     @Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Organizations [id=");
-		builder.append(id);
-		builder.append(", code=");
-		builder.append(code);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", fullName=");
-		builder.append(fullName);
-		builder.append(", parentId=");
-		builder.append(parentId);
-		builder.append(", parentName=");
-		builder.append(parentName);
-		builder.append(", type=");
-		builder.append(type);
-		builder.append(", codePath=");
-		builder.append(codePath);
-		builder.append(", namePath=");
-		builder.append(namePath);
-		builder.append(", level=");
-		builder.append(level);
-		builder.append(", hasChild=");
-		builder.append(hasChild);
-		builder.append(", division=");
-		builder.append(division);
-		builder.append(", country=");
-		builder.append(country);
-		builder.append(", region=");
-		builder.append(region);
-		builder.append(", locality=");
-		builder.append(locality);
-		builder.append(", street=");
-		builder.append(street);
-		builder.append(", address=");
-		builder.append(address);
-		builder.append(", contact=");
-		builder.append(contact);
-		builder.append(", postalCode=");
-		builder.append(postalCode);
-		builder.append(", phone=");
-		builder.append(phone);
-		builder.append(", fax=");
-		builder.append(fax);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", sortIndex=");
-		builder.append(sortIndex);
-		builder.append(", ldapDn=");
-		builder.append(ldapDn);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", extId=");
-		builder.append(extId);
-		builder.append(", extParentId=");
-		builder.append(extParentId);
-		builder.append("]");
-		return builder.toString();
-	}
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Organizations [id=");
+        builder.append(id);
+        builder.append(", code=");
+        builder.append(code);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", fullName=");
+        builder.append(fullName);
+        builder.append(", parentId=");
+        builder.append(parentId);
+        builder.append(", parentName=");
+        builder.append(parentName);
+        builder.append(", type=");
+        builder.append(type);
+        builder.append(", codePath=");
+        builder.append(codePath);
+        builder.append(", namePath=");
+        builder.append(namePath);
+        builder.append(", level=");
+        builder.append(level);
+        builder.append(", hasChild=");
+        builder.append(hasChild);
+        builder.append(", division=");
+        builder.append(division);
+        builder.append(", country=");
+        builder.append(country);
+        builder.append(", region=");
+        builder.append(region);
+        builder.append(", locality=");
+        builder.append(locality);
+        builder.append(", street=");
+        builder.append(street);
+        builder.append(", address=");
+        builder.append(address);
+        builder.append(", contact=");
+        builder.append(contact);
+        builder.append(", postalCode=");
+        builder.append(postalCode);
+        builder.append(", phone=");
+        builder.append(phone);
+        builder.append(", fax=");
+        builder.append(fax);
+        builder.append(", email=");
+        builder.append(email);
+        builder.append(", sortIndex=");
+        builder.append(sortIndex);
+        builder.append(", ldapDn=");
+        builder.append(ldapDn);
+        builder.append(", description=");
+        builder.append(description);
+        builder.append(", status=");
+        builder.append(status);
+        builder.append(", isPrimary=");
+        builder.append(isPrimary);
+        builder.append(", reorgNamePath=");
+        builder.append(reorgNamePath);
+        builder.append("]");
+        return builder.toString();
+    }
 
 
 

@@ -19,6 +19,7 @@ dependencies {
    	implementation project(":maxkey-identitys:maxkey-identity-scim")   
    	implementation project(":maxkey-identitys:maxkey-identity-rest")	
    	implementation project(":maxkey-identitys:maxkey-synchronizers")
+   	implementation project(":maxkey-identitys:maxkey-synchronizers-reorgdept")
    	implementation project(":maxkey-identitys:maxkey-synchronizers-activedirectory")
    	implementation project(":maxkey-identitys:maxkey-synchronizers-ldap")
    	implementation project(":maxkey-identitys:maxkey-synchronizers-workweixin")

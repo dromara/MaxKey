@@ -149,20 +149,35 @@
 </head>
 <body>
  <div>
-    <form id="basic_search_form" style="display:none">
-        <input id="departmentId"  class="form-control" name="departmentId" type="text" >
-        <input  class="button btn mr-3 btn-primary"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-    </form>
- 	<input class="button btn btn-primary mr-3"  style="float: right;" id="winClose" type="button" value="<@locale code="button.text.select" />" >
+    <table   class="table table-bordered">
+            <tr>
+                <td  width="120px">
+                     <@locale code="userinfo.username"/>:
+                </td>
+                <td  width="300px">
+                    <form id="basic_search_form">
+                        <input  class="form-control"   id="departmentId"  name="departmentId" type="hidden">
+                        <input  class="form-control"  name="username" type="text" >
+                    </form>
+                </td>
+                <td colspan="2"> 
+                     <div id="tool_box_right">    
+                         <input  class="button btn mr-3 btn-primary"    id="searchBtn" type="button" value="<@locale code="button.text.search"/>">
+                         <input  class="button btn mr-3 btn-success"    id="winClose" type="button" value="<@locale code="button.text.select" />" >
+                    </div>
+                </td>
+            </tr>
+        </table>
+ 	
  </div>
      <!-- content -->  
   <table class="table table-bordered"   width="100%" >
    <tr>
-      <td valign="top"  class="td_1" style="vertical-align: top;">
+      <td valign="top"  style="vertical-align: top;min-width: 200px;">
       	<div id="orgsTree" class="ztree"></div>
          
       </td>
-      <td  valign="top"  class="td_1" style="vertical-align: top;">
+      <td  valign="top"  style="vertical-align: top;">
 	 	<table  data-url="<@base/>/userinfo/grid"
 				id="datagrid"
 				data-toggle="table"

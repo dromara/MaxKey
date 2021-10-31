@@ -261,7 +261,7 @@ public class PasswordPolicyValidator {
                 lockUser(userInfo);
                 throw new BadCredentialsException(
                         WebContext.getI18nValue("login.error.attempts",
-                                new Object[]{userInfo.getUsername(),userInfo.getBadPasswordCount()}) 
+                                new Object[]{userInfo.getBadPasswordCount(),passwordPolicy.getDuration()}) 
                         );
             }
         }
@@ -404,7 +404,8 @@ public class PasswordPolicyValidator {
    
    public void plusBadPasswordCount(UserInfo userInfo) {
        if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-           setBadPasswordCount(userInfo.getId(),userInfo.getBadPasswordCount() + 1);
+           userInfo.setBadPasswordCount(userInfo.getBadPasswordCount() + 1);
+           setBadPasswordCount(userInfo.getId(),userInfo.getBadPasswordCount());
            
        }
    }

@@ -120,7 +120,17 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
         if (!passwordMatches) {
             passwordPolicyValidator.plusBadPasswordCount(userInfo);
             insertLoginHistory(userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", "password error");
-            throw new BadCredentialsException(WebContext.getI18nValue("login.error.password"));
+            
+            if(userInfo.getBadPasswordCount()>=(passwordPolicyValidator.getPasswordPolicy().getAttempts()/2)) {
+                throw new BadCredentialsException(
+                        WebContext.getI18nValue("login.error.password.attempts",
+                                new Object[]{
+                                        userInfo.getBadPasswordCount() + 1,
+                                        passwordPolicyValidator.getPasswordPolicy().getAttempts(),
+                                        passwordPolicyValidator.getPasswordPolicy().getDuration()}));
+            }else {
+                throw new BadCredentialsException(WebContext.getI18nValue("login.error.password"));
+            }
         }
         return passwordMatches;
     }
