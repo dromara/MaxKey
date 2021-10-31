@@ -67,7 +67,7 @@
 					 		    	target="window"> 
 					 		    	
 					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
-					 				wurl="<@base/>/roles/delete" />
+					 				wurl="<@base/>/accountsstrategy/delete" />
 						</div>
 		 			</td>
 		 		</tr>

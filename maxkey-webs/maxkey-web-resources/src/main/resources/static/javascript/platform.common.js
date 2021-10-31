@@ -29,27 +29,24 @@ $(function(){
         });
     });
     
-	//side navigation
-    if($('#side-nav-menu')["metisMenu"]){
-        $('#side-nav-menu').metisMenu();
-    }
+	
     		
 	//on captcha image click ,new a captcha code
 	$('.captcha-image').click(function () {//
 		$(this).attr("src", webContextPath + "/captcha?"+(new Date()).getTime()); 
 	});
-	/*side-nav-menu*/
-	 $(".sidenav-fold-toggler").on("click",function(e) {
-    	   $(".app").toggleClass("side-nav-folded");
-           e.preventDefault();
-     });
+	
+    /*side-nav-menu side navigation*/
+    if($('#side-nav-menu')["metisMenu"]){
+        $('#side-nav-menu').metisMenu();
+    }
      
-     $('.side-nav-menu').each(function(){
-           var href = $(this).attr('href');
-           if(window.location.href.indexOf(href) > 0){
-                $(this).parents("li").addClass("mm-active");
-                
-           }
+    $('.side-nav-menu').each(function(){
+        var href = $(this).attr('href');
+        if(window.location.href.indexOf(href) > 0){
+            $(this).parents("li").addClass("mm-active");
+            $(this).parents("li").children("ul").addClass("mm-show");
+        }
      });
 	/** switch_tab*/
     $(".switch_tab_class").on("click",function(){
