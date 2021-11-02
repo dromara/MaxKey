@@ -52,6 +52,7 @@ def libjarsmapper=[
     'maxkey-synchronizers-ldap'             :'maxkey_mgt',
     'maxkey-synchronizers-dingding'         :'maxkey_mgt',
     'maxkey-synchronizers-workweixin'       :'maxkey_mgt',
+	'maxkey-synchronizers-reorgdept'        :'maxkey_mgt',
     'maxkey-boot-monitor'                   :'maxkey_monitor'
 ]
 

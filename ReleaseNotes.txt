@@ -1,4 +1,4 @@
-﻿MaxKey v 3.1.0 GA 2021/11/**
+﻿MaxKey v 3.1.0 GA 2021/11/03
     *(MAXKEY-210801) OAuth 2.1及PKCE支持
     *(MAXKEY-210802) bootstrap升级到5.1.2
     *(MAXKEY-210803) 缓存切换成Caffeine
@@ -29,7 +29,9 @@
     *(MAXKEY-210828) 登录失败信息提示优化
     *(MAXKEY-210829) 机构namepath重组
     *(MAXKEY-210830) HttpRequestAdapter支持JSON
-    *(MAXKEY-210831) 依赖jar引用、更新和升级
+    *(MAXKEY-210831) OAuth2 从客户端引导空指针修复
+    *(MAXKEY-210832) Demo问题修复
+    *(MAXKEY-210833) 依赖jar引用、更新和升级
          spring              5.3.12
          springboot          2.5.6
          tomcat              9.0.54

@@ -31,6 +31,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.util.Instance;
 import org.maxkey.util.StringGenerator;
+import org.maxkey.util.StringUtils;
 
 /**
  * Reciprocal cipher or Symmetric-key algorithm
@@ -151,6 +152,8 @@ public final class ReciprocalUtils {
     }
 
     public static String decoderHexByDefaultKey(String ciphers, String algorithm) {
+        if(StringUtils.isBlank(ciphers))return "";
+        
         byte[] byteSimple = HexUtils.hex2Bytes(ciphers);
 
         byte[] byteFinal = decoderByDefaultKey(byteSimple, algorithm);
@@ -205,6 +208,8 @@ public final class ReciprocalUtils {
     }
 
     public static String decoderHex(String ciphers, String secretKey, String algorithm) {
+        if(StringUtils.isBlank(ciphers))return "";
+        
         if (keyLengthCheck(secretKey, algorithm)) {
             byte[] byteSimple = HexUtils.hex2Bytes(ciphers);
 
