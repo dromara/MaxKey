@@ -85,12 +85,7 @@ public class OAuth20AccessConfirmationEndpoint {
 	                (AuthorizationRequest) WebContext.getAttribute("authorizationRequest");
 	        ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
 	        Apps  app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
-	        //session中为空或者id不一致重新加载
-	        if (app == null || !app.getId().equalsIgnoreCase(clientAuth.getClientId())) {
-	            app = appsService.get(clientAuth.getClientId()); 
-	            WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
-	            WebContext.setAttribute(app.getId(), app.getIcon());
-	        }
+	        WebContext.setAttribute(app.getId(), app.getIcon());
 	       
 	        model.put("auth_request", clientAuth);
 	        model.put("client", client);

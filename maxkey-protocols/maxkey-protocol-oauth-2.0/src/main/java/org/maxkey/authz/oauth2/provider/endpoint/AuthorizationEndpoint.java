@@ -43,7 +43,9 @@ import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.implicit.ImplicitTokenRequest;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestValidator;
 import org.maxkey.util.HttpEncoder;
+import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -200,7 +202,13 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 							(Authentication) principal));
 				}
 			}
-
+			Apps  app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
+			//session中为空或者id不一致重新加载
+            if (app == null || !app.getId().equalsIgnoreCase(authorizationRequest.getClientId())) {
+                app = appsService.get(authorizationRequest.getClientId()); 
+                WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
+            }
+            
 			// Place auth request into the model so that it is stored in the session
 			// for approveOrDeny to use. That way we make sure that auth request comes from the session,
 			// so any auth request parameters passed to approveOrDeny will be ignored and retrieved from the session.

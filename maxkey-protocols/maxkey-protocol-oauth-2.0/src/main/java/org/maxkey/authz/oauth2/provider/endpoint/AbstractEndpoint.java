@@ -35,6 +35,7 @@ import org.maxkey.authz.oauth2.provider.refresh.RefreshTokenGranter;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.persistence.service.AppsService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -74,6 +75,10 @@ public class AbstractEndpoint implements InitializingBean {
 	@Autowired
     @Qualifier("oauth20UserAuthenticationManager")
 	AuthenticationManager authenticationManager;
+	
+	@Autowired
+    @Qualifier("appsService")
+    protected AppsService appsService;
 	
 	@Autowired 
     @Qualifier("applicationConfig")
