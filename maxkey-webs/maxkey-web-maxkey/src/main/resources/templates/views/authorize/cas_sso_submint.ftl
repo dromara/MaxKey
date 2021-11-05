@@ -9,7 +9,7 @@
             srcUrl = srcUrl.substring(srcUrl.indexOf("#"));
             var callbackUrl = "${callbackUrl}";
             if(srcUrl.indexOf("#") >-1 ){
-                callbackUrl =callbackUrl.replace("?",srcUrl + "&");
+                callbackUrl =callbackUrl + srcUrl;
             }
             window.top.location.href = callbackUrl;
        }

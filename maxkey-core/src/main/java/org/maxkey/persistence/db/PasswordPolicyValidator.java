@@ -253,8 +253,8 @@ public class PasswordPolicyValidator {
                           passwordPolicy.getDuration(), 
                           (intDuration > passwordPolicy.getDuration())
                     );
-            //auto unlock attempts when intDuration > set Duration
-            if(intDuration > passwordPolicy.getDuration()) {
+            //auto unlock attempts when intDuration >= set Duration
+            if(intDuration >= passwordPolicy.getDuration()) {
                 _logger.debug("resetAttempts ...");
                 resetAttempts(userInfo);
             }else {
