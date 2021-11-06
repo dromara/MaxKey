@@ -4,23 +4,27 @@
 
 	<sql id="where_statement">
 		<if test="id != null and id != ''">
-			and id = #{id}
+			and id 			= #{id}
 		</if>
 		<if test="name != null and name != ''">
-			and name  like  '%${name}%'
+			and name  		like  	'%${name}%'
 		</if>
 		<if test="protocol != null and protocol != ''">
-			and protocol = #{protocol}
+			and protocol 	= #{protocol}
 		</if>
 		<if test="credential != null and credential != ''">
-			and credential = #{credential}
+			and credential 	= #{credential}
 		</if>
 		<if test="category != null and category != ''">
-			and category = #{category}
+			and category 	= #{category}
 		</if>
 		<if test="vendor != null and vendor != ''">
-			and vendor = #{vendor}
+			and vendor 		= #{vendor}
 		</if>
+		<if test="accountMgmt == 1 or accountMgmt == 2">
+			and accountmgmt = #{accountMgmt}
+		</if>
+		
 	</sql>
 	
 	
@@ -67,6 +71,7 @@
 			
 			principal,
 			credentials,
+			accountmgmt,
 			
 			visible,
 			
@@ -108,6 +113,7 @@
 			
 			#{principal},
 			#{credentials},
+			#{accountMgmt},
 			
 			#{visible},
 			
@@ -125,17 +131,17 @@
 	
 	<update id="updateApp" parameterType="Apps" >
     	update mxk_apps set
-    		name			=	#{name},
+    		name				=	#{name},
     		<if test="icon != null">
-			icon			=	#{icon},
+			icon				=	#{icon},
 			</if>
-			loginurl		=	#{loginUrl},
-			protocol		=	#{protocol},
-			category		=	#{category},
-			secret 			=	#{secret},
-			description		=	#{description},
-			vendor			=	#{vendor},
-			vendorurl		=	#{vendorUrl},
+			loginurl			=	#{loginUrl},
+			protocol			=	#{protocol},
+			category			=	#{category},
+			secret 				=	#{secret},
+			description			=	#{description},
+			vendor				=	#{vendor},
+			vendorurl			=	#{vendorUrl},
 			
 			credential			=	#{credential},
 			sharedusername		=	#{sharedUsername},
@@ -154,20 +160,21 @@
 			adaptername			=	#{adapterName},
 			adapter				=	#{adapter},
 			</if>
-			principal		=	#{principal},
-			credentials		=	#{credentials},
+			principal			=	#{principal},
+			credentials			=	#{credentials},
+			accountmgmt			=	#{accountMgmt},
 			visible				=	#{visible},
 			sortindex			=	#{sortIndex},
 			
-			modifiedby		=	#{modifiedBy},
-			modifieddate	=	#{modifiedDate},
+			modifiedby			=	#{modifiedBy},
+			modifieddate		=	#{modifiedDate},
 			
-			status			=	#{status},
+			status				=	#{status},
 
 			logouturl			=	#{logoutUrl},
 			logouttype			=	#{logoutType}
     	where 
-			ID	=	#{id}
+			ID					=	#{id}
     </update>
     
     <select id="queryMyApps" parameterType="UserApps" resultType="UserApps">

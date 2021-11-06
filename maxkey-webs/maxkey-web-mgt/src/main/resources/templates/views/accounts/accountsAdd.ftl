@@ -73,7 +73,7 @@
 				</td>
 				<td>
 				    <input class="button btn btn-primary mr-3 window"  type="button"    id="selectAppsubmitBtn" value="<@locale code="button.text.select" />"
-                      wurl="<@base/>/apps/select"
+                      wurl="<@base/>/apps/select?accountMgmt=1"
                                     wwidth="800"
                                     wheight="620"
                                     target="window"/>

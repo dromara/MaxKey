@@ -31,6 +31,7 @@
 		 			<td  width="300px" nowrap>
 		 				<form id="basic_search_form">
 			 				<input type="text" class="form-control" name="name" >
+			 				<input type="hidden" class="form-control" name="accountMgmt" value="${accountMgmt}">
 		 				 </form>
 		 			</td>
 		 			<td colspan="2">

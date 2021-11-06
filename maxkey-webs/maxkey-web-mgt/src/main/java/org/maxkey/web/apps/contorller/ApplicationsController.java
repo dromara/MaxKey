@@ -33,6 +33,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,8 +49,14 @@ public class ApplicationsController extends BaseAppContorller {
 	}
 	
 	@RequestMapping(value={"/select"})
-	public ModelAndView select(){
-		return new ModelAndView("apps/selectAppsList");
+	public ModelAndView select(@RequestParam(name="accountMgmt",required=false) String accountMgmt){
+		ModelAndView modelAndView=new ModelAndView("apps/selectAppsList");
+		if(accountMgmt != null) {
+			modelAndView.addObject("accountMgmt", accountMgmt);
+		}else {
+			modelAndView.addObject("accountMgmt", 3);
+		}
+		return modelAndView;
 	}
 	
 	

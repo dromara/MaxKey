@@ -31,8 +31,17 @@
       </tr>
       <tr>
          <th><@locale code="apps.logoutUrl"/>：</th>
+         <td colspan="3">
+            <input type="text" class="form-control" id="logoutUrl" name="logoutUrl"  title="" value="${model.logoutUrl!}"  required="" />
+         </td>
+      </tr>
+      <tr>
+         <th><@locale code="apps.accountMgmt"/>：</th>
          <td>
-            <input  type="text" id="logoutUrl" class="form-control"  name="logoutUrl"  title="" value="${model.logoutUrl!}"/>
+         	<select  id="accountMgmt" name="accountMgmt" class="form-control  form-select" >
+				<option value="1" <#if 1==model.accountMgmt!>selected</#if> ><@locale code="common.text.status.enabled"/></option>
+				<option value="2" <#if 2==model.accountMgmt!>selected</#if> ><@locale code="common.text.status.disabled"/></option>
+			</select>
          </td>
          <th><@locale code="apps.logoutType"/></th>
          <td>
