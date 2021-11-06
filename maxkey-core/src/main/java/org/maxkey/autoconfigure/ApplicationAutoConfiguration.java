@@ -94,7 +94,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
         if(_logger.isDebugEnabled()) {
         	 _logger.debug("Password Encoders :");
 	        for (String key : encoders.keySet()) {
-	            _logger.debug(key + "=" + encoders.get(key));
+	            _logger.debug(key + "=" + encoders.get(key).getClass().getName());
 	        }
         }
         _logger.debug("default encoder " + idForEncode);

@@ -52,7 +52,7 @@ public class JwtHS256Adapter extends AbstractAuthorizeAdapter {
 	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
 		AppsJwtDetails details=(AppsJwtDetails)app;
 		
-		OIDCProviderMetadata providerMetadata= (OIDCProviderMetadata)WebContext.getBean("oidcProviderMetadata");
+		OIDCProviderMetadata providerMetadata= WebContext.getBean("oidcProviderMetadata",OIDCProviderMetadata.class);
 	
 		DateTime currentDateTime=DateTime.now();
 		

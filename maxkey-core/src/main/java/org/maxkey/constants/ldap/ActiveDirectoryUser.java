@@ -65,7 +65,7 @@ public class ActiveDirectoryUser {
     /*
 	 *常规
 	 *  名				First Name			givenName
-	 *	姓				Last Name			sn
+	 *	姓				Last Name/SurName 	sn 
 	 *	英文缩写			Initials			initials
 	 *	描述				Description			description
 	 *	办公室			Office				physicalDeliveryOfficeName
@@ -179,13 +179,45 @@ public class ActiveDirectoryUser {
 	public static final String DISTINGUISHEDNAME 			= "distinguishedname";
 	
 	//MaxKey EXTEND
+	/**
+	 * EXTEND managerName
+	 */
 	public static final String MANAGERNAME                  = "managerName";
+	/**
+	 * EXTEND username
+	 */
 	public static final String USERNAME                     = "username";
+	/**
+	 * EXTEND userType
+	 */
 	public static final String USERTYPE                     = "userType";
+	/**
+	 * EXTEND gender
+	 */
 	public static final String GENDER                       = "gender";
+	/**
+	 * EXTEND status
+	 */
 	public static final String USERSTATUS                   = "status";
+    /**
+	 * EXTEND firstName
+	 */
+    public static final String FIRSTNAME 				     = "firstName";
+    /**
+	 * EXTEND lastName
+	 */
+    public static final String LASTNAME 				     = "lastName";
+    /**
+	 * EXTEND email
+	 */
+    public static final String EMAIL 				     	 = "email";
 	
-	
+	/**
+	 * encodePassword for ActiveDirectory
+	 * @param password
+	 * @return 
+	 * @throws UnsupportedEncodingException
+	 */
 	public static byte[] encodePassword(String password) throws UnsupportedEncodingException {
 	        return ("\"" + password + "\"").getBytes("UTF-16LE");
 	}

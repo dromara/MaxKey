@@ -35,6 +35,7 @@ import org.maxkey.util.IdGenerator;
 import org.maxkey.web.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.security.core.Authentication;
@@ -161,13 +162,21 @@ public final class WebContext {
      * @param id
      * @return Object
      */
-    public static Object getBean(String id){
+    public static Object getBean(String name){
         if(applicationContext==null) {
-            return getApplicationContext().getBean(id);
+            return getApplicationContext().getBean(name);
         }else {
-            return applicationContext.getBean(id);
+            return applicationContext.getBean(name);
         }
     }
+    
+    public static <T> T getBean(String name, Class<T> requiredType) throws BeansException{
+    	if(applicationContext==null) {
+            return getApplicationContext().getBean(name,requiredType);
+        }else {
+            return applicationContext.getBean(name,requiredType);
+        }
+    };
 
     // below method is common HttpServlet method
     /**
@@ -202,8 +211,8 @@ public final class WebContext {
      *         http://www.website.com/webcontext
      */
     public static String getHttpContextPath(HttpServletRequest httpServletRequest) {
-        ApplicationConfig applicationConfig = (
-                ApplicationConfig) WebContext.getBean("applicationConfig");
+        ApplicationConfig applicationConfig = 
+        		WebContext.getBean("applicationConfig",ApplicationConfig.class);
         
         _logger.trace("Config ServerPrefix " + applicationConfig.getServerPrefix());
         _logger.trace("Config DomainName " + applicationConfig.getDomainName());
@@ -295,7 +304,7 @@ public final class WebContext {
      * @return encoded String
      */
     public static String encoding(String encodingString) {
-        ApplicationConfig applicationConfig = (ApplicationConfig) getBean("applicationConfig");
+        ApplicationConfig applicationConfig = getBean("applicationConfig",ApplicationConfig.class);
         return applicationConfig.getCharacterEncodingConfig().encoding(encodingString);
     }
 
@@ -309,7 +318,7 @@ public final class WebContext {
         Locale locale = null;
         try {
             CookieLocaleResolver cookieLocaleResolver = 
-                    (CookieLocaleResolver) getBean("localeResolver");
+            			getBean("localeResolver",CookieLocaleResolver.class);
             locale = cookieLocaleResolver.resolveLocale(getRequest());
 
         } catch (Exception e) {

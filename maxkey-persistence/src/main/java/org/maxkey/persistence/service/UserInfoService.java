@@ -154,7 +154,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
         if(userInfo.getStatus() != ConstantsStatus.ACTIVE) {
             if(accountsService==null) {
                 accountsService = 
-                        (AccountsService)WebContext.getBean("accountsService"); 
+                       WebContext.getBean("accountsService",AccountsService.class); 
             }
             Accounts queryAcount =new Accounts();
             queryAcount.setUserId(userInfo.getId());

@@ -132,9 +132,21 @@ public class InetOrgPerson {
 	public static final String MANAGER 				    	 = "manager";
 	
 	//MaxKey EXTEND
+	/**
+	 * EXTEND department
+	 */
     public static final String DEPARTMENT 				     = "department";
-    
-    
-	
+    /**
+	 * EXTEND firstName
+	 */
+    public static final String FIRSTNAME 				     = "firstName";
+    /**
+	 * EXTEND lastName
+	 */
+    public static final String LASTNAME 				     = "lastName";
+    /**
+	 * EXTEND email
+	 */
+    public static final String EMAIL 				     	 = "email";
 
 }

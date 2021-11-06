@@ -111,7 +111,7 @@ public class SynchronizersController {
 			for(String sysId : ids) {
 				Synchronizers  synchronizer  = synchronizersService.get(sysId);
 				_logger.debug("synchronizer " + synchronizer);
-				ISynchronizerService synchronizerService = (ISynchronizerService)WebContext.getBean(synchronizer.getService());
+				ISynchronizerService synchronizerService = WebContext.getBean(synchronizer.getService(),ISynchronizerService.class);
 				synchronizerService.setSynchronizer(synchronizer);
 				synchronizerService.sync();
 			}

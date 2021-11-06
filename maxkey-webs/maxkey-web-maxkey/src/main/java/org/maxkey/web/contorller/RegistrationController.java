@@ -23,6 +23,8 @@ import javax.servlet.ServletException;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.ReciprocalUtils;
@@ -35,6 +37,7 @@ import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
+import org.mybatis.spring.SqlSessionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +55,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value={"/registration"})
 public class RegistrationController {
-	
-	
 	private static Logger _logger = LoggerFactory.getLogger(RegistrationController.class);
 	
 	@Autowired
@@ -98,7 +99,10 @@ public class RegistrationController {
 		  try {
 			email.setHostName(applicationConfig.getEmailConfig().getSmtpHost());
 			email.setSmtpPort(applicationConfig.getEmailConfig().getPort());
-			email.setAuthenticator(new DefaultAuthenticator(applicationConfig.getEmailConfig().getUsername(), applicationConfig.getEmailConfig().getPassword()));
+			email.setAuthenticator(new DefaultAuthenticator(
+							applicationConfig.getEmailConfig().getUsername(), 
+							applicationConfig.getEmailConfig().getPassword()
+						));
 			
 			email.addTo(registration.getWorkEmail(), registration.getLastName()+registration.getFirstName());
 			email.setFrom(applicationConfig.getEmailConfig().getSender(), "MaxKey");
@@ -141,14 +145,17 @@ public class RegistrationController {
 	
 	
 	@RequestMapping(value={"/activate/{id}"})
-	public ModelAndView setPassWord(@PathVariable("id") String id,@RequestParam String password,@RequestParam String confirmpassword) {
+	public ModelAndView setPassWord(@PathVariable("id") String id,
+									@RequestParam String password,
+									@RequestParam String confirmpassword) {
 		_logger.debug("Registration  /registration/setpassword.");
 		ModelAndView modelAndView=new ModelAndView("registration/activated");
 		if(password.equals(confirmpassword)){
 			Registration registration=registrationService.get(id);
 			if(registration!=null){
-				org.mybatis.spring.SqlSessionUtils.getSqlSession((org.apache.ibatis.session.SqlSessionFactory)WebContext.getBean("sqlSessionFactory")).commit(false);
-
+				SqlSession  sqlSession  = SqlSessionUtils.getSqlSession(
+									WebContext.getBean("sqlSessionFactory",SqlSessionFactory.class));
+				sqlSession.commit(false);
 				
 				UserInfo userInfo=new UserInfo();
 				userInfo.setUsername(registration.getWorkEmail());
@@ -167,7 +174,7 @@ public class RegistrationController {
 				userInfoService.insert(userInfo);
 
 				registrationService.remove(id);
-				org.mybatis.spring.SqlSessionUtils.getSqlSession((org.apache.ibatis.session.SqlSessionFactory)WebContext.getBean("sqlSessionFactory")).commit(true);
+				sqlSession.commit(true);
 				modelAndView.addObject("activate", 1);
 			}else{
 				modelAndView.addObject("activate", 2);

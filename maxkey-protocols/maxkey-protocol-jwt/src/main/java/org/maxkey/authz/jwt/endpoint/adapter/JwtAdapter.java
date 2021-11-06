@@ -49,8 +49,8 @@ public class JwtAdapter extends AbstractAuthorizeAdapter {
 		AppsJwtDetails details=(AppsJwtDetails)app;
 	
 		
-		JwtSigningAndValidationService jwtSignerService= (JwtSigningAndValidationService)WebContext.getBean("jwtSignerValidationService");
-		OIDCProviderMetadata providerMetadata= (OIDCProviderMetadata)WebContext.getBean("oidcProviderMetadata");
+		JwtSigningAndValidationService jwtSignerService= WebContext.getBean("jwtSignerValidationService",JwtSigningAndValidationService.class);
+		OIDCProviderMetadata providerMetadata= WebContext.getBean("oidcProviderMetadata",OIDCProviderMetadata.class);
 	
 		DateTime currentDateTime=DateTime.now();
 		

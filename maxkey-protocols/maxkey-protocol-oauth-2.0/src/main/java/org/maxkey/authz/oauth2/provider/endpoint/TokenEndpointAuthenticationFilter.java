@@ -121,13 +121,13 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 			ServletException {
 		logger.debug("Authentication TokenEndpoint ");
 		if(authenticationManager==null) {
-			authenticationManager=(AuthenticationManager)WebContext.getBean("oauth20UserAuthenticationManager");
+			authenticationManager= WebContext.getBean("oauth20UserAuthenticationManager",AuthenticationManager.class);
 		}
 		if(oAuth2RequestFactory==null) {
-			oAuth2RequestFactory=(OAuth2RequestFactory)WebContext.getBean("oAuth2RequestFactory");
+			oAuth2RequestFactory= WebContext.getBean("oAuth2RequestFactory",OAuth2RequestFactory.class);
 		}
 		if(oauth20ClientAuthenticationManager==null) {
-		    oauth20ClientAuthenticationManager = (AuthenticationManager)WebContext.getBean("oauth20ClientAuthenticationManager");
+		    oauth20ClientAuthenticationManager = WebContext.getBean("oauth20ClientAuthenticationManager",AuthenticationManager.class);
 		}
 		
 		final boolean debug = logger.isDebugEnabled();

@@ -44,7 +44,7 @@ public abstract class AbstractAuthorizeAdapter {
 	
 	public String  sign(String data,Apps app){
 		if(Boolean.isTrue(app.getIsSignature())){
-			KeyStoreLoader keyStoreLoader=(KeyStoreLoader)WebContext.getBean("keyStoreLoader");
+			KeyStoreLoader keyStoreLoader=WebContext.getBean("keyStoreLoader",KeyStoreLoader.class);
 			try {	
 				byte[] signature= CertSigner.sign(data.getBytes(), keyStoreLoader.getKeyStore(), keyStoreLoader.getEntityName(), keyStoreLoader.getKeystorePassword());
 				_logger.debug("signed Token : "+data);

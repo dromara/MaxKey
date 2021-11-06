@@ -79,7 +79,7 @@ public class AttributeStatementGenerator {
 		}
 		
 		logger.debug("ExtendAttr "+saml20Details.getExtendAttr());
-		if(Boolean.isTrue(saml20Details.getIsExtendAttr())) {
+		if(Boolean.isTrue(saml20Details.getIsExtendAttr()) && saml20Details.getExtendAttr() != null) {
 			ExtraAttrs extraAttrs=new ExtraAttrs(saml20Details.getExtendAttr());
 			for(ExtraAttr extraAttr : extraAttrs.getExtraAttrs()) {
 				logger.debug("Attribute : "+extraAttr.getAttr()+" , Vale : "+extraAttr.getValue()+" , Type : "+extraAttr.getType());
@@ -140,11 +140,18 @@ public class AttributeStatementGenerator {
         attributeMap.put(ActiveDirectoryUser.MANAGERNAME, userInfo.getManager());
         
         attributeMap.put(ActiveDirectoryUser.DISPLAYNAME, userInfo.getDisplayName());
+        
+        attributeMap.put(ActiveDirectoryUser.FIRSTNAME, userInfo.getGivenName());
+        attributeMap.put(ActiveDirectoryUser.LASTNAME, userInfo.getFamilyName());
+        
         attributeMap.put(ActiveDirectoryUser.GIVENNAME, userInfo.getGivenName());
         attributeMap.put(ActiveDirectoryUser.SN, userInfo.getFamilyName());
+        
         attributeMap.put(ActiveDirectoryUser.GENDER, userInfo.getGender() + "");
-        attributeMap.put(ActiveDirectoryUser.MAIL, userInfo.getEmail());
         attributeMap.put(ActiveDirectoryUser.MOBILE, userInfo.getMobile());
+        
+        attributeMap.put(ActiveDirectoryUser.MAIL, userInfo.getEmail());
+        attributeMap.put(ActiveDirectoryUser.EMAIL, userInfo.getEmail());
         
         attributeMap.put(ActiveDirectoryUser.USERSTATUS, userInfo.getStatus() + "");
         
