@@ -46,6 +46,12 @@ $(function(){
             }
          });
     }
+	
+	/*side-nav-menu*/
+	 $(".sidenav-fold-toggler").on("click",function(e) {
+    	   $(".app").toggleClass("side-nav-folded");
+           e.preventDefault();
+     });
      
 	/** switch_tab*/
     $(".switch_tab_class").on("click",function(){
