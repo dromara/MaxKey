@@ -21,42 +21,42 @@
 rootProject.name = 'MaxKey'
 
 include (
-//Common
-'maxkey-common',
-'maxkey-core',
-'maxkey-persistence',
-//authentications
-'maxkey-authentications:maxkey-authentication-core',
-'maxkey-authentications:maxkey-authentication-captcha',
-'maxkey-authentications:maxkey-authentication-social',
-'maxkey-authentications:maxkey-authentication-otp',
-//identity
-'maxkey-identitys:maxkey-identity-scim',
-'maxkey-identitys:maxkey-identity-rest',
-'maxkey-identitys:maxkey-synchronizers',
-'maxkey-identitys:maxkey-synchronizers-reorgdept',
-'maxkey-identitys:maxkey-synchronizers-activedirectory',
-'maxkey-identitys:maxkey-synchronizers-ldap',
-'maxkey-identitys:maxkey-synchronizers-dingding',
-'maxkey-identitys:maxkey-synchronizers-workweixin',
-//Protocol
-'maxkey-protocols:maxkey-protocol-authorize',
-'maxkey-protocols:maxkey-protocol-oauth-2.0',
-'maxkey-protocols:maxkey-protocol-saml-2.0',
-'maxkey-protocols:maxkey-protocol-cas',
-'maxkey-protocols:maxkey-protocol-jwt',
-'maxkey-protocols:maxkey-protocol-formbased',
-'maxkey-protocols:maxkey-protocol-tokenbased',
-'maxkey-protocols:maxkey-protocol-extendapi',
-//webs
-//static
-'maxkey-webs:maxkey-web-resources',
-//maxkey
-'maxkey-webs:maxkey-web-maxkey',
-//management(mgt)
-'maxkey-webs:maxkey-web-mgt',
-//monitor
-'maxkey-webs:maxkey-boot-monitor',
-//gataway
-'maxkey-gataway'
+	//Common
+	'maxkey-common',
+	'maxkey-core',
+	'maxkey-persistence',
+	//authentications
+	'maxkey-authentications:maxkey-authentication-core',
+	'maxkey-authentications:maxkey-authentication-captcha',
+	'maxkey-authentications:maxkey-authentication-social',
+	'maxkey-authentications:maxkey-authentication-otp',
+	//identity
+	'maxkey-identitys:maxkey-identity-scim',
+	'maxkey-identitys:maxkey-identity-rest',
+	'maxkey-identitys:maxkey-synchronizers',
+	'maxkey-identitys:maxkey-synchronizers-reorgdept',
+	'maxkey-identitys:maxkey-synchronizers-activedirectory',
+	'maxkey-identitys:maxkey-synchronizers-ldap',
+	'maxkey-identitys:maxkey-synchronizers-dingding',
+	'maxkey-identitys:maxkey-synchronizers-workweixin',
+	//Protocol
+	'maxkey-protocols:maxkey-protocol-authorize',
+	'maxkey-protocols:maxkey-protocol-oauth-2.0',
+	'maxkey-protocols:maxkey-protocol-saml-2.0',
+	'maxkey-protocols:maxkey-protocol-cas',
+	'maxkey-protocols:maxkey-protocol-jwt',
+	'maxkey-protocols:maxkey-protocol-formbased',
+	'maxkey-protocols:maxkey-protocol-tokenbased',
+	'maxkey-protocols:maxkey-protocol-extendapi',
+	//webs
+	//static
+	'maxkey-webs:maxkey-web-resources',
+	//maxkey
+	'maxkey-webs:maxkey-web-maxkey',
+	//management(mgt)
+	'maxkey-webs:maxkey-web-mgt',
+	//monitor
+	'maxkey-webs:maxkey-boot-monitor',
+	//gataway
+	'maxkey-gataway'
 )
