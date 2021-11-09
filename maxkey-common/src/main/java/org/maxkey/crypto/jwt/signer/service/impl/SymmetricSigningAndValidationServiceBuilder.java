@@ -56,7 +56,6 @@ public class SymmetricSigningAndValidationServiceBuilder {
 		/**
 		 * Builder Symmetric Signing And Validation Service
 		 */
-		//TODO:
 		JWK jwk = null;
 		//JWK jwk = new OctetSequenceKey(Base64URL.encode(sharedSecret), KeyUse.SIGNATURE, null, null, SYMMETRIC_KEY, null, null, null);
 		Map<String, JWK> keys = ImmutableMap.of(SYMMETRIC_KEY, jwk);

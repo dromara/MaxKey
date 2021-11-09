@@ -34,7 +34,6 @@ public class AppsSaml20DetailsService  extends JpaBaseService<AppsSAML20Details>
 	 */
 	@Override
 	public AppsSaml20DetailsMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (AppsSaml20DetailsMapper)super.getMapper();
 	}
 	

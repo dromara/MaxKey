@@ -35,7 +35,6 @@ public class GroupMemberService  extends JpaBaseService<GroupMember>{
 	 */
 	@Override
 	public GroupMemberMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (GroupMemberMapper)super.getMapper();
 	}
 	

@@ -36,7 +36,6 @@ public class GroupPrivilegesService  extends JpaBaseService<GroupPrivileges>{
 	 */
 	@Override
 	public GroupPrivilegesMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (GroupPrivilegesMapper)super.getMapper();
 	}
 

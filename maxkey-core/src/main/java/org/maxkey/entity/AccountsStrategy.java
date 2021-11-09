@@ -67,7 +67,6 @@ public class AccountsStrategy extends JpaBaseEntity implements Serializable {
 
     public AccountsStrategy() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public String getId() {

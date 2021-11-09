@@ -48,7 +48,6 @@ public class InMemoryProxyGrantingTicketServices extends RandomServiceTicketServ
 
     @Override
     public Ticket get(String ticket) {
-        // TODO Auto-generated method stub
         return casTicketStore.getIfPresent(ticket);
     }
 

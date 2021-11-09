@@ -27,7 +27,6 @@ public class ScimEnterpriseUserJsonTest {
 
     public static void main(String[] args) {
        
-        // TODO Auto-generated method stub
         EnterpriseUser u = new EnterpriseUser();
         u.setUserName("UserName");
         u.setExternalId("UserName");

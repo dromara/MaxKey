@@ -34,7 +34,6 @@ public class AppsTokenBasedDetailsService  extends JpaBaseService<AppsTokenBased
 	 */
 	@Override
 	public AppsTokenBasedDetailsMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (AppsTokenBasedDetailsMapper)super.getMapper();
 	}
 	

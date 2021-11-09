@@ -195,7 +195,6 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			try {
 				storedTicket = ticketServices.consumeTicket(ticket);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

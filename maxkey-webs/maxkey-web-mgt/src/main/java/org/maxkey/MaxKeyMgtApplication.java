@@ -36,11 +36,12 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {
     "org.maxkey.MaxKeyMgtConfig",
     "org.maxkey.MaxKeyMgtMvcConfig",
+    "org.maxkey.MaxKeyMgtJobs",
     "org.maxkey.web.interceptor",
     "org.maxkey.configuration",
-    "org.maxkey.domain",
-    "org.maxkey.domain.apps",
-    "org.maxkey.domain.userinfo",
+    "org.maxkey.entity",
+    "org.maxkey.entity.apps",
+    "org.maxkey.entity.userinfo",
     "org.maxkey.web.endpoint",
     "org.maxkey.web.contorller",
     "org.maxkey.web.apps.contorller",
@@ -70,8 +71,7 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 		try {
 			initWebContext.init(null);
 		} catch (ServletException e) {
-			e.printStackTrace();
-			_logger.error("",e);
+			_logger.error("Exception ",e);
 		}
 		_logger.info("MaxKeyMgt at "+new DateTime());
 		_logger.info("MaxKeyMgt Server Port "+applicationContext.getBean(ApplicationConfig.class).getPort());

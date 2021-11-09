@@ -37,10 +37,8 @@ public class HmacOTPTest {
      try {
 		System.out.println(HOTP.generateOTP(byteseed, 3, 6, false, -1));
 	} catch (InvalidKeyException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	} catch (NoSuchAlgorithmException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
  }

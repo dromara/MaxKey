@@ -35,7 +35,6 @@ public class HistoryLoginAppsService  extends JpaBaseService<HistoryLoginApps>{
 	 */
 	@Override
 	public HistoryLoginAppsMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (HistoryLoginAppsMapper)super.getMapper();
 	}
 	

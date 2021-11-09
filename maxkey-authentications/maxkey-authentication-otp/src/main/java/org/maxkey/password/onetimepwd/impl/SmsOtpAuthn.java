@@ -34,7 +34,7 @@ public class SmsOtpAuthn extends AbstractOtpAuthn {
     @Override
     public boolean produce(UserInfo userInfo) {
         String token = this.genToken(userInfo);
-        // TODO:You must add send sms code here
+        // You must add send sms code here
         logger.debug("send sms code" + token);
         return true;
     }

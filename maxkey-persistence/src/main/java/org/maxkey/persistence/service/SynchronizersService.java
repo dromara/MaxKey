@@ -37,7 +37,6 @@ public class SynchronizersService  extends JpaBaseService<Synchronizers>{
 	 */
 	@Override
 	public SynchronizersMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (SynchronizersMapper)super.getMapper();
 	}
 	

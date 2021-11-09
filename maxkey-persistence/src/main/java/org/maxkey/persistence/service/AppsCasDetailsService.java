@@ -34,7 +34,6 @@ public class AppsCasDetailsService  extends JpaBaseService<AppsCasDetails>{
 	 */
 	@Override
 	public AppsCasDetailsMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (AppsCasDetailsMapper)super.getMapper();
 	}
 	

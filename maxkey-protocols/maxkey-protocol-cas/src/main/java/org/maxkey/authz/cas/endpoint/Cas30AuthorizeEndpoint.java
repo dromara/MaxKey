@@ -78,7 +78,6 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			try {
 				storedTicket = ticketServices.consumeTicket(ticket);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

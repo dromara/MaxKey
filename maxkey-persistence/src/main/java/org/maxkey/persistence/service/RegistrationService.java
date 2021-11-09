@@ -37,7 +37,6 @@ public class RegistrationService  extends JpaBaseService<Registration>{
 	 */
 	@Override
 	public RegistrationMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (RegistrationMapper)super.getMapper();
 	}
 	

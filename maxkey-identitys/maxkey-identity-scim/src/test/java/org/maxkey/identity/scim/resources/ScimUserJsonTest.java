@@ -26,7 +26,6 @@ import org.maxkey.util.JsonUtils;
 public class ScimUserJsonTest {
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
         User u = new User();
         u.setUserName("UserName");
         u.setExternalId("UserName");

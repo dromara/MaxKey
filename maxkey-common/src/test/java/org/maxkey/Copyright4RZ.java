@@ -51,10 +51,8 @@ public class Copyright4RZ {
         try {
             writer = new OutputStreamWriter(new FileOutputStream("D:/MaxKey/code.txt"), encode);
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

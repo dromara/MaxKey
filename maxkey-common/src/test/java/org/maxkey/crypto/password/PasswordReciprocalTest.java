@@ -22,11 +22,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class PasswordReciprocalTest {
 
 	public PasswordReciprocalTest() {
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		BCryptPasswordEncoder spe= new BCryptPasswordEncoder();
 		String pass=PasswordReciprocal.getInstance().rawPassword("admin", "admin");
 		String epass=spe.encode(pass);

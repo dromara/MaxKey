@@ -8,7 +8,6 @@ import com.google.code.kaptcha.NoiseProducer;
 import com.google.code.kaptcha.util.Configurable;
 import com.jhlabs.image.RippleFilter;
 import com.jhlabs.image.TransformFilter;
-import com.jhlabs.image.WaterFilter;
 
 /**
  * {@link WaterRipple} adds water ripple effect to an image.

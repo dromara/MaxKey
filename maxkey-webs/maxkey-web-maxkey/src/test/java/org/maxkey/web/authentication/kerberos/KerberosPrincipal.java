@@ -39,14 +39,12 @@ public class KerberosPrincipal {
 	 * 
 	 */
 	public KerberosPrincipal() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		String kerberosPrincipal="Administrator@CONNSEC.COM";
 		kerberosPrincipal=kerberosPrincipal.substring(0, kerberosPrincipal.indexOf("@"));
 		System.out.println(kerberosPrincipal);

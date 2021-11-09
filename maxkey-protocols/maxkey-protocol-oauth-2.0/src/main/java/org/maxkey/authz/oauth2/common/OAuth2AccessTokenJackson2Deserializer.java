@@ -60,7 +60,7 @@ public final class OAuth2AccessTokenJackson2Deserializer extends StdDeserializer
 		Set<String> scope = null;
 		Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
 
-		// TODO What should occur if a parameter exists twice
+		// What should occur if a parameter exists twice
 		while (jp.nextToken() != JsonToken.END_OBJECT) {
 			String name = jp.getCurrentName();
 			jp.nextToken();
@@ -88,7 +88,7 @@ public final class OAuth2AccessTokenJackson2Deserializer extends StdDeserializer
 			}
 		}
 
-		// TODO What should occur if a required parameter (tokenValue or tokenType) is missing?
+		// What should occur if a required parameter (tokenValue or tokenType) is missing?
 
 		DefaultOAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(tokenValue);
 		accessToken.setTokenType(tokenType);

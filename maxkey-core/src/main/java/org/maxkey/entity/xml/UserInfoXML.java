@@ -39,7 +39,6 @@ public class UserInfoXML extends JpaBaseEntity {
 	 */
 	public UserInfoXML() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 

@@ -44,7 +44,6 @@ public class DerbyTest {
 	 * @throws SQLException 
 	 */
 	public static void main(String[] args) throws SQLException {
-		// TODO Auto-generated method stub
 		String nsURL="jdbc:derby://localhost:1527/seconddb1";  
 		java.util.Properties props = new java.util.Properties();
 		props.setProperty("user","tquist");

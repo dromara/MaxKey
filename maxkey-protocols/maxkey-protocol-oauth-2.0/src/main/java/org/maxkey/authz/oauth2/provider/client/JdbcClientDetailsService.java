@@ -126,7 +126,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
     }
 
     public ClientDetails loadClientByClientId(String clientId) {
-        //TODO: cache in memory
+        // cache in memory
         ClientDetails details = clientDetailsCache.getIfPresent(clientId);
         if(details == null) {
             try {

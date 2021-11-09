@@ -125,7 +125,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 			
 			// if the auth time claim was explicitly requested OR if the client always wants the auth time, put it in
 			if (request.getExtensions().containsKey("max_age")
-					|| (request.getExtensions().containsKey("idtoken")) // TODO: parse the ID Token claims (#473) -- for now assume it could be in there
+					|| (request.getExtensions().containsKey("idtoken")) // parse the ID Token claims (#473) -- for now assume it could be in there
 					) {
 				DateTime loginDate=DateTime.parse(WebContext.getUserInfo().getLastLoginTime(), DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
 				builder.claim("auth_time",  loginDate.getMillis()/ 1000);

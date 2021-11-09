@@ -23,27 +23,13 @@ import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.maxkey.authz.oauth2.provider.token.TokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.InMemoryTokenStore;
 import org.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
-import org.maxkey.jobs.DynamicGroupsJob;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
 import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.LoginService;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
-import org.maxkey.persistence.service.GroupsService;
 import org.maxkey.persistence.service.UserInfoService;
-import org.opensaml.xml.ConfigurationException;
-import org.quartz.CronScheduleBuilder;
-import org.quartz.CronTrigger;
-import org.quartz.Job;
-import org.quartz.JobBuilder;
-import org.quartz.JobDataMap;
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.TriggerBuilder;
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.slf4j.Logger;
@@ -53,7 +39,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -108,7 +93,7 @@ public class MaxKeyMgtConfig  implements InitializingBean {
     }
     
 	
-	//浠ヤ笅鍐呭鍙互娉ㄩ噴鎺夊悗鍐峹ml涓厤缃�,xml寮曞叆鍦∕axKeyMgtApplication涓�
+	//authenticationRealm for MaxKeyMgtApplication
 	@Bean(name = "authenticationRealm")
 	public JdbcAuthenticationRealm authenticationRealm(
  			PasswordEncoder passwordEncoder,
@@ -138,48 +123,7 @@ public class MaxKeyMgtConfig  implements InitializingBean {
 	    _logger.debug("TimeBasedOtpAuthn inited.");
         return tfaOtpAuthn;
     }
-	
-    /**
-     * schedulerJobsInit.
-     * @return schedulerJobsInit
-     * @throws ConfigurationException 
-     * @throws SchedulerException 
-     */
-    @Bean(name = "schedulerJobs")
-    public String  schedulerJobs(
-            SchedulerFactoryBean schedulerFactoryBean,
-            GroupsService groupsService,
-            @Value("${maxkey.job.cron.dynamicgroups}") String cronSchedule
-            ) throws SchedulerException {
-       
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        //dynamicGroupsJob("DynamicGroups",DynamicGroupsJob.class,scheduler,groupsService,cronSchedule);
-        
-        return "schedulerJobs";
-    }
-    
-	
-    public void dynamicGroupsJob(String jobName,
-                                  Class<Job> cls,
-                                  Scheduler scheduler,
-                                  JpaBaseService<JpaBaseEntity> service,
-                                  String cronSchedule) throws SchedulerException {
-        JobDetail jobDetail = 
-                JobBuilder.newJob(cls) 
-                .withIdentity(jobName + "Job", jobName)
-                .build();
-        JobDataMap jobDataMap = new JobDataMap();
-        jobDataMap.put("service", service);
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronSchedule);
-        CronTrigger cronTrigger = 
-                TriggerBuilder.newTrigger()
-                .withIdentity("trigger" + jobName, jobName)
-                .usingJobData(jobDataMap)
-                .withSchedule(scheduleBuilder)
-                .build();
-        scheduler.scheduleJob(jobDetail,cronTrigger);    
-    }
-	 
+
     @Override
     public void afterPropertiesSet() throws Exception {
         

@@ -51,7 +51,6 @@ public class LoginConfig {
      *  .
      */
     public LoginConfig() {
-        // TODO Auto-generated constructor stub
     }
 
     public boolean isCaptcha() {

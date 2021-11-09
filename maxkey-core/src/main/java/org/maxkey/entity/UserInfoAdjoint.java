@@ -92,7 +92,6 @@ public class UserInfoAdjoint extends JpaBaseEntity {
     protected String quitDate;
     public UserInfoAdjoint() {
         super();
-        // TODO Auto-generated constructor stub
     }
     public String getId() {
         return id;

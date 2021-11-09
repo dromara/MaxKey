@@ -34,7 +34,6 @@ public class PasswordPolicyService  extends JpaBaseService<PasswordPolicy>{
 	 */
 	@Override
 	public PasswordPolicyMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (PasswordPolicyMapper)super.getMapper();
 	}
 	

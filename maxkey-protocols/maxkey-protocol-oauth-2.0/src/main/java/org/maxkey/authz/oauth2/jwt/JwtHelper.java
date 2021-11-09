@@ -50,7 +50,7 @@ public class JwtHelper {
 			throw new IllegalArgumentException("JWT must have 3 tokens");
 		}
 		CharBuffer buffer = CharBuffer.wrap(token, 0, firstPeriod);
-		// TODO: Use a Reader which supports CharBuffer
+		// Use a Reader which supports CharBuffer
 		JwtHeader header = JwtHeaderHelper.create(buffer.toString());
 
 		buffer.limit(lastPeriod).position(firstPeriod + 1);

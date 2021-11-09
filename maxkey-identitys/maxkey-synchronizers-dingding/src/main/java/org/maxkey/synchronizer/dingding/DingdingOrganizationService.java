@@ -105,7 +105,6 @@ public class DingdingOrganizationService   implements ISynchronizerService{
 
 	@Override
 	public void setSynchronizer(Synchronizers Synchronizer) {
-		// TODO Auto-generated method stub
 		
 	}
 	

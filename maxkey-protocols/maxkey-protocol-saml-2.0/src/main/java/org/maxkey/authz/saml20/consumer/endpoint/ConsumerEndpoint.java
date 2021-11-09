@@ -227,7 +227,6 @@ public class ConsumerEndpoint {
 		// 1. 获取 sp keyStore
 		AppsSAML20Details saml20Details = saml20DetailsService.get(spId);
 		if (saml20Details == null) {
-			// TODO
 			logger.error("spid[" + spId + "] not exists");
 			throw new Exception();
 		}

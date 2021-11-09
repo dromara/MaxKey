@@ -60,7 +60,6 @@ public class Roles extends JpaBaseEntity implements Serializable {
 
     public Roles() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public String getId() {

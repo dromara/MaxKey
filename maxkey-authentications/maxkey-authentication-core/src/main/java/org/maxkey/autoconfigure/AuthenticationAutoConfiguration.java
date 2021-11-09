@@ -118,7 +118,6 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     
     @Override
     public void afterPropertiesSet() throws Exception {
-        // TODO Auto-generated method stub
         
     }
 }

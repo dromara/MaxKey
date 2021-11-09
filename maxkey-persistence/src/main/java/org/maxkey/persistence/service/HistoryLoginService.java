@@ -35,7 +35,6 @@ public class HistoryLoginService  extends JpaBaseService<HistoryLogin>{
 	 */
 	@Override
 	public HistoryLoginMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (HistoryLoginMapper)super.getMapper();
 	}
 	

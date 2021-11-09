@@ -58,7 +58,6 @@ public class AccountsService  extends JpaBaseService<Accounts>{
 	 */
 	@Override
 	public AccountsMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (AccountsMapper)super.getMapper();
 	}
 	

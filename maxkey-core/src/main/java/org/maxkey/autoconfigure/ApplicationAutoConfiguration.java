@@ -163,7 +163,6 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        // TODO Auto-generated method stub
         
     }
 }

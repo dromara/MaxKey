@@ -35,7 +35,6 @@ public class RoleMemberService  extends JpaBaseService<RoleMember>{
 	 */
 	@Override
 	public RoleMemberMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (RoleMemberMapper)super.getMapper();
 	}
 	

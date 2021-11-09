@@ -114,7 +114,6 @@ public class WorkweixinUsersService  implements ISynchronizerService{
 
 	@Override
 	public void setSynchronizer(Synchronizers Synchronizer) {
-		// TODO Auto-generated method stub
 		
 	}
 

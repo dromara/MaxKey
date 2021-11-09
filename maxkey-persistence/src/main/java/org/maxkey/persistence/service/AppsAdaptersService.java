@@ -34,7 +34,6 @@ public class AppsAdaptersService  extends JpaBaseService<AppsAdapters>{
 	 */
 	@Override
 	public AppsAdaptersMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (AppsAdaptersMapper)super.getMapper();
 	}
 }

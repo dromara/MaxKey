@@ -162,7 +162,6 @@ public final class ReciprocalUtils {
         try {
             simple = new String(byteFinal, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return simple;

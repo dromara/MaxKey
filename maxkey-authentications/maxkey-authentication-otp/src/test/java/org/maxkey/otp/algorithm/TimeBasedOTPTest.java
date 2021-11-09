@@ -55,7 +55,6 @@ public class TimeBasedOTPTest {
          try {
         	 curr=df.parse(utcTime);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
          long currentTimeSeconds = curr.getTime() / 1000;

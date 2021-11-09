@@ -35,7 +35,6 @@ public class ActiveDirectoryUtilsTest {
 		try {
 			dirContext.close();
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

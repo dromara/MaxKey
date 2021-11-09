@@ -128,7 +128,6 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             return new ResponseEntity<>(ticket, HttpStatus.OK);
             
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 	       return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
@@ -147,7 +146,6 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
                     return new ResponseEntity<>("", HttpStatus.OK);
                 }
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 	       return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
@@ -167,7 +165,6 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
                 return new ResponseEntity<>("", HttpStatus.OK);
             }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
        return new ResponseEntity<>("", HttpStatus.NOT_FOUND);

@@ -93,7 +93,7 @@ public class SymmetricCacheService {
 			try {
 
 				String id = "SYMMETRIC-KEY";
-				//TODO:
+
 				JWK jwk =null;
 				//JWK jwk = new OctetSequenceKey(Base64URL.encode(key), KeyUse.SIGNATURE, null, null, id, null, null, null);
 				Map<String, JWK> keys = ImmutableMap.of(id, jwk);

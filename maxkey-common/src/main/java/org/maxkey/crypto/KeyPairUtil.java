@@ -206,7 +206,7 @@ public final class KeyPairUtil
 		}
 		else if (pubKey instanceof ECKey)
 		{
-			// TODO: how to get key size from these?
+			// how to get key size from these?
 			return UNKNOWN_KEY_SIZE;
 		}
 
@@ -236,7 +236,7 @@ public final class KeyPairUtil
 		}
 		else if (keyParams instanceof ECKeyParameters)
 		{
-			// TODO: how to get key length from these?
+			// how to get key length from these?
 			return UNKNOWN_KEY_SIZE;
 		}
 

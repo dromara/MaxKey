@@ -59,7 +59,6 @@ public class SocialSignOnAutoConfiguration implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        // TODO Auto-generated method stub
         
     }
 }

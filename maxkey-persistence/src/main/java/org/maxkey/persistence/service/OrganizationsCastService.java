@@ -40,7 +40,6 @@ public class OrganizationsCastService  extends JpaBaseService<OrganizationsCast>
 	 */
 	@Override
 	public OrganizationsCastMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (OrganizationsCastMapper)super.getMapper();
 	}
 

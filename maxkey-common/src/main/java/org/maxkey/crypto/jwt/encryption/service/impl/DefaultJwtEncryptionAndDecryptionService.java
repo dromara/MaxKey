@@ -230,7 +230,7 @@ public class DefaultJwtEncryptionAndDecryptionService implements JwtEncryptionAn
 					logger.warn("No private key for key #" + jwk.getKeyID());
 				}
 
-				// TODO: add support for EC keys
+				//  add support for EC keys
 
 			} else if (jwk instanceof OctetSequenceKey) {
 				// build symmetric encrypters and decrypters

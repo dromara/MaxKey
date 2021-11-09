@@ -26,7 +26,6 @@ public class Base64UtilsTest {
 	 */
 	@Test
 	public void test() {
-		// TODO Auto-generated method stub
 		 String encode=Base64Utils.encoder("base64ToFile".getBytes());
 		 System.out.println(encode);
 		 String decode=Base64Utils.decode(encode);

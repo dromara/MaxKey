@@ -18,23 +18,15 @@
 package org.maxkey.persistence.service;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.entity.AccountsStrategy;
 import org.maxkey.entity.Groups;
 import org.maxkey.persistence.mapper.AccountsStrategyMapper;
-import org.maxkey.persistence.mapper.GroupsMapper;
-import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Repository
 public class AccountsStrategyService  extends JpaBaseService<AccountsStrategy> implements Serializable {
@@ -59,7 +51,6 @@ public class AccountsStrategyService  extends JpaBaseService<AccountsStrategy> i
 	 */
 	@Override
 	public AccountsStrategyMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (AccountsStrategyMapper)super.getMapper();
 	}
 	

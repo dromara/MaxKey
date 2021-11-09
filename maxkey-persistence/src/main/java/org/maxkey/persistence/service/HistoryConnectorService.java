@@ -34,7 +34,6 @@ public class HistoryConnectorService  extends JpaBaseService<HistoryConnector>{
 	 */
 	@Override
 	public HistoryConnectorMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (HistoryConnectorMapper)super.getMapper();
 	}
 }

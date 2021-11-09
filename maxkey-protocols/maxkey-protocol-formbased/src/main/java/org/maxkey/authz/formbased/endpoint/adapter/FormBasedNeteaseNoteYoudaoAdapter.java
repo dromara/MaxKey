@@ -35,7 +35,6 @@ public class FormBasedNeteaseNoteYoudaoAdapter extends AbstractAuthorizeAdapter 
 
 	@Override
 	public String encrypt(String data, String algorithmKey, String algorithm) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

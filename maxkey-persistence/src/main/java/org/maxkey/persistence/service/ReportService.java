@@ -73,7 +73,6 @@ public class ReportService  extends JpaBaseService<JpaBaseEntity>{
 	 */
 	@Override
 	public ReportMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (ReportMapper)super.getMapper();
 	}
 }

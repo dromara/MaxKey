@@ -61,7 +61,6 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	 */
 	@Override
 	public OrganizationsMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (OrganizationsMapper)super.getMapper();
 	}
 	

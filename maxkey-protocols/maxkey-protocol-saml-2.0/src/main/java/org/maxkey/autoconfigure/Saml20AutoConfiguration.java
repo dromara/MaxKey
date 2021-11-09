@@ -334,7 +334,6 @@ public class Saml20AutoConfiguration implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        // TODO Auto-generated method stub
         
     }
 }

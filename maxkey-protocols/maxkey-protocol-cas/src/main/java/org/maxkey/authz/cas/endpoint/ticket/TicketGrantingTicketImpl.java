@@ -166,37 +166,31 @@ public class TicketGrantingTicketImpl extends AbstractTicket implements TicketGr
 
     @Override
     public Map<String, Service> getServices() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public Map<String, Service> getProxyGrantingTickets() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public Service getProxiedBy() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public boolean isRoot() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public TicketGrantingTicket getRoot() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public List<Authentication> getChainedAuthentications() {
-        // TODO Auto-generated method stub
         return null;
     }
 

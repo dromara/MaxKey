@@ -34,7 +34,6 @@ public class NoticesService  extends JpaBaseService<Notices>{
 	 */
 	@Override
 	public NoticesMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (NoticesMapper)super.getMapper();
 	}
 	

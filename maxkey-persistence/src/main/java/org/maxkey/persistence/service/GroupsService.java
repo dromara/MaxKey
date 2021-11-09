@@ -57,7 +57,6 @@ public class GroupsService  extends JpaBaseService<Groups> implements Serializab
 	 */
 	@Override
 	public GroupsMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (GroupsMapper)super.getMapper();
 	}
 	
@@ -73,7 +72,7 @@ public class GroupsService  extends JpaBaseService<Groups> implements Serializab
 	}
 	
 	public void refreshDynamicGroups(Groups dynamicGroup){
-	    if(dynamicGroup.getDynamic().equals(ConstantsStatus.ACTIVE)) {
+	    if(dynamicGroup.getDynamic().equals(ConstantsStatus.ACTIVE+"")) {
 	        boolean isDynamicTimeSupport = false;
 	        boolean isBetweenEffectiveTime = false;
 	        if(StringUtils.isNotBlank(dynamicGroup.getResumeTime())

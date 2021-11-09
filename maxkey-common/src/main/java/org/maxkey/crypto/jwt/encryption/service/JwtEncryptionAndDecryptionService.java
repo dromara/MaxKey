@@ -64,7 +64,7 @@ public interface JwtEncryptionAndDecryptionService {
 	public Collection<EncryptionMethod> getAllEncryptionEncsSupported();
 
 	/**
-	 * TODO add functionality for encrypting and decrypting using a specified key id.
+	 *  add functionality for encrypting and decrypting using a specified key id.
 	 * Example: public void encryptJwt(EncryptedJWT jwt, String kid);
 	 */
 }

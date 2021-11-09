@@ -101,8 +101,6 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
 		try {
 			storedTicket = ticketServices.consumeTicket(ticket);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			_logger.error("consume Ticket error " , e);
 		}
 		

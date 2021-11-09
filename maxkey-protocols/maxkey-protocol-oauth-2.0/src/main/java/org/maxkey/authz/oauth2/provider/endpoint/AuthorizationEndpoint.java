@@ -188,7 +188,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			// such logic here, and set the approved flag on the authorization request accordingly.
 			authorizationRequest = userApprovalHandler.checkForPreApproval(authorizationRequest,
 					(Authentication) principal);
-			// TODO: is this call necessary?
+			// is this call necessary?
 			boolean approved = userApprovalHandler.isApproved(authorizationRequest, (Authentication) principal);
 			authorizationRequest.setApproved(approved);
 
@@ -331,7 +331,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		return accessToken;
 	}
 	
-	//TODO:  Authorization Code Response
+	// Authorization Code Response
 	private View getAuthorizationCodeResponse(AuthorizationRequest authorizationRequest, Authentication authUser) {
 		try {
 			return new RedirectView(getSuccessfulRedirect(authorizationRequest,
@@ -419,7 +419,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 
 		}
 	}
-	//TODO: Successful Redirect
+	// Successful Redirect
 	private String getSuccessfulRedirect(AuthorizationRequest authorizationRequest, String authorizationCode) {
 
 		if (authorizationCode == null) {

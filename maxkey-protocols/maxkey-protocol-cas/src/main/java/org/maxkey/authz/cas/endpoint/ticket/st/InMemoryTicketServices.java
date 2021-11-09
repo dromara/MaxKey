@@ -48,8 +48,7 @@ public class InMemoryTicketServices extends RandomServiceTicketServices {
 
     @Override
     public Ticket get(String ticket) {
-        // TODO Auto-generated method stub
-        return null;
+        return casTicketStore.getIfPresent(ticket);
     }
 
 }

@@ -115,20 +115,17 @@ public class ServiceTicketImpl extends AbstractTicket  implements ServiceTicket{
 
     @Override
     public Service getService() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public boolean isFromNewLogin() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public ProxyGrantingTicket grantProxyGrantingTicket(String id, Authentication authentication,
             ExpirationPolicy expirationPolicy) throws Exception {
-        // TODO Auto-generated method stub
         return null;
     }
 

@@ -40,13 +40,11 @@ public class RsaOtpAuthn extends AbstractOtpAuthn {
 
     @Override
     public boolean produce(UserInfo userInfo) {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean validate(UserInfo userInfo, String token) {
-        // TODO Auto-generated method stub
         return false;
     }
 

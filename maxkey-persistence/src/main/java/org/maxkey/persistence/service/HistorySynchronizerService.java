@@ -34,7 +34,6 @@ public class HistorySynchronizerService  extends JpaBaseService<HistorySynchroni
 	 */
 	@Override
 	public HistorySynchronizerMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (HistorySynchronizerMapper)super.getMapper();
 	}
 }

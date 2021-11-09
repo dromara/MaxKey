@@ -36,7 +36,6 @@ public class ResourcesService  extends JpaBaseService<Resources>{
 	 */
 	@Override
 	public ResourcesMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (ResourcesMapper)super.getMapper();
 	}
 	

@@ -20,7 +20,6 @@ package org.maxkey.crypto.password;
 public class SM3PasswordEncoderTest {
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
         SM3PasswordEncoder sm3 = new SM3PasswordEncoder();
         System.out.println(sm3.encode("maxkeypassword"));
         

@@ -45,10 +45,10 @@ public final class NetUtil
 	/** Logger */
 	private static final Logger _logger = LoggerFactory.getLogger(NetUtil.class);
 
-	// TODO: make this configurable
+	//  make this configurable
 	private static final int CONNECT_TIMEOUT = 10000;
 
-	// TODO: make this configurable
+	//  make this configurable
 	private static final int READ_TIMEOUT = 20000;
 
 	/**
@@ -74,7 +74,7 @@ public final class NetUtil
 		conn.setConnectTimeout(CONNECT_TIMEOUT);
 		conn.setReadTimeout(READ_TIMEOUT);
 
-		// TODO: User-Agent?
+		//  User-Agent?
 
 		return conn.getInputStream();
 	}
@@ -97,7 +97,7 @@ public final class NetUtil
 		conn.setConnectTimeout(CONNECT_TIMEOUT);
 		conn.setReadTimeout(READ_TIMEOUT);
 
-		// TODO: User-Agent?
+		//  User-Agent?
 
 		if (contentType != null)
 		{

@@ -149,13 +149,11 @@ public abstract class AbstractTicket implements Ticket {
 
 	@Override
 	public AppsCasDetails getCasDetails() {
-		// TODO Auto-generated method stub
 		return this.casDetails;
 	}
 	
 	@Override
 	public Authentication getAuthentication() {
-		// TODO Auto-generated method stub
 		return this.authentication;
 	}
 	

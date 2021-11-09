@@ -99,7 +99,7 @@ public class DefaultJwtSigningAndValidationService implements JwtSigningAndValid
 			for (JWK key : keyStore.getKeys()) {
 				if (!Strings.isNullOrEmpty(key.getKeyID())) {
 					// use the key ID that's built into the key itself
-					// TODO (#641): deal with JWK thumbprints
+					//  (#641): deal with JWK thumbprints
 					this.keys.put(key.getKeyID(), key);
 				} else {
 					// create a random key id
@@ -173,7 +173,7 @@ public class DefaultJwtSigningAndValidationService implements JwtSigningAndValid
 			} else if (jwk instanceof ECKey) {
 				// build EC signers & verifiers
 
-				// TODO: add support for EC keys
+				//  add support for EC keys
 				logger.warn("EC Keys are not yet supported.");
 
 			} else if (jwk instanceof OctetSequenceKey) {

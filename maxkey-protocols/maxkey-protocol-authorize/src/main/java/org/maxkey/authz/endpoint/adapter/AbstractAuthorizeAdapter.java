@@ -55,7 +55,6 @@ public abstract class AbstractAuthorizeAdapter {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			_logger.debug("Token : "+data);

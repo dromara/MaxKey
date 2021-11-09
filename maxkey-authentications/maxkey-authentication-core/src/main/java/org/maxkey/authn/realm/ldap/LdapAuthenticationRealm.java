@@ -25,11 +25,9 @@ import javax.validation.constraints.Size;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.realm.IAuthenticationServer;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.authentication.BadCredentialsException;
 
 public class LdapAuthenticationRealm  extends AbstractAuthenticationRealm{
 	private final static Logger _logger = LoggerFactory.getLogger(LdapAuthenticationRealm.class);

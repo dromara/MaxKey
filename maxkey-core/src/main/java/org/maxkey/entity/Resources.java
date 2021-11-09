@@ -70,7 +70,6 @@ public class Resources  extends JpaBaseEntity implements Serializable {
 
     public Resources() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public String getId() {

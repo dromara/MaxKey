@@ -145,7 +145,7 @@ public class OIDCProviderMetadataDetails implements OIDCProviderMetadata {
         return builder.toString();
     }
 
-    // TODO: Complete remaining properties from
+    //  Complete remaining properties from
     // http://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
     
 }

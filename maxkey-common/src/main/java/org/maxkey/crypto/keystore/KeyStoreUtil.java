@@ -234,7 +234,7 @@ public final class KeyStoreUtil {
      * @return available keystore types
      */
     public static KeyStoreType[] getAvailableTypes() {
-        // TODO: populate only once
+        //  populate only once
         KeyStoreType[] known = KeyStoreType.values();
         ArrayList<KeyStoreType> available = new ArrayList<KeyStoreType>();
         for (KeyStoreType type : known) {

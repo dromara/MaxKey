@@ -34,7 +34,6 @@ public class AppsJwtDetailsService  extends JpaBaseService<AppsJwtDetails>{
 	 */
 	@Override
 	public AppsJwtDetailsMapper getMapper() {
-		// TODO Auto-generated method stub
 		return (AppsJwtDetailsMapper)super.getMapper();
 	}
 	

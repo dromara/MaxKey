@@ -62,7 +62,6 @@ public class HistoryLoginApps extends JpaBaseEntity {
 	 */
 	public HistoryLoginApps() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

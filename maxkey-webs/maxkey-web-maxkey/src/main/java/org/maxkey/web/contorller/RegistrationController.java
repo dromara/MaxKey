@@ -124,7 +124,6 @@ public class RegistrationController {
 			// send the email
 			email.send();
 		} catch (EmailException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		  modelAndView.addObject("registered", 0); 

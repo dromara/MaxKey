@@ -26,11 +26,9 @@ import org.maxkey.pretty.impl.XmlPretty;
 public class ServiceResponseBuilderTest {
 
 	public ServiceResponseBuilderTest() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
 		ServiceResponseBuilder srbJson=new ServiceResponseBuilder();
 		srbJson.success()
 			.setUser("shi")
