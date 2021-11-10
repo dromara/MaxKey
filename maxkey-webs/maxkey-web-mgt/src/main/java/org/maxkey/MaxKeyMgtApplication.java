@@ -34,27 +34,23 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan(basePackages = {
-    "org.maxkey.MaxKeyMgtConfig",
-    "org.maxkey.MaxKeyMgtMvcConfig",
-    "org.maxkey.MaxKeyMgtJobs",
-    "org.maxkey.web.interceptor",
-    "org.maxkey.configuration",
-    "org.maxkey.entity",
+	"org.maxkey.authn",
+	"org.maxkey.configuration",
+	"org.maxkey.entity",
     "org.maxkey.entity.apps",
     "org.maxkey.entity.userinfo",
-    "org.maxkey.web.endpoint",
-    "org.maxkey.web.contorller",
-    "org.maxkey.web.apps.contorller",
-    "org.maxkey.web.endpoint",
-    "org.maxkey.web.api.endpoint",
-    "org.maxkey.authn",
-    "org.maxkey.persistence",
-    "org.maxkey.web",
-    "org.maxkey.web.tag",
     "org.maxkey.identity.kafka",
-    "org.maxkey.identity.scim.controller",
     "org.maxkey.identity.rest",
-    "org.maxkey.synchronizer"
+    "org.maxkey.identity.scim.controller",
+    "org.maxkey.persistence",
+    "org.maxkey.synchronizer",
+    "org.maxkey.web",
+    "org.maxkey.web.api.endpoint",
+    "org.maxkey.web.apps.contorller",
+    "org.maxkey.web.contorller",
+    "org.maxkey.web.endpoint",
+    "org.maxkey.web.interceptor",
+    "org.maxkey.web.tag"
 })
 @MapperScan("org.maxkey.persistence.mapper,")
 @SpringBootApplication
