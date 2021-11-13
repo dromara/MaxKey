@@ -68,6 +68,7 @@
 								<td>authorization_code | code<input <#if   model.authorizedGrantTypes?contains('authorization_code') >checked</#if>  type="checkbox" id="grantTypes_authorization_code" name="authorizedGrantTypes" value="authorization_code"/></td>
 								<td>password<input <#if   model.authorizedGrantTypes?contains('password') >checked</#if>  type="checkbox" id="grantTypes_trust" name="authorizedGrantTypes" value="password"/></td>
 								<td>implicit<input <#if   model.authorizedGrantTypes?contains('implicit') >checked</#if>  type="checkbox" id="grantTypes_implicit" name="authorizedGrantTypes" value="implicit"/></td>
+								<td>client_credentials<input <#if   model.authorizedGrantTypes?contains('client_credentials') >checked</#if>  type="checkbox" id="grantTypes_client_credentials" name="authorizedGrantTypes" value="client_credentials"/></td>
 								<td>refresh_token<input <#if   model.authorizedGrantTypes?contains('refresh_token') >checked</#if>  type="checkbox" id="grantTypes_refresh_token" name="authorizedGrantTypes" value="refresh_token"/></td>
 								<td>id_token<input <#if   model.authorizedGrantTypes?contains('id_token') >checked</#if>  type="checkbox" id="grantTypes_id_token" name="authorizedGrantTypes" value="id_token"/></td>
 								<td>token<input <#if   model.authorizedGrantTypes?contains( 'token') >checked</#if>  type="checkbox" id="grantTypes_token" name="authorizedGrantTypes" value="token"/></td>

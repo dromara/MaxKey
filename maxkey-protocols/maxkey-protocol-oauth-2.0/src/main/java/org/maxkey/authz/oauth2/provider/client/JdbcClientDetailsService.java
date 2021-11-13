@@ -152,6 +152,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
         if (count != 1) {
             throw new NoSuchClientException("No client found with id = " + clientDetails.getClientId());
         }
+        clientDetailsCache.invalidate(clientDetails.getClientId());
     }
 
     public void updateClientSecret(String clientId, String secret) throws NoSuchClientException {

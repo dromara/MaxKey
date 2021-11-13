@@ -155,14 +155,17 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 		try {
 			String grantType = request.getParameter(OAuth2Constants.PARAMETER.GRANT_TYPE);
 			if (grantType != null && grantType.equals(OAuth2Constants.PARAMETER.GRANT_TYPE_PASSWORD)) {
+				//password
 				usernamepassword(request,response);
 			}else {
 				Authentication authentication=ClientCredentials(request,response);
 				logger.trace("getPrincipal " + authentication.getPrincipal().getClass());
 				SigninPrincipal auth = null;
 				if(authentication.getPrincipal() instanceof SigninPrincipal) {
+					//authorization_code
 					auth = (SigninPrincipal)authentication.getPrincipal();
 				}else {
+					//client_credentials
 					auth =new SigninPrincipal((User)authentication.getPrincipal());
 				}
 				auth.setAuthenticated(true);
@@ -242,7 +245,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 	public Authentication ClientCredentials(HttpServletRequest request, HttpServletResponse response)
 				throws AuthenticationException, IOException, ServletException {
 			if (allowOnlyPost && !"POST".equalsIgnoreCase(request.getMethod())) {
-				throw new HttpRequestMethodNotSupportedException(request.getMethod(), new String[] { "POST" });
+				throw new HttpRequestMethodNotSupportedException(request.getMethod(), new String[] { "POST","G" });
 			}
 
 			String clientId = request.getParameter(OAuth2Constants.PARAMETER.CLIENT_ID);

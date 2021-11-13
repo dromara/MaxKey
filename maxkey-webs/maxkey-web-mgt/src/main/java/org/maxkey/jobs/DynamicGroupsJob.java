@@ -56,9 +56,7 @@ public class DynamicGroupsJob  implements Job , Serializable {
                 groupsService = 
                 		(GroupsService) context.getMergedJobDataMap().get("service");
             }else {
-
             	groupsService.refreshAllDynamicGroups();
-            
             	Thread.sleep(10 *1000);
             }
             _logger.debug("DynamicGroupsJob is success  " );

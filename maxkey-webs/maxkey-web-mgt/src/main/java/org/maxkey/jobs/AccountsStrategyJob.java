@@ -57,9 +57,7 @@ public class AccountsStrategyJob   implements Job , Serializable {
                 accountsService = 
                 		(AccountsService) context.getMergedJobDataMap().get("service");
             }else {
-
             	accountsService.refreshAllByStrategy();
-            
             	Thread.sleep(10 *1000);
             }
             _logger.debug("DynamicGroupsJob is success  " );

@@ -17,6 +17,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidClientException;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
@@ -109,6 +110,10 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
 			}
 		}
 		String grantType = requestParameters.get(OAuth2Constants.PARAMETER.GRANT_TYPE);
+		if(StringUtils.isBlank(grantType)) {
+			//default client_credentials
+			grantType = OAuth2Constants.PARAMETER.GRANT_TYPE_CLIENT_CREDENTIALS;
+		}
 
 		Set<String> scopes = extractScopes(requestParameters, clientId);
 		TokenRequest tokenRequest = new TokenRequest(requestParameters, clientId, scopes, grantType);

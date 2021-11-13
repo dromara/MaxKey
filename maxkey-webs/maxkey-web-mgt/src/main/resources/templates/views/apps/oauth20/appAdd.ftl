@@ -81,6 +81,7 @@
 								<td>authorization_code | code<input type="checkbox" id="grantTypes_authorization_code" name="authorizedGrantTypes" value="authorization_code"  checked /></td>
 								<td>password<input type="checkbox" id="grantTypes_trust" name="authorizedGrantTypes" value="password"/></td>
 								<td>implicit<input type="checkbox" id="grantTypes_implicit" name="authorizedGrantTypes" value="implicit"/></td>
+								<td>client_credentials<input type="checkbox" id="grantTypes_client_credentials" name="authorizedGrantTypes" value="client_credentials"/></td>
 								<td>refresh_token<input type="checkbox" id="grantTypes_refresh_token" name="authorizedGrantTypes" value="refresh_token"/></td>
 								<td>id_token<input  type="checkbox" id="grantTypes_id_token" name="authorizedGrantTypes" value="id_token"/></td>
 								<td>token<input type="checkbox" id="grantTypes_token" name="authorizedGrantTypes" value="token"/></td>
