@@ -53,12 +53,14 @@ public class DynamicGroupsJob  implements Job , Serializable {
         jobStatus = JOBSTATUS.RUNNING;
         try {
             if(groupsService == null) {
-                groupsService = (GroupsService) context.getMergedJobDataMap().get("service");
-            }
+                groupsService = 
+                		(GroupsService) context.getMergedJobDataMap().get("service");
+            }else {
 
-            groupsService.refreshAllDynamicGroups();
+            	groupsService.refreshAllDynamicGroups();
             
-            Thread.sleep(10 *1000);
+            	Thread.sleep(10 *1000);
+            }
             _logger.debug("DynamicGroupsJob is success  " );
         }catch(Exception e) {
             _logger.error("Exception " ,e);

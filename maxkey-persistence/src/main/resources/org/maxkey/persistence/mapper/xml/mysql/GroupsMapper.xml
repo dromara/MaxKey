@@ -54,5 +54,21 @@
     		</foreach>
     </update>
     
+    
+    <select id="queryGroupByUserId" parameterType="string"  resultType="Groups">
+            select  distinct
+                g.*
+            from
+                mxk_userinfo u,
+                mxk_groups   g,
+                mxk_group_member gm
+            where   1   =   1
+                    and gm.memberid = #{value}
+                    and u.id        = #{value}
+                    and gm.type     in( 'USER','USER-DYNAMIC')
+                    and gm.groupid  =   g.id    
+                    and gm.memberid =   u.id
+    </select>
+    
    
 </mapper>

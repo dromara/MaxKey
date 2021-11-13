@@ -19,7 +19,7 @@ package org.maxkey.identity.scim.resources;
 
 import java.io.Serializable;
 
-public class UserName  implements Serializable {
+public class ScimFormattedName  implements Serializable {
 
     /**
      * 
@@ -67,7 +67,7 @@ public class UserName  implements Serializable {
     public void setHonorificSuffix(String honorificSuffix) {
         this.honorificSuffix = honorificSuffix;
     }
-    public UserName(String formatted, String familyName, String givenName, String middleName, String honorificPrefix,
+    public ScimFormattedName(String formatted, String familyName, String givenName, String middleName, String honorificPrefix,
             String honorificSuffix) {
         super();
         this.formatted = formatted;
@@ -77,7 +77,7 @@ public class UserName  implements Serializable {
         this.honorificPrefix = honorificPrefix;
         this.honorificSuffix = honorificSuffix;
     }
-    public UserName() {
+    public ScimFormattedName() {
     }
 
     

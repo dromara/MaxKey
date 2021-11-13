@@ -17,11 +17,23 @@
 
 package org.maxkey.identity.scim.resources;
 
-public class MemberRef extends MultiValuedAttribute{
+import java.io.Serializable;
+
+public class ScimUserOrganization extends ScimMultiValuedAttribute implements Serializable {
 
     /**
      * 
      */
-    private static final long serialVersionUID = -6018893424394625889L;
+    private static final long serialVersionUID = 3201987266085144715L;
 
+    public ScimUserOrganization() {
+		super();
+	}
+
+	public ScimUserOrganization(String value, String display, boolean primary) {
+        super();
+        this.value = value;
+        this.display = display;
+        this.primary = primary;
+    }
 }

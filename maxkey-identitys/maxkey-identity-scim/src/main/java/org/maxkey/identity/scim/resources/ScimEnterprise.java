@@ -19,15 +19,16 @@ package org.maxkey.identity.scim.resources;
 
 import java.io.Serializable;
 
-public class Enterprise implements Serializable {
+public class ScimEnterprise implements Serializable {
     private static final long serialVersionUID = -204619629148409697L;
     
     private  String employeeNumber;
     private  String costCenter;
     private  String organization;
     private  String division;
+    private  String departmentId;
     private  String department;
-    private  Manager manager;
+    private  ScimManager manager;
     
     public String getEmployeeNumber() {
         return employeeNumber;
@@ -53,19 +54,26 @@ public class Enterprise implements Serializable {
     public void setDivision(String division) {
         this.division = division;
     }
-    public String getDepartment() {
+    
+    public String getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(String departmentId) {
+		this.departmentId = departmentId;
+	}
+	public String getDepartment() {
         return department;
     }
     public void setDepartment(String department) {
         this.department = department;
     }
-    public Manager getManager() {
+    public ScimManager getManager() {
         return manager;
     }
-    public void setManager(Manager manager) {
+    public void setManager(ScimManager manager) {
         this.manager = manager;
     }
-    public Enterprise() {
+    public ScimEnterprise() {
     }
     
     

@@ -25,7 +25,7 @@ public class ScimEnterpriseUserJsonString2ObjectTest {
     public static void main(String[] args) {
        
         String userJsonString = ReadJson2String.read("ScimEnterpriseUserJsonString.json");
-        EnterpriseUser u  = JsonUtils.json2Object(userJsonString, EnterpriseUser.class);
+        ScimEnterpriseUser u  = JsonUtils.json2Object(userJsonString, ScimEnterpriseUser.class);
         
         System.out.println(
                 (new JsonPretty()).format(JsonUtils.object2Json(u)));

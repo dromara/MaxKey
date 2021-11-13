@@ -18,14 +18,24 @@
 package org.maxkey.identity.scim.controller;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.maxkey.identity.scim.resources.Organization;
+import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.entity.Organizations;
+import org.maxkey.identity.scim.resources.ScimMeta;
+import org.maxkey.identity.scim.resources.ScimOrganization;
+import org.maxkey.identity.scim.resources.ScimParameters;
 import org.maxkey.identity.scim.resources.ScimSearchResult;
-import org.maxkey.identity.scim.resources.User;
+import org.maxkey.persistence.service.OrganizationsService;
+import org.maxkey.util.DateUtils;
+import org.maxkey.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,57 +55,130 @@ import org.springframework.web.util.UriComponentsBuilder;
  * http://tools.ietf.org/html/draft-ietf-scim-api-00#section-3
  */
 @RestController
-@RequestMapping(value = "/im/scim/v2/Organization")
+@RequestMapping(value = "/api/idm/SCIM/v2/Organization")
 public class ScimOrganizationController {
-
+	final static Logger _logger = LoggerFactory.getLogger(ScimOrganizationController.class);
+	
+	@Autowired
+	OrganizationsService organizationsService;
+	
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public MappingJacksonValue getOrganization(@PathVariable String id,
+    public MappingJacksonValue get(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
-        //Organization user = null;
-        return null;
+    	Organizations	org = organizationsService.get(id);
+    	ScimOrganization 	scimOrg = org2ScimOrg(org);
+        
+        return new MappingJacksonValue(scimOrg);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<MappingJacksonValue> create(@RequestBody  Organization user,
-                                                      @RequestParam(required = false) String attributes,
-                                                      UriComponentsBuilder builder) throws IOException {
-        //Organization createdUser = null;
-        return null;
+    public MappingJacksonValue create(@RequestBody  ScimOrganization scimOrg,
+                                      @RequestParam(required = false) String attributes,
+                                      UriComponentsBuilder builder) throws IOException {
+        Organizations createOrg = scimOrg2Org(scimOrg);
+        organizationsService.insert(createOrg);
+        return get(createOrg.getId(), attributes);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<MappingJacksonValue> replace(@PathVariable String id,
-                                                       @RequestBody Organization user,
-                                                       @RequestParam(required = false) String attributes)
-            throws IOException {
-        //Organization createdUser = null;
-        return null;
+    public MappingJacksonValue replace(@PathVariable String id,
+                                       @RequestBody ScimOrganization scimOrg,
+                                       @RequestParam(required = false) String attributes)throws IOException {
+    	Organizations updateOrg = scimOrg2Org(scimOrg);
+    	organizationsService.update(updateOrg);
+        return get(id, attributes);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
-        //tokenService.revokeAllTokensOfUser(id);
-       
+    	organizationsService.remove(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public MappingJacksonValue searchWithGet(@RequestParam Map<String, String> requestParameters) {
+    public MappingJacksonValue searchWithGet(@ModelAttribute ScimParameters requestParameters) {
         return searchWithPost(requestParameters);
     }
 
     @RequestMapping(value = "/.search", method = RequestMethod.POST)
-    public MappingJacksonValue searchWithPost(@RequestParam Map<String, String> requestParameters) {
-        //ScimSearchResult<User> scimSearchResult = null;
-        /*
-                requestParameters.get("filter"),
-                requestParameters.get("sortBy"),
-                requestParameters.getOrDefault("sortOrder", "ascending"),             // scim default
-                Integer.parseInt(requestParameters.getOrDefault("count", "" + ScimServiceProviderConfigController.MAX_RESULTS)),
-                Integer.parseInt(requestParameters.getOrDefault("startIndex", "1")); // scim default
-*/
-        //String attributes = (requestParameters.containsKey("attributes") ? requestParameters.get("attributes") : "");
+    public MappingJacksonValue searchWithPost(@ModelAttribute ScimParameters requestParameters) {
+    	requestParameters.parse();
+    	_logger.debug("requestParameters {} ",requestParameters);
+        Organizations queryModel = new Organizations();
+        queryModel.setPageSize(requestParameters.getCount());
+        queryModel.calculate(requestParameters.getStartIndex()); 
         
-        return null;
+        JpaPageResults<Organizations> orgResults = organizationsService.queryPageResults(queryModel);
+        List<ScimOrganization> resultList = new ArrayList<ScimOrganization>();
+        for(Organizations org : orgResults.getRows()) {
+        	resultList.add(org2ScimOrg(org));
+        }
+        ScimSearchResult<ScimOrganization> scimSearchResult = 
+        		new ScimSearchResult<ScimOrganization>(
+        				resultList,
+        				orgResults.getRecords(),
+        				requestParameters.getCount(),
+        				requestParameters.getStartIndex());  
+        
+        return new MappingJacksonValue(scimSearchResult);
+    }
+    
+    public ScimOrganization org2ScimOrg(Organizations org) {
+    	ScimOrganization 	scimOrg = new ScimOrganization();
+        scimOrg.setId(org.getId());
+        scimOrg.setCode(org.getCode());
+        scimOrg.setName(org.getName());
+        scimOrg.setDisplayName(org.getName());
+        scimOrg.setFullName(org.getFullName());
+        scimOrg.setType(org.getType());
+        scimOrg.setLevel(org.getLevel());
+        scimOrg.setDivision(org.getDivision());
+        scimOrg.setSortOrder(org.getSortOrder());
+        scimOrg.setCodePath(org.getCodePath());
+        scimOrg.setNamePath(org.getNamePath());
+        scimOrg.setDescription(org.getDescription());
+        
+        scimOrg.setParentId(org.getParentId());
+        scimOrg.setParent(org.getParentId());
+        //scimOrg.setParentCode(org.getParentId());
+        scimOrg.setParentName(org.getParentName());
+        
+        scimOrg.setParentName(org.getParentName());
+        if(StringUtils.isNotBlank(org.getSortOrder())) {
+        	scimOrg.setOrder(Long.parseLong(org.getSortOrder()));
+        }else {
+        	scimOrg.setOrder(1);
+        }
+        scimOrg.setExternalId(org.getId());
+        
+        ScimMeta meta = new ScimMeta("Organization");
+        
+        if(StringUtils.isNotBlank(org.getCreatedDate())){
+        	meta.setCreated(
+        			DateUtils.parse(org.getCreatedDate(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
+        }
+        if(StringUtils.isNotBlank(org.getModifiedDate())){
+        	meta.setLastModified(
+        			DateUtils.parse(org.getModifiedDate(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
+        }
+        scimOrg.setMeta(meta);
+        return scimOrg;
+    }
+    
+    public Organizations scimOrg2Org(ScimOrganization 	scimOrg) {
+    	Organizations org = new Organizations();
+    	org.setId(scimOrg.getId());
+    	org.setCode(scimOrg.getCode());
+    	org.setFullName(scimOrg.getFullName());
+    	org.setName(StringUtils.isNotBlank(scimOrg.getName()) ? scimOrg.getName():scimOrg.getDisplayName());
+    	org.setParentId(StringUtils.isNotBlank(scimOrg.getParentId())? scimOrg.getParentId():scimOrg.getParent());
+    	org.setParentCode(scimOrg.getParentCode());
+    	org.setParentName(scimOrg.getParentName());
+    	org.setSortOrder(StringUtils.isNotBlank(scimOrg.getSortOrder() )?scimOrg.getSortOrder():scimOrg.getOrder()+"");
+    	org.setLevel(scimOrg.getLevel());
+    	org.setType(scimOrg.getType());
+    	org.setDivision(scimOrg.getDivision());
+    	org.setDescription(scimOrg.getDescription());
+    	return org;
     }
 }

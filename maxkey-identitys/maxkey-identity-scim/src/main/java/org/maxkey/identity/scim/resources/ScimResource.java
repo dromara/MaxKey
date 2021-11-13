@@ -20,7 +20,7 @@ package org.maxkey.identity.scim.resources;
 import java.io.Serializable;
 import java.util.Set;
 
-public class Resource implements Serializable {
+public class ScimResource implements Serializable {
 
     /**
      * 
@@ -29,12 +29,12 @@ public class Resource implements Serializable {
     protected  Set<String> schemas;
     private  String id;
     private  String externalId;
-    private  Meta meta;
+    private  ScimMeta meta;
     
-    public Resource() {
+    public ScimResource() {
 
     }
-    public Resource(String id, String externalId, Meta meta, Set<String> schemas) {
+    public ScimResource(String id, String externalId, ScimMeta meta, Set<String> schemas) {
         super();
         this.id = id;
         this.externalId = externalId;
@@ -54,10 +54,10 @@ public class Resource implements Serializable {
     public void setExternalId(String externalId) {
         this.externalId = externalId;
     }
-    public Meta getMeta() {
+    public ScimMeta getMeta() {
         return meta;
     }
-    public void setMeta(Meta meta) {
+    public void setMeta(ScimMeta meta) {
         this.meta = meta;
     }
     public Set<String> getSchemas() {

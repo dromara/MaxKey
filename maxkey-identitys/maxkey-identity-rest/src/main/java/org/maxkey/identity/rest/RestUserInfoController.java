@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping(value={"/im/api/Users"})
+@RequestMapping(value={"/api/idm/Users"})
 public class RestUserInfoController {
 
     @Autowired

@@ -27,12 +27,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ScimSearchResult <T>{
 
+	public static class Constants{
+		public static final String FILTER		=	"filter";
+		public static final String SORTBY		=	"sortBy";
+		public static final String COUNT		=	"count";
+		public static final String STARTINDEX	=	"startIndex";
+		
+		
+	}
     public static final String SCHEMA = "urn:ietf:params:scim:api:messages:2.0:ListResponse";
     public static final int MAX_RESULTS = 100;
     private long totalResults;
     private long itemsPerPage;
     private long startIndex;
     private Set<String> schemas = new HashSet<>(Collections.singletonList(SCHEMA));
+    
+    @JsonProperty("Resources")
     private List<T> resources = new ArrayList<>();
 
     /**
@@ -50,7 +60,7 @@ public class ScimSearchResult <T>{
 
 
     /**
-     * gets a list of found {@link User}s or {@link Group}s
+     * gets a list of found {@link ScimUser}s or {@link ScimGroup}s
      *
      * @return a list of found resources
      */

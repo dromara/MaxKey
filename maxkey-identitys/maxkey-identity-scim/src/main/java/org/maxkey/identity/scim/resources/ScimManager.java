@@ -17,33 +17,28 @@
 
 package org.maxkey.identity.scim.resources;
 
-import java.util.HashSet;
-import java.util.Set;
+public class ScimManager {
 
-public class Group extends Resource{
-    private static final long serialVersionUID = 404613567384513866L;
-
-    public static final String SCHEMA = "urn:ietf:params:scim:schemas:core:2.0:Group";
-    
+    private  String managerId;
     private  String displayName;
-    private  Set<MemberRef> members;
-    
+    public String getManagerId() {
+        return managerId;
+    }
+    public void setManagerId(String managerId) {
+        this.managerId = managerId;
+    }
     public String getDisplayName() {
         return displayName;
     }
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
-    public Set<MemberRef> getMembers() {
-        return members;
+    public ScimManager() {
     }
-    public void setMembers(Set<MemberRef> members) {
-        this.members = members;
+    public ScimManager(String managerId, String displayName) {
+        super();
+        this.managerId = managerId;
+        this.displayName = displayName;
     }
-    
-    public Group() {
-        schemas =new HashSet<String>();
-        schemas.add(SCHEMA);
-    }
-    
+
 }

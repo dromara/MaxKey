@@ -19,11 +19,11 @@ package org.maxkey.identity.scim.resources;
 
 import java.io.Serializable;
 
-public class UserPhoto extends MultiValuedAttribute implements Serializable {
+public class ScimUserRole extends ScimMultiValuedAttribute implements Serializable {
 
     /**
      * 
      */
-    private static final long serialVersionUID = -3796708555581889691L;
+    private static final long serialVersionUID = 4482653235751625445L;
 
 }

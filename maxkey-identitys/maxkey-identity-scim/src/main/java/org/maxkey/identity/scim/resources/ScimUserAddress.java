@@ -19,7 +19,7 @@ package org.maxkey.identity.scim.resources;
 
 import java.io.Serializable;
 
-public class UserAddress extends MultiValuedAttribute implements Serializable {
+public class ScimUserAddress extends ScimMultiValuedAttribute implements Serializable {
 
     /**
      * 
@@ -81,7 +81,7 @@ public class UserAddress extends MultiValuedAttribute implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-    public UserAddress() {
+    public ScimUserAddress() {
     }
     
     

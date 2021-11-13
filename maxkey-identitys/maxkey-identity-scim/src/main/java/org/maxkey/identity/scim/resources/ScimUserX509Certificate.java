@@ -17,28 +17,13 @@
 
 package org.maxkey.identity.scim.resources;
 
-public class Manager {
+import java.io.Serializable;
 
-    private  String managerId;
-    private  String displayName;
-    public String getManagerId() {
-        return managerId;
-    }
-    public void setManagerId(String managerId) {
-        this.managerId = managerId;
-    }
-    public String getDisplayName() {
-        return displayName;
-    }
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-    public Manager() {
-    }
-    public Manager(String managerId, String displayName) {
-        super();
-        this.managerId = managerId;
-        this.displayName = displayName;
-    }
+public class ScimUserX509Certificate extends ScimMultiValuedAttribute implements Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5988790799054211553L;
 
 }

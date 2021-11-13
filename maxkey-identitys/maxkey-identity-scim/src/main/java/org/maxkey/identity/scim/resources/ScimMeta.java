@@ -26,7 +26,7 @@ import org.maxkey.json.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-public class Meta implements Serializable {
+public class ScimMeta implements Serializable {
     
     /**
      * 
@@ -87,10 +87,16 @@ public class Meta implements Serializable {
     public void setResourceType(String resourceType) {
         this.resourceType = resourceType;
     }
-    public Meta() {
+    public ScimMeta() {
 
     }
-    public Meta(String resourceType, Date created, Date lastModified, String location, String version,
+    
+    public ScimMeta(String resourceType) {
+    	this.resourceType 	= 	resourceType;
+    	this.version 		= 	"1.0";
+    }
+    
+    public ScimMeta(String resourceType, Date created, Date lastModified, String location, String version,
             Set<String> attributes) {
         super();
         this.resourceType = resourceType;

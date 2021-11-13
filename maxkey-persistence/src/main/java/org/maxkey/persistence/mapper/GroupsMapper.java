@@ -33,4 +33,6 @@ import org.maxkey.entity.Groups;
 public  interface GroupsMapper extends IJpaBaseMapper<Groups> {
 
     public List<Groups> queryDynamicGroups(Groups groups);
+    
+    public List<Groups> queryGroupByUserId(String userId);
 }

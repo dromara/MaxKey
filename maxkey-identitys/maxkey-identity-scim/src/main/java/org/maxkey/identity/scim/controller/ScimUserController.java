@@ -18,13 +18,34 @@
 package org.maxkey.identity.scim.controller;
 
 import java.io.IOException;
-import java.util.Map;
-
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.entity.Groups;
+import org.maxkey.entity.UserInfo;
+import org.maxkey.identity.scim.resources.ScimEnterprise;
+import org.maxkey.identity.scim.resources.ScimGroupRef;
+import org.maxkey.identity.scim.resources.ScimManager;
+import org.maxkey.identity.scim.resources.ScimMeta;
+import org.maxkey.identity.scim.resources.ScimParameters;
 import org.maxkey.identity.scim.resources.ScimSearchResult;
-import org.maxkey.identity.scim.resources.User;
+import org.maxkey.identity.scim.resources.ScimOrganizationEmail.UserEmailType;
+import org.maxkey.identity.scim.resources.ScimOrganizationPhoneNumber.UserPhoneNumberType;
+import org.maxkey.identity.scim.resources.ScimUser;
+import org.maxkey.identity.scim.resources.ScimUserEmail;
+import org.maxkey.identity.scim.resources.ScimFormattedName;
+import org.maxkey.identity.scim.resources.ScimUserPhoneNumber;
+import org.maxkey.persistence.service.GroupsService;
+import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.util.DateUtils;
+import org.maxkey.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,56 +65,170 @@ import org.springframework.web.util.UriComponentsBuilder;
  * http://tools.ietf.org/html/draft-ietf-scim-api-00#section-3
  */
 @RestController
-@RequestMapping(value = "/im/scim/v2/Users")
+@RequestMapping(value = "/api/idm/SCIM/v2/Users")
 public class ScimUserController {
-
+	final static Logger _logger = LoggerFactory.getLogger(ScimUserController.class);
+	@Autowired
+	private UserInfoService userInfoService;
+	
+	@Autowired
+	GroupsService groupsService;
+	
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public MappingJacksonValue getUser(@PathVariable String id,
+    public MappingJacksonValue get(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
-        //User user = null;
-        return null;
+        UserInfo userInfo = userInfoService.get(id);
+        ScimUser scimUser = userInfo2ScimUser(userInfo);
+        return new MappingJacksonValue(scimUser);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<MappingJacksonValue> create(@RequestBody  User user,
-                                                      @RequestParam(required = false) String attributes,
-                                                      UriComponentsBuilder builder) throws IOException {
-        //User createdUser = null;
-        return null;
+    public MappingJacksonValue create(@RequestBody  ScimUser user,
+                                      @RequestParam(required = false) String attributes,
+                                      UriComponentsBuilder builder) throws IOException {
+    	UserInfo userInfo = scimUser2UserInfo(user);
+    	userInfoService.insert(userInfo);
+        return get(userInfo.getId(),attributes);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<MappingJacksonValue> replace(@PathVariable String id,
-                                                       @RequestBody User user,
-                                                       @RequestParam(required = false) String attributes)
+    public MappingJacksonValue replace(@PathVariable String id,
+                                       @RequestBody ScimUser user,
+                                       @RequestParam(required = false) String attributes)
             throws IOException {
-        //User createdUser = null;
-        return null;
+    	UserInfo userInfo = scimUser2UserInfo(user);
+    	userInfoService.update(userInfo);
+        return get(id,attributes);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
-        //tokenService.revokeAllTokensOfUser(id);
-       
+    	userInfoService.remove(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public MappingJacksonValue searchWithGet(@RequestParam Map<String, String> requestParameters) {
+    public MappingJacksonValue searchWithGet(@ModelAttribute ScimParameters requestParameters) {
         return searchWithPost(requestParameters);
     }
 
     @RequestMapping(value = "/.search", method = RequestMethod.POST)
-    public MappingJacksonValue searchWithPost(@RequestParam Map<String, String> requestParameters) {
-        //ScimSearchResult<User> scimSearchResult = null;
-        /*
-                requestParameters.get("filter"),
-                requestParameters.get("sortBy"),
-                requestParameters.getOrDefault("sortOrder", "ascending"),             // scim default
-                Integer.parseInt(requestParameters.getOrDefault("count", "" + ScimServiceProviderConfigController.MAX_RESULTS)),
-                Integer.parseInt(requestParameters.getOrDefault("startIndex", "1")); // scim default
-*/
-        //String attributes = (requestParameters.containsKey("attributes") ? requestParameters.get("attributes") : "");
-        return null;
+    public MappingJacksonValue searchWithPost(@ModelAttribute ScimParameters requestParameters) {
+    	requestParameters.parse();
+    	_logger.debug("requestParameters {} ",requestParameters);
+    	UserInfo queryModel = new UserInfo();
+    	queryModel.setPageSize(requestParameters.getCount());
+    	queryModel.calculate(requestParameters.getStartIndex()); 
+        
+        JpaPageResults<UserInfo> orgResults = userInfoService.queryPageResults(queryModel);
+        List<ScimUser> resultList = new ArrayList<ScimUser>();
+        for(UserInfo user : orgResults.getRows()) {
+        	resultList.add(userInfo2ScimUser(user));
+        }
+        ScimSearchResult<ScimUser> scimSearchResult = 
+        		new ScimSearchResult<ScimUser>(
+        				resultList,
+        				orgResults.getRecords(),
+        				requestParameters.getCount(),
+        				requestParameters.getStartIndex());  
+        return new MappingJacksonValue(scimSearchResult);
+    }
+    
+    public ScimUser userInfo2ScimUser(UserInfo userInfo) {
+    	ScimUser scimUser =new ScimUser();
+    	scimUser.setId(userInfo.getId());
+    	scimUser.setExternalId(userInfo.getId());
+    	scimUser.setDisplayName(userInfo.getDisplayName());
+    	scimUser.setUserName(userInfo.getUsername());
+    	scimUser.setName(new ScimFormattedName(
+    									userInfo.getFormattedName(),
+    									userInfo.getFamilyName(),
+    									userInfo.getGivenName(),
+    									userInfo.getMiddleName(),
+    									userInfo.getHonorificPrefix(),
+    									userInfo.getHonorificSuffix()
+    						)
+    					);
+    	scimUser.setNickName(userInfo.getNickName());
+    	scimUser.setTitle(userInfo.getJobTitle());
+    	scimUser.setUserType(userInfo.getUserType());
+    	
+    	ScimEnterprise enterprise = new ScimEnterprise();
+    	enterprise.setDepartmentId(userInfo.getDepartmentId());
+    	enterprise.setDepartment(userInfo.getDepartment());
+    	enterprise.setCostCenter(userInfo.getCostCenter());
+    	enterprise.setManager(new ScimManager(userInfo.getManagerId(),userInfo.getManager()));
+    	enterprise.setDivision(userInfo.getDivision());
+    	enterprise.setEmployeeNumber(userInfo.getEmployeeNumber());
+    	scimUser.setEnterprise(enterprise);
+    	
+    	List<String> organizationsList=new  ArrayList<String>(); 
+    	organizationsList.add(userInfo.getDepartmentId());
+    	scimUser.setOrganization(organizationsList);
+    	
+    	List<String> groupsList=new  ArrayList<String>(); 
+    	List<ScimGroupRef> groups = new  ArrayList<ScimGroupRef>(); 
+    	for(Groups group : groupsService.queryGroupByUserId(userInfo.getId())){
+    		groupsList.add(group.getId());
+    		groups.add(new ScimGroupRef(group.getId(),group.getName()));
+    		
+    	}
+    	scimUser.setGroup(groupsList);
+    	scimUser.setGroups(groups);
+    	
+    	scimUser.setTimezone(userInfo.getTimeZone());
+    	scimUser.setLocale(userInfo.getLocale());
+    	scimUser.setPreferredLanguage(userInfo.getPreferredLanguage());
+    	scimUser.setActive(userInfo.getStatus() == ConstantsStatus.ACTIVE);
+    	
+    	List<ScimUserEmail> emails = new ArrayList<ScimUserEmail>(); 
+    	if(StringUtils.isNotBlank(userInfo.getEmail())){
+    		emails.add(new ScimUserEmail(userInfo.getEmail(),UserEmailType.OTHER,true));
+    	}
+    	if(StringUtils.isNotBlank(userInfo.getWorkEmail())){
+    		emails.add(new ScimUserEmail(userInfo.getEmail(),UserEmailType.WORK,false));
+    	}
+    	if(StringUtils.isNotBlank(userInfo.getHomeEmail())){
+    		emails.add(new ScimUserEmail(userInfo.getEmail(),UserEmailType.HOME,false));
+    	}
+    	
+    	if(emails.size() > 0) {
+    		scimUser.setEmails(emails);
+    	}
+    	
+    	List<ScimUserPhoneNumber> phoneNumbers = new ArrayList<ScimUserPhoneNumber>(); 
+    	if(StringUtils.isNotBlank(userInfo.getMobile())){
+    		phoneNumbers.add(new ScimUserPhoneNumber(userInfo.getMobile(),UserPhoneNumberType.MOBILE,true));
+    	}
+    	if(StringUtils.isNotBlank(userInfo.getWorkPhoneNumber())){
+    		phoneNumbers.add(new ScimUserPhoneNumber(userInfo.getWorkPhoneNumber(),UserPhoneNumberType.WORK,false));
+    	}
+    	
+    	if(StringUtils.isNotBlank(userInfo.getHomePhoneNumber())){
+    		phoneNumbers.add(new ScimUserPhoneNumber(userInfo.getHomePhoneNumber(),UserPhoneNumberType.HOME,false));
+    	}
+    	
+    	if(phoneNumbers.size() > 0) {
+    		scimUser.setPhoneNumbers(phoneNumbers);
+    	}
+    	
+        ScimMeta meta = new ScimMeta("User");
+        if(StringUtils.isNotBlank(userInfo.getCreatedDate())){
+        	meta.setCreated(
+        			DateUtils.parse(userInfo.getCreatedDate(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
+        }
+        if(StringUtils.isNotBlank(userInfo.getModifiedDate())){
+        	meta.setLastModified(
+        			DateUtils.parse(userInfo.getModifiedDate(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
+        }
+        scimUser.setMeta(meta);
+    	return scimUser;
+    }
+    
+    public UserInfo scimUser2UserInfo(ScimUser scimUser) {
+    	UserInfo userInfo = new UserInfo();
+    	userInfo.setId(scimUser.getId());
+    	userInfo.setUsername(scimUser.getUserName());
+    	return userInfo;
     }
 }

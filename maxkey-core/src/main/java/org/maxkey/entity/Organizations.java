@@ -43,6 +43,7 @@ public class Organizations extends JpaBaseEntity implements Serializable {
     private String fullName;
     @Column
     private String parentId;
+    private String parentCode;
     @Column
     private String parentName;
     @Column
@@ -85,6 +86,14 @@ public class Organizations extends JpaBaseEntity implements Serializable {
     private String description;
     @Column
     private int status;
+    @Column
+    String createdBy;
+    @Column
+    String createdDate;
+    @Column
+    String modifiedBy;
+    @Column
+    String modifiedDate;
     
     private int isPrimary = 0;
     
@@ -136,7 +145,15 @@ public class Organizations extends JpaBaseEntity implements Serializable {
         this.parentId = parentId;
     }
 
-    public String getParentName() {
+    public String getParentCode() {
+		return parentCode;
+	}
+
+	public void setParentCode(String parentCode) {
+		this.parentCode = parentCode;
+	}
+
+	public String getParentName() {
         return parentName;
     }
 
@@ -322,7 +339,39 @@ public class Organizations extends JpaBaseEntity implements Serializable {
         this.reorgNamePath = reorgNamePath;
     }
 
-    @Override
+    public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public String getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(String modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Organizations [id=");

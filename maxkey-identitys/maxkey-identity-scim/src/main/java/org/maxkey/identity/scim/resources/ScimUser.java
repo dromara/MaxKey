@@ -21,17 +21,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-public class User extends Resource{
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class ScimUser extends ScimResource{
 
     /**
      * 
      */
     private static final long serialVersionUID = -7478787809774041557L;
 
-    public static  String SCHEMA = "urn:ietf:params:scim:schemas:core:2.0:User";
+    public static final String SCHEMA = "urn:ietf:params:scim:schemas:core:2.0:User";
+    
+    public static final String SCHEMA_ENTERPRISE = "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User";
 
     private  String userName;
-    private  UserName name;
+    private  ScimFormattedName name;
     private  String displayName;
     private  String nickName;
     private  String profileUrl;
@@ -43,34 +47,42 @@ public class User extends Resource{
     private  Boolean active;
     private  String password;
 
-    private  List<UserEmail> emails;
+    private  List<ScimUserEmail> emails;
 
-    private  List<UserPhoneNumber> phoneNumbers;
+    private  List<ScimUserPhoneNumber> phoneNumbers;
+    
+    @JsonProperty(SCHEMA_ENTERPRISE)
+    ScimEnterprise enterprise;
+    
+    private  List<ScimUserIm> ims;
 
-    private  List<UserIm> ims;
-
-    private  List<UserPhoto> photos;
+    private  List<ScimUserPhoto> photos;
     // Can't really validate that one. value is not acessible
-    private  List<UserAddress> addresses;
+    private  List<ScimUserAddress> addresses;
 
-    private  List<GroupRef> groups;
+    private  List<ScimGroupRef> groups;
 
-    private  List<UserEntitlement> entitlements;
+    private  List<ScimUserEntitlement> entitlements;
 
-    private  List<UserRole> roles;
+    private  List<ScimUserRole> roles;
 
-    private  List<UserX509Certificate> x509Certificates;
-    private  Map<String, UserExtension> extensions;
+    private  List<ScimUserX509Certificate> x509Certificates;
+    private  Map<String, ScimUserExtension> extensions;
+    
+    // T/IDAC 002—2021
+    private  List<String> organization;
+    private  List<String> group;
+    
     public String getUserName() {
         return userName;
     }
     public void setUserName(String userName) {
         this.userName = userName;
     }
-    public UserName getName() {
+    public ScimFormattedName getName() {
         return name;
     }
-    public void setName(UserName name) {
+    public void setName(ScimFormattedName name) {
         this.name = name;
     }
     public String getDisplayName() {
@@ -133,67 +145,88 @@ public class User extends Resource{
     public void setPassword(String password) {
         this.password = password;
     }
-    public List<UserEmail> getEmails() {
+    public List<ScimUserEmail> getEmails() {
         return emails;
     }
-    public void setEmails(List<UserEmail> emails) {
+    public void setEmails(List<ScimUserEmail> emails) {
         this.emails = emails;
     }
-    public List<UserPhoneNumber> getPhoneNumbers() {
+    public List<ScimUserPhoneNumber> getPhoneNumbers() {
         return phoneNumbers;
     }
-    public void setPhoneNumbers(List<UserPhoneNumber> phoneNumbers) {
+    public void setPhoneNumbers(List<ScimUserPhoneNumber> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
-    public List<UserIm> getIms() {
+    public List<ScimUserIm> getIms() {
         return ims;
     }
-    public void setIms(List<UserIm> ims) {
+    public void setIms(List<ScimUserIm> ims) {
         this.ims = ims;
     }
-    public List<UserPhoto> getPhotos() {
+    public List<ScimUserPhoto> getPhotos() {
         return photos;
     }
-    public void setPhotos(List<UserPhoto> photos) {
+    public void setPhotos(List<ScimUserPhoto> photos) {
         this.photos = photos;
     }
-    public List<UserAddress> getAddresses() {
+    public List<ScimUserAddress> getAddresses() {
         return addresses;
     }
-    public void setAddresses(List<UserAddress> addresses) {
+    public void setAddresses(List<ScimUserAddress> addresses) {
         this.addresses = addresses;
     }
-    public List<GroupRef> getGroups() {
+    public List<ScimGroupRef> getGroups() {
         return groups;
     }
-    public void setGroups(List<GroupRef> groups) {
+    public void setGroups(List<ScimGroupRef> groups) {
         this.groups = groups;
     }
-    public List<UserEntitlement> getEntitlements() {
+    public List<ScimUserEntitlement> getEntitlements() {
         return entitlements;
     }
-    public void setEntitlements(List<UserEntitlement> entitlements) {
+    public void setEntitlements(List<ScimUserEntitlement> entitlements) {
         this.entitlements = entitlements;
     }
-    public List<UserRole> getRoles() {
+    public List<ScimUserRole> getRoles() {
         return roles;
     }
-    public void setRoles(List<UserRole> roles) {
+    public void setRoles(List<ScimUserRole> roles) {
         this.roles = roles;
     }
-    public List<UserX509Certificate> getX509Certificates() {
+    public List<ScimUserX509Certificate> getX509Certificates() {
         return x509Certificates;
     }
-    public void setX509Certificates(List<UserX509Certificate> x509Certificates) {
+    public void setX509Certificates(List<ScimUserX509Certificate> x509Certificates) {
         this.x509Certificates = x509Certificates;
     }
-    public Map<String, UserExtension> getExtensions() {
+    public Map<String, ScimUserExtension> getExtensions() {
         return extensions;
     }
-    public void setExtensions(Map<String, UserExtension> extensions) {
+    public void setExtensions(Map<String, ScimUserExtension> extensions) {
         this.extensions = extensions;
     }
-    public User() {
+    
+    
+    public ScimEnterprise getEnterprise() {
+		return enterprise;
+	}
+	public void setEnterprise(ScimEnterprise enterprise) {
+		this.enterprise = enterprise;
+	}
+
+	public List<String> getOrganization() {
+		return organization;
+	}
+	public void setOrganization(List<String> organization) {
+		this.organization = organization;
+	}
+	public List<String> getGroup() {
+		return group;
+	}
+	public void setGroup(List<String> group) {
+		this.group = group;
+	}
+	public ScimUser() {
         schemas =new HashSet<String>();
         schemas.add(SCHEMA);
     }

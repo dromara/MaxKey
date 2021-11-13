@@ -244,6 +244,52 @@
 			)
     </delete>
     
+    <select id="queryMemberByGroupId" parameterType="string"  resultType="UserInfo">
+            select  distinct
+                u.id,
+                u.username,
+                u.usertype,
+                u.windowsaccount,
+                
+                u.displayname ,
+                u.nickname ,
+                u.namezhspell,
+                u.namezhshortspell,
+                u.givenname ,
+                u.middlename ,
+                u.familyname ,
+                
+                u.gender,
+    
+                u.authntype,
+                u.mobile,
+                u.email,
+                u.workemail,
+                u.workphonenumber,
+    
+                u.employeenumber,
+                u.division,
+                u.costcenter,
+                u.organization,
+                u.departmentid,
+                u.department,
+                u.jobtitle,
+                u.joblevel,
+                gm.createddate,
+                u.status
+            from
+                mxk_userinfo u,
+                mxk_groups   g,
+                mxk_group_member gm
+            where   1   =   1
+                    and gm.groupid  = #{value}
+                    and g.id        = #{value}
+                    and gm.type     in( 'USER','USER-DYNAMIC')
+                    and gm.groupid  =   g.id    
+                    and gm.memberid =   u.id
+    </select>
+    
+    
     <delete id="deleteByGroupId" parameterType="string" >
     	delete from mxk_group_member gm
     	where  gm.groupid=#{value}

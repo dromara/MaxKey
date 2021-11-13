@@ -27,12 +27,12 @@ public class ScimEnterpriseUserJsonTest {
 
     public static void main(String[] args) {
        
-        EnterpriseUser u = new EnterpriseUser();
+        ScimEnterpriseUser u = new ScimEnterpriseUser();
         u.setUserName("UserName");
         u.setExternalId("UserName");
         u.setId("1111111111111");
         
-        Meta meta = new Meta();
+        ScimMeta meta = new ScimMeta();
         meta.setVersion("W\\/\"f250dd84f0671c3\"");
         meta.setCreated(new Date());
         meta.setLocation("https://example.com/v2/Users/2819c223...");
@@ -40,7 +40,7 @@ public class ScimEnterpriseUserJsonTest {
         meta.setLastModified(new Date());
         u.setMeta(meta);
         
-        UserName un=new UserName();
+        ScimFormattedName un=new ScimFormattedName();
         un.setFamilyName("Jensen");
         un.setFormatted("Ms. Barbara J Jensen, III");
         un.setGivenName("Barbara");
@@ -49,28 +49,28 @@ public class ScimEnterpriseUserJsonTest {
         un.setMiddleName("Jane");
         u.setName(un);
         
-        List<UserPhoneNumber> UserPhoneNumberList = new ArrayList<UserPhoneNumber>();
-        UserPhoneNumber pn =new UserPhoneNumber();
+        List<ScimUserPhoneNumber> UserPhoneNumberList = new ArrayList<ScimUserPhoneNumber>();
+        ScimUserPhoneNumber pn =new ScimUserPhoneNumber();
         pn.setValue("555-555-8377");
-        pn.setType(UserPhoneNumber.UserPhoneNumberType.WORK);
+        pn.setType(ScimUserPhoneNumber.UserPhoneNumberType.WORK);
         
-        UserPhoneNumber pnh =new UserPhoneNumber();
+        ScimUserPhoneNumber pnh =new ScimUserPhoneNumber();
         pnh.setValue("555-555-8377");
-        pnh.setType(UserPhoneNumber.UserPhoneNumberType.HOME);
+        pnh.setType(ScimUserPhoneNumber.UserPhoneNumberType.HOME);
         UserPhoneNumberList.add(pnh);
         
         UserPhoneNumberList.add(pn);
         
         u.setPhoneNumbers(UserPhoneNumberList);
         
-        List<UserEmail> ueList = new ArrayList<UserEmail>();
-        UserEmail ue =new UserEmail();
+        List<ScimUserEmail> ueList = new ArrayList<ScimUserEmail>();
+        ScimUserEmail ue =new ScimUserEmail();
         ue.setValue("bjensen@example.com");
-        ue.setType(UserEmail.UserEmailType.WORK);
+        ue.setType(ScimUserEmail.UserEmailType.WORK);
         ueList.add(ue);
         u.setEmails(ueList);
         
-        Enterprise ent =new Enterprise();
+        ScimEnterprise ent =new ScimEnterprise();
         ent.setCostCenter("1111");
         ent.setDepartment("de");
         ent.setEmployeeNumber("k200908");

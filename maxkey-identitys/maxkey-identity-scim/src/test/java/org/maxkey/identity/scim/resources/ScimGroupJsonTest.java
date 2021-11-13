@@ -26,9 +26,9 @@ import org.maxkey.util.JsonUtils;
 
 public class ScimGroupJsonTest {
     public static void main(String[] args) {
-        Group g= new Group();
+        ScimGroup g= new ScimGroup();
         
-        Meta meta = new Meta();
+        ScimMeta meta = new ScimMeta();
         meta.setVersion("W\\/\"f250dd84f0671c3\"");
         meta.setCreated(new Date());
         meta.setLocation("https://example.com/v2/Users/2819c223...");
@@ -38,16 +38,16 @@ public class ScimGroupJsonTest {
               
         g.setDisplayName("Tour Guides");
         
-        Set<MemberRef> mrSet =new HashSet<MemberRef>();
-        MemberRef mr1 =new MemberRef();
+        Set<ScimMemberRef> mrSet =new HashSet<ScimMemberRef>();
+        ScimMemberRef mr1 =new ScimMemberRef();
         mr1.setReference("https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646");
         mr1.setValue("2819c223-7f76-453a-919d-413861904646");
         mr1.setDisplay("Babs Jensen");
-        MemberRef mr2 =new MemberRef();
+        ScimMemberRef mr2 =new ScimMemberRef();
         mr2.setReference("https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646");
         mr2.setValue("2819c223-7f76-453a-919d-413861904646");
         mr2.setDisplay("Babs Jensen");
-        MemberRef mr3 =new MemberRef();
+        ScimMemberRef mr3 =new ScimMemberRef();
         mr3.setReference("https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646");
         mr3.setValue("2819c223-7f76-453a-919d-413861904646");
         mr3.setDisplay("Babs Jensen");

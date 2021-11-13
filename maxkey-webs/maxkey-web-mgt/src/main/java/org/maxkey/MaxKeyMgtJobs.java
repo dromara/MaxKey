@@ -94,7 +94,7 @@ public class MaxKeyMgtJobs  implements InitializingBean {
 					.build();
 		
 		JobDataMap jobDataMap = new JobDataMap();
-		jobDataMap.put("groupsService", groupsService);
+		jobDataMap.put("service", groupsService);
 		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronSchedule);
 		
 		CronTrigger cronTrigger = 
@@ -121,7 +121,7 @@ public class MaxKeyMgtJobs  implements InitializingBean {
 			.build();
 		
 		JobDataMap jobDataMap = new JobDataMap();
-		jobDataMap.put("accountsService", accountsService);
+		jobDataMap.put("service", accountsService);
 		
 		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronSchedule);
 		CronTrigger cronTrigger = 

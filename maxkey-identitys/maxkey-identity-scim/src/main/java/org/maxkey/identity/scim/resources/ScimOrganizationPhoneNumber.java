@@ -19,7 +19,7 @@ package org.maxkey.identity.scim.resources;
 
 import java.io.Serializable;
 
-public class OrganizationPhoneNumber extends MultiValuedAttribute implements Serializable {
+public class ScimOrganizationPhoneNumber extends ScimMultiValuedAttribute implements Serializable {
 
     /**
      * 

@@ -19,53 +19,48 @@ package org.maxkey.identity.scim.resources;
 
 import java.io.Serializable;
 
-public class UserEmail extends MultiValuedAttribute implements Serializable {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -41327146592552688L;
+public class ScimMultiValuedAttribute implements Serializable {
     
-    public static class UserEmailType {
-        public static final String WORK = "work";
-        public static final String HOME = "home";
-        public static final String OTHER = "other";
-
-    }
-
+    private static final long serialVersionUID = 6878912593878245947L;
+    
+    String value;
+    String display;
+    boolean primary;
+    @JsonProperty("$ref")
+    String reference;
+    String type;
+      
     public String getValue() {
         return value;
     }
-
     public void setValue(String value) {
         this.value = value;
     }
-
-    public String getType() {
-        return type;
+    public String getDisplay() {
+        return display;
     }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setDisplay(String display) {
+        this.display = display;
     }
-
     public boolean isPrimary() {
         return primary;
     }
-
     public void setPrimary(boolean primary) {
         this.primary = primary;
     }
-
-    public UserEmail() {
+    public String getReference() {
+        return reference;
     }
-
-    public UserEmail(String value, String type, boolean primary) {
-        super();
-        this.value = value;
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
         this.type = type;
-        this.primary = primary;
     }
-    
     
 }

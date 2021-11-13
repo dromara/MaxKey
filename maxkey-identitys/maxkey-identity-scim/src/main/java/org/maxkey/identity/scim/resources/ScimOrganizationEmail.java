@@ -19,7 +19,7 @@ package org.maxkey.identity.scim.resources;
 
 import java.io.Serializable;
 
-public class OrganizationEmail extends MultiValuedAttribute implements Serializable {
+public class ScimOrganizationEmail extends ScimMultiValuedAttribute implements Serializable {
 
     /**
      * 
@@ -57,10 +57,10 @@ public class OrganizationEmail extends MultiValuedAttribute implements Serializa
         this.primary = primary;
     }
 
-    public OrganizationEmail() {
+    public ScimOrganizationEmail() {
     }
 
-    public OrganizationEmail(String value, String type, boolean primary) {
+    public ScimOrganizationEmail(String value, String type, boolean primary) {
         super();
         this.value = value;
         this.type = type;

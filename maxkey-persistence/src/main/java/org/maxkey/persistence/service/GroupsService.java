@@ -71,6 +71,10 @@ public class GroupsService  extends JpaBaseService<Groups> implements Serializab
 	    return true;
 	}
 	
+	public List<Groups> queryGroupByUserId(String userId){
+		return this.getMapper().queryGroupByUserId(userId);
+	}
+	
 	public void refreshDynamicGroups(Groups dynamicGroup){
 	    if(dynamicGroup.getDynamic().equals(ConstantsStatus.ACTIVE+"")) {
 	        boolean isDynamicTimeSupport = false;

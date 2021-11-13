@@ -20,7 +20,7 @@ package org.maxkey.identity.scim.resources;
 import java.util.HashSet;
 import java.util.List;
 
-public class Organization extends Resource{
+public class ScimOrganization extends ScimResource{
 
     /**
      * 
@@ -48,15 +48,23 @@ public class Organization extends Resource{
     
     private String division;
     
-    private  List<OrganizationAddress> addresses;
+    private  List<ScimOrganizationAddress> addresses;
     
-    private  List<OrganizationEmail> emails;
+    private  List<ScimOrganizationEmail> emails;
 
-    private  List<OrganizationPhoneNumber> phoneNumbers;
+    private  List<ScimOrganizationPhoneNumber> phoneNumbers;
+    
     
     private String sortOrder;
     
     private String description;
+    
+    // T/IDAC 002—2021
+    private String 	displayName;	//name
+    private long   	order;			//sortOrder
+    private String 	parent; 		//parentId
+    private String 	parentCode;		//parent code
+    
     
     public String getCode() {
         return code;
@@ -154,33 +162,67 @@ public class Organization extends Resource{
         this.description = description;
     }
 
-    public List<OrganizationAddress> getAddresses() {
+    public List<ScimOrganizationAddress> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(List<OrganizationAddress> addresses) {
+    public void setAddresses(List<ScimOrganizationAddress> addresses) {
         this.addresses = addresses;
     }
 
-    public List<OrganizationEmail> getEmails() {
+    public List<ScimOrganizationEmail> getEmails() {
         return emails;
     }
 
-    public void setEmails(List<OrganizationEmail> emails) {
+    public void setEmails(List<ScimOrganizationEmail> emails) {
         this.emails = emails;
     }
 
-    public List<OrganizationPhoneNumber> getPhoneNumbers() {
+    public List<ScimOrganizationPhoneNumber> getPhoneNumbers() {
         return phoneNumbers;
     }
 
-    public void setPhoneNumbers(List<OrganizationPhoneNumber> phoneNumbers) {
+    public void setPhoneNumbers(List<ScimOrganizationPhoneNumber> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
 
-    public Organization() {
+    
+    public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public long getOrder() {
+		return order;
+	}
+
+	public void setOrder(long order) {
+		this.order = order;
+	}
+
+	public String getParent() {
+		return parent;
+	}
+
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
+
+	public String getParentCode() {
+		return parentCode;
+	}
+
+	public void setParentCode(String parentCode) {
+		this.parentCode = parentCode;
+	}
+
+	public ScimOrganization() {
         schemas =new HashSet<String>();
         schemas.add(SCHEMA);
+        
     }
     
     

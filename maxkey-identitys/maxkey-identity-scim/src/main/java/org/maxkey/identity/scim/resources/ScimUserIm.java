@@ -17,31 +17,23 @@
 
 package org.maxkey.identity.scim.resources;
 
-import java.util.HashSet;
+import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+public class ScimUserIm extends ScimMultiValuedAttribute implements Serializable {
 
-public class EnterpriseUser extends User {
-    private static final long serialVersionUID = 3212312511630459427L;
-    
-    public static final String SCHEMA = "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User";
-    
-    @JsonProperty(SCHEMA)
-    Enterprise enterprise;
-    
-    public EnterpriseUser() {
-        schemas =new HashSet<String>();
-        schemas.add(User.SCHEMA);
-        schemas.add(SCHEMA);
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -529297556948872883L;
+
+    public static class UserImType {
+        public static final String AIM = "aim";
+        public static final String GTALK = "gtalk";
+        public static final String ICQ = "icq";
+        public static final String XMPP = "xmpp";
+        public static final String MSN = "msn";
+        public static final String SKYPE = "skype";
+        public static final String QQ = "qq";
+        public static final String YAHOO = "yahoo";
     }
-
-    public Enterprise getEnterprise() {
-        return enterprise;
-    }
-
-    public void setEnterprise(Enterprise enterprise) {
-        this.enterprise = enterprise;
-    }
-    
-    
 }

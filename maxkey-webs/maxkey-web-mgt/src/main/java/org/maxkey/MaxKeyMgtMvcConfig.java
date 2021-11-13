@@ -151,11 +151,17 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
         _logger.debug("add LocaleChangeInterceptor");
         
         
-        
+        /*
+         * api
+         * idm
+         * scim
+         * */
         registry.addInterceptor(restApiPermissionAdapter)
-                .addPathPatterns("/im/api/**")
+                .addPathPatterns("/api/**")
+                .addPathPatterns("/api/idm/**")
+                .addPathPatterns("/api/idm/scim/**")
                 ;
-
+		
         _logger.debug("add RestApiPermissionAdapter");
         
     }
