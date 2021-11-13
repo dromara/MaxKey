@@ -55,7 +55,7 @@ import org.springframework.web.util.UriComponentsBuilder;
  * http://tools.ietf.org/html/draft-ietf-scim-api-00#section-3
  */
 @RestController
-@RequestMapping(value = "/api/idm/SCIM/v2/Organization")
+@RequestMapping(value = "/api/idm/SCIM/v2/Organizations")
 public class ScimOrganizationController {
 	final static Logger _logger = LoggerFactory.getLogger(ScimOrganizationController.class);
 	
