@@ -60,7 +60,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
     
     protected final static  Cache<String, ClientDetails> clientDetailsCache = 
             Caffeine.newBuilder()
-                .expireAfterWrite(60, TimeUnit.MINUTES)
+                .expireAfterWrite(30, TimeUnit.MINUTES)
                 .maximumSize(200000)
                 .build();
 

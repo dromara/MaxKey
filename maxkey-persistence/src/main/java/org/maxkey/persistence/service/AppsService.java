@@ -31,12 +31,15 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Repository
 public class AppsService extends JpaBaseService<Apps>{
+	//maxkey-mgt
+	public final static 	String MGT_APP_ID 		= "622076759805923328";
 	
-	public final static String DETAIL_SUFFIX	=	"_detail";
+	public final static 	String DETAIL_SUFFIX	=	"_detail";
+	
 	protected final static  Cache<String, Apps> appsDetailsCacheStore = 
-			Caffeine.newBuilder()
-                .expireAfterWrite(60, TimeUnit.MINUTES)
-                .build();
+										Caffeine.newBuilder()
+							                .expireAfterWrite(30, TimeUnit.MINUTES)
+							                .build();
 	
 	public AppsService() {
 		super(AppsMapper.class);
@@ -75,7 +78,8 @@ public class AppsService extends JpaBaseService<Apps>{
         return appDetails;
     }
 
-    public Apps  loadAppById(String id) {
+    public Apps  loadById(String id) {
+    	id = id.equalsIgnoreCase("maxkey_mgt") ? MGT_APP_ID : id;
     	Apps app = appsDetailsCacheStore.getIfPresent(id); 
     	if(app == null) {
     		app = get(id);
@@ -83,4 +87,5 @@ public class AppsService extends JpaBaseService<Apps>{
     	}
     	return app;
     }
+    
 }

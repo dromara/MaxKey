@@ -28,6 +28,8 @@ import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.AppsCasDetailsService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +46,8 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "1-2认证总地址文档模块")
 @Controller
 public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
+	final static Logger _logger = LoggerFactory.getLogger(AuthorizeEndpoint.class);
+	
 	@Autowired
 	AppsCasDetailsService casDetailsService;
 	
@@ -54,30 +58,29 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 			HttpServletRequest request,
 			@PathVariable("id") String id){
 		ModelAndView modelAndView=null;
-		Apps  application=getApp(id);
-		id = application.getId();
-		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, application.getId());
+		Apps  app=getApp(id);
+		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, app.getId());
 		
-		if(application.getProtocol().equalsIgnoreCase(ConstantsProtocols.EXTEND_API)){
-			modelAndView=WebContext.forward("/authz/api/"+id);
-		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.FORMBASED)){
-			 modelAndView=WebContext.forward("/authz/formbased/"+id);
-		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH20)){
-			 modelAndView=WebContext.forward("/authz/oauth/v20/"+application.getId());
-		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH21)){
-		    modelAndView=WebContext.redirect(application.getLoginUrl());
-        }else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.OPEN_ID_CONNECT10)){
-            modelAndView=WebContext.forward("/authz/oauth/v20/"+application.getId());
-		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.SAML20)){
-			 modelAndView=WebContext.forward("/authz/saml20/idpinit/"+application.getId());
-		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.TOKENBASED)){
-			modelAndView=WebContext.forward("/authz/tokenbased/"+id);
-		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.CAS)){
-			modelAndView=WebContext.forward("/authz/cas/"+id);
-		}else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.JWT)){
-            modelAndView=WebContext.forward("/authz/jwt/"+id);
-        }else if (application.getProtocol().equalsIgnoreCase(ConstantsProtocols.BASIC)){
-			modelAndView=WebContext.redirect(application.getLoginUrl());
+		if(app.getProtocol().equalsIgnoreCase(ConstantsProtocols.EXTEND_API)){
+			modelAndView=WebContext.forward("/authz/api/"+app.getId());
+		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.FORMBASED)){
+			 modelAndView=WebContext.forward("/authz/formbased/"+app.getId());
+		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH20)){
+			 modelAndView=WebContext.forward("/authz/oauth/v20/"+app.getId());
+		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH21)){
+		    modelAndView=WebContext.redirect(app.getLoginUrl());
+        }else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.OPEN_ID_CONNECT10)){
+            modelAndView=WebContext.forward("/authz/oauth/v20/"+app.getId());
+		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.SAML20)){
+			 modelAndView=WebContext.forward("/authz/saml20/idpinit/"+app.getId());
+		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.TOKENBASED)){
+			modelAndView=WebContext.forward("/authz/tokenbased/"+app.getId());
+		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.CAS)){
+			modelAndView=WebContext.forward("/authz/cas/"+app.getId());
+		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.JWT)){
+            modelAndView=WebContext.forward("/authz/jwt/"+app.getId());
+        }else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.BASIC)){
+			modelAndView=WebContext.redirect(app.getLoginUrl());
 		}
 		
 		_logger.debug(modelAndView.getViewName());
