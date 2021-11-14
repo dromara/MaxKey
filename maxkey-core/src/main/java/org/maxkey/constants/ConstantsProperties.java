@@ -18,9 +18,6 @@
 package org.maxkey.constants;
 
 public class ConstantsProperties {
-
-    public static final String kaptchaPropertySource      = 
-            "classpath:/kaptcha.properties";
     
     public static String classPathResource(String propertySource) {
         return propertySource.replaceAll("classpath:","");

@@ -19,13 +19,16 @@ package org.maxkey.web.contorller;
 
 import com.google.code.kaptcha.Producer;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.maxkey.web.WebConstants;
-import org.maxkey.web.image.AbstractImageEndpoint;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -36,11 +39,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-public class ImageCaptchaEndpoint extends AbstractImageEndpoint {
+public class ImageCaptchaEndpoint {
     private static final Logger _logger = LoggerFactory.getLogger(ImageCaptchaEndpoint.class);
 
+    public static final	String IMAGE_GIF 			= "image/gif";
+    
+    public static final	String KAPTCHA_SESSION_KEY 	= "kaptcha_session_key";
+    
     @Autowired
     private Producer captchaProducer;
+    
+    @Value("${maxkey.login.captcha.type}")
+    private String captchaType;
+    
 
     /**
      * captcha image Producer.
@@ -53,8 +64,7 @@ public class ImageCaptchaEndpoint extends AbstractImageEndpoint {
         try {
            
             String kaptchaText = captchaProducer.createText();
-            if (applicationConfig.getLoginConfig().getCaptchaType()
-                                        .equalsIgnoreCase("Arithmetic")) {
+            if (captchaType.equalsIgnoreCase("Arithmetic")) {
                 Integer intParamA = Integer.valueOf(kaptchaText.substring(0, 1));
                 Integer intParamB = Integer.valueOf(kaptchaText.substring(1, 2));
                 Integer calculateValue = 0;
@@ -68,10 +78,10 @@ public class ImageCaptchaEndpoint extends AbstractImageEndpoint {
                 _logger.trace("Sesssion id " + request.getSession().getId() 
                         + " , Arithmetic calculate Value is " + calculateValue);
                 request.getSession().setAttribute(
-                        WebConstants.KAPTCHA_SESSION_KEY, calculateValue + "");
+                        KAPTCHA_SESSION_KEY, calculateValue + "");
             } else {
                 // store the text in the session
-                request.getSession().setAttribute(WebConstants.KAPTCHA_SESSION_KEY, kaptchaText);
+                request.getSession().setAttribute(KAPTCHA_SESSION_KEY, kaptchaText);
             }
             _logger.trace("Sesssion id " + request.getSession().getId() 
                                 + " , Captcha Text is " + kaptchaText);
@@ -84,9 +94,46 @@ public class ImageCaptchaEndpoint extends AbstractImageEndpoint {
         }
     }
 
+    /**
+     * producerImage.
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @param bufferedImage BufferedImage
+     * @throws IOException error
+     */
+    public static void producerImage(HttpServletRequest request, 
+                              HttpServletResponse response,
+                              BufferedImage bufferedImage) throws IOException {
+        // Set to expire far in the past.
+        response.setDateHeader("Expires", 0);
+        // Set standard HTTP/1.1 no-cache headers.
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+        // Set IE extended HTTP/1.1 no-cache headers (use addHeader).
+        response.addHeader("Cache-Control", "post-check=0, pre-check=0");
+        // Set standard HTTP/1.0 no-cache header.
+        response.setHeader("Pragma", "no-cache");
+        // return a jpeg/gif
+        response.setContentType(IMAGE_GIF);
+        _logger.trace("create the image");
+        // create the image
+        if (bufferedImage != null) {
+            ServletOutputStream out = response.getOutputStream();
+            // write the data out
+            ImageIO.write(bufferedImage, "gif", out);
+            try {
+                out.flush();
+            } finally {
+                out.close();
+            }
+        }
+    }
  
 
-    public void setCaptchaProducer(Producer captchaProducer) {
+    public void setCaptchaType(String captchaType) {
+		this.captchaType = captchaType;
+	}
+
+	public void setCaptchaProducer(Producer captchaProducer) {
         this.captchaProducer = captchaProducer;
     }
 
