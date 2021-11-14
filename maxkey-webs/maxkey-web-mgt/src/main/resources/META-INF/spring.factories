@@ -8,6 +8,7 @@ org.maxkey.autoconfigure.RedisAutoConfiguration,\
 org.maxkey.autoconfigure.AuthenticationAutoConfiguration,\
 org.maxkey.synchronizer.autoconfigure.SynchronizerAutoConfiguration,\
 org.maxkey.autoconfigure.SwaggerConfig,\
+org.maxkey.Oauth20ClientAutoConfiguration,\
 org.maxkey.MaxKeyMgtConfig,\
 org.maxkey.MaxKeyMgtJobs,\
 org.maxkey.MaxKeyMgtMvcConfig

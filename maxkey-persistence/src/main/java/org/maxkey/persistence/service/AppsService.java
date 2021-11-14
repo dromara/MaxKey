@@ -31,7 +31,8 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Repository
 public class AppsService extends JpaBaseService<Apps>{
-
+	
+	public final static String DETAIL_SUFFIX	=	"_detail";
 	protected final static  Cache<String, Apps> appsDetailsCacheStore = 
 			Caffeine.newBuilder()
                 .expireAfterWrite(60, TimeUnit.MINUTES)
@@ -63,14 +64,23 @@ public class AppsService extends JpaBaseService<Apps>{
     public List<UserApps> queryMyApps(UserApps userApplications){
         return getMapper().queryMyApps(userApplications);
     }
-    
+
     //cache for running
     public void storeCacheAppDetails(String appId, Apps appDetails) {
-    	appsDetailsCacheStore.put(appId, appDetails);
+    	appsDetailsCacheStore.put(appId + DETAIL_SUFFIX, appDetails);
 	}
 	
     public Apps getCacheAppDetails(String appId) {
-    	Apps appDetails=appsDetailsCacheStore.getIfPresent(appId); 
+    	Apps appDetails=appsDetailsCacheStore.getIfPresent(appId + DETAIL_SUFFIX); 
         return appDetails;
+    }
+
+    public Apps  loadAppById(String id) {
+    	Apps app = appsDetailsCacheStore.getIfPresent(id); 
+    	if(app == null) {
+    		app = get(id);
+    		appsDetailsCacheStore.put(id, app);
+    	}
+    	return app;
     }
 }

@@ -18,25 +18,25 @@
 package org.maxkey.web.interceptor;
 
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.maxkey.crypto.password.PasswordReciprocal;
-import org.maxkey.entity.apps.Apps;
-import org.maxkey.persistence.service.AppsService;
+
+import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
+import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.maxkey.util.AuthorizationHeaderCredential;
 import org.maxkey.util.AuthorizationHeaderUtils;
+import org.maxkey.util.StringUtils;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
-
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 
 /**
  * basic认证Interceptor处理.
@@ -46,18 +46,14 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 @Component
 public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	private static final Logger _logger = LoggerFactory.getLogger(RestApiPermissionAdapter.class);
-	
-    protected static final Cache<String, Apps> appsCacheStore = 
-            Caffeine.newBuilder()
-                .expireAfterWrite(60, TimeUnit.MINUTES)
-                .build();
-    
+
 	@Autowired
-    AppsService appsService;
-	
+	@Qualifier("oauth20TokenServices")
+	DefaultTokenServices oauth20TokenServices;
+
 	@Autowired
-    @Qualifier("passwordReciprocal")
-    protected PasswordReciprocal passwordReciprocal;
+    @Qualifier("oauth20ClientAuthenticationManager")
+	ProviderManager authenticationManager;
 	
 	static  ConcurrentHashMap<String ,String >navigationsMap=null;
 	
@@ -70,26 +66,46 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 _logger.trace("RestApiPermissionAdapter preHandle");
 		String  authorization = request.getHeader(AuthorizationHeaderUtils.AUTHORIZATION_HEADERNAME);
-		 
 		AuthorizationHeaderCredential headerCredential = AuthorizationHeaderUtils.resolve(authorization);
 		 
 		//判断应用的AppId和Secret
 		if(headerCredential != null){
-			String appId = headerCredential.getUsername();
-			String appSecret = headerCredential.getCredential();
-		    _logger.trace("appId "+ appId+" , appSecret " + appSecret);
-		    Apps app = appsCacheStore.getIfPresent(appId);
-		    if (app == null) {
-		    	app = appsService.get(appId);
-		    	appsCacheStore.put(appId, app);
-		    }
-		    
-		    _logger.debug("App Info "+ app.getSecret());
-		    if(app != null && passwordReciprocal.matches(appSecret, app.getSecret())) {
-		        return true;
-		    }
+			UsernamePasswordAuthenticationToken authenticationToken = null;
+			if(headerCredential.getCredentialType().equals(AuthorizationHeaderCredential.Credential.BASIC)) {
+			    if(StringUtils.isNotBlank(headerCredential.getUsername())&&
+			    		StringUtils.isNotBlank(headerCredential.getCredential())
+			    		) {
+			    	UsernamePasswordAuthenticationToken authRequest = 
+							new UsernamePasswordAuthenticationToken(
+									headerCredential.getUsername(),
+									headerCredential.getCredential());
+			    	authenticationToken= (UsernamePasswordAuthenticationToken)authenticationManager.authenticate(authRequest);
+			    }
+			}else {
+				_logger.trace("Authentication bearer " + headerCredential.getCredential());
+				OAuth2Authentication oauth2Authentication = 
+						oauth20TokenServices.loadAuthentication(headerCredential.getCredential());
+				
+				if(oauth2Authentication != null) {
+					_logger.trace("Authentication token " + oauth2Authentication.getPrincipal().toString());
+					authenticationToken= new UsernamePasswordAuthenticationToken(
+			    			new User(
+			    					oauth2Authentication.getPrincipal().toString(), 
+			    					"CLIENT_SECRET", 
+			    					oauth2Authentication.getAuthorities()), 
+	                        "PASSWORD", 
+	                        oauth2Authentication.getAuthorities()
+	                );
+				}else {
+					_logger.trace("Authentication token is null ");
+				}
+			}
+			
+			if(authenticationToken !=null && authenticationToken.isAuthenticated()) {
+				WebContext.setAuthentication(authenticationToken);
+				return true;
+			}
 		}
-		
 		
 		_logger.trace("No Authentication ... forward to /login");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
