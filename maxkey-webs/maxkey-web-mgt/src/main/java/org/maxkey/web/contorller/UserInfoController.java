@@ -18,20 +18,32 @@
 package org.maxkey.web.contorller;
 
 import java.beans.PropertyEditorSupport;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.entity.ExcelImport;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.util.DateUtils;
+import org.maxkey.util.ExcelUtils;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
@@ -45,6 +57,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -55,6 +68,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.common.collect.Lists;
 
 /**
  * @author Crystal.Sea
@@ -89,9 +103,6 @@ public class UserInfoController {
 		//modelAndView.addObject("userTypeList", userTypeList);
 		return modelAndView;
 	}
-	
-	
-	
 	
 	@RequestMapping(value={"/list"})
 	public ModelAndView usersList(){
@@ -276,15 +287,152 @@ public class UserInfoController {
 	
     @RequestMapping(value = "/import")
     public ModelAndView importing(@ModelAttribute("excelImportFile")ExcelImport excelImportFile)  {
-        ModelAndView modelAndView=new ModelAndView("/userinfo/usersImport");
-        
-        if (excelImportFile.getExcelFile() != null && !excelImportFile.getExcelFile().isEmpty() && userInfoService.importing(excelImportFile.getExcelFile())) {
-             new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
+        if (excelImportFile.isExcelNotEmpty() ) {
+            try {
+                int columnSize = 46;
+                List<UserInfo> userInfoList = Lists.newArrayList();
+                Workbook workbook = excelImportFile.biuldWorkbook();
+                int recordCount = 0;
+                int sheetSize = workbook.getNumberOfSheets();
+                //遍历sheet页
+                for (int i = 0; i < sheetSize; i++) {
+                    Sheet sheet = workbook.getSheetAt(i);
+                    int rowSize = sheet.getLastRowNum() + 1;
+                    for (int j = 1; j < rowSize; j++) {//遍历行
+                        Row row = sheet.getRow(j);
+                        if (row == null || j <3 ) {//略过空行和前3行
+                            continue;
+                        } else {//其他行是数据行
+                            UserInfo userInfo = new UserInfo();
+                            userInfo.setCreatedDate(DateUtils.formatDateTime(new Date()));
+                            
+                            for (int k = 0; k < columnSize; k++) {
+                            	Cell cell = row.getCell(k);
+                                if (k == 0) {// 登录账号
+                                    userInfo.setUsername(ExcelUtils.getValue(cell));
+                                } else if (k == 1) {// 密码
+                                    userInfo.setPassword(ExcelUtils.getValue(cell));
+                                } else if (k == 2) {// 用户显示
+                                    userInfo.setDisplayName(ExcelUtils.getValue(cell));
+                                } else if (k == 3) {// 姓
+                                    userInfo.setFamilyName(ExcelUtils.getValue(cell));
+                                } else if (k == 4) {// 名
+                                    userInfo.setGivenName(ExcelUtils.getValue(cell));
+                                } else if (k == 5) {// 中间名
+                                    userInfo.setMiddleName(ExcelUtils.getValue(cell));
+                                } else if (k == 6) {// 昵称
+                                    userInfo.setNickName(ExcelUtils.getValue(cell));
+                                } else if (k == 7) {// 性别
+                                    String gender = ExcelUtils.getValue(cell);
+                                    userInfo.setGender(gender.equals("")? 1 : Integer.valueOf(ExcelUtils.getValue(cell)));
+                                } else if (k == 8) {// 语言偏好
+                                    userInfo.setPreferredLanguage(ExcelUtils.getValue(cell));
+                                } else if (k == 9) {// 时区
+                                    userInfo.setTimeZone(ExcelUtils.getValue(cell));
+                                } else if (k == 10) {// 用户类型
+                                    userInfo.setUserType(ExcelUtils.getValue(cell));
+                                } else if (k == 11) {// 员工编码
+                                    userInfo.setEmployeeNumber(ExcelUtils.getValue(cell));
+                                } else if (k == 12) {// AD域账号
+                                    userInfo.setWindowsAccount(ExcelUtils.getValue(cell));
+                                }else if (k == 13) {// 所属机构
+                                    userInfo.setOrganization(ExcelUtils.getValue(cell));
+                                }else if (k == 14) {// 分支机构
+                                    userInfo.setDivision(ExcelUtils.getValue(cell));
+                                }else if (k == 15) {// 部门编号
+                                    userInfo.setDepartmentId(ExcelUtils.getValue(cell));
+                                }else if (k == 16) {// 部门名称
+                                    userInfo.setDepartment(ExcelUtils.getValue(cell));
+                                }else if (k == 17) {// 成本中心
+                                    userInfo.setCostCenter(ExcelUtils.getValue(cell));
+                                }else if (k == 18) {// 职位
+                                    userInfo.setJobTitle(ExcelUtils.getValue(cell));
+                                }else if (k == 19) { // 级别
+                                    userInfo.setJobLevel(ExcelUtils.getValue(cell));
+                                }else if (k == 20) {// 上级经理
+                                    userInfo.setManager(ExcelUtils.getValue(cell));
+                                }else if (k == 21) {// 助理
+                                    userInfo.setAssistant(ExcelUtils.getValue(cell));
+                                }else if (k == 22) {// 入职时间
+                                    userInfo.setEntryDate(ExcelUtils.getValue(cell));
+                                }else if (k == 23) {
+                                    // 离职时间
+                                    userInfo.setQuitDate(ExcelUtils.getValue(cell));
+                                }else if (k == 24) {// 工作-国家
+                                    userInfo.setWorkCountry(ExcelUtils.getValue(cell));
+                                }else if (k == 25) {// 工作-省
+                                    userInfo.setWorkRegion(ExcelUtils.getValue(cell));
+                                }else if (k == 26) {// 工作-城市
+                                    userInfo.setTimeZone(ExcelUtils.getValue(cell));
+                                }else if (k == 27) {// 工作-地址
+                                    userInfo.setWorkLocality(ExcelUtils.getValue(cell));
+                                }else if (k == 28) {// 邮编
+                                    userInfo.setWorkPostalCode(ExcelUtils.getValue(cell));
+                                }else if (k == 29) {// 传真
+                                    userInfo.setWorkFax(ExcelUtils.getValue(cell));
+                                }else if (k == 30) {// 工作电话
+                                    userInfo.setWorkPhoneNumber(ExcelUtils.getValue(cell));
+                                }else if (k == 31) {// 工作邮件
+                                    userInfo.setWorkEmail(ExcelUtils.getValue(cell));
+                                }else if (k == 32) {// 证件类型 todo 现在数据库中存储的是tinyint
+//                                    userInfo.setIdType(ExcelUtils.getValue(cell));
+                                }else if (k == 33) {// 证件号码
+                                    userInfo.setIdCardNo(ExcelUtils.getValue(cell));
+                                } else if (k == 34) {
+                                    // 出生日期
+                                    userInfo.setBirthDate(ExcelUtils.getValue(cell));
+                                }else if (k == 35) {// 婚姻状态 todo 现在数据字段类型是 tinyint
+//                                    userInfo.setMarried(ExcelUtils.getValue(cell));
+                                }else if (k == 36) {// 开始工作时间
+                                    userInfo.setStartWorkDate(ExcelUtils.getValue(cell));
+                                }else if (k == 37) {// 个人主页
+                                    userInfo.setWebSite(ExcelUtils.getValue(cell));
+                                }else if (k == 38) {// 即时通讯
+                                    userInfo.setDefineIm(ExcelUtils.getValue(cell));
+                                }else if (k == 39) {// 国家
+                                    userInfo.setHomeCountry(ExcelUtils.getValue(cell));
+                                }else if (k == 40) {// 省
+                                    userInfo.setHomeRegion(ExcelUtils.getValue(cell));
+                                }else if (k == 41) {// 城市
+                                    userInfo.setHomeLocality(ExcelUtils.getValue(cell));
+                                }else if (k == 42) {// 家庭地址
+                                    userInfo.setHomeStreetAddress(ExcelUtils.getValue(cell));
+                                }else if (k == 43) {// 家庭邮编
+                                    userInfo.setHomePostalCode(ExcelUtils.getValue(cell));
+                                }else if (k == 44) {// 家庭传真
+                                    userInfo.setHomeFax(ExcelUtils.getValue(cell));
+                                }else if (k == 45) {// 家庭电话
+                                    userInfo.setHomePhoneNumber(ExcelUtils.getValue(cell));
+                                }else if (k == 46) {// 家庭邮箱
+                                    userInfo.setHomeEmail(ExcelUtils.getValue(cell));
+                                }
+                            }
+                            userInfo.setStatus(1);
+                            userInfoList.add(userInfoService.passwordEncoder(userInfo));
+                            recordCount ++;
+                            _logger.debug("record {} user {} account {}",recordCount,userInfo.getDisplayName(),userInfo.getUsername());
+                        }
+                    }
+                }
+                // 数据去重
+                if(!CollectionUtils.isEmpty(userInfoList)){
+                    userInfoList = userInfoList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getUsername()))), ArrayList::new));
+                    if( userInfoService.batchInsert(userInfoList)) {
+                    	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
+                    }else {
+                    	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+            	excelImportFile.closeWorkbook();
+            }
         }else {
-             new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+        	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
         }
         
-        return modelAndView;
+        return new ModelAndView("/userinfo/usersImport");
     }
     
 	@InitBinder
@@ -305,4 +453,6 @@ public class UserInfoController {
 	        dateFormat.setLenient(false);  
 	        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
+	
+
 }

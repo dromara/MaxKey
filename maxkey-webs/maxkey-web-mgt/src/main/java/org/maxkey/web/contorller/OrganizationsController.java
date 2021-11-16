@@ -17,14 +17,23 @@
 
 package org.maxkey.web.contorller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.entity.ExcelImport;
 import org.maxkey.entity.Organizations;
 import org.maxkey.persistence.service.OrganizationsService;
+import org.maxkey.util.ExcelUtils;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.component.TreeNode;
 import org.maxkey.web.component.TreeNodeList;
@@ -36,6 +45,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,17 +53,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.common.collect.Lists;
+
 
 @Controller
 @RequestMapping({"/orgs"})
 public class OrganizationsController {
   static final Logger _logger = LoggerFactory.getLogger(OrganizationsController.class);
 
-  
   @Autowired
   OrganizationsService organizationsService;
 
-  
   @ResponseBody
   @RequestMapping({"/tree"})
   public List<HashMap<String, Object>> organizationsTree(@RequestParam(value = "id", required = false) String id) {
@@ -82,8 +92,6 @@ public class OrganizationsController {
     return treeNodeList.getTreeNodeList();
   }
 
-
-  
 	@RequestMapping({ "/list" })
 	public ModelAndView orgsTreeList() {
 		return new ModelAndView("orgs/orgsList");
@@ -96,7 +104,6 @@ public class OrganizationsController {
 
 	}
 
-  
   @RequestMapping({"/orgsSelect/{deptId}/{department}"})
   public ModelAndView orgsSelect(@PathVariable("deptId") String deptId, @PathVariable("department") String department) {
     ModelAndView modelAndView = new ModelAndView("orgs/orgsSelect");
@@ -104,7 +111,6 @@ public class OrganizationsController {
     modelAndView.addObject("department", department);
     return modelAndView;
   }
-
 
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd(@ModelAttribute("org") Organizations org) {
@@ -114,9 +120,6 @@ public class OrganizationsController {
 		return modelAndView;
 	}
 
-
-
-  
   @ResponseBody
   @RequestMapping({"/add"})
   public Message insert(@ModelAttribute("org") Organizations org) {
@@ -132,26 +135,16 @@ public class OrganizationsController {
     return new Message(WebContext.getI18nValue("message.action.insert.success"), MessageType.error);
   }
 
-
-
-
-
-
-
-  
-  @ResponseBody
-  @RequestMapping({"/query"})
-  public Message query(@ModelAttribute("org") Organizations org) {
-    _logger.debug("-query  :" + org);
-    if (this.organizationsService.load(org) != null) {
-      return new Message(WebContext.getI18nValue("message.action.insert.success"), MessageType.success);
-    }
+	@ResponseBody
+	@RequestMapping({"/query"})
+	public Message query(@ModelAttribute("org") Organizations org) {
+		_logger.debug("-query  :" + org);
+		if (this.organizationsService.load(org) != null) {
+			return new Message(WebContext.getI18nValue("message.action.insert.success"), MessageType.success);
+		}
     
-    return new Message(WebContext.getI18nValue("message.action.insert.error"), MessageType.error);
-  }
-
-
-
+    	return new Message(WebContext.getI18nValue("message.action.insert.error"), MessageType.error);
+	}
 
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
@@ -162,57 +155,120 @@ public class OrganizationsController {
 		return modelAndView;
 	}
 
-
-  
-  @ResponseBody
-  @RequestMapping({"/update"})
-  public Message update(@ModelAttribute("org") Organizations org) {
-    _logger.debug("-update  organization :" + org);
-    if (this.organizationsService.update(org)) {
-      return new Message(WebContext.getI18nValue("message.action.update.success"), MessageType.success);
-    }
+	@ResponseBody
+	@RequestMapping({"/update"})
+	public Message update(@ModelAttribute("org") Organizations org) {
+		_logger.debug("-update  organization :" + org);
+    	if (this.organizationsService.update(org)) {
+    		return new Message(WebContext.getI18nValue("message.action.update.success"), MessageType.success);
+    	}
     
-    return new Message(WebContext.getI18nValue("message.action.update.error"), MessageType.error);
-  }
+    	return new Message(WebContext.getI18nValue("message.action.update.error"), MessageType.error);
+	}
 
-
-
-
-
-
-
-  @ResponseBody
-  @RequestMapping({"/delete"})
-  public Message delete(@ModelAttribute("org") Organizations org) {
-    _logger.debug("-delete  organization :" + org);
-    if (this.organizationsService.batchDelete(org.getId())) {
-      return new Message(WebContext.getI18nValue("message.action.delete.success"), MessageType.success);
-    }
+	@ResponseBody
+	@RequestMapping({"/delete"})
+	public Message delete(@ModelAttribute("org") Organizations org) {
+		_logger.debug("-delete  organization :" + org);
+    	if (this.organizationsService.batchDelete(org.getId())) {
+    		return new Message(WebContext.getI18nValue("message.action.delete.success"), MessageType.success);
+    	}
     
-    return new Message(WebContext.getI18nValue("message.action.delete.success"), MessageType.error);
-  }
+    	return new Message(WebContext.getI18nValue("message.action.delete.success"), MessageType.error);
+	}
 
-
-
-  
   @RequestMapping({"/orgUsersList"})
   public ModelAndView orgUsersList() { return new ModelAndView("orgs/orgUsersList"); }
 
-
   @RequestMapping(value = "/import")
   public ModelAndView importing(@ModelAttribute("excelImportFile")ExcelImport excelImportFile)  {
-      ModelAndView modelAndView=new ModelAndView("/orgs/orgsImport");
+      if (excelImportFile.isExcelNotEmpty() ) {
+        try {
+            int columnSize = 46;
+            List<Organizations> orgsList = Lists.newArrayList();
+            Workbook workbook = excelImportFile.biuldWorkbook();
+            int sheetSize = workbook.getNumberOfSheets();
+            //遍历sheet页
+            for (int i = 0; i < sheetSize; i++) {
+                Sheet sheet = workbook.getSheetAt(i);
+                int rowSize = sheet.getLastRowNum() + 1;
+                for (int j = 1; j < rowSize; j++) {//遍历行
+                	Row row = sheet.getRow(j);
+                    if (row == null || j <3 ) {//略过空行和前3行
+                        continue;
+                    } else {//其他行是数据行
+                    	Organizations organization =new Organizations();
+                        for (int k = 0; k < columnSize; k++) {
+                            if (k == 0) {// 上级编码
+                                organization.setParentId(ExcelUtils.getValue(row.getCell(k)));
+                            } else if (k == 1) {// 上级名称
+                                organization.setParentName(ExcelUtils.getValue(row.getCell(k)));
+                            } else if (k == 2) {// 组织编码
+                                organization.setId(ExcelUtils.getValue(row.getCell(k)));
+                            } else if (k == 3) {// 组织名称
+                                organization.setName(ExcelUtils.getValue(row.getCell(k)));
+                            } else if (k == 4) {// 组织全称
+                                organization.setFullName(ExcelUtils.getValue(row.getCell(k)));
+                            } else if (k == 5) {// 编码路径
+                                organization.setCodePath(ExcelUtils.getValue(row.getCell(k)));
+                            } else if (k == 6) {// 名称路径
+                                organization.setNamePath(ExcelUtils.getValue(row.getCell(k)));
+                            } else if (k == 7) { // 组织类型
+                                organization.setType(ExcelUtils.getValue(row.getCell(k)));
+                            } else if (k == 8) {// 所属分支机构
+                                organization.setDivision(ExcelUtils.getValue(row.getCell(k)));
+                            } else if (k == 9) {// 级别
+                                String level=ExcelUtils.getValue(row.getCell(k));
+                                organization.setLevel(level.equals("") ? "1" : level);
+                            } else if (k == 10) {// 排序
+                                String sortIndex=ExcelUtils.getValue(row.getCell(k));
+                                organization.setSortIndex(sortIndex.equals("") ? 1 : Integer.parseInt(sortIndex));
+                            } else if (k == 11) {// 联系人
+                                organization.setContact(ExcelUtils.getValue(row.getCell(k)));
+                            } else if (k == 12) {// 联系电话
+                                organization.setPhone(ExcelUtils.getValue(row.getCell(k)));
+                            }else if (k == 13) {// 邮箱
+                                organization.setEmail(ExcelUtils.getValue(row.getCell(k)));
+                            }else if (k == 14) {// 传真
+                                organization.setFax(ExcelUtils.getValue(row.getCell(k)));
+                            }else if (k == 24) {// 工作-国家
+                                organization.setCountry(ExcelUtils.getValue(row.getCell(k)));
+                            }else if (k == 25) {// 工作-省
+                                organization.setRegion(ExcelUtils.getValue(row.getCell(k)));
+                            }else if (k == 26) {// 工作-城市
+                                organization.setLocality(ExcelUtils.getValue(row.getCell(k)));
+                            }else if (k == 27) {// 工作-地址
+                                organization.setLocality(ExcelUtils.getValue(row.getCell(k)));
+                            }else if (k == 28) {// 邮编
+                                organization.setPostalCode(ExcelUtils.getValue(row.getCell(k)));
+                            }else if (k == 29) {// 详细描述
+                                organization.setDescription(ExcelUtils.getValue(row.getCell(k)));
+                            }
+                        }
+                        organization.setStatus(1);
+                        orgsList.add(organization);
+                    }
+                }
+            }
+            // 数据去重
+            if(!CollectionUtils.isEmpty(orgsList)){
+                orgsList = orgsList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getId()))), ArrayList::new));
+                if(organizationsService.batchInsert(orgsList)) {
+		        	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
+		        }else {
+		        	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+		        }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+        	excelImportFile.closeWorkbook();
+        }
+	}else {
+		new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+	}
       
-      if (excelImportFile.getExcelFile() != null && !excelImportFile.getExcelFile().isEmpty() && organizationsService.importing(excelImportFile.getExcelFile())) {
-           new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
-      }else {
-           new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
-      }
-      
-      return modelAndView;
+	return new ModelAndView("/orgs/orgsImport");
   }
-
-
-
 
 }
