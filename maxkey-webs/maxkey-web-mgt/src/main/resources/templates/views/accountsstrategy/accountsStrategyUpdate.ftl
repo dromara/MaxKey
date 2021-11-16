@@ -225,6 +225,26 @@ function showOrgsTree() {
                     </select>
                 </td>
             </tr>
+            <tr>
+                <th><@locale code="accounts.strategy.suffixes" />：</th>
+                <td nowrap>
+                    <input type="text" id="suffixes" name="suffixes" class="form-control" title="" value="${model.suffixes!}" />
+                </td>
+            </tr>
+            <tr>
+                <th><@locale code="accounts.strategy.createType" />：</th>
+                <td nowrap>
+                    <select id="createType" name="createType" class="form-control form-select"   >
+                        <option value="manual"  <#if model.createType?contains("manual")>selected</#if> >
+                            <@locale code="accounts.strategy.createType.manual" />
+                        </option>
+                        <option value="automatic" <#if model.createType?contains("automatic")>selected</#if>  >
+                            <@locale code="accounts.strategy.createType.automatic" />
+                        </option>
+                    </select>
+                    
+                </td>
+            </tr>
 		<tr>
 				<th><@locale code="accounts.strategy.orgidslist" />：</th>
 				<td nowrap>
@@ -235,13 +255,13 @@ function showOrgsTree() {
 		<tr>
 			<th><@locale code="accounts.strategy.filters" />：</th>
 			<td nowrap>
-				<textarea id="filters" name="filters" class="form-control"  rows="4" cols="20">${model.filters!}</textarea>
+				<textarea id="filters" name="filters" class="form-control"  rows="3" cols="20">${model.filters!}</textarea>
 			</td>
 		</tr>
 		<tr>
                 <th><@locale code="common.text.description" />：</th>
                 <td nowrap>
-                	<textarea id="description" name="description" class="form-control"  rows="3" cols="20">${model.description!}</textarea>
+                	<textarea id="description" name="description" class="form-control"  rows="2" cols="20">${model.description!}</textarea>
                 </td>
             </tr>
 		<tr>

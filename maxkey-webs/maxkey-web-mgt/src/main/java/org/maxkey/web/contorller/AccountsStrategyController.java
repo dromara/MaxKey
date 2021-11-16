@@ -57,12 +57,20 @@ public class AccountsStrategyController {
 		return new ModelAndView("accountsstrategy/accountsstrategyList");
 	}
 
+	@RequestMapping(value={"/select"})
+	public ModelAndView selectAccountsStrategyList(){
+		return new ModelAndView("accountsstrategy/selectAccountsStrategy");
+	}
 	
 	@RequestMapping(value = { "/grid" })
 	@ResponseBody
 	public JpaPageResults<AccountsStrategy> queryDataGrid(@ModelAttribute("accountsStrategy") AccountsStrategy accountsStrategy) {
 		_logger.debug(""+accountsStrategy);
-		return accountsStrategyService.queryPageResults(accountsStrategy);
+		JpaPageResults<AccountsStrategy> accountsStrategyList =accountsStrategyService.queryPageResults(accountsStrategy);
+		for (AccountsStrategy strategy : accountsStrategyList.getRows()){
+			WebContext.setAttribute(strategy.getId(), strategy.getAppIcon());
+		}
+		return accountsStrategyList;
 	}
 
 	

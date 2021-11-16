@@ -34,6 +34,13 @@ import org.maxkey.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
 @Repository
 public class AccountsService  extends JpaBaseService<Accounts>{
 
@@ -133,22 +140,7 @@ public class AccountsService  extends JpaBaseService<Accounts>{
            account.setUserId(user.getId());
            account.setUsername(user.getUsername());
            account.setDisplayName(user.getDisplayName());
-           
-           if(strategy.getMapping().equalsIgnoreCase("username")) {
-               account.setRelatedUsername(user.getUsername());
-           }else if(strategy.getMapping().equalsIgnoreCase("mobile")) {
-               account.setRelatedUsername(user.getMobile());
-           }else if(strategy.getMapping().equalsIgnoreCase("email")) {
-               account.setRelatedUsername(user.getEmail());
-           }else if(strategy.getMapping().equalsIgnoreCase("employeeNumber")) {
-               account.setRelatedUsername(user.getEmployeeNumber());
-           }else if(strategy.getMapping().equalsIgnoreCase("windowsAccount")) {
-               account.setRelatedUsername(user.getWindowsAccount());
-           }else if(strategy.getMapping().equalsIgnoreCase("idCardNo")) {
-               account.setRelatedUsername(user.getIdCardNo());
-           }else {
-               account.setRelatedUsername(user.getUsername());
-           }
+           account.setRelatedUsername(generateAccount(user,strategy));
            account.setRelatedPassword(ReciprocalUtils.encode(userInfoService.randomPassword()));
            
            account.setCreateType("automatic");
@@ -160,7 +152,9 @@ public class AccountsService  extends JpaBaseService<Accounts>{
        deleteByStrategy(strategy);
    }
    public void refreshAllByStrategy() {
-       for( AccountsStrategy strategy : accountsStrategyService.query(null)) {
+	   AccountsStrategy queryStrategy = new AccountsStrategy();
+	   queryStrategy.setCreateType("automatic");
+       for( AccountsStrategy strategy : accountsStrategyService.query(queryStrategy)) {
            refreshByStrategy(strategy);
        }
    }
@@ -173,5 +167,90 @@ public class AccountsService  extends JpaBaseService<Accounts>{
    public long deleteByStrategy(AccountsStrategy strategy) {
        return getMapper().deleteByStrategy(strategy);
    }
+	
+	
+   public List<Accounts> queryByAppIdAndDate(Accounts account) {
+       return getMapper().queryByAppIdAndDate(account);
+   }
+   
+   public List<Accounts> queryByAppIdAndAccount(String appId,String relatedUsername){
+	   return getMapper().queryByAppIdAndAccount(appId,relatedUsername);
+   }
+   
+   
+   public String generateAccount(UserInfo  userInfo,AccountsStrategy accountsStrategy) {
+   	String shortAccount = generateAccount(userInfo,accountsStrategy,true);
+   	String account = generateAccount(userInfo,accountsStrategy,false);
+   	String accountResult = shortAccount;
+   	List<Accounts> AccountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),shortAccount +accountsStrategy.getSuffixes());
+   	if(!AccountsList.isEmpty()) {
+   		if(accountsStrategy.getMapping().equalsIgnoreCase("email")) {
+   			accountResult = account;
+   			AccountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),account + accountsStrategy.getSuffixes());
+   		}
+   		if(!AccountsList.isEmpty()) {
+	    		for(int i =1 ;i < 100 ;i++) {
+	    			accountResult = account + i;
+	    			AccountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),accountResult + accountsStrategy.getSuffixes());
+	    			if(AccountsList.isEmpty())break;
+	    		}
+   		}
+   	}
+   	if(StringUtils.isNotBlank(accountsStrategy.getSuffixes())){
+   		accountResult = accountResult + accountsStrategy.getSuffixes();
+   	}
+       return accountResult;
+   }
+   
+   
+	private String generateAccount(UserInfo  userInfo,AccountsStrategy strategy,boolean isShort) {
+		String account = "";
+    	if(strategy.getMapping().equalsIgnoreCase("username")) {
+    		account = userInfo.getUsername();
+    	}else if(strategy.getMapping().equalsIgnoreCase("mobile")) {
+    		account = userInfo.getMobile();
+    	}else if(strategy.getMapping().equalsIgnoreCase("email")) {
+    		try {
+	    		if(isShort) {
+	    			account = getPinYinShortName(userInfo.getDisplayName());
+	    		}else {
+	    			account = getPinYinName(userInfo.getDisplayName());
+	    		}
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}else if(strategy.getMapping().equalsIgnoreCase("employeeNumber")) {
+    		account = userInfo.getEmployeeNumber();
+    	}else if(strategy.getMapping().equalsIgnoreCase("windowsAccount")) {
+    		account = userInfo.getWindowsAccount();
+    	}else if(strategy.getMapping().equalsIgnoreCase("idCardNo")) {
+    		account = userInfo.getIdCardNo();
+    	}else {
+    		account = userInfo.getUsername();
+    	}
+    	
+        return account;
+	}
+	
+	public static String getPinYinName(String name) throws BadHanyuPinyinOutputFormatCombination {
+        HanyuPinyinOutputFormat pinyinFormat = new        HanyuPinyinOutputFormat();
+        pinyinFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+        pinyinFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+        pinyinFormat.setVCharType(HanyuPinyinVCharType.WITH_V);
+        return PinyinHelper.toHanYuPinyinString(name, pinyinFormat, "",false);
+    }
+	
+	public static String getPinYinShortName(String name) throws BadHanyuPinyinOutputFormatCombination {
+		char[] strs = name.toCharArray();
+		String pinyinName = "";
+		for(int i=0;i<strs.length;i++) {
+			if(i == 0) {
+				pinyinName += getPinYinName(strs[i]+"");
+			}else {
+				pinyinName += getPinYinName(strs[i]+"").charAt(0);
+			}
+		}
+		return pinyinName;
+    }
 	
 }

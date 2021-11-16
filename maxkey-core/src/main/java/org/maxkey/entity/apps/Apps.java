@@ -140,9 +140,6 @@ public class Apps extends JpaBaseEntity implements Serializable {
     
     @Column
     private String adapter;
-    
-    @Column
-    protected int accountMgmt;
 
     protected Accounts appUser;
     @Column
@@ -584,14 +581,6 @@ public class Apps extends JpaBaseEntity implements Serializable {
 
 	public void setAdapterName(String adapterName) {
 		this.adapterName = adapterName;
-	}
-
-	public int getAccountMgmt() {
-		return accountMgmt;
-	}
-
-	public void setAccountMgmt(int accountMgmt) {
-		this.accountMgmt = accountMgmt;
 	}
 
 	@Override

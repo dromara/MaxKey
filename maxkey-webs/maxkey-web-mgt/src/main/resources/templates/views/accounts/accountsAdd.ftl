@@ -17,6 +17,19 @@
                 $("#relatedPassword").val(data+"");
             }); 
         });
+        
+        $("#generateAccountBtn").on("click",function(){
+            $.post("<@base/>/accounts/generate/", {
+                        _method:"post",
+                        userId : $("#userId").val(),
+                        appId : $("#appId").val(),
+                        strategyId : $("#strategyId").val(),
+                        currTime:(new Date()).getTime()
+                        }, function(data) {
+                $("#relatedUsername").val(data+"");
+            }); 
+        });
+        
         $("#view").on("click",function(){
             if($("#relatedPassword").attr("type")=="text"){
                 $("#relatedPassword").attr("type","password");
@@ -73,7 +86,7 @@
 				</td>
 				<td>
 				    <input class="button btn btn-primary mr-3 window"  type="button"    id="selectAppsubmitBtn" value="<@locale code="button.text.select" />"
-                      wurl="<@base/>/apps/select?accountMgmt=1"
+                      wurl="<@base/>/accountsstrategy/select"
                                     wwidth="800"
                                     wheight="620"
                                     target="window"/>
@@ -86,6 +99,7 @@
 
 				</td>
 				<td>
+				    <input class="button btn btn-primary mr-3"  type="button"    id="generateAccountBtn" value="<@locale code="button.text.generate" />"/>
                 </td>
 			</tr>
 			<tr>
@@ -104,7 +118,9 @@
 					<input id="_method" type="hidden" name="_method"  value="post"/>
 					<input id="status" type="hidden" name="status"  value="1"/>
 					<input type="hidden" id="userId" name="userId" class="userId" title="" value="${model.userId!}"/>
+					<input type="hidden" id="strategyId" name="strategyId" class="strategyId" title="" value="${model.strategyId!}"/>
 					<input type="hidden" id="appId" name="appId" class="appId" title="" value="${model.appId!}"/>
+					<input type="hidden" id="createType" name="createType"  title="" value="manual"/>
 			   		<input class="button btn btn-primary mr-3"  type="submit"    id="submitBtn" value="<@locale code="button.text.save" />"/>
 					<input class="button btn btn-secondary mr-3"  type="button"    id="closeBtn" value="<@locale code="button.text.cancel" /> "/>	
 					

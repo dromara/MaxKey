@@ -42,16 +42,19 @@ public class AccountsStrategy extends JpaBaseEntity implements Serializable {
     private String name;
     @Column
     private String appId;
+    private byte[] appIcon;
     @Column
     private String appName;
     @Column
     private String mapping;
-
     @Column
     String filters ;
-    
     @Column
     String orgIdsList;
+    @Column
+    String suffixes;
+    @Column
+    String createType;
     @Column
     String status;
     @Column
@@ -173,7 +176,31 @@ public class AccountsStrategy extends JpaBaseEntity implements Serializable {
         this.mapping = mapping;
     }
 
-    @Override
+    public byte[] getAppIcon() {
+		return appIcon;
+	}
+
+	public void setAppIcon(byte[] appIcon) {
+		this.appIcon = appIcon;
+	}
+
+	public String getCreateType() {
+		return createType;
+	}
+
+	public void setCreateType(String createType) {
+		this.createType = createType;
+	}
+
+	public String getSuffixes() {
+		return suffixes;
+	}
+
+	public void setSuffixes(String suffixes) {
+		this.suffixes = suffixes;
+	}
+
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("AccountsStrategy [id=");

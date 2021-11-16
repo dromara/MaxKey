@@ -22,6 +22,8 @@ package org.maxkey.persistence.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.AccountsStrategy;
@@ -37,4 +39,9 @@ public  interface AccountsMapper extends IJpaBaseMapper<Accounts> {
     public List<UserInfo> queryUserNotInStrategy(AccountsStrategy strategy);
     
     public long deleteByStrategy(AccountsStrategy strategy);
+    
+    public List<Accounts> queryByAppIdAndDate(Accounts account);
+    
+    @Select("select * from mxk_accounts where appid=#{appId} and	relatedusername=#{relatedUsername}")
+    public List<Accounts> queryByAppIdAndAccount(@Param ("appId") String appId,@Param ("relatedUsername") String relatedUsername);
 }

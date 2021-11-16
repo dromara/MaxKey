@@ -5,51 +5,33 @@
 	<#include  "../layout/common.cssjs.ftl"/>
 	<script type="text/javascript">	
 		function dynamicFormatter(value, row, index){
-            return value=='0'? '<@locale code="common.text.no" />':'<@locale code="common.text.yes" />';
-        };
-        function createTypeFormatter(value, row, index){
-            return value=='manual'? 
-                '<@locale code="accounts.strategy.createType.manual" />'
-                :'<@locale code="accounts.strategy.createType.automatic" />';
-        };
-        
-        function iconFormatter(value, row, index){
-            return "<img width='30'  border='0px' src='<@base/>/image/"+value+"'/>";
-        };
+	  		return value=='0'? '<@locale code="common.text.no" />':'<@locale code="common.text.yes" />';
+		};
+		function createTypeFormatter(value, row, index){
+	  		return value=='manual'? 
+	  			'<@locale code="accounts.strategy.createType.manual" />'
+	  			:'<@locale code="accounts.strategy.createType.automatic" />';
+		};
+		
+		function iconFormatter(value, row, index){
+  			return "<img width='30'  border='0px' src='<@base/>/image/"+value+"'/>";
+		};
+		
+		$(function () {
+			$("#selectBtn").on("click",function(){
+				var seldata=$.dataGridSelRowsData("#datagrid"); 
+				console.log(seldata[0].id+" - "+seldata[0].name);
+				$(".strategyId", window.parent.document).val(seldata[0].id);
+				$(".appId", window.parent.document).val(seldata[0].appId);
+				$(".appName", window.parent.document).val(seldata[0].appName);
+				$.closeWindow();
+			 			
+			});
+		});
+		
 	</script>
 </head>
 <body> 
-<div class="app header-default side-nav-dark">
-<div class="layout">
-	<div class="header navbar">
-		<#include  "../layout/top.ftl"/>
-	</div>
-	
-	<div class="col-md-3 sidebar-nav side-nav" >
- 		<#include  "../layout/sidenav.ftl"/>
-	</div>
-	<div class="page-container">
-	
-	<div class="main-content">
-		<div class="container-fluid">
-			<div class="breadcrumb-wrapper row">
-				<div class="col-12 col-lg-3 col-md-6">
-					<h4 class="page-title"><@locale code="navs.roles"/></h4>
-				</div>
-				<div class="col-12 col-lg-9 col-md-6">
-					<ol class="breadcrumb float-right">
-						<li><a href="<@base/>/main"><@locale code="navs.home"/></a></li>
-						<li class="active">/ <@locale code="navs.roles"/></li>
-					</ol>
-				</div>
-			</div>
-		</div>
-		<div class="container-fluid">
-			<div class="content-wrapper row">
-			<div class="col-12 grid-margin">
-				<div class="card">
-					<div class="card-body">
-		
 			<table  class="table table-bordered">
  				<tr>
 		 			<td width="120px"><@locale code="accounts.strategy.name"/>:</td>
@@ -62,31 +44,18 @@
 					 	</form>
 		 			</td>
 		 			<td colspan="2">
-		 				<div id="tool_box_right">
-		 					 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
-						 		    wurl="<@base/>/accountsstrategy/forwardAdd"
-						 		    wwidth="800"
-						 		    wheight="550"
-					 		    	target="window">	    	
-					 		    	
-					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
-					 				wurl="<@base/>/accountsstrategy/forwardUpdate"
-					 				wwidth="800"
-						 		    wheight="550"
-					 		    	target="window"> 
-					 		    	
-					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"
-					 				wurl="<@base/>/accountsstrategy/delete" />
-						</div>
+		 				<div >
+		 					<input class="button btn btn-primary mr-3"   id="selectBtn" type="button" value="<@locale code="button.text.select"/>" />
+				 		</div>
 		 			</td>
 		 		</tr>
 		 	</table>
 		
-		 <div id="advanced_search">
-            <form id="advanced_search_form">
-                
-            </form>
-        </div>
+			 <div id="advanced_search">
+	            <form id="advanced_search_form">
+	                
+	            </form>
+	        </div>
             <table  data-url="<@base/>/accountsstrategy/grid"
                 id="datagrid"
                     data-toggle="table"
@@ -110,7 +79,6 @@
                     <th data-field="appName" ><@locale code="apps.name"/></th>
                     <th data-field="createType"  data-formatter="createTypeFormatter" ><@locale code="accounts.strategy.createType" /></th>
                     <th data-field="status"  data-formatter="dynamicFormatter"><@locale code="common.text.status"/></th>
-                    <th data-field="description"   data-visible="false"><@locale code="common.text.description"/></th>
                     <th data-field="createdBy"    data-visible="false"><@locale code="common.text.createdby"/></th>
                     <th data-field="createdDate"  data-visible="false"><@locale code="common.text.createddate"/></th>
                     <th data-field="modifiedBy"   data-visible="false"><@locale code="common.text.modifiedby"/></th>
@@ -118,26 +86,6 @@
         
                 </tr>
             </thead>
-        </table>		
- 	</div>
- 	
- 	
-	
-	
-</div>
-					</div>
-</div>
-	<footer class="content-footer">
-		<#include  "../layout/footer.ftl"/>
-	</footer>
-	</div>
-	
-	</div>
-</div>
-
-<div id="preloader">
-<div class="loader" id="loader-1"></div>
-</div>
-
+        </table>	
 </body>
 </html>

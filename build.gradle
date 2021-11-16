@@ -402,6 +402,7 @@ subprojects {
          implementation  group: 'org.codehaus.woodstox', name: 'stax2-api', version: "${stax2apiVersion}"
          implementation  group: 'org.reflections', name: 'reflections', version: '0.9.11'
          implementation  group: 'io.prometheus', name: 'simpleclient', version: '0.5.0'
+         implementation  group: 'com.belerweb', name: 'pinyin4j', version: "${pinyin4jVersion}"
          
           //阿里云
          implementation  group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: "${aliyunjavasdkcoreVersion}"

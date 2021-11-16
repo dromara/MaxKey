@@ -215,6 +215,26 @@ function showOrgsTree() {
 				</td>
 			</tr>
 			<tr>
+                <th><@locale code="accounts.strategy.suffixes" />：</th>
+                <td nowrap>
+                    <input type="text" id="suffixes" name="suffixes" class="form-control" title="" value=""   />
+                </td>
+            </tr>
+            <tr>
+                <th><@locale code="accounts.strategy.createType" />：</th>
+                <td nowrap>
+                    <select id="createType" name="createType" class="form-control form-select"   >
+                        <option value="manual"  selected >
+                            <@locale code="accounts.strategy.createType.manual" />
+                        </option>
+                        <option value="automatic"   >
+                            <@locale code="accounts.strategy.createType.automatic" />
+                        </option>
+                    </select>
+                    
+                </td>
+            </tr>
+			<tr>
 				<th><@locale code="accounts.strategy.orgidslist" />：</th>
 				<td nowrap>
 					<input type="text" id="orgIdsListName" name="orgIdsListName"   readonly  class="form-control" title="" value=""   onclick="showOrgsTree();"/>
@@ -224,13 +244,13 @@ function showOrgsTree() {
 			<tr>
 				<th><@locale code="accounts.strategy.filters" />：</th>
 				<td nowrap>
-					<textarea id="filters" name="filters" class="form-control"  rows="4" cols="20"></textarea>
+					<textarea id="filters" name="filters" class="form-control"  rows="3" cols="20"></textarea>
 				</td>
 			</tr>
 			<tr>
                 <th><@locale code="common.text.description" />：</th>
                 <td nowrap>
-                    <textarea id="description" name="description" class="form-control"  rows="3" cols="20"></textarea>
+                    <textarea id="description" name="description" class="form-control"  rows="2" cols="20"></textarea>
                 </td>
             </tr>
 			

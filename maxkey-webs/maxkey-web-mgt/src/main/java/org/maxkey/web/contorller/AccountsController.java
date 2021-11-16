@@ -21,7 +21,10 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.entity.Accounts;
+import org.maxkey.entity.AccountsStrategy;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.AccountsService;
+import org.maxkey.persistence.service.AccountsStrategyService;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebContext;
@@ -47,6 +50,10 @@ public class AccountsController {
 	@Autowired
 	@Qualifier("accountsService")
 	AccountsService accountsService;
+	
+	@Autowired
+	@Qualifier("accountsStrategyService")
+	AccountsStrategyService accountsStrategyService;
 	
 	@Autowired
 	@Qualifier("appsService")
@@ -142,4 +149,11 @@ public class AccountsController {
 		
 	}
 	
+    @ResponseBody
+    @RequestMapping(value = "/generate")
+    public String generate(@ModelAttribute("appAccounts") Accounts appAccounts) {
+    	AccountsStrategy accountsStrategy = accountsStrategyService.get(appAccounts.getStrategyId());
+       	UserInfo  userInfo  = userInfoService.get(appAccounts.getUserId());
+    	return accountsService.generateAccount(userInfo,accountsStrategy);
+    }
 }

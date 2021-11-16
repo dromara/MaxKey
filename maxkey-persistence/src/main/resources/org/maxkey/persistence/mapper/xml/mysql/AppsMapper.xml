@@ -21,9 +21,6 @@
 		<if test="vendor != null and vendor != ''">
 			and vendor 		= #{vendor}
 		</if>
-		<if test="accountMgmt == 1 or accountMgmt == 2">
-			and accountmgmt = #{accountMgmt}
-		</if>
 		
 	</sql>
 	
@@ -71,7 +68,6 @@
 			
 			principal,
 			credentials,
-			accountmgmt,
 			
 			visible,
 			
@@ -113,7 +109,6 @@
 			
 			#{principal},
 			#{credentials},
-			#{accountMgmt},
 			
 			#{visible},
 			
@@ -162,7 +157,6 @@
 			</if>
 			principal			=	#{principal},
 			credentials			=	#{credentials},
-			accountmgmt			=	#{accountMgmt},
 			visible				=	#{visible},
 			sortindex			=	#{sortIndex},
 			

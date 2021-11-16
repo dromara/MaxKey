@@ -24,24 +24,15 @@
          </td>
       </tr>
       <tr>
-         <th><@locale code="apps.loginUrl"/>：</th>
+         <th></th>
          <td colspan="3">
             <input type="text" class="form-control"  id="loginUrl" name="loginUrl" size="100"  title="" value=""  required=""   />
          </td>
       </tr>
       <tr>
-         <th><@locale code="apps.logoutUrl"/>：</th>
-         <td colspan="3">
-            <input type="text" class="form-control"  id="logoutUrl" name="logoutUrl" size="100"  title="" value=""  required=""   />
-         </td>
-      </tr>
-      <tr>
-         <th><@locale code="apps.accountMgmt"/>：</th>
+         <th><@locale code="apps.loginUrl"/>：</th>
          <td>
-         	<select  id="accountMgmt" name="accountMgmt" class="form-control  form-select" >
-				<option value="1" ><@locale code="common.text.status.enabled"/></option>
-				<option value="2" selected ><@locale code="common.text.status.disabled"/></option>
-			</select>
+         	<input type="text" class="form-control"  id="logoutUrl" name="logoutUrl" size="100"  title="" value=""   />
          </td>
          <th><@locale code="apps.logoutType"/></th>
          <td>
