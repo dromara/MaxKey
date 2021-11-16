@@ -38,7 +38,7 @@ ul.navMenu > li:hover ul.dropdown {
   visibility: visible;
   transform: translate(0, 0);
   opacity: 1;
-  z-index: 0;
+  z-index: 1000;
 }
 ul.navMenu > li:hover ul.dropdown > li {
   -webkit-animation-name: slideInLeft;

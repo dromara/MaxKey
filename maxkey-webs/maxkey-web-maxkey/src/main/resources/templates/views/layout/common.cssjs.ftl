@@ -34,8 +34,6 @@
 	<script src ="<@base />/static/javascript/jquery.blockUI.js" type="text/javascript" ></script>
 	<#-- serializeObject -->
 	<script src ="<@base />/static/javascript/jquery.serialize-object.min.js" type="text/javascript" ></script>
-	<#-- validation -->
-	<script src ="<@base />/static/javascript/jsonformatter.js" type="text/javascript" ></script>
 	<#-- platform common script -->	
 	<script src ="<@base />/static/javascript/locale/common.<@locale/>.js" type="text/javascript" ></script>
 	<script src ="<@base />/static/javascript/platform.common.js" type="text/javascript" ></script>

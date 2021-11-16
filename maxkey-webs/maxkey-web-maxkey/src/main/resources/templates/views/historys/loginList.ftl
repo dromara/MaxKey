@@ -3,7 +3,6 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
-	<script type="text/javascript" src="<@base/>/static/jquery/jsonformatter.js"></script>
 </head>
 <body>
 <#include  "../layout/top.ftl"/>

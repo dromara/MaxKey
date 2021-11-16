@@ -3,7 +3,6 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
-	<script type="text/javascript" src="<@base/>/static/jquery/jsonformatter.js"></script>
 	<script type="text/javascript">
 		function viewformatter (value, options, rData){
 			return "<a href='javascript:void(0);' selid='"+rData["id"]+"' class='viewJsonObject' title='view more' >view more</a>";
