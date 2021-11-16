@@ -54,7 +54,7 @@ public class AccountsStrategyController {
 	
 	@RequestMapping(value={"/list"})
 	public ModelAndView rolesList(){
-		return new ModelAndView("accountsstrategy/accountsstrategyList");
+		return new ModelAndView("accountsstrategy/accountsStrategyList");
 	}
 
 	@RequestMapping(value={"/select"})
@@ -76,12 +76,12 @@ public class AccountsStrategyController {
 	
 	@RequestMapping(value = { "/forwardAdd" })
 	public ModelAndView forwardAdd() {
-		return new ModelAndView("accountsstrategy/accountsstrategyAdd");
+		return new ModelAndView("accountsstrategy/accountsStrategyAdd");
 	}
 	
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
-		ModelAndView modelAndView=new ModelAndView("accountsstrategy/accountsstrategyUpdate");
+		ModelAndView modelAndView=new ModelAndView("accountsstrategy/accountsStrategyUpdate");
 		AccountsStrategy accountsStrategy=accountsStrategyService.get(id);
 		modelAndView.addObject("model",accountsStrategy);
 		return modelAndView;
