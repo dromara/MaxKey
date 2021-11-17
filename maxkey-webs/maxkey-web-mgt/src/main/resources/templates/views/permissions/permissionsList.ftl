@@ -290,7 +290,7 @@ $('#datagrid').on('click-row.bs.table', function (row, element, field) {
                             data-page-list="[10, 25, 50, 100]"
                             data-search="false"
                             data-single-select="true"
-                            data-locale="zh-CN"
+                            data-locale="<@locale/>"
                             data-query-params="dataGridQueryParams"
                             data-query-params-type="pageSize"
                             data-side-pagination="server">

@@ -101,7 +101,7 @@
 				data-page-list="[5, 10, 25, 50]"
 				data-search="false"
 				data-sort-name="name"
-				data-locale="zh-CN"
+				data-locale="<@locale/>"
 				data-query-params="dataGridQueryParams"
 				data-query-params-type="pageSize"
 				data-side-pagination="server">

@@ -56,7 +56,7 @@
 				data-total-field="records"
 				data-page-list="[5, 10, 25, 50]"
 				data-search="false"
-				data-locale="zh-CN"
+				data-locale="<@locale/>"
 				data-query-params="dataGridQueryParams"
 				data-query-params-type="pageSize"
 				data-side-pagination="server">
