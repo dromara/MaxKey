@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -289,13 +288,11 @@ public class UserInfoController {
     public ModelAndView importing(@ModelAttribute("excelImportFile")ExcelImport excelImportFile)  {
         if (excelImportFile.isExcelNotEmpty() ) {
             try {
-                int columnSize = 46;
                 List<UserInfo> userInfoList = Lists.newArrayList();
                 Workbook workbook = excelImportFile.biuldWorkbook();
                 int recordCount = 0;
                 int sheetSize = workbook.getNumberOfSheets();
-                //遍历sheet页
-                for (int i = 0; i < sheetSize; i++) {
+                for (int i = 0; i < sheetSize; i++) {//遍历sheet页
                     Sheet sheet = workbook.getSheetAt(i);
                     int rowSize = sheet.getLastRowNum() + 1;
                     for (int j = 1; j < rowSize; j++) {//遍历行
@@ -303,112 +300,8 @@ public class UserInfoController {
                         if (row == null || j <3 ) {//略过空行和前3行
                             continue;
                         } else {//其他行是数据行
-                            UserInfo userInfo = new UserInfo();
-                            userInfo.setCreatedDate(DateUtils.formatDateTime(new Date()));
-                            
-                            for (int k = 0; k < columnSize; k++) {
-                            	Cell cell = row.getCell(k);
-                                if (k == 0) {// 登录账号
-                                    userInfo.setUsername(ExcelUtils.getValue(cell));
-                                } else if (k == 1) {// 密码
-                                    userInfo.setPassword(ExcelUtils.getValue(cell));
-                                } else if (k == 2) {// 用户显示
-                                    userInfo.setDisplayName(ExcelUtils.getValue(cell));
-                                } else if (k == 3) {// 姓
-                                    userInfo.setFamilyName(ExcelUtils.getValue(cell));
-                                } else if (k == 4) {// 名
-                                    userInfo.setGivenName(ExcelUtils.getValue(cell));
-                                } else if (k == 5) {// 中间名
-                                    userInfo.setMiddleName(ExcelUtils.getValue(cell));
-                                } else if (k == 6) {// 昵称
-                                    userInfo.setNickName(ExcelUtils.getValue(cell));
-                                } else if (k == 7) {// 性别
-                                    String gender = ExcelUtils.getValue(cell);
-                                    userInfo.setGender(gender.equals("")? 1 : Integer.valueOf(ExcelUtils.getValue(cell)));
-                                } else if (k == 8) {// 语言偏好
-                                    userInfo.setPreferredLanguage(ExcelUtils.getValue(cell));
-                                } else if (k == 9) {// 时区
-                                    userInfo.setTimeZone(ExcelUtils.getValue(cell));
-                                } else if (k == 10) {// 用户类型
-                                    userInfo.setUserType(ExcelUtils.getValue(cell));
-                                } else if (k == 11) {// 员工编码
-                                    userInfo.setEmployeeNumber(ExcelUtils.getValue(cell));
-                                } else if (k == 12) {// AD域账号
-                                    userInfo.setWindowsAccount(ExcelUtils.getValue(cell));
-                                }else if (k == 13) {// 所属机构
-                                    userInfo.setOrganization(ExcelUtils.getValue(cell));
-                                }else if (k == 14) {// 分支机构
-                                    userInfo.setDivision(ExcelUtils.getValue(cell));
-                                }else if (k == 15) {// 部门编号
-                                    userInfo.setDepartmentId(ExcelUtils.getValue(cell));
-                                }else if (k == 16) {// 部门名称
-                                    userInfo.setDepartment(ExcelUtils.getValue(cell));
-                                }else if (k == 17) {// 成本中心
-                                    userInfo.setCostCenter(ExcelUtils.getValue(cell));
-                                }else if (k == 18) {// 职位
-                                    userInfo.setJobTitle(ExcelUtils.getValue(cell));
-                                }else if (k == 19) { // 级别
-                                    userInfo.setJobLevel(ExcelUtils.getValue(cell));
-                                }else if (k == 20) {// 上级经理
-                                    userInfo.setManager(ExcelUtils.getValue(cell));
-                                }else if (k == 21) {// 助理
-                                    userInfo.setAssistant(ExcelUtils.getValue(cell));
-                                }else if (k == 22) {// 入职时间
-                                    userInfo.setEntryDate(ExcelUtils.getValue(cell));
-                                }else if (k == 23) {
-                                    // 离职时间
-                                    userInfo.setQuitDate(ExcelUtils.getValue(cell));
-                                }else if (k == 24) {// 工作-国家
-                                    userInfo.setWorkCountry(ExcelUtils.getValue(cell));
-                                }else if (k == 25) {// 工作-省
-                                    userInfo.setWorkRegion(ExcelUtils.getValue(cell));
-                                }else if (k == 26) {// 工作-城市
-                                    userInfo.setTimeZone(ExcelUtils.getValue(cell));
-                                }else if (k == 27) {// 工作-地址
-                                    userInfo.setWorkLocality(ExcelUtils.getValue(cell));
-                                }else if (k == 28) {// 邮编
-                                    userInfo.setWorkPostalCode(ExcelUtils.getValue(cell));
-                                }else if (k == 29) {// 传真
-                                    userInfo.setWorkFax(ExcelUtils.getValue(cell));
-                                }else if (k == 30) {// 工作电话
-                                    userInfo.setWorkPhoneNumber(ExcelUtils.getValue(cell));
-                                }else if (k == 31) {// 工作邮件
-                                    userInfo.setWorkEmail(ExcelUtils.getValue(cell));
-                                }else if (k == 32) {// 证件类型 todo 现在数据库中存储的是tinyint
-//                                    userInfo.setIdType(ExcelUtils.getValue(cell));
-                                }else if (k == 33) {// 证件号码
-                                    userInfo.setIdCardNo(ExcelUtils.getValue(cell));
-                                } else if (k == 34) {
-                                    // 出生日期
-                                    userInfo.setBirthDate(ExcelUtils.getValue(cell));
-                                }else if (k == 35) {// 婚姻状态 todo 现在数据字段类型是 tinyint
-//                                    userInfo.setMarried(ExcelUtils.getValue(cell));
-                                }else if (k == 36) {// 开始工作时间
-                                    userInfo.setStartWorkDate(ExcelUtils.getValue(cell));
-                                }else if (k == 37) {// 个人主页
-                                    userInfo.setWebSite(ExcelUtils.getValue(cell));
-                                }else if (k == 38) {// 即时通讯
-                                    userInfo.setDefineIm(ExcelUtils.getValue(cell));
-                                }else if (k == 39) {// 国家
-                                    userInfo.setHomeCountry(ExcelUtils.getValue(cell));
-                                }else if (k == 40) {// 省
-                                    userInfo.setHomeRegion(ExcelUtils.getValue(cell));
-                                }else if (k == 41) {// 城市
-                                    userInfo.setHomeLocality(ExcelUtils.getValue(cell));
-                                }else if (k == 42) {// 家庭地址
-                                    userInfo.setHomeStreetAddress(ExcelUtils.getValue(cell));
-                                }else if (k == 43) {// 家庭邮编
-                                    userInfo.setHomePostalCode(ExcelUtils.getValue(cell));
-                                }else if (k == 44) {// 家庭传真
-                                    userInfo.setHomeFax(ExcelUtils.getValue(cell));
-                                }else if (k == 45) {// 家庭电话
-                                    userInfo.setHomePhoneNumber(ExcelUtils.getValue(cell));
-                                }else if (k == 46) {// 家庭邮箱
-                                    userInfo.setHomeEmail(ExcelUtils.getValue(cell));
-                                }
-                            }
-                            userInfo.setStatus(1);
-                            userInfoList.add(userInfoService.passwordEncoder(userInfo));
+                        	UserInfo userInfo = buildUserFromSheetRow(row);
+                            userInfoList.add(userInfo);
                             recordCount ++;
                             _logger.debug("record {} user {} account {}",recordCount,userInfo.getDisplayName(),userInfo.getUsername());
                         }
@@ -454,5 +347,108 @@ public class UserInfoController {
 	        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 	
+	
+	public UserInfo buildUserFromSheetRow(Row row) {
+		UserInfo userInfo = new UserInfo();
+        userInfo.setCreatedDate(DateUtils.formatDateTime(new Date()));
+		// 登录账号
+		userInfo.setUsername(ExcelUtils.getValue(row, 0));
+		// 密码
+		userInfo.setPassword(ExcelUtils.getValue(row, 1));
+		// 用户显示
+		userInfo.setDisplayName(ExcelUtils.getValue(row, 2));
+		// 姓
+		userInfo.setFamilyName(ExcelUtils.getValue(row, 3));
+		// 名
+		userInfo.setGivenName(ExcelUtils.getValue(row, 4));
+		// 中间名
+		userInfo.setMiddleName(ExcelUtils.getValue(row, 5));
+		// 昵称
+		userInfo.setNickName(ExcelUtils.getValue(row, 6));
+		// 性别
+		String gender = ExcelUtils.getValue(row, 7);
+		userInfo.setGender(gender.equals("") ? 1 : Integer.valueOf(gender));
+		// 语言偏好
+		userInfo.setPreferredLanguage(ExcelUtils.getValue(row, 8));
+		// 时区
+		userInfo.setTimeZone(ExcelUtils.getValue(row, 9));
+		// 用户类型
+		userInfo.setUserType(ExcelUtils.getValue(row, 10));
+		// 员工编码
+		userInfo.setEmployeeNumber(ExcelUtils.getValue(row, 11));
+		// AD域账号
+		userInfo.setWindowsAccount(ExcelUtils.getValue(row, 12));
+		// 所属机构
+		userInfo.setOrganization(ExcelUtils.getValue(row, 13));
+		// 分支机构
+		userInfo.setDivision(ExcelUtils.getValue(row, 14));
+		// 部门编号
+		userInfo.setDepartmentId(ExcelUtils.getValue(row, 15));
+		// 部门名称
+		userInfo.setDepartment(ExcelUtils.getValue(row, 16));
+		// 成本中心
+		userInfo.setCostCenter(ExcelUtils.getValue(row, 17));
+		// 职位
+		userInfo.setJobTitle(ExcelUtils.getValue(row, 18));
+		// 级别
+		userInfo.setJobLevel(ExcelUtils.getValue(row, 19));
+		// 上级经理
+		userInfo.setManager(ExcelUtils.getValue(row, 20));
+		// 助理
+		userInfo.setAssistant(ExcelUtils.getValue(row, 21));
+		// 入职时间
+		userInfo.setEntryDate(ExcelUtils.getValue(row, 22));
+		// 离职时间
+		userInfo.setQuitDate(ExcelUtils.getValue(row, 23));
+		// 工作-国家
+		userInfo.setWorkCountry(ExcelUtils.getValue(row, 24));
+		// 工作-省
+		userInfo.setWorkRegion(ExcelUtils.getValue(row, 25));
+		// 工作-城市
+		userInfo.setTimeZone(ExcelUtils.getValue(row, 26));
+		// 工作-地址
+		userInfo.setWorkLocality(ExcelUtils.getValue(row, 27));
+		// 邮编
+		userInfo.setWorkPostalCode(ExcelUtils.getValue(row, 28));
+		// 传真
+		userInfo.setWorkFax(ExcelUtils.getValue(row, 29));
+		// 工作电话
+		userInfo.setWorkPhoneNumber(ExcelUtils.getValue(row, 30));
+		// 工作邮件
+		userInfo.setWorkEmail(ExcelUtils.getValue(row, 31));
+		// 证件类型 todo 现在数据库中存储的是tinyint
+//      userInfo.setIdType(ExcelUtils.getValue(row, 32));
+		// 证件号码
+		userInfo.setIdCardNo(ExcelUtils.getValue(row, 33));
+		// 出生日期
+		userInfo.setBirthDate(ExcelUtils.getValue(row, 34));
+		// 婚姻状态 todo 现在数据字段类型是 tinyint
+//      userInfo.setMarried(ExcelUtils.getValue(row, 35));
+		// 开始工作时间
+		userInfo.setStartWorkDate(ExcelUtils.getValue(row, 36));
+		// 个人主页
+		userInfo.setWebSite(ExcelUtils.getValue(row, 37));
+		// 即时通讯
+		userInfo.setDefineIm(ExcelUtils.getValue(row, 38));
+		// 国家
+		userInfo.setHomeCountry(ExcelUtils.getValue(row, 39));
+		// 省
+		userInfo.setHomeRegion(ExcelUtils.getValue(row, 40));
+		// 城市
+		userInfo.setHomeLocality(ExcelUtils.getValue(row, 41));
+		// 家庭地址
+		userInfo.setHomeStreetAddress(ExcelUtils.getValue(row, 42));
+		// 家庭邮编
+		userInfo.setHomePostalCode(ExcelUtils.getValue(row, 43));
+		// 家庭传真
+		userInfo.setHomeFax(ExcelUtils.getValue(row, 44));
+		// 家庭电话
+		userInfo.setHomePhoneNumber(ExcelUtils.getValue(row, 45));
+		// 家庭邮箱
+		userInfo.setHomeEmail(ExcelUtils.getValue(row, 46));
+		userInfoService.passwordEncoder(userInfo);
+        userInfo.setStatus(1);
+        return userInfo;
+	}
 
 }

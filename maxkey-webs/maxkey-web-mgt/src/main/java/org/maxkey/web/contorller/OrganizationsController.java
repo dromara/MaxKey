@@ -184,7 +184,6 @@ public class OrganizationsController {
   public ModelAndView importing(@ModelAttribute("excelImportFile")ExcelImport excelImportFile)  {
       if (excelImportFile.isExcelNotEmpty() ) {
         try {
-            int columnSize = 46;
             List<Organizations> orgsList = Lists.newArrayList();
             Workbook workbook = excelImportFile.biuldWorkbook();
             int sheetSize = workbook.getNumberOfSheets();
@@ -197,56 +196,7 @@ public class OrganizationsController {
                     if (row == null || j <3 ) {//略过空行和前3行
                         continue;
                     } else {//其他行是数据行
-                    	Organizations organization =new Organizations();
-                        for (int k = 0; k < columnSize; k++) {
-                            if (k == 0) {// 上级编码
-                                organization.setParentId(ExcelUtils.getValue(row.getCell(k)));
-                            } else if (k == 1) {// 上级名称
-                                organization.setParentName(ExcelUtils.getValue(row.getCell(k)));
-                            } else if (k == 2) {// 组织编码
-                                organization.setId(ExcelUtils.getValue(row.getCell(k)));
-                            } else if (k == 3) {// 组织名称
-                                organization.setName(ExcelUtils.getValue(row.getCell(k)));
-                            } else if (k == 4) {// 组织全称
-                                organization.setFullName(ExcelUtils.getValue(row.getCell(k)));
-                            } else if (k == 5) {// 编码路径
-                                organization.setCodePath(ExcelUtils.getValue(row.getCell(k)));
-                            } else if (k == 6) {// 名称路径
-                                organization.setNamePath(ExcelUtils.getValue(row.getCell(k)));
-                            } else if (k == 7) { // 组织类型
-                                organization.setType(ExcelUtils.getValue(row.getCell(k)));
-                            } else if (k == 8) {// 所属分支机构
-                                organization.setDivision(ExcelUtils.getValue(row.getCell(k)));
-                            } else if (k == 9) {// 级别
-                                String level=ExcelUtils.getValue(row.getCell(k));
-                                organization.setLevel(level.equals("") ? "1" : level);
-                            } else if (k == 10) {// 排序
-                                String sortIndex=ExcelUtils.getValue(row.getCell(k));
-                                organization.setSortIndex(sortIndex.equals("") ? 1 : Integer.parseInt(sortIndex));
-                            } else if (k == 11) {// 联系人
-                                organization.setContact(ExcelUtils.getValue(row.getCell(k)));
-                            } else if (k == 12) {// 联系电话
-                                organization.setPhone(ExcelUtils.getValue(row.getCell(k)));
-                            }else if (k == 13) {// 邮箱
-                                organization.setEmail(ExcelUtils.getValue(row.getCell(k)));
-                            }else if (k == 14) {// 传真
-                                organization.setFax(ExcelUtils.getValue(row.getCell(k)));
-                            }else if (k == 24) {// 工作-国家
-                                organization.setCountry(ExcelUtils.getValue(row.getCell(k)));
-                            }else if (k == 25) {// 工作-省
-                                organization.setRegion(ExcelUtils.getValue(row.getCell(k)));
-                            }else if (k == 26) {// 工作-城市
-                                organization.setLocality(ExcelUtils.getValue(row.getCell(k)));
-                            }else if (k == 27) {// 工作-地址
-                                organization.setLocality(ExcelUtils.getValue(row.getCell(k)));
-                            }else if (k == 28) {// 邮编
-                                organization.setPostalCode(ExcelUtils.getValue(row.getCell(k)));
-                            }else if (k == 29) {// 详细描述
-                                organization.setDescription(ExcelUtils.getValue(row.getCell(k)));
-                            }
-                        }
-                        organization.setStatus(1);
-                        orgsList.add(organization);
+                        orgsList.add(buildOrganizationsFromSheetRow(row));
                     }
                 }
             }
@@ -271,4 +221,53 @@ public class OrganizationsController {
 	return new ModelAndView("/orgs/orgsImport");
   }
 
+  public Organizations buildOrganizationsFromSheetRow(Row row) {
+		Organizations organization = new Organizations();
+		// 上级编码
+		organization.setParentId(ExcelUtils.getValue(row, 0));
+		// 上级名称
+		organization.setParentName(ExcelUtils.getValue(row, 1));
+		// 组织编码
+		organization.setId(ExcelUtils.getValue(row, 2));
+		// 组织名称
+		organization.setName(ExcelUtils.getValue(row, 3));
+		// 组织全称
+		organization.setFullName(ExcelUtils.getValue(row, 4));
+		// 编码路径
+		organization.setCodePath(ExcelUtils.getValue(row, 5));
+		// 名称路径
+		organization.setNamePath(ExcelUtils.getValue(row, 6));
+		// 组织类型
+		organization.setType(ExcelUtils.getValue(row, 7));
+		// 所属分支机构
+		organization.setDivision(ExcelUtils.getValue(row, 8));
+		// 级别
+		String level = ExcelUtils.getValue(row, 9);
+		organization.setLevel(level.equals("") ? "1" : level);
+		// 排序
+		String sortIndex = ExcelUtils.getValue(row, 10);
+		organization.setSortIndex(sortIndex.equals("") ? 1 : Integer.parseInt(sortIndex));
+		// 联系人
+		organization.setContact(ExcelUtils.getValue(row, 11));
+		// 联系电话
+		organization.setPhone(ExcelUtils.getValue(row, 12));
+		// 邮箱
+		organization.setEmail(ExcelUtils.getValue(row, 13));
+		// 传真
+		organization.setFax(ExcelUtils.getValue(row, 14));
+		// 工作-国家
+		organization.setCountry(ExcelUtils.getValue(row, 15));
+		// 工作-省
+		organization.setRegion(ExcelUtils.getValue(row, 16));
+		// 工作-城市
+		organization.setLocality(ExcelUtils.getValue(row, 17));
+		// 工作-地址
+		organization.setLocality(ExcelUtils.getValue(row, 18));
+		// 邮编
+		organization.setPostalCode(ExcelUtils.getValue(row, 19));
+		// 详细描述
+		organization.setDescription(ExcelUtils.getValue(row, 20));
+		organization.setStatus(1);
+      return organization;
+  }
 }

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
 
 public class ExcelUtils {
 
@@ -31,5 +32,9 @@ public class ExcelUtils {
 		} else {
 			return String.valueOf(cell.getStringCellValue().trim());
 		}
+	}
+	
+	public static String getValue(Row row,int i) {
+		return getValue(row.getCell(i));
 	}
 }
