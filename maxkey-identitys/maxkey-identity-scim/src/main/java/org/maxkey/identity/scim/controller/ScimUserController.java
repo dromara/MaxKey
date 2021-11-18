@@ -129,7 +129,7 @@ public class ScimUserController {
         		new ScimSearchResult<ScimUser>(
         				resultList,
         				orgResults.getRecords(),
-        				requestParameters.getCount(),
+        				queryModel.getPageSize(),
         				requestParameters.getStartIndex());  
         return new MappingJacksonValue(scimSearchResult);
     }

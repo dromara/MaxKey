@@ -124,7 +124,7 @@ public class ScimGroupController {
         		new ScimSearchResult<ScimGroup>(
         				resultList,
         				orgResults.getRecords(),
-        				requestParameters.getCount(),
+        				queryModel.getPageSize(),
         				requestParameters.getStartIndex());  
         return new MappingJacksonValue(scimSearchResult);
     }

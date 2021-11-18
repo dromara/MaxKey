@@ -117,7 +117,7 @@ public class ScimOrganizationController {
         		new ScimSearchResult<ScimOrganization>(
         				resultList,
         				orgResults.getRecords(),
-        				requestParameters.getCount(),
+        				queryModel.getPageSize(),
         				requestParameters.getStartIndex());  
         
         return new MappingJacksonValue(scimSearchResult);
