@@ -57,15 +57,18 @@ public class AuthorizeBaseEndpoint {
 		
 	protected Apps getApp(String id){
 		Apps  app=(Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
-		//session中为空或者id不一致重新加载
-		if(StringUtils.isBlank(id) || !app.getId().equalsIgnoreCase(id)) {
-			app=appsService.loadById(id);
-			WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
+		if(StringUtils.isBlank(id)) {
+			_logger.error("parameter for app id " + id + "  is null.");
+		}else {
+			//session中为空或者id不一致重新加载
+			if(app == null || !app.getId().equalsIgnoreCase(id)) {
+				app=appsService.loadById(id);
+				WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
+			}
 		}
 		if(app	==	null){
-			_logger.error("Applications for id "+id + "  is null");
+			_logger.error("Applications id " + id + "  is not exist.");
 		}
-		
 		return app;
 	}
 	
