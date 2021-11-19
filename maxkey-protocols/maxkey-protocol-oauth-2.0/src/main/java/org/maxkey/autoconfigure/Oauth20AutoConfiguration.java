@@ -76,7 +76,9 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         _logger.debug("TokenEndpointAuthenticationFilter init ");
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<Filter>();
         registration.setFilter(new TokenEndpointAuthenticationFilter());
-        registration.addUrlPatterns(OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN + "/*");
+        registration.addUrlPatterns(
+        							OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN + "/*",
+        							OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_TOKEN + "/*");
         registration.setName("TokenEndpointAuthenticationFilter");
         registration.setOrder(1);
         return registration;

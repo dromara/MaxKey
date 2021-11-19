@@ -124,5 +124,8 @@ public class OAuth2Constants {
 		
 		public final static String ENDPOINT_OPENID_CONNECT_USERINFO   = "/api/connect/v10/userinfo";
 		
+		public final static String ENDPOINT_TENCENT_IOA_AUTHORIZE	  =	"/oauth2/authorize";
+		public final static String ENDPOINT_TENCENT_IOA_TOKEN	  	  =	"/oauth2/token";
+		
 	}
 }

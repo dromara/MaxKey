@@ -136,7 +136,11 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
     }
 	   
 	@ApiOperation(value = "OAuth 2.0 认证接口", notes = "传递参数client_id,response_type,redirect_uri等",httpMethod="GET")
-	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE, method = RequestMethod.GET)
+	@RequestMapping(value = {
+								OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE,
+								OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_AUTHORIZE
+							}, 
+					method = RequestMethod.GET)
 	public ModelAndView authorize(
 	            Map<String, Object> model, 
 	            @RequestParam Map<String, String> parameters,
@@ -225,7 +229,9 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	}
 
 	//approval must post
-	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE, method = RequestMethod.POST, params = OAuth2Constants.PARAMETER.USER_OAUTH_APPROVAL)
+	@RequestMapping(value  = {OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE}, 
+					params = OAuth2Constants.PARAMETER.USER_OAUTH_APPROVAL,
+					method = RequestMethod.POST)
 	public View approveOrDeny(
 	                @RequestParam Map<String, String> approvalParameters,
 	                Map<String, ?> model,
@@ -334,8 +340,12 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	// Authorization Code Response
 	private View getAuthorizationCodeResponse(AuthorizationRequest authorizationRequest, Authentication authUser) {
 		try {
-			return new RedirectView(getSuccessfulRedirect(authorizationRequest,
-					generateCode(authorizationRequest, authUser)), false, true, false);
+			String  successfulRedirect = getSuccessfulRedirect(
+					authorizationRequest,
+					generateCode(authorizationRequest, authUser)
+			);
+			_logger.debug("successfulRedirect " + successfulRedirect);
+			return new RedirectView(successfulRedirect, false, true, false);
 		}
 		catch (OAuth2Exception e) {
 			return new RedirectView(getUnsuccessfulRedirect(authorizationRequest, e, false), false, true, false);

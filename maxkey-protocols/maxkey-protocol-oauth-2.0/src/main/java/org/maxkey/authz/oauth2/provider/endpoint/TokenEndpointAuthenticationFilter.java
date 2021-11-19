@@ -78,7 +78,10 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
  * @author Dave Syer
  * 
  */
-@WebFilter(filterName = "TokenEndpointAuthenticationFilter", urlPatterns = OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN+"/*")
+@WebFilter(	filterName = "TokenEndpointAuthenticationFilter", 
+			urlPatterns = {
+							OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN+"/*",
+							OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_TOKEN+"/*"})
 public class TokenEndpointAuthenticationFilter implements Filter {
 
 	private static final Log logger = LogFactory.getLog(TokenEndpointAuthenticationFilter.class);

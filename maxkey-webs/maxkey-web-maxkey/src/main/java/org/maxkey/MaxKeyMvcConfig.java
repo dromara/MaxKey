@@ -185,6 +185,10 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/authz/oauth/v20/authorize")
                 .addPathPatterns("/authz/oauth/v20/authorize/*")
                 
+                //OAuth TENCENT_IOA
+                .addPathPatterns("/oauth2/authorize")
+                .addPathPatterns("/oauth2/authorize/*")
+                
                 //online ticket Validate
                 .excludePathPatterns("/onlineticket/ticketValidate")
                 .excludePathPatterns("/onlineticket/ticketValidate/*")
