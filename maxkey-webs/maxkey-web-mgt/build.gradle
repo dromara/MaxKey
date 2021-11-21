@@ -1,7 +1,42 @@
+buildscript {
+	repositories {
+		maven { url 'https://maven.aliyun.com/nexus/content/groups/public/'}
+	}
+}
+//docker
+plugins {
+	id 'java'
+	id 'com.google.cloud.tools.jib' version "${jibGradlePluginVersion}"
+	id 'org.springframework.boot' version "${springBootVersion}"
+}
+
+
+apply plugin: 'com.google.cloud.tools.jib'
+
 description = "maxkey-web-mgt"
 
-//add support for Java
-apply plugin: 'java'
+jib {
+	from {
+		image = "${jibFromImage}"
+	}
+	to {
+		//https://registry.hub.docker.com/repository/docker/maxkeytop/maxkey-mgt
+		image = "${jibToImage}/maxkey-mgt"
+		tags = ["${project.version}".toString(), 'latest']
+		auth {
+			username = "${jibToAuthUsername}"
+			password = "${jibToAuthPassword}"
+		}
+		
+	}
+	container {
+		mainClass 	= "org.maxkey.MaxKeyMgtApplication"
+		jvmFlags 	= ['-Dfile.encoding=utf-8', '-Dserver.port=9527','-Duser.timezone=Asia/Shanghai']
+		ports	 	= ['9527']
+	}
+}
+
+//build.configure { finalizedBy jib }
 
 dependencies {
 	implementation project(":maxkey-common")
@@ -19,11 +54,11 @@ dependencies {
    	implementation project(":maxkey-identitys:maxkey-identity-scim")   
    	implementation project(":maxkey-identitys:maxkey-identity-rest")	
    	implementation project(":maxkey-identitys:maxkey-synchronizers")
-   	implementation project(":maxkey-identitys:maxkey-synchronizers-reorgdept")
    	implementation project(":maxkey-identitys:maxkey-synchronizers-activedirectory")
    	implementation project(":maxkey-identitys:maxkey-synchronizers-ldap")
    	implementation project(":maxkey-identitys:maxkey-synchronizers-workweixin")
    	implementation project(":maxkey-identitys:maxkey-synchronizers-dingding")
    	
    	implementation project(":maxkey-webs:maxkey-web-resources")
+   	
 }

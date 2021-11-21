@@ -2,6 +2,6 @@ create database if not exists  `maxkey` /*!40100 DEFAULT CHARACTER SET utf8mb4 C
 
 use maxkey ;
 
-source /docker-entrypoint-initdb.d/v3.1.1.ga/maxkey_v3.1.1.GA.sql   ;
-source /docker-entrypoint-initdb.d/v3.1.1.ga/maxkey_v3.1.1.GA_data.sql   ;
+source /docker-entrypoint-initdb.d/v3.1.0.ga/maxkey_v3.1.0.GA.sql   ;
+source /docker-entrypoint-initdb.d/v3.1.0.ga/maxkey_v3.1.0.GA_data.sql   ;
  
