@@ -1,0 +1,43 @@
+version: '3'
+services:
+  mysql:
+    image: maxkey:mysql
+    container_name: mysql
+    build: ./docker-mysql
+    volumes:
+      - /root/mysql/data:/var/lib/mysql 
+      - /root/mysql/logs:/var/log/mysql 
+      - /root/docker-mysql:/etc/mysql/conf.d 
+      - /root/docker-mysql/sql:/docker-entrypoint-initdb.d 
+    environment:
+      - MYSQL_ROOT_PASSWORD=maxkey
+    ports:
+      - "3306:3306"
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    
+  maxkey:
+    image: maxkey:maxkey
+    container_name: maxkey
+    build: ./docker-maxkey
+    environment:
+      - DATABASE_HOST:192.168.0.102
+      - DATABASE_PORT:3306
+      - DATABASE_NAME:maxkey
+      - DATABASE_USER:root
+      - DATABASE_PWD:maxkey
+    ports:
+      - "443:443"
+
+  maxkey-mgt:
+    image: maxkey:maxkey-mgt
+    container_name: maxkey-mgt
+    build: ./docker-maxkey-mgt
+    environment:
+      - DATABASE_HOST:192.168.0.102
+      - DATABASE_PORT:3306
+      - DATABASE_NAME:maxkey
+      - DATABASE_USER:root
+      - DATABASE_PWD:maxkey
+    ports:
+      - "9527:9527"
