@@ -1,42 +1,7 @@
-buildscript {
-	repositories {
-		maven { url 'https://maven.aliyun.com/nexus/content/groups/public/'}
-	}
-}
-
-plugins {
-	id 'java'
-	id 'com.google.cloud.tools.jib' version "${jibGradlePluginVersion}"
-	id 'org.springframework.boot' version "${springBootVersion}"
-}
-
-apply plugin: 'com.google.cloud.tools.jib'
-
 description = "maxkey-web-maxkey"
 
-//docker
-jib {
-	from {
-		image = "${jibFromImage}"
-	}
-	to {
-		//https://registry.hub.docker.com/repository/docker/maxkeytop/maxkey
-		image = "${jibToImage}/maxkey"
-		tags = ["${project.version}".toString(), 'latest']
-		auth {
-			username = "${jibToAuthUsername}"
-			password = "${jibToAuthPassword}"
-		}
-	}
-	container {
-		mainClass 	= "org.maxkey.MaxKeyApplication"
-		jvmFlags 	= ['-Dfile.encoding=utf-8', '-Dserver.port=443','-Duser.timezone=Asia/Shanghai']
-		ports 		= ['443']
-	}
-}
-
-
-//build.configure { finalizedBy jib }
+//add support for Java
+apply plugin: 'java'
 
 dependencies {
 	implementation project(":maxkey-common")
@@ -58,5 +23,4 @@ dependencies {
 	implementation project(":maxkey-protocols:maxkey-protocol-jwt")
 	
 	implementation project(":maxkey-webs:maxkey-web-resources")
-	
 }
