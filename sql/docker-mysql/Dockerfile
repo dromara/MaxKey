@@ -1,15 +1,17 @@
-FROM mysql:8.0.21
+FROM mysql:8.0.27
 
 ENV TZ=Asia/Shanghai \
     MYSQL_DATABASE=maxkey \
-    MYSQL_USER=admin \
-    MYSQL_PASSWORD=password \
-    MYSQL_ROOT_PASSWORD=password
+    MYSQL_USER=maxkey \
+    MYSQL_PASSWORD=maxkey \
+    MYSQL_ROOT_PASSWORD=maxkey
 
 
-MAINTAINER guox(guox@goodrain.com)
+MAINTAINER maxkey(maxkeysupport@163.com)
 
-VOLUME ["/var/lib/mysql", "/var/log/mysql"]
+VOLUME ["/var/lib/mysql", "/root/mysql/data"]
+VOLUME ["/var/log/mysql", "/root/mysql/logs"]
+
 
 EXPOSE 3306
 
