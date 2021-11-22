@@ -1,4 +1,33 @@
-﻿MaxKey v 3.1.0 GA 2021/11/03
+﻿MaxKey v 3.1.1 GA 2021/1*/**
+    *(MAXKEY-210901) 腾讯iOA零信任产品适配
+    *(MAXKEY-210902) docker部署完善和文档优化
+    *(MAXKEY-210903) docker-compose支持和文档
+    *(MAXKEY-210904) SCIM2优化
+    *(MAXKEY-210905) 机构和用户Excel导入优化
+    *(MAXKEY-210906) 认证服务下拉菜单bug修复
+    *(MAXKEY-210907) 增加账号策略的功能
+    *(MAXKEY-210908) 状态检查management.health.mail.enabled=false
+    *(MAXKEY-210909) 图片验证码分离
+    *(MAXKEY-210910) 缓存功能优化
+    *(MAXKEY-210911) 独立任务MaxKeyMgtJobs
+    *(MAXKEY-210912) 管理端左侧菜单问题修复
+    *(MAXKEY-210913) 修改WebContext.getBean方法，返回类对象
+    *(MAXKEY-210914) 认证失败超过最大次数锁定时间问题修复
+    *(MAXKEY-210915) platform.common.js优化
+    *(MAXKEY-210916) CAS单点登录符号问题调整
+    *(MAXKEY-210917) 接口调用认证拦截优化
+    *(MAXKEY-210918) APP加载空问题修复
+    *(MAXKEY-210919) OAuth2 token支持GET方法
+    *(MAXKEY-210920) OAuth2 client_credentials模式优化
+    *(MAXKEY-210921) 依赖jar引用、更新和升级
+         spring              5.3.13
+         springData          2.5.7
+         springkafka         2.7.8
+         springbootadmin     2.5.4
+         jodatime            2.10.13
+         mybatis-jpa-extra   2.6.1
+    
+MaxKey v 3.1.0 GA 2021/11/03
     *(MAXKEY-210801) OAuth 2.1及PKCE支持
     *(MAXKEY-210802) bootstrap升级到5.1.2
     *(MAXKEY-210803) 缓存切换成Caffeine

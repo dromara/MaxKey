@@ -141,7 +141,3 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 4.3     | 江苏创致信息科技有限公司                    |  科技  |
 | 4.4     | 江西云车科技有限公司                        |  科技  |
 | 4.5     | 无锡市陶都巨龙软件有限责任公司              |  科技  |
-| 5.1     | 王朔日记                                    |  个人  |
-| 5.2     | 一席南风（张彬）                            |  个人  |
-| 5.3     | glzpcw                                      |  个人  |
-| 5.4     | ynduck                                      |  个人  |
