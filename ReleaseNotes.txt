@@ -1,4 +1,4 @@
-﻿MaxKey v 3.1.1 GA 2021/1*/**
+﻿MaxKey v 3.1.1 GA 2021/11/30
     *(MAXKEY-210901) 腾讯iOA零信任产品适配
     *(MAXKEY-210902) docker部署完善和文档优化
     *(MAXKEY-210903) docker-compose支持和文档
