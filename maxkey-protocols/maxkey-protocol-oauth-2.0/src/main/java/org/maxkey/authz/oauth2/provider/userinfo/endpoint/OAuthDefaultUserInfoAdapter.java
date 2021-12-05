@@ -42,6 +42,7 @@ public class OAuthDefaultUserInfoAdapter extends AbstractAuthorizeAdapter {
 		beanMap.put("mobile", userInfo.getMobile());
 		beanMap.put("realname", userInfo.getDisplayName());
 		beanMap.put("birthday", userInfo.getBirthDate());
+		beanMap.put("departmentId", userInfo.getDepartmentId());
 		beanMap.put("department", userInfo.getDepartment());
 		beanMap.put("createdate", userInfo.getCreatedDate());
 		beanMap.put("title", userInfo.getJobTitle());

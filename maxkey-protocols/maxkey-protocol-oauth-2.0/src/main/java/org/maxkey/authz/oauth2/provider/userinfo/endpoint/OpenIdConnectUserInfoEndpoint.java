@@ -138,6 +138,8 @@ public class OpenIdConnectUserInfoEndpoint {
 			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId());
 			 
 		 	if(scopes.contains("profile")){
+		 		jwtClaimsSetBuilder.claim("userId", userInfo.getId());
+		 		jwtClaimsSetBuilder.claim("user", userInfo.getUsername());
 		 		jwtClaimsSetBuilder.claim("name", userInfo.getUsername());
 		 		jwtClaimsSetBuilder.claim("preferred_username", userInfo.getDisplayName());
 		 		jwtClaimsSetBuilder.claim("given_name", userInfo.getGivenName());
@@ -147,6 +149,9 @@ public class OpenIdConnectUserInfoEndpoint {
 		 		jwtClaimsSetBuilder.claim("profile", "profile");
 		 		jwtClaimsSetBuilder.claim("picture", "picture");
 		 		jwtClaimsSetBuilder.claim("website", userInfo.getWebSite());
+		 		
+		 		jwtClaimsSetBuilder.claim("departmentId", userInfo.getDepartmentId());
+		 		jwtClaimsSetBuilder.claim("department", userInfo.getDepartment());
 				
 				String gender;
 				 switch(userInfo.getGender()){
