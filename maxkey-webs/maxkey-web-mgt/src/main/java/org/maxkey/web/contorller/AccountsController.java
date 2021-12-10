@@ -19,7 +19,7 @@ package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.AccountsStrategy;
 import org.maxkey.entity.UserInfo;
@@ -101,7 +101,7 @@ public class AccountsController {
 	@RequestMapping(value={"/add"})  
 	public Message add(@ModelAttribute("appAccounts") Accounts appAccounts ) {
 		_logger.debug("-update  :" + appAccounts);
-		appAccounts.setRelatedPassword(ReciprocalUtils.encode(appAccounts.getRelatedPassword()));
+		appAccounts.setRelatedPassword(PasswordReciprocal.getInstance().encode(appAccounts.getRelatedPassword()));
 		accountsService.insert(appAccounts);
 		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 		
@@ -113,7 +113,7 @@ public class AccountsController {
 		ModelAndView modelAndView=new ModelAndView("/accounts/accountsUpdate");
 		Accounts appAccounts =accountsService.get(id);
 		
-		appAccounts.setRelatedPassword(ReciprocalUtils.decoder(appAccounts.getRelatedPassword()));
+		appAccounts.setRelatedPassword(PasswordReciprocal.getInstance().decoder(appAccounts.getRelatedPassword()));
 		modelAndView.addObject("model",appAccounts);
 		return modelAndView;
 	}
@@ -129,7 +129,7 @@ public class AccountsController {
 	public Message update(@ModelAttribute("appAccounts") Accounts appAccounts ) {
 		_logger.debug("-update  :" + appAccounts);
 		
-		appAccounts.setRelatedPassword(ReciprocalUtils.encode(appAccounts.getRelatedPassword()));
+		appAccounts.setRelatedPassword(PasswordReciprocal.getInstance().encode(appAccounts.getRelatedPassword()));
 		accountsService.update(appAccounts);
 		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 		

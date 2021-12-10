@@ -20,6 +20,7 @@ package org.maxkey.crypto;
 import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
+import org.maxkey.crypto.password.PasswordReciprocal;
 
 public class ReciprocalUtilsTest {
 	@Test
@@ -53,18 +54,13 @@ public class ReciprocalUtilsTest {
 				 
 				
 		 System.out.println(urldcode);*/
-		System.out.println( ReciprocalUtils.decoder("76efad66eb7d10140dc2d9ef41c51df0"));
-		 
-		
-		
-		
-		
+
 		 
 		String encoderString="root";
-		System.out.println( ReciprocalUtils.encode(encoderString));
+		encoderString = PasswordReciprocal.getInstance().encode(encoderString);
+		System.out.println( encoderString);
 		
-	    encoderString="ead67db5c4f55eace090ab0044682451";
-		encoderString=ReciprocalUtils.decoder(encoderString);
+		encoderString=PasswordReciprocal.getInstance().decoder(encoderString);
 		System.out.println(encoderString );
 		
 		

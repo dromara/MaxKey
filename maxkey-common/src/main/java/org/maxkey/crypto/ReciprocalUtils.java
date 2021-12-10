@@ -132,55 +132,18 @@ public final class ReciprocalUtils {
         return null;
     }
 
-    public static byte[] encodeByDefaultKey(String simple, String algorithm) {
-        SecretKey key = generatorDefaultKey(algorithm);
-        return encode(simple.getBytes(), key, algorithm);
-
-    }
-
-    public static String encode2HexByDefaultKey(String simple, String algorithm) {
-        byte[] byteFinal = encodeByDefaultKey(simple, algorithm);
-
-        String cipherHex = HexUtils.bytes2HexString(byteFinal);
-        return cipherHex;
-    }
-
-    public static byte[] decoderByDefaultKey(byte[] byteCiphers, String algorithm) {
-        SecretKey key = generatorDefaultKey(algorithm);
-        return decoder(byteCiphers, key, algorithm);
-
-    }
-
-    public static String decoderHexByDefaultKey(String ciphers, String algorithm) {
-        if(StringUtils.isBlank(ciphers))return "";
-        
-        byte[] byteSimple = HexUtils.hex2Bytes(ciphers);
-
-        byte[] byteFinal = decoderByDefaultKey(byteSimple, algorithm);
-
-        String simple = null;
+    public static String generatorDefaultKey(String secretKey,String algorithm) {
         try {
-            simple = new String(byteFinal, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return simple;
-
-    }
-
-    public static SecretKey generatorDefaultKey(String algorithm) {
-        try {
-            String secretKey = defaultKey;
+            secretKey = secretKey + defaultKey;
             if (algorithm.equals(Algorithm.DES)) {
-                secretKey = defaultKey.substring(0, 8);
+                secretKey = secretKey.substring(0, 8);
             } else if (algorithm.equals(Algorithm.AES) || algorithm.equals(Algorithm.Blowfish)) {
-                secretKey = defaultKey.substring(0, 16);
+                secretKey = secretKey.substring(0, 16);
             } else if (algorithm.equals(Algorithm.DESede)) {
-                secretKey = defaultKey.substring(0, 24);
+                secretKey = secretKey.substring(0, 24);
             }
             // System.out.println("defaultKey : "+secretKey);
-            SecretKey key = new SecretKeySpec(secretKey.getBytes(), algorithm);
-            return key;
+           return secretKey;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -216,7 +179,17 @@ public final class ReciprocalUtils {
         }
         return null;
     }
+    
+    public static String encode2Hex(String simple, String secretKey) {
+    	String key = generatorDefaultKey(secretKey + defaultKey,Algorithm.DESede);
+    	return encode2Hex(simple,key, Algorithm.DESede);
+    }
 
+    public static String decoderHex(String ciphers, String secretKey) {
+    	String key = generatorDefaultKey(secretKey + defaultKey,Algorithm.DESede);
+    	return decoderHex(ciphers,key,Algorithm.DESede);
+    }
+    
     private static boolean keyLengthCheck(String secretKey, String algorithm) {
         boolean lengthCheck = false;
         if (algorithm.equals(Algorithm.DES)) {
@@ -262,27 +235,6 @@ public final class ReciprocalUtils {
 
     public static String aesDecoder(String ciphers, String secretKey) {
         return decoderHex(ciphers, secretKey, Algorithm.AES);
-    }
-
-    /**
-     * encode by defaultKey with Algorithm.AES
-     * 
-     * @param simple
-     * @return Hex
-     */
-    public static String encode(String simple) {
-        return encode2HexByDefaultKey(simple, Algorithm.AES);
-    }
-
-    /**
-     * decoder by defaultKey with Algorithm.AES
-     * 
-     * @param ciphers is HEX
-     * 
-     * @return
-     */
-    public static String decoder(String ciphers) {
-        return decoderHexByDefaultKey(ciphers, Algorithm.AES);
     }
 
     public static String generateKey(String algorithm) {

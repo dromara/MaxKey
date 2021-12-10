@@ -20,7 +20,6 @@ package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.constants.ConstantsStatus;
-import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ChangePassword;
@@ -205,7 +204,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	    //密码不为空，则需要进行加密处理
 	    if(userInfo.getPassword()!=null && !userInfo.getPassword().equals("")) {
     	    String password = passwordEncoder.encode(userInfo.getPassword());
-            userInfo.setDecipherable(ReciprocalUtils.encode(PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), userInfo.getPassword())));
+            userInfo.setDecipherable(PasswordReciprocal.getInstance().encode(userInfo.getPassword()));
             _logger.debug("decipherable : "+userInfo.getDecipherable());
             userInfo.setPassword(password);
             userInfo.setPasswordLastSetTime(DateUtils.getCurrentDateTimeAsString());
@@ -263,8 +262,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean changePassword(UserInfo changeUserInfo,boolean passwordPolicy) {
         try {
             _logger.debug("decipherable old : " + changeUserInfo.getDecipherable());
-            _logger.debug("decipherable new : " + ReciprocalUtils.encode(PasswordReciprocal.getInstance()
-                    .rawPassword(changeUserInfo.getUsername(), changeUserInfo.getPassword())));
+            _logger.debug("decipherable new : " + PasswordReciprocal.getInstance().encode(changeUserInfo.getPassword()));
 
             if (passwordPolicy && passwordPolicyValidator.validator(changeUserInfo) == false) {
                 return false;

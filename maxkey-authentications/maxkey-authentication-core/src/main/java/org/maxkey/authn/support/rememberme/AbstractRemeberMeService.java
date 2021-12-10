@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsTimeInterval;
 import org.maxkey.crypto.Base64Utils;
-import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -71,7 +71,7 @@ public abstract class AbstractRemeberMeService {
             String jsonRemeberMe = JsonUtils.object2Json(remeberMe);
             _logger.debug("Remeber Me JSON " + jsonRemeberMe);
 
-            jsonRemeberMe = ReciprocalUtils.encode(jsonRemeberMe);
+            jsonRemeberMe = PasswordReciprocal.getInstance().encode(jsonRemeberMe);
 
             String cookieValue = Base64Utils.base64UrlEncode(jsonRemeberMe.getBytes());
 
@@ -101,7 +101,7 @@ public abstract class AbstractRemeberMeService {
         _logger.debug("Remeber Me JSON " + jsonRemeberMe);
 
         _logger.debug("Encode Remeber Me JSON ...");
-        jsonRemeberMe = ReciprocalUtils.encode(jsonRemeberMe);
+        jsonRemeberMe = PasswordReciprocal.getInstance().encode(jsonRemeberMe);
         _logger.debug("Encode Remeber Me JSON " + jsonRemeberMe);
 
         String cookieValue = Base64Utils.base64UrlEncode(jsonRemeberMe.getBytes());

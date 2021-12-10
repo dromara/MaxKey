@@ -27,7 +27,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsStatus;
-import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Registration;
 import org.maxkey.entity.UserInfo;
@@ -164,10 +163,9 @@ public class RegistrationController {
 				userInfo.setWorkPhoneNumber(registration.getWorkPhone());
 				userInfo.setEmail(registration.getWorkEmail());
 				userInfo.setStatus(ConstantsStatus.ACTIVE);
-				String rawPassword=PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), password);
-				userInfo.setDecipherable(ReciprocalUtils.encode(rawPassword));
+				userInfo.setDecipherable(PasswordReciprocal.getInstance().encode(password));
 				
-				password = passwordEncoder.encode(rawPassword );
+				password = passwordEncoder.encode(password );
 				userInfo.setPassword(password);
 				userInfo.setPasswordLastSetTime(DateUtils.format(new Date(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
 				userInfoService.insert(userInfo);

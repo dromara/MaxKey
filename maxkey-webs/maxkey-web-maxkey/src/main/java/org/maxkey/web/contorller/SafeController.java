@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsPasswordSetType;
 import org.maxkey.constants.ConstantsTimeInterval;
-import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
@@ -133,10 +133,10 @@ public class SafeController {
 		
 		UserInfo userInfo =WebContext.getUserInfo();
 		_logger.debug("App Login Password : "+userInfo.getAppLoginPassword());
-		_logger.debug("App Login new Password : "+ReciprocalUtils.encode(newPassword));
+		_logger.debug("App Login new Password : "+PasswordReciprocal.getInstance().encode(newPassword));
 		if(newPassword.equals(confirmPassword)){
-			if(StringUtils.isEmpty(userInfo.getAppLoginPassword())||userInfo.getAppLoginPassword().equals(ReciprocalUtils.encode(oldPassword))){
-				userInfo.setAppLoginPassword(ReciprocalUtils.encode(newPassword));
+			if(StringUtils.isEmpty(userInfo.getAppLoginPassword())||userInfo.getAppLoginPassword().equals(PasswordReciprocal.getInstance().encode(oldPassword))){
+				userInfo.setAppLoginPassword(PasswordReciprocal.getInstance().encode(newPassword));
 				boolean change= userInfoService.changeAppLoginPassword(userInfo);
 				_logger.debug(""+change);
 				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.prompt);

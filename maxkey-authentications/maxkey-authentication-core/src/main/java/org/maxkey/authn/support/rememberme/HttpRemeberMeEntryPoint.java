@@ -27,7 +27,7 @@ import org.maxkey.authn.LoginCredential;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
 import org.maxkey.crypto.Base64Utils;
-import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -82,7 +82,7 @@ public class HttpRemeberMeEntryPoint implements AsyncHandlerInterceptor {
 
         remeberMe = new String(Base64Utils.base64UrlDecode(remeberMe));
 
-        remeberMe = ReciprocalUtils.decoder(remeberMe);
+        remeberMe = PasswordReciprocal.getInstance().decoder(remeberMe);
 
         _logger.debug("decoder RemeberMe : " + remeberMe);
         RemeberMe remeberMeCookie = new RemeberMe();

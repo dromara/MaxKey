@@ -22,7 +22,7 @@ package org.maxkey.authz.endpoint;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
@@ -80,12 +80,12 @@ public class AuthorizeBaseEndpoint {
 			
 			account=accountsService.load(new Accounts(userInfo.getId(),loadApp.getId()));
 			if(account!=null){
-				account.setRelatedPassword(ReciprocalUtils.decoder(account.getRelatedPassword()));
+				account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));
 			}
 		}else if(loadApp.getCredential()==Apps.CREDENTIALS.SHARED){
 			
 			account.setRelatedUsername(loadApp.getSharedUsername());
-			account.setRelatedPassword(ReciprocalUtils.decoder(loadApp.getSharedPassword()));
+			account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(loadApp.getSharedPassword()));
 			
 		}else if(loadApp.getCredential()==Apps.CREDENTIALS.SYSTEM){
 			
@@ -101,7 +101,7 @@ public class AuthorizeBaseEndpoint {
 				account.setUsername(userInfo.getWindowsAccount());
 			}
 			//decoder database stored encode password
-			account.setRelatedPassword(ReciprocalUtils.decoder(WebContext.getUserInfo().getDecipherable()));
+			account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(WebContext.getUserInfo().getDecipherable()));
 			
 		}else if(loadApp.getCredential()==Apps.CREDENTIALS.NONE){
 			

@@ -18,6 +18,7 @@
 package org.maxkey.crypto.password;
 
 import org.maxkey.crypto.ReciprocalUtils;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -27,8 +28,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 public class PasswordReciprocal implements PasswordEncoder {
 
+	public static int PREFFIX_LENGTH = 7;
+	
     public static PasswordReciprocal passwordReciprocal;
-
+    
     public PasswordReciprocal() {
 
     }
@@ -45,24 +48,38 @@ public class PasswordReciprocal implements PasswordEncoder {
 
         return passwordReciprocal;
     }
-
-    public String rawPassword(String username, String password) {
-        return password + "@" + username;
-    }
-
-    public String encode(CharSequence rawPassword) {
-        return ReciprocalUtils.encode(rawPassword.toString());
+    
+    public String decoder(CharSequence encodedPassword) {
+    	String salt = encodedPassword.subSequence(0, 29).toString();
+    	encodedPassword = encodedPassword.subSequence(29, encodedPassword.length());
+    	String plain = ReciprocalUtils.decoderHex(encodedPassword.toString(), salt.substring(PREFFIX_LENGTH));
+        return plain.substring(salt.substring(PREFFIX_LENGTH).length());
     }
 
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        return ReciprocalUtils.encode(rawPassword.toString()).equals(encodedPassword);
+    	String salt = encodedPassword.subSequence(0, 29).toString();
+    	String finalPassword = encode(rawPassword,salt);
+        return finalPassword.equals(encodedPassword);//ReciprocalUtils.encode(rawPassword.toString()).equals(encodedPassword);
     }
 
-    public String decoder(CharSequence encodedPassword) {
-        if(encodedPassword == null || encodedPassword.equals("")) {
-            return "";
-        }
-        return ReciprocalUtils.decoder(encodedPassword.toString());
+    /**
+     * salt
+     * length 29
+     * @return salt
+     */
+    public String gensalt() {
+    	return BCrypt.gensalt("$2a", 10);
     }
 
+	@Override
+	public String encode(CharSequence plain) {
+		//$2a$10$
+    	String salt = gensalt();
+        return encode(plain, salt);
+	}
+	
+	private String encode(CharSequence plain,String salt) {
+    	String password = salt.substring(PREFFIX_LENGTH) + plain ;
+        return salt + ReciprocalUtils.encode2Hex(password , salt.substring(PREFFIX_LENGTH));
+	}
 }

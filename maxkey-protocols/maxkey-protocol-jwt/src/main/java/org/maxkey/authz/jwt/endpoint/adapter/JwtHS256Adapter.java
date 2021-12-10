@@ -25,9 +25,9 @@ import org.joda.time.DateTime;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.configuration.oidc.OIDCProviderMetadata;
-import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
 import org.maxkey.crypto.jwt.signer.service.impl.SymmetricSigningAndValidationServiceBuilder;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsJwtDetails;
@@ -79,7 +79,7 @@ public class JwtHS256Adapter extends AbstractAuthorizeAdapter {
 		
 		JWT jwtToken = new PlainJWT(jwtClaims);
 		
-		String sharedSecret=ReciprocalUtils.decoder(details.getAlgorithmKey());
+		String sharedSecret=PasswordReciprocal.getInstance().decoder(details.getAlgorithmKey());
 		
 		_logger.debug("jwt sharedSecret : "+sharedSecret);
 		

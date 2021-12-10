@@ -37,7 +37,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsPasswordSetType;
-import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.ExcelImport;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
@@ -162,7 +162,7 @@ public class UserInfoController {
 		UserInfo userInfo = userInfoService.get(id);
 		if(userInfo!=null&&userInfo.getDecipherable()!=null){
 			try{
-				userInfo.setPassword(ReciprocalUtils.decoder(userInfo.getDecipherable()));
+				userInfo.setPassword(PasswordReciprocal.getInstance().decoder(userInfo.getDecipherable()));
 			}catch (Exception e) {
 			}
 			userInfo.setDecipherable(userInfo.getPassword());

@@ -21,8 +21,7 @@
 package org.maxkey.authz.endpoint;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.util.StringUtils;
@@ -76,7 +75,7 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 			appUser.setAppName(getApp(appId).getName());
 			
 			appUser.setRelatedUsername(identity_username);
-			appUser.setRelatedPassword(ReciprocalUtils.encode(identity_password));
+			appUser.setRelatedPassword(PasswordReciprocal.getInstance().encode(identity_password));
 			
 			if(accountsService.insert(appUser)){
 				

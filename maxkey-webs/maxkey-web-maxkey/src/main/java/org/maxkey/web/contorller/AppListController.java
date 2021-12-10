@@ -23,7 +23,7 @@ import java.util.List;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsProtocols;
-import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
@@ -147,7 +147,7 @@ public class AppListController {
                 @RequestParam("password") String password) {
 
         UserInfo userInfo = WebContext.getUserInfo();
-        String userAppProtectedPassword = ReciprocalUtils.decoder(userInfo.getAppLoginPassword());
+        String userAppProtectedPassword = PasswordReciprocal.getInstance().decoder(userInfo.getAppLoginPassword());
         if (userAppProtectedPassword.equals(password)) {
 
             if (protectedappId.equalsIgnoreCase("YES")) {
@@ -213,7 +213,7 @@ public class AppListController {
             }
             if (appUsers != null) {
                 modelAndView.addObject("identity_username", appUsers.getRelatedUsername());
-                modelAndView.addObject("identity_password", ReciprocalUtils.decoder(appUsers.getRelatedPassword()));
+                modelAndView.addObject("identity_password", PasswordReciprocal.getInstance().decoder(appUsers.getRelatedPassword()));
             } else {
                 modelAndView.addObject("identity_username", "");
                 modelAndView.addObject("identity_password", "");
@@ -256,11 +256,11 @@ public class AppListController {
                 appUsers.setDisplayName(userInfo.getDisplayName());
 
                 appUsers.setRelatedUsername(identity_username);
-                appUsers.setRelatedPassword(ReciprocalUtils.encode(identity_password));
+                appUsers.setRelatedPassword(PasswordReciprocal.getInstance().encode(identity_password));
                 appUsersService.insert(appUsers);
             } else {
                 appUsers.setRelatedUsername(identity_username);
-                appUsers.setRelatedPassword(ReciprocalUtils.encode(identity_password));
+                appUsers.setRelatedPassword(PasswordReciprocal.getInstance().encode(identity_password));
                 appUsersService.update(appUsers);
             }
         }

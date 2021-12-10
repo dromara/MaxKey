@@ -27,11 +27,16 @@ public class PasswordReciprocalTest {
 
 	public static void main(String[] args) {
 		BCryptPasswordEncoder spe= new BCryptPasswordEncoder();
-		String pass=PasswordReciprocal.getInstance().rawPassword("admin", "admin");
+		//String pass=PasswordReciprocal.getInstance().rawPassword("admin", "admin");
+		String pass ="x8zPbCya";
 		String epass=spe.encode(pass);
 		System.out.println("PasswordEncoder "+epass); 
 		
-		System.out.println(PasswordReciprocal.getInstance().decoder("f1ee1e9b912f05333a06925c99daf9c0"));
+		String encode = PasswordReciprocal.getInstance().encode(pass);
+		System.out.println(encode);
+		System.out.println(PasswordReciprocal.getInstance().decoder(encode));
+		
+		System.out.println(PasswordReciprocal.getInstance().matches(pass,encode));
 	}
 
 }

@@ -34,11 +34,11 @@ import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.OAuth2Request;
 import org.maxkey.authz.oauth2.provider.token.TokenEnhancer;
 import org.maxkey.configuration.oidc.OIDCProviderMetadata;
-import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.encryption.service.impl.RecipientJwtEncryptionAndDecryptionServiceBuilder;
 import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
 import org.maxkey.crypto.jwt.signer.service.impl.SymmetricSigningAndValidationServiceBuilder;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.web.WebContext;
 
@@ -174,7 +174,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 							|| signingAlg.equals(JWSAlgorithm.HS384)
 							|| signingAlg.equals(JWSAlgorithm.HS512)) {
 						// sign it with the client's secret
-						String client_secret=ReciprocalUtils.decoder(clientDetails.getClientSecret());
+						String client_secret=PasswordReciprocal.getInstance().decoder(clientDetails.getClientSecret());
 						
 						JwtSigningAndValidationService symmetricJwtSignerService =symmetricJwtSignerServiceBuilder.serviceBuilder(client_secret);
 						if(symmetricJwtSignerService!=null){
