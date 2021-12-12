@@ -95,6 +95,11 @@ public class Organizations extends JpaBaseEntity implements Serializable {
     @Column
     String modifiedDate;
     
+	@Column
+	private String instId;
+
+	private String instName;
+    
     private int isPrimary = 0;
     
     private boolean reorgNamePath;
@@ -369,6 +374,22 @@ public class Organizations extends JpaBaseEntity implements Serializable {
 
 	public void setModifiedDate(String modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
 	}
 
 	@Override

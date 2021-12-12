@@ -66,7 +66,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		transform(tokenBasedDetails);
 		
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
-		
+		tokenBasedDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (tokenBasedDetailsService.insert(tokenBasedDetails)&&appsService.insertApp(tokenBasedDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -99,6 +99,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		_logger.debug("-update  application :" + tokenBasedDetails);
 		transform(tokenBasedDetails);
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
+		tokenBasedDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (tokenBasedDetailsService.update(tokenBasedDetails)&&appsService.updateApp(tokenBasedDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

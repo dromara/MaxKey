@@ -15,9 +15,9 @@
 		select
 			*
 		from
-			`mxk_groups`
-		where
-			 dynamic = '1'
+			mxk_roles
+		where instid   =   #{instId} 
+			 and dynamic = '1'
 		<include refid="where_statement"/>
 	</select>
 	
@@ -27,7 +27,7 @@
 		from
 			mxk_roles
 		where
-			 (1=1)	
+			 instid   =   #{instId} 
 		<include refid="where_statement"/>
 	</select>
 	
@@ -35,7 +35,7 @@
 	<update id="logisticDelete" parameterType="Roles" >
     	update mxk_roles set
     		status	=	'2'  
-    	where	1	=	1
+    	where	instid   =   #{instId} 
     	<if test="id != null">
 			and	id	=	#{id}
 		</if>
@@ -46,7 +46,10 @@
     
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	update mxk_roles set status='2' where id in
+    	update mxk_roles 
+    	set status='2' 
+    	where instid   =   #{instId}  
+    	   and id in
     		<foreach item="item" collection="list" open="(" separator="," close=")">
 				#{item}
     		</foreach>
@@ -58,8 +61,8 @@
             *
         from
             mxk_role_permissions
-        where
-             status = 1
+        where   instid   =   #{instId} 
+            and status   = 1
        <if test="id != null and id != ''">
             and id  =   #{id}
         </if> 
@@ -73,17 +76,20 @@
     </select>
     
     <update id="logisticDeleteRolePermissions" parameterType="java.util.List">
-        update mxk_role_permissions set status=9 where id in
+        update mxk_role_permissions 
+        set status=9 
+        where instid   =   #{instId} 
+            and id in
             <foreach item="item" collection="list" open="(" separator="," close=")">
                 #{item.id}
             </foreach>
     </update>
     
     <insert id="insertRolePermissions"  parameterType="java.util.List">
-	    insert into mxk_role_permissions ( id,appid,roleid,resourceid,status) 
+	    insert into mxk_role_permissions ( id,appid,roleid,resourceid,status,instid) 
 	    values 
 	    <foreach collection="list" item="item" index="index" separator=",">
-	        (#{item.id},#{item.appId},#{item.roleId},#{item.resourceId},#{item.status})
+	        (#{item.id},#{item.appId},#{item.roleId},#{item.resourceId},#{item.status},#{item.instId})
 	    </foreach>
 	</insert>
 	

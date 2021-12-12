@@ -75,6 +75,7 @@ public class HistoryLogsAdapter  implements AsyncHandlerInterceptor  {
                                 userInfo == null ? null : userInfo.getUsername(),
                                         ""
                         );
+                historyLogs.setInstId(userInfo.getInstId());
                 _logger.debug("insert db historyLogs content : " + historyLogs);
                 historySystemLogsService.insert(historyLogs);//日志插入数据库
                 //message类型仅插入数据库

@@ -57,7 +57,11 @@ public class Roles extends JpaBaseEntity implements Serializable {
     String modifiedBy;
     @Column
     String modifiedDate;
+	@Column
+	private String instId;
 
+	private String instName;
+	
     public Roles() {
         super();
     }
@@ -150,7 +154,23 @@ public class Roles extends JpaBaseEntity implements Serializable {
         this.orgIdsList = orgIdsList;
     }
 
-    @Override
+    public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Roles [id=");

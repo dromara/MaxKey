@@ -61,7 +61,7 @@ public class CasDetailsController  extends BaseAppContorller {
 		_logger.debug("-Add  :" + casDetails);
 
 		transform(casDetails);
-		
+		casDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (casDetailsService.insert(casDetails)&&appsService.insertApp(casDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -92,7 +92,7 @@ public class CasDetailsController  extends BaseAppContorller {
 		//
 		_logger.debug("-update  application :" + casDetails);
 		transform(casDetails);
-
+		casDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (casDetailsService.update(casDetails)&&appsService.updateApp(casDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

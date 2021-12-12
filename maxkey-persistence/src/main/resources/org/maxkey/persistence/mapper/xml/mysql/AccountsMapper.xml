@@ -24,8 +24,7 @@
 			*
 		from
 			mxk_accounts
-		where
-			 (1=1)	
+		where instid = #{instId}
 		<include refid="where_statement"/>
 	</select>
 	
@@ -33,9 +32,11 @@
         select 
             *
         from mxk_userinfo u
-        where not exists(
+        where u.instid = #{instId} 
+            and not exists(
                 select  1 from mxk_accounts ac 
                 where   ac.appid = #{appId}
+                    and ac.instid = #{instId} 
                     and ac.userid = u.id
                     and ac.createtype='automatic'
             )
@@ -49,13 +50,14 @@
     
 	<delete id="deleteByStrategy" parameterType="AccountsStrategy" >
         delete from mxk_accounts ac
-        where   ac.createtype = 'automatic'
+        where   ac.instid = #{instId} 
+            and ac.createtype = 'automatic'
             and ac.appid = #{appId}
             and ac.strategyid = #{id}
             and not exists(
                 select 1
                 from mxk_userinfo u
-                where 1 = 1 
+                where instid = #{instId} 
                     and u.id=ac.userid
                 <if test="filters != null and filters != ''">
                         and (${filters})

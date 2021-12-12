@@ -51,8 +51,7 @@
 			status
 		from
 			mxk_userinfo
-		where
-			 (1=1)	
+		where instid = #{instId}
 		<if test="username != null and username != ''">
 			and username = #{username}
 		</if>
@@ -251,13 +250,17 @@
  
     <select id="loadDeptsByUserId" parameterType="string" resultType="Organizations">
         select o.* , 1 isPrimary from mxk_organizations o,mxk_userinfo u 
-        where   o.id=u.departmentid 
+        where   o.instid = #{instId} 
+            and u.instid = #{instId} 
+            and o.id=u.departmentid 
             and u.id=#{value}
 
         union all
 
         select o.* , 0 isPrimary from mxk_organizations o,mxk_userinfo_adjunct ua 
-        where   o.id=ua.departmentid 
+        where   o.instid = #{instId} 
+            and ua.instid = #{instId} 
+            and o.id=ua.departmentid 
             and ua.userid=#{value}
     </select>
     

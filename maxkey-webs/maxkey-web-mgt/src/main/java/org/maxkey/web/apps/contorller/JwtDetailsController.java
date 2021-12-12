@@ -66,7 +66,7 @@ public class JwtDetailsController  extends BaseAppContorller {
 		transform(jwtDetails);
 		
 		jwtDetails.setAlgorithmKey(jwtDetails.getSecret());
-		
+		jwtDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (jwtDetailsService.insert(jwtDetails)&&appsService.insertApp(jwtDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -99,6 +99,7 @@ public class JwtDetailsController  extends BaseAppContorller {
 		_logger.debug("-update  application :" + jwtDetails);
 		transform(jwtDetails);
 		jwtDetails.setAlgorithmKey(jwtDetails.getSecret());
+		jwtDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (jwtDetailsService.update(jwtDetails)&&appsService.updateApp(jwtDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

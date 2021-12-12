@@ -8,11 +8,12 @@
     	from 
     		mxk_apps_jwt_details jd,
     		mxk_apps app
-    	where 	
-    		app.id	=	#{value}
-    		and jd.id	=	#{value}
-    		and jd.id	=	app.id
-    		and status	=	1
+    	where 	app.instid  =   #{instId} 
+            and jd.instid   =   #{instId} 
+    		and app.id	    =	#{value}
+    		and jd.id	    =	#{value}
+    		and status        =   1
+    		and jd.id	    =	app.id
     </select>
 	
 </mapper>

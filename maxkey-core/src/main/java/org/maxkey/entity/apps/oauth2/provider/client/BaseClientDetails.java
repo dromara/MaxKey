@@ -98,6 +98,8 @@ public class BaseClientDetails implements ClientDetails {
 	
 	private String protocol;
 	
+	private String instId;
+	
 	
 	public BaseClientDetails() {
 	}
@@ -391,7 +393,16 @@ public class BaseClientDetails implements ClientDetails {
         this.protocol = protocol;
     }
 
-    @Override
+	@Override
+	public String getInstId() {
+		return this.instId;
+	}
+	
+    public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -524,5 +535,7 @@ public class BaseClientDetails implements ClientDetails {
         builder.append("]");
         return builder.toString();
     }
+
+
 
 }

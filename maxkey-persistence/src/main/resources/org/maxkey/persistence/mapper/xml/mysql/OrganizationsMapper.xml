@@ -24,7 +24,7 @@
     	select 
 			*
     	from mxk_organizations 
-    	where	1	=	1
+    	where	instid   =   #{instId} 
     	<include refid="dao_where_statement"/>
     	order by sortindex,id
     </select>
@@ -34,14 +34,14 @@
     	select 
 			*
     	from mxk_organizations 
-    	where	1	=	1
+    	where	instid   =   #{instId} 
     	<include refid="dao_where_statement"/>
     	order by sortindex,id
     </select>
   
     <update id="logisticDelete" parameterType="Organizations" >
     	update mxk_organizations set status	=	'2'  
-    		where	1	=	1
+    		where	instid   =   #{instId} 
     	<if test="id != null and id != '' ">
 			and	id	=	#{id}
 		</if>
@@ -57,8 +57,10 @@
     </update>
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	UPDATE MXK_ORGANIZATIONS SET STATUS	=	'2'  
-    		 WHERE ID IN
+    	UPDATE MXK_ORGANIZATIONS 
+    	SET STATUS	=	'2'  
+    	WHERE instid   =   #{instId} 
+    	   and id in
 		<foreach collection="ids" item="selectId"  open="(" separator="," close=")">  
         	#{selectId}   
      	</foreach>

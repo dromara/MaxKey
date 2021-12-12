@@ -17,6 +17,8 @@
 
 package org.maxkey.entity;
 
+import javax.persistence.Column;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
 public class Registration extends JpaBaseEntity{
@@ -34,6 +36,10 @@ public class Registration extends JpaBaseEntity{
 	private String lastName;//familyName
 	private String firstName;//givenName
 	private Integer users;
+	@Column
+	private String instId;
+
+	private String instName;
 	
 	
 	/**
@@ -160,6 +166,22 @@ public class Registration extends JpaBaseEntity{
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
 	}
 
 	@Override

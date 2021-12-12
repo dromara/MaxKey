@@ -63,6 +63,7 @@ public class ApplicationsController extends BaseAppContorller {
 	@RequestMapping(value = { "/grid" })
 	@ResponseBody
 	public JpaPageResults<Apps> queryDataGrid(@ModelAttribute("applications") Apps applications) {
+		applications.setInstId(WebContext.getUserInfo().getInstId());
 		JpaPageResults<Apps> apps=appsService.queryPageResults(applications);
 		if(apps!=null&&apps.getRows()!=null){
 			for (Apps app : apps.getRows()){
@@ -84,7 +85,7 @@ public class ApplicationsController extends BaseAppContorller {
 		_logger.debug("-Add  :" + application);
 		
 		transform(application);
-		
+		application.setInstId(WebContext.getUserInfo().getInstId());
 		if (appsService.insert(application)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -150,6 +151,7 @@ public class ApplicationsController extends BaseAppContorller {
 	@RequestMapping(value={"/update"})  
 	public Message update(@ModelAttribute("application") Apps application) {
 		_logger.debug("-update  application :" + application);
+		application.setInstId(WebContext.getUserInfo().getInstId());
 		if (appsService.update(application)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

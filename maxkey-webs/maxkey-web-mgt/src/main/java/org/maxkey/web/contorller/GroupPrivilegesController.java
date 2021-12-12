@@ -57,7 +57,7 @@ public class GroupPrivilegesController {
 	public JpaPageResults<GroupPrivileges> queryAppsInGroup(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
 		
 		JpaPageResults<GroupPrivileges> groupPrivileges;
-		
+		groupApp.setInstId(WebContext.getUserInfo().getInstId());
 		groupPrivileges= groupPrivilegesService.queryPageResults("appsInGroup",groupApp);
 
 		if(groupPrivileges!=null&&groupPrivileges.getRows()!=null){
@@ -81,7 +81,7 @@ public class GroupPrivilegesController {
 	@ResponseBody
 	public JpaPageResults<GroupPrivileges> queryAppsNotInGroup(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
 		JpaPageResults<GroupPrivileges> groupPrivileges;
-		
+		groupApp.setInstId(WebContext.getUserInfo().getInstId());
 		groupPrivileges= groupPrivilegesService.queryPageResults("appsNotInGroup",groupApp);
 
 		if(groupPrivileges!=null&&groupPrivileges.getRows()!=null){
@@ -111,6 +111,7 @@ public class GroupPrivilegesController {
 			for (int i = 0; i < arrAppIds.length; i++) {
 				GroupPrivileges newGroupApp = new GroupPrivileges(groupId, arrAppIds[i]);
 				newGroupApp.setId(WebContext.genId());
+				newGroupApp.setInstId(WebContext.getUserInfo().getInstId());
 				result = groupPrivilegesService.insert(newGroupApp);
 			}
 			if(!result) {

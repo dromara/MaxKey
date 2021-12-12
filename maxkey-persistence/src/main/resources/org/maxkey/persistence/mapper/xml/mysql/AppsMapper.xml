@@ -30,8 +30,7 @@
 			*
 		from
 			mxk_apps
-		where
-			 (1=1)	
+		where instid = #{instId}
 		<include refid="where_statement"/>
 		order by sortindex 
 	</select>
@@ -79,7 +78,8 @@
 			status,
 			
 			logouturl,
-			logouttype
+			logouttype,
+			instid
 		)values(
 			#{id},
 			#{name},
@@ -120,7 +120,8 @@
 			#{status},
 
 			#{logoutUrl},
-			#{logoutType}
+			#{logoutType},
+			#{instId}
 		)
 	</insert>
 	
@@ -179,6 +180,9 @@
         where
             app.id=gp.appid
             and gp.groupid=g.id
+            and app.instid = #{instId}
+            and gp.instid = #{instId}
+            and g.instid = #{instId}
             and app.visible != 0
             and (
             	 g.id='ROLE_ALL_USER'

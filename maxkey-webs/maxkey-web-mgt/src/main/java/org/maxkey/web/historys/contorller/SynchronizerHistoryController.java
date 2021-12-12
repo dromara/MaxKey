@@ -23,6 +23,7 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.entity.HistorySynchronizer;
 import org.maxkey.persistence.service.HistorySynchronizerService;
 import org.maxkey.util.DateUtils;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,7 @@ final static Logger _logger = LoggerFactory.getLogger(SynchronizerHistoryControl
     @ResponseBody
     public JpaPageResults<HistorySynchronizer> historySynchronizerGrid(@ModelAttribute("historySynchronizer") HistorySynchronizer historySynchronizer){
         _logger.debug("historys/synchronizerHistory/grid/ "+historySynchronizer);
+        historySynchronizer.setInstId(WebContext.getUserInfo().getInstId());
         return historySynchronizerService.queryPageResults(historySynchronizer);
     }
 

@@ -66,6 +66,7 @@ public class AccountsStrategyController {
 	@ResponseBody
 	public JpaPageResults<AccountsStrategy> queryDataGrid(@ModelAttribute("accountsStrategy") AccountsStrategy accountsStrategy) {
 		_logger.debug(""+accountsStrategy);
+		accountsStrategy.setInstId(WebContext.getUserInfo().getInstId());
 		JpaPageResults<AccountsStrategy> accountsStrategyList =accountsStrategyService.queryPageResults(accountsStrategy);
 		for (AccountsStrategy strategy : accountsStrategyList.getRows()){
 			WebContext.setAttribute(strategy.getId(), strategy.getAppIcon());
@@ -91,7 +92,7 @@ public class AccountsStrategyController {
 	@RequestMapping(value={"/add"})
 	public Message insert(@ModelAttribute("accountsStrategy") AccountsStrategy accountsStrategy) {
 		_logger.debug("-Add  :" + accountsStrategy);
-		
+		accountsStrategy.setInstId(WebContext.getUserInfo().getInstId());
 		if (accountsStrategyService.insert(accountsStrategy)) {
 		    accountsService.refreshByStrategy(accountsStrategy);
 		    //rolesService.refreshDynamicRoles(role);
@@ -112,6 +113,7 @@ public class AccountsStrategyController {
 	@RequestMapping(value={"/query"}) 
 	public Message query(@ModelAttribute("accountsStrategy") AccountsStrategy accountsStrategy) {
 		_logger.debug("-query  :" + accountsStrategy);
+		accountsStrategy.setInstId(WebContext.getUserInfo().getInstId());
 		if (accountsStrategyService.load(accountsStrategy)!=null) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -130,7 +132,7 @@ public class AccountsStrategyController {
 	@RequestMapping(value={"/update"})  
 	public Message update(@ModelAttribute("accountsStrategy") AccountsStrategy accountsStrategy) {
 		_logger.debug("-update  AccountsStrategy :" + accountsStrategy);
-		
+		accountsStrategy.setInstId(WebContext.getUserInfo().getInstId());
 		if (accountsStrategyService.update(accountsStrategy)) {
 		   // rolesService.refreshDynamicRoles(role);
 		    accountsService.refreshByStrategy(accountsStrategy);

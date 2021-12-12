@@ -23,6 +23,7 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.entity.HistoryLogs;
 import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.util.DateUtils;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,7 @@ public class HistorySystemLogsController {
     @ResponseBody
     public JpaPageResults<HistoryLogs> logsDataGrid(@ModelAttribute("historyLogs") HistoryLogs historyLogs) {
         _logger.debug("history/systemLogs/grid/ systemLogs() " + historyLogs);
+        historyLogs.setInstId(WebContext.getUserInfo().getInstId());
         return historySystemLogsService.queryPageResults(historyLogs);
     }
 

@@ -72,7 +72,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		transform(oauth20Details);
 
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
-		
+		oauth20Details.setInstId(WebContext.getUserInfo().getInstId());
 		oauth20JdbcClientDetailsService.addClientDetails(oauth20Details.clientDetailsRowMapper());
 		if (appsService.insertApp(oauth20Details)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
@@ -115,7 +115,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
         oauth20JdbcClientDetailsService.updateClientSecret(oauth20Details.getClientId(), oauth20Details.getClientSecret());
         
 		transform(oauth20Details);
-		
+		oauth20Details.setInstId(WebContext.getUserInfo().getInstId());
 		if (appsService.updateApp(oauth20Details)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 		} else {

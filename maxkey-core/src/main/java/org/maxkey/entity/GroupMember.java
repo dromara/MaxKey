@@ -53,9 +53,11 @@ public class GroupMember extends UserInfo implements Serializable{
 	private String memberName;
 	@Column
 	private String type;//User or Group
-	
 
-	
+	@Column
+	private String instId;
+
+	private String instName;
 	
 	public GroupMember(){
 		super();
@@ -162,6 +164,26 @@ public class GroupMember extends UserInfo implements Serializable{
 
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
+	}
+
+
+	public String getInstId() {
+		return instId;
+	}
+
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+
+	public String getInstName() {
+		return instName;
+	}
+
+
+	public void setInstName(String instName) {
+		this.instName = instName;
 	}
 
 

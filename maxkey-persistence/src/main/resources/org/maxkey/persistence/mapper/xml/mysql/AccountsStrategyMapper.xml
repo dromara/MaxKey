@@ -23,8 +23,9 @@
         from
             mxk_accounts_strategy mas,
             mxk_apps    ma
-        where
-             mas.appid = ma.id
+        where   ma.instid = #{instId}
+            and mas.instid = #{instId}
+            and mas.appid = ma.id
         <include refid="where_statement"/>
     </select>
 	

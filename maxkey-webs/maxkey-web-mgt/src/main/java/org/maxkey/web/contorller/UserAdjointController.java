@@ -58,6 +58,7 @@ public class UserAdjointController {
 	@ResponseBody
 	public JpaPageResults<UserInfoAdjoint> queryDataGrid(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
 		_logger.debug(""+userInfoAdjoint);
+		userInfoAdjoint.setInstId(WebContext.getUserInfo().getInstId());
 		return userInfoAdjointService.queryPageResults(userInfoAdjoint);
 	}
 
@@ -81,7 +82,7 @@ public class UserAdjointController {
 	@RequestMapping(value={"/add"})
 	public Message insert(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
 		_logger.debug("-Add  :" + userInfoAdjoint);
-		
+		userInfoAdjoint.setInstId(WebContext.getUserInfo().getInstId());
 		if (userInfoAdjointService.insert(userInfoAdjoint)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -100,6 +101,7 @@ public class UserAdjointController {
 	@RequestMapping(value={"/query"}) 
 	public Message query(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
 		_logger.debug("-query  :" + userInfoAdjoint);
+		userInfoAdjoint.setInstId(WebContext.getUserInfo().getInstId());
 		if (userInfoAdjointService.load(userInfoAdjoint)!=null) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -118,7 +120,7 @@ public class UserAdjointController {
 	@RequestMapping(value={"/update"})  
 	public Message update(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
 		_logger.debug("-update  userInfoAdjoint :" + userInfoAdjoint);
-		
+		userInfoAdjoint.setInstId(WebContext.getUserInfo().getInstId());
 		if (userInfoAdjointService.update(userInfoAdjoint)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

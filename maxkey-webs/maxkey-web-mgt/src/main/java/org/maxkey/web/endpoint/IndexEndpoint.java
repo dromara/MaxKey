@@ -17,7 +17,10 @@
 
 package org.maxkey.web.endpoint;
 
+import java.util.HashMap;
+
 import org.maxkey.persistence.service.ReportService;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,15 +46,17 @@ public class IndexEndpoint {
 	public ModelAndView home() {
 		_logger.debug("IndexController /main.");
 		ModelAndView mainMView=new ModelAndView("main");
-		mainMView.addObject("rptDayCount", reportService.analysisDay(""));
-		mainMView.addObject("rptNewUsers", reportService.analysisNewUsers(""));
-		mainMView.addObject("rptOnlineUsers", reportService.analysisOnlineUsers(""));
-		mainMView.addObject("rptActiveUsers", reportService.analysisActiveUsers(""));
+		HashMap<String,Object> reportParameter = new HashMap<String,Object>();
+		reportParameter.put("instId", WebContext.getUserInfo().getInstId());
+		mainMView.addObject("rptDayCount", reportService.analysisDay(reportParameter));
+		mainMView.addObject("rptNewUsers", reportService.analysisNewUsers(reportParameter));
+		mainMView.addObject("rptOnlineUsers", reportService.analysisOnlineUsers(reportParameter));
+		mainMView.addObject("rptActiveUsers", reportService.analysisActiveUsers(reportParameter));
 		
-		mainMView.addObject("rptMonth", reportService.analysisMonth(""));
-		mainMView.addObject("rptDayHour", reportService.analysisDayHour(""));
-		mainMView.addObject("rptBrowser", reportService.analysisBrowser(null));
-		mainMView.addObject("rptApp", reportService.analysisApp(null));
+		mainMView.addObject("rptMonth", reportService.analysisMonth(reportParameter));
+		mainMView.addObject("rptDayHour", reportService.analysisDayHour(reportParameter));
+		mainMView.addObject("rptBrowser", reportService.analysisBrowser(reportParameter));
+		mainMView.addObject("rptApp", reportService.analysisApp(reportParameter));
 		return  mainMView;
 	}
 	

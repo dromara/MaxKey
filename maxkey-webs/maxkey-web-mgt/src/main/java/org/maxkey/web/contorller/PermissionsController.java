@@ -61,8 +61,10 @@ public class PermissionsController {
 	public Message insert(@ModelAttribute("rolePermissions") RolePermissions rolePermissions) {
 		_logger.debug("-save  :" + rolePermissions);
 		//have
-		List<RolePermissions> rolePermissionsedList = rolesService.queryRolePermissions(
-		                new RolePermissions(rolePermissions.getAppId(),rolePermissions.getRoleId()));
+		
+		RolePermissions queryRolePermissions = new RolePermissions(rolePermissions.getAppId(),rolePermissions.getRoleId());
+		queryRolePermissions.setInstId(WebContext.getUserInfo().getInstId());
+		List<RolePermissions> rolePermissionsedList = rolesService.queryRolePermissions(queryRolePermissions);
 		
 		HashMap<String,String >permedMap =new HashMap<String,String >();
 		for(RolePermissions rolePerms : rolePermissionsedList) {
@@ -78,7 +80,7 @@ public class PermissionsController {
                     rolePermissions.getAppId(),
                     rolePermissions.getRoleId(),
                     resourceId);
-		    
+		    newRolePermissions.setInstId(WebContext.getUserInfo().getInstId());
 		    newPermsMap.put(newRolePermissions.getUniqueId(), rolePermissions.getAppId());
 		    
 		    if(!rolePermissions.getAppId().equalsIgnoreCase(resourceId) &&
@@ -112,8 +114,9 @@ public class PermissionsController {
     public List<RolePermissions> querypermissions(@ModelAttribute("rolePermissions") RolePermissions rolePermissions) {
         _logger.debug("-querypermissions  :" + rolePermissions);
         //have
-        List<RolePermissions> rolePermissionsedList = rolesService.queryRolePermissions(
-                        new RolePermissions(rolePermissions.getAppId(),rolePermissions.getRoleId()));
+        RolePermissions queryRolePermissions = new RolePermissions(rolePermissions.getAppId(),rolePermissions.getRoleId());
+		queryRolePermissions.setInstId(WebContext.getUserInfo().getInstId());
+        List<RolePermissions> rolePermissionsedList = rolesService.queryRolePermissions(queryRolePermissions);
         return rolePermissionsedList;
 	}
 

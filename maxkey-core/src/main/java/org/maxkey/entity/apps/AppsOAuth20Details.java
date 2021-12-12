@@ -65,6 +65,9 @@ public class AppsOAuth20Details extends Apps {
     
     private String pkce;
 
+	private String instId;
+
+	private String instName;
     /**
      * 
      */
@@ -118,6 +121,7 @@ public class AppsOAuth20Details extends Apps {
         this.approvalPrompt = baseClientDetails.getApprovalPrompt();
         
         this.pkce = baseClientDetails.getPkce();
+        this.instId = baseClientDetails.getInstId();
         
 
     }
@@ -326,7 +330,23 @@ public class AppsOAuth20Details extends Apps {
         this.jwksUri = jwksUri;
     }
 
-    public BaseClientDetails clientDetailsRowMapper() {
+    public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+
+	public BaseClientDetails clientDetailsRowMapper() {
         BaseClientDetails baseClientDetails = new BaseClientDetails(this.getId(), this.getId(), this.getScope(),
                 this.getAuthorizedGrantTypes(), "ROLE_CLIENT, ROLE_TRUSTED_CLIENT", this.getRegisteredRedirectUris());
         baseClientDetails.setAccessTokenValiditySeconds(this.getAccessTokenValiditySeconds());
@@ -346,7 +366,7 @@ public class AppsOAuth20Details extends Apps {
         baseClientDetails.setApprovalPrompt(this.getApprovalPrompt());
         baseClientDetails.setPkce(this.getPkce());
         baseClientDetails.setProtocol(this.getProtocol());
-
+        baseClientDetails.setInstId(instId);
         return baseClientDetails;
     }
 

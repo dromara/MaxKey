@@ -42,6 +42,10 @@ public class AppsCasDetails extends Apps {
     private Integer expires;
     @Column
     private String callbackUrl;
+	@Column
+	private String instId;
+
+	private String instName;
 
     /**
      * @return the service
@@ -75,6 +79,22 @@ public class AppsCasDetails extends Apps {
 		this.expires = expires;
 	}
 
+	public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -86,6 +106,10 @@ public class AppsCasDetails extends Apps {
 		builder.append(expires);
 		builder.append(", callbackUrl=");
 		builder.append(callbackUrl);
+		builder.append(", instId=");
+		builder.append(instId);
+		builder.append(", instName=");
+		builder.append(instName);
 		builder.append("]");
 		return builder.toString();
 	}

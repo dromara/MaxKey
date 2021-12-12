@@ -70,6 +70,11 @@ public class Accounts extends JpaBaseEntity implements Serializable {
     @Column
     private int status;
     
+    @Column
+    private String instId;
+    
+    private String instName;
+    
     UserInfo userInfo;
     
     private HashMap<String,OrganizationsCast> orgCast =new HashMap<String,OrganizationsCast>();
@@ -206,7 +211,23 @@ public class Accounts extends JpaBaseEntity implements Serializable {
         }
     }
 
-    @Override
+    public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+
+	@Override
     public String toString() {
         return "AppAccounts [uid=" + userId + ", username=" + username + ", displayName=" + displayName + ", appId="
                 + appId + ", appName=" + appName + ", relatedUsername=" + relatedUsername + ", relatedPassword="

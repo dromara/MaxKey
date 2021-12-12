@@ -152,5 +152,7 @@ public interface ClientDetails extends Serializable {
 	
 	public String getProtocol();
 	
+	public String getInstId();
+	
 
 }

@@ -65,6 +65,7 @@ public class GroupMemberController {
 		if(groupMember.getGroupId()==null||groupMember.getGroupId().equals("")){
 			return null;
 		}
+		groupMember.setInstId(WebContext.getUserInfo().getInstId());
 		return groupMemberService.queryPageResults(groupMember);
 	}
 	
@@ -86,6 +87,7 @@ public class GroupMemberController {
 	@ResponseBody
 	public JpaPageResults<GroupMember> queryMemberInGroup(@ModelAttribute("groupMember")  GroupMember groupMember) {
 		_logger.debug("groupMember : "+groupMember);
+		groupMember.setInstId(WebContext.getUserInfo().getInstId());
 		if(groupMember.getGroupId()==null||groupMember.getGroupId().equals("")||groupMember.getGroupId().equals("ROLE_ALL_USER")){
 			return groupMemberService.queryPageResults("allMemberInGroup",groupMember);
 		}else{
@@ -105,7 +107,8 @@ public class GroupMemberController {
 	@RequestMapping(value = { "/queryMemberNotInGroup" })
 	@ResponseBody
 	public JpaPageResults<GroupMember> queryMemberNotInGroupGrid(@ModelAttribute("groupMember")  GroupMember groupMember) {
-			return groupMemberService.queryPageResults("memberNotInGroup",groupMember);
+		groupMember.setInstId(WebContext.getUserInfo().getInstId());
+		return groupMemberService.queryPageResults("memberNotInGroup",groupMember);
 	}
 	
 	
@@ -128,6 +131,7 @@ public class GroupMemberController {
 			for (int i = 0; i < arrMemberIds.length; i++) {
 				GroupMember newGroupMember = new GroupMember(groupId,groupMember.getGroupName(), arrMemberIds[i], arrMemberNames[i],"USER");
 				newGroupMember.setId(WebContext.genId());
+				newGroupMember.setInstId(WebContext.getUserInfo().getInstId());
 				result = groupMemberService.insert(newGroupMember);
 			}
 			if(!result) {

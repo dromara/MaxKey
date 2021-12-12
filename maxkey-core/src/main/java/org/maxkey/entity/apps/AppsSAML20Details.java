@@ -105,7 +105,11 @@ public class AppsSAML20Details extends Apps {
     
     @Column
     private String nameIdSuffix;
+	@Column
+	private String instId;
 
+	private String instName;
+	
     public static final class BindingType {
         public static final  String Redirect_Post = "Redirect-Post";
         public static final  String Post_Post = "Post-Post";
@@ -359,7 +363,23 @@ public class AppsSAML20Details extends Apps {
         this.metaUrl = metaUrl;
     }
 
-    @Override
+    public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("AppsSAML20Details [id=");

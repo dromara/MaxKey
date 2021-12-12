@@ -47,7 +47,11 @@ public class RoleMember extends UserInfo implements Serializable {
     private String memberName;
     @Column
     private String type;// User or Roles
+	@Column
+	private String instId;
 
+	private String instName;
+	
     public RoleMember() {
         super();
     }
@@ -100,7 +104,23 @@ public class RoleMember extends UserInfo implements Serializable {
         this.type = type;
     }
 
-    public RoleMember(String roleId, String memberId, String type) {
+    public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+
+	public RoleMember(String roleId, String memberId, String type) {
         super();
         this.roleId = roleId;
         this.memberId = memberId;

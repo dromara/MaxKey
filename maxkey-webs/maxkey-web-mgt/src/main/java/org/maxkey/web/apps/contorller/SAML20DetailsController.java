@@ -90,6 +90,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		saml20Details.setInstId(WebContext.getUserInfo().getInstId());
 		saml20DetailsService.insert(saml20Details);
 		if (appsService.insertApp(saml20Details)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
@@ -125,6 +126,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		saml20Details.setInstId(WebContext.getUserInfo().getInstId());
 		saml20DetailsService.update(saml20Details);
 		if (appsService.updateApp(saml20Details)) {
 			 new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);

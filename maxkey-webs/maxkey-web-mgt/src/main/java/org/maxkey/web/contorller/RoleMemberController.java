@@ -65,6 +65,7 @@ public class RoleMemberController {
 		if(roleMember.getRoleId()==null||roleMember.getRoleId().equals("")){
 			return null;
 		}
+		roleMember.setInstId(WebContext.getUserInfo().getInstId());
 		return roleMemberService.queryPageResults(roleMember);
 	}
 	
@@ -73,6 +74,7 @@ public class RoleMemberController {
 	@ResponseBody
 	public JpaPageResults<RoleMember> queryMemberInRole(@ModelAttribute("roleMember")  RoleMember roleMember) {
 		_logger.debug("roleMember : "+roleMember);
+		roleMember.setInstId(WebContext.getUserInfo().getInstId());
 		if(roleMember.getRoleId()==null||roleMember.getRoleId().equals("")||roleMember.getRoleId().equals("ALL_USER_ROLE")){
 			return roleMemberService.queryPageResults("allMemberInRole",roleMember);
 		}else{
@@ -92,7 +94,8 @@ public class RoleMemberController {
 	@RequestMapping(value = { "/queryMemberNotInRole" })
 	@ResponseBody
 	public JpaPageResults<RoleMember> queryMemberNotInGroupGrid(@ModelAttribute("roleMember")  RoleMember roleMember) {
-			return roleMemberService.queryPageResults("memberNotInRole",roleMember);
+		roleMember.setInstId(WebContext.getUserInfo().getInstId());
+		return roleMemberService.queryPageResults("memberNotInRole",roleMember);
 	}
 	
 	
@@ -115,6 +118,7 @@ public class RoleMemberController {
 			for (int i = 0; i < arrMemberIds.length; i++) {
 				RoleMember newRoleMember = new RoleMember(groupId,roleMember.getRoleName(), arrMemberIds[i], arrMemberNames[i],"USER");
 				newRoleMember.setId(WebContext.genId());
+				newRoleMember.setInstId(WebContext.getUserInfo().getInstId());
 				result = roleMemberService.insert(newRoleMember);
 			}
 			if(!result) {

@@ -60,7 +60,10 @@ public class AppsTokenBasedDetails  extends Apps {
 	private String algorithmKey;
 	@Column
 	private String expires;
-		
+	@Column
+	private String instId;
+
+	private String instName;	
 	
 	public AppsTokenBasedDetails() {
 		super();
@@ -137,7 +140,27 @@ public class AppsTokenBasedDetails  extends Apps {
     }
 
 
-    @Override
+    public String getInstId() {
+		return instId;
+	}
+
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+
+	public String getInstName() {
+		return instName;
+	}
+
+
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+
+
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("AppsTokenBasedDetails [id=");

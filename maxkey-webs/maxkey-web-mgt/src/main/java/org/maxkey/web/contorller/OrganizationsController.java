@@ -69,6 +69,7 @@ public class OrganizationsController {
   public List<HashMap<String, Object>> organizationsTree(@RequestParam(value = "id", required = false) String id) {
     _logger.debug("organizationsTree id :" + id);
     Organizations queryOrg = new Organizations();
+    queryOrg.setInstId(WebContext.getUserInfo().getInstId());
     List<Organizations> organizationsList = this.organizationsService.queryOrgs(queryOrg);
     TreeNodeList treeNodeList = new TreeNodeList();
     
@@ -100,6 +101,7 @@ public class OrganizationsController {
 	@RequestMapping(value = { "/pageresults" })
 	@ResponseBody
 	public JpaPageResults<Organizations> pageResults(@ModelAttribute("orgs") Organizations orgs) {
+		orgs.setInstId(WebContext.getUserInfo().getInstId());
 		return organizationsService.queryPageResults(orgs);
 
 	}
@@ -128,6 +130,7 @@ public class OrganizationsController {
     	org.generateId();
     }
     
+    org.setInstId(WebContext.getUserInfo().getInstId());
     if (this.organizationsService.insert(org)) {
       return new Message(WebContext.getI18nValue("message.action.insert.success"), MessageType.success);
     }
@@ -139,6 +142,7 @@ public class OrganizationsController {
 	@RequestMapping({"/query"})
 	public Message query(@ModelAttribute("org") Organizations org) {
 		_logger.debug("-query  :" + org);
+		org.setInstId(WebContext.getUserInfo().getInstId());
 		if (this.organizationsService.load(org) != null) {
 			return new Message(WebContext.getI18nValue("message.action.insert.success"), MessageType.success);
 		}
@@ -159,6 +163,7 @@ public class OrganizationsController {
 	@RequestMapping({"/update"})
 	public Message update(@ModelAttribute("org") Organizations org) {
 		_logger.debug("-update  organization :" + org);
+		org.setInstId(WebContext.getUserInfo().getInstId());
     	if (this.organizationsService.update(org)) {
     		return new Message(WebContext.getI18nValue("message.action.update.success"), MessageType.success);
     	}
@@ -268,6 +273,8 @@ public class OrganizationsController {
 		// 详细描述
 		organization.setDescription(ExcelUtils.getValue(row, 20));
 		organization.setStatus(1);
+		
+		organization.setInstId(WebContext.getUserInfo().getInstId());
       return organization;
   }
 }

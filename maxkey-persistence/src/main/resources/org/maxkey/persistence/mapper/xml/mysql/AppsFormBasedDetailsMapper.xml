@@ -8,8 +8,9 @@
     	from 
     		mxk_apps_form_based_details fbd,
     		mxk_apps app
-    	where 	
-    		app.id	=	#{value}
+    	where 	app.instId = #{instId}
+    	    and fbd.instId = #{instId}
+    		and app.id	=	#{value}
     		and fbd.id	=	#{value}
     		and fbd.id	=	app.id
     		and status	=	1

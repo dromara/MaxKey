@@ -45,7 +45,7 @@
 			date_format(logintime, '%Y-%m-%d  %H:%i:%s') as logintime
 			 
     	from mxk_history_login_apps
-    	where	1	=	1
+    	where	instid   =   #{instId} 
     	<include refid="dao_where_statement"/>
     	
     	order by logintime desc

@@ -24,8 +24,9 @@
     	from 
     		mxk_apps_saml_v20_details svd,
     		mxk_apps app
-    	where 	
-    		app.id			=	#{value}
+    	where 	app.instid  =   #{instId} 
+    	    and svd.instid  =   #{instId} 
+    		and app.id		=	#{value}
     		and svd.id		=	#{value}
     		and svd.id		=	app.id
     		and app.status	=	1

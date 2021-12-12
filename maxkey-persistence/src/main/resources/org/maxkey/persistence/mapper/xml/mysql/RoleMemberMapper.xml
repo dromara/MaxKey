@@ -50,7 +50,7 @@
 					u.status
 				from
 					mxk_userinfo u
-			where	1	=	1
+			where	instid   =   #{instId} 
 	</select>
 	
     <select id="memberInRole" parameterType="RoleMember" resultType="RoleMember">
@@ -93,7 +93,9 @@
 				mxk_userinfo u,
 				mxk_roles r,
 				mxk_role_member rm
-			where	1	=	1
+			where	u.instid     =   #{instId} 
+			     and r.instid    =   #{instId} 
+			     and rm.instid   =   #{instId} 
 				<if test="roleId != null and roleId != ''">
 					and rm.roleid = #{roleId}
 					and r.id = #{roleId}

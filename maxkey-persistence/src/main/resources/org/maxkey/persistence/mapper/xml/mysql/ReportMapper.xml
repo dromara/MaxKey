@@ -2,69 +2,70 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.maxkey.persistence.mapper.ReportMapper" >
  	<!-- DAY  COUNT 一天访问量 -->
-	<select id="analysisDay" parameterType="String" resultType="Integer">
+	<select id="analysisDay" parameterType="java.util.HashMap" resultType="Integer">
     	select 
     		count(id) reportcount
     	from mxk_history_login 
-    	where 
-    		date(logintime) =curdate()
+    	where  instid   =   #{instId} 
+            and date(logintime) =curdate()
     </select>
     <!-- 本月新用户统计 -->
-    <select id="analysisNewUsers" parameterType="String" resultType="Integer">
+    <select id="analysisNewUsers" parameterType="java.util.HashMap" resultType="Integer">
     	select 
 			count(*) reportcount 
 		from mxk_userinfo 
-		where 
-		last_day(createddate) =last_day(curdate())
+		where instid   =   #{instId} 
+		  and last_day(createddate) =last_day(curdate())
     </select>
     <!-- 在线用户统计 -->
-    <select id="analysisOnlineUsers" parameterType="String" resultType="Integer">
+    <select id="analysisOnlineUsers" parameterType="java.util.HashMap" resultType="Integer">
     	    select 
 				count(*) reportcount 
 			from mxk_userinfo 
-			where 	online = 1
+			where 	instid   =   #{instId} 
+                and online = 1
 				and now() - lastlogintime between 1 and 10000   
     </select>
     <!-- 30天活跃用户统计 -->
-    <select id="analysisActiveUsers" parameterType="String" resultType="Integer">
+    <select id="analysisActiveUsers" parameterType="java.util.HashMap" resultType="Integer">
     	select 
 			count(*) reportcount 
 		from mxk_userinfo 
-		where 
-		date(lastlogintime) >date_add(curdate(), interval - day(curdate()) -31 day)
+		where instid   =   #{instId} 
+		  and date(lastlogintime) >date_add(curdate(), interval - day(curdate()) -31 day)
     </select>
     
     <!-- DAY HOUR COUNT 当天每小时 -->
-	<select id="analysisDayHour" parameterType="String" resultType="Map">
+	<select id="analysisDayHour" parameterType="java.util.HashMap" resultType="Map">
     	select 
     		count(id) reportcount, 
 			hour(logintime) reportstring 
     	from mxk_history_login 
-    	where 
-    		date(logintime) =curdate()
+    	where   instid   =   #{instId} 
+    		and date(logintime) =curdate()
     	group by reportstring
     	order by reportstring
     </select>
     <!-- 30 DAY COUNT 最近30天每天访问量-->   
-    <select id="analysisMonth" parameterType="String" resultType="Map">
+    <select id="analysisMonth" parameterType="java.util.HashMap" resultType="Map">
     	select 
     		count(id) reportcount, 
 			date(logintime) reportstring 
     	from mxk_history_login 
-    	where 
-    		date(logintime) >date_add(curdate(), interval - day(curdate()) -31 day)
+    	where   instid   =   #{instId} 
+    		and date(logintime) >date_add(curdate(), interval - day(curdate()) -31 day)
     	group by reportstring
     	order by reportstring
     </select>
     
     <!-- 30天浏览器的访问统计 -->
-    <select id="analysisBrowser" parameterType="Map" resultType="Map">
+    <select id="analysisBrowser" parameterType="java.util.HashMap" resultType="Map">
     	select 
     		count(id) reportcount, 
 			coalesce(browser,'Other') reportstring 
     	from mxk_history_login 
-    	where 
-    		date(logintime) >date_add(curdate(), interval - day(curdate()) -31 day)
+    	where  instid   =   #{instId} 
+            and date(logintime) >date_add(curdate(), interval - day(curdate()) -31 day)
     	group by reportstring
     	order by reportcount desc
     </select>
@@ -75,8 +76,8 @@
 			count(id) reportcount,
 			appname 
     	from mxk_history_login_apps
-    	where 
-    		date(logintime) >date_add(curdate(), interval - day(curdate()) -31 day)
+    	where  instid   =   #{instId} 
+    	   and date(logintime) >date_add(curdate(), interval - day(curdate()) -31 day)
     	group by appname order by reportcount desc
     </select>
 

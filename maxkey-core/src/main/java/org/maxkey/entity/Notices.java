@@ -63,7 +63,10 @@ public class Notices  extends JpaBaseEntity implements Serializable {
     protected String modifiedDate;
     @Column
     protected String description;
-    
+	@Column
+	private String instId;
+
+	private String instName;
     
 	public Notices() {
 
@@ -139,6 +142,22 @@ public class Notices  extends JpaBaseEntity implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
 	}
 
 	@Override

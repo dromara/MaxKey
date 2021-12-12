@@ -77,6 +77,10 @@ public class HistoryConnector  extends JpaBaseEntity  implements Serializable{
     
     String endDate;
     
+	@Column
+	private String instId;
+
+	private String instName;
    
     public String getId() {
         return id;
@@ -205,6 +209,26 @@ public class HistoryConnector  extends JpaBaseEntity  implements Serializable{
 
 	public void setConAction(String conAction) {
 		this.conAction = conAction;
+	}
+
+
+	public String getInstId() {
+		return instId;
+	}
+
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+
+	public String getInstName() {
+		return instName;
+	}
+
+
+	public void setInstName(String instName) {
+		this.instName = instName;
 	}
 
 

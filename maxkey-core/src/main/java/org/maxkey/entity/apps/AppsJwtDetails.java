@@ -60,7 +60,10 @@ public class AppsJwtDetails  extends Apps {
 	private String algorithmKey;
 	@Column
 	private String expires;
-		
+	@Column
+	private String instId;
+
+	private String instName;	
 	
 	public AppsJwtDetails() {
 		super();
@@ -137,25 +140,49 @@ public class AppsJwtDetails  extends Apps {
     }
 
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("AppsTokenBasedDetails [id=");
-        builder.append(id);
-        builder.append(", redirectUri=");
-        builder.append(redirectUri);
-        builder.append(", tokenType=");
-        builder.append(tokenType);
-        builder.append(", cookieName=");
-        builder.append(cookieName);
-        builder.append(", algorithm=");
-        builder.append(algorithm);
-        builder.append(", algorithmKey=");
-        builder.append(algorithmKey);
-        builder.append(", expires=");
-        builder.append(expires);
-        builder.append("]");
-        return builder.toString();
-    }
+    public String getInstId() {
+		return instId;
+	}
+
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+
+	public String getInstName() {
+		return instName;
+	}
+
+
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("AppsJwtDetails [id=");
+		builder.append(id);
+		builder.append(", redirectUri=");
+		builder.append(redirectUri);
+		builder.append(", tokenType=");
+		builder.append(tokenType);
+		builder.append(", cookieName=");
+		builder.append(cookieName);
+		builder.append(", algorithm=");
+		builder.append(algorithm);
+		builder.append(", algorithmKey=");
+		builder.append(algorithmKey);
+		builder.append(", expires=");
+		builder.append(expires);
+		builder.append(", instId=");
+		builder.append(instId);
+		builder.append(", instName=");
+		builder.append(instName);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

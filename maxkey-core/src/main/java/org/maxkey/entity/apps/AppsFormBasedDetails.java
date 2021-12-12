@@ -50,7 +50,10 @@ public class AppsFormBasedDetails  extends Apps {
 	private String passwordAlgorithm;
 	@Column
 	private String authorizeView;
+	@Column
+	private String instId;
 
+	private String instName;
 
 	/**
 	 * 
@@ -135,21 +138,47 @@ public class AppsFormBasedDetails  extends Apps {
     }
 
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("AppsFormBasedDetails [id=");
-        builder.append(id);
-        builder.append(", redirectUri=");
-        builder.append(redirectUri);
-        builder.append(", usernameMapping=");
-        builder.append(usernameMapping);
-        builder.append(", passwordMapping=");
-        builder.append(passwordMapping);
-        builder.append(", authorizeView=");
-        builder.append(authorizeView);
-        builder.append("]");
-        return builder.toString();
-    }
+    public String getInstId() {
+		return instId;
+	}
+
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+
+	public String getInstName() {
+		return instName;
+	}
+
+
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("AppsFormBasedDetails [id=");
+		builder.append(id);
+		builder.append(", redirectUri=");
+		builder.append(redirectUri);
+		builder.append(", usernameMapping=");
+		builder.append(usernameMapping);
+		builder.append(", passwordMapping=");
+		builder.append(passwordMapping);
+		builder.append(", passwordAlgorithm=");
+		builder.append(passwordAlgorithm);
+		builder.append(", authorizeView=");
+		builder.append(authorizeView);
+		builder.append(", instId=");
+		builder.append(instId);
+		builder.append(", instName=");
+		builder.append(instName);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

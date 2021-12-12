@@ -57,7 +57,7 @@
 			date_format(logintime, '%Y-%m-%d  %H:%i:%s') as logintime,
 			date_format(logouttime, '%Y-%m-%d  %H:%i:%s') as logouttime
     	from mxk_history_login
-    	where	1	=	1
+    	where	instid   =   #{instId} 
     	<include refid="dao_where_statement"/>
     	
     	order by logintime desc
@@ -83,7 +83,8 @@
             date_format(logintime, '%Y-%m-%d  %H:%i:%s') as logintime,
             date_format(logouttime, '%Y-%m-%d  %H:%i:%s') as logouttime
         from mxk_history_login
-        where   sessionstatus = 1
+        where   instid   =   #{instId}  
+            and sessionstatus = 1
         
         <include refid="dao_where_statement"/>
         

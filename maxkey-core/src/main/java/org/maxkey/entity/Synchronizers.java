@@ -86,6 +86,11 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
     String status;
     
     String service;
+    
+	@Column
+	private String instId;
+
+	private String instName;
 
     public Synchronizers() {
     }
@@ -290,6 +295,30 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 
 	public void setService(String service) {
 		this.service = service;
+	}
+
+
+
+	public String getInstId() {
+		return instId;
+	}
+
+
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+
+
+	public String getInstName() {
+		return instName;
+	}
+
+
+
+	public void setInstName(String instName) {
+		this.instName = instName;
 	}
 
 

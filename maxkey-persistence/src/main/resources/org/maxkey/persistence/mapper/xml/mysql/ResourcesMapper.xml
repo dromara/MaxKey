@@ -25,7 +25,9 @@
 		from
 			mxk_resources res, mxk_apps app
 		where
-			 (1=1)	and res.appid=app.id
+			 res.instid   =   #{instId} 
+			 and app.instid   =   #{instId} 	
+			 and res.appid=app.id
 		<include refid="where_statement"/>
 		order by res.sortindex 
 	</select>
@@ -34,7 +36,7 @@
 	<update id="logisticDelete" parameterType="Resources" >
     	update mxk_resources set
     		status	=	'2'  
-    	where	1	=	1
+    	where	instid   =   #{instId} 
     	<if test="id != null">
 			and	id	=	#{id}
 		</if>
@@ -45,7 +47,10 @@
     
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	update mxk_resources set status='2' where id in
+    	update mxk_resources 
+    	set status='2'
+    	where  instid   =   #{instId} 
+    	   and id in
     		<foreach item="item" collection="list" open="(" separator="," close=")">
 				#{item}
     		</foreach>

@@ -83,7 +83,7 @@ public class LoginSessionController {
     @ResponseBody
     public JpaPageResults<HistoryLogin> loginSessionListGrid(@ModelAttribute("historyLogin") HistoryLogin historyLogin) {
         _logger.debug("history/session/ sessionListGrid() " + historyLogin);
-        //historyLogin.setUserId(WebContext.getUserInfo().getId());
+        historyLogin.setInstId(WebContext.getUserInfo().getInstId());
         return historyLoginService.queryOnlineSession(historyLogin);
     }
 

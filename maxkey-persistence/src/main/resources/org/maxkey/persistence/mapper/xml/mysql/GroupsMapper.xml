@@ -18,8 +18,7 @@
 			*
 		from
 			`mxk_groups`
-		where
-			 (1=1)	
+		where instid   =   #{instId} 
 		<include refid="where_statement"/>
 	</select>
 	
@@ -28,8 +27,8 @@
 			*
 		from
 			`mxk_groups`
-		where
-			 dynamic = '1'
+		where instid   =   #{instId} 
+            and dynamic = '1'
 		<include refid="where_statement"/>
 	</select>
 	
@@ -37,7 +36,7 @@
 	<update id="logisticDelete" parameterType="Groups" >
     	update `mxk_groups` set
     		status	=	'2'  
-    	where	1	=	1
+    	where	instid   =   #{instId} 
     	<if test="id != null">
 			and	id	=	#{id}
 		</if>
@@ -48,7 +47,10 @@
     
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	update `mxk_groups` set status='2' where id in
+    	update `mxk_groups` 
+    	set status='2' 
+    	where instid   =   #{instId} 
+    	   and id in
     		<foreach item="item" collection="list" open="(" separator="," close=")">
 				#{item}
     		</foreach>
@@ -62,12 +64,14 @@
                 mxk_userinfo u,
                 mxk_groups   g,
                 mxk_group_member gm
-            where   1   =   1
-                    and gm.memberid = #{value}
-                    and u.id        = #{value}
-                    and gm.type     in( 'USER','USER-DYNAMIC')
-                    and gm.groupid  =   g.id    
-                    and gm.memberid =   u.id
+            where   u.instid    =   #{instId} 
+                and g.instid    =   #{instId} 
+                and gm.instid   =   #{instId} 
+                and gm.memberid = #{value}
+                and u.id        = #{value}
+                and gm.type     in( 'USER','USER-DYNAMIC')
+                and gm.groupid  =   g.id    
+                and gm.memberid =   u.id
     </select>
     
    

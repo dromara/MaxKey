@@ -8,8 +8,9 @@
     	from 
     		mxk_apps_token_based_details tbd,
     		mxk_apps app
-    	where 	
-    		app.id	=	#{value}
+    	where 	app.instid  =   #{instId} 
+            and tbd.instid  =   #{instId} 
+    		and app.id	=	#{value}
     		and tbd.id	=	#{value}
     		and tbd.id	=	app.id
     		and status	=	1

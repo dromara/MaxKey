@@ -64,7 +64,10 @@ public class OrganizationsCast extends JpaBaseEntity implements Serializable {
     private String orgId;
     @Column
     private String orgParentId;
-    
+	@Column
+	private String instId;
+
+	private String instName;
     //重组标志
     boolean reorgNamePath;
     
@@ -183,6 +186,22 @@ public class OrganizationsCast extends JpaBaseEntity implements Serializable {
 
 	public void setReorgNamePath(boolean reorgNamePath) {
 		this.reorgNamePath = reorgNamePath;
+	}
+
+	public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
 	}
 
 	@Override

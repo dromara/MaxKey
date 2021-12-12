@@ -159,6 +159,7 @@ public abstract class AbstractAuthenticationRealm {
         historyLogin.setUserId(userInfo.getId());
         historyLogin.setUsername(userInfo.getUsername());
         historyLogin.setDisplayName(userInfo.getDisplayName());
+        historyLogin.setInstId(userInfo.getInstId());
         
         loginHistoryService.login(historyLogin);
         

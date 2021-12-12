@@ -68,6 +68,7 @@ public class ResourcesController {
 	@ResponseBody
 	public JpaPageResults<Resources> queryDataGrid(@ModelAttribute("resources") Resources resources) {
 		_logger.debug(""+resources);
+		resources.setInstId(WebContext.getUserInfo().getInstId());
 		return resourcesService.queryPageResults(resources);
 	}
 
@@ -89,7 +90,7 @@ public class ResourcesController {
 	@RequestMapping(value={"/add"})
 	public Message insert(@ModelAttribute("resource") Resources resource) {
 		_logger.debug("-Add  :" + resource);
-		
+		resource.setInstId(WebContext.getUserInfo().getInstId());
 		if (resourcesService.insert(resource)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -108,6 +109,7 @@ public class ResourcesController {
 	@RequestMapping(value={"/query"}) 
 	public Message query(@ModelAttribute("resource") Resources resource) {
 		_logger.debug("-query  :" + resource);
+		resource.setInstId(WebContext.getUserInfo().getInstId());
 		if (resourcesService.load(resource)!=null) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -126,7 +128,7 @@ public class ResourcesController {
 	@RequestMapping(value={"/update"})  
 	public Message update(@ModelAttribute("resource") Resources resource) {
 		_logger.debug("-update  resource :" + resource);
-		
+		resource.setInstId(WebContext.getUserInfo().getInstId());
 		if (resourcesService.update(resource)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
@@ -160,6 +162,7 @@ public class ResourcesController {
 	    _logger.debug("resourcesTree appId :" + appId + " ,appName " + appName);
 	    Resources queryRes = new Resources();
 	    queryRes.setAppId(appId);
+	    queryRes.setInstId(WebContext.getUserInfo().getInstId());
 	    List<Resources> resourcesList = this.resourcesService.queryResourcesTree(queryRes);
 	    TreeNodeList treeNodeList = new TreeNodeList();
 	    

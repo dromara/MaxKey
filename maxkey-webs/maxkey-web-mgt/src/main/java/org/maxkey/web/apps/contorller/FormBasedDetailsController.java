@@ -64,7 +64,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 		_logger.debug("-Add  :" + formBasedDetails);
 		
 		transform(formBasedDetails);
-		
+		formBasedDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (formBasedDetailsService.insert(formBasedDetails)&&appsService.insertApp(formBasedDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -95,6 +95,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 		//
 		_logger.debug("-update  application :" + formBasedDetails);
 		transform(formBasedDetails);
+		formBasedDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (formBasedDetailsService.update(formBasedDetails)&&appsService.updateApp(formBasedDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

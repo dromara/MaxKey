@@ -53,7 +53,10 @@ public class HistoryLoginApps extends JpaBaseEntity {
 	private String displayName;
 	@Column
 	private String loginTime;
-	
+	@Column
+	private String instId;
+
+	private String instName;
 	String startDate;
 	String endDate;
 	
@@ -207,6 +210,26 @@ public class HistoryLoginApps extends JpaBaseEntity {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+
+	public String getInstId() {
+		return instId;
+	}
+
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+
+	public String getInstName() {
+		return instName;
+	}
+
+
+	public void setInstName(String instName) {
+		this.instName = instName;
 	}
 
 

@@ -53,6 +53,7 @@ public class SocialsProviderController {
 	@ResponseBody
 	public JpaPageResults<SocialsProvider> queryDataGrid(@ModelAttribute("socialsProvider") SocialsProvider socialsProvider) {
 		_logger.debug(""+socialsProvider);
+		socialsProvider.setInstId(WebContext.getUserInfo().getInstId());
 		return socialsProviderService.queryPageResults(socialsProvider);
 	}
 
@@ -73,7 +74,7 @@ public class SocialsProviderController {
 	@RequestMapping(value={"/add"})
 	public Message insert(@ModelAttribute("socialsProvider") SocialsProvider socialsProvider) {
 		_logger.debug("-Add  :" + socialsProvider);
-		
+		socialsProvider.setInstId(WebContext.getUserInfo().getInstId());
 		if (socialsProviderService.insert(socialsProvider)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -92,6 +93,7 @@ public class SocialsProviderController {
 	@RequestMapping(value={"/query"}) 
 	public Message query(@ModelAttribute("socialsProvider") SocialsProvider socialsProvider) {
 		_logger.debug("-query  :" + socialsProvider);
+		socialsProvider.setInstId(WebContext.getUserInfo().getInstId());
 		if (socialsProviderService.load(socialsProvider)!=null) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -110,7 +112,7 @@ public class SocialsProviderController {
 	@RequestMapping(value={"/update"})  
 	public Message update(@ModelAttribute("socialsProvider") SocialsProvider socialsProvider) {
 		_logger.debug("-update  socialsProvider :" + socialsProvider);
-		
+		socialsProvider.setInstId(WebContext.getUserInfo().getInstId());
 		if (socialsProviderService.update(socialsProvider)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

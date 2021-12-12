@@ -22,7 +22,7 @@
       <tbody>
       	<#list listSocialSignOnProvider as socialSignOnProvider>
         <tr>
-          <td>${socialSignOnProvider.sortOrder}</td>
+          <td>${socialSignOnProvider.sortIndex}</td>
           <td><img src="<@base />/static/${socialSignOnProvider.icon}" title="${socialSignOnProvider.providerName}" width="32px;" height="32px;"/></td>
           <td>${socialSignOnProvider.providerName}</td>
           <td>${socialSignOnProvider.bindTime!}</td>

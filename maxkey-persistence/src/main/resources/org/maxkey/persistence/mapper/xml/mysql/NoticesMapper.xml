@@ -19,7 +19,7 @@
 		from
 			mxk_notices
 		where
-			 (1=1)	
+			instid   =   #{instId} 
 		<include refid="where_statement"/>
 		order by  modifieddate desc
 	</select>
@@ -29,6 +29,7 @@
 			*
 		from
 			mxk_notices
+		where instid   =   #{instId} 
 		order by  modifieddate desc
 		limit 1
 	</select>

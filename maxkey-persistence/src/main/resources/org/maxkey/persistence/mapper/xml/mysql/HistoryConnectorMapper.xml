@@ -53,7 +53,7 @@
     	select 
 			*
     	from mxk_history_connector 
-    	where	1	=	1
+    	where	instid   =   #{instId} 
     	<include refid="where_statement"/>
     	
     	order by synctime desc

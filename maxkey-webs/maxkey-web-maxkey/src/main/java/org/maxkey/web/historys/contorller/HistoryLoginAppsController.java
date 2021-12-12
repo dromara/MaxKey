@@ -67,6 +67,7 @@ public class HistoryLoginAppsController {
             @ModelAttribute("historyLoginApps") HistoryLoginApps historyLoginApps) {
         _logger.debug("history/loginApps/grid/ logsGrid() " + historyLoginApps);
         historyLoginApps.setId(null);
+        historyLoginApps.setInstId(WebContext.getUserInfo().getInstId());
         historyLoginApps.setUsername(WebContext.getUserInfo().getUsername());
         return historyLoginAppsService.queryPageResults(historyLoginApps);
 

@@ -62,6 +62,7 @@ public class GroupsController {
 	@ResponseBody
 	public JpaPageResults<Groups> queryDataGrid(@ModelAttribute("groups") Groups groups) {
 		_logger.debug(""+groups);
+		groups.setInstId(WebContext.getUserInfo().getInstId());
 		return groupsService.queryPageResults(groups);
 	}
 
@@ -83,7 +84,7 @@ public class GroupsController {
 	@RequestMapping(value={"/add"})
 	public Message insert(@ModelAttribute("group") Groups group) {
 		_logger.debug("-Add  :" + group);
-		
+		group.setInstId(WebContext.getUserInfo().getInstId());
 		if (groupsService.insert(group)) {
 		    groupsService.refreshDynamicGroups(group);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
@@ -103,6 +104,7 @@ public class GroupsController {
 	@RequestMapping(value={"/query"}) 
 	public Message query(@ModelAttribute("group") Groups group) {
 		_logger.debug("-query  :" + group);
+		group.setInstId(WebContext.getUserInfo().getInstId());
 		if (groupsService.load(group)!=null) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -121,7 +123,7 @@ public class GroupsController {
 	@RequestMapping(value={"/update"})  
 	public Message update(@ModelAttribute("group") Groups group) {
 		_logger.debug("-update  group :" + group);
-		
+		group.setInstId(WebContext.getUserInfo().getInstId());
 		if (groupsService.update(group)) {
 		    groupsService.refreshDynamicGroups(group);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);

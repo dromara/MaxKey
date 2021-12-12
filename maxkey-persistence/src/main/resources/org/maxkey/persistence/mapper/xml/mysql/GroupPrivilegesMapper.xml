@@ -35,7 +35,9 @@
 			mxk_apps apps,
 			mxk_group_privileges    gp
 		where
-			gp.appid=apps.id
+		    apps.instid     =   #{instId} 
+		    and gp.instid   =   #{instId} 
+			and gp.appid    =    apps.id
 			and gp.groupid	=	#{groupId}
 		<include refid="where_statement"/>
 	</select>

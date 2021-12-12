@@ -62,6 +62,8 @@ public class SocialsProvider extends JpaBaseEntity implements Serializable {
     @Column
     private int status;
     @Column
+	private String instId;
+    @Column
     String createdBy;
     @Column
     String createdDate;
@@ -259,7 +261,15 @@ public class SocialsProvider extends JpaBaseEntity implements Serializable {
         this.sortIndex = sortIndex;
     }
 
-    @Override
+    public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("SocialsProvider [id=");

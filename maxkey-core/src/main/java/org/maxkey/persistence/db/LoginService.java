@@ -360,6 +360,7 @@ public class LoginService {
             userInfo.setGridList(rs.getInt("GRIDLIST"));
             userInfo.setDescription(rs.getString("DESCRIPTION"));
             userInfo.setTheme(rs.getString("THEME"));
+            userInfo.setInstId(rs.getString("INSTID"));
             if (userInfo.getTheme() == null || userInfo.getTheme().equalsIgnoreCase("")) {
                 userInfo.setTheme("default");
             }

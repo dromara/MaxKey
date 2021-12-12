@@ -55,6 +55,7 @@ public class NoticesController {
 	@ResponseBody
 	public JpaPageResults<Notices> queryDataGrid(@ModelAttribute("notices") Notices notice) {
 		_logger.debug(""+notice);
+		notice.setInstId(WebContext.getUserInfo().getInstId());
 		return noticesService.queryPageResults(notice);
 	}
 
@@ -76,7 +77,7 @@ public class NoticesController {
 	@RequestMapping(value={"/add"})
 	public Message insert(@ModelAttribute("notice")Notices notice) {
 		_logger.debug("-Add  :" + notice);
-		
+		notice.setInstId(WebContext.getUserInfo().getInstId());
 		if (noticesService.insert(notice)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -95,6 +96,7 @@ public class NoticesController {
 	@RequestMapping(value={"/query"}) 
 	public Message query(@ModelAttribute("notice")Notices notice) {
 		_logger.debug("-query  :" + notice);
+		notice.setInstId(WebContext.getUserInfo().getInstId());
 		if (noticesService.load(notice)!=null) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -113,7 +115,7 @@ public class NoticesController {
 	@RequestMapping(value={"/update"})  
 	public Message update(@ModelAttribute("notice")Notices notice) {
 		_logger.debug("-update  notice :" + notice);
-		
+		notice.setInstId(WebContext.getUserInfo().getInstId());
 		if (noticesService.update(notice)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

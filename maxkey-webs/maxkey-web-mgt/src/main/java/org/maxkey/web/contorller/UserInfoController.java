@@ -91,6 +91,7 @@ public class UserInfoController {
 	@RequestMapping(value={"/grid"})
 	@ResponseBody
 	public JpaPageResults<UserInfo> forwardUsersList(@ModelAttribute("userInfo") UserInfo userInfo){
+		userInfo.setInstId(WebContext.getUserInfo().getInstId());
 		return userInfoService.queryPageResults(userInfo);
 		
 	}
@@ -128,6 +129,7 @@ public class UserInfoController {
 		}
 		
 		userInfo.setId(WebContext.genId());
+		userInfo.setInstId(WebContext.getUserInfo().getInstId());
 		//userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
 		//userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
 		if( userInfoService.insert(userInfo)) {
@@ -196,6 +198,7 @@ public class UserInfoController {
 		//userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
 		convertExtraAttribute(userInfo) ;
 		_logger.info(userInfo.getExtraAttribute());
+		userInfo.setInstId(WebContext.getUserInfo().getInstId());
 		if(userInfoService.update(userInfo)) {
 			new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
 			
@@ -448,6 +451,7 @@ public class UserInfoController {
 		userInfo.setHomeEmail(ExcelUtils.getValue(row, 46));
 		userInfoService.passwordEncoder(userInfo);
         userInfo.setStatus(1);
+        userInfo.setInstId(WebContext.getUserInfo().getInstId());
         return userInfo;
 	}
 

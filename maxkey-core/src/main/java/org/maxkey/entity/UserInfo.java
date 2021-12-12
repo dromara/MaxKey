@@ -260,6 +260,11 @@ public class UserInfo extends JpaBaseEntity {
     @Column
     String description;
 
+	@Column
+	private String instId;
+
+	private String instName;
+	
     List<Organizations> depts;
     
     List<UserInfoAdjoint> adjoints;
@@ -1260,7 +1265,23 @@ public class UserInfo extends JpaBaseEntity {
         this.adjoints = adjoints;
     }
 
-    @Override
+    public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("UserInfo [id=");

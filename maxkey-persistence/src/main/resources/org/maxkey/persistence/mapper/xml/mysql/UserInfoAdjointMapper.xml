@@ -19,7 +19,7 @@
 		from
 			mxk_userinfo_adjunct
 		where
-			 (1=1)	
+			 instid   =   #{instId} 
 		<include refid="where_statement"/>
 	</select>
 	
@@ -27,7 +27,7 @@
 	<update id="logisticDelete" parameterType="UserInfoAdjoint" >
     	update mxk_userinfo_adjunct set
     		status	=	'2'  
-    	where	1	=	1
+    	where	instid   =   #{instId} 
     	<if test="id != null">
 			and	id	=	#{id}
 		</if>
@@ -38,7 +38,10 @@
     
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	update mxk_userinfo_adjunct set status='2' where id in
+    	update mxk_userinfo_adjunct 
+    	set status='2' 
+    	where  instid   =   #{instId} 
+    	   and id in
     		<foreach item="item" collection="list" open="(" separator="," close=")">
 				#{item}
     		</foreach>

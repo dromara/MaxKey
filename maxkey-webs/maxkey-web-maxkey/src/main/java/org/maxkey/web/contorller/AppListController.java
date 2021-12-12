@@ -23,6 +23,7 @@ import java.util.List;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.constants.ConstantsProtocols;
+import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.UserInfo;
@@ -92,7 +93,7 @@ public class AppListController {
     private List<UserApps> queryAccessableApps() {
         UserApps userApplications = new UserApps();
         userApplications.setUsername(WebContext.getUserInfo().getUsername());
-
+        userApplications.setInstId(WebContext.getUserInfo().getInstId());
         List<UserApps> appList = appsService.queryMyApps(userApplications);
         for (UserApps app : appList) {
             WebContext.setAttribute(app.getId(), app.getIcon());
@@ -257,6 +258,8 @@ public class AppListController {
 
                 appUsers.setRelatedUsername(identity_username);
                 appUsers.setRelatedPassword(PasswordReciprocal.getInstance().encode(identity_password));
+                appUsers.setInstId(userInfo.getInstId());
+                appUsers.setStatus(ConstantsStatus.ACTIVE);
                 appUsersService.insert(appUsers);
             } else {
                 appUsers.setRelatedUsername(identity_username);

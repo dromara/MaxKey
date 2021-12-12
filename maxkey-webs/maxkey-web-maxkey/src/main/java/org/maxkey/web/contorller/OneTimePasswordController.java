@@ -37,6 +37,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.xkcoding.http.util.StringUtil;
+
 
 /**
  * .
@@ -64,7 +66,11 @@ public class OneTimePasswordController {
     public ModelAndView timebased() {
         ModelAndView modelAndView = new ModelAndView("safe/timeBased");
         UserInfo userInfo = WebContext.getUserInfo();
-        String sharedSecret = passwordReciprocal.decoder(userInfo.getSharedSecret());
+        
+        String sharedSecret = userInfo.getId();
+        if(StringUtil.isNotEmpty(userInfo.getSharedSecret())) {
+        	passwordReciprocal.decoder(userInfo.getSharedSecret());
+        }
         otpKeyUriFormat.setSecret(sharedSecret);
         String otpauth = otpKeyUriFormat.format(userInfo.getUsername());
         byte[] byteSharedSecret = Base32Utils.decode(sharedSecret);

@@ -59,7 +59,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 		_logger.debug("-Add  :" + extendApiDetails);
 		
 		transform(extendApiDetails);
-		
+		extendApiDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (appsService.insertApp(extendApiDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -92,7 +92,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 	public ModelAndView update(@ModelAttribute("extendApiDetails") AppsExtendApiDetails extendApiDetails) {
 		_logger.debug("-update  extendApiDetails :" + extendApiDetails);
 		transform(extendApiDetails);
-		
+		extendApiDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (appsService.updateApp(extendApiDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

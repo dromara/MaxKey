@@ -50,7 +50,7 @@
 					u.status
 				from
 					mxk_userinfo u
-			where	1	=	1
+			where	instid  =   #{instId} 
 	</select>
 	
     <select id="memberInGroup" parameterType="GroupMember" resultType="GroupMember">
@@ -92,7 +92,9 @@
 				mxk_userinfo u,
 				mxk_groups   g,
 				mxk_group_member gm
-			where	1	=	1
+			where	 u.instid   =   #{instId} 
+			     and g.instid   =   #{instId} 
+			     and gm.instid  =   #{instId} 
 				<if test="groupId != null and groupId != ''">
 					and gm.groupid = #{groupId}
 					and g.id = #{groupId}

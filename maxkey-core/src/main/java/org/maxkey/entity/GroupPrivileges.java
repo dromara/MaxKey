@@ -52,6 +52,11 @@ public class GroupPrivileges extends Apps implements Serializable{
 	@Column
 	private String appId;
 	
+	@Column
+	private String instId;
+
+	private String instName;
+	
 	public GroupPrivileges(){
 		super();
 	}
@@ -101,6 +106,26 @@ public class GroupPrivileges extends Apps implements Serializable{
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+
+	public String getInstId() {
+		return instId;
+	}
+
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+
+	public String getInstName() {
+		return instName;
+	}
+
+
+	public void setInstName(String instName) {
+		this.instName = instName;
 	}
 
 

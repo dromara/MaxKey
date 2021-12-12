@@ -62,6 +62,7 @@ public class RolesController {
 	@ResponseBody
 	public JpaPageResults<Roles> queryDataGrid(@ModelAttribute("roles") Roles roles) {
 		_logger.debug(""+roles);
+		roles.setInstId(WebContext.getUserInfo().getInstId());
 		return rolesService.queryPageResults(roles);
 	}
 
@@ -83,7 +84,7 @@ public class RolesController {
 	@RequestMapping(value={"/add"})
 	public Message insert(@ModelAttribute("role") Roles role) {
 		_logger.debug("-Add  :" + role);
-		
+		role.setInstId(WebContext.getUserInfo().getInstId());
 		if (rolesService.insert(role)) {
 		    rolesService.refreshDynamicRoles(role);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
@@ -103,6 +104,7 @@ public class RolesController {
 	@RequestMapping(value={"/query"}) 
 	public Message query(@ModelAttribute("role") Roles role) {
 		_logger.debug("-query  :" + role);
+		role.setInstId(WebContext.getUserInfo().getInstId());
 		if (rolesService.load(role)!=null) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -121,7 +123,7 @@ public class RolesController {
 	@RequestMapping(value={"/update"})  
 	public Message update(@ModelAttribute("role") Roles role) {
 		_logger.debug("-update  role :" + role);
-		
+		role.setInstId(WebContext.getUserInfo().getInstId());
 		if (rolesService.update(role)) {
 		    rolesService.refreshDynamicRoles(role);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);

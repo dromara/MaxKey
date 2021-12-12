@@ -57,7 +57,7 @@ public class BasicDetailsController  extends BaseAppContorller {
 		_logger.debug("-Add  :" + appDetails);
 
 		transform(appDetails);
-		
+		appDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (appsService.insert(appDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -87,7 +87,7 @@ public class BasicDetailsController  extends BaseAppContorller {
 		//
 		_logger.debug("-update  application :" + appDetails);
 		transform(appDetails);
-
+		appDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (appsService.update(appDetails)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

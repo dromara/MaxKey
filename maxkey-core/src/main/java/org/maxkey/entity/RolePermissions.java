@@ -45,7 +45,11 @@ public class RolePermissions  extends JpaBaseEntity implements Serializable {
     String resourceId;
     
     int status = ConstantsStatus.ACTIVE;
+	@Column
+	private String instId;
 
+	private String instName;
+	
     public RolePermissions() {
     }
 
@@ -111,7 +115,23 @@ public class RolePermissions  extends JpaBaseEntity implements Serializable {
         return  appId + "_" + roleId + "_" + resourceId;
     }
 
-    @Override
+    public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("RolePermissions [id=");

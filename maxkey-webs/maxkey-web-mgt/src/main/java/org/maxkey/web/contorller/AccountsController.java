@@ -72,6 +72,7 @@ public class AccountsController {
 	@RequestMapping(value={"/grid"})
 	@ResponseBody
 	public JpaPageResults<Accounts> grid(@ModelAttribute("appAccounts") Accounts appAccounts){
+		appAccounts.setInstId(WebContext.getUserInfo().getInstId());
 		return accountsService.queryPageResults(appAccounts);
 		
 	}
@@ -101,6 +102,7 @@ public class AccountsController {
 	@RequestMapping(value={"/add"})  
 	public Message add(@ModelAttribute("appAccounts") Accounts appAccounts ) {
 		_logger.debug("-update  :" + appAccounts);
+		appAccounts.setInstId(WebContext.getUserInfo().getInstId());
 		appAccounts.setRelatedPassword(PasswordReciprocal.getInstance().encode(appAccounts.getRelatedPassword()));
 		accountsService.insert(appAccounts);
 		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
@@ -128,7 +130,7 @@ public class AccountsController {
 	@RequestMapping(value={"/update"})  
 	public Message update(@ModelAttribute("appAccounts") Accounts appAccounts ) {
 		_logger.debug("-update  :" + appAccounts);
-		
+		appAccounts.setInstId(WebContext.getUserInfo().getInstId());
 		appAccounts.setRelatedPassword(PasswordReciprocal.getInstance().encode(appAccounts.getRelatedPassword()));
 		accountsService.update(appAccounts);
 		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);

@@ -23,6 +23,7 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.entity.HistoryConnector;
 import org.maxkey.persistence.service.HistoryConnectorService;
 import org.maxkey.util.DateUtils;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,7 @@ final static Logger _logger = LoggerFactory.getLogger(ConnectorHistoryController
     @ResponseBody
     public JpaPageResults<HistoryConnector> historySynchronizerGrid(@ModelAttribute("historyConnector") HistoryConnector historyConnector){
         _logger.debug("historys/historyConnector/grid/ "+historyConnector);
+        historyConnector.setInstId(WebContext.getUserInfo().getInstId());
         return historyConnectorService.queryPageResults(historyConnector);
     }
 

@@ -61,6 +61,7 @@ public class SynchronizersController {
 	@ResponseBody
 	public JpaPageResults<Synchronizers> queryDataGrid(@ModelAttribute("synchronizers") Synchronizers synchronizers) {
 		_logger.debug(""+synchronizers);
+		synchronizers.setInstId(WebContext.getUserInfo().getInstId());
 		return synchronizersService.queryPageResults(synchronizers);
 	}
 
@@ -86,7 +87,7 @@ public class SynchronizersController {
 	@RequestMapping(value={"/update"})  
 	public Message update(@ModelAttribute("synchronizers") Synchronizers synchronizers) {
 		_logger.debug("-update  synchronizers :" + synchronizers);
-		
+		synchronizers.setInstId(WebContext.getUserInfo().getInstId());
 		if (synchronizersService.update(synchronizers)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

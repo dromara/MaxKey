@@ -90,6 +90,12 @@ public class UserInfoAdjoint extends JpaBaseEntity {
     protected String entryDate;
     @Column
     protected String quitDate;
+    
+	@Column
+	private String instId;
+
+	private String instName;
+	
     public UserInfoAdjoint() {
         super();
     }
@@ -245,7 +251,20 @@ public class UserInfoAdjoint extends JpaBaseEntity {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    @Override
+    
+    public String getInstId() {
+		return instId;
+	}
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+	public String getInstName() {
+		return instName;
+	}
+	public void setInstName(String instName) {
+		this.instName = instName;
+	}
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("UserInfoAdjoint [id=");
