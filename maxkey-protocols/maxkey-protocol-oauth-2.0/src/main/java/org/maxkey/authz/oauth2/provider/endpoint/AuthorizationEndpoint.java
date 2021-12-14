@@ -66,8 +66,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriTemplate;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * <p>
@@ -86,7 +86,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Vladimir Kryachko
  * 
  */
-@Api(tags = "2-1-OAuth v2.0 API文档模块")
+@Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 @SessionAttributes("authorizationRequest")
 public class AuthorizationEndpoint extends AbstractEndpoint {
@@ -111,7 +111,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		this.errorPage = errorPage;
 	}
 
-    @ApiOperation(value = "OAuth 2.0 认证接口", notes = "传递参数应用ID，自动完成跳转认证拼接",httpMethod="GET")
+	@Operation(summary = "OAuth 2.0 认证接口", description = "传递参数应用ID，自动完成跳转认证拼接",method="GET")
     @RequestMapping(OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{id}")
     public ModelAndView authorize(
             HttpServletRequest request,
@@ -135,7 +135,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
         return WebContext.redirect(authorizationUrl);
     }
 	   
-	@ApiOperation(value = "OAuth 2.0 认证接口", notes = "传递参数client_id,response_type,redirect_uri等",httpMethod="GET")
+	@Operation(summary = "OAuth 2.0 认证接口", description = "传递参数client_id,response_type,redirect_uri等",method="GET")
 	@RequestMapping(value = {
 								OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE,
 								OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_AUTHORIZE

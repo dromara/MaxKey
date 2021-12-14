@@ -42,20 +42,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @author Crystal.Sea
  * https://apereo.github.io/cas/6.2.x/protocol/CAS-Protocol.html
  */
-@Api(tags = "2-3-CAS API文档模块")
+@Tag(name = "2-3-CAS API文档模块")
 @Controller
 public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 
 	final static Logger _logger = LoggerFactory.getLogger(CasAuthorizeEndpoint.class);
 	
-	@ApiOperation(value = "CAS页面跳转service认证接口", notes = "传递参数service",httpMethod="GET")
+	@Operation(summary = "CAS页面跳转service认证接口", description = "传递参数service",method="GET")
 	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_LOGIN)
 	public ModelAndView casLogin(
 			HttpServletRequest request,
@@ -68,7 +69,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		
 	}
 	
-	@ApiOperation(value = "CAS页面跳转应用ID认证接口", notes = "传递参数应用ID",httpMethod="GET")
+	@Operation(summary = "CAS页面跳转应用ID认证接口", description = "传递参数应用ID",method="GET")
 	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_BASE + "/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,
@@ -171,7 +172,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	 * @param casService
 	 * @return
 	 */
-	@ApiOperation(value = "CAS注销接口", notes = "CAS注销接口",httpMethod="GET")
+	@Operation(summary = "CAS注销接口", description = "CAS注销接口",method="GET")
 	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_LOGOUT)
 	public ModelAndView logout(
 			HttpServletRequest request,

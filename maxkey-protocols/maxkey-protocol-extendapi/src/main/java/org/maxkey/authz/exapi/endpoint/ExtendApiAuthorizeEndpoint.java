@@ -37,19 +37,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @author Crystal.Sea
  *
  */
-@Api(tags = "2-8-ExtendApi接口文档模块")
+@Tag(name = "2-8-ExtendApi接口文档模块")
 @Controller
 public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(ExtendApiAuthorizeEndpoint.class);
 
-	@ApiOperation(value = "ExtendApi认证地址接口", notes = "参数应用ID",httpMethod="GET")
+	@Operation(summary = "ExtendApi认证地址接口", description = "参数应用ID",method="GET")
 	@RequestMapping("/authz/api/{id}")
 	public ModelAndView authorize(HttpServletRequest request,@PathVariable("id") String id){
 	    

@@ -43,14 +43,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @author Crystal.Sea
  * https://apereo.github.io/cas/6.2.x/protocol/CAS-Protocol-V2-Specification.html
  */
-@Api(tags = "2-3-CAS API文档模块")
+@Tag(name = "2-3-CAS API文档模块")
 @Controller
 public class Cas20AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 
@@ -171,7 +171,7 @@ INTERNAL_ERROR - an internal error occurred during ticket validation
 
 For all error codes, it is RECOMMENDED that CAS provide a more detailed message as the body of the \<cas:authenticationFailure\> block of the XML response.
 	 */
-	@ApiOperation(value = "CAS 2.0 ticket验证接口", notes = "通过ticket获取当前登录用户信息",httpMethod="POST")
+	@Operation(summary = "CAS 2.0 ticket验证接口", description = "通过ticket获取当前登录用户信息",method="POST")
 	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE,produces =MediaType.APPLICATION_XML_VALUE)
 	@ResponseBody
 	public String serviceValidate(
@@ -293,7 +293,7 @@ Response on ticket validation failure:
 }
 	 */
 	
-	@ApiOperation(value = "CAS 2.0 ticket代理验证接口", notes = "通过ticket获取当前登录用户信息",httpMethod="POST")
+	@Operation(summary = "CAS 2.0 ticket代理验证接口", description = "通过ticket获取当前登录用户信息",method="POST")
 	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_PROXY_VALIDATE,produces =MediaType.APPLICATION_XML_VALUE)
 	@ResponseBody
 	public String proxy(

@@ -22,22 +22,16 @@ import java.util.List;
 
 import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.entity.Organizations;
-import org.maxkey.entity.Synchronizers;
-import org.maxkey.persistence.service.OrganizationsService;
+import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReorgDeptService implements ISynchronizerService{
+public class ReorgDeptService extends AbstractSynchronizerService implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(ReorgDeptService.class);
-	
-	@Autowired
-	OrganizationsService organizationsService;
-	
-	
+
 	String rootParentOrgId = "-1";
 
 	public void sync() {
@@ -46,7 +40,9 @@ public class ReorgDeptService implements ISynchronizerService{
 		try {
 			long responseCount =0;
 			HashMap<String,Organizations>orgCastMap =new HashMap<String,Organizations>();
-			List<Organizations> listOrg = organizationsService.findAll();
+			Organizations queryOrganization =new Organizations();
+			queryOrganization.setInstId(this.synchronizer.getInstId());
+			List<Organizations> listOrg = organizationsService.query(queryOrganization);
 
 			buildNamePath(orgCastMap,listOrg);
 			
@@ -102,20 +98,6 @@ public class ReorgDeptService implements ISynchronizerService{
  	   			}
  	   		}
  	   	}while(listOrg.size()>listOrg.size());
-	}
-
-	public OrganizationsService getOrganizationsService() {
-		return organizationsService;
-	}
-
-	public void setOrganizationsService(OrganizationsService organizationsService) {
-		this.organizationsService = organizationsService;
-	}
-
-	@Override
-	public void setSynchronizer(Synchronizers synchronizer) {
-		
-		
 	}
 
 }

@@ -138,6 +138,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 			userInfo.setUserType("EMPLOYEE");
 			userInfo.setTimeZone("Asia/Shanghai");
 			userInfo.setStatus(1);
+			userInfo.setInstId(this.synchronizer.getInstId());
 			UserInfo quser=new UserInfo();
             quser.setUsername(userInfo.getUsername());
             UserInfo loadedUser=userInfoService.load(quser);

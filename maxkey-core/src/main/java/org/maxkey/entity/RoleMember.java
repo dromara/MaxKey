@@ -120,21 +120,23 @@ public class RoleMember extends UserInfo implements Serializable {
 		this.instName = instName;
 	}
 
-	public RoleMember(String roleId, String memberId, String type) {
+	public RoleMember(String roleId, String memberId, String type , String instId) {
         super();
         this.roleId = roleId;
         this.memberId = memberId;
         this.type = type;
+        this.instId = instId;
     }
 
     
-    public RoleMember(String roleId, String roleName, String memberId, String memberName, String type) {
+    public RoleMember(String roleId, String roleName, String memberId, String memberName, String type ,String instId) {
         super();
         this.roleId = roleId;
         this.roleName = roleName;
         this.memberId = memberId;
         this.memberName = memberName;
         this.type = type;
+        this.instId = instId;
     }
 
     @Override

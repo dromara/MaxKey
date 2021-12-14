@@ -27,10 +27,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Api(tags = "基于时间令牌验证 API文档模块")
+@Tag(name = "基于时间令牌验证 API文档模块")
 @Controller
 @RequestMapping(value={"/im/api/otp"})
 public class RestTimeBasedOtpController {
@@ -43,7 +43,7 @@ public class RestTimeBasedOtpController {
     @Qualifier("userInfoService")
     private UserInfoService userInfoService;
     
-    @ApiOperation(value = "基于时间令牌验证 API文档模块", notes = "传递参数username和token",httpMethod="GET")
+    @Operation(summary = "基于时间令牌验证 API文档模块", description = "传递参数username和token",method="GET")
     @ResponseBody
     @RequestMapping(value = "/timebased/validate", method = RequestMethod.GET)
     public boolean getUser(@RequestParam String username,

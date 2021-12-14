@@ -17,9 +17,8 @@
 
 package org.maxkey.synchronizer.workweixin;
 
-import org.maxkey.entity.Synchronizers;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.maxkey.synchronizer.workweixin.entity.WorkWeixinDepts;
 import org.maxkey.synchronizer.workweixin.entity.WorkWeixinUsers;
@@ -32,14 +31,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WorkweixinUsersService  implements ISynchronizerService{
+public class WorkweixinUsersService extends AbstractSynchronizerService implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(WorkweixinUsersService.class);
 	
 	@Autowired
-	WorkweixinOrganizationService organizationService;
-	
-	@Autowired
-	UserInfoService userInfoService;
+	WorkweixinOrganizationService workweixinOrganizationService;
 	
 	String access_token;
 	
@@ -49,7 +45,7 @@ public class WorkweixinUsersService  implements ISynchronizerService{
 		_logger.info("Sync Users...");
 		try {
 			
-			for (WorkWeixinDepts dept : organizationService.getDeptsResponse().getDepartment()) {
+			for (WorkWeixinDepts dept : workweixinOrganizationService.getDeptsResponse().getDepartment()) {
 				HttpRequestAdapter request =new HttpRequestAdapter();
 				String responseBody = request.get(String.format(USERS_URL, access_token,dept.getId()));
 				WorkWeixinUsersResponse usersResponse  =JsonUtils.gson2Object(responseBody, WorkWeixinUsersResponse.class);
@@ -88,35 +84,17 @@ public class WorkweixinUsersService  implements ISynchronizerService{
 
 		//激活状态: 1=已激活，2=已禁用，4=未激活，5=退出企业。
 		userInfo.setStatus(user.getStatus());
-
+		userInfo.setInstId(this.synchronizer.getInstId());
 		return userInfo;
 	}
 
-	public void setOrganizationService(WorkweixinOrganizationService organizationService) {
-		this.organizationService = organizationService;
-	}
 
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
 	}
 
-	public UserInfoService getUserInfoService() {
-		return userInfoService;
+	public void setWorkweixinOrganizationService(WorkweixinOrganizationService workweixinOrganizationService) {
+		this.workweixinOrganizationService = workweixinOrganizationService;
 	}
 
-	public void setUserInfoService(UserInfoService userInfoService) {
-		this.userInfoService = userInfoService;
-	}
-
-	public WorkweixinOrganizationService getOrganizationService() {
-		return organizationService;
-	}
-
-	@Override
-	public void setSynchronizer(Synchronizers Synchronizer) {
-		
-	}
-
-
-	
 }

@@ -117,6 +117,7 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 			org.setPhone(LdapUtils.getAttributeStringValue(OrganizationalUnit.TELEPHONENUMBER,attributeMap));
 			org.setFax(LdapUtils.getAttributeStringValue(OrganizationalUnit.FACSIMILETELEPHONENUMBER,attributeMap));
 			org.setDescription(LdapUtils.getAttributeStringValue(OrganizationalUnit.DESCRIPTION,attributeMap));
+			org.setInstId(this.synchronizer.getInstId());
 			orgsNamePathMap.put(org.getNamePath(), org);
             _logger.info("org " + org);
             organizationsService.insert(org);

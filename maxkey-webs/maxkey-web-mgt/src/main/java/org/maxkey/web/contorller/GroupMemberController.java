@@ -129,9 +129,15 @@ public class GroupMemberController {
 			String[] arrMemberNames = memberNames.split(",");
 			
 			for (int i = 0; i < arrMemberIds.length; i++) {
-				GroupMember newGroupMember = new GroupMember(groupId,groupMember.getGroupName(), arrMemberIds[i], arrMemberNames[i],"USER");
+				GroupMember newGroupMember = 
+						new GroupMember(
+							groupId,
+							groupMember.getGroupName(), 
+							arrMemberIds[i], 
+							arrMemberNames[i],
+							"USER",
+							WebContext.getUserInfo().getInstId());
 				newGroupMember.setId(WebContext.genId());
-				newGroupMember.setInstId(WebContext.getUserInfo().getInstId());
 				result = groupMemberService.insert(newGroupMember);
 			}
 			if(!result) {

@@ -18,12 +18,10 @@
 package org.maxkey.synchronizer.dingding;
 
 import org.maxkey.entity.Organizations;
-import org.maxkey.entity.Synchronizers;
-import org.maxkey.persistence.service.OrganizationsService;
+import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
@@ -33,13 +31,10 @@ import com.dingtalk.api.response.OapiV2DepartmentListsubResponse.DeptBaseRespons
 import com.taobao.api.ApiException;
 
 @Service
-public class DingdingOrganizationService   implements ISynchronizerService{
+public class DingdingOrganizationService  extends AbstractSynchronizerService implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(DingdingOrganizationService.class);
 	
 	OapiV2DepartmentListsubResponse rspDepts;
-	
-	@Autowired
-	OrganizationsService organizationsService;
 	
 	String access_token;
 	
@@ -78,6 +73,7 @@ public class DingdingOrganizationService   implements ISynchronizerService{
 		org.setId(dept.getDeptId()+"");
 		org.setName(dept.getName());
 		org.setParentId(dept.getParentId()+"");
+		org.setInstId(this.synchronizer.getInstId());
 		return org;
 	}
 
@@ -93,19 +89,6 @@ public class DingdingOrganizationService   implements ISynchronizerService{
 
 	public OapiV2DepartmentListsubResponse getRspDepts() {
 		return rspDepts;
-	}
-
-	public OrganizationsService getOrganizationsService() {
-		return organizationsService;
-	}
-
-	public void setOrganizationsService(OrganizationsService organizationsService) {
-		this.organizationsService = organizationsService;
-	}
-
-	@Override
-	public void setSynchronizer(Synchronizers Synchronizer) {
-		
 	}
 	
 	

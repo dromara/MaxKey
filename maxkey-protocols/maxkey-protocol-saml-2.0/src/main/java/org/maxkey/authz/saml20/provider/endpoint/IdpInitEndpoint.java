@@ -40,8 +40,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * idp init  not need extract SAML request message
@@ -49,7 +49,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Crystal.Sea
  *
  */
-@Api(tags = "2-2-SAML v2.0 API文档模块")
+@Tag(name = "2-2-SAML v2.0 API文档模块")
 @Controller
 public class IdpInitEndpoint {
 	private final static Logger logger = LoggerFactory.getLogger(IdpInitEndpoint.class);
@@ -85,7 +85,7 @@ public class IdpInitEndpoint {
 	 * 
 	 *
 	 */
-	@ApiOperation(value = "SAML 2.0 IDP Init接口", notes = "传递参数应用ID",httpMethod="GET")
+	@Operation(summary = "SAML 2.0 IDP Init接口", description = "传递参数应用ID",method="GET")
 	@RequestMapping(value = "/authz/saml20/idpinit/{appid}", method=RequestMethod.GET)
 	public ModelAndView authorizeIdpInit(
 				HttpServletRequest request,

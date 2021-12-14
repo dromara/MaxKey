@@ -62,8 +62,11 @@ public class PermissionsController {
 		_logger.debug("-save  :" + rolePermissions);
 		//have
 		
-		RolePermissions queryRolePermissions = new RolePermissions(rolePermissions.getAppId(),rolePermissions.getRoleId());
-		queryRolePermissions.setInstId(WebContext.getUserInfo().getInstId());
+		RolePermissions queryRolePermissions = 
+				new RolePermissions(
+						rolePermissions.getAppId(),
+						rolePermissions.getRoleId(),
+						WebContext.getUserInfo().getInstId());
 		List<RolePermissions> rolePermissionsedList = rolesService.queryRolePermissions(queryRolePermissions);
 		
 		HashMap<String,String >permedMap =new HashMap<String,String >();
@@ -114,8 +117,11 @@ public class PermissionsController {
     public List<RolePermissions> querypermissions(@ModelAttribute("rolePermissions") RolePermissions rolePermissions) {
         _logger.debug("-querypermissions  :" + rolePermissions);
         //have
-        RolePermissions queryRolePermissions = new RolePermissions(rolePermissions.getAppId(),rolePermissions.getRoleId());
-		queryRolePermissions.setInstId(WebContext.getUserInfo().getInstId());
+        RolePermissions queryRolePermissions = 
+        		new RolePermissions(
+        				rolePermissions.getAppId(),
+        				rolePermissions.getRoleId(),
+        				WebContext.getUserInfo().getInstId());
         List<RolePermissions> rolePermissionsedList = rolesService.queryRolePermissions(queryRolePermissions);
         return rolePermissionsedList;
 	}

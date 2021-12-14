@@ -40,14 +40,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @author Crystal.Sea
  *
  */
-@Api(tags = "2-7-FormBased接口文档模块")
+@Tag(name = "2-7-FormBased接口文档模块")
 @Controller
 public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(FormBasedAuthorizeEndpoint.class);
@@ -57,7 +57,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	
 	FormBasedDefaultAdapter defaultFormBasedAdapter=new FormBasedDefaultAdapter();
 	
-	@ApiOperation(value = "FormBased认证地址接口", notes = "参数应用ID",httpMethod="GET")
+	@Operation(summary = "FormBased认证地址接口", description = "参数应用ID",method="GET")
 	@RequestMapping("/authz/formbased/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,

@@ -49,11 +49,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Api(tags = "2-1-OAuth v2.0 API文档模块")
+@Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class UserInfoEndpoint {
 	final static Logger _logger = LoggerFactory.getLogger(UserInfoEndpoint.class);	
@@ -95,8 +96,8 @@ public class UserInfoEndpoint {
     @Autowired
     protected HttpResponseAdapter httpResponseAdapter;
 	
-	@ApiOperation(value = "OAuth 2.0 用户信息接口", notes = "传递参数access_token",httpMethod="GET")
-	@RequestMapping(value=OAuth2Constants.ENDPOINT.ENDPOINT_USERINFO) 
+    @Operation(summary = "OAuth 2.0 用户信息接口", description = "传递参数access_token",method="GET")
+	@RequestMapping(value=OAuth2Constants.ENDPOINT.ENDPOINT_USERINFO, method={RequestMethod.POST, RequestMethod.GET}) 
 	public void apiV20UserInfo(
 			@RequestParam(value = "access_token", required = false) String access_token,
 			@RequestHeader(value = "authorization", required = false) String authorization_bearer,

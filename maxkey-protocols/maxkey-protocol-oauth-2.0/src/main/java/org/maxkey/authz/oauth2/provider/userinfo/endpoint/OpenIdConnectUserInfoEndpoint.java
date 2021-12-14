@@ -51,6 +51,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JWEAlgorithm;
@@ -61,11 +62,12 @@ import com.nimbusds.jwt.EncryptedJWT;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTClaimsSet.Builder;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import com.nimbusds.jwt.SignedJWT;
 
-@Api(tags = "2-1-OAuth v2.0 API文档模块")
+@Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class OpenIdConnectUserInfoEndpoint {
 	final static Logger _logger = LoggerFactory.getLogger(OpenIdConnectUserInfoEndpoint.class);	
@@ -107,8 +109,8 @@ public class OpenIdConnectUserInfoEndpoint {
     @Autowired
     protected HttpResponseAdapter httpResponseAdapter;
 		
-	@ApiOperation(value = "OIDC 用户信息接口", notes = "传递Authorization参数access_token",httpMethod="GET")
-	@RequestMapping(value=OAuth2Constants.ENDPOINT.ENDPOINT_OPENID_CONNECT_USERINFO)
+    @Operation(summary = "OIDC 用户信息接口", description = "传递Authorization参数access_token",method="GET")
+	@RequestMapping(value=OAuth2Constants.ENDPOINT.ENDPOINT_OPENID_CONNECT_USERINFO, method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String connect10aUserInfo(
 			@RequestHeader(value = "Authorization", required = true) String access_token,

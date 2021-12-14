@@ -50,14 +50,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @author Crystal.Sea
  * https://apereo.github.io/cas/6.2.x/protocol/REST-Protocol.html
  */
-@Api(tags = "2-4-CAS REST API文档模块")
+@Tag(name = "2-4-CAS REST API文档模块")
 @Controller
 public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
     final static Logger _logger = LoggerFactory.getLogger(CasRestV1Endpoint.class);
@@ -66,7 +66,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
     @Qualifier("authenticationProvider")
     AbstractAuthenticationProvider authenticationProvider ;
     
-    @ApiOperation(value = "CAS REST认证接口", notes = "通过用户名密码获取TGT",httpMethod="POST")
+    @Operation(summary = "CAS REST认证接口", description = "通过用户名密码获取TGT",method="POST")
 	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1, 
 	        method=RequestMethod.POST, 
 	        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -105,7 +105,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
         }
 	}
 	
-    @ApiOperation(value = "CAS REST认证接口", notes = "通过TGT获取ST",httpMethod="POST")
+    @Operation(summary = "CAS REST认证接口", description = "通过TGT获取ST",method="POST")
 	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1+"/{ticketGrantingTicket}", 
 	            method=RequestMethod.POST, 
 	            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -132,7 +132,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
         }
 	       return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
 	   }
-    @ApiOperation(value = "CAS REST认证接口", notes = "检查TGT状态",httpMethod="GET")
+    @Operation(summary = "CAS REST认证接口", description = "检查TGT状态",method="GET")
     @RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1 + "/{ticketGrantingTicket}", 
 	            method=RequestMethod.GET)
     public ResponseEntity<String> verifyTicketGrantingTicketStatus(
@@ -151,7 +151,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
 	       return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
 	}
     
-    @ApiOperation(value = "CAS REST认证接口", notes = "注销TGT状态",httpMethod="DELETE")
+    @Operation(summary = "CAS REST认证接口", description = "注销TGT状态",method="DELETE")
     @RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1+"/{ticketGrantingTicket}", 
             method=RequestMethod.DELETE)
     public ResponseEntity<String> destroyTicketGrantingTicket(
@@ -170,7 +170,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
        return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
     }
 	   
-    @ApiOperation(value = "CAS REST认证接口", notes = "用户名密码登录接口",httpMethod="POST")   
+    @Operation(summary = "CAS REST认证接口", description = "用户名密码登录接口",method="POST")   
 	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_USERS_V1, 
             method=RequestMethod.POST, 
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

@@ -69,22 +69,24 @@ public class GroupMember extends UserInfo implements Serializable{
 	 * @param memberId
 	 * @param type
 	 */
-	public GroupMember(String groupId, String memberId, String type) {
+	public GroupMember(String groupId, String memberId, String type , String instId) {
 		super();
 		this.groupId = groupId;
 		this.memberId = memberId;
 		this.type = type;
+		this.instId = instId;
 	}
 
 
 	public GroupMember(String groupId, String groupName, String memberId,
-			String memberName, String type) {
+			String memberName, String type , String instId) {
 		super();
 		this.groupId = groupId;
 		this.groupName = groupName;
 		this.memberId = memberId;
 		this.memberName = memberName;
 		this.type = type;
+		this.instId = instId;
 	}
 
 

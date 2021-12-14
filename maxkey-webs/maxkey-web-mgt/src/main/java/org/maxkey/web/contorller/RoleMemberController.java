@@ -116,9 +116,15 @@ public class RoleMemberController {
 			String[] arrMemberNames = memberNames.split(",");
 			
 			for (int i = 0; i < arrMemberIds.length; i++) {
-				RoleMember newRoleMember = new RoleMember(groupId,roleMember.getRoleName(), arrMemberIds[i], arrMemberNames[i],"USER");
+				RoleMember newRoleMember = 
+						new RoleMember(
+								groupId,
+								roleMember.getRoleName(), 
+								arrMemberIds[i], 
+								arrMemberNames[i],
+								"USER",
+								WebContext.getUserInfo().getInstId());
 				newRoleMember.setId(WebContext.genId());
-				newRoleMember.setInstId(WebContext.getUserInfo().getInstId());
 				result = roleMemberService.insert(newRoleMember);
 			}
 			if(!result) {

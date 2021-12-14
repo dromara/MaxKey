@@ -48,12 +48,13 @@ public class DingdingSynchronizerService  implements ISynchronizerService{
 		_logger.info("Sync ...");
 		dingdingAccessTokenService.setAppkey(synchronizer.getPrincipal());
 		dingdingAccessTokenService.setAppsecret(synchronizer.getCredentials());
-		
 		String access_token=dingdingAccessTokenService.requestToken();
 		
+		dingdingOrganizationService.setSynchronizer(synchronizer);
 		dingdingOrganizationService.setAccess_token(access_token);
 		dingdingOrganizationService.sync();
 		
+		dingdingUsersService.setSynchronizer(synchronizer);
 		dingdingUsersService.setAccess_token(access_token);
 		dingdingUsersService.sync();
 	}

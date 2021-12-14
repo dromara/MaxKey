@@ -49,6 +49,7 @@ public class LdapSynchronizerService  implements ISynchronizerService{
 		        synchronizer.getCredentials(),
 		        synchronizer.getBasedn());
 		ldapUtils.openConnection();
+		
 		ldapOrganizationService.setSynchronizer(synchronizer);
 		ldapUsersService.setSynchronizer(synchronizer);
 		
@@ -58,6 +59,7 @@ public class LdapSynchronizerService  implements ISynchronizerService{
 		
 		ldapOrganizationService.sync();
 		ldapUsersService.sync();
+		
 		ldapUtils.close();
 	}
 

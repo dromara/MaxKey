@@ -45,8 +45,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * Controller which decodes access tokens for clients who are not able to do so (or where opaque token values are used).
@@ -54,7 +54,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Luke Taylor
  * @author Joel D'sa
  */
-@Api(tags = "2-1-OAuth v2.0 API文档模块")
+@Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class CheckTokenEndpoint {
 
@@ -78,7 +78,7 @@ public class CheckTokenEndpoint {
 		this.accessTokenConverter = accessTokenConverter;
 	}
 
-	@ApiOperation(value = "OAuth 2.0 token检查接口", notes = "传递参数token",httpMethod="POST")
+	@Operation(summary = "OAuth 2.0 token检查接口", description = "传递参数token",method="POST")
 	@RequestMapping(value = OAuth2Constants.ENDPOINT.ENDPOINT_CHECK_TOKEN)
 	@ResponseBody
 	public Map<String, ?> checkToken(@RequestParam(OAuth2Constants.PARAMETER.TOKEN) String value) {

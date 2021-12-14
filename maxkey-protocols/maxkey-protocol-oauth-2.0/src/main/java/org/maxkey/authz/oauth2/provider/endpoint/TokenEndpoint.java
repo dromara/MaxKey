@@ -53,8 +53,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * <p>
@@ -73,7 +73,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Dave Syer
  * 
  */
-@Api(tags = "2-1-OAuth v2.0 API文档模块")
+@Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class TokenEndpoint extends AbstractEndpoint {
 
@@ -89,7 +89,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 	 * @return OAuth2AccessToken Entity
 	 * @throws HttpRequestMethodNotSupportedException
 	 */
-	@ApiOperation(value = "OAuth 2.0 获取AccessToken接口", notes = "传递参数token等",httpMethod="GET")
+	@Operation(summary = "OAuth 2.0 获取AccessToken接口", description = "传递参数token等",method="GET")
 	@RequestMapping(value = {
 								OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN,
 								OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_TOKEN
@@ -103,7 +103,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 		return postAccessToken(parameters);
 	}
 	
-	@ApiOperation(value = "OAuth 2.0 获取AccessToken接口", notes = "传递参数token等",httpMethod="POST")
+	@Operation(summary = "OAuth 2.0 获取AccessToken接口", description = "传递参数token等",method="POST")
 	@RequestMapping(value = {
 								OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN,
 								OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_TOKEN

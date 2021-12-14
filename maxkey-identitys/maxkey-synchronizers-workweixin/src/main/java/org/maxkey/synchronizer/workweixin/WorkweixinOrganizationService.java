@@ -18,8 +18,7 @@
 package org.maxkey.synchronizer.workweixin;
 
 import org.maxkey.entity.Organizations;
-import org.maxkey.entity.Synchronizers;
-import org.maxkey.persistence.service.OrganizationsService;
+import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.maxkey.synchronizer.workweixin.entity.WorkWeixinDepts;
 import org.maxkey.synchronizer.workweixin.entity.WorkWeixinDeptsResponse;
@@ -27,15 +26,11 @@ import org.maxkey.util.JsonUtils;
 import org.maxkey.web.HttpRequestAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WorkweixinOrganizationService implements ISynchronizerService{
+public class WorkweixinOrganizationService extends AbstractSynchronizerService implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(WorkweixinOrganizationService.class);
-	
-	@Autowired
-	OrganizationsService organizationsService;
 	
 	WorkWeixinDeptsResponse deptsResponse;
 	
@@ -77,6 +72,7 @@ public class WorkweixinOrganizationService implements ISynchronizerService{
 		org.setName(dept.getName());
 		org.setParentId(dept.getParentid()+"");
 		org.setSortIndex(dept.getOrder());
+		org.setInstId(this.synchronizer.getInstId());
 		return org;
 	}
 
@@ -94,20 +90,6 @@ public class WorkweixinOrganizationService implements ISynchronizerService{
 
 	public void setDeptsResponse(WorkWeixinDeptsResponse deptsResponse) {
 		this.deptsResponse = deptsResponse;
-	}
-
-	public OrganizationsService getOrganizationsService() {
-		return organizationsService;
-	}
-
-	public void setOrganizationsService(OrganizationsService organizationsService) {
-		this.organizationsService = organizationsService;
-	}
-
-	@Override
-	public void setSynchronizer(Synchronizers synchronizer) {
-		
-		
 	}
 
 }

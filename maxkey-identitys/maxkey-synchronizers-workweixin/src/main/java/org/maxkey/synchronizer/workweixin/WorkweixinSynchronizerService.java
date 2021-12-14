@@ -48,9 +48,11 @@ public class WorkweixinSynchronizerService  implements ISynchronizerService{
 		workweixinAccessTokenService.setCorpsecret(synchronizer.getCredentials());
 		String access_token=workweixinAccessTokenService.requestToken();
 		
+		workweixinOrganizationService.setSynchronizer(synchronizer);
 		workweixinOrganizationService.setAccess_token(access_token);
 		workweixinOrganizationService.sync();
 		
+		workweixinUsersService.setSynchronizer(synchronizer);
 		workweixinUsersService.setAccess_token(access_token);
 		workweixinUsersService.sync();
 	}

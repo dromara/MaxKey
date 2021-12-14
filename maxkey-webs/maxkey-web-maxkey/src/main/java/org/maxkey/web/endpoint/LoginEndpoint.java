@@ -45,14 +45,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @author Crystal.Sea
  *
  */
-@Api(tags = "1-1-登录接口文档模块")
+@Tag(name = "1-1-登录接口文档模块")
 @Controller
 public class LoginEndpoint {
 	private static Logger _logger = LoggerFactory.getLogger(LoginEndpoint.class);
@@ -92,7 +92,7 @@ public class LoginEndpoint {
 	 * init login
 	 * @return
 	 */
-	@ApiOperation(value = "登录接口", notes = "用户登录地址",httpMethod="GET")
+	@Operation(summary  = "登录接口", description  = "用户登录地址",method="GET")
  	@RequestMapping(value={"/login"})
 	public ModelAndView login() {
 		_logger.debug("LoginController /login.");

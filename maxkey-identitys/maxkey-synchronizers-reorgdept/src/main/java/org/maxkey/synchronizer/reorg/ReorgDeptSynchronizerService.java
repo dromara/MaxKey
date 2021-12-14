@@ -40,6 +40,7 @@ public class ReorgDeptSynchronizerService implements ISynchronizerService {
 
     public void sync() throws Exception {
         _logger.info("Sync ...");
+        reorgDeptService.setSynchronizer(synchronizer);
         reorgDeptService.sync();
 
     }

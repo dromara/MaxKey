@@ -19,9 +19,8 @@ package org.maxkey.synchronizer.dingding;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-import org.maxkey.entity.Synchronizers;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,14 +35,11 @@ import com.dingtalk.api.response.OapiV2DepartmentListsubResponse.DeptBaseRespons
 import com.dingtalk.api.response.OapiV2UserListResponse.ListUserResponse;
 
 @Service
-public class DingdingUsersService   implements ISynchronizerService{
+public class DingdingUsersService  extends AbstractSynchronizerService implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(DingdingUsersService.class);
 	
 	@Autowired
-	DingdingOrganizationService organizationService;
-	
-	@Autowired
-	UserInfoService userInfoService;
+	DingdingOrganizationService dingdingOrganizationService;
 	
 	String access_token;
 	
@@ -51,7 +47,7 @@ public class DingdingUsersService   implements ISynchronizerService{
 		_logger.info("Sync Users...");
 		try {
 			
-			OapiV2DepartmentListsubResponse rspDepts = organizationService.getRspDepts();
+			OapiV2DepartmentListsubResponse rspDepts = dingdingOrganizationService.getRspDepts();
 			for(DeptBaseResponse dept : rspDepts.getResult()) {
 				DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/v2/user/list");
 				OapiV2UserListRequest req = new OapiV2UserListRequest();
@@ -101,35 +97,19 @@ public class DingdingUsersService   implements ISynchronizerService{
 		userInfo.setWorkPhoneNumber(user.getTelephone());//鍏徃鐢佃瘽
 		userInfo.setWorkOfficeName(user.getWorkPlace());//鍔炲叕瀹�
 		userInfo.setDescription(user.getRemark());//澶囨敞
-		
+		userInfo.setInstId(this.synchronizer.getInstId());
 		return userInfo;
 	}
 
-	public void setOrganizationService(DingdingOrganizationService organizationService) {
-		this.organizationService = organizationService;
-	}
+
 
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
 	}
 
-	public UserInfoService getUserInfoService() {
-		return userInfoService;
-	}
-
-	public void setUserInfoService(UserInfoService userInfoService) {
-		this.userInfoService = userInfoService;
-	}
-
-	public DingdingOrganizationService getOrganizationService() {
-		return organizationService;
-	}
-
-	@Override
-	public void setSynchronizer(Synchronizers Synchronizer) {
-		
+	public void setDingdingOrganizationService(DingdingOrganizationService dingdingOrganizationService) {
+		this.dingdingOrganizationService = dingdingOrganizationService;
 	}
 
 
-	
 }

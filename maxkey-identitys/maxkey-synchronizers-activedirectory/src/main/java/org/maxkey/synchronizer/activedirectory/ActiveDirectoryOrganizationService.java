@@ -120,6 +120,7 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 			org.setStreet(LdapUtils.getAttributeStringValue(OrganizationalUnit.STREET,attributeMap));
 			org.setPostalCode(LdapUtils.getAttributeStringValue(OrganizationalUnit.POSTALCODE,attributeMap));
 			org.setDescription(LdapUtils.getAttributeStringValue(OrganizationalUnit.DESCRIPTION,attributeMap));
+			org.setInstId(this.synchronizer.getInstId());
 			orgsNamePathMap.put(org.getNamePath(), org);
 			_logger.info("org " + org);
 			organizationsService.insert(org);

@@ -42,20 +42,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @author Crystal.Sea
  * https://apereo.github.io/cas/6.2.x/protocol/CAS-Protocol-Specification.html
  */
-@Api(tags = "2-3-CAS API文档模块")
+@Tag(name = "2-3-CAS API文档模块")
 @Controller
 public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 
 	final static Logger _logger = LoggerFactory.getLogger(Cas30AuthorizeEndpoint.class);
 
-	@ApiOperation(value = "CAS 3.0 ticket验证接口", notes = "通过ticket获取当前登录用户信息",httpMethod="POST")
+	@Operation(summary = "CAS 3.0 ticket验证接口", description = "通过ticket获取当前登录用户信息",method="POST")
 	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE_V3)
 	public void serviceValidate(
 			HttpServletRequest request,
@@ -115,7 +115,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		httpResponseAdapter.write(response,serviceResponseBuilder.serviceResponseBuilder(),format);
 	}
 	
-	@ApiOperation(value = "CAS 3.0 ProxyTicket代理验证接口", notes = "通过ProxyGrantingTicket获取ProxyTicket",httpMethod="POST")
+	@Operation(summary = "CAS 3.0 ProxyTicket代理验证接口", description = "通过ProxyGrantingTicket获取ProxyTicket",method="POST")
 	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_PROXY_V3)
 	public void proxy(
 			HttpServletRequest request,
@@ -141,7 +141,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	    httpResponseAdapter.write(response,proxyServiceResponseBuilder.serviceResponseBuilder(),format);
 	}
 	
-	@ApiOperation(value = "CAS 3.0 ticket代理验证接口", notes = "通过ProxyTicket获取当前登录用户信息",httpMethod="POST")
+	@Operation(summary = "CAS 3.0 ticket代理验证接口", description = "通过ProxyTicket获取当前登录用户信息",method="POST")
 	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_PROXY_VALIDATE_V3)
 	public void proxy(
 			HttpServletRequest request,

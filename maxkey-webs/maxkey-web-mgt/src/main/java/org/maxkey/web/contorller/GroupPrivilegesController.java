@@ -109,9 +109,9 @@ public class GroupPrivilegesController {
 			String[] arrAppIds = appIds.split(",");
 			
 			for (int i = 0; i < arrAppIds.length; i++) {
-				GroupPrivileges newGroupApp = new GroupPrivileges(groupId, arrAppIds[i]);
+				GroupPrivileges newGroupApp = 
+						new GroupPrivileges(groupId, arrAppIds[i],WebContext.getUserInfo().getInstId());
 				newGroupApp.setId(WebContext.genId());
-				newGroupApp.setInstId(WebContext.getUserInfo().getInstId());
 				result = groupPrivilegesService.insert(newGroupApp);
 			}
 			if(!result) {

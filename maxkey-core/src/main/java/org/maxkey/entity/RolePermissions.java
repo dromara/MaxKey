@@ -53,9 +53,10 @@ public class RolePermissions  extends JpaBaseEntity implements Serializable {
     public RolePermissions() {
     }
 
-    public RolePermissions(String appId, String roleId) {
+    public RolePermissions(String appId, String roleId, String instId) {
         this.appId = appId;
         this.roleId = roleId;
+        this.instId = instId;
     }
     
     /**
@@ -64,11 +65,12 @@ public class RolePermissions  extends JpaBaseEntity implements Serializable {
      * @param roleId String
      * @param resourceId String
      */
-    public RolePermissions(String appId, String roleId, String resourceId) {
+    public RolePermissions(String appId, String roleId, String resourceId , String instId) {
         this.id = WebContext.genId();
         this.appId = appId;
         this.roleId = roleId;
         this.resourceId = resourceId;
+        this.instId = instId;
     }
 
     public String getId() {

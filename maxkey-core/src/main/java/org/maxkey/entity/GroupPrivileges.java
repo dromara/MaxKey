@@ -66,10 +66,11 @@ public class GroupPrivileges extends Apps implements Serializable{
 	 * @param groupId
 	 * @param appId
 	 */
-	public GroupPrivileges(String groupId, String appId) {
+	public GroupPrivileges(String groupId, String appId, String instId) {
 		super();
 		this.groupId = groupId;
 		this.appId = appId;
+		this.instId = instId;
 	}
 
 
