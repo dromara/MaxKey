@@ -56,13 +56,15 @@ Key Functions
 
 4. Identity Lifecycle management, support SCIM 2 , and realize Identity supply synchronization through connector based on Apache Kafka agent.
 
-5. The platform independence and diversity of environment. It supports web, mobile phone, mobile devices, such as apple IOS, Android, etc., and covers the certification ability from B/S to mobile applications.
+5. The Multi-Tenancy authentication platform , supports the independent management of multiple enterprises under the group company or the data isolation of different departments under the enterprise, so as to reduce the operation and maintenance cost.
 
-6. Variety of authentication mechanisms coexist, each application system can retain the original authentication mechanism, and integrate the authentication of the MaxKey; the application has a high degree of independence, does not rely on the MaxKey, and can use the authentication of the MaxKey to realize single sign on.
+6. The platform independence and diversity of environment. It supports web, mobile phone, mobile devices, such as apple IOS, Android, etc., and covers the certification ability from B/S to mobile applications.
 
-7. Based on Java EE platform, Adopts Spring, MySQL, Tomcat, Redis , Apache Kafka and other open source technologies, supports microservices, and has strong scalability.
+7. Variety of authentication mechanisms coexist, each application system can retain the original authentication mechanism, and integrate the authentication of the MaxKey; the application has a high degree of independence, does not rely on the MaxKey, and can use the authentication of the MaxKey to realize single sign on.
 
-8. Open Source, Secure,  Independent and Controllable , License Under Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright</a>. 
+8. Based on Java EE platform , microservice architecture, Adopts Spring, MySQL, Tomcat, Redis , Apache Kafka and other open source technologies, and has strong scalability.
+
+9. Open Source, Secure,  Independent and Controllable , License Under Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright</a>. 
 
 
 # UI
@@ -102,7 +104,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | --------| :-----  | :----   |
 | 1     | Maxkey-Cloud (micro service support)                      |  2021Q3  |
 | 2     | Zero trust scenario integration                           |  2021Q4  |
-| 3     | React, and Ant Design                                     |  2021Q4  |
+| 3     | React, and Ant Design                                     |  2022Q2  |
 | 4     | OAuth 2.1                                                 |  2022Q1  |
 | 5     | OpenID Connect optimize                                   |  2022Q2  |
 | 6     | Java 17+                                                  |  2022Q3  |
