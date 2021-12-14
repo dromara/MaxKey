@@ -5,7 +5,7 @@
 
 # 概述
 
-<b>MaxKey</b>单点登录认证系统(Single Sign On System)，谐音马克思的钥匙寓意是最大钥匙,是<b>业界领先的企业级IAM身份管理和认证产品</b>,支持OAuth 2.x/OpenID Connect、SAML 2.0、JWT、CAS、SCIM等标准协议，提供<b>简单、标准、安全和开放</b>的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、RBAC权限管理和资源管理等。
+<b>MaxKey</b>单点登录认证系统，谐音马克思的钥匙寓意是最大钥匙,是<b>业界领先的企业级IAM身份管理和认证产品</b>,支持OAuth 2.x/OpenID Connect、SAML 2.0、JWT、CAS、SCIM等标准协议，提供<b>简单、标准、安全和开放</b>的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、RBAC权限管理和资源管理等。
 
 官方网站  <a href="https://www.maxkey.top" target="_blank"><b>官网</b></a> |  <a href="https://maxkeytop.gitee.io" target="_blank"><b>官网二线</b></a>
 
@@ -106,8 +106,8 @@ QQ交流群：<b>434469201</b>
 | --------| :-----  | :----  |
 | 1     | Maxkey-Cloud (micro service support)                      |  2021Q3  |
 | 2     | Zero trust scenario integration                           |  2021Q4  |
-| 3     | React, and Ant Design                                     |  2022Q2  |
-| 4     | OAuth 2.1                                                 |  2022Q1  |
+| 3     | OAuth 2.1                                                 |  2022Q1  |
+| 4     | React, and Ant Design                                     |  2022Q2  |
 | 5     | OpenID Connect optimize                                   |  2022Q2  |
 | 6     | Java 17+                                                  |  2022Q3  |
 | 7     | Jakarta EE 9+                                             |  2022Q3  |

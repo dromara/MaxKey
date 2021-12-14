@@ -104,8 +104,8 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | --------| :-----  | :----  |
 | 1     | Maxkey-Cloud (micro service support)                      |  2021Q3  |
 | 2     | Zero trust scenario integration                           |  2021Q4  |
-| 3     | React, and Ant Design                                     |  2022Q2  |
-| 4     | OAuth 2.1                                                 |  2022Q1  |
+| 3     | OAuth 2.1                                                 |  2022Q1  |
+| 4     | React, and Ant Design                                     |  2022Q2  |
 | 5     | OpenID Connect optimize                                   |  2022Q2  |
 | 6     | Java 17+                                                  |  2022Q3  |
 | 7     | Jakarta EE 9+                                             |  2022Q3  |
