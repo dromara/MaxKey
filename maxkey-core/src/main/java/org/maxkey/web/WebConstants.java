@@ -85,5 +85,14 @@ public class WebConstants {
     public static final  String ONLINE_TICKET_NAME = "online_ticket";
     
     public static final  String ONLINE_TICKET_PREFIX = "OT";
+    
+    public static final class LOGIN_RESULT{
+    	public static final  String SUCCESS 		= "success";
+    	public static final  String FAIL 			= "fail";
+    	public static final  String PASSWORD_ERROE 	= "password error";
+    	public static final  String USER_NOT_EXIST 	= "user not exist";
+    	
+    	
+    }
 
 }

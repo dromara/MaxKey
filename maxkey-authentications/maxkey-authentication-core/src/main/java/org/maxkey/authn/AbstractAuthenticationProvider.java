@@ -116,8 +116,11 @@ public abstract class AbstractAuthenticationProvider {
         
         changeSession(authentication);
         
-        authenticationRealm.insertLoginHistory(
-                WebContext.getUserInfo(), ConstantsLoginType.LOCAL, "", "xe00000004", "success");
+        authenticationRealm.insertLoginHistory( WebContext.getUserInfo(), 
+						        				ConstantsLoginType.LOCAL, 
+								                "", 
+								                "xe00000004", 
+								                WebConstants.LOGIN_RESULT.SUCCESS);
         
         return authentication;
     }
@@ -331,7 +334,7 @@ public abstract class AbstractAuthenticationProvider {
             loginUser.setDisplayName("not exist");
             loginUser.setLoginCount(0);
             authenticationRealm.insertLoginHistory(loginUser, ConstantsLoginType.LOCAL, "",
-                    WebContext.getI18nValue("login.error.username"), "user not exist");
+                    WebContext.getI18nValue("login.error.username"),WebConstants.LOGIN_RESULT.USER_NOT_EXIST);
             throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
         }
         return true;

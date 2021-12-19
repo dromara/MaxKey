@@ -95,7 +95,8 @@ public class HttpRemeberMeEntryPoint implements AsyncHandlerInterceptor {
 	        DateTime expiryDate = loginDate.plusSeconds(remeberMeService.getRemeberMeValidity());
 	        DateTime now = new DateTime();
 	        if (now.isBefore(expiryDate)) {
-	            LoginCredential loginCredential =new LoginCredential(storeRemeberMe.getUsername(),"",ConstantsLoginType.REMEBER_ME);
+	            LoginCredential loginCredential =
+	            		new LoginCredential(storeRemeberMe.getUsername(),"",ConstantsLoginType.REMEBER_ME);
 	            authenticationProvider.authentication(loginCredential,true);
 	            remeberMeService.updateRemeberMe(remeberMeCookie, response);
 	            _logger.debug("RemeberMe Logined in , username " + storeRemeberMe.getUsername());

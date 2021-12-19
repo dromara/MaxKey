@@ -20,6 +20,7 @@ package org.maxkey.authn;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.maxkey.web.WebConstants;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -40,7 +41,7 @@ public class LoginCredential  implements Authentication {
     String onlineTicket;
     String provider;
     String code;
-    String message="SUCCESS";
+    String message = WebConstants.LOGIN_RESULT.SUCCESS;
     
     ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;

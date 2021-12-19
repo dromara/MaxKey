@@ -97,7 +97,8 @@ public class HttpHeaderEntryPoint implements AsyncHandlerInterceptor {
 			 isAuthenticated=false;
 		 }else {
 			 _logger.info("Security Authentication   not null . ");
-			 UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+			 UsernamePasswordAuthenticationToken authenticationToken = 
+					 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 			 String lastSessionUserName = authenticationToken.getPrincipal().toString();
 			 _logger.info("Authentication Principal : " + lastSessionUserName);
 			 if (lastSessionUserName != null && !lastSessionUserName.equals(httpHeaderUsername)) {
