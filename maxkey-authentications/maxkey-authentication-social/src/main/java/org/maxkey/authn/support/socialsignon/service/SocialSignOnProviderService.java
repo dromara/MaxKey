@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.SocialsProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -194,7 +195,9 @@ public class SocialSignOnProviderService{
             socialsProvider.setProviderName(rs.getString("providername"));
             socialsProvider.setIcon(rs.getString("icon"));
             socialsProvider.setClientId(rs.getString("clientid"));
-            socialsProvider.setClientSecret(rs.getString("clientsecret"));
+            String clientSecret= rs.getString("clientsecret");
+            clientSecret = PasswordReciprocal.getInstance().decoder(clientSecret);
+            socialsProvider.setClientSecret(clientSecret);
             socialsProvider.setAgentId(rs.getString("agentId"));
             socialsProvider.setHidden(rs.getString("hidden"));
             socialsProvider.setSortIndex(rs.getInt("sortindex"));

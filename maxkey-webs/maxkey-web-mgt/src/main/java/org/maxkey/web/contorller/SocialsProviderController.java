@@ -19,6 +19,7 @@ package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.SocialsProvider;
 import org.maxkey.persistence.service.SocialsProviderService;
 import org.maxkey.web.WebContext;
@@ -66,7 +67,9 @@ public class SocialsProviderController {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("socialsprovider/socialsProviderUpdate");
-		modelAndView.addObject("model",socialsProviderService.get(id));
+		SocialsProvider socialsProvider = socialsProviderService.get(id);
+		socialsProvider.setClientSecret(PasswordReciprocal.getInstance().decoder(socialsProvider.getClientSecret()));
+		modelAndView.addObject("model",socialsProvider);
 		return modelAndView;
 	}
 	
@@ -75,6 +78,7 @@ public class SocialsProviderController {
 	public Message insert(@ModelAttribute("socialsProvider") SocialsProvider socialsProvider) {
 		_logger.debug("-Add  :" + socialsProvider);
 		socialsProvider.setInstId(WebContext.getUserInfo().getInstId());
+		socialsProvider.setClientSecret(PasswordReciprocal.getInstance().encode(socialsProvider.getClientSecret()));
 		if (socialsProviderService.insert(socialsProvider)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -113,6 +117,7 @@ public class SocialsProviderController {
 	public Message update(@ModelAttribute("socialsProvider") SocialsProvider socialsProvider) {
 		_logger.debug("-update  socialsProvider :" + socialsProvider);
 		socialsProvider.setInstId(WebContext.getUserInfo().getInstId());
+		socialsProvider.setClientSecret(PasswordReciprocal.getInstance().encode(socialsProvider.getClientSecret()));
 		if (socialsProviderService.update(socialsProvider)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			

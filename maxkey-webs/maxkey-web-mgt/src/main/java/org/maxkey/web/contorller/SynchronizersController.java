@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Synchronizers;
 import org.maxkey.persistence.service.SynchronizersService;
 import org.maxkey.synchronizer.ISynchronizerService;
@@ -72,6 +73,7 @@ public class SynchronizersController {
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("synchronizers/synchronizerUpdate");
 		Synchronizers synchronizers=synchronizersService.get(id);
+		synchronizers.setCredentials(PasswordReciprocal.getInstance().decoder(synchronizers.getCredentials()));
 		modelAndView.addObject("model",synchronizers);
 		return modelAndView;
 	}
@@ -88,6 +90,7 @@ public class SynchronizersController {
 	public Message update(@ModelAttribute("synchronizers") Synchronizers synchronizers) {
 		_logger.debug("-update  synchronizers :" + synchronizers);
 		synchronizers.setInstId(WebContext.getUserInfo().getInstId());
+		synchronizers.setCredentials(PasswordReciprocal.getInstance().encode(synchronizers.getCredentials()));
 		if (synchronizersService.update(synchronizers)) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
@@ -111,6 +114,7 @@ public class SynchronizersController {
 		try {
 			for(String sysId : ids) {
 				Synchronizers  synchronizer  = synchronizersService.get(sysId);
+				synchronizer.setCredentials(PasswordReciprocal.getInstance().decoder(synchronizer.getCredentials()));
 				_logger.debug("synchronizer " + synchronizer);
 				ISynchronizerService synchronizerService = WebContext.getBean(synchronizer.getService(),ISynchronizerService.class);
 				synchronizerService.setSynchronizer(synchronizer);
