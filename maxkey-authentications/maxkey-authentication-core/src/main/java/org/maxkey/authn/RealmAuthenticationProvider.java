@@ -94,7 +94,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 
         userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
 
-        userinfoValid(userInfo, loginCredential.getUsername());
+        statusValid(loginCredential , userInfo);
         //mfa 
         tftcaptchaValid(loginCredential.getOtpCaptcha(),loginCredential.getAuthType(),userInfo);
         
@@ -140,7 +140,9 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     @Override
     public  Authentication authentication(LoginCredential loginCredential,boolean isTrusted) {
         UserInfo loadeduserInfo = loadUserInfo(loginCredential.getUsername(), "");
+        statusValid(loginCredential , loadeduserInfo);
         if (loadeduserInfo != null) {
+        	
             //Validate PasswordPolicy
             authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(loadeduserInfo);
             if(!isTrusted) {

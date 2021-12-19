@@ -281,8 +281,6 @@ public class PasswordPolicyValidator {
                                 );
         }
 
-        
-        
         return true;
     }
    

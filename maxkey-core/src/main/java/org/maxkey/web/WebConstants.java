@@ -91,6 +91,10 @@ public class WebConstants {
     	public static final  String FAIL 			= "fail";
     	public static final  String PASSWORD_ERROE 	= "password error";
     	public static final  String USER_NOT_EXIST 	= "user not exist";
+    	public static final  String USER_LOCKED 	= "locked";
+    	public static final  String USER_INACTIVE 	= "inactive";
+    	
+    	
     	
     	
     }

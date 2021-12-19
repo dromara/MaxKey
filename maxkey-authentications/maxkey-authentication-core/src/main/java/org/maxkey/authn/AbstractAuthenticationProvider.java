@@ -25,6 +25,7 @@ import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.web.WebConstants;
@@ -324,18 +325,40 @@ public abstract class AbstractAuthenticationProvider {
         return true;
     }
 
-    protected boolean userinfoValid(UserInfo userInfo, String username) {
+    protected boolean statusValid(LoginCredential loginCredential , UserInfo userInfo) {
         if (null == userInfo) {
-            String message = WebContext.getI18nValue("login.error.username");
-            _logger.debug("login user  " + username + " not in this System ." + message);
-            UserInfo loginUser = new UserInfo(username);
+            String i18nMessage = WebContext.getI18nValue("login.error.username");
+            _logger.debug("login user  " + loginCredential.getUsername() + " not in this System ." + i18nMessage);
+            UserInfo loginUser = new UserInfo(loginCredential.getUsername());
             loginUser.setId(loginUser.generateId());
-            loginUser.setUsername(username);
+            loginUser.setUsername(loginCredential.getUsername());
             loginUser.setDisplayName("not exist");
             loginUser.setLoginCount(0);
-            authenticationRealm.insertLoginHistory(loginUser, ConstantsLoginType.LOCAL, "",
-                    WebContext.getI18nValue("login.error.username"),WebConstants.LOGIN_RESULT.USER_NOT_EXIST);
-            throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
+            authenticationRealm.insertLoginHistory(
+            			loginUser, 
+            			ConstantsLoginType.LOCAL, 
+            			"",
+            			i18nMessage,
+            			WebConstants.LOGIN_RESULT.USER_NOT_EXIST);
+            throw new BadCredentialsException(i18nMessage);
+        }else {
+        	if(userInfo.getIsLocked()==ConstantsStatus.LOCK) {
+        		authenticationRealm.insertLoginHistory( 
+        				userInfo, 
+                        loginCredential.getAuthType(), 
+                        loginCredential.getProvider(), 
+                        loginCredential.getCode(), 
+                        WebConstants.LOGIN_RESULT.USER_LOCKED
+                    );
+        	}else if(userInfo.getStatus()!=ConstantsStatus.ACTIVE) {
+        		authenticationRealm.insertLoginHistory( 
+        				userInfo, 
+                        loginCredential.getAuthType(), 
+                        loginCredential.getProvider(), 
+                        loginCredential.getCode(), 
+                        WebConstants.LOGIN_RESULT.USER_INACTIVE
+                    );
+        	}
         }
         return true;
     }

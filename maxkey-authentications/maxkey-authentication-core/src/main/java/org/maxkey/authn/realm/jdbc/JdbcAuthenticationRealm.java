@@ -25,6 +25,7 @@ import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.LoginService;
 import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,7 +120,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
         _logger.debug("passwordvalid : {}" , passwordMatches);
         if (!passwordMatches) {
             passwordPolicyValidator.plusBadPasswordCount(userInfo);
-            insertLoginHistory(userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", "password error");
+            insertLoginHistory(userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", WebConstants.LOGIN_RESULT.PASSWORD_ERROE);
             
             if(userInfo.getBadPasswordCount()>=(passwordPolicyValidator.getPasswordPolicy().getAttempts()/2)) {
                 throw new BadCredentialsException(
