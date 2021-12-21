@@ -14,13 +14,10 @@ email: <b> maxkeysupport@163.com </b>
 
 Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a>
 
-<b> Single Sign On </b> (<b> SSO </b >),Users only need to login to the authentication center once , access all the trusted application systems without logging in again.
-
-Key Functions
-
-1) All application systems share one Identity authentication system
-
-2) All application systems can Identify and extract Ticket
+><b> Single Sign On </b>(<b> SSO </b >),Users only need to login to the authentication center once , access all the trusted application systems without logging in again.
+>**Key Functions**
+>1) All application systems share one Identity authentication system
+>2) All application systems can Identify and extract Ticket
  
  
 # Features
@@ -67,7 +64,7 @@ Key Functions
 9. Open Source, Secure,  Independent and Controllable , License Under Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright</a>. 
 
 
-# UI
+# Interface
 
 **MaxKey**
 
@@ -101,7 +98,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 # Roadmap
 
 | No.     | Plan    |  Date   |
-| --------| :-----  | :----   |
+| --------| :-----  | :----  |
 | 1     | Maxkey-Cloud (micro service support)                      |  2021Q3  |
 | 2     | Zero trust scenario integration                           |  2021Q4  |
 | 3     | OAuth 2.1                                                 |  2022Q1  |
@@ -111,6 +108,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 7     | Jakarta EE 9+                                             |  2022Q3  |
 | 8     | Spring Framework 6                                        |  2022Q4  |
 | 9     | Spring Boot 3                                             |  2022Q4  |
+
 
 # User Registration
 

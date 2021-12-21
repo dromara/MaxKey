@@ -14,13 +14,10 @@ email: <b> maxkeysupport@163.com </b>
 
 Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a>
 
-<b> Single Sign On </b>(<b> SSO </b >),Users only need to login to the authentication center once , access all the trusted application systems without logging in again.
-
-Key Functions
-
-1) All application systems share one Identity authentication system
-
-2) All application systems can Identify and extract Ticket
+><b> Single Sign On </b>(<b> SSO </b >),Users only need to login to the authentication center once , access all the trusted application systems without logging in again.
+>**Key Functions**
+>1) All application systems share one Identity authentication system
+>2) All application systems can Identify and extract Ticket
  
  
 # Features
