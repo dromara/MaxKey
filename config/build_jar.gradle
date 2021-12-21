@@ -121,8 +121,9 @@ subprojects {
     }  
 	
 	//all dependencies
-	dependencies {  
-		//for Test and Compile
+    dependencies {
+        
+        //for Test and Compile
          testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
          compileOnly group: 'junit', name: 'junit', version: "${junitVersion}"
          testImplementation group: 'org.mockito', name: 'mockito-all', version: "${mockitoallVersion}"
@@ -247,8 +248,8 @@ subprojects {
          implementation  group: 'org.springframework.session', name: 'spring-session-core', version: "${springSessionVersion}"
          implementation  group: 'org.springframework.session', name: 'spring-session-data-redis', version: "${springSessionVersion}"
          
-         implementation  group: 'org.springframework.plugin', name: 'spring-plugin-core', version: "${springplugincoreVersion}"
-         implementation  group: 'org.springframework.plugin', name: 'spring-plugin-metadata', version: "${springpluginmetadataVersion}"
+         //implementation  group: 'org.springframework.plugin', name: 'spring-plugin-core', version: "${springplugincoreVersion}"
+         //implementation  group: 'org.springframework.plugin', name: 'spring-plugin-metadata', version: "${springpluginmetadataVersion}"
          //spring cloud
          implementation  group: 'org.springframework.cloud', name: 'spring-cloud-commons', version: "${springcloudVersion}"
          implementation  group: 'org.springframework.cloud', name: 'spring-cloud-context', version: "${springcloudVersion}"
@@ -318,7 +319,6 @@ subprojects {
          implementation  group: 'com.alibaba', name: 'druid', version: "${druidVersion}"
          implementation  group: 'com.alibaba', name: 'druid-spring-boot-starter', version: "${druidspringbootstarterVersion}"
          implementation  group: 'redis.clients', name: 'jedis', version: "${jedisVersion}"
-         //implementation  group: 'org.ehcache', name: 'ehcache', version: "${ehcacheVersion}"
          //implementation  group: 'org.liquibase', name: 'liquibase-core', version: '4.3.5'
          implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: "${caffeineVersion}"
          //mybatis
@@ -372,34 +372,22 @@ subprojects {
          implementation  group: 'com.alibaba', name: 'fastjson', version: "${fastjsonVersion}"
          //docs
          implementation  group: 'org.mapstruct', name: 'mapstruct', version: "${mapstructVersion}"
-         implementation  group: 'io.swagger', name: 'swagger-annotations', version: "${swaggerVersion}"
-         implementation  group: 'io.swagger', name: 'swagger-models', version: "${swaggerVersion}"
+         //implementation  group: 'io.swagger', name: 'swagger-annotations', version: "${swaggerVersion}"
+         //implementation  group: 'io.swagger', name: 'swagger-models', version: "${swaggerVersion}"
          implementation  group: 'io.swagger.core.v3', name: 'swagger-annotations', version: "${swaggerV3Version}"
          implementation  group: 'io.swagger.core.v3', name: 'swagger-core', version: "${swaggerV3Version}"
          implementation  group: 'io.swagger.core.v3', name: 'swagger-integration', version: "${swaggerV3Version}"
          implementation  group: 'io.swagger.core.v3', name: 'swagger-models', version: "${swaggerV3Version}"
-         //springfox
-         implementation  group: 'io.springfox', name: 'springfox-bean-validators', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-core', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-data-rest', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-spi', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-oas', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-schema', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-swagger2', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-swagger-ui', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-swagger-common', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-spring-webmvc', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-spring-web', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-spring-webflux', version: "${springfoxVersion}"
-         implementation  group: 'io.springfox', name: 'springfox-boot-starter', version: "${springfoxVersion}"
+         //springdoc
+         implementation group: 'io.github.classgraph', name: 'classgraph', version: '4.8.137'
+         implementation group: 'org.springdoc', name: 'springdoc-openapi-common', version: "${springdocVersion}"
+         implementation group: 'org.springdoc', name: 'springdoc-openapi-webmvc-core', version: "${springdocVersion}"
+         implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: "${springdocVersion}"
+         implementation group: 'org.webjars', name: 'webjars-locator-core', version: '0.48'
+         implementation group: 'org.webjars', name: 'webjars-locator', version: '0.42'
+         implementation group: 'org.webjars', name: 'swagger-ui', version: '4.1.3'
          //knife4j
-         implementation  group: 'com.github.xiaoymin', name: 'knife4j-annotations', version: "${knife4jVersion}"
-         implementation  group: 'com.github.xiaoymin', name: 'knife4j-core', version: "${knife4jVersion}"
-         implementation  group: 'com.github.xiaoymin', name: 'knife4j-spring-mvc', version: "${knife4jVersion}"
-         implementation  group: 'com.github.xiaoymin', name: 'knife4j-spring', version: "${knife4jVersion}"
-         implementation  group: 'com.github.xiaoymin', name: 'knife4j-spring-ui', version: "${knife4jVersion}"
-         implementation  group: 'com.github.xiaoymin', name: 'knife4j-spring-boot-starter', version: "${knife4jVersion}"
-         implementation  group: 'com.github.xiaoymin', name: 'knife4j-spring-boot-autoconfigure', version: "${knife4jVersion}"
+         implementation group: 'com.github.xiaoymin', name: 'knife4j-springdoc-ui', version: "${knife4jVersion}"
         
          //local jars
          implementation fileTree(dir: "${rootDir}/maxkey-lib/", include: '*.jar')
