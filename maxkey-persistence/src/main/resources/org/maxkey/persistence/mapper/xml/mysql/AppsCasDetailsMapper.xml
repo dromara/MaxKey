@@ -7,8 +7,7 @@
     	from 
     		mxk_apps_cas_details cd,
     		mxk_apps app
-    	where 	app.instid = #{instId}
-            and cd.instid = #{instId}
+    	where 	app.instid = cd.instid
     		and app.status	=	1
     		and cd.id	=	app.id
     		and (

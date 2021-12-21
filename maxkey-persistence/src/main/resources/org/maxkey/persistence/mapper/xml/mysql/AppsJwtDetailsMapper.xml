@@ -8,8 +8,7 @@
     	from 
     		mxk_apps_jwt_details jd,
     		mxk_apps app
-    	where 	app.instid  =   #{instId} 
-            and jd.instid   =   #{instId} 
+    	where 	app.instid  =   jd.instid
     		and app.id	    =	#{value}
     		and jd.id	    =	#{value}
     		and status        =   1
