@@ -1,6 +1,6 @@
 ﻿MaxKey v 3.2.0 GA 2021/12/21
     *(MAXKEY-211001) 实现多租户基本功能
-    *(MAXKEY-211002) Apache log4j漏洞升级到2.16.0
+    *(MAXKEY-211002) Apache log4j漏洞升级到2.17.0
     *(MAXKEY-211004) 修改对称加密算法，
     *(MAXKEY-211005) OAuth 2.*增加departmentId用户返回属性
     *(MAXKEY-211006) 删除springfox,swagger依赖，增加springdoc依赖
