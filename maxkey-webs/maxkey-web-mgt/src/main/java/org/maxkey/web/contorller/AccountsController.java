@@ -144,7 +144,7 @@ public class AccountsController {
 		
 		_logger.debug("-delete  AppAccounts :" + appAccounts);
 		
-		accountsService.batchDelete(appAccounts.getId());
+		accountsService.deleteBatch(appAccounts.getId());
 		
 		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 		

@@ -131,7 +131,7 @@ public class NoticesController {
 	public Message delete(@ModelAttribute("notice")Notices notice) {
 		_logger.debug("-delete  notice :" + notice);
 		
-		if (noticesService.batchDelete(notice.getId())) {
+		if (noticesService.deleteBatch(notice.getId())) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

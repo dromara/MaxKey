@@ -144,7 +144,7 @@ public class RoleMemberController {
 			return  new Message("传入参数为空",MessageType.error);
 		}
 		
-		if(roleMemberService.batchDelete(roleMember.getId())) {
+		if(roleMemberService.deleteBatch(roleMember.getId())) {
 		    return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
 		}
 		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);

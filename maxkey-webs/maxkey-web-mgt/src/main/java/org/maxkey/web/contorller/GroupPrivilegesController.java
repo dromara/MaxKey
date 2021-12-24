@@ -129,7 +129,7 @@ public class GroupPrivilegesController {
 			return  new Message("传入参数为空",MessageType.error);
 		}
 	
-		if(groupPrivilegesService.batchDelete(groupApp.getId())) {
+		if(groupPrivilegesService.deleteBatch(groupApp.getId())) {
 		    return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
 		}
 		

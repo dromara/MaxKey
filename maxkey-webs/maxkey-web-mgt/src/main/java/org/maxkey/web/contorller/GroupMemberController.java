@@ -157,7 +157,7 @@ public class GroupMemberController {
 			return  new Message("传入参数为空",MessageType.error);
 		}
 		
-		if(groupMemberService.batchDelete(groupMember.getId())) {
+		if(groupMemberService.deleteBatch(groupMember.getId())) {
 		    return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
 		}
 		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);	

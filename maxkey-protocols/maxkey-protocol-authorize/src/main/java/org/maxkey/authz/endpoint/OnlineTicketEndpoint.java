@@ -44,6 +44,6 @@ public class OnlineTicketEndpoint {
     public String ticketValidate(
             @RequestParam(value ="ticket",required = true) String ticket) {
         OnlineTicket onlineTicket = onlineTicketServices.get(ticket);
-        return onlineTicket == null ? "" :onlineTicket.getTicketId();
+        return onlineTicket == null ? "" : onlineTicket.getTicketId();
     }
 }

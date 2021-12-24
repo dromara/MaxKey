@@ -175,7 +175,7 @@ public class OrganizationsController {
 	@RequestMapping({"/delete"})
 	public Message delete(@ModelAttribute("org") Organizations org) {
 		_logger.debug("-delete  organization :" + org);
-    	if (this.organizationsService.batchDelete(org.getId())) {
+    	if (this.organizationsService.deleteBatch(org.getId())) {
     		return new Message(WebContext.getI18nValue("message.action.delete.success"), MessageType.success);
     	}
     
@@ -208,7 +208,7 @@ public class OrganizationsController {
             // 数据去重
             if(!CollectionUtils.isEmpty(orgsList)){
                 orgsList = orgsList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getId()))), ArrayList::new));
-                if(organizationsService.batchInsert(orgsList)) {
+                if(organizationsService.insertBatch(orgsList)) {
 		        	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
 		        }else {
 		        	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);

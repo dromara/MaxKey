@@ -26,13 +26,17 @@ import java.util.StringTokenizer;
 import org.maxkey.pretty.Pretty;
 
 public class SqlPretty implements Pretty{
-	public static final String WHITESPACE = " \n\r\f\t";
-	private static final Set<String> BEGIN_CLAUSES = new HashSet<String>();
-	private static final Set<String> END_CLAUSES = new HashSet<String>();
-	private static final Set<String> LOGICAL = new HashSet<String>();
-	private static final Set<String> QUANTIFIERS = new HashSet<String>();
-	private static final Set<String> DML = new HashSet<String>();
-	private static final Set<String> MISC = new HashSet<String>();
+	
+	public static final String WHITESPACE 			= " \n\r\f\t";
+	private static final Set<String> BEGIN_CLAUSES 	= new HashSet<String>();
+	private static final Set<String> END_CLAUSES 	= new HashSet<String>();
+	private static final Set<String> LOGICAL 		= new HashSet<String>();
+	private static final Set<String> QUANTIFIERS 	= new HashSet<String>();
+	private static final Set<String> DML 			= new HashSet<String>();
+	private static final Set<String> MISC 			= new HashSet<String>();
+	private static final String INDENT_STRING 		= "    ";
+	//mhshi modify
+	private static final String INITIAL 			= "";//System.lineSeparator() + INDENT_STRING;
 	
 	static {
 		BEGIN_CLAUSES.add( "left" );
@@ -72,10 +76,6 @@ public class SqlPretty implements Pretty{
 		MISC.add( "on" );
 	}
 
-	private static final String INDENT_STRING = "    ";
-	//mhshi modify
-	private static final String INITIAL = "";//System.lineSeparator() + INDENT_STRING;
-
 	public SqlPretty() {
 		
 	}
@@ -95,8 +95,8 @@ public class SqlPretty implements Pretty{
 		boolean afterInsert;
 		int inFunction;
 		int parensSinceSelect;
-		private LinkedList<Integer> parenCounts = new LinkedList<Integer>();
-		private LinkedList<Boolean> afterByOrFromOrSelects = new LinkedList<Boolean>();
+		private LinkedList<Integer> parenCounts 			= new LinkedList<Integer>();
+		private LinkedList<Boolean> afterByOrFromOrSelects 	= new LinkedList<Boolean>();
 		//mhshi modify
 		int indent = 0;//1;
 

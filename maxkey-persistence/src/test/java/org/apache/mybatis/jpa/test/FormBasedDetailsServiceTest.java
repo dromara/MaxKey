@@ -86,7 +86,7 @@ public class FormBasedDetailsServiceTest {
 		idList.add("ab7422e9-a91a-4840-9e59-9d911257c918");
 		idList.add("12b6ceb8-573b-4f01-ad85-cfb24cfa007c");
 		idList.add("dafd5ba4-d2e3-4656-bd42-178841e610fe");
-		service.batchDelete(idList);
+		service.deleteBatch(idList);
 	}
 
 	@Test

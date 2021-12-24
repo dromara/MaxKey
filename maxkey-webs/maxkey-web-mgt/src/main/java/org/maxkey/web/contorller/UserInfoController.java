@@ -217,7 +217,7 @@ public class UserInfoController {
 	@RequestMapping(value="/batchDelete")  
 	public Message batchDeleteUsers(@RequestParam("id")String id) {
 		_logger.debug(id);
-		if(userInfoService.batchDelete(StringUtils.string2List(id, ","))) {
+		if(userInfoService.deleteBatch(StringUtils.string2List(id, ","))) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
@@ -235,7 +235,7 @@ public class UserInfoController {
 	@RequestMapping(value="/delete")  
 	public Message deleteUsersById(@RequestParam("id") String id) {
 		_logger.debug(id);
-		if(userInfoService.batchDelete(id)) {
+		if(userInfoService.deleteBatch(id)) {
 			//provisioningPrepare.prepare(userInfo, OPERATEACTION.DELETE_ACTION);
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 		} else {
@@ -313,7 +313,7 @@ public class UserInfoController {
                 // 数据去重
                 if(!CollectionUtils.isEmpty(userInfoList)){
                     userInfoList = userInfoList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getUsername()))), ArrayList::new));
-                    if( userInfoService.batchInsert(userInfoList)) {
+                    if( userInfoService.insertBatch(userInfoList)) {
                     	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
                     }else {
                     	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);

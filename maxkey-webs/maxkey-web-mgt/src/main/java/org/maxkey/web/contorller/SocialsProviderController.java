@@ -133,7 +133,7 @@ public class SocialsProviderController {
 	public Message delete(@ModelAttribute("socialsProvider") SocialsProvider socialsProvider) {
 		_logger.debug("-delete  socialsProvider :" + socialsProvider);
 		
-		if (socialsProviderService.batchDelete(socialsProvider.getId())) {
+		if (socialsProviderService.deleteBatch(socialsProvider.getId())) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {

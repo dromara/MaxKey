@@ -76,19 +76,17 @@ public class AuthorizeBaseEndpoint {
 		Accounts account=new Accounts();
 		UserInfo userInfo=WebContext.getUserInfo();
 		Apps  loadApp = getApp(app.getId());
-		if(loadApp.getCredential()==Apps.CREDENTIALS.USER_DEFINED){
-			
-			account=accountsService.load(new Accounts(userInfo.getId(),loadApp.getId()));
-			if(account!=null){
+		if(loadApp.getCredential() == Apps.CREDENTIALS.USER_DEFINED){
+			account = accountsService.load(new Accounts(userInfo.getId(),loadApp.getId()));
+			if(account != null){
 				account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));
 			}
-		}else if(loadApp.getCredential()==Apps.CREDENTIALS.SHARED){
 			
+		}else if(loadApp.getCredential() == Apps.CREDENTIALS.SHARED){
 			account.setRelatedUsername(loadApp.getSharedUsername());
-			account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(loadApp.getSharedPassword()));
-			
-		}else if(loadApp.getCredential()==Apps.CREDENTIALS.SYSTEM){
-			
+			account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(loadApp.getSharedPassword()));	
+		
+		}else if(loadApp.getCredential() == Apps.CREDENTIALS.SYSTEM){
 			if(loadApp.getSystemUserAttr().equalsIgnoreCase("userId")){
 				account.setUsername(userInfo.getId());
 			}else if(loadApp.getSystemUserAttr().equalsIgnoreCase("username")){
@@ -104,7 +102,6 @@ public class AuthorizeBaseEndpoint {
 			account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(WebContext.getUserInfo().getDecipherable()));
 			
 		}else if(loadApp.getCredential()==Apps.CREDENTIALS.NONE){
-			
 			account.setUsername(userInfo.getUsername());
 			account.setRelatedPassword(userInfo.getUsername());
 			

@@ -40,9 +40,11 @@ public class JsonPretty  implements Pretty{
 	 * @return String
 	 */
 	public  String jacksonFormat(Object bean){
-		String prettyJson="";
+		String prettyJson = "";
 		try {
-			prettyJson= (new ObjectMapper()).writerWithDefaultPrettyPrinter().writeValueAsString(bean);
+			prettyJson = (new ObjectMapper())
+					.writerWithDefaultPrettyPrinter()
+					.writeValueAsString(bean);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -59,7 +61,9 @@ public class JsonPretty  implements Pretty{
 	 * @return String
 	 */
 	public  String format(Object bean){
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		Gson gson = new GsonBuilder()
+				.setPrettyPrinting()
+				.create();
 		String json = gson.toJson(bean);
 		return json;
 	}

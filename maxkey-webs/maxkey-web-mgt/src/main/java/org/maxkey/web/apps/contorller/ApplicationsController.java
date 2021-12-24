@@ -166,7 +166,7 @@ public class ApplicationsController extends BaseAppContorller {
 	@RequestMapping(value={"/delete"})
 	public Message delete(@ModelAttribute("application") Apps application) {
 		_logger.debug("-delete  application :" + application);
-		if (appsService.batchDelete(application.getId())) {
+		if (appsService.deleteBatch(application.getId())) {
 			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
