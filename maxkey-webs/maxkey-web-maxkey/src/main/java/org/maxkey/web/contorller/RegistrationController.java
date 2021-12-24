@@ -167,6 +167,9 @@ public class RegistrationController {
 				
 				password = passwordEncoder.encode(password );
 				userInfo.setPassword(password);
+				if(StringUtils.isEmpty(userInfo.getInstId())) {
+					userInfo.setInstId("1");
+				}
 				userInfo.setPasswordLastSetTime(DateUtils.format(new Date(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
 				userInfoService.insert(userInfo);
 
