@@ -23,9 +23,11 @@ package org.maxkey.crypto.jwt.encryption.service.impl;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.text.ParseException;
-import org.apache.log4j.Logger;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
 
@@ -34,7 +36,7 @@ import com.nimbusds.jose.jwk.JWKSet;
  *
  */
 public class RecipientJwtEncryptionAndDecryptionServiceBuilder {
-	final static Logger logger = Logger.getLogger(RecipientJwtEncryptionAndDecryptionServiceBuilder.class);
+	final static Logger _logger = LoggerFactory.getLogger(RecipientJwtEncryptionAndDecryptionServiceBuilder.class);
 	
 	//private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
 	//private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
@@ -49,11 +51,11 @@ public class RecipientJwtEncryptionAndDecryptionServiceBuilder {
 	
 	public JwtEncryptionAndDecryptionService serviceBuilder(String jwksUri){
 		
-		logger.debug("jwksUri : "+jwksUri);
+		_logger.debug("jwksUri : {}" , jwksUri);
 		
 		String jsonString ="";//= restTemplate.getForObject(jwksUri, String.class);
 		
-		logger.debug("jwks json String : "+jsonString);
+		_logger.debug("jwks json String : {}" , jsonString);
 		JwtEncryptionAndDecryptionService recipientJwtEncryptionAndDecryptionService;
 		try {
 			JWKSet jwkSet = JWKSet.parse(jsonString);

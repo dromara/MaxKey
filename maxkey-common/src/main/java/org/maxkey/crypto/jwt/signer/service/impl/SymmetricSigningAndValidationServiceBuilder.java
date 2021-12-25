@@ -24,8 +24,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.ImmutableMap;
 import com.nimbusds.jose.JOSEException;
@@ -36,7 +37,7 @@ import com.nimbusds.jose.jwk.JWK;
  * Builder Symmetric Signing Service
  */
 public class SymmetricSigningAndValidationServiceBuilder {
-	final static Logger logger = Logger.getLogger(SymmetricSigningAndValidationServiceBuilder.class);
+	final static Logger _logger = LoggerFactory.getLogger(SymmetricSigningAndValidationServiceBuilder.class);
 	public static final String SYMMETRIC_KEY = "SYMMETRIC-KEY";
 	/**
 	 * 
@@ -46,10 +47,10 @@ public class SymmetricSigningAndValidationServiceBuilder {
 	}
 	
 	public JwtSigningAndValidationService serviceBuilder(String sharedSecret){
-		logger.debug("shared Secret : "+sharedSecret);
-		logger.debug("Symmetric Id : "+SYMMETRIC_KEY);
+		_logger.debug("shared Secret : {}" , sharedSecret);
+		_logger.debug("Symmetric Id : {}" , SYMMETRIC_KEY);
 		if (sharedSecret == null) {
-			logger.error("Couldn't create symmetric SigningAndValidation");
+			_logger.error("Couldn't create symmetric SigningAndValidation");
 			return null;
 		}
 
