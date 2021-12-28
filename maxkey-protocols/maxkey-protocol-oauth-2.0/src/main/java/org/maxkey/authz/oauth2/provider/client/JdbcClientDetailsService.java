@@ -70,7 +70,8 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
             + "AUTHORIZED_GRANT_TYPES, WEB_SERVER_REDIRECT_URI, AUTHORITIES, ACCESS_TOKEN_VALIDITY, "
             + "REFRESH_TOKEN_VALIDITY, ADDITIONAL_INFORMATION, AUTOAPPROVE, APPROVALPROMPT , "
             + "IDTOKENSIGNINGALGORITHM, IDTOKENENCRYPTEDALGORITHM, IDTOKENENCRYPTIONMETHOD, "
-            + "USERINFOSIGNINGALGORITHM, USERINFOCRYPTEDALGORITHM, USERINFOENCRYPTIONMETHOD, JWKSURI, PKCE, PROTOCOL";
+            + "USERINFOSIGNINGALGORITHM, USERINFOCRYPTEDALGORITHM, USERINFOENCRYPTIONMETHOD,"
+            +" JWKSURI, PKCE, PROTOCOL , INSTID ";
 
     private static final String CLIENT_FIELDS = "client_secret, " + CLIENT_FIELDS_FOR_UPDATE;
 
@@ -82,7 +83,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
     private static final String DEFAULT_SELECT_STATEMENT = BASE_FIND_STATEMENT + " where client_id = ?";
 
     private static final String DEFAULT_INSERT_STATEMENT = "insert into mxk_apps_oauth_client_details (" + CLIENT_FIELDS
-            + ", client_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ", client_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     private static final String DEFAULT_UPDATE_STATEMENT = "update mxk_apps_oauth_client_details " + "set "
             + CLIENT_FIELDS_FOR_UPDATE.replaceAll(", ", "=?, ") + "=? where client_id = ?";
@@ -211,7 +212,8 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
                 clientDetails.getIdTokenEncryptedAlgorithm(), clientDetails.getIdTokenEncryptionMethod(),
                 clientDetails.getUserInfoSigningAlgorithm(), clientDetails.getUserInfoEncryptedAlgorithm(),
                 clientDetails.getUserInfoEncryptionMethod(), clientDetails.getJwksUri(), 
-                clientDetails.getPkce(), clientDetails.getProtocol(),
+                clientDetails.getPkce(), clientDetails.getProtocol(),clientDetails.getInstId(),
+                
                 clientDetails.getClientId()
                 
             };
@@ -299,6 +301,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
             details.setApprovalPrompt(rs.getString("APPROVALPROMPT"));
             details.setPkce(rs.getString("PKCE"));
             details.setProtocol(rs.getString("PROTOCOL"));
+            details.setInstId(rs.getString("INSTID"));
             String json = rs.getString(10);
             if (json != null) {
                 try {

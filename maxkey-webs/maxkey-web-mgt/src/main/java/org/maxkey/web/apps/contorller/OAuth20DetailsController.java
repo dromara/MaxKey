@@ -73,6 +73,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
 		oauth20Details.setInstId(WebContext.getUserInfo().getInstId());
+		
 		oauth20JdbcClientDetailsService.addClientDetails(oauth20Details.clientDetailsRowMapper());
 		if (appsService.insertApp(oauth20Details)) {
 			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
