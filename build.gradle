@@ -196,8 +196,9 @@ subprojects {
          implementation  group: 'org.apache.xmlbeans', name: 'xmlbeans', version:  "${xmlbeansVersion}"
          implementation  group: 'org.apache.commons', name: 'commons-compress', version: "${commonscompressVersion}"
          implementation  group: 'org.apache.poi', name: 'poi', version: "${poiVersion}"
+         implementation  group: 'org.apache.poi', name: 'poi-excelant', version: "${poiVersion}"
          implementation  group: 'org.apache.poi', name: 'poi-ooxml', version: "${poiVersion}"
-         implementation  group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: "${poiVersion}"
+         implementation  group: 'org.apache.poi', name: 'poi-ooxml-full', version: "${poiVersion}"
          implementation  group: 'org.apache.poi', name: 'poi-scratchpad', version: "${poiVersion}"
          //implementation  group: 'org.apache.commons', name: 'not-yet-commons-ssl', version: "${notyetcommonssslVersion}"
          //tomcat embed Core Tomcat implementation
