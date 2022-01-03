@@ -2,7 +2,7 @@
 <Configuration status="INFO"  monitorInterval="300">  
     <Appenders>  
         <Console name="consolePrint" target="SYSTEM_OUT">  
-            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss,SSS} %-5level [%t] %logger{36}:%L - %msg%n" />  
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS} %-5level [%t] %logger{36}:%L - %msg%n" />  
         </Console>
    
 		<!-- 输出到文件，按天或者超过128MB分割  每天进行归档yyyy-MM-dd -->
