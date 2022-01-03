@@ -280,7 +280,7 @@ public class OpenIdConnectUserInfoEndpoint {
 
 	public  UserInfo queryUserInfo(String userId){
 		_logger.debug("userId : "+userId);
-		UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(userId);
+		UserInfo userInfo = (UserInfo) userInfoService.findByUsername(userId);
 		return userInfo;
 	}
 

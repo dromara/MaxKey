@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.maxkey.persistence.mapper.UserInfoMapper">
-	
-	<select id="loadByUsername" parameterType="string" resultType="UserInfo">
-    	select 
-			*
-    	from
-			mxk_userinfo
-		where	username = #{value}
-    </select>
     
 	<select id="queryPageResults" parameterType="UserInfo" resultType="UserInfo">
 		select
@@ -70,7 +62,7 @@
 		order by sortorder,id 
 	</select>
 	
-    <update id="locked" parameterType="UserInfo" >
+    <update id="updateLocked" parameterType="UserInfo" >
     	update mxk_userinfo set
     		<if test="isLocked != null">
     		islocked		=	#{isLocked},
@@ -80,7 +72,7 @@
 			id	=	#{id}
     </update>
     
-    <update id="lockout" parameterType="UserInfo" >
+    <update id="updateLockout" parameterType="UserInfo" >
     	update mxk_userinfo set
     		<if test="isLocked != null">
     		islocked		=	#{isLocked},
@@ -92,7 +84,7 @@
 			id	=	#{id}
     </update>
     	
-	<update id="changePassword" parameterType="UserInfo" >
+	<update id="updatePassword" parameterType="UserInfo" >
     	update mxk_userinfo set
     	<if test="password != null">
     		password			=	#{password},
@@ -104,7 +96,7 @@
 			id	=	#{id}
     </update>
     
-    <update id="changeSharedSecret" parameterType="UserInfo" >
+    <update id="updateSharedSecret" parameterType="UserInfo" >
     	update mxk_userinfo set
     		<if test="sharedSecret != null">
     		sharedsecret		=	#{sharedSecret},
@@ -115,7 +107,7 @@
 			id	=	#{id}
     </update>
     
-    <update id="changeAppLoginPassword" parameterType="UserInfo" >
+    <update id="updateAppLoginPassword" parameterType="UserInfo" >
     	update mxk_userinfo set
     		<if test="appLoginPassword != null">
     		apploginpassword		=	#{appLoginPassword},
@@ -135,7 +127,7 @@
 			id	=	#{id}
     </update>
     
-    <update id="changePasswordQuestion" parameterType="UserInfo" >
+    <update id="updatePasswordQuestion" parameterType="UserInfo" >
     	update mxk_userinfo set
     		<if test="passwordAnswer != null">
     		passwordquestion	=	#{passwordQuestion},
@@ -146,7 +138,7 @@
 			id	=	#{id}
     </update>
 	
-	<update id="changeAuthnType" parameterType="UserInfo" >
+	<update id="updateAuthnType" parameterType="UserInfo" >
     	update mxk_userinfo set
     		<if test="authnType != null">
     		authntype	=	#{authnType},
@@ -156,7 +148,7 @@
 			id	=	#{id}
     </update>
     
-    <update id="changeEmail" parameterType="UserInfo" >
+    <update id="updateEmail" parameterType="UserInfo" >
     	update mxk_userinfo set
     		<if test="email != null">
     		email	=	#{email},
@@ -172,7 +164,7 @@
 			id	=	#{id}
     </update>
     
-    <update id="changeMobile" parameterType="UserInfo" >
+    <update id="updateMobile" parameterType="UserInfo" >
     	update mxk_userinfo set
     		<if test="mobile != null">
     		mobile			=	#{mobile},
@@ -184,13 +176,6 @@
 		where 
 			id	=	#{id}
     </update>
-    
-    <update id="logisticBatchDelete" parameterType="java.util.List">
-    	update mxk_userinfo set status='2' where id in
-    		<foreach item="item" collection="list" open="(" separator="," close=")">
-				#{item}
-    		</foreach>
-	</update>
 	
     <update id="updateProfile" parameterType="UserInfo" >
         update mxk_userinfo set
@@ -248,7 +233,7 @@
             id  =   #{id}
     </update>
  
-    <select id="loadDeptsByUserId" parameterType="string" resultType="Organizations">
+    <select id="findDeptsByUserId" parameterType="string" resultType="Organizations">
         select o.* , 1 isPrimary from mxk_organizations o,mxk_userinfo u 
         where   o.instid = #{instId} 
             and u.instid = #{instId} 
@@ -264,7 +249,7 @@
             and ua.userid=#{value}
     </select>
     
-    <select id="loadAdjointsByUserId" parameterType="string" resultType="UserInfoAdjoint">
+    <select id="findAdjointsByUserId" parameterType="string" resultType="UserInfoAdjoint">
         select
             *
         from    mxk_userinfo_adjunct

@@ -78,7 +78,7 @@ public class SessionListenerAdapter implements HttpSessionListener {
             init();
             UserInfo userInfo = (UserInfo)session.getAttribute(WebConstants.CURRENT_USER);
             userInfo.setLastLogoffTime(DateUtils.formatDateTime(new Date()));
-            loginService.setLastLogoffInfo(userInfo);
+            loginService.updateLastLogoff(userInfo);
             loginHistoryService.logoff(userInfo.getLastLogoffTime(), sessionIdAttribute.toString());
             
             _logger.debug(

@@ -98,7 +98,7 @@ public class ForgotPasswordContorller {
             	emailMobile =emailMobile + "@" + emailConfig.getSmtpHost().substring(emailConfig.getSmtpHost().indexOf(".")+1);
             }
             
-            userInfo = userInfoService.queryUserInfoByEmailMobile(emailMobile);
+            userInfo = userInfoService.findByEmailMobile(emailMobile);
             
             if(null != userInfo) {
 	            if (forgotType == ForgotType.EMAIL ) {

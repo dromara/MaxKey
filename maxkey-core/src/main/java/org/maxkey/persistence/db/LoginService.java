@@ -54,11 +54,11 @@ public class LoginService {
 
     private static final String GROUPS_SELECT_STATEMENT = "select distinct g.id,g.name from mxk_userinfo u,mxk_groups g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
 
-    private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "select * from  mxk_userinfo where username = ?";
+    private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "select * from  mxk_userinfo where username = ? ";
     
-    private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE = "select * from  mxk_userinfo where username = ? or mobile = ? ";
+    private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE = "select * from  mxk_userinfo where (username = ? or mobile = ?)";
     
-    private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL = "select * from  mxk_userinfo where username = ? or mobile = ? or email = ? ";
+    private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL = "select * from  mxk_userinfo where (username = ? or mobile = ? or email = ?) ";
     
     private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.name from mxk_apps app,mxk_group_privileges gp,mxk_groups g  where app.id=gp.appid and gp.groupid=g.id and g.id in(%s)";
     
@@ -77,27 +77,14 @@ public class LoginService {
         this.jdbcTemplate=jdbcTemplate;
     }
     
-    public UserInfo loadUserInfo(String username, String password) {
-    	
+    public UserInfo find(String username, String password) {
         List<UserInfo> listUserInfo = null ;
         if( LOGIN_ATTRIBUTE_TYPE == 1) {
-	        listUserInfo = jdbcTemplate.query(
-	        			DEFAULT_USERINFO_SELECT_STATEMENT, 
-	        			new UserInfoRowMapper(),
-	        			username
-	        		);
+        	listUserInfo = findByUsername(username,password);
         }else if( LOGIN_ATTRIBUTE_TYPE == 2) {
-        	 listUserInfo = jdbcTemplate.query(
-        			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE, 
-	        			new UserInfoRowMapper(),
-	        			username,username
-	        		);
+        	 listUserInfo = findByUsernameOrMobile(username,password);
         }else if( LOGIN_ATTRIBUTE_TYPE == 3) {
-        	 listUserInfo = jdbcTemplate.query(
-        			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL, 
-	        			new UserInfoRowMapper(),
-	        			username,username,username
-	        		);
+        	 listUserInfo = findByUsernameOrMobileOrEmail(username,password);
         }
         
         UserInfo userInfo = null;
@@ -108,6 +95,29 @@ public class LoginService {
         return userInfo;
     }
     
+    public List<UserInfo> findByUsername(String username, String password) {
+    	return jdbcTemplate.query(
+    			DEFAULT_USERINFO_SELECT_STATEMENT, 
+    			new UserInfoRowMapper(),
+    			username
+    		);
+    }
+    
+    public List<UserInfo> findByUsernameOrMobile(String username, String password) {
+    	return jdbcTemplate.query(
+			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE, 
+    			new UserInfoRowMapper(),
+    			username,username
+    		);
+    }
+    
+    public List<UserInfo> findByUsernameOrMobileOrEmail(String username, String password) {
+    	return jdbcTemplate.query(
+			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL, 
+    			new UserInfoRowMapper(),
+    			username,username,username
+    		);
+    }
     
 
     /**
@@ -115,7 +125,7 @@ public class LoginService {
      * 
      * @param userInfo
      */
-    public void lockUser(UserInfo userInfo) {
+    public void updateLock(UserInfo userInfo) {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                 jdbcTemplate.update(LOCK_USER_UPDATE_STATEMENT,
@@ -133,7 +143,7 @@ public class LoginService {
      * 
      * @param userInfo
      */
-    public void unlockUser(UserInfo userInfo) {
+    public void updateUnlock(UserInfo userInfo) {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                 jdbcTemplate.update(UNLOCK_USER_UPDATE_STATEMENT,
@@ -151,7 +161,7 @@ public class LoginService {
      * 
      * @param userInfo
      */
-    public void resetBadPasswordCountAndLockout(UserInfo userInfo) {
+    public void updateLockout(UserInfo userInfo) {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                 jdbcTemplate.update(BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT,
@@ -169,7 +179,7 @@ public class LoginService {
      * 
      * @param userInfo
      */
-    public void setBadPasswordCount(UserInfo userInfo) {
+    public void updateBadPasswordCount(UserInfo userInfo) {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                 int badPasswordCount = userInfo.getBadPasswordCount() + 1;
@@ -194,7 +204,7 @@ public class LoginService {
                 String.format(DEFAULT_MYAPPS_SELECT_STATEMENT, grantedAuthorityString), 
                 new RowMapper<GrantedAuthority>() {
             public GrantedAuthority mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new SimpleGrantedAuthority(rs.getString("ID"));
+                return new SimpleGrantedAuthority(rs.getString("id"));
             }
         });
 
@@ -205,7 +215,7 @@ public class LoginService {
     public List<Groups> queryGroups(UserInfo userInfo) {
         List<Groups> listGroups = jdbcTemplate.query(GROUPS_SELECT_STATEMENT, new RowMapper<Groups>() {
             public Groups mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Groups group = new Groups(rs.getString("ID"), rs.getString("NAME"), 0);
+                Groups group = new Groups(rs.getString("id"), rs.getString("name"), 0);
 
                 return group;
             }
@@ -239,128 +249,131 @@ public class LoginService {
     }
     
     
-    public void setLastLoginInfo(UserInfo userInfo) {
+    public void updateLastLogin(UserInfo userInfo) {
         jdbcTemplate.update(LOGIN_USERINFO_UPDATE_STATEMENT,
-                new Object[] { userInfo.getLastLoginTime(), userInfo.getLastLoginIp(), userInfo.getLoginCount() + 1, userInfo.getId() },
+                new Object[] { 
+                				userInfo.getLastLoginTime(), 
+                				userInfo.getLastLoginIp(), 
+                				userInfo.getLoginCount() + 1, 
+                				userInfo.getId() 
+                			},
                 new int[] { Types.VARCHAR, Types.VARCHAR, Types.INTEGER, Types.VARCHAR });
     }
     
-    
-    public void setLastLogoffInfo(UserInfo userInfo) {
-        jdbcTemplate.update(LOGOUT_USERINFO_UPDATE_STATEMENT, new Object[] { userInfo.getLastLogoffTime(), userInfo.getId() },
-                new int[] { Types.VARCHAR, Types.VARCHAR });
-   
+    public void updateLastLogoff(UserInfo userInfo) {
+        jdbcTemplate.update(	LOGOUT_USERINFO_UPDATE_STATEMENT, 
+        		new Object[] { 	userInfo.getLastLogoffTime(), userInfo.getId() },
+                new int[] { 	Types.VARCHAR, Types.VARCHAR });
     }
     
     public class UserInfoRowMapper implements RowMapper<UserInfo> {
-
         @Override
         public UserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             UserInfo userInfo = new UserInfo();
-            userInfo.setId(rs.getString("ID"));
-            userInfo.setUsername(rs.getString("USERNAME"));
-            userInfo.setPassword(rs.getString("PASSWORD"));
-            userInfo.setSharedSecret(rs.getString("SHAREDSECRET"));
-            userInfo.setSharedCounter(rs.getString("SHAREDCOUNTER"));
-            userInfo.setDecipherable(rs.getString("DECIPHERABLE"));
-            userInfo.setWindowsAccount(rs.getString("WINDOWSACCOUNT"));
-            userInfo.setUserType(rs.getString("USERTYPE"));
+            userInfo.setId(rs.getString("id"));
+            userInfo.setUsername(rs.getString("username"));
+            userInfo.setPassword(rs.getString("password"));
+            userInfo.setSharedSecret(rs.getString("sharedsecret"));
+            userInfo.setSharedCounter(rs.getString("sharedcounter"));
+            userInfo.setDecipherable(rs.getString("decipherable"));
+            userInfo.setWindowsAccount(rs.getString("windowsaccount"));
+            userInfo.setUserType(rs.getString("usertype"));
 
-            userInfo.setDisplayName(rs.getString("DISPLAYNAME"));
-            userInfo.setNickName(rs.getString("NICKNAME"));
-            userInfo.setNameZhSpell(rs.getString("NAMEZHSPELL"));// nameZHSpell
-            userInfo.setNameZhShortSpell(rs.getString("NAMEZHSHORTSPELL"));// nameZHSpell
-            userInfo.setGivenName(rs.getString("GIVENNAME"));
-            userInfo.setMiddleName(rs.getString("MIDDLENAME"));
-            userInfo.setFamilyName(rs.getString("FAMILYNAME"));
-            userInfo.setHonorificPrefix(rs.getString("HONORIFICPREFIX"));
-            userInfo.setHonorificSuffix(rs.getString("HONORIFICSUFFIX"));
-            userInfo.setFormattedName(rs.getString("FORMATTEDNAME"));
+            userInfo.setDisplayName(rs.getString("displayname"));
+            userInfo.setNickName(rs.getString("nickname"));
+            userInfo.setNameZhSpell(rs.getString("namezhspell"));// nameZHSpell
+            userInfo.setNameZhShortSpell(rs.getString("namezhshortspell"));// nameZHSpell
+            userInfo.setGivenName(rs.getString("givenname"));
+            userInfo.setMiddleName(rs.getString("middlename"));
+            userInfo.setFamilyName(rs.getString("familyname"));
+            userInfo.setHonorificPrefix(rs.getString("honorificprefix"));
+            userInfo.setHonorificSuffix(rs.getString("honorificsuffix"));
+            userInfo.setFormattedName(rs.getString("formattedname"));
 
-            userInfo.setGender(rs.getInt("GENDER"));
-            userInfo.setBirthDate(rs.getString("BIRTHDATE"));
-            userInfo.setPicture(rs.getBytes("PICTURE"));
-            userInfo.setMarried(rs.getInt("MARRIED"));
-            userInfo.setIdType(rs.getInt("IDTYPE"));
-            userInfo.setIdCardNo(rs.getString("IDCARDNO"));
-            userInfo.setWebSite(rs.getString("WEBSITE"));
+            userInfo.setGender(rs.getInt("gender"));
+            userInfo.setBirthDate(rs.getString("birthdate"));
+            userInfo.setPicture(rs.getBytes("picture"));
+            userInfo.setMarried(rs.getInt("married"));
+            userInfo.setIdType(rs.getInt("idtype"));
+            userInfo.setIdCardNo(rs.getString("idcardno"));
+            userInfo.setWebSite(rs.getString("website"));
 
-            userInfo.setAuthnType(rs.getInt("AUTHNTYPE"));
-            userInfo.setMobile(rs.getString("MOBILE"));
-            userInfo.setMobileVerified(rs.getInt("MOBILEVERIFIED"));
-            userInfo.setEmail(rs.getString("EMAIL"));
-            userInfo.setEmailVerified(rs.getInt("EMAILVERIFIED"));
-            userInfo.setPasswordQuestion(rs.getString("PASSWORDQUESTION"));
-            userInfo.setPasswordAnswer(rs.getString("PASSWORDANSWER"));
+            userInfo.setAuthnType(rs.getInt("authntype"));
+            userInfo.setMobile(rs.getString("mobile"));
+            userInfo.setMobileVerified(rs.getInt("mobileverified"));
+            userInfo.setEmail(rs.getString("email"));
+            userInfo.setEmailVerified(rs.getInt("emailverified"));
+            userInfo.setPasswordQuestion(rs.getString("passwordquestion"));
+            userInfo.setPasswordAnswer(rs.getString("passwordanswer"));
 
-            userInfo.setAppLoginAuthnType(rs.getInt("APPLOGINAUTHNTYPE"));
-            userInfo.setAppLoginPassword(rs.getString("APPLOGINPASSWORD"));
-            userInfo.setProtectedApps(rs.getString("PROTECTEDAPPS"));
+            userInfo.setAppLoginAuthnType(rs.getInt("apploginauthntype"));
+            userInfo.setAppLoginPassword(rs.getString("apploginpassword"));
+            userInfo.setProtectedApps(rs.getString("protectedapps"));
 
-            userInfo.setPasswordLastSetTime(rs.getString("PASSWORDLASTSETTIME"));
-            userInfo.setPasswordSetType(rs.getInt("PASSWORDSETTYPE"));
-            userInfo.setBadPasswordCount(rs.getInt("BADPASSWORDCOUNT"));
-            userInfo.setBadPasswordTime(rs.getString("BADPASSWORDTIME"));
-            userInfo.setUnLockTime(rs.getString("UNLOCKTIME"));
-            userInfo.setIsLocked(rs.getInt("ISLOCKED"));
-            userInfo.setLastLoginTime(rs.getString("LASTLOGINTIME"));
-            userInfo.setLastLoginIp(rs.getString("LASTLOGINIP"));
-            userInfo.setLastLogoffTime(rs.getString("LASTLOGOFFTIME"));
-            userInfo.setLoginCount(rs.getInt("LOGINCOUNT"));
+            userInfo.setPasswordLastSetTime(rs.getString("passwordlastsettime"));
+            userInfo.setPasswordSetType(rs.getInt("passwordsettype"));
+            userInfo.setBadPasswordCount(rs.getInt("badpasswordcount"));
+            userInfo.setBadPasswordTime(rs.getString("badpasswordtime"));
+            userInfo.setUnLockTime(rs.getString("unlocktime"));
+            userInfo.setIsLocked(rs.getInt("islocked"));
+            userInfo.setLastLoginTime(rs.getString("lastlogintime"));
+            userInfo.setLastLoginIp(rs.getString("lastloginip"));
+            userInfo.setLastLogoffTime(rs.getString("lastlogofftime"));
+            userInfo.setLoginCount(rs.getInt("logincount"));
 
-            userInfo.setTimeZone(rs.getString("TIMEZONE"));
-            userInfo.setLocale(rs.getString("LOCALE"));
-            userInfo.setPreferredLanguage(rs.getString("PREFERREDLANGUAGE"));
+            userInfo.setTimeZone(rs.getString("timezone"));
+            userInfo.setLocale(rs.getString("locale"));
+            userInfo.setPreferredLanguage(rs.getString("preferredlanguage"));
 
-            userInfo.setWorkEmail(rs.getString("WORKEMAIL"));
-            userInfo.setWorkPhoneNumber(rs.getString("WORKPHONENUMBER"));
-            userInfo.setWorkCountry(rs.getString("WORKCOUNTRY"));
-            userInfo.setWorkRegion(rs.getString("WORKREGION"));
-            userInfo.setWorkLocality(rs.getString("WORKLOCALITY"));
-            userInfo.setWorkStreetAddress(rs.getString("WORKSTREETADDRESS"));
-            userInfo.setWorkAddressFormatted(rs.getString("WORKADDRESSFORMATTED"));
-            userInfo.setWorkPostalCode(rs.getString("WORKPOSTALCODE"));
-            userInfo.setWorkFax(rs.getString("WORKFAX"));
+            userInfo.setWorkEmail(rs.getString("workemail"));
+            userInfo.setWorkPhoneNumber(rs.getString("workphonenumber"));
+            userInfo.setWorkCountry(rs.getString("workcountry"));
+            userInfo.setWorkRegion(rs.getString("workregion"));
+            userInfo.setWorkLocality(rs.getString("worklocality"));
+            userInfo.setWorkStreetAddress(rs.getString("workstreetaddress"));
+            userInfo.setWorkAddressFormatted(rs.getString("workaddressformatted"));
+            userInfo.setWorkPostalCode(rs.getString("workpostalcode"));
+            userInfo.setWorkFax(rs.getString("workfax"));
 
-            userInfo.setHomeEmail(rs.getString("HOMEEMAIL"));
-            userInfo.setHomePhoneNumber(rs.getString("HOMEPHONENUMBER"));
-            userInfo.setHomeCountry(rs.getString("HOMECOUNTRY"));
-            userInfo.setHomeRegion(rs.getString("HOMEREGION"));
-            userInfo.setHomeLocality(rs.getString("HOMELOCALITY"));
-            userInfo.setHomeStreetAddress(rs.getString("HOMESTREETADDRESS"));
-            userInfo.setHomeAddressFormatted(rs.getString("HOMEADDRESSFORMATTED"));
-            userInfo.setHomePostalCode(rs.getString("HOMEPOSTALCODE"));
-            userInfo.setHomeFax(rs.getString("HOMEFAX"));
+            userInfo.setHomeEmail(rs.getString("homeemail"));
+            userInfo.setHomePhoneNumber(rs.getString("homephonenumber"));
+            userInfo.setHomeCountry(rs.getString("homecountry"));
+            userInfo.setHomeRegion(rs.getString("homeregion"));
+            userInfo.setHomeLocality(rs.getString("homelocality"));
+            userInfo.setHomeStreetAddress(rs.getString("homestreetaddress"));
+            userInfo.setHomeAddressFormatted(rs.getString("homeaddressformatted"));
+            userInfo.setHomePostalCode(rs.getString("homepostalcode"));
+            userInfo.setHomeFax(rs.getString("homefax"));
 
-            userInfo.setEmployeeNumber(rs.getString("EMPLOYEENUMBER"));
-            userInfo.setDivision(rs.getString("DIVISION"));
-            userInfo.setCostCenter(rs.getString("COSTCENTER"));
-            userInfo.setOrganization(rs.getString("ORGANIZATION"));
-            userInfo.setDepartmentId(rs.getString("DEPARTMENTID"));
-            userInfo.setDepartment(rs.getString("DEPARTMENT"));
-            userInfo.setJobTitle(rs.getString("JOBTITLE"));
-            userInfo.setJobLevel(rs.getString("JOBLEVEL"));
-            userInfo.setManagerId(rs.getString("MANAGERID"));
-            userInfo.setManager(rs.getString("MANAGER"));
-            userInfo.setAssistantId(rs.getString("ASSISTANTID"));
-            userInfo.setAssistant(rs.getString("ASSISTANT"));
-            userInfo.setEntryDate(rs.getString("ENTRYDATE"));//
-            userInfo.setQuitDate(rs.getString("QUITDATE"));
-            userInfo.setStartWorkDate(rs.getString("STARTWORKDATE"));// STARTWORKDATE
+            userInfo.setEmployeeNumber(rs.getString("employeenumber"));
+            userInfo.setDivision(rs.getString("division"));
+            userInfo.setCostCenter(rs.getString("costcenter"));
+            userInfo.setOrganization(rs.getString("organization"));
+            userInfo.setDepartmentId(rs.getString("departmentid"));
+            userInfo.setDepartment(rs.getString("department"));
+            userInfo.setJobTitle(rs.getString("jobtitle"));
+            userInfo.setJobLevel(rs.getString("joblevel"));
+            userInfo.setManagerId(rs.getString("managerid"));
+            userInfo.setManager(rs.getString("manager"));
+            userInfo.setAssistantId(rs.getString("assistantid"));
+            userInfo.setAssistant(rs.getString("assistant"));
+            userInfo.setEntryDate(rs.getString("entrydate"));//
+            userInfo.setQuitDate(rs.getString("quitdate"));
+            userInfo.setStartWorkDate(rs.getString("startworkdate"));// STARTWORKDATE
 
-            userInfo.setExtraAttribute(rs.getString("EXTRAATTRIBUTE"));
+            userInfo.setExtraAttribute(rs.getString("extraattribute"));
 
-            userInfo.setCreatedBy(rs.getString("CREATEDBY"));
-            userInfo.setCreatedDate(rs.getString("CREATEDDATE"));
-            userInfo.setModifiedBy(rs.getString("MODIFIEDBY"));
-            userInfo.setModifiedDate(rs.getString("MODIFIEDDATE"));
+            userInfo.setCreatedBy(rs.getString("createdby"));
+            userInfo.setCreatedDate(rs.getString("createddate"));
+            userInfo.setModifiedBy(rs.getString("modifiedby"));
+            userInfo.setModifiedDate(rs.getString("modifieddate"));
 
-            userInfo.setStatus(rs.getInt("STATUS"));
-            userInfo.setGridList(rs.getInt("GRIDLIST"));
-            userInfo.setDescription(rs.getString("DESCRIPTION"));
-            userInfo.setTheme(rs.getString("THEME"));
-            userInfo.setInstId(rs.getString("INSTID"));
+            userInfo.setStatus(rs.getInt("status"));
+            userInfo.setGridList(rs.getInt("gridlist"));
+            userInfo.setDescription(rs.getString("description"));
+            userInfo.setTheme(rs.getString("theme"));
+            userInfo.setInstId(rs.getString("instid"));
             if (userInfo.getTheme() == null || userInfo.getTheme().equalsIgnoreCase("")) {
                 userInfo.setTheme("default");
             }

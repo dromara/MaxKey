@@ -220,7 +220,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
-				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
+				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(principal);
 				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);
 			}
 		}else{
@@ -330,7 +330,7 @@ Response on ticket validation failure:
 			
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
-				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
+				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(principal);
 				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);
 			}
 		}else{

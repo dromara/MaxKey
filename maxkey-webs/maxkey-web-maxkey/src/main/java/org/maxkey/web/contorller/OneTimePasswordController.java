@@ -90,7 +90,7 @@ public class OneTimePasswordController {
         String sharedSecret = Base32Utils.encode(byteSharedSecret);
         sharedSecret = passwordReciprocal.encode(sharedSecret);
         userInfo.setSharedSecret(sharedSecret);
-        userInfoService.changeSharedSecret(userInfo);
+        userInfoService.updateSharedSecret(userInfo);
         WebContext.setUserInfo(userInfo);
         return WebContext.redirect("/safe/otp/timebased");
     }
@@ -124,7 +124,7 @@ public class OneTimePasswordController {
         sharedSecret = passwordReciprocal.encode(sharedSecret);
         userInfo.setSharedSecret(sharedSecret);
         userInfo.setSharedCounter("0");
-        userInfoService.changeSharedSecret(userInfo);
+        userInfoService.updateSharedSecret(userInfo);
         WebContext.setUserInfo(userInfo);
         return WebContext.redirect("/safe/otp/counterbased");
     }
@@ -156,7 +156,7 @@ public class OneTimePasswordController {
         sharedSecret = passwordReciprocal.encode(sharedSecret);
         userInfo.setSharedSecret(sharedSecret);
         userInfo.setSharedCounter("0");
-        userInfoService.changeSharedSecret(userInfo);
+        userInfoService.updateSharedSecret(userInfo);
         WebContext.setUserInfo(userInfo);
         return WebContext.redirect("/safe/otp/hotp");
     }

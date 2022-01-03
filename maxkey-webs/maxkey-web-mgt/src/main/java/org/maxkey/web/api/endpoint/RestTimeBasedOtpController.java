@@ -49,7 +49,7 @@ public class RestTimeBasedOtpController {
     public boolean getUser(@RequestParam String username,
     							 @RequestParam String token) {
     	
-    	UserInfo validUserInfo = userInfoService.loadByUsername(username);
+    	UserInfo validUserInfo = userInfoService.findByUsername(username);
     	if(validUserInfo != null) {
     		if(timeBasedOtpAuthn.validate(validUserInfo, token)) {
     			return true;

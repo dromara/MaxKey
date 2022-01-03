@@ -46,7 +46,7 @@ public class ProfileController {
     @RequestMapping(value = { "/myProfile" })
     public ModelAndView forwardBasic() {
         ModelAndView modelAndView = new ModelAndView("profile/myProfile");
-        UserInfo userInfo = userInfoService.loadByUsername(WebContext.getUserInfo().getUsername());
+        UserInfo userInfo = userInfoService.findByUsername(WebContext.getUserInfo().getUsername());
         WebContext.getSession().setAttribute(userInfo.getId(), userInfo.getPicture());
 
         //  HashMap<String,Object>extraAttributeMap=new HashMap<String,Object>();

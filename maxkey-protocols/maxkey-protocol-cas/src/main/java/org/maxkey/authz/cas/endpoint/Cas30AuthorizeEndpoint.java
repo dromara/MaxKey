@@ -103,7 +103,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
-				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
+				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(principal);
 				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);
 			}
 		}else{
@@ -177,7 +177,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			
 			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
-				UserInfo userInfo = (UserInfo) userInfoService.loadByUsername(principal);
+				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(principal);
 				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);
 			}
 		}else{

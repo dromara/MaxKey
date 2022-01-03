@@ -86,7 +86,7 @@ public abstract class AbstractAuthenticationRealm {
     }
 
     public UserInfo loadUserInfo(String username, String password) {
-        return loginService.loadUserInfo(username, password);
+        return loginService.find(username, password);
     }
 
     public abstract boolean passwordMatches(UserInfo userInfo, String password);
@@ -163,7 +163,7 @@ public abstract class AbstractAuthenticationRealm {
         
         loginHistoryService.login(historyLogin);
         
-        loginService.setLastLoginInfo(userInfo);
+        loginService.updateLastLogin(userInfo);
 
         return true;
     }
@@ -185,7 +185,7 @@ public abstract class AbstractAuthenticationRealm {
                 loginHistoryService.logoff(userInfo.getLastLogoffTime(), sessionIdAttribute.toString());
             }
             
-            loginService.setLastLogoffInfo(userInfo);
+            loginService.updateLastLogoff(userInfo);
             
             _logger.debug("Session " + WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID) + ", user "
                     + userInfo.getUsername() + " Logout, datetime " + userInfo.getLastLogoffTime() + " .");

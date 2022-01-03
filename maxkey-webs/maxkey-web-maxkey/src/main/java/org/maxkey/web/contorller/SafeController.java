@@ -137,7 +137,7 @@ public class SafeController {
 		if(newPassword.equals(confirmPassword)){
 			if(StringUtils.isEmpty(userInfo.getAppLoginPassword())||userInfo.getAppLoginPassword().equals(PasswordReciprocal.getInstance().encode(oldPassword))){
 				userInfo.setAppLoginPassword(PasswordReciprocal.getInstance().encode(newPassword));
-				boolean change= userInfoService.changeAppLoginPassword(userInfo);
+				boolean change= userInfoService.updateAppLoginPassword(userInfo);
 				_logger.debug(""+change);
 				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.prompt);
 			}
@@ -168,17 +168,17 @@ public class SafeController {
 			@RequestParam("theme") String theme) {
 		UserInfo userInfo =WebContext.getUserInfo();
 		userInfo.setAuthnType(Integer.parseInt(authnType));
-		userInfoService.changeAuthnType(userInfo);
+		userInfoService.updateAuthnType(userInfo);
 		
 		userInfo.setMobile(mobile);
-		userInfoService.changeMobile(userInfo);
+		userInfoService.updateMobile(userInfo);
 		
 		userInfo.setEmail(email);
 
         userInfo.setTheme(theme);
         WebContext.setCookie(response,null, WebConstants.THEME_COOKIE_NAME, theme, ConstantsTimeInterval.ONE_WEEK);
         
-		userInfoService.changeEmail(userInfo);
+		userInfoService.updateEmail(userInfo);
 		
 		
 		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);

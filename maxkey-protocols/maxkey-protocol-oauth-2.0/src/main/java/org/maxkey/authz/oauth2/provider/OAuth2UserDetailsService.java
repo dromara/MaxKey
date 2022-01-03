@@ -46,7 +46,7 @@ public class OAuth2UserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserInfo userInfo;
 		try {
-		    userInfo = loginService.loadUserInfo(username, "");
+		    userInfo = loginService.find(username, "");
 		} catch (NoSuchClientException e) {
 			throw new UsernameNotFoundException(e.getMessage(), e);
 		}

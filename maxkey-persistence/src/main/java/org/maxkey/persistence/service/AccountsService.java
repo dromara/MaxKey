@@ -72,7 +72,7 @@ public class AccountsService  extends JpaBaseService<Accounts>{
 	 public boolean insert(Accounts account) {
 	     if (super.insert(account)) {
 	            if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
-	                UserInfo loadUserInfo = userInfoService.loadUserRelated(account.getUserId());
+	                UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
 	                account.setUserInfo(loadUserInfo);
 	                OrganizationsCast cast = new OrganizationsCast();
                     cast.setProvider(account.getAppId());
@@ -92,7 +92,7 @@ public class AccountsService  extends JpaBaseService<Accounts>{
    public boolean update(Accounts account) {
          if (super.update(account)) {
                 if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
-                    UserInfo loadUserInfo = userInfoService.loadUserRelated(account.getUserId());
+                    UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
                     account.setUserInfo(loadUserInfo);
                     OrganizationsCast cast = new OrganizationsCast();
                     cast.setProvider(account.getAppId());
@@ -114,7 +114,7 @@ public class AccountsService  extends JpaBaseService<Accounts>{
        if (super.remove(id)) {
               UserInfo loadUserInfo = null;
               if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
-                  loadUserInfo = userInfoService.loadUserRelated(account.getUserId());
+                  loadUserInfo = userInfoService.findUserRelated(account.getUserId());
                   account.setUserInfo(loadUserInfo);
                   kafkaPersistService.send(
                           KafkaIdentityTopic.ACCOUNT_TOPIC, 

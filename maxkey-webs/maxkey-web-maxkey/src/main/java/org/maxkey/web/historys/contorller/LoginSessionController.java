@@ -108,7 +108,7 @@ public class LoginSessionController {
                 }
                 UserInfo userInfo = WebContext.getUserInfo();
                 String lastLogoffTime = DateUtils.formatDateTime(new Date());
-                loginService.setLastLogoffInfo(userInfo);
+                loginService.updateLastLogoff(userInfo);
                 loginHistoryService.logoff(lastLogoffTime, sessionId);
                 onlineTicketServices.remove("OT-" + sessionId);
             }

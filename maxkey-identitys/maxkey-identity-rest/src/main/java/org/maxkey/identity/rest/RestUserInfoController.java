@@ -58,7 +58,7 @@ public class RestUserInfoController {
     public UserInfo create(@RequestBody  UserInfo userInfo,
                                                       @RequestParam(required = false) String attributes,
                                                       UriComponentsBuilder builder) throws IOException {
-        UserInfo loadUserInfo = userInfoService.loadByUsername(userInfo.getUsername());
+        UserInfo loadUserInfo = userInfoService.findByUsername(userInfo.getUsername());
         if(loadUserInfo != null) {
             userInfoService.update(userInfo);
         }else {
@@ -73,7 +73,7 @@ public class RestUserInfoController {
                                                       @RequestParam(required = true) String username,
                                                       @RequestParam(required = true) String password,
                                                       UriComponentsBuilder builder) throws IOException {
-        UserInfo loadUserInfo = userInfoService.loadByUsername(username);
+        UserInfo loadUserInfo = userInfoService.findByUsername(username);
         if(loadUserInfo != null) {
         	UserInfo changePassword  = new UserInfo();
         	changePassword.setId(loadUserInfo.getId());
@@ -91,7 +91,7 @@ public class RestUserInfoController {
                                                        @RequestBody UserInfo userInfo,
                                                        @RequestParam(required = false) String attributes)
             throws IOException {
-        UserInfo loadUserInfo = userInfoService.loadByUsername(userInfo.getUsername());
+        UserInfo loadUserInfo = userInfoService.findByUsername(userInfo.getUsername());
         if(loadUserInfo != null) {
             userInfoService.update(userInfo);
         }else {
@@ -103,7 +103,6 @@ public class RestUserInfoController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
-        userInfoService.logisticDeleteAllByCid(id);
-       
+        userInfoService.logicDelete(id);
     }
 }

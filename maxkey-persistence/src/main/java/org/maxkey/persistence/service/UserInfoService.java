@@ -78,7 +78,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
         userInfo = passwordEncoder(userInfo);
         if (super.insert(userInfo)) {
             if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
-                UserInfo loadUserInfo = loadUserRelated(userInfo.getId());
+                UserInfo loadUserInfo = findUserRelated(userInfo.getId());
                 kafkaPersistService.send(
                         KafkaIdentityTopic.USERINFO_TOPIC, 
                         loadUserInfo,
@@ -95,7 +95,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
         userInfo = passwordEncoder(userInfo);
         if (super.update(userInfo)) {
             if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
-                UserInfo loadUserInfo = loadUserRelated(userInfo.getId());
+                UserInfo loadUserInfo = findUserRelated(userInfo.getId());
                 accountUpdate(loadUserInfo);
                 kafkaPersistService.send(
                         KafkaIdentityTopic.USERINFO_TOPIC, 
@@ -112,7 +112,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	public boolean delete(UserInfo userInfo) {
 	    UserInfo loadUserInfo = null;
 	    if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
-	        loadUserInfo = loadUserRelated(userInfo.getId());
+	        loadUserInfo = findUserRelated(userInfo.getId());
 	    }
 	    
 		if( super.delete(userInfo)){
@@ -142,10 +142,10 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
         }
     }
 
-	public UserInfo loadUserRelated(String userId) {
+	public UserInfo findUserRelated(String userId) {
 	    UserInfo loadUserInfo =this.get(userId);
-	    loadUserInfo.setDepts(getMapper().loadDeptsByUserId(userId));
-	    loadUserInfo.setAdjoints(getMapper().loadAdjointsByUserId(userId));
+	    loadUserInfo.setDepts(getMapper().findDeptsByUserId(userId));
+	    loadUserInfo.setAdjoints(getMapper().findAdjointsByUserId(userId));
 	    return loadUserInfo;
 	}
 	
@@ -176,28 +176,23 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		return false;
 	}
 
-	public UserInfo loadByUsername(String username) {
-		return getMapper().loadByUsername(username);
+	public UserInfo findByUsername(String username) {
+		return getMapper().findByUsername(username);
 	}
 	
-	public UserInfo loadByAppIdAndUsername(String appId,String username){
+    public UserInfo findByEmailMobile(String emailMobile) {
+        return getMapper().findByEmailMobile(emailMobile);
+    }
+	
+	public UserInfo findByAppIdAndUsername(String appId,String username){
 		try {
 			UserInfo userinfo = new UserInfo();
 			userinfo.setUsername(username);
-			return getMapper().loadByAppIdAndUsername(userinfo) ;
+			return getMapper().findByAppIdAndUsername(userinfo) ;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
-	}
-	
-
-	public void logisticDeleteAllByCid(String cid){
-		try {
-			 getMapper().logisticDeleteAllByCid(cid);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public UserInfo passwordEncoder(UserInfo userInfo) {
@@ -274,7 +269,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 
             changeUserInfo = passwordEncoder(changeUserInfo);
 
-            if (getMapper().changePassword(changeUserInfo) > 0) {
+            if (getMapper().updatePassword(changeUserInfo) > 0) {
                 changePasswordProvisioning(changeUserInfo);
                 return true;
             }
@@ -306,13 +301,13 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	    }
 	}
 	
-	public boolean changeAppLoginPassword(UserInfo userinfo) {
+	public boolean updateAppLoginPassword(UserInfo userinfo) {
 		try {
 			if(WebContext.getUserInfo() != null) {
 				userinfo.setModifiedBy(WebContext.getUserInfo().getId());
 			}
 			userinfo.setModifiedDate(DateUtils.getCurrentDateTimeAsString());
-			return getMapper().changeAppLoginPassword(userinfo) > 0;
+			return getMapper().updateAppLoginPassword(userinfo) > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -324,11 +319,11 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	 * 锁定用户：islock：1 用户解锁 2 用户锁定
 	 * @param userInfo
 	 */
-	public void locked(UserInfo userInfo) {
+	public void updateLocked(UserInfo userInfo) {
 		try {
 			if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
 				userInfo.setIsLocked(ConstantsStatus.STOP);
-				getMapper().locked(userInfo);
+				getMapper().updateLocked(userInfo);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -339,12 +334,12 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	 * 用户登录成功后，重置错误密码次数和解锁用户
 	 * @param userInfo
 	 */
-	public void unlock(UserInfo userInfo) {
+	public void updateLockout(UserInfo userInfo) {
 		try {
 			if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
 				userInfo.setIsLocked(ConstantsStatus.START);
 				userInfo.setBadPasswordCount(0);
-				getMapper().unlock(userInfo);
+				getMapper().updateLockout(userInfo);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -367,34 +362,27 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		}
 	}
 
- 
-	
-	public boolean changeSharedSecret(UserInfo userInfo){
-		return getMapper().changeSharedSecret(userInfo)>0;
+	public boolean updateSharedSecret(UserInfo userInfo){
+		return getMapper().updateSharedSecret(userInfo)>0;
 	}
 	
-	public boolean changePasswordQuestion(UserInfo userInfo){
-		return getMapper().changePasswordQuestion(userInfo)>0;
+	public boolean updatePasswordQuestion(UserInfo userInfo){
+		return getMapper().updatePasswordQuestion(userInfo)>0;
 	}
 	
-	public boolean changeAuthnType(UserInfo userInfo){
-		return getMapper().changeAuthnType(userInfo)>0;
+	public boolean updateAuthnType(UserInfo userInfo){
+		return getMapper().updateAuthnType(userInfo)>0;
 	}
 	
-	public boolean changeEmail(UserInfo userInfo){
-		return getMapper().changeEmail(userInfo)>0;
+	public boolean updateEmail(UserInfo userInfo){
+		return getMapper().updateEmail(userInfo)>0;
 	}
 	
-	public boolean changeMobile(UserInfo userInfo){
-		return getMapper().changeMobile(userInfo)>0;
+	public boolean updateMobile(UserInfo userInfo){
+		return getMapper().updateMobile(userInfo)>0;
 	}
-	
-    public UserInfo queryUserInfoByEmailMobile(String emailMobile) {
-        return getMapper().queryUserInfoByEmailMobile(emailMobile);
-    }
     
     public int updateProfile(UserInfo userInfo){
-        
         return getMapper().updateProfile(userInfo);
     }
 

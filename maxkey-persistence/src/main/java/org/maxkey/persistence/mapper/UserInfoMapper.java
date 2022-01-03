@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
+import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.entity.Organizations;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.UserInfoAdjoint;
@@ -34,44 +35,42 @@ import org.maxkey.entity.UserInfoAdjoint;
 public interface UserInfoMapper  extends IJpaBaseMapper<UserInfo>{
 	
 	//login query
+	public UserInfo findByAppIdAndUsername(UserInfo userInfo);
 	
-	public UserInfo loadByAppIdAndUsername(UserInfo userInfo);
+	@Select("select * from  mxk_userinfo where username = #{value} and status = " + ConstantsStatus.ACTIVE)
+	public UserInfo findByUsername(String username);
 	
-	public int logisticDeleteAllByCid(String cid);
+	@Select("select * from  mxk_userinfo where ( email = #{value} or mobile= #{value} ) and status = " + ConstantsStatus.ACTIVE)
+	public UserInfo findByEmailMobile(String emailMobile);
+	 
+	public List<Organizations> findDeptsByUserId(String userId);
 	
-	public UserInfo loadByUsername(String username);
+	public List<UserInfoAdjoint> findAdjointsByUserId(String userId);
 	
-	public void locked(UserInfo userInfo);
+	public void updateLocked(UserInfo userInfo);
 
-	public void unlock(UserInfo userInfo);
+	public void updateLockout(UserInfo userInfo);
 
 	public void updateBadPWDCount(UserInfo userInfo);
 	
-	public int changePassword(UserInfo userInfo);
+	public int 	updatePassword(UserInfo userInfo);
 	
-	public int changeAppLoginPassword(UserInfo userInfo);
+	public int 	updateAppLoginPassword(UserInfo userInfo);
 	
-	public int updateProtectedApps(UserInfo userInfo);
+	public int 	updateProtectedApps(UserInfo userInfo);
 	
-	public int changeSharedSecret(UserInfo userInfo);
+	public int 	updateSharedSecret(UserInfo userInfo);
 	
-	public int changePasswordQuestion(UserInfo userInfo);
+	public int 	updatePasswordQuestion(UserInfo userInfo);
 	
-	public int changeAuthnType(UserInfo userInfo);
+	public int	updateAuthnType(UserInfo userInfo);
 	
-	public int changeEmail(UserInfo userInfo);
+	public int 	updateEmail(UserInfo userInfo);
 	
-	public int changeMobile(UserInfo userInfo);
+	public int 	updateMobile(UserInfo userInfo);
 	
-	public int updateProfile(UserInfo userInfo);
+	public int 	updateProfile(UserInfo userInfo);
 	
-	public List<Organizations> loadDeptsByUserId(String userId);
-	
-	public List<UserInfoAdjoint> loadAdjointsByUserId(String userId);
-	   
-    @Select("select * from  mxk_userinfo where   email = #{value} or mobile= #{value}")
-    public UserInfo queryUserInfoByEmailMobile(String emailMobile);
-    
     @Update("update mxk_userinfo set gridlist =  #{gridList} where id = #{id}")
-	public int updateGridList(UserInfo userInfo) ;
+	public int 	updateGridList(UserInfo userInfo) ;
 }

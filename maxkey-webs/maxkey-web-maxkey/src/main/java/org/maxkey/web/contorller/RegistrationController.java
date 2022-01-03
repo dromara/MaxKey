@@ -201,12 +201,12 @@ public class RegistrationController {
  		if(!(StringUtils.isValidEmail(emailMobile)||StringUtils.isValidMobileNo(emailMobile))) {
  			return new Message(WebContext.getI18nValue("register.emailMobile.error"),"1");
  		}
- 		UserInfo temp=userInfoService.queryUserInfoByEmailMobile(emailMobile);
+ 		UserInfo temp=userInfoService.findByEmailMobile(emailMobile);
  		if(temp!=null) {
  			return new Message(WebContext.getI18nValue("register.emailMobile.exist"),"1");
  		}
  		
- 		temp=userInfoService.loadByUsername(userInfo.getUsername());
+ 		temp=userInfoService.findByUsername(userInfo.getUsername());
  		if(temp!=null) {
  			return new Message(WebContext.getI18nValue("register.user.error"),"1");
  		}
