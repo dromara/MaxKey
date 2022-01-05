@@ -20,29 +20,29 @@ package org.maxkey.persistence.service;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.entity.Registration;
+import org.maxkey.entity.Register;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.mapper.RegistrationMapper;
+import org.maxkey.persistence.mapper.RegisterMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RegistrationService  extends JpaBaseService<Registration>{
+public class RegisterService  extends JpaBaseService<Register>{
 
-	public RegistrationService() {
-		super(RegistrationMapper.class);
+	public RegisterService() {
+		super(RegisterMapper.class);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.connsec.db.service.BaseService#getMapper()
 	 */
 	@Override
-	public RegistrationMapper getMapper() {
-		return (RegistrationMapper)super.getMapper();
+	public RegisterMapper getMapper() {
+		return (RegisterMapper)super.getMapper();
 	}
 	
 	
-	public UserInfo queryUserInfoByEmail(String email){
-		List<UserInfo> listUserInfo=getMapper().queryUserInfoByEmail(email);
+	public UserInfo findByEmail(String email){
+		List<UserInfo> listUserInfo=getMapper().findByEmail(email);
 		return listUserInfo.size()>0?listUserInfo.get(0):null;
 	}
 	

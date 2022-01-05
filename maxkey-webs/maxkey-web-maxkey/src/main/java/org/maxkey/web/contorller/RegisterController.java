@@ -28,9 +28,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
-import org.maxkey.entity.Registration;
+import org.maxkey.entity.Register;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.service.RegistrationService;
+import org.maxkey.persistence.service.RegisterService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
@@ -43,8 +43,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,12 +54,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping(value={"/registration"})
-public class RegistrationController {
-	private static Logger _logger = LoggerFactory.getLogger(RegistrationController.class);
+@RequestMapping(value={"/signup"})
+public class RegisterController {
+	private static Logger _logger = LoggerFactory.getLogger(RegisterController.class);
 	
 	@Autowired
-	RegistrationService registrationService;
+	RegisterService registerService;
 	
 	@Autowired 
   	@Qualifier("applicationConfig")
@@ -73,29 +75,35 @@ public class RegistrationController {
 	
 	@RequestMapping(value={"/forward"})
 	public ModelAndView forward() {
-		_logger.debug("Registration  /registration/register.");
-		return  new ModelAndView("registration/register");
+		_logger.debug("register  /register/register.");
+		return  new ModelAndView("register/register");
+	}
+	
+	@RequestMapping(value={"/forward/email"})
+	public ModelAndView forwardEmail() {
+		_logger.debug("register  /register/register.");
+		return  new ModelAndView("register/registerInst");
 	}
 	
 	//邮件验证注册
 	@RequestMapping(value={"/register"})
-	public ModelAndView reg(@ModelAttribute("registration") Registration registration) {
-		_logger.debug("Registration  /registration/register.");
-		_logger.debug(""+registration);
-		ModelAndView modelAndView= new ModelAndView("registration/registered");
+	public ModelAndView reg(@ModelAttribute("register") Register register) {
+		_logger.debug("register  /register/register.");
+		_logger.debug(""+register);
+		ModelAndView modelAndView= new ModelAndView("register/registered");
 		
-		UserInfo userInfo =registrationService.queryUserInfoByEmail(registration.getWorkEmail());
+		UserInfo userInfo = registerService.findByEmail(register.getWorkEmail());
 		
 		if(userInfo!=null){
 			modelAndView.addObject("registered", 1);
 			return modelAndView;
 		}
 		
-		registration.setId(registration.generateId());
-		registrationService.insert(registration);
+		register.setId(register.generateId());
+		registerService.insert(register);
 		HtmlEmail email = new HtmlEmail();
 		  
-		  try {
+		try {
 			email.setHostName(applicationConfig.getEmailConfig().getSmtpHost());
 			email.setSmtpPort(applicationConfig.getEmailConfig().getPort());
 			email.setAuthenticator(new DefaultAuthenticator(
@@ -103,11 +111,11 @@ public class RegistrationController {
 							applicationConfig.getEmailConfig().getPassword()
 						));
 			
-			email.addTo(registration.getWorkEmail(), registration.getLastName()+registration.getFirstName());
+			email.addTo(register.getWorkEmail(), register.getDisplayName());
 			email.setFrom(applicationConfig.getEmailConfig().getSender(), "MaxKey");
 			email.setSubject("MaxKey Identity & Access Registration activate Email .");
 			  
-			String activateUrl=WebContext.getHttpContextPath()+"/registration/forward/activate/"+registration.getId();
+			String activateUrl=WebContext.getHttpContextPath()+"/register/forward/activate/"+register.getId();
 			
 			
 			// set the html message
@@ -125,43 +133,41 @@ public class RegistrationController {
 		} catch (EmailException e) {
 			e.printStackTrace();
 		}
-		  modelAndView.addObject("registered", 0); 
+		modelAndView.addObject("registered", 0); 
 		return  modelAndView;
 	}
 	
-	@RequestMapping(value={"/forward/activate/{id}"})
+	@GetMapping(value={"/forward/activate/{id}"})
 	public ModelAndView confirm(@PathVariable("id") String id) {
-		_logger.debug("Registration  /registration/forward/activate.");
-		Registration registration=registrationService.get(id);
-		ModelAndView mav=new ModelAndView("registration/activate");
-		if(registration!=null){
-			mav.addObject("model", registration);
+		_logger.debug("register  /register/forward/activate.");
+		Register register=registerService.get(id);
+		ModelAndView mav=new ModelAndView("register/activate");
+		if(register!=null){
+			mav.addObject("model", register);
 		}
 		
 		return mav;
 	}
 	
-	
-	@RequestMapping(value={"/activate/{id}"})
+	@PostMapping(value={"/activate/{id}"})
 	public ModelAndView setPassWord(@PathVariable("id") String id,
 									@RequestParam String password,
 									@RequestParam String confirmpassword) {
-		_logger.debug("Registration  /registration/setpassword.");
-		ModelAndView modelAndView=new ModelAndView("registration/activated");
+		_logger.debug("register  /register/setpassword.");
+		ModelAndView modelAndView=new ModelAndView("register/activated");
 		if(password.equals(confirmpassword)){
-			Registration registration=registrationService.get(id);
-			if(registration!=null){
+			Register register=registerService.get(id);
+			if(register!=null){
 				SqlSession  sqlSession  = SqlSessionUtils.getSqlSession(
 									WebContext.getBean("sqlSessionFactory",SqlSessionFactory.class));
 				sqlSession.commit(false);
 				
 				UserInfo userInfo=new UserInfo();
-				userInfo.setUsername(registration.getWorkEmail());
-				userInfo.setFamilyName(registration.getLastName());
-				userInfo.setGivenName(registration.getFirstName());
+				userInfo.setUsername(register.getWorkEmail());
+				userInfo.setDisplayName(register.getDisplayName());
 				
-				userInfo.setWorkPhoneNumber(registration.getWorkPhone());
-				userInfo.setEmail(registration.getWorkEmail());
+				userInfo.setWorkPhoneNumber(register.getWorkPhone());
+				userInfo.setEmail(register.getWorkEmail());
 				userInfo.setStatus(ConstantsStatus.ACTIVE);
 				userInfo.setDecipherable(PasswordReciprocal.getInstance().encode(password));
 				
@@ -173,7 +179,7 @@ public class RegistrationController {
 				userInfo.setPasswordLastSetTime(DateUtils.format(new Date(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
 				userInfoService.insert(userInfo);
 
-				registrationService.remove(id);
+				registerService.remove(id);
 				sqlSession.commit(true);
 				modelAndView.addObject("activate", 1);
 			}else{
@@ -189,28 +195,36 @@ public class RegistrationController {
  	@RequestMapping(value={"/registeron"})
  	@ResponseBody
 	public Message registeron(UserInfo userInfo,@RequestParam String emailMobile) throws ServletException, IOException {
+ 		
  		if(StringUtils.isEmpty(emailMobile)) {
  			return new Message(WebContext.getI18nValue("register.emailMobile.error"),"1");
  		}
+ 		
  		if(StringUtils.isValidEmail(emailMobile)) {
  			userInfo.setEmail(emailMobile);
  		}
+ 		
  		if(StringUtils.isValidMobileNo(emailMobile)) {
  			userInfo.setMobile(emailMobile);
  		}
+ 		
  		if(!(StringUtils.isValidEmail(emailMobile)||StringUtils.isValidMobileNo(emailMobile))) {
  			return new Message(WebContext.getI18nValue("register.emailMobile.error"),"1");
  		}
- 		UserInfo temp=userInfoService.findByEmailMobile(emailMobile);
+ 		
+ 		UserInfo temp = userInfoService.findByEmailMobile(emailMobile);
+ 		
  		if(temp!=null) {
  			return new Message(WebContext.getI18nValue("register.emailMobile.exist"),"1");
  		}
  		
- 		temp=userInfoService.findByUsername(userInfo.getUsername());
+ 		temp = userInfoService.findByUsername(userInfo.getUsername());
  		if(temp!=null) {
  			return new Message(WebContext.getI18nValue("register.user.error"),"1");
  		}
+ 		
  		userInfo.setStatus(ConstantsStatus.ACTIVE);
+ 		
  		if(userInfoService.insert(userInfo)) {
  			return new Message(WebContext.getI18nValue("login.text.register.success"),"0");
  		}

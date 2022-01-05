@@ -111,7 +111,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td id="register"><a href="<@base />/registration/forward"><div><@locale code="login.text.register"/></div></a></td>
+						<td id="register"><a href="<@base />/signup/forward"><div><@locale code="login.text.register"/></div></a></td>
 					</tr>
 				</table>
 						</td>

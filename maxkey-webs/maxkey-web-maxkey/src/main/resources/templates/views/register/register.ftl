@@ -14,7 +14,7 @@
 <div class="col-md-2"></div>
 <div class="col-md-8">
 				<form id="actionForm" 
-					action="<@base/>/registration/registeron"
+					action="<@base/>/register/registeron"
 					forward="<@base/>/login"
 					method="post"   class="needs-validation" novalidate>
 					<table  class="table table-bordered">

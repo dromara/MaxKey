@@ -23,7 +23,7 @@ package org.maxkey.persistence.mapper;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.entity.Registration;
+import org.maxkey.entity.Register;
 import org.maxkey.entity.UserInfo;
 
 /**
@@ -31,9 +31,9 @@ import org.maxkey.entity.UserInfo;
  *
  */
 
-public  interface RegistrationMapper extends IJpaBaseMapper<Registration> {
+public  interface RegisterMapper extends IJpaBaseMapper<Register> {
 	
 
-	public List<UserInfo> queryUserInfoByEmail(String email);
+	public List<UserInfo> findByEmail(String email);
 
 }
