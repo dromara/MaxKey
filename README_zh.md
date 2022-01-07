@@ -29,27 +29,27 @@ QQ交流群：<b>434469201</b>
 
 | 序号    | 协议    |  支持   |
 | --------| :-----  | :----   |
-| 1.1     | OAuth 2.x/OpenID Connect    	|  高  |
-| 1.2     | SAML 2.0                    	|  高  |
-| 1.3     | JWT                         	|  高  |
-| 1.4     | CAS                         	|  高  |
-| 1.5     | FormBased                  		|  中  |
-| 1.6     | TokenBased(Post/Cookie)     	|  中  |
-| 1.7     | ExtendApi                   	|  低  |
-| 1.8     | EXT                         	|  低  |
+| 1.1     | OAuth 2.x/OpenID Connect        |  高  |
+| 1.2     | SAML 2.0                        |  高  |
+| 1.3     | JWT                             |  高  |
+| 1.4     | CAS                             |  高  |
+| 1.5     | FormBased                       |  中  |
+| 1.6     | TokenBased(Post/Cookie)         |  中  |
+| 1.7     | ExtendApi                       |  低  |
+| 1.8     | EXT                             |  低  |
 
 2. 登录支持
 
 | 序号    | 登录方式      |   支持  |
-| --------| :-----      | :----   |
-| 2.1     | 动态验证码  | 字母/数字/算术   | 
-| 2.2     | 双因素认证  | 短信/时间令牌/邮件 | 
-| 2.3     | 短信认证    | 腾讯云短信/阿里云短信/网易云信  |
-| 2.4     | 时间令牌    | 登录易/Google/Microsoft Authenticator/FreeOTP/支持TOTP或者HOTP |
-| 2.5     | 域认证         | Kerberos/SPNEGO/AD域 |
-| 2.6     | LDAP        | OpenLDAP/ActiveDirectory/标准LDAP服务器 |
-| 2.7     | 社交账号    | 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
-| 2.8     | 扫码登录    | 企业微信/钉钉扫码登录  | 
+| --------| :-----        | :----   |
+| 2.1     | 动态验证码    | 字母/数字/算术   | 
+| 2.2     | 双因素认证    | 短信/时间令牌/邮件 | 
+| 2.3     | 短信认证      | 腾讯云短信/阿里云短信/网易云信  |
+| 2.4     | 时间令牌      | 登录易/Google/Microsoft Authenticator/FreeOTP/支持TOTP或者HOTP |
+| 2.5     | 域认证        | Kerberos/SPNEGO/AD域 |
+| 2.6     | LDAP          | OpenLDAP/ActiveDirectory/标准LDAP服务器 |
+| 2.7     | 社交账号      | 微信/QQ/微博/钉钉/Google/Facebook/其他  | 
+| 2.8     | 扫码登录      | 企业微信/钉钉扫码登录  | 
 
 
 3. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
