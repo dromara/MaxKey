@@ -26,7 +26,6 @@
     	<Logger level="ERROR"	name="org.reflections.Reflections" ></Logger>
     	<Logger level="OFF"     name="org.hibernate.validator.internal.util.Version" ></Logger>
     	
-    	
         <Root  level="INFO">  
             <AppenderRef  ref="consolePrint" />
             <AppenderRef  ref="RollingFile" /> 

@@ -29,6 +29,7 @@ import org.maxkey.crypto.password.MessageDigestPasswordEncoder;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.crypto.password.SM3PasswordEncoder;
 import org.maxkey.crypto.password.StandardPasswordEncoder;
+import org.maxkey.persistence.db.InstitutionService;
 import org.maxkey.util.IdGenerator;
 import org.maxkey.util.SnowFlakeId;
 import org.maxkey.web.WebContext;
@@ -39,6 +40,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
@@ -60,6 +62,11 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     @Bean(name = "transactionManager")
     public DataSourceTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
+    }
+    
+    @Bean(name = "institutionService")
+    public InstitutionService institutionService(JdbcTemplate jdbcTemplate) {
+        return new InstitutionService(jdbcTemplate);
     }
     
     /**
@@ -94,10 +101,10 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
         if(_logger.isDebugEnabled()) {
         	 _logger.debug("Password Encoders :");
 	        for (String key : encoders.keySet()) {
-	            _logger.debug(key + "=" + encoders.get(key).getClass().getName());
+	            _logger.debug("{}= {}" ,String.format("%-10s", key), encoders.get(key).getClass().getName());
 	        }
         }
-        _logger.debug("default encoder " + idForEncode);
+        _logger.debug("{} is default encoder" , idForEncode);
         return passwordEncoder;
     }
 

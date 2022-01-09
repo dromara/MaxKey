@@ -42,8 +42,8 @@ public class SocialSignOnAutoConfiguration implements InitializingBean {
     public SocialSignOnProviderService socialSignOnProviderService(
                     JdbcTemplate jdbcTemplate) throws IOException {
         SocialSignOnProviderService socialSignOnProviderService = new SocialSignOnProviderService(jdbcTemplate);
-        //load Socials Providers from database
-        socialSignOnProviderService.loadSocialsProviders();
+        //load default Social Providers from database
+        socialSignOnProviderService.loadSocialsProviders("1");
         _logger.debug("SocialSignOnProviderService inited.");
         return socialSignOnProviderService;
     }

@@ -136,6 +136,12 @@
              </a>
            </li>
            <li>
+             <a class="side-nav-menu" href="<@base />/institutions/forward/">
+                <@locale code="navs.institutions"/>
+                 <span class="fa fa-fw fa-balance-scale"></span>
+             </a>
+           </li>
+           <li>
              <a class="side-nav-menu" href="<@base />/config/passwordpolicy/forward/">
                 <@locale code="navs.conf.passwordpolicy"/>
                  <span class="fa fa-fw fa-balance-scale"></span>

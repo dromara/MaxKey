@@ -29,6 +29,7 @@ import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.entity.Institutions;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.persistence.service.UserInfoService;
@@ -94,8 +95,11 @@ public class LoginEndpoint {
 	 */
 	@Operation(summary  = "登录接口", description  = "用户登录地址",method="GET")
  	@RequestMapping(value={"/login"})
-	public ModelAndView login() {
+	public ModelAndView login(HttpServletRequest request) {
 		_logger.debug("LoginController /login.");
+		
+		WebContext.printRequest(request);
+		
 		boolean isAuthenticated= WebContext.isAuthenticated();
 		
 		if(isAuthenticated){
@@ -123,7 +127,8 @@ public class LoginEndpoint {
 		//load Social Sign On Providers
 		if(applicationConfig.getLoginConfig().isSocialSignOn()){
 			_logger.debug("Load Social Sign On Providers ");
-			modelAndView.addObject("ssopList", socialSignOnProviderService.getSocialSignOnProviders());
+			Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
+			modelAndView.addObject("sspLogin", socialSignOnProviderService.loadSocialsProviders(inst.getId()));
 		}
 		
 		Object loginErrorMessage=WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
@@ -152,9 +157,7 @@ public class LoginEndpoint {
  	@RequestMapping("/login/{username}")
 	@ResponseBody
 	public HashMap <String,Object> queryLoginUserAuth(@PathVariable("username") String username) {
- 		UserInfo userInfo=new UserInfo();
- 		userInfo.setUsername(username);
- 		userInfo=userInfoService.load(userInfo);
+ 		UserInfo userInfo=userInfoService.findByUsername(username);
  		
  		HashMap <String,Object> authnType=new HashMap <String,Object>();
  		authnType.put("authnType", userInfo.getAuthnType());

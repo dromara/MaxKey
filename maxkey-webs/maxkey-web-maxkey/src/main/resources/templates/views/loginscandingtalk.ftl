@@ -1,6 +1,12 @@
+     <#if sspLogin.dingTalkLogin == 'https'> 
      <script src="https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
-     var dingtalkredirect_uri="";
+     </#if>  
+     <#if sspLogin.dingTalkLogin == 'http'> 
+     <script src="http://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
+     </#if>  
+     
      <script type="text/javascript"> 
+        var dingtalkredirect_uri="";
         var handleMessage = function (event) {
         var origin = event.origin;
         console.log("origin", event.origin);

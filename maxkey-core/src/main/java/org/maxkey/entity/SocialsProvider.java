@@ -60,6 +60,8 @@ public class SocialsProvider extends JpaBaseEntity implements Serializable {
     @Column
     private long sortIndex;
     @Column
+    private String scanCode;
+    @Column
     private int status;
     @Column
 	private String instId;
@@ -261,7 +263,15 @@ public class SocialsProvider extends JpaBaseEntity implements Serializable {
         this.sortIndex = sortIndex;
     }
 
-    public String getInstId() {
+    public String getScanCode() {
+		return scanCode;
+	}
+
+	public void setScanCode(String scanCode) {
+		this.scanCode = scanCode;
+	}
+
+	public String getInstId() {
 		return instId;
 	}
 
@@ -270,53 +280,57 @@ public class SocialsProvider extends JpaBaseEntity implements Serializable {
 	}
 
 	@Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("SocialsProvider [id=");
-        builder.append(id);
-        builder.append(", provider=");
-        builder.append(provider);
-        builder.append(", providerName=");
-        builder.append(providerName);
-        builder.append(", icon=");
-        builder.append(icon);
-        builder.append(", clientId=");
-        builder.append(clientId);
-        builder.append(", clientSecret=");
-        builder.append(clientSecret);
-        builder.append(", agentId=");
-        builder.append(agentId);
-        builder.append(", sortOrder=");
-        builder.append(sortOrder);
-        builder.append(", hidden=");
-        builder.append(hidden);
-        builder.append(", status=");
-        builder.append(status);
-        builder.append(", createdBy=");
-        builder.append(createdBy);
-        builder.append(", createdDate=");
-        builder.append(createdDate);
-        builder.append(", modifiedBy=");
-        builder.append(modifiedBy);
-        builder.append(", modifiedDate=");
-        builder.append(modifiedDate);
-        builder.append(", redirectUri=");
-        builder.append(redirectUri);
-        builder.append(", accountId=");
-        builder.append(accountId);
-        builder.append(", bindTime=");
-        builder.append(bindTime);
-        builder.append(", unBindTime=");
-        builder.append(unBindTime);
-        builder.append(", lastLoginTime=");
-        builder.append(lastLoginTime);
-        builder.append(", state=");
-        builder.append(state);
-        builder.append(", userBind=");
-        builder.append(userBind);
-        builder.append("]");
-        return builder.toString();
-    }
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SocialsProvider [id=");
+		builder.append(id);
+		builder.append(", provider=");
+		builder.append(provider);
+		builder.append(", providerName=");
+		builder.append(providerName);
+		builder.append(", icon=");
+		builder.append(icon);
+		builder.append(", clientId=");
+		builder.append(clientId);
+		builder.append(", clientSecret=");
+		builder.append(clientSecret);
+		builder.append(", agentId=");
+		builder.append(agentId);
+		builder.append(", hidden=");
+		builder.append(hidden);
+		builder.append(", sortIndex=");
+		builder.append(sortIndex);
+		builder.append(", scanCode=");
+		builder.append(scanCode);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", instId=");
+		builder.append(instId);
+		builder.append(", createdBy=");
+		builder.append(createdBy);
+		builder.append(", createdDate=");
+		builder.append(createdDate);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
+		builder.append(", modifiedDate=");
+		builder.append(modifiedDate);
+		builder.append(", redirectUri=");
+		builder.append(redirectUri);
+		builder.append(", accountId=");
+		builder.append(accountId);
+		builder.append(", bindTime=");
+		builder.append(bindTime);
+		builder.append(", unBindTime=");
+		builder.append(unBindTime);
+		builder.append(", lastLoginTime=");
+		builder.append(lastLoginTime);
+		builder.append(", state=");
+		builder.append(state);
+		builder.append(", userBind=");
+		builder.append(userBind);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 	
 

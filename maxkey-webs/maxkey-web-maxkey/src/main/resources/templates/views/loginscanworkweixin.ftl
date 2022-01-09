@@ -1,4 +1,9 @@
+     <#if sspLogin.workWeixinLogin == 'https'> 
      <script type="text/javascript" src="https://wwcdn.weixin.qq.com/node/wework/wwopen/js/wwLogin-1.2.4.js"></script>
+     </#if>  
+     <#if sspLogin.workWeixinLogin == 'http'> 
+     <script type="text/javascript" src="http://wwcdn.weixin.qq.com/node/wework/wwopen/js/wwLogin-1.2.4.js"></script>
+     </#if>  
      <script type="text/javascript"> 
         $(function(){
            $("#qrcodelogin").on("click",function(){

@@ -129,6 +129,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/session/**")
                 .addPathPatterns("/socialsprovider/**")
                 .addPathPatterns("/accountsstrategy/**")
+                .addPathPatterns("/institutions/**")
                 
                 ;
         

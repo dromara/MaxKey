@@ -47,6 +47,8 @@ public class WebConstants {
                                     = "current_user_password_set_type";
 
     public static final  String CURRENT_MESSAGE = "current_message";
+    
+    public static final  String CURRENT_INST 	= "current_inst";
 
     // SPRING_SECURITY_SAVED_REQUEST
     public static final  String FIRST_SAVED_REQUEST_PARAMETER 
@@ -92,11 +94,7 @@ public class WebConstants {
     	public static final  String PASSWORD_ERROE 	= "password error";
     	public static final  String USER_NOT_EXIST 	= "user not exist";
     	public static final  String USER_LOCKED 	= "locked";
-    	public static final  String USER_INACTIVE 	= "inactive";
-    	
-    	
-    	
-    	
+    	public static final  String USER_INACTIVE 	= "inactive";	
     }
 
 }

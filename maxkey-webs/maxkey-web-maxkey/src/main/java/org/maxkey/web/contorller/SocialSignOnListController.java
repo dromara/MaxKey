@@ -24,7 +24,9 @@ import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.entity.Institutions;
 import org.maxkey.entity.SocialsProvider;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +57,9 @@ public class SocialSignOnListController {
 		
 		ModelAndView modelAndView=new ModelAndView("social/socialSignOnProvider");
 		if(applicationConfig.getLoginConfig().isSocialSignOn()){
-			List<SocialsProvider>  listSocialSignOnProvider= socialSignOnProviderService.getSocialSignOnProviders();
+			Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
+			List<SocialsProvider>  listSocialSignOnProvider = 
+									socialSignOnProviderService.loadSocialsProviders(inst.getId()).getSocialSignOnProviders();
 			
 			SocialsAssociate socialSignOnUser=new SocialsAssociate();
 			socialSignOnUser.setUserId(WebContext.getUserInfo().getId());

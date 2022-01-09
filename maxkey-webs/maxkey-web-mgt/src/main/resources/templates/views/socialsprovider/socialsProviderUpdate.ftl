@@ -63,6 +63,16 @@
                 </td>
         </tr>
         <tr>
+                    <th><@locale code="socials.provider.scanCode" />：</th>
+                    <td nowrap>
+                        <select  id="hidden" name="scanCode" class="form-control  form-select" >
+                            <option value="none" <#if 'none'==model.scanCode!>selected</#if>><@locale code="socials.provider.scanCode.none"/></option>
+                            <option value="https" <#if 'https'==model.scanCode!>selected</#if>><@locale code="socials.provider.scanCode.https"/></option>
+                            <option value="http" <#if 'http'==model.scanCode!>selected</#if>><@locale code="socials.provider.scanCode.http"/></option>
+                        </select>
+                    </td>
+            </tr>
+        <tr>
                 <th><@locale code="common.text.sortindex" />：</th>
                 <td nowrap>
                     <input type="text" id="sortIndex" name="sortIndex" class="form-control" title="" value="${model.sortIndex!}"  required="" />

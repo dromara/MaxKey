@@ -148,8 +148,10 @@ public class LogoutEndpoint {
  					WebConstants.ONLINE_TICKET_NAME, 
  					UUID.randomUUID().toString()
  		);
- 		
  		request.getSession().invalidate();
+ 		//for(String removeAttribute : WebContext.logoutAttributeNameList) {
+ 		//	request.getSession().removeAttribute(removeAttribute);
+ 		//}
  		SecurityContextHolder.clearContext();
  		
  		modelAndView.setViewName(viewName);

@@ -25,7 +25,11 @@ import freemarker.template.TemplateModel;
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+
+import org.maxkey.entity.Institutions;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
+import org.maxkey.web.WebInstRequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +48,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 @FreemarkerTag("locale")
 public class LocaleTagDirective implements TemplateDirectiveModel {
     private static final Logger _logger = LoggerFactory.getLogger(LocaleTagDirective.class);
+
     @Autowired
     private HttpServletRequest request;
 
@@ -60,6 +65,16 @@ public class LocaleTagDirective implements TemplateDirectiveModel {
         } else if (params.get("code").toString().equals("global.application.version")
                 || params.get("code").toString().equals("application.version")) {
             message = WebContext.properties.getProperty("application.formatted-version");
+        } else if (params.get("code").toString().equals("global.logo")) {
+        	if(request.getSession().getAttribute(WebConstants.CURRENT_INST)!=null) {
+        		message = ((Institutions)request.getSession().getAttribute(WebConstants.CURRENT_INST)).getLogo();
+        	}else {
+        		message = WebContext.readCookieByName(request, WebInstRequestFilter.LOGO_COOKIE_NAME).getValue();
+        	}
+        	
+        	if(!message.startsWith("http")) {
+            	message = request.getContextPath() + message;
+            }
         } else {
             _logger.trace("message code " + params.get("code"));
             try {

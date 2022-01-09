@@ -20,6 +20,7 @@ package org.maxkey.web;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -64,6 +65,8 @@ public final class WebContext {
     
     public static ArrayList<String> sessionAttributeNameList = new ArrayList<String>();
     
+    public static ArrayList<String> logoutAttributeNameList = new ArrayList<String>();
+    
     public static IdGenerator idGenerator;
     
     static {
@@ -76,9 +79,27 @@ public final class WebContext {
         sessionAttributeNameList.add(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE);
         sessionAttributeNameList.add(WebConstants.CURRENT_USER_SESSION_ID);
         
+        sessionAttributeNameList.add(WebConstants.CURRENT_INST);
+        
         sessionAttributeNameList.add(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
         
         sessionAttributeNameList.add(WebConstants.REMEBER_ME_SESSION);
+        
+        //logout
+        logoutAttributeNameList.add(WebConstants.AUTHENTICATION);
+        
+        logoutAttributeNameList.add(WebConstants.AUTHORIZE_SIGN_ON_APP);
+        logoutAttributeNameList.add(WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER);
+        
+        logoutAttributeNameList.add(WebConstants.CURRENT_USER);
+        logoutAttributeNameList.add(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE);
+        logoutAttributeNameList.add(WebConstants.CURRENT_USER_SESSION_ID);
+        
+        
+        logoutAttributeNameList.add(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
+        
+        logoutAttributeNameList.add(WebConstants.REMEBER_ME_SESSION);
+        
     }
      
     /**
@@ -237,6 +258,24 @@ public final class WebContext {
         _logger.trace("httpContextPath " + httpContextPath);
         return httpContextPath;
 
+    }
+    
+    public static void printRequest(final HttpServletRequest request) {
+    	_logger.trace("getRequestURL : "+request.getRequestURL());
+    	_logger.trace("getMethod : "+request.getMethod());
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+          String key = (String) headerNames.nextElement();
+          String value = request.getHeader(key);
+          _logger.trace("Header key "+key +" , value " + value);
+        }
+        
+        Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+          String key = (String) parameterNames.nextElement();
+          String value = request.getParameter(key);
+          _logger.trace("Parameter "+key +" , value " + value);
+        }
     }
 
     /**

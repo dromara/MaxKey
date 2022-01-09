@@ -78,8 +78,12 @@
 								<#include "loginmobile.ftl">
 							</div>
 							<div id="div_qrcodelogin">
-							     <#include "loginworkweixin.ftl"> 
-							     <#-- <#include "logindingtalk.ftl">-->
+							     <#if sspLogin.workWeixinLogin != 'none'>
+							         <#include "loginscanworkweixin.ftl"> 
+							     </#if>  
+							     <#if sspLogin.dingTalkLogin != 'none'>  
+							         <#include "loginscandingtalk.ftl">
+							     </#if>  
 							</div>
 						</td>
 					</tr>
@@ -91,7 +95,7 @@
 					      			<td colspan="3" align="left"><@locale code="login.text.otherlogins"/>：</td>
 					      		</tr>
 					      		
-					      		<#list ssopList as ssop>
+					      		<#list sspLogin.socialSignOnProviders as ssop>
 					      			<#if (ssop_index)%4==0>
 						      			<tr>
 						      		</#if>
@@ -104,7 +108,7 @@
 						      		</tr>
 						      		</#if>
 						      	</#list>
-						      	<#if (ssopList?size)%4!=0>
+						      	<#if (sspLogin.socialSignOnProviders?size)%4!=0>
 						      		</tr>
 						      	</#if>
 					      	</table>

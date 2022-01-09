@@ -17,7 +17,6 @@
 package org.maxkey.authz.oauth2.provider.endpoint;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,8 +31,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
@@ -44,6 +41,8 @@ import org.maxkey.authz.oauth2.provider.OAuth2RequestFactory;
 import org.maxkey.util.AuthorizationHeaderCredential;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.web.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -84,7 +83,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 							OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_TOKEN+"/*"})
 public class TokenEndpointAuthenticationFilter implements Filter {
 
-	private static final Log logger = LogFactory.getLog(TokenEndpointAuthenticationFilter.class);
+	final static Logger _logger = LoggerFactory.getLogger(TokenEndpointAuthenticationFilter.class);
 
 	private AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
 	boolean allowOnlyPost;
@@ -122,7 +121,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
 			ServletException {
-		logger.debug("Authentication TokenEndpoint ");
+		_logger.debug("Authentication TokenEndpoint ");
 		if(authenticationManager==null) {
 			authenticationManager= WebContext.getBean("oauth20UserAuthenticationManager",AuthenticationManager.class);
 		}
@@ -133,26 +132,12 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 		    oauth20ClientAuthenticationManager = WebContext.getBean("oauth20ClientAuthenticationManager",AuthenticationManager.class);
 		}
 		
-		final boolean debug = logger.isDebugEnabled();
+		final boolean debug = _logger.isDebugEnabled();
 		final HttpServletRequest request = (HttpServletRequest) req;
 		final HttpServletResponse response = (HttpServletResponse) res;
 
-		if(logger.isTraceEnabled()) {
-			logger.trace("getRequestURL : "+request.getRequestURL());
-			logger.trace("getMethod : "+request.getMethod());
-	        Enumeration<String> headerNames = request.getHeaderNames();
-	        while (headerNames.hasMoreElements()) {
-	          String key = (String) headerNames.nextElement();
-	          String value = request.getHeader(key);
-	          logger.trace("Header key "+key +" , value " + value);
-	        }
-	        
-	        Enumeration<String> parameterNames = request.getParameterNames();
-	        while (parameterNames.hasMoreElements()) {
-	          String key = (String) parameterNames.nextElement();
-	          String value = request.getParameter(key);
-	          logger.trace("Parameter "+key +" , value " + value);
-	        }
+		if(_logger.isTraceEnabled()) {
+			WebContext.printRequest(request);
 		}
 		
 		try {
@@ -162,7 +147,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 				usernamepassword(request,response);
 			}else {
 				Authentication authentication=ClientCredentials(request,response);
-				logger.trace("getPrincipal " + authentication.getPrincipal().getClass());
+				_logger.trace("getPrincipal " + authentication.getPrincipal().getClass());
 				SigninPrincipal auth = null;
 				if(authentication.getPrincipal() instanceof SigninPrincipal) {
 					//authorization_code
@@ -181,7 +166,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 			SecurityContextHolder.clearContext();
 
 			if (debug) {
-				logger.debug("Authentication request for failed: " + failed);
+				_logger.debug("Authentication request for failed: " + failed);
 			}
 
 			onUnsuccessfulAuthentication(request, response, failed);
@@ -193,17 +178,17 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 	}
 
 	public void usernamepassword(HttpServletRequest request, HttpServletResponse response) throws IOException,ServletException {
-	logger.debug("Authentication TokenEndpoint ");
+		_logger.debug("Authentication TokenEndpoint ");
 	
 	try {
 		Authentication credentials = extractCredentials(request);
 	
 		if (credentials != null) {
-			logger.debug("Authentication credentials found for '" + credentials.getName() + "'");
+			_logger.debug("Authentication credentials found for '" + credentials.getName() + "'");
 	
 			Authentication authResult = authenticationManager.authenticate(credentials);
 	
-			logger.debug("Authentication success: " + authResult.getName());
+			_logger.debug("Authentication success: " + authResult.getName());
 			String clientId = request.getParameter(OAuth2Constants.PARAMETER.CLIENT_ID);
 	        String clientSecret = request.getParameter(OAuth2Constants.PARAMETER.CLIENT_SECRET);
 	        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(clientId,
@@ -237,7 +222,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 		catch (AuthenticationException failed) {
 			SecurityContextHolder.clearContext();
 		
-				logger.debug("Authentication request for failed: " + failed);
+			_logger.debug("Authentication request for failed: " + failed);
 		
 			onUnsuccessfulAuthentication(request, response, failed);
 		
@@ -261,7 +246,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 				clientSecret=ahc.getCredential();
 			}
 			
-			 logger.trace("clientId "+clientId +" , clientSecret " + clientSecret);
+			_logger.trace("clientId "+clientId +" , clientSecret " + clientSecret);
 
 			// If the request is already authenticated we can assume that this
 			// filter is not needed

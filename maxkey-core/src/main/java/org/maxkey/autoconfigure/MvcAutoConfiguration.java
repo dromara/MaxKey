@@ -22,11 +22,14 @@ import java.util.List;
 
 import javax.servlet.Filter;
 
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.persistence.db.InstitutionService;
 import org.maxkey.persistence.db.LoginHistoryService;
 import org.maxkey.persistence.db.LoginService;
 import org.maxkey.web.SessionListenerAdapter;
 import org.maxkey.web.WebXssRequestFilter;
+import org.maxkey.web.WebInstRequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -255,17 +258,6 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
         return new SecurityContextHolderAwareRequestFilter();
     }
     
-    
-    @Bean
-    public FilterRegistrationBean<Filter> webXssRequestFilter() {
-        _logger.debug("delegatingFilterProxy init for /* ");
-        FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>(new WebXssRequestFilter());
-        registrationBean.addUrlPatterns("/*");
-        registrationBean.setName("webXssRequestFilter");
-        registrationBean.setOrder(2);
-        return registrationBean;
-    }
-    
     @Bean
     public FilterRegistrationBean<Filter> delegatingFilterProxy() {
         _logger.debug("delegatingFilterProxy init for /* ");
@@ -276,6 +268,30 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
         registrationBean.setName("delegatingFilterProxy");
         registrationBean.setOrder(1);
         
+        return registrationBean;
+    }
+    
+    @Bean
+    public FilterRegistrationBean<Filter> webXssRequestFilter() {
+        _logger.debug("webXssRequestFilter init for /* ");
+        FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>(new WebXssRequestFilter());
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setName("webXssRequestFilter");
+        registrationBean.setOrder(2);
+        return registrationBean;
+    }
+    
+    
+    @Bean
+    public FilterRegistrationBean<Filter> WebInstRequestFilter(
+    											InstitutionService institutionService,
+    											ApplicationConfig applicationConfig) {
+        _logger.debug("WebInstRequestFilter init for /* ");
+        FilterRegistrationBean<Filter> registrationBean = 
+        		new FilterRegistrationBean<Filter>(new WebInstRequestFilter(institutionService,applicationConfig));
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setName("webInstRequestFilter");
+        registrationBean.setOrder(3);
         return registrationBean;
     }
     
