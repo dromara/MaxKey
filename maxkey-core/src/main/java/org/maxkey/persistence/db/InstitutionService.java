@@ -20,6 +20,7 @@ package org.maxkey.persistence.db;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.maxkey.constants.ConstantsStatus;
@@ -36,12 +37,19 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 public class InstitutionService {
     private static Logger _logger = LoggerFactory.getLogger(InstitutionService.class);
     
-    private static final String SELECT_STATEMENT = "select * from  mxk_institutions where domain = ? and status = " + ConstantsStatus.ACTIVE;
+    private static final String SELECT_STATEMENT = 
+    						"select * from  mxk_institutions where domain = ? and status = " + ConstantsStatus.ACTIVE;
+
+    private static final String SELECT_STATEMENT_BY_ID = 
+    						"select * from  mxk_institutions where id = ? and status = " + ConstantsStatus.ACTIVE;
 
     protected static final Cache<String, Institutions> institutionsStore = 
             Caffeine.newBuilder()
-                .expireAfterWrite(ConstantsTimeInterval.ONE_HOUR, TimeUnit.MINUTES)
+                .expireAfterWrite(ConstantsTimeInterval.ONE_HOUR, TimeUnit.SECONDS)
                 .build();
+    
+    //id domain mapping
+    protected static final  ConcurrentHashMap<String,String> mapper = new ConcurrentHashMap<String,String>();
     
     protected JdbcTemplate jdbcTemplate;
     
@@ -61,6 +69,24 @@ public class InstitutionService {
 	        }
 	        
 	        institutionsStore.put(domain, inst);
+	        mapper.put(inst.getId(), domain);
+        }
+        
+        return inst;
+    }
+    
+    public Institutions get(String instId) {
+        _logger.trace(" instId {}" , instId);
+        Institutions inst = institutionsStore.getIfPresent(mapper.get(instId));
+        if(inst == null) {
+	        List<Institutions> institutions = 
+	        		jdbcTemplate.query(SELECT_STATEMENT_BY_ID,new InstitutionsRowMapper(),instId);
+	        
+	        if (institutions != null && institutions.size() > 0) {
+	        	inst = institutions.get(0);
+	        }
+	        institutionsStore.put(inst.getDomain(), inst);
+	        mapper.put(inst.getId(), inst.getDomain());
         }
         
         return inst;
@@ -75,6 +101,8 @@ public class InstitutionService {
         	institution.setFullName(rs.getString("fullname"));
         	institution.setLogo(rs.getString("logo"));
         	institution.setDomain(rs.getString("domain"));
+        	institution.setTitle(rs.getString("title"));
+        	institution.setConsoleTitle(rs.getString("consoletitle"));
             return institution;
         }
     }

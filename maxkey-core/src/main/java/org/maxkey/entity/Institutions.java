@@ -46,6 +46,10 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 	@Column
 	private String logo;
 	@Column
+	private String title;
+	@Column
+	private String consoleTitle;
+	@Column
 	private String domain;
 	@Column
     private String division;
@@ -110,6 +114,19 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 	}
 	public void setLogo(String logo) {
 		this.logo = logo;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getConsoleTitle() {
+		return consoleTitle;
+	}
+	public void setConsoleTitle(String consoleTitle) {
+		this.consoleTitle = consoleTitle;
 	}
 	public String getDomain() {
 		return domain;
@@ -228,6 +245,14 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 		builder.append(name);
 		builder.append(", fullName=");
 		builder.append(fullName);
+		builder.append(", logo=");
+		builder.append(logo);
+		builder.append(", title=");
+		builder.append(title);
+		builder.append(", consoleTitle=");
+		builder.append(consoleTitle);
+		builder.append(", domain=");
+		builder.append(domain);
 		builder.append(", division=");
 		builder.append(division);
 		builder.append(", country=");

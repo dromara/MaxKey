@@ -46,6 +46,8 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 			
 			for(WorkWeixinDepts dept : rsp.getDepartment()) {
 				_logger.info("dept : " + dept.getId()+" "+ dept.getName()+" "+ dept.getParentid());
+				Organizations org = buildOrganization(dept);
+				this.organizationsService.merge(org);
 			}
 
 		} catch (Exception e) {

@@ -126,7 +126,7 @@ public class LoginEndpoint {
 		//modelAndView.addObject("jwtToken",jwtLoginService.buildLoginJwt());
 		//load Social Sign On Providers
 		if(applicationConfig.getLoginConfig().isSocialSignOn()){
-			_logger.debug("Load Social Sign On Providers ");
+			_logger.trace("Load Social Sign On Providers ");
 			Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
 			modelAndView.addObject("sspLogin", socialSignOnProviderService.loadSocialsProviders(inst.getId()));
 		}

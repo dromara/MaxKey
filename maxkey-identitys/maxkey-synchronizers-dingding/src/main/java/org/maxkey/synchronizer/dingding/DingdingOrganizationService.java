@@ -47,6 +47,7 @@ public class DingdingOrganizationService  extends AbstractSynchronizerService im
 			for(DeptBaseResponse dept : rsp.getResult()) {
 				_logger.info("dept : " + dept.getDeptId()+" "+ dept.getName()+" "+ dept.getParentId());
 				Organizations org = buildOrganization(dept);
+				this.organizationsService.merge(org);
 				_logger.info("Organizations : " + org);
 			}
 

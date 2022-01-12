@@ -46,9 +46,11 @@ public class WebConstants {
     public static final  String CURRENT_USER_PASSWORD_SET_TYPE 
                                     = "current_user_password_set_type";
 
-    public static final  String CURRENT_MESSAGE = "current_message";
+    public static final  String CURRENT_MESSAGE 	= "current_message";
     
-    public static final  String CURRENT_INST 	= "current_inst";
+    public static final  String CURRENT_INST 		= "current_inst";
+    
+    public final static  String INST_COOKIE_NAME 	= "mxk_inst";
 
     // SPRING_SECURITY_SAVED_REQUEST
     public static final  String FIRST_SAVED_REQUEST_PARAMETER 

@@ -30,6 +30,7 @@ import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.crypto.password.SM3PasswordEncoder;
 import org.maxkey.crypto.password.StandardPasswordEncoder;
 import org.maxkey.persistence.db.InstitutionService;
+import org.maxkey.persistence.db.LocalizationService;
 import org.maxkey.util.IdGenerator;
 import org.maxkey.util.SnowFlakeId;
 import org.maxkey.web.WebContext;
@@ -67,6 +68,11 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     @Bean(name = "institutionService")
     public InstitutionService institutionService(JdbcTemplate jdbcTemplate) {
         return new InstitutionService(jdbcTemplate);
+    }
+    
+    @Bean(name = "localizationService")
+    public LocalizationService localizationService(JdbcTemplate jdbcTemplate,InstitutionService institutionService) {
+        return new LocalizationService(jdbcTemplate,institutionService);
     }
     
     /**

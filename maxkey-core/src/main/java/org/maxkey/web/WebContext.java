@@ -28,8 +28,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.entity.Institutions;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.IdGenerator;
@@ -119,6 +122,18 @@ public final class WebContext {
      */
     public static UserInfo getUserInfo() {
         return ((UserInfo) getAttribute(WebConstants.CURRENT_USER));
+    }
+    
+    public static String getInst(HttpServletRequest request) {
+    	String instId = "1";
+    	//from session
+    	if(getAttribute(WebConstants.CURRENT_INST) != null) {
+    		instId = ((Institutions)request.getSession().getAttribute(WebConstants.CURRENT_INST)).getId();
+    	}else {
+    	//from cookie
+    		instId = WebContext.readCookieByName(request, WebConstants.INST_COOKIE_NAME).getValue();
+    	}
+        return StringUtils.isBlank(instId) ? "1" : instId;
     }
 
     /**

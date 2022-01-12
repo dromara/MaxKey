@@ -39,14 +39,19 @@ public class WebXssRequestFilter  extends GenericFilterBean {
 	final static ConcurrentHashMap <String,String> skipUrlMap = new  ConcurrentHashMap <String,String>();
 	
 	static {
+		//add or update
 		skipUrlMap.put("/notices/add", "/notices/add");
 		skipUrlMap.put("/notices/update", "/notices/update");
+		skipUrlMap.put("/institutions/update","/institutions/update");
+		skipUrlMap.put("/localization/update","/localization/update");
+		//authz
 		skipUrlMap.put("/authz/cas", "/authz/cas");
 		skipUrlMap.put("/authz/cas/", "/authz/cas/");
 		skipUrlMap.put("/authz/cas/login", "/authz/cas/login");
 		skipUrlMap.put("/authz/oauth/v20/authorize", "/authz/oauth/v20/authorize");
 		//TENCENT_IOA
 		skipUrlMap.put("/oauth2/authorize", "/oauth2/authorize");
+		
 	}
 	
 	@Override

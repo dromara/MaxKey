@@ -54,6 +54,7 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 				for(WorkWeixinUsers user : usersResponse.getUserlist()) {
 					UserInfo userInfo  = buildUserInfo(user);
 					_logger.info("userInfo : " + userInfo);
+					this.userInfoService.merge(userInfo);
 				}
 			}
 			

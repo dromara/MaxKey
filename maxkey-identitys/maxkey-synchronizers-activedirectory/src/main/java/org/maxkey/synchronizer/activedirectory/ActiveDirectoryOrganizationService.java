@@ -123,7 +123,7 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 			org.setInstId(this.synchronizer.getInstId());
 			orgsNamePathMap.put(org.getNamePath(), org);
 			_logger.info("org " + org);
-			organizationsService.insert(org);
+			organizationsService.merge(org);
 			HistorySynchronizer historySynchronizer =new HistorySynchronizer();
             historySynchronizer.setId(historySynchronizer.generateId());
             historySynchronizer.setSyncId(this.synchronizer.getId());

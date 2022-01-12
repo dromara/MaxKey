@@ -39,12 +39,9 @@ public class WebInstRequestFilter  extends GenericFilterBean {
 	
 	public final static String  HEADER_HOST = "host";
 	
-	public final static String  LOGO_COOKIE_NAME = "mxk_logo";
-
 	InstitutionService institutionService;
 	
 	ApplicationConfig applicationConfig;
-	
 	
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
@@ -64,7 +61,7 @@ public class WebInstRequestFilter  extends GenericFilterBean {
 			Institutions institution =institutionService.findByDomain(host);
 			_logger.trace("{}" ,institution);
 			request.getSession().setAttribute(WebConstants.CURRENT_INST, institution);
-			WebContext.setCookie((HttpServletResponse)servletResponse, host, LOGO_COOKIE_NAME, institution.getLogo());
+			WebContext.setCookie((HttpServletResponse)servletResponse, host, WebConstants.INST_COOKIE_NAME, institution.getId());
 		}
         chain.doFilter(servletRequest, servletResponse);
 	}

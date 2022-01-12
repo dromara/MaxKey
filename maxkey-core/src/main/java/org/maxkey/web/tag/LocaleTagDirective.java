@@ -26,10 +26,8 @@ import java.io.IOException;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
-import org.maxkey.entity.Institutions;
-import org.maxkey.web.WebConstants;
+import org.maxkey.persistence.db.LocalizationService;
 import org.maxkey.web.WebContext;
-import org.maxkey.web.WebInstRequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +49,9 @@ public class LocaleTagDirective implements TemplateDirectiveModel {
 
     @Autowired
     private HttpServletRequest request;
+    
+    @Autowired
+    LocalizationService localizationService;
 
     @SuppressWarnings("rawtypes")
     @Override
@@ -60,31 +61,39 @@ public class LocaleTagDirective implements TemplateDirectiveModel {
         WebApplicationContext webApplicationContext = 
                 RequestContextUtils.findWebApplicationContext(request);
         String message = "";
-        if (params.get("code") == null) {
+        String code = params.get("code") == null? null : params.get("code").toString();
+        String htmlTag = params.get("htmltag")==null ? null : params.get("htmltag").toString();
+        _logger.trace("message code {} , htmltag {}" , code , htmlTag);
+        
+        if (code == null) {
             message = RequestContextUtils.getLocale(request).getLanguage();
-        } else if (params.get("code").toString().equals("global.application.version")
-                || params.get("code").toString().equals("application.version")) {
+        } else if (code.equals("global.application.version")
+                || code.equals("application.version")) {
             message = WebContext.properties.getProperty("application.formatted-version");
-        } else if (params.get("code").toString().equals("global.logo")) {
-        	if(request.getSession().getAttribute(WebConstants.CURRENT_INST)!=null) {
-        		message = ((Institutions)request.getSession().getAttribute(WebConstants.CURRENT_INST)).getLogo();
-        	}else {
-        		message = WebContext.readCookieByName(request, WebInstRequestFilter.LOGO_COOKIE_NAME).getValue();
-        	}
-        	
+        } else if (code.equals("global.logo")) {
+        	message = localizationService.getLocale(
+        						code,
+        						htmlTag,
+        						WebContext.getLocale(),
+        						WebContext.getInst(request));
         	if(!message.startsWith("http")) {
             	message = request.getContextPath() + message;
             }
+        }else if (code.equals("global.title")
+        			||code.equals("global.consoleTitle")) {
+        	message = localizationService.getLocale(
+        						code,
+        						htmlTag,
+        						WebContext.getLocale(),
+        						WebContext.getInst(request));
         } else {
-            _logger.trace("message code " + params.get("code"));
             try {
                 message = webApplicationContext.getMessage(
-                                params.get("code").toString(), 
+                                code, 
                                 null,
                                 RequestContextUtils.getLocale(request));
-
             } catch (Exception e) {
-                _logger.error("message code " + params.get("code"), e);
+                _logger.error("message code " + code, e);
             }
         }
         env.getOut().append(message);

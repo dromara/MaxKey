@@ -60,6 +60,39 @@
 										</div>
 									</div>
 									<div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.title" />：</label>
+                                                <div class="col-sm-7">
+                                                    <input  required="" class="form-control" type="text" id="title" name="title"  value="${model.title!}" />
+                                                    
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input class="button btn btn-info mr-3 window" type="button" value="<@locale code="common.text.locale"/>" 
+                                                        wurl="<@base/>/localization/forward/global.title"
+                                                        wwidth="650"
+                                                        wheight="200"
+                                                        target="window"> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.consoleTitle" />：</label>
+                                                <div class="col-sm-7">
+                                                    <input  required="" class="form-control" type="text" id="consoleTitle" name="consoleTitle" value="${model.consoleTitle!}" />
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input class="button btn btn-info mr-3 window" type="button" value="<@locale code="common.text.locale"/>" 
+                                                        wurl="<@base/>/localization/forward/global.consoleTitle"
+                                                        wwidth="650"
+                                                        wheight="200"
+                                                        target="window"> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
 												<label class="col-sm-3 col-form-label"><@locale code="institutions.logo" />：</label>
@@ -198,6 +231,7 @@
 									<div class="row">
 										<div class="col-md-4"></div>
 										<div class="col-md-4">
+										      <input   class="form-control" type="hidden" id="status" name="status"  value="1" />
 											<button type="submit" class="button btn-primary btn btn-common btn-block mr-3"    id="submitBtn" ><@locale code="button.text.save" /></button>
 										</div>
 										<div class="col-md-4"></div>

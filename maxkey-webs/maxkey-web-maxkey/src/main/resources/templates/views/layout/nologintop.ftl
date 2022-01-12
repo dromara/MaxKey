@@ -4,7 +4,7 @@
 			<div class="col-sm-6">
 				<div style="float:left;margin-left:20px;margin-top: 5px;"><IMG SRC="<@locale code="global.logo"/>" style="width:55px;heigth:55px"></div>
 				<div style="margin-top:15px;margin-left:10px;float:left">
-					<div style="letter-spacing:2px;font-size:24px;font-weight:bolder;"><@locale code="global.application"/></div>
+					<div style="letter-spacing:2px;font-size:24px;font-weight:bolder;"><@locale code="global.title"/></div>
 				</div>
 			</div>
 			<div class="col-sm-2"></div>

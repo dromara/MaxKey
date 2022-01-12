@@ -3,14 +3,14 @@
 <div class="header-container">
 	<div class="nav-logo">
 		<a href="<@base/>/main"> 
-			<IMG SRC="<@base/>/static/images/logo.jpg" alt="" style="width:40px;heigth:40px">	
+			<IMG SRC="<@locale code="global.logo"/>" alt="" style="width:40px;heigth:40px">	
 		</a>
 		<span class="logo">
 		
 		</span>
 	</div>
 	<ul class="nav-left"  style="letter-spacing:2px;font-size:20px;font-weight:bolder;margin-top: 14px;">
-		<@locale code="global.application"/>
+		<@locale code="global.consoleTitle"/>
 	</ul>
 	<ul class="nav-right">
 		<li style="font-size: 16px; margin-top: 10px;">

@@ -17,6 +17,7 @@
 
 package org.maxkey.synchronizer.dingding;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.maxkey.entity.UserInfo;
@@ -65,6 +66,13 @@ public class DingdingUsersService  extends AbstractSynchronizerService implement
 						_logger.info("name : " + user.getName()+" , "+user.getLoginId()+" , "+user.getUserid());
 						UserInfo userInfo  = buildUserInfo(user);
 						_logger.info("userInfo " + userInfo);
+						//if(userInfoService.findByUsername(userInfo.getUsername()) == null) {
+							userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
+							this.userInfoService.insert(userInfo);
+						//}else {
+						//	userInfoService.update(userInfo);
+						//}
+						
 					}
 				}
 			}
@@ -88,7 +96,7 @@ public class DingdingUsersService  extends AbstractSynchronizerService implement
 		userInfo.setDisplayName(user.getName());//鐢ㄦ埛鍚�
 		userInfo.setFormattedName(user.getName());//鐢ㄦ埛鍚�
 		
-		userInfo.setEmail(user.getEmail());
+		userInfo.setEmail(StringUtils.isBlank(user.getEmail())? user.getUserid() +"@maxkey.top":user.getEmail());
 		userInfo.setEntryDate(new DateTime(user.getHiredDate()).toString(DateTimeFormat.forPattern("yyyy-MM-dd")));
 		userInfo.setMobile(user.getMobile());//鎵嬫満
 		userInfo.setDepartmentId(user.getDeptIdList().get(0)+"");
