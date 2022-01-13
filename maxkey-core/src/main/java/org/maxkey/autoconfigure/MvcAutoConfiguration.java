@@ -24,9 +24,9 @@ import javax.servlet.Filter;
 
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstantsTimeInterval;
-import org.maxkey.persistence.db.InstitutionService;
-import org.maxkey.persistence.db.LoginHistoryService;
-import org.maxkey.persistence.db.LoginService;
+import org.maxkey.persistence.repository.InstitutionsRepository;
+import org.maxkey.persistence.repository.LoginHistoryRepository;
+import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.web.SessionListenerAdapter;
 import org.maxkey.web.WebXssRequestFilter;
 import org.maxkey.web.WebInstRequestFilter;
@@ -284,11 +284,11 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
     
     @Bean
     public FilterRegistrationBean<Filter> WebInstRequestFilter(
-    											InstitutionService institutionService,
+    											InstitutionsRepository institutionsRepository,
     											ApplicationConfig applicationConfig) {
         _logger.debug("WebInstRequestFilter init for /* ");
         FilterRegistrationBean<Filter> registrationBean = 
-        		new FilterRegistrationBean<Filter>(new WebInstRequestFilter(institutionService,applicationConfig));
+        		new FilterRegistrationBean<Filter>(new WebInstRequestFilter(institutionsRepository,applicationConfig));
         registrationBean.addUrlPatterns("/*");
         registrationBean.setName("webInstRequestFilter");
         registrationBean.setOrder(3);
@@ -297,11 +297,11 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
     
     @Bean(name = "sessionListenerAdapter")
     public SessionListenerAdapter sessionListenerAdapter(
-                LoginService loginService,
-                LoginHistoryService loginHistoryService
+                LoginRepository loginRepository,
+                LoginHistoryRepository loginHistoryRepository
             ) {
         SessionListenerAdapter sessionListenerAdapter =
-                new SessionListenerAdapter(loginService,loginHistoryService);
+                new SessionListenerAdapter(loginRepository,loginHistoryRepository);
         return sessionListenerAdapter;
     }
     

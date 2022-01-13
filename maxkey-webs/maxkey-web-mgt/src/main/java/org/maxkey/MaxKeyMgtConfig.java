@@ -19,9 +19,9 @@ package org.maxkey;
 
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
-import org.maxkey.persistence.db.LoginHistoryService;
-import org.maxkey.persistence.db.LoginService;
-import org.maxkey.persistence.db.PasswordPolicyValidator;
+import org.maxkey.persistence.repository.LoginHistoryRepository;
+import org.maxkey.persistence.repository.LoginRepository;
+import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
@@ -42,8 +42,8 @@ public class MaxKeyMgtConfig  implements InitializingBean {
 	public JdbcAuthenticationRealm authenticationRealm(
  			PasswordEncoder passwordEncoder,
 	    		PasswordPolicyValidator passwordPolicyValidator,
-	    		LoginService loginService,
-	    		LoginHistoryService loginHistoryService,
+	    		LoginRepository loginRepository,
+	    		LoginHistoryRepository loginHistoryRepository,
 	    		AbstractRemeberMeService remeberMeService,
 	    		UserInfoService userInfoService,
              JdbcTemplate jdbcTemplate) {
@@ -51,8 +51,8 @@ public class MaxKeyMgtConfig  implements InitializingBean {
         JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
         		passwordEncoder,
         		passwordPolicyValidator,
-        		loginService,
-        		loginHistoryService,
+        		loginRepository,
+        		loginHistoryRepository,
         		remeberMeService,
         		userInfoService,
         		jdbcTemplate);

@@ -20,7 +20,7 @@ package org.maxkey.web.contorller;
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.entity.Localization;
-import org.maxkey.persistence.db.LocalizationService;
+import org.maxkey.persistence.repository.LocalizationRepository;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageType;
@@ -43,7 +43,7 @@ public class LocalizationController {
 		final static Logger _logger = LoggerFactory.getLogger(LocalizationController.class);
 		
 		@Autowired
-		private LocalizationService localizationService;
+		private LocalizationRepository localizationRepository;
 		
 		/**
 		 * 读取
@@ -51,7 +51,7 @@ public class LocalizationController {
 		 */
 		@RequestMapping(value={"/forward/{property}"})
 		public ModelAndView forward(@PathVariable("property") String property){
-			Localization localization = localizationService.get(property,WebContext.getUserInfo().getInstId());
+			Localization localization = localizationRepository.get(property,WebContext.getUserInfo().getInstId());
 			if(localization == null )localization = new Localization();
 			localization.setProperty(property);
 			localization.setInstId(WebContext.getUserInfo().getInstId());
@@ -70,13 +70,13 @@ public class LocalizationController {
 			localization.setInstId(WebContext.getUserInfo().getInstId());
 			if(StringUtils.isBlank(localization.getId())){
 				localization.setId(localization.generateId());
-				if(localizationService.insert(localization)) {
+				if(localizationRepository.insert(localization)) {
 					return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 				} else {
 					return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
 				}
 			}else {
-				if(localizationService.update(localization)) {
+				if(localizationRepository.update(localization)) {
 					return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 				} else {
 					return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);

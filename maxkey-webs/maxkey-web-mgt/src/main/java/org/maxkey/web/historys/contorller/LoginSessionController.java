@@ -24,8 +24,8 @@ import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.constants.ConstantsOperateMessage;
 import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.db.LoginHistoryService;
-import org.maxkey.persistence.db.LoginService;
+import org.maxkey.persistence.repository.LoginHistoryRepository;
+import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.persistence.service.HistoryLoginService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
@@ -60,10 +60,10 @@ public class LoginSessionController {
     @Autowired
     HistoryLoginService historyLoginService;
     @Autowired
-    LoginService loginService;
+    LoginRepository loginRepository;
     
     @Autowired
-    LoginHistoryService loginHistoryService;
+    LoginHistoryRepository loginHistoryRepository;
     
     @Autowired
     OnlineTicketServices onlineTicketServices;
@@ -106,8 +106,8 @@ public class LoginSessionController {
                 }
                 UserInfo userInfo = WebContext.getUserInfo();
                 String lastLogoffTime = DateUtils.formatDateTime(new Date());
-                loginService.updateLastLogoff(userInfo);
-                loginHistoryService.logoff(lastLogoffTime, sessionId);
+                loginRepository.updateLastLogoff(userInfo);
+                loginHistoryRepository.logoff(lastLogoffTime, sessionId);
                 onlineTicketServices.remove("OT-" + sessionId);
             }
             isTerminated = true;

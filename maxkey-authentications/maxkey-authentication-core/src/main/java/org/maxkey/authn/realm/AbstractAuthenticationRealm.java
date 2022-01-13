@@ -26,10 +26,10 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.entity.Groups;
 import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.db.LoginHistoryService;
-import org.maxkey.persistence.db.PasswordPolicyValidator;
+import org.maxkey.persistence.repository.LoginHistoryRepository;
+import org.maxkey.persistence.repository.LoginRepository;
+import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
-import org.maxkey.persistence.db.LoginService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -52,9 +52,9 @@ public abstract class AbstractAuthenticationRealm {
     
     protected PasswordPolicyValidator passwordPolicyValidator;
     
-    protected LoginService loginService;
+    protected LoginRepository loginRepository;
 
-    protected LoginHistoryService loginHistoryService;
+    protected LoginHistoryRepository loginHistoryRepository;
 
     protected AbstractRemeberMeService remeberMeService;
     
@@ -81,12 +81,12 @@ public abstract class AbstractAuthenticationRealm {
         return passwordPolicyValidator;
     }
 
-    public LoginService getUserInfoLoginService() {
-        return loginService;
+    public LoginRepository getLoginRepository() {
+        return loginRepository;
     }
 
     public UserInfo loadUserInfo(String username, String password) {
-        return loginService.find(username, password);
+        return loginRepository.find(username, password);
     }
 
     public abstract boolean passwordMatches(UserInfo userInfo, String password);
@@ -102,7 +102,7 @@ public abstract class AbstractAuthenticationRealm {
 
 
     public List<Groups> queryGroups(UserInfo userInfo) {
-       return loginService.queryGroups(userInfo);
+       return loginRepository.queryGroups(userInfo);
     }
 
     /**
@@ -112,7 +112,7 @@ public abstract class AbstractAuthenticationRealm {
      * @return ArrayList<GrantedAuthority>
      */
     public ArrayList<GrantedAuthority> grantAuthority(UserInfo userInfo) {
-        return loginService.grantAuthority(userInfo);
+        return loginRepository.grantAuthority(userInfo);
     }
     
     /**
@@ -122,7 +122,7 @@ public abstract class AbstractAuthenticationRealm {
      * @return ArrayList<GrantedAuthority Apps>
      */
     public ArrayList<GrantedAuthority> queryAuthorizedApps(ArrayList<GrantedAuthority> grantedAuthoritys) {
-        return loginService.queryAuthorizedApps(grantedAuthoritys);
+        return loginRepository.queryAuthorizedApps(grantedAuthoritys);
     }
 
     /**
@@ -161,9 +161,9 @@ public abstract class AbstractAuthenticationRealm {
         historyLogin.setDisplayName(userInfo.getDisplayName());
         historyLogin.setInstId(userInfo.getInstId());
         
-        loginHistoryService.login(historyLogin);
+        loginHistoryRepository.login(historyLogin);
         
-        loginService.updateLastLogin(userInfo);
+        loginRepository.updateLastLogin(userInfo);
 
         return true;
     }
@@ -182,10 +182,10 @@ public abstract class AbstractAuthenticationRealm {
             if (sessionIdAttribute != null) {
                 remeberMeService.removeRemeberMe(response);
 
-                loginHistoryService.logoff(userInfo.getLastLogoffTime(), sessionIdAttribute.toString());
+                loginHistoryRepository.logoff(userInfo.getLastLogoffTime(), sessionIdAttribute.toString());
             }
             
-            loginService.updateLastLogoff(userInfo);
+            loginRepository.updateLastLogoff(userInfo);
             
             _logger.debug("Session " + WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID) + ", user "
                     + userInfo.getUsername() + " Logout, datetime " + userInfo.getLastLogoffTime() + " .");

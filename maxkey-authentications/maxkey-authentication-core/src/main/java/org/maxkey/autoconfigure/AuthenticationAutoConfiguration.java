@@ -27,8 +27,10 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.RemeberMeServiceFactory;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
-import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
+import org.maxkey.persistence.repository.LoginHistoryRepository;
+import org.maxkey.persistence.repository.LoginRepository;
+import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -37,8 +39,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.maxkey.persistence.db.LoginService;
-import org.maxkey.persistence.db.LoginHistoryService;
 
 
 @Configuration
@@ -80,13 +80,13 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         return new PasswordPolicyValidator(jdbcTemplate,messageSource);
     }
     
-    @Bean(name = "loginService")
-    public LoginService LoginService(JdbcTemplate jdbcTemplate) {
-        return new LoginService(jdbcTemplate);
+    @Bean(name = "loginRepository")
+    public LoginRepository loginRepository(JdbcTemplate jdbcTemplate) {
+        return new LoginRepository(jdbcTemplate);
     }
-    @Bean(name = "loginHistoryService")
-    public LoginHistoryService loginHistoryService(JdbcTemplate jdbcTemplate) {
-        return new LoginHistoryService(jdbcTemplate);
+    @Bean(name = "loginHistoryRepository")
+    public LoginHistoryRepository LoginHistoryRepository(JdbcTemplate jdbcTemplate) {
+        return new LoginHistoryRepository(jdbcTemplate);
     }
     
     /**

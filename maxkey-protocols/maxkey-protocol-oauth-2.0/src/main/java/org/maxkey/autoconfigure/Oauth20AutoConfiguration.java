@@ -43,8 +43,8 @@ import org.maxkey.configuration.oidc.OIDCProviderMetadataDetails;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
-import org.maxkey.persistence.db.LoginService;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
+import org.maxkey.persistence.repository.LoginRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -303,11 +303,11 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     @Bean(name = "oauth20UserAuthenticationManager")
     public ProviderManager oauth20UserAuthenticationManager(
             PasswordEncoder passwordEncoder,
-            LoginService loginService
+            LoginRepository loginRepository
             ) {
         
         OAuth2UserDetailsService userDetailsService =new OAuth2UserDetailsService();
-        userDetailsService.setLoginService(loginService);
+        userDetailsService.setLoginRepository(loginRepository);
         
         DaoAuthenticationProvider daoAuthenticationProvider= new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);

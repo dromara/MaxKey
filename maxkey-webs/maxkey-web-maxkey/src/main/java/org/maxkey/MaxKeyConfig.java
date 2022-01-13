@@ -45,12 +45,12 @@ import org.maxkey.password.onetimepwd.impl.sms.SmsOtpAuthnAliyun;
 import org.maxkey.password.onetimepwd.impl.sms.SmsOtpAuthnTencentCloud;
 import org.maxkey.password.onetimepwd.impl.sms.SmsOtpAuthnYunxin;
 import org.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
-import org.maxkey.persistence.db.LoginHistoryService;
-import org.maxkey.persistence.db.LoginService;
-import org.maxkey.persistence.db.PasswordPolicyValidator;
 import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
 import org.maxkey.persistence.ldap.LdapUtils;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
+import org.maxkey.persistence.repository.LoginHistoryRepository;
+import org.maxkey.persistence.repository.LoginRepository;
+import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,8 +152,8 @@ public class MaxKeyConfig  implements InitializingBean {
     public JdbcAuthenticationRealm authenticationRealm(
     			PasswordEncoder passwordEncoder,
 	    		PasswordPolicyValidator passwordPolicyValidator,
-	    		LoginService loginService,
-	    		LoginHistoryService loginHistoryService,
+	    		LoginRepository loginService,
+	    		LoginHistoryRepository loginHistoryService,
 	    		AbstractRemeberMeService remeberMeService,
 	    		UserInfoService userInfoService,
                 JdbcTemplate jdbcTemplate,

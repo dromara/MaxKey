@@ -18,7 +18,7 @@ import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.db.LoginService;
+import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,18 +35,12 @@ public class OAuth2UserDetailsService implements UserDetailsService {
 	 private static final Logger _logger = 
 	            LoggerFactory.getLogger(OAuth2UserDetailsService.class);
 	
-    LoginService loginService;
+    LoginRepository loginRepository;
 	
-
-	public void setLoginService(LoginService loginService) {
-        this.loginService = loginService;
-    }
-
-
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserInfo userInfo;
 		try {
-		    userInfo = loginService.find(username, "");
+		    userInfo = loginRepository.find(username, "");
 		} catch (NoSuchClientException e) {
 			throw new UsernameNotFoundException(e.getMessage(), e);
 		}
@@ -58,7 +52,7 @@ public class OAuth2UserDetailsService implements UserDetailsService {
 		//set OnlineTicket
         signinPrincipal.setOnlineTicket(onlineTicket);
         
-        ArrayList<GrantedAuthority> grantedAuthoritys = loginService.grantAuthority(userInfo);
+        ArrayList<GrantedAuthority> grantedAuthoritys = loginRepository.grantAuthority(userInfo);
         signinPrincipal.setAuthenticated(true);
         
         for(GrantedAuthority administratorsAuthority : AbstractAuthenticationProvider.grantedAdministratorsAuthoritys) {
@@ -74,4 +68,9 @@ public class OAuth2UserDetailsService implements UserDetailsService {
 		return signinPrincipal;
 	}
 
+	public void setLoginRepository(LoginRepository loginRepository) {
+		this.loginRepository = loginRepository;
+	}
+
+    
 }

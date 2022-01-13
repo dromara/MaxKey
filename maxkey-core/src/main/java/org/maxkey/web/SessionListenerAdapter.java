@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSessionListener;
 
 import org.apache.mybatis.jpa.util.WebContext;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.db.LoginHistoryService;
-import org.maxkey.persistence.db.LoginService;
+import org.maxkey.persistence.repository.LoginHistoryRepository;
+import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,26 +35,26 @@ public class SessionListenerAdapter implements HttpSessionListener {
 
     private static final Logger _logger = LoggerFactory.getLogger(SessionListenerAdapter.class);
     
-    LoginService loginService;
+    LoginRepository loginRepository;
     
-    LoginHistoryService loginHistoryService;
+    LoginHistoryRepository loginHistoryRepository;
     
     public SessionListenerAdapter() {
         super();
         _logger.debug("SessionListenerAdapter inited . ");
     }
 
-    public SessionListenerAdapter(LoginService loginService, LoginHistoryService loginHistoryService) {
+    public SessionListenerAdapter(LoginRepository loginRepository, LoginHistoryRepository loginHistoryRepository) {
         super();
-        this.loginService = loginService;
-        this.loginHistoryService = loginHistoryService;
+        this.loginRepository = loginRepository;
+        this.loginHistoryRepository = loginHistoryRepository;
         _logger.debug("SessionListenerAdapter inited . ");
     }
 
     public void init() {
-        if(loginService == null ) {
-            loginService = (LoginService)WebContext.getBean("loginService");
-            loginHistoryService = (LoginHistoryService)WebContext.getBean("loginHistoryService");
+        if(loginRepository == null ) {
+        	loginRepository = (LoginRepository)WebContext.getBean("loginRepository");
+        	loginHistoryRepository = (LoginHistoryRepository)WebContext.getBean("loginHistoryRepository");
             _logger.debug("SessionListenerAdapter function inited . ");
         }
     }
@@ -78,8 +78,8 @@ public class SessionListenerAdapter implements HttpSessionListener {
             init();
             UserInfo userInfo = (UserInfo)session.getAttribute(WebConstants.CURRENT_USER);
             userInfo.setLastLogoffTime(DateUtils.formatDateTime(new Date()));
-            loginService.updateLastLogoff(userInfo);
-            loginHistoryService.logoff(userInfo.getLastLogoffTime(), sessionIdAttribute.toString());
+            loginRepository.updateLastLogoff(userInfo);
+            loginHistoryRepository.logoff(userInfo.getLastLogoffTime(), sessionIdAttribute.toString());
             
             _logger.debug(
                     "session {} Destroyed as {} userId : {} , username : {}" ,
@@ -91,12 +91,12 @@ public class SessionListenerAdapter implements HttpSessionListener {
         
     }
 
-    public void setLoginService(LoginService loginService) {
-        this.loginService = loginService;
-    }
+	public void setLoginRepository(LoginRepository loginRepository) {
+		this.loginRepository = loginRepository;
+	}
 
-    public void setLoginHistoryService(LoginHistoryService loginHistoryService) {
-        this.loginHistoryService = loginHistoryService;
-    }
+	public void setLoginHistoryRepository(LoginHistoryRepository loginHistoryRepository) {
+		this.loginHistoryRepository = loginHistoryRepository;
+	}
 
 }

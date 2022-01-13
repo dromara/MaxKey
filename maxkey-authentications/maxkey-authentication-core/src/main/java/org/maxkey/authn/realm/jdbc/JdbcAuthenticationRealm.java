@@ -20,10 +20,11 @@ package org.maxkey.authn.realm.jdbc;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.entity.PasswordPolicy;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.db.LoginHistoryService;
-import org.maxkey.persistence.db.LoginService;
-import org.maxkey.persistence.db.PasswordPolicyValidator;
+import org.maxkey.persistence.repository.LoginHistoryRepository;
+import org.maxkey.persistence.repository.LoginRepository;
+import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -54,16 +55,16 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     public JdbcAuthenticationRealm(
     		PasswordEncoder passwordEncoder,
     		PasswordPolicyValidator passwordPolicyValidator,
-    		LoginService loginService,
-    		LoginHistoryService loginHistoryService,
+    		LoginRepository loginRepository,
+    		LoginHistoryRepository loginHistoryRepository,
     		AbstractRemeberMeService remeberMeService,
     		UserInfoService userInfoService,
     	    JdbcTemplate jdbcTemplate) {
     	
     	this.passwordEncoder =passwordEncoder;
     	this.passwordPolicyValidator=passwordPolicyValidator;
-    	this.loginService = loginService;
-    	this.loginHistoryService = loginHistoryService;
+    	this.loginRepository = loginRepository;
+    	this.loginHistoryRepository = loginHistoryRepository;
     	this.remeberMeService = remeberMeService;
     	 this.userInfoService = userInfoService;
         this.jdbcTemplate = jdbcTemplate;
@@ -73,8 +74,8 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     public JdbcAuthenticationRealm(
     		PasswordEncoder passwordEncoder,
     		PasswordPolicyValidator passwordPolicyValidator,
-    		LoginService loginService,
-    		LoginHistoryService loginHistoryService,
+    		LoginRepository loginRepository,
+    		LoginHistoryRepository loginHistoryRepository,
     		AbstractRemeberMeService remeberMeService,
     		UserInfoService userInfoService,
     	    JdbcTemplate jdbcTemplate,
@@ -84,8 +85,8 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     	
     	this.passwordEncoder =passwordEncoder;
     	this.passwordPolicyValidator=passwordPolicyValidator;
-    	this.loginService = loginService;
-    	this.loginHistoryService = loginHistoryService;
+    	this.loginRepository = loginRepository;
+    	this.loginHistoryRepository = loginHistoryRepository;
     	this.remeberMeService = remeberMeService;
         this.jdbcTemplate = jdbcTemplate;
         this.ldapAuthenticationRealm = ldapAuthenticationRealm;
@@ -121,14 +122,14 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
         if (!passwordMatches) {
             passwordPolicyValidator.plusBadPasswordCount(userInfo);
             insertLoginHistory(userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", WebConstants.LOGIN_RESULT.PASSWORD_ERROE);
-            
-            if(userInfo.getBadPasswordCount()>=(passwordPolicyValidator.getPasswordPolicy().getAttempts()/2)) {
+            PasswordPolicy passwordPolicy = passwordPolicyValidator.getPasswordPolicyRepository().getPasswordPolicy();
+            if(userInfo.getBadPasswordCount()>=(passwordPolicy.getAttempts()/2)) {
                 throw new BadCredentialsException(
                         WebContext.getI18nValue("login.error.password.attempts",
                                 new Object[]{
                                         userInfo.getBadPasswordCount() + 1,
-                                        passwordPolicyValidator.getPasswordPolicy().getAttempts(),
-                                        passwordPolicyValidator.getPasswordPolicy().getDuration()}));
+                                        passwordPolicy.getAttempts(),
+                                        passwordPolicy.getDuration()}));
             }else {
                 throw new BadCredentialsException(WebContext.getI18nValue("login.error.password"));
             }

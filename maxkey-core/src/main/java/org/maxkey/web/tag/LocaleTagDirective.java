@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
-import org.maxkey.persistence.db.LocalizationService;
+import org.maxkey.persistence.repository.LocalizationRepository;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +51,7 @@ public class LocaleTagDirective implements TemplateDirectiveModel {
     private HttpServletRequest request;
     
     @Autowired
-    LocalizationService localizationService;
+    LocalizationRepository localizationService;
 
     @SuppressWarnings("rawtypes")
     @Override

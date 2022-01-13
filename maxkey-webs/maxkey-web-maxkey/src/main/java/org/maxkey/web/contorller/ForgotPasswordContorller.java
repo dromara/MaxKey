@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 import org.maxkey.configuration.EmailConfig;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
-import org.maxkey.persistence.db.PasswordPolicyValidator;
+import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;

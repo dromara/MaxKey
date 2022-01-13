@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.maxkey.persistence.db;
+package org.maxkey.persistence.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,8 +33,8 @@ import org.springframework.jdbc.core.RowMapper;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
-public class LocalizationService {
-	private static Logger _logger = LoggerFactory.getLogger(LocalizationService.class);
+public class LocalizationRepository {
+	private static Logger _logger = LoggerFactory.getLogger(LocalizationRepository.class);
 	private static final String INSERT_STATEMENT ="insert into mxk_localization (id, property,langzh,langen,status,description,instid)values(?,?,?,?,?,?,?)";
 	private static final String UPDATE_STATEMENT ="update mxk_localization set langzh = ? , langen =? where id = ?";
 	private static final String DELETE_STATEMENT ="delete from  mxk_localization where id = ?";
@@ -42,7 +42,7 @@ public class LocalizationService {
 	
 	private static final Pattern PATTERN_HTML = Pattern.compile("<[^>]+>", Pattern.CASE_INSENSITIVE);
 	 
-	protected InstitutionService institutionService;
+	protected InstitutionsRepository institutionService;
 	
 	JdbcTemplate jdbcTemplate;
 	
@@ -51,7 +51,7 @@ public class LocalizationService {
                 .expireAfterWrite(ConstantsTimeInterval.ONE_HOUR, TimeUnit.SECONDS)
                 .build();
 
-	public LocalizationService() {
+	public LocalizationRepository() {
 
 	}
 	
@@ -102,7 +102,7 @@ public class LocalizationService {
 		return message;
 	}
 	
-	public void setInstitutionService(InstitutionService institutionService) {
+	public void setInstitutionService(InstitutionsRepository institutionService) {
 		this.institutionService = institutionService;
 	}
 
@@ -133,7 +133,7 @@ public class LocalizationService {
 		return (localizations==null || localizations.size()==0) ? null : localizations.get(0);
 	}
 	
-	public LocalizationService(JdbcTemplate jdbcTemplate,InstitutionService institutionService) {
+	public LocalizationRepository(JdbcTemplate jdbcTemplate,InstitutionsRepository institutionService) {
 		super();
 		this.institutionService = institutionService;
 		this.jdbcTemplate = jdbcTemplate;

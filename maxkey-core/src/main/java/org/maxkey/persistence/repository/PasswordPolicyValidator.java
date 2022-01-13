@@ -15,21 +15,14 @@
  */
  
 
-package org.maxkey.persistence.db;
+package org.maxkey.persistence.repository;
 
-import java.io.InputStreamReader;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.maxkey.constants.ConstantsPasswordSetType;
-import org.maxkey.constants.ConstantsProperties;
 import org.maxkey.constants.ConstantsStatus;
 import org.maxkey.crypto.password.PasswordGen;
 import org.maxkey.entity.PasswordPolicy;
@@ -37,48 +30,19 @@ import org.maxkey.entity.UserInfo;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
-import org.passay.CharacterOccurrencesRule;
-import org.passay.CharacterRule;
-import org.passay.DictionaryRule;
-import org.passay.EnglishCharacterData;
-import org.passay.EnglishSequenceData;
-import org.passay.IllegalSequenceRule;
-import org.passay.LengthRule;
 import org.passay.PasswordData;
 import org.passay.PasswordValidator;
-import org.passay.Rule;
 import org.passay.RuleResult;
-import org.passay.UsernameRule;
-import org.passay.WhitespaceRule;
-import org.passay.dictionary.Dictionary;
-import org.passay.dictionary.DictionaryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.authentication.BadCredentialsException;
-
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 
 public class PasswordPolicyValidator {
     private static Logger _logger = LoggerFactory.getLogger(PasswordPolicyValidator.class);
     
-    //Dictionary topWeakPassword Source
-    public static final String topWeakPasswordPropertySource      = 
-            "classpath:/top_weak_password.txt";
-    
-    //Cache PasswordPolicy in memory ONE_HOUR
-    protected static final Cache<String, PasswordPolicy> passwordPolicyStore = 
-            Caffeine.newBuilder()
-                .expireAfterWrite(60, TimeUnit.MINUTES)
-                .build();
-    
-    protected PasswordPolicy passwordPolicy;
-    
-    ArrayList <Rule> passwordPolicyRuleList;
+    PasswordPolicyRepository passwordPolicyRepository;
     
     protected JdbcTemplate jdbcTemplate;
     
@@ -86,11 +50,7 @@ public class PasswordPolicyValidator {
     
     public static final String PASSWORD_POLICY_VALIDATE_RESULT = "PASSWORD_POLICY_SESSION_VALIDATE_RESULT_KEY";
     
-    private static final String PASSWORD_POLICY_KEY = "PASSWORD_POLICY_KEY";
-    
     private static final String LOCK_USER_UPDATE_STATEMENT = "update mxk_userinfo set islocked = ?  , unlocktime = ? where id = ?";
-
-    private static final String PASSWORD_POLICY_SELECT_STATEMENT = "select * from mxk_password_policy ";
 
     private static final String UNLOCK_USER_UPDATE_STATEMENT = "update mxk_userinfo set islocked = ? , unlocktime = ? where id = ?";
 
@@ -104,84 +64,8 @@ public class PasswordPolicyValidator {
     public PasswordPolicyValidator(JdbcTemplate jdbcTemplate,MessageSource messageSource) {
         this.messageSource=messageSource;
         this.jdbcTemplate = jdbcTemplate;
-    }
-    
-    /**
-     * init PasswordPolicy and load Rules
-     * @return
-     */
-    public PasswordPolicy getPasswordPolicy() {
-        passwordPolicy = passwordPolicyStore.getIfPresent(PASSWORD_POLICY_KEY);
-       
-        if (passwordPolicy == null) {
-            passwordPolicy = jdbcTemplate.queryForObject(PASSWORD_POLICY_SELECT_STATEMENT,
-                    new PasswordPolicyRowMapper());
-            _logger.debug("query PasswordPolicy : " + passwordPolicy);
-            passwordPolicyStore.put(PASSWORD_POLICY_KEY,passwordPolicy);
-            
-            //RandomPasswordLength =(MaxLength +MinLength)/2
-            passwordPolicy.setRandomPasswordLength(
-                Math.round(
-                        (
-                                passwordPolicy.getMaxLength() + 
-                                passwordPolicy.getMinLength()
-                        )/2
-                   )
-            );
-            
-            passwordPolicyRuleList = new ArrayList<Rule>();
-            passwordPolicyRuleList.add(new WhitespaceRule());
-            passwordPolicyRuleList.add(new LengthRule(passwordPolicy.getMinLength(), passwordPolicy.getMaxLength()));
-            
-            if(passwordPolicy.getUpperCase()>0) {
-                passwordPolicyRuleList.add(new CharacterRule(EnglishCharacterData.UpperCase, passwordPolicy.getUpperCase()));
-            }
-            
-            if(passwordPolicy.getLowerCase()>0) {
-                passwordPolicyRuleList.add(new CharacterRule(EnglishCharacterData.LowerCase, passwordPolicy.getLowerCase()));
-            }
-            
-            if(passwordPolicy.getDigits()>0) {
-                passwordPolicyRuleList.add(new CharacterRule(EnglishCharacterData.Digit, passwordPolicy.getDigits()));
-            }
-            
-            if(passwordPolicy.getSpecialChar()>0) {
-                passwordPolicyRuleList.add(new CharacterRule(EnglishCharacterData.Special, passwordPolicy.getSpecialChar()));
-            }
-            
-            if(passwordPolicy.getUsername()>0) {
-                passwordPolicyRuleList.add(new UsernameRule());
-            }
-            
-            if(passwordPolicy.getOccurances()>0) {
-                passwordPolicyRuleList.add(new CharacterOccurrencesRule(passwordPolicy.getOccurances()));
-            }
-            
-            if(passwordPolicy.getAlphabetical()>0) {
-                passwordPolicyRuleList.add(new IllegalSequenceRule(EnglishSequenceData.Alphabetical, 4, false));
-            }
-            
-            if(passwordPolicy.getNumerical()>0) {
-                passwordPolicyRuleList.add(new IllegalSequenceRule(EnglishSequenceData.Numerical, 4, false));
-            }
-            
-            if(passwordPolicy.getQwerty()>0) {
-                passwordPolicyRuleList.add(new IllegalSequenceRule(EnglishSequenceData.USQwerty, 4, false));
-            }
-                        
-            if(passwordPolicy.getDictionary()>0 ) {
-                try {
-                    ClassPathResource dictFile= 
-                            new ClassPathResource(
-                                    ConstantsProperties.classPathResource(topWeakPasswordPropertySource));
-                    Dictionary dictionary =new DictionaryBuilder().addReader(new InputStreamReader(dictFile.getInputStream())).build();
-                    passwordPolicyRuleList.add(new DictionaryRule(dictionary));
-                }catch(Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return passwordPolicy;
+        this.passwordPolicyRepository = new PasswordPolicyRepository(jdbcTemplate);
+        
     }
     
     /**
@@ -200,10 +84,8 @@ public class PasswordPolicyValidator {
            return false;
        }
        
-       getPasswordPolicy();
-
        PasswordValidator validator = new PasswordValidator(
-               new PasswordPolicyMessageResolver(messageSource),passwordPolicyRuleList);
+               new PasswordPolicyMessageResolver(messageSource),passwordPolicyRepository.getPasswordPolicyRuleList());
        
        RuleResult result = validator.validate(new PasswordData(username,password));
        
@@ -230,8 +112,8 @@ public class PasswordPolicyValidator {
     */
    public boolean passwordPolicyValid(UserInfo userInfo) {
        
-       getPasswordPolicy();
-       
+	   PasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
+	   
        DateTime currentdateTime = new DateTime();
         /*
          * check login attempts fail times
@@ -285,7 +167,8 @@ public class PasswordPolicyValidator {
     }
    
    public void applyPasswordPolicy(UserInfo userInfo) {
-       getPasswordPolicy();
+	   PasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
+	   
        DateTime currentdateTime = new DateTime();
        //initial password need change
        if(userInfo.getLoginCount()<=0) {
@@ -417,7 +300,8 @@ public class PasswordPolicyValidator {
    }
    
    public String generateRandomPassword() {
-       getPasswordPolicy();
+       PasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
+       
        PasswordGen passwordGen = new PasswordGen(
                passwordPolicy.getRandomPasswordLength()
        );
@@ -428,36 +312,9 @@ public class PasswordPolicyValidator {
                passwordPolicy.getDigits(), 
                passwordPolicy.getSpecialChar());
    }
-   
-   public void setPasswordPolicy(PasswordPolicy passwordPolicy) {
-    this.passwordPolicy = passwordPolicy;
-   }
 
- 
-   public class PasswordPolicyRowMapper implements RowMapper<PasswordPolicy> {
+	public PasswordPolicyRepository getPasswordPolicyRepository() {
+		return passwordPolicyRepository;
+	}
 
-       @Override
-       public PasswordPolicy mapRow(ResultSet rs, int rowNum) throws SQLException {
-           PasswordPolicy passwordPolicy = new PasswordPolicy();
-           passwordPolicy.setId(rs.getString("ID"));
-           passwordPolicy.setMinLength(rs.getInt("MINLENGTH"));
-           passwordPolicy.setMaxLength(rs.getInt("MAXLENGTH"));
-           passwordPolicy.setLowerCase(rs.getInt("LOWERCASE"));
-           passwordPolicy.setUpperCase(rs.getInt("UPPERCASE"));
-           passwordPolicy.setDigits(rs.getInt("DIGITS"));
-           passwordPolicy.setSpecialChar(rs.getInt("SPECIALCHAR"));
-           passwordPolicy.setAttempts(rs.getInt("ATTEMPTS"));
-           passwordPolicy.setDuration(rs.getInt("DURATION"));
-           passwordPolicy.setExpiration(rs.getInt("EXPIRATION"));
-           passwordPolicy.setUsername(rs.getInt("USERNAME"));
-           passwordPolicy.setHistory(rs.getInt("HISTORY"));
-           passwordPolicy.setDictionary(rs.getInt("DICTIONARY"));
-           passwordPolicy.setAlphabetical(rs.getInt("ALPHABETICAL"));
-           passwordPolicy.setNumerical(rs.getInt("NUMERICAL"));
-           passwordPolicy.setQwerty(rs.getInt("QWERTY"));
-           passwordPolicy.setOccurances(rs.getInt("OCCURANCES"));
-           return passwordPolicy;
-       }
-
-   }
 }

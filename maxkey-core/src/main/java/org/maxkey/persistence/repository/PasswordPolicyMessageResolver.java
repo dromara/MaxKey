@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.persistence.db;
+package org.maxkey.persistence.repository;
 
 import java.util.Locale;
 

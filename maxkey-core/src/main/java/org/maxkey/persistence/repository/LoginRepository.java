@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.persistence.db;
+package org.maxkey.persistence.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,8 +35,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-public class LoginService {
-    private static Logger _logger = LoggerFactory.getLogger(LoginService.class);
+public class LoginRepository {
+    private static Logger _logger = LoggerFactory.getLogger(LoginRepository.class);
 
     private static final String LOCK_USER_UPDATE_STATEMENT = "update mxk_userinfo set islocked = ?  , unlocktime = ? where id = ?";
 
@@ -69,11 +69,11 @@ public class LoginService {
      */
     public  static  int LOGIN_ATTRIBUTE_TYPE = 2;
     
-    public LoginService(){
+    public LoginRepository(){
         
     }
     
-    public LoginService(JdbcTemplate jdbcTemplate){
+    public LoginRepository(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate=jdbcTemplate;
     }
     

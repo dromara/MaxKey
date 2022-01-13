@@ -31,7 +31,7 @@ import java.io.OutputStreamWriter;
  */
 public class Copyright {   
     // 存放java文件的文件夹,必须是文件夹
-    private static String srcFolder = "C:\\IDES\\shimi\\eclipse-workspace\\MaxKey";
+    private static String srcFolder = "D:\\MaxKey\\workspace\\workspace-maxkey\\MaxKey";
     //已添加标识
     private static String copyRightText = "http://www.apache.org/licenses/LICENSE-2.0";
     //扫描目录

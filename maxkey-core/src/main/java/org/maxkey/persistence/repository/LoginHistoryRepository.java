@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.persistence.db;
+package org.maxkey.persistence.repository;
 
 import java.sql.Types;
 
@@ -25,8 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class LoginHistoryService {
-    private static Logger _logger = LoggerFactory.getLogger(LoginHistoryService.class);
+public class LoginHistoryRepository {
+    private static Logger _logger = LoggerFactory.getLogger(LoginHistoryRepository.class);
     
     private static final String HISTORY_LOGIN_INSERT_STATEMENT = "insert into mxk_history_login (id , sessionid , userid , username , displayname , logintype , message , code , provider , sourceip , browser , platform , application , loginurl , sessionstatus ,instid)values( ? , ? , ? , ? , ? , ? , ?, ? , ? , ?, ? , ? , ?, ? , ? , ?)";
 
@@ -34,7 +34,7 @@ public class LoginHistoryService {
 
     protected JdbcTemplate jdbcTemplate;
     
-    public LoginHistoryService(JdbcTemplate jdbcTemplate) {
+    public LoginHistoryRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
         

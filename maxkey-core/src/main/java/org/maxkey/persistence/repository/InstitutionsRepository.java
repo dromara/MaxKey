@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.persistence.db;
+package org.maxkey.persistence.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,8 +34,8 @@ import org.springframework.jdbc.core.RowMapper;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
-public class InstitutionService {
-    private static Logger _logger = LoggerFactory.getLogger(InstitutionService.class);
+public class InstitutionsRepository {
+    private static Logger _logger = LoggerFactory.getLogger(InstitutionsRepository.class);
     
     private static final String SELECT_STATEMENT = 
     						"select * from  mxk_institutions where domain = ? and status = " + ConstantsStatus.ACTIVE;
@@ -53,7 +53,7 @@ public class InstitutionService {
     
     protected JdbcTemplate jdbcTemplate;
     
-    public InstitutionService(JdbcTemplate jdbcTemplate) {
+    public InstitutionsRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
         
