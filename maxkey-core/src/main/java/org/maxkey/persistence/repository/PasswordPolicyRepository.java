@@ -161,23 +161,23 @@ public class PasswordPolicyRowMapper implements RowMapper<PasswordPolicy> {
        @Override
        public PasswordPolicy mapRow(ResultSet rs, int rowNum) throws SQLException {
            PasswordPolicy passwordPolicy = new PasswordPolicy();
-           passwordPolicy.setId(rs.getString("ID"));
-           passwordPolicy.setMinLength(rs.getInt("MINLENGTH"));
-           passwordPolicy.setMaxLength(rs.getInt("MAXLENGTH"));
-           passwordPolicy.setLowerCase(rs.getInt("LOWERCASE"));
-           passwordPolicy.setUpperCase(rs.getInt("UPPERCASE"));
-           passwordPolicy.setDigits(rs.getInt("DIGITS"));
-           passwordPolicy.setSpecialChar(rs.getInt("SPECIALCHAR"));
-           passwordPolicy.setAttempts(rs.getInt("ATTEMPTS"));
-           passwordPolicy.setDuration(rs.getInt("DURATION"));
-           passwordPolicy.setExpiration(rs.getInt("EXPIRATION"));
-           passwordPolicy.setUsername(rs.getInt("USERNAME"));
-           passwordPolicy.setHistory(rs.getInt("HISTORY"));
-           passwordPolicy.setDictionary(rs.getInt("DICTIONARY"));
-           passwordPolicy.setAlphabetical(rs.getInt("ALPHABETICAL"));
-           passwordPolicy.setNumerical(rs.getInt("NUMERICAL"));
-           passwordPolicy.setQwerty(rs.getInt("QWERTY"));
-           passwordPolicy.setOccurances(rs.getInt("OCCURANCES"));
+           passwordPolicy.setId(rs.getString("id"));
+           passwordPolicy.setMinLength(rs.getInt("minlength"));
+           passwordPolicy.setMaxLength(rs.getInt("maxlength"));
+           passwordPolicy.setLowerCase(rs.getInt("lowercase"));
+           passwordPolicy.setUpperCase(rs.getInt("uppercase"));
+           passwordPolicy.setDigits(rs.getInt("digits"));
+           passwordPolicy.setSpecialChar(rs.getInt("specialchar"));
+           passwordPolicy.setAttempts(rs.getInt("attempts"));
+           passwordPolicy.setDuration(rs.getInt("duration"));
+           passwordPolicy.setExpiration(rs.getInt("expiration"));
+           passwordPolicy.setUsername(rs.getInt("username"));
+           passwordPolicy.setHistory(rs.getInt("history"));
+           passwordPolicy.setDictionary(rs.getInt("dictionary"));
+           passwordPolicy.setAlphabetical(rs.getInt("alphabetical"));
+           passwordPolicy.setNumerical(rs.getInt("numerical"));
+           passwordPolicy.setQwerty(rs.getInt("qwerty"));
+           passwordPolicy.setOccurances(rs.getInt("occurances"));
            return passwordPolicy;
        }
 

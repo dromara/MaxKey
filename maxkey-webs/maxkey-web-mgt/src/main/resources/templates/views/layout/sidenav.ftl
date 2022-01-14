@@ -142,6 +142,19 @@
              </a>
            </li>
            <li>
+             <a class="side-nav-menu" href="<@base />/ldapcontext/forward/">
+                <@locale code="navs.ldapcontext"/>
+                 <span class="fa fa-fw fa-balance-scale"></span>
+             </a>
+           </li>
+           <li>
+             <a class="side-nav-menu" href="<@base />/emailsenders/forward/">
+                <@locale code="navs.emailsenders"/>
+                 <span class="fa fa-fw fa-balance-scale"></span>
+             </a>
+           </li>
+           
+           <li>
              <a class="side-nav-menu" href="<@base />/config/passwordpolicy/forward/">
                 <@locale code="navs.conf.passwordpolicy"/>
                  <span class="fa fa-fw fa-balance-scale"></span>
