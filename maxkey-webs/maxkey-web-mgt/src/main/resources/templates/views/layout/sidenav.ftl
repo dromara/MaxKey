@@ -36,7 +36,7 @@
    	<li>
      	<a class="side-nav-menu has-arrow" href="#">
        		<@locale code="navs.privileges"/>
-       		<span class="fa fa-fw fa-cubes fa-lg"></span>
+       		<span class="fa fa-fw fa-map fa-lg"></span>
      	</a>
      	<ul>
      	   <li>
@@ -68,7 +68,7 @@
    	<li>
      	<a class="side-nav-menu has-arrow" href="#">
        		<@locale code="navs.role.permissions"/>
-       		<span class="fa fa-fw fa-cogs fa-lg"></span>
+       		<span class="fa fa-fw fa-leaf fa-lg"></span>
      	</a>
      	<ul>
      		
@@ -138,22 +138,27 @@
            <li>
              <a class="side-nav-menu" href="<@base />/institutions/forward/">
                 <@locale code="navs.institutions"/>
-                 <span class="fa fa-fw fa-balance-scale"></span>
+                 <span class="fa fa-fw fa-institution"></span>
              </a>
            </li>
            <li>
              <a class="side-nav-menu" href="<@base />/ldapcontext/forward/">
                 <@locale code="navs.ldapcontext"/>
-                 <span class="fa fa-fw fa-balance-scale"></span>
+                 <span class="fa fa-fw fa-database"></span>
              </a>
            </li>
            <li>
              <a class="side-nav-menu" href="<@base />/emailsenders/forward/">
                 <@locale code="navs.emailsenders"/>
-                 <span class="fa fa-fw fa-balance-scale"></span>
+                 <span class="fa fa-fw  fa-envelope"></span>
              </a>
            </li>
-           
+           <li>
+             <a class="side-nav-menu" href="<@base />/smsprovider/forward/">
+                <@locale code="navs.smsprovider"/>
+                 <span class="fa fa-fw  fa-commenting"></span>
+             </a>
+           </li>
            <li>
              <a class="side-nav-menu" href="<@base />/config/passwordpolicy/forward/">
                 <@locale code="navs.conf.passwordpolicy"/>

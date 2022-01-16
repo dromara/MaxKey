@@ -133,6 +133,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/localization/**")
                 .addPathPatterns("/ldapcontext/**")
                 .addPathPatterns("/emailsenders/**")
+                .addPathPatterns("/smsprovider/**")
                 
                 ;
         
