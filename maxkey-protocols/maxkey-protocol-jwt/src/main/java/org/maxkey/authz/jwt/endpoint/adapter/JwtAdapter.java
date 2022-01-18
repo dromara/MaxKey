@@ -71,6 +71,7 @@ public class JwtAdapter extends AbstractAuthorizeAdapter {
 				.claim("locale", userInfo.getLocale())
 				.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId())
 				.claim("kid", jwtSignerService.getDefaultSignerKeyId())
+				.claim("institution", userInfo.getInstId())
 				.build();
 		
 		_logger.debug("jwt Claims : "+jwtClaims);

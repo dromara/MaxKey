@@ -82,8 +82,8 @@ public class LoginEndpoint {
     @Qualifier("tfaOtpAuthn")
     protected AbstractOtpAuthn tfaOtpAuthn;
 	
-	@Autowired
-    @Qualifier("smsOtpAuthn")
+	//@Autowired
+    //@Qualifier("smsOtpAuthn")
     protected AbstractOtpAuthn smsOtpAuthn;
 	
 	Pattern mobileRegex = Pattern.compile(

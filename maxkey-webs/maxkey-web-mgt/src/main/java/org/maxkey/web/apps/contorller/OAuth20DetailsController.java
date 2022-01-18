@@ -19,8 +19,8 @@ package org.maxkey.web.apps.contorller;
 
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
-import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.constants.ConstantsProtocols;
+import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsOAuth20Details;
@@ -56,7 +56,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		oauth20Details.setSecret(ReciprocalUtils.generateKey(""));
 		oauth20Details.setClientId(oauth20Details.getId());
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
-		oauth20Details.setProtocol(ConstantsProtocols.OAUTH20);
+		oauth20Details.setProtocol(ConstsProtocols.OAUTH20);
 		modelAndView.addObject("model",oauth20Details);
 		return modelAndView;
 	}
@@ -66,7 +66,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	public ModelAndView insert(@ModelAttribute("oauth20Details") AppsOAuth20Details oauth20Details ) {
 		_logger.debug("-Add  :" + oauth20Details);
 		
-		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH21)) {
+		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
 		    oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
 		}
 		transform(oauth20Details);
@@ -76,10 +76,10 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		
 		oauth20JdbcClientDetailsService.addClientDetails(oauth20Details.clientDetailsRowMapper());
 		if (appsService.insertApp(oauth20Details)) {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+oauth20Details.getId());
 	}
@@ -108,7 +108,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		//
 		_logger.debug("-update  application :" + oauth20Details);
 		_logger.debug("-update  oauth20Details use oauth20JdbcClientDetails" );
-		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH21)) {
+		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
             oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
         }
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
@@ -119,9 +119,9 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		transform(oauth20Details);
 		
 		if (appsService.updateApp(oauth20Details)) {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 		} else {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+oauth20Details.getId());
 	}
@@ -133,10 +133,10 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		_logger.debug("-delete  application :" + id);
 		oauth20JdbcClientDetailsService.removeClientDetails(id);
 		if (appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 	}
 	

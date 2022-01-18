@@ -27,7 +27,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
-import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.entity.Accounts;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -168,7 +168,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
     
     public Apps() {
         super();
-        isSignature = Boolean.FALSE;
+        isSignature = ConstsBoolean.FALSE;
         credential = CREDENTIALS.NONE;
     }
 

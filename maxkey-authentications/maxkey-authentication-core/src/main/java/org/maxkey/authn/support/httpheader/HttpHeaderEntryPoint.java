@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
-import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.constants.ConstsLoginType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,7 +109,7 @@ public class HttpHeaderEntryPoint implements AsyncHandlerInterceptor {
 		 }
 		 
 		 if(!isAuthenticated){
-			LoginCredential loginCredential =new LoginCredential(httpHeaderUsername,"",ConstantsLoginType.HTTPHEADER);
+			LoginCredential loginCredential =new LoginCredential(httpHeaderUsername,"",ConstsLoginType.HTTPHEADER);
             authenticationProvider.authentication(loginCredential,true);
 			_logger.info("Authentication  "+httpHeaderUsername+" successful .");
 		 }

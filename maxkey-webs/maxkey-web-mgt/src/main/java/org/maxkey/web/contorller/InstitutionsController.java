@@ -17,7 +17,7 @@
 
 package org.maxkey.web.contorller;
 
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.Institutions;
 import org.maxkey.persistence.service.InstitutionsService;
 import org.maxkey.web.WebContext;
@@ -63,9 +63,9 @@ public class InstitutionsController {
 		public Message updat(@ModelAttribute("institutions") Institutions institutions,BindingResult result) {
 			_logger.debug("updateRole institutions : "+institutions);
 			if(institutionsService.update(institutions)) {
-				return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			} else {
-				return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 			}
 		}
 		

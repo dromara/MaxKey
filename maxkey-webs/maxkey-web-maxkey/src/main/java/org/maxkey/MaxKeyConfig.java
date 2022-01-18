@@ -25,32 +25,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
-import org.maxkey.authn.realm.ldap.LdapAuthenticationRealm;
-import org.maxkey.authn.realm.ldap.LdapServer;
-import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.realm.IAuthenticationServer;
-import org.maxkey.authn.realm.activedirectory.ActiveDirectoryAuthenticationRealm;
-import org.maxkey.authn.realm.activedirectory.ActiveDirectoryServer;
+import org.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
 import org.maxkey.authn.support.kerberos.KerberosProxy;
 import org.maxkey.authn.support.kerberos.RemoteKerberosService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.EmailConfig;
-import org.maxkey.constants.ConstantsPersistence;
+import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.OtpAuthnService;
 import org.maxkey.password.onetimepwd.algorithm.OtpKeyUriFormat;
 import org.maxkey.password.onetimepwd.impl.MailOtpAuthn;
-import org.maxkey.password.onetimepwd.impl.SmsOtpAuthn;
 import org.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
-import org.maxkey.password.onetimepwd.impl.sms.SmsOtpAuthnAliyun;
-import org.maxkey.password.onetimepwd.impl.sms.SmsOtpAuthnTencentCloud;
-import org.maxkey.password.onetimepwd.impl.sms.SmsOtpAuthnYunxin;
 import org.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
-import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
-import org.maxkey.persistence.ldap.LdapUtils;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
 import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.persistence.repository.PasswordPolicyValidator;
+import org.maxkey.persistence.service.LdapContextService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +50,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -105,48 +95,6 @@ public class MaxKeyConfig  implements InitializingBean {
         return otpKeyUriFormat;
     }
     
-    public AbstractAuthenticationRealm ldapAuthenticationRealm(
-    			boolean ldapSupport,
-    			boolean ldapJit,
-    			String providerUrl,
-    			String principal,
-    			String credentials,
-    			String filter,
-    			String baseDN,
-    			String domain,
-    			String product,
-                JdbcTemplate jdbcTemplate) {
-    	
-    	AbstractAuthenticationRealm authenticationRealm =null;
-    	if(ldapSupport) {
-	    	if(product.equalsIgnoreCase("activedirectory")) {
-	    		ActiveDirectoryAuthenticationRealm activeDirectoryAuthenticationRealm = new ActiveDirectoryAuthenticationRealm(jdbcTemplate);
-	            ActiveDirectoryServer ldapServer=new ActiveDirectoryServer();
-	            ActiveDirectoryUtils ldapUtils = new ActiveDirectoryUtils(providerUrl,principal,credentials,domain);
-	            ldapServer.setActiveDirectoryUtils(ldapUtils);
-	            
-	            List<IAuthenticationServer> ldapServers = new ArrayList<IAuthenticationServer>();
-	            ldapServers.add(ldapServer);
-	            activeDirectoryAuthenticationRealm.setActiveDirectoryServers(ldapServers);
-	            authenticationRealm = activeDirectoryAuthenticationRealm;
-	            _logger.debug("ActiveDirectoryAuthenticationRealm inited.");
-	    	}else {
-	    		LdapAuthenticationRealm ldapAuthenticationRealm = new LdapAuthenticationRealm(jdbcTemplate);
-		        LdapServer ldapServer=new LdapServer();
-		        LdapUtils ldapUtils = new LdapUtils(providerUrl,principal,credentials,baseDN);
-		        ldapServer.setLdapUtils(ldapUtils);
-		        ldapServer.setFilterAttribute(filter);
-		        List<IAuthenticationServer> ldapServers = new ArrayList<IAuthenticationServer>();
-		        ldapServers.add(ldapServer);
-		        ldapAuthenticationRealm.setLdapServers(ldapServers);
-		        authenticationRealm = ldapAuthenticationRealm;
-		        _logger.debug("LdapAuthenticationRealm inited.");
-	    	}
-    	}
-        return authenticationRealm;
-        
-    }
-    
     //可以在此实现其他的登陆认证方式，请实现AbstractAuthenticationRealm
     @Bean(name = "authenticationRealm")
     public JdbcAuthenticationRealm authenticationRealm(
@@ -157,22 +105,9 @@ public class MaxKeyConfig  implements InitializingBean {
 	    		AbstractRemeberMeService remeberMeService,
 	    		UserInfoService userInfoService,
                 JdbcTemplate jdbcTemplate,
-                @Value("${maxkey.login.ldap.enable:false}")boolean ldapSupport,
-    			@Value("${maxkey.login.ldap.jit:false}")boolean ldapJit,
-    			@Value("${maxkey.login.ldap.providerurl}")String providerUrl,
-    			@Value("${maxkey.login.ldap.principal}")String principal,
-    			@Value("${maxkey.login.ldap.credentials}")String credentials,
-    			@Value("${maxkey.login.ldap.filter}")String filter,
-    			@Value("${maxkey.login.ldap.basedn}")String baseDN,
-    			@Value("${maxkey.login.ldap.activedirectory.domain}")String domain,
-    			@Value("${maxkey.login.ldap.product:openldap}")String product) {
-    	AbstractAuthenticationRealm ldapAuthenticationRealm = 
-    			ldapAuthenticationRealm(
-					ldapSupport,ldapJit,
-					providerUrl,principal,credentials,
-					filter,baseDN,domain,product,
-					jdbcTemplate
-				);
+                OtpAuthnService otpAuthnService,
+                LdapContextService ldapContextService) {
+    	LdapAuthenticationRealmService ldapRealmService = new LdapAuthenticationRealmService(ldapContextService);
         JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
         		passwordEncoder,
         		passwordPolicyValidator,
@@ -181,8 +116,7 @@ public class MaxKeyConfig  implements InitializingBean {
         		remeberMeService,
         		userInfoService,
         		jdbcTemplate,
-        		ldapAuthenticationRealm,
-        		ldapSupport
+        		ldapRealmService
         	);
         
         return authenticationRealm;
@@ -211,7 +145,7 @@ public class MaxKeyConfig  implements InitializingBean {
         AbstractOtpAuthn tfaOtpAuthn  = new TimeBasedOtpAuthn(digits , period);
         _logger.debug("TimeBasedOtpAuthn inited.");
 
-        if (persistence == ConstantsPersistence.REDIS) {
+        if (persistence == ConstsPersistence.REDIS) {
             RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);
             tfaOtpAuthn.setOptTokenStore(redisOptTokenStore);
         }
@@ -250,32 +184,6 @@ public class MaxKeyConfig  implements InitializingBean {
         mailOtpAuthn.setInterval(messageValidity);
         _logger.debug("MailOtpAuthn inited.");
         return mailOtpAuthn;
-    }
-    
-    @Bean(name = "smsOtpAuthn")
-    public SmsOtpAuthn smsOtpAuthn(
-            @Value("${maxkey.otp.sms.provider}")String provider,
-            @Value("${maxkey.server.persistence}") int persistence,
-            StandardEnvironment environment,
-            RedisConnectionFactory redisConnFactory) {
-        SmsOtpAuthn smsOtpAuthn = null;
-        if(provider.equalsIgnoreCase("aliyun")) {
-            smsOtpAuthn = new SmsOtpAuthnAliyun();
-        }else if(provider.equalsIgnoreCase("tencentcloud")) {
-            smsOtpAuthn = new SmsOtpAuthnTencentCloud();
-        }else {
-            smsOtpAuthn = new SmsOtpAuthnYunxin();
-        }
-        if (persistence == ConstantsPersistence.REDIS) {
-            RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);
-            smsOtpAuthn.setOptTokenStore(redisOptTokenStore);
-        }
-        
-        smsOtpAuthn.setProperties(environment);
-        smsOtpAuthn.initPropertys();
-        
-        _logger.debug("SmsOtpAuthn {} inited." ,smsOtpAuthn.getClass().getCanonicalName());
-        return smsOtpAuthn;
     }
     
     

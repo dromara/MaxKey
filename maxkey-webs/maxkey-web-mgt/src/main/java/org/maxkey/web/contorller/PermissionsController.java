@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.RolePermissions;
 import org.maxkey.persistence.service.RolesService;
 import org.maxkey.util.StringUtils;
@@ -104,10 +104,10 @@ public class PermissionsController {
 		}
 		
 		if (!rolePermissionsList.isEmpty() && rolesService.insertRolePermissions(rolePermissionsList)) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		
 	}

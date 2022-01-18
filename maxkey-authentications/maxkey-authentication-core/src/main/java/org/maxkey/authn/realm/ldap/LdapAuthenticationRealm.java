@@ -36,6 +36,8 @@ public class LdapAuthenticationRealm  extends AbstractAuthenticationRealm{
     @Size(min=1)
     private List<IAuthenticationServer> ldapServers;
 	
+	private boolean ldapSupport;
+	
 	/**
 	 * 
 	 */
@@ -43,6 +45,10 @@ public class LdapAuthenticationRealm  extends AbstractAuthenticationRealm{
 		
 	}
 
+	public LdapAuthenticationRealm(boolean ldapSupport) {
+		this.ldapSupport = ldapSupport;
+	}
+	
 	/**
 	 * @param jdbcTemplate
 	 */
@@ -66,6 +72,14 @@ public class LdapAuthenticationRealm  extends AbstractAuthenticationRealm{
 
 	public void setLdapServers(List<IAuthenticationServer> ldapServers) {
 		this.ldapServers = ldapServers;
+	}
+
+	public boolean isLdapSupport() {
+		return ldapSupport;
+	}
+
+	public void setLdapSupport(boolean ldapSupport) {
+		this.ldapSupport = ldapSupport;
 	}
 
 

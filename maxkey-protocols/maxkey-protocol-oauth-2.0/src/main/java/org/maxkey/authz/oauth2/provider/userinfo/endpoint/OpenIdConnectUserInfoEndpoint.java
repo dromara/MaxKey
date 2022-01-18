@@ -137,6 +137,7 @@ public class OpenIdConnectUserInfoEndpoint {
 			 SigninPrincipal authentication = (SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal();
 			 
 			 jwtClaimsSetBuilder.claim("sub", userInfo.getId());
+			 jwtClaimsSetBuilder.claim("institution", userInfo.getInstId());
 			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId());
 			 
 		 	if(scopes.contains("profile")){

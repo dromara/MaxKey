@@ -20,7 +20,7 @@ package org.maxkey.persistence.service;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.AccountsStrategy;
@@ -144,7 +144,7 @@ public class AccountsService  extends JpaBaseService<Accounts>{
            account.setRelatedPassword(PasswordReciprocal.getInstance().encode(userInfoService.randomPassword()));
            
            account.setCreateType("automatic");
-           account.setStatus(ConstantsStatus.ACTIVE);
+           account.setStatus(ConstsStatus.ACTIVE);
            account.setStrategyId(strategy.getId());
            
            insert(account);

@@ -34,8 +34,8 @@ import org.slf4j.LoggerFactory;
  * @author Crystal.Sea
  *
  */
-public final class LdapServer implements IAuthenticationServer {
-	private final static Logger _logger = LoggerFactory.getLogger(LdapServer.class);
+public final class StandardLdapServer implements IAuthenticationServer {
+	private final static Logger _logger = LoggerFactory.getLogger(StandardLdapServer.class);
 	
 	LdapUtils ldapUtils;
 	

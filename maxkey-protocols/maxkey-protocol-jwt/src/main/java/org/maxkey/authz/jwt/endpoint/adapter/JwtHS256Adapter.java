@@ -73,6 +73,7 @@ public class JwtHS256Adapter extends AbstractAuthorizeAdapter {
 				.claim("external_id", userInfo.getId())
 				.claim("locale", userInfo.getLocale())
 				.claim("kid", "SYMMETRIC-KEY")
+				.claim("institution", userInfo.getInstId())
 				.build();
 		
 		_logger.debug("jwt Claims : "+jwtClaims);

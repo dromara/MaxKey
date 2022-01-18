@@ -24,8 +24,6 @@ import com.tencentcloudapi.sms.v20190711.SmsClient;
 import com.tencentcloudapi.sms.v20190711.models.SendSmsRequest;
 import com.tencentcloudapi.sms.v20190711.models.SendSmsResponse;
 
-import java.io.IOException;
-
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.impl.SmsOtpAuthn;
 import org.slf4j.Logger;
@@ -39,7 +37,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
     private static final  Logger logger = LoggerFactory.getLogger(SmsOtpAuthnTencentCloud.class);
- 
+
     //
     String secretId;
     //
@@ -55,9 +53,17 @@ public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
         otpType = OtpTypes.SMS;
     }
     
-    
-    
-    @Override
+    public SmsOtpAuthnTencentCloud(String secretId, String secretKey, String smsSdkAppid, String templateId,
+			String sign) {
+    	otpType = OtpTypes.SMS;
+		this.secretId = secretId;
+		this.secretKey = secretKey;
+		this.smsSdkAppid = smsSdkAppid;
+		this.templateId = templateId;
+		this.sign = sign;
+	}
+
+	@Override
     public boolean produce(UserInfo userInfo) {
         // 手机号
         String mobile = userInfo.getMobile();
@@ -104,87 +110,46 @@ public class SmsOtpAuthnTencentCloud extends SmsOtpAuthn {
         return this.optTokenStore.validate(userInfo, token, OtpTypes.SMS, interval);
     }
 
-
     public String getSecretId() {
         return secretId;
     }
-
-
-
 
     public void setSecretId(String secretId) {
         this.secretId = secretId;
     }
 
-
-
-
     public String getSecretKey() {
         return secretKey;
     }
-
-
-
 
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
     }
 
-
-
-
     public String getSmsSdkAppid() {
         return smsSdkAppid;
     }
-
-
-
 
     public void setSmsSdkAppid(String smsSdkAppid) {
         this.smsSdkAppid = smsSdkAppid;
     }
 
-
-
-
     public String getTemplateId() {
         return templateId;
     }
 
-
-
-
     public void setTemplateId(String templateId) {
         this.templateId = templateId;
     }
-
-
-
 
     public String getSign() {
         return sign;
     }
 
 
-
-
     public void setSign(String sign) {
         this.sign = sign;
     }
-    
-    @Override
-    public void initPropertys() {
-        try {
-            this.loadProperties();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        this.secretId       = properties.getProperty("maxkey.otp.sms.tencentcloud.secretid");
-        this.secretKey      = properties.getProperty("maxkey.otp.sms.tencentcloud.secretkey");
-        this.smsSdkAppid    = properties.getProperty("maxkey.otp.sms.tencentcloud.smssdkappid");
-        this.templateId     = properties.getProperty("maxkey.otp.sms.tencentcloud.templateid");
-        this.sign           = properties.getProperty("maxkey.otp.sms.tencentcloud.sign");
-    }
+
     
 }

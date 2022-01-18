@@ -18,7 +18,7 @@
 package org.maxkey.web.contorller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.Localization;
 import org.maxkey.persistence.repository.LocalizationRepository;
 import org.maxkey.web.WebContext;
@@ -71,15 +71,15 @@ public class LocalizationController {
 			if(StringUtils.isBlank(localization.getId())){
 				localization.setId(localization.generateId());
 				if(localizationRepository.insert(localization)) {
-					return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+					return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 				} else {
-					return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+					return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 				}
 			}else {
 				if(localizationRepository.update(localization)) {
-					return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+					return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 				} else {
-					return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+					return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 				}
 			}
 		}

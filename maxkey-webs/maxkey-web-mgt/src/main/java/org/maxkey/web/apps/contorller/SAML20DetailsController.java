@@ -27,8 +27,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.maxkey.authz.saml20.metadata.MetadataDescriptorUtil;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.constants.ConstantsProtocols;
+import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.cert.X509CertUtils;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
@@ -73,7 +73,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		ModelAndView modelAndView=new ModelAndView("apps/saml20/appAdd");
 		AppsSAML20Details saml20Details=new AppsSAML20Details();
 		saml20Details.setSecret(ReciprocalUtils.generateKey(""));
-		saml20Details.setProtocol(ConstantsProtocols.SAML20);
+		saml20Details.setProtocol(ConstsProtocols.SAML20);
 		saml20Details.setId(saml20Details.generateId());
 		modelAndView.addObject("model",saml20Details);
 		 
@@ -93,10 +93,10 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		saml20Details.setInstId(WebContext.getUserInfo().getInstId());
 		saml20DetailsService.insert(saml20Details);
 		if (appsService.insertApp(saml20Details)) {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+saml20Details.getId());
 	}
@@ -129,10 +129,10 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		saml20Details.setInstId(WebContext.getUserInfo().getInstId());
 		saml20DetailsService.update(saml20Details);
 		if (appsService.updateApp(saml20Details)) {
-			 new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			 new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			 new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			 new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+saml20Details.getId());
 	}
@@ -143,10 +143,10 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
 		if (saml20DetailsService.remove(id)&&appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 	}
 	

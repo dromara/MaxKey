@@ -18,7 +18,7 @@
 package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.Groups;
 import org.maxkey.persistence.service.GroupsService;
 import org.maxkey.web.WebContext;
@@ -87,10 +87,10 @@ public class GroupsController {
 		group.setInstId(WebContext.getUserInfo().getInstId());
 		if (groupsService.insert(group)) {
 		    groupsService.refreshDynamicGroups(group);
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		
 	}
@@ -106,10 +106,10 @@ public class GroupsController {
 		_logger.debug("-query  :" + group);
 		group.setInstId(WebContext.getUserInfo().getInstId());
 		if (groupsService.load(group)!=null) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
 		}
 		
 	}
@@ -126,10 +126,10 @@ public class GroupsController {
 		group.setInstId(WebContext.getUserInfo().getInstId());
 		if (groupsService.update(group)) {
 		    groupsService.refreshDynamicGroups(group);
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		
 	}
@@ -141,10 +141,10 @@ public class GroupsController {
 		_logger.debug("-delete  group :" + group);
 		
 		if (groupsService.deleteById(group.getId())) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 		
 	}

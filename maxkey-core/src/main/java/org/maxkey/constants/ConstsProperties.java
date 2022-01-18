@@ -17,25 +17,18 @@
 
 package org.maxkey.constants;
 
-import org.maxkey.configuration.ApplicationConfig;
-
-public class ConstantsDatabase {
-
-    public static String  MYSQL         	= "MySQL";
+public class ConstsProperties {
     
-    public static String  POSTGRESQL    	= "PostgreSQL";
-    
-    public static String  ORACLE        	= "Oracle";
-    
-    public static String  MSSQLSERVER   	= "SQL Server";
-    
-    public static String  DB2           	= "db2";
-    
-    public static boolean compare(String databaseProduct) {
-        if(databaseProduct.equalsIgnoreCase(ApplicationConfig.databaseProduct)) {
-            return true;
-        }
-        return false;
+    public static String classPathResource(String propertySource) {
+        return propertySource.replaceAll("classpath:","");
     }
+    
+    public static String classPathResource(String propertySource,String active) {
+    	if(active == null || active.equals("")) {
+    		return propertySource.replaceAll("classpath:","");
+    	}
+        return propertySource.replace(".", "-"+active+".").replaceAll("classpath:","");
+    }
+    
 
 }

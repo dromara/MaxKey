@@ -18,7 +18,7 @@
 package org.maxkey.web.contorller;
 
 import javax.validation.Valid;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebContext;
@@ -84,12 +84,12 @@ public class ProfileController {
 
         if (userInfoService.updateProfile(userInfo) > 0) {
             new Message(
-                    WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS), 
+                    WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS), 
                     userInfo, MessageType.success,
                     OperateType.add, MessageScope.DB);
 
         } else {
-            new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR), MessageType.error);
+            new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR), MessageType.error);
         }
 
         return WebContext.redirect("/profile/myProfile");

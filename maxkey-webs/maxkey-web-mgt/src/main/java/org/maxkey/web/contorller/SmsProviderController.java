@@ -18,7 +18,7 @@
 package org.maxkey.web.contorller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.SmsProvider;
 import org.maxkey.persistence.service.SmsProviderService;
@@ -77,9 +77,9 @@ public class SmsProviderController {
 				updateResult = smsProviderService.update(smsProvider);
 			}
 			if(updateResult) {
-				return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			} else {
-				return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 			}
 		}
 		

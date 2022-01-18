@@ -23,7 +23,7 @@ import java.sql.Types;
 import java.util.Date;
 import java.util.List;
 
-import org.maxkey.constants.ConstantsDatabase;
+import org.maxkey.constants.ConstsDatabase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -54,7 +54,7 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 	public boolean insert(SocialsAssociate socialsAssociate) {
 		socialsAssociate.setId(socialsAssociate.generateId());
 		jdbcTemplate.update(
-		        ConstantsDatabase.compare(ConstantsDatabase.ORACLE)?
+		        ConstsDatabase.compare(ConstsDatabase.ORACLE)?
 		                DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE:DEFAULT_DEFAULT_INSERT_STATEMENT, 
 				new Object[] { 
 					socialsAssociate.getId(),

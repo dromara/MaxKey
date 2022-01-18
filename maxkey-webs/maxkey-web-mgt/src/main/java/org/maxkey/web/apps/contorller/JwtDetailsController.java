@@ -17,8 +17,8 @@
 
 package org.maxkey.web.apps.contorller;
 
-import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.constants.ConstantsProtocols;
+import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.entity.apps.AppsJwtDetails;
 import org.maxkey.persistence.service.AppsJwtDetailsService;
@@ -50,7 +50,7 @@ public class JwtDetailsController  extends BaseAppContorller {
 		ModelAndView modelAndView=new ModelAndView("apps/jwt/appAdd");
 		AppsJwtDetails jwtDetails =new AppsJwtDetails();
 		jwtDetails.setId(jwtDetails.generateId());
-		jwtDetails.setProtocol(ConstantsProtocols.JWT);
+		jwtDetails.setProtocol(ConstsProtocols.JWT);
 		jwtDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.AES));
 		jwtDetails.setAlgorithmKey(jwtDetails.getSecret());
 		jwtDetails.setUserPropertys("userPropertys");
@@ -68,10 +68,10 @@ public class JwtDetailsController  extends BaseAppContorller {
 		jwtDetails.setAlgorithmKey(jwtDetails.getSecret());
 		jwtDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (jwtDetailsService.insert(jwtDetails)&&appsService.insertApp(jwtDetails)) {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+jwtDetails.getId());
 	}
@@ -101,10 +101,10 @@ public class JwtDetailsController  extends BaseAppContorller {
 		jwtDetails.setAlgorithmKey(jwtDetails.getSecret());
 		jwtDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (jwtDetailsService.update(jwtDetails)&&appsService.updateApp(jwtDetails)) {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+jwtDetails.getId());
 	}
@@ -115,10 +115,10 @@ public class JwtDetailsController  extends BaseAppContorller {
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
 		if (jwtDetailsService.remove(id)&&appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 	}
 	

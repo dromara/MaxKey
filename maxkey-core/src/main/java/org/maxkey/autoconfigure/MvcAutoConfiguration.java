@@ -23,7 +23,7 @@ import java.util.List;
 import javax.servlet.Filter;
 
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.persistence.repository.InstitutionsRepository;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
 import org.maxkey.persistence.repository.LoginRepository;
@@ -187,7 +187,7 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setCookieName("mxk_locale");
         cookieLocaleResolver.setCookieDomain(domainName);
-        cookieLocaleResolver.setCookieMaxAge(ConstantsTimeInterval.TWO_WEEK);
+        cookieLocaleResolver.setCookieMaxAge(ConstsTimeInterval.TWO_WEEK);
         return cookieLocaleResolver;
     }
      

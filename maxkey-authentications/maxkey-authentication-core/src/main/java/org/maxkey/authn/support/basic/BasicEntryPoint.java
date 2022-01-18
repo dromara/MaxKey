@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
-import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.util.AuthorizationHeaderCredential;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.slf4j.Logger;
@@ -130,7 +130,7 @@ public class BasicEntryPoint implements   AsyncHandlerInterceptor {
 		 }
 		 
 		 if(!isAuthenticated){
-		     LoginCredential loginCredential =new LoginCredential(headerCredential.getUsername(),"",ConstantsLoginType.BASIC);
+		     LoginCredential loginCredential =new LoginCredential(headerCredential.getUsername(),"",ConstsLoginType.BASIC);
 			 authenticationProvider.authentication(loginCredential,true);
 			 _logger.info("Authentication  "+headerCredential.getUsername()+" successful .");
 		 }

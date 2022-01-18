@@ -26,11 +26,16 @@ import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.RemeberMeServiceFactory;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.OtpAuthnService;
+import org.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
 import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.persistence.repository.PasswordPolicyValidator;
+import org.maxkey.persistence.service.EmailSendersService;
+import org.maxkey.persistence.service.SmsProviderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -58,7 +63,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    AbstractOtpAuthn tfaOtpAuthn,
-    	    AbstractOtpAuthn smsOtpAuthn,
+    	    OtpAuthnService otpAuthnService,
     	    AbstractRemeberMeService remeberMeService,
     	    OnlineTicketServices onlineTicketServices
     		) {
@@ -68,11 +73,31 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         		authenticationRealm,
         		applicationConfig,
         		tfaOtpAuthn,
-        		smsOtpAuthn,
+        		otpAuthnService,
         		remeberMeService,
         		onlineTicketServices
         		);
         
+    }
+    
+    @Bean(name = "otpAuthnService")
+    public OtpAuthnService otpAuthnService(
+            @Value("${maxkey.server.persistence}") int persistence,
+            SmsProviderService smsProviderService,
+            EmailSendersService emailSendersService,
+            RedisConnectionFactory redisConnFactory) {
+        OtpAuthnService otpAuthnService = 
+        							new OtpAuthnService(smsProviderService,emailSendersService);
+        
+        if (persistence == ConstsPersistence.REDIS) {
+            RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);
+            otpAuthnService.setRedisOptTokenStore(redisOptTokenStore);
+        }
+        
+        
+        _logger.debug("OneTimePasswordService {} inited." , 
+        				persistence == ConstsPersistence.REDIS ? "Redis" : "InMemory");
+        return otpAuthnService;
     }
     
     @Bean(name = "passwordPolicyValidator")

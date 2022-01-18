@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
 import org.opensaml.saml1.core.impl.AssertionImpl;
@@ -99,7 +99,7 @@ public class HttpWsFederationEntryPoint implements AsyncHandlerInterceptor {
                     			wsFederationService.getWsFederationConfiguration().getUpnSuffix());
                     }
                     LoginCredential loginCredential =new LoginCredential(
-                            wsFederationCredential.getAttributes().get("").toString(),"",ConstantsLoginType.WSFEDERATION);
+                            wsFederationCredential.getAttributes().get("").toString(),"",ConstsLoginType.WSFEDERATION);
                     authenticationProvider.authentication(loginCredential,true);
                     return true;
                 } else {

@@ -18,7 +18,7 @@
 package org.maxkey.password.onetimepwd.token;
 
 import org.joda.time.DateTime;
-import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.OneTimePassword;
 import org.maxkey.persistence.redis.RedisConnection;
@@ -26,7 +26,7 @@ import org.maxkey.persistence.redis.RedisConnectionFactory;
 
 public class RedisOtpTokenStore  extends AbstractOtpTokenStore {
     
-    protected int validitySeconds = ConstantsTimeInterval.ONE_MINUTE * 5;
+    protected int validitySeconds = ConstsTimeInterval.ONE_MINUTE * 5;
     
     RedisConnectionFactory connectionFactory;
     

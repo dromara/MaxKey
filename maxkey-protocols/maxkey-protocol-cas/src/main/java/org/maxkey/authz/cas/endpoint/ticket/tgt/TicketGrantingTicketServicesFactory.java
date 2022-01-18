@@ -18,7 +18,7 @@
 package org.maxkey.authz.cas.endpoint.ticket.tgt;
 
 import org.maxkey.authz.cas.endpoint.ticket.TicketServices;
-import org.maxkey.constants.ConstantsPersistence;
+import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,14 +32,14 @@ public class TicketGrantingTicketServicesFactory {
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
         TicketServices casTicketServices = null;
-        if (persistence == ConstantsPersistence.INMEMORY) {
+        if (persistence == ConstsPersistence.INMEMORY) {
             casTicketServices = new InMemoryTicketGrantingTicketServices();
             _logger.debug("InMemoryTicketGrantingTicketServices");
-        } else if (persistence == ConstantsPersistence.JDBC) {
+        } else if (persistence == ConstsPersistence.JDBC) {
             //
             //casTicketServices = new JdbcTicketGrantingTicketServices(jdbcTemplate);
             _logger.debug("JdbcTicketGrantingTicketServices not support ");
-        } else if (persistence == ConstantsPersistence.REDIS) {
+        } else if (persistence == ConstsPersistence.REDIS) {
             casTicketServices = new RedisTicketGrantingTicketServices(redisConnFactory);
             _logger.debug("RedisTicketServices");
         }

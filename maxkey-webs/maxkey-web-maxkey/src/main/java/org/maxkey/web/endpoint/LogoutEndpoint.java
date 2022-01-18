@@ -33,7 +33,7 @@ import org.maxkey.authz.singlelogout.DefaultSingleLogout;
 import org.maxkey.authz.singlelogout.LogoutType;
 import org.maxkey.authz.singlelogout.SingleLogout;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsProtocols;
+import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -130,7 +130,7 @@ public class LogoutEndpoint {
 		            _logger.debug("App Id : "+ mapEntry.getKey()+ " , " +mapEntry.getValue());
 		            if( mapEntry.getValue().getLogoutType() == LogoutType.BACK_CHANNEL){
 		                SingleLogout singleLogout;
-		                if(mapEntry.getValue().getProtocol().equalsIgnoreCase(ConstantsProtocols.CAS)) {
+		                if(mapEntry.getValue().getProtocol().equalsIgnoreCase(ConstsProtocols.CAS)) {
 		                    singleLogout =new SamlSingleLogout();
 		                }else {
 		                    singleLogout = new DefaultSingleLogout();

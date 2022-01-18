@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.SocialsProvider;
 import org.maxkey.entity.SocialsProviderLogin;
@@ -49,7 +49,7 @@ public class SocialSignOnProviderService{
 	
 	protected static final Cache<String, SocialsProviderLogin> socialSignOnProvidersStore = 
             Caffeine.newBuilder()
-                .expireAfterWrite(ConstantsTimeInterval.ONE_HOUR, TimeUnit.MINUTES)
+                .expireAfterWrite(ConstsTimeInterval.ONE_HOUR, TimeUnit.MINUTES)
                 .build();
 	
 	HashMap<String ,SocialsProvider>socialSignOnProviderMaps=new HashMap<String ,SocialsProvider>();

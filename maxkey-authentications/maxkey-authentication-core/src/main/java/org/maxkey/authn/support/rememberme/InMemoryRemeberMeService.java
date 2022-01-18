@@ -19,7 +19,7 @@ package org.maxkey.authn.support.rememberme;
 
 import java.util.concurrent.TimeUnit;
 
-import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.constants.ConstsTimeInterval;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -28,7 +28,7 @@ public class InMemoryRemeberMeService   extends AbstractRemeberMeService {
 
     protected static final Cache<String, RemeberMe> remeberMeStore = 
             Caffeine.newBuilder()
-                .expireAfterWrite(ConstantsTimeInterval.TWO_WEEK, TimeUnit.MINUTES)
+                .expireAfterWrite(ConstsTimeInterval.TWO_WEEK, TimeUnit.MINUTES)
                 .build();
     
     @Override

@@ -29,7 +29,7 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.ExcelImport;
 import org.maxkey.entity.Organizations;
 import org.maxkey.persistence.service.OrganizationsService;
@@ -209,9 +209,9 @@ public class OrganizationsController {
             if(!CollectionUtils.isEmpty(orgsList)){
                 orgsList = orgsList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getId()))), ArrayList::new));
                 if(organizationsService.insertBatch(orgsList)) {
-		        	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
+		        	new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
 		        }else {
-		        	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+		        	new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR), MessageType.error);
 		        }
             }
         } catch (IOException e) {
@@ -220,7 +220,7 @@ public class OrganizationsController {
         	excelImportFile.closeWorkbook();
         }
 	}else {
-		new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+		new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR), MessageType.error);
 	}
       
 	return new ModelAndView("/orgs/orgsImport");

@@ -22,7 +22,7 @@ package org.maxkey.constants;
  * @author Crystal.Sea
  *
  */
-public final class ConstantsProtocols {
+public final class ConstsProtocols {
 
     public static final String BASIC 				= "Basic";
 

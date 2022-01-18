@@ -44,7 +44,17 @@ public class EmailConfig {
     public EmailConfig() {
     }
 
-    /*
+    public EmailConfig(String username, String password, String smtpHost, Integer port, boolean ssl, String sender) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.smtpHost = smtpHost;
+		this.port = port;
+		this.ssl = ssl;
+		this.sender = sender;
+	}
+
+	/*
      * @return the username
      */
     public String getUsername() {

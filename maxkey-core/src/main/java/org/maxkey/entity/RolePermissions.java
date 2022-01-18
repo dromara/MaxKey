@@ -25,7 +25,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.web.WebContext;
 
 @Entity
@@ -44,7 +44,7 @@ public class RolePermissions  extends JpaBaseEntity implements Serializable {
     @Column
     String resourceId;
     
-    int status = ConstantsStatus.ACTIVE;
+    int status = ConstsStatus.ACTIVE;
 	@Column
 	private String instId;
 

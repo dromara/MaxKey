@@ -18,7 +18,7 @@
 package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.AccountsStrategy;
@@ -105,7 +105,7 @@ public class AccountsController {
 		appAccounts.setInstId(WebContext.getUserInfo().getInstId());
 		appAccounts.setRelatedPassword(PasswordReciprocal.getInstance().encode(appAccounts.getRelatedPassword()));
 		accountsService.insert(appAccounts);
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 		
 	}
 	
@@ -133,7 +133,7 @@ public class AccountsController {
 		appAccounts.setInstId(WebContext.getUserInfo().getInstId());
 		appAccounts.setRelatedPassword(PasswordReciprocal.getInstance().encode(appAccounts.getRelatedPassword()));
 		accountsService.update(appAccounts);
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 		
 	}
 	
@@ -146,7 +146,7 @@ public class AccountsController {
 		
 		accountsService.deleteBatch(appAccounts.getId());
 		
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 		
 		
 	}

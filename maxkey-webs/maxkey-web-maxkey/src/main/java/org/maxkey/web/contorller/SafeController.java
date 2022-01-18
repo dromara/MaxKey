@@ -20,9 +20,9 @@ package org.maxkey.web.contorller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.constants.ConstantsPasswordSetType;
-import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.constants.ConstsPasswordSetType;
+import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.repository.PasswordPolicyValidator;
@@ -64,11 +64,11 @@ public class SafeController {
 			@RequestParam("newPassword") String newPassword,
 			@RequestParam("confirmPassword") String confirmPassword) {
 		
-			if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword,ConstantsPasswordSetType.PASSWORD_NORMAL)) {
-				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword,ConstsPasswordSetType.PASSWORD_NORMAL)) {
+				return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			}else {
 				return  new Message(
-				        WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR)+"<br>"
+				        WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR)+"<br>"
 				        +WebContext.getAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT),
 				        MessageType.error);
 			}	
@@ -82,8 +82,8 @@ public class SafeController {
 			ModelAndView modelAndView=new ModelAndView("passwordExpired");
 	        if(newPassword ==null ||newPassword.equals("")) {
 	            
-	        }else if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword,ConstantsPasswordSetType.PASSWORD_NORMAL)){
-	            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
+	        }else if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword,ConstsPasswordSetType.PASSWORD_NORMAL)){
+	            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,ConstsPasswordSetType.PASSWORD_NORMAL);
 				return WebContext.redirect("/index");
 			}
 	        
@@ -103,8 +103,8 @@ public class SafeController {
 		ModelAndView modelAndView=new ModelAndView("passwordInitial");
         if(newPassword ==null ||newPassword.equals("")) {
             
-        }else if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword,ConstantsPasswordSetType.PASSWORD_NORMAL)){
-            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,ConstantsPasswordSetType.PASSWORD_NORMAL);
+        }else if(userInfoService.changePassword(oldPassword,newPassword,confirmPassword,ConstsPasswordSetType.PASSWORD_NORMAL)){
+            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,ConstsPasswordSetType.PASSWORD_NORMAL);
 			return WebContext.redirect("/index");
 		}
 		
@@ -139,11 +139,11 @@ public class SafeController {
 				userInfo.setAppLoginPassword(PasswordReciprocal.getInstance().encode(newPassword));
 				boolean change= userInfoService.updateAppLoginPassword(userInfo);
 				_logger.debug(""+change);
-				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.prompt);
+				return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.prompt);
 			}
 		}
 		
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		
 	}
 	
@@ -176,12 +176,12 @@ public class SafeController {
 		userInfo.setEmail(email);
 
         userInfo.setTheme(theme);
-        WebContext.setCookie(response,null, WebConstants.THEME_COOKIE_NAME, theme, ConstantsTimeInterval.ONE_WEEK);
+        WebContext.setCookie(response,null, WebConstants.THEME_COOKIE_NAME, theme, ConstsTimeInterval.ONE_WEEK);
         
 		userInfoService.updateEmail(userInfo);
 		
 		
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 		
 	}
 	

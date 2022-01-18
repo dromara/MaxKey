@@ -17,18 +17,11 @@
 
 package org.maxkey.constants;
 
-public class ConstantsEntryType {
+public final class ConstsPlatformRole {
 
-    public static int USERINFO_TYPE 	= 1;
-    
-    public static int ORGANIZATION_TYPE = 2;
-    
-    public static int GROUP_TYPE 		= 3;
-    
-    public static int PASSWORD_TYPE 	= 4;
-    
-    public static int RESOURCES_TYPE 	= 5;
-    
-    public static int PERMISSIONS_TYPE 	= 6;
+    public static final String PLATFORM_ADMIN 	= "PLATFORM_ADMIN";
 
+    public static final String TANANT_ADMIN 	= "TANANT_ADMIN";
+
+    public static final String ORDINARY_USER 	= "ORDINARY_USER";
 }

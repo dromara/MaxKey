@@ -21,9 +21,9 @@ import java.security.Principal;
 import java.util.List;
 
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.constants.ConstantsProtocols;
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.constants.ConstsProtocols;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.UserInfo;
@@ -183,10 +183,10 @@ public class AppListController {
 
             userInfoService.updateProtectedApps(userInfo);
         } else {
-            return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR), MessageType.error);
+            return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR), MessageType.error);
         }
 
-        return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS), MessageType.success);
+        return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS), MessageType.success);
     }
 
     @RequestMapping(value = { "/forward/appUserConfig/{protocol}/{credential}/{appId}" })
@@ -199,13 +199,13 @@ public class AppListController {
         UserInfo userInfo = WebContext.getUserInfo();
         if (credential == Apps.CREDENTIALS.USER_DEFINED) {
             appUsers = appUsersService.load(new Accounts(userInfo.getId(), appId));
-            if (protocol.equalsIgnoreCase(ConstantsProtocols.FORMBASED)
-                    || protocol.equalsIgnoreCase(ConstantsProtocols.BASIC) 
-                    || protocol.equalsIgnoreCase(ConstantsProtocols.EXTEND_API)) {
+            if (protocol.equalsIgnoreCase(ConstsProtocols.FORMBASED)
+                    || protocol.equalsIgnoreCase(ConstsProtocols.BASIC) 
+                    || protocol.equalsIgnoreCase(ConstsProtocols.EXTEND_API)) {
 
                 modelAndView.addObject("username", true);
                 modelAndView.addObject("password", true);
-            } else if (protocol.equalsIgnoreCase(ConstantsProtocols.SAML20)) {
+            } else if (protocol.equalsIgnoreCase(ConstsProtocols.SAML20)) {
                 modelAndView.addObject("username", true);
                 modelAndView.addObject("password", false);
             } else {
@@ -259,7 +259,7 @@ public class AppListController {
                 appUsers.setRelatedUsername(identity_username);
                 appUsers.setRelatedPassword(PasswordReciprocal.getInstance().encode(identity_password));
                 appUsers.setInstId(userInfo.getInstId());
-                appUsers.setStatus(ConstantsStatus.ACTIVE);
+                appUsers.setStatus(ConstsStatus.ACTIVE);
                 appUsersService.insert(appUsers);
             } else {
                 appUsers.setRelatedUsername(identity_username);
@@ -268,6 +268,6 @@ public class AppListController {
             }
         }
 
-        return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS), MessageType.success);
+        return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS), MessageType.success);
     }
 }

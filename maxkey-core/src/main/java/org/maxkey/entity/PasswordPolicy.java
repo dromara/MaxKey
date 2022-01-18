@@ -25,7 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
-import org.maxkey.constants.ConstantsServiceMessage;
+import org.maxkey.constants.ConstsServiceMessage;
 import org.maxkey.exception.PasswordPolicyException;
 
 /**
@@ -342,16 +342,16 @@ public class PasswordPolicy extends JpaBaseEntity implements java.io.Serializabl
 
     public void check(String username, String newPassword, String oldPassword) throws PasswordPolicyException {
         if ((1 == this.getUsername()) && newPassword.toLowerCase().contains(username.toLowerCase())) {
-            throw new PasswordPolicyException(ConstantsServiceMessage.PASSWORDPOLICY.XW00000001);
+            throw new PasswordPolicyException(ConstsServiceMessage.PASSWORDPOLICY.XW00000001);
         }
         if (oldPassword != null && newPassword.equalsIgnoreCase(oldPassword)) {
-            throw new PasswordPolicyException(ConstantsServiceMessage.PASSWORDPOLICY.XW00000002);
+            throw new PasswordPolicyException(ConstsServiceMessage.PASSWORDPOLICY.XW00000002);
         }
         if (newPassword.length() < this.getMinLength()) {
-            throw new PasswordPolicyException(ConstantsServiceMessage.PASSWORDPOLICY.XW00000003, this.getMinLength());
+            throw new PasswordPolicyException(ConstsServiceMessage.PASSWORDPOLICY.XW00000003, this.getMinLength());
         }
         if (newPassword.length() > this.getMaxLength()) {
-            throw new PasswordPolicyException(ConstantsServiceMessage.PASSWORDPOLICY.XW00000004, this.getMaxLength());
+            throw new PasswordPolicyException(ConstsServiceMessage.PASSWORDPOLICY.XW00000004, this.getMaxLength());
         }
         int numCount = 0, upperCount = 0, lowerCount = 0, spacil = 0;
         char[] chPwd = newPassword.toCharArray();
@@ -372,16 +372,16 @@ public class PasswordPolicy extends JpaBaseEntity implements java.io.Serializabl
             spacil++;
         }
         if (numCount < this.getDigits()) {
-            throw new PasswordPolicyException(ConstantsServiceMessage.PASSWORDPOLICY.XW00000005, this.getDigits());
+            throw new PasswordPolicyException(ConstsServiceMessage.PASSWORDPOLICY.XW00000005, this.getDigits());
         }
         if (lowerCount < this.getLowerCase()) {
-            throw new PasswordPolicyException(ConstantsServiceMessage.PASSWORDPOLICY.XW00000006, this.getLowerCase());
+            throw new PasswordPolicyException(ConstsServiceMessage.PASSWORDPOLICY.XW00000006, this.getLowerCase());
         }
         if (upperCount < this.getUpperCase()) {
-            throw new PasswordPolicyException(ConstantsServiceMessage.PASSWORDPOLICY.XW00000007, this.getUpperCase());
+            throw new PasswordPolicyException(ConstsServiceMessage.PASSWORDPOLICY.XW00000007, this.getUpperCase());
         }
         if (spacil < this.getSpecialChar()) {
-            throw new PasswordPolicyException(ConstantsServiceMessage.PASSWORDPOLICY.XW00000008, this.getSpecialChar());
+            throw new PasswordPolicyException(ConstsServiceMessage.PASSWORDPOLICY.XW00000008, this.getSpecialChar());
         }
     }
 

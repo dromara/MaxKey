@@ -25,7 +25,7 @@ import org.joda.time.DateTime;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.crypto.Base64Utils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.util.JsonUtils;
@@ -96,7 +96,7 @@ public class HttpRemeberMeEntryPoint implements AsyncHandlerInterceptor {
 	        DateTime now = new DateTime();
 	        if (now.isBefore(expiryDate)) {
 	            LoginCredential loginCredential =
-	            		new LoginCredential(storeRemeberMe.getUsername(),"",ConstantsLoginType.REMEBER_ME);
+	            		new LoginCredential(storeRemeberMe.getUsername(),"",ConstsLoginType.REMEBER_ME);
 	            authenticationProvider.authentication(loginCredential,true);
 	            remeberMeService.updateRemeberMe(remeberMeCookie, response);
 	            _logger.debug("RemeberMe Logined in , username " + storeRemeberMe.getUsername());

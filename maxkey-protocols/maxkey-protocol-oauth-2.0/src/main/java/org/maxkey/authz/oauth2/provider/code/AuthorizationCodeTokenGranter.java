@@ -35,7 +35,7 @@ import org.maxkey.authz.oauth2.provider.OAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.TokenRequest;
 import org.maxkey.authz.oauth2.provider.token.AbstractTokenGranter;
 import org.maxkey.authz.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.maxkey.constants.ConstantsProtocols;
+import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.DigestUtils;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.springframework.security.core.Authentication;
@@ -124,7 +124,7 @@ public class AuthorizationCodeTokenGranter extends AbstractTokenGranter {
 		//OAuth 2.1 and PKCE Support
 		logger.debug("client Protocol "+client.getProtocol()+", PKCE Support "+
 		        (client.getPkce().equalsIgnoreCase(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES)));
-		if(client.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH21)
+		if(client.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)
 		        || client.getPkce().equalsIgnoreCase(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES)) {
     		logger.trace("stored CodeChallengeMethod "+ pendingOAuth2Request.getCodeChallengeMethod());
     		logger.trace("stored CodeChallenge "+ pendingOAuth2Request.getCodeChallenge());

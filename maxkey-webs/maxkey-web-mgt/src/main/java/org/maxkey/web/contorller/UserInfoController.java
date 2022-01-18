@@ -35,8 +35,8 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.constants.ConstantsPasswordSetType;
+import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.constants.ConstsPasswordSetType;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.ExcelImport;
 import org.maxkey.entity.UserInfo;
@@ -133,10 +133,10 @@ public class UserInfoController {
 		//userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
 		//userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
 		if( userInfoService.insert(userInfo)) {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
 		}
 		
-		 new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
+		 new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
 		return   WebContext.forward("forwardUpdate/"+userInfo.getId());
 	}
 	
@@ -200,10 +200,10 @@ public class UserInfoController {
 		_logger.info(userInfo.getExtraAttribute());
 		userInfo.setInstId(WebContext.getUserInfo().getInstId());
 		if(userInfoService.update(userInfo)) {
-			new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
+			new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),userInfo,MessageType.success,OperateType.add,MessageScope.DB);
 			
 		}
-	    new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+	    new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		return   WebContext.forward("forwardUpdate/"+userInfo.getId());
 	}
 	
@@ -218,10 +218,10 @@ public class UserInfoController {
 	public Message batchDeleteUsers(@RequestParam("id")String id) {
 		_logger.debug(id);
 		if(userInfoService.deleteBatch(StringUtils.string2List(id, ","))) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_ERROR),MessageType.error);
 		}
 	}
 	
@@ -237,9 +237,9 @@ public class UserInfoController {
 		_logger.debug(id);
 		if(userInfoService.deleteBatch(id)) {
 			//provisioningPrepare.prepare(userInfo, OPERATEACTION.DELETE_ACTION);
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_ERROR),MessageType.error);
 		}
 	}
 	
@@ -278,12 +278,12 @@ public class UserInfoController {
 	@RequestMapping(value="/changePassword")  
 	public Message changePassword( @ModelAttribute("userInfo")UserInfo userInfo) {
 		_logger.debug(userInfo.getId());
-		userInfo.setPasswordSetType(ConstantsPasswordSetType.PASSWORD_NORMAL);
+		userInfo.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
 		if(userInfoService.changePassword(userInfo,true)) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 	}
 	
@@ -314,9 +314,9 @@ public class UserInfoController {
                 if(!CollectionUtils.isEmpty(userInfoList)){
                     userInfoList = userInfoList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getUsername()))), ArrayList::new));
                     if( userInfoService.insertBatch(userInfoList)) {
-                    	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
+                    	new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
                     }else {
-                    	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+                    	new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR), MessageType.error);
                     }
                 }
             } catch (IOException e) {
@@ -325,7 +325,7 @@ public class UserInfoController {
             	excelImportFile.closeWorkbook();
             }
         }else {
-        	new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR), MessageType.error);
+        	new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR), MessageType.error);
         }
         
         return new ModelAndView("/userinfo/usersImport");

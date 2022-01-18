@@ -17,7 +17,7 @@
 
 package org.maxkey.constants;
 
-public class ConstantsLoginType {
+public class ConstsLoginType {
 
     public static final String LOCAL 			= "Local Login";
     

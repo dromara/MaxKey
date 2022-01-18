@@ -22,7 +22,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Organizations;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.UserInfoAdjoint;
@@ -37,10 +37,10 @@ public interface UserInfoMapper  extends IJpaBaseMapper<UserInfo>{
 	//login query
 	public UserInfo findByAppIdAndUsername(UserInfo userInfo);
 	
-	@Select("select * from  mxk_userinfo where username = #{value} and status = " + ConstantsStatus.ACTIVE)
+	@Select("select * from  mxk_userinfo where username = #{value} and status = " + ConstsStatus.ACTIVE)
 	public UserInfo findByUsername(String username);
 	
-	@Select("select * from  mxk_userinfo where ( email = #{value} or mobile= #{value} ) and status = " + ConstantsStatus.ACTIVE)
+	@Select("select * from  mxk_userinfo where ( email = #{value} or mobile= #{value} ) and status = " + ConstsStatus.ACTIVE)
 	public UserInfo findByEmailMobile(String emailMobile);
 	 
 	public List<Organizations> findDeptsByUserId(String userId);

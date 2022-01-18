@@ -29,7 +29,7 @@ import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.jwt.endpoint.adapter.JwtDefaultAdapter;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsJwtDetails;
 import org.maxkey.persistence.service.AppsJwtDetailsService;
@@ -82,7 +82,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		jwtDetails.setIsAdapter(application.getIsAdapter());
 		
 		AbstractAuthorizeAdapter adapter;
-		if(Boolean.isTrue(jwtDetails.getIsAdapter())){
+		if(ConstsBoolean.isTrue(jwtDetails.getIsAdapter())){
 			adapter =(AbstractAuthorizeAdapter)Instance.newInstance(jwtDetails.getAdapter());
 		}else{
 			adapter =(AbstractAuthorizeAdapter)jwtDefaultAdapter;

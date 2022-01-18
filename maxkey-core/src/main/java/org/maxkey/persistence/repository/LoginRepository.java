@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Groups;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.util.StringUtils;
@@ -129,9 +129,9 @@ public class LoginRepository {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                 jdbcTemplate.update(LOCK_USER_UPDATE_STATEMENT,
-                        new Object[] { ConstantsStatus.LOCK, new Date(), userInfo.getId() },
+                        new Object[] { ConstsStatus.LOCK, new Date(), userInfo.getId() },
                         new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
-                userInfo.setIsLocked(ConstantsStatus.LOCK);
+                userInfo.setIsLocked(ConstsStatus.LOCK);
             }
         } catch (Exception e) {
             _logger.error("lockUser Exception",e);
@@ -147,9 +147,9 @@ public class LoginRepository {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                 jdbcTemplate.update(UNLOCK_USER_UPDATE_STATEMENT,
-                        new Object[] { ConstantsStatus.ACTIVE, new Date(), userInfo.getId() },
+                        new Object[] { ConstsStatus.ACTIVE, new Date(), userInfo.getId() },
                         new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
-                userInfo.setIsLocked(ConstantsStatus.ACTIVE);
+                userInfo.setIsLocked(ConstsStatus.ACTIVE);
             }
         } catch (Exception e) {
             _logger.error("unlockUser Exception",e);
@@ -165,9 +165,9 @@ public class LoginRepository {
         try {
             if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                 jdbcTemplate.update(BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT,
-                        new Object[] { 0, ConstantsStatus.ACTIVE, new Date(), userInfo.getId() },
+                        new Object[] { 0, ConstsStatus.ACTIVE, new Date(), userInfo.getId() },
                         new int[] { Types.INTEGER, Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
-                userInfo.setIsLocked(ConstantsStatus.ACTIVE);
+                userInfo.setIsLocked(ConstsStatus.ACTIVE);
             }
         } catch (Exception e) {
             _logger.error("resetBadPasswordCountAndLockout Exception",e);

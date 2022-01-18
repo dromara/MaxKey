@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
@@ -57,7 +57,7 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		Apps apps=getApp(id);
 		_logger.debug(""+apps);
 		UserInfo userInfo = WebContext.getUserInfo();
-		if(Boolean.isTrue(apps.getIsAdapter())){
+		if(ConstsBoolean.isTrue(apps.getIsAdapter())){
 			
 			AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(apps.getAdapter());
 			String username ="";

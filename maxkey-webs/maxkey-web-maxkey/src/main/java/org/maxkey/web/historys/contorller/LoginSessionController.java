@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.online.OnlineTicketServices;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
@@ -118,9 +118,9 @@ public class LoginSessionController {
         }
         
         if(isTerminated) {
-            return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+            return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
         } else {
-            return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_ERROR),MessageType.error);
+            return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_ERROR),MessageType.error);
         }
     }
     @InitBinder

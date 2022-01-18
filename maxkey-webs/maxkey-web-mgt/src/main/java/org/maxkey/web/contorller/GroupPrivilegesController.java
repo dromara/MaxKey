@@ -18,7 +18,7 @@
 package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.GroupPrivileges;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.GroupPrivilegesService;
@@ -115,11 +115,11 @@ public class GroupPrivilegesController {
 				result = groupPrivilegesService.insert(newGroupApp);
 			}
 			if(!result) {
-				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
+				return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
 			}
 			
 		}
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
+		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.info);
 	}
 	
 	@RequestMapping(value = {"/delete"})
@@ -130,10 +130,10 @@ public class GroupPrivilegesController {
 		}
 	
 		if(groupPrivilegesService.deleteBatch(groupApp.getId())) {
-		    return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
+		    return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.info);
 		}
 		
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
+		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
 	}
 	
 	

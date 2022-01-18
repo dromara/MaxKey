@@ -26,7 +26,7 @@ import org.apache.commons.mail.HtmlEmail;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Register;
 import org.maxkey.entity.UserInfo;
@@ -168,7 +168,7 @@ public class RegisterController {
 				
 				userInfo.setWorkPhoneNumber(register.getWorkPhone());
 				userInfo.setEmail(register.getWorkEmail());
-				userInfo.setStatus(ConstantsStatus.ACTIVE);
+				userInfo.setStatus(ConstsStatus.ACTIVE);
 				userInfo.setDecipherable(PasswordReciprocal.getInstance().encode(password));
 				
 				password = passwordEncoder.encode(password );
@@ -223,7 +223,7 @@ public class RegisterController {
  			return new Message(WebContext.getI18nValue("register.user.error"),"1");
  		}
  		
- 		userInfo.setStatus(ConstantsStatus.ACTIVE);
+ 		userInfo.setStatus(ConstsStatus.ACTIVE);
  		
  		if(userInfoService.insert(userInfo)) {
  			return new Message(WebContext.getI18nValue("login.text.register.success"),"0");

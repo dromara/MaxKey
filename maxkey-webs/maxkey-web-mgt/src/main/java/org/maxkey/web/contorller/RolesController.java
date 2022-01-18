@@ -18,7 +18,7 @@
 package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.Roles;
 import org.maxkey.persistence.service.RolesService;
 import org.maxkey.web.WebContext;
@@ -87,10 +87,10 @@ public class RolesController {
 		role.setInstId(WebContext.getUserInfo().getInstId());
 		if (rolesService.insert(role)) {
 		    rolesService.refreshDynamicRoles(role);
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		
 	}
@@ -106,10 +106,10 @@ public class RolesController {
 		_logger.debug("-query  :" + role);
 		role.setInstId(WebContext.getUserInfo().getInstId());
 		if (rolesService.load(role)!=null) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
 		}
 		
 	}
@@ -126,10 +126,10 @@ public class RolesController {
 		role.setInstId(WebContext.getUserInfo().getInstId());
 		if (rolesService.update(role)) {
 		    rolesService.refreshDynamicRoles(role);
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		
 	}
@@ -141,10 +141,10 @@ public class RolesController {
 		_logger.debug("-delete  role :" + role);
 		
 		if (rolesService.deleteById(role.getId())) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 		
 	}

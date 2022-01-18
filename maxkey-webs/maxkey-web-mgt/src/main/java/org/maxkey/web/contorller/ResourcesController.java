@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.Resources;
 import org.maxkey.persistence.service.ResourcesService;
 import org.maxkey.web.WebContext;
@@ -92,10 +92,10 @@ public class ResourcesController {
 		_logger.debug("-Add  :" + resource);
 		resource.setInstId(WebContext.getUserInfo().getInstId());
 		if (resourcesService.insert(resource)) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		
 	}
@@ -111,10 +111,10 @@ public class ResourcesController {
 		_logger.debug("-query  :" + resource);
 		resource.setInstId(WebContext.getUserInfo().getInstId());
 		if (resourcesService.load(resource)!=null) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
 		}
 		
 	}
@@ -130,10 +130,10 @@ public class ResourcesController {
 		_logger.debug("-update  resource :" + resource);
 		resource.setInstId(WebContext.getUserInfo().getInstId());
 		if (resourcesService.update(resource)) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		
 	}
@@ -145,10 +145,10 @@ public class ResourcesController {
 		_logger.debug("-delete  resource :" + resource);
 		
 		if (resourcesService.deleteBatch(resource.getId())) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 		
 	}

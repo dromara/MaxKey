@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.formbased.endpoint.adapter.FormBasedDefaultAdapter;
-import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsFormBasedDetails;
@@ -82,7 +82,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			
 			AbstractAuthorizeAdapter adapter;
 			
-			if(Boolean.isTrue(formBasedDetails.getIsAdapter())){
+			if(ConstsBoolean.isTrue(formBasedDetails.getIsAdapter())){
 				adapter =(AbstractAuthorizeAdapter)Instance.newInstance(formBasedDetails.getAdapter());
 			}else{
 				adapter =(AbstractAuthorizeAdapter)defaultFormBasedAdapter;

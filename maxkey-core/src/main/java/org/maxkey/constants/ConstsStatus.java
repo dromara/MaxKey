@@ -17,7 +17,7 @@
 
 package org.maxkey.constants;
 
-public final class ConstantsStatus {
+public final class ConstsStatus {
 	
     public static final int ACTIVE 		= 1;
 

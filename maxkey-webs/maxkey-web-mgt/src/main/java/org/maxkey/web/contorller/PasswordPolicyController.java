@@ -19,7 +19,7 @@ package org.maxkey.web.contorller;
 
 import javax.validation.Valid;
 
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.PasswordPolicy;
 import org.maxkey.persistence.service.PasswordPolicyService;
 import org.maxkey.web.WebContext;
@@ -70,9 +70,9 @@ public class PasswordPolicyController {
 				return message;
 			}
 			if(passwordPolicyService.update(passwordPolicy)) {
-				return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			} else {
-				return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 			}
 		}
 		

@@ -18,7 +18,7 @@
 package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.RoleMember;
 import org.maxkey.entity.Roles;
 import org.maxkey.persistence.service.RoleMemberService;
@@ -128,11 +128,11 @@ public class RoleMemberController {
 				result = roleMemberService.insert(newRoleMember);
 			}
 			if(!result) {
-				return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
+				return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
 			}
 			
 		}
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
+		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.info);
 	}
 	
 	@RequestMapping(value = {"/delete"})
@@ -145,8 +145,8 @@ public class RoleMemberController {
 		}
 		
 		if(roleMemberService.deleteBatch(roleMember.getId())) {
-		    return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.info);
+		    return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.info);
 		}
-		return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
+		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
 	}
 }

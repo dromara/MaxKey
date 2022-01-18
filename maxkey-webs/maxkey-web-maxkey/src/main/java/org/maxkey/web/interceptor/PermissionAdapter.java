@@ -27,7 +27,7 @@ import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsPasswordSetType;
+import org.maxkey.constants.ConstsPasswordSetType;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -84,8 +84,8 @@ public class PermissionAdapter  implements AsyncHandlerInterceptor  {
         
         if(passwordSetTypeAttribute != null) {
             Integer passwordSetType=(Integer)passwordSetTypeAttribute;
-            if(passwordSetType==ConstantsPasswordSetType.PASSWORD_EXPIRED||
-                    passwordSetType==ConstantsPasswordSetType.MANAGER_CHANGED_PASSWORD){
+            if(passwordSetType==ConstsPasswordSetType.PASSWORD_EXPIRED||
+                    passwordSetType==ConstsPasswordSetType.MANAGER_CHANGED_PASSWORD){
                 _logger.trace("changeExpiredPassword ... forward to /safe/changeExpiredPassword");
                 if(request.getRequestURI().indexOf("/changeExpiredPassword")>-1) {
                     return true;
@@ -93,7 +93,7 @@ public class PermissionAdapter  implements AsyncHandlerInterceptor  {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/safe/changeExpiredPassword");
                 dispatcher.forward(request, response);
                 return false;
-            }else if(passwordSetType==ConstantsPasswordSetType.INITIAL_PASSWORD){
+            }else if(passwordSetType==ConstsPasswordSetType.INITIAL_PASSWORD){
                 _logger.trace("changeInitPassword ... forward to /safe/changeInitPassword");
                 if(request.getRequestURI().indexOf("/changeInitPassword")>-1) {
                     return true;

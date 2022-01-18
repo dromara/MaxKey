@@ -21,7 +21,7 @@ import java.time.Instant;
 
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.crypto.DigestUtils;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsFormBasedDetails;
@@ -62,7 +62,7 @@ public class FormBasedDefaultAdapter extends AbstractAuthorizeAdapter {
         modelAndView.addObject("password",  password);
         modelAndView.addObject("timestamp",  ""+Instant.now().getEpochSecond());
 		
-	    if(Boolean.isTrue(details.getIsExtendAttr())){
+	    if(ConstsBoolean.isTrue(details.getIsExtendAttr())){
 	        modelAndView.addObject("extendAttr", details.getExtendAttr());
 	        modelAndView.addObject("isExtendAttr", true);
         }else{

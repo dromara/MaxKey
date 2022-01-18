@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.constants.ldap.ActiveDirectoryUser;
 import org.maxkey.entity.ExtraAttr;
 import org.maxkey.entity.ExtraAttrs;
@@ -79,7 +79,7 @@ public class AttributeStatementGenerator {
 		}
 		
 		logger.debug("ExtendAttr "+saml20Details.getExtendAttr());
-		if(Boolean.isTrue(saml20Details.getIsExtendAttr()) && saml20Details.getExtendAttr() != null) {
+		if(ConstsBoolean.isTrue(saml20Details.getIsExtendAttr()) && saml20Details.getExtendAttr() != null) {
 			ExtraAttrs extraAttrs=new ExtraAttrs(saml20Details.getExtendAttr());
 			for(ExtraAttr extraAttr : extraAttrs.getExtraAttrs()) {
 				logger.debug("Attribute : "+extraAttr.getAttr()+" , Vale : "+extraAttr.getValue()+" , Type : "+extraAttr.getType());
@@ -152,6 +152,8 @@ public class AttributeStatementGenerator {
         
         attributeMap.put(ActiveDirectoryUser.MAIL, userInfo.getEmail());
         attributeMap.put(ActiveDirectoryUser.EMAIL, userInfo.getEmail());
+        
+        attributeMap.put("institution", userInfo.getInstId());
         
         attributeMap.put(ActiveDirectoryUser.USERSTATUS, userInfo.getStatus() + "");
         

@@ -23,7 +23,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.entity.Localization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +48,7 @@ public class LocalizationRepository {
 	
     protected static final Cache<String, String> localizationStore = 
             Caffeine.newBuilder()
-                .expireAfterWrite(ConstantsTimeInterval.ONE_HOUR, TimeUnit.SECONDS)
+                .expireAfterWrite(ConstsTimeInterval.ONE_HOUR, TimeUnit.SECONDS)
                 .build();
 
 	public LocalizationRepository() {

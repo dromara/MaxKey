@@ -18,7 +18,7 @@
 package org.maxkey.web.contorller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.EmailSenders;
 import org.maxkey.persistence.service.EmailSendersService;
@@ -82,9 +82,9 @@ public class EmailSendersController {
 			}
 			
 			if(updateResult) {
-				return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			} else {
-				return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 			}
 		}
 		

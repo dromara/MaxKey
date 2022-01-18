@@ -19,7 +19,7 @@ package org.maxkey.authz.formbased.endpoint.adapter;
 
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsFormBasedDetails;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,7 +44,7 @@ public class FormBasedNetease163EmailAdapter extends AbstractAuthorizeAdapter {
 		modelAndView.addObject("email", details.getAppUser().getRelatedUsername());
 		modelAndView.addObject("password",  details.getAppUser().getRelatedPassword());
 		
-		if(Boolean.isTrue(details.getIsExtendAttr())){
+		if(ConstsBoolean.isTrue(details.getIsExtendAttr())){
 			modelAndView.addObject("extendAttr", details.getExtendAttr());
 			modelAndView.addObject("isExtendAttr", true);
 		}else{

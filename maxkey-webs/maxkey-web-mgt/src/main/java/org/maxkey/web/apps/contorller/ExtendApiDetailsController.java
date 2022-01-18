@@ -17,8 +17,8 @@
 
 package org.maxkey.web.apps.contorller;
 
-import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.constants.ConstantsProtocols;
+import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsExtendApiDetails;
@@ -47,7 +47,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 		ModelAndView modelAndView=new ModelAndView("apps/extendapi/appAdd");
 		AppsExtendApiDetails extendApiDetails=new AppsExtendApiDetails();
 		extendApiDetails.setId(extendApiDetails.generateId());
-		extendApiDetails.setProtocol(ConstantsProtocols.EXTEND_API);
+		extendApiDetails.setProtocol(ConstsProtocols.EXTEND_API);
 		extendApiDetails.setSecret(ReciprocalUtils.generateKey(""));
 
 		modelAndView.addObject("model",extendApiDetails);
@@ -61,10 +61,10 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 		transform(extendApiDetails);
 		extendApiDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (appsService.insertApp(extendApiDetails)) {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+extendApiDetails.getId());
 	}
@@ -94,10 +94,10 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 		transform(extendApiDetails);
 		extendApiDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (appsService.updateApp(extendApiDetails)) {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+extendApiDetails.getId());
 	}
@@ -108,10 +108,10 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
 		if (appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 	}
 

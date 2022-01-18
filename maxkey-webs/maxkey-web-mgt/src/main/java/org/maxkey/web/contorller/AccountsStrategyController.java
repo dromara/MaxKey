@@ -18,7 +18,7 @@
 package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.AccountsStrategy;
 import org.maxkey.entity.Roles;
 import org.maxkey.persistence.service.AccountsService;
@@ -96,10 +96,10 @@ public class AccountsStrategyController {
 		if (accountsStrategyService.insert(accountsStrategy)) {
 		    accountsService.refreshByStrategy(accountsStrategy);
 		    //rolesService.refreshDynamicRoles(role);
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		
 	}
@@ -115,10 +115,10 @@ public class AccountsStrategyController {
 		_logger.debug("-query  :" + accountsStrategy);
 		accountsStrategy.setInstId(WebContext.getUserInfo().getInstId());
 		if (accountsStrategyService.load(accountsStrategy)!=null) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
 		}
 		
 	}
@@ -136,10 +136,10 @@ public class AccountsStrategyController {
 		if (accountsStrategyService.update(accountsStrategy)) {
 		   // rolesService.refreshDynamicRoles(role);
 		    accountsService.refreshByStrategy(accountsStrategy);
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		
 	}
@@ -151,10 +151,10 @@ public class AccountsStrategyController {
 		_logger.debug("-delete  role :" + role);
 		
 		if (accountsStrategyService.deleteById(role.getId())) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 		
 	}

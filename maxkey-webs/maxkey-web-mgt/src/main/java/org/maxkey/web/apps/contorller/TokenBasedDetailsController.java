@@ -17,8 +17,8 @@
 
 package org.maxkey.web.apps.contorller;
 
-import org.maxkey.constants.ConstantsOperateMessage;
-import org.maxkey.constants.ConstantsProtocols;
+import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.entity.apps.AppsTokenBasedDetails;
 import org.maxkey.persistence.service.AppsTokenBasedDetailsService;
@@ -50,7 +50,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		ModelAndView modelAndView=new ModelAndView("apps/tokenbased/appAdd");
 		AppsTokenBasedDetails tokenBasedDetails =new AppsTokenBasedDetails();
 		tokenBasedDetails.setId(tokenBasedDetails.generateId());
-		tokenBasedDetails.setProtocol(ConstantsProtocols.TOKENBASED);
+		tokenBasedDetails.setProtocol(ConstsProtocols.TOKENBASED);
 		tokenBasedDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.AES));
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
 		tokenBasedDetails.setUserPropertys("userPropertys");
@@ -68,10 +68,10 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
 		tokenBasedDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (tokenBasedDetailsService.insert(tokenBasedDetails)&&appsService.insertApp(tokenBasedDetails)) {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+tokenBasedDetails.getId());
 	}
@@ -101,10 +101,10 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
 		tokenBasedDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (tokenBasedDetailsService.update(tokenBasedDetails)&&appsService.updateApp(tokenBasedDetails)) {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		return   WebContext.forward("forwardUpdate/"+tokenBasedDetails.getId());
 	}
@@ -115,10 +115,10 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	public Message delete(@PathVariable("id") String id) {
 		_logger.debug("-delete  application :" + id);
 		if (tokenBasedDetailsService.remove(id)&&appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
 		}
 	}
 	

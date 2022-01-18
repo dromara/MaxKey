@@ -23,7 +23,7 @@ import org.joda.time.DateTime;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
@@ -95,7 +95,7 @@ public class HttpKerberosEntryPoint implements AsyncHandlerInterceptor {
 		_logger.debug("Kerberos Token is After Now  "+notOnOrAfter.isAfterNow());
 		
 		if(notOnOrAfter.isAfterNow()){
-		    LoginCredential loginCredential =new LoginCredential(kerberosToken.getPrincipal(),"",ConstantsLoginType.KERBEROS);
+		    LoginCredential loginCredential =new LoginCredential(kerberosToken.getPrincipal(),"",ConstsLoginType.KERBEROS);
 		    loginCredential.setProvider(kerberosUserDomain);
             authenticationProvider.authentication(loginCredential,true);
 	    	_logger.debug("Kerberos Logined in , username " + kerberosToken.getPrincipal());

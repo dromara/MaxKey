@@ -20,7 +20,7 @@ package org.maxkey.synchronizer.workweixin.service;
 import java.util.HashMap;
 import java.util.List;
 
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Organizations;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
@@ -48,7 +48,7 @@ public class ReorgDeptService extends AbstractSynchronizerService implements ISy
 			
 			for(Organizations org :listOrg) {
 				_logger.info("Dept "+(++responseCount)+" : " + org);
-				org.setStatus(ConstantsStatus.ACTIVE);
+				org.setStatus(ConstsStatus.ACTIVE);
 				organizationsService.update(org);
 			}
 			

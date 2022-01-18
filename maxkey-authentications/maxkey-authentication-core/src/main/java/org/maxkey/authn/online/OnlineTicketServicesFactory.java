@@ -17,7 +17,7 @@
 
 package org.maxkey.authn.online;
 
-import org.maxkey.constants.ConstantsPersistence;
+import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,12 +33,12 @@ public class OnlineTicketServicesFactory {
 	            RedisConnectionFactory redisConnFactory){
 		 
 		 OnlineTicketServices onlineTicketServices = null;
-		if (persistence == ConstantsPersistence.INMEMORY) {
+		if (persistence == ConstsPersistence.INMEMORY) {
 		    onlineTicketServices = new InMemoryOnlineTicketServices();
 		    _logger.debug("InMemoryOnlineTicketServices");
-		} else if (persistence == ConstantsPersistence.JDBC) {
+		} else if (persistence == ConstsPersistence.JDBC) {
 		    _logger.debug("OnlineTicketServices not support "); 
-		} else if (persistence == ConstantsPersistence.REDIS) {
+		} else if (persistence == ConstsPersistence.REDIS) {
 		    onlineTicketServices = new RedisOnlineTicketServices(redisConnFactory);
 		    _logger.debug("RedisOnlineTicketServices");
 		}

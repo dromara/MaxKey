@@ -18,7 +18,7 @@
 package org.maxkey.authz.oauth2.provider.token.store;
 
 import org.maxkey.authz.oauth2.provider.token.TokenStore;
-import org.maxkey.constants.ConstantsPersistence;
+import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,13 +32,13 @@ public class TokenStoreFactory {
 	            JdbcTemplate jdbcTemplate,
 	            RedisConnectionFactory redisConnFactory) {
 	        TokenStore tokenStore = null;
-	        if (persistence == ConstantsPersistence.INMEMORY) {
+	        if (persistence == ConstsPersistence.INMEMORY) {
 	            tokenStore = new InMemoryTokenStore();
 	            _logger.debug("InMemoryTokenStore");
-	        } else if (persistence == ConstantsPersistence.JDBC) {
+	        } else if (persistence == ConstsPersistence.JDBC) {
 	            //tokenStore = new JdbcTokenStore(jdbcTemplate);
 	            _logger.debug("JdbcTokenStore not support "); 
-	        } else if (persistence == ConstantsPersistence.REDIS) {
+	        } else if (persistence == ConstsPersistence.REDIS) {
 	            tokenStore = new RedisTokenStore(redisConnFactory);
 	            _logger.debug("RedisTokenStore");
 	        }

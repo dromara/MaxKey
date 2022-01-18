@@ -32,7 +32,7 @@ import org.maxkey.authz.cas.endpoint.ticket.ProxyGrantingTicketImpl;
 import org.maxkey.authz.cas.endpoint.ticket.ProxyTicketImpl;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.util.Instance;
 import org.maxkey.util.StringUtils;
@@ -101,7 +101,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 				httpRequestAdapter.post(pgtUrl+"?pgtId="+proxyGrantingTicket+"&pgtIou="+proxyGrantingTicketIOU,null);		
 			}
 			
-			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
+			if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(principal);
 				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);
@@ -175,7 +175,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			_logger.debug("principal "+principal);
 			serviceResponseBuilder.success().setUser(principal);
 			
-			if(Boolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
+			if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(principal);
 				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);

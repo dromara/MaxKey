@@ -18,11 +18,11 @@
 package org.maxkey.persistence.mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Institutions;
 
 public interface InstitutionsMapper extends IJpaBaseMapper<Institutions> {
 
-	@Select("select * from  mxk_institutions where domain = #{value} and status = " + ConstantsStatus.ACTIVE)
+	@Select("select * from  mxk_institutions where domain = #{value} and status = " + ConstsStatus.ACTIVE)
 	public Institutions findByDomain(String domain);
 }

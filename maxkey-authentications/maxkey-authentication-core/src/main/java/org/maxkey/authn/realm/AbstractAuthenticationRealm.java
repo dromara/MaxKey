@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.entity.Groups;
 import org.maxkey.entity.HistoryLogin;
@@ -58,12 +59,9 @@ public abstract class AbstractAuthenticationRealm {
 
     protected AbstractRemeberMeService remeberMeService;
     
-    protected boolean ldapSupport;
-    
-    protected  AbstractAuthenticationRealm ldapAuthenticationRealm;
-    
     protected UserInfoService userInfoService;
     
+    protected LdapAuthenticationRealmService ldapAuthenticationRealmService;
    
 
     /**

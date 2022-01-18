@@ -29,7 +29,7 @@ import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.token.endpoint.adapter.TokenBasedDefaultAdapter;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsTokenBasedDetails;
 import org.maxkey.persistence.service.AppsTokenBasedDetailsService;
@@ -81,7 +81,7 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		tokenBasedDetails.setIsAdapter(application.getIsAdapter());
 		
 		AbstractAuthorizeAdapter adapter;
-		if(Boolean.isTrue(tokenBasedDetails.getIsAdapter())){
+		if(ConstsBoolean.isTrue(tokenBasedDetails.getIsAdapter())){
 			adapter =(AbstractAuthorizeAdapter)Instance.newInstance(tokenBasedDetails.getAdapter());
 		}else{
 			adapter =(AbstractAuthorizeAdapter)defaultTokenBasedAdapter;

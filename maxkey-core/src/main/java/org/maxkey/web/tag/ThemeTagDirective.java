@@ -27,7 +27,7 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -77,7 +77,7 @@ public class ThemeTagDirective implements TemplateDirectiveModel {
                 && null != WebContext.getUserInfo()) {
             request.setAttribute(WebConstants.THEME_COOKIE_NAME, "theme");
             WebContext.setCookie(response, null,
-                    WebConstants.THEME_COOKIE_NAME, theme, ConstantsTimeInterval.ONE_WEEK);
+                    WebConstants.THEME_COOKIE_NAME, theme, ConstsTimeInterval.ONE_WEEK);
         }
         
         env.getOut().append(theme == null ? "default" : theme);

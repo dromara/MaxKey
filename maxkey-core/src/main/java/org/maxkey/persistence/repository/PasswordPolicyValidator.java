@@ -22,8 +22,8 @@ import java.util.Date;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
-import org.maxkey.constants.ConstantsPasswordSetType;
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsPasswordSetType;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordGen;
 import org.maxkey.entity.PasswordPolicy;
 import org.maxkey.entity.UserInfo;
@@ -149,14 +149,14 @@ public class PasswordPolicyValidator {
         }
         
         //locked
-        if(userInfo.getIsLocked()==ConstantsStatus.LOCK) {
+        if(userInfo.getIsLocked()==ConstsStatus.LOCK) {
             throw new BadCredentialsException(
                                 userInfo.getUsername()+ " "+
                                 WebContext.getI18nValue("login.error.locked")
                                 );
         }
         // inactive
-        if(userInfo.getStatus()!=ConstantsStatus.ACTIVE) {
+        if(userInfo.getStatus()!=ConstsStatus.ACTIVE) {
             throw new BadCredentialsException(
                                 userInfo.getUsername()+ 
                                 WebContext.getI18nValue("login.error.inactive") 
@@ -173,16 +173,16 @@ public class PasswordPolicyValidator {
        //initial password need change
        if(userInfo.getLoginCount()<=0) {
            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
-                   ConstantsPasswordSetType.INITIAL_PASSWORD);
+                   ConstsPasswordSetType.INITIAL_PASSWORD);
        }
        
-       if (userInfo.getPasswordSetType() != ConstantsPasswordSetType.PASSWORD_NORMAL) {
+       if (userInfo.getPasswordSetType() != ConstsPasswordSetType.PASSWORD_NORMAL) {
            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
                        userInfo.getPasswordSetType());
            return;
        } else {
            WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
-                   ConstantsPasswordSetType.PASSWORD_NORMAL);
+                   ConstsPasswordSetType.PASSWORD_NORMAL);
        }
 
        /*
@@ -206,7 +206,7 @@ public class PasswordPolicyValidator {
                 );
            if (intDuration > passwordPolicy.getExpiration()) {
                WebContext.getSession().setAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE,
-                       ConstantsPasswordSetType.PASSWORD_EXPIRED);
+                       ConstsPasswordSetType.PASSWORD_EXPIRED);
            }
        }
        
@@ -222,9 +222,9 @@ public class PasswordPolicyValidator {
        try {
            if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                jdbcTemplate.update(LOCK_USER_UPDATE_STATEMENT,
-                       new Object[] { ConstantsStatus.LOCK, new Date(), userInfo.getId() },
+                       new Object[] { ConstsStatus.LOCK, new Date(), userInfo.getId() },
                        new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
-               userInfo.setIsLocked(ConstantsStatus.LOCK);
+               userInfo.setIsLocked(ConstsStatus.LOCK);
            }
        } catch (Exception e) {
            _logger.error("lockUser Exception",e);
@@ -241,9 +241,9 @@ public class PasswordPolicyValidator {
        try {
            if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                jdbcTemplate.update(UNLOCK_USER_UPDATE_STATEMENT,
-                       new Object[] { ConstantsStatus.ACTIVE, new Date(), userInfo.getId() },
+                       new Object[] { ConstsStatus.ACTIVE, new Date(), userInfo.getId() },
                        new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
-               userInfo.setIsLocked(ConstantsStatus.ACTIVE);
+               userInfo.setIsLocked(ConstsStatus.ACTIVE);
            }
        } catch (Exception e) {
            _logger.error("unlockUser Exception",e);
@@ -259,9 +259,9 @@ public class PasswordPolicyValidator {
        try {
            if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
                jdbcTemplate.update(BADPASSWORDCOUNT_RESET_UPDATE_STATEMENT,
-                       new Object[] { 0, ConstantsStatus.ACTIVE, new Date(), userInfo.getId() },
+                       new Object[] { 0, ConstsStatus.ACTIVE, new Date(), userInfo.getId() },
                        new int[] { Types.INTEGER, Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
-               userInfo.setIsLocked(ConstantsStatus.ACTIVE);
+               userInfo.setIsLocked(ConstsStatus.ACTIVE);
            }
        } catch (Exception e) {
            _logger.error("resetAttempts Exception",e);

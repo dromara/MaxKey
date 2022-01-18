@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Groups;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.identity.scim.resources.ScimEnterprise;
@@ -179,7 +179,7 @@ public class ScimUserController {
     	scimUser.setTimezone(userInfo.getTimeZone());
     	scimUser.setLocale(userInfo.getLocale());
     	scimUser.setPreferredLanguage(userInfo.getPreferredLanguage());
-    	scimUser.setActive(userInfo.getStatus() == ConstantsStatus.ACTIVE);
+    	scimUser.setActive(userInfo.getStatus() == ConstsStatus.ACTIVE);
     	
     	List<ScimUserEmail> emails = new ArrayList<ScimUserEmail>(); 
     	if(StringUtils.isNotBlank(userInfo.getEmail())){

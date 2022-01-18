@@ -24,14 +24,10 @@ import com.aliyuncs.IAcsClient;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 
-import java.io.IOException;
-
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.impl.SmsOtpAuthn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
 
 /**
  * 阿里云短信验证.
@@ -45,6 +41,14 @@ public class SmsOtpAuthnAliyun extends SmsOtpAuthn {
         otpType = OtpTypes.SMS;
     }
 
+    public SmsOtpAuthnAliyun(String accessKeyId, String accessSecret, String templateCode, String signName) {
+    	otpType = OtpTypes.SMS;
+		this.accessKeyId = accessKeyId;
+		this.accessSecret = accessSecret;
+		this.templateCode = templateCode;
+		this.signName = signName;
+	}
+    
     //请替换你在管理后台应用下申请的accessKeyId
     private   String accessKeyId = "94395d754eb55693043f5d6a2b772ef3";
     //请替换你在管理后台应用下申请的accessSecret
@@ -54,7 +58,9 @@ public class SmsOtpAuthnAliyun extends SmsOtpAuthn {
     
     private String signName = "MaxKey";
     
-    @Override
+
+
+	@Override
     public boolean produce(UserInfo userInfo) {
         // 手机号
         String mobile = userInfo.getMobile();
@@ -128,20 +134,6 @@ public class SmsOtpAuthnAliyun extends SmsOtpAuthn {
 
     public void setSignName(String signName) {
         this.signName = signName;
-    }
-    
-    @Override
-    public void initPropertys() {
-        try {
-            this.loadProperties();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        this.accessKeyId    = properties.getProperty("maxkey.otp.sms.aliyun.accesskeyid");
-        this.accessSecret   = properties.getProperty("maxkey.otp.sms.aliyun.accesssecret");
-        this.templateCode   = properties.getProperty("maxkey.otp.sms.aliyun.templatecode");
-        this.signName       = properties.getProperty("maxkey.otp.sms.aliyun.signname");
     }
     
 }

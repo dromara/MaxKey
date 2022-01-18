@@ -17,18 +17,42 @@
 
 package org.maxkey.constants;
 
-public class ConstantsProperties {
-    
-    public static String classPathResource(String propertySource) {
-        return propertySource.replaceAll("classpath:","");
+/**
+ * Define int for boolean 0 false 1 true.
+ * 
+ * @author Crystal.Sea
+ *
+ */
+public class ConstsBoolean {
+
+    public static final int FALSE 	= 0;
+
+    public static  final int TRUE 	= 1;
+
+    private int value 				= FALSE;
+
+    public ConstsBoolean() {
+
     }
-    
-    public static String classPathResource(String propertySource,String active) {
-    	if(active == null || active.equals("")) {
-    		return propertySource.replaceAll("classpath:","");
-    	}
-        return propertySource.replace(".", "-"+active+".").replaceAll("classpath:","");
+
+    public int getValue() {
+        return value;
     }
-    
+
+    public boolean isValue() {
+        return TRUE == value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public static boolean isTrue(int value) {
+        return TRUE == value;
+    }
+
+    public static boolean isFalse(int value) {
+        return FALSE == value;
+    }
 
 }

@@ -66,7 +66,7 @@ public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
 		serviceResponseBuilder.setAttribute("department", base64Attr(userInfo.getDepartment()));
 		serviceResponseBuilder.setAttribute("departmentId", userInfo.getDepartmentId());
 		serviceResponseBuilder.setAttribute("workRegion",base64Attr(userInfo.getWorkRegion()));
-		
+		serviceResponseBuilder.setAttribute("institution", userInfo.getInstId());
 		serviceResponseBuilder.setAttribute(WebConstants.ONLINE_TICKET_NAME,authentication.getOnlineTicket().getTicketId());
 	
 		return null;

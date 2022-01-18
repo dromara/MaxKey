@@ -26,6 +26,7 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.OtpAuthnService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -62,13 +63,13 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    AbstractOtpAuthn tfaOtpAuthn,
-    	    AbstractOtpAuthn smsOtpAuthn,
+    	    OtpAuthnService otpAuthnService,
     	    AbstractRemeberMeService remeberMeService,
     	    OnlineTicketServices onlineTicketServices) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
 		this.tfaOtpAuthn = tfaOtpAuthn;
-		this.smsOtpAuthn = smsOtpAuthn;
+		this.otpAuthnService = otpAuthnService;
 		this.remeberMeService =  remeberMeService;
 		this.onlineTicketServices = onlineTicketServices;
 	}

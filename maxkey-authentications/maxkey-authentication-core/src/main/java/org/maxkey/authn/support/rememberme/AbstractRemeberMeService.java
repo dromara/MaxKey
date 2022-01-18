@@ -23,7 +23,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.crypto.Base64Utils;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.util.JsonUtils;
@@ -37,7 +37,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public abstract class AbstractRemeberMeService {
     private static final Logger _logger = LoggerFactory.getLogger(AbstractRemeberMeService.class);
 
-    protected Integer remeberMeValidity = ConstantsTimeInterval.TWO_WEEK;
+    protected Integer remeberMeValidity = ConstsTimeInterval.TWO_WEEK;
 
     protected String validity;
 
@@ -152,13 +152,13 @@ public abstract class AbstractRemeberMeService {
         if (Pattern.matches("[0-9]+", validity)) {
             remeberMeValidity = Integer.parseInt(validity);
         } else if (validity.equalsIgnoreCase("ONE_DAY")) {
-            remeberMeValidity = ConstantsTimeInterval.ONE_DAY;
+            remeberMeValidity = ConstsTimeInterval.ONE_DAY;
         } else if (validity.equalsIgnoreCase("ONE_WEEK")) {
-            remeberMeValidity = ConstantsTimeInterval.ONE_WEEK;
+            remeberMeValidity = ConstsTimeInterval.ONE_WEEK;
         } else if (validity.equalsIgnoreCase("TWO_WEEK")) {
-            remeberMeValidity = ConstantsTimeInterval.TWO_WEEK;
+            remeberMeValidity = ConstsTimeInterval.TWO_WEEK;
         } else if (validity.equalsIgnoreCase("ONE_YEAR")) {
-            remeberMeValidity = ConstantsTimeInterval.ONE_YEAR;
+            remeberMeValidity = ConstsTimeInterval.ONE_YEAR;
         }
 
         _logger.debug("Remeber Me Validity : " + remeberMeValidity);

@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 import org.maxkey.configuration.EmailConfig;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.OtpAuthnService;
 import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;
@@ -70,8 +71,8 @@ public class ForgotPasswordContorller {
     protected AbstractOtpAuthn mailOtpAuthn;
     
     @Autowired
-    @Qualifier("smsOtpAuthn")
-    protected AbstractOtpAuthn smsOtpAuthn;
+    @Qualifier("otpAuthnService")
+    OtpAuthnService otpAuthnService;
     
 
     @RequestMapping(value = { "/forward" })
@@ -104,6 +105,7 @@ public class ForgotPasswordContorller {
 	            if (forgotType == ForgotType.EMAIL ) {
 	            	mailOtpAuthn.produce(userInfo);
 	            }else if (forgotType == ForgotType.MOBILE) {
+	            	AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(userInfo.getInstId());
 	            	smsOtpAuthn.produce(userInfo);
 	            }
             }
@@ -138,6 +140,8 @@ public class ForgotPasswordContorller {
             userInfo.setUsername(username);
             userInfo.setPassword(password);
             userInfo.setDecipherable(password);
+            UserInfo loadedUserInfo = userInfoService.findByUsername(username);
+            AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(loadedUserInfo.getInstId());
             if ((forgotType == ForgotType.EMAIL && mailOtpAuthn.validate(userInfo, captcha)) ||
                     (forgotType == ForgotType.MOBILE && smsOtpAuthn.validate(userInfo, captcha))
                 ) {

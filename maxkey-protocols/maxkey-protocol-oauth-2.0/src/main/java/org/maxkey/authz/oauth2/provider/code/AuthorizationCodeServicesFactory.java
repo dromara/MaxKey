@@ -17,7 +17,7 @@
 
 package org.maxkey.authz.oauth2.provider.code;
 
-import org.maxkey.constants.ConstantsPersistence;
+import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,13 +31,13 @@ public class AuthorizationCodeServicesFactory {
 	            JdbcTemplate jdbcTemplate,
 	            RedisConnectionFactory redisConnFactory) {
 	        AuthorizationCodeServices authorizationCodeServices = null;
-	        if (persistence == ConstantsPersistence.INMEMORY) {
+	        if (persistence == ConstsPersistence.INMEMORY) {
 	            authorizationCodeServices = new InMemoryAuthorizationCodeServices();
 	            _logger.debug("InMemoryAuthorizationCodeServices");
-	        } else if (persistence == ConstantsPersistence.JDBC) {
+	        } else if (persistence == ConstsPersistence.JDBC) {
 	            //authorizationCodeServices = new JdbcAuthorizationCodeServices(jdbcTemplate);
 	            _logger.debug("JdbcAuthorizationCodeServices not support "); 
-	        } else if (persistence == ConstantsPersistence.REDIS) {
+	        } else if (persistence == ConstsPersistence.REDIS) {
 	            authorizationCodeServices = new RedisAuthorizationCodeServices(redisConnFactory);
 	            _logger.debug("RedisAuthorizationCodeServices");
 	        }

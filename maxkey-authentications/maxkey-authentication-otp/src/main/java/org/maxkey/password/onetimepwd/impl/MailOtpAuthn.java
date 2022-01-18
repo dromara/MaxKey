@@ -26,12 +26,10 @@ import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class MailOtpAuthn extends AbstractOtpAuthn {
     private static final Logger _logger = LoggerFactory.getLogger(MailOtpAuthn.class);
     
-    @Autowired
     EmailConfig emailConfig;
     String subject = "One Time PassWord";
     
@@ -40,8 +38,22 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
     public MailOtpAuthn() {
         otpType = OtpTypes.EMAIL;
     }
+    
+    public MailOtpAuthn(EmailConfig emailConfig) {
+    	otpType = OtpTypes.EMAIL;
+		this.emailConfig = emailConfig;
+	}
 
-    @Override
+	public MailOtpAuthn(EmailConfig emailConfig, String subject, String messageTemplate) {
+		otpType = OtpTypes.EMAIL;
+		this.emailConfig = emailConfig;
+		this.subject = subject;
+		this.messageTemplate = messageTemplate;
+	}
+
+
+
+	@Override
     public boolean produce(UserInfo userInfo) {
         try {
             String token = this.genToken(userInfo);

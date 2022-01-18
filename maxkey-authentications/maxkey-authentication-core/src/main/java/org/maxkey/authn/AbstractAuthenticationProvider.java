@@ -24,10 +24,11 @@ import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsLoginType;
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsLoginType;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.OtpAuthnService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -59,7 +60,7 @@ public abstract class AbstractAuthenticationProvider {
 
     protected AbstractOtpAuthn tfaOtpAuthn;
     
-    protected AbstractOtpAuthn smsOtpAuthn;
+    protected OtpAuthnService otpAuthnService;
 
     protected AbstractRemeberMeService remeberMeService;
     
@@ -118,7 +119,7 @@ public abstract class AbstractAuthenticationProvider {
         changeSession(authentication);
         
         authenticationRealm.insertLoginHistory( WebContext.getUserInfo(), 
-						        				ConstantsLoginType.LOCAL, 
+						        				ConstsLoginType.LOCAL, 
 								                "", 
 								                "xe00000004", 
 								                WebConstants.LOGIN_RESULT.SUCCESS);
@@ -255,6 +256,7 @@ public abstract class AbstractAuthenticationProvider {
             UserInfo validUserInfo = new UserInfo();
             validUserInfo.setUsername(userInfo.getUsername());
             validUserInfo.setId(userInfo.getId());
+            AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(userInfo.getInstId());
             if (password == null || !smsOtpAuthn.validate(validUserInfo, password)) {
                 String message = WebContext.getI18nValue("login.error.captcha");
                 _logger.debug("login captcha valid error.");
@@ -336,13 +338,13 @@ public abstract class AbstractAuthenticationProvider {
             loginUser.setLoginCount(0);
             authenticationRealm.insertLoginHistory(
             			loginUser, 
-            			ConstantsLoginType.LOCAL, 
+            			ConstsLoginType.LOCAL, 
             			"",
             			i18nMessage,
             			WebConstants.LOGIN_RESULT.USER_NOT_EXIST);
             throw new BadCredentialsException(i18nMessage);
         }else {
-        	if(userInfo.getIsLocked()==ConstantsStatus.LOCK) {
+        	if(userInfo.getIsLocked()==ConstsStatus.LOCK) {
         		authenticationRealm.insertLoginHistory( 
         				userInfo, 
                         loginCredential.getAuthType(), 
@@ -350,7 +352,7 @@ public abstract class AbstractAuthenticationProvider {
                         loginCredential.getCode(), 
                         WebConstants.LOGIN_RESULT.USER_LOCKED
                     );
-        	}else if(userInfo.getStatus()!=ConstantsStatus.ACTIVE) {
+        	}else if(userInfo.getStatus()!=ConstsStatus.ACTIVE) {
         		authenticationRealm.insertLoginHistory( 
         				userInfo, 
                         loginCredential.getAuthType(), 
@@ -383,7 +385,8 @@ public abstract class AbstractAuthenticationProvider {
         this.onlineTicketServices = onlineTicketServices;
     }
 
-	public void setSmsOtpAuthn(AbstractOtpAuthn smsOtpAuthn) {
-		this.smsOtpAuthn = smsOtpAuthn;
+	public void setOtpAuthnService(OtpAuthnService otpAuthnService) {
+		this.otpAuthnService = otpAuthnService;
 	}
+
 }

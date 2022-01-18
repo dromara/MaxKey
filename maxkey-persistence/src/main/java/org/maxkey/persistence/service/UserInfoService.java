@@ -19,7 +19,7 @@ package org.maxkey.persistence.service;
 
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.constants.ConstantsStatus;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ChangePassword;
@@ -128,7 +128,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
     //更新账号状态
     public void accountUpdate(UserInfo userInfo) {
-        if(userInfo.getStatus() != ConstantsStatus.ACTIVE) {
+        if(userInfo.getStatus() != ConstsStatus.ACTIVE) {
             if(accountsService==null) {
                 accountsService = 
                        WebContext.getBean("accountsService",AccountsService.class); 
@@ -136,7 +136,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
             Accounts queryAcount =new Accounts();
             queryAcount.setUserId(userInfo.getId());
             for (Accounts acount : accountsService.query(queryAcount)) {
-                acount.setStatus(ConstantsStatus.INACTIVE);
+                acount.setStatus(ConstsStatus.INACTIVE);
                 accountsService.update(acount);
             }
         }
@@ -322,7 +322,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	public void updateLocked(UserInfo userInfo) {
 		try {
 			if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-				userInfo.setIsLocked(ConstantsStatus.STOP);
+				userInfo.setIsLocked(ConstsStatus.STOP);
 				getMapper().updateLocked(userInfo);
 			}
 		} catch(Exception e) {
@@ -337,7 +337,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	public void updateLockout(UserInfo userInfo) {
 		try {
 			if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-				userInfo.setIsLocked(ConstantsStatus.START);
+				userInfo.setIsLocked(ConstsStatus.START);
 				userInfo.setBadPasswordCount(0);
 				getMapper().updateLockout(userInfo);
 			}

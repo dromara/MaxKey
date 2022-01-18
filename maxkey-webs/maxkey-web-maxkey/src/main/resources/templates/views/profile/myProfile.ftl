@@ -1074,7 +1074,7 @@
 				<div >
 					<input id="_method" type="hidden" name="_method"  value="post"/>
 					<input type="submit" id="submitButton" style="display: none;" />
-					<input id="submitBtn" class="button btn btn-primary mr-3" type="button" value="<@locale code="button.text.save" />"/>
+					<input id="submitBtn" class="button btn btn-primary mr-3" type="submit" value="<@locale code="button.text.save" />"/>
 				</div>
 			</div>
 	</div>

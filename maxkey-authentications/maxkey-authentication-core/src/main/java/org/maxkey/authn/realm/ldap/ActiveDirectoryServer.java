@@ -18,7 +18,7 @@
 /**
  * 
  */
-package org.maxkey.authn.realm.activedirectory;
+package org.maxkey.authn.realm.ldap;
 
 import org.maxkey.authn.realm.IAuthenticationServer;
 import org.maxkey.persistence.ldap.ActiveDirectoryUtils;

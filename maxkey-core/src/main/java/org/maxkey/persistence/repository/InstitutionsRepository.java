@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-import org.maxkey.constants.ConstantsStatus;
-import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Institutions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,15 +37,15 @@ public class InstitutionsRepository {
     private static Logger _logger = LoggerFactory.getLogger(InstitutionsRepository.class);
     
     private static final String SELECT_STATEMENT = 
-    						"select * from  mxk_institutions where domain = ? and status = " + ConstantsStatus.ACTIVE;
+    						"select * from  mxk_institutions where domain = ? and status = " + ConstsStatus.ACTIVE;
 
     private static final String SELECT_STATEMENT_BY_ID = 
-    						"select * from  mxk_institutions where id = ? and status = " + ConstantsStatus.ACTIVE;
+    						"select * from  mxk_institutions where id = ? and status = " + ConstsStatus.ACTIVE;
 
     protected static final Cache<String, Institutions> institutionsStore = 
             Caffeine.newBuilder()
-                .expireAfterWrite(ConstantsTimeInterval.ONE_HOUR, TimeUnit.SECONDS)
-                .build();
+                	.expireAfterWrite(60, TimeUnit.MINUTES)
+                	.build();
     
     //id domain mapping
     protected static final  ConcurrentHashMap<String,String> mapper = new ConcurrentHashMap<String,String>();
@@ -66,10 +65,12 @@ public class InstitutionsRepository {
 	        
 	        if (institutions != null && institutions.size() > 0) {
 	        	inst = institutions.get(0);
+	        	institutionsStore.put(domain, inst);
+		        mapper.put(inst.getId(), domain);
+	        }else {
+	        	//default institution
+	        	inst = get("1"); 
 	        }
-	        
-	        institutionsStore.put(domain, inst);
-	        mapper.put(inst.getId(), domain);
         }
         
         return inst;
@@ -77,7 +78,7 @@ public class InstitutionsRepository {
     
     public Institutions get(String instId) {
         _logger.trace(" instId {}" , instId);
-        Institutions inst = institutionsStore.getIfPresent(mapper.get(instId));
+        Institutions inst = institutionsStore.getIfPresent(mapper.get(instId)==null ? "1" : mapper.get(instId) );
         if(inst == null) {
 	        List<Institutions> institutions = 
 	        		jdbcTemplate.query(SELECT_STATEMENT_BY_ID,new InstitutionsRowMapper(),instId);

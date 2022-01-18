@@ -18,8 +18,10 @@
 package org.maxkey.authn.realm.jdbc;
 
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authn.realm.ldap.LdapAuthenticationRealm;
+import org.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
-import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.PasswordPolicy;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
@@ -66,11 +68,10 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     	this.loginRepository = loginRepository;
     	this.loginHistoryRepository = loginHistoryRepository;
     	this.remeberMeService = remeberMeService;
-    	 this.userInfoService = userInfoService;
+    	this.userInfoService = userInfoService;
         this.jdbcTemplate = jdbcTemplate;
     }
-    
-    
+  
     public JdbcAuthenticationRealm(
     		PasswordEncoder passwordEncoder,
     		PasswordPolicyValidator passwordPolicyValidator,
@@ -79,19 +80,15 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     		AbstractRemeberMeService remeberMeService,
     		UserInfoService userInfoService,
     	    JdbcTemplate jdbcTemplate,
-    	    AbstractAuthenticationRealm ldapAuthenticationRealm,
-    	    boolean ldapSupport
-    	    ) {
-    	
-    	this.passwordEncoder =passwordEncoder;
-    	this.passwordPolicyValidator=passwordPolicyValidator;
-    	this.loginRepository = loginRepository;
-    	this.loginHistoryRepository = loginHistoryRepository;
-    	this.remeberMeService = remeberMeService;
-        this.jdbcTemplate = jdbcTemplate;
-        this.ldapAuthenticationRealm = ldapAuthenticationRealm;
-        this.userInfoService = userInfoService;
-        this.ldapSupport = ldapSupport;
+    	    LdapAuthenticationRealmService ldapAuthenticationRealmService) {
+		this.passwordEncoder = passwordEncoder;
+		this.passwordPolicyValidator = passwordPolicyValidator;
+		this.loginRepository = loginRepository;
+		this.loginHistoryRepository = loginHistoryRepository;
+		this.remeberMeService = remeberMeService;
+		this.userInfoService = userInfoService;
+		this.jdbcTemplate = jdbcTemplate;
+		this.ldapAuthenticationRealmService = ldapAuthenticationRealmService;
     }
     
     /**
@@ -104,24 +101,26 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
         //        + PasswordReciprocal.getInstance().rawPassword(userInfo.getUsername(), password));
         passwordMatches = passwordEncoder.matches(password,userInfo.getPassword());
         
-        //passwordMatches == false and ldapSupport ==true
-        //validate password with LDAP
-        if(!passwordMatches && ldapSupport) {
-            passwordMatches =this.ldapAuthenticationRealm.passwordMatches(userInfo, password);
-            if(passwordMatches) {
-                //init password to local Realm
-                UserInfo changePasswordUser = new UserInfo();
-                changePasswordUser.setId(userInfo.getId());
-                changePasswordUser.setUsername(userInfo.getUsername());
-                changePasswordUser.setPassword(password);
-                userInfoService.changePassword(changePasswordUser, false);
-            }
+        if(ldapAuthenticationRealmService != null) {
+        	//passwordMatches == false and ldapSupport ==true
+        	//validate password with LDAP
+	        LdapAuthenticationRealm ldapRealm = ldapAuthenticationRealmService.getByInstId(userInfo.getInstId());
+	        if(!passwordMatches && ldapRealm != null && ldapRealm.isLdapSupport()) {
+	            passwordMatches = ldapRealm.passwordMatches(userInfo, password);
+	            if(passwordMatches) {
+	                //write password to database Realm
+	                UserInfo changePasswordUser = new UserInfo();
+	                changePasswordUser.setId(userInfo.getId());
+	                changePasswordUser.setUsername(userInfo.getUsername());
+	                changePasswordUser.setPassword(password);
+	                userInfoService.changePassword(changePasswordUser, false);
+	            }
+	        }
         }
-        
         _logger.debug("passwordvalid : {}" , passwordMatches);
         if (!passwordMatches) {
             passwordPolicyValidator.plusBadPasswordCount(userInfo);
-            insertLoginHistory(userInfo, ConstantsLoginType.LOCAL, "", "xe00000004", WebConstants.LOGIN_RESULT.PASSWORD_ERROE);
+            insertLoginHistory(userInfo, ConstsLoginType.LOCAL, "", "xe00000004", WebConstants.LOGIN_RESULT.PASSWORD_ERROE);
             PasswordPolicy passwordPolicy = passwordPolicyValidator.getPasswordPolicyRepository().getPasswordPolicy();
             if(userInfo.getBadPasswordCount()>=(passwordPolicy.getAttempts()/2)) {
                 throw new BadCredentialsException(

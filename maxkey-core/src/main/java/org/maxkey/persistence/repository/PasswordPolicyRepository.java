@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import org.maxkey.constants.ConstantsProperties;
+import org.maxkey.constants.ConstsProperties;
 import org.maxkey.entity.PasswordPolicy;
 import org.passay.CharacterOccurrencesRule;
 import org.passay.CharacterRule;
@@ -139,7 +139,7 @@ public class PasswordPolicyRepository {
                 try {
                     ClassPathResource dictFile= 
                             new ClassPathResource(
-                                    ConstantsProperties.classPathResource(topWeakPasswordPropertySource));
+                                    ConstsProperties.classPathResource(topWeakPasswordPropertySource));
                     Dictionary dictionary =new DictionaryBuilder().addReader(new InputStreamReader(dictFile.getInputStream())).build();
                     passwordPolicyRuleList.add(new DictionaryRule(dictionary));
                 }catch(Exception e) {

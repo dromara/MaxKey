@@ -25,7 +25,7 @@ import org.maxkey.authz.saml.service.IDService;
 import org.maxkey.authz.saml.service.TimeService;
 import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.xml.IssuerGenerator;
-import org.maxkey.constants.Boolean;
+import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.Configuration;
 import org.opensaml.saml2.core.Assertion;
@@ -78,7 +78,7 @@ public class AuthnResponseGenerator {
 											attributeMap);
 		
 		//Encrypt 
-		if(Boolean.isTrue(saml20Details.getEncrypted())) {
+		if(ConstsBoolean.isTrue(saml20Details.getEncrypted())) {
 			logger.info("begin to encrypt assertion");
 			try {
 				// Assume this contains a recipient's RSA public

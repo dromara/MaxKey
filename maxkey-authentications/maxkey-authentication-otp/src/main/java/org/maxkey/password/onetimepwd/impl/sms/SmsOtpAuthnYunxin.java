@@ -17,7 +17,7 @@
 
 package org.maxkey.password.onetimepwd.impl.sms;
 
-import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +48,14 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
         otpType = OtpTypes.SMS;
     }
 
-    //发送验证码的请求路径URL
+    public SmsOtpAuthnYunxin(String appKey, String appSecret, String templateId) {
+    	otpType = OtpTypes.SMS;
+		this.appKey = appKey;
+		this.appSecret = appSecret;
+		this.templateId = templateId;
+	}
+
+	//发送验证码的请求路径URL
     private static final String
             SERVER_URL = "https://api.netease.im/sms/sendcode.action";
     //网易云信分配的账号，请替换你在管理后台应用下申请的Appkey
@@ -58,6 +65,7 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
     private  String appSecret = "05d5485357bc";
     // 短信模板ID
     private  String templateId = "14860099";
+    
     
     @Override
     public boolean produce(UserInfo userInfo) {
@@ -201,22 +209,11 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
         public void setObj(String obj) {
             this.obj = obj;
         }
+
         
     }
-    
-    @Override
-    public void initPropertys() {
-        try {
-            this.loadProperties();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        this.appKey         = properties.getProperty("maxkey.otp.sms.yunxin.appkey");
-        this.appSecret      = properties.getProperty("maxkey.otp.sms.yunxin.appsecret");
-        this.templateId     = properties.getProperty("maxkey.otp.sms.yunxin.templateid");
-    }
-    
+
+
     /**
      * main.
      * @param args String
@@ -233,4 +230,41 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
         System.out.println("code " + yunxinSms.getObj());
     }
     
+}
+
+class SmsOtpAuthnYunxinCheckSumBuilder {
+    // 计算并获取CheckSum
+    public static String getCheckSum(String appSecret, String nonce, String curTime) {
+        return encode("sha1", appSecret + nonce + curTime);
+    }
+
+    // 计算并获取md5值
+    public static String getMD5(String requestBody) {
+        return encode("md5", requestBody);
+    }
+
+    private static String encode(String algorithm, String value) {
+        if (value == null) {
+            return null;
+        }
+        try {
+            MessageDigest messageDigest
+                    = MessageDigest.getInstance(algorithm);
+            messageDigest.update(value.getBytes());
+            return getFormattedText(messageDigest.digest());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private static String getFormattedText(byte[] bytes) {
+        int len = bytes.length;
+        StringBuilder buf = new StringBuilder(len * 2);
+        for (int j = 0; j < len; j++) {
+            buf.append(HEX_DIGITS[(bytes[j] >> 4) & 0x0f]);
+            buf.append(HEX_DIGITS[bytes[j] & 0x0f]);
+        }
+        return buf.toString();
+    }
+    private static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5',
+            '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 }

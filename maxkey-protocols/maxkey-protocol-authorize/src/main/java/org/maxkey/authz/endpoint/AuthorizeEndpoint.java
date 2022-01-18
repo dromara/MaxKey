@@ -23,7 +23,7 @@ package org.maxkey.authz.endpoint;
 import javax.servlet.http.HttpServletRequest;
 
 
-import org.maxkey.constants.ConstantsProtocols;
+import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.AppsCasDetailsService;
 import org.maxkey.web.WebConstants;
@@ -61,25 +61,25 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 		Apps  app=getApp(id);
 		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, app.getId());
 		
-		if(app.getProtocol().equalsIgnoreCase(ConstantsProtocols.EXTEND_API)){
+		if(app.getProtocol().equalsIgnoreCase(ConstsProtocols.EXTEND_API)){
 			modelAndView=WebContext.forward("/authz/api/"+app.getId());
-		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.FORMBASED)){
+		}else if (app.getProtocol().equalsIgnoreCase(ConstsProtocols.FORMBASED)){
 			 modelAndView=WebContext.forward("/authz/formbased/"+app.getId());
-		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH20)){
+		}else if (app.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH20)){
 			 modelAndView=WebContext.forward("/authz/oauth/v20/"+app.getId());
-		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.OAUTH21)){
+		}else if (app.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)){
 		    modelAndView=WebContext.redirect(app.getLoginUrl());
-        }else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.OPEN_ID_CONNECT10)){
+        }else if (app.getProtocol().equalsIgnoreCase(ConstsProtocols.OPEN_ID_CONNECT10)){
             modelAndView=WebContext.forward("/authz/oauth/v20/"+app.getId());
-		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.SAML20)){
+		}else if (app.getProtocol().equalsIgnoreCase(ConstsProtocols.SAML20)){
 			 modelAndView=WebContext.forward("/authz/saml20/idpinit/"+app.getId());
-		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.TOKENBASED)){
+		}else if (app.getProtocol().equalsIgnoreCase(ConstsProtocols.TOKENBASED)){
 			modelAndView=WebContext.forward("/authz/tokenbased/"+app.getId());
-		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.CAS)){
+		}else if (app.getProtocol().equalsIgnoreCase(ConstsProtocols.CAS)){
 			modelAndView=WebContext.forward("/authz/cas/"+app.getId());
-		}else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.JWT)){
+		}else if (app.getProtocol().equalsIgnoreCase(ConstsProtocols.JWT)){
             modelAndView=WebContext.forward("/authz/jwt/"+app.getId());
-        }else if (app.getProtocol().equalsIgnoreCase(ConstantsProtocols.BASIC)){
+        }else if (app.getProtocol().equalsIgnoreCase(ConstsProtocols.BASIC)){
 			modelAndView=WebContext.redirect(app.getLoginUrl());
 		}
 		

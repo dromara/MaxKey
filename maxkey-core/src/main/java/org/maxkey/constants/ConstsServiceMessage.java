@@ -17,7 +17,7 @@
 
 package org.maxkey.constants;
 
-public final class ConstantsServiceMessage {
+public final class ConstsServiceMessage {
 
     public static final class EMPLOYEES {
         public static final String SERVICE_NAME = "employees";

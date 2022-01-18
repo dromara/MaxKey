@@ -17,13 +17,13 @@
 
 package org.maxkey.authn.support.rememberme;
 
-import org.maxkey.constants.ConstantsTimeInterval;
+import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.persistence.redis.RedisConnection;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 
 public class RedisRemeberMeService extends AbstractRemeberMeService {
 
-    protected int serviceTicketValiditySeconds = ConstantsTimeInterval.TWO_WEEK;
+    protected int serviceTicketValiditySeconds = ConstsTimeInterval.TWO_WEEK;
     
     RedisConnectionFactory connectionFactory;
     

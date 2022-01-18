@@ -20,7 +20,7 @@ package org.maxkey.web.contorller;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstantsOperateMessage;
+import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Synchronizers;
 import org.maxkey.persistence.service.SynchronizersService;
@@ -92,10 +92,10 @@ public class SynchronizersController {
 		synchronizers.setInstId(WebContext.getUserInfo().getInstId());
 		synchronizers.setCredentials(PasswordReciprocal.getInstance().encode(synchronizers.getCredentials()));
 		if (synchronizersService.update(synchronizers)) {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
 		
 	}
@@ -122,9 +122,9 @@ public class SynchronizersController {
 			}
 		}catch(Exception e) {
 			_logger.error("synchronizer Exception " , e);
-			return  new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
 		}
-		return new Message(WebContext.getI18nValue(ConstantsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+		return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 	}
 
 }

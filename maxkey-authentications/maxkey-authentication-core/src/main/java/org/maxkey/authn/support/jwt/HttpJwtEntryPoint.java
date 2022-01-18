@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstantsLoginType;
+import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -78,7 +78,7 @@ public class HttpJwtEntryPoint implements AsyncHandlerInterceptor {
 		 SignedJWT signedJWT = jwtLoginService.jwtTokenValidation(jwt);
 		 if(signedJWT != null) {
 			 String username =signedJWT.getJWTClaimsSet().getSubject();
-			 LoginCredential loginCredential =new LoginCredential(username,"",ConstantsLoginType.JWT);
+			 LoginCredential loginCredential =new LoginCredential(username,"",ConstsLoginType.JWT);
 			 authenticationProvider.authentication(loginCredential,true);
 			 _logger.debug("JWT Logined in , username " + username);
 		 }
