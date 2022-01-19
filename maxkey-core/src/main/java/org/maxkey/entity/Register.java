@@ -17,22 +17,39 @@
 
 package org.maxkey.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
+@Entity
+@Table(name = "MXK_REGISTER")
 public class Register extends JpaBaseEntity{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4021412077583763378L;
+	@Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
 	private String id;
+	@Column
 	private String displayName;
+	@Column
 	private String workEmail;
+	@Column
 	private String workPhone;
+	@Column
 	private Integer employees;
 	
 	//机构
 	private String instId;
+	@Column
 	private String instName;
 	
 	/**

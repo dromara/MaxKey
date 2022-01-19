@@ -27,7 +27,9 @@
 </div>
 <div class="container">	
 	<div class="row">
-		<div class="col-sm-6"></div>
+		<div class="d-none d-sm-block   col-sm-6 col-md-6">
+
+        </div>
         <div class="col-md-4 col-md-offset-4 col-lg-offset-4col-xl-offset-4">
             <div class="panel panel-default">
 				<table border="0">

@@ -21,7 +21,8 @@
 	*(MAXKEY-220120) 修复钉钉同步器bug
 	*(MAXKEY-220121) 修复LDAP同步器bug
 	*(MAXKEY-220122) 修复企业微信同步器bug
-	*(MAXKEY-220123) 依赖jar引用、更新和升级
+	*(MAXKEY-220123) 增加在线集成指南
+	*(MAXKEY-220124) 依赖jar引用、更新和升级
 		log4j           2.17.1
 		spring          5.3.15
 		springBoot      2.6.1
