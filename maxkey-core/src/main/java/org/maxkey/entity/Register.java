@@ -52,6 +52,18 @@ public class Register extends JpaBaseEntity{
 	@Column
 	private String instName;
 	
+	@Column
+    int status;
+    @Column
+    String createdBy;
+    @Column
+    String createdDate;
+    @Column
+    String modifiedBy;
+    @Column
+    String modifiedDate;
+    
+	
 	/**
 	 * 
 	 */
@@ -117,10 +129,50 @@ public class Register extends JpaBaseEntity{
 		this.instName = instName;
 	}
 
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public String getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(String modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Registration [id=");
+		builder.append("Register [id=");
 		builder.append(id);
 		builder.append(", displayName=");
 		builder.append(displayName);
@@ -134,6 +186,16 @@ public class Register extends JpaBaseEntity{
 		builder.append(instId);
 		builder.append(", instName=");
 		builder.append(instName);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", createdBy=");
+		builder.append(createdBy);
+		builder.append(", createdDate=");
+		builder.append(createdDate);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
+		builder.append(", modifiedDate=");
+		builder.append(modifiedDate);
 		builder.append("]");
 		return builder.toString();
 	}

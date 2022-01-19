@@ -60,7 +60,7 @@ Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitH
 
 7. Variety of authentication mechanisms coexist, each application system can retain the original authentication mechanism, and integrate the authentication of the MaxKey; the application has a high degree of independence, does not rely on the MaxKey, and can use the authentication of the MaxKey to realize single sign on.
 
-8. Based on Java EE platform , microservice architecture, Adopts Spring, MySQL, Tomcat, Redis , Apache Kafka and other open source technologies, and has strong scalability.
+8. Based on Java EE platform , microservice architecture, Use Spring, MySQL, Tomcat, Redis , Apache Kafka and other open source technologies, and has strong scalability.
 
 9. Open Source, Secure,  Independent and Controllable , License Under Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright</a>. 
 
@@ -116,40 +116,43 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 <a href="https://github.com/dromara/MaxKey/issues/40" target="_blank"> Click to register </a> as MaxKey user and contribute to MaxKey!
 
 以下为部分接入或测试中的用户
-| 序号    | 单位    |  行业   |
-| --------| :-----  | :----   |
-| 1.1     | 兰州现代职业学院                            |  院校  |
-| 1.2     | 长春职业技术学院                            |  院校  |
-| 1.3     | 重庆市北碚图书馆                            |  教育  |
-| 1.4     | 德清智慧教育平台                            |  教育  |
-| 2.1     | 国家能源局                                  |  企业  |
-| 2.2     | 360公司                                     |  企业  |
-| 2.3     | 深圳市金溢科技股份有限公司                  |  企业  |
-| 2.4     | 之江实验室                                  |  企业  |
-| 2.5     | 深圳市中悦科技有限公司                      |  企业  |
-| 3.1     | 国元证券                                    |  金融  |
-| 3.2     | 华夏金融租赁有限公司                        |  金融  |
-| 3.3     | 宁波金融资产交易中心                        |  金融  |
-| 3.4     | 国宝人寿保险股份有限公司                    |  金融  |
-| 3.5     | 瀚华金控股份有限公司                        |  金融  |
-| 3.6     | 路特斯中国                                  |  汽车  |
-| 3.7     | 北京银泰置业有限公司                        |  企业  |
-| 3.8     | 遂宁市经济大数据平台                        |  企业  |
-| 3.9     | 同方节能工程技术有限公司                    |  企业  |
-| 3.10    | 云南航天工程物探检测股份有限公司            |  企业  |
-| 3.11    | 山东港口陆海国际物流集团有限公司            |  企业  |
-| 3.12    | 广州无线电集团                              |  企业  |
-| 3.13    | 河南新辰环保科技有限公司                    |  企业  |
-| 3.14    | 三一华兴                                    |  企业  |
-| 3.15    | unicon.net                                  |  企业  |
-| 3.16    | 深圳市东阳光实业发展有限公司                |  企业  |
-| 3.17    | 广州思迈特软件有限公司                      |  科技  |
-| 3.18    | 尚企云链                                    |  科技  |
-| 4.1     | 北京博亚思科技有限公司                      |  科技  |
-| 4.2     | 武汉英特沃科技有限公司                      |  科技  |
-| 4.3     | 江苏创致信息科技有限公司                    |  科技  |
-| 4.4     | 江西云车科技有限公司                        |  科技  |
-| 4.5     | 无锡市陶都巨龙软件有限责任公司              |  科技  |
+
+| 行业    | 单位    |
+| --------| :-----  |
+| 院校    | 兰州现代职业学院                            |
+| 院校    | 长春职业技术学院                            |
+| 教育    | 重庆市北碚图书馆                            |
+| 教育    | 德清智慧教育平台                            |
+| 企业    | 国家能源局                                  |
+| 企业    | 360公司                                     |
+| 企业    | 深圳市金溢科技股份有限公司                  |
+| 企业    | 之江实验室                                  |
+| 企业    | 深圳市中悦科技有限公司                      |
+| 金融    | 国元证券                                    |
+| 金融    | 华夏金融租赁有限公司                        |
+| 金融    | 宁波金融资产交易中心                        |
+| 金融    | 国宝人寿保险股份有限公司                    |
+| 金融    | 瀚华金控股份有限公司                        |
+| 汽车    | 路特斯中国                                  |
+| 企业    | 北京银泰置业有限公司                        |
+| 企业    | 遂宁市经济大数据平台                        |
+| 企业    | 同方节能工程技术有限公司                    |
+| 企业    | 云南航天工程物探检测股份有限公司            |
+| 企业    | 山东港口陆海国际物流集团有限公司            |
+| 企业    | 广州无线电集团                              |
+| 企业    | 河南新辰环保科技有限公司                    |
+| 企业    | 三一华兴                                    |
+| 企业    | unicon.net                                  |
+| 企业    | 深圳市东阳光实业发展有限公司                |
+| 科技    | 广州思迈特软件有限公司                      |
+| 科技    | 尚企云链                                    |
+| 科技    | 北京博亚思科技有限公司                      |
+| 科技    | 武汉英特沃科技有限公司                      |
+| 科技    | 江苏创致信息科技有限公司                    |
+| 科技    | 湖南数通信息技术服务有限公司                |
+| 科技    | 广东漫云物联科技有限公司                    |
+| 科技    | 江西云车科技有限公司                        |
+| 科技    | 无锡市陶都巨龙软件有限责任公司              |
 
 # Dromara社区
 <a href="https://dromara.org/zh/" target="_blank">**Dromara**</a>致力于微服务云原生解决方案的组织。
