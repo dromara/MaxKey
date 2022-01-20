@@ -22,7 +22,7 @@ dependencies {
    	implementation project(":maxkey-identitys:maxkey-synchronizers-activedirectory")
    	implementation project(":maxkey-identitys:maxkey-synchronizers-ldap")
    	implementation project(":maxkey-identitys:maxkey-synchronizers-workweixin")
-   	implementation project(":maxkey-identitys:maxkey-synchronizers-dingding")
+   	implementation project(":maxkey-identitys:maxkey-synchronizers-dingtalk")
    	
    	implementation project(":maxkey-webs:maxkey-web-resources")
 }
