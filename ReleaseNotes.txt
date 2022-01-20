@@ -1,38 +1,44 @@
-﻿MaxKey v 3.3.0 GA 2022/01/**
+﻿MaxKey v 3.3.0 GA 2022/01/21
     *(MAXKEY-220101) 机构管理配置管理
-	*(MAXKEY-220102) 应用系统名称后台配置及国际化支持
-	*(MAXKEY-220103) 初步实现国际化存储在数据库
-	*(MAXKEY-220104) 租户管理邮箱地址
-	*(MAXKEY-220105) 租户管理短信网关
-	*(MAXKEY-220106) 租户管理LDAP配置
-	*(MAXKEY-220107) 官方网站增加Dromara标识
-	*(MAXKEY-220108) LDAP认证从租户读取配置
-	*(MAXKEY-220109) 租户管理社交账号
-	*(MAXKEY-220110) 社交账号自动识别http,https
-	*(MAXKEY-220111) 增加prometheus支持
-	*(MAXKEY-220112) log4j日志pattern调整 
-	*(MAXKEY-220113) 数据库方法统一命名
-	*(MAXKEY-220114) 修复新增应用oauth2协议 多租户新增bug
-	*(MAXKEY-220115) Logger统一使用slf4j
-	*(MAXKEY-220116) readme完善
-	*(MAXKEY-220117) org.maxkey.persistence.db调整为org.maxkey.persistence.repository
-	*(MAXKEY-220118) org.maxkey.constants下的类统一以Consts开头
-	*(MAXKEY-220119) 认证协议返回的数据统一增加机构institution
-	*(MAXKEY-220120) 修复钉钉同步器bug
-	*(MAXKEY-220121) 修复LDAP同步器bug
-	*(MAXKEY-220122) 修复企业微信同步器bug
-	*(MAXKEY-220123) 增加在线集成指南
-	*(MAXKEY-220124) 依赖jar引用、更新和升级
-		log4j           2.17.1
-		spring          5.3.15
-		springBoot      2.6.1
-		springbootadmin 2.6.0
-		xmlbeans        5.0.2
-		poi             5.1.0
-		jedis           3.8.0
-		mybatis         3.5.9
-		mybatis-jpa-extra 2.7
-		
+    *(MAXKEY-220102) 应用系统名称后台配置及国际化支持
+    *(MAXKEY-220103) 初步实现国际化存储在数据库
+    *(MAXKEY-220104) 租户管理邮箱地址
+    *(MAXKEY-220105) 租户管理短信网关
+    *(MAXKEY-220106) 租户管理LDAP配置
+    *(MAXKEY-220107) 官方网站增加Dromara标识
+    *(MAXKEY-220108) LDAP认证从租户读取配置
+    *(MAXKEY-220109) 租户管理社交账号
+    *(MAXKEY-220110) 社交账号自动识别http,https
+    *(MAXKEY-220111) 增加prometheus支持
+    *(MAXKEY-220112) 增加find和findOne的方法，可根据where的过滤条件查询数据
+    *(MAXKEY-220113) log4j日志pattern调整 
+    *(MAXKEY-220114) 数据库方法统一命名
+    *(MAXKEY-220115) 修复新增应用oauth2协议 多租户新增bug
+    *(MAXKEY-220116) Logger统一使用slf4j
+    *(MAXKEY-220117) maxkey-synchronizers-dingding改为maxkey-synchronizers-dingtalk
+    *(MAXKEY-220118) org.maxkey.persistence.db调整为org.maxkey.persistence.repository
+    *(MAXKEY-220119) org.maxkey.constants下的类统一以Consts开头
+    *(MAXKEY-220120) 认证协议返回的数据统一增加机构institution
+    *(MAXKEY-220121) 机构institution，使用instid作为租户标识，对应instance(实例)
+    *(MAXKEY-220122) 增加mxk_inst cookie，代表当前登录的租户编号
+    *(MAXKEY-220123) 修复钉钉同步器bug
+    *(MAXKEY-220124) 修复LDAP同步器bug
+    *(MAXKEY-220125) 修复企业微信同步器bug
+    *(MAXKEY-220126) 增加在线集成指南
+    *(MAXKEY-220127) 官方网站更新和优化
+    *(MAXKEY-220128) opensaml的jar存放在本地，加速构建的效率
+    *(MAXKEY-220129) readme完善
+    *(MAXKEY-220130) 依赖jar引用、更新和升级
+        log4j           2.17.1
+        spring          5.3.15
+        springBoot      2.6.1
+        springbootadmin 2.6.0
+        xmlbeans        5.0.2
+        poi             5.1.0
+        jedis           3.8.0
+        mybatis         3.5.9
+        mybatis-jpa-extra 2.7
+        
 MaxKey v 3.2.0 GA 2021/12/21
     *(MAXKEY-211001) 实现多租户基本功能
     *(MAXKEY-211002) Apache log4j漏洞升级到2.17.0
