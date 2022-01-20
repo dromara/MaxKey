@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.synchronizer.dingding;
+package org.maxkey.synchronizer.dingtalk;
 
 import org.maxkey.entity.Organizations;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
@@ -31,8 +31,8 @@ import com.dingtalk.api.response.OapiV2DepartmentListsubResponse.DeptBaseRespons
 import com.taobao.api.ApiException;
 
 @Service
-public class DingdingOrganizationService  extends AbstractSynchronizerService implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(DingdingOrganizationService.class);
+public class DingtalkOrganizationService  extends AbstractSynchronizerService implements ISynchronizerService{
+	final static Logger _logger = LoggerFactory.getLogger(DingtalkOrganizationService.class);
 	
 	OapiV2DepartmentListsubResponse rspDepts;
 	

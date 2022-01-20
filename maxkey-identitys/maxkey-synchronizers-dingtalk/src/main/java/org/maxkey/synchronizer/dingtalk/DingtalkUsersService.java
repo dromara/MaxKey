@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.synchronizer.dingding;
+package org.maxkey.synchronizer.dingtalk;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -36,11 +36,11 @@ import com.dingtalk.api.response.OapiV2DepartmentListsubResponse.DeptBaseRespons
 import com.dingtalk.api.response.OapiV2UserListResponse.ListUserResponse;
 
 @Service
-public class DingdingUsersService  extends AbstractSynchronizerService implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(DingdingUsersService.class);
+public class DingtalkUsersService  extends AbstractSynchronizerService implements ISynchronizerService{
+	final static Logger _logger = LoggerFactory.getLogger(DingtalkUsersService.class);
 	
 	@Autowired
-	DingdingOrganizationService dingdingOrganizationService;
+	DingtalkOrganizationService dingdingOrganizationService;
 	
 	String access_token;
 	
@@ -115,7 +115,7 @@ public class DingdingUsersService  extends AbstractSynchronizerService implement
 		this.access_token = access_token;
 	}
 
-	public void setDingdingOrganizationService(DingdingOrganizationService dingdingOrganizationService) {
+	public void setDingdingOrganizationService(DingtalkOrganizationService dingdingOrganizationService) {
 		this.dingdingOrganizationService = dingdingOrganizationService;
 	}
 

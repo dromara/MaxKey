@@ -1,4 +1,4 @@
-description = "maxkey-synchronizers-dingding"
+description = "maxkey-synchronizers-dingtalk"
 
 apply plugin: 'java'
 

@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.synchronizer.dingding;
+package org.maxkey.synchronizer.dingtalk;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,17 +26,17 @@ import com.dingtalk.api.request.OapiGettokenRequest;
 import com.dingtalk.api.response.OapiGettokenResponse;
 import com.taobao.api.ApiException;
 
-public class DingdingAccessTokenService {
-	final static Logger _logger = LoggerFactory.getLogger(DingdingAccessTokenService.class);
+public class DingtalkAccessTokenService {
+	final static Logger _logger = LoggerFactory.getLogger(DingtalkAccessTokenService.class);
 	
 	String appkey;
 	
 	String appsecret;
 	
-	public DingdingAccessTokenService() {
+	public DingtalkAccessTokenService() {
 		
 	}
-	public DingdingAccessTokenService(String appkey, String appsecret) {
+	public DingtalkAccessTokenService(String appkey, String appsecret) {
 		super();
 		this.appkey = appkey;
 		this.appsecret = appsecret;

@@ -37,7 +37,7 @@ include (
 	'maxkey-identitys:maxkey-synchronizers-reorgdept',
 	'maxkey-identitys:maxkey-synchronizers-activedirectory',
 	'maxkey-identitys:maxkey-synchronizers-ldap',
-	'maxkey-identitys:maxkey-synchronizers-dingding',
+	'maxkey-identitys:maxkey-synchronizers-dingtalk',
 	'maxkey-identitys:maxkey-synchronizers-workweixin',
 	//Protocol
 	'maxkey-protocols:maxkey-protocol-authorize',

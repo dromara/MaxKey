@@ -50,7 +50,7 @@ def libjarsmapper=[
     'maxkey-synchronizers'                  :'maxkey_mgt',
     'maxkey-synchronizers-activedirectory'  :'maxkey_mgt',
     'maxkey-synchronizers-ldap'             :'maxkey_mgt',
-    'maxkey-synchronizers-dingding'         :'maxkey_mgt',
+    'maxkey-synchronizers-dingtalk'         :'maxkey_mgt',
     'maxkey-synchronizers-workweixin'       :'maxkey_mgt',
 	'maxkey-synchronizers-reorgdept'        :'maxkey_mgt',
     'maxkey-boot-monitor'                   :'maxkey_monitor'
@@ -300,9 +300,9 @@ subprojects {
          implementation  group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-config', version: "${springcloudalibabaVersion}"
          
          //saml 
-         implementation  group: 'org.opensaml', name: 'opensaml', version: "${opensamlVersion}"
-         implementation  group: 'org.opensaml', name: 'openws', version: "${openwsVersion}"
-         implementation  group: 'org.opensaml', name: 'xmltooling', version: "${xmltoolingVersion}"
+         //implementation  group: 'org.opensaml', name: 'opensaml', version: "${opensamlVersion}"
+         //implementation  group: 'org.opensaml', name: 'openws', version: "${openwsVersion}"
+         //implementation  group: 'org.opensaml', name: 'xmltooling', version: "${xmltoolingVersion}"
          implementation  group: 'net.shibboleth.utilities', name: 'java-support', version: "${javasupportVersion}"
          //jose-jwt
          implementation  group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: "${nimbusjosejwtVersion}"
