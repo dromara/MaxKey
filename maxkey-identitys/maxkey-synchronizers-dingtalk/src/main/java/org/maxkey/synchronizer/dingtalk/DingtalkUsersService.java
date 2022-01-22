@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Organizations;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
@@ -104,6 +105,11 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 		userInfo.setWorkEmail(user.getOrgEmail());//瀹搞儰缍旈柇顔绘
 		userInfo.setWorkPhoneNumber(user.getTelephone());//閸忣剙寰冮悽浣冪樈
 		userInfo.setWorkOfficeName(user.getWorkPlace());//閸旂偛鍙曠�癸拷
+		if(user.getActive()) {
+			userInfo.setStatus(ConstsStatus.ACTIVE);
+		}else {
+			userInfo.setStatus(ConstsStatus.INACTIVE);
+		}
 		
 		userInfo.setInstId(this.synchronizer.getInstId());
 		userInfo.setDescription("dingtalk "+user.getRemark());

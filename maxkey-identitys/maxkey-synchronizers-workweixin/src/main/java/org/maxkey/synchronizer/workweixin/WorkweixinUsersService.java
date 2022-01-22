@@ -20,6 +20,7 @@ package org.maxkey.synchronizer.workweixin;
 import java.sql.Types;
 import java.util.List;
 
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Organizations;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
@@ -87,7 +88,11 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 		userInfo.setWorkAddressFormatted(user.getAddress());//工作地点
 
 		//激活状态: 1=已激活，2=已禁用，4=未激活，5=退出企业。
-		userInfo.setStatus(user.getStatus());
+		if(user.getStatus() == 1) {
+			userInfo.setStatus(ConstsStatus.ACTIVE);
+		}else {
+			userInfo.setStatus(ConstsStatus.INACTIVE);
+		}
 		userInfo.setInstId(this.synchronizer.getInstId());
 		return userInfo;
 	}
