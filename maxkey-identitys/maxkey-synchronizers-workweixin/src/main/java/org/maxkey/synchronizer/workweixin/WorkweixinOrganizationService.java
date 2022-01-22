@@ -35,8 +35,6 @@ import org.springframework.stereotype.Service;
 public class WorkweixinOrganizationService extends AbstractSynchronizerService implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(WorkweixinOrganizationService.class);
 	
-	WorkWeixinDeptsResponse deptsResponse;
-	
 	String access_token;
 	
 	static String DEPTS_URL="https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=%s";
@@ -49,13 +47,13 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 			
 			for(WorkWeixinDepts dept : rsp.getDepartment()) {
 				_logger.info("dept : " + dept.getId()+" "+ dept.getName()+" "+ dept.getParentid());
-				Organizations org = buildOrganization(dept);
+				Organizations organization = buildOrganization(dept);
 				if(organizationsService.findOne("id = ? and instid = ?", 
-						new Object[] { org.getId().toString(), org.getInstId() },
+						new Object[] { organization.getId(), organization.getInstId() },
                         new int[] { Types.VARCHAR, Types.VARCHAR }) == null) {
-					organizationsService.insert(org);
+					organizationsService.insert(organization);
 				}else {
-					organizationsService.update(org);
+					organizationsService.update(organization);
 				}
 			}
 
@@ -68,7 +66,7 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 	public WorkWeixinDeptsResponse requestDepartmentList(String access_token) {
 		HttpRequestAdapter request =new HttpRequestAdapter();
 		String responseBody = request.get(String.format(DEPTS_URL, access_token));
-		deptsResponse  =JsonUtils.gson2Object(responseBody, WorkWeixinDeptsResponse.class);
+		WorkWeixinDeptsResponse deptsResponse  =JsonUtils.gson2Object(responseBody, WorkWeixinDeptsResponse.class);
 		
 		_logger.info("response : " + responseBody);
 		for(WorkWeixinDepts dept : deptsResponse.getDepartment()) {
@@ -95,14 +93,6 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
-	}
-
-	public WorkWeixinDeptsResponse getDeptsResponse() {
-		return deptsResponse;
-	}
-
-	public void setDeptsResponse(WorkWeixinDeptsResponse deptsResponse) {
-		this.deptsResponse = deptsResponse;
 	}
 
 }

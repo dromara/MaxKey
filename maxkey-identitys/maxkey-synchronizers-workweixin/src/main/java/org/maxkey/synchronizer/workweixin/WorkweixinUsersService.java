@@ -17,25 +17,24 @@
 
 package org.maxkey.synchronizer.workweixin;
 
+import java.sql.Types;
+import java.util.List;
+
+import org.maxkey.entity.Organizations;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
-import org.maxkey.synchronizer.workweixin.entity.WorkWeixinDepts;
 import org.maxkey.synchronizer.workweixin.entity.WorkWeixinUsers;
 import org.maxkey.synchronizer.workweixin.entity.WorkWeixinUsersResponse;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.web.HttpRequestAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class WorkweixinUsersService extends AbstractSynchronizerService implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(WorkweixinUsersService.class);
-	
-	@Autowired
-	WorkweixinOrganizationService workweixinOrganizationService;
 	
 	String access_token;
 	
@@ -44,8 +43,11 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 	public void sync() {
 		_logger.info("Sync Users...");
 		try {
-			
-			for (WorkWeixinDepts dept : workweixinOrganizationService.getDeptsResponse().getDepartment()) {
+			List<Organizations> organizations = 
+					 organizationsService.find("instid = ?",
+									 		new Object[] { this.synchronizer.getInstId() },
+					                        new int[] { Types.VARCHAR});
+			for(Organizations dept : organizations) {
 				HttpRequestAdapter request =new HttpRequestAdapter();
 				String responseBody = request.get(String.format(USERS_URL, access_token,dept.getId()));
 				WorkWeixinUsersResponse usersResponse  =JsonUtils.gson2Object(responseBody, WorkWeixinUsersResponse.class);
@@ -54,7 +56,14 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 				for(WorkWeixinUsers user : usersResponse.getUserlist()) {
 					UserInfo userInfo  = buildUserInfo(user);
 					_logger.info("userInfo : " + userInfo);
-					this.userInfoService.merge(userInfo);
+					if(userInfoService.findOne("username = ? and instid = ?",
+							new Object[] { userInfo.getUsername(),this.getSynchronizer().getInstId() },
+	                        new int[] { Types.VARCHAR,Types.VARCHAR}) == null) {
+						userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
+						this.userInfoService.insert(userInfo);
+					}else {
+						userInfoService.update(userInfo);
+					}
 				}
 			}
 			
@@ -89,13 +98,7 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 		return userInfo;
 	}
 
-
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
 	}
-
-	public void setWorkweixinOrganizationService(WorkweixinOrganizationService workweixinOrganizationService) {
-		this.workweixinOrganizationService = workweixinOrganizationService;
-	}
-
 }
