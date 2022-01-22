@@ -50,7 +50,7 @@ public class AttributeStatementGenerator {
 	private final XMLObjectBuilderFactory builderFactory = Configuration.getBuilderFactory();
 
 	public static String COMMA 				= ",";
-	public static String COMMA_ISO8859_1 	= "&#44;"; //&#44; ->,
+	public static String COMMA_ISO8859_1 	= "#44;"; //#44; ->,
 	
 	public AttributeStatement generateAttributeStatement(AppsSAML20Details saml20Details,ArrayList<GrantedAuthority> grantedAuthoritys) {
 		return generateAttributeStatement(saml20Details, grantedAuthoritys,null);
