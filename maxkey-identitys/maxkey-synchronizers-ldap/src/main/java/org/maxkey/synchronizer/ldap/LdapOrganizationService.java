@@ -67,9 +67,9 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 						attributeMap.put(objAttrs.getID().toLowerCase(), objAttrs);
 					}
 					
-					Organizations org = buildOrganization(attributeMap,si.getName(),si.getNameInNamespace());
-					
-					_logger.info("Organizations " + org);
+					Organizations organization = buildOrganization(attributeMap,si.getName(),si.getNameInNamespace());
+					organizationsService.saveOrUpdate(organization);
+					_logger.info("Organizations " + organization);
 				}
 			}
 			

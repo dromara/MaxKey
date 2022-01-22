@@ -56,14 +56,8 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 				for(WorkWeixinUsers user : usersResponse.getUserlist()) {
 					UserInfo userInfo  = buildUserInfo(user);
 					_logger.info("userInfo : " + userInfo);
-					if(userInfoService.findOne("username = ? and instid = ?",
-							new Object[] { userInfo.getUsername(),this.getSynchronizer().getInstId() },
-	                        new int[] { Types.VARCHAR,Types.VARCHAR}) == null) {
-						userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
-						this.userInfoService.insert(userInfo);
-					}else {
-						userInfoService.update(userInfo);
-					}
+					userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
+					userInfoService.saveOrUpdate(userInfo);
 				}
 			}
 			

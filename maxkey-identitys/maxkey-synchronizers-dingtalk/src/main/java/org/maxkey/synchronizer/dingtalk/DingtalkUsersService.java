@@ -68,14 +68,8 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 						_logger.info("name : " + user.getName()+" , "+user.getLoginId()+" , "+user.getUserid());
 						UserInfo userInfo  = buildUserInfo(user);
 						_logger.info("userInfo " + userInfo);
-						if(userInfoService.findOne("username = ? and instid = ?",
-								new Object[] { userInfo.getUsername(),this.getSynchronizer().getInstId() },
-		                        new int[] { Types.VARCHAR,Types.VARCHAR}) == null) {
-							userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
-							this.userInfoService.insert(userInfo);
-						}else {
-							userInfoService.update(userInfo);
-						}
+						userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
+						userInfoService.saveOrUpdate(userInfo);
 						
 					}
 				}

@@ -65,6 +65,8 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 					}
 					
 					UserInfo userInfo  = buildUserInfo(attributeMap,si.getName(),si.getNameInNamespace());
+					userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
+					userInfoService.saveOrUpdate(userInfo);
 					_logger.info("userInfo " + userInfo);
 				}
 			}

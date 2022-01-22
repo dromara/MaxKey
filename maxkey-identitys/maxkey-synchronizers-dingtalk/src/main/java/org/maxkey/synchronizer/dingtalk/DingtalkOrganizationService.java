@@ -17,7 +17,6 @@
 
 package org.maxkey.synchronizer.dingtalk;
 
-import java.sql.Types;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -56,13 +55,7 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
 					deptsQueue.add(dept.getDeptId());
 					deptMap.put(dept.getDeptId(), dept);
 					Organizations organization = buildOrganization(dept,deptMap.get(dept.getParentId()));
-					if(organizationsService.findOne("id = ? and instid = ?", 
-							new Object[] { organization.getId().toString(), organization.getInstId() },
-	                        new int[] { Types.VARCHAR, Types.VARCHAR }) == null) {
-						organizationsService.insert(organization);
-					}else {
-						organizationsService.update(organization);
-					}
+					organizationsService.saveOrUpdate(organization);
 					_logger.info("Organizations : " + organization);
 				}
 			}

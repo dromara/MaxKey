@@ -18,6 +18,8 @@
 package org.maxkey.persistence.service;
 
 
+import java.sql.Types;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
@@ -162,6 +164,17 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	    return true;
 	}
 	
+	
+	public void saveOrUpdate(UserInfo userInfo) {
+		if(findOne(" username = ? and instid = ?",
+				new Object[] { userInfo.getUsername(),userInfo.getInstId() },
+                new int[] { Types.VARCHAR,Types.VARCHAR}) == null) {
+			insert(userInfo);
+		}else {
+			userInfo.setPassword(null);
+			update(userInfo);
+		}
+	}
 	
 	public boolean updateProtectedApps(UserInfo userinfo) {
 		try {

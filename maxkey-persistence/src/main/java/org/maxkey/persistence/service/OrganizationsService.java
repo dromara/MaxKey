@@ -17,6 +17,7 @@
 
 package org.maxkey.persistence.service;
 
+import java.sql.Types;
 import java.util.List;
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.apache.poi.ss.usermodel.Cell;
@@ -66,6 +67,15 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
          return false;
      }
  
+	 public void saveOrUpdate(Organizations organization) {
+		 if(findOne(" id = ? and instid = ?", 
+					new Object[] { organization.getId().toString(), organization.getInstId() },
+                 new int[] { Types.VARCHAR, Types.VARCHAR }) == null) {
+				insert(organization);
+			}else {
+				update(organization);
+			}
+	 }
 	 public List<Organizations> queryOrgs(Organizations organization){
 		 return getMapper().queryOrgs(organization);
 	 }
