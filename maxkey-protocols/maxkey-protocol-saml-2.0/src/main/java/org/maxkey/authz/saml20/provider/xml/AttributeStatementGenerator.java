@@ -49,6 +49,9 @@ public class AttributeStatementGenerator {
 	
 	private final XMLObjectBuilderFactory builderFactory = Configuration.getBuilderFactory();
 
+	public static String COMMA 				= ",";
+	public static String COMMA_ISO8859_1 	= "&#44;"; //&#44; ->,
+	
 	public AttributeStatement generateAttributeStatement(AppsSAML20Details saml20Details,ArrayList<GrantedAuthority> grantedAuthoritys) {
 		return generateAttributeStatement(saml20Details, grantedAuthoritys,null);
 
@@ -82,8 +85,16 @@ public class AttributeStatementGenerator {
 		if(ConstsBoolean.isTrue(saml20Details.getIsExtendAttr()) && saml20Details.getExtendAttr() != null) {
 			ExtraAttrs extraAttrs=new ExtraAttrs(saml20Details.getExtendAttr());
 			for(ExtraAttr extraAttr : extraAttrs.getExtraAttrs()) {
-				logger.debug("Attribute : "+extraAttr.getAttr()+" , Vale : "+extraAttr.getValue()+" , Type : "+extraAttr.getType());
-				attributeStatement.getAttributes().add(builderAttribute(extraAttr.getAttr(),extraAttr.getValue(),extraAttr.getType()));
+				extraAttr.setValue(extraAttr.getValue().replaceAll(COMMA_ISO8859_1, COMMA));
+				logger.debug("Attribute : {} , Vale : {} , Type : {}",
+								extraAttr.getAttr(),extraAttr.getValue(),extraAttr.getType());
+				
+				attributeStatement.getAttributes().add(builderAttribute(
+																extraAttr.getAttr(),
+																extraAttr.getValue(),
+																extraAttr.getType()
+															)
+														);
 			}
 		}
 		
