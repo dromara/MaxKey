@@ -44,6 +44,10 @@ public class WebXssRequestFilter  extends GenericFilterBean {
 		skipUrlMap.put("/notices/update", "/notices/update");
 		skipUrlMap.put("/institutions/update","/institutions/update");
 		skipUrlMap.put("/localization/update","/localization/update");
+		skipUrlMap.put("/apps/updateExtendAttr","/apps/updateExtendAttr");
+		skipUrlMap.put("/synchronizers/add","/synchronizers/add");
+		skipUrlMap.put("/synchronizers/update","/synchronizers/update");
+		
 		//authz
 		skipUrlMap.put("/authz/cas", "/authz/cas");
 		skipUrlMap.put("/authz/cas/", "/authz/cas/");
