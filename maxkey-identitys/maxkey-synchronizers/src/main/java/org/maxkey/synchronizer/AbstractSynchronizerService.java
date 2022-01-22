@@ -56,7 +56,7 @@ public abstract class AbstractSynchronizerService {
         }
         
         for(Organizations org : orgsList) {
-           if(org.getId().equals(orgId)&&orgId.equals("1")) {
+           if(org.getId().equals(orgId) && orgId.equals("1")) {
                rootOrganization = org; 
                rootOrganization.setNamePath("/"+rootOrganization.getName());
                rootOrganization.setCodePath("/1");

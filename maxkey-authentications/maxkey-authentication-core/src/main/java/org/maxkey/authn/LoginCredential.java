@@ -42,6 +42,8 @@ public class LoginCredential  implements Authentication {
     String provider;
     String code;
     String message = WebConstants.LOGIN_RESULT.SUCCESS;
+    String instId;
+    
     
     ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;
@@ -211,20 +213,50 @@ public class LoginCredential  implements Authentication {
         this.message = message;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("LoginCredential [username=").append(username)
-                .append(", password=").append("******")
-                .append(", sessionId=").append(sessionId)
-                .append(", captcha=").append(captcha)
-                .append(", otpCaptcha=").append(otpCaptcha)
-                .append(", remeberMe=").append(remeberMe)
-                .append(", authType=").append(authType)
-                .append(", jwtToken=").append(jwtToken)
-                .append(", grantedAuthority=").append(grantedAuthority)
-                .append(", authenticated=").append(authenticated)
-                .append("]");
-        return builder.toString();
-    }
+    public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("LoginCredential [username=");
+		builder.append(username);
+		builder.append(", password=");
+		builder.append("******");
+		builder.append(", sessionId=");
+		builder.append(sessionId);
+		builder.append(", captcha=");
+		builder.append(captcha);
+		builder.append(", otpCaptcha=");
+		builder.append(otpCaptcha);
+		builder.append(", remeberMe=");
+		builder.append(remeberMe);
+		builder.append(", authType=");
+		builder.append(authType);
+		builder.append(", jwtToken=");
+		builder.append(jwtToken);
+		builder.append(", onlineTicket=");
+		builder.append(onlineTicket);
+		builder.append(", provider=");
+		builder.append(provider);
+		builder.append(", code=");
+		builder.append(code);
+		builder.append(", message=");
+		builder.append(message);
+		builder.append(", instId=");
+		builder.append(instId);
+		builder.append(", grantedAuthority=");
+		builder.append(grantedAuthority);
+		builder.append(", authenticated=");
+		builder.append(authenticated);
+		builder.append(", roleAdministrators=");
+		builder.append(roleAdministrators);
+		builder.append("]");
+		return builder.toString();
+	}
 }

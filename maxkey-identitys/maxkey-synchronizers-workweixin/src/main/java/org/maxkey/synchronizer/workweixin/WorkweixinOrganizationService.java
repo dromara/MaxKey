@@ -17,6 +17,9 @@
 
 package org.maxkey.synchronizer.workweixin;
 
+import java.sql.Types;
+
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Organizations;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
@@ -47,7 +50,13 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 			for(WorkWeixinDepts dept : rsp.getDepartment()) {
 				_logger.info("dept : " + dept.getId()+" "+ dept.getName()+" "+ dept.getParentid());
 				Organizations org = buildOrganization(dept);
-				this.organizationsService.merge(org);
+				if(organizationsService.findOne("id = ? and instid = ?", 
+						new Object[] { org.getId().toString(), org.getInstId() },
+                        new int[] { Types.VARCHAR, Types.VARCHAR }) == null) {
+					organizationsService.insert(org);
+				}else {
+					organizationsService.update(org);
+				}
 			}
 
 		} catch (Exception e) {
@@ -75,6 +84,8 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 		org.setParentId(dept.getParentid()+"");
 		org.setSortIndex(dept.getOrder());
 		org.setInstId(this.synchronizer.getInstId());
+		org.setStatus(ConstsStatus.ACTIVE);
+		org.setDescription("WorkWeixin");
 		return org;
 	}
 

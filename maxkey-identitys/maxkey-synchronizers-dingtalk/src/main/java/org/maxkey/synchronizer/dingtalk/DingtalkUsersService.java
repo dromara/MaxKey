@@ -17,30 +17,28 @@
 
 package org.maxkey.synchronizer.dingtalk;
 
+import java.sql.Types;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.maxkey.entity.Organizations;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiV2UserListRequest;
-import com.dingtalk.api.response.OapiV2DepartmentListsubResponse;
 import com.dingtalk.api.response.OapiV2UserListResponse;
-import com.dingtalk.api.response.OapiV2DepartmentListsubResponse.DeptBaseResponse;
 import com.dingtalk.api.response.OapiV2UserListResponse.ListUserResponse;
 
 @Service
 public class DingtalkUsersService  extends AbstractSynchronizerService implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(DingtalkUsersService.class);
-	
-	@Autowired
-	DingtalkOrganizationService dingdingOrganizationService;
 	
 	String access_token;
 	
@@ -48,11 +46,15 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 		_logger.info("Sync Users...");
 		try {
 			
-			OapiV2DepartmentListsubResponse rspDepts = dingdingOrganizationService.getRspDepts();
-			for(DeptBaseResponse dept : rspDepts.getResult()) {
+			 List<Organizations> organizations = 
+					 organizationsService.find("instid = ?",
+									 		new Object[] { this.synchronizer.getInstId() },
+					                        new int[] { Types.VARCHAR});
+			 
+			for(Organizations dept : organizations) {
 				DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/v2/user/list");
 				OapiV2UserListRequest req = new OapiV2UserListRequest();
-				req.setDeptId(dept.getDeptId());
+				req.setDeptId(Long.parseLong(dept.getCode()));
 				req.setCursor(0L);
 				req.setSize(100L);
 				req.setOrderField("modify_desc");
@@ -66,12 +68,14 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 						_logger.info("name : " + user.getName()+" , "+user.getLoginId()+" , "+user.getUserid());
 						UserInfo userInfo  = buildUserInfo(user);
 						_logger.info("userInfo " + userInfo);
-						//if(userInfoService.findByUsername(userInfo.getUsername()) == null) {
+						if(userInfoService.findOne("username = ? and instid = ?",
+								new Object[] { userInfo.getUsername(),this.getSynchronizer().getInstId() },
+		                        new int[] { Types.VARCHAR,Types.VARCHAR}) == null) {
 							userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
 							this.userInfoService.insert(userInfo);
-						//}else {
-						//	userInfoService.update(userInfo);
-						//}
+						}else {
+							userInfoService.update(userInfo);
+						}
 						
 					}
 				}
@@ -91,21 +95,24 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 	public UserInfo buildUserInfo(ListUserResponse user) {
 		UserInfo userInfo = new  UserInfo();
 
-		userInfo.setUsername(user.getUserid());//鐧诲綍鍚�
-		userInfo.setNickName(user.getName());//鐢ㄦ埛鍚�
-		userInfo.setDisplayName(user.getName());//鐢ㄦ埛鍚�
-		userInfo.setFormattedName(user.getName());//鐢ㄦ埛鍚�
+		userInfo.setUsername(user.getUserid());//閻ц缍嶉崥锟�
+		userInfo.setNickName(user.getName());//閻€劍鍩涢崥锟�
+		userInfo.setDisplayName(user.getName());//閻€劍鍩涢崥锟�
+		userInfo.setFormattedName(user.getName());//閻€劍鍩涢崥锟�
 		
 		userInfo.setEmail(StringUtils.isBlank(user.getEmail())? user.getUserid() +"@maxkey.top":user.getEmail());
 		userInfo.setEntryDate(new DateTime(user.getHiredDate()).toString(DateTimeFormat.forPattern("yyyy-MM-dd")));
-		userInfo.setMobile(user.getMobile());//鎵嬫満
+		userInfo.setMobile(user.getMobile());//閹靛婧�
+		
 		userInfo.setDepartmentId(user.getDeptIdList().get(0)+"");
-		userInfo.setJobTitle(user.getTitle());//鑱屽姟
-		userInfo.setWorkEmail(user.getOrgEmail());//宸ヤ綔閭欢
-		userInfo.setWorkPhoneNumber(user.getTelephone());//鍏徃鐢佃瘽
-		userInfo.setWorkOfficeName(user.getWorkPlace());//鍔炲叕瀹�
-		userInfo.setDescription(user.getRemark());//澶囨敞
+		userInfo.setEmployeeNumber(user.getJobNumber());
+		userInfo.setJobTitle(user.getTitle());//閼卞苯濮�
+		userInfo.setWorkEmail(user.getOrgEmail());//瀹搞儰缍旈柇顔绘
+		userInfo.setWorkPhoneNumber(user.getTelephone());//閸忣剙寰冮悽浣冪樈
+		userInfo.setWorkOfficeName(user.getWorkPlace());//閸旂偛鍙曠�癸拷
+		
 		userInfo.setInstId(this.synchronizer.getInstId());
+		userInfo.setDescription("dingtalk "+user.getRemark());
 		return userInfo;
 	}
 
@@ -114,10 +121,5 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
 	}
-
-	public void setDingdingOrganizationService(DingtalkOrganizationService dingdingOrganizationService) {
-		this.dingdingOrganizationService = dingdingOrganizationService;
-	}
-
 
 }

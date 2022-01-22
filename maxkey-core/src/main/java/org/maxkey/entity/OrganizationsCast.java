@@ -64,6 +64,12 @@ public class OrganizationsCast extends JpaBaseEntity implements Serializable {
     private String orgId;
     @Column
     private String orgParentId;
+    
+    @Column
+    private String appId;
+    
+    @Column
+    private String appName;
 	@Column
 	private String instId;
 

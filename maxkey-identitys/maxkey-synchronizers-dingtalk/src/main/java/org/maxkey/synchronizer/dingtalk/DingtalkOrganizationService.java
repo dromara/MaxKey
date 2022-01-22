@@ -17,6 +17,12 @@
 
 package org.maxkey.synchronizer.dingtalk;
 
+import java.sql.Types;
+import java.util.HashMap;
+import java.util.NoSuchElementException;
+import java.util.concurrent.LinkedBlockingQueue;
+
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Organizations;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
@@ -34,47 +40,65 @@ import com.taobao.api.ApiException;
 public class DingtalkOrganizationService  extends AbstractSynchronizerService implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(DingtalkOrganizationService.class);
 	
-	OapiV2DepartmentListsubResponse rspDepts;
-	
 	String access_token;
 	
 	public void sync() {
 		_logger.info("Sync Organizations ...");
-	
-		try {			
-			OapiV2DepartmentListsubResponse rsp = requestDepartmentList(access_token);
-			
-			for(DeptBaseResponse dept : rsp.getResult()) {
-				_logger.info("dept : " + dept.getDeptId()+" "+ dept.getName()+" "+ dept.getParentId());
-				Organizations org = buildOrganization(dept);
-				this.organizationsService.merge(org);
-				_logger.info("Organizations : " + org);
+		LinkedBlockingQueue<Long> deptsQueue = new LinkedBlockingQueue<Long>();
+		deptsQueue.add(1L);
+		HashMap<Long,DeptBaseResponse> deptMap = new HashMap<Long,DeptBaseResponse>();
+		try {
+			while(deptsQueue.element() != null) {
+				OapiV2DepartmentListsubResponse rsp = requestDepartmentList(access_token,deptsQueue.poll());
+				
+				for(DeptBaseResponse dept : rsp.getResult()) {
+					_logger.info("dept : " + dept.getDeptId()+" "+ dept.getName()+" "+ dept.getParentId());
+					deptsQueue.add(dept.getDeptId());
+					deptMap.put(dept.getDeptId(), dept);
+					Organizations organization = buildOrganization(dept,deptMap.get(dept.getParentId()));
+					if(organizationsService.findOne("id = ? and instid = ?", 
+							new Object[] { organization.getId().toString(), organization.getInstId() },
+	                        new int[] { Types.VARCHAR, Types.VARCHAR }) == null) {
+						organizationsService.insert(organization);
+					}else {
+						organizationsService.update(organization);
+					}
+					_logger.info("Organizations : " + organization);
+				}
 			}
-
 		} catch (ApiException e) {
 			e.printStackTrace();
+		}catch (NoSuchElementException e) {
+			_logger.debug("Sync Department successful .");
 		}
 		
 	}
 	
-	public OapiV2DepartmentListsubResponse requestDepartmentList(String access_token) throws ApiException {
+	public OapiV2DepartmentListsubResponse requestDepartmentList(String access_token,Long deptId) throws ApiException {
 		DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/v2/department/listsub");
 		OapiV2DepartmentListsubRequest req = new OapiV2DepartmentListsubRequest();
-		req.setDeptId(1L);
+		req.setDeptId(deptId);
 		req.setLanguage("zh_CN");
-		rspDepts = client.execute(req, access_token);
+		OapiV2DepartmentListsubResponse rspDepts = client.execute(req, access_token);
 		_logger.info("response : " + rspDepts.getBody());
 		return rspDepts;
 	}
 	
 	
 	
-	public Organizations buildOrganization(DeptBaseResponse dept) {
+	public Organizations buildOrganization(DeptBaseResponse dept,DeptBaseResponse parentDept) {
 		Organizations org = new Organizations();
 		org.setId(dept.getDeptId()+"");
+		org.setCode(dept.getDeptId()+"");
 		org.setName(dept.getName());
 		org.setParentId(dept.getParentId()+"");
+		org.setParentCode(dept.getParentId()+"");
+		if(parentDept != null) {
+			org.setParentName(parentDept.getName());
+		}
 		org.setInstId(this.synchronizer.getInstId());
+		org.setStatus(ConstsStatus.ACTIVE);
+		org.setDescription("dingtalk");
 		return org;
 	}
 
@@ -87,10 +111,5 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
 	}
-
-	public OapiV2DepartmentListsubResponse getRspDepts() {
-		return rspDepts;
-	}
-	
 	
 }
