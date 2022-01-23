@@ -39,6 +39,7 @@ public class SocialsAssociate extends JpaBaseEntity {
 	private String exAttribute; 
     private String createdDate;
     private String updatedDate;
+    private String instId;
 	
 	public SocialsAssociate() {}
 
@@ -128,7 +129,15 @@ public class SocialsAssociate extends JpaBaseEntity {
         this.updatedDate = updatedDate;
     }
 
-    @Override
+    public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
+
+	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("SocialsAssociate [id=");

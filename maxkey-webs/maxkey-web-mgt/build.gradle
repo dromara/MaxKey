@@ -17,12 +17,14 @@ dependencies {
    	
    	//identity
    	implementation project(":maxkey-identitys:maxkey-identity-scim")   
-   	implementation project(":maxkey-identitys:maxkey-identity-rest")	
-   	implementation project(":maxkey-identitys:maxkey-synchronizers")
-   	implementation project(":maxkey-identitys:maxkey-synchronizers-activedirectory")
-   	implementation project(":maxkey-identitys:maxkey-synchronizers-ldap")
-   	implementation project(":maxkey-identitys:maxkey-synchronizers-workweixin")
-   	implementation project(":maxkey-identitys:maxkey-synchronizers-dingtalk")
+   	implementation project(":maxkey-identitys:maxkey-identity-rest")
+   		
+   	//synchronizers
+   	implementation project(":maxkey-synchronizers:maxkey-synchronizer")
+   	implementation project(":maxkey-synchronizers:maxkey-synchronizer-activedirectory")
+   	implementation project(":maxkey-synchronizers:maxkey-synchronizer-ldap")
+   	implementation project(":maxkey-synchronizers:maxkey-synchronizer-workweixin")
+   	implementation project(":maxkey-synchronizers:maxkey-synchronizer-dingtalk")
    	
    	implementation project(":maxkey-webs:maxkey-web-resources")
 }

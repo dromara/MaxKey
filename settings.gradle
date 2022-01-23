@@ -33,12 +33,13 @@ include (
 	//identity
 	'maxkey-identitys:maxkey-identity-scim',
 	'maxkey-identitys:maxkey-identity-rest',
-	'maxkey-identitys:maxkey-synchronizers',
-	'maxkey-identitys:maxkey-synchronizers-reorgdept',
-	'maxkey-identitys:maxkey-synchronizers-activedirectory',
-	'maxkey-identitys:maxkey-synchronizers-ldap',
-	'maxkey-identitys:maxkey-synchronizers-dingtalk',
-	'maxkey-identitys:maxkey-synchronizers-workweixin',
+	//synchronizers
+	'maxkey-synchronizers:maxkey-synchronizer',
+	'maxkey-synchronizers:maxkey-synchronizer-reorgdept',
+	'maxkey-synchronizers:maxkey-synchronizer-activedirectory',
+	'maxkey-synchronizers:maxkey-synchronizer-ldap',
+	'maxkey-synchronizers:maxkey-synchronizer-dingtalk',
+	'maxkey-synchronizers:maxkey-synchronizer-workweixin',
 	//Protocol
 	'maxkey-protocols:maxkey-protocol-authorize',
 	'maxkey-protocols:maxkey-protocol-oauth-2.0',

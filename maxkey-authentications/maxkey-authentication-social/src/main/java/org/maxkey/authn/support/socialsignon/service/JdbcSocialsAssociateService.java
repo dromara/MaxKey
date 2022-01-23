@@ -32,13 +32,13 @@ import org.springframework.jdbc.core.RowMapper;
 public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 	private static final Logger _logger = LoggerFactory.getLogger(JdbcSocialsAssociateService.class);
 	
-	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = "insert into  mxk_socials_associate(id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute )values( ? , ? , ? , ? , ?, ? , ? , ?)";
+	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = "insert into  mxk_socials_associate(id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , instid)values( ? , ? , ? , ? , ?, ? , ? , ?, ?)";
 	
-	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE = "insert into  mxk_socials_associate(id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute )values( ? , ? , ? , ? , ?, ? , ? , ?)";
+	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE = "insert into  mxk_socials_associate(id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , instid)values( ? , ? , ? , ? , ?, ? , ? , ?, ?)";
 	
-	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "select id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , createddate , updateddate  from mxk_socials_associate where provider = ?  and socialuserid = ?";
+	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "select id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , createddate , updateddate , instid from mxk_socials_associate where provider = ?  and socialuserid = ?";
 	
-	private static final String DEFAULT_DEFAULT_BIND_SELECT_STATEMENT = "select id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , createddate , updateddate  from mxk_socials_associate where userid = ?" ;
+	private static final String DEFAULT_DEFAULT_BIND_SELECT_STATEMENT = "select id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , createddate , updateddate , instid from mxk_socials_associate where userid = ?" ;
 	
 	private static final String DEFAULT_DEFAULT_DELETE_STATEMENT = "delete from  mxk_socials_associate where  userid = ? and provider = ?";
 	
@@ -64,10 +64,13 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 					socialsAssociate.getSocialUserId(),
 					socialsAssociate.getAccessToken(),
 					socialsAssociate.getSocialUserInfo(),
-					socialsAssociate.getExAttribute()},
+					socialsAssociate.getExAttribute(),
+					socialsAssociate.getInstId()
+					},
 				new int[] {
 				        Types.VARCHAR, Types.VARCHAR,Types.VARCHAR,Types.VARCHAR, 
-				        Types.VARCHAR,Types.VARCHAR, Types.VARCHAR,Types.VARCHAR 
+				        Types.VARCHAR,Types.VARCHAR, Types.VARCHAR,Types.VARCHAR,
+				        Types.VARCHAR
 				});
 		return true;
 	}
@@ -135,6 +138,7 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 			socialsAssociate.setExAttribute(rs.getString(8));
 			socialsAssociate.setCreatedDate(rs.getString(9));
 			socialsAssociate.setUpdatedDate(rs.getString(10));
+			socialsAssociate.setInstId(rs.getString(11));
 			return socialsAssociate;
 		}
 	}

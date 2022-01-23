@@ -1,4 +1,4 @@
-description = "maxkey-synchronizers"
+description = "maxkey-synchronizer-workweixin"
 
 apply plugin: 'java'
 
@@ -9,5 +9,6 @@ dependencies {
 	implementation project(":maxkey-common")
 	implementation project(":maxkey-core")
 	implementation project(":maxkey-persistence")
+	implementation project(":maxkey-synchronizers:maxkey-synchronizer")
    
 }

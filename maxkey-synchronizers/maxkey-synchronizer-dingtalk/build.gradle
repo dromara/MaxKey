@@ -1,4 +1,4 @@
-description = "maxkey-synchronizers-reorgdept"
+description = "maxkey-synchronizer-dingtalk"
 
 apply plugin: 'java'
 
@@ -9,6 +9,6 @@ dependencies {
 	implementation project(":maxkey-common")
 	implementation project(":maxkey-core")
 	implementation project(":maxkey-persistence")
-	implementation project(":maxkey-identitys:maxkey-synchronizers")
+	implementation project(":maxkey-synchronizers:maxkey-synchronizer")
    
 }
