@@ -123,7 +123,11 @@ public class SocialSignOnProviderService{
             authRequest = new AuthWeChatEnterpriseQrcodeRequest(authConfig);
         }else if(provider.equalsIgnoreCase("workweixin")) {
             authRequest = new AuthWeChatEnterpriseWebRequest(authConfig);
+        }else if(provider.equalsIgnoreCase("welink")) {
+            authRequest = new AuthHuaweiWeLinkRequest(authConfig);
         }
+		
+		
 		
 		return authRequest;
 	}

@@ -86,6 +86,9 @@
 							     <#if sspLogin.dingTalkLogin != 'none'>  
 							         <#include "loginscandingtalk.ftl">
 							     </#if>  
+							     <#if sspLogin.weLinkLogin != 'none'>  
+                                     <#include "loginscanwelink.ftl">
+                                 </#if>  
 							</div>
 						</td>
 					</tr>
