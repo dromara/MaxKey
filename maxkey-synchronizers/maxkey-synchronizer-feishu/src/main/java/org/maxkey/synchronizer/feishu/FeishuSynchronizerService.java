@@ -54,7 +54,7 @@ public class FeishuSynchronizerService  implements ISynchronizerService{
 		
 		feishuUsersService.setSynchronizer(synchronizer);
 		feishuUsersService.setAccess_token(access_token);
-		//feishuUsersService.sync();
+		feishuUsersService.sync();
 	}
 
 
