@@ -22,6 +22,7 @@ dependencies {
 	//synchronizers
    	implementation project(":maxkey-synchronizers:maxkey-synchronizer")
    	implementation project(":maxkey-synchronizers:maxkey-synchronizer-activedirectory")
+   	implementation project(":maxkey-synchronizers:maxkey-synchronizer-feishu")
    	implementation project(":maxkey-synchronizers:maxkey-synchronizer-ldap")
    	implementation project(":maxkey-synchronizers:maxkey-synchronizer-workweixin")
    	implementation project(":maxkey-synchronizers:maxkey-synchronizer-dingtalk")

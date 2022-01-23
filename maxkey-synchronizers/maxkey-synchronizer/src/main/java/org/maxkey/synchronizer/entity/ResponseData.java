@@ -20,7 +20,10 @@ package org.maxkey.synchronizer.entity;
 public class ResponseData {
 
 	protected long errcode;
+	protected long code;
+	
 	protected String errmsg;
+	protected String msg;
 	
 	public long getErrcode() {
 		return errcode;
@@ -33,6 +36,20 @@ public class ResponseData {
 	}
 	public void setErrmsg(String errmsg) {
 		this.errmsg = errmsg;
+	}
+	
+	
+	public long getCode() {
+		return code;
+	}
+	public void setCode(long code) {
+		this.code = code;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 	public ResponseData() {
 		super();

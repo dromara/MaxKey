@@ -22,6 +22,8 @@ public class AccessToken {
 	int errcode;
 	String errmsg;
 	String access_token;
+	//feishu access_token
+	String tenant_access_token;
 	String expires_in;
 
 	public AccessToken() {
@@ -50,6 +52,14 @@ public class AccessToken {
 
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
+	}
+
+	public String getTenant_access_token() {
+		return tenant_access_token;
+	}
+
+	public void setTenant_access_token(String tenant_access_token) {
+		this.tenant_access_token = tenant_access_token;
 	}
 
 	public String getExpires_in() {

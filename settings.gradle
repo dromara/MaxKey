@@ -37,6 +37,7 @@ include (
 	'maxkey-synchronizers:maxkey-synchronizer',
 	'maxkey-synchronizers:maxkey-synchronizer-reorgdept',
 	'maxkey-synchronizers:maxkey-synchronizer-activedirectory',
+	'maxkey-synchronizers:maxkey-synchronizer-feishu',
 	'maxkey-synchronizers:maxkey-synchronizer-ldap',
 	'maxkey-synchronizers:maxkey-synchronizer-dingtalk',
 	'maxkey-synchronizers:maxkey-synchronizer-workweixin',
