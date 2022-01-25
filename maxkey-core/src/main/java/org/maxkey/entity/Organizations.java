@@ -53,7 +53,7 @@ public class Organizations extends JpaBaseEntity implements Serializable {
     @Column
     private String namePath;
     @Column
-    private String level;
+    private int level;
     @Column
     private String hasChild;
     @Column
@@ -174,11 +174,11 @@ public class Organizations extends JpaBaseEntity implements Serializable {
         this.type = type;
     }
 
-    public String getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 

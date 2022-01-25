@@ -44,7 +44,7 @@ public class ScimOrganization extends ScimResource{
     
     private String namePath;
     
-    private String level;
+    private int level;
     
     private String division;
     
@@ -130,11 +130,11 @@ public class ScimOrganization extends ScimResource{
         this.namePath = namePath;
     }
 
-    public String getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 

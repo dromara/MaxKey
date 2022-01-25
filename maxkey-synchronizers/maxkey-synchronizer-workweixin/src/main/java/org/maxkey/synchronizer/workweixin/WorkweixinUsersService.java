@@ -42,7 +42,7 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 	static String USERS_URL="https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token=%s&department_id=%s&fetch_child=0";
 	
 	public void sync() {
-		_logger.info("Sync Users...");
+		_logger.info("Sync Workweixin Users...");
 		try {
 			List<Organizations> organizations = 
 					 organizationsService.find("instid = ?",

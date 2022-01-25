@@ -49,7 +49,7 @@ public abstract class AbstractSynchronizerService {
     protected Organizations rootOrganization = null;
     
     
-    public void loadOrgsById(String orgId) {
+    public HashMap<String,Organizations> loadOrgsById(String orgId) {
         List<Organizations> orgsList = organizationsService.query(null);
         if(orgId== null || orgId.equals("")) {
             orgId="1";
@@ -72,7 +72,7 @@ public abstract class AbstractSynchronizerService {
         push(orgsNamePathMap,orgsList,rootOrganization);
         
         _logger.trace("orgsNamePathMap " + orgsNamePathMap);
-        
+        return orgsNamePathMap;
     }
     
     public void push(HashMap<String,Organizations> orgsNamePathMap,

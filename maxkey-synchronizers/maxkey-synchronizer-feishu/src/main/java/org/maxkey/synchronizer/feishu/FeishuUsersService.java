@@ -44,7 +44,7 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
 	static String USERS_URL="https://open.feishu.cn/open-apis/contact/v3/users/find_by_department";
 	
 	public void sync() {
-		_logger.info("Sync Users...");
+		_logger.info("Sync Feishu Users...");
 		try {
 			List<Organizations> organizations = 
 					 organizationsService.find("instid = ?",

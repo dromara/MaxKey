@@ -38,7 +38,7 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 	static String DEPTS_URL="https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=%s";
 	
 	public void sync() {
-		_logger.info("Sync Organizations ...");
+		_logger.info("Sync Workweixin Organizations ...");
 
 		try {			
 			WorkWeixinDeptsResponse rsp = requestDepartmentList(access_token);

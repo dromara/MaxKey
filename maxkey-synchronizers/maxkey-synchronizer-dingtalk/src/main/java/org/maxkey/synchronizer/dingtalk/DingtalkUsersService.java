@@ -44,7 +44,7 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 	String access_token;
 	
 	public void sync() {
-		_logger.info("Sync Users...");
+		_logger.info("Sync Dingtalk Users...");
 		try {
 			
 			 List<Organizations> organizations = 
@@ -55,6 +55,7 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 			for(Organizations dept : organizations) {
 				DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/topapi/v2/user/list");
 				OapiV2UserListRequest req = new OapiV2UserListRequest();
+				_logger.info("DingTalk deptId : {}" , dept.getCode());
 				req.setDeptId(Long.parseLong(dept.getCode()));
 				req.setCursor(0L);
 				req.setSize(100L);
@@ -62,16 +63,15 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 				req.setContainAccessLimit(true);
 				req.setLanguage("zh_CN");
 				OapiV2UserListResponse rsp = client.execute(req, access_token);
-				_logger.info("response : " + rsp.getBody());
+				_logger.trace("response : {}" , rsp.getBody());
 				
 				if(rsp.getErrcode()==0) {
 					for(ListUserResponse user :rsp.getResult().getList()) {
-						_logger.info("name : " + user.getName()+" , "+user.getLoginId()+" , "+user.getUserid());
+						_logger.debug("name : {} , {} , {}", user.getName(),user.getLoginId(),user.getUserid());
 						UserInfo userInfo  = buildUserInfo(user);
-						_logger.info("userInfo " + userInfo);
+						_logger.trace("userInfo {}" , userInfo);
 						userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
 						userInfoService.saveOrUpdate(userInfo);
-						
 					}
 				}
 			}
@@ -83,10 +83,6 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 		
 	}
 	
-	public void postSync(UserInfo userInfo) {
-		
-	}
-
 	public UserInfo buildUserInfo(ListUserResponse user) {
 		UserInfo userInfo = new  UserInfo();
 

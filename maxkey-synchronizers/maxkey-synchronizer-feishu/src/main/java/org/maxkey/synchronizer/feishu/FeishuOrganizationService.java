@@ -43,7 +43,7 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
 	static String DEPTS_URL="https://open.feishu.cn/open-apis/contact/v3/departments/%s/children?page_size=50";
 	
 	public void sync() {
-		_logger.info("Sync Organizations ...");
+		_logger.info("Sync Feishu Organizations ...");
 
 		LinkedBlockingQueue<String> deptsQueue = new LinkedBlockingQueue<String>();
 		deptsQueue.add("0");

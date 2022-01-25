@@ -248,7 +248,7 @@ public class OrganizationsController {
 		organization.setDivision(ExcelUtils.getValue(row, 8));
 		// 级别
 		String level = ExcelUtils.getValue(row, 9);
-		organization.setLevel(level.equals("") ? "1" : level);
+		organization.setLevel(level.equals("") ? 1 : Integer.parseInt(level));
 		// 排序
 		String sortIndex = ExcelUtils.getValue(row, 10);
 		organization.setSortIndex(sortIndex.equals("") ? 1 : Integer.parseInt(sortIndex));

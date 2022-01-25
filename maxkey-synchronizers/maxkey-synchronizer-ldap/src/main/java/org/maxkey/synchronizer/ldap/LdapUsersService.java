@@ -23,6 +23,8 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
+
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.constants.ldap.InetOrgPerson;
 import org.maxkey.entity.HistorySynchronizer;
 import org.maxkey.entity.Organizations;
@@ -41,30 +43,33 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 	LdapUtils ldapUtils;
 	
 	public void sync() {
-		_logger.info("Sync Users...");
+		_logger.info("Sync Ldap Users ...");
 		loadOrgsById("1");
 		try {
 			SearchControls constraints = new SearchControls();
 			constraints.setSearchScope(ldapUtils.getSearchScope());
-			NamingEnumeration<SearchResult> results = ldapUtils.getConnection()
-					.search(ldapUtils.getBaseDN(), "(&(objectClass=inetOrgPerson))", constraints);
+			String filter = StringUtils.isNotBlank(this.getSynchronizer().getFilters()) ? 
+								getSynchronizer().getFilters() : "(&(objectClass=inetOrgPerson))";
+			NamingEnumeration<SearchResult> results = 
+					ldapUtils.getConnection().search(ldapUtils.getBaseDN(), filter, constraints);
 			
+			long recordCount = 0;
 			while (null != results && results.hasMoreElements()) {
 				Object obj = results.nextElement();
 				if (obj instanceof SearchResult) {
-					SearchResult si = (SearchResult) obj;
-					_logger.trace("name " + si.getName());
-					_logger.info("NameInNamespace " + si.getNameInNamespace());
+					SearchResult sr = (SearchResult) obj;
+					_logger.debug("Sync User {} , name {} , NameInNamespace {}" , 
+				    				(++recordCount),sr.getName(),sr.getNameInNamespace());
 					
 					HashMap<String,Attribute> attributeMap = new HashMap<String,Attribute>();
-					NamingEnumeration<? extends Attribute>  attrs = si.getAttributes().getAll();
+					NamingEnumeration<? extends Attribute>  attrs = sr.getAttributes().getAll();
 					while (null != attrs && attrs.hasMoreElements()) {
 						Attribute  objAttrs = attrs.nextElement();
 						_logger.trace("attribute "+objAttrs.getID() + " , " + objAttrs.get());
 						attributeMap.put(objAttrs.getID(), objAttrs);
 					}
 					
-					UserInfo userInfo  = buildUserInfo(attributeMap,si.getName(),si.getNameInNamespace());
+					UserInfo userInfo  = buildUserInfo(attributeMap,sr.getName(),sr.getNameInNamespace());
 					userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
 					userInfoService.saveOrUpdate(userInfo);
 					_logger.info("userInfo " + userInfo);
@@ -141,24 +146,18 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 			userInfo.setTimeZone("Asia/Shanghai");
 			userInfo.setStatus(1);
 			userInfo.setInstId(this.synchronizer.getInstId());
-			UserInfo quser=new UserInfo();
-            quser.setUsername(userInfo.getUsername());
-            UserInfo loadedUser=userInfoService.load(quser);
-            if(loadedUser == null) {
-                userInfo.setPassword(userInfo.generateId());
-                userInfoService.insert(userInfo);
-                HistorySynchronizer historySynchronizer =new HistorySynchronizer();
-                historySynchronizer.setId(historySynchronizer.generateId());
-                historySynchronizer.setSyncId(this.synchronizer.getId());
-                historySynchronizer.setSyncName(this.synchronizer.getName());
-                historySynchronizer.setObjectId(userInfo.getId());
-                historySynchronizer.setObjectName(userInfo.getUsername());
-                historySynchronizer.setObjectType(Organizations.class.getSimpleName());
-                historySynchronizer.setResult("success");
-                this.historySynchronizerService.insert(historySynchronizer);
-            }else {
-                _logger.info("username  " + userInfo.getUsername()+" exists.");
-            }
+
+            HistorySynchronizer historySynchronizer =new HistorySynchronizer();
+            historySynchronizer.setId(historySynchronizer.generateId());
+            historySynchronizer.setSyncId(this.synchronizer.getId());
+            historySynchronizer.setSyncName(this.synchronizer.getName());
+            historySynchronizer.setObjectId(userInfo.getId());
+            historySynchronizer.setObjectName(userInfo.getUsername());
+            historySynchronizer.setObjectType(Organizations.class.getSimpleName());
+            historySynchronizer.setInstId(synchronizer.getInstId());
+            historySynchronizer.setResult("success");
+            this.historySynchronizerService.insert(historySynchronizer);
+           
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

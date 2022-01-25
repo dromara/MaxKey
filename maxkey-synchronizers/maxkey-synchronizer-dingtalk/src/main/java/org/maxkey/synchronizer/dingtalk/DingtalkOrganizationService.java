@@ -42,7 +42,7 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
 	String access_token;
 	
 	public void sync() {
-		_logger.info("Sync Organizations ...");
+		_logger.info("Sync Dingtalk Organizations ...");
 		LinkedBlockingQueue<Long> deptsQueue = new LinkedBlockingQueue<Long>();
 		deptsQueue.add(1L);
 		HashMap<Long,DeptBaseResponse> deptMap = new HashMap<Long,DeptBaseResponse>();
@@ -76,8 +76,6 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
 		_logger.info("response : " + rspDepts.getBody());
 		return rspDepts;
 	}
-	
-	
 	
 	public Organizations buildOrganization(DeptBaseResponse dept,DeptBaseResponse parentDept) {
 		Organizations org = new Organizations();
