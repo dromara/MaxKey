@@ -78,10 +78,9 @@
     <update id="logisticDeleteRolePermissions" parameterType="java.util.List">
         update mxk_role_permissions 
         set status=9 
-        where instid   =   #{instId} 
-            and id in
-            <foreach item="item" collection="list" open="(" separator="," close=")">
-                #{item.id}
+        where 1 = 1 and 
+            <foreach item="item" collection="list" open="(" separator="or" close=")">
+                ( id = #{item.id} and instid  =   #{item.instId} )
             </foreach>
     </update>
     

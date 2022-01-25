@@ -61,12 +61,12 @@ public class PermissionsController {
 	public Message insert(@ModelAttribute("rolePermissions") RolePermissions rolePermissions) {
 		_logger.debug("-save  :" + rolePermissions);
 		//have
-		
+		String instId = WebContext.getUserInfo().getInstId();
 		RolePermissions queryRolePermissions = 
 				new RolePermissions(
 						rolePermissions.getAppId(),
 						rolePermissions.getRoleId(),
-						WebContext.getUserInfo().getInstId());
+						instId);
 		List<RolePermissions> rolePermissionsedList = rolesService.queryRolePermissions(queryRolePermissions);
 		
 		HashMap<String,String >permedMap =new HashMap<String,String >();
@@ -82,8 +82,9 @@ public class PermissionsController {
 		    RolePermissions newRolePermissions=new RolePermissions(
                     rolePermissions.getAppId(),
                     rolePermissions.getRoleId(),
-                    resourceId);
-		    newRolePermissions.setInstId(WebContext.getUserInfo().getInstId());
+                    resourceId,
+                    instId);
+		    newRolePermissions.setId(newRolePermissions.generateId());
 		    newPermsMap.put(newRolePermissions.getUniqueId(), rolePermissions.getAppId());
 		    
 		    if(!rolePermissions.getAppId().equalsIgnoreCase(resourceId) &&
@@ -96,6 +97,7 @@ public class PermissionsController {
 		ArrayList<RolePermissions> deleteRolePermissionsList =new ArrayList<RolePermissions>();
 		for(RolePermissions rolePerms : rolePermissionsedList) {
            if(!newPermsMap.containsKey(rolePerms.getUniqueId())) {
+        	   rolePerms.setInstId(instId);
                deleteRolePermissionsList.add(rolePerms);
            }
         }
