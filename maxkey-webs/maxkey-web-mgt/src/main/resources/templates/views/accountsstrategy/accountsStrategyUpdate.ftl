@@ -106,7 +106,7 @@ $(function () {
 			var node = zTree.getNodeByParam("id",orgsIdValues[i] );
 			if(node != null){
 				zTree.checkNode(node, true, false);//将指定ID的节点选中
-				orgsName +=  node.name;
+				orgsName +=  node.name + ",";
 			}
 		} 
 		$("#orgIdsListName").val(orgsName);
