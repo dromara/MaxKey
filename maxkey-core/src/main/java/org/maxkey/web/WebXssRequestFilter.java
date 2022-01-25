@@ -37,6 +37,7 @@ public class WebXssRequestFilter  extends GenericFilterBean {
 	final static Logger _logger = LoggerFactory.getLogger(GenericFilterBean.class);	
 	
 	final static ConcurrentHashMap <String,String> skipUrlMap = new  ConcurrentHashMap <String,String>();
+	final static ConcurrentHashMap <String,String> skipParameterName = new  ConcurrentHashMap <String,String>();
 	
 	static {
 		//add or update
@@ -45,8 +46,6 @@ public class WebXssRequestFilter  extends GenericFilterBean {
 		skipUrlMap.put("/institutions/update","/institutions/update");
 		skipUrlMap.put("/localization/update","/localization/update");
 		skipUrlMap.put("/apps/updateExtendAttr","/apps/updateExtendAttr");
-		skipUrlMap.put("/synchronizers/add","/synchronizers/add");
-		skipUrlMap.put("/synchronizers/update","/synchronizers/update");
 		
 		//authz
 		skipUrlMap.put("/authz/cas", "/authz/cas");
@@ -56,6 +55,15 @@ public class WebXssRequestFilter  extends GenericFilterBean {
 		//TENCENT_IOA
 		skipUrlMap.put("/oauth2/authorize", "/oauth2/authorize");
 		
+		skipParameterName.put("relatedPassword", "relatedPassword");
+		skipParameterName.put("oldPassword", "oldPassword");
+		skipParameterName.put("password", "password");
+		skipParameterName.put("confirmpassword", "confirmpassword");
+		skipParameterName.put("credentials", "credentials");
+		skipParameterName.put("clientSecret", "clientSecret");
+		skipParameterName.put("appSecret", "appSecret");
+		skipParameterName.put("sharedSecret", "sharedSecret");
+		skipParameterName.put("secret", "secret");
 	}
 	
 	@Override
@@ -76,6 +84,8 @@ public class WebXssRequestFilter  extends GenericFilterBean {
 	        Enumeration<String> parameterNames = request.getParameterNames();
 	        while (parameterNames.hasMoreElements()) {
 	          String key = (String) parameterNames.nextElement();
+	          if(skipParameterName.containsKey(key)) {continue;}
+	          
 	          String value = request.getParameter(key);
 	          _logger.trace("parameter name "+key +" , value " + value);
 	          String tempValue = value;
