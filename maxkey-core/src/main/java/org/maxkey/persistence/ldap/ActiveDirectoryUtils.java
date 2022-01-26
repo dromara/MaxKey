@@ -68,9 +68,10 @@ public class ActiveDirectoryUtils extends LdapUtils {
     @Override
     protected void initEnvironment() {
     	 if(props == null) {
- 	        _logger.info("PROVIDER_URL:" + providerUrl);
- 	        _logger.info("SECURITY_PRINCIPAL:" + principal);
- 	        _logger.info("SECURITY_CREDENTIALS:" + credentials);
+    		_logger.debug("PROVIDER_URL {}" , providerUrl);
+            _logger.debug("SECURITY_PRINCIPAL {}" , principal);
+            //no log credentials 
+            //_logger.trace("SECURITY_CREDENTIALS {}" , credentials);
  	        // LDAP
  	        props = new Properties();
  	        props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");

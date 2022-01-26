@@ -112,9 +112,10 @@ public class LdapUtils {
     protected void initEnvironment() {
     	// LDAP
         if(props == null) {
-        	 _logger.debug("PROVIDER_URL:" + providerUrl);
-             _logger.debug("SECURITY_PRINCIPAL:" + principal);
-             _logger.trace("SECURITY_CREDENTIALS:" + credentials);
+        	 _logger.debug("PROVIDER_URL {}" , providerUrl);
+             _logger.debug("SECURITY_PRINCIPAL {}" , principal);
+             //no log credentials 
+             //_logger.trace("SECURITY_CREDENTIALS {}" , credentials);
 	        props = new Properties();
 	        props.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 	        props.setProperty(Context.URL_PKG_PREFIXES, "com.sun.jndi.url");

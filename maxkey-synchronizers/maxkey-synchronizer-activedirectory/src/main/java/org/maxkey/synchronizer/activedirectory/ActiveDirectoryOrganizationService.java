@@ -65,7 +65,7 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 				Object obj = results.nextElement();
 				if (obj instanceof SearchResult) {
 					SearchResult sr = (SearchResult) obj;
-					if("OU=Domain Controllers,DC=maxkey,DC=top".endsWith(sr.getNameInNamespace())) {
+					if(sr.getNameInNamespace().contains("OU=Domain Controllers")) {
 					    _logger.info("Skip  'OU=Domain Controllers' .");
 					    continue;
 					}
@@ -76,7 +76,7 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 					NamingEnumeration<? extends Attribute>  attrs = sr.getAttributes().getAll();
 					while (null != attrs && attrs.hasMoreElements()) {
 						Attribute  objAttrs = attrs.nextElement();
-						_logger.trace("attribute "+objAttrs.getID() + " : " + objAttrs.get());
+						_logger.trace("attribute {} : {}" ,objAttrs.getID(), objAttrs.get());
 						attributeMap.put(objAttrs.getID().toLowerCase(), objAttrs);
 					}
 					

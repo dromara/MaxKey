@@ -25,6 +25,7 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
 import org.apache.commons.lang3.StringUtils;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.constants.ldap.ActiveDirectoryUser;
 import org.maxkey.entity.HistorySynchronizer;
 import org.maxkey.entity.Organizations;
@@ -59,9 +60,9 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 				Object obj = results.nextElement();
 				if (obj instanceof SearchResult) {
 					SearchResult sr = (SearchResult) obj;
-					if(sr.getNameInNamespace().indexOf("CN=Users,DC=maxkey,DC=top")>-1
-					        ||sr.getNameInNamespace().indexOf("OU=Domain Controllers,DC=maxkey,DC=top")>-1) {
-					    _logger.info("to skip.");
+					if(sr.getNameInNamespace().contains("CN=Users,")
+					        ||sr.getNameInNamespace().contains("OU=Domain Controllers,")) {
+					    _logger.trace("Skip 'CN=Users' or 'OU=Domain Controllers' . ");
 					    continue;
 					}
 					_logger.debug("Sync User {} , name {} , NameInNamespace {}" , 
@@ -71,7 +72,7 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 					NamingEnumeration<? extends Attribute>  attrs = sr.getAttributes().getAll();
 					while (null != attrs && attrs.hasMoreElements()) {
 						Attribute  objAttrs = attrs.nextElement();
-						_logger.trace("attribute "+objAttrs.getID() + " : " + objAttrs.get());
+						_logger.trace("attribute {} : {}" ,objAttrs.getID(), objAttrs.get());
 						attributeMap.put(objAttrs.getID().toLowerCase(), objAttrs);
 					}
 					
@@ -155,7 +156,7 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 			userInfo.setUserState("RESIDENT");
 			userInfo.setUserType("EMPLOYEE");
 			userInfo.setTimeZone("Asia/Shanghai");
-			userInfo.setStatus(1);
+			userInfo.setStatus(ConstsStatus.ACTIVE);
 			userInfo.setInstId(this.synchronizer.getInstId());
 
 		    HistorySynchronizer historySynchronizer =new HistorySynchronizer();
@@ -169,7 +170,6 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
             historySynchronizer.setResult("success");
             this.historySynchronizerService.insert(historySynchronizer);
 
-			
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
