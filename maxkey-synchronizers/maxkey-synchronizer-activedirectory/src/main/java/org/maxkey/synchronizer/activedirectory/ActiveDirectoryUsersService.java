@@ -72,7 +72,10 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 					NamingEnumeration<? extends Attribute>  attrs = sr.getAttributes().getAll();
 					while (null != attrs && attrs.hasMoreElements()) {
 						Attribute  objAttrs = attrs.nextElement();
-						_logger.trace("attribute {} : {}" ,objAttrs.getID(), objAttrs.get());
+						_logger.trace("attribute {} : {}" ,
+												objAttrs.getID(), 
+												ActiveDirectoryUtils.getAttrStringValue(objAttrs)
+									);
 						attributeMap.put(objAttrs.getID().toLowerCase(), objAttrs);
 					}
 					

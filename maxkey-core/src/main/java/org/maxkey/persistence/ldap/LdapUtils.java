@@ -291,14 +291,14 @@ public class LdapUtils {
     }
 
     public static String getAttrStringValue(Attributes attrs, String elem) {
-        String value = "";
+    	StringBuffer  values = new StringBuffer("");
         try {
             if (attrs.get(elem) != null) {
                 for (int i = 0; i < attrs.get(elem).size(); i++) {
                 	if(i == 0) {
-                		value += attrs.get(elem).get(i).toString();
+                		values.append(attrs.get(elem).get(i).toString());
                 	}else {
-                		value += "," + attrs.get(elem).get(i).toString();
+                		values.append(" , ").append(attrs.get(elem).get(i).toString());
                 	}
                 }
             }
@@ -306,7 +306,26 @@ public class LdapUtils {
             e.printStackTrace();
             _logger.error(e.getMessage());
         }
-        return value;
+        return values.toString();
+    }
+    
+    public static String getAttrStringValue(Attribute attr) {
+    	StringBuffer  values = new StringBuffer("");
+        try {
+            if (attr != null) {
+                for (int i = 0; i < attr.size(); i++) {
+                	if(i == 0) {
+                		values.append(attr.get(i).toString());
+                	}else {
+                		values.append(" , ").append(attr.get(i).toString());
+                	}
+                }
+            }
+        } catch (NamingException e) {
+            e.printStackTrace();
+            _logger.error(e.getMessage());
+        }
+        return values.toString();
     }
     
     public static String getAttributeStringValue(String attribute ,HashMap<String,Attribute> attributeMap) throws NamingException {

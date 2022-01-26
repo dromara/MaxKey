@@ -65,7 +65,10 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 					NamingEnumeration<? extends Attribute>  attrs = sr.getAttributes().getAll();
 					while (null != attrs && attrs.hasMoreElements()) {
 						Attribute  objAttrs = attrs.nextElement();
-						_logger.trace("attribute "+objAttrs.getID() + " , " + objAttrs.get());
+						_logger.trace("attribute {} : {}" ,
+											objAttrs.getID(), 
+											LdapUtils.getAttrStringValue(objAttrs)
+								);
 						attributeMap.put(objAttrs.getID(), objAttrs);
 					}
 					
