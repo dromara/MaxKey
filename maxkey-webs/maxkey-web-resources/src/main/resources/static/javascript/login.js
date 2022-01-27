@@ -1,5 +1,6 @@
 var currentSwitchTab="normalLogin";
 function doLoginSubmit(){
+    currentSwitchTab = $(".switch_tab_current").attr("id") ;
     $.cookie("mxk_login_username", $("#"+currentSwitchTab+"Form input[name=username]").val(), { expires: 7 });
     $("#"+currentSwitchTab+"SubmitButton").click();
     $.cookie("mxk_login_switch_tab", currentSwitchTab, { expires: 7 });

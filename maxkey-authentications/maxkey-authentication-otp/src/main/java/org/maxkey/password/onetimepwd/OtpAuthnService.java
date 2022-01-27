@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.maxkey.configuration.EmailConfig;
 import org.maxkey.constants.ConstsBoolean;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.EmailSenders;
 import org.maxkey.entity.SmsProvider;
 import org.maxkey.password.onetimepwd.impl.MailOtpAuthn;
@@ -84,10 +85,12 @@ public class OtpAuthnService {
     			}else if(smsProvider.getProvider().equalsIgnoreCase("email")) {
     				EmailSenders emailSender = 
     						emailSendersService.findOne("where instid = ? ", new Object[]{instId}, new int[]{Types.VARCHAR});
+    				
+    				String credentials = PasswordReciprocal.getInstance().decoder(emailSender.getCredentials());
     				EmailConfig emailConfig = 
     								new EmailConfig(
     										emailSender.getAccount(),
-    										emailSender.getCredentials(),
+    										credentials,
     										emailSender.getSmtpHost(),
     										emailSender.getPort(),
     										ConstsBoolean.isTrue(emailSender.getSslSwitch()),

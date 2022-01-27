@@ -32,6 +32,7 @@ import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
+import org.maxkey.password.onetimepwd.OtpAuthnService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -82,9 +83,9 @@ public class LoginEndpoint {
     @Qualifier("tfaOtpAuthn")
     protected AbstractOtpAuthn tfaOtpAuthn;
 	
-	//@Autowired
-    //@Qualifier("smsOtpAuthn")
-    protected AbstractOtpAuthn smsOtpAuthn;
+	@Autowired
+    @Qualifier("otpAuthnService")
+    protected OtpAuthnService otpAuthnService;
 	
 	Pattern mobileRegex = Pattern.compile(
 	            "^(13[4,5,6,7,8,9]|15[0,8,9,1,7]|188|187)\\\\d{8}$");
@@ -168,10 +169,10 @@ public class LoginEndpoint {
  	
  	@RequestMapping("/login/sendsms/{mobile}")
     @ResponseBody
-    public String produceOtp(@PathVariable("mobile") String mobile) {
+    public String produceOtp(@PathVariable("mobile") String mobile,HttpServletRequest request) {
         UserInfo queryUserInfo=userInfoService.findByEmailMobile(mobile);
         if(queryUserInfo!=null) {
-        	smsOtpAuthn.produce(queryUserInfo);
+        	otpAuthnService.getByInstId(WebContext.getInst(request)).produce(queryUserInfo);
             return "ok";
         }
         
