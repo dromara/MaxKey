@@ -21,7 +21,7 @@
 				
 			</td>
 			<td>
-				<form action="<@base />/registration/activate/${model.id}" method="post">
+				<form action="<@base />/signup/activate/${model.id}" method="post">
 					<table  class="datatable">
 						<tr>
 							<td><@locale code="register.lastname"/></td>
