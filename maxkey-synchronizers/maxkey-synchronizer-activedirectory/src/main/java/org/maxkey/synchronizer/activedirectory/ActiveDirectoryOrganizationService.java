@@ -65,11 +65,11 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 				Object obj = results.nextElement();
 				if (obj instanceof SearchResult) {
 					SearchResult sr = (SearchResult) obj;
-					if(sr.getNameInNamespace().contains("OU=Domain Controllers")) {
-					    _logger.info("Skip  'OU=Domain Controllers' .");
+					if(sr.getNameInNamespace().contains("OU=Domain Controllers")||StringUtils.isEmpty(sr.getName())) {
+					    _logger.info("Skip '' or 'OU=Domain Controllers' .");
 					    continue;
 					}
-					_logger.debug("Sync OrganizationalUnit {} , name {} , NameInNamespace {}" , 
+					_logger.debug("Sync OrganizationalUnit {} , name [{}] , NameInNamespace [{}]" , 
 								    (++recordCount),sr.getName(),sr.getNameInNamespace());
 					
 					HashMap<String,Attribute> attributeMap = new HashMap<String,Attribute>();
@@ -114,15 +114,16 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 						organizationsService.saveOrUpdate(organization);
 						orgsNamePathMap.put(organization.getNamePath(), organization);
 						
-						HistorySynchronizer historySynchronizer =new HistorySynchronizer();
-			            historySynchronizer.setId(historySynchronizer.generateId());
-			            historySynchronizer.setSyncId(this.synchronizer.getId());
-			            historySynchronizer.setSyncName(this.synchronizer.getName());
-			            historySynchronizer.setObjectId(organization.getId());
-			            historySynchronizer.setObjectName(organization.getName());
-			            historySynchronizer.setObjectType(Organizations.class.getSimpleName());
-			            historySynchronizer.setInstId(synchronizer.getInstId());
-			            historySynchronizer.setResult("success");
+						HistorySynchronizer historySynchronizer 
+											= new HistorySynchronizer(synchronizer.generateId(),
+													this.synchronizer.getId(),
+													this.synchronizer.getName(),
+													organization.getId(),
+													organization.getName(),
+													Organizations.class.getSimpleName(),
+													org.maxkey.util.DateUtils.getCurrentDateAsString(),
+													"success",
+													synchronizer.getInstId());
 			           this.historySynchronizerService.insert(historySynchronizer);
 					}
 				}
@@ -140,9 +141,7 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 		try {
 		    Organizations org = new Organizations();
 			org.setLdapDn(nameInNamespace);
-			nameInNamespace = nameInNamespace.replaceAll(",OU=", "/").replaceAll("OU=", "/");
-			nameInNamespace = nameInNamespace.substring(0, nameInNamespace.length() - ldapUtils.getBaseDN().length() - 1);
-			String []namePaths = nameInNamespace.split("/");
+			String []namePaths = name.replaceAll(",OU=", "/").replaceAll("OU=", "/").split("/");
 			String namePah= "/"+rootOrganization.getName();
 			for(int i = namePaths.length -1 ; i >= 0 ; i --) {
 			    namePah = namePah + "/" + namePaths[i];

@@ -64,7 +64,38 @@ public class HistorySynchronizer  extends JpaBaseEntity  implements Serializable
     String startDate;
     String endDate;
     
-    public String getId() {
+    public HistorySynchronizer(String id, String syncId,  String syncName, String objectId,
+			String objectType, String objectName, String syncTime, String result,String instId) {
+		super();
+		this.id = id;
+		this.syncId = syncId;
+		this.syncName = syncName;
+		this.objectId = objectId;
+		this.objectType = objectType;
+		this.objectName = objectName;
+		this.syncTime = syncTime;
+		this.result = result;
+		this.instId = instId;
+	}
+    
+    
+	public HistorySynchronizer(String id, String syncId, String sessionId, String syncName, String objectId,
+			String objectType, String objectName, String syncTime, String result, String instId) {
+		super();
+		this.id = id;
+		this.syncId = syncId;
+		this.sessionId = sessionId;
+		this.syncName = syncName;
+		this.objectId = objectId;
+		this.objectType = objectType;
+		this.objectName = objectName;
+		this.syncTime = syncTime;
+		this.result = result;
+		this.instId = instId;
+	}
+
+
+	public String getId() {
         return id;
     }
     public void setId(String id) {

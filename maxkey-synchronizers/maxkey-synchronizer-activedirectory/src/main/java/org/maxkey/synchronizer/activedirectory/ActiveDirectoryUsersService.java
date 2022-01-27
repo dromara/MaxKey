@@ -65,7 +65,7 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 					    _logger.trace("Skip 'CN=Users' or 'OU=Domain Controllers' . ");
 					    continue;
 					}
-					_logger.debug("Sync User {} , name {} , NameInNamespace {}" , 
+					_logger.debug("Sync User {} , name [{}] , NameInNamespace [{}]" , 
 						    		(++recordCount),sr.getName(),sr.getNameInNamespace());
 					
 					HashMap<String,Attribute> attributeMap = new HashMap<String,Attribute>();
@@ -99,14 +99,12 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 		
 	    UserInfo userInfo = new  UserInfo();
 		userInfo.setLdapDn(nameInNamespace);
-		nameInNamespace = nameInNamespace.replaceAll(",OU=", "/").replaceAll("OU=", "/").replaceAll("CN=", "/");
-        nameInNamespace = nameInNamespace.substring(0, nameInNamespace.length() - ldapUtils.getBaseDN().length() - 1);
-        _logger.info("nameInNamespace  " + nameInNamespace);
-        String []namePaths = nameInNamespace.split("/");
-        String namePah= "/"+rootOrganization.getName();
-        for(int i = namePaths.length -1 ; i>=1 ;i--) {
-            namePah = namePah + "/"+namePaths[i];
-        }
+		String []namePaths = name.replaceAll(",OU=", "/").replaceAll("OU=", "/").split("/");
+		String namePah= "/"+rootOrganization.getName();
+		for(int i = namePaths.length -1 ; i >= 0 ; i --) {
+			namePah = namePah + "/" + namePaths[i];
+		}
+			
         //namePah = namePah.substring(0, namePah.length());
         String deptNamePath= namePah.substring(0, namePah.lastIndexOf("/"));
         _logger.info("deptNamePath  " + deptNamePath);

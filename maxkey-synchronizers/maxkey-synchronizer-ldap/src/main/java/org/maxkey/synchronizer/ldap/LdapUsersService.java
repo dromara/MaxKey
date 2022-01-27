@@ -58,7 +58,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 				Object obj = results.nextElement();
 				if (obj instanceof SearchResult) {
 					SearchResult sr = (SearchResult) obj;
-					_logger.debug("Sync User {} , name {} , NameInNamespace {}" , 
+					_logger.debug("Sync User {} , name [{}] , NameInNamespace [{}]" , 
 				    				(++recordCount),sr.getName(),sr.getNameInNamespace());
 					
 					HashMap<String,Attribute> attributeMap = new HashMap<String,Attribute>();
@@ -93,14 +93,12 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 	public UserInfo buildUserInfo(HashMap<String,Attribute> attributeMap,String name,String nameInNamespace) {
 		UserInfo userInfo = new  UserInfo();
 		userInfo.setLdapDn(nameInNamespace);
-		nameInNamespace = nameInNamespace.replaceAll(",ou=", "/").replaceAll("ou=", "/").replaceAll("uid=", "/").replaceAll("cn=", "/");
-        nameInNamespace = nameInNamespace.substring(0, nameInNamespace.length() - ldapUtils.getBaseDN().length() - 1);
-        _logger.info("nameInNamespace  " + nameInNamespace);
-        String []namePaths = nameInNamespace.split("/");
-        String namePah= "/"+rootOrganization.getName();
-        for(int i = namePaths.length -1 ; i>=1 ;i--) {
-            namePah = namePah + "/"+namePaths[i];
-        }
+		String []namePaths = name.replaceAll(",OU=", "/").replaceAll("OU=", "/").split("/");
+		String namePah= "/"+rootOrganization.getName();
+		for(int i = namePaths.length -1 ; i >= 0 ; i --) {
+			namePah = namePah + "/" + namePaths[i];
+		}
+			
         //namePah = namePah.substring(0, namePah.length());
         String deptNamePath= namePah.substring(0, namePah.lastIndexOf("/"));
         _logger.info("deptNamePath  " + deptNamePath);
