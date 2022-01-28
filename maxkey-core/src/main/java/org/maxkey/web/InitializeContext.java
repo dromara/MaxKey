@@ -232,7 +232,7 @@ public class InitializeContext extends HttpServlet {
         _logger.info("+                           Version {}", 
                         WebContext.properties.getProperty("application.formatted-version"));
         _logger.info("+");
-        _logger.info("+                  {}Copyright 2018-{} https://www.maxkey.top/",
+        _logger.info("+                 {}Copyright 2018 - {} https://www.maxkey.top/",
         			    (char)0xA9 , new DateTime().getYear()
         			);
         _logger.info("+                 Licensed under the Apache License, Version 2.0 ");
