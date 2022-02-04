@@ -7,23 +7,27 @@
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="login.text.mobile"/>：</td>
+			<td><@locale code="login.text.mobile"/></td>
 			<td>
 				<div  class="wrapper">
-                	<i class="fa fa-mobile"></i>
-					<input required="" class="form-control"  type='text' id='mobile_j_username'  name='username' value="" tabindex="1"/>
+				    <div class="input-group" style="width:250px;">
+                	   <i class="fa fa-mobile"></i>
+					   <input required="" class="form-control"  type='text' id='mobile_j_username'  name='username' value="" tabindex="1"/>
+				    </div>
 				</div>
 			</td>
 		</tr>
 		<tr> 
-			<td><@locale code="login.text.smscode"/>：</td>
+			<td><@locale code="login.text.smscode"/></td>
 			<td>
 				<div  class="wrapper">
-                	<i class="fa fa-lock fa-2"></i>
-					<input required="" class="form-control"  type='password' id='mobile_j_password'  name='password' value=""  tabindex="2"  style="float: left;"/>
-					<button  class="btn  btn-outline-secondary"  id="mobile_j_otp_button"  tabindex="5"  type="button" >
-                       <@locale code="login.text.login.mobile.obtain"/>
-                    </button>
+				    <div class="input-group" style="width:250px;">
+                    	<i class="fa fa-lock fa-2"></i>
+    					<input required="" class="form-control"  type='password' id='mobile_j_password'  name='password' value=""  tabindex="2"  style="float: left;"/>
+    					<button  class="btn  btn-outline-secondary"  id="mobile_j_otp_button"  tabindex="5"  type="button" >
+                           <@locale code="login.text.login.mobile.obtain"/>
+                        </button>
+                    </div>
 				</div>
 			</td>
 		</tr>

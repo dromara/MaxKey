@@ -18,24 +18,24 @@
 						<div class="card-body">
 						    <main class ="form-signin">
 							<form class="form-horizontal m-t-20 needs-validation" id="loginForm" name="loginForm" action="<@base />/logon.do" method="post"  novalidate>
-							<div class="row g-3">
+							<div class="row g-4">
 								<div class="">
 								    <div class="input-group">
-                                        <span class="input-group-text fa fa-user"></span>
+                                        <span class="input-group-text fa fa-user d-flex justify-content-center"></span>
                                         <input id='j_username' name='username' value="admin" class="form-control" type="text" required="" placeholder="<@locale code="login.text.username"/>">
                                     </div>
 									
 								</div>
 								<div class="">
 								    <div class="input-group">
-                                        <span class="input-group-text fa fa-key"></span>
+                                        <span class="input-group-text fa fa-key d-flex justify-content-center"></span>
                                         <input id='j_password' name='password' class="form-control" type="password" required="" placeholder="<@locale code="login.text.password"/>">
 									</div>
 								</div>
 								<#if true==isCaptcha> 
 								<div class="">
 								    <div class="input-group">
-                                        <span class="input-group-text fa fa-refresh"></span>
+                                        <span class="input-group-text fa fa-refresh d-flex justify-content-center"></span>
                                         <input id="j_captcha" name="captcha" class="form-control" value="" type="text" required="" placeholder="<@locale code="login.text.captcha"/>"> 
                                         <img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha" />
                                     </div>

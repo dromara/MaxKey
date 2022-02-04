@@ -7,7 +7,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="login.text.username"/>：</td>
+			<td><@locale code="login.text.username"/></td>
 			<td>
 				<div  class="wrapper">
 					<i class="fa fa-user"></i>
@@ -16,7 +16,7 @@
 			</td>
 		</tr>
 		<tr> 
-			<td><@locale code="login.text.password"/>：</td>
+			<td><@locale code="login.text.password"/></td>
 			<td>
 				<div  class="wrapper">
 					<i class="fa fa-key fa-2" style="color: #FFD700;"></i>
@@ -26,7 +26,7 @@
 		</tr>
 		<#if true==isMfa >
 		<tr>
-			<td><@locale code="login.text.captcha"/>：</td>
+			<td><@locale code="login.text.captcha"/></td>
 			<td>
 				<div  class="wrapper">
 					<i class="fa fa-lock fa-2"></i>

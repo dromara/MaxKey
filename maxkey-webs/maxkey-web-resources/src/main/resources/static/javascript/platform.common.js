@@ -33,6 +33,18 @@ $(function(){
 	$('.captcha-image').click(function () {//
 		$(this).attr("src", webContextPath + "/captcha?"+(new Date()).getTime()); 
 	});
+    
+    //passwdeye
+    $('.passwdeye').click(function () {//
+        if($(this).hasClass("fa-eye-slash")){
+            $(this).removeClass("fa-eye-slash").addClass("fa-eye");
+            $("#"+$(this).attr("refid")).attr("type","text");
+        }else{
+            $(this).removeClass("fa-eye").addClass("fa-eye-slash");
+            $("#"+$(this).attr("refid")).attr("type","password");
+        }
+    });
+    
 	
     /*side-nav-menu side navigation*/
     if($('#side-nav-menu').length > 0){

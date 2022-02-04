@@ -7,30 +7,39 @@
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="login.text.username"/>：</td>
+			<td><@locale code="login.text.username"/></td>
 			<td>
 			 	<div  class="wrapper">
-                	<i class="fa fa-user"></i>
-					<input required="" class="form-control" type='text' id='j_username'  name='username' value="admin" tabindex="1"/>
+			 	   <div class="input-group" style="width:250px;">
+                	   <i class="fa fa-user" ></i>
+					   <input required="" class="form-control" type='text' id='j_username'  name='username' value="admin" tabindex="1"/>
+				    </div >
 				</div >
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="login.text.password"/>：</td>
+			<td><@locale code="login.text.password"/></td>
 			<td>
 				<div  class="wrapper">
-                	<i class="fa fa-key fa-2" style="color: #FFD700;"></i>
-					<input required="" class="form-control"  type='password' id='j_password'  name='password' value="maxkey"  tabindex="2"/>
+				    <div class="input-group" style="width:250px;">
+                	   <i class="fa fa-key fa-2" style="color: #FFD700;"></i>
+					   <input required="" class="form-control"  type='password' id='j_password'  name='password' value="maxkey"  tabindex="2"/>
+				       <i class="passwdeye fa fa-eye-slash fa-2" style="left: 220px; color: gainsboro;" refid="j_password" ></i>
+				    </div >
 				</div >
 			</td>
 		</tr>
 		<#if true==isCaptcha> 
 		<tr>
-			<td><@locale code="login.text.captcha"/>：</td>
+			<td><@locale code="login.text.captcha"/></td>
 			<td>
 				<div  class="wrapper">
-                	<i class="fa fa-lock fa-2"></i>
-					<input required="" class="form-control "  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha"/>
+                	
+                	<div class="input-group" style="width:250px;">
+                	   <i class="fa fa-lock fa-2" ></i>
+					   <input required="" class="form-control "  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/>
+					   <img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha"/>
+				    </div >
 				</div >
 			</td>
 			

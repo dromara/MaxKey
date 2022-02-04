@@ -256,8 +256,8 @@ body{
 }
 
 .login_form_table td, .login_form_table th {
-    padding: .2rem;
-    vertical-align: top;
+    height: 60px;
+    vertical-align: middle;
     border-top: 1px solid #dee2e6;
 }
 
@@ -283,7 +283,7 @@ body{
 
 #j_captchaimg{
 	width:70px;
-	height: 33px;
+	height: 35px;
 	vertical-align: top;
 }
 
@@ -308,6 +308,7 @@ body{
 #register a{
 	font-weight: bold;
 	color: white;
+	text-decoration-line: none;
 }
 
 .login_error_message{
@@ -346,8 +347,9 @@ body{
 	position: absolute; 
 	top: 5px; 
 	left: 5px; 
-	font-size: 22px; 
-	color: gray;
+	font-size: 24px; 
+	color: black;
+	z-index: 20;
 }
 
 #tfa_j_otp_button,#mobile_j_otp_button{
