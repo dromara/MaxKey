@@ -26,6 +26,9 @@ $(function(){
 </script>
 </head>
 <body>
+<div  class="container">   
+    <div  class="row">
+    <div class="col-md-12"> 
 <form id="actionForm_app"  method="post" type="label" autoclose="true"    closeWindow="true"
    action="<@base/>/apps/extendapi/update"  
    forward="<@base/>/apps/list"
@@ -111,5 +114,8 @@ $(function(){
     		<input class="button btn btn-primary mr-3"  id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
 			<input class="button btn btn-secondary mr-3"  id="backBtn" type="button" value="<@locale code="button.text.close" />"/>		  
 </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

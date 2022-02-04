@@ -72,24 +72,26 @@
 	<div id="tool_box">
 	 		<table   class="table table-bordered">
  				<tr>
-		 			<td width="120px"><@locale code="role.name"/>:</td>
+		 			<td width="120px"><@locale code="role.name"/></td>
 		 			<td width="450px">
 		 				<form id="basic_search_form" style="width:100%">
-				 			<input class="roleId" id="roleId" name="roleId" value="" type="hidden" >
-				 			<input class="form-control roleName"    style="width:200px;float: left;" value=""    id="roleName" name="roleName" type="text" >
-				 			<input class="button btn btn-success mr-3" style="float: left;" id="addBtn" type="button" value="<@locale code="button.text.select"/>" 
-						 		    wurl="<@base/>/roles/selectRolesList"
-						 		    wwidth="700"
-						 		    wheight="500"
-					 		    	target="window">
-				 			<input   class="button btn btn-primary mr-3"  style="float: left;"   id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-				 			<input class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
-				 		
+		 				    <div class="input-group " style="vertical-align: middle;">
+    				 			<input class="roleId" id="roleId" name="roleId" value="" type="hidden" >
+    				 			<input class="form-control roleName"     value=""    id="roleName" name="roleName" type="text" >
+    				 			<input class="window button btn btn-primary mr-3"  type="button" value="<@locale code="button.text.select"/>" 
+    						 		    wurl="<@base/>/roles/selectRolesList"
+    						 		    wwidth="700"
+    						 		    wheight="500"
+    					 		    	target="window">
+    					 	 
+				 			    <input   class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+				 			    <input class="button btn btn-primary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+				 		     </div>
 				 		</form>
 		 			</td>
 				 	<td colspan="2"> <div id="tool_box_right"  >
 				 		
-						<input class="button btn btn-success mr-3"  id="insertGroupUserBtn" type="button" value="<@locale code="button.text.add.member"/>">
+						<input class="button btn btn-primary mr-3"  id="insertGroupUserBtn" type="button" value="<@locale code="button.text.add.member"/>">
 						<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete.member"/>"
 							wurl="<@base/>/rolemembers/delete"/>
 				 	</div>

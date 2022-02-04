@@ -32,29 +32,33 @@
 	</script>
 </head>
 <body> 
-			<table  class="table table-bordered">
- 				<tr>
-		 			<td width="120px"><@locale code="accounts.strategy.name"/>:</td>
-		 			<td width="375px">
-		 				<form id="basic_search_form">
-			 				<input class="form-control" type="text" name="name"  style ="width:150px;float:left;">
-			 				<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-				 			<!--<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
-					 		-->
-					 	</form>
-		 			</td>
-		 			<td colspan="2">
-		 				<div >
-		 					<input class="button btn btn-primary mr-3"   id="selectBtn" type="button" value="<@locale code="button.text.select"/>" />
-				 		</div>
-		 			</td>
-		 		</tr>
-		 	</table>
-		
-			 <div id="advanced_search">
-	            <form id="advanced_search_form">
-	                
-	            </form>
+    <div id="tool_box">
+    			<table  class="table table-bordered">
+     				<tr>
+    		 			<td width="120px"><@locale code="accounts.strategy.name"/></td>
+    		 			<td width="300px">
+    		 				<form id="basic_search_form">
+    		 				<div class="input-group" style="vertical-align: middle;">
+    			 				<input class="form-control" type="text" name="name"  >
+    			 				<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+    				 			<!--<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+    					 		-->
+    					 	</div>
+    					 	</form>
+    		 			</td>
+    		 			<td colspan="2">
+    		 				 <div id="tool_box_right"  >
+    		 					<input class="button btn btn-primary mr-3"   id="selectBtn" type="button" value="<@locale code="button.text.confirm"/>" />
+    				 		</div>
+    		 			</td>
+    		 		</tr>
+    		 	</table>
+    		
+    			 <div id="advanced_search">
+    	            <form id="advanced_search_form">
+    	                
+    	            </form>
+    	        </div>
 	        </div>
             <table  data-url="<@base/>/accountsstrategy/grid"
                 id="datagrid"

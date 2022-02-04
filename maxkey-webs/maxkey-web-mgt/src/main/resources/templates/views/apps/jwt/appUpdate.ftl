@@ -7,6 +7,9 @@
 	<#setting number_format="#">
 </head>
 <body>
+<div  class="container">   
+    <div  class="row">
+    <div class="col-md-12"> 
 <form id="actionForm_app"  method="post" type="label" autoclose="true"   closeWindow="true" 
 			action="<@base/>/apps/jwt/update"  
 			forward="<@base/>/apps/list"
@@ -25,30 +28,30 @@
 								<tbody>
 								
 								<tr>
-									<td colspan=4><@locale code="apps.jwt.info" /></td>
+									<td colspan=4><h5><@locale code="apps.jwt.info" /></h5></td>
 								</tr>
 								<tr>
-									<th style="width:15%;"><@locale code="apps.jwt.redirectUri" />：</th>
+									<th style="width:15%;"><@locale code="apps.jwt.redirectUri" /></th>
 									<td  colspan=3>
 										<input type="text" id="redirectUri" class="form-control" name="redirectUri"  title="" value="${model.redirectUri}"  required="" />
 									</td>
 								</tr>
 								<tr>
-									<th ><@locale code="apps.jwt.tokenType" />：</th>
+									<th ><@locale code="apps.jwt.tokenType" /></th>
 									<td >
 										<select id="tokenType" name="tokenType"  class="form-control  form-select">
 											<option value="POST" <#if 'POST'==model.tokenType>selected</#if> >安全令牌(TOKEN POST)</option>
 											<option value="LTPA" <#if 'LTPA'==model.tokenType>selected</#if> >轻量级认证(LTPA COOKIE)</option>
 										</select>
 									</td>
-									<th ><@locale code="apps.jwt.cookieName" />：</th>
+									<th ><@locale code="apps.jwt.cookieName" /></th>
 									<td >
 										<input type="text" class="form-control" id="cookieName" name="cookieName"  title="" value="${model.cookieName!}"/>
 										
 									</td>
 								</tr>
 								<tr>
-									<th style="width:15%;"><@locale code="apps.jwt.algorithm" />：</th>
+									<th style="width:15%;"><@locale code="apps.jwt.algorithm" /></th>
 									<td style="width:35%;">
 										<select id="algorithm" name="algorithm" class="form-control  form-select" >
 											<option value="DES"  <#if 'DES'==model.algorithm>selected</#if> >DES</option>
@@ -60,7 +63,7 @@
 											
 										</select>
 									</td>
-									<th style="width:15%;"><@locale code="apps.jwt.algorithmKey" />：</th>
+									<th style="width:15%;"><@locale code="apps.jwt.algorithmKey" /></th>
 									<td style="width:35%;">
 										<span id="algorithmKey_text">${model.algorithmKey}</span>
 										<input type="hidden" id="algorithmKey" name="algorithmKey"  title="" value="${model.algorithmKey}"/>
@@ -68,11 +71,11 @@
 									</td>
 								</tr>
 								<tr>
-									<th><@locale code="apps.jwt.content" />：</th>
+									<th><@locale code="apps.jwt.content" /></th>
 									<td >
 										<#include  "../userPropertys.ftl"/>
 									</td>
-									<th><@locale code="apps.jwt.expires" />：</th>
+									<th><@locale code="apps.jwt.expires" /></th>
 									<td>
 										<input type="text" class="form-control" id="expires" name="expires"  title="" value="${model.expires}"  required="" />
 									</td>
@@ -91,5 +94,8 @@
 				</tbody>
 				</table>  
 </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

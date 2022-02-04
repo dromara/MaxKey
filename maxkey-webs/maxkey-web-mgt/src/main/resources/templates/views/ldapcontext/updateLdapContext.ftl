@@ -43,7 +43,7 @@
 									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="ldapcontext.product" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="ldapcontext.product" /></label>
 												<div class="col-sm-9">
 													<input id="id" name="id" type="hidden" value="${model.id!}"/>
 						   							<select id="product" name="product"  class="form-control form-select">
@@ -56,7 +56,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="common.text.status" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="common.text.status" /></label>
 												<div class="col-sm-9">
 													<select id="status" name="status"  class="form-control  form-select">
                                                         <option value="0" <#if 0==model.status>selected</#if> ><@locale code="common.text.status.disabled" /></option>
@@ -67,7 +67,7 @@
 										</div>
 									</div>
 									<div class="row mb-3">
-                                            <label class="col-md-2 col-form-label"><@locale code="ldapcontext.providerUrl" />：</label>
+                                            <label class="col-md-2 col-form-label"><@locale code="ldapcontext.providerUrl" /></label>
                                             <div class="col-md-10">
                                                 <input required=""  class="form-control" type="text" id="providerUrl" name="providerUrl" value="${model.providerUrl!}" />
                                             </div>
@@ -75,7 +75,7 @@
 									<div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="ldapcontext.principal" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="ldapcontext.principal" /></label>
                                                 <div class="col-sm-9">
                                                     <input  required="" class="form-control" type="text" id="principal" name="principal"  value="${model.principal!}" />
                                                     
@@ -85,7 +85,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="ldapcontext.credentials" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="ldapcontext.credentials" /></label>
                                                 <div class="col-sm-9">
                                                     <input  required="" class="form-control" type="password" id="credentials" name="credentials" value="${model.credentials!}" />
                                                 </div>
@@ -95,7 +95,7 @@
 									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="ldapcontext.filters" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="ldapcontext.filters" /></label>
 												<div class="col-sm-9">
 													<input  required="" class="form-control" type="text" id="filters" name="filters"  value="${model.filters!}" />
 												</div>
@@ -103,7 +103,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="ldapcontext.basedn" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="ldapcontext.basedn" /></label>
 												<div class="col-sm-9">
 													<input  required="" class="form-control" type="text" id="basedn" name="basedn" value="${model.basedn!}" />
 												</div>
@@ -113,7 +113,7 @@
 									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="ldapcontext.msadDomain" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="ldapcontext.msadDomain" /></label>
 												<div class="col-sm-9">
 													<input   class="form-control" type="text" id="msadDomain" name="msadDomain" value="${model.msadDomain!}"/>
 												</div>
@@ -121,7 +121,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3"><@locale code="ldapcontext.sslSwitch" />：</label>
+												<label class="col-sm-3"><@locale code="ldapcontext.sslSwitch" /></label>
 												<div class="col-sm-9">
 												    <select id="sslSwitch" name="sslSwitch"  class="form-control  form-select">
                                                         <option value="0" <#if '0'==model.sslSwitch>selected</#if> ><@locale code="common.text.no" /></option>
@@ -134,7 +134,7 @@
 									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="ldapcontext.trustStore" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="ldapcontext.trustStore" /></label>
 												<div class="col-sm-9">
 													<input   class="form-control" type="text" id="trustStore" name="trustStore" value="${model.trustStore!}" />
 												</div>
@@ -143,7 +143,7 @@
 										
 										<div class="col-md-6">
 											<div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="ldapcontext.trustStorePassword" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="ldapcontext.trustStorePassword" /></label>
                                                 <div class="col-sm-9">
                                                     <input   class="form-control" type="text" id="trustStorePassword" name="trustStorePassword" value="${model.trustStorePassword!}" />
                                                 </div>
@@ -154,7 +154,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-2">
-                                                    <label class="col-form-label"><@locale code="common.text.description" />：</label>
+                                                    <label class="col-form-label"><@locale code="common.text.description" /></label>
                                                 </div>
                                                 <div class="col-sm-10">
                                                     <input   class="form-control" type="text" id="description" name="description"  value="${model.description!}" />

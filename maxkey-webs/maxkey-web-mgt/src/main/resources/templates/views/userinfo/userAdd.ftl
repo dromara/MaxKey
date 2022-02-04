@@ -49,30 +49,30 @@
 			 <table id="div_table_switch_basic" width="980" class="table table-bordered" >
 	<tbody>				
 	<tr>
-		<td style="width:15%;"><@locale code="userinfo.username" />：</td>
+		<td style="width:15%;"><@locale code="userinfo.username" /></td>
 		<td style="width:35%;">
 			<input type="hidden" id="id" name="id" value=""/>
 			<input type="hidden" id="status" name="status" value="1"/>
 			<input  class="form-control"  type="text" required="" id="username" name="username"  title="" value=""/>
 		</td>
-		<td style="width:15%;"><@locale code="login.text.password" />：</td>
+		<td style="width:15%;"><@locale code="login.text.password" /></td>
 		<td style="width:35%;">
 			<input  class="form-control"  type="password" required="" id="password" name="password"  title="" value=""/>
 		</td>
 	</tr>
 	<tr>
-			<td style="width:15%;"><@locale code="userinfo.employeeNumber" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.employeeNumber" /></td>
 			<td style="width:35%;">
 				<input class="form-control"  type="text" id="employeeNumber" name="employeeNumber"  title="" value=""/>
 			</td>
-			<td style="width:15%;"><@locale code="userinfo.windowsAccount" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.windowsAccount" /></td>
 			<td style="width:35%;">
 				<input class="form-control"  type="text" id="windowsAccount" name="windowsAccount"  title="" value=""/>
 			</td>
 		</tr>
 		
 	<tr>
-		<td><@locale code="userinfo.userType" />：</td>
+		<td><@locale code="userinfo.userType" /></td>
 		<td style="width:35%;">
 
 			<select name="userType"   class="form-control  form-select" >
@@ -87,7 +87,7 @@
 					<option value="TEMP"  ><@locale code="userinfo.userType.temp" /></option>
 			</select>
 		</td>
-		<td><@locale code="userinfo.userstate" />：</td>
+		<td><@locale code="userinfo.userstate" /></td>
 		<td style="width:35%;">
 			<select name="userState"   class="form-control  form-select" >
 					<option value="RESIDENT"  selected ><@locale code="userinfo.userstate.resident" /></option>
@@ -104,48 +104,48 @@
 		
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.displayName" />：</td>
+		<td><@locale code="userinfo.displayName" /></td>
 		<td>
 			<input class="form-control"  type="text" required="" id="displayName" name="displayName"  title="" value=""/>
 		</td>
-		<td rowspan="3"><@locale code="userinfo.picture" />：</td>
+		<td rowspan="3"><@locale code="userinfo.picture" /></td>
 		<td rowspan="3">
 			<img id="picture" width="150px" height="150px" src="<@base/>/static/images/uploadimage.jpg" />
 			<input type="file" id="pictureFile" name="pictureFile" style="display:none" />
 					</td>
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.familyName" />：</td>
+		<td><@locale code="userinfo.familyName" /></td>
 		<td>
 			<input class="form-control"  type="text" id="familyName" name="familyName"  title="" value=""/>
 		</td>
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.givenName" />：</td>
+		<td><@locale code="userinfo.givenName" /></td>
 		<td>
 			<input class="form-control"  type="text" id="givenName" name="givenName"  title="" value=""/>
 		</td>
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.middleName" />：</td>
+		<td><@locale code="userinfo.middleName" /></td>
 		<td>
 			<input class="form-control"  type="text" id="middleName" name="middleName"  title="" value=""/>
 		</td>
-		<td><@locale code="userinfo.nickName" />：</td>
+		<td><@locale code="userinfo.nickName" /></td>
 		<td>
 			<input class="form-control"  type="text" id="nickName" name="nickName"  title="" value=""/>
 		</td>
 		
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.gender" />：</td>
+		<td><@locale code="userinfo.gender" /></td>
 		<td>
 			<select name="gender"   class="form-control" >
 					<option value="1"  selected><@locale code="userinfo.gender.female" /></option>
 					<option value="2"  ><@locale code="userinfo.gender.male" /></option>
 			</select>
 		</td>
-		<td><@locale code="userinfo.birthDate" />：</td>
+		<td><@locale code="userinfo.birthDate" /></td>
 		<td>
 			<input class="form-control"  type="text" id="birthDate" name="birthDate"  title="" value=""/>
 		</td>
@@ -157,7 +157,7 @@
 		
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.preferredLanguage" />：</td>
+		<td><@locale code="userinfo.preferredLanguage" /></td>
 		<td>
 			<select class="form-control  form-select"  name="preferredLanguage" id="preferredLanguage">
 				<option value="" selected="selected">Language</option>
@@ -178,7 +178,7 @@
 				<option value="ru"     >Russian</option>
 			</select>
 		</td>
-		<td><@locale code="userinfo.timeZone" />：</td>
+		<td><@locale code="userinfo.timeZone" /></td>
 		<td nowrap >
 			<select class="form-control  form-select"  id="timeZone" name="timeZone" tabindex="61">
 				<option value="Pacific/Kiritimati"   >(GMT+14:00) Line Islands Time (Pacific/Kiritimati)</option>
@@ -288,11 +288,11 @@
  <table  class="table table-bordered"  style="display:none" id="div_table_switch_company" width="980">
 	<tbody>				
 		<tr>
-			<td style="width:15%;"><@locale code="userinfo.organization" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.organization" /></td>
 			<td style="width:35%;">
 				<input class="form-control"  type="text" id="organization" name="organization"  title="" value=""/>
 			</td>
-			<td style="width:15%;"><@locale code="userinfo.division" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.division" /></td>
 			<td style="width:35%;">
 				<input class="form-control"  type="text" id="division" name="division"  title="" value=""/>
 			</td>
@@ -300,46 +300,46 @@
 		</tr>
 		
 		<tr>
-			<td><@locale code="userinfo.department" />：</td>
+			<td><@locale code="userinfo.department" /></td>
 			<td>
 				<input class="form-control"  type="hidden" id="departmentId" name="departmentId"  title="" value=""/>
 				<input class="form-control"  type="text" style="width:70%"  id="department" name="department"  title="" value=""/>
 				<s:Dialog text="button.text.select" title="department" url="/orgs/orgsSelect/deptId/department" width="300" height="400" />
 			</td>
-			<td><@locale code="userinfo.costCenter" />：</td>
+			<td><@locale code="userinfo.costCenter" /></td>
 			<td>
 				<input class="form-control"  type="text" id="costCenter" name="costCenter"  title="" value=""/>
 			</td>
 			
 		</tr>
 		<tr>
-			<td><@locale code="userinfo.jobTitle" />：</td>
+			<td><@locale code="userinfo.jobTitle" /></td>
 			<td>
 				<input class="form-control"  type="text" id="jobTitle" name="jobTitle"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.jobLevel" />：</td>
+			<td><@locale code="userinfo.jobLevel" /></td>
 			<td>
 				<input class="form-control"  type="text" id="jobLevel" name="jobLevel"  title="" value=""/>
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="userinfo.manager" />：</td>
+			<td><@locale code="userinfo.manager" /></td>
 			<td>
 				<input class="form-control"  type="hidden" id="managerId" name="managerId"  title="" value=""/>
 				<input class="form-control"  type="text" id="manager" name="manager"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.assistant" />：</td>
+			<td><@locale code="userinfo.assistant" /></td>
 			<td>
 				<input class="form-control"  type="hidden" id="assistantId" name="assistantId"  title="" value=""/>
 				<input class="form-control"   type="text" id="assistant" name="assistant"  title="" value=""/>
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="userinfo.entryDate" />：</td>
+			<td><@locale code="userinfo.entryDate" /></td>
 			<td>
 				<input class="form-control"  type="text" id="entryDate" name="entryDate"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.quitDate" />：</td>
+			<td><@locale code="userinfo.quitDate" /></td>
 			<td>
 				<input class="form-control"   type="text" id="quitDate" name="quitDate"  title="" value=""/>
 			</td>
@@ -350,43 +350,43 @@
 			
 		</tr>
 		<tr>
-			<td><@locale code="userinfo.workCountry" />：</td>
+			<td><@locale code="userinfo.workCountry" /></td>
 			<td nowrap >
 				<input class="form-control"   type="text" id="workCountry" name="workCountry"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.workRegion" />：</td>
+			<td><@locale code="userinfo.workRegion" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workRegion" name="workRegion"  title="" value=""/>
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="userinfo.workLocality" />：</td>
+			<td><@locale code="userinfo.workLocality" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workLocality" name="workLocality"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.workStreetAddress" />：</td>
+			<td><@locale code="userinfo.workStreetAddress" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workStreetAddress" name="workStreetAddress"  title="" value=""/>
 			</td>
 		</tr>
 		<tr>
 			
-			<td><@locale code="userinfo.workPostalCode" />：</td>
+			<td><@locale code="userinfo.workPostalCode" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workPostalCode" name="workPostalCode"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.workFax" />：</td>
+			<td><@locale code="userinfo.workFax" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workFax" name="workFax"  title="" value=""/>
 			</td>
 		</tr>
 
 		<tr>
-			<td><@locale code="userinfo.workPhoneNumber" />：</td>
+			<td><@locale code="userinfo.workPhoneNumber" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workPhoneNumber" name="workPhoneNumber"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.workEmail" />：</td>
+			<td><@locale code="userinfo.workEmail" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workEmail" name="workEmail"  title="" value=""/>
 			</td>
@@ -401,7 +401,7 @@
 <table  class="table table-bordered"  style="display:none" id="div_table_switch_home" width="980">
 	<tbody>				
 		<tr>
-			<td style="width:15%;"><@locale code="userinfo.idtype" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.idtype" /></td>
 			<td style="width:35%;">
 				<select name="idType"   class="form-control  form-select" >
 					<option value="UNKNOWN" selected ><@locale code="userinfo.idtype.unknown" /></option>
@@ -412,7 +412,7 @@
 				</select>
 			</td>
 			
-			<td style="width:15%;"><@locale code="userinfo.idCardNo" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.idCardNo" /></td>
 			<td style="width:35%;">
 				<input class="form-control"  type="text" id="idCardNo" name="idCardNo"  title="" value=""/>
 
@@ -420,7 +420,7 @@
 		</tr>
 		<tr>
 			
-			<td><@locale code="userinfo.married" />：</td>
+			<td><@locale code="userinfo.married" /></td>
 			<td>
 				<select name="married"  class="form-control  form-select" >
 					<option value="UNKNOWN" selected><@locale code="userinfo.married.unknown" /></option>
@@ -430,7 +430,7 @@
 					<option value="WIDOWED" ><@locale code="userinfo.married.widowed" /></option>
 				</select>
 			</td>
-			<td><@locale code="userinfo.startWorkDate" />：</td>
+			<td><@locale code="userinfo.startWorkDate" /></td>
 			<td>
 				<input class="form-control"  type="text" id="startWorkDate" name="startWorkDate"  title="" value=""/>
 			</td>
@@ -442,44 +442,44 @@
 		</tr>
 		
 		<tr>
-			<td><@locale code="userinfo.homeCountry" />：</td>
+			<td><@locale code="userinfo.homeCountry" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homeCountry" name="homeCountry"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.homeRegion" />：</td>
+			<td><@locale code="userinfo.homeRegion" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homeRegion" name="homeRegion"  title="" value=""/>
 			</td>
 		</tr>
 		<tr>
 			
-			<td><@locale code="userinfo.homeLocality" />：</td>
+			<td><@locale code="userinfo.homeLocality" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homeLocality" name="homeLocality"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.homeStreetAddress" />：</td>
+			<td><@locale code="userinfo.homeStreetAddress" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homeStreetAddress" name="homeStreetAddress"  title="" value=""/>
 			</td>
 		</tr>
 		<tr>
 			
-			<td><@locale code="userinfo.homePostalCode" />：</td>
+			<td><@locale code="userinfo.homePostalCode" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homePostalCode" name="homePostalCode"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.homeFax" />：</td>
+			<td><@locale code="userinfo.homeFax" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homeFax" name="homeFax"  title="" value=""/>
 			</td>
 		</tr>
 		
 		<tr>
-			<td><@locale code="userinfo.homePhoneNumber" />：</td>
+			<td><@locale code="userinfo.homePhoneNumber" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homePhoneNumber" name="homePhoneNumber"  title="" value=""/>
 			</td>
-			<td><@locale code="userinfo.homeEmail" />：</td>
+			<td><@locale code="userinfo.homeEmail" /></td>
 			<td >
 				<input class="form-control"  type="text" id="homeEmail" name="homeEmail"  title="" value=""/>
 			</td>
@@ -490,11 +490,11 @@
 			
 		</tr>
 				<tr>
-					<td><@locale code="userinfo.website" />：</td>
+					<td><@locale code="userinfo.website" /></td>
 					<td>
 						<input  class="form-control"   type="text" id="webSite" name="webSite"  title="" value=""/>
 					</td>
-					<td><@locale code="userinfo.ims" />：</td>
+					<td><@locale code="userinfo.ims" /></td>
 					<td >
 						<input class="form-control"  type="text" id="defineIm" name="defineIm"  title="" value=""/>
 					</td>

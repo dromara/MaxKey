@@ -57,23 +57,25 @@
 		<table   class="table table-bordered">
 			<tr>
 				<td  width="120px">
-			 		 <@locale code="account.username"/>:
+			 		 <@locale code="account.username"/>
 				</td>
 				<td  width="375px">
 					<form id="basic_search_form">
-				 			<input  class="form-control"  name="username" type="text" style ="width:150px;float:left;">
+					   <div class="input-group" style="vertical-align: middle;">
+				 			<input  class="form-control"  name="username" type="text" >
 				 			<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-				 			<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
-					 	</form>
+				 			<input  class="button btn btn-primary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+				        </div>
+				    </form>
 				</td>
 				<td colspan="2"> 
 					 <div id="tool_box_right">	    
-						 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
+						 <input class="button btn btn-primary mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/accounts/forwardAdd"
 						 		    wwidth="960"
 						 		    wheight="600"
 					 		    	target="window">
-					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
+					 	<input class="button btn btn-primary mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
                                     wurl="<@base/>/accounts/forwardUpdate"
                                     wwidth="700"
                                     wheight="400"
@@ -94,14 +96,16 @@
 	 			<tr>
 	 				<td width="120px"><@locale code="apps.name"/></td>
 		 			<td width="360px">
-		 				<input class="form-control d-none appId" id="appId" name="appId" value="" type="text"  >
-                        <input class="form-control d-none" id="parentId" name="parentId" value="" type="text"  >
-                        <input class="form-control appName"    style="width:200px;float: left;" value=""    id="appName" name="appName" type="text" >
-                        <input class="button btn btn-success mr-3 window" style="float: left;" id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
+		 			   <div class="input-group mb-3" style="float: left;vertical-align: middle;">
+		 				     <input class="form-control d-none appId" id="appId" name="appId" value="" type="text"  >
+                            <input class="form-control d-none" id="parentId" name="parentId" value="" type="text"  >
+                            <input class="form-control appName"      value=""    id="appName" name="appName" type="text" >
+                            <input class="button btn btn-primary mr-3 window"  id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
                                 wurl="<@base/>/apps/select"
                                 wwidth="700"
                                 wheight="500"
                                 target="window">
+                        </div>
 		 			</td>
 		 			<td width="120px"><@locale code="account.relatedUsername"/></td>
 		 			<td width="360px">

@@ -11,7 +11,7 @@
 		<div class="row mb-3">
 			<div class="col-md-6" style="display:none">
 				<div class="form-group row">
-					<label class="col-sm-3 col-form-label"><@locale code="localization.property" />：</label>
+					<label class="col-sm-3 col-form-label"><@locale code="localization.property" /></label>
 					<div class="col-sm-9">
 						<input id="id" name="id" type="hidden" value="${model.id!}"/>
 						<input  required="" class="form-control" type="text" id="property" name="property"  value="${model.property!}" />
@@ -20,7 +20,7 @@
 			</div>
 			<div class="col-md-6">
 				<div class="form-group row">
-					<label class="col-sm-3 col-form-label"><@locale code="localization.langZh" />：</label>
+					<label class="col-sm-3 col-form-label"><@locale code="localization.langZh" /></label>
 					<div class="col-sm-9">
 						<input required=""  class="form-control" type="text" id="langZh" name="langZh" value="${model.langZh!}" />
 					</div>
@@ -29,7 +29,7 @@
 			</div>
 			<div class="col-md-6">
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label"><@locale code="localization.langEn" />：</label>
+                    <label class="col-sm-3 col-form-label"><@locale code="localization.langEn" /></label>
                     <div class="col-sm-9">
                         <input  required="" class="form-control" type="text" id="langEn" name="langEn"  value="${model.langEn!}" />
                         

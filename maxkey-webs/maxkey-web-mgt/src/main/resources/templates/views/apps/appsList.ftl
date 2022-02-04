@@ -119,18 +119,20 @@
 		    <div id="tool_box">
 			<table  class="table table-bordered">
  				<tr>
-		 			<td width="120px"><@locale code="apps.name"/>:</td>
+		 			<td width="120px"><@locale code="apps.name"/></td>
 		 			<td width="375px">
 		 				<form id="basic_search_form">
-			 				<input class="form-control" type="text" name="name"  style ="width:150px;float:left;">
-			 				<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-				 			<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+                            <div class="input-group" style="vertical-align: middle;">
+			 				    <input class="form-control" type="text" name="name"  >
+			 				    <input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+				 			    <input  class="button btn btn-primary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+					 	    </div> 
 					 	</form>
 		 			</td>
 		 			<td colspan="2">
 		 				<div id="tool_box_right">
 		 					<div  class="btn-group" style="width: 90px;">
-							 	<button class="btn btn-success  dropdown-toggle  mr-3" type="button" id="dropdownMenuButton"  data-bs-toggle="dropdown" aria-expanded="false">
+							 	<button class="btn btn-primary  dropdown-toggle  mr-3" type="button" id="dropdownMenuButton"  data-bs-toggle="dropdown" aria-expanded="false">
 							     	<@locale code="button.text.add"/>
 							  	</button>
 								  <ul  class="dropdown-menu" style="" aria-labelledby="dropdownMenuButton">
@@ -144,7 +146,7 @@
 							 		 <li><a class="dropdown-item"  target="_blank"  href="<@base/>/apps/basic/forwardAdd">&nbsp;&nbsp;<@locale code="apps.protocol.basic" /></a></li>
 								  </ul>
 							</div>
-						 	<input  class="button btn btn-info mr-3 " id="modifyApps" type="button" value="<@locale code="button.text.edit"/>" />
+						 	<input  class="button btn btn-primary mr-3 " id="modifyApps" type="button" value="<@locale code="button.text.edit"/>" />
 						 	<input  class="button btn btn-danger mr-3 "   id="deleteApps" type="button" value="<@locale code="button.text.delete"/>" />
 				 		</div>
 		 			</td>

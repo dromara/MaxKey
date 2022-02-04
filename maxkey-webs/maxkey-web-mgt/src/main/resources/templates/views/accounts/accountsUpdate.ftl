@@ -33,66 +33,53 @@
     <table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
         <tbody>
             <tr style="display:none">
-                <th><@locale code="userinfo.id" />：</th>
+                <th><@locale code="userinfo.id" /></th>
                 <td nowrap>
                     <input  required="" type="text" id="id" name="id" readonly  class="form-control" title="" value="${model.id!}"/>
     
                 </td>
-                <td>
-                </td>
             </tr>
             <tr>
-                <th style="width: 150px;"><@locale code="userinfo.username" />：</th>
+                <th style="width: 150px;"><@locale code="userinfo.username" /></th>
                 <td nowrap  style="width:400px">
                     <input  required="" readonly type="text" id="username" name="username"  class="form-control username" title="" value="${model.username!}"   required="" />
                     
                 </td>
-                <td >
-                    
-                </td>
             </tr>
             <tr>
-                <th><@locale code="userinfo.displayName" />：</th>
+                <th><@locale code="userinfo.displayName" /></th>
                 <td nowrap>
                     <input  required="" readonly  type="text" id="displayName" name="displayName"  class="form-control displayName"  title="" value="${model.displayName!}"   required="" />
             
                 </td>
-                <td>
-                </td>
             </tr>
             <tr>
-                <th><@locale code="apps.name" />：</th>
+                <th><@locale code="apps.name" /></th>
                 <td nowrap>
                     <input  required="" readonly  type="text" id="appName" name="appName"  class="form-control appName" title="" value="${model.appName!}"   required="" />
                     
                     
                 </td>
-                <td>
-                    
-                </td>
             </tr>
             <tr>
-                <th><@locale code="account.relatedUsername" />：</th>
+                <th><@locale code="account.relatedUsername" /></th>
                 <td nowrap>
                     <input type="text" id="relatedUsername" name="relatedUsername"  class="form-control" title="" value="${model.relatedUsername!}"    required="" />
 
                 </td>
-                <td>
-                </td>
             </tr>
             <tr>
-                <th><@locale code="account.relatedPassword" />：</th>
+                <th><@locale code="account.relatedPassword" /></th>
                 <td nowrap>
-                    <input type="password" id="relatedPassword" name="relatedPassword"  class="form-control" title="" value="${model.relatedPassword!}"  required="" />
-                </td>
-                <td>
-                    <input id="generateSecret" type="button" class="button btn btn-warning mr-3" style="width:75px"  value="<@locale code="button.text.generate"/>"/>
-                    <input id="view" type="button" class="button btn btn-info mr-3" style="width:75px"  value="<@locale code="button.text.view"/>"/>
-                
+                    <div class="input-group mb-3" style="vertical-align: middle;">
+                        <input type="password" id="relatedPassword" name="relatedPassword"  class="form-control" title="" value="${model.relatedPassword!}"  required="" />
+                        <input id="generateSecret" type="button" class="button btn btn-primary mr-3" style="width:75px"  value="<@locale code="button.text.generate"/>"/>
+                        <input id="view" type="button" class="button btn btn-primary mr-3" style="width:75px"  value="<@locale code="button.text.view"/>"/>
+                    </div>
                 </td>
             </tr>
             <tr>
-                <th><@locale code="common.text.status" />：</th>
+                <th><@locale code="common.text.status" /></th>
                 <td nowrap>
                     <select  id="status" name="status" class="form-control  form-select" >
                         <option value="1" <#if 1==model.status!>selected</#if>><@locale code="common.text.status.activate"/></option>
@@ -102,10 +89,9 @@
                     
                     </select>
                 </td>
-                <td></td>
              </tr>
             <tr>
-                <td colspan="3"  class="center">
+                <td colspan="2"  class="center">
                     <input id="_method" type="hidden" name="_method"  value="post"/>
                     <input type="hidden" id="userId" name="userId" class="userId" title="" value="${model.userId!}"/>
                     <input type="hidden" id="appId" name="appId" class="appId" title="" value="${model.appId!}"/>

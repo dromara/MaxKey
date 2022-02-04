@@ -13,7 +13,7 @@
   </head>
   
   <body>
-<div class="container">	
+<div  id="main"  class="container">	
   <#if null != model>
 	<table border="0"  style="width:100%;">
 		<tr>

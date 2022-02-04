@@ -21,25 +21,25 @@
 	<table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
 		<tbody>
 			<tr style="display:none">
-				<th><@locale code="common.text.id" />：</th>
+				<th><@locale code="common.text.id" /></th>
 				<td nowrap>
 					<input type="text" id="id" name="id" class="form-control" title="" value=""  />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="notices.title" />：</th>
+				<th><@locale code="notices.title" /></th>
 				<td nowrap>
 					<input type="text" id="title" name="title" class="form-control" title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="notices.content" />：</th>
+				<th><@locale code="notices.content" /></th>
 				<td nowrap  >
 					<textarea name="content" class="editor"></textarea>
 				</td>
 			</tr>
 			<tr>
-                <th><@locale code="common.text.description" />：</th>
+                <th><@locale code="common.text.description" /></th>
                 <td nowrap>
                     <textarea id="description" name="description" class="form-control"  rows="2" cols="20"></textarea>
                 </td>

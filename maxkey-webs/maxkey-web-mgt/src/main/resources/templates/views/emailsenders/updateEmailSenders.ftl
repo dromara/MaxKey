@@ -43,7 +43,7 @@
 									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="common.text.id" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="common.text.id" /></label>
 												<div class="col-sm-9">
 													<input class="form-control" readonly id="id" name="id" type="text" value="${model.id!}"/>
 						   							
@@ -52,7 +52,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="common.text.status" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="common.text.status" /></label>
 												<div class="col-sm-9">
 													<select id="status" name="status"  class="form-control  form-select">
                                                         <option value="0" <#if 0==model.status>selected</#if> ><@locale code="common.text.status.disabled" /></option>
@@ -65,7 +65,7 @@
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.smtpHost" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.smtpHost" /></label>
                                                 <div class="col-sm-9">
                                                     <input  required="" class="form-control" type="text" id="smtpHost" name="smtpHost"  value="${model.smtpHost!}" />
                                                     
@@ -75,7 +75,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.port" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.port" /></label>
                                                 <div class="col-sm-9">
                                                     <input  required="" class="form-control" type="text" id="port" name="port" value="${model.port!}" />
                                                 </div>
@@ -85,7 +85,7 @@
 									<div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.account" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.account" /></label>
                                                 <div class="col-sm-9">
                                                     <input  required="" class="form-control" type="text" id="account" name="account"  value="${model.account!}" />
                                                     
@@ -95,7 +95,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.credentials" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.credentials" /></label>
                                                 <div class="col-sm-9">
                                                     <input  required="" class="form-control" type="password" id="credentials" name="credentials" value="${model.credentials!}" />
                                                 </div>
@@ -105,7 +105,7 @@
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.protocol" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.protocol" /></label>
                                                 <div class="col-sm-9">
                                                     <input  required="" class="form-control" type="text" id="protocol" name="protocol"  value="${model.protocol!}" />
                                                     
@@ -115,7 +115,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.encoding" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="emailsenders.encoding" /></label>
                                                 <div class="col-sm-9">
                                                     <input  required="" class="form-control" type="text" id="encoding" name="encoding" value="${model.encoding!}" />
                                                 </div>
@@ -125,7 +125,7 @@
 									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="emailsenders.sender" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="emailsenders.sender" /></label>
 												<div class="col-sm-9">
 													<input   class="form-control" type="text" id="sender" name="sender" value="${model.sender!}"/>
 												</div>
@@ -133,7 +133,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3"><@locale code="emailsenders.sslSwitch" />：</label>
+												<label class="col-sm-3"><@locale code="emailsenders.sslSwitch" /></label>
 												<div class="col-sm-9">
 												    <select id="sslSwitch" name="sslSwitch"  class="form-control  form-select">
                                                         <option value="0" <#if 0==model.sslSwitch>selected</#if> ><@locale code="common.text.no" /></option>
@@ -148,7 +148,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-2">
-                                                    <label class="col-form-label"><@locale code="common.text.description" />：</label>
+                                                    <label class="col-form-label"><@locale code="common.text.description" /></label>
                                                 </div>
                                                 <div class="col-sm-10">
                                                     <input   class="form-control" type="text" id="description" name="description"  value="${model.description!}" />

@@ -21,6 +21,9 @@
     </script>
 </head>
 <body>
+<div  class="container">   
+    <div  class="row">
+    <div class="col-md-12"> 
 <form id="actionForm_app"  method="post" type="label" autoclose="true"    closeWindow="true"
 			action="<@base/>/apps/oauth20/add"
 			forward="<@base/>/apps/list"  
@@ -39,15 +42,15 @@
 				<tbody>
 				
 				<tr>
-					<td colspan=4><@locale code="apps.oauth.v2.0.info" /></td>
+					<td colspan=4><h5><@locale code="apps.oauth.v2.0.info" /></h5></td>
 				</tr>
-				<tr>
-					<th style="width:15%;"><@locale code="apps.oauth.v2.0.clientId" />：</th>
+				<tr  class="d-none">
+					<th style="width:15%;"><@locale code="apps.oauth.v2.0.clientId" /></th>
 					<td style="width:35%;">${model.clientId}
 						<input type="hidden" class="form-control" id="clientId" name="clientId"  title="" value="${model.clientId}"/>
 						
 					</td>
-					<th style="width:15%;"><@locale code="apps.oauth.v2.0.clientSecret" />：</th>
+					<th style="width:15%;"><@locale code="apps.oauth.v2.0.clientSecret" /></th>
 					<td style="width:35%;">
 						<span id="clientSecret_text">${model.clientSecret}</span>
 						<input type="hidden" class="form-control" id="clientSecret" name="clientSecret"  title="" value="${model.clientSecret}"/>
@@ -55,7 +58,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.oauth.scope" />：</th>
+					<th><@locale code="apps.oauth.scope" /></th>
 					<td  colspan="3">
 						<table class="hidetable"  style="width:100%;">
 							<tr>
@@ -74,7 +77,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.oauth.GrantTypes" />：</th>
+					<th><@locale code="apps.oauth.GrantTypes" /></th>
 					<td  colspan="3">
 						<table  class="hidetable"  style="width:100%;">
 							<tr>
@@ -91,26 +94,26 @@
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.oauth.registeredRedirectUris" />：</th>
+					<th><@locale code="apps.oauth.registeredRedirectUris" /></th>
 					<td colspan=3>
 						<textarea  class="form-control"  id="registeredRedirectUris" name="registeredRedirectUris" rows="4" cols="60"></textarea>
 						<b class="orange">*</b><label for="registeredRedirectUris"></label>
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.oauth.accessTokenValiditySeconds" />：</th>
+					<th><@locale code="apps.oauth.accessTokenValiditySeconds" /></th>
 					<td >
 						<input type="text"  class="form-control" id="accessTokenValiditySeconds" name="accessTokenValiditySeconds"  title="" value="180"/>
 						<b class="orange">*</b><label for="accessTokenValiditySeconds"></label>
 					</td>
-					<th><@locale code="apps.oauth.refreshTokenValiditySeconds" />：</th>
+					<th><@locale code="apps.oauth.refreshTokenValiditySeconds" /></th>
 					<td>
 						<input type="text" class="form-control"  id="refreshTokenValiditySeconds" name="refreshTokenValiditySeconds"  title="" value="180"/>
 						<b class="orange">*</b><label for="refreshTokenValiditySeconds"></label>
 					</td>
 				</tr>
 				<tr>
-                    <th>PKCE：</th>
+                    <th>PKCE</th>
                     <td >
                         <select  id="pkce" name="pkce" class="form-control  form-select">
                             <option value="yes"  >
@@ -119,7 +122,7 @@
                                 <@locale code="common.text.no" /></option>
                         </select>
                     </td>
-                    <th><@locale code="apps.oauth.approvalPrompt" />：</th>
+                    <th><@locale code="apps.oauth.approvalPrompt" /></th>
                     <td >
                         <select  id="approvalPrompt" name="approvalPrompt"  class="form-control  form-select" >
                             <option value="force" selected>
@@ -131,10 +134,10 @@
                     
                 </tr>
 				<tr>
-					<td colspan=4><@locale code="apps.oauth.connect.info" /></td>
+					<td colspan=4><h5><@locale code="apps.oauth.connect.info" /></h5></td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.oauth.connect.idTokenSigningAlgorithm" />：</th>
+					<th><@locale code="apps.oauth.connect.idTokenSigningAlgorithm" /></th>
 					<td >
 						<select  id="idTokenSigningAlgorithm" name="idTokenSigningAlgorithm"   class="form-control  form-select" >
 							<option value="none"    selected>No digital signature</option>
@@ -149,7 +152,7 @@
 							<option value="ES512"  >ECDSA using P-512 curve and SHA-512 hash algorithm</option>
 						</select>
 					</td>
-					<th><@locale code="apps.oauth.connect.userInfoSigningAlgorithm" />：</th>
+					<th><@locale code="apps.oauth.connect.userInfoSigningAlgorithm" /></th>
 					<td >
 						<select  id="userInfoSigningAlgorithm" name="userInfoSigningAlgorithm"  class="form-control  form-select" >
 							<option value="none"    selected>No digital signature</option>
@@ -166,13 +169,13 @@
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.oauth.connect.jwksUri" />：</th>
+					<th><@locale code="apps.oauth.connect.jwksUri" /></th>
 					<td colspan =3>
 						<input type="text" class="form-control"  id="jwksUri" name="jwksUri"  title="" value="${model.jwksUri!}"/>
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.oauth.connect.idTokenEncryptedAlgorithm" />：</th>
+					<th><@locale code="apps.oauth.connect.idTokenEncryptedAlgorithm" /></th>
 					<td >
 						<select  id="idTokenEncryptedAlgorithm" name="idTokenEncryptedAlgorithm"  class="form-control  form-select" >
 							<option value="none" selected >No encryption</option>
@@ -187,7 +190,7 @@
 						
 						</select>
 					</td>
-					<th><@locale code="apps.oauth.connect.userInfoEncryptedAlgorithm" />：</th>
+					<th><@locale code="apps.oauth.connect.userInfoEncryptedAlgorithm" /></th>
 					<td >
 						<select  id="userInfoEncryptedAlgorithm" name="userInfoEncryptedAlgorithm" class="form-control  form-select"  >
 							<option value="none" selected >No encryption</option>
@@ -205,7 +208,7 @@
 				</tr>
 				
 				<tr>
-					<th><@locale code="apps.oauth.connect.idTokenEncryptionMethod" />：</th>
+					<th><@locale code="apps.oauth.connect.idTokenEncryptionMethod" /></th>
 					<td >
 						<select  id="idTokenEncryptionMethod" name="idTokenEncryptionMethod"  class="form-control  form-select" >
 							<option value="none" selected>No encryption</option>
@@ -215,7 +218,7 @@
 							<option value="A256GCM" >AES GCM using 256 bit keys</option>
 					</select>
 					</td>
-					<th><@locale code="apps.oauth.connect.userInfoEncryptionMethod" />：</th>
+					<th><@locale code="apps.oauth.connect.userInfoEncryptionMethod" /></th>
 					<td >
 						<select  id="userInfoEncryptionMethod" name="userInfoEncryptionMethod"  class="form-control  form-select" >
 							<option value="none" selected>No encryption</option>
@@ -241,5 +244,8 @@
 				</tbody>
 				</table>	  
 </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

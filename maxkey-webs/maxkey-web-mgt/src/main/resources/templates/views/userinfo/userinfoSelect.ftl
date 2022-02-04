@@ -152,18 +152,20 @@
     <table   class="table table-bordered">
             <tr>
                 <td  width="120px">
-                     <@locale code="userinfo.username"/>:
+                     <@locale code="userinfo.username"/>
                 </td>
                 <td  width="300px">
                     <form id="basic_search_form">
-                        <input  class="form-control"   id="departmentId"  name="departmentId" type="hidden">
-                        <input  class="form-control"  name="username" type="text" >
+                        <div class="input-group" style="vertical-align: middle;">
+                            <input  class="form-control"   id="departmentId"  name="departmentId" type="hidden">
+                            <input  class="form-control"  name="username" type="text" >
+                            <input  class="button btn mr-3 btn-primary"    id="searchBtn" type="button" value="<@locale code="button.text.search"/>">
+                         </div>
                     </form>
                 </td>
                 <td colspan="2"> 
                      <div id="tool_box_right">    
-                         <input  class="button btn mr-3 btn-primary"    id="searchBtn" type="button" value="<@locale code="button.text.search"/>">
-                         <input  class="button btn mr-3 btn-success"    id="winClose" type="button" value="<@locale code="button.text.select" />" >
+                         <input  class="button btn mr-3 btn-primary"    id="winClose" type="button" value="<@locale code="button.text.confirm" />" >
                     </div>
                 </td>
             </tr>

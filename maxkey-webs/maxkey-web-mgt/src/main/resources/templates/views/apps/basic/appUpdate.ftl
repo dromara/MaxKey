@@ -7,36 +7,42 @@
 	<#setting number_format="#">
 </head>
 <body>
-<form id="actionForm_app"  method="post" type="label" autoclose="true"    closeWindow="true"
-			action="<@base/>/apps/basic/update"  
-			forward="<@base/>/apps/list"
-			enctype="multipart/form-data"
-			class="needs-validation" novalidate>		 
-  	        <!-- content -->    
-  	      	<!--table-->
-  	      	<table   class="table table-bordered" >
-				<tbody>
-				<tr>
-					<td ><#include  "../appUpdateCommon.ftl"/></td>
-				</tr>
-				<tr>
-					<td>
-				 			<table width="960"   class="table table-bordered"  >
-								<tbody>
-								<tr>
-									<td  colspan=4>
-										<input class="button btn btn-primary mr-3"  id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
-										<input class="button btn btn-secondary mr-3"  id="backBtn" type="button" value="<@locale code="button.text.close" />"/>		  
-									</td>
-								</tr>
-								
-								</tbody>
-							  </table>
-			  </td>
-				</tr>
-				</tbody>
-				</table>
-    		
-</form>
+<div  class="container">   
+    <div  class="row">
+    <div class="col-md-12"> 
+        <form id="actionForm_app"  method="post" type="label" autoclose="true"    closeWindow="true"
+        			action="<@base/>/apps/basic/update"  
+        			forward="<@base/>/apps/list"
+        			enctype="multipart/form-data"
+        			class="needs-validation" novalidate>		 
+          	        <!-- content -->    
+          	      	<!--table-->
+          	      	<table   class="table table-bordered" >
+        				<tbody>
+        				<tr>
+        					<td ><#include  "../appUpdateCommon.ftl"/></td>
+        				</tr>
+        				<tr>
+        					<td>
+        				 			<table width="960"   class="table table-bordered"  >
+        								<tbody>
+        								<tr>
+        									<td  colspan=4>
+        										<input class="button btn btn-primary mr-3"  id="submitBtn" type="submit" value="<@locale code="button.text.save" />"/>
+        										<input class="button btn btn-secondary mr-3"  id="backBtn" type="button" value="<@locale code="button.text.close" />"/>		  
+        									</td>
+        								</tr>
+        								
+        								</tbody>
+        							  </table>
+        			  </td>
+        				</tr>
+        				</tbody>
+        				</table>
+            		
+        </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

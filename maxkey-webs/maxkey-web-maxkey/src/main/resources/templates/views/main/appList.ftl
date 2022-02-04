@@ -15,35 +15,26 @@
 <body>
 <#include  "../layout/top.ftl"/>
 <#include  "../layout/nav_primary.ftl"/>
-<div class="container">
+<div  id="main"  class="container">
 <#if  Session["current_user"].gridList==0 >
 	<#list appList as app>
 		<#if (app_index)%4==0>
 		<div class="row">
 		</#if>
-			<div class="col-3" style="min-width: 170px;">
-	  				<table  class="none" style="min-width: 170px; min-height: 150px;border-spacing: 0;border-collapse: collapse;">
+			<div class="col-3" style="min-width: 160px;">
+	  				<table  class="none" style="min-width: 160px; min-height: 120px;border-spacing: 0;border-collapse: collapse;">
 	  					<tr><td style="text-align: center;border-spacing: 0;border-collapse: collapse;border: 0px;">
-	  					<#if "Desktop"==app.protocol>
-	  						<a href="javascript:void(0);" title="${app.name}" 
-	  						onclick="window.open('<@base/>/authz/${app.id}');">
-	  							<img src="<@base/>/image/${app.id}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
-	  						</a>
-	  					</#if>
-	  					<#if "Desktop"!=app.protocol>
-	  						<a 
+	  						<a  target="_blank" title="${app.name}"
 	  							<#if "SP"==app.inducer>
 	  								href="${app.loginUrl}"
 	  							</#if>
 	  							<#if "IDP"==app.inducer>
 	  								href="<@base/>/authz/${app.id}"
-	  							</#if>
-	  						 target="_blank" title="${app.name}" >
+	  							</#if>  >
 	  							<img src="<@base/>/image/${app.id}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
-	  						</a>
-	  					</#if>
+	  						</a><br>
+	  						${app.name}
 	  					</td></tr>
-	  					<tr><td style="text-align: center;border-spacing: 0;border-collapse: collapse;border: 0px;">${app.name}</td></tr>
 	  				</table>
 	  		</div>
 		<#if (app_index +1)%4==0>
@@ -74,12 +65,7 @@
 	<tr>
 		<td>${app_index +1 }</td>
 		<td>
-			<#if app.protocol?contains("Desktop")>
-				<a href="javascript:void(0);"  title="${app.name}" 
-				onclick="window.open('<@base/>/authz/${app.id}');">
-					<img src="<@base/>/image/${app.id}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
-				</a>
-			<#else>
+
 				<a 
 					<#if "SP"==app.inducer>
 						href="${app.loginUrl}"
@@ -90,27 +76,19 @@
 					 target="_blank" title="${app.name}" >
 					<img src="<@base/>/image/${app.id}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
 				</a>
-			</#if>
 		</td>
-		<td style="word-wrap:break-word;">${app.name}</td>
+		<td style="word-wrap:break-word;vertical-align: middle;">${app.name}</td>
 		<td>
-			<#if app.protocol ?contains("Desktop")>
-				<a href="javascript:void(0);" title="${app.name}" 
-				onclick="window.open('<@base/>/authz/${app.id}');">
-					<@locale code="button.text.visit"/>
-				</a>
-			<#else>
-				<a 
-					<#if "SP"==app.inducer>
-						href="${app.loginUrl}"
-					</#if>
-					<#if "IDP"==app.inducer>
-						href="<@base/>/authz/${app.id}"
-					</#if>
-					 target="_blank" title="${app.name}" >
-					<@locale code="button.text.visit"/>
-				</a>
-			</#if>
+			<a 
+				<#if "SP"==app.inducer>
+					href="${app.loginUrl}"
+				</#if>
+				<#if "IDP"==app.inducer>
+					href="<@base/>/authz/${app.id}"
+				</#if>
+				 target="_blank" title="${app.name}" >
+				<@locale code="button.text.visit"/>
+			</a>
 		</td>
 	</tr>
 </#list>

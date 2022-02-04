@@ -73,6 +73,9 @@ body{
 	padding: 0 10px
 }
 
+#main{
+	min-height: 450px;
+}
 #mainFrame{
 	margin-top: 0px;
 	margin-left: auto;

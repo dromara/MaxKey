@@ -26,6 +26,9 @@ $(function(){
 </script>
 </head>
 <body>
+<div  class="container">   
+    <div  class="row">
+    <div class="col-md-12"> 
 <form id="actionForm_app"  method="post" type="label" autoclose="true"   closeWindow="true" 
 			action="<@base/>/apps/formbased/add"
 			forward="<@base/>/apps/list"  
@@ -44,7 +47,7 @@ $(function(){
 				<tbody>
 				
 				<tr>
-					<td colspan=4><@locale code="apps.formbased.info"/></td>
+					<td colspan=4><h5><@locale code="apps.formbased.info"/></h5></td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.formbased.redirectUri"/>：</th>
@@ -148,5 +151,8 @@ $(function(){
 
 			
 </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

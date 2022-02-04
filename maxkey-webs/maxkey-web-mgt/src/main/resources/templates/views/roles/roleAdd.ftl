@@ -165,19 +165,19 @@ function showOrgsTree() {
 	<table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
 		<tbody>
 			<tr>
-				<th><@locale code="role.id" />：</th>
+				<th><@locale code="role.id" /></th>
 				<td nowrap>
 					<input type="text" id="id" name="id" class="form-control" title="" value=""  />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="role.name" />：</th>
+				<th><@locale code="role.name" /></th>
 				<td nowrap>
 					<input type="text" id="name" name="name" class="form-control" title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="role.dynamic" />：</th>
+				<th><@locale code="role.dynamic" /></th>
 				<td nowrap>
 					<select id="dynamic" name="dynamic"  class="form-control  form-select">
 						<option value="0" selected ><@locale code="common.text.no" /></option>
@@ -186,20 +186,20 @@ function showOrgsTree() {
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="role.orgidslist" />：</th>
+				<th><@locale code="role.orgidslist" /></th>
 				<td nowrap>
 					<input type="text" id="orgIdsListName" name="orgIdsListName"   readonly  class="form-control" title="" value=""   onclick="showOrgsTree();"/>
 					<input type="hidden" id="orgIdsList" name="orgIdsList"   readonly  class="form-control" title="" value=""   />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="role.filters" />：</th>
+				<th><@locale code="role.filters" /></th>
 				<td nowrap>
 					<textarea id="filters" name="filters" class="form-control"  rows="7" cols="20"></textarea>
 				</td>
 			</tr>
 			<tr>
-                <th><@locale code="common.text.description" />：</th>
+                <th><@locale code="common.text.description" /></th>
                 <td nowrap>
                     <textarea id="description" name="description" class="form-control"  rows="6" cols="20"></textarea>
                 </td>

@@ -27,17 +27,19 @@
 	<div>
 			<table    class="table table-bordered" >
  				<tr>
-		 			<td width="120px"><@locale code="apps.name"/>:</td>
+		 			<td width="120px"><@locale code="apps.name"/></td>
 		 			<td  width="300px" nowrap>
 		 				<form id="basic_search_form">
-			 				<input type="text" class="form-control" name="name" >
-			 				<input type="hidden" class="form-control" name="accountMgmt" value="${accountMgmt}">
+		 				     <div class="input-group" style="vertical-align: middle;">
+			 				    <input type="text" class="form-control" name="name" >
+			 				    <input type="hidden" class="form-control" name="accountMgmt" value="${accountMgmt}">
+			 				    <input class="button btn btn-primary mr-3"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+			 				</div>
 		 				 </form>
 		 			</td>
 		 			<td colspan="2">
-		 				<div id="tool_box_right">    
-		 				    <input class="button btn btn-primary mr-3"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-		 					<input class="button btn btn-success mr-3"   id="selectBtn" type="button" value="<@locale code="button.text.select"/>" />
+		 				<div id="tool_box_right"> 
+		 					<input class="button btn btn-primary mr-3"  id="selectBtn" type="button" value="<@locale code="button.text.confirm"/>" />
 				 		</div>
 		 			</td>
 		 		</tr>

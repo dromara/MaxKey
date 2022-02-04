@@ -308,6 +308,16 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
     vertical-align: middle;
 }
 
+#advanced_search_form  .table td, #advanced_search_form  .table th,.toolbox .table td, .tool_box  .table th{
+    padding: 0.2rem;
+    vertical-align: middle;
+}
+
+#advanced_search_form  .table td, #advanced_search_form  .table th,.toolbox .table td, .tool_box  .table th{
+    padding: 0.2rem;
+    vertical-align: middle;
+}
+
 #tool_box_left {
 	padding-left: 10px;
 	float: left;

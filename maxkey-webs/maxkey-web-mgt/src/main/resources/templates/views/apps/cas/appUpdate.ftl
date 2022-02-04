@@ -37,6 +37,9 @@ $(function(){
 </script>
 </head>
 <body>
+<div  class="container">   
+    <div  class="row">
+    <div class="col-md-12"> 
 <form id="actionForm_app"  method="post" type="label" autoclose="true"  closeWindow="true"
 			action="<@base/>/apps/cas/update"  
 			forward="<@base/>/apps/list"
@@ -54,23 +57,23 @@ $(function(){
 				 			<table width="960"   class="table table-bordered"  >
 								<tbody>
 								<tr>
-									<th colspan=4><@locale code="apps.cas.info"/></th>
+									<th colspan=4><h5><@locale code="apps.cas.info"/></h5></th>
 								</tr>
 								<tr>
-									<th style="width:15%;"><@locale code="apps.cas.service"/>：</th>
+									<th style="width:15%;"><@locale code="apps.cas.service"/></th>
 									<td  colspan=3>
 										<input type="text" class="form-control" id="service" name="service"  title="" value="${model.service}"  required=""   />
 									</td>
 								</tr>
 								<tr>
-									<th style="width:15%;"><@locale code="apps.cas.callbackUrl"/>：</th>
+									<th style="width:15%;"><@locale code="apps.cas.callbackUrl"/></th>
 									<td  colspan=3>
 										<input type="text" class="form-control" id="callbackUrl" name="callbackUrl"  title="" value="${model.callbackUrl}"  required="" />
 							
 									</td>
 								</tr>
 								<tr>
-									<th style="width:15%;"><@locale code="apps.cas.expires"/>：</th>
+									<th style="width:15%;"><@locale code="apps.cas.expires"/></th>
 									<td  colspan=3>
 										<input type="text" class="form-control" id="expires" name="expires"  title="" value="${model.expires}"  required="30"  />
 									</td>
@@ -90,5 +93,8 @@ $(function(){
 				</table>
     		
 </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

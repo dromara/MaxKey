@@ -165,32 +165,34 @@ function showOrgsTree() {
 	<table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
 		<tbody>
 			<tr>
-				<th><@locale code="accounts.strategy.id" />：</th>
+				<th><@locale code="accounts.strategy.id" /></th>
 				<td nowrap>
 					<input type="text" id="id" name="id" class="form-control" title="" value=""  />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="accounts.strategy.name" />：</th>
+				<th><@locale code="accounts.strategy.name" /></th>
 				<td nowrap>
 					<input type="text" id="name" name="name" class="form-control" title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>
-                <th><@locale code="apps.name"/>：</th>
+                <th><@locale code="apps.name"/></th>
                 <td nowrap>
-                    <input class="form-control appId" id="appId" name="appId" value="" type="hidden"  >
-                    <input class="form-control" id="pid" name="pid" value="" type="hidden"  >
-                    <input class="form-control appName"    style="width:80%;float: left;" value=""    id="appName" name="appName" type="text" >
-                    <input class="button btn btn-success mr-3 window" style="float: left;" id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
-                            wurl="<@base/>/apps/select"
-                            wwidth="700"
-                            wheight="500"
-                            target="window">
+                    <div class="input-group mb-3" style="vertical-align: middle;">
+                        <input class="form-control appId" id="appId" name="appId" value="" type="hidden"  >
+                        <input class="form-control" id="pid" name="pid" value="" type="hidden"  >
+                        <input class="form-control appName"    style="width:80%;float: left;" value=""    id="appName" name="appName" type="text" >
+                        <input class="button btn btn-primary mr-3 window" style="float: left;" id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
+                                wurl="<@base/>/apps/select"
+                                wwidth="700"
+                                wheight="540"
+                                target="window">
+                    </div>
                 </td>
             </tr>
 			<tr>
-				<th><@locale code="accounts.strategy.mapping" />：</th>
+				<th><@locale code="accounts.strategy.mapping" /></th>
 				<td nowrap>
 					<select id="mapping" name="mapping" class="form-control form-select"   >
                         <option value="username"  selected >
@@ -215,13 +217,13 @@ function showOrgsTree() {
 				</td>
 			</tr>
 			<tr>
-                <th><@locale code="accounts.strategy.suffixes" />：</th>
+                <th><@locale code="accounts.strategy.suffixes" /></th>
                 <td nowrap>
                     <input type="text" id="suffixes" name="suffixes" class="form-control" title="" value=""   />
                 </td>
             </tr>
             <tr>
-                <th><@locale code="accounts.strategy.createType" />：</th>
+                <th><@locale code="accounts.strategy.createType" /></th>
                 <td nowrap>
                     <select id="createType" name="createType" class="form-control form-select"   >
                         <option value="manual"  selected >
@@ -235,20 +237,20 @@ function showOrgsTree() {
                 </td>
             </tr>
 			<tr>
-				<th><@locale code="accounts.strategy.orgidslist" />：</th>
+				<th><@locale code="accounts.strategy.orgidslist" /></th>
 				<td nowrap>
 					<input type="text" id="orgIdsListName" name="orgIdsListName"   readonly  class="form-control" title="" value=""   onclick="showOrgsTree();"/>
 					<input type="hidden" id="orgIdsList" name="orgIdsList"   readonly  class="form-control" title="" value=""   />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="accounts.strategy.filters" />：</th>
+				<th><@locale code="accounts.strategy.filters" /></th>
 				<td nowrap>
 					<textarea id="filters" name="filters" class="form-control"  rows="3" cols="20"></textarea>
 				</td>
 			</tr>
 			<tr>
-                <th><@locale code="common.text.description" />：</th>
+                <th><@locale code="common.text.description" /></th>
                 <td nowrap>
                     <textarea id="description" name="description" class="form-control"  rows="2" cols="20"></textarea>
                 </td>

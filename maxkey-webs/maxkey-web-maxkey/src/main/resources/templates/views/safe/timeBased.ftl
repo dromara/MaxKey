@@ -7,7 +7,7 @@
 <body>
 <#include  "../layout/top.ftl"/>
 <#include  "../layout/nav_primary.ftl"/>
-<div class="container">
+<div  id="main"  class="container">
 	<div class="row">
 		<div class="col-md-12">
 				<@locale code="login.totp.title" />

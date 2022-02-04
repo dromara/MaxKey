@@ -43,7 +43,7 @@
 									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="institutions.name" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="institutions.name" /></label>
 												<div class="col-sm-9">
 													<input id="id" name="id" type="hidden" value="${model.id!}"/>
 						   							<input  required="" class="form-control" type="text" id="name" name="name"  value="${model.name!}" />
@@ -52,7 +52,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="institutions.fullName" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="institutions.fullName" /></label>
 												<div class="col-sm-9">
 													<input required=""  class="form-control" type="text" id="fullName" name="fullName" value="${model.fullName!}" />
 												</div>
@@ -62,13 +62,13 @@
 									<div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.title" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.title" /></label>
                                                 <div class="col-sm-7">
                                                     <input  required="" class="form-control" type="text" id="title" name="title"  value="${model.title!}" />
                                                     
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <input class="button btn btn-info mr-3 window" type="button" value="<@locale code="common.text.locale"/>" 
+                                                    <input class="button btn btn-primary mr-3 window" type="button" value="<@locale code="common.text.locale"/>" 
                                                         wurl="<@base/>/localization/forward/global.title"
                                                         wwidth="650"
                                                         wheight="200"
@@ -78,12 +78,12 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.consoleTitle" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.consoleTitle" /></label>
                                                 <div class="col-sm-7">
                                                     <input  required="" class="form-control" type="text" id="consoleTitle" name="consoleTitle" value="${model.consoleTitle!}" />
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <input class="button btn btn-info mr-3 window" type="button" value="<@locale code="common.text.locale"/>" 
+                                                    <input class="button btn btn-primary mr-3 window" type="button" value="<@locale code="common.text.locale"/>" 
                                                         wurl="<@base/>/localization/forward/global.consoleTitle"
                                                         wwidth="650"
                                                         wheight="200"
@@ -95,7 +95,7 @@
 									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="institutions.logo" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="institutions.logo" /></label>
 												<div class="col-sm-9">
 													<input  required="" class="form-control" type="text" id="logo" name="logo"  value="${model.logo!}" />
 												</div>
@@ -103,7 +103,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="institutions.domain" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="institutions.domain" /></label>
 												<div class="col-sm-9">
 													<input  required="" class="form-control" type="text" id="domain" name="domain" value="${model.domain!}" />
 												</div>
@@ -113,7 +113,7 @@
 									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="institutions.division" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="institutions.division" /></label>
 												<div class="col-sm-9">
 													<input   class="form-control" type="text" id="division" name="division" value="${model.division!}"/>
 												</div>
@@ -121,7 +121,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3"><@locale code="institutions.contact" />：</label>
+												<label class="col-sm-3"><@locale code="institutions.contact" /></label>
 												<div class="col-sm-9">
 													<input    class="form-control" type="text" id="contact" name="contact"  value="${model.contact!}" />
 												</div>
@@ -131,7 +131,7 @@
 									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
-												<label class="col-sm-3 col-form-label"><@locale code="institutions.phone" />：</label>
+												<label class="col-sm-3 col-form-label"><@locale code="institutions.phone" /></label>
 												<div class="col-sm-9">
 													<input   class="form-control" type="text" id="phone" name="phone" value="${model.phone!}" />
 												</div>
@@ -140,7 +140,7 @@
 										
 										<div class="col-md-6">
 											<div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.email" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.email" /></label>
                                                 <div class="col-sm-9">
                                                     <input   class="form-control" type="text" id="email" name="email" value="${model.email!}" />
                                                 </div>
@@ -151,7 +151,7 @@
 										<div class="col-md-6">
 											<div class="form-group row">
                                                 
-                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.fax" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.fax" /></label>
                                                 <div class="col-sm-9">
                                                     <input   class="form-control" type="text" id="fax" name="fax" value="${model.fax!}" />
                                                 </div>
@@ -159,7 +159,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.postalcode" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.postalcode" /></label>
                                                 <div class="col-sm-9">
                                                     <input   class="form-control" type="text" id="postalCode" name="postalCode"  value="${model.postalCode!}" />
                                                 </div>
@@ -169,7 +169,7 @@
 									<div class="row mb-3">
 										<div class="col-md-6">
 											<div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.country" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.country" /></label>
                                                 <div class="col-sm-9">
                                                     <input   class="form-control" type="text" id="country" name="country" value="${model.country!}" />
                                                 </div>
@@ -178,7 +178,7 @@
 										<div class="col-md-6">
 											<div class="form-group row">
                                                 
-                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.region" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.region" /></label>
                                                 <div class="col-sm-9">
                                                     <input   class="form-control" type="text" id="region" name="region" value="${model.region!}" />
                                                 </div>
@@ -189,7 +189,7 @@
 										<div class="col-md-6">
 											<div class="form-group row">
                                                 
-                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.locality" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.locality" /></label>
                                                 <div class="col-sm-9">
                                                     <input  class="form-control" type="text" id="locality" name="locality" value="${model.locality!}" />
                                                 </div>
@@ -197,7 +197,7 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group row">
-                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.street" />：</label>
+                                                <label class="col-sm-3 col-form-label"><@locale code="institutions.street" /></label>
                                                 <div class="col-sm-9">
                                                     <input   class="form-control" type="text" id="street" name="street" value="${model.street!}" />
                                                 </div>
@@ -208,7 +208,7 @@
 										<div class="col-md-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-2">
-												    <label class="col-form-label"><@locale code="institutions.address" />：</label>
+												    <label class="col-form-label"><@locale code="institutions.address" /></label>
 												</div>
 												<div class="col-sm-10">
 													<input   class="form-control" type="text" id="address" name="address"  value="${model.address!}" />
@@ -220,7 +220,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group row">
                                                 <div class="col-sm-2">
-                                                    <label class="col-form-label"><@locale code="common.text.description" />：</label>
+                                                    <label class="col-form-label"><@locale code="common.text.description" /></label>
                                                 </div>
                                                 <div class="col-sm-10">
                                                     <input   class="form-control" type="text" id="description" name="description"  value="${model.description!}" />

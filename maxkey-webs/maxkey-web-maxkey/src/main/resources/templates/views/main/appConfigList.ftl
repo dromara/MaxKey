@@ -18,7 +18,7 @@
 <body>
 <#include  "../layout/top.ftl"/>
 <#include  "../layout/nav_primary.ftl"/>
-<div class="container">
+<div  id="main"  class="container">
 <table  class="table">
 	<tr>
 		<td>

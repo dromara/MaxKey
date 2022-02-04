@@ -179,19 +179,19 @@ function showOrgsTree() {
 	 <table  border="0" cellpadding="0" cellspacing="0" class="table table-bordered">
 		<tbody>
 		<tr style="display:none1">
-			<th><@locale code="group.id" />：</th>
+			<th><@locale code="group.id" /></th>
 			<td nowrap>
 				<input id="id" type="text" readonly name="id"  class="form-control"   value="${model.id}"/>
 			</td>
 		</tr>
 		<tr>
-			<th><@locale code="group.name" />：</th>
+			<th><@locale code="group.name" /></th>
 			<td nowrap>
 				<input type="text" id="name" name="name" class="form-control" title="" value="${model.name}"  required="" />
 			</td>
 		</tr>
 		<tr>
-			<th><@locale code="group.dynamic" />：</th>
+			<th><@locale code="group.dynamic" /></th>
 			<td nowrap>
 				<select id="dynamic" name="dynamic"  class="form-control  form-select">
 					<option value="0" <#if '0'==model.dynamic>selected</#if> ><@locale code="common.text.no" /></option>
@@ -200,32 +200,32 @@ function showOrgsTree() {
 			</td>
 		</tr>
 		<tr>
-				<th><@locale code="group.resumeTime" />：</th>
+				<th><@locale code="group.resumeTime" /></th>
 				<td nowrap>
 					<input type="text" id="resumeTime" name="resumeTime" class="form-control timepicker" title="" value="${model.resumeTime!}"  required="" />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="group.suspendTime" />：</th>
+				<th><@locale code="group.suspendTime" /></th>
 				<td nowrap>
 					<input type="text" id="suspendTime" name="suspendTime" class="form-control timepicker" title="" value="${model.suspendTime!}"  required="" />
 				</td>
 		</tr>
 		<tr>
-				<th><@locale code="group.orgidslist" />：</th>
+				<th><@locale code="group.orgidslist" /></th>
 				<td nowrap>
 					<input type="text" id="orgIdsListName" name="orgIdsListName"   readonly  class="form-control" title="" value=""   onclick="showOrgsTree();"/>
 					<input type="hidden" id="orgIdsList" name="orgIdsList"   readonly  class="form-control" title="" value="${model.orgIdsList!}"   />
 				</td>
 		</tr>
 		<tr>
-			<th><@locale code="group.filters" />：</th>
+			<th><@locale code="group.filters" /></th>
 			<td nowrap>
 				<textarea id="filters" name="filters" class="form-control"  rows="6" cols="20">${model.filters!}</textarea>
 			</td>
 		</tr>
 		<tr>
-                <th><@locale code="common.text.description" />：</th>
+                <th><@locale code="common.text.description" /></th>
                 <td nowrap>
                 	<textarea id="description" name="description" class="form-control"  rows="4" cols="20">${model.description!}</textarea>
                 </td>

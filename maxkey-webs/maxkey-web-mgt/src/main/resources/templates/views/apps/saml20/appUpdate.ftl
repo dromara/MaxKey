@@ -22,6 +22,9 @@
 	</script>
 </head>
 <body>
+<div  class="container">   
+    <div  class="row">
+    <div class="col-md-12"> 
 <form id="actionForm_app"  method="post" type="label" autoclose="true"   closeWindow="true" 
 			action="<@base/>/apps/saml20/update"
 			forward="<@base/>/apps/list"
@@ -40,16 +43,16 @@
 				<tbody>
 				
 				<tr>
-					<td colspan=4><@locale code="apps.saml.v2.0.info" /></td>
+					<td colspan=4><h5><@locale code="apps.saml.v2.0.info" /></h5></td>
 				</tr>
 				<tr>
-                    <th><@locale code="apps.saml.spAcsUrl" />：</th>
+                    <th><@locale code="apps.saml.spAcsUrl" /></th>
                     <td colspan =3>
                         <input type="text" class="form-control"  id="spAcsUrl" name="spAcsUrl"  title="" value="${model.spAcsUrl!}"   />
                     </td>
                 </tr>
 				<tr>
-					<th><@locale code="apps.saml.entityId" />：</th>
+					<th><@locale code="apps.saml.entityId" /></th>
 					<td >
 						<input type="text" class="form-control"  id="entityId" name="entityId"  title="" value="${model.entityId!}"  />
 					</td>
@@ -59,17 +62,17 @@
                     </td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.saml.issuer" />：</th>
+					<th><@locale code="apps.saml.issuer" /></th>
 					<td >
 						<input type="text" class="form-control"  id="issuer" name="issuer"  title="" value="${model.issuer!}"  />
 					</td>
-					<th><@locale code="apps.saml.audience" />：</th>
+					<th><@locale code="apps.saml.audience" /></th>
                     <td  colspan =2>
                         <input type="text" class="form-control"  id="audience" name="audience"  title="" value="${model.audience!}"   />
                     </td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.saml.signature" />：</th>
+					<th><@locale code="apps.saml.signature" /></th>
 					<td>
 						<select  id="signature" name="signature"  class="form-control  form-select" >
                             <option value="RSAwithSHA1"  <#if 'RSAwithSHA1'==model.signature>selected</#if>>RSAwithSHA1</option>
@@ -91,7 +94,7 @@
                             <option value="HMAC-RIPEMD160"  <#if 'HMAC-RIPEMD160'==model.signature>selected</#if>>HMAC-RIPEMD160</option>
                           </select>
 					</td>
-					<th><@locale code="apps.saml.digestMethod" />：</th>
+					<th><@locale code="apps.saml.digestMethod" /></th>
                     <td>
                         <select  id="digestMethod" name="digestMethod"  class="form-control  form-select" >
                             <option value="MD5"         <#if 'MD5'==model.digestMethod>selected</#if>>MD5</option>
@@ -105,7 +108,7 @@
                     </td>
 				</tr>
 				<tr>
-					<th style="width:15%;"><@locale code="apps.saml.nameidFormat" />：</th>
+					<th style="width:15%;"><@locale code="apps.saml.nameidFormat" /></th>
 					<td style="width:35%;">
 						<select  id="nameidFormat" name="nameidFormat"  class="form-control  form-select" >
 							<option value="persistent"  <#if 'persistent'==model.nameidFormat>selected</#if>>persistent</option>
@@ -118,7 +121,7 @@
 							<option value="custom" <#if 'custom'==model.nameidFormat>selected</#if>>user custom persistent </option>
 						</select>
 					</td>
-					<th style="width:15%;"><@locale code="apps.saml.nameIdConvert" />：</th>
+					<th style="width:15%;"><@locale code="apps.saml.nameIdConvert" /></th>
 					<td style="width:35%;">
 						<select  id="nameIdConvert" name="nameIdConvert"  class="form-control  form-select" >
 							<option value="0"  <#if 0==model.nameIdConvert>selected</#if>>
@@ -131,7 +134,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.saml.binding" />：</th>
+					<th><@locale code="apps.saml.binding" /></th>
 					<td>
 						<select  id="binding" name="binding"  class="form-control  form-select" >
 							<option value="Redirect-Post"  <#if 'Redirect-Post'==model.binding>selected</#if>>Redirect-Post</option>
@@ -143,14 +146,14 @@
 						</select>
 					</td>
 					
-					<th><@locale code="apps.saml.validityInterval" />：</th>
+					<th><@locale code="apps.saml.validityInterval" /></th>
 					<td >
 						<input type="text" class="form-control"  id="validityInterval" name="validityInterval"  title="" value="${model.validityInterval}"/>
 					</td>
 					
 				</tr>
 				<tr>
-					<th><@locale code="apps.saml.fileType" />：</th>
+					<th><@locale code="apps.saml.fileType" /></th>
 					<td>
 						<select  id="fileType" name="fileType"  class="form-control  form-select" >
 							<option value="certificate" selected><@locale code="apps.saml.fileType.certificate" /></option>
@@ -158,7 +161,7 @@
 							<option value="metadata_url" ><@locale code="apps.saml.fileType.metadata.url" /></option>
 						</select>
 					</td>
-					<th><@locale code="apps.saml.metaFile" />：</th>
+					<th><@locale code="apps.saml.metaFile" /></th>
 					<td>
 						<div class="MetaFile" style="float: left;">
 							<img id="metaFileImg"  height="40" width="80" alt="upload certificate or metadata file" src="<@base />/static/images/cert.png">
@@ -171,7 +174,7 @@
 				</tr>
 				
 				<tr>
-					<th><@locale code="apps.saml.encrypted" />：</th>
+					<th><@locale code="apps.saml.encrypted" /></th>
 					<td >
 						<select  id="encrypted" name="encrypted"  class="form-control  form-select" >
 							<option value="0"   <#if 0==model.encrypted>selected</#if>>
@@ -186,15 +189,15 @@
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.saml.certIssuer" />：</th>
+					<th><@locale code="apps.saml.certIssuer" /></th>
 					<td>${model.certIssuer!}
 					</td>
-					<th><@locale code="apps.saml.certExpiration" />：</th>
+					<th><@locale code="apps.saml.certExpiration" /></th>
 					<td>${model.certExpiration!}
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.saml.certSubject" />：</th>
+					<th><@locale code="apps.saml.certSubject" /></th>
 					<td  colspan =3>${model.certSubject!}
 					</td>
 				</tr>
@@ -211,5 +214,8 @@
 				</tbody>
 				</table>  
 </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

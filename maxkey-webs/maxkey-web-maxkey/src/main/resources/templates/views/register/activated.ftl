@@ -14,7 +14,7 @@
   </head>
   
   <body>
-<div class="container">
+<div  id="main"  class="container">
  	 <#if 0 == activate>
 		url expired.
 	  </#if>

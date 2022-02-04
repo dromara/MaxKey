@@ -2,35 +2,35 @@
 <table width="960"   class="table table-bordered" >
    <tbody>
       <tr>
-         <td colspan=4><@locale code="apps.basic.info"/></td>
+         <td colspan=4><h5><@locale code="apps.basic.info"/></h5></td>
       </tr>
       <tr>
-         <th style="width:15%;"><@locale code="apps.id"/>：</th>
+         <th style="width:15%;"><@locale code="apps.id"/></th>
          <td style="width:35%;">
          	<div style="width:100%;font-weight: bold;">${model.id!}</div>
             <input type="hidden" id="id" name="id"  title="" value="${model.id!}"/>
             <input type="hidden" id="status" name="status"  title="" value="${model.status!}"/>
          </td>
-         <th style="width:15%;"><@locale code="apps.secret"/>：</th>
+         <th style="width:15%;"><@locale code="apps.secret"/></th>
          <td style="width:35%;">
          	<input type="text" id="secret" readonly style="width:80%;float: left;font-weight: bold;" class="form-control" name="secret"  title="" value="${model.secret!}"/>
             <input id="generateSecret" type="button"  class="button btn btn-warning mr-2" value="<@locale code="button.text.generate"/>"/>
          </td>
       </tr>
       <tr>
-         <th><@locale code="apps.name"/>：</th>
+         <th><@locale code="apps.name"/></th>
          <td  colspan="3">
             <input type="text" class="form-control" id="name" name="name"  title="" value="${model.name!}"  required="" />
          </td>
       </tr>
       <tr>
-         <th><@locale code="apps.loginUrl"/>：</th>
+         <th><@locale code="apps.loginUrl"/></th>
          <td colspan="3">
             <input type="text" class="form-control" id="loginUrl" name="loginUrl"  title="" value="${model.loginUrl!}"  required="" />
          </td>
       </tr>
       <tr>
-         <th><@locale code="apps.logoutUrl"/>：</th>
+         <th><@locale code="apps.logoutUrl"/></th>
          <td>
          <input type="text" class="form-control" id="logoutUrl" name="logoutUrl"  title="" value="${model.logoutUrl!}" />
          </td>
@@ -44,17 +44,17 @@
          </td>
       </tr>
       <tr>
-         <th><@locale code="apps.protocol"/>：</th>
+         <th><@locale code="apps.protocol"/></th>
          <td>
             <input type="text" class="form-control" id="protocol" name="protocol"  title="" value="${model.protocol!}"/>
          </td>
-         <th><@locale code="apps.category"/>：</th>
+         <th><@locale code="apps.category"/></th>
          <td>
             <input type="text"class="form-control"  id="category" name="category"  title="" value="${model.category!}"/>
          </td>
       </tr>
       <tr>
-         <th><@locale code="apps.icon"/>：</th>
+         <th><@locale code="apps.icon"/></th>
          <td><img id="iconFileImg" height='30' src='<@base/>/image/${model.id!}'/>
          </td>
          <th><@locale code="common.text.sortindex"/></th>
@@ -63,11 +63,11 @@
          </td>
       </tr>
       <tr>
-         <th><@locale code="apps.vendor"/>：</th>
+         <th><@locale code="apps.vendor"/></th>
          <td>
             <input  type="text" class="form-control" id="vendor" name="vendor"  title="" value="${model.vendor!}"/>
          </td>
-         <th><@locale code="apps.vendor.url"/>：</th>
+         <th><@locale code="apps.vendor.url"/></th>
          <td>
             <input type="text" class="form-control" id="vendorUrl" name="vendorUrl"  title="" value="${model.vendorUrl!}"/>
          </td>
@@ -93,14 +93,14 @@
 		 </td>
 	 </tr>
 	 <tr>
-		<th><@locale code="apps.isAdapter" />：</th>
+		<th><@locale code="apps.isAdapter" /></th>
 		<td>
 			<select  id="isAdapter" name="isAdapter"  class="form-control  form-select">
 				<option value="0"  <#if 0==model.isAdapter>selected</#if> ><@locale code="apps.isAdapter.no"/></option>
 				<option value="1"  <#if 1==model.isAdapter>selected</#if> ><@locale code="apps.isAdapter.yes"/></option>
 			</select>
 		</td>
-		<th><@locale code="apps.adapter" />：</th>
+		<th><@locale code="apps.adapter" /></th>
 		<td>
 			<input type="hidden" class="form-control"   id="adapterId" name="adapterId"  title="" value="${model.adapterId!}"/>
 			<input type="text" class="form-control"     id="adapterName" name="adapterName"  title="" value="${model.adapterName!}"  style="width: 80%;float: left;"/>
@@ -115,7 +115,7 @@
 		</td>
 	</tr>
 	 <tr>
-         <th><@locale code="common.text.description"/>：</th>
+         <th><@locale code="common.text.description"/></th>
          <td colspan =3>
             <input  type="text"  class="form-control" id="description" name="description"  title="" value="${model.description!}"/>
          </td>

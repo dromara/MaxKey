@@ -179,19 +179,19 @@ function showOrgsTree() {
 	 <table  border="0" cellpadding="0" cellspacing="0" class="table table-bordered">
 		<tbody>
 		<tr>
-			<th><@locale code="accounts.strategy.id" />：</th>
+			<th><@locale code="accounts.strategy.id" /></th>
 			<td nowrap>
 				<input id="id" type="text" readonly name="id"  class="form-control"   value="${model.id}"/>
 			</td>
 		</tr>
 		<tr>
-			<th><@locale code="accounts.strategy.name" />：</th>
+			<th><@locale code="accounts.strategy.name" /></th>
 			<td nowrap>
 				<input type="text" id="name" name="name" class="form-control" title="" value="${model.name!}"  required="" />
 			</td>
 		</tr>
 		<tr>
-            <th><@locale code="apps.name"/>：</th>
+            <th><@locale code="apps.name"/></th>
             <td nowrap>
                 <input class="form-control appId" id="appId" name="appId" value="${model.appId!}" type="hidden"  >
                 <input class="form-control appName" readonly value="${model.appName!}"    id="appName" name="appName" type="text" >
@@ -199,7 +199,7 @@ function showOrgsTree() {
             </td>
         </tr>
 		<tr>
-                <th><@locale code="accounts.strategy.mapping" />：</th>
+                <th><@locale code="accounts.strategy.mapping" /></th>
                 <td nowrap>
                     <select id="mapping" name="mapping" class="form-control form-select"   >
                         
@@ -226,13 +226,13 @@ function showOrgsTree() {
                 </td>
             </tr>
             <tr>
-                <th><@locale code="accounts.strategy.suffixes" />：</th>
+                <th><@locale code="accounts.strategy.suffixes" /></th>
                 <td nowrap>
                     <input type="text" id="suffixes" name="suffixes" class="form-control" title="" value="${model.suffixes!}" />
                 </td>
             </tr>
             <tr>
-                <th><@locale code="accounts.strategy.createType" />：</th>
+                <th><@locale code="accounts.strategy.createType" /></th>
                 <td nowrap>
                     <select id="createType" name="createType" class="form-control form-select"   >
                         <option value="manual"  <#if model.createType?contains("manual")>selected</#if> >
@@ -246,20 +246,20 @@ function showOrgsTree() {
                 </td>
             </tr>
 		<tr>
-				<th><@locale code="accounts.strategy.orgidslist" />：</th>
+				<th><@locale code="accounts.strategy.orgidslist" /></th>
 				<td nowrap>
 					<input type="text" id="orgIdsListName" name="orgIdsListName"   readonly  class="form-control" title="" value=""   onclick="showOrgsTree();"/>
 					<input type="hidden" id="orgIdsList" name="orgIdsList"   readonly  class="form-control" title="" value="${model.orgIdsList!}"   />
 				</td>
 		</tr>
 		<tr>
-			<th><@locale code="accounts.strategy.filters" />：</th>
+			<th><@locale code="accounts.strategy.filters" /></th>
 			<td nowrap>
 				<textarea id="filters" name="filters" class="form-control"  rows="3" cols="20">${model.filters!}</textarea>
 			</td>
 		</tr>
 		<tr>
-                <th><@locale code="common.text.description" />：</th>
+                <th><@locale code="common.text.description" /></th>
                 <td nowrap>
                 	<textarea id="description" name="description" class="form-control"  rows="2" cols="20">${model.description!}</textarea>
                 </td>

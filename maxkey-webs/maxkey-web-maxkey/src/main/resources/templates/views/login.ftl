@@ -25,7 +25,7 @@
 <div id="top">
 	<#include "layout/nologintop.ftl">
 </div>
-<div class="container">	
+<div id="main" class="container">	
 	<div class="row">
 		<div class="d-none d-sm-block   col-sm-6 col-md-6">
 
@@ -96,10 +96,11 @@
 						<td>
 							
 					      	<table id="otherlogins" width="100%">
+					      	    <!--
 					      		<tr>
 					      			<td colspan="3" align="left"><@locale code="login.text.otherlogins"/>：</td>
 					      		</tr>
-					      		
+					      		 -->
 					      		<#list sspLogin.socialSignOnProviders as ssop>
 					      			<#if (ssop_index)%4==0>
 						      			<tr>

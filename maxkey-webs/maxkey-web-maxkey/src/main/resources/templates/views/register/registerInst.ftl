@@ -9,7 +9,7 @@
 <div id="top">
 	<#include "../layout/nologintop.ftl">
 </div>
-<div class="container">	
+<div  id="main"  class="container">	
 <div class="row">
 <div class="col-md-2"></div>
 <div class="col-md-8">

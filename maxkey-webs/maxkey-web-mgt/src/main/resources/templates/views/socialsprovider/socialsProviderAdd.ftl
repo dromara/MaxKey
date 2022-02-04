@@ -18,49 +18,49 @@
 	<table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
 		<tbody>
 			<tr style="display:none">
-				<th><@locale code="common.text.id" />：</th>
+				<th><@locale code="common.text.id" /></th>
 				<td nowrap>
 					<input type="text" id="id" name="id" class="form-control" title="" value=""  />
 				</td>
 			</tr>
 			<tr>
-                <th><@locale code="socials.provider.icon" />：</th>
+                <th><@locale code="socials.provider.icon" /></th>
                 <td nowrap>
                     <input type="text" id="title" name="icon" class="form-control" title="" value=""  required="" />
                 </td>
             </tr>
             <tr>
-                <th><@locale code="socials.provider.provider" />：</th>
+                <th><@locale code="socials.provider.provider" /></th>
                 <td nowrap>
                     <input type="text" id="provider" name="provider" class="form-control" title="" value=""  required="" />
                 </td>
             </tr>
             <tr>
-                    <th><@locale code="socials.provider.providerName" />：</th>
+                    <th><@locale code="socials.provider.providerName" /></th>
                     <td nowrap>
                         <input type="text" id="providerName" name="providerName" class="form-control" title="" value=""  required="" />
                     </td>
             </tr>
             <tr>
-                    <th><@locale code="socials.provider.clientId" />：</th>
+                    <th><@locale code="socials.provider.clientId" /></th>
                     <td nowrap>
                         <input type="text" id="clientId" name="clientId" class="form-control" title="" value=""  required="" />
                     </td>
             </tr>
             <tr>
-                    <th><@locale code="socials.provider.clientSecret" />：</th>
+                    <th><@locale code="socials.provider.clientSecret" /></th>
                     <td nowrap>
                         <input type="text" id="clientSecret" name="clientSecret" class="form-control" title="" value=""  required="" />
                     </td>
             </tr>
             <tr>
-                    <th><@locale code="socials.provider.agentId" />：</th>
+                    <th><@locale code="socials.provider.agentId" /></th>
                     <td nowrap>
                         <input type="text" id="agentId" name="agentId" class="form-control" title="" value=""  required="" />
                     </td>
             </tr>
             <tr>
-                    <th><@locale code="socials.provider.scanCode" />：</th>
+                    <th><@locale code="socials.provider.scanCode" /></th>
                     <td nowrap>
                         <select  id="hidden" name="scanCode" class="form-control  form-select" >
                             <option value="none" selected><@locale code="socials.provider.scanCode.none"/></option>
@@ -70,14 +70,14 @@
                     </td>
             </tr>
             <tr>
-                    <th><@locale code="common.text.sortindex" />：</th>
+                    <th><@locale code="common.text.sortindex" /></th>
                     <td nowrap>
                         <input type="text" id="sortIndex" name="sortIndex" class="form-control" title="" value=""  required="" />
                     </td>
             </tr>
             
             <tr>
-                    <th><@locale code="socials.provider.hidden" />：</th>
+                    <th><@locale code="socials.provider.hidden" /></th>
                     <td nowrap>
                         <select  id="hidden" name="hidden" class="form-control  form-select" >
                             <option value="true" ><@locale code="common.text.yes"/></option>
@@ -86,7 +86,7 @@
                     </td>
             </tr>
             <tr>
-                    <th><@locale code="common.text.status" />：</th>
+                    <th><@locale code="common.text.status" /></th>
                     <td nowrap>
                         <select  id="status" name="status" class="form-control  form-select" >
                             <option value="1" selected><@locale code="common.text.status.activate"/></option>

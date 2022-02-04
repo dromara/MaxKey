@@ -7,7 +7,7 @@
 <body>
 <#include  "../layout/top.ftl"/>
 <#include  "../layout/nav_primary.ftl"/>
-<div class="container">
+<div  id="main"  class="container">
 	<div id="tool_box">
 		<table  class="table table-bordered">
 			<tr>

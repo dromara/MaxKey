@@ -237,36 +237,39 @@ $('#datagrid').on('click-row.bs.table', function (row, element, field) {
 			<div class="col-12 grid-margin">
 				<div class="card">
 					<div class="card-body">
-		
+		<div id="tool_box">
 			<table  class="table table-bordered">
  				<tr>
-		 			<td style="width:80px;"><@locale code="role.name"/>:</td>
+		 			<td style="width:80px;"><@locale code="role.name"/></td>
 		 			<td style="width:350px;">
 		 				<form id="basic_search_form">
-                            <input class="form-control"    style="width:200px;float: left;" value=""    id="name" name="name" type="text" >
+		 				     <div class="input-group" style="vertical-align: middle;">
+                                <input class="form-control"    value=""    id="name" name="name" type="text" >
                             
-			 				<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-				 			
+			 				    <input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+				 			</div>
 					 	</form>
 		 			</td>
-		 			<td style="width:120px;"><@locale code="apps.name"/>:</td>
+		 			<td style="width:120px;"><@locale code="apps.name"/></td>
                     <td style="width:500px;">
                         <form id="resources_search_form">
-                            <input class="form-control appId" id="appId" name="appId" value="" type="hidden"  >
-                            <input class="form-control" id="pid" name="pid" value="" type="hidden"  >
-                            <input class="form-control appName"    style="width:200px;float: left;" value=""    id="appName" name="appName" type="text" >
-                            <input class="button btn btn-success mr-3 window" style="float: left;" id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
-                                    wurl="<@base/>/apps/select"
-                                    wwidth="700"
-                                    wheight="500"
-                                    target="window">
-                            <input  class="button btn btn-primary mr-3"    id="changTreeBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-                           
+                            <div class="input-group" style="vertical-align: middle;">
+                                <input class="form-control appId" id="appId" name="appId" value="" type="hidden"  >
+                                <input class="form-control" id="pid" name="pid" value="" type="hidden"  >
+                                <input class="form-control appName"     value=""    id="appName" name="appName" type="text" >
+                                <input class="button btn btn-primary mr-3 window"  id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
+                                        wurl="<@base/>/apps/select"
+                                        wwidth="700"
+                                        wheight="500"
+                                        target="window">
+                            
+                                <input  class="button btn btn-primary mr-3"    id="changTreeBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+                           </div>
                         </form>
                     </td>
 		 			<td >
 		 				<div id="tool_box_right" >
-					 	     <input class="button btn btn-success mr-3 "  id="savePermBtn" type="button" value="<@locale code="button.text.save"/>"/>
+					 	     <input class="button btn btn-primary mr-3 "  id="savePermBtn" type="button" value="<@locale code="button.text.save"/>"/>
 						</div>
 		 			</td>
 		 		</tr>
@@ -276,7 +279,7 @@ $('#datagrid').on('click-row.bs.table', function (row, element, field) {
                 
             </form>
         </div>
-        
+        </div>
        <table class="table table-bordered"   width="100%" >
        <tr>
           <td valign="top"  class="td_1" style="vertical-align: top;width:450px;">

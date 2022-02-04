@@ -45,12 +45,12 @@
 			 <table id="div_table_switch_basic" width="980" class="table table-bordered" >
 	<tbody>				
 	<tr>
-		<td style="width:15%;"><@locale code="userinfo.username" />：</td>
+		<td style="width:15%;"><@locale code="userinfo.username" /></td>
 		<td style="width:35%;">
 			<input type="hidden" id="id" name="id" value="${model.id!""}"/>
 			<input  class="form-control"  type="text" id="username" name="username"  title="" value="${model.username!""}"/>
 		</td>
-		<td style="width:15%;"><@locale code="userinfo.status" />：</td>
+		<td style="width:15%;"><@locale code="userinfo.status" /></td>
 		<td style="width:35%;">
 			<select name="status"  id="status" class="form-control  form-select" >
 						<option value="1"   <#if 1==model.status>selected</#if>><@locale code="userinfo.status.active" /></option>
@@ -61,7 +61,7 @@
 		</td>
 	</tr>
 	<tr>
-			<td style="width:15%;"><@locale code="userinfo.userType" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.userType" /></td>
 			<td style="width:35%;">
 				<select name="userType"   class="form-control  form-select" >
 						<option value="EMPLOYEE"  	<#if 'EMPLOYEE'==model.userType>selected</#if> ><@locale code="userinfo.userType.employee" /></option>
@@ -75,7 +75,7 @@
 						<option value="TEMP"  		<#if 'TEMP'==model.userType>selected</#if>><@locale code="userinfo.userType.temp" /></option>
 				</select>
 			</td>
-			<td><@locale code="userinfo.userstate" />：</td>
+			<td><@locale code="userinfo.userstate" /></td>
 			<td style="width:35%;">
 				<select name="userState"   class="form-control  form-select" >
 						<option value="RESIDENT"  	<#if 'RESIDENT'==model.userState>selected</#if> ><@locale code="userinfo.userstate.resident" /></option>
@@ -87,11 +87,11 @@
 			
 	</tr>
 		<tr>
-			<td style="width:15%;"><@locale code="userinfo.employeeNumber" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.employeeNumber" /></td>
 			<td style="width:35%;">
 				<input class="form-control"  type="text" id="employeeNumber" name="employeeNumber"  title="" value="${model.employeeNumber!""!""}"/>
 			</td>
-			<td><@locale code="userinfo.windowsAccount" />：</td>
+			<td><@locale code="userinfo.windowsAccount" /></td>
 			<td style="width:35%;">
 				<input class="form-control"  type="text" id="windowsAccount" name="windowsAccount"  title="" value="${model.windowsAccount!""}"/>
 			</td>
@@ -103,48 +103,48 @@
 		
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.displayName" />：</td>
+		<td><@locale code="userinfo.displayName" /></td>
 		<td>
 			<input class="form-control"  type="text" id="displayName" name="displayName"  title="" value="${model.displayName!""}"/>
 		</td>
-		<td rowspan="3"><@locale code="userinfo.picture" />：</td>
+		<td rowspan="3"><@locale code="userinfo.picture" /></td>
 		<td rowspan="3">
 			<img id="picture" width="150px" height="150px" src="<@base/>/static/images/uploadimage.jpg" />
 			<input type="file" id="pictureFile" name="pictureFile" style="display:none" />
 					</td>
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.familyName" />：</td>
+		<td><@locale code="userinfo.familyName" /></td>
 		<td>
 			<input class="form-control"  type="text" id="familyName" name="familyName"  title="" value="${model.familyName!""}"/>
 		</td>
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.givenName" />：</td>
+		<td><@locale code="userinfo.givenName" /></td>
 		<td>
 			<input class="form-control"  type="text" id="givenName" name="givenName"  title="" value="${model.givenName!""}"/>
 		</td>
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.middleName" />：</td>
+		<td><@locale code="userinfo.middleName" /></td>
 		<td>
 			<input class="form-control"  type="text" id="middleName" name="middleName"  title="" value="${model.middleName!""}"/>
 		</td>
-		<td><@locale code="userinfo.nickName" />：</td>
+		<td><@locale code="userinfo.nickName" /></td>
 		<td>
 			<input class="form-control"  type="text" id="nickName" name="nickName"  title="" value="${model.nickName!""}"/>
 		</td>
 		
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.gender" />：</td>
+		<td><@locale code="userinfo.gender" /></td>
 		<td>
 			<select name="gender"   class="form-control  form-select" >
 					<option value="1"  <#if 1==model.gender>selected</#if> ><@locale code="userinfo.gender.female" /></option>
 					<option value="2"  <#if 2==model.gender>selected</#if> ><@locale code="userinfo.gender.male" /></option>
 			</select>
 		</td>
-		<td><@locale code="userinfo.birthDate" />：</td>
+		<td><@locale code="userinfo.birthDate" /></td>
 		<td>
 			<input class="form-control"  type="text" id="birthDate" name="birthDate"  title="" value="${model.birthDate!""}"/>
 		</td>
@@ -156,7 +156,7 @@
 		
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.preferredLanguage" />：</td>
+		<td><@locale code="userinfo.preferredLanguage" /></td>
 		<td>
 			<select class="form-control  form-select"  name="preferredLanguage" id="preferredLanguage">
 				<option value="en_US"  <#if 'en_US'==model.preferredLanguage>selected</#if>  >English</option>
@@ -176,7 +176,7 @@
 				<option value="ru"     <#if 'ru'==model.preferredLanguage>selected</#if>  >Russian</option>
 			</select>
 		</td>
-		<td><@locale code="userinfo.timeZone" />：</td>
+		<td><@locale code="userinfo.timeZone" /></td>
 		<td nowrap >
 			<select class="form-control  form-select"  id="timeZone" name="timeZone" tabindex="61">
 				<option value="Pacific/Kiritimati"   <#if 'Pacific/Kiritimati'==model.timeZone>selected</#if>>(GMT+14:00) Line Islands Time (Pacific/Kiritimati)</option>
@@ -286,11 +286,11 @@
  <table  class="table table-bordered"  style="display:none" id="div_table_switch_company" width="980">
 	<tbody>				
 		<tr>
-			<td style="width:15%;"><@locale code="userinfo.organization" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.organization" /></td>
 			<td style="width:35%;">
 				<input class="form-control"  type="text" id="organization" name="organization"  title="" value="${model.organization!""}"/>
 			</td>
-			<td style="width:15%;"><@locale code="userinfo.division" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.division" /></td>
 			<td style="width:35%;">
 				<input class="form-control"  type="text" id="division" name="division"  title="" value="${model.division!""}"/>
 			</td>
@@ -298,46 +298,46 @@
 		</tr>
 		
 		<tr>
-			<td><@locale code="userinfo.department" />：</td>
+			<td><@locale code="userinfo.department" /></td>
 			<td>
 				<input class="form-control"  type="hidden" id="departmentId" name="departmentId"  title="" value="${model.departmentId!""}"/>
 				<input class="form-control"  type="text" style="width:70%"  id="department" name="department"  title="" value="${model.department!""}"/>
 				<s:Dialog text="button.text.select" title="department" url="/orgs/orgsSelect/deptId/department" width="300" height="400" />
 			</td>
-			<td><@locale code="userinfo.costCenter" />：</td>
+			<td><@locale code="userinfo.costCenter" /></td>
 			<td>
 				<input class="form-control"  type="text" id="costCenter" name="costCenter"  title="" value="${model.costCenter!""}"/>
 			</td>
 			
 		</tr>
 		<tr>
-			<td><@locale code="userinfo.jobTitle" />：</td>
+			<td><@locale code="userinfo.jobTitle" /></td>
 			<td>
 				<input class="form-control"  type="text" id="jobTitle" name="jobTitle"  title="" value="${model.jobTitle!""}"/>
 			</td>
-			<td><@locale code="userinfo.jobLevel" />：</td>
+			<td><@locale code="userinfo.jobLevel" /></td>
 			<td>
 				<input class="form-control"  type="text" id="jobLevel" name="jobLevel"  title="" value="${model.jobLevel!""}"/>
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="userinfo.manager" />：</td>
+			<td><@locale code="userinfo.manager" /></td>
 			<td>
 				<input class="form-control"  type="hidden" id="managerId" name="managerId"  title="" value="${model.managerId!""}"/>
 				<input class="form-control"  type="text" id="manager" name="manager"  title="" value="${model.manager!""}"/>
 			</td>
-			<td><@locale code="userinfo.assistant" />：</td>
+			<td><@locale code="userinfo.assistant" /></td>
 			<td>
 				<input class="form-control"  type="hidden" id="assistantId" name="assistantId"  title="" value="${model.assistantId!""}"/>
 				<input class="form-control"   type="text" id="assistant" name="assistant"  title="" value="${model.assistant!""}"/>
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="userinfo.entryDate" />：</td>
+			<td><@locale code="userinfo.entryDate" /></td>
 			<td>
 				<input class="form-control"  type="text" id="entryDate" name="entryDate"  title="" value="${model.entryDate!""}"/>
 			</td>
-			<td><@locale code="userinfo.quitDate" />：</td>
+			<td><@locale code="userinfo.quitDate" /></td>
 			<td>
 				<input class="form-control"   type="text" id="quitDate" name="quitDate"  title="" value="${model.quitDate!""}"/>
 			</td>
@@ -348,43 +348,43 @@
 			
 		</tr>
 		<tr>
-			<td><@locale code="userinfo.workCountry" />：</td>
+			<td><@locale code="userinfo.workCountry" /></td>
 			<td nowrap >
 				<input class="form-control"   type="text" id="workCountry" name="workCountry"  title="" value="${model.workCountry!""}"/>
 			</td>
-			<td><@locale code="userinfo.workRegion" />：</td>
+			<td><@locale code="userinfo.workRegion" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workRegion" name="workRegion"  title="" value="${model.workRegion!""}"/>
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="userinfo.workLocality" />：</td>
+			<td><@locale code="userinfo.workLocality" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workLocality" name="workLocality"  title="" value="${model.workLocality!""}"/>
 			</td>
-			<td><@locale code="userinfo.workStreetAddress" />：</td>
+			<td><@locale code="userinfo.workStreetAddress" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workStreetAddress" name="workStreetAddress"  title="" value="${model.workStreetAddress!""}"/>
 			</td>
 		</tr>
 		<tr>
 			
-			<td><@locale code="userinfo.workPostalCode" />：</td>
+			<td><@locale code="userinfo.workPostalCode" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workPostalCode" name="workPostalCode"  title="" value="${model.workPostalCode!""}"/>
 			</td>
-			<td><@locale code="userinfo.workFax" />：</td>
+			<td><@locale code="userinfo.workFax" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workFax" name="workFax"  title="" value="${model.workFax!""}"/>
 			</td>
 		</tr>
 
 		<tr>
-			<td><@locale code="userinfo.workPhoneNumber" />：</td>
+			<td><@locale code="userinfo.workPhoneNumber" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workPhoneNumber" name="workPhoneNumber"  title="" value="${model.workPhoneNumber!""}"/>
 			</td>
-			<td><@locale code="userinfo.workEmail" />：</td>
+			<td><@locale code="userinfo.workEmail" /></td>
 			<td>
 				<input class="form-control"  type="text" id="workEmail" name="workEmail"  title="" value="${model.workEmail!""}"/>
 			</td>
@@ -399,7 +399,7 @@
 <table  class="table table-bordered"  style="display:none" id="div_table_switch_home" width="980">
 	<tbody>				
 		<tr>
-			<td style="width:15%;"><@locale code="userinfo.idtype" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.idtype" /></td>
 			<td style="width:35%;">
 				<select name="idType"   class="form-control  form-select" >
 					<option value="0"  <#if 0==model.idType>selected</#if> ><@locale code="userinfo.idtype.unknown" /></option>
@@ -410,7 +410,7 @@
 				</select>
 			</td>
 			
-			<td style="width:15%;"><@locale code="userinfo.idCardNo" />：</td>
+			<td style="width:15%;"><@locale code="userinfo.idCardNo" /></td>
 			<td style="width:35%;">
 				<input class="form-control"  type="text" id="idCardNo" name="idCardNo"  title="" value="${model.idCardNo!""}"/>
 
@@ -418,7 +418,7 @@
 		</tr>
 		<tr>
 			
-			<td><@locale code="userinfo.married" />：</td>
+			<td><@locale code="userinfo.married" /></td>
 			<td>
 				<select name="married"  class="form-control  form-select" >
 					<option value="0"  <#if 0==model.married>selected</#if> ><@locale code="userinfo.married.unknown" /></option>
@@ -428,7 +428,7 @@
 					<option value="4"  <#if 4==model.married>selected</#if> ><@locale code="userinfo.married.widowed" /></option>
 				</select>
 			</td>
-			<td><@locale code="userinfo.startWorkDate" />：</td>
+			<td><@locale code="userinfo.startWorkDate" /></td>
 			<td>
 				<input class="form-control"  type="text" id="startWorkDate" name="startWorkDate"  title="" value="${model.startWorkDate!""}"/>
 			</td>
@@ -440,44 +440,44 @@
 		</tr>
 		
 		<tr>
-			<td><@locale code="userinfo.homeCountry" />：</td>
+			<td><@locale code="userinfo.homeCountry" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homeCountry" name="homeCountry"  title="" value="${model.homeCountry!""}"/>
 			</td>
-			<td><@locale code="userinfo.homeRegion" />：</td>
+			<td><@locale code="userinfo.homeRegion" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homeRegion" name="homeRegion"  title="" value="${model.homeRegion!""}"/>
 			</td>
 		</tr>
 		<tr>
 			
-			<td><@locale code="userinfo.homeLocality" />：</td>
+			<td><@locale code="userinfo.homeLocality" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homeLocality" name="homeLocality"  title="" value="${model.homeLocality!""}"/>
 			</td>
-			<td><@locale code="userinfo.homeStreetAddress" />：</td>
+			<td><@locale code="userinfo.homeStreetAddress" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homeStreetAddress" name="homeStreetAddress"  title="" value="${model.homeStreetAddress!""}"/>
 			</td>
 		</tr>
 		<tr>
 			
-			<td><@locale code="userinfo.homePostalCode" />：</td>
+			<td><@locale code="userinfo.homePostalCode" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homePostalCode" name="homePostalCode"  title="" value="${model.homePostalCode!""}"/>
 			</td>
-			<td><@locale code="userinfo.homeFax" />：</td>
+			<td><@locale code="userinfo.homeFax" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homeFax" name="homeFax"  title="" value="${model.homeFax!""}"/>
 			</td>
 		</tr>
 		
 		<tr>
-			<td><@locale code="userinfo.homePhoneNumber" />：</td>
+			<td><@locale code="userinfo.homePhoneNumber" /></td>
 			<td>
 				<input class="form-control"  type="text" id="homePhoneNumber" name="homePhoneNumber"  title="" value="${model.homePhoneNumber!""}"/>
 			</td>
-			<td><@locale code="userinfo.homeEmail" />：</td>
+			<td><@locale code="userinfo.homeEmail" /></td>
 			<td >
 				<input class="form-control"  type="text" id="homeEmail" name="homeEmail"  title="" value="${model.homeEmail!""}"/>
 			</td>
@@ -488,11 +488,11 @@
 			
 		</tr>
 				<tr>
-					<td><@locale code="userinfo.website" />：</td>
+					<td><@locale code="userinfo.website" /></td>
 					<td>
 						<input  class="form-control"   type="text" id="webSite" name="webSite"  title="" value="${model.webSite!""}"/>
 					</td>
-					<td><@locale code="userinfo.ims" />：</td>
+					<td><@locale code="userinfo.ims" /></td>
 					<td >
 						<input class="form-control"  type="text" id="defineIm" name="defineIm"  title="" value="${model.defineIm!""}"/>
 					</td>

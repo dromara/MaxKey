@@ -173,29 +173,31 @@ $(function () {
 		<table   class="table table-bordered">
 			<tr>
 				<td  width="120px">
-			 		 <@locale code="org.name"/>:
+			 		 <@locale code="org.name"/>
 				</td>
 				<td  width="375px">
 					<form id="basic_search_form">
-				 			<input  class="form-control"  name="name" type="text" style ="width:150px;float:left;">
-				 			<input id="pId"  class="form-control"  name="parentId" type="hidden" style ="width:150px;float:left;">
+					   <div class="input-group" style="float: left;vertical-align: middle;">
+				 			<input  class="form-control"  name="name" type="text" >
+				 			<input id="pId"  class="form-control"  name="parentId" type="hidden" >
 				 			<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-				 			<!--<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">-->
-					 	</form>
+				 			<!--<input  class="button btn btn-primary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">-->
+					   </div>
+					</form>
 				</td>
 				<td colspan="2"> 
 					 <div id="tool_box_right">	
-					 	<input class="button btn btn-success mr-3 window" id="usersImportBtn" type="button" 
+					 	<input class="button btn btn-primary mr-3 window" id="usersImportBtn" type="button" 
 						 		value="<@locale code="button.text.import"/>" 
 						 		    wurl="<@base/>/orgs/import" wwidth="400px" wheight="250px" />
 						 		        
-						 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
+						 <input class="button btn btn-primary mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/orgs/forwardAdd"
 						 		    wwidth="620"
 						 		    wheight="600"
 					 		    	target="window">	    	
 					 		    	
-					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
+					 	<input class="button btn btn-primary mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
 					 				wurl="<@base/>/orgs/forwardUpdate"
 					 				wwidth="620"
 						 		    wheight="600"

@@ -26,6 +26,9 @@ $(function(){
 </script>
 </head>
 <body>
+<div  class="container">   
+    <div  class="row">
+    <div class="col-md-12"> 
 <form id="actionForm_app"  method="post" type="label" autoclose="true"    closeWindow="true"
    action="<@base/>/apps/extendapi/add"  
    forward="<@base/>/apps/list"
@@ -113,5 +116,8 @@ $(function(){
 				</tbody>
 				</table>  
 </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

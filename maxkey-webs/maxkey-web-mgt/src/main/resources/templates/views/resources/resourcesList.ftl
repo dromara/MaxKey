@@ -168,35 +168,38 @@ $(function () {
 			<div class="col-12 grid-margin">
 				<div class="card">
 					<div class="card-body">
-		
+		<div id="tool_box">
 			<table  class="table table-bordered">
  				<tr>
-		 			<td width="120px"><@locale code="apps.name"/>:</td>
+		 			<td width="120px"><@locale code="apps.name"/></td>
 		 			<td width="450px">
 		 				<form id="basic_search_form">
-			 				<input class="form-control appId" id="appId" name="appId" value="" type="hidden"  >
-			 				<input class="form-control" id="parentId" name="parentId" value="" type="hidden"  >
-                            <input class="form-control appName"    style="width:200px;float: left;" value=""    id="appName" name="appName" type="text" >
-                            <input class="button btn btn-success mr-3 window" style="float: left;" id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
-                                    wurl="<@base/>/apps/select"
-                                    wwidth="700"
-                                    wheight="500"
-                                    target="window">
-			 				<input  class="button btn btn-primary mr-3"    id="changTreeBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-				 			<!--<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
-					 		-->
-					 		<input style="display:none"  class="button btn btn-primary mr-3"    id="searchBtn" type="button"/>
+		 				    <div class="input-group" style="vertical-align: middle;"> 
+    			 				<input class="form-control appId" id="appId" name="appId" value="" type="hidden"  >
+    			 				<input class="form-control" id="parentId" name="parentId" value="" type="hidden"  >
+                                <input class="form-control appName"    value=""    id="appName" name="appName" type="text" >
+                                <input class="button btn btn-primary mr-3 window" id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
+                                        wurl="<@base/>/apps/select"
+                                        wwidth="700"
+                                        wheight="500"
+                                        target="window">
+                            
+    			 				<input  class="button btn btn-primary mr-3"    id="changTreeBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+    				 			<!--<input  class="button btn btn-primary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+    					 		-->
+    					 		<input style="display:none"  class="button btn btn-primary mr-3"    id="searchBtn" type="button"/>
+    					 	</div>
 					 	</form>
 		 			</td>
 		 			<td colspan="2">
 		 				<div id="tool_box_right" >
-		 					 <input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
+		 					 <input class="button btn btn-primary mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/resources/forwardAdd"
 						 		    wwidth="500"
 						 		    wheight="550"
 					 		    	target="window"/>	    	
 					 		    	
-					 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
+					 	<input class="button btn btn-primary mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
 					 				wurl="<@base/>/resources/forwardUpdate"
 					 				wwidth="500"
 						 		    wheight="550"
@@ -208,7 +211,7 @@ $(function () {
 		 			</td>
 		 		</tr>
 		 	</table>
-	   
+	   </div>
             <div id="advanced_search">
                 <form id="advanced_search_form">
                     

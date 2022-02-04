@@ -46,14 +46,16 @@
 		<table   class="table table-bordered">
 			<tr>
 				<td  width="120px">
-			 		 <@locale code="userinfo.username"/>:
+			 		 <@locale code="userinfo.username"/>
 				</td>
 				<td  width="375px">
 					<form id="basic_search_form">
-				 			<input  class="form-control"  name="username" type="text" style ="width:150px;float:left;">
+					   <div class="input-group " style="vertical-align: middle;">
+				 			<input  class="form-control"  name="username" type="text" >
 				 			<input  class="button btn btn-primary mr-3"    id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
-				 			<input  class="button btn btn-secondary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
-					 	</form>
+				 			<input  class="button btn btn-primary"  id="advancedSearchExpandBtn" type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+					   </div>
+					 </form>
 				</td>
 				<td colspan="2"> 
 					 <div id="tool_box_right">

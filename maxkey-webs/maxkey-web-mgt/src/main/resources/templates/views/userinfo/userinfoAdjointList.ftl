@@ -22,11 +22,11 @@
 </head>
 <body>
  <div style="float: right;">
- 	<input class="button btn btn-success mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
+ 	<input class="button btn btn-primary mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 	 		    wurl="<@base/>/useradjoint/forwardAdd/${userId!}"
  		    	target="forward">	    	
  		    	
- 	<input class="button btn btn-info mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
+ 	<input class="button btn btn-primary mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
  				wurl="<@base/>/useradjoint/forwardUpdate"
  		    	target="forward"> 
  	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"

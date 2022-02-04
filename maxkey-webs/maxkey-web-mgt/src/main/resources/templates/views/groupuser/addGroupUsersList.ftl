@@ -51,18 +51,20 @@
 </div>
 
 	<div id="tool_box">
-	 		<table   class="datatable">
+	 		<table   class="table table-bordered">
  				<tr>
-		 			<td width="120px"><@locale code="userinfo.username"/>:</td>
-		 			<td width="374px">
+		 			<td width="120px"><@locale code="userinfo.username"/></td>
+		 			<td width="300px">
 		 				<form id="basic_search_form">
-				 			<input class="form-control" type="text" name="username" style ="width:150px;float:left;">
-				 			<input class="button btn btn-primary mr-3" id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+		 				     <div class="input-group" style="vertical-align: middle;">  
+				 			    <input class="form-control" type="text" name="username">
+				 			    <input class="button btn btn-primary mr-3" id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+				 		     </div>
 				 		</form>
 		 			</td>
 				 	<td colspan="2"> 
-					 	<div >
-							<input class="button btn btn-success mr-3"   id="insertGroupUserBtn" type="button" value="<@locale code="button.text.add"/>">
+					 	<div id="tool_box_right">
+							<input class="button btn btn-primary mr-3"   id="insertGroupUserBtn" type="button" value="<@locale code="button.text.confirm"/>">
 					 	</div>
 				 	</td>
 				</tr>
