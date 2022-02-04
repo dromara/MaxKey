@@ -18,25 +18,25 @@
 	 <table  border="0" cellpadding="0" cellspacing="0" class="table table-bordered">
 		<tbody>
 		<tr>
-			<th><@locale code="common.text.id" />：</th>
+			<th><@locale code="common.text.id" /></th>
 			<td nowrap>
 				<input id="id" type="text" readonly name="id"  class="form-control"   value="${model.id}"/>
 			</td>
 		</tr>
 		<tr>
-			<th><@locale code="apps.adapter.name" />：</th>
+			<th><@locale code="apps.adapter.name" /></th>
 			<td nowrap>
 				<input type="text" id="name" name="name" class="form-control" title="" value="${model.name!}"  required="" />
 			</td>
 		</tr>
 		<tr>
-				<th><@locale code="apps.adapter.protocol" />：</th>
+				<th><@locale code="apps.adapter.protocol" /></th>
 				<td nowrap>
 					<input type="text" readonly id="protocol" name="protocol" class="form-control" title="" value="${model.protocol!}"  required="" />
 				</td>
 		</tr>
 		<tr>
-				<th><@locale code="apps.adapter.adapter" />：</th>
+				<th><@locale code="apps.adapter.adapter" /></th>
 				<td nowrap>
 					<input type="text" id="adapter" name="adapter" class="form-control" title="" value="${model.adapter!}"  required="" />
 				</td>
@@ -48,7 +48,7 @@
 	         	</td>
 	      </tr>
 		<tr>
-                <th><@locale code="common.text.description" />：</th>
+                <th><@locale code="common.text.description" /></th>
                 <td nowrap>
                 	<textarea id="description" name="description" class="form-control"  rows="2" cols="20">${model.description!}</textarea>
                 </td>

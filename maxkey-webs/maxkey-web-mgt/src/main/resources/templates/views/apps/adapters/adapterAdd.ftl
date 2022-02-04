@@ -18,19 +18,19 @@
 	<table border="0" cellpadding="0" cellspacing="0" class="table table-bordered" >
 		<tbody>
 			<tr>
-				<th><@locale code="common.text.id" />：</th>
+				<th><@locale code="common.text.id" /></th>
 				<td nowrap>
 					<input type="text" id="id" name="id" class="form-control" title="" value=""  />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="apps.adapter.name" />：</th>
+				<th><@locale code="apps.adapter.name" /></th>
 				<td nowrap>
 					<input type="text" id="name" name="name" class="form-control" title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="apps.adapter.protocol" />：</th>
+				<th><@locale code="apps.adapter.protocol" /></th>
 				<td nowrap>
 					<select name="protocol" class="form-control  form-select">
 	 					<option value=""  selected>Select</option>
@@ -45,7 +45,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="apps.adapter.adapter" />：</th>
+				<th><@locale code="apps.adapter.adapter" /></th>
 				<td nowrap>
 					<input type="text" id="adapter" name="adapter" class="form-control" title="" value=""  required="" />
 				</td>
@@ -57,7 +57,7 @@
 	         	</td>
 	      	</tr>
 			<tr>
-                <th><@locale code="common.text.description" />：</th>
+                <th><@locale code="common.text.description" /></th>
                 <td nowrap>
                     <textarea id="description" name="description" class="form-control"  rows="2" cols="20"></textarea>
                 </td>

@@ -26,19 +26,21 @@
 </head>
 <body>
 	<div id="tool_box">
-	 		<table   class="datatable">
+	 		<table   class="table table-bordered">
  				<tr>
-		 			<td width="120px"><@locale code="apps.adapter.name"/>:</td>
-		 			<td width="374px">
+		 			<td width="120px"><@locale code="apps.adapter.name"/></td>
+		 			<td width="300px">
 		 				<form id="basic_search_form">
-				 			<input class="form-control" type="text" name="name" style ="width:150px;float: left;">
-				 			<input class="form-control" type="hidden" name="protocol" style ="width:150px;float: left;" value="${protocol!}">
-				 			<input class="button btn btn-success mr-3"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+		 				     <div class="input-group" style="vertical-align: middle;">  
+				 			    <input class="form-control" type="text" name="name">
+				 			    <input class="form-control" type="hidden" name="protocol" style ="width:150px;float: left;" value="${protocol!}">
+				 			    <input class="button btn btn-primary mr-3"  id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
+				 		     </div>
 				 		</form>
 		 			</td>
 				 	<td colspan="2"> 
 					 	<div id="tool_box_right" style="width: auto;">
-							<input  class="button btn btn-primary mr-3"   id="selectBtn" type="button" value="<@locale code="button.text.select"/>" >
+							<input  class="button btn btn-primary mr-3"   id="selectBtn" type="button" value="<@locale code="button.text.confirm"/>" >
 						</div>
 				 	</td>
 				</tr>

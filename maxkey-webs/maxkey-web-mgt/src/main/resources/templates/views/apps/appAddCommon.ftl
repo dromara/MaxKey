@@ -103,7 +103,7 @@
 			<input type="text"  class="form-control"    id="adapterName" name="adapterName"  title="" value="" style="width: 80%;float: left;"/>
 			<input type="hidden" class="form-control"   id="adapter" name="adapter"  title="" value=""/>
 			
-			<input class="button btn btn-success mr-3 window" style="float: left;" id="selectAdaptersBtn" type="button" 
+			<input class="button btn btn-primary mr-3 window" style="float: left;" id="selectAdaptersBtn" type="button" 
          			value="<@locale code="button.text.select"/>" 
 		 		    wurl="<@base/>/apps/adapters/selectAdaptersList?protocol=${model.protocol!}"
 		 		    wwidth="750"

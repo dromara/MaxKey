@@ -14,7 +14,7 @@
          <th style="width:15%;"><@locale code="apps.secret"/></th>
          <td style="width:35%;">
          	<input type="text" id="secret" readonly style="width:80%;float: left;font-weight: bold;" class="form-control" name="secret"  title="" value="${model.secret!}"/>
-            <input id="generateSecret" type="button"  class="button btn btn-warning mr-2" value="<@locale code="button.text.generate"/>"/>
+            <input id="generateSecret" type="button"  class="button btn btn-danger mr-2" value="<@locale code="button.text.generate"/>"/>
          </td>
       </tr>
       <tr>
@@ -84,7 +84,7 @@
          </td>
          <th><@locale code="apps.extendAttr"/></th>
          <td>
-         	<input class="button btn btn-success mr-3 window" style="float: left;" id="addExtendAttrBtn" type="button" 
+         	<input class="button btn btn-primary mr-3 window" style="float: left;" id="addExtendAttrBtn" type="button" 
          			value="<@locale code="button.text.select"/>" 
 		 		    wurl="<@base/>/apps/forwardAppsExtendAttr/${model.id!}"
 		 		    wwidth="900"
@@ -106,7 +106,7 @@
 			<input type="text" class="form-control"     id="adapterName" name="adapterName"  title="" value="${model.adapterName!}"  style="width: 80%;float: left;"/>
 			<input type="hidden" class="form-control"   id="adapter" name="adapter"  title="" value="${model.adapter!}"/>
 			
-			<input class="button btn btn-success mr-3 window" style="float: left;" id="selectAdaptersBtn" type="button" 
+			<input class="button btn btn-primary mr-3 window" style="float: left;" id="selectAdaptersBtn" type="button" 
          			value="<@locale code="button.text.select"/>" 
 		 		    wurl="<@base/>/apps/adapters/selectAdaptersList?protocol=${model.protocol!}"
 		 		    wwidth="750"
