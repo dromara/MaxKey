@@ -31,27 +31,27 @@
 				</th>
 			</tr>
 			<tr>
-				<th><@locale code="userinfo.displayName" /> :</th>
+				<th><@locale code="userinfo.displayName" /> </th>
 				<td>
 					<input readonly type="text" id="displayName" name="displayName" class="form-control" title="" value="${model.displayName}"/>
 					
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="userinfo.username" /> :</th>
+				<th><@locale code="userinfo.username" /> </th>
 				<td>
 					<input readonly type="text" id="username" name="username" class="form-control" title="" value="${model.username}"/>
 					
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="login.password.newPassword" />:</th>
+				<th><@locale code="login.password.newPassword" /></th>
 				<td>
 					<input type="password" id="newPassword" name="newPassword" class="form-control" title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="login.password.confirmPassword" />:</th>
+				<th><@locale code="login.password.confirmPassword" /></th>
 				<td nowrap>
 					<input type="password" id="confirmPassword" name="confirmPassword" class="form-control" title="" value=""  required="" />
 				</td>
