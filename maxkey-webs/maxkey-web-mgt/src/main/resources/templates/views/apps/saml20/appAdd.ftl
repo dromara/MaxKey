@@ -116,7 +116,7 @@
 							<option value="entity">entity</option>
 							<option value="custom">user custom persistent </option>
 						</select>
-						<b class="orange">*</b><label for="fileType"></label>
+						
 					</td>
 					<th><@locale code="apps.saml.nameIdConvert" /></th>
 					<td>
@@ -128,7 +128,7 @@
 							<option value="2">
 								<@locale code="apps.saml.nameIdConvert.lowerCase" /></option>
 						</select>
-						<b class="orange">*</b><label for="issuer"></label>
+						
 					</td>
 					
 				</tr>
@@ -143,7 +143,7 @@
 							<option value="Post-PostSimpleSign" >Post-PostSimpleSign</option>
 							<option value="IdpInit-PostSimpleSign" >IdpInit-PostSimpleSign</option>
 						</select>
-						<b class="orange">*</b><label for="binding"></label>
+						
 					</td>
 					<th style="width:15%;"><@locale code="apps.saml.validityInterval" /></th>
 					<td style="width:35%;">
@@ -159,7 +159,7 @@
 							<option value="metadata_file"  selected><@locale code="apps.saml.fileType.metadata.file" /></option>
 							<option value="metadata_url"           ><@locale code="apps.saml.fileType.metadata.url" /></option>
 						</select>
-						<b class="orange">*</b><label for="fileType"></label>
+						
 					</td>
 					<th><@locale code="apps.saml.metaFile" /></th>
 					<td nowrap >

@@ -49,7 +49,7 @@
 		<tr>
 			<th><@locale code="synchronizers.credentials" /></th>
 			<td nowrap>
-				<input type="text" id="credentials" name="credentials" class="form-control" title="" value="${model.credentials!}"  required="" />
+				<input type="password" id="credentials" name="credentials" class="form-control" title="" value="${model.credentials!}"  required="" />
 			</td>
 		</tr>
 	</#if>
@@ -75,7 +75,7 @@
 		<tr>
 			<th><@locale code="synchronizers.credentials" /></th>
 			<td nowrap>
-				<input type="text" id="credentials" name="credentials" class="form-control" title="" value="${model.credentials!}"  required="" />
+				<input type="password" id="credentials" name="credentials" class="form-control" title="" value="${model.credentials!}"  required="" />
 			</td>
 		</tr>
 		<tr>
@@ -101,7 +101,7 @@
 		<tr>
 			<th><@locale code="synchronizers.credentials" /></th>
 			<td nowrap>
-				<input type="text" id="credentials" name="credentials" class="form-control" title="" value="${model.credentials!}"  required="" />
+				<input type="password" id="credentials" name="credentials" class="form-control" title="" value="${model.credentials!}"  required="" />
 			</td>
 		</tr>
 		<tr>
@@ -131,7 +131,7 @@
 		<tr>
 			<th><@locale code="synchronizers.trustStorePassword" /></th>
 			<td nowrap>
-				<input type="text" id="trustStorePassword" name="trustStorePassword" class="form-control" title="" value="${model.trustStorePassword!}"  />
+				<input type="password" id="trustStorePassword" name="trustStorePassword" class="form-control" title="" value="${model.trustStorePassword!}"  />
 			</td>
 		</tr>
 		<tr>

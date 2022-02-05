@@ -27,7 +27,7 @@
 							url		:	"<@base/>/groupMember/addGroupAppsList/"+$("#groupId").val(),//window url
 							title	:	"New",//title
 							width	:	"700",//width
-							height	:	"500"//height
+							height	:	"560"//height
 						};
 					$.window(settings);//open window
 			
@@ -81,7 +81,7 @@
     				 			<input class="window button btn btn-primary mr-3"  type="button" value="<@locale code="button.text.select"/>" 
     						 		    wurl="<@base/>/groups/selectGroupsList"
     						 		    wwidth="700"
-    						 		    wheight="500"
+    						 		    wheight="560"
     					 		    	target="window">
     					 	     	
 				 			    <input   class="button btn btn-primary mr-3"   id="searchBtn" type="button" size="50" value="<@locale code="button.text.search"/>">

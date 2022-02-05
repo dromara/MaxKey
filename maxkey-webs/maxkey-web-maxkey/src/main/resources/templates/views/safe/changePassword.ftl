@@ -19,34 +19,34 @@
 				<th  colspan="2"><@locale code="login.password.changepassword" /></th>
 			</tr>
 			<tr>
-				<th><@locale code="userinfo.displayName" /> :</th>
+				<th><@locale code="userinfo.displayName" /> </th>
 				<td>
 					<input  class="form-control"  readonly type="text" id="displayName" name="displayName" class="required" title="" value="${model.displayName}"/>
 					
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="userinfo.username" /> :</th>
+				<th><@locale code="userinfo.username" /> </th>
 				<td>
 					<input  class="form-control"  readonly type="text" id="username" name="username" class="required" title="" value="${model.username}"/>
 					
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="login.password.oldPassword" /> :</th>
+				<th><@locale code="login.password.oldPassword" /> </th>
 				<td>
 					<input  class="form-control"  type="password" id="oldPassword" name="oldPassword"  title="" value=""  required="" />
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="login.password.newPassword" />:</th>
+				<th><@locale code="login.password.newPassword" /></th>
 				<td>
 					<input  class="form-control"  type="password" id="newPassword" name="newPassword"  title="" value=""  required="" />
 
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="login.password.confirmPassword" />:</th>
+				<th><@locale code="login.password.confirmPassword" /></th>
 				<td nowrap>
 					<input  class="form-control"  type="password" id="confirmPassword" name="confirmPassword"  title="" value=""  required="" />
 				</td>

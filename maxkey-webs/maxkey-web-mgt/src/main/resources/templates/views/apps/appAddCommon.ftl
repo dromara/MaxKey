@@ -14,7 +14,7 @@
          <th><@locale code="apps.secret"/></th>
          <td>
          	<span id="secret_text"  style="width:100%;font-weight: bold;">${model.secret!}</span>
-            <input type="hidden"class="form-control"  id="secret" name="secret"  title="" value="${model.secret!}"/>
+            <input type="hidden" class="form-control"  id="secret" name="secret"  title="" value="${model.secret!}"/>
          </td>
       </tr>
        <tr>
@@ -99,16 +99,18 @@
 		</td>
 		<th><@locale code="apps.adapter" /></th>
 		<td >
-			<input type="hidden" class="form-control"   id="adapterId" name="adapterId"  title="" value=""/>
-			<input type="text"  class="form-control"    id="adapterName" name="adapterName"  title="" value="" style="width: 80%;float: left;"/>
-			<input type="hidden" class="form-control"   id="adapter" name="adapter"  title="" value=""/>
-			
-			<input class="button btn btn-primary mr-3 window" style="float: left;" id="selectAdaptersBtn" type="button" 
-         			value="<@locale code="button.text.select"/>" 
-		 		    wurl="<@base/>/apps/adapters/selectAdaptersList?protocol=${model.protocol!}"
-		 		    wwidth="750"
-		 		    wheight="600"
-	 		    	target="window">
+		      <div class="input-group">
+    			<input type="hidden" class="form-control"   id="adapterId" name="adapterId"      value=""/>
+    			<input type="text"   class="form-control"   id="adapterName" name="adapterName"  value="" />
+    			<input type="hidden" class="form-control"   id="adapter" name="adapter"          value=""/>
+    			
+    			<input class="button btn btn-primary mr-3 window"  id="selectAdaptersBtn" type="button" 
+             			value="<@locale code="button.text.select"/>" 
+    		 		    wurl="<@base/>/apps/adapters/selectAdaptersList?protocol=${model.protocol!}"
+    		 		    wwidth="750"
+    		 		    wheight="600"
+    	 		    	target="window">
+    	 	</div>
 		</td>
 	</tr>
 	<tr>

@@ -17,7 +17,7 @@
    	<li>
      	<a class="side-nav-menu" href="<@base />/userinfo/list/">
        		<@locale code="navs.users"/>
-       		<span class="fa fa-fw fa-user fa-lg"></span>
+       		<span class="fa fa-fw fa-user-circle-o fa-lg"></span>
      	</a>
    	</li>
  	<li>
@@ -36,7 +36,7 @@
    	<li>
      	<a class="side-nav-menu has-arrow" href="#">
        		<@locale code="navs.privileges"/>
-       		<span class="fa fa-fw fa-map fa-lg"></span>
+       		<span class="fa fa-fw fa-shield fa-lg"></span>
      	</a>
      	<ul>
      	   <li>
@@ -75,7 +75,7 @@
 	       <li>
              <a class="side-nav-menu" href="<@base />/roles/list/">
                 <@locale code="navs.roles"/>  
-                <span class="fa fa-fw fa-shield"></span>
+                <span class="fa fa-fw fa-id-card"></span>
              </a>
            </li>
            <li>

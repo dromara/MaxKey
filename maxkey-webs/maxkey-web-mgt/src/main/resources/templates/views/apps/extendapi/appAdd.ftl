@@ -46,17 +46,17 @@ $(function(){
 			   <table  class="table table-bordered" >
 				<tbody>
 				<tr>
-					<th  ><@locale code="apps.principal"/>：</th>
+					<th  ><@locale code="apps.principal"/></th>
 					<td  >
 						<input  class="form-control" type="text" id="principal" name="principal"  title="" value=""  required=""  />
 					</td>
-					<th  ><@locale code="apps.credentials"/>：</th>
+					<th  ><@locale code="apps.credentials"/></th>
 					<td  >
 						<input class="form-control" type="text" id="credentials" name="credentials"  title="" value=""  required=""   />
 					</td>
 				</tr>
 				<tr>
-					<th  style="width:15%;"><@locale code="apps.credential"/>：</th>
+					<th  style="width:15%;"><@locale code="apps.credential"/></th>
 					<td  style="width:35%;">
 						<input type="radio" id="credential-user-defined" name="credential" class="credential" value="3"  checked />
 						<@locale code="apps.credential.user-defined"/>
@@ -64,7 +64,7 @@ $(function(){
 						<@locale code="apps.credential.shared"/>
 						<input type="radio" id="credential-system" name="credential" class="credential"  value="1"  />
 						<@locale code="apps.credential.system"/>
-						<b class="orange">*</b><label for="credential"></label>
+						
 					</td>
 					<th  style="width:15%;"></th>
 					<td  style="width:35%;">
@@ -72,7 +72,7 @@ $(function(){
 					</td>
 				</tr>
 				<tr id="systemconfigure"  style="display:none">
-					<th><@locale code="apps.systemUserAttr"/>：</th>
+					<th><@locale code="apps.systemUserAttr"/></th>
 					<td colspan="3">
 						<select  class="form-control  form-select" id="systemUserAttr" name="systemUserAttr">
 							<option value="uid">
@@ -86,19 +86,17 @@ $(function(){
 							<option value="windowsaccount">
 								<@locale code="userinfo.windowsAccount"/></option>
 						</select>
-						<b class="orange">*</b><label for="systemUserAttr"></label>
 					</td>
 				</tr>
 				<tr id="sharedconfigure"  style="display:none">
-					<th><@locale code="apps.credential.sharedUsername"/>：</th>
+					<th><@locale code="apps.credential.sharedUsername"/></th>
 					<td>
 						<input  class="form-control" type="text" id="sharedUsername" name="sharedUsername" value="" />
-						<b class="orange">*</b><label for="sharedUsername"></label>
+						
 					</td>
-					<th><@locale code="apps.credential.sharedPassword"/>：</th>
+					<th><@locale code="apps.credential.sharedPassword"/></th>
 					<td>
 						<input  class="form-control" type="text" id="sharedPassword" name="sharedPassword" value="" />
-						<b class="orange">*</b><label for="sharedPassword"></label>
 					</td>
 				</tr>
 				</tbody>

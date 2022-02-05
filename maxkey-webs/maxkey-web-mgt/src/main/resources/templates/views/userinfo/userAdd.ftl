@@ -57,7 +57,10 @@
 		</td>
 		<td style="width:15%;"><@locale code="login.text.password" /></td>
 		<td style="width:35%;">
+		  <div class="input-group" style="vertical-align middle;">
 			<input  class="form-control"  type="password" required="" id="password" name="password"  title="" value=""/>
+			<i class="passwdeye fa fa-eye-slash fa-2" style="left: 290px; color: gainsboro;" refid="password" ></i>
+		  </div>
 		</td>
 	</tr>
 	<tr>

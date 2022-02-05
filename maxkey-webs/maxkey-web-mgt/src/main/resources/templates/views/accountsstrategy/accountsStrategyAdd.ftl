@@ -186,7 +186,7 @@ function showOrgsTree() {
                         <input class="button btn btn-primary mr-3 window" style="float: left;" id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
                                 wurl="<@base/>/apps/select"
                                 wwidth="700"
-                                wheight="540"
+                                wheight="560"
                                 target="window">
                     </div>
                 </td>

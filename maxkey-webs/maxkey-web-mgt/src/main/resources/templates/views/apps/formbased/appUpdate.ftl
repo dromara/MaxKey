@@ -50,7 +50,7 @@ $(function(){
 					<td colspan=4><h5><@locale code="apps.formbased.info"/></h5></td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.formbased.redirectUri"/>：</th>
+					<th><@locale code="apps.formbased.redirectUri"/></th>
 					<td colspan="3">
 						<input type="text" class="form-control" id="redirectUri" name="redirectUri"  title="" value="${model.redirectUri}"  required=""   />
 					</td>
@@ -58,18 +58,18 @@ $(function(){
 				</tr> 
 				
 				<tr>
-					<th style="width:15%;"><@locale code="apps.formbased.usernameMapping"/>：</th>
+					<th style="width:15%;"><@locale code="apps.formbased.usernameMapping"/></th>
 					<td style="width:35%;">
 						<input type="text" class="form-control" id="usernameMapping" name="usernameMapping"  title="" value="${model.usernameMapping}"  required=""   />
 					</td>
-					<th style="width:15%;"><@locale code="apps.formbased.passwordMapping"/>：</th>
+					<th style="width:15%;"><@locale code="apps.formbased.passwordMapping"/></th>
 					<td style="width:35%;">
 						<input type="text" class="form-control" id="passwordMapping" name="passwordMapping"  title="" value="${model.passwordMapping}"  required=""   />
 	
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.credential"/>：</th>
+					<th><@locale code="apps.credential"/></th>
 					<td >
 						<select id="credential" name="credential"  class="form-control  form-select" >
 							<option value="3"   <#if  3==model.credential >selected</#if> >
@@ -84,19 +84,19 @@ $(function(){
 						</select>	
 						
 					</td>
-					<th><@locale code="apps.formbased.passwordAlgorithm"/>：</th>
+					<th><@locale code="apps.formbased.passwordAlgorithm"/></th>
 					<td>
 					   <input type="text" class="form-control" id="passwordAlgorithm" name="passwordAlgorithm"  title="" value="${model.passwordAlgorithm!}"/>
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.formbased.authorizeView"/>：</th>
+					<th><@locale code="apps.formbased.authorizeView"/></th>
 					<td colspan =3>
 						<input type="text" class="form-control" id="authorizeView" name="authorizeView"  title="" value="${model.authorizeView!}"/>
 					</td>
 				</tr>
 				<tr id="systemconfigure"  <#if 1!=model.credential> style="display:none"</#if> >
-					<th><@locale code="apps.systemUserAttr"/>：</th>
+					<th><@locale code="apps.systemUserAttr"/></th>
 					<td colspan="3">
 						<select id="systemUserAttr" name="systemUserAttr" class="form-control  form-select">
 							<option value="userId"   <#if 'userId'==model.systemUserAttr>selected</#if> >
@@ -113,12 +113,12 @@ $(function(){
 					</td>
 				</tr>
 				<tr id="sharedconfigure"  <#if 2!=model.credential> style="display:none"</#if>>
-					<th><@locale code="apps.credential.sharedUsername"/>：</th>
+					<th><@locale code="apps.credential.sharedUsername"/></th>
 					<td>
 						<input type="text" class="form-control" id="sharedUsername" name="sharedUsername" value="${model.sharedUsername}" />
 			
 					</td>
-					<th><@locale code="apps.credential.sharedPassword"/>：</th>
+					<th><@locale code="apps.credential.sharedPassword"/></th>
 					<td>
 						<input type="text"  class="form-control" id="sharedPassword" name="sharedPassword" value="${model.sharedPassword}" />
 

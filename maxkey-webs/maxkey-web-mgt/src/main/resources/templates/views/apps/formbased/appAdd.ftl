@@ -50,28 +50,26 @@ $(function(){
 					<td colspan=4><h5><@locale code="apps.formbased.info"/></h5></td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.formbased.redirectUri"/>：</th>
+					<th><@locale code="apps.formbased.redirectUri"/></th>
 					<td colspan="3">
 						<input type="text"  class="form-control"  id="redirectUri" name="redirectUri"  title="" value=""  required="" />
-						<b class="orange">*</b><label for="redirectUri"></label>
 					</td>
 					
 				</tr>
 				<tr>
-					<th style="width:15%;"><@locale code="apps.formbased.usernameMapping"/>：</th>
+					<th style="width:15%;"><@locale code="apps.formbased.usernameMapping"/></th>
 					<td style="width:35%;">
 						<input type="text"  class="form-control"  id="usernameMapping" name="usernameMapping"  title="" value="username"  required="" />
-						<b class="orange">*</b><label for="usernameMapping"></label>
 					</td>
-					<th style="width:15%;"><@locale code="apps.formbased.passwordMapping"/>：</th>
+					<th style="width:15%;"><@locale code="apps.formbased.passwordMapping"/></th>
 					<td style="width:35%;">
 						<input type="text"  class="form-control" id="passwordMapping" name="passwordMapping"  title="" value="password"  required=""  />
-						<b class="orange">*</b><label for="passwordMapping"></label>
+
 					</td>
 				</tr>
 				
 				<tr>
-					<th width="140px"><@locale code="apps.credential"/>：</th>
+					<th width="140px"><@locale code="apps.credential"/></th>
 					<td>
 						<input type="radio" id="credential-user-defined" name="credential" class="credential" value="3"  checked />
 						<@locale code="apps.credential.user-defined"/>
@@ -79,21 +77,20 @@ $(function(){
 						<@locale code="apps.credential.shared"/>
 						<input type="radio" id="credential-system" name="credential" class="credential"  value="1"  />
 						<@locale code="apps.credential.system"/>
-						<b class="orange">*</b><label for="credential"></label>
 					</td>
-					<th><@locale code="apps.formbased.passwordAlgorithm"/>：</th>
+					<th><@locale code="apps.formbased.passwordAlgorithm"/></th>
                     <td>
                        <input type="text" class="form-control" id="passwordAlgorithm" name="passwordAlgorithm"  title="" value=""/>
                     </td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.formbased.authorizeView"/>：</th>
+					<th><@locale code="apps.formbased.authorizeView"/></th>
 					<td colspan =3>
 						<input type="text"  class="form-control"  id="authorizeView" name="authorizeView"  title="" value=""/>
 					</td>
 				</tr>
 				<tr id="systemconfigure"  style="display:none">
-					<th><@locale code="apps.systemUserAttr"/>：</th>
+					<th><@locale code="apps.systemUserAttr"/></th>
 					<td colspan="3">
 						<select id="systemUserAttr" name="systemUserAttr"  class="form-control  form-select" >
 							<option value="userId">
@@ -111,19 +108,19 @@ $(function(){
 					</td>
 				</tr>
 				<tr id="sharedconfigure"  style="display:none">
-					<th><@locale code="apps.credential.sharedUsername"/>：</th>
+					<th><@locale code="apps.credential.sharedUsername"/></th>
 					<td>
 						<input type="text" id="sharedUsername"  class="form-control"  name="sharedUsername" value="" />
-						<b class="orange">*</b><label for="sharedUsername"></label>
+
 					</td>
-					<th><@locale code="apps.credential.sharedPassword"/>：</th>
+					<th><@locale code="apps.credential.sharedPassword"/></th>
 					<td>
 						<input type="text" id="sharedPassword"  class="form-control"  name="sharedPassword" value="" />
-						<b class="orange">*</b><label for="sharedPassword"></label>
+
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="apps.extendAttr"/>：</th>
+					<th><@locale code="apps.extendAttr"/></th>
 					<td colspan="3">
 						<input type="checkbox" id="isExtendAttr" name="isExtendAttr" value="1"/>
 						<@locale code="apps.isExtendAttr"/>

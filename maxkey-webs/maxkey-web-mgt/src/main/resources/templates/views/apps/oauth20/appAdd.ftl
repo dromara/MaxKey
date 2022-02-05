@@ -71,7 +71,7 @@
 								<td>phone<input type="checkbox" id="scope_phone" name="scope" value="phone"/></td>
 								<td>address<input type="checkbox" id="scope_address" name="scope" value="address"/></td>
 								<td>all<input type="checkbox" id="scope_all" name="scope" value="all"/></td>
-								<td><b class="orange">*</b><label for="scope"></label></td>
+								
 							</tr>
 						</table>
 					</td>
@@ -88,7 +88,7 @@
 								<td>refresh_token<input type="checkbox" id="grantTypes_refresh_token" name="authorizedGrantTypes" value="refresh_token"/></td>
 								<td>id_token<input  type="checkbox" id="grantTypes_id_token" name="authorizedGrantTypes" value="id_token"/></td>
 								<td>token<input type="checkbox" id="grantTypes_token" name="authorizedGrantTypes" value="token"/></td>
-								<td><b class="orange">*</b><label for="authorizedGrantTypes"></label></td>
+								
 							</tr>
 						</table>
 					</td>
@@ -97,19 +97,19 @@
 					<th><@locale code="apps.oauth.registeredRedirectUris" /></th>
 					<td colspan=3>
 						<textarea  class="form-control"  id="registeredRedirectUris" name="registeredRedirectUris" rows="4" cols="60"></textarea>
-						<b class="orange">*</b><label for="registeredRedirectUris"></label>
+						
 					</td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.oauth.accessTokenValiditySeconds" /></th>
 					<td >
-						<input type="text"  class="form-control" id="accessTokenValiditySeconds" name="accessTokenValiditySeconds"  title="" value="180"/>
-						<b class="orange">*</b><label for="accessTokenValiditySeconds"></label>
+						<input type="text"  class="form-control" id="accessTokenValiditySeconds" name="accessTokenValiditySeconds"  title="" value="1800"/>
+						
 					</td>
 					<th><@locale code="apps.oauth.refreshTokenValiditySeconds" /></th>
 					<td>
-						<input type="text" class="form-control"  id="refreshTokenValiditySeconds" name="refreshTokenValiditySeconds"  title="" value="180"/>
-						<b class="orange">*</b><label for="refreshTokenValiditySeconds"></label>
+						<input type="text" class="form-control"  id="refreshTokenValiditySeconds" name="refreshTokenValiditySeconds"  title="" value="1800"/>
+						
 					</td>
 				</tr>
 				<tr>

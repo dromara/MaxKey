@@ -20,7 +20,7 @@
 							<td><input  required="" type="text" id="emailMobile" name="emailMobile" class="form-control"  title="" value=""/></td>
 						</tr>
 						<tr>
-								<td><@locale code="login.text.captcha"/>：</td>
+								<td><@locale code="login.text.captcha"/></td>
 								<td><input  required="" class="form-control"  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha"/></td>
 								
 						</tr>

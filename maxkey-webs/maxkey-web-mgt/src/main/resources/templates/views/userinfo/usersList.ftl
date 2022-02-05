@@ -218,7 +218,7 @@ $(function () {
 					 <div id="tool_box_right">    
 						  <input class="button btn btn-primary mr-3 window" id="changepwdBtn" type="button"
                          value="<@locale code="login.password.changepassword"/>" 
-                                    wurl="<@base/>/userinfo/forwardChangePassword/" wwidth="600px" wheight="260px" ref="datagrid"/>
+                                    wurl="<@base/>/userinfo/forwardChangePassword/" wwidth="600px" wheight="300px" ref="datagrid"/>
                         
                          <input class="button btn btn-primary mr-3 window" id="userAdjointBtn" type="button" 
                                 value="<@locale code="button.text.adjunct"/>"  ref="datagrid"

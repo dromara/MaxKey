@@ -13,8 +13,10 @@
          </td>
          <th style="width:15%;"><@locale code="apps.secret"/></th>
          <td style="width:35%;">
-         	<input type="text" id="secret" readonly style="width:80%;float: left;font-weight: bold;" class="form-control" name="secret"  title="" value="${model.secret!}"/>
-            <input id="generateSecret" type="button"  class="button btn btn-danger mr-2" value="<@locale code="button.text.generate"/>"/>
+            <div class="input-group">
+         	      <input type="text" id="secret" readonly style="font-weight: bold;" class="form-control" name="secret"  title="" value="${model.secret!}"/>
+                  <input id="generateSecret" type="button"  class="button btn btn-danger mr-2" value="<@locale code="button.text.generate"/>"/>
+            </div>
          </td>
       </tr>
       <tr>
@@ -102,16 +104,18 @@
 		</td>
 		<th><@locale code="apps.adapter" /></th>
 		<td>
-			<input type="hidden" class="form-control"   id="adapterId" name="adapterId"  title="" value="${model.adapterId!}"/>
-			<input type="text" class="form-control"     id="adapterName" name="adapterName"  title="" value="${model.adapterName!}"  style="width: 80%;float: left;"/>
-			<input type="hidden" class="form-control"   id="adapter" name="adapter"  title="" value="${model.adapter!}"/>
+		      <div class="input-group">
+			     <input type="hidden" class="form-control"   id="adapterId" name="adapterId"  title="" value="${model.adapterId!}"/>
+			     <input type="text" class="form-control"     id="adapterName" name="adapterName"  title="" value="${model.adapterName!}"  />
+			     <input type="hidden" class="form-control"   id="adapter" name="adapter"  title="" value="${model.adapter!}"/>
 			
-			<input class="button btn btn-primary mr-3 window" style="float: left;" id="selectAdaptersBtn" type="button" 
-         			value="<@locale code="button.text.select"/>" 
-		 		    wurl="<@base/>/apps/adapters/selectAdaptersList?protocol=${model.protocol!}"
-		 		    wwidth="750"
-		 		    wheight="600"
-	 		    	target="window">
+    			 <input class="button btn btn-primary mr-3 window"  id="selectAdaptersBtn" type="button" 
+             			value="<@locale code="button.text.select"/>" 
+    		 		    wurl="<@base/>/apps/adapters/selectAdaptersList?protocol=${model.protocol!}"
+    		 		    wwidth="750"
+    		 		    wheight="600"
+    	 		    	target="window">
+    	 	 </div>
 		</td>
 	</tr>
 	 <tr>

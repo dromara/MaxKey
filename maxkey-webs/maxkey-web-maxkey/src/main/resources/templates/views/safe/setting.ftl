@@ -18,21 +18,21 @@
 				<th  colspan="2"><@locale code="userinfo.authnType" /></th>
 			</tr>
 			<tr>
-				<th><@locale code="userinfo.displayName" /> :</th>
+				<th><@locale code="userinfo.displayName" /> </th>
 				<td >
 					<input  class="form-control"  readonly type="text" id="displayName" name="displayName" class="required" title="" value="${model.displayName}"/>
 					
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="userinfo.username" /> :</th>
+				<th><@locale code="userinfo.username" /> </th>
 				<td>
 					<input  class="form-control"  readonly type="text" id="username" name="username" class="required" title="" value="${model.username}"/>
 					
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="userinfo.authnType" />:</th>
+				<th><@locale code="userinfo.authnType" /></th>
 				<td nowrap>
 					<select  class="form-control form-select"  name="authnType" id="authnType">
 						<option value="1"  <#if 0==model.authnType >selected</#if>  ><@locale code="button.text.select" /></option>
@@ -55,7 +55,7 @@
 				</td>
 			</tr>	
 			<tr>
-				<th><@locale code="userinfo.mobile" /> :</th>
+				<th><@locale code="userinfo.mobile" /> </th>
 				<td>
 					<input   class="form-control" type="text" id="mobile" name="mobile" required title="" value="${model.mobile}"  required="" />
 					<label for="mobile"></label>
@@ -69,7 +69,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th><@locale code="userinfo.email" /> :</th>
+				<th><@locale code="userinfo.email" /> </th>
 				<td>
 					<input  class="form-control"  type="text" id="email" name="email" class="required" title="" value="${model.email}"  required="" />
 					<label for="eamil"></label>
@@ -83,7 +83,7 @@
 				</td>
 			</tr>	
 			<tr>
-                <th><@locale code="userinfo.theme" />:</th>
+                <th><@locale code="userinfo.theme" /></th>
                 <td nowrap>
                     <select  class="form-control form-select"  name="theme" id="theme">
                         <option value="default"  <#if "default"==model.theme >selected</#if>  ><@locale code="userinfo.theme.default" /></option>

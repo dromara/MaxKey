@@ -23,16 +23,16 @@
 							<td><input  required="" type="text" id="emailMobile" name="emailMobile" class="form-control"  title="" value=""/></td>
 						</tr>
 						<tr>
-								<td><@locale code="login.text.captcha"/>：</td>
+								<td><@locale code="login.text.captcha"/></td>
 								<td><input  required="" class="form-control"  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/><img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha"/></td>
 								
 						</tr>
 						<tr>
-								<td><@locale code="userinfo.displayName"/>：</td>
+								<td><@locale code="userinfo.displayName"/></td>
 								<td><input required="" class="form-control" type='text' id='displayName'  name='displayName' tabindex="1"/></td>
 						</tr>
 						<tr>
-								<td><@locale code="userinfo.username"/>：</td>
+								<td><@locale code="userinfo.username"/></td>
 								<td><input required="" class="form-control" type='text' id='username'  name='username' tabindex="1"/></td>
 						</tr>
 						<tr>

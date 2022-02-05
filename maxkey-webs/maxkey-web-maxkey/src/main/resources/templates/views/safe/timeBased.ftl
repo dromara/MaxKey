@@ -21,44 +21,44 @@
 		<div class="col-md-6">
 			<table  class="table table-bordered"   >
 				<tr>
-					<th style="width:30%;"><@locale code="userinfo.displayName" /> :</th>
+					<th style="width:30%;"><@locale code="userinfo.displayName" /> </th>
 					<td>
 						<input readonly type="text" class="required form-control" title="" value="${userInfo.displayName}"/>
 						
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="userinfo.username" /> :</th>
+					<th><@locale code="userinfo.username" /> </th>
 					<td>
 						<input readonly type="text" class="required form-control" title="" value="${userInfo.username}"/>
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="login.totp.sharedSecret" />(BASE32) :</th>
+					<th><@locale code="login.totp.sharedSecret" />(BASE32) </th>
 					<td>
 					<input readonly type="text" class="required form-control" title="" value="${sharedSecret}"/>
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="login.totp.sharedSecret" />(HEX) :</th>
+					<th><@locale code="login.totp.sharedSecret" />(HEX) </th>
 					<td>
 						<input readonly type="text" class="required form-control" title="" value="${hexSharedSecret}"/>
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="login.totp.period" />:</th>
+					<th><@locale code="login.totp.period" /></th>
 					<td>
 						<input readonly type="text" class="required form-control" title="" value="${format.period}"/>
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="login.totp.digits" />:</th>
+					<th><@locale code="login.totp.digits" /></th>
 					<td>
 						<input readonly type="text" class="required form-control" title="" value="${format.digits}"/>
 					</td>
 				</tr>
 				<tr>
-					<th><@locale code="login.totp.crypto" />:</th>
+					<th><@locale code="login.totp.crypto" /></th>
 					<td>
 						<input readonly type="text" class="required form-control" title="" value="${format.crypto}"/>
 					</td>

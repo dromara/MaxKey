@@ -46,19 +46,19 @@ $(function(){
 			   <table  class="table table-bordered" >
 				<tbody>
 				<tr>
-					<th  ><@locale code="apps.principal"/>：</th>
+					<th  ><@locale code="apps.principal"/></th>
 					<td  >
 						<input type="text"  class="form-control"  id="principal" name="principal"  title="" value="${model.principal}"  required=""   />
 						
 					</td>
-					<th  ><@locale code="apps.credentials"/>：</th>
+					<th  ><@locale code="apps.credentials"/></th>
 					<td  >
 						<input type="text" class="form-control"  id="credentials" name="credentials"  title="" value="${model.credentials}"  required=""  />
 						
 					</td>
 				</tr>
 				<tr>
-					<th style="width:15%;"><@locale code="apps.credential"/>：</th>
+					<th style="width:15%;"><@locale code="apps.credential"/></th>
 					<td style="width:35%;">
 						<select id="credential" name="credential"  class="form-control  form-select" >
 							<option value="3"   <#if  3==model.credential >selected</#if> >
@@ -77,7 +77,7 @@ $(function(){
 					</td>
 				</tr>
 				<tr id="systemconfigure"  <#if  1!=model.credential > style="display:none"</#if> >
-					<th><@locale code="apps.systemUserAttr"/>：</th>
+					<th><@locale code="apps.systemUserAttr"/></th>
 					<td colspan="3">
 						<select id="systemUserAttr" name="systemUserAttr"  class="form-control  form-select" >
 							<option value="uid"   <#if  'uid'==model.systemUserAttr >selected</#if> >
@@ -94,12 +94,12 @@ $(function(){
 					</td>
 				</tr>
 				<tr id="sharedconfigure"  <#if  2!=model.credential > style="display:none"</#if>>
-					<th><@locale code="apps.credential.sharedUsername"/>：</th>
+					<th><@locale code="apps.credential.sharedUsername"/></th>
 					<td>
 						<input type="text" class="form-control"  id="sharedUsername" name="sharedUsername" value="${model.sharedUsername}" />
 						
 					</td>
-					<th><@locale code="apps.credential.sharedPassword"/>：</th>
+					<th><@locale code="apps.credential.sharedPassword"/></th>
 					<td>
 						<input type="text" class="form-control"  id="sharedPassword" name="sharedPassword" value="${model.sharedPassword}" />
 					</td>

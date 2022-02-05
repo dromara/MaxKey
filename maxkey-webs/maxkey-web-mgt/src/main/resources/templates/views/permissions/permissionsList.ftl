@@ -260,7 +260,7 @@ $('#datagrid').on('click-row.bs.table', function (row, element, field) {
                                 <input class="button btn btn-primary mr-3 window"  id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
                                         wurl="<@base/>/apps/select"
                                         wwidth="700"
-                                        wheight="500"
+                                        wheight="560"
                                         target="window">
                             
                                 <input  class="button btn btn-primary mr-3"    id="changTreeBtn" type="button" size="50" value="<@locale code="button.text.search"/>">

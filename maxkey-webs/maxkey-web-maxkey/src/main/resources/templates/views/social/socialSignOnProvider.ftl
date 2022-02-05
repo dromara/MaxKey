@@ -11,7 +11,7 @@
     <table data-toggle="table">
       <thead>
         <tr>
-          <th><@locale code="login.social.sortorder" /></th>
+          <!--<th><@locale code="login.social.sortorder" /></th>-->
           <th><@locale code="login.social.icon" /></th>
           <th><@locale code="login.social.provider" /></th>
           <th><@locale code="login.social.bindtime" /></th>
@@ -22,7 +22,7 @@
       <tbody>
       	<#list listSocialSignOnProvider as socialSignOnProvider>
         <tr>
-          <td>${socialSignOnProvider.sortIndex}</td>
+          <!--<td>${socialSignOnProvider.sortIndex}</td>-->
           <td><img src="<@base />/static/${socialSignOnProvider.icon}" title="${socialSignOnProvider.providerName}" width="32px;" height="32px;"/></td>
           <td>${socialSignOnProvider.providerName}</td>
           <td>${socialSignOnProvider.bindTime!}</td>

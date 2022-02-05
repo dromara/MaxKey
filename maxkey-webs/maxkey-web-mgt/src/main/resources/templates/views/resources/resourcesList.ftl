@@ -181,7 +181,7 @@ $(function () {
                                 <input class="button btn btn-primary mr-3 window" id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
                                         wurl="<@base/>/apps/select"
                                         wwidth="700"
-                                        wheight="500"
+                                        wheight="560"
                                         target="window">
                             
     			 				<input  class="button btn btn-primary mr-3"    id="changTreeBtn" type="button" size="50" value="<@locale code="button.text.search"/>">
@@ -196,13 +196,13 @@ $(function () {
 		 					 <input class="button btn btn-primary mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/resources/forwardAdd"
 						 		    wwidth="500"
-						 		    wheight="550"
+						 		    wheight="570"
 					 		    	target="window"/>	    	
 					 		    	
 					 	<input class="button btn btn-primary mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
 					 				wurl="<@base/>/resources/forwardUpdate"
 					 				wwidth="500"
-						 		    wheight="550"
+						 		    wheight="570"
 					 		    	target="window"/> 
 					 		    	
 					 	<input class="button btn btn-danger mr-3 "  id="deleteBtn" type="button" value="<@locale code="button.text.delete"/>"

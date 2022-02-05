@@ -482,7 +482,7 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 	text-decoration: none;
 	display: inline-block;
 	height: 14px;
-	color: #333;
+	color: black;
 	font-size: 14px;
 	font-weight: bold;
 	padding: 8px 0;
@@ -490,9 +490,13 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 }
 
 .switch_tab_current{
-	background-color: #8bc8de;
+	background-color: #0d6efd;
 	border-right: 1px solid #e3e3e3;
 	border-bottom: 1px solid #e3e3e3;
+}
+
+.switch_tab_current a{
+    color: white;
 }
 
 /*maxkey login*/
@@ -509,6 +513,15 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 #j_username,#j_password,#tfa_j_username,#tfa_j_password,#currentTime{
 	font-size: 14px;
 	font-weight: bold;
+}
+
+#loginForm .input-group i.fa{ 
+    position: absolute; 
+    top: 5px; 
+    left: 5px; 
+    font-size: 24px; 
+    color: black;
+    z-index: 20;
 }
 
 #j_captcha{
@@ -591,4 +604,13 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
   max-width: 330px;
   padding: 15px;
   margin: auto;
+}
+
+.input-group i.fa {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 24px;
+    color: black;
+    z-index: 20;
 }

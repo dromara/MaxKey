@@ -30,6 +30,7 @@
 								    <div class="input-group">
                                         <span class="input-group-text fa fa-key d-flex justify-content-center"></span>
                                         <input id='j_password' name='password' class="form-control" type="password" required="" placeholder="<@locale code="login.text.password"/>">
+									    <i class="passwdeye fa fa-eye-slash fa-2" style="left: 270px; color: gainsboro;" refid="j_password" ></i>
 									</div>
 								</div>
 								<#if true==isCaptcha> 

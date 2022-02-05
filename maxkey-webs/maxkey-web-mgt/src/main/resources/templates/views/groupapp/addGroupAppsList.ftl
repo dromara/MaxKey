@@ -4,7 +4,11 @@
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
     <link type="text/css" rel="stylesheet"  href="<@base />/static/css/minitable.css"/>
-    
+    <style>
+    .bootstrap-table .fixed-table-container .table th, .bootstrap-table .fixed-table-container .table td{
+        padding: .2rem;
+    }
+   </style>
 <script type="text/javascript">	
 			function afterSubmit(data){
 				//$("#list").trigger('reloadGrid');

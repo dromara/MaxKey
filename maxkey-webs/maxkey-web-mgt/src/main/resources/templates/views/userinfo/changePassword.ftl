@@ -3,18 +3,13 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
-	<style   type="text/css">
-	  .table th, .table td {
-	    padding .2rem;
-	    vertical-align middle;
-	  }
-	</style>
+
 
 	<script type="text/javascript">
 	<!--
 	$(function(){	
 		$("#generateSecret").on("click",function(){
-			$.post("<@base/>/userinfo/randomPassword/", {_method"post",currTime(new Date()).getTime()}, function(data) {
+			$.post("<@base/>/userinfo/randomPassword/", {_method:"post",currTime:(new Date()).getTime()}, function(data) {
 				$("#password").val(data+"");
 				$("#confirmPassword").val(data+"");
 			}); 
@@ -55,10 +50,12 @@
 			<tr>
 				<th><@locale code="login.password.newPassword" /></th>
 				<td>
-				    <div class="input-group mb-3" style="vertical-align middle;">
-					   <input type="password" id="password" name="password"  required=""  class="form-control"  title="" value="" width="80%"/>
-					   <input id="generateSecret" type="button" class="button btn btn-primary mr-3" style="width100px"  value="<@locale code="button.text.generate"/>"/>
-                        <input id="view" type="button" class="button btn btn-primary mr-3" style="width100px"  value="<@locale code="button.text.view"/>"/>
+				    
+				    <div class="input-group" style="vertical-align middle;">
+					   <input type="password" id="password" name="password"  required=""  class="form-control"  title="" value=""/>
+					   <i class="passwdeye fa fa-eye-slash fa-2" style="left: 350px; color: gainsboro;" refid="password" ></i>
+					   <input id="generateSecret" type="button" class="button btn btn-primary mr-3"    value="<@locale code="button.text.generate"/>"/>
+                       
                     </div>
 				</td>
 			</tr>

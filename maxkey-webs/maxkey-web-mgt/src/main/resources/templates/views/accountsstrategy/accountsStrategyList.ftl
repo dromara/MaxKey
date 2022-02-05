@@ -68,7 +68,7 @@
 		 					 <input class="button btn btn-primary mr-3" id="addBtn" type="button" value="<@locale code="button.text.add"/>" 
 						 		    wurl="<@base/>/accountsstrategy/forwardAdd"
 						 		    wwidth="800"
-						 		    wheight="560"
+						 		    wheight="580"
 					 		    	target="window">	    	
 					 		    	
 					 	<input class="button btn btn-primary mr-3 " id="modifyBtn" type="button" value="<@locale code="button.text.edit"/>" 
