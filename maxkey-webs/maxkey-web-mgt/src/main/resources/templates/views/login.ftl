@@ -36,7 +36,7 @@
 								<#if true==isCaptcha> 
 								<div class="">
 								    <div class="input-group">
-                                        <span class="input-group-text fa fa-refresh d-flex justify-content-center"></span>
+                                        <span class="input-group-text fa fa-shield d-flex justify-content-center"></span>
                                         <input id="j_captcha" name="captcha" class="form-control" value="" type="text" required="" placeholder="<@locale code="login.text.captcha"/>"> 
                                         <img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha" />
                                     </div>

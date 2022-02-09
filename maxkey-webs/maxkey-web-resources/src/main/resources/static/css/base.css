@@ -255,16 +255,25 @@ body{
 	width:358px;
 }
 
-.login_form_table td, .login_form_table th {
+.login_form_table td,
+.login_form_table th {
     height: 60px;
     vertical-align: middle;
     border-top: 1px solid #dee2e6;
 }
 
-#j_username,#j_password,#tfa_j_username,#tfa_j_password,#currentTime{
+#j_username,
+#j_password,
+#tfa_j_username,
+#tfa_j_password,
+#currentTime,
+#mobile_j_username,
+#mobile_j_password
+{
 	width	:250px;
 	font-size: 14px;
 	font-weight: bold;
+	height: 40px;
 }
 
 #j_captcha{
@@ -285,6 +294,12 @@ body{
 	width:70px;
 	height: 35px;
 	vertical-align: top;
+}
+
+.login_form_table #j_captchaimg{
+    width: 100px;
+    height: 40px;
+    vertical-align: top;
 }
 
 #normalLogin,#tfaLogin,#mobileLogin,#qrcodelogin{
@@ -335,18 +350,23 @@ body{
 	position: relative; 
 }
 
+
+.login_form_table  .wrapper .input-group{
+	width:90%;
+}
+
 #div_normalLogin .wrapper input,
 #div_tfaLogin .wrapper input,
 #div_mobileLogin .wrapper input { 
-    text-indent: 20px;
+    text-indent: 46px;
 }
 	
 #div_normalLogin .wrapper i.fa,
 #div_tfaLogin .wrapper i.fa,
 #div_mobileLogin .wrapper i.fa{ 
 	position: absolute; 
-	top: 5px; 
-	left: 5px; 
+	top: 6px; 
+	left: 16px; 
 	font-size: 24px; 
 	color: black;
 	z-index: 20;
@@ -354,8 +374,12 @@ body{
 
 #tfa_j_otp_button,#mobile_j_otp_button{
     width   :130px;
-    height: 34px;
+    height: 40px;
     font-size: 14px;
     font-weight: bold;  
     text-indent: 1px;
+}
+
+#otherlogins{
+    margin-top: -14px;
 }

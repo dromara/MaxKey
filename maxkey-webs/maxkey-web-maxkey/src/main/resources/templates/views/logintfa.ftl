@@ -7,30 +7,30 @@
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="login.text.username"/></td>
+			<!--<td><@locale code="login.text.username"/></td>-->
 			<td>
 				<div  class="wrapper">
 					<i class="fa fa-user"></i>
-					<input required="" class="form-control"  type='text' id='tfa_j_username'  name='username' value="" tabindex="1"/>
+					<input required="" class="form-control"  type='text' id='tfa_j_username'  name='username' value="" tabindex="1"  placeholder='<@locale code="login.text.username"/>'/>
 				</div>
 			</td>
 		</tr>
 		<tr> 
-			<td><@locale code="login.text.password"/></td>
+			<!--<td><@locale code="login.text.password"/></td>-->
 			<td>
 				<div  class="wrapper">
 					<i class="fa fa-key fa-2" style="color: #FFD700;"></i>
-					<input required="" class="form-control"  type='password' id='tfa_j_password'  name='password' value=""  tabindex="2" />
+					<input required="" class="form-control"  type='password' id='tfa_j_password'  name='password' value=""  tabindex="2"  placeholder='<@locale code="login.text.password"/>'/>
 				</div>
 			</td>
 		</tr>
 		<#if true==isMfa >
 		<tr>
-			<td><@locale code="login.text.captcha"/></td>
+			<!--<td><@locale code="login.text.captcha"/></td>-->
 			<td>
 				<div  class="wrapper">
 					<i class="fa fa-lock fa-2"></i>
-					<input required="" class="form-control"  type='text' id="tfa_j_otp_captcha" name="otpCaptcha"  tabindex="3"  value=""   style="float: left;"/>
+					<input required="" class="form-control"  type='text' id="tfa_j_otp_captcha" name="otpCaptcha"  tabindex="3"  value=""   style="float: left;"  placeholder='<@locale code="login.text.captcha"/>'/>
 					<button  class="btn  btn-outline-secondary"  id="tfa_j_otp_button"  tabindex="5"  type="button" >
 					   <@locale code="login.text.login.twofactor.obtain"/>
 					</button>

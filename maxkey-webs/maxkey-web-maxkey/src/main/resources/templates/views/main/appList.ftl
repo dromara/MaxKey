@@ -22,7 +22,7 @@
 		<div class="row">
 		</#if>
 			<div class="col-3" style="min-width: 160px;">
-	  				<table  class="none" style="min-width: 160px; min-height: 120px;border-spacing: 0;border-collapse: collapse;">
+	  				<table  class="none" style="width: 100%; min-height: 120px;border-spacing: 0;border-collapse: collapse;">
 	  					<tr><td style="text-align: center;border-spacing: 0;border-collapse: collapse;border: 0px;">
 	  						<a  target="_blank" title="${app.name}"
 	  							<#if "SP"==app.inducer>

@@ -7,37 +7,37 @@
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="login.text.username"/></td>
+			<!--<td><@locale code="login.text.username"/></td>-->
 			<td>
 			 	<div  class="wrapper">
-			 	   <div class="input-group" style="width:250px;">
+			 	   <div class="input-group" >
                 	   <i class="fa fa-user" ></i>
-					   <input required="" class="form-control" type='text' id='j_username'  name='username' value="admin" tabindex="1"/>
+					   <input required="" class="form-control" type='text' id='j_username'  name='username' value="admin" tabindex="1"  placeholder='<@locale code="login.text.username"/>' />
 				    </div >
 				</div >
 			</td>
 		</tr>
 		<tr>
-			<td><@locale code="login.text.password"/></td>
+			<!--<td><@locale code="login.text.password"/></td>-->
 			<td>
 				<div  class="wrapper">
-				    <div class="input-group" style="width:250px;">
+				    <div class="input-group" >
                 	   <i class="fa fa-key fa-2" style="color: #FFD700;"></i>
-					   <input required="" class="form-control"  type='password' id='j_password'  name='password' value="maxkey"  tabindex="2"/>
-				       <i class="passwdeye fa fa-eye-slash fa-2" style="left: 220px; color: gainsboro;" refid="j_password" ></i>
+					   <input required="" class="form-control"  type='password' id='j_password'  name='password' value="maxkey"  tabindex="2" placeholder='<@locale code="login.text.password"/>'/>
+				       <i class="passwdeye fa fa-eye-slash fa-2" style="left: 270px; color: gainsboro;" refid="j_password" ></i>
 				    </div >
 				</div >
 			</td>
 		</tr>
 		<#if true==isCaptcha> 
 		<tr>
-			<td><@locale code="login.text.captcha"/></td>
+			<!--<td><@locale code="login.text.captcha"/></td>-->
 			<td>
 				<div  class="wrapper">
                 	
-                	<div class="input-group" style="width:250px;">
+                	<div class="input-group" >
                 	   <i class="fa fa-lock fa-2" ></i>
-					   <input required="" class="form-control "  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"/>
+					   <input required="" class="form-control "  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"  placeholder='<@locale code="login.text.captcha"/>'/>
 					   <img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha"/>
 				    </div >
 				</div >

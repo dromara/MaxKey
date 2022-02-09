@@ -513,6 +513,7 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 #j_username,#j_password,#tfa_j_username,#tfa_j_password,#currentTime{
 	font-size: 14px;
 	font-weight: bold;
+	height: 40px;
 }
 
 #loginForm .input-group i.fa{ 
