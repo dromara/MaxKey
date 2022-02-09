@@ -47,14 +47,14 @@
 		</#if>
 		<#if true==isRemeberMe>
 		<tr>
-			<td colspan="2">
-			    <div class="col-sm-6 float-left" style="line-height: 30px;">
+			<td colspan="2" style ="height: 20px;">
+			    <div class="col-sm-6 float-left" style="line-height: 20px;">
 			         <span class="form_checkbox_label">
                         <input type='checkbox' id="remeberMe" name="remeberMe"  class="checkbox"   tabindex="4"  value="remeberMe" />
                         <@locale code="login.text.remeberme"/>
                     </span>
 			    </div>
-			    <div class="col-sm-6  float-left"  style="line-height: 30px;">
+			    <div class="col-sm-6  float-left"  style="line-height: 20px;">
 			         <a href="<@base />/forgotpassword/forward"><@locale code="login.text.forgotpassword"/></a>
                 </div>
 			</td>								

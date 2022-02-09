@@ -62,6 +62,7 @@
 								<!---->
 								<li id="qrcodelogin"   class="switch_tab_class col-md-4">
                                     <a href="javascript:void(0);">
+                                    <i class="fa fa-qrcode" aria-hidden="true"></i>
                                     <@locale code="login.text.login.qrcode"/>
                                     </a>
                                 </li>
