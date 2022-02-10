@@ -95,7 +95,7 @@ QQ交流群：<b>434469201</b>
 
 | 版本    | 日期    |  Docker      |  网盘      |  网盘提取码  |
 | --------| :-----  | :----        | :----      | :----        |
-| v 3.3.0 GA | 2022/01/21    |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1BV9K1ki4TnV8R2Fddaqx7w" target="_blank">下载</a>  |  **mxk9**  |
+| v 3.3.1 GA | 2022/02/10    |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1pW4_XOZYwvTW48EXiMDV8g" target="_blank">下载</a>  |  **mxk9**  |
 
 
 # Roadmap

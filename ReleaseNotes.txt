@@ -1,4 +1,4 @@
-﻿MaxKey v 3.3.1 GA 2022/02/**
+﻿MaxKey v 3.3.1 GA 2022/02/10
 	*(MAXKEY-220201) 同步器拆分，统一组织在maxkey-synchronizers目录下
 	*(MAXKEY-220202) Active Directory同步器优化
 	*(MAXKEY-220203) LDAP同步器优化
@@ -12,7 +12,9 @@
 	*(MAXKEY-220211) LDAP获取条目的字段的详情信息
 	*(MAXKEY-220212) 短信验证码SMS发送优化
 	*(MAXKEY-220213) 注册地址改为signup
-	*(MAXKEY-220214) 依赖jar引用、更新和升级
+	*(MAXKEY-220214) 界面风格色调统一
+	*(MAXKEY-220215) 登录界面样式的优化
+	*(MAXKEY-220216) 依赖jar引用、更新和升级
 		tomcat                   9.0.58
 		springBoot               2.6.3
 		springSecurity           5.6.1
