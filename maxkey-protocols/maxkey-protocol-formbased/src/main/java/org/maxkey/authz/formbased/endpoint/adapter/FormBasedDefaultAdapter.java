@@ -19,6 +19,7 @@ package org.maxkey.authz.formbased.endpoint.adapter;
 
 import java.time.Instant;
 
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.crypto.DigestUtils;
@@ -27,6 +28,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class FormBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 
+	static String _HEX = "_HEX";
+	
 	@Override
 	public Object generateInfo() {
 		return null;
@@ -38,11 +41,16 @@ public class FormBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 		AppsFormBasedDetails details=(AppsFormBasedDetails)app;
 		
 		String password = account.getRelatedPassword();
-        if(null==details.getPasswordAlgorithm()||details.getPasswordAlgorithm().equals("")){
-        }else if(details.getPasswordAlgorithm().indexOf("HEX")>-1){
-            password = DigestUtils.digestHex(account.getRelatedPassword(),details.getPasswordAlgorithm().substring(0, details.getPasswordAlgorithm().indexOf("HEX")));
+		String passwordAlgorithm = details.getPasswordAlgorithm();
+		
+        if(StringUtils.isBlank(passwordAlgorithm) 
+        		|| passwordAlgorithm.equalsIgnoreCase("NONE")){
+        	//do nothing
+        }else if(passwordAlgorithm.indexOf(_HEX) > -1){
+        	passwordAlgorithm = passwordAlgorithm.substring(0,passwordAlgorithm.indexOf(_HEX));
+            password = DigestUtils.digestHex(account.getRelatedPassword(),passwordAlgorithm);
         }else{
-            password = DigestUtils.digestBase64(account.getRelatedPassword(),details.getPasswordAlgorithm());
+            password = DigestUtils.digestBase64(account.getRelatedPassword(),passwordAlgorithm);
         }
         
         modelAndView.addObject("id", details.getId());
@@ -62,7 +70,7 @@ public class FormBasedDefaultAdapter extends AbstractAuthorizeAdapter {
             modelAndView.addObject("isExtendAttr", false);
         }
 	    
-		if(details.getAuthorizeView()!=null&&!details.getAuthorizeView().equals("")){
+		if(StringUtils.isNotBlank(details.getAuthorizeView())){
 			modelAndView.setViewName("authorize/"+details.getAuthorizeView());
 		}
 		
