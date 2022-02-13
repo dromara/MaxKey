@@ -17,26 +17,31 @@
 
 package org.maxkey.authz.jwt.endpoint.adapter;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 
 import org.joda.time.DateTime;
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.configuration.oidc.OIDCProviderMetadata;
-import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
-import org.maxkey.entity.UserInfo;
-import org.maxkey.entity.apps.Apps;
+import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
+import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
+import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.maxkey.entity.apps.AppsJwtDetails;
 import org.maxkey.web.WebConstants;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nimbusds.jose.EncryptionMethod;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWEAlgorithm;
+import com.nimbusds.jose.JWEHeader;
+import com.nimbusds.jose.JWEObject;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.Payload;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.PlainJWT;
@@ -44,23 +49,35 @@ import com.nimbusds.jwt.SignedJWT;
 
 public class JwtAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(JwtAdapter.class);
+
+	AppsJwtDetails jwtDetails;
+	
+	JWT jwtToken;
+	
+	JWEObject jweObject;
+	
+	JWTClaimsSet jwtClaims;
+	
+	public JwtAdapter() {
+
+	}
+
+	public JwtAdapter(AppsJwtDetails jwtDetails) {
+		this.jwtDetails = jwtDetails;
+	}
+
 	@Override
-	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
-		AppsJwtDetails details=(AppsJwtDetails)app;
-	
+	public Object generateInfo() {
+		DateTime currentDateTime = DateTime.now();
+		Date expirationTime = currentDateTime.plusMinutes(Integer.parseInt(jwtDetails.getExpires())).toDate();
+		_logger.debug("expiration Time : {}" , expirationTime);
+		String subject = getValueByUserAttr(userInfo,jwtDetails.getSubject());
+		_logger.trace("jwt subject : {}" , subject);
 		
-		JwtSigningAndValidationService jwtSignerService= WebContext.getBean("jwtSignerValidationService",JwtSigningAndValidationService.class);
-		OIDCProviderMetadata providerMetadata= WebContext.getBean("oidcProviderMetadata",OIDCProviderMetadata.class);
-	
-		DateTime currentDateTime=DateTime.now();
-		
-		Date expirationTime=currentDateTime.plusMinutes(Integer.parseInt(details.getExpires())).toDate();
-		_logger.debug("expiration Time : "+expirationTime);
-		
-		JWTClaimsSet jwtClaims =new  JWTClaimsSet.Builder()
-				.issuer(providerMetadata.getIssuer())
-				.subject(userInfo.getUsername())
-				.audience(Arrays.asList(details.getId()))
+		jwtClaims =new  JWTClaimsSet.Builder()
+				.issuer(jwtDetails.getIssuer())
+				.subject(subject)
+				.audience(Arrays.asList(jwtDetails.getId()))
 				.jwtID(UUID.randomUUID().toString())
 				.issueTime(currentDateTime.toDate())
 				.expirationTime(expirationTime)
@@ -70,58 +87,111 @@ public class JwtAdapter extends AbstractAuthorizeAdapter {
 				.claim("external_id", userInfo.getId())
 				.claim("locale", userInfo.getLocale())
 				.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId())
-				.claim("kid", jwtSignerService.getDefaultSignerKeyId())
+				.claim("kid", jwtDetails.getId()+ "_sig")
 				.claim("institution", userInfo.getInstId())
 				.build();
 		
-		_logger.debug("jwt Claims : "+jwtClaims);
+		_logger.trace("jwt Claims : {}" , jwtClaims);
 		
-		JWT jwtToken = new PlainJWT(jwtClaims);
-		
-		JWSAlgorithm signingAlg = jwtSignerService.getDefaultSigningAlgorithm();
-		
-		//get PublicKey
-		/*Map<String, JWK>  jwkMap=jwtSignerService.getAllPublicKeys();
-		
-		JWK jwk=jwkMap.get("connsec_rsa1");
-		
-		_logger.debug("isPrivate "+jwk.isPrivate());*/
-		
-		_logger.debug(" signingAlg "+signingAlg);
-		
-		jwtToken = new SignedJWT(new JWSHeader(signingAlg), jwtClaims);
-		// sign it with the server's key
-		jwtSignerService.signJwt((SignedJWT) jwtToken);
-		
-		String tokenString=jwtToken.serialize();
-		_logger.debug("jwt Token : "+tokenString);
-		
-		return tokenString;
+		jwtToken = new PlainJWT(jwtClaims);
+			
+		return jwtToken;
 	}
 
 	@Override
-	public String encrypt(String data, String algorithmKey, String algorithm) {
+	public Object sign(Object data,String signatureKey,String signature) {
+		if(!jwtDetails.getSignature().equalsIgnoreCase("none")) {
+			JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": ["+jwtDetails.getSignatureKey()+"]}");
+			try {
+				DefaultJwtSigningAndValidationService jwtSignerService = 
+							new DefaultJwtSigningAndValidationService(jwkSetKeyStore);
+				jwtSignerService.setDefaultSignerKeyId(jwtDetails.getId() + "_sig");
+				jwtSignerService.setDefaultSigningAlgorithmName(jwtDetails.getSignature());
+				JWSAlgorithm signingAlg = jwtSignerService.getDefaultSigningAlgorithm();
+				_logger.trace(" signingAlg {}" , signingAlg);
+				jwtToken = new SignedJWT(new JWSHeader(signingAlg), jwtClaims);
+				// sign it with the server's key
+				jwtSignerService.signJwt((SignedJWT) jwtToken);
+				return jwtToken;
+			} catch (NoSuchAlgorithmException e) {
+				_logger.error("NoSuchAlgorithmException", e);
+			} catch (InvalidKeySpecException e) {
+				_logger.error("InvalidKeySpecException", e);
+			} catch (JOSEException e) {
+				_logger.error("JOSEException", e);
+			}
+		}
 		return data;
 	}
 
 	@Override
-	public String sign(String data, Apps app) {
-		
+	public Object encrypt(Object data, String algorithmKey, String algorithm) {
+		if(!jwtDetails.getAlgorithm().equalsIgnoreCase("none")) {
+			JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": ["+jwtDetails.getAlgorithmKey()+"]}");
+			try {
+				DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
+							new DefaultJwtEncryptionAndDecryptionService(jwkSetKeyStore);
+				jwtEncryptionService.setDefaultEncryptionKeyId(jwtDetails.getId()  + "_enc");
+				jwtEncryptionService.setDefaultAlgorithm(jwtDetails.getAlgorithm());
+				JWEAlgorithm encryptAlgorithm = null;
+				if(jwtDetails.getAlgorithm().startsWith("RSA")) {
+					encryptAlgorithm = jwtEncryptionService.getDefaultAlgorithm();
+				}else {
+					encryptAlgorithm = JWEAlgorithm.DIR;
+				}
+				_logger.trace(" encryptAlgorithm {}" , encryptAlgorithm);
+				EncryptionMethod encryptionMethod = 
+						jwtEncryptionService.parseEncryptionMethod(jwtDetails.getEncryptionMethod());
+				
+				Payload payload;
+				if(jwtToken instanceof SignedJWT) {
+					payload = ((SignedJWT)jwtToken).getPayload();
+				}else {
+					payload = ((PlainJWT)jwtToken).getPayload();
+				}
+				// Example Request JWT encrypted with RSA-OAEP-256 and 128-bit AES/GCM
+				//JWEHeader jweHeader = new JWEHeader(JWEAlgorithm.RSA1_5, EncryptionMethod.A128GCM);
+				
+				jweObject = new JWEObject(
+					    new JWEHeader.Builder(new JWEHeader(encryptAlgorithm,encryptionMethod))
+					        .contentType("JWT") // required to indicate nested JWT
+					        .build(),
+					        payload);
+				
+				jwtEncryptionService.encryptJwt(jweObject);
+				
+			} catch (NoSuchAlgorithmException | InvalidKeySpecException | JOSEException e) {
+				_logger.error("Encrypt Exception", e);
+			}
+		}
 		return data;
 	}
-
+	
 	@Override
-	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
+	public ModelAndView authorize(ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/jwt_sso_submint");
-		AppsJwtDetails details=(AppsJwtDetails)app;
-		modelAndView.addObject("action", details.getRedirectUri());
-		_logger.debug("jwt Token data : "+data);
+		modelAndView.addObject("action", jwtDetails.getRedirectUri());
 		
-		modelAndView.addObject("token",data);
-		
-		//return_to
+		modelAndView.addObject("token",serialize());
+		modelAndView.addObject("jwtName",jwtDetails.getJwtName());
 		
 		return modelAndView;
+	}
+
+	public void setJwtDetails(AppsJwtDetails jwtDetails) {
+		this.jwtDetails = jwtDetails;
+	}
+
+	@Override
+	public String serialize() {
+		String tokenString = "";
+		if(jweObject != null) {
+			tokenString = jweObject.serialize();
+		}else {
+			tokenString = jwtToken.serialize();
+		}
+		_logger.debug("jwt Token : {}" , tokenString);
+		return tokenString;
 	}
 
 }

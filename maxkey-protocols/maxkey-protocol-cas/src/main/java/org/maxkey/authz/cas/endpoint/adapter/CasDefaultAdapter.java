@@ -20,21 +20,25 @@ package org.maxkey.authz.cas.endpoint.adapter;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.codec.binary.Base64;
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.apps.AppsCasDetails;
 import org.maxkey.web.WebConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
+	final static Logger _logger = LoggerFactory.getLogger(CasDefaultAdapter.class);
 	
 	static String Charset_UTF8="UTF-8";
 	
+	ServiceResponseBuilder serviceResponseBuilder;
+	
 	@Override
-	public ModelAndView authorize(UserInfo userInfo, Object app, String data, ModelAndView modelAndView) {
+	public ModelAndView authorize(ModelAndView modelAndView) {
 
-		return null;
+		return modelAndView;
 	}
 
 	public String base64Attr(String attrValue){
@@ -48,8 +52,12 @@ public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
 	}
 	
 	@Override
-	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo, Object serviceResponseObject) {
-		ServiceResponseBuilder serviceResponseBuilder=(ServiceResponseBuilder)serviceResponseObject;
+	public Object generateInfo() {
+		//user for return 
+		String user = getValueByUserAttr(userInfo,((AppsCasDetails)this.app).getCasUser());
+		_logger.debug("cas user {}",user);
+		serviceResponseBuilder.success().setUser(user);
+		
 		//for user
 		serviceResponseBuilder.setAttribute("uid", userInfo.getId());
 		serviceResponseBuilder.setAttribute("displayName", base64Attr(userInfo.getDisplayName()));
@@ -69,7 +77,11 @@ public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
 		serviceResponseBuilder.setAttribute("institution", userInfo.getInstId());
 		serviceResponseBuilder.setAttribute(WebConstants.ONLINE_TICKET_NAME,authentication.getOnlineTicket().getTicketId());
 	
-		return null;
+		return serviceResponseBuilder;
+	}
+
+	public void setServiceResponseBuilder(ServiceResponseBuilder serviceResponseBuilder) {
+		this.serviceResponseBuilder = serviceResponseBuilder;
 	}
 
 }

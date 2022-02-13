@@ -17,6 +17,8 @@
 
 package org.maxkey.authz.oauth2.provider.userinfo.endpoint;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,18 +26,19 @@ import java.util.Set;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.maxkey.constants.ContentType;
-import org.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionService;
-import org.maxkey.crypto.jwt.encryption.service.impl.RecipientJwtEncryptionAndDecryptionServiceBuilder;
-import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
-import org.maxkey.crypto.jwt.signer.service.impl.SymmetricSigningAndValidationServiceBuilder;
-import org.maxkey.crypto.password.PasswordReciprocal;
+import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
+import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
+import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.persistence.service.AppsService;
@@ -54,14 +57,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.nimbusds.jose.EncryptionMethod;
+import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWEHeader;
+import com.nimbusds.jose.JWEObject;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jwt.EncryptedJWT;
+import com.nimbusds.jose.Payload;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTClaimsSet.Builder;
+import com.nimbusds.jwt.PlainJWT;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -69,8 +76,8 @@ import com.nimbusds.jwt.SignedJWT;
 
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
-public class OpenIdConnectUserInfoEndpoint {
-	final static Logger _logger = LoggerFactory.getLogger(OpenIdConnectUserInfoEndpoint.class);	
+public class UserInfoOIDCEndpoint {
+	final static Logger _logger = LoggerFactory.getLogger(UserInfoOIDCEndpoint.class);	
 	@Autowired
 	@Qualifier("oauth20JdbcClientDetailsService")
 	private ClientDetailsService clientDetailsService;
@@ -88,22 +95,6 @@ public class OpenIdConnectUserInfoEndpoint {
 	@Qualifier("appsService")
 	protected AppsService appsService;
 	
-	@Autowired
-	@Qualifier("jwtSignerValidationService")
-	private JwtSigningAndValidationService jwtSignerValidationService;
-	
-	@Autowired
-	@Qualifier("jwtEncryptionService")
-	private JwtEncryptionAndDecryptionService jwtEnDecryptionService; 
-	
-	
-	
-	private SymmetricSigningAndValidationServiceBuilder symmetricJwtSignerServiceBuilder
-					=new SymmetricSigningAndValidationServiceBuilder();
-
-	private RecipientJwtEncryptionAndDecryptionServiceBuilder recipientJwtEnDecryptionServiceBuilder
-					=new RecipientJwtEncryptionAndDecryptionServiceBuilder();
-
 	OAuthDefaultUserInfoAdapter defaultOAuthUserInfoAdapter=new OAuthDefaultUserInfoAdapter();
 	
     @Autowired
@@ -127,23 +118,31 @@ public class OpenIdConnectUserInfoEndpoint {
 			 
 			 principal=((SigninPrincipal)oAuth2Authentication.getPrincipal()).getUsername();
 			 
-			 Set<String >scopes=oAuth2Authentication.getOAuth2Request().getScope();
-			 ClientDetails clientDetails = clientDetailsService.loadClientByClientId(oAuth2Authentication.getOAuth2Request().getClientId());
+			 Set<String >scopes = oAuth2Authentication.getOAuth2Request().getScope();
+			 ClientDetails clientDetails = 
+					 clientDetailsService.loadClientByClientId(oAuth2Authentication.getOAuth2Request().getClientId(),true);
 			 
-			 UserInfo userInfo=queryUserInfo(principal);
-			 String userJson="";
+			 UserInfo userInfo = queryUserInfo(principal);
+			 String userJson = "";
 			 Builder jwtClaimsSetBuilder= new JWTClaimsSet.Builder();
 			 
 			 SigninPrincipal authentication = (SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal();
 			 
-			 jwtClaimsSetBuilder.claim("sub", userInfo.getId());
+			 String subject = AbstractAuthorizeAdapter.getValueByUserAttr(userInfo, clientDetails.getSubject());
+			 _logger.debug("userId : {} , username : {} , displayName : {} , subject : {}" , 
+					 userInfo.getId(),
+					 userInfo.getUsername(),
+					 userInfo.getDisplayName(),
+					 subject);
+			 
+			 jwtClaimsSetBuilder.claim("sub", subject);
 			 jwtClaimsSetBuilder.claim("institution", userInfo.getInstId());
 			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId());
 			 
 		 	if(scopes.contains("profile")){
 		 		jwtClaimsSetBuilder.claim("userId", userInfo.getId());
 		 		jwtClaimsSetBuilder.claim("user", userInfo.getUsername());
-		 		jwtClaimsSetBuilder.claim("name", userInfo.getUsername());
+		 		jwtClaimsSetBuilder.claim("name", userInfo.getDisplayName());
 		 		jwtClaimsSetBuilder.claim("preferred_username", userInfo.getDisplayName());
 		 		jwtClaimsSetBuilder.claim("given_name", userInfo.getGivenName());
 		 		jwtClaimsSetBuilder.claim("family_name", userInfo.getFamilyName());
@@ -151,7 +150,8 @@ public class OpenIdConnectUserInfoEndpoint {
 		 		jwtClaimsSetBuilder.claim("nickname", userInfo.getNickName());
 		 		jwtClaimsSetBuilder.claim("profile", "profile");
 		 		jwtClaimsSetBuilder.claim("picture", "picture");
-		 		jwtClaimsSetBuilder.claim("website", userInfo.getWebSite());
+		 		//jwtClaimsSetBuilder.claim("website", userInfo.getWebSite());
+		 		jwtClaimsSetBuilder.claim("displayName", userInfo.getDisplayName());
 		 		
 		 		jwtClaimsSetBuilder.claim("departmentId", userInfo.getDepartmentId());
 		 		jwtClaimsSetBuilder.claim("department", userInfo.getDepartment());
@@ -198,69 +198,88 @@ public class OpenIdConnectUserInfoEndpoint {
 					.jwtID(UUID.randomUUID().toString())// set a random NONCE in the middle of it
 					.audience(Arrays.asList(clientDetails.getClientId()))
 					.issueTime(new Date())
-					.expirationTime(new Date(new Date().getTime()+clientDetails.getAccessTokenValiditySeconds()*1000));
+					.expirationTime(new Date(new Date().getTime() + clientDetails.getAccessTokenValiditySeconds() * 1000));
+			
+			//default ContentType
+			response.setContentType(ContentType.APPLICATION_JWT_UTF8);
 			
 			JWTClaimsSet userInfoJWTClaims = jwtClaimsSetBuilder.build();
 			JWT userInfoJWT=null;
-			JWSAlgorithm signingAlg = jwtSignerValidationService.getDefaultSigningAlgorithm();
-			if (clientDetails.getUserInfoEncryptedAlgorithm() != null 
-			        && !clientDetails.getUserInfoEncryptedAlgorithm().equals("none")
-					&& clientDetails.getUserInfoEncryptionMethod() != null 
-					&& !clientDetails.getUserInfoEncryptionMethod().equals("none")
-					&&clientDetails.getJwksUri()!=null&&clientDetails.getJwksUri().length()>4
-					) {
-			    //需要加密
-			    response.setContentType(ContentType.APPLICATION_JWT_UTF8);
-				JwtEncryptionAndDecryptionService recipientJwtEnDecryptionService =
-						recipientJwtEnDecryptionServiceBuilder.serviceBuilder(clientDetails.getJwksUri());
-				
-				if (recipientJwtEnDecryptionService != null) {
-					JWEAlgorithm jweAlgorithm=new JWEAlgorithm(clientDetails.getUserInfoEncryptedAlgorithm());
-					EncryptionMethod encryptionMethod=new EncryptionMethod(clientDetails.getUserInfoEncryptionMethod());
-					EncryptedJWT encryptedJWT = new EncryptedJWT(new JWEHeader(jweAlgorithm, encryptionMethod), userInfoJWTClaims);
-					recipientJwtEnDecryptionService.encryptJwt(encryptedJWT);
-					userJson=encryptedJWT.serialize();
-				}else{
-					_logger.error("Couldn't find encrypter for client: " + clientDetails.getClientId());
-					HashMap<String,Object>authzException=new HashMap<String,Object>();
-					authzException.put(OAuth2Exception.ERROR, "error");
-					authzException.put(OAuth2Exception.DESCRIPTION,"Couldn't find encrypter for client: " + clientDetails.getClientId());
-					return JsonUtils.gson2Json(authzException);
-				}	
-			}else if (clientDetails.getUserInfoSigningAlgorithm()!=null 
-			        && !clientDetails.getUserInfoSigningAlgorithm().equals("none")) {
-			    //需要签名
-			    response.setContentType(ContentType.APPLICATION_JWT_UTF8);
-				// signed ID token
-				if (signingAlg.equals(JWSAlgorithm.HS256)
-						|| signingAlg.equals(JWSAlgorithm.HS384)
-						|| signingAlg.equals(JWSAlgorithm.HS512)) {
-					// sign it with the client's secret
-					String client_secret=PasswordReciprocal.getInstance().decoder(clientDetails.getClientSecret());
-					
-					JwtSigningAndValidationService symmetricJwtSignerService =symmetricJwtSignerServiceBuilder.serviceBuilder(client_secret);
-					if(symmetricJwtSignerService!=null){
-						userInfoJWTClaims = new JWTClaimsSet.Builder(userInfoJWTClaims).claim("kid", "SYMMETRIC-KEY").build();
-						userInfoJWT = new SignedJWT(new JWSHeader(signingAlg), userInfoJWTClaims);
-						symmetricJwtSignerService.signJwt((SignedJWT) userInfoJWT);
-					}else{
-						_logger.error("Couldn't create symmetric validator for client " + clientDetails.getClientId() + " without a client secret");
-					}
-				} else {
-					userInfoJWTClaims = new JWTClaimsSet.Builder(userInfoJWTClaims).claim("kid", jwtSignerValidationService.getDefaultSignerKeyId()).build();
-					userInfoJWT = new SignedJWT(new JWSHeader(signingAlg), userInfoJWTClaims);
-					// sign it with the server's key
-					jwtSignerValidationService.signJwt((SignedJWT) userInfoJWT);
+			
+			if(clientDetails.getUserInfoResponse().equalsIgnoreCase("NORMAL")) {
+				response.setContentType(ContentType.APPLICATION_JSON_UTF8);
+				userJson = userInfoJWTClaims.toString();
+			}else if (StringUtils.isNotBlank(clientDetails.getSignature()) 
+			        && !clientDetails.getSignature().equalsIgnoreCase("none")
+			        && clientDetails.getUserInfoResponse().equalsIgnoreCase("ENCRYPTION")) {
+			    //需要签名  signed ID token
+			    JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": ["+clientDetails.getSignatureKey()+"]}");
+				DefaultJwtSigningAndValidationService jwtSignerService = null;
+				try {
+					jwtSignerService = new DefaultJwtSigningAndValidationService(jwkSetKeyStore);
+				}catch(Exception e) {
+					_logger.error("Couldn't create Jwt Signing Service",e);
 				}
-				userJson=userInfoJWT.serialize();
+				
+				jwtSignerService.setDefaultSignerKeyId(clientDetails.getClientId() + "_sig");
+				jwtSignerService.setDefaultSigningAlgorithmName(clientDetails.getSignature());
+				
+				JWSAlgorithm signingAlg = jwtSignerService.getDefaultSigningAlgorithm();
+				_logger.trace(" signingAlg {}" , signingAlg);
+				userInfoJWTClaims = new JWTClaimsSet
+						.Builder(userInfoJWTClaims)
+						.claim("kid", jwtSignerService.getDefaultSignerKeyId())
+						.build();
+
+				userInfoJWT = new SignedJWT(new JWSHeader(signingAlg), userInfoJWTClaims);
+				// sign it with the server's key
+				jwtSignerService.signJwt((SignedJWT) userInfoJWT);
+				
+				userJson = userInfoJWT.serialize();
+			}else if (StringUtils.isNotBlank(clientDetails.getAlgorithm())
+			        && !clientDetails.getAlgorithm().equalsIgnoreCase("none")
+			        && clientDetails.getUserInfoResponse().equalsIgnoreCase("SIGNING")
+					) {
+			    //TODO: 需要加密
+			    JWKSetKeyStore jwkSetKeyStore_Enc = new JWKSetKeyStore("{\"keys\": ["+clientDetails.getAlgorithmKey()+"]}");
+				try {
+					DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
+								new DefaultJwtEncryptionAndDecryptionService(jwkSetKeyStore_Enc);
+					jwtEncryptionService.setDefaultEncryptionKeyId(clientDetails.getClientId()  + "_enc");
+					jwtEncryptionService.setDefaultAlgorithm(clientDetails.getAlgorithm());
+					JWEAlgorithm encryptAlgorithm = null;
+					if(clientDetails.getAlgorithm().startsWith("RSA")) {
+						encryptAlgorithm = jwtEncryptionService.getDefaultAlgorithm();
+					}else {
+						encryptAlgorithm = JWEAlgorithm.DIR;
+					}
+					_logger.trace(" encryptAlgorithm {}" , encryptAlgorithm);
+					EncryptionMethod encryptionMethod = 
+							jwtEncryptionService.parseEncryptionMethod(clientDetails.getEncryptionMethod());
+					
+					Payload payload = userInfoJWTClaims.toPayload();
+					
+					// Example Request JWT encrypted with RSA-OAEP-256 and 128-bit AES/GCM
+					//JWEHeader jweHeader = new JWEHeader(JWEAlgorithm.RSA1_5, EncryptionMethod.A128GCM);
+					
+					JWEObject jweObject = new JWEObject(
+						    new JWEHeader.Builder(new JWEHeader(encryptAlgorithm,encryptionMethod))
+						        .contentType("JWT") // required to indicate nested JWT
+						        .build(),
+						        payload);
+					
+					jwtEncryptionService.encryptJwt(jweObject);
+					userJson = jweObject.serialize();
+				} catch (NoSuchAlgorithmException | InvalidKeySpecException | JOSEException e) {
+					_logger.error("Couldn't create Jwt Encryption Exception", e);
+				}
 			}else {
-			    //不需要加密和签名
-                response.setContentType(ContentType.APPLICATION_JSON_UTF8);
-                // unsigned ID token
-                //userInfoJWT = new PlainJWT(userInfoJWTClaims);
-                userJson=JsonUtils.gson2Json(jwtClaimsSetBuilder.getClaims());
+			    //不需要加密和签名  unsigned ID token
+                userInfoJWT = new PlainJWT(userInfoJWTClaims);
+                userJson = userInfoJWT.serialize();
             }
-			 
+			
+			_logger.trace("OpenID Connect Response {}",userJson);
 			return userJson;
 			 
 		}catch(OAuth2Exception e){
@@ -280,9 +299,7 @@ public class OpenIdConnectUserInfoEndpoint {
 	}
 
 	public  UserInfo queryUserInfo(String userId){
-		_logger.debug("userId : "+userId);
-		UserInfo userInfo = (UserInfo) userInfoService.findByUsername(userId);
-		return userInfo;
+		return (UserInfo) userInfoService.findByUsername(userId);
 	}
 
 
@@ -295,16 +312,4 @@ public class OpenIdConnectUserInfoEndpoint {
 	public void setUserInfoService(UserInfoService userInfoService) {
 		this.userInfoService = userInfoService;
 	}
-
-//
-//
-//	public void setJwtSignerValidationService(
-//			JwtSigningAndValidationService jwtSignerValidationService) {
-//		this.jwtSignerValidationService = jwtSignerValidationService;
-//	}
-//
-//	public void setJwtEnDecryptionService(
-//			JwtEncryptionAndDecryptionService jwtEnDecryptionService) {
-//		this.jwtEnDecryptionService = jwtEnDecryptionService;
-//	}
 }

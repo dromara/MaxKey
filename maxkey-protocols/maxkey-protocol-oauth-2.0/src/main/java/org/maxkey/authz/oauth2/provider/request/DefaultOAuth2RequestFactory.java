@@ -85,7 +85,7 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
 				Collections.<String, String> emptyMap(), clientId, scopes, null, null, false, state, redirectUri,
 				responseTypes,codeChallenge,codeChallengeMethod);
 
-		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);		
+		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId,true);		
 		request.setResourceIdsAndAuthoritiesFromClientDetails(clientDetails);
 
 		return request;
@@ -133,7 +133,7 @@ public class DefaultOAuth2RequestFactory implements OAuth2RequestFactory {
 
 	private Set<String> extractScopes(Map<String, String> requestParameters, String clientId) {
 		Set<String> scopes = OAuth2Utils.parseParameterList(requestParameters.get(OAuth2Constants.PARAMETER.SCOPE));
-		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
+		ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId,true);
 
 		if ((scopes == null || scopes.isEmpty())) {
 			// If no scopes are specified in the incoming data, use the default values registered with the client

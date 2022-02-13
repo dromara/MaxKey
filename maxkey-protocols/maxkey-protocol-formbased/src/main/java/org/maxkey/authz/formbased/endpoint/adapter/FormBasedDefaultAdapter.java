@@ -19,37 +19,30 @@ package org.maxkey.authz.formbased.endpoint.adapter;
 
 import java.time.Instant;
 
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.crypto.DigestUtils;
-import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsFormBasedDetails;
 import org.springframework.web.servlet.ModelAndView;
 
 public class FormBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 
 	@Override
-	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
+	public Object generateInfo() {
 		return null;
 	}
-
+	
 	@Override
-	public String encrypt(String data, String algorithmKey, String algorithm) {
-		return null;
-	}
-
-	@Override
-	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
+	public ModelAndView authorize(ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/formbased_sso_submint");
 		AppsFormBasedDetails details=(AppsFormBasedDetails)app;
 		
-		String password = details.getAppUser().getRelatedPassword();
+		String password = account.getRelatedPassword();
         if(null==details.getPasswordAlgorithm()||details.getPasswordAlgorithm().equals("")){
         }else if(details.getPasswordAlgorithm().indexOf("HEX")>-1){
-            password = DigestUtils.digestHex(details.getAppUser().getRelatedPassword(),details.getPasswordAlgorithm().substring(0, details.getPasswordAlgorithm().indexOf("HEX")));
+            password = DigestUtils.digestHex(account.getRelatedPassword(),details.getPasswordAlgorithm().substring(0, details.getPasswordAlgorithm().indexOf("HEX")));
         }else{
-            password = DigestUtils.digestBase64(details.getAppUser().getRelatedPassword(),details.getPasswordAlgorithm());
+            password = DigestUtils.digestBase64(account.getRelatedPassword(),details.getPasswordAlgorithm());
         }
         
         modelAndView.addObject("id", details.getId());
@@ -58,9 +51,9 @@ public class FormBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 		modelAndView.addObject("loginUrl", details.getLoginUrl());
 		modelAndView.addObject("usernameMapping", details.getUsernameMapping());
 		modelAndView.addObject("passwordMapping", details.getPasswordMapping());
-		modelAndView.addObject("username", details.getAppUser().getRelatedUsername());    
+		modelAndView.addObject("username", account.getRelatedUsername());    
         modelAndView.addObject("password",  password);
-        modelAndView.addObject("timestamp",  ""+Instant.now().getEpochSecond());
+        modelAndView.addObject("timestamp",  "" + Instant.now().getEpochSecond());
 		
 	    if(ConstsBoolean.isTrue(details.getIsExtendAttr())){
 	        modelAndView.addObject("extendAttr", details.getExtendAttr());

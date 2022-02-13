@@ -50,7 +50,7 @@ public class CasDetailsController  extends BaseAppContorller {
 		AppsCasDetails casDetails =new AppsCasDetails();
 		casDetails.setId(casDetails.generateId());
 		casDetails.setProtocol(ConstsProtocols.CAS);
-		casDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.DES));
+		casDetails.setSecret(ReciprocalUtils.generateKey(""));
 		modelAndView.addObject("model",casDetails);
 		return modelAndView;
 	}

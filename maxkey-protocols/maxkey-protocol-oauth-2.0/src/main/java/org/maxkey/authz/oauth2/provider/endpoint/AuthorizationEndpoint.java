@@ -117,7 +117,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
             HttpServletRequest request,
             HttpServletResponse response,
             @PathVariable("id") String id){
-        ClientDetails  clientDetails =getClientDetailsService().loadClientByClientId(id);
+        ClientDetails  clientDetails =getClientDetailsService().loadClientByClientId(id,true);
         _logger.debug(""+clientDetails);
         String authorizationUrl = "";
         try {
@@ -169,7 +169,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 						"User must be authenticated with Spring Security before authorization can be completed.");
 			}
 
-			ClientDetails client = getClientDetailsService().loadClientByClientId(authorizationRequest.getClientId());
+			ClientDetails client = getClientDetailsService().loadClientByClientId(authorizationRequest.getClientId(),true);
 
 			// The resolved redirect URI is either the redirect_uri from the parameters or the one from
 			// clientDetails. Either way we need to store it on the AuthorizationRequest.

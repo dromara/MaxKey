@@ -83,7 +83,7 @@ public class OAuth20AccessConfirmationEndpoint {
 	        // Map<String, Object> model
 	        AuthorizationRequest clientAuth = 
 	                (AuthorizationRequest) WebContext.getAttribute("authorizationRequest");
-	        ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
+	        ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId(),true);
 	        Apps  app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
 	        WebContext.setAttribute(app.getId(), app.getIcon());
 	       

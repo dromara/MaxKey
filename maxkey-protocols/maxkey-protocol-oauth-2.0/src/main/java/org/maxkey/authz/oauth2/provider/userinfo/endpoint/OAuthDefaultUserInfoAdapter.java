@@ -19,24 +19,41 @@ package org.maxkey.authz.oauth2.provider.userinfo.endpoint;
 
 import java.util.HashMap;
 
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;
 import org.maxkey.web.WebConstants;
-import org.springframework.web.servlet.ModelAndView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OAuthDefaultUserInfoAdapter extends AbstractAuthorizeAdapter {
+	final static Logger _logger = LoggerFactory.getLogger(OAuthDefaultUserInfoAdapter.class);
+	ClientDetails clientDetails;
+	
+	public OAuthDefaultUserInfoAdapter() {}
+
+	public OAuthDefaultUserInfoAdapter(ClientDetails clientDetails) {
+		this.clientDetails = clientDetails;
+	}
 
 	@Override
-	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
+	public Object generateInfo() {
+		 String subject = AbstractAuthorizeAdapter.getValueByUserAttr(userInfo, clientDetails.getSubject());
+		 _logger.debug("userId : {} , username : {} , displayName : {} , subject : {}" , 
+				 userInfo.getId(),
+				 userInfo.getUsername(),
+				 userInfo.getDisplayName(),
+				 subject);
+		 
 		HashMap<String, Object> beanMap = new HashMap<String, Object>();
 		beanMap.put("randomId",(new StringGenerator()).uuidGenerate());
 		beanMap.put("userId", userInfo.getId());
 		//for spring security oauth2
-		beanMap.put("user", userInfo.getUsername());
-		beanMap.put("username", userInfo.getUsername());
+		beanMap.put("user", subject);
+		beanMap.put("username", subject);
+		
+		beanMap.put("displayName", userInfo.getDisplayName());
 		beanMap.put("employeeNumber", userInfo.getEmployeeNumber());
 		beanMap.put("email", userInfo.getEmail());
 		beanMap.put("mobile", userInfo.getMobile());
@@ -56,15 +73,11 @@ public class OAuthDefaultUserInfoAdapter extends AbstractAuthorizeAdapter {
 		return info;
 	}
 
-	@Override
-	public String encrypt(String data, String algorithmKey, String algorithm) {
-		return null;
+	public ClientDetails getClientDetails() {
+		return clientDetails;
 	}
 
-	@Override
-	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
-
-		return null;
+	public void setClientDetails(ClientDetails clientDetails) {
+		this.clientDetails = clientDetails;
 	}
-
 }

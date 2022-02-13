@@ -52,7 +52,6 @@ public class JwtDetailsController  extends BaseAppContorller {
 		jwtDetails.setId(jwtDetails.generateId());
 		jwtDetails.setProtocol(ConstsProtocols.JWT);
 		jwtDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.AES));
-		jwtDetails.setAlgorithmKey(jwtDetails.getSecret());
 		jwtDetails.setUserPropertys("userPropertys");
 		modelAndView.addObject("model",jwtDetails);
 		return modelAndView;
@@ -65,7 +64,6 @@ public class JwtDetailsController  extends BaseAppContorller {
 		
 		transform(jwtDetails);
 		
-		jwtDetails.setAlgorithmKey(jwtDetails.getSecret());
 		jwtDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (jwtDetailsService.insert(jwtDetails)&&appsService.insertApp(jwtDetails)) {
 			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
@@ -81,8 +79,6 @@ public class JwtDetailsController  extends BaseAppContorller {
 		ModelAndView modelAndView=new ModelAndView("apps/jwt/appUpdate");
 		AppsJwtDetails jwtDetails=jwtDetailsService.getAppDetails(id);
 		decoderSecret(jwtDetails);
-		String algorithmKey=passwordReciprocal.decoder(jwtDetails.getAlgorithmKey());
-		jwtDetails.setAlgorithmKey(algorithmKey);
 		WebContext.setAttribute(jwtDetails.getId(), jwtDetails.getIcon());
 
 		modelAndView.addObject("model",jwtDetails);
@@ -98,7 +94,6 @@ public class JwtDetailsController  extends BaseAppContorller {
 		//
 		_logger.debug("-update  application :" + jwtDetails);
 		transform(jwtDetails);
-		jwtDetails.setAlgorithmKey(jwtDetails.getSecret());
 		jwtDetails.setInstId(WebContext.getUserInfo().getInstId());
 		if (jwtDetailsService.update(jwtDetails)&&appsService.updateApp(jwtDetails)) {
 			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);

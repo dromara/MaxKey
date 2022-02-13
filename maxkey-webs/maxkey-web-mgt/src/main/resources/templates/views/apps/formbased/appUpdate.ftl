@@ -52,11 +52,16 @@ $(function(){
 				<tr>
 					<th><@locale code="apps.formbased.redirectUri"/></th>
 					<td colspan="3">
-						<input type="text" class="form-control" id="redirectUri" name="redirectUri"  title="" value="${model.redirectUri}"  required=""   />
+						<input type="text" class="form-control" id="redirectUri" name="redirectUri"  title="" value="${model.redirectUri!}"  required=""   />
 					</td>
 					
 				</tr> 
-				
+				<tr>
+                    <th><@locale code="apps.formbased.authorizeView"/></th>
+                    <td colspan =3>
+                        <input type="text" class="form-control" id="authorizeView" name="authorizeView"  title="" value="${model.authorizeView!}"/>
+                    </td>
+                </tr>
 				<tr>
 					<th style="width:15%;"><@locale code="apps.formbased.usernameMapping"/></th>
 					<td style="width:35%;">
@@ -86,15 +91,24 @@ $(function(){
 					</td>
 					<th><@locale code="apps.formbased.passwordAlgorithm"/></th>
 					<td>
-					   <input type="text" class="form-control" id="passwordAlgorithm" name="passwordAlgorithm"  title="" value="${model.passwordAlgorithm!}"/>
+					   <select id="passwordAlgorithm" name="passwordAlgorithm"  class="form-control  form-select" >
+					        <option value="NONE"     <#if  'NONE'==model.passwordAlgorithm >selected</#if> >NONE</option>
+                            <option value="MD5"      <#if  'MD5'==model.passwordAlgorithm >selected</#if> >MD5</option>
+                            <option value="SHA"      <#if  'SHA'==model.passwordAlgorithm >selected</#if> >SHA</option>
+                            <option value="SHA-1"    <#if  'SHA-1'==model.passwordAlgorithm >selected</#if>   >SHA-1</option>
+                            <option value="SHA-256"   <#if 'SHA-256'==model.passwordAlgorithm >selected</#if> >SHA-256</option>
+                            <option value="SHA-384"   <#if 'SHA-384'==model.passwordAlgorithm >selected</#if> >SHA-384</option>
+                            <option value="SHA-512"   <#if 'SHA-512'==model.passwordAlgorithm >selected</#if> >SHA-512</option>
+                            <option value="MD5-HEX"      <#if  'MD5-HEX'==model.passwordAlgorithm >selected</#if> >MD5-HEX</option>
+                            <option value="SHA-HEX"      <#if  'SHA-HEX'==model.passwordAlgorithm >selected</#if> >SHA-HEX</option>
+                            <option value="SHA-1-HEX"    <#if  'SHA-1-HEX'==model.passwordAlgorithm >selected</#if>  >SHA-1-HEX</option>
+                            <option value="SHA-256-HEX"  <#if 'SHA-256-HEX'==model.passwordAlgorithm >selected</#if> >SHA-256-HEX</option>
+                            <option value="SHA-384-HEX"  <#if 'SHA-384-HEX'==model.passwordAlgorithm >selected</#if> >SHA-384-HEX</option>
+                            <option value="SHA-512-HEX"  <#if 'SHA-512'==model.passwordAlgorithm >selected</#if> >SHA-512-HEX</option>
+                        </select>
 					</td>
 				</tr>
-				<tr>
-					<th><@locale code="apps.formbased.authorizeView"/></th>
-					<td colspan =3>
-						<input type="text" class="form-control" id="authorizeView" name="authorizeView"  title="" value="${model.authorizeView!}"/>
-					</td>
-				</tr>
+				
 				<tr id="systemconfigure"  <#if 1!=model.credential> style="display:none"</#if> >
 					<th><@locale code="apps.systemUserAttr"/></th>
 					<td colspan="3">
@@ -107,6 +121,8 @@ $(function(){
 								<@locale code="userinfo.username"/></option>
 							<option value="email" <#if 'email'==model.systemUserAttr>selected</#if> >
 								<@locale code="userinfo.email"/></option>
+							<option value="mobile" <#if 'mobile'==model.systemUserAttr>selected</#if> >
+                                <@locale code="userinfo.mobile"/></option>
 							<option value="windowsaccount" <#if 'windowsaccount'==model.systemUserAttr>selected</#if> >
 								<@locale code="userinfo.windowsAccount"/></option>
 						</select>

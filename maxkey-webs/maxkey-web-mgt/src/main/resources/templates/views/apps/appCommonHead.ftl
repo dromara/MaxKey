@@ -8,18 +8,27 @@
 <!--
 $(function(){	
 	$("#algorithm").change(function(){
-		$.post("<@base/>/apps/generate/secret/"+$(this).val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
-			$("#algorithmKey").val(data+"");
-			$("#algorithmKey_text").html(data+"");
-			$("#secret").val(data+"");
-			$("#secret_text").html(data+"");
-		});
+	   if($(this).val()=="NONE"){
+	       $("#algorithmKey").html("");
+	   }else{
+		  $.post("<@base/>/apps/generate/secret/"+$(this).val(), {id:$("#id").val(),_method:"post",currTime:(new Date()).getTime()}, function(data) {
+		      $("#algorithmKey").html(data+"");
+		  });
+	   }
 	}); 
 	
+	$("#signature").change(function(){
+	   if($(this).val()=="NONE"){
+           $("#signatureKey").html("");
+       }else{
+            $.post("<@base/>/apps/generate/secret/"+$(this).val(), {id:$("#id").val(),_method:"post",currTime:(new Date()).getTime()}, function(data) {
+                $("#signatureKey").html(data+"");
+            });
+        }
+    }); 
+	
 	$("#generateSecret").on("click",function(){
-		$.post("<@base/>/apps/generate/secret/"+$("#algorithm").val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
-			$("#algorithmKey").val(data+"");
-			$("#algorithmKey_text").html(data+"");
+		$.post("<@base/>/apps/generate/secret/random", {id:$("#id").val(),_method:"post",currTime:(new Date()).getTime()}, function(data) {
 			$("#secret").val(data+"");
 			$("#secret_text").html(data+"");
 		}); 

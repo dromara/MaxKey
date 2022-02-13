@@ -19,45 +19,26 @@ package org.maxkey.authz.formbased.endpoint.adapter;
 
 import java.util.Date;
 
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.crypto.DigestUtils;
-import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsFormBasedDetails;
 import org.springframework.web.servlet.ModelAndView;
 
 public class FormBasedNeteaseNoteYoudaoAdapter extends AbstractAuthorizeAdapter {
 
 	@Override
-	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
+	public Object generateInfo() {
 		return null;
 	}
 
-	@Override
-	public String encrypt(String data, String algorithmKey, String algorithm) {
-		return null;
-	}
 
 	@Override
-	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
+	public ModelAndView authorize(ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/formbased_wy_youdao_sso_submint");
 		AppsFormBasedDetails details=(AppsFormBasedDetails)app;
-		modelAndView.addObject("username", details.getAppUser().getRelatedUsername());
-		modelAndView.addObject("password",  DigestUtils.md5Hex(details.getAppUser().getRelatedPassword()));
+		modelAndView.addObject("username", account.getRelatedUsername());
+		modelAndView.addObject("password",  DigestUtils.md5Hex(account.getRelatedPassword()));
 		modelAndView.addObject("currentTime",  (new Date()).getTime());
-		
-		/*
-		if(BOOLEAN.isTrue(details.getIsExtendAttr())){
-			modelAndView.addObject("extendAttr", details.getExtendAttr());
-			modelAndView.addObject("isExtendAttr", true);
-		}else{
-			modelAndView.addObject("isExtendAttr", false);
-		}
-		
-		modelAndView.addObject("action", details.getRedirectUri());
-		modelAndView.addObject("usernameMapping", details.getUsernameMapping());
-		modelAndView.addObject("passwordMapping", details.getPasswordMapping());
-		*/
 		return modelAndView;
 	}
 

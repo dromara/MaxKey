@@ -55,9 +55,29 @@ $(function(){
 								</td>
 							</tr>
 							<tr>
+							    <th style="width:15%;"><@locale code="apps.cas.casUser" /></th>
+                                <td style="width:35%;">
+                                    <select id="casUser" name="casUser"  class="form-control  form-select">
+                                        <option value="userId">
+                                            <@locale code="userinfo.id"/></option>
+                                        <option value="employeeNumber">
+                                            <@locale code="userinfo.employeeNumber"/></option>
+                                        <option value="username"  selected>
+                                            <@locale code="userinfo.username"/></option>
+                                        <option value="email">
+                                            <@locale code="userinfo.email"/></option>
+                                        <option value="mobile">
+                                            <@locale code="userinfo.mobile"/></option>
+                                        <option value="windowsaccount">
+                                            <@locale code="userinfo.windowsAccount"/></option>
+                                    </select>
+                                </td>
 								<th style="width:15%;"><@locale code="apps.cas.expires"/></th>
-								<td  colspan=3>
-									<input type="text" class="form-control" id="expires" name="expires"  title="" value=""  required="30"  />
+								<td style="width:35%;">
+								    <div class="input-group">
+									    <input type="text" class="form-control" id="expires" name="expires"  title="" value="3"  required=""  />
+								        <span class="input-group-text">Minutes</span>
+                                    </div>
 								</td>
 							</tr>
 							

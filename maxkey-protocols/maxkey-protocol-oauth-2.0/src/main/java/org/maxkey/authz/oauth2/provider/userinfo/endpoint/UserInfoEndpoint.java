@@ -17,10 +17,14 @@
 
 package org.maxkey.authz.oauth2.provider.userinfo.endpoint;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
 import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
@@ -29,12 +33,9 @@ import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.maxkey.constants.ConstsBoolean;
-import org.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionService;
-import org.maxkey.crypto.jwt.encryption.service.impl.RecipientJwtEncryptionAndDecryptionServiceBuilder;
-import org.maxkey.crypto.jwt.signer.service.JwtSigningAndValidationService;
-import org.maxkey.crypto.jwt.signer.service.impl.SymmetricSigningAndValidationServiceBuilder;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
+import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.AuthorizationHeaderUtils;
@@ -51,6 +52,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -66,7 +68,6 @@ public class UserInfoEndpoint {
 	@Qualifier("oauth20TokenServices")
 	private DefaultTokenServices oauth20tokenServices;
 	
-	
 	@Autowired
 	@Qualifier("userInfoService")
 	private UserInfoService userInfoService;
@@ -74,25 +75,7 @@ public class UserInfoEndpoint {
 	@Autowired
 	@Qualifier("appsService")
 	protected AppsService appsService;
-	
-	@Autowired
-	@Qualifier("jwtSignerValidationService")
-	private JwtSigningAndValidationService jwtSignerValidationService;
-	
-	@Autowired
-	@Qualifier("jwtEncryptionService")
-	private JwtEncryptionAndDecryptionService jwtEnDecryptionService; 
-	
-	
-	
-	private SymmetricSigningAndValidationServiceBuilder symmetricJwtSignerServiceBuilder
-					=new SymmetricSigningAndValidationServiceBuilder();
 
-	private RecipientJwtEncryptionAndDecryptionServiceBuilder recipientJwtEnDecryptionServiceBuilder
-					=new RecipientJwtEncryptionAndDecryptionServiceBuilder();
-
-	OAuthDefaultUserInfoAdapter defaultOAuthUserInfoAdapter=new OAuthDefaultUserInfoAdapter();
-	
     @Autowired
     protected HttpResponseAdapter httpResponseAdapter;
 	
@@ -128,20 +111,29 @@ public class UserInfoEndpoint {
 				 principal=((SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal()).getUsername();
 				 
 				 String client_id= oAuth2Authentication.getOAuth2Request().getClientId();
+				 ClientDetails clientDetails = 
+						 clientDetailsService.loadClientByClientId(client_id,true);
+				 
 				 UserInfo userInfo=queryUserInfo(principal);
-				 Apps app=appsService.get(client_id);
+				 Apps app = appsService.get(client_id);
 				 
 				 AbstractAuthorizeAdapter adapter;
 				 if(ConstsBoolean.isTrue(app.getIsAdapter())){
 					adapter =(AbstractAuthorizeAdapter)Instance.newInstance(app.getAdapter());
+					try {
+						BeanUtils.setProperty(adapter, "clientDetails", clientDetails);
+					} catch (IllegalAccessException | InvocationTargetException e) {
+						_logger.error("setProperty error . ", e);
+					}
 				 }else{
-					adapter =(AbstractAuthorizeAdapter)defaultOAuthUserInfoAdapter;
+					adapter =(AbstractAuthorizeAdapter)new OAuthDefaultUserInfoAdapter(clientDetails);
 				 }
+				 adapter.setAuthentication((SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal());
+				 adapter.setUserInfo(userInfo);
+				 adapter.setApp(app);
 				 
-				String jsonData=adapter.generateInfo(
-				        (SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal(),
-				        userInfo, app);
-				httpResponseAdapter.write(response,jsonData,"json"); 
+				Object jsonData = adapter.generateInfo();
+				httpResponseAdapter.write(response,jsonData.toString(),"json"); 
 			}catch(OAuth2Exception e){
 				HashMap<String,Object>authzException=new HashMap<String,Object>();
 				authzException.put(OAuth2Exception.ERROR, e.getOAuth2ErrorCode());
@@ -175,15 +167,4 @@ public class UserInfoEndpoint {
 		this.userInfoService = userInfoService;
 	}
 
-//
-//
-//	public void setJwtSignerValidationService(
-//			JwtSigningAndValidationService jwtSignerValidationService) {
-//		this.jwtSignerValidationService = jwtSignerValidationService;
-//	}
-//
-//	public void setJwtEnDecryptionService(
-//			JwtEncryptionAndDecryptionService jwtEnDecryptionService) {
-//		this.jwtEnDecryptionService = jwtEnDecryptionService;
-//	}
 }

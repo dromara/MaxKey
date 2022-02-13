@@ -20,14 +20,17 @@
  */
 package org.maxkey.authz.token.endpoint;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.authz.jwt.endpoint.adapter.JwtDefaultAdapter;
+import org.maxkey.authz.jwt.endpoint.adapter.JwtAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.entity.apps.Apps;
@@ -59,8 +62,6 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	@Autowired
 	AppsJwtDetailsService jwtDetailsService;
 	
-	JwtDefaultAdapter jwtDefaultAdapter=new JwtDefaultAdapter();
-	
 	@Autowired
 	ApplicationConfig applicationConfig;
 	
@@ -83,44 +84,36 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		
 		AbstractAuthorizeAdapter adapter;
 		if(ConstsBoolean.isTrue(jwtDetails.getIsAdapter())){
-			adapter =(AbstractAuthorizeAdapter)Instance.newInstance(jwtDetails.getAdapter());
+			Object jwtAdapter = Instance.newInstance(jwtDetails.getAdapter());
+			try {
+				BeanUtils.setProperty(jwtAdapter, "jwtDetails", jwtDetails);
+			} catch (IllegalAccessException | InvocationTargetException e) {
+				_logger.error("setProperty error . ", e);
+			}
+			adapter = (AbstractAuthorizeAdapter)jwtAdapter;
 		}else{
-			adapter =(AbstractAuthorizeAdapter)jwtDefaultAdapter;
+			JwtAdapter jwtAdapter =new JwtAdapter(jwtDetails);
+			adapter = (AbstractAuthorizeAdapter)jwtAdapter;
 		}
 		
-		String tokenData=adapter.generateInfo(
-		        (SigninPrincipal)WebContext.getAuthentication().getPrincipal(),
-				WebContext.getUserInfo(), 
-				jwtDetails);
+		adapter.setAuthentication((SigninPrincipal)WebContext.getAuthentication().getPrincipal());
+		adapter.setUserInfo(WebContext.getUserInfo());
 		
-		String encryptTokenData=adapter.encrypt(
-				tokenData, 
-				jwtDetails.getAlgorithmKey(), 
-				jwtDetails.getAlgorithm());
-		
-		String signTokenData=adapter.sign(
-				encryptTokenData, 
-				jwtDetails);
+		adapter.generateInfo();
+		//sign
+		adapter.sign(null,jwtDetails.getSignatureKey(), jwtDetails.getSignature());
+		//encrypt
+		adapter.encrypt(null, jwtDetails.getAlgorithmKey(), jwtDetails.getAlgorithm());
 		
 		if(jwtDetails.getTokenType().equalsIgnoreCase("POST")) {
-			modelAndView=adapter.authorize(
-					WebContext.getUserInfo(), 
-					jwtDetails, 
-					signTokenData, 
-					modelAndView);
-			
-			return modelAndView;
+			return adapter.authorize(modelAndView);
 		}else {
+			_logger.debug("Cookie Name : {}" , jwtDetails.getJwtName());
 			
-			String cookieValue="";
-			cookieValue=signTokenData;
+			Cookie cookie= new Cookie(jwtDetails.getJwtName(),adapter.serialize());
 			
-			_logger.debug("Cookie Name : "+jwtDetails.getCookieName());
-			
-			Cookie cookie= new Cookie(jwtDetails.getCookieName(),cookieValue);
-			
-			Integer maxAge=Integer.parseInt(jwtDetails.getExpires())*60;
-			_logger.debug("Cookie Max Age :"+maxAge+" seconds.");
+			Integer maxAge = Integer.parseInt(jwtDetails.getExpires()) * 60;
+			_logger.debug("Cookie Max Age : {} seconds." , maxAge);
 			cookie.setMaxAge(maxAge);
 			
 			cookie.setPath("/");
@@ -129,7 +122,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			//tomcat 8.5
 			cookie.setDomain(applicationConfig.getBaseDomainName());
 			
-			_logger.debug("Sub Domain Name : "+"."+applicationConfig.getBaseDomainName());
+			_logger.debug("Sub Domain Name : .{}",applicationConfig.getBaseDomainName());
 			response.addCookie(cookie);
 			
 			if(jwtDetails.getRedirectUri().indexOf(applicationConfig.getBaseDomainName())>-1){

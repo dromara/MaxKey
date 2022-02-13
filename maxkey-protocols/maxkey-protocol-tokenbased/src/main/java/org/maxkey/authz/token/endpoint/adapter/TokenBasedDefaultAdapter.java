@@ -20,9 +20,7 @@ package org.maxkey.authz.token.endpoint.adapter;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsTokenBasedDetails;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
@@ -34,8 +32,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(TokenBasedDefaultAdapter.class);
+	String token = "";
+	
 	@Override
-	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
+	public Object generateInfo() {
 		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 		HashMap<String,String> beanMap=new HashMap<String,String>();
 		
@@ -90,24 +90,31 @@ public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 		
 		beanMap.put("expires", expiresString);
 		
-		String jsonString=JsonUtils.object2Json(beanMap);
-		_logger.debug("Token : "+jsonString);
+		token = JsonUtils.object2Json(beanMap);
+		_logger.debug("Token : {}",token);
 		
-		return jsonString;
+		return token;
 	}
 
 	@Override
-	public String encrypt(String data, String algorithmKey, String algorithm) {
-		return super.encrypt(data, algorithmKey, algorithm);
+	public Object encrypt(Object data, String algorithmKey, String algorithm) {
+		token = super.encrypt(token, algorithmKey, algorithm).toString();
+		return token;
 	}
 
 	@Override
-	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
+	public ModelAndView authorize(ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/tokenbased_sso_submint");
 		AppsTokenBasedDetails details=(AppsTokenBasedDetails)app;
 		modelAndView.addObject("action", details.getRedirectUri());
 		
-		modelAndView.addObject("token",data );
+		modelAndView.addObject("token",token );
 		return modelAndView;
 	}
+
+	@Override
+	public String serialize() {
+		return token;
+	}
+	
 }

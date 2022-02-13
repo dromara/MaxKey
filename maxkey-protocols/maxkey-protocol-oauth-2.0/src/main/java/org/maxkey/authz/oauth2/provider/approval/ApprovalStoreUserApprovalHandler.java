@@ -111,7 +111,7 @@ public class ApprovalStoreUserApprovalHandler implements UserApprovalHandler, In
 
 		if (clientDetailsService != null) {
 			try {
-				ClientDetails client = clientDetailsService.loadClientByClientId(clientId);
+				ClientDetails client = clientDetailsService.loadClientByClientId(clientId,true);
 				for (String scope : requestedScopes) {
 					if (client.isAutoApprove(scope) || client.isAutoApprove("all")) {
 						approvedScopes.add(scope);

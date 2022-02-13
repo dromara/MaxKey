@@ -122,7 +122,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 			}
 	
 			String clientId = getClientId((Authentication)principal);
-			ClientDetails authenticatedClient = getClientDetailsService().loadClientByClientId(clientId);
+			ClientDetails authenticatedClient = getClientDetailsService().loadClientByClientId(clientId,true);
 	
 			TokenRequest tokenRequest = getOAuth2RequestFactory().createTokenRequest(parameters, authenticatedClient);
 	

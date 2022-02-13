@@ -87,7 +87,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/oauth20/appUpdate");
-		BaseClientDetails baseClientDetails=(BaseClientDetails)oauth20JdbcClientDetailsService.loadClientByClientId(id);
+		BaseClientDetails baseClientDetails=(BaseClientDetails)oauth20JdbcClientDetailsService.loadClientByClientId(id,false);
 		Apps application=appsService.get(id);//
 		decoderSecret(application);
 		AppsOAuth20Details oauth20Details=new AppsOAuth20Details(application,baseClientDetails);

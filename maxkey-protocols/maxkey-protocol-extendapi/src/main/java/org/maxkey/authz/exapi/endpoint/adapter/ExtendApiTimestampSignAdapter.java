@@ -18,11 +18,10 @@
 package org.maxkey.authz.exapi.endpoint.adapter;
 
 import java.time.Instant;
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.crypto.DigestUtils;
+import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ExtraAttrs;
-import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,18 +42,20 @@ import org.springframework.web.servlet.ModelAndView;
 public class ExtendApiTimestampSignAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(ExtendApiTimestampSignAdapter.class);
 	
+	Accounts account;
+	
 	@Override
-	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
+	public Object generateInfo() {
 		return null;
 	}
 
 	@Override
-	public String encrypt(String data, String algorithmKey, String algorithm) {
+	public Object encrypt(Object data, String algorithmKey, String algorithm) {
 		return null;
 	}
 
 	@Override
-	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
+	public ModelAndView authorize(ModelAndView modelAndView) {
 		Apps details=(Apps)app;
 		
 		String code = details.getPrincipal();

@@ -45,7 +45,7 @@ public class ClientDetailsUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		ClientDetails clientDetails;
 		try {
-			clientDetails = clientDetailsService.loadClientByClientId(username);
+			clientDetails = clientDetailsService.loadClientByClientId(username,true);
 		} catch (NoSuchClientException e) {
 			throw new UsernameNotFoundException(e.getMessage(), e);
 		}

@@ -8,7 +8,7 @@
 <script type="text/javascript">
 <!--
 $(function(){		
-	$(".credential").on("click",function(){
+	$("#credential").on("click",function(){
 		if($(this).val()=="3"){
 			$("#sharedconfigure").hide();
 			$("#systemconfigure").hide();
@@ -54,8 +54,13 @@ $(function(){
 					<td colspan="3">
 						<input type="text"  class="form-control"  id="redirectUri" name="redirectUri"  title="" value=""  required="" />
 					</td>
-					
 				</tr>
+				<tr>
+                    <th><@locale code="apps.formbased.authorizeView"/></th>
+                    <td colspan =3>
+                        <input type="text"  class="form-control"  id="authorizeView" name="authorizeView"  title="" value=""/>
+                    </td>
+                </tr>
 				<tr>
 					<th style="width:15%;"><@locale code="apps.formbased.usernameMapping"/></th>
 					<td style="width:35%;">
@@ -71,24 +76,38 @@ $(function(){
 				<tr>
 					<th width="140px"><@locale code="apps.credential"/></th>
 					<td>
-						<input type="radio" id="credential-user-defined" name="credential" class="credential" value="3"  checked />
-						<@locale code="apps.credential.user-defined"/>
-						<input type="radio" id="credential-shared" name="credential" class="credential"  value="2" />
-						<@locale code="apps.credential.shared"/>
-						<input type="radio" id="credential-system" name="credential" class="credential"  value="1"  />
-						<@locale code="apps.credential.system"/>
+						<select id="credential" name="credential"  class="form-control  form-select" >
+                            <option value="3"   selected >
+                                <@locale code="apps.credential.user-defined"/>
+                            </option>
+                            <option value="2"   >
+                                <@locale code="apps.credential.shared"/>
+                            </option>
+                            <option value="1"   >
+                                <@locale code="apps.credential.system"/>
+                            </option>
+                        </select>   
 					</td>
 					<th><@locale code="apps.formbased.passwordAlgorithm"/></th>
                     <td>
-                       <input type="text" class="form-control" id="passwordAlgorithm" name="passwordAlgorithm"  title="" value=""/>
+                       <select id="passwordAlgorithm" name="passwordAlgorithm"  class="form-control  form-select" >
+                            <option value="NONE"  selected      >NONE</option>
+                            <option value="MD5"                 >MD5</option>
+                            <option value="SHA"                 >SHA</option>
+                            <option value="SHA-1"               >SHA-1</option>
+                            <option value="SHA-256"             >SHA-256</option>
+                            <option value="SHA-384"             >SHA-384</option>
+                            <option value="SHA-512"             >SHA-512</option>
+                            <option value="MD5-HEX"             >MD5-HEX</option>
+                            <option value="SHA-HEX"             >SHA-HEX</option>
+                            <option value="SHA-1-HEX"           >SHA-1-HEX</option>
+                            <option value="SHA-256-HEX"         >SHA-256-HEX</option>
+                            <option value="SHA-384-HEX"         >SHA-384-HEX</option>
+                            <option value="SHA-512-HEX"         >SHA-512-HEX</option>
+                        </select>
                     </td>
 				</tr>
-				<tr>
-					<th><@locale code="apps.formbased.authorizeView"/></th>
-					<td colspan =3>
-						<input type="text"  class="form-control"  id="authorizeView" name="authorizeView"  title="" value=""/>
-					</td>
-				</tr>
+				
 				<tr id="systemconfigure"  style="display:none">
 					<th><@locale code="apps.systemUserAttr"/></th>
 					<td colspan="3">
@@ -101,10 +120,11 @@ $(function(){
 								<@locale code="userinfo.username"/></option>
 							<option value="email">
 								<@locale code="userinfo.email"/></option>
+							<option value="mobile">
+                                 <@locale code="userinfo.mobile"/></option>
 							<option value="windowsaccount">
 								<@locale code="userinfo.windowsAccount"/></option>
 						</select>
-						<b class="orange">*</b><label for="systemUserAttr"></label>
 					</td>
 				</tr>
 				<tr id="sharedconfigure"  style="display:none">
@@ -117,16 +137,6 @@ $(function(){
 					<td>
 						<input type="text" id="sharedPassword"  class="form-control"  name="sharedPassword" value="" />
 
-					</td>
-				</tr>
-				<tr>
-					<th><@locale code="apps.extendAttr"/></th>
-					<td colspan="3">
-						<input type="checkbox" id="isExtendAttr" name="isExtendAttr" value="1"/>
-						<@locale code="apps.isExtendAttr"/>
-						<span  id="showExtendAttr" style="display:none">
-							<input  class="button"  type="button"  value='<@locale code="button.text.add"/>' id="addExtendAttr"/>
-						</span>
 					</td>
 				</tr>
 				</tbody>

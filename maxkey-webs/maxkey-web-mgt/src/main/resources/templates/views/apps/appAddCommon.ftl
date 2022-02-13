@@ -24,13 +24,13 @@
          </td>
       </tr>
       <tr>
-         <th></th>
+         <th><@locale code="apps.loginUrl"/></th>
          <td colspan="3">
             <input type="text" class="form-control"  id="loginUrl" name="loginUrl" size="100"  title="" value=""  required=""   />
          </td>
       </tr>
       <tr>
-         <th><@locale code="apps.loginUrl"/></th>
+         <th><@locale code="apps.logoutUrl"/></th>
          <td>
          	<input type="text" class="form-control"  id="logoutUrl" name="logoutUrl" size="100"  title="" value=""   />
          </td>

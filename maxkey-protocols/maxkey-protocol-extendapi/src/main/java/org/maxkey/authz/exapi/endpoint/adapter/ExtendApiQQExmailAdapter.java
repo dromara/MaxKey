@@ -18,12 +18,11 @@
 package org.maxkey.authz.exapi.endpoint.adapter;
 
 import java.util.HashMap;
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.client.oauth.OAuthClient;
 import org.maxkey.client.oauth.model.Token;
+import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ExtraAttrs;
-import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.util.HttpsTrusts;
 import org.maxkey.util.JsonUtils;
@@ -43,25 +42,20 @@ public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
 	//https://exmail.qq.com/qy_mng_logic/doc#10036
 	static String AUTHKEY_URI="https://api.exmail.qq.com/cgi-bin/service/get_login_url?access_token=%s&userid=%s";
 	
+	Accounts account;
+	
 	@Override
-	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
+	public Object generateInfo() {
 		return null;
 	}
 
-	@Override
-	public String encrypt(String data, String algorithmKey, String algorithm) {
-		return null;
-	}
 
 	@SuppressWarnings("unchecked")
     @Override
-	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
+	public ModelAndView authorize(ModelAndView modelAndView) {
 		HttpsTrusts.beforeConnection();
 		
 		Apps details=(Apps)app;
-		String username = data.substring(0, data.indexOf("="));
-		String password = data.substring(data.indexOf("=") + 1);
-		_logger.trace("username " + username +" password " + password);
 		//extraAttrs from Applications
 		ExtraAttrs extraAttrs=null;
 		if(details.getIsExtendAttr()==1){
@@ -74,7 +68,7 @@ public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
 		_logger.debug(""+token);
 		
 		OAuthClient authkeyRestClient=new OAuthClient(
-				String.format(AUTHKEY_URI,token.getAccess_token(),username));
+				String.format(AUTHKEY_URI,token.getAccess_token(),userInfo.getUsername()));
 		
 		HashMap<String, String> authKey=JsonUtils.gson2Object(authkeyRestClient.execute().getBody(), HashMap.class);
 		_logger.debug("authKey : "+authKey);

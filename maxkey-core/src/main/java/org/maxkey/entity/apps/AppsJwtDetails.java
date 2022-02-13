@@ -44,6 +44,15 @@ public class AppsJwtDetails  extends Apps {
 	@Column
 	@GeneratedValue(strategy=GenerationType.AUTO,generator="snowflakeid")
 	protected String id;
+	
+	@Column
+	private String subject;
+	
+	@Column
+	private String issuer;
+	
+	@Column
+	private String audience;
 	/**
 	 * 
 	 */
@@ -53,11 +62,17 @@ public class AppsJwtDetails  extends Apps {
 	@Column
 	private String tokenType;
 	@Column
-	private String cookieName;
+	private String jwtName;
 	@Column
 	private String algorithm;
 	@Column
 	private String algorithmKey;
+	@Column
+	private String encryptionMethod;
+	@Column
+	private String signature;
+	@Column
+	private String signatureKey;
 	@Column
 	private String expires;
 	@Column
@@ -80,7 +95,37 @@ public class AppsJwtDetails  extends Apps {
     }
 
 
-    public String getRedirectUri() {
+    public String getSubject() {
+		return subject;
+	}
+
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+
+	public String getIssuer() {
+		return issuer;
+	}
+
+
+	public void setIssuer(String issuer) {
+		this.issuer = issuer;
+	}
+
+
+	public String getAudience() {
+		return audience;
+	}
+
+
+	public void setAudience(String audience) {
+		this.audience = audience;
+	}
+
+
+	public String getRedirectUri() {
         return redirectUri;
     }
 
@@ -100,17 +145,19 @@ public class AppsJwtDetails  extends Apps {
     }
 
 
-    public String getCookieName() {
-        return cookieName;
-    }
 
 
-    public void setCookieName(String cookieName) {
-        this.cookieName = cookieName;
-    }
+    public String getJwtName() {
+		return jwtName;
+	}
 
 
-    public String getAlgorithm() {
+	public void setJwtName(String jwtName) {
+		this.jwtName = jwtName;
+	}
+
+
+	public String getAlgorithm() {
         return algorithm;
     }
 
@@ -130,7 +177,37 @@ public class AppsJwtDetails  extends Apps {
     }
 
 
-    public String getExpires() {
+    public String getEncryptionMethod() {
+		return encryptionMethod;
+	}
+
+
+	public void setEncryptionMethod(String encryptionMethod) {
+		this.encryptionMethod = encryptionMethod;
+	}
+
+
+	public String getSignature() {
+		return signature;
+	}
+
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
+
+	public String getSignatureKey() {
+		return signatureKey;
+	}
+
+
+	public void setSignatureKey(String signatureKey) {
+		this.signatureKey = signatureKey;
+	}
+
+
+	public String getExpires() {
         return expires;
     }
 
@@ -169,8 +246,8 @@ public class AppsJwtDetails  extends Apps {
 		builder.append(redirectUri);
 		builder.append(", tokenType=");
 		builder.append(tokenType);
-		builder.append(", cookieName=");
-		builder.append(cookieName);
+		builder.append(", jwtName=");
+		builder.append(jwtName);
 		builder.append(", algorithm=");
 		builder.append(algorithm);
 		builder.append(", algorithmKey=");

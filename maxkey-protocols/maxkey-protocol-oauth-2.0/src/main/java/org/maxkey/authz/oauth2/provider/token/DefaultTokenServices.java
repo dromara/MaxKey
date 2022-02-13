@@ -244,7 +244,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 		if (clientDetailsService != null) {
 			String clientId = result.getOAuth2Request().getClientId();
 			try {
-				clientDetailsService.loadClientByClientId(clientId);
+				clientDetailsService.loadClientByClientId(clientId,true);
 			}
 			catch (ClientRegistrationException e) {
 				throw new InvalidTokenException("Client not valid: " + clientId, e);
@@ -310,7 +310,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 	 */
 	protected int getAccessTokenValiditySeconds(OAuth2Request clientAuth) {
 		if (clientDetailsService != null) {
-			ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
+			ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId(),true);
 			Integer validity = client.getAccessTokenValiditySeconds();
 			if (validity != null) {
 				return validity;
@@ -327,7 +327,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 	 */
 	protected int getRefreshTokenValiditySeconds(OAuth2Request clientAuth) {
 		if (clientDetailsService != null) {
-			ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
+			ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId(),true);
 			Integer validity = client.getRefreshTokenValiditySeconds();
 			if (validity != null) {
 				return validity;
@@ -345,7 +345,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 	 */
 	protected boolean isSupportRefreshToken(OAuth2Request clientAuth) {
 		if (clientDetailsService != null) {
-			ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
+			ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId(),true);
 			return client.getAuthorizedGrantTypes().contains("refresh_token");
 		}
 		return this.supportRefreshToken;

@@ -90,7 +90,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		_logger.debug(""+casDetails);
 		Map<String, String> parameterMap = WebContext.getRequestParameterMap(request);
 		String service = casService;
-		_logger.debug("CAS Parameter service = " + service);
+		_logger.debug("CAS Parameter service = {}" , service);
 		if(casService.indexOf("?") >-1 ) {
 		    service = casService.substring(casService.indexOf("?") + 1);
 		    if(service.indexOf("=") > -1) {
@@ -99,7 +99,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		            parameterMap.put(parameterValues[0], parameterValues[1]);
 		        }
 		    }
-		    _logger.debug("CAS service with Parameter : " + service);
+		    _logger.debug("CAS service with Parameter : {}" , parameterMap);
 		}
 		WebContext.setAttribute(
     		        CasConstants.PARAMETER.PARAMETER_MAP, 
@@ -117,10 +117,10 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	        @AuthenticationPrincipal Object user,
 			HttpServletRequest request,
 			HttpServletResponse response){
-		AppsCasDetails casDetails=(AppsCasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
-		ServiceTicketImpl serviceTicket=new ServiceTicketImpl(WebContext.getAuthentication(),casDetails);
+		AppsCasDetails casDetails = (AppsCasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
+		ServiceTicketImpl serviceTicket = new ServiceTicketImpl(WebContext.getAuthentication(),casDetails);
 		
-		String ticket=ticketServices.createTicket(serviceTicket);
+		String ticket = ticketServices.createTicket(serviceTicket);
 		
 		StringBuffer callbackUrl = new StringBuffer(casDetails.getCallbackUrl());
 		if(casDetails.getCallbackUrl().indexOf("?")==-1) {
@@ -158,7 +158,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		    onlineTicketServices.store(onlineTicketId, onlineTicket);
 		}
 		
-		_logger.debug("redirect to CAS Client URL " + callbackUrl);
+		_logger.debug("redirect to CAS Client URL {}" , callbackUrl);
 		
 		ModelAndView modelAndView=new ModelAndView("authorize/cas_sso_submint");
 		modelAndView.addObject("callbackUrl", callbackUrl.toString());

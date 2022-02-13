@@ -20,8 +20,12 @@
  */
 package org.maxkey.authz.cas.endpoint;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
@@ -202,9 +206,6 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 		
 		if(storedTicket!=null){
 		    SigninPrincipal authentication = ((SigninPrincipal)storedTicket.getAuthentication().getPrincipal());
-			String principal=authentication.getUsername();
-			_logger.debug("principal "+principal);
-			serviceResponseBuilder.success().setUser(principal);
 			if(StringUtils.isNotBlank(pgtUrl)) {
 				ProxyGrantingTicketIOUImpl proxyGrantingTicketIOUImpl =new ProxyGrantingTicketIOUImpl();
 				String proxyGrantingTicketIOU=casProxyGrantingTicketServices.createTicket(proxyGrantingTicketIOUImpl);
@@ -219,9 +220,21 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 			}
 			
 			if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
-				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
-				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(principal);
-				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);
+				
+				Object samlAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
+				try {
+					BeanUtils.setProperty(samlAdapter, "serviceResponseBuilder", serviceResponseBuilder);
+				} catch (IllegalAccessException | InvocationTargetException e) {
+					_logger.error("setProperty error . ", e);
+				}
+				
+				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(authentication.getUsername());
+				
+				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)samlAdapter;
+				adapter.setAuthentication(authentication);
+				adapter.setUserInfo(userInfo);
+				adapter.setApp(storedTicket.getCasDetails());
+				adapter.generateInfo();
 			}
 		}else{
 			serviceResponseBuilder.failure()
@@ -324,14 +337,21 @@ Response on ticket validation failure:
 		
 		if(storedTicket!=null){
 		    SigninPrincipal authentication = ((SigninPrincipal)storedTicket.getAuthentication().getPrincipal());
-			String principal=authentication.getUsername();
-			_logger.debug("principal "+principal);
-			serviceResponseBuilder.success().setUser(principal);
-			
 			if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
-				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)Instance.newInstance(storedTicket.getCasDetails().getAdapter());
-				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(principal);
-				adapter.generateInfo(authentication,userInfo, serviceResponseBuilder);
+				Object samlAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
+				try {
+					BeanUtils.setProperty(samlAdapter, "serviceResponseBuilder", serviceResponseBuilder);
+				} catch (IllegalAccessException | InvocationTargetException e) {
+					_logger.error("setProperty error . ", e);
+				}
+				
+				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(authentication.getUsername());
+				
+				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)samlAdapter;
+				adapter.setAuthentication(authentication);
+				adapter.setUserInfo(userInfo);
+				adapter.setApp(storedTicket.getCasDetails());
+				adapter.generateInfo();
 			}
 		}else{
 			serviceResponseBuilder.failure()

@@ -58,9 +58,6 @@
 											<option value="DESede" <#if 'DESede'==model.algorithm>selected</#if>>DESede</option>
 											<option value="Blowfish" <#if 'Blowfish'==model.algorithm>selected</#if>>Blowfish</option>
 											<option value="AES" <#if 'AES'==model.algorithm>selected</#if>>AES</option>
-											<option value="HS256" <#if 'HS256'==model.algorithm>selected</#if>>HMAC SHA-256</option>
-											<option value="RS256" <#if 'RS256'==model.algorithm>selected</#if>>RSA SHA-256</option>
-											
 										</select>
 									</td>
 									<th style="width:15%;"><@locale code="apps.tokenbased.algorithmKey" /></th>

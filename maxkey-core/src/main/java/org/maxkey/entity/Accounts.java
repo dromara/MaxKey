@@ -87,13 +87,13 @@ public class Accounts extends JpaBaseEntity implements Serializable {
         this.id = id;
     }
 
-    public Accounts(String uid, String appId) {
-        this.userId = uid;
+    public Accounts(String userId, String appId) {
+        this.userId = userId;
         this.appId = appId;
     }
 
-    public Accounts(String uid, String appId, String password) {
-        this.userId = uid;
+    public Accounts(String userId, String appId, String password) {
+        this.userId = userId;
         this.appId = appId;
         this.relatedPassword = password;
     }
@@ -102,8 +102,8 @@ public class Accounts extends JpaBaseEntity implements Serializable {
         return userId;
     }
 
-    public void setUserId(String uid) {
-        this.userId = uid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {

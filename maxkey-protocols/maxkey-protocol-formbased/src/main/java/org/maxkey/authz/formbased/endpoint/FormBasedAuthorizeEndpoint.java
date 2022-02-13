@@ -22,6 +22,7 @@ package org.maxkey.authz.formbased.endpoint;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.formbased.endpoint.adapter.FormBasedDefaultAdapter;
@@ -62,40 +63,40 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	public ModelAndView authorize(
 			HttpServletRequest request,
 			@PathVariable("id") String id){
-		AppsFormBasedDetails formBasedDetails=formBasedDetailsService.getAppDetails(id);
-		_logger.debug(""+formBasedDetails);
-		Apps  application= getApp(id);
+		
+		AppsFormBasedDetails formBasedDetails = formBasedDetailsService.getAppDetails(id);
+		_logger.debug("formBasedDetails {}",formBasedDetails);
+		Apps  application = getApp(id);
 		formBasedDetails.setAdapter(application.getAdapter());
 		formBasedDetails.setIsAdapter(application.getIsAdapter());
 		ModelAndView modelAndView=null;
 		
-		Accounts appUser=getAccounts(formBasedDetails);
+		Accounts account = getAccounts(formBasedDetails);
+		_logger.debug("Accounts {}",account);
 		
-		_logger.debug("Accounts "+appUser);
-		if(appUser	==	null){
+		if(account	==	null){
 			return generateInitCredentialModelAndView(id,"/authz/formbased/"+id);
-			
 		}else{
-			formBasedDetails.setAppUser(appUser);
-			
 			modelAndView=new ModelAndView();
 			
 			AbstractAuthorizeAdapter adapter;
 			
 			if(ConstsBoolean.isTrue(formBasedDetails.getIsAdapter())){
-				adapter =(AbstractAuthorizeAdapter)Instance.newInstance(formBasedDetails.getAdapter());
+				Object formBasedAdapter = Instance.newInstance(formBasedDetails.getAdapter());
+				adapter =(AbstractAuthorizeAdapter)formBasedAdapter;
 			}else{
-				adapter =(AbstractAuthorizeAdapter)defaultFormBasedAdapter;
+				FormBasedDefaultAdapter formBasedDefaultAdapter =new FormBasedDefaultAdapter();
+				adapter =(AbstractAuthorizeAdapter)formBasedDefaultAdapter;
 			}
+			adapter.setAuthentication((SigninPrincipal)WebContext.getAuthentication().getPrincipal());
+			adapter.setUserInfo(WebContext.getUserInfo());
+			adapter.setApp(formBasedDetails);
+			adapter.setAccount(account);
 			
-			modelAndView=adapter.authorize(
-					WebContext.getUserInfo(), 
-					formBasedDetails, 
-					appUser.getRelatedUsername()+"."+appUser.getRelatedPassword(), 
-					modelAndView);
+			modelAndView = adapter.authorize(modelAndView);
 		}
 		
-		_logger.debug("FormBased View Name " + modelAndView.getViewName());
+		_logger.debug("FormBased View Name {}" , modelAndView.getViewName());
 		
 		return modelAndView;
 	}

@@ -57,9 +57,7 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(TokenBasedAuthorizeEndpoint.class);
 	@Autowired
 	AppsTokenBasedDetailsService tokenBasedDetailsService;
-	
-	TokenBasedDefaultAdapter defaultTokenBasedAdapter=new TokenBasedDefaultAdapter();
-	
+
 	@Autowired
 	ApplicationConfig applicationConfig;
 	
@@ -84,42 +82,28 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		if(ConstsBoolean.isTrue(tokenBasedDetails.getIsAdapter())){
 			adapter =(AbstractAuthorizeAdapter)Instance.newInstance(tokenBasedDetails.getAdapter());
 		}else{
-			adapter =(AbstractAuthorizeAdapter)defaultTokenBasedAdapter;
+			adapter =(AbstractAuthorizeAdapter)new TokenBasedDefaultAdapter();
 		}
+		adapter.setAuthentication((SigninPrincipal)WebContext.getAuthentication().getPrincipal());
+		adapter.setUserInfo(WebContext.getUserInfo());
+		adapter.setApp(tokenBasedDetails);
 		
-		String tokenData=adapter.generateInfo(
-		        (SigninPrincipal)WebContext.getAuthentication().getPrincipal(),
-				WebContext.getUserInfo(), 
-				tokenBasedDetails);
+		adapter.generateInfo();
 		
-		String encryptTokenData=adapter.encrypt(
-				tokenData, 
+		adapter.encrypt(
+				null, 
 				tokenBasedDetails.getAlgorithmKey(), 
 				tokenBasedDetails.getAlgorithm());
 		
-		String signTokenData=adapter.sign(
-				encryptTokenData, 
-				tokenBasedDetails);
-		
 		if(tokenBasedDetails.getTokenType().equalsIgnoreCase("POST")) {
-			modelAndView=adapter.authorize(
-					WebContext.getUserInfo(), 
-					tokenBasedDetails, 
-					signTokenData, 
-					modelAndView);
-			
-			return modelAndView;
+			return adapter.authorize(modelAndView);
 		}else {
+			_logger.debug("Cookie Name : {}" ,tokenBasedDetails.getCookieName());
 			
-			String cookieValue="";
-			cookieValue=signTokenData;
+			Cookie cookie= new Cookie(tokenBasedDetails.getCookieName(),adapter.serialize());
 			
-			_logger.debug("Cookie Name : "+tokenBasedDetails.getCookieName());
-			
-			Cookie cookie= new Cookie(tokenBasedDetails.getCookieName(),cookieValue);
-			
-			Integer maxAge=Integer.parseInt(tokenBasedDetails.getExpires())*60;
-			_logger.debug("Cookie Max Age :"+maxAge+" seconds.");
+			Integer maxAge=Integer.parseInt(tokenBasedDetails.getExpires()) * 60;
+			_logger.debug("Cookie Max Age : {} seconds.",maxAge);
 			cookie.setMaxAge(maxAge);
 			
 			cookie.setPath("/");
@@ -128,7 +112,7 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			//tomcat 8.5
 			cookie.setDomain(applicationConfig.getBaseDomainName());
 			
-			_logger.debug("Sub Domain Name : "+"."+applicationConfig.getBaseDomainName());
+			_logger.debug("Sub Domain Name : .{}",applicationConfig.getBaseDomainName());
 			response.addCookie(cookie);
 			
 			if(tokenBasedDetails.getRedirectUri().indexOf(applicationConfig.getBaseDomainName())>-1){

@@ -17,32 +17,25 @@
 
 package org.maxkey.authz.formbased.endpoint.adapter;
 
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.ConstsBoolean;
-import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsFormBasedDetails;
 import org.springframework.web.servlet.ModelAndView;
 
 public class FormBasedNetease163EmailAdapter extends AbstractAuthorizeAdapter {
-
+	
 	@Override
-	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
+	public String generateInfo() {
 		return null;
 	}
 
 	@Override
-	public String encrypt(String data, String algorithmKey, String algorithm) {
-		return null;
-	}
-
-	@Override
-	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
+	public ModelAndView authorize(ModelAndView modelAndView) {
 		modelAndView.setViewName("authorize/formbased_163email_sso_submint");
 		AppsFormBasedDetails details=(AppsFormBasedDetails)app;
-		modelAndView.addObject("username", details.getAppUser().getRelatedUsername().substring(details.getAppUser().getRelatedUsername().indexOf("@")));
-		modelAndView.addObject("email", details.getAppUser().getRelatedUsername());
-		modelAndView.addObject("password",  details.getAppUser().getRelatedPassword());
+		modelAndView.addObject("username", account.getRelatedUsername().substring(account.getRelatedUsername().indexOf("@")));
+		modelAndView.addObject("email", account.getRelatedUsername());
+		modelAndView.addObject("password",  account.getRelatedPassword());
 		
 		if(ConstsBoolean.isTrue(details.getIsExtendAttr())){
 			modelAndView.addObject("extendAttr", details.getExtendAttr());

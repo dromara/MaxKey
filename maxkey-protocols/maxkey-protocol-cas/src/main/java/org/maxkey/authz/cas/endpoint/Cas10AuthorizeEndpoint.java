@@ -97,14 +97,14 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
                 +" , renew " + renew
         );
 	    
-		Ticket storedTicket=null;
+		Ticket storedTicket = null;
 		try {
 			storedTicket = ticketServices.consumeTicket(ticket);
 		} catch (Exception e) {
 			_logger.error("consume Ticket error " , e);
 		}
 		
-		if(storedTicket!=null){
+		if(storedTicket != null){
 			String principal=((SigninPrincipal)storedTicket.getAuthentication().getPrincipal()).getUsername();
 			_logger.debug("principal "+principal);
 			return new Service10ResponseBuilder().success()

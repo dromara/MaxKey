@@ -82,15 +82,24 @@ public class BaseClientDetails implements ClientDetails {
 	private Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
 
 	//for OpenID Connect
-	private String idTokenSigningAlgorithm;
-	private String idTokenEncryptedAlgorithm;
-	private String idTokenEncryptionMethod;
 
-	private String userInfoSigningAlgorithm;
-	private String userInfoEncryptedAlgorithm;
-	private String userInfoEncryptionMethod;
+	private String issuer;
 	
-	private String jwksUri;
+	private String audience;
+	
+	private String algorithm;
+	
+	private String algorithmKey;
+	
+	private String encryptionMethod;
+	
+	private String signature;
+	
+	private String signatureKey;
+	
+	private String subject;
+	
+	private String userInfoResponse;
 	
 	private String approvalPrompt;
 	
@@ -310,65 +319,79 @@ public class BaseClientDetails implements ClientDetails {
 		this.additionalInformation.put(key, value);
 	}
 	
-	
-
-	public String getIdTokenEncryptedAlgorithm() {
-		return idTokenEncryptedAlgorithm;
+	public String getIssuer() {
+		return issuer;
 	}
 
-	public void setIdTokenEncryptedAlgorithm(String idTokenEncryptedAlgorithm) {
-		this.idTokenEncryptedAlgorithm = idTokenEncryptedAlgorithm;
+	public void setIssuer(String issuer) {
+		this.issuer = issuer;
 	}
 
-	public String getIdTokenSigningAlgorithm() {
-		return idTokenSigningAlgorithm;
+	public String getAudience() {
+		return audience;
 	}
 
-	public void setIdTokenSigningAlgorithm(String idTokenSigningAlgorithm) {
-		this.idTokenSigningAlgorithm = idTokenSigningAlgorithm;
+	public void setAudience(String audience) {
+		this.audience = audience;
 	}
 
-	public String getIdTokenEncryptionMethod() {
-		return idTokenEncryptionMethod;
+	public String getAlgorithm() {
+		return algorithm;
 	}
 
-	public void setIdTokenEncryptionMethod(String idTokenEncryptionMethod) {
-		this.idTokenEncryptionMethod = idTokenEncryptionMethod;
+	public void setAlgorithm(String algorithm) {
+		this.algorithm = algorithm;
 	}
 
-	public String getUserInfoSigningAlgorithm() {
-		return userInfoSigningAlgorithm;
+	public String getAlgorithmKey() {
+		return algorithmKey;
 	}
 
-	public void setUserInfoSigningAlgorithm(String userInfoSigningAlgorithm) {
-		this.userInfoSigningAlgorithm = userInfoSigningAlgorithm;
+	public void setAlgorithmKey(String algorithmKey) {
+		this.algorithmKey = algorithmKey;
 	}
 
-	public String getUserInfoEncryptedAlgorithm() {
-		return userInfoEncryptedAlgorithm;
+	public String getEncryptionMethod() {
+		return encryptionMethod;
 	}
 
-	public void setUserInfoEncryptedAlgorithm(String userInfoEncryptedAlgorithm) {
-		this.userInfoEncryptedAlgorithm = userInfoEncryptedAlgorithm;
+	public void setEncryptionMethod(String encryptionMethod) {
+		this.encryptionMethod = encryptionMethod;
 	}
 
-	public String getUserInfoEncryptionMethod() {
-		return userInfoEncryptionMethod;
+	public String getSignature() {
+		return signature;
 	}
 
-	public void setUserInfoEncryptionMethod(String userInfoEncryptionMethod) {
-		this.userInfoEncryptionMethod = userInfoEncryptionMethod;
+	public void setSignature(String signature) {
+		this.signature = signature;
 	}
 
-	public String getJwksUri() {
-		return jwksUri;
+	public String getSignatureKey() {
+		return signatureKey;
 	}
 
-	public void setJwksUri(String jwksUri) {
-		this.jwksUri = jwksUri;
+	public void setSignatureKey(String signatureKey) {
+		this.signatureKey = signatureKey;
 	}
 
 	
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getUserInfoResponse() {
+		return userInfoResponse;
+	}
+
+	public void setUserInfoResponse(String userInfoResponse) {
+		this.userInfoResponse = userInfoResponse;
+	}
+
 	public String getApprovalPrompt() {
         return approvalPrompt;
     }
@@ -492,49 +515,55 @@ public class BaseClientDetails implements ClientDetails {
 	}
 
 	@Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("BaseClientDetails [clientId=");
-        builder.append(clientId);
-        builder.append(", clientSecret=");
-        builder.append(clientSecret);
-        builder.append(", scope=");
-        builder.append(scope);
-        builder.append(", resourceIds=");
-        builder.append(resourceIds);
-        builder.append(", authorizedGrantTypes=");
-        builder.append(authorizedGrantTypes);
-        builder.append(", registeredRedirectUris=");
-        builder.append(registeredRedirectUris);
-        builder.append(", autoApproveScopes=");
-        builder.append(autoApproveScopes);
-        builder.append(", authorities=");
-        builder.append(authorities);
-        builder.append(", accessTokenValiditySeconds=");
-        builder.append(accessTokenValiditySeconds);
-        builder.append(", refreshTokenValiditySeconds=");
-        builder.append(refreshTokenValiditySeconds);
-        builder.append(", additionalInformation=");
-        builder.append(additionalInformation);
-        builder.append(", idTokenSigningAlgorithm=");
-        builder.append(idTokenSigningAlgorithm);
-        builder.append(", idTokenEncryptedAlgorithm=");
-        builder.append(idTokenEncryptedAlgorithm);
-        builder.append(", idTokenEncryptionMethod=");
-        builder.append(idTokenEncryptionMethod);
-        builder.append(", userInfoSigningAlgorithm=");
-        builder.append(userInfoSigningAlgorithm);
-        builder.append(", userInfoEncryptedAlgorithm=");
-        builder.append(userInfoEncryptedAlgorithm);
-        builder.append(", userInfoEncryptionMethod=");
-        builder.append(userInfoEncryptionMethod);
-        builder.append(", jwksUri=");
-        builder.append(jwksUri);
-        builder.append(", approvalPrompt=");
-        builder.append(approvalPrompt);
-        builder.append("]");
-        return builder.toString();
-    }
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("BaseClientDetails [clientId=");
+		builder.append(clientId);
+		builder.append(", clientSecret=");
+		builder.append(clientSecret);
+		builder.append(", scope=");
+		builder.append(scope);
+		builder.append(", resourceIds=");
+		builder.append(resourceIds);
+		builder.append(", authorizedGrantTypes=");
+		builder.append(authorizedGrantTypes);
+		builder.append(", registeredRedirectUris=");
+		builder.append(registeredRedirectUris);
+		builder.append(", autoApproveScopes=");
+		builder.append(autoApproveScopes);
+		builder.append(", authorities=");
+		builder.append(authorities);
+		builder.append(", accessTokenValiditySeconds=");
+		builder.append(accessTokenValiditySeconds);
+		builder.append(", refreshTokenValiditySeconds=");
+		builder.append(refreshTokenValiditySeconds);
+		builder.append(", additionalInformation=");
+		builder.append(additionalInformation);
+		builder.append(", issuer=");
+		builder.append(issuer);
+		builder.append(", audience=");
+		builder.append(audience);
+		builder.append(", algorithm=");
+		builder.append(algorithm);
+		builder.append(", algorithmKey=");
+		builder.append(algorithmKey);
+		builder.append(", encryptionMethod=");
+		builder.append(encryptionMethod);
+		builder.append(", signature=");
+		builder.append(signature);
+		builder.append(", signatureKey=");
+		builder.append(signatureKey);
+		builder.append(", approvalPrompt=");
+		builder.append(approvalPrompt);
+		builder.append(", pkce=");
+		builder.append(pkce);
+		builder.append(", protocol=");
+		builder.append(protocol);
+		builder.append(", instId=");
+		builder.append(instId);
+		builder.append("]");
+		return builder.toString();
+	}
 
 
 

@@ -110,7 +110,7 @@ public class TokenStoreUserApprovalHandler implements UserApprovalHandler, Initi
 		Set<String> scopes = authorizationRequest.getScope();
 		if (clientDetailsService!=null) {
 			try {
-				ClientDetails client = clientDetailsService.loadClientByClientId(clientId);
+				ClientDetails client = clientDetailsService.loadClientByClientId(clientId,true);
 				approved = true;
 				for (String scope : scopes) {
 					if (!client.isAutoApprove(scope)) {

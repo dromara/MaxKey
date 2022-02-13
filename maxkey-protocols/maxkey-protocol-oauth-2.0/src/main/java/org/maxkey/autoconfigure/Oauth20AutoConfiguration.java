@@ -166,13 +166,9 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "tokenEnhancer")
     public OIDCIdTokenEnhancer tokenEnhancer(
-            DefaultJwtSigningAndValidationService jwtSignerValidationService,
-            DefaultJwtEncryptionAndDecryptionService jwtEncryptionService,
             OIDCProviderMetadataDetails oidcProviderMetadata,
             ClientDetailsService oauth20JdbcClientDetailsService) {
         OIDCIdTokenEnhancer tokenEnhancer = new OIDCIdTokenEnhancer();
-        tokenEnhancer.setJwtSignerService(jwtSignerValidationService);
-        tokenEnhancer.setJwtEnDecryptionService(jwtEncryptionService);
         tokenEnhancer.setClientDetailsService(oauth20JdbcClientDetailsService);
         tokenEnhancer.setProviderMetadata(oidcProviderMetadata);
         _logger.debug("OIDC IdToken Enhancer init.");

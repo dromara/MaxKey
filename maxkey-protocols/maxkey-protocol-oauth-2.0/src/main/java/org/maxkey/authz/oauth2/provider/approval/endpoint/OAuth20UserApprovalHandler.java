@@ -75,7 +75,7 @@ public class OAuth20UserApprovalHandler extends ApprovalStoreUserApprovalHandler
 				Collection<String> requestedScopes = authorizationRequest.getScope();
 				try {
 					ClientDetails client = clientDetailsService
-							.loadClientByClientId(authorizationRequest.getClientId());
+							.loadClientByClientId(authorizationRequest.getClientId(),true);
 					for (String scope : requestedScopes) {
 						if (client.isAutoApprove(scope) || client.isAutoApprove("all")) {
 							approved = true;

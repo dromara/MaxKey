@@ -69,9 +69,8 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
     private static final String CLIENT_FIELDS_FOR_UPDATE = "RESOURCE_IDS, SCOPE, "
             + "AUTHORIZED_GRANT_TYPES, WEB_SERVER_REDIRECT_URI, AUTHORITIES, ACCESS_TOKEN_VALIDITY, "
             + "REFRESH_TOKEN_VALIDITY, ADDITIONAL_INFORMATION, AUTOAPPROVE, APPROVALPROMPT , "
-            + "IDTOKENSIGNINGALGORITHM, IDTOKENENCRYPTEDALGORITHM, IDTOKENENCRYPTIONMETHOD, "
-            + "USERINFOSIGNINGALGORITHM, USERINFOCRYPTEDALGORITHM, USERINFOENCRYPTIONMETHOD,"
-            +" JWKSURI, PKCE, PROTOCOL , INSTID ";
+            + "ALGORITHM, ALGORITHMKEY, ENCRYPTIONMETHOD, SIGNATURE, SIGNATUREKEY, SUBJECT, "
+            + "USERINFORESPONSE, ISSUER, AUDIENCE, PKCE, PROTOCOL , INSTID ";
 
     private static final String CLIENT_FIELDS = "client_secret, " + CLIENT_FIELDS_FOR_UPDATE;
 
@@ -83,7 +82,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
     private static final String DEFAULT_SELECT_STATEMENT = BASE_FIND_STATEMENT + " where client_id = ?";
 
     private static final String DEFAULT_INSERT_STATEMENT = "insert into mxk_apps_oauth_client_details (" + CLIENT_FIELDS
-            + ", client_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ", client_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     private static final String DEFAULT_UPDATE_STATEMENT = "update mxk_apps_oauth_client_details " + "set "
             + CLIENT_FIELDS_FOR_UPDATE.replaceAll(", ", "=?, ") + "=? where client_id = ?";
@@ -126,13 +125,18 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
         this.passwordEncoder = passwordEncoder;
     }
 
-    public ClientDetails loadClientByClientId(String clientId) {
+    public ClientDetails loadClientByClientId(String clientId,boolean cached) {
         // cache in memory
-        ClientDetails details = clientDetailsCache.getIfPresent(clientId);
+        ClientDetails details = null;
+        if(cached) {
+        	details = clientDetailsCache.getIfPresent(clientId);
+        }
         if(details == null) {
             try {
                 details = jdbcTemplate.queryForObject(selectClientDetailsSql, new ClientDetailsRowMapper(), clientId);
-                clientDetailsCache.put(clientId, details);
+                if(cached) {
+                	clientDetailsCache.put(clientId, details);
+                }
             } catch (EmptyResultDataAccessException e) {
                 throw new NoSuchClientException("No client with requested id: " + clientId);
             }
@@ -208,10 +212,11 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
                         : null,
                 clientDetails.getAccessTokenValiditySeconds(), clientDetails.getRefreshTokenValiditySeconds(), json,
                 getAutoApproveScopes(clientDetails),clientDetails.getApprovalPrompt(),
-                clientDetails.getIdTokenSigningAlgorithm(),
-                clientDetails.getIdTokenEncryptedAlgorithm(), clientDetails.getIdTokenEncryptionMethod(),
-                clientDetails.getUserInfoSigningAlgorithm(), clientDetails.getUserInfoEncryptedAlgorithm(),
-                clientDetails.getUserInfoEncryptionMethod(), clientDetails.getJwksUri(), 
+                clientDetails.getAlgorithm(),
+                clientDetails.getAlgorithmKey(), clientDetails.getEncryptionMethod(),
+                clientDetails.getSignature(), clientDetails.getSignatureKey(),
+                clientDetails.getSubject(),clientDetails.getUserInfoResponse(),
+                clientDetails.getIssuer(), clientDetails.getAudience(), 
                 clientDetails.getPkce(), clientDetails.getProtocol(),clientDetails.getInstId(),
                 
                 clientDetails.getClientId()
@@ -290,14 +295,16 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
                 details.setRefreshTokenValiditySeconds(rs.getInt(9));
             }
 
-            details.setIdTokenEncryptedAlgorithm(rs.getString("IDTOKENENCRYPTEDALGORITHM"));
-            details.setIdTokenEncryptionMethod(rs.getString("IDTOKENENCRYPTIONMETHOD"));
-            details.setIdTokenSigningAlgorithm(rs.getString("IDTOKENSIGNINGALGORITHM"));
+            details.setAlgorithm(rs.getString("algorithm"));
+            details.setAlgorithmKey(rs.getString("algorithmKey"));
+            details.setEncryptionMethod(rs.getString("encryptionMethod"));
 
-            details.setUserInfoEncryptedAlgorithm(rs.getString("USERINFOCRYPTEDALGORITHM"));
-            details.setUserInfoEncryptionMethod(rs.getString("USERINFOENCRYPTIONMETHOD"));
-            details.setUserInfoSigningAlgorithm(rs.getString("USERINFOSIGNINGALGORITHM"));
-            details.setJwksUri(rs.getString("JWKSURI"));
+            details.setSignature(rs.getString("signature"));
+            details.setSignatureKey(rs.getString("signatureKey"));
+            details.setSubject(rs.getString("subject"));
+            details.setUserInfoResponse(rs.getString("userInfoResponse"));
+            details.setAudience(rs.getString("audience"));
+            details.setIssuer(rs.getString("issuer"));
             details.setApprovalPrompt(rs.getString("APPROVALPROMPT"));
             details.setPkce(rs.getString("PKCE"));
             details.setProtocol(rs.getString("PROTOCOL"));

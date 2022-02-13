@@ -8,7 +8,7 @@
 <!--
 $(function(){		
 
-	$(".credential").on("click",function(){
+	$("#credential").on("click",function(){
 		if($(this).val()=="3"){
 			$("#sharedconfigure").hide();
 			$("#systemconfigure").hide();
@@ -58,13 +58,17 @@ $(function(){
 				<tr>
 					<th  style="width:15%;"><@locale code="apps.credential"/></th>
 					<td  style="width:35%;">
-						<input type="radio" id="credential-user-defined" name="credential" class="credential" value="3"  checked />
-						<@locale code="apps.credential.user-defined"/>
-						<input type="radio" id="credential-shared" name="credential" class="credential"  value="2" />
-						<@locale code="apps.credential.shared"/>
-						<input type="radio" id="credential-system" name="credential" class="credential"  value="1"  />
-						<@locale code="apps.credential.system"/>
-						
+						<select id="credential" name="credential"  class="form-control  form-select" >
+                            <option value="3"   selected >
+                                <@locale code="apps.credential.user-defined"/>
+                            </option>
+                            <option value="2"   >
+                                <@locale code="apps.credential.shared"/>
+                            </option>
+                            <option value="1"   >
+                                <@locale code="apps.credential.system"/>
+                            </option>
+                        </select> 
 					</td>
 					<th  style="width:15%;"></th>
 					<td  style="width:35%;">

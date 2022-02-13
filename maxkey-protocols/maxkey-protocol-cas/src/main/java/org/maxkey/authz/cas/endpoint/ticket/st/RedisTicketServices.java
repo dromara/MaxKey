@@ -53,15 +53,15 @@ public class RedisTicketServices extends RandomServiceTicketServices {
 	@Override
 	public void store(String ticketId, Ticket ticket) {
 		RedisConnection conn=connectionFactory.getConnection();
-		conn.setexObject(PREFIX+ticketId, serviceTicketValiditySeconds, ticket);
+		conn.setexObject(prefixTicketId(ticketId), serviceTicketValiditySeconds, ticket);
 		conn.close();
 	}
 
 	@Override
 	public Ticket remove(String ticketId) {
 		RedisConnection conn=connectionFactory.getConnection();
-		Ticket ticket = conn.getObject(PREFIX+ticketId);
-		conn.delete(PREFIX+ticketId);
+		Ticket ticket = conn.getObject(prefixTicketId(ticketId));
+		conn.delete(prefixTicketId(ticketId));
 		conn.close();
 		return ticket;
 	}
@@ -69,9 +69,13 @@ public class RedisTicketServices extends RandomServiceTicketServices {
     @Override
     public Ticket get(String ticketId) {
         RedisConnection conn=connectionFactory.getConnection();
-        Ticket ticket = conn.getObject(PREFIX+ticketId);
+        Ticket ticket = conn.getObject(prefixTicketId(ticketId));
         conn.close();
         return ticket;
+    }
+    
+    public String prefixTicketId(String ticketId) {
+    	return PREFIX + ticketId;
     }
 
 	

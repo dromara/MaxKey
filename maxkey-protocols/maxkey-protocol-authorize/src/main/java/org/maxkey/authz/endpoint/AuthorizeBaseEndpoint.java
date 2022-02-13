@@ -21,6 +21,7 @@
 package org.maxkey.authz.endpoint;
 
 import org.apache.commons.lang3.StringUtils;
+import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
@@ -73,34 +74,30 @@ public class AuthorizeBaseEndpoint {
 	}
 	
 	protected Accounts getAccounts(Apps app){
-		Accounts account=new Accounts();
-		UserInfo userInfo=WebContext.getUserInfo();
+		UserInfo userInfo = WebContext.getUserInfo();
 		Apps  loadApp = getApp(app.getId());
+		
+		Accounts account = new Accounts(userInfo.getId(),loadApp.getId());
+		account.setUsername(userInfo.getUsername());
+		account.setAppName(app.getName());
+		
 		if(loadApp.getCredential() == Apps.CREDENTIALS.USER_DEFINED){
 			account = accountsService.load(new Accounts(userInfo.getId(),loadApp.getId()));
 			if(account != null){
-				account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));
+				account.setRelatedPassword(
+						PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));
 			}
 			
 		}else if(loadApp.getCredential() == Apps.CREDENTIALS.SHARED){
 			account.setRelatedUsername(loadApp.getSharedUsername());
 			account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(loadApp.getSharedPassword()));	
-		
 		}else if(loadApp.getCredential() == Apps.CREDENTIALS.SYSTEM){
-			if(loadApp.getSystemUserAttr().equalsIgnoreCase("userId")){
-				account.setUsername(userInfo.getId());
-			}else if(loadApp.getSystemUserAttr().equalsIgnoreCase("username")){
-				account.setUsername(userInfo.getUsername());
-			}else if(loadApp.getSystemUserAttr().equalsIgnoreCase("employeeNumber")){
-				account.setUsername(userInfo.getEmployeeNumber());
-			}else if(loadApp.getSystemUserAttr().equalsIgnoreCase("email")){
-				account.setUsername(userInfo.getEmail());
-			}else if(loadApp.getSystemUserAttr().equalsIgnoreCase("windowsAccount")){
-				account.setUsername(userInfo.getWindowsAccount());
-			}
+			account.setUsername(
+					AbstractAuthorizeAdapter.getValueByUserAttr(userInfo, loadApp.getSystemUserAttr())
+			);
 			//decoder database stored encode password
-			account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(WebContext.getUserInfo().getDecipherable()));
-			
+			account.setRelatedPassword(
+					PasswordReciprocal.getInstance().decoder(WebContext.getUserInfo().getDecipherable()));
 		}else if(loadApp.getCredential()==Apps.CREDENTIALS.NONE){
 			account.setUsername(userInfo.getUsername());
 			account.setRelatedPassword(userInfo.getUsername());
@@ -110,8 +107,10 @@ public class AuthorizeBaseEndpoint {
 	}
 	
 	public ModelAndView generateInitCredentialModelAndView(String appId,String redirect_uri){
-		ModelAndView modelAndView=new ModelAndView("redirect:/authz/credential/forward?appId="+appId+"&redirect_uri="+redirect_uri);
+		ModelAndView modelAndView = 
+				new ModelAndView(String.format(InitCredentialURL,appId, redirect_uri));
 		return modelAndView;
 	}
 	
+	public static String InitCredentialURL = "redirect:/authz/credential/forward?appId=%s&redirect_uri=%s";
 }

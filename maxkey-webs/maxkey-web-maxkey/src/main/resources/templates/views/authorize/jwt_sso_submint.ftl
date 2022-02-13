@@ -11,7 +11,7 @@
 		<table style="width:100%">
 			<tr>
 				<td>token</td>
-				<td><input type="text" id="tokenbased_token" name="jwt" value="${token}" /></td>
+				<td><input type="text" id="tokenbased_token" name="${jwtName}" value="${token}" /></td>
 			</tr>
 			
 			<tr>

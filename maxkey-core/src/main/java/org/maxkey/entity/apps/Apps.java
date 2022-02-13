@@ -28,7 +28,6 @@ import javax.persistence.Table;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.maxkey.constants.ConstsBoolean;
-import org.maxkey.entity.Accounts;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
@@ -141,7 +140,6 @@ public class Apps extends JpaBaseEntity implements Serializable {
     @Column
     private String adapter;
 
-    protected Accounts appUser;
     @Column
     protected int sortIndex;
 
@@ -464,14 +462,6 @@ public class Apps extends JpaBaseEntity implements Serializable {
         this.adapter = adapter;
     }
 
-    public Accounts getAppUser() {
-        return appUser;
-    }
-
-    public void setAppUser(Accounts appUser) {
-        this.appUser = appUser;
-    }
-
     public String getPrincipal() {
         return principal;
     }
@@ -659,8 +649,6 @@ public class Apps extends JpaBaseEntity implements Serializable {
 		builder.append(adapterName);
 		builder.append(", adapter=");
 		builder.append(adapter);
-		builder.append(", appUser=");
-		builder.append(appUser);
 		builder.append(", sortIndex=");
 		builder.append(sortIndex);
 		builder.append(", status=");

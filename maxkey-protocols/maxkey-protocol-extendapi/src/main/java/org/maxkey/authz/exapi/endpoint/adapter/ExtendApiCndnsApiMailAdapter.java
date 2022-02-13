@@ -19,13 +19,12 @@ package org.maxkey.authz.exapi.endpoint.adapter;
 
 import java.time.Instant;
 import java.util.HashMap;
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.client.http.HttpVerb;
 import org.maxkey.client.oauth.OAuthClient;
 import org.maxkey.crypto.DigestUtils;
+import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ExtraAttrs;
-import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.util.HttpsTrusts;
 import org.maxkey.util.JsonUtils;
@@ -45,6 +44,8 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
 	//sign with parameter
 	//sign=md5(action=getUserInfo&appid=***&email=admin@maxkey.org&time=1579736456 + md5(token))
 
+	Accounts account;
+	
 	static String SIGN_STRING 		="action=getDomainInfo&appid=%s%s";
 	
 	static String SIGN_EMAIL_STRING ="action=getUserInfo&appid=%s&email=%s&time=%s%s";
@@ -55,18 +56,18 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
 	
 	
 	@Override
-	public String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app) {
+	public Object generateInfo() {
 		return null;
 	}
 
 	@Override
-	public String encrypt(String data, String algorithmKey, String algorithm) {
+	public Object encrypt(Object data, String algorithmKey, String algorithm) {
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
     @Override
-	public ModelAndView authorize(UserInfo userInfo, Object app, String data,ModelAndView modelAndView) {
+	public ModelAndView authorize(ModelAndView modelAndView) {
 		HttpsTrusts.beforeConnection();
 		
 		Apps details=(Apps)app;

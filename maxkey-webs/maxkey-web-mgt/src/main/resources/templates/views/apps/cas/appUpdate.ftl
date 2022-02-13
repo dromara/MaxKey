@@ -14,20 +14,9 @@
 <script type="text/javascript">
 <!--
 $(function(){	
-
-	$("#algorithm").change(function(){
-		$.post("<@base/>/apps/generate/secret/"+$(this).val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
-			$("#algorithmKey").val(data+"");
-			$("#algorithmKey_text").html(data+"");
-			$("#secret").val(data+"");
-			$("#secret_text").html(data+"");
-		});
-	}); 
 	
 	$("#generateSecret").on("click",function(){
-		$.post("<@base/>/apps/generate/secret/"+$("#algorithm").val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
-			$("#algorithmKey").val(data+"");
-			$("#algorithmKey_text").html(data+"");
+		$.post("<@base/>/apps/generate/secret/secret", {_method:"post",currTime:(new Date()).getTime()}, function(data) {
 			$("#secret").val(data+"");
 			$("#secret_text").html(data+"");
 		}); 
@@ -73,9 +62,29 @@ $(function(){
 									</td>
 								</tr>
 								<tr>
+								    <th style="width:15%;"><@locale code="apps.cas.casUser" /></th>
+                                    <td  style="width:35%;">
+                                        <select id="casUser" name="casUser"  class="form-control  form-select">
+                                            <option value="userId"   <#if 'userId'==model.casUser>selected</#if> >
+                                                <@locale code="userinfo.id"/></option>
+                                            <option value="employeeNumber" <#if 'employeeNumber'==model.casUser>selected</#if> >
+                                                <@locale code="userinfo.employeeNumber"/></option>
+                                            <option value="username" <#if 'username'==model.casUser>selected</#if> >
+                                                <@locale code="userinfo.username"/></option>
+                                            <option value="email" <#if 'email'==model.casUser>selected</#if> >
+                                                <@locale code="userinfo.email"/></option>
+                                            <option value="mobile" <#if 'mobile'==model.casUser>selected</#if> >
+                                                <@locale code="userinfo.mobile"/></option>
+                                            <option value="windowsaccount" <#if 'windowsaccount'==model.casUser>selected</#if> >
+                                                <@locale code="userinfo.windowsAccount"/></option>
+                                        </select>
+                                    </td>
 									<th style="width:15%;"><@locale code="apps.cas.expires"/></th>
-									<td  colspan=3>
-										<input type="text" class="form-control" id="expires" name="expires"  title="" value="${model.expires}"  required="30"  />
+									<td style="width:35%;">
+									   <div class="input-group">
+									       <input type="text" class="form-control" id="expires" name="expires"  title="" value="${model.expires}"  required="30"  />
+									       <span class="input-group-text">Minutes</span>
+									   </div>
 									</td>
 								</tr>
 								<tr>

@@ -46,7 +46,7 @@ public class BasicDetailsController  extends BaseAppContorller {
 		Apps appDetails =new Apps();
 		appDetails.setId(appDetails.generateId());
 		appDetails.setProtocol(ConstsProtocols.BASIC);
-		appDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.DES));
+		appDetails.setSecret(ReciprocalUtils.generateKey(""));
 		modelAndView.addObject("model",appDetails);
 		return modelAndView;
 	}

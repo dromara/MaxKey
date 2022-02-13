@@ -47,6 +47,16 @@ public class JWKSetKeyStore {
         this.jwkSet = jwkSet;
         initializeJwkSet();
     }
+    
+    public JWKSetKeyStore(String  jwkSetJsonString) {
+        try {
+			this.jwkSet = JWKSet.parse(jwkSetJsonString);
+		} catch (ParseException e) {
+			_logger.error("ParseException", e);
+		}
+        initializeJwkSet();
+    }
+    
 
     private void initializeJwkSet() {
 

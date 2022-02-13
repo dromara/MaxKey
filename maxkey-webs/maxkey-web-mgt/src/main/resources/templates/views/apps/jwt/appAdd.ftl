@@ -42,39 +42,115 @@
 											<option value="LTPA">轻量级认证(LTPA COOKIE)</option>
 										</select>
 									</td>
-									<th ><@locale code="apps.jwt.cookieName" /></th>
+									<th ><@locale code="apps.jwt.jwtName" /></th>
 									<td >
-										<input type="text" class="form-control" id="cookieName" name="cookieName"  title="" value=""/>
+										<input type="text" class="form-control" id="jwtName" name="jwtName"  title="" value="jwt"/>
 									</td>
-								</tr>
+							</tr>
+							<tr>
+                                    <th ><@locale code="apps.jwt.subject" /></th>
+                                    <td >
+                                        <select id="subject" name="subject"  class="form-control  form-select">
+                                            <option value="userId">
+                                                <@locale code="userinfo.id"/></option>
+                                            <option value="employeeNumber">
+                                                <@locale code="userinfo.employeeNumber"/></option>
+                                            <option value="username"  selected>
+                                                <@locale code="userinfo.username"/></option>
+                                            <option value="email">
+                                                <@locale code="userinfo.email"/></option>
+                                            <option value="mobile">
+                                                <@locale code="userinfo.mobile"/></option>
+                                            <option value="windowsaccount">
+                                                <@locale code="userinfo.windowsAccount"/></option>
+                                        </select>
+                                    </td>
+                                    <th ><@locale code="apps.jwt.issuer" /></th>
+                                    <td >
+                                        <input type="text" class="form-control" id="issuer" name="issuer"  title="" value="" required=""/>
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <th ><@locale code="apps.jwt.audience" /></th>
+                                    <td >
+                                         <input type="text" class="form-control" id="audience" name="audience"  title="" value="" required=""/>
+                                    </td>
+                                    <th ><@locale code="apps.jwt.expires" /></th>
+                                    <td >
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="expires" name="expires"  title="" value="1"  required="" />
+                                            <span class="input-group-text">Minutes</span>
+                                        </div>
+                                    </td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%;"><@locale code="apps.jwt.signature" /></th>
+                                <td style="width:35%;">
+                                    <select id="signature" name="signature"   class="form-control  form-select">
+                                        <option value="NONE" selected >NONE</option>
+                                        <option value="RS256"         >RS256</option>
+                                        <option value="RS384"         >RS384</option>
+                                        <option value="RS512"         >RS512</option>
+                                        <option value="HS256"         >HS256</option>
+                                        <option value="HS384"         >HS384</option>
+                                        <option value="HS512"         >HS512</option>
+                                    </select>
+                                </td>
+                                <th></th>
+                                <td>
+                                </td>
+                            </tr>
+                            <tr>
+                                    <th ><@locale code="apps.jwt.signatureKey" /></th>
+                                    <td colspan ="3">
+                                        <textarea class="form-control" id="signatureKey" name="signatureKey"></textarea>
+                                    </td>
+                            </tr>
 							<tr>
 								<th style="width:15%;"><@locale code="apps.jwt.algorithm" /></th>
 								<td style="width:35%;">
 									<select id="algorithm" name="algorithm"   class="form-control  form-select">
-										<option value="DES">DES</option>
-										<option value="DESede">DESede</option>
-										<option value="Blowfish">Blowfish</option>
-										<option value="AES"  selected>AES</option>
-										<option value="HS256"  >HMAC SHA-256</option>
-										<option value="RS256"  >RSA SHA-256</option>
+									    <option value="NONE" selected >NONE</option>
+										<option value="RSA1_5"       >RSA1_5</option>
+										<option value="RSA_OAEP"     >RSA_OAEP</option>
+										<option value="RSA-OAEP-256" >RSA-OAEP-256</option>
+										<option value="A128KW"       >A128KW</option>
+										<option value="A192KW"       >A192KW</option>
+										<option value="A256KW"       >A256KW</option>
+										<option value="A128GCMKW"    >A128GCMKW</option>
+										<option value="A192GCMKW"    >A192GCMKW</option>
+										<option value="A256GCMKW"    >A256GCMKW</option>
 									</select>
-									<b class="orange">*</b><label for="algorithm"></label>
 								</td>
-								<th width="140px"><@locale code="apps.jwt.algorithmKey" /></th>
+								<th width="140px"><@locale code="apps.jwt.encryptionMethod" /></th>
 								<td width="340px">
-									<span id="algorithmKey_text">${model.algorithmKey!}</span>
-									<input type="hidden" class="form-control" id="algorithmKey" name="algorithmKey"  title="" value="${model.algorithmKey!}"/>
-								
+									<select id="encryptionMethod" name="encryptionMethod"   class="form-control  form-select">
+                                        <option value="A128GCM"   selected      >A128GCM</option>
+                                        <option value="A192GCM"                 >A192GCM</option>
+                                        <option value="A256GCM"                 >A256GCM</option>
+                                        
+                                        <option value="A128CBC-HS256"           >A128CBC-HS256</option>
+                                        <option value="A192CBC-HS384"           >A192CBC-HS384</option>
+                                        <option value="A256CBC-HS512"           >A256CBC-HS512</option>
+                                        
+                                        <option value="XC20P"                   >XC20P</option>
+                                    </select>
 								</td>
 							</tr>
+							<tr>
+                                    <th ><@locale code="apps.jwt.algorithmKey" /></th>
+                                    <td colspan ="3">
+                                        <textarea class="form-control" id="algorithmKey" name="algorithmKey"></textarea>
+                                    </td>
+                            </tr>
 							<tr>
 								<th><@locale code="apps.jwt.content" /></th>
 								<td>
 									<#include  "../userPropertys.ftl"/>
 								</td>
-								<th><@locale code="apps.jwt.expires" /></th>
+								<th></th>
 								<td>
-									<input type="text" class="form-control" id="expires" name="expires"  title="" value="1"  required="" />
+									
 								</td>
 							</tr>
 							<tr>

@@ -77,6 +77,8 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 			appUser.setRelatedUsername(identity_username);
 			appUser.setRelatedPassword(PasswordReciprocal.getInstance().encode(identity_password));
 			
+			appUser.setInstId(WebContext.getUserInfo().getInstId());
+			
 			if(accountsService.insert(appUser)){
 				
 			}

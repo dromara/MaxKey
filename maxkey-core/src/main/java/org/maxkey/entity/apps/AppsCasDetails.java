@@ -44,6 +44,8 @@ public class AppsCasDetails extends Apps {
     private String callbackUrl;
 	@Column
 	private String instId;
+	@Column
+	private String casUser;
 
 	private String instName;
 
@@ -77,6 +79,14 @@ public class AppsCasDetails extends Apps {
 
 	public void setExpires(Integer expires) {
 		this.expires = expires;
+	}
+
+	public String getCasUser() {
+		return casUser;
+	}
+
+	public void setCasUser(String casUser) {
+		this.casUser = casUser;
 	}
 
 	public String getInstId() {

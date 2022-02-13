@@ -19,6 +19,7 @@ package org.maxkey.authz.endpoint.adapter;
 
 import java.io.UnsupportedEncodingException;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.crypto.Base64Utils;
@@ -26,6 +27,7 @@ import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.cert.CertSigner;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.password.PasswordReciprocal;
+import org.maxkey.entity.Accounts;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.web.WebContext;
@@ -36,51 +38,109 @@ import org.springframework.web.servlet.ModelAndView;
 public abstract class AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(AbstractAuthorizeAdapter.class);
 	
-	public  PasswordReciprocal passwordReciprocal=PasswordReciprocal.getInstance();
+	protected Apps app;
 	
-	public abstract ModelAndView authorize(UserInfo userInfo,Object app,String data,ModelAndView modelAndView);
+	protected UserInfo userInfo;
 	
-	public abstract String generateInfo(SigninPrincipal authentication,UserInfo userInfo,Object app);
+	protected Accounts account;
 	
-	public String  sign(String data,Apps app){
+	protected SigninPrincipal authentication;
+	
+	public abstract Object generateInfo();
+	
+	public  ModelAndView authorize(ModelAndView modelAndView) {
+		return modelAndView;
+	}
+	
+	public Object  sign(Object data,String signatureKey,String signature){
 		if(ConstsBoolean.isTrue(app.getIsSignature())){
-			KeyStoreLoader keyStoreLoader=WebContext.getBean("keyStoreLoader",KeyStoreLoader.class);
+			KeyStoreLoader keyStoreLoader = WebContext.getBean("keyStoreLoader",KeyStoreLoader.class);
 			try {	
-				byte[] signature= CertSigner.sign(data.getBytes(), keyStoreLoader.getKeyStore(), keyStoreLoader.getEntityName(), keyStoreLoader.getKeystorePassword());
+				byte[] signData= CertSigner.sign(data.toString().getBytes(), keyStoreLoader.getKeyStore(), keyStoreLoader.getEntityName(), keyStoreLoader.getKeystorePassword());
 				_logger.debug("signed Token : "+data);
-				_logger.debug("signature : "+signature.toString());
+				_logger.debug("signature : "+signData.toString());
 				
-				
-				data=Base64Utils.base64UrlEncode(data.getBytes("UTF-8"))+"."+Base64Utils.base64UrlEncode(signature);
+				return Base64Utils.base64UrlEncode(data.toString().getBytes("UTF-8"))+"."+Base64Utils.base64UrlEncode(signData);
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+				_logger.error("UnsupportedEncodingException " , e);
 			} catch (Exception e) {
-				e.printStackTrace();
+				_logger.error("Exception " , e);
 			}
-			_logger.debug("Token : "+data);
+			_logger.debug("Token {}" , data);
 			
 		}else{
 			_logger.debug("data not need sign .");
+			return data;
 		}
 		
-		return data;
+		return null;
 	}
 	
-	public  String encrypt(String data,String algorithmKey,String algorithm){
+	public  Object encrypt(Object data,String algorithmKey,String algorithm){
 		
-		algorithmKey=passwordReciprocal.decoder(algorithmKey);
+		algorithmKey = PasswordReciprocal.getInstance().decoder(algorithmKey);
 		_logger.debug("algorithm : "+algorithm);
 		_logger.debug("algorithmKey : "+algorithmKey);
 		//Chinese , encode data to HEX
 		try {
-			data = new String(Hex.encodeHex(data.getBytes("UTF-8")));
+			data = new String(Hex.encodeHex(data.toString().getBytes("UTF-8")));
 		} catch (UnsupportedEncodingException e) { 
 			e.printStackTrace();
 		}     
-		byte[] encodeData=ReciprocalUtils.encode(data, algorithmKey, algorithm);
-		String tokenString=Base64Utils.base64UrlEncode(encodeData);
+		byte[] encodeData = ReciprocalUtils.encode(data.toString(), algorithmKey, algorithm);
+		String tokenString = Base64Utils.base64UrlEncode(encodeData);
 		_logger.trace("Reciprocal then HEX  Token : "+tokenString);
 		
 		return tokenString;
 	}
+	
+	public static String getValueByUserAttr(UserInfo userInfo,String userAttr) {
+		String value = "";
+		if(StringUtils.isBlank(userAttr)) {
+			value = userInfo.getUsername();
+		}else if(userAttr.equalsIgnoreCase("username")){
+			value = userInfo.getUsername();
+		}else if(userAttr.equalsIgnoreCase("userId")){
+			value = userInfo.getId();
+		}else if(userAttr.equalsIgnoreCase("email")){
+			value = userInfo.getEmail();
+		}else if(userAttr.equalsIgnoreCase("mobile")){
+			value = userInfo.getMobile();
+		}else if(userAttr.equalsIgnoreCase("workEmail")) {
+			value = userInfo.getWorkEmail();
+		}else if(userAttr.equalsIgnoreCase("windowsAccount")){
+			value = userInfo.getWindowsAccount();
+		}else if(userAttr.equalsIgnoreCase("employeeNumber")){
+			value = userInfo.getEmployeeNumber();
+		}else {
+			value = userInfo.getId();
+		}
+		
+		if(StringUtils.isBlank(value)) {
+			value = userInfo.getUsername();
+		}
+		
+		return value;
+	}
+	
+	public  String serialize() {
+		return "";
+	};
+
+	public void setAuthentication(SigninPrincipal authentication) {
+		this.authentication = authentication;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	public void setApp(Apps app) {
+		this.app = app;
+	}
+
+	public void setAccount(Accounts account) {
+		this.account = account;
+	}	
+	
 }

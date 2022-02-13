@@ -132,21 +132,25 @@ public interface ClientDetails extends Serializable {
 	/*
 	 * for OpenID Connect
 	 */
-	public String getIdTokenEncryptedAlgorithm() ;
+	public String getIssuer() ;
 	
-	public String getIdTokenSigningAlgorithm() ;
+	public String getAudience() ;
 	
-	public String getIdTokenEncryptionMethod();
+	public String getAlgorithm();
 	
-	public String getUserInfoSigningAlgorithm();
+	public String getAlgorithmKey();
 	
-	public String getUserInfoEncryptedAlgorithm();
+	public String getEncryptionMethod();
 	
-	public String getUserInfoEncryptionMethod();
+	public String getSignature();
 	
-	public String getJwksUri();
+	public String getSignatureKey();
 	
 	public String getApprovalPrompt();
+	
+	public String getSubject();
+	
+	public String getUserInfoResponse();
 	
 	public String getPkce();
 	

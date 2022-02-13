@@ -37,6 +37,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWEAlgorithm;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.Requirement;
+import com.nimbusds.jose.jwk.KeyUse;
+import com.nimbusds.jose.jwk.OctetSequenceKey;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.gen.OctetSequenceKeyGenerator;
+import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
+
 
 @Controller
 @RequestMapping(value={"/apps"})
@@ -177,7 +187,7 @@ public class ApplicationsController extends BaseAppContorller {
 	
 	@ResponseBody
 	@RequestMapping(value = { "/generate/secret/{type}" })
-	public String generateSecret(@PathVariable("type") String type) {
+	public String generateSecret(@PathVariable("type") String type,@RequestParam(name="id",required=false) String id) throws JOSEException {
 		String secret="";
 		type=type.toLowerCase();
 		if(type.equals("des")){
@@ -188,6 +198,46 @@ public class ApplicationsController extends BaseAppContorller {
 			secret=ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.AES);
 		}else if(type.equals("blowfish")){
 			secret=ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.Blowfish);
+		}else if(type.equalsIgnoreCase("RS256")
+				||type.equalsIgnoreCase("RS384")
+				||type.equalsIgnoreCase("RS512")) {
+			RSAKey rsaJWK = new RSAKeyGenerator(2048)
+				    .keyID(id + "_sig")
+				    .keyUse(KeyUse.SIGNATURE)
+				    .algorithm(new JWSAlgorithm(type.toUpperCase(), Requirement.OPTIONAL))
+				    .generate();
+			secret = rsaJWK.toJSONString();
+		}else if(type.equalsIgnoreCase("HS256")
+				||type.equalsIgnoreCase("HS384")
+				||type.equalsIgnoreCase("HS512")) {
+			OctetSequenceKey octKey=  new OctetSequenceKeyGenerator(2048)
+					.keyID(id + "_sig")
+					.keyUse(KeyUse.SIGNATURE)
+					.algorithm(new JWSAlgorithm(type.toUpperCase(), Requirement.OPTIONAL))
+					.generate();
+			secret = octKey.toJSONString();
+		}else if(type.equalsIgnoreCase("RSA1_5")
+				||type.equalsIgnoreCase("RSA_OAEP")
+				||type.equalsIgnoreCase("RSA-OAEP-256")) {
+			RSAKey rsaJWK = new RSAKeyGenerator(2048)
+				    .keyID(id + "_enc")
+				    .keyUse(KeyUse.ENCRYPTION)
+				    .algorithm(new JWEAlgorithm(type.toUpperCase(), Requirement.OPTIONAL))
+				    .generate();
+			secret = rsaJWK.toJSONString();
+		}else if(type.equalsIgnoreCase("A128KW")
+				||type.equalsIgnoreCase("A192KW")
+				||type.equalsIgnoreCase("A256KW")
+				||type.equalsIgnoreCase("A128GCMKW")
+				||type.equalsIgnoreCase("A192GCMKW")
+				||type.equalsIgnoreCase("A256GCMKW")) {
+			int keyLength = Integer.parseInt(type.substring(1, 4));
+			OctetSequenceKey octKey=  new OctetSequenceKeyGenerator(keyLength)
+					.keyID(id + "_enc")
+					.keyUse(KeyUse.ENCRYPTION)
+					.algorithm(new JWEAlgorithm(type.toUpperCase(), Requirement.OPTIONAL))
+					.generate();
+			secret = octKey.toJSONString();
 		}else{
 			secret=ReciprocalUtils.generateKey("");
 		}

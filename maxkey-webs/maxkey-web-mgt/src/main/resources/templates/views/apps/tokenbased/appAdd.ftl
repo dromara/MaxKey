@@ -55,8 +55,6 @@
 										<option value="DESede">DESede</option>
 										<option value="Blowfish">Blowfish</option>
 										<option value="AES"  selected>AES</option>
-										<option value="HS256"  >HMAC SHA-256</option>
-										<option value="RS256"  >RSA SHA-256</option>
 									</select>
 									<b class="orange">*</b><label for="algorithm"></label>
 								</td>
