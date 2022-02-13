@@ -90,6 +90,8 @@ public class WebConstants {
     
     public static final  String ONLINE_TICKET_PREFIX = "OT";
     
+	public static final  String MXK_METADATA_PREFIX = "mxk_metadata_";
+	
     public static final class LOGIN_RESULT{
     	public static final  String SUCCESS 		= "success";
     	public static final  String FAIL 			= "fail";

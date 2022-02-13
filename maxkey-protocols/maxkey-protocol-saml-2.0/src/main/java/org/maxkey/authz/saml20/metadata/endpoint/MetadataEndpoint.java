@@ -26,6 +26,7 @@ import org.maxkey.authz.saml20.metadata.MetadataGenerator;
 import org.maxkey.constants.ContentType;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.entity.Saml20Metadata;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.opensaml.common.xml.SAMLConstants;
 import org.opensaml.saml2.core.NameIDType;
@@ -73,17 +74,15 @@ public class MetadataEndpoint {
 	private Saml20Metadata saml20Metadata;
 	
 	private Credential signingCredential;
-	
-	public static String IDP_METADATA_PREFIX = "Idp_Metadata_";
 
-	@Operation(summary = "SAML 2.0 元数据接口", description = "参数Idp_Metadata_应用ID",method="GET")
+	@Operation(summary = "SAML 2.0 元数据接口", description = "参数mxk_metadata_APPID",method="GET")
 	@RequestMapping(value = "/{appid}.xml",produces = "application/xml", method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String  metadata(HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("appid") String appId) {
 	    response.setContentType(ContentType.APPLICATION_XML_UTF8);
-	    appId = appId.substring(IDP_METADATA_PREFIX.length(), appId.length());
-		if(signingCredential==null){
+	    appId = appId.substring(WebConstants.MXK_METADATA_PREFIX.length(), appId.length());
+		if(signingCredential == null){
 	        TrustResolver trustResolver = new TrustResolver();
 	        CredentialResolver credentialResolver=(CredentialResolver)trustResolver.buildKeyStoreCredentialResolver(
 	        		keyStoreLoader.getKeyStore(),
@@ -96,7 +95,6 @@ public class MetadataEndpoint {
 	 		
 	 		 criteriaSet.add(new UsageCriteria(UsageType.SIGNING));
 	 		 
-			
 			try {
 				signingCredential = credentialResolver.resolveSingle(criteriaSet);
 			}catch (SecurityException e) {
@@ -121,7 +119,7 @@ public class MetadataEndpoint {
 	        
 	        descriptor.getSingleLogoutServices().add(metadataGenerator.getSingleLogoutService(WebContext.getHttpContextPath()+"/logout",null));
 	        
-	        descriptor.getManageNameIDServices().add(metadataGenerator.getManageNameIDService(WebContext.getHttpContextPath()+"/saml/metadata/"+IDP_METADATA_PREFIX+appId+".xml"));
+	        descriptor.getManageNameIDServices().add(metadataGenerator.getManageNameIDService(WebContext.getHttpContextPath()+"/saml/metadata/" + WebConstants.MXK_METADATA_PREFIX + appId + ".xml"));
 	             
 	        descriptor.getKeyDescriptors().add(metadataGenerator.generateEncryptionKeyDescriptor(signingCredential));  
 	         

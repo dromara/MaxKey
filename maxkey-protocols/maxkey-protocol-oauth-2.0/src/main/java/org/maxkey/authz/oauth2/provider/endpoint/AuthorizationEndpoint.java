@@ -42,6 +42,7 @@ import org.maxkey.authz.oauth2.provider.approval.UserApprovalHandler;
 import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.implicit.ImplicitTokenRequest;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestValidator;
+import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.util.HttpEncoder;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
@@ -58,6 +59,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -285,6 +287,29 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			sessionStatus.setComplete();
 		}
 
+	}
+	
+	@Operation(summary = "OAuth JWk 元数据接口", description = "参数mxk_metadata_APPID",method="GET")
+	@RequestMapping(value = "/metadata/oauth/v20/{appid}.json",produces = "application/json", method={RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
+	public String  metadata(HttpServletRequest request,
+			HttpServletResponse response, @PathVariable("appid") String appId) {
+		appId = appId.substring(WebConstants.MXK_METADATA_PREFIX.length(), appId.length());
+		ClientDetails  clientDetails = getClientDetailsService().loadClientByClientId(appId,true);
+		String jwkSetString = "";
+		if(!clientDetails.getSignature().equalsIgnoreCase("none")) {
+			jwkSetString = clientDetails.getSignatureKey();
+		}
+		if(!clientDetails.getAlgorithm().equalsIgnoreCase("none")) {
+			if(!StringUtils.hasText(jwkSetString)) {
+				jwkSetString = clientDetails.getAlgorithmKey();
+			}else {
+				jwkSetString = jwkSetString + "," +clientDetails.getAlgorithmKey();
+			}
+		}
+		JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
+		
+		return jwkSetKeyStore.getJwkSet().toPublicJWKSet().toString();
 	}
 
 	// We need explicit approval from the user.

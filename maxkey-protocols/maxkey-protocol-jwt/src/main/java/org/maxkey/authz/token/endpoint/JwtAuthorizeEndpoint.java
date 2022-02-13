@@ -27,16 +27,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.jwt.endpoint.adapter.JwtAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsBoolean;
+import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsJwtDetails;
 import org.maxkey.persistence.service.AppsJwtDetailsService;
 import org.maxkey.util.Instance;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +47,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -72,13 +77,9 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			HttpServletResponse response,
 			@PathVariable("id") String id){
 		ModelAndView modelAndView=new ModelAndView();
-		
-		
-		AppsJwtDetails jwtDetails=null;
-		jwtDetails=jwtDetailsService.getAppDetails(id);
+		Apps  application = getApp(id);
+		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(id);
 		_logger.debug(""+jwtDetails);
-		
-		Apps  application= getApp(id);
 		jwtDetails.setAdapter(application.getAdapter());
 		jwtDetails.setIsAdapter(application.getIsAdapter());
 		
@@ -135,4 +136,26 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		
 	}
 
+	@Operation(summary = "JWT JWK元数据接口", description = "参数mxk_metadata_APPID",method="GET")
+	@RequestMapping(value = "/metadata/jwt/{appid}.json",produces = "application/json", method={RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
+	public String  metadata(HttpServletRequest request,
+			HttpServletResponse response, @PathVariable("appid") String appId) {
+		appId = appId.substring(WebConstants.MXK_METADATA_PREFIX.length(), appId.length());
+		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(appId);
+		String jwkSetString = "";
+		if(!jwtDetails.getSignature().equalsIgnoreCase("none")) {
+			jwkSetString = jwtDetails.getSignatureKey();
+		}
+		if(!jwtDetails.getAlgorithm().equalsIgnoreCase("none")) {
+			if(StringUtils.isBlank(jwkSetString)) {
+				jwkSetString = jwtDetails.getAlgorithmKey();
+			}else {
+				jwkSetString = jwkSetString + "," +jwtDetails.getAlgorithmKey();
+			}
+		}
+		JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
+		
+		return jwkSetKeyStore.getJwkSet().toPublicJWKSet().toString();
+	}
 }
