@@ -26,6 +26,8 @@ public interface TicketServices {
 	 * @return The generated code.
 	 */
 	String createTicket(Ticket ticket);
+	
+	String createTicket(Ticket ticket , int validitySeconds);
 
 	/**
 	 * Consume a authorization code.
@@ -38,6 +40,8 @@ public interface TicketServices {
 			throws Exception;
 	
 	public  void store(String ticketId, Ticket ticket);
+	
+	public  void store(String ticketId, Ticket ticket, int validitySeconds);
 
     public  Ticket remove(String ticket);
     

@@ -102,7 +102,7 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			
 			Cookie cookie= new Cookie(tokenBasedDetails.getCookieName(),adapter.serialize());
 			
-			Integer maxAge=Integer.parseInt(tokenBasedDetails.getExpires()) * 60;
+			Integer maxAge = tokenBasedDetails.getExpires();
 			_logger.debug("Cookie Max Age : {} seconds.",maxAge);
 			cookie.setMaxAge(maxAge);
 			

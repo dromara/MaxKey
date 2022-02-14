@@ -20,6 +20,7 @@ package org.maxkey.authz.token.endpoint.adapter;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.joda.time.DateTime;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.entity.apps.AppsTokenBasedDetails;
 import org.maxkey.util.DateUtils;
@@ -78,15 +79,14 @@ public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 		 * use UTC date time format
 		 * current date plus expires minute 
 		 */
-		Integer expiresLong=Integer.parseInt(details.getExpires());
-		Date currentDate=new Date();
-		Date expiresDate=DateUtils.addMinutes(currentDate,expiresLong);
-		String expiresString=DateUtils.toUtc(expiresDate);
-		_logger.debug("UTC Local current date : "+DateUtils.toUtcLocal(currentDate));
-		_logger.debug("UTC  current Date : "+DateUtils.toUtc(currentDate));
-		_logger.debug("UTC  expires Date : "+DateUtils.toUtc(expiresDate));
+		DateTime currentDateTime = DateTime.now();
+		Date expirationTime = currentDateTime.plusSeconds(details.getExpires()).toDate();
+		String expiresString = DateUtils.toUtc(expirationTime);
+		_logger.debug("UTC Local current date : "+DateUtils.toUtcLocal(currentDateTime.toDate()));
+		_logger.debug("UTC  current Date : "+DateUtils.toUtc(currentDateTime));
+		_logger.debug("UTC  expires Date : "+DateUtils.toUtc(currentDateTime));
 		
-		beanMap.put("at", DateUtils.toUtc(currentDate));
+		beanMap.put("at", DateUtils.toUtc(currentDateTime));
 		
 		beanMap.put("expires", expiresString);
 		

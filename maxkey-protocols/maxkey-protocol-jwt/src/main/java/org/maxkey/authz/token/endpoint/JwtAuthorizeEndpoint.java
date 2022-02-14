@@ -114,7 +114,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			
 			Cookie cookie= new Cookie(jwtDetails.getJwtName(),adapter.serialize());
 			
-			Integer maxAge = Integer.parseInt(jwtDetails.getExpires()) * 60;
+			Integer maxAge = jwtDetails.getExpires();
 			_logger.debug("Cookie Max Age : {} seconds." , maxAge);
 			cookie.setMaxAge(maxAge);
 			

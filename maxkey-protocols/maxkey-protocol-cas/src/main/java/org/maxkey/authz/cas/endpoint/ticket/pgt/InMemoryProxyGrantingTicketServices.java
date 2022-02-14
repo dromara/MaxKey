@@ -36,6 +36,11 @@ public class InMemoryProxyGrantingTicketServices extends RandomServiceTicketServ
 	
 	@Override
 	public void store(String ticketId, Ticket ticket) {
+		store(ticketId, ticket , 60 * 3);
+	}
+
+	@Override
+	public void store(String ticketId, Ticket ticket, int validitySeconds) {
 		casTicketStore.put(ticketId, ticket);
 	}
 

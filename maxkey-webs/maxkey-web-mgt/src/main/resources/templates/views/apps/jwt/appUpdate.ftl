@@ -82,7 +82,7 @@
                                     <td >
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="expires" name="expires"  title="" value="${model.expires!}"  required="" />
-                                            <span class="input-group-text">Minutes</span>
+                                            <span class="input-group-text">Seconds</span>
                                         </div>
                                     </td>
                             </tr>

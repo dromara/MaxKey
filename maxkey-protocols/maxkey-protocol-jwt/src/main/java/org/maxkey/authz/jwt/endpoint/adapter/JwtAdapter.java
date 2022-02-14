@@ -65,7 +65,7 @@ public class JwtAdapter extends AbstractAuthorizeAdapter {
 	@Override
 	public Object generateInfo() {
 		DateTime currentDateTime = DateTime.now();
-		Date expirationTime = currentDateTime.plusMinutes(Integer.parseInt(jwtDetails.getExpires())).toDate();
+		Date expirationTime = currentDateTime.plusSeconds(jwtDetails.getExpires()).toDate();
 		_logger.debug("expiration Time : {}" , expirationTime);
 		String subject = getValueByUserAttr(userInfo,jwtDetails.getSubject());
 		_logger.trace("jwt subject : {}" , subject);

@@ -119,8 +119,8 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			HttpServletResponse response){
 		AppsCasDetails casDetails = (AppsCasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
 		ServiceTicketImpl serviceTicket = new ServiceTicketImpl(WebContext.getAuthentication(),casDetails);
-		
-		String ticket = ticketServices.createTicket(serviceTicket);
+
+		String ticket = ticketServices.createTicket(serviceTicket,casDetails.getExpires());
 		
 		StringBuffer callbackUrl = new StringBuffer(casDetails.getCallbackUrl());
 		if(casDetails.getCallbackUrl().indexOf("?")==-1) {

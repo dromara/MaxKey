@@ -75,8 +75,8 @@ $(function(){
 								<th style="width:15%;"><@locale code="apps.cas.expires"/></th>
 								<td style="width:35%;">
 								    <div class="input-group">
-									    <input type="text" class="form-control" id="expires" name="expires"  title="" value="3"  required=""  />
-								        <span class="input-group-text">Minutes</span>
+									    <input type="text" class="form-control" id="expires" name="expires"  title="" value="180"  required=""  />
+								        <span class="input-group-text">Seconds</span>
                                     </div>
 								</td>
 							</tr>

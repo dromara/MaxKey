@@ -52,9 +52,15 @@ public class RedisTicketServices extends RandomServiceTicketServices {
 
 	@Override
 	public void store(String ticketId, Ticket ticket) {
+		store(ticketId,ticket,serviceTicketValiditySeconds);
+	}
+
+	@Override
+	public void store(String ticketId, Ticket ticket, int validitySeconds) {
 		RedisConnection conn=connectionFactory.getConnection();
-		conn.setexObject(prefixTicketId(ticketId), serviceTicketValiditySeconds, ticket);
+		conn.setexObject(prefixTicketId(ticketId), validitySeconds, ticket);
 		conn.close();
+		
 	}
 
 	@Override

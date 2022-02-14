@@ -74,7 +74,7 @@ public class AppsJwtDetails  extends Apps {
 	@Column
 	private String signatureKey;
 	@Column
-	private String expires;
+	private Integer expires;
 	@Column
 	private String instId;
 
@@ -207,12 +207,12 @@ public class AppsJwtDetails  extends Apps {
 	}
 
 
-	public String getExpires() {
+	public Integer getExpires() {
         return expires;
     }
 
 
-    public void setExpires(String expires) {
+    public void setExpires(Integer expires) {
         this.expires = expires;
     }
 

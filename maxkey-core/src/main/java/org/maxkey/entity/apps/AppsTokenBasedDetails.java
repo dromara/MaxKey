@@ -59,7 +59,7 @@ public class AppsTokenBasedDetails  extends Apps {
 	@Column
 	private String algorithmKey;
 	@Column
-	private String expires;
+	private Integer expires;
 	@Column
 	private String instId;
 
@@ -130,12 +130,12 @@ public class AppsTokenBasedDetails  extends Apps {
     }
 
 
-    public String getExpires() {
+    public Integer getExpires() {
         return expires;
     }
 
 
-    public void setExpires(String expires) {
+    public void setExpires(Integer expires) {
         this.expires = expires;
     }
 

@@ -78,8 +78,8 @@
                                     <th ><@locale code="apps.jwt.expires" /></th>
                                     <td >
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="expires" name="expires"  title="" value="1"  required="" />
-                                            <span class="input-group-text">Minutes</span>
+                                            <input type="text" class="form-control" id="expires" name="expires"  title="" value="180"  required="" />
+                                            <span class="input-group-text">Seconds</span>
                                         </div>
                                     </td>
                             </tr>

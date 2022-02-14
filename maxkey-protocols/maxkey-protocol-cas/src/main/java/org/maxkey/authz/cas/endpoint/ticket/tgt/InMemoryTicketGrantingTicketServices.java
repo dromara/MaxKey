@@ -35,7 +35,13 @@ public class InMemoryTicketGrantingTicketServices extends RandomServiceTicketSer
 	
 	@Override
 	public void store(String ticketId, Ticket ticket) {
-	    casTicketGrantingTicketStore.put(ticketId, ticket);
+		store(ticketId, ticket , 60 * 3);
+	}
+
+	@Override
+	public void store(String ticketId, Ticket ticket, int validitySeconds) {
+		casTicketGrantingTicketStore.put(ticketId, ticket);
+		
 	}
 
 	@Override
