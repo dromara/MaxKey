@@ -25,7 +25,6 @@ import java.util.UUID;
 
 import org.joda.time.DateTime;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.maxkey.entity.apps.AppsJwtDetails;
@@ -34,12 +33,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWEHeader;
 import com.nimbusds.jose.JWEObject;
-import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jwt.JWT;
@@ -101,15 +97,18 @@ public class JwtAdapter extends AbstractAuthorizeAdapter {
 	@Override
 	public Object sign(Object data,String signatureKey,String signature) {
 		if(!jwtDetails.getSignature().equalsIgnoreCase("none")) {
-			JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": ["+jwtDetails.getSignatureKey()+"]}");
 			try {
 				DefaultJwtSigningAndValidationService jwtSignerService = 
-							new DefaultJwtSigningAndValidationService(jwkSetKeyStore);
-				jwtSignerService.setDefaultSignerKeyId(jwtDetails.getId() + "_sig");
-				jwtSignerService.setDefaultSigningAlgorithmName(jwtDetails.getSignature());
-				JWSAlgorithm signingAlg = jwtSignerService.getDefaultSigningAlgorithm();
-				_logger.trace(" signingAlg {}" , signingAlg);
-				jwtToken = new SignedJWT(new JWSHeader(signingAlg), jwtClaims);
+							new DefaultJwtSigningAndValidationService(
+									jwtDetails.getSignatureKey(),
+									jwtDetails.getId() + "_sig",
+									jwtDetails.getSignature()
+								);
+				
+				jwtToken = new SignedJWT(
+								new JWSHeader(jwtSignerService.getDefaultSigningAlgorithm()), 
+								jwtClaims
+							);
 				// sign it with the server's key
 				jwtSignerService.signJwt((SignedJWT) jwtToken);
 				return jwtToken;
@@ -127,22 +126,14 @@ public class JwtAdapter extends AbstractAuthorizeAdapter {
 	@Override
 	public Object encrypt(Object data, String algorithmKey, String algorithm) {
 		if(!jwtDetails.getAlgorithm().equalsIgnoreCase("none")) {
-			JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": ["+jwtDetails.getAlgorithmKey()+"]}");
 			try {
 				DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
-							new DefaultJwtEncryptionAndDecryptionService(jwkSetKeyStore);
-				jwtEncryptionService.setDefaultEncryptionKeyId(jwtDetails.getId()  + "_enc");
-				jwtEncryptionService.setDefaultAlgorithm(jwtDetails.getAlgorithm());
-				JWEAlgorithm encryptAlgorithm = null;
-				if(jwtDetails.getAlgorithm().startsWith("RSA")) {
-					encryptAlgorithm = jwtEncryptionService.getDefaultAlgorithm();
-				}else {
-					encryptAlgorithm = JWEAlgorithm.DIR;
-				}
-				_logger.trace(" encryptAlgorithm {}" , encryptAlgorithm);
-				EncryptionMethod encryptionMethod = 
-						jwtEncryptionService.parseEncryptionMethod(jwtDetails.getEncryptionMethod());
-				
+							new DefaultJwtEncryptionAndDecryptionService(
+									jwtDetails.getAlgorithmKey(),
+									jwtDetails.getId()  + "_enc",
+									jwtDetails.getAlgorithm()
+								);
+
 				Payload payload;
 				if(jwtToken instanceof SignedJWT) {
 					payload = ((SignedJWT)jwtToken).getPayload();
@@ -151,9 +142,12 @@ public class JwtAdapter extends AbstractAuthorizeAdapter {
 				}
 				// Example Request JWT encrypted with RSA-OAEP-256 and 128-bit AES/GCM
 				//JWEHeader jweHeader = new JWEHeader(JWEAlgorithm.RSA1_5, EncryptionMethod.A128GCM);
-				
+				JWEHeader jweHeader = new JWEHeader(
+						jwtEncryptionService.getDefaultAlgorithm(jwtDetails.getAlgorithm()), 
+						jwtEncryptionService.parseEncryptionMethod(jwtDetails.getEncryptionMethod())
+						);
 				jweObject = new JWEObject(
-					    new JWEHeader.Builder(new JWEHeader(encryptAlgorithm,encryptionMethod))
+					    new JWEHeader.Builder(jweHeader)
 					        .contentType("JWT") // required to indicate nested JWT
 					        .build(),
 					        payload);

@@ -132,7 +132,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
             e.printStackTrace();
         }
         
-        _logger.debug("authorizationUrl "+authorizationUrl);
+        _logger.debug("authorizationUrl {}" , authorizationUrl);
         
         return WebContext.redirect(authorizationUrl);
     }

@@ -37,7 +37,6 @@ import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.OAuth2Request;
 import org.maxkey.authz.oauth2.provider.token.TokenEnhancer;
 import org.maxkey.configuration.oidc.OIDCProviderMetadata;
-import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
@@ -48,9 +47,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Strings;
-import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWEHeader;
 import com.nimbusds.jose.JWEObject;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -71,8 +68,6 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 
 	private OIDCProviderMetadata providerMetadata;
 	
-
-
 	private ClientDetailsService clientDetailsService;
 
 	public void setProviderMetadata(OIDCProviderMetadata providerMetadata) {
@@ -94,12 +89,13 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 			JWSAlgorithm signingAlg = null;
 			try {//jwtSignerService
 				if (StringUtils.isNotBlank(clientDetails.getSignature()) && !clientDetails.getSignature().equalsIgnoreCase("none")) {
-					JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": ["+clientDetails.getSignatureKey()+"]}");
-					jwtSignerService = new DefaultJwtSigningAndValidationService(jwkSetKeyStore);
-					jwtSignerService.setDefaultSignerKeyId(clientDetails.getClientId() + "_sig");
-					jwtSignerService.setDefaultSigningAlgorithmName(clientDetails.getSignature());
+					jwtSignerService = new DefaultJwtSigningAndValidationService(
+							clientDetails.getSignatureKey(),
+							clientDetails.getClientId() + "_sig",
+							clientDetails.getSignature()
+						);
+
 					signingAlg = jwtSignerService.getDefaultSigningAlgorithm();
-					_logger.trace(" signingAlg {}" , signingAlg);
 				}
 			}catch(Exception e) {
 				_logger.error("Couldn't create Jwt Signing Service",e);
@@ -118,7 +114,10 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 			 * @see http://openid.net/specs/openid-connect-core-1_0.html#SelfIssuedDiscovery
 			 *     7.  Self-Issued OpenID Provider
 			 */
-			if(providerMetadata.getIssuer().equalsIgnoreCase("https://self-issued.me") && jwtSignerService != null){
+			if(clientDetails.getIssuer()!=null 
+					&& jwtSignerService != null
+					&& clientDetails.getIssuer().equalsIgnoreCase("https://self-issued.me") 
+					){
 				builder.claim("sub_jwk", jwtSignerService.getAllPublicKeys().get(jwtSignerService.getDefaultSignerKeyId()));
 			}
 			
@@ -161,30 +160,26 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 				}
 			}else if (StringUtils.isNotBlank(clientDetails.getAlgorithm()) 
 					&& !clientDetails.getAlgorithm().equalsIgnoreCase("none")) {
-				JWKSetKeyStore jwkSetKeyStore_Enc = new JWKSetKeyStore("{\"keys\": ["+clientDetails.getAlgorithmKey()+"]}");
 				try {
 					DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
-								new DefaultJwtEncryptionAndDecryptionService(jwkSetKeyStore_Enc);
-					jwtEncryptionService.setDefaultEncryptionKeyId(clientDetails.getClientId()  + "_enc");
-					jwtEncryptionService.setDefaultAlgorithm(clientDetails.getAlgorithm());
-					JWEAlgorithm encryptAlgorithm = null;
-					if(clientDetails.getAlgorithm().startsWith("RSA")) {
-						encryptAlgorithm = jwtEncryptionService.getDefaultAlgorithm();
-					}else {
-						encryptAlgorithm = JWEAlgorithm.DIR;
-					}
-					_logger.trace(" encryptAlgorithm {}" , encryptAlgorithm);
-					EncryptionMethod encryptionMethod = 
-							jwtEncryptionService.parseEncryptionMethod(clientDetails.getEncryptionMethod());
-					
+								new DefaultJwtEncryptionAndDecryptionService(
+										clientDetails.getAlgorithmKey(),
+										clientDetails.getClientId()  + "_enc",
+										clientDetails.getAlgorithm()
+									);
 					Payload payload = builder.build().toPayload();
 					// Example Request JWT encrypted with RSA-OAEP-256 and 128-bit AES/GCM
 					//JWEHeader jweHeader = new JWEHeader(JWEAlgorithm.RSA1_5, EncryptionMethod.A128GCM);
+					JWEHeader jweHeader = new JWEHeader(
+							jwtEncryptionService.getDefaultAlgorithm(clientDetails.getAlgorithm()), 
+							jwtEncryptionService.parseEncryptionMethod(clientDetails.getEncryptionMethod())
+						);
 					JWEObject jweObject = new JWEObject(
-						    new JWEHeader.Builder(new JWEHeader(encryptAlgorithm,encryptionMethod))
+						    new JWEHeader.Builder(jweHeader)
 						        .contentType("JWT") // required to indicate nested JWT
 						        .build(),
 						        payload);
+					
 					jwtEncryptionService.encryptJwt(jweObject);
 					idTokenString = jweObject.serialize();
 				} catch (NoSuchAlgorithmException | InvalidKeySpecException | JOSEException e) {

@@ -213,19 +213,17 @@ public class UserInfoOIDCEndpoint {
 			        && !clientDetails.getSignature().equalsIgnoreCase("none")
 			        && clientDetails.getUserInfoResponse().equalsIgnoreCase("ENCRYPTION")) {
 			    //需要签名  signed ID token
-			    JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": ["+clientDetails.getSignatureKey()+"]}");
 				DefaultJwtSigningAndValidationService jwtSignerService = null;
 				try {
-					jwtSignerService = new DefaultJwtSigningAndValidationService(jwkSetKeyStore);
+					jwtSignerService = new DefaultJwtSigningAndValidationService(
+							clientDetails.getSignatureKey(),
+							clientDetails.getClientId() + "_sig",
+							clientDetails.getSignature());
 				}catch(Exception e) {
 					_logger.error("Couldn't create Jwt Signing Service",e);
 				}
 				
-				jwtSignerService.setDefaultSignerKeyId(clientDetails.getClientId() + "_sig");
-				jwtSignerService.setDefaultSigningAlgorithmName(clientDetails.getSignature());
-				
 				JWSAlgorithm signingAlg = jwtSignerService.getDefaultSigningAlgorithm();
-				_logger.trace(" signingAlg {}" , signingAlg);
 				userInfoJWTClaims = new JWTClaimsSet
 						.Builder(userInfoJWTClaims)
 						.claim("kid", jwtSignerService.getDefaultSignerKeyId())
@@ -240,30 +238,24 @@ public class UserInfoOIDCEndpoint {
 			        && !clientDetails.getAlgorithm().equalsIgnoreCase("none")
 			        && clientDetails.getUserInfoResponse().equalsIgnoreCase("SIGNING")
 					) {
-			    //TODO: 需要加密
-			    JWKSetKeyStore jwkSetKeyStore_Enc = new JWKSetKeyStore("{\"keys\": ["+clientDetails.getAlgorithmKey()+"]}");
+			    // 需要加密
 				try {
 					DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
-								new DefaultJwtEncryptionAndDecryptionService(jwkSetKeyStore_Enc);
-					jwtEncryptionService.setDefaultEncryptionKeyId(clientDetails.getClientId()  + "_enc");
-					jwtEncryptionService.setDefaultAlgorithm(clientDetails.getAlgorithm());
-					JWEAlgorithm encryptAlgorithm = null;
-					if(clientDetails.getAlgorithm().startsWith("RSA")) {
-						encryptAlgorithm = jwtEncryptionService.getDefaultAlgorithm();
-					}else {
-						encryptAlgorithm = JWEAlgorithm.DIR;
-					}
-					_logger.trace(" encryptAlgorithm {}" , encryptAlgorithm);
-					EncryptionMethod encryptionMethod = 
-							jwtEncryptionService.parseEncryptionMethod(clientDetails.getEncryptionMethod());
+								new DefaultJwtEncryptionAndDecryptionService(
+										clientDetails.getAlgorithmKey(),
+										clientDetails.getClientId()  + "_enc",
+										clientDetails.getAlgorithm());
 					
 					Payload payload = userInfoJWTClaims.toPayload();
 					
 					// Example Request JWT encrypted with RSA-OAEP-256 and 128-bit AES/GCM
 					//JWEHeader jweHeader = new JWEHeader(JWEAlgorithm.RSA1_5, EncryptionMethod.A128GCM);
+					JWEHeader jweHeader = new JWEHeader(
+							jwtEncryptionService.getDefaultAlgorithm(clientDetails.getAlgorithm()), 
+							jwtEncryptionService.parseEncryptionMethod(clientDetails.getEncryptionMethod()));
 					
 					JWEObject jweObject = new JWEObject(
-						    new JWEHeader.Builder(new JWEHeader(encryptAlgorithm,encryptionMethod))
+						    new JWEHeader.Builder(jweHeader)
 						        .contentType("JWT") // required to indicate nested JWT
 						        .build(),
 						        payload);

@@ -52,7 +52,7 @@ import com.nimbusds.jose.jwk.RSAKey;
  */
 public class DefaultJwtEncryptionAndDecryptionService implements JwtEncryptionAndDecryptionService {
 
-	private static Logger logger = LoggerFactory.getLogger(DefaultJwtEncryptionAndDecryptionService.class);
+	private static Logger _logger = LoggerFactory.getLogger(DefaultJwtEncryptionAndDecryptionService.class);
 
 	// map of identifier to encrypter
 	private Map<String, JWEEncrypter> encrypters = new HashMap<String, JWEEncrypter>();
@@ -94,6 +94,25 @@ public class DefaultJwtEncryptionAndDecryptionService implements JwtEncryptionAn
 	 */
 	public DefaultJwtEncryptionAndDecryptionService(JWKSetKeyStore keyStore) throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
 
+		// convert all keys in the keystore to a map based on key id
+		for (JWK key : keyStore.getKeys()) {
+			if (!Strings.isNullOrEmpty(key.getKeyID())) {
+				this.keys.put(key.getKeyID(), key);
+			} else {
+				throw new IllegalArgumentException("Tried to load a key from a keystore without a 'kid' field: " + key);
+			}
+		}
+
+		buildEncryptersAndDecrypters();
+
+	}
+	
+	public DefaultJwtEncryptionAndDecryptionService(String jwkSetString, String defaultEncryptionKeyId,String defaultAlgorithm) throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
+		JWKSetKeyStore keyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
+		this.defaultEncryptionKeyId = defaultEncryptionKeyId;
+		this.defaultAlgorithm = JWEAlgorithm.parse(defaultAlgorithm);
+		_logger.trace(" encryptAlgorithm {}" , defaultAlgorithm);
+		
 		// convert all keys in the keystore to a map based on key id
 		for (JWK key : keyStore.getKeys()) {
 			if (!Strings.isNullOrEmpty(key.getKeyID())) {
@@ -158,6 +177,14 @@ public class DefaultJwtEncryptionAndDecryptionService implements JwtEncryptionAn
 	public JWEAlgorithm getDefaultAlgorithm() {
 		return defaultAlgorithm;
 	}
+	
+	public JWEAlgorithm getDefaultAlgorithm(String algorithm) {
+		if(algorithm.startsWith("RSA")) {
+			return defaultAlgorithm;
+		}else {
+			return JWEAlgorithm.DIR;
+		}
+	}
 
 	public void setDefaultAlgorithm(String algorithm) {
 		defaultAlgorithm = JWEAlgorithm.parse(algorithm);
@@ -182,7 +209,7 @@ public class DefaultJwtEncryptionAndDecryptionService implements JwtEncryptionAn
 			jwt.encrypt(encrypter);
 		} catch (JOSEException e) {
 
-			logger.error("Failed to encrypt JWT, error was: ", e);
+			_logger.error("Failed to encrypt JWT, error was: ", e);
 		}
 
 	}
@@ -202,7 +229,7 @@ public class DefaultJwtEncryptionAndDecryptionService implements JwtEncryptionAn
 			jwt.decrypt(decrypter);
 		} catch (JOSEException e) {
 
-			logger.error("Failed to decrypt JWT, error was: ", e);
+			_logger.error("Failed to decrypt JWT, error was: ", e);
 		}
 
 	}
@@ -231,7 +258,7 @@ public class DefaultJwtEncryptionAndDecryptionService implements JwtEncryptionAn
 					RSADecrypter decrypter = new RSADecrypter(((RSAKey) jwk).toRSAPrivateKey());
 					decrypters.put(id, decrypter);
 				} else {
-					logger.warn("No private key for key #" + jwk.getKeyID());
+					_logger.warn("No private key for key #" + jwk.getKeyID());
 				}
 
 				//  add support for EC keys
@@ -246,7 +273,7 @@ public class DefaultJwtEncryptionAndDecryptionService implements JwtEncryptionAn
 				decrypters.put(id, decrypter);
 
 			} else {
-				logger.warn("Unknown key type: " + jwk);
+				_logger.warn("Unknown key type: " + jwk);
 			}
 
 		}

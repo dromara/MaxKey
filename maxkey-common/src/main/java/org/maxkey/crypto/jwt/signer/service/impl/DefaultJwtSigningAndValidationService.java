@@ -46,7 +46,8 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jwt.SignedJWT;
 
 public class DefaultJwtSigningAndValidationService implements JwtSigningAndValidationService {
-
+	final static Logger _logger = LoggerFactory.getLogger(DefaultJwtSigningAndValidationService.class);
+	
 	// map of identifier to signer
 	private Map<String, JWSSigner> signers = new HashMap<String, JWSSigner>();
 
@@ -111,7 +112,39 @@ public class DefaultJwtSigningAndValidationService implements JwtSigningAndValid
 		buildSignersAndVerifiers();
 	}
 
-
+	/**
+	 * Build this service based on the given keystore. All keys must have a key
+	 * id ({@code kid}) field in order to be used.
+	 * see DefaultJwtSigningAndValidationService(JWKSetKeyStore keyStore)
+	 * @param jwkSetString
+	 * @param defaultSignerKeyId
+	 * @param defaultAlgorithm
+	 * @throws NoSuchAlgorithmException
+	 * @throws InvalidKeySpecException
+	 * @throws JOSEException
+	 */
+	public DefaultJwtSigningAndValidationService(String jwkSetString, String defaultSignerKeyId,String defaultAlgorithm) throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
+		JWKSetKeyStore keyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
+		this.defaultSignerKeyId = defaultSignerKeyId;
+		this.defaultAlgorithm = JWSAlgorithm.parse(defaultAlgorithm);
+		_logger.trace(" signingAlg {}" , defaultAlgorithm);
+		
+		// convert all keys in the keystore to a map based on key id
+		if (keyStore!= null && keyStore.getJwkSet() != null) {
+			for (JWK key : keyStore.getKeys()) {
+				if (!Strings.isNullOrEmpty(key.getKeyID())) {
+					// use the key ID that's built into the key itself
+					//  (#641): deal with JWK thumbprints
+					this.keys.put(key.getKeyID(), key);
+				} else {
+					// create a random key id
+					String fakeKid = UUID.randomUUID().toString();
+					this.keys.put(fakeKid, key);
+				}
+			}
+		}
+		buildSignersAndVerifiers();
+	}
 	/**
 	 * @return the defaultSignerKeyId
 	 */
