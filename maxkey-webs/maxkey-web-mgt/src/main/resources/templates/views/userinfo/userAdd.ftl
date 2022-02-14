@@ -49,19 +49,19 @@
 			 <table id="div_table_switch_basic" width="980" class="table table-bordered" >
 	<tbody>				
 	<tr>
-		<td style="width:15%;"><@locale code="userinfo.username" /></td>
+		<th style="width:15%;"><@locale code="userinfo.username" /></th>
 		<td style="width:35%;">
 			<input type="hidden" id="id" name="id" value=""/>
 			<input type="hidden" id="status" name="status" value="1"/>
 			<input  class="form-control"  type="text" required="" id="username" name="username"  title="" value=""/>
 		</td>
-		<td style="width:15%;"><@locale code="login.text.password" /></td>
-		<td style="width:35%;">
+		<th style="width:15%;"><@locale code="login.text.password" /></th>
+		<th style="width:35%;">
 		  <div class="input-group" style="vertical-align middle;">
 			<input  class="form-control"  type="password" required="" id="password" name="password"  title="" value=""/>
 			<i class="passwdeye fa fa-eye-slash fa-2" style="left: 290px; color: gainsboro;" refid="password" ></i>
 		  </div>
-		</td>
+		</th>
 	</tr>
 	<tr>
 			<td style="width:15%;"><@locale code="userinfo.employeeNumber" /></td>
@@ -107,7 +107,7 @@
 		
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.displayName" /></td>
+		<th><@locale code="userinfo.displayName" /></th>
 		<td>
 			<input class="form-control"  type="text" required="" id="displayName" name="displayName"  title="" value=""/>
 		</td>
@@ -152,12 +152,6 @@
 		<td>
 			<input class="form-control"  type="text" id="birthDate" name="birthDate"  title="" value=""/>
 		</td>
-	</tr>
-
-	<tr>
-		<td colspan="4">&nbsp;
-		</td>
-		
 	</tr>
 	<tr>
 		<td><@locale code="userinfo.preferredLanguage" /></td>

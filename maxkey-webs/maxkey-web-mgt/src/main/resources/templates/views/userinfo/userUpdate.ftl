@@ -45,7 +45,7 @@
 			 <table id="div_table_switch_basic" width="980" class="table table-bordered" >
 	<tbody>				
 	<tr>
-		<td style="width:15%;"><@locale code="userinfo.username" /></td>
+		<th style="width:15%;"><@locale code="userinfo.username" /></th>
 		<td style="width:35%;">
 			<input type="hidden" id="id" name="id" value="${model.id!""}"/>
 			<input  class="form-control"  type="text" id="username" name="username"  title="" value="${model.username!""}"/>
@@ -103,7 +103,7 @@
 		
 	</tr>
 	<tr>
-		<td><@locale code="userinfo.displayName" /></td>
+		<th><@locale code="userinfo.displayName" /></th>
 		<td>
 			<input class="form-control"  type="text" id="displayName" name="displayName"  title="" value="${model.displayName!""}"/>
 		</td>
@@ -148,12 +148,6 @@
 		<td>
 			<input class="form-control"  type="text" id="birthDate" name="birthDate"  title="" value="${model.birthDate!""}"/>
 		</td>
-	</tr>
-
-	<tr>
-		<td colspan="4">&nbsp;
-		</td>
-		
 	</tr>
 	<tr>
 		<td><@locale code="userinfo.preferredLanguage" /></td>

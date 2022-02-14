@@ -71,11 +71,11 @@
 				<th data-field="message"><@locale code="log.loginhistory.message"/></th>
 				<th data-field="loginType"><@locale code="log.loginhistory.loginType"/></th>
 				<th data-field="sourceIp"><@locale code="log.loginhistory.sourceIp"/></th>
-				<th data-field="browser"><@locale code="log.loginhistory.browser"/></th>
+				<th data-field="browser"  data-visible="false"><@locale code="log.loginhistory.browser"/></th>
 				<th data-field="loginTime"><@locale code="log.loginhistory.loginTime"/></th>
 				<th data-field="logoutTime"><@locale code="log.loginhistory.logoutTime"/></th>
-				<th data-field="platform"><@locale code="log.loginhistory.platform"/></th>
-				<th data-field="application"><@locale code="log.loginhistory.application"/></th>
+				<th data-field="platform"  data-visible="false"><@locale code="log.loginhistory.platform"/></th>
+				<th data-field="application"  data-visible="false"><@locale code="log.loginhistory.application"/></th>
 				<th data-field="loginUrl" data-visible="false"><@locale code="log.loginhistory.loginUrl"/></th>
 				<th data-field="code" data-visible="false"><@locale code="log.loginhistory.code"/></th>
 				<th data-field="rpUserInfo" data-visible="false"><@locale code="log.loginhistory.rpUserInfo"/></th>

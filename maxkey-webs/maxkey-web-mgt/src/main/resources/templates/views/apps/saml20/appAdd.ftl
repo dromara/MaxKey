@@ -147,7 +147,10 @@
 					</td>
 					<th style="width:15%;"><@locale code="apps.saml.validityInterval" /></th>
 					<td style="width:35%;">
-						<input type="text" class="form-control"   id="validityInterval" name="validityInterval"  title="" value="15"  required="" />
+					   <div class="input-group">
+						  <input type="text" class="form-control"   id="validityInterval" name="validityInterval"  title="" value="15"  required="" />
+					       <span class="input-group-text">Seconds</span>
+                        </div>
 					</td>
 					
 				</tr>

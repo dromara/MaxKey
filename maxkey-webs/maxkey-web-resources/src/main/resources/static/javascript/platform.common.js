@@ -45,7 +45,16 @@ $(function(){
         }
     });
     
-	
+    //btn-collapse toggle collapseId
+    $(".btn-collapse").click(function(){
+        $($(this).attr("collapseId")).toggle();
+        if($($(this).attr("collapseId")).is(":visible")){
+            $(this).val($(this).attr("collapseValue"));
+        }else{
+            $(this).val($(this).attr("expandValue"));
+        }
+    });
+    	
     /*side-nav-menu side navigation*/
     if($('#side-nav-menu').length > 0){
         $('#side-nav-menu').metisMenu();

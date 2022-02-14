@@ -5,6 +5,17 @@
 	<#include  "../../layout/common.cssjs.ftl"/>
 	<#include  "../appCommonHead.ftl"/>
 	<#setting number_format="#">
+	<script type="text/javascript">
+    <!--
+    $(function(){   
+	   $("#tokenbased_algorithm").change(function(){
+        $.post("<@base/>/apps/generate/secret/"+$(this).val(), {_method:"post",currTime:(new Date()).getTime()}, function(data) {
+            $("#algorithmKey").val(data+"");
+        });
+    }); 
+    });
+//-->
+</script>
 </head>
 <body>
 <div  class="container">   
@@ -53,7 +64,7 @@
 								<tr>
 									<th style="width:15%;"><@locale code="apps.tokenbased.algorithm" /></th>
 									<td style="width:35%;">
-										<select id="algorithm" name="algorithm" class="form-control  form-select" >
+										<select id="tokenbased_algorithm" name="algorithm" class="form-control  form-select" >
 											<option value="DES"  <#if 'DES'==model.algorithm>selected</#if> >DES</option>
 											<option value="DESede" <#if 'DESede'==model.algorithm>selected</#if>>DESede</option>
 											<option value="Blowfish" <#if 'Blowfish'==model.algorithm>selected</#if>>Blowfish</option>
@@ -62,8 +73,7 @@
 									</td>
 									<th style="width:15%;"><@locale code="apps.tokenbased.algorithmKey" /></th>
 									<td style="width:35%;">
-										<span id="algorithmKey_text">${model.algorithmKey}</span>
-										<input type="hidden" id="algorithmKey" name="algorithmKey"  title="" value="${model.algorithmKey}"/>
+										<input type="text"  class="form-control"  id="algorithmKey" name="algorithmKey"  title="" value="${model.algorithmKey}"/>
 
 									</td>
 								</tr>
@@ -74,7 +84,10 @@
 									</td>
 									<th><@locale code="apps.tokenbased.expires" /></th>
 									<td>
-										<input type="text" class="form-control" id="expires" name="expires"  title="" value="${model.expires}"  required="" />
+									   <div class="input-group">
+										  <input type="text" class="form-control" id="expires" name="expires"  title="" value="${model.expires}"  required="" />
+									       <span class="input-group-text">Minutes</span>
+                                        </div>
 									</td>
 								</tr>
 								

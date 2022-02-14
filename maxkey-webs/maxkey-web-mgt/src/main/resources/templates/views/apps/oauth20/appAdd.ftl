@@ -79,15 +79,15 @@
 					<td >
 						<table class="hidetable"  style="width:100%;">
 							<tr>
-								<td>read<input type="checkbox" id="scope_trust" name="scope" value="read"  checked /></td>
-								<td>write<input type="checkbox" id="scope_write" name="scope" value="write"/></td>
-								<td>trust<input type="checkbox" id="scope_trust" name="scope" value="trust"/></td>
-								<td>openid<input type="checkbox" id="scope_openid" name="scope" value="openid"/></td>
-								<td>profile<input type="checkbox" id="scope_profile" name="scope" value="profile"/></td>
-								<td>email<input type="checkbox" id="scope_email" name="scope" value="email"/></td>
-								<td>phone<input type="checkbox" id="scope_phone" name="scope" value="phone"/></td>
-								<td>address<input type="checkbox" id="scope_address" name="scope" value="address"/></td>
-								<td>all<input type="checkbox" id="scope_all" name="scope" value="all"/></td>
+								<td>read    <input  class="form-check-input" type="checkbox" id="scope_trust" name="scope" value="read"  checked /></td>
+								<td>write   <input  class="form-check-input" type="checkbox" id="scope_write" name="scope" value="write"/></td>
+								<td>trust   <input  class="form-check-input" type="checkbox" id="scope_trust" name="scope" value="trust"/></td>
+								<td>openid  <input  class="form-check-input" type="checkbox" id="scope_openid" name="scope" value="openid"/></td>
+								<td>profile <input  class="form-check-input" type="checkbox" id="scope_profile" name="scope" value="profile"/></td>
+								<td>email   <input  class="form-check-input" type="checkbox" id="scope_email" name="scope" value="email"/></td>
+								<td>phone   <input  class="form-check-input" type="checkbox" id="scope_phone" name="scope" value="phone"/></td>
+								<td>address <input  class="form-check-input" type="checkbox" id="scope_address" name="scope" value="address"/></td>
+								<td>all     <input  class="form-check-input" type="checkbox" id="scope_all" name="scope" value="all"/></td>
 								
 							</tr>
 						</table>
@@ -98,13 +98,13 @@
 					<td  colspan="3">
 						<table  class="hidetable"  style="width:100%;">
 							<tr>
-								<td>authorization_code | code<input type="checkbox" id="grantTypes_authorization_code" name="authorizedGrantTypes" value="authorization_code"  checked /></td>
-								<td>password<input type="checkbox" id="grantTypes_trust" name="authorizedGrantTypes" value="password"/></td>
-								<td>implicit<input type="checkbox" id="grantTypes_implicit" name="authorizedGrantTypes" value="implicit"/></td>
-								<td>client_credentials<input type="checkbox" id="grantTypes_client_credentials" name="authorizedGrantTypes" value="client_credentials"/></td>
-								<td>refresh_token<input type="checkbox" id="grantTypes_refresh_token" name="authorizedGrantTypes" value="refresh_token"/></td>
-								<td>id_token<input  type="checkbox" id="grantTypes_id_token" name="authorizedGrantTypes" value="id_token"/></td>
-								<td>token<input type="checkbox" id="grantTypes_token" name="authorizedGrantTypes" value="token"/></td>
+								<td>authorization_code  <input  class="form-check-input" type="checkbox" id="grantTypes_authorization_code" name="authorizedGrantTypes" value="authorization_code"  checked /></td>
+								<td>password            <input  class="form-check-input" type="checkbox" id="grantTypes_trust" name="authorizedGrantTypes" value="password"/></td>
+								<td>implicit            <input  class="form-check-input" type="checkbox" id="grantTypes_implicit" name="authorizedGrantTypes" value="implicit"/></td>
+								<td>client_credentials  <input  class="form-check-input" type="checkbox" id="grantTypes_client_credentials" name="authorizedGrantTypes" value="client_credentials"/></td>
+								<td>refresh_token       <input  class="form-check-input" type="checkbox" id="grantTypes_refresh_token" name="authorizedGrantTypes" value="refresh_token"/></td>
+								<td>id_token            <input  class="form-check-input"  type="checkbox" id="grantTypes_id_token" name="authorizedGrantTypes" value="id_token"/></td>
+								<td>token               <input  class="form-check-input" type="checkbox" id="grantTypes_token" name="authorizedGrantTypes" value="token"/></td>
 								
 							</tr>
 						</table>

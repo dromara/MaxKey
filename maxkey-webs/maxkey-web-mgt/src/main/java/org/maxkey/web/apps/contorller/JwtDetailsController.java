@@ -51,7 +51,7 @@ public class JwtDetailsController  extends BaseAppContorller {
 		AppsJwtDetails jwtDetails =new AppsJwtDetails();
 		jwtDetails.setId(jwtDetails.generateId());
 		jwtDetails.setProtocol(ConstsProtocols.JWT);
-		jwtDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.AES));
+		jwtDetails.setSecret(ReciprocalUtils.generateKey(""));
 		jwtDetails.setUserPropertys("userPropertys");
 		modelAndView.addObject("model",jwtDetails);
 		return modelAndView;

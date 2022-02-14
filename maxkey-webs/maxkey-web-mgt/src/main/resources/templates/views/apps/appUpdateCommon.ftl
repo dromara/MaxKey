@@ -7,8 +7,15 @@
       <tr>
          <th style="width:15%;"><@locale code="apps.id"/></th>
          <td style="width:35%;">
-         	<div style="width:100%;font-weight: bold;">${model.id!}</div>
-            <input type="hidden" id="id" name="id"  title="" value="${model.id!}"/>
+            <div class="input-group">
+                <input class="form-control" type="text"  readonly  id="id" name="id"  title="" value="${model.id!}"/>
+                <input class="button btn btn-primary mr-3 window" style="float: left;" id="addExtendAttrBtn" type="button" 
+                        value="<@locale code="apps.extendAttr"/>" 
+                        wurl="<@base/>/apps/forwardAppsExtendAttr/${model.id!}"
+                        wwidth="900"
+                        wheight="650"
+                        target="window">
+            </div>
             <input type="hidden" id="status" name="status"  title="" value="${model.status!}"/>
          </td>
          <th style="width:15%;"><@locale code="apps.secret"/></th>
@@ -21,16 +28,25 @@
       </tr>
       <tr>
          <th><@locale code="apps.name"/></th>
-         <td  colspan="3">
-            <input type="text" class="form-control" id="name" name="name"  title="" value="${model.name!}"  required="" />
+         <td>
+            <input type="text" class="form-control" id="name" name="name"  title="" value="${model.name!}"  required="" /> 
          </td>
+        <th><@locale code="apps.icon"/></th>
+        <td>
+            <img id="iconFileImg" height='30' src='<@base/>/image/${model.id!}'/>
+        </td>
       </tr>
       <tr>
          <th><@locale code="apps.loginUrl"/></th>
          <td colspan="3">
-            <input type="text" class="form-control" id="loginUrl" name="loginUrl"  title="" value="${model.loginUrl!}"  required="" />
+            <div class="input-group" >
+                <input type="text" class="form-control" id="loginUrl" name="loginUrl"  title="" value="${model.loginUrl!}"  required="" />
+                <input  class="button btn btn-primary btn-collapse"  type="button" size="50"  value="<@locale code="button.text.expandsearch"/>" collapseId="#basic_info" expandValue="<@locale code="button.text.expandsearch"/>"  collapseValue="<@locale code="button.text.collapsesearch"/>">
+            </div>
          </td>
       </tr>
+      </tbody>
+      <tbody id="basic_info" style="display:none" >
       <tr>
          <th><@locale code="apps.logoutUrl"/></th>
          <td>
@@ -56,8 +72,14 @@
          </td>
       </tr>
       <tr>
-         <th><@locale code="apps.icon"/></th>
-         <td><img id="iconFileImg" height='30' src='<@base/>/image/${model.id!}'/>
+        <th><@locale code="apps.visible"/></th>
+        <td>
+            <select  id="visible" name="visible" class="form-control  form-select">
+                <option value="0"  <#if 0==model.visible!>selected</#if> ><@locale code="apps.visible.hidden"/></option>
+                <option value="1"  <#if 1==model.visible!>selected</#if> ><@locale code="apps.visible.all"/></option>
+                <option value="2"  <#if 2==model.visible!>selected</#if> ><@locale code="apps.visible.internet"/></option>
+                <option value="3"  <#if 3==model.visible!>selected</#if> ><@locale code="apps.visible.intranet"/></option>
+            </select>
          </td>
          <th><@locale code="common.text.sortindex"/></th>
          <td>
@@ -74,26 +96,6 @@
             <input type="text" class="form-control" id="vendorUrl" name="vendorUrl"  title="" value="${model.vendorUrl!}"/>
          </td>
       </tr>
-      <tr>
-      	<th><@locale code="apps.visible"/></th>
-         <td>
-         	<select  id="visible" name="visible" class="form-control  form-select">
-				<option value="0"  <#if 0==model.visible!>selected</#if> ><@locale code="apps.visible.hidden"/></option>
-				<option value="1"  <#if 1==model.visible!>selected</#if> ><@locale code="apps.visible.all"/></option>
-				<option value="2"  <#if 2==model.visible!>selected</#if> ><@locale code="apps.visible.internet"/></option>
-				<option value="3"  <#if 3==model.visible!>selected</#if> ><@locale code="apps.visible.intranet"/></option>
-			</select>
-         </td>
-         <th><@locale code="apps.extendAttr"/></th>
-         <td>
-         	<input class="button btn btn-primary mr-3 window" style="float: left;" id="addExtendAttrBtn" type="button" 
-         			value="<@locale code="button.text.select"/>" 
-		 		    wurl="<@base/>/apps/forwardAppsExtendAttr/${model.id!}"
-		 		    wwidth="900"
-		 		    wheight="650"
-	 		    	target="window">
-		 </td>
-	 </tr>
 	 <tr>
 		<th><@locale code="apps.isAdapter" /></th>
 		<td>

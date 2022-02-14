@@ -148,7 +148,10 @@
 					
 					<th><@locale code="apps.saml.validityInterval" /></th>
 					<td >
-						<input type="text" class="form-control"  id="validityInterval" name="validityInterval"  title="" value="${model.validityInterval}"/>
+					    <div class="input-group">
+						  <input type="text" class="form-control"  id="validityInterval" name="validityInterval"  title="" value="${model.validityInterval}"/>
+						  <span class="input-group-text">Seconds</span>
+                        </div>
 					</td>
 					
 				</tr>
@@ -190,15 +193,18 @@
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.certIssuer" /></th>
-					<td>${model.certIssuer!}
+					<td>
+					   <input type="text" readonly class="form-control"   title="" value='${model.certIssuer!}'/>
 					</td>
 					<th><@locale code="apps.saml.certExpiration" /></th>
-					<td>${model.certExpiration!}
+					<td>
+					   <input type="text" readonly class="form-control"   title="" value='${model.certExpiration!}'/>
 					</td>
 				</tr>
 				<tr>
 					<th><@locale code="apps.saml.certSubject" /></th>
-					<td  colspan =3>${model.certSubject!}
+					<td  colspan =3>
+					   <input type="text" readonly class="form-control"   title="" value='${model.certSubject!}'/>
 					</td>
 				</tr>
 				<tr>

@@ -55,9 +55,9 @@
 				<th data-field="messageType"><@locale code="log.operate.messageType"/></th>
 				<th data-field="operateType"><@locale code="log.operate.operateType"/></th>
 				<th data-field="username"><@locale code="log.operate.username"/></th>
-				<th data-field="createdBy"><@locale code="common.text.createdby"/></th>
+				<th data-field="createdBy"  data-visible="false"><@locale code="common.text.createdby"/></th>
 				<th data-field="createdDate"><@locale code="common.text.createddate"/></th>
-				<th data-field="modifiedBy"><@locale code="common.text.modifiedby"/></th>
+				<th data-field="modifiedBy"  data-visible="false"><@locale code="common.text.modifiedby"/></th>
 				<th data-field="modifiedDate"><@locale code="common.text.modifieddate"/></th>
 			</tr>
 		</thead>

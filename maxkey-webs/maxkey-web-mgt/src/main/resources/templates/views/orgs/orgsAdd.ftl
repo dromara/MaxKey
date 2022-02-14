@@ -38,96 +38,96 @@ $(function () {
               <td></td>
            </tr>
            <tr >
-              <td > <@locale code="org.pid" />：</td>
+              <th > <@locale code="org.pid" /></th>
               <td><input type="text"  id="pId" name="parentId"  class="form-control"/></td>
            </tr>
            <tr>
-              <th  width="200px"> <@locale code="org.pname" />：</td>
+              <th  width="200px"> <@locale code="org.pname" /></td>
               <td><input type="text"  id="pName" name="parentName"    class="form-control"/></td>
            </tr>
            <tr >
-              <td > <@locale code="org.id" />：</td>
+              <th > <@locale code="org.id" /></th>
               <td><input type="text" id="id" name="id"    class="form-control"/></td>
            </tr>
            <tr>
-              <td > <@locale code="org.name" />：</td>
+              <th > <@locale code="org.name" /></th>
               <td><input type="text"  id="name" name="name" required=""    class="form-control"/></td>
            </tr>
            <tr>
-              <td > <@locale code="org.fullname" />：</td>
+              <td > <@locale code="org.fullname" /></td>
               <td><input type="text"  id="fullName" name="fullName"  required=""   class="form-control"/></td>
            </tr>
             <tr >
-              <td > <@locale code="org.xpath" /> ：
+              <td > <@locale code="org.xpath" /> 
               </th>
               <td><input type="text"  id="xPath" name="codePath"    class="form-control"/></td>
            </tr>
            
             <tr >
-              <td > <@locale code="org.xnamepath" /> ：
+              <td > <@locale code="org.xnamepath" /> 
               </th>
               <td><input type="text"  id="xNamePath" name="namePath"    class="form-control"/></td>
            </tr>
            
            <tr>
-              <td > <@locale code="org.type" />：</td>
+              <td > <@locale code="org.type" /></td>
               <td><input type="text"  id="type" name="type"    class="form-control"/></td>
            </tr>
            <tr>
-              <td > <@locale code="org.division" />：</td>
+              <td > <@locale code="org.division" /></td>
               <td><input type="text"  id="division" name="division"    class="form-control"/></td>
            </tr>
            <tr>
-              <th >
-                 <@locale code="org.sortorder" /> ：
-              </th>
+              <td >
+                 <@locale code="org.sortorder" /> 
+              </td>
               <td><input type="text"  id="sortIndex" name="sortIndex"    class="form-control" value='1'/></td>
            </tr>
           
            <tr>
-              <th ><@locale code="org.description" />：</td>
+              <td ><@locale code="org.description" /></td>
               <td><input type="text"  id="description" name="description"    class="form-control"/></td>
            </tr>
         </table>
         <table id="div_switch_extra"   class="table table-bordered"  style="display:none">
         	<tr>
-              <td > <@locale code="org.contact" />：</td>
+              <td > <@locale code="org.contact" /></td>
               <td><input type="text"  id="contact" name="contact"    class="form-control"/></td>
            </tr>
            <tr>
-              <th  width="200px"> <@locale code="org.phone" />：</td>
+              <td  width="200px"> <@locale code="org.phone" /></td>
               <td><input type="text"  id="phone" name="phone"    class="form-control"/></td>
            </tr>
             <tr>
-              <td > <@locale code="org.email" />：</td>
+              <td > <@locale code="org.email" /></td>
               <td><input type="text"  id="email" name="email"    class="form-control"/></td>
            </tr>
            <tr>
-              <td > <@locale code="org.fax" />：</td>
+              <td > <@locale code="org.fax" /></td>
               <td><input type="text"  id="fax" name="fax"    class="form-control"/></td>
            </tr>
            <tr>
-              <td > <@locale code="org.country" />：</td>
+              <td > <@locale code="org.country" /></td>
               <td><input type="text"  id="country" name="country"    class="form-control"/></td>
            </tr>
            <tr>
-              <td > <@locale code="org.region" />：</td>
+              <td > <@locale code="org.region" /></td>
               <td><input type="text"  id="region" name="region"    class="form-control"/></td>
            </tr>
            <tr>
-              <td > <@locale code="org.locality" />：</td>
+              <td > <@locale code="org.locality" /></td>
               <td><input type="text"  id="locality" name="locality"    class="form-control"/></td>
            </tr>
            <tr>
-              <td > <@locale code="org.street" />：</td>
+              <td > <@locale code="org.street" /></td>
               <td><input type="text"  id="street" name="street"    class="form-control"/></td>
            </tr>
            <tr>
-              <td > <@locale code="org.address" />：</td>
+              <td > <@locale code="org.address" /></td>
               <td><input type="text"  id="address" name="address"    class="form-control"/></td>
            </tr>
            <tr>
-              <td > <@locale code="org.postalcode" />：</td>
+              <td > <@locale code="org.postalcode" /></td>
               <td><input type="text"  id="postalCode" name="postalCode"    class="form-control"/></td>
            </tr>
         </table>

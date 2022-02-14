@@ -66,16 +66,15 @@
 					<td  >
 						<table  class="hidetable"  style="width:100%;">
 							<tr>
-								<td>read<input type="checkbox" id="scope_trust" name="scope" value="read"  <#if   model.scope?contains("read") >checked</#if> /></td>
-								<td>write<input type="checkbox" id="scope_write" name="scope" value="write" <#if   model.scope?contains('write') >checked</#if>/></td>
-								<td>trust<input type="checkbox" id="scope_trust" name="scope" value="trust" <#if   model.scope?contains('trust') >checked</#if>/></td>
-								<td>openid<input type="checkbox" id="scope_openid" name="scope" value="openid" <#if   model.scope?contains('openid') >checked</#if>/></td>
-								<td>profile<input type="checkbox" id="scope_profile" name="scope" value="profile" <#if   model.scope?contains('profile') >checked</#if>/></td>
-								<td>email<input type="checkbox" id="scope_email" name="scope" value="email" <#if   model.scope?contains('email') >checked</#if>/></td>
-								<td>phone<input type="checkbox" id="scope_phone" name="scope" value="phone" <#if   model.scope?contains('phone') >checked</#if>/></td>
-								<td>address<input type="checkbox" id="scope_address" name="scope" value="address" <#if   model.scope?contains('address') >checked</#if>/></td>
-								<td>all<input type="checkbox" id="scope_all" name="scope" value="all" <#if   model.scope?contains('all') >checked</#if>/></td>
-								<td><b class="orange"></b><label for="scope"></label></td>
+								<td>read<input class="form-check-input" type="checkbox" id="scope_trust" name="scope" value="read"  <#if   model.scope?contains("read") >checked</#if> /></td>
+								<td>write<input class="form-check-input"  type="checkbox" id="scope_write" name="scope" value="write" <#if   model.scope?contains('write') >checked</#if>/></td>
+								<td>trust<input class="form-check-input"  type="checkbox" id="scope_trust" name="scope" value="trust" <#if   model.scope?contains('trust') >checked</#if>/></td>
+								<td>openid<input class="form-check-input"  type="checkbox" id="scope_openid" name="scope" value="openid" <#if   model.scope?contains('openid') >checked</#if>/></td>
+								<td>profile<input class="form-check-input"  type="checkbox" id="scope_profile" name="scope" value="profile" <#if   model.scope?contains('profile') >checked</#if>/></td>
+								<td>email<input class="form-check-input"  type="checkbox" id="scope_email" name="scope" value="email" <#if   model.scope?contains('email') >checked</#if>/></td>
+								<td>phone<input class="form-check-input"  type="checkbox" id="scope_phone" name="scope" value="phone" <#if   model.scope?contains('phone') >checked</#if>/></td>
+								<td>address<input class="form-check-input"  type="checkbox" id="scope_address" name="scope" value="address" <#if   model.scope?contains('address') >checked</#if>/></td>
+								<td>all<input class="form-check-input"  type="checkbox" id="scope_all" name="scope" value="all" <#if   model.scope?contains('all') >checked</#if>/></td>
 							</tr>
 						</table>
 					</td>
@@ -85,13 +84,13 @@
 					<td colspan="3">
 						<table  class="hidetable"  style="width:100%;">
 							<tr>
-								<td>authorization_code | code<input <#if   model.authorizedGrantTypes?contains('authorization_code') >checked</#if>  type="checkbox" id="grantTypes_authorization_code" name="authorizedGrantTypes" value="authorization_code"/></td>
-								<td>password<input <#if   model.authorizedGrantTypes?contains('password') >checked</#if>  type="checkbox" id="grantTypes_trust" name="authorizedGrantTypes" value="password"/></td>
-								<td>implicit<input <#if   model.authorizedGrantTypes?contains('implicit') >checked</#if>  type="checkbox" id="grantTypes_implicit" name="authorizedGrantTypes" value="implicit"/></td>
-								<td>client_credentials<input <#if   model.authorizedGrantTypes?contains('client_credentials') >checked</#if>  type="checkbox" id="grantTypes_client_credentials" name="authorizedGrantTypes" value="client_credentials"/></td>
-								<td>refresh_token<input <#if   model.authorizedGrantTypes?contains('refresh_token') >checked</#if>  type="checkbox" id="grantTypes_refresh_token" name="authorizedGrantTypes" value="refresh_token"/></td>
-								<td>id_token<input <#if   model.authorizedGrantTypes?contains('id_token') >checked</#if>  type="checkbox" id="grantTypes_id_token" name="authorizedGrantTypes" value="id_token"/></td>
-								<td>token<input <#if   model.authorizedGrantTypes?contains( 'token') >checked</#if>  type="checkbox" id="grantTypes_token" name="authorizedGrantTypes" value="token"/></td>
+								<td>authorization_code      <input  class="form-check-input"  <#if   model.authorizedGrantTypes?contains('authorization_code') >checked</#if>  type="checkbox" id="grantTypes_authorization_code" name="authorizedGrantTypes" value="authorization_code"/></td>
+								<td>password                <input  class="form-check-input"  <#if   model.authorizedGrantTypes?contains('password') >checked</#if>  type="checkbox" id="grantTypes_trust" name="authorizedGrantTypes" value="password"/></td>
+								<td>implicit                <input  class="form-check-input"  <#if   model.authorizedGrantTypes?contains('implicit') >checked</#if>  type="checkbox" id="grantTypes_implicit" name="authorizedGrantTypes" value="implicit"/></td>
+								<td>client_credentials      <input  class="form-check-input"  <#if   model.authorizedGrantTypes?contains('client_credentials') >checked</#if>  type="checkbox" id="grantTypes_client_credentials" name="authorizedGrantTypes" value="client_credentials"/></td>
+								<td>refresh_token           <input  class="form-check-input"  <#if   model.authorizedGrantTypes?contains('refresh_token') >checked</#if>  type="checkbox" id="grantTypes_refresh_token" name="authorizedGrantTypes" value="refresh_token"/></td>
+								<td>id_token                <input  class="form-check-input"  <#if   model.authorizedGrantTypes?contains('id_token') >checked</#if>  type="checkbox" id="grantTypes_id_token" name="authorizedGrantTypes" value="id_token"/></td>
+								<td>token                   <input  class="form-check-input"  <#if   model.authorizedGrantTypes?contains( 'token') >checked</#if>  type="checkbox" id="grantTypes_token" name="authorizedGrantTypes" value="token"/></td>
 								
 							</tr>
 						</table>
