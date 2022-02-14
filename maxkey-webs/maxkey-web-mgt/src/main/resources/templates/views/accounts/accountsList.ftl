@@ -96,14 +96,14 @@
 	 			<tr>
 	 				<td width="120px"><@locale code="apps.name"/></td>
 		 			<td width="360px">
-		 			   <div class="input-group mb-3" style="float: left;vertical-align: middle;">
+		 			   <div class="input-group" style="float: left;vertical-align: middle;">
 		 				     <input class="form-control d-none appId" id="appId" name="appId" value="" type="text"  >
                             <input class="form-control d-none" id="parentId" name="parentId" value="" type="text"  >
                             <input class="form-control appName"      value=""    id="appName" name="appName" type="text" >
                             <input class="button btn btn-primary mr-3 window"  id="selectBtn" type="button" value="<@locale code="button.text.select"/>" 
                                 wurl="<@base/>/apps/select"
                                 wwidth="700"
-                                wheight="500"
+                                wheight="550"
                                 target="window">
                         </div>
 		 			</td>

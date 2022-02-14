@@ -46,6 +46,7 @@ import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.util.HttpEncoder;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
+import org.maxkey.pretty.PrettyFactory;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -309,7 +310,8 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		}
 		JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
 		
-		return jwkSetKeyStore.getJwkSet().toPublicJWKSet().toString();
+		return PrettyFactory.getJsonPretty().format(
+				jwkSetKeyStore.getJwkSet().toPublicJWKSet().toString());
 	}
 
 	// We need explicit approval from the user.
