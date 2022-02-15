@@ -21,9 +21,9 @@
 		<#if (app_index)%4==0>
 		<div class="row">
 		</#if>
-			<div class="col-3" style="min-width: 160px;">
-	  				<table  class="none" style="width: 100%; min-height: 120px;border-spacing: 0;border-collapse: collapse;">
-	  					<tr><td style="text-align: center;border-spacing: 0;border-collapse: collapse;border: 0px;">
+			<div class="col-3 appListGrid">
+	  				<table>
+	  					<tr><td>
 	  						<a  target="_blank" title="${app.name}"
 	  							<#if "SP"==app.inducer>
 	  								href="${app.loginUrl}"
@@ -31,7 +31,7 @@
 	  							<#if "IDP"==app.inducer>
 	  								href="<@base/>/authz/${app.id}"
 	  							</#if>  >
-	  							<img src="<@base/>/image/${app.id}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
+	  							<img src="<@base/>/image/${app.id}" title="${app.name}" class="appListimage"/>
 	  						</a><br>
 	  						${app.name}
 	  					</td></tr>
@@ -48,21 +48,23 @@
 <#else>
 <div class="row">
 <div class="col-12">
-<table  class="table">
-	<tr>
-		<td>
-			<@locale code="apps.number"/>
-		</td>
-		<td>
-			<@locale code="apps.icon"/>
-		</td>
-		<td style="word-wrap:break-word;"><@locale code="apps.name"/></td>
-		<td>
-			<@locale code="button.text.action"/>
-		</td>
-	</tr>
+<table  class="table appListTable table-hover">
+    <thead>
+    	<tr>
+    		<th>
+    			<@locale code="apps.number"/>
+    		</th>
+    		<th>
+    			<@locale code="apps.icon"/>
+    		</th>
+    		<th ><@locale code="apps.name"/></td>
+    		<th>
+    			<@locale code="button.text.action"/>
+    		</th>
+    	</tr>
+    </thead>
 <#list appList as app>
-	<tr>
+	<tr class="">
 		<td>${app_index +1 }</td>
 		<td>
 
@@ -74,10 +76,10 @@
 						href="<@base/>/authz/${app.id}"
 					</#if>
 					 target="_blank" title="${app.name}" >
-					<img src="<@base/>/image/${app.id}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
+					<img src="<@base/>/image/${app.id}" title="${app.name}" class="appListimage"/>
 				</a>
 		</td>
-		<td style="word-wrap:break-word;vertical-align: middle;">${app.name}</td>
+		<td style="">${app.name}</td>
 		<td>
 			<a 
 				<#if "SP"==app.inducer>

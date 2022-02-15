@@ -380,6 +380,49 @@ body{
     text-indent: 1px;
 }
 
+.appListGrid {
+	min-width: 160px;
+	min-height: 170px;
+}
+
+.appListGrid table{
+    min-width: 150px; 
+    min-height: 150px;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+.appListGrid table td{
+    text-align: center;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border:1px solid #e1e5e8;
+    box-shadow: 0 0 12px 0 rgb(0 15 32 / 10%);
+}
+
+.appListGrid table td:hover{
+    text-align: center;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border:1px solid #e1e5e8;
+    box-shadow: 2px 2px 2px #8f8c8c;
+}
+
+.appListTable {
+}
+
+.appListTable td{
+    word-wrap:break-word;
+    vertical-align: middle;
+}
+
+.appListimage{
+	width:65px;
+	height:65px;
+	border:0;
+}
+
 #otherlogins{
     margin-top: -14px;
 }
