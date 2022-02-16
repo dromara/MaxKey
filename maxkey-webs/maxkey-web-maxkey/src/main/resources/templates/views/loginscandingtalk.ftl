@@ -1,10 +1,4 @@
-     <#if sspLogin.dingTalkLogin == 'https'> 
-     <script src="https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
-     </#if>  
-     <#if sspLogin.dingTalkLogin == 'http'> 
-     <script src="http://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
-     </#if>  
-     
+     <script src="${sspLogin.dingTalkLogin}://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
      <script type="text/javascript"> 
         var dingtalkredirect_uri="";
         var handleMessage = function (event) {
@@ -32,7 +26,6 @@
                         dingtalkredirect_uri = 'https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid='+data.clientId+'&response_type=code&scope=snsapi_login&state='+data.state+'&redirect_uri='+data.redirectUri;
                         console.log("dingtalkredirect_uri", dingtalkredirect_uri);
                         console.log("gotodingtalk", gotodingtalk);
-                        
                         var obj = DDLogin({
                              id:"div_qrcodelogin",//这里需要你在自己的页面定义一个HTML标签并设置id，例如<div id="login_container"></div>或<span id="login_container"></span>
                              goto: gotodingtalk, //请参考注释里的方式

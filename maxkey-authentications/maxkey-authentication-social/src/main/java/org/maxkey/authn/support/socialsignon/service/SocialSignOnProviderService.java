@@ -100,7 +100,8 @@ public class SocialSignOnProviderService{
         }else if(provider.equalsIgnoreCase("Eleme")) {
             authRequest = new AuthElemeRequest(authConfig);
         }else if(provider.equalsIgnoreCase("Feishu")) {
-            authRequest = new AuthFeishuRequest(authConfig);
+            //authRequest = new AuthFeishuRequest(authConfig);
+        	authRequest = new AuthFeishu2Request(authConfig);
         }else if(provider.equalsIgnoreCase("Github")) {
             authRequest = new AuthGithubRequest(authConfig);
         }else if(provider.equalsIgnoreCase("Gitlab")) {
