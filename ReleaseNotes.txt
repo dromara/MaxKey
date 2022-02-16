@@ -1,34 +1,58 @@
-﻿MaxKey v 3.3.1 GA 2022/02/10
-	*(MAXKEY-220201) 同步器拆分，统一组织在maxkey-synchronizers目录下
-	*(MAXKEY-220202) Active Directory同步器优化
-	*(MAXKEY-220203) LDAP同步器优化
-	*(MAXKEY-220204) 钉钉同步器多组织读取BUG修复
-	*(MAXKEY-220205) 新增飞书的同步器
-	*(MAXKEY-220206) 修复权限管理的保存错误问题
-	*(MAXKEY-220207) 应用扩展属性英文逗号(,)使用ISO8859_1的(#44;)替换，修复多值BUG
-	*(MAXKEY-220208) WebXss新增属性过滤，优化URL的过滤
-	*(MAXKEY-220209) 修复动态角色、动态组、账号策略显示机构名称的无分隔符问题，统一用逗号分隔
-	*(MAXKEY-220210) 删除LDAP连接时日志打印密码问题
-	*(MAXKEY-220211) LDAP获取条目的字段的详情信息
-	*(MAXKEY-220212) 短信验证码SMS发送优化
-	*(MAXKEY-220213) 注册地址改为signup
-	*(MAXKEY-220214) 界面风格色调统一
-	*(MAXKEY-220215) 登录界面样式的优化
-	*(MAXKEY-220216) 依赖jar引用、更新和升级
-		tomcat                   9.0.58
-		springBoot               2.6.3
-		springSecurity           5.6.1
-		springData               2.6.1
-		springSession            2.6.1
-		springkafka              2.8.2
-		jbosslogging             3.4.3.Final
-		thymeleaf                3.0.14.RELEASE
-		springbootadmin          2.6.2
-		slf4j                    1.7.35
-		jackson                  2.13.1
-		woodstox                 6.2.8
-		nimbusjosejwt            9.16.1
-		JustAuth                 1.16.5
+﻿MaxKey v 3.3.2 GA 2022/02/17
+    *(MAXKEY-220301) 统一界面色调
+    *(MAXKEY-220302) 增加飞书扫码登录，更新最新飞书图标
+    *(MAXKEY-220303) appList GRID界面优化，增加边框和阴影背景
+    *(MAXKEY-220304) appList TABLE界面统一文字对齐，鼠标移动提示背景
+    *(MAXKEY-220305) metadata(JWT,OIDC,SAML)调整优化
+    *(MAXKEY-220306) 应用管理基本信息折叠效果
+    *(MAXKEY-220307) formbased优化，多种密码hash支持
+    *(MAXKEY-220308) JWT支持JWK配置
+    *(MAXKEY-220309) OAuth支持JWK配置
+    *(MAXKEY-220310) CAS,JWT,OIDC,TOKENBASE可配置用户映射
+    *(MAXKEY-220311) 应用的过期时间、有效时间统一为Seconds秒
+    *(MAXKEY-220312) appList的style调整到css文件中
+    *(MAXKEY-220313) 组织管理界面优化
+    *(MAXKEY-220314) 用户状态文字调整
+    *(MAXKEY-220315) OIDC配置优化，简化配置参数
+    *(MAXKEY-220316) JWT 增加jwtName参数
+    *(MAXKEY-220317) 适配器优化和调整
+    *(MAXKEY-220318) 修复FORMBASE写入用户关联问题
+    *(MAXKEY-220319) AD域同步优化，空字段值用默认值替代
+    *(MAXKEY-220320) LDAP连接时日志打印密码问题
+    *(MAXKEY-220321) 依赖jar引用、更新和升级
+        postgresql              42.3.3
+
+MaxKey v 3.3.1 GA 2022/02/10
+    *(MAXKEY-220201) 同步器拆分，统一组织在maxkey-synchronizers目录下
+    *(MAXKEY-220202) Active Directory同步器优化
+    *(MAXKEY-220203) LDAP同步器优化
+    *(MAXKEY-220204) 钉钉同步器多组织读取BUG修复
+    *(MAXKEY-220205) 新增飞书的同步器
+    *(MAXKEY-220206) 修复权限管理的保存错误问题
+    *(MAXKEY-220207) 应用扩展属性英文逗号(,)使用ISO8859_1的(#44;)替换，修复多值BUG
+    *(MAXKEY-220208) WebXss新增属性过滤，优化URL的过滤
+    *(MAXKEY-220209) 修复动态角色、动态组、账号策略显示机构名称的无分隔符问题，统一用逗号分隔
+    *(MAXKEY-220210) 删除LDAP连接时日志打印密码问题
+    *(MAXKEY-220211) LDAP获取条目的字段的详情信息
+    *(MAXKEY-220212) 短信验证码SMS发送优化
+    *(MAXKEY-220213) 注册地址改为signup
+    *(MAXKEY-220214) 界面风格色调统一
+    *(MAXKEY-220215) 登录界面样式的优化
+    *(MAXKEY-220216) 依赖jar引用、更新和升级
+        tomcat                   9.0.58
+        springBoot               2.6.3
+        springSecurity           5.6.1
+        springData               2.6.1
+        springSession            2.6.1
+        springkafka              2.8.2
+        jbosslogging             3.4.3.Final
+        thymeleaf                3.0.14.RELEASE
+        springbootadmin          2.6.2
+        slf4j                    1.7.35
+        jackson                  2.13.1
+        woodstox                 6.2.8
+        nimbusjosejwt            9.16.1
+        JustAuth                 1.16.5
 
 MaxKey v 3.3.0 GA 2022/01/21
     *(MAXKEY-220101) 机构管理配置管理
