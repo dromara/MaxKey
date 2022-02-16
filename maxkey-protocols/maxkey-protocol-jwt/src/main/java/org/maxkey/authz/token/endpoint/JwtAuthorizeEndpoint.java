@@ -155,7 +155,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 				jwkSetString = jwkSetString + "," +jwtDetails.getAlgorithmKey();
 			}
 		}
-		
+		 
 		JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
 		
 		return PrettyFactory.getJsonPretty().format(

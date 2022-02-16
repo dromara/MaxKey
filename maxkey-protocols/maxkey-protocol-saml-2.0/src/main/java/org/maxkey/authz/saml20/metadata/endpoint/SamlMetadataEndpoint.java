@@ -57,9 +57,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "2-2-SAML v2.0 API文档模块")
 @Controller
 @RequestMapping(value = { "/metadata/saml20/" })
-public class MetadataEndpoint {
+public class SamlMetadataEndpoint {
 	private final static Logger logger = LoggerFactory
-			.getLogger(MetadataEndpoint.class);
+			.getLogger(SamlMetadataEndpoint.class);
 
 	@Autowired
 	@Qualifier("keyStoreLoader")
