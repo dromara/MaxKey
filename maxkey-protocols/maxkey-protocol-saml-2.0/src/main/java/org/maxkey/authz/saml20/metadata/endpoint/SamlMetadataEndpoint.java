@@ -76,12 +76,11 @@ public class SamlMetadataEndpoint {
 	private Credential signingCredential;
 
 	@Operation(summary = "SAML 2.0 元数据接口", description = "参数mxk_metadata_APPID",method="GET")
-	@RequestMapping(value = "/{appid}.xml",produces = "application/xml", method={RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "/" + WebConstants.MXK_METADATA_PREFIX + "{appid}.xml",produces = "application/xml", method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String  metadata(HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("appid") String appId) {
 	    response.setContentType(ContentType.APPLICATION_XML_UTF8);
-	    appId = appId.substring(WebConstants.MXK_METADATA_PREFIX.length(), appId.length());
 		if(signingCredential == null){
 	        TrustResolver trustResolver = new TrustResolver();
 	        CredentialResolver credentialResolver=(CredentialResolver)trustResolver.buildKeyStoreCredentialResolver(

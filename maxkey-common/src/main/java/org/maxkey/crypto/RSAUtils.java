@@ -25,6 +25,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +39,8 @@ public final class RSAUtils {
 	public static final String PUBLIC_KEY 		= 	"RSAPublicKey";
 
 	public static final String PRIVATE_KEY 		= 	"RSAPrivateKey";
+	
+	public static final int BASE64ARRAY_SIZE	= 64;
 
 	public static Map<String, Object> genKeyPair() throws Exception {
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KEY_ALGORTHM);
@@ -173,5 +176,41 @@ public final class RSAUtils {
 
 		return cipher.doFinal(data);
 	}
+	
+	public static String getPublicKeyPEM(byte[] encoded) {
+		StringBuffer base64String = 
+				new StringBuffer("");
+		base64String.append("-----BEGIN PUBLIC KEY-----").append("\n");
+		base64String.append(getBase64PEM(encoded));
+		base64String.append("-----END PUBLIC KEY-------").append("\n");
+		return base64String.toString();
+	}
+	
+	public static String getPrivateKeyPEM(byte[] encoded) {
+		StringBuffer base64String = 
+				new StringBuffer("");
+		base64String.append("-----BEGIN RSA PRIVATE KEY-----").append("\n");
+		base64String.append(getBase64PEM(encoded));
+		base64String.append("-----END RSA PRIVATE KEY-------").append("\n");
+		return base64String.toString();
+	}
+	
+	public static String getBase64PEM(byte[] encoded) {
+		String base64String = Base64.getEncoder().encodeToString(encoded);
+		StringBuffer base64ArrayString = new StringBuffer("");
+		int startPosition = 0;
+		int endPosition = BASE64ARRAY_SIZE;
+		while(endPosition < base64String.length()) {
+			base64ArrayString.append(base64String.substring(startPosition, endPosition)).append("\n");
+			startPosition = endPosition;
+			endPosition = endPosition + BASE64ARRAY_SIZE;
+		}
+		if(startPosition < base64String.length()) {
+			base64ArrayString.append(base64String.substring(startPosition)).append("\n");
+		}
+		
+		return base64ArrayString.toString();
+	}
+	
 
 }

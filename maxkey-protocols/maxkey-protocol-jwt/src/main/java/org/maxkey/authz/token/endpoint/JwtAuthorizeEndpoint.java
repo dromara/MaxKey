@@ -21,7 +21,6 @@
 package org.maxkey.authz.token.endpoint;
 
 import java.lang.reflect.InvocationTargetException;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,12 +33,13 @@ import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.jwt.endpoint.adapter.JwtAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsBoolean;
+import org.maxkey.constants.ContentType;
 import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsJwtDetails;
 import org.maxkey.persistence.service.AppsJwtDetailsService;
-import org.maxkey.pretty.PrettyFactory;
 import org.maxkey.util.Instance;
+import org.maxkey.web.HttpRequestAdapter;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -138,27 +138,38 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	}
 
 	@Operation(summary = "JWT JWK元数据接口", description = "参数mxk_metadata_APPID",method="GET")
-	@RequestMapping(value = "/metadata/jwt/{appid}.json",produces = "application/json", method={RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(
+			value = "/metadata/jwt/" + WebConstants.MXK_METADATA_PREFIX + "{appid}.{mediaType}",
+			method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String  metadata(HttpServletRequest request,
-			HttpServletResponse response, @PathVariable("appid") String appId) {
-		appId = appId.substring(WebConstants.MXK_METADATA_PREFIX.length(), appId.length());
+			HttpServletResponse response, 
+			@PathVariable("appid") String appId, 
+			@PathVariable("mediaType") String mediaType) {
 		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(appId);
-		String jwkSetString = "";
-		if(!jwtDetails.getSignature().equalsIgnoreCase("none")) {
-			jwkSetString = jwtDetails.getSignatureKey();
-		}
-		if(!jwtDetails.getAlgorithm().equalsIgnoreCase("none")) {
-			if(StringUtils.isBlank(jwkSetString)) {
-				jwkSetString = jwtDetails.getAlgorithmKey();
-			}else {
-				jwkSetString = jwkSetString + "," +jwtDetails.getAlgorithmKey();
+		if(jwtDetails != null) {
+			String jwkSetString = "";
+			if(!jwtDetails.getSignature().equalsIgnoreCase("none")) {
+				jwkSetString = jwtDetails.getSignatureKey();
 			}
+			if(!jwtDetails.getAlgorithm().equalsIgnoreCase("none")) {
+				if(StringUtils.isBlank(jwkSetString)) {
+					jwkSetString = jwtDetails.getAlgorithmKey();
+				}else {
+					jwkSetString = jwkSetString + "," +jwtDetails.getAlgorithmKey();
+				}
+			}
+			 
+			JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
+			if(StringUtils.isNotBlank(mediaType) 
+					&& mediaType.equalsIgnoreCase(HttpRequestAdapter.MediaType.XML)) {
+				response.setContentType(ContentType.APPLICATION_XML_UTF8);
+			}else {
+				response.setContentType(ContentType.APPLICATION_JSON_UTF8);
+			}
+			return jwkSetKeyStore.toString(mediaType);
+			
 		}
-		 
-		JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
-		
-		return PrettyFactory.getJsonPretty().format(
-				jwkSetKeyStore.getJwkSet().toPublicJWKSet().toString());
+		return appId + " not exist.";
 	}
 }

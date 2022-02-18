@@ -18,12 +18,20 @@ package org.maxkey.crypto.jose.keystore;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
+import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.PublicKey;
 import java.text.ParseException;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.maxkey.crypto.RSAUtils;
+import org.maxkey.pretty.PrettyFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -131,5 +139,49 @@ public class JWKSetKeyStore {
         }
         return jwkSet.getKeys();
     }
-
+    
+    public String toString(String mediaType){
+    	StringBuffer metaDataString = new StringBuffer("");
+		if(StringUtils.isNotBlank(mediaType) && mediaType.equalsIgnoreCase("XML")) {
+			metaDataString.append("<RSAKeyValue>").append("\n");
+			for(JWK jwk : jwkSet.getKeys()) {
+				RSAKey  rsaKey  = jwk.toRSAKey();
+				PublicKey publicKey;
+				try {
+					publicKey = rsaKey.toPublicKey();
+					metaDataString.append("<Modulus>").append("\n");
+					metaDataString.append(RSAUtils.getPublicKeyPEM(publicKey.getEncoded()));
+					metaDataString.append("</Modulus>").append("\n");
+					//keyID
+					metaDataString.append("<Algorithm>");
+					metaDataString.append(rsaKey.getAlgorithm());
+					metaDataString.append("</Algorithm>").append("\n");
+					
+					metaDataString.append("<KeyID>");
+					metaDataString.append(rsaKey.getKeyID());
+					metaDataString.append("</KeyID>").append("\n");
+					
+					metaDataString.append("<KeyType>");
+					metaDataString.append(rsaKey.getKeyType());
+					metaDataString.append("</KeyType>").append("\n");
+					
+					metaDataString.append("<Format>");
+					metaDataString.append(publicKey.getFormat());
+					metaDataString.append("</Format>");
+					
+					metaDataString.append("<PublicExponent>");
+					metaDataString.append(rsaKey.getPublicExponent());
+					metaDataString.append("</PublicExponent>").append("\n");
+				} catch (JOSEException e) {
+					_logger.error("JOSEException ", mediaType);
+				}
+			}
+			metaDataString.append("</RSAKeyValue>");
+		}else {
+			metaDataString.append(PrettyFactory.getJsonPretty().format(
+					jwkSet.toPublicJWKSet().toString()));
+		}
+		
+		return metaDataString.toString();
+	}
 }
