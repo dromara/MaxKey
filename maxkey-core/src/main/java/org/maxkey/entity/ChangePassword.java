@@ -38,6 +38,7 @@ public class ChangePassword extends JpaBaseEntity{
 	private String password;
 	private String confirmpassword;
 	private String decipherable;
+	private String instId;
 	
 	/**
 	 * 
@@ -208,6 +209,13 @@ public class ChangePassword extends JpaBaseEntity{
 		this.employeeNumber = employeeNumber;
 	}
 
+	public String getInstId() {
+		return instId;
+	}
+
+	public void setInstId(String instId) {
+		this.instId = instId;
+	}
 
 	@Override
     public String toString() {

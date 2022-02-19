@@ -313,7 +313,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	}
 	
 	public void changePasswordProvisioning(UserInfo userInfo) {
-	    if(userInfo.getPassword()!=null && !userInfo.getPassword().equals("")) {
+	    if(StringUtils.isNotBlank(userInfo.getPassword())) {
 	    	UserInfo loadUserInfo = findByUsername(userInfo.getUsername());
     	    ChangePassword changePassword=new ChangePassword();
             changePassword.setId(loadUserInfo.getId());
@@ -325,7 +325,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
             changePassword.setEmployeeNumber(loadUserInfo.getEmployeeNumber());
             changePassword.setDecipherable(loadUserInfo.getDecipherable());
             changePassword.setPassword(loadUserInfo.getPassword());
-            
+            changePassword.setInstId(loadUserInfo.getInstId());
             kafkaPersistService.send(
                     KafkaIdentityTopic.PASSWORD_TOPIC, 
                     changePassword, 
