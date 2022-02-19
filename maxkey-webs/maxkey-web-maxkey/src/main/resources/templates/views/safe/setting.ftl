@@ -35,7 +35,7 @@
 				<th><@locale code="userinfo.authnType" /></th>
 				<td nowrap>
 					<select  class="form-control form-select"  name="authnType" id="authnType">
-						<option value="1"  <#if 0==model.authnType >selected</#if>  ><@locale code="button.text.select" /></option>
+						<option value="0"  <#if 0==model.authnType >selected</#if>  ><@locale code="button.text.select" /></option>
 						<option value="1"  <#if 1==model.authnType >selected</#if>  ><@locale code="userinfo.authnType.authnType.1" /></option>
 						<!-- 
 						<option value="2"  <#if 2==model.authnType >selected</#if>  ><@locale code="userinfo.authnType.authnType.2" /></option>

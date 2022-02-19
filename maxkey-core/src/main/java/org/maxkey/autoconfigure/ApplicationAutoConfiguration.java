@@ -105,10 +105,10 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
         PasswordEncoder passwordEncoder =
             new DelegatingPasswordEncoder(idForEncode, encoders);
        
-        if(_logger.isDebugEnabled()) {
-        	 _logger.debug("Password Encoders :");
+        if(_logger.isTraceEnabled()) {
+        	 _logger.trace("Password Encoders :");
 	        for (String key : encoders.keySet()) {
-	            _logger.debug("{}= {}" ,String.format("%-10s", key), encoders.get(key).getClass().getName());
+	            _logger.trace("{}= {}" ,String.format("%-10s", key), encoders.get(key).getClass().getName());
 	        }
         }
         _logger.debug("{} is default encoder" , idForEncode);

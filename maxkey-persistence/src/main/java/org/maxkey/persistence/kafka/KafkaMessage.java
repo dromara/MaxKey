@@ -23,7 +23,7 @@ public class KafkaMessage {
     String actionType;
     String sendTime;
     String msgId;
-    String content;
+    Object content;
 
     public String getTopic() {
         return topic;
@@ -61,10 +61,21 @@ public class KafkaMessage {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(Object content) {
         this.content = content;
     }
 
     public KafkaMessage() {
     }
+
+	public KafkaMessage(String topic, String actionType, String sendTime, String msgId, Object content) {
+		super();
+		this.topic = topic;
+		this.actionType = actionType;
+		this.sendTime = sendTime;
+		this.msgId = msgId;
+		this.content = content;
+	}
+    
+    
 }
