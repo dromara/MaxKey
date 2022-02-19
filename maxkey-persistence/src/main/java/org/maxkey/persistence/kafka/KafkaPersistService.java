@@ -61,7 +61,7 @@ public class KafkaPersistService {
         //config.identity.kafkasupport , if true 
         if(applicationConfig.isKafkaSupport()) {
             KafkaMessage message = new KafkaMessage();
-            //message id uuid
+            //message id is uuid
             message.setMsgId(UUID.randomUUID().toString());
             message.setActionType(actionType);
             message.setTopic(topic);
@@ -70,7 +70,7 @@ public class KafkaPersistService {
             //content Object to json message content
             message.setContent(JsonUtils.gson2Json(content));
             String msg = JsonUtils.gson2Json(message);
-            _logger.info("send  message = {}", msg);
+            _logger.debug("send  message = {}", msg);
             //通过线程发送Kafka消息
             KafkaProvisioningThread thread = 
                     new  KafkaProvisioningThread(kafkaTemplate,topic,msg);
@@ -106,9 +106,9 @@ public class KafkaPersistService {
 
         @Override
         public void run() {
-            
+        	_logger.trace("send to Message Queue ...");
             kafkaTemplate.send(topic, msg);
-            
+            _logger.trace("send to Message Queue finished .");
         }
 
     }

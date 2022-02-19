@@ -222,7 +222,14 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
         return userInfo;
 	}
 	
-	
+	/**
+	 * 认证密码修改
+	 * @param oldPassword
+	 * @param newPassword
+	 * @param confirmPassword
+	 * @param passwordSetType
+	 * @return
+	 */
 	public boolean changePassword(  String oldPassword,
                                     String newPassword,
                                     String confirmPassword,
@@ -267,6 +274,12 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		return false;
 	}
 	
+	/**
+	 * 后台密码修改
+	 * @param changeUserInfo
+	 * @param passwordPolicy
+	 * @return
+	 */
     public boolean changePassword(UserInfo changeUserInfo,boolean passwordPolicy) {
         try {
             _logger.debug("decipherable old : " + changeUserInfo.getDecipherable());
@@ -301,12 +314,18 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
 	public void changePasswordProvisioning(UserInfo userInfo) {
 	    if(userInfo.getPassword()!=null && !userInfo.getPassword().equals("")) {
+	    	UserInfo loadUserInfo = findByUsername(userInfo.getUsername());
     	    ChangePassword changePassword=new ChangePassword();
-            changePassword.setId(userInfo.getId());
-            changePassword.setUserId(userInfo.getId());
-            changePassword.setUsername(userInfo.getUsername());
-            changePassword.setDecipherable(userInfo.getDecipherable());
-            changePassword.setPassword(userInfo.getPassword());
+            changePassword.setId(loadUserInfo.getId());
+            changePassword.setUserId(loadUserInfo.getId());
+            changePassword.setUsername(loadUserInfo.getUsername());
+            changePassword.setWindowsAccount(loadUserInfo.getWindowsAccount());
+            changePassword.setMobile(loadUserInfo.getMobile());
+            changePassword.setEmail(loadUserInfo.getEmail());
+            changePassword.setEmployeeNumber(loadUserInfo.getEmployeeNumber());
+            changePassword.setDecipherable(loadUserInfo.getDecipherable());
+            changePassword.setPassword(loadUserInfo.getPassword());
+            
             kafkaPersistService.send(
                     KafkaIdentityTopic.PASSWORD_TOPIC, 
                     changePassword, 
