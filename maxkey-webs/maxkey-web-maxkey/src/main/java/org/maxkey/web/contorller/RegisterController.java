@@ -173,6 +173,7 @@ public class RegisterController {
 				
 				password = passwordEncoder.encode(password );
 				userInfo.setPassword(password);
+				//default InstId
 				if(StringUtils.isEmpty(userInfo.getInstId())) {
 					userInfo.setInstId("1");
 				}
@@ -222,6 +223,10 @@ public class RegisterController {
  		if(temp!=null) {
  			return new Message(WebContext.getI18nValue("register.user.error"),"1");
  		}
+ 		//default InstId
+ 		if(StringUtils.isEmpty(userInfo.getInstId())) {
+			userInfo.setInstId("1");
+		}
  		
  		userInfo.setStatus(ConstsStatus.ACTIVE);
  		
