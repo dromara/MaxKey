@@ -60,6 +60,9 @@ public class LdapAuthenticationRealmService {
 			            								ldapContext.getCredentials(),
 			            								ldapContext.getMsadDomain());
 			            ldapServer.setActiveDirectoryUtils(ldapUtils);
+			            if(ldapContext.getAccountMapping().equalsIgnoreCase("YES")) {
+			            	ldapServer.setMapping(true);
+			            }
 			            ldapAuthenticationServers.add(ldapServer);
 						
 					}else {
@@ -71,6 +74,9 @@ public class LdapAuthenticationRealmService {
 													ldapContext.getBasedn());
 						standardLdapServer.setLdapUtils(ldapUtils);
 						standardLdapServer.setFilterAttribute(ldapContext.getFilters());
+						if(ldapContext.getAccountMapping().equalsIgnoreCase("YES")) {
+							standardLdapServer.setMapping(true);
+			            }
 						ldapAuthenticationServers.add(standardLdapServer);
 					}
 				}

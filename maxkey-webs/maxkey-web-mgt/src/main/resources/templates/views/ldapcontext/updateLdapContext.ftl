@@ -67,9 +67,26 @@
 										</div>
 									</div>
 									<div class="row mb-3">
-                                            <label class="col-md-2 col-form-label"><@locale code="ldapcontext.providerUrl" /></label>
-                                            <div class="col-md-10">
-                                                <input required=""  class="form-control" type="text" id="providerUrl" name="providerUrl" value="${model.providerUrl!}" />
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label"><@locale code="ldapcontext.providerUrl" /></label>
+                                                    <div class="col-sm-9">
+                                                        <input  required="" class="form-control" type="text" id="providerUrl" name="providerUrl"  value="${model.providerUrl!}" />
+                                                        
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label"><@locale code="ldapcontext.accountMapping" /></label>
+                                                    <div class="col-sm-9">
+                                                        <select id="accountMapping" name="accountMapping"  class="form-control  form-select">
+                                                            <option value="YES" <#if 'YES'==model.accountMapping>selected</#if> ><@locale code="common.text.yes" /></option>
+                                                            <option value="NO" <#if 'NO'==model.accountMapping>selected</#if> ><@locale code="common.text.no" /></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                     </div>
 									<div class="row mb-3">

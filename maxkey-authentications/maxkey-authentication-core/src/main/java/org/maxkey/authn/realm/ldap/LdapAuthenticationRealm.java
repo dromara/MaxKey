@@ -61,8 +61,12 @@ public class LdapAuthenticationRealm  extends AbstractAuthenticationRealm{
 	public boolean passwordMatches(UserInfo userInfo, String password) {
 		 boolean isAuthenticated=false;
 		 for (final IAuthenticationServer ldapServer : this.ldapServers) {
-            _logger.debug("Attempting to authenticate {} at {}", userInfo.getUsername(), ldapServer);
-            isAuthenticated= ldapServer.authenticate(userInfo.getUsername(), password);
+			 String username = userInfo.getUsername();
+			 if(ldapServer.isMapping()) {//if ldap Context accountMapping equals YES 
+				 username = userInfo.getWindowsAccount();
+			 }
+            _logger.debug("Attempting to authenticate {} at {}", username, ldapServer);
+            isAuthenticated= ldapServer.authenticate(username, password);
             if (isAuthenticated ) {
             	return true;
             }

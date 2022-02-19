@@ -36,6 +36,8 @@ public final class ActiveDirectoryServer implements IAuthenticationServer {
 
 	String filter;
 	
+	boolean mapping;
+	
 	/* (non-Javadoc)
 	 * @see com.connsec.web.authentication.realm.IAuthenticationServer#authenticate(java.lang.String, java.lang.String)
 	 */
@@ -75,4 +77,11 @@ public final class ActiveDirectoryServer implements IAuthenticationServer {
 		this.filter = filter;
 	}
 
+	public boolean isMapping() {
+		return mapping;
+	}
+
+	public void setMapping(boolean mapping) {
+		this.mapping = mapping;
+	}
 }

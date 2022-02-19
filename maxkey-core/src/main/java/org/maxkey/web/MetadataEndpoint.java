@@ -32,12 +32,12 @@ public class MetadataEndpoint {
 			        
 				  version.append("---------------------------------------------------------------------------------\n");
 				  version.append("+                                JAVA    \n");
-				  version.append(String.format("+                  %s java version %s, class %s\n",
+				  version.append(String.format("+                 %s java version %s, class %s\n",
 			                        SystemUtils.JAVA_VENDOR,
 			                        SystemUtils.JAVA_VERSION,
 			                        SystemUtils.JAVA_CLASS_VERSION
 			                    ));
-				  version.append(String.format("+                  %s (build %s, %s)\n",
+				  version.append(String.format("+                 %s (build %s, %s)\n",
 			                        SystemUtils.JAVA_VM_NAME,
 			                        SystemUtils.JAVA_VM_VERSION,
 			                        SystemUtils.JAVA_VM_INFO

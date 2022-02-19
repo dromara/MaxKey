@@ -25,5 +25,6 @@ package org.maxkey.authn.realm;
 public interface IAuthenticationServer {
 
     public boolean authenticate(String username, String password);
-
+    
+    public boolean isMapping();
 }

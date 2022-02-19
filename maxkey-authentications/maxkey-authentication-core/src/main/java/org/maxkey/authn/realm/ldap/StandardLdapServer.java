@@ -41,6 +41,8 @@ public final class StandardLdapServer implements IAuthenticationServer {
 	
 	String filterAttribute;
 	
+	boolean mapping;
+	
 	/* (non-Javadoc)
 	 * @see com.connsec.web.authentication.realm.IAuthenticationServer#authenticate(java.lang.String, java.lang.String)
 	 */
@@ -93,6 +95,14 @@ public final class StandardLdapServer implements IAuthenticationServer {
 	}
 	public void setFilterAttribute(String filterAttribute) {
 		this.filterAttribute = filterAttribute;
+	}
+
+	public boolean isMapping() {
+		return mapping;
+	}
+
+	public void setMapping(boolean mapping) {
+		this.mapping = mapping;
 	}
 
 }

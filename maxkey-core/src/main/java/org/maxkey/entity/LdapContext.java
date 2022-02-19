@@ -54,6 +54,8 @@ public class LdapContext extends JpaBaseEntity implements Serializable {
     @Column
     String msadDomain;
     @Column
+    String accountMapping;
+    @Column
     String sslSwitch;
     @Column
     String trustStore;
@@ -150,6 +152,14 @@ public class LdapContext extends JpaBaseEntity implements Serializable {
 
 	public void setSslSwitch(String sslSwitch) {
 		this.sslSwitch = sslSwitch;
+	}
+
+	public String getAccountMapping() {
+		return accountMapping;
+	}
+
+	public void setAccountMapping(String accountMapping) {
+		this.accountMapping = accountMapping;
 	}
 
 	public String getTrustStore() {
