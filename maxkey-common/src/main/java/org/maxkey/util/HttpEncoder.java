@@ -35,16 +35,17 @@ public abstract class HttpEncoder {
         ENCODING_RULES = Collections.unmodifiableMap(rules);
     }
 
-    public static String encode(String plain) throws Exception {
-        String encoded;
+    public static String encode(String plain) {
+        String encoded = null;
         try {
             encoded = URLEncoder.encode(plain, CHARSET);
+            for (Map.Entry<String, String> rule : ENCODING_RULES.entrySet()) {
+                encoded = applyRule(encoded, rule.getKey(), rule.getValue());
+            }
         } catch (UnsupportedEncodingException uee) {
-            throw new Exception("Charset not found while encoding string: " + CHARSET, uee);
+        	uee.printStackTrace();
         }
-        for (Map.Entry<String, String> rule : ENCODING_RULES.entrySet()) {
-            encoded = applyRule(encoded, rule.getKey(), rule.getValue());
-        }
+        
         return encoded;
     }
 
