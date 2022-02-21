@@ -32,7 +32,7 @@ spring:
     nacos:
       discovery:
         server-addr: ${NACOS_DISCOVERY_SERVER_ADDR:127.0.0.1:8848}
-        enabled: ${NACOS_DISCOVERY_ENABLED:true}
+        enabled: ${NACOS_DISCOVERY_ENABLED:false}
       config:
 #        file-extension: yaml
 #        server-addr: 127.0.0.1:8848
