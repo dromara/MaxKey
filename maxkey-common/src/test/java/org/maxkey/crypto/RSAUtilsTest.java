@@ -28,8 +28,7 @@ public class RSAUtilsTest {
 	@Test
 	public void test() throws Exception {
 
-		// ˽Կ���ܡ�����Կ����
-		// ˽Կǩ����Կ��֤ǩ��
+		// RSA KeyPair
 		Map<String, Object> key = RSAUtils.genKeyPair();
 		String privateKey = RSAUtils.getPublicKey2Hex(key);
 		String publicKey = RSAUtils.getPrivateKey2Hex(key);
@@ -40,8 +39,8 @@ public class RSAUtilsTest {
 		System.out.println("privateKey:" + Base64Utils.base64UrlEncode(keyp.getEncoded()));
 
 		byte[] encodedData = RSAUtils.encryptByPrivateKey(signString.getBytes(), privateKey);
-		System.out.println("���ܺ�\r\n" + new String(encodedData));
-		System.out.println("���ܺ�B64��\r\n" + HexUtils.bytes2HexString(encodedData));
+		System.out.println("encodedData \r\n" + new String(encodedData));
+		System.out.println("encodedData HexString \r\n" + HexUtils.bytes2HexString(encodedData));
 		byte[] decodedData = RSAUtils.decryptByPublicKey(encodedData, publicKey);
 		String target = new String(decodedData);
 		System.out.println("target:" + target);
