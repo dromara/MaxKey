@@ -182,7 +182,7 @@ public final class RSAUtils {
 				new StringBuffer("");
 		base64String.append("-----BEGIN PUBLIC KEY-----").append("\n");
 		base64String.append(getBase64PEM(encoded));
-		base64String.append("-----END PUBLIC KEY-------").append("\n");
+		base64String.append("-----END PUBLIC KEY-----").append("\n");
 		return base64String.toString();
 	}
 	
@@ -191,7 +191,7 @@ public final class RSAUtils {
 				new StringBuffer("");
 		base64String.append("-----BEGIN RSA PRIVATE KEY-----").append("\n");
 		base64String.append(getBase64PEM(encoded));
-		base64String.append("-----END RSA PRIVATE KEY-------").append("\n");
+		base64String.append("-----END RSA PRIVATE KEY-----").append("\n");
 		return base64String.toString();
 	}
 	
