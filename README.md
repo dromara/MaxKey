@@ -123,6 +123,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 院校    | 长春职业技术学院                            |
 | 教育    | 重庆市北碚图书馆                            |
 | 教育    | 德清智慧教育平台                            |
+| 教育    | 余姚市教育局                                |
 | 企业    | 国家能源局                                  |
 | 企业    | 360公司                                     |
 | 企业    | 深圳市金溢科技股份有限公司                  |
@@ -144,6 +145,10 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 企业    | 三一华兴                                    |
 | 企业    | unicon.net                                  |
 | 企业    | 深圳市东阳光实业发展有限公司                |
+| 企业    | 黄河科技集团有限公司                        |
+| 企业    | 新开普电子股份有限公司                      |
+| 企业    | 杭州润为数据科技有限公司                    |
+| 企业    | 百安居中国                                  |
 | 科技    | 广州思迈特软件有限公司                      |
 | 科技    | 尚企云链                                    |
 | 科技    | 北京博亚思科技有限公司                      |
