@@ -26,10 +26,10 @@ import org.maxkey.entity.Accounts;
 import org.maxkey.entity.AccountsStrategy;
 import org.maxkey.entity.OrganizationsCast;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.kafka.KafkaIdentityAction;
-import org.maxkey.persistence.kafka.KafkaIdentityTopic;
-import org.maxkey.persistence.kafka.KafkaPersistService;
 import org.maxkey.persistence.mapper.AccountsMapper;
+import org.maxkey.persistence.mq.MqIdentityAction;
+import org.maxkey.persistence.mq.MqIdentityTopic;
+import org.maxkey.persistence.mq.MqPersistService;
 import org.maxkey.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,7 +45,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 public class AccountsService  extends JpaBaseService<Accounts>{
 
     @Autowired
-    KafkaPersistService kafkaPersistService;
+    MqPersistService mqPersistService;
     
     @Autowired
     UserInfoService  userInfoService;
@@ -71,17 +71,17 @@ public class AccountsService  extends JpaBaseService<Accounts>{
 	
 	 public boolean insert(Accounts account) {
 	     if (super.insert(account)) {
-	            if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
+	            if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
 	                UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
 	                account.setUserInfo(loadUserInfo);
 	                OrganizationsCast cast = new OrganizationsCast();
                     cast.setProvider(account.getAppId());
                     cast.setOrgId(loadUserInfo.getDepartmentId());
                     account.setOrgCast(organizationsCastService.query(cast));
-	                kafkaPersistService.send(
-	                        KafkaIdentityTopic.ACCOUNT_TOPIC, 
+                    mqPersistService.send(
+	                        MqIdentityTopic.ACCOUNT_TOPIC, 
 	                        account,
-	                        KafkaIdentityAction.CREATE_ACTION);
+	                        MqIdentityAction.CREATE_ACTION);
 	            }
 	            
 	            return true;
@@ -91,17 +91,17 @@ public class AccountsService  extends JpaBaseService<Accounts>{
 	 
    public boolean update(Accounts account) {
          if (super.update(account)) {
-                if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
+        	 if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
                     UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
                     account.setUserInfo(loadUserInfo);
                     OrganizationsCast cast = new OrganizationsCast();
                     cast.setProvider(account.getAppId());
                     cast.setOrgId(loadUserInfo.getDepartmentId());
                     account.setOrgCast(organizationsCastService.query(cast));
-                    kafkaPersistService.send(
-                            KafkaIdentityTopic.ACCOUNT_TOPIC, 
+                    mqPersistService.send(
+                            MqIdentityTopic.ACCOUNT_TOPIC, 
                             account,
-                            KafkaIdentityAction.UPDATE_ACTION);
+                            MqIdentityAction.UPDATE_ACTION);
                 }
                 
                 return true;
@@ -113,13 +113,13 @@ public class AccountsService  extends JpaBaseService<Accounts>{
        Accounts account = this.get(id);
        if (super.remove(id)) {
               UserInfo loadUserInfo = null;
-              if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
+              if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
                   loadUserInfo = userInfoService.findUserRelated(account.getUserId());
                   account.setUserInfo(loadUserInfo);
-                  kafkaPersistService.send(
-                          KafkaIdentityTopic.ACCOUNT_TOPIC, 
+                  mqPersistService.send(
+                          MqIdentityTopic.ACCOUNT_TOPIC, 
                           account,
-                          KafkaIdentityAction.DELETE_ACTION);
+                          MqIdentityAction.DELETE_ACTION);
               }
               
               return true;

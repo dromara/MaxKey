@@ -17,6 +17,7 @@
 
 package org.maxkey.configuration;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -72,8 +73,8 @@ public class ApplicationConfig {
     @Value("${server.servlet.session.timeout:1800}")
     private int sessionTimeout;
 
-    @Value("${maxkey.server.kafka.support:false}")
-    private boolean kafkaSupport;
+    @Value("${maxkey.server.message.queue:none}")
+    private String messageQueue;
     
     @Value("${maxkey.notices.visible:false}")
     private boolean noticesVisible;
@@ -178,15 +179,22 @@ public class ApplicationConfig {
         this.defaultUri = defaultUri;
     }
 
-    public boolean isKafkaSupport() {
-        return kafkaSupport;
-    }
+    public String getMessageQueue() {
+		return messageQueue;
+	}
+    
+    public boolean isMessageQueueSupport() {
+    	if(StringUtils.isBlank(messageQueue)||messageQueue.equalsIgnoreCase("none")) {
+    		return false;
+    	}
+		return true;
+	}
+    
+	public void setMessageQueue(String messageQueue) {
+		this.messageQueue = messageQueue;
+	}
 
-    public void setKafkaSupport(boolean kafkaSupport) {
-        this.kafkaSupport = kafkaSupport;
-    }
-
-    public String getMgtUri() {
+	public String getMgtUri() {
 		return mgtUri;
 	}
 
@@ -242,7 +250,7 @@ public class ApplicationConfig {
         builder.append(", port=");
         builder.append(port);
         builder.append(", kafkaSupport=");
-        builder.append(kafkaSupport);
+        builder.append(messageQueue);
         builder.append(", maxKeyUri=");
         builder.append(authzUri);
         builder.append("]");

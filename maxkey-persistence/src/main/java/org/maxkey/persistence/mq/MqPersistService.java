@@ -15,12 +15,14 @@
  */
  
 
-package org.maxkey.persistence.kafka;
+package org.maxkey.persistence.mq;
 
 import java.util.UUID;
 
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.pretty.PrettyFactory;
+import org.maxkey.persistence.mq.thread.KafkaProvisioningThread;
+import org.maxkey.persistence.mq.thread.RocketMQProvisioningThread;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
@@ -30,14 +32,17 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KafkaPersistService {
-    private static final Logger _logger = LoggerFactory.getLogger(KafkaPersistService.class);
+public class MqPersistService {
+    private static final Logger _logger = LoggerFactory.getLogger(MqPersistService.class);
     
     @Autowired
     protected ApplicationConfig applicationConfig;
     
     @Autowired
     protected KafkaTemplate<String, String> kafkaTemplate;
+    
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
 
     public void setApplicationConfig(ApplicationConfig applicationConfig) {
         this.applicationConfig = applicationConfig;
@@ -58,50 +63,27 @@ public class KafkaPersistService {
      * @param actionType CREATE UPDATE DELETE
      */
     public void send(String topic,Object content,String actionType) {
-        //maxkey.server.kafka.support , if true 
-        if(applicationConfig.isKafkaSupport()) {
-            KafkaMessage message = 
-            		new KafkaMessage(
-            				topic,	//kafka TOPIC
-            				actionType,	//action of content
-            				DateUtils.getCurrentDateTimeAsString(),	//send to kafka time
+        //maxkey.server.message.queue , if not none , Kafka , RocketMQ
+        if(applicationConfig.isMessageQueueSupport()) {
+            MqMessage message = 
+            		new MqMessage(
             				UUID.randomUUID().toString(),	//message id as uuid
+            				topic,	//TOPIC
+            				actionType,	//action of content
+            				DateUtils.getCurrentDateTimeAsString(),	//send time
             				content 	//content Object to json message content
             				);
             String msg = JsonUtils.gson2Json(message);
-            //sand msg to Kafka topic
-            KafkaProvisioningThread thread = 
-                    new  KafkaProvisioningThread(kafkaTemplate,topic,msg);
+            //sand msg to MQ topic
+            Thread thread = null;
+            if(applicationConfig.getMessageQueue().equalsIgnoreCase("Kafka")) {
+            	_logger.trace("Kafka message...");
+            	thread = new  KafkaProvisioningThread(kafkaTemplate,topic,msg);
+            }else if(applicationConfig.getMessageQueue().equalsIgnoreCase("RocketMQ")) {
+            	_logger.trace("RocketMQ message...");
+            	thread = new  RocketMQProvisioningThread(rocketMQTemplate,topic,msg);
+            }
             thread.start();
-        }
-    }
-    
-    /**
-     * KafkaProvisioningThread for send message
-     *
-     */
-    class KafkaProvisioningThread extends Thread{
-
-        KafkaTemplate<String, String> kafkaTemplate;
-        
-        String topic ;
-        
-        String msg;
-        
-        public KafkaProvisioningThread(
-                                KafkaTemplate<String, String> kafkaTemplate, 
-                                String topic, 
-                                String msg) {
-            this.kafkaTemplate = kafkaTemplate;
-            this.topic = topic;
-            this.msg = msg;
-        }
-
-        @Override
-        public void run() {
-        	_logger.debug("send message \n{}" , PrettyFactory.getJsonPretty().format(msg));
-            kafkaTemplate.send(topic, msg);
-            _logger.debug("send to Message Queue finished .");
         }
     }
 }

@@ -15,9 +15,9 @@
  */
  
 
-package org.maxkey.persistence.kafka;
+package org.maxkey.persistence.mq;
 
-public class KafkaIdentityAction {
+public class MqIdentityAction {
     
     public static String  CREATE_ACTION     = "CREATE_ACTION";
     

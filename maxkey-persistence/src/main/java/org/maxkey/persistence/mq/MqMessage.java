@@ -15,14 +15,14 @@
  */
  
 
-package org.maxkey.persistence.kafka;
+package org.maxkey.persistence.mq;
 
-public class KafkaMessage {
+public class MqMessage {
 
+	String id;
     String topic;
     String actionType;
     String sendTime;
-    String msgId;
     Object content;
 
     public String getTopic() {
@@ -49,15 +49,15 @@ public class KafkaMessage {
         this.sendTime = sendTime;
     }
 
-    public String getMsgId() {
-        return msgId;
-    }
+    public String getId() {
+		return id;
+	}
 
-    public void setMsgId(String msgId) {
-        this.msgId = msgId;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public Object getContent() {
+	public Object getContent() {
         return content;
     }
 
@@ -65,15 +65,15 @@ public class KafkaMessage {
         this.content = content;
     }
 
-    public KafkaMessage() {
+    public MqMessage() {
     }
 
-	public KafkaMessage(String topic, String actionType, String sendTime, String msgId, Object content) {
+	public MqMessage(String id,String topic, String actionType, String sendTime,  Object content) {
 		super();
+		this.id = id;
 		this.topic = topic;
 		this.actionType = actionType;
 		this.sendTime = sendTime;
-		this.msgId = msgId;
 		this.content = content;
 	}
     

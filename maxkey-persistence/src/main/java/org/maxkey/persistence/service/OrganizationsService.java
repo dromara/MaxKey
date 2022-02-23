@@ -23,10 +23,10 @@ import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.maxkey.entity.Organizations;
-import org.maxkey.persistence.kafka.KafkaIdentityAction;
-import org.maxkey.persistence.kafka.KafkaIdentityTopic;
-import org.maxkey.persistence.kafka.KafkaPersistService;
 import org.maxkey.persistence.mapper.OrganizationsMapper;
+import org.maxkey.persistence.mq.MqIdentityAction;
+import org.maxkey.persistence.mq.MqIdentityTopic;
+import org.maxkey.persistence.mq.MqPersistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 public class OrganizationsService  extends JpaBaseService<Organizations>{
 
     @Autowired
-    KafkaPersistService kafkaPersistService;
+    MqPersistService mqPersistService;
     
 	public OrganizationsService() {
 		super(OrganizationsMapper.class);
@@ -51,8 +51,8 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	
 	 public boolean insert(Organizations organization) {
 	     if(super.insert(organization)){
-	    	 kafkaPersistService.send(
-                     KafkaIdentityTopic.ORG_TOPIC, organization, KafkaIdentityAction.CREATE_ACTION);
+	    	 mqPersistService.send(
+                     MqIdentityTopic.ORG_TOPIC, organization, MqIdentityAction.CREATE_ACTION);
              return true;
          }
          return false;
@@ -60,8 +60,8 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	 
 	 public boolean update(Organizations organization) {
 	     if(super.update(organization)){
-	    	 kafkaPersistService.send(
-                     KafkaIdentityTopic.ORG_TOPIC, organization, KafkaIdentityAction.UPDATE_ACTION);
+	    	 mqPersistService.send(
+                     MqIdentityTopic.ORG_TOPIC, organization, MqIdentityAction.UPDATE_ACTION);
              return true;
          }
          return false;
@@ -82,8 +82,8 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	 
 	 public boolean delete(Organizations organization) {
 	     if(super.delete(organization)){
-	    	 kafkaPersistService.send(
-                     KafkaIdentityTopic.ORG_TOPIC, organization, KafkaIdentityAction.DELETE_ACTION);
+	    	 mqPersistService.send(
+                     MqIdentityTopic.ORG_TOPIC, organization, MqIdentityAction.DELETE_ACTION);
              return true;
          }
          return false;

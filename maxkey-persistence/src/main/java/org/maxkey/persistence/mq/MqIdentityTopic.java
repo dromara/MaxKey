@@ -15,9 +15,9 @@
  */
  
 
-package org.maxkey.persistence.kafka;
+package org.maxkey.persistence.mq;
 
-public class KafkaIdentityTopic {
+public class MqIdentityTopic {
     
     public final static String   USERINFO_TOPIC                     = "MXK_IDENTITY_USERINFO_TOPIC";
     

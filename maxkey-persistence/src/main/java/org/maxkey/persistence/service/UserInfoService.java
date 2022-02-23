@@ -26,10 +26,10 @@ import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.kafka.KafkaIdentityAction;
-import org.maxkey.persistence.kafka.KafkaIdentityTopic;
-import org.maxkey.persistence.kafka.KafkaPersistService;
 import org.maxkey.persistence.mapper.UserInfoMapper;
+import org.maxkey.persistence.mq.MqIdentityAction;
+import org.maxkey.persistence.mq.MqIdentityTopic;
+import org.maxkey.persistence.mq.MqPersistService;
 import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
@@ -57,7 +57,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	PasswordPolicyValidator passwordPolicyValidator;
 	
 	@Autowired
-	KafkaPersistService kafkaPersistService;
+	MqPersistService mqPersistService;
 	
 	 @Autowired
 	 protected JdbcTemplate jdbcTemplate;
@@ -79,12 +79,12 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean insert(UserInfo userInfo) {
         userInfo = passwordEncoder(userInfo);
         if (super.insert(userInfo)) {
-            if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
+        	if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
                 UserInfo loadUserInfo = findUserRelated(userInfo.getId());
-                kafkaPersistService.send(
-                        KafkaIdentityTopic.USERINFO_TOPIC, 
+                mqPersistService.send(
+                        MqIdentityTopic.USERINFO_TOPIC, 
                         loadUserInfo,
-                        KafkaIdentityAction.CREATE_ACTION);
+                        MqIdentityAction.CREATE_ACTION);
             }
             
             return true;
@@ -96,13 +96,13 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean update(UserInfo userInfo) {
         userInfo = passwordEncoder(userInfo);
         if (super.update(userInfo)) {
-            if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
+        	if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
                 UserInfo loadUserInfo = findUserRelated(userInfo.getId());
                 accountUpdate(loadUserInfo);
-                kafkaPersistService.send(
-                        KafkaIdentityTopic.USERINFO_TOPIC, 
+                mqPersistService.send(
+                        MqIdentityTopic.USERINFO_TOPIC, 
                         loadUserInfo,
-                        KafkaIdentityAction.UPDATE_ACTION);
+                        MqIdentityAction.UPDATE_ACTION);
             }
             
             changePasswordProvisioning(userInfo);
@@ -113,15 +113,15 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
 	public boolean delete(UserInfo userInfo) {
 	    UserInfo loadUserInfo = null;
-	    if(kafkaPersistService.getApplicationConfig().isKafkaSupport()) {
+	    if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
 	        loadUserInfo = findUserRelated(userInfo.getId());
 	    }
 	    
 		if( super.delete(userInfo)){
-			kafkaPersistService.send(
-		            KafkaIdentityTopic.USERINFO_TOPIC, 
+			mqPersistService.send(
+		            MqIdentityTopic.USERINFO_TOPIC, 
 		            loadUserInfo, 
-		            KafkaIdentityAction.DELETE_ACTION);
+		            MqIdentityAction.DELETE_ACTION);
 			accountUpdate(loadUserInfo);
 			 return true;
 		}
@@ -326,10 +326,10 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
             changePassword.setDecipherable(loadUserInfo.getDecipherable());
             changePassword.setPassword(loadUserInfo.getPassword());
             changePassword.setInstId(loadUserInfo.getInstId());
-            kafkaPersistService.send(
-                    KafkaIdentityTopic.PASSWORD_TOPIC, 
+            mqPersistService.send(
+                    MqIdentityTopic.PASSWORD_TOPIC, 
                     changePassword, 
-                    KafkaIdentityAction.PASSWORD_ACTION);
+                    MqIdentityAction.PASSWORD_ACTION);
 	    }
 	}
 	
