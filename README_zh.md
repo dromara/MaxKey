@@ -1,6 +1,9 @@
 <p align="center" >
     <img src="images/logo_maxkey.png?raw=true"  width="200px"   alt=""/>
 </p>   
+<p align="center">
+  <strong>业界领先的IAM身份管理和认证产品</strong>
+</p>  
 <p align="center" >
 <a href="README_en.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
 </p>
