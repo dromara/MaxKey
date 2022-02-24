@@ -1,7 +1,9 @@
-# <img src="images/logo_maxkey.png?raw=true"  width="200px"   alt=""/>
-
+<p align="center" >
+    <img src="images/logo_maxkey.png?raw=true"  width="200px"   alt=""/>
+</p>   
+<p align="center" >
 <a href="README_en.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
-
+</p>     
 <p align="center">
     <a target="_blank" href="https://maxkey.top/zh/about/download.html">
         <img src="https://img.shields.io/github/v/release/dromara/MaxKey" />
