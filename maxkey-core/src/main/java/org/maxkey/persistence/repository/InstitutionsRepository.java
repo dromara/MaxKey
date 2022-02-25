@@ -104,6 +104,9 @@ public class InstitutionsRepository {
         	institution.setDomain(rs.getString("domain"));
         	institution.setTitle(rs.getString("title"));
         	institution.setConsoleTitle(rs.getString("consoletitle"));
+        	institution.setCaptcha(rs.getString("captcha"));
+        	institution.setCaptchaSupport(rs.getString("CaptchaSupport"));
+        	institution.setDefaultUri(rs.getString("DefaultUri"));
             return institution;
         }
     }

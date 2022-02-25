@@ -38,7 +38,7 @@
                 	<div class="input-group" >
                 	   <i class="fa fa-lock fa-2" ></i>
 					   <input required="" class="form-control "  type='text' id="j_captcha" name="captcha"  tabindex="3"  value="" style="float: left;"  placeholder='<@locale code="login.text.captcha"/>'/>
-					   <img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha"/>
+					   <img id="j_captchaimg" class="captcha-image" src="<@base/>/captcha?captcha=${captcha}"/>
 				    </div >
 				</div >
 			</td>

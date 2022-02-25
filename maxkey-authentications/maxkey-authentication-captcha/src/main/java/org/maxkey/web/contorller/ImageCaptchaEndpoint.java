@@ -28,9 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
@@ -48,10 +48,6 @@ public class ImageCaptchaEndpoint {
     
     @Autowired
     private Producer captchaProducer;
-    
-    @Value("${maxkey.login.captcha.type}")
-    private String captchaType;
-    
 
     /**
      * captcha image Producer.
@@ -60,9 +56,11 @@ public class ImageCaptchaEndpoint {
      * @param response HttpServletResponse
      */
     @RequestMapping(value = "/captcha")
-    public void captchaHandleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public void captchaHandleRequest(HttpServletRequest  request, 
+    								 HttpServletResponse response, 
+    								 @RequestParam(value="captcha",required=false,defaultValue="text") String captchaType) {
         try {
-           
+        	
             String kaptchaText = captchaProducer.createText();
             if (captchaType.equalsIgnoreCase("Arithmetic")) {
                 Integer intParamA = Integer.valueOf(kaptchaText.substring(0, 1));
@@ -127,11 +125,6 @@ public class ImageCaptchaEndpoint {
             }
         }
     }
- 
-
-    public void setCaptchaType(String captchaType) {
-		this.captchaType = captchaType;
-	}
 
 	public void setCaptchaProducer(Producer captchaProducer) {
         this.captchaProducer = captchaProducer;

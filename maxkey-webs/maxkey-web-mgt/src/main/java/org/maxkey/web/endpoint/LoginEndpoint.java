@@ -20,6 +20,7 @@ package org.maxkey.web.endpoint;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.entity.Institutions;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -64,8 +65,10 @@ public class LoginEndpoint {
 		}
 		
 		ModelAndView modelAndView = new ModelAndView();
+		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
 		modelAndView.addObject("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
-		modelAndView.addObject("isCaptcha", applicationConfig.getLoginConfig().isCaptcha());
+		modelAndView.addObject("isCaptcha", inst.isCaptchaSupport());
+		modelAndView.addObject("captcha", inst.getCaptcha());
 		modelAndView.addObject("sessionid", WebContext.getSession().getId());
 		Object loginErrorMessage=WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
         modelAndView.addObject("loginErrorMessage", loginErrorMessage==null?"":loginErrorMessage);

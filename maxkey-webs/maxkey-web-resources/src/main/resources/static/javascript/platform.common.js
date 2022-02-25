@@ -29,9 +29,10 @@ $(function(){
         });
     });
     
+    var captchaImageUrl = $('.captcha-image').attr("src");
 	//on captcha image click ,new a captcha code
 	$('.captcha-image').click(function () {//
-		$(this).attr("src", webContextPath + "/captcha?"+(new Date()).getTime()); 
+		$(this).attr("src", captchaImageUrl+"&"+(new Date()).getTime()); 
 	});
     
     //passwdeye

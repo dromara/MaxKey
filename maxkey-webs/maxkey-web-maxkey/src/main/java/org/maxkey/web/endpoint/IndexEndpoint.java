@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.entity.Institutions;
+import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,10 +55,11 @@ public class IndexEndpoint {
 	public ModelAndView forwardindex(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
 		_logger.debug("IndexEndpoint /forwardindex.");
-        String defaultUri = applicationConfig.getLoginConfig().getDefaultUri();
+		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
+        String defaultUri = inst.getDefaultUri();
         if (defaultUri != null && !defaultUri.equals("")) {
             _logger.debug("defaultUri " + defaultUri);
-            return WebContext.redirect(applicationConfig.getLoginConfig().getDefaultUri());
+            return WebContext.redirect(defaultUri);
         }
         _logger.debug("Uri /appList");
 		return  new ModelAndView("/appList");

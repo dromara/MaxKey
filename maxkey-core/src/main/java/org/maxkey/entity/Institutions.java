@@ -44,14 +44,6 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 	@Column
 	private String fullName;
 	@Column
-	private String logo;
-	@Column
-	private String title;
-	@Column
-	private String consoleTitle;
-	@Column
-	private String domain;
-	@Column
     private String division;
     @Column
     private String country;
@@ -76,8 +68,25 @@ public class Institutions extends JpaBaseEntity implements Serializable {
     
     @Column
     private String description;
+    
     @Column
     private int status;
+    
+	@Column
+	private String logo;
+	@Column
+	private String title;
+	@Column
+	private String consoleTitle;
+	@Column
+	private String domain;
+    @Column
+    private String captcha;
+    @Column
+    private String captchaSupport;
+    @Column
+    private String defaultUri;
+    
     @Column
     String createdBy;
     @Column
@@ -235,6 +244,33 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 	}
 	public void setModifiedDate(String modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+	
+	
+	public String getCaptcha() {
+		return captcha;
+	}
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
+	}
+
+	public String getCaptchaSupport() {
+		return captchaSupport;
+	}
+	
+	public boolean isCaptchaSupport() {
+		return (captchaSupport !=null && captchaSupport.equalsIgnoreCase("YES") ? true : false);
+	}
+	
+	
+	public void setCaptchaSupport(String captchaSupport) {
+		this.captchaSupport = captchaSupport;
+	}
+	public String getDefaultUri() {
+		return defaultUri;
+	}
+	public void setDefaultUri(String defaultUri) {
+		this.defaultUri = defaultUri;
 	}
 	@Override
 	public String toString() {

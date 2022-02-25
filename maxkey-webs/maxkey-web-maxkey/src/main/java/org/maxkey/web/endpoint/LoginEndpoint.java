@@ -122,15 +122,13 @@ public class LoginEndpoint {
 		if( applicationConfig.getLoginConfig().isKerberos()){
 			modelAndView.addObject("userDomainUrlJson", kerberosService.buildKerberosProxys());
 		}
-		modelAndView.addObject("isCaptcha", applicationConfig.getLoginConfig().isCaptcha());
+		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
+		modelAndView.addObject("isCaptcha", inst.isCaptchaSupport());
+		modelAndView.addObject("captcha", inst.getCaptcha());
 		modelAndView.addObject("sessionid", WebContext.getSession().getId());
 		//modelAndView.addObject("jwtToken",jwtLoginService.buildLoginJwt());
 		//load Social Sign On Providers
-		if(applicationConfig.getLoginConfig().isSocialSignOn()){
-			_logger.trace("Load Social Sign On Providers ");
-			Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-			modelAndView.addObject("sspLogin", socialSignOnProviderService.loadSocialsProviders(inst.getId()));
-		}
+		modelAndView.addObject("sspLogin", socialSignOnProviderService.loadSocialsProviders(inst.getId()));
 		
 		Object loginErrorMessage=WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
         modelAndView.addObject("loginErrorMessage", loginErrorMessage==null?"":loginErrorMessage);

@@ -22,18 +22,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class LoginConfig {
-    @Value("${maxkey.login.captcha}")
-    boolean captcha;
-    
-    //验证码类型 text 文本 ， arithmetic算术验证码
-    @Value("${maxkey.login.captcha.type:text}")
-    String captchaType;
     
     @Value("${maxkey.login.mfa}")
     boolean mfa;
-    
-    @Value("${maxkey.login.socialsignon}")
-    boolean socialSignOn;
     
     @Value("${maxkey.login.kerberos}")
     boolean kerberos;
@@ -43,9 +34,6 @@ public class LoginConfig {
     
     @Value("${maxkey.login.wsfederation}")
     boolean wsFederation;
-    
-    @Value("${maxkey.login.default.uri}")
-    String defaultUri;
 
     /**
      *  .
@@ -53,21 +41,7 @@ public class LoginConfig {
     public LoginConfig() {
     }
 
-    public boolean isCaptcha() {
-        return captcha;
-    }
 
-    public void setCaptcha(boolean captcha) {
-        this.captcha = captcha;
-    }
-
-    public boolean isSocialSignOn() {
-        return socialSignOn;
-    }
-
-    public void setSocialSignOn(boolean socialSignOn) {
-        this.socialSignOn = socialSignOn;
-    }
 
     public boolean isKerberos() {
         return kerberos;
@@ -85,13 +59,7 @@ public class LoginConfig {
         this.mfa = mfa;
     }
 
-    public String getDefaultUri() {
-        return defaultUri;
-    }
 
-    public void setDefaultUri(String defaultUri) {
-        this.defaultUri = defaultUri;
-    }
 
     public boolean isRemeberMe() {
         return remeberMe;
@@ -109,35 +77,19 @@ public class LoginConfig {
         this.wsFederation = wsFederation;
     }
     
-    public String getCaptchaType() {
-        return captchaType;
-    }
-
-    public void setCaptchaType(String captchaType) {
-        this.captchaType = captchaType;
-    }
-
     @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("LoginConfig [captcha=");
-        builder.append(captcha);
-        builder.append(", captchaType=");
-        builder.append(captchaType);
-        builder.append(", mfa=");
-        builder.append(mfa);
-        builder.append(", socialSignOn=");
-        builder.append(socialSignOn);
-        builder.append(", kerberos=");
-        builder.append(kerberos);
-        builder.append(", remeberMe=");
-        builder.append(remeberMe);
-        builder.append(", wsFederation=");
-        builder.append(wsFederation);
-        builder.append(", defaultUri=");
-        builder.append(defaultUri);
-        builder.append("]");
-        return builder.toString();
-    }
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("LoginConfig [mfa=");
+		builder.append(mfa);
+		builder.append(", kerberos=");
+		builder.append(kerberos);
+		builder.append(", remeberMe=");
+		builder.append(remeberMe);
+		builder.append(", wsFederation=");
+		builder.append(wsFederation);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

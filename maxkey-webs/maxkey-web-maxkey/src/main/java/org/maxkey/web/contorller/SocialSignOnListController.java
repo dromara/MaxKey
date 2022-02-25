@@ -56,36 +56,36 @@ public class SocialSignOnListController {
 	public ModelAndView forwardUpdate() {
 		
 		ModelAndView modelAndView=new ModelAndView("social/socialSignOnProvider");
-		if(applicationConfig.getLoginConfig().isSocialSignOn()){
-			Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-			List<SocialsProvider>  listSocialSignOnProvider = 
-									socialSignOnProviderService.loadSocialsProviders(inst.getId()).getSocialSignOnProviders();
-			
-			SocialsAssociate socialSignOnUser=new SocialsAssociate();
-			socialSignOnUser.setUserId(WebContext.getUserInfo().getId());
-			List<SocialsAssociate>  listSocialSignOnUserToken= socialSignOnUserService.query(socialSignOnUser);
-			List<SocialsProvider>  listBindSocialSignOnProvider=new ArrayList<SocialsProvider>();
-			_logger.debug("list SocialSignOnProvider : "+listSocialSignOnProvider);
-			_logger.debug("list SocialSignOnUserToken : "+listSocialSignOnUserToken);
-			for (SocialsProvider ssop : listSocialSignOnProvider){
-				SocialsProvider socialSignOnProvider=new SocialsProvider();
-				socialSignOnProvider.setProvider(ssop.getProvider());
-				socialSignOnProvider.setProviderName(ssop.getProviderName());
-				socialSignOnProvider.setIcon(ssop.getIcon());
-				socialSignOnProvider.setSortOrder(ssop.getSortOrder());
-				for(SocialsAssociate ssout :listSocialSignOnUserToken){
-					if(ssout.getProvider().equals(ssop.getProvider())){
-						socialSignOnProvider.setUserBind(true);
-						socialSignOnProvider.setBindTime(ssout.getCreatedDate());
-						socialSignOnProvider.setLastLoginTime(ssout.getUpdatedDate());
-						_logger.debug("binded provider : "+ssout.getProvider());
-					}
+
+		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
+		List<SocialsProvider>  listSocialSignOnProvider = 
+								socialSignOnProviderService.loadSocialsProviders(inst.getId()).getSocialSignOnProviders();
+		
+		SocialsAssociate socialSignOnUser=new SocialsAssociate();
+		socialSignOnUser.setUserId(WebContext.getUserInfo().getId());
+		List<SocialsAssociate>  listSocialSignOnUserToken= socialSignOnUserService.query(socialSignOnUser);
+		List<SocialsProvider>  listBindSocialSignOnProvider=new ArrayList<SocialsProvider>();
+		_logger.debug("list SocialSignOnProvider : "+listSocialSignOnProvider);
+		_logger.debug("list SocialSignOnUserToken : "+listSocialSignOnUserToken);
+		for (SocialsProvider ssop : listSocialSignOnProvider){
+			SocialsProvider socialSignOnProvider=new SocialsProvider();
+			socialSignOnProvider.setProvider(ssop.getProvider());
+			socialSignOnProvider.setProviderName(ssop.getProviderName());
+			socialSignOnProvider.setIcon(ssop.getIcon());
+			socialSignOnProvider.setSortOrder(ssop.getSortOrder());
+			for(SocialsAssociate ssout :listSocialSignOnUserToken){
+				if(ssout.getProvider().equals(ssop.getProvider())){
+					socialSignOnProvider.setUserBind(true);
+					socialSignOnProvider.setBindTime(ssout.getCreatedDate());
+					socialSignOnProvider.setLastLoginTime(ssout.getUpdatedDate());
+					_logger.debug("binded provider : "+ssout.getProvider());
 				}
-				listBindSocialSignOnProvider.add(socialSignOnProvider);
 			}
-			
-			modelAndView.addObject("listSocialSignOnProvider", listBindSocialSignOnProvider);
+			listBindSocialSignOnProvider.add(socialSignOnProvider);
 		}
+		
+		modelAndView.addObject("listSocialSignOnProvider", listBindSocialSignOnProvider);
+		
 		return modelAndView;
 	}
 	

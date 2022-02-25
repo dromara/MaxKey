@@ -203,8 +203,7 @@ public abstract class AbstractAuthenticationProvider {
      */
     protected void captchaValid(String captcha, String authType) {
         // for basic
-        if (applicationConfig.getLoginConfig().isCaptcha() 
-        		&& authType.equalsIgnoreCase(AuthType.NORMAL)) {
+        if (authType.equalsIgnoreCase(AuthType.NORMAL)) {
             _logger.info("captcha : "
                     + WebContext.getSession().getAttribute(
                             WebConstants.KAPTCHA_SESSION_KEY).toString());
