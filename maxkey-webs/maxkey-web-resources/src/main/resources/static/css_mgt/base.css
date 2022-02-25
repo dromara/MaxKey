@@ -510,7 +510,7 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 	width:358px;
 	border:0;
 }
-#j_username,#j_password,#tfa_j_username,#tfa_j_password,#currentTime{
+#j_username,#j_password,#j_captcha,#tfa_j_username,#tfa_j_password,#currentTime{
 	font-size: 14px;
 	font-weight: bold;
 	height: 40px;
@@ -525,13 +525,6 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
     z-index: 20;
 }
 
-#j_captcha{
-	width	:60%;
-	font-size: 14px;
-	font-weight: bold;
-	float: left; 
-}
-
 #tfa_j_otp_captcha{
 	width	:100px;
 	/*width	:230px;*/
@@ -544,12 +537,6 @@ header .header-container .nav-left>li, .header .header-container .nav-right>li {
 	height: 34px;
 	font-size: 14px;
 	font-weight: bold;	
-}
-
-#j_captchaimg{
-	width:70px;
-	height: 35px;
-	vertical-align: top;
 }
 
 #switch_commonLogin,#switch_tfaLogin{
