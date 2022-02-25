@@ -21,7 +21,7 @@ services:
     container_name: maxkey
     build: ./docker-maxkey
     environment:
-      - DATABASE_HOST:192.168.0.102
+      - DATABASE_HOST:localhost
       - DATABASE_PORT:3306
       - DATABASE_NAME:maxkey
       - DATABASE_USER:root
@@ -34,7 +34,7 @@ services:
     container_name: maxkey-mgt
     build: ./docker-maxkey-mgt
     environment:
-      - DATABASE_HOST:192.168.0.102
+      - DATABASE_HOST:localhost
       - DATABASE_PORT:3306
       - DATABASE_NAME:maxkey
       - DATABASE_USER:root
