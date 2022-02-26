@@ -20,7 +20,6 @@ package org.maxkey.util;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import org.maxkey.client.oauth.model.OAuthConstants;
 
 /**
  * Utils for checking preconditions and invariants
@@ -31,6 +30,8 @@ public abstract class Preconditions {
 
     // scheme = alpha *( alpha | digit | "+" | "-" | "." )
     private static final String URL_REGEXP = "^[a-zA-Z][a-zA-Z0-9+.-]*://\\S+";
+    
+    private static final String OUT_OF_BAND = "oob";
 
     /**
      * Checks that an object is not null.
@@ -75,7 +76,7 @@ public abstract class Preconditions {
      */
     public static void checkValidOAuthCallback(String url, String errorMsg) {
         checkEmptyString(url, errorMsg);
-        if (url.toLowerCase(Locale.getDefault()).compareToIgnoreCase(OAuthConstants.OUT_OF_BAND) != 0) {
+        if (url.toLowerCase(Locale.getDefault()).compareToIgnoreCase(OUT_OF_BAND) != 0) {
             check(isUrl(url), errorMsg);
         }
     }

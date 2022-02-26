@@ -31,7 +31,8 @@ public class HttpsTrusts {
 		sc.init(null, trustAllCerts, null);
 		javax.net.ssl.HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 	}
-    /*
+    
+    /**
      * https ssl auto trust
      */
 	public static void beforeConnection() {

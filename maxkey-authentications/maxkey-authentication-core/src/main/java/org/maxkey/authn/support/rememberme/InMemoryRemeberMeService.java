@@ -28,7 +28,7 @@ public class InMemoryRemeberMeService   extends AbstractRemeberMeService {
 
     protected static final Cache<String, RemeberMe> remeberMeStore = 
             Caffeine.newBuilder()
-                .expireAfterWrite(ConstsTimeInterval.TWO_WEEK, TimeUnit.MINUTES)
+                .expireAfterWrite(ConstsTimeInterval.TWO_WEEK, TimeUnit.SECONDS)
                 .build();
     
     @Override

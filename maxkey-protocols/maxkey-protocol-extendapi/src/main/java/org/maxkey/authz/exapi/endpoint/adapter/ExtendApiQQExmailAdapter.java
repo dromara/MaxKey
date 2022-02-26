@@ -17,15 +17,15 @@
 
 package org.maxkey.authz.exapi.endpoint.adapter;
 
-import java.util.HashMap;
+import java.io.Serializable;
+
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.client.oauth.OAuthClient;
-import org.maxkey.client.oauth.model.Token;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ExtraAttrs;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.util.HttpsTrusts;
 import org.maxkey.util.JsonUtils;
+import org.maxkey.web.HttpRequestAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,9 +38,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
 	final static Logger _logger = LoggerFactory.getLogger(ExtendApiQQExmailAdapter.class);
 	//https://exmail.qq.com/qy_mng_logic/doc#10003
-	static String TOKEN_URI="https://api.exmail.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
+	static String TOKEN_URI		= "https://api.exmail.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
 	//https://exmail.qq.com/qy_mng_logic/doc#10036
-	static String AUTHKEY_URI="https://api.exmail.qq.com/cgi-bin/service/get_login_url?access_token=%s&userid=%s";
+	static String AUTHKEY_URI 	= "https://api.exmail.qq.com/cgi-bin/service/get_login_url?access_token=%s&userid=%s";
 	
 	Accounts account;
 	
@@ -49,8 +49,6 @@ public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
 		return null;
 	}
 
-
-	@SuppressWarnings("unchecked")
     @Override
 	public ModelAndView authorize(ModelAndView modelAndView) {
 		HttpsTrusts.beforeConnection();
@@ -62,23 +60,111 @@ public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
 			extraAttrs=new ExtraAttrs(details.getExtendAttr());
 		}
 		_logger.debug("Extra Attrs "+extraAttrs);
-		OAuthClient tokenRestClient=new OAuthClient(
-				String.format(TOKEN_URI,details.getPrincipal(),details.getCredentials()));
-		Token token =tokenRestClient.requestAccessToken();
-		_logger.debug(""+token);
+		String responseBody = new HttpRequestAdapter().get(
+				String.format(TOKEN_URI,details.getPrincipal(),details.getCredentials()),null);
+		Token token =JsonUtils.gson2Object(responseBody,Token.class);
+		_logger.debug("token {}" , token);
 		
-		OAuthClient authkeyRestClient=new OAuthClient(
-				String.format(AUTHKEY_URI,token.getAccess_token(),userInfo.getUsername()));
+		String authKeyBody = new HttpRequestAdapter().get(
+				String.format(AUTHKEY_URI,token.getAccess_token(),userInfo.getUsername()),null);
 		
-		HashMap<String, String> authKey=JsonUtils.gson2Object(authkeyRestClient.execute().getBody(), HashMap.class);
-		_logger.debug("authKey : "+authKey);
+		LoginUrl loginUrl=JsonUtils.gson2Object(authKeyBody, LoginUrl.class);
+		_logger.debug("LoginUrl {} " , loginUrl);
 		
-		String redirect_uri=authKey.get("login_url");
-		_logger.debug("redirect_uri : "+redirect_uri);
 		
-        modelAndView.addObject("redirect_uri", redirect_uri);
+        modelAndView.addObject("redirect_uri", loginUrl.getLogin_url());
         
         return modelAndView;
+	}
+    
+	class ExMailMsg{
+		
+		protected long expires_in;
+		    
+		protected String errmsg;
+		
+		protected long errcode;
+
+		public ExMailMsg() {
+		}
+
+		public long getExpires_in() {
+			return expires_in;
+		}
+
+		public void setExpires_in(long expires_in) {
+			this.expires_in = expires_in;
+		}
+
+		public String getErrmsg() {
+			return errmsg;
+		}
+
+		public void setErrmsg(String errmsg) {
+			this.errmsg = errmsg;
+		}
+
+		public long getErrcode() {
+			return errcode;
+		}
+
+		public void setErrcode(long errcode) {
+			this.errcode = errcode;
+		}
+		
+		
+	}
+	
+	class Token extends ExMailMsg implements Serializable {
+		private static final long serialVersionUID = 275756585220635542L;
+
+	    /**
+	     * access_token
+	     */
+	    private String access_token;
+	    
+		public String getAccess_token() {
+			return access_token;
+		}
+
+		public void setAccess_token(String access_token) {
+			this.access_token = access_token;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("Token [access_token=");
+			builder.append(access_token);
+			builder.append("]");
+			return builder.toString();
+		}
+
+	}
+	
+	class LoginUrl extends ExMailMsg  implements Serializable {
+		private static final long serialVersionUID = 3033047757268214198L;
+		private String login_url;
+		 
+		public String getLogin_url() {
+			return login_url;
+		}
+
+		public void setLogin_url(String login_url) {
+			this.login_url = login_url;
+		}
+		
+		public LoginUrl() {
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("LoginUrl [login_url=");
+			builder.append(login_url);
+			builder.append("]");
+			return builder.toString();
+		}
 	}
 
 }

@@ -48,5 +48,11 @@ public final class ConstsStatus {
     public static final int APPROVED 	= 14;
     
     public static final int QUITED 		= 15;
+    
+    public static final String NONE 	= "NONE";
+    
+    public static final String YES 		= "YES";
+    
+    public static final String NO 		= "NO";
 
 }

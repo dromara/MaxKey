@@ -20,14 +20,13 @@ package org.maxkey.authz.exapi.endpoint.adapter;
 import java.time.Instant;
 import java.util.HashMap;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.client.http.HttpVerb;
-import org.maxkey.client.oauth.OAuthClient;
 import org.maxkey.crypto.DigestUtils;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ExtraAttrs;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.util.HttpsTrusts;
 import org.maxkey.util.JsonUtils;
+import org.maxkey.web.HttpRequestAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -88,7 +87,7 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
 		String timestamp  = ""+Instant.now().getEpochSecond();
 		
 		String tokenMd5 =DigestUtils.md5Hex(details.getCredentials());
-		HashMap<String,String > requestParamenter =new HashMap<String,String >();
+		HashMap<String,Object > requestParamenter =new HashMap<String,Object >();
 		String redirect_uri = "";
 		if(action.equalsIgnoreCase("getDomailUrl")) {
 			String sign =DigestUtils.md5Hex
@@ -96,12 +95,11 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
 							SIGN_STRING,
 							details.getPrincipal(),timestamp,tokenMd5));
 			requestParamenter.put("domain", domain);
-			OAuthClient authkeyRestClient=new OAuthClient(
-					String.format(ADMIN_AUTHKEY_URI,details.getPrincipal(),sign,timestamp),HttpVerb.POST);
-			authkeyRestClient.addRestObject(requestParamenter);
+			String responseBody = new HttpRequestAdapter().post(
+					String.format(ADMIN_AUTHKEY_URI,details.getPrincipal(),sign,timestamp),requestParamenter);
 			
-			HashMap<String, String> authKey=JsonUtils.gson2Object(authkeyRestClient.execute().getBody(), HashMap.class);
-			redirect_uri=authKey.get("adminUrl");
+			HashMap<String, String> authKey=JsonUtils.gson2Object(responseBody, HashMap.class);
+			redirect_uri = authKey.get("adminUrl");
 			
 		}else {
 			String sign =DigestUtils.md5Hex
@@ -109,11 +107,10 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
 							SIGN_EMAIL_STRING,
 							details.getPrincipal(),userInfo.getEmail(),timestamp,tokenMd5));
 			requestParamenter.put("email", userInfo.getWorkEmail());
-			OAuthClient authkeyRestClient=new OAuthClient(
-					String.format(AUTHKEY_URI,details.getPrincipal(),sign,timestamp),HttpVerb.POST);
-			authkeyRestClient.addRestObject(requestParamenter);
+			String responseBody = new HttpRequestAdapter().post(
+					String.format(AUTHKEY_URI,details.getPrincipal(),sign,timestamp),requestParamenter);
 			
-			HashMap<String, String> authKey=JsonUtils.gson2Object(authkeyRestClient.execute().getBody(), HashMap.class);
+			HashMap<String, String> authKey=JsonUtils.gson2Object(responseBody, HashMap.class);
 			redirect_uri=authKey.get("webmailUrl");
 		}
 		

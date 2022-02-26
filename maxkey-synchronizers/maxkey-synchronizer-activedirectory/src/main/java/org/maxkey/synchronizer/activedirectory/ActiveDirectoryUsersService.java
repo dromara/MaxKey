@@ -117,43 +117,44 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
         userInfo.setDepartmentId(deptOrg.getId());
 		try {
 		    userInfo.setId(userInfo.generateId());
-			userInfo.setFormattedName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.CN,attributeMap));//閸忋劌鎮�
-			//鐠愶附鍩�
-			userInfo.setUsername(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.SAMACCOUNTNAME,attributeMap));//鐠愶箑褰�
-			userInfo.setWindowsAccount(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.USERPRINCIPALNAME,attributeMap));//閻ц缍�
+			userInfo.setFormattedName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.CN,attributeMap));//cn
+			//
+			userInfo.setUsername(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.SAMACCOUNTNAME,attributeMap));//WindowsAccount
+			userInfo.setWindowsAccount(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.SAMACCOUNTNAME,attributeMap));
+			//userInfo.setWindowsAccount(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.USERPRINCIPALNAME,attributeMap));//
 			
-			//鐢瓕顫�
-			userInfo.setFamilyName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.SN,attributeMap));//婵拷
-			userInfo.setGivenName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.GIVENNAME,attributeMap));//閸氾拷
-			userInfo.setNickName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.INITIALS,attributeMap));//閺勭數袨
-			userInfo.setNameZhShortSpell(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.INITIALS,attributeMap));//閼昏鲸鏋冪紓鈺佸晸
-			userInfo.setDisplayName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.DISPLAYNAME,attributeMap));//閺勫墽銇氶崥宥囆�
-			userInfo.setDescription(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.DESCRIPTION,attributeMap));//閹诲繗鍫�
-			userInfo.setWorkPhoneNumber(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.TELEPHONENUMBER,attributeMap));//閻絻鐦介崣椋庣垳
-			userInfo.setWorkOfficeName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.PHYSICALDELIVERYOFFICENAME,attributeMap));//閸旂偛鍙曠�癸拷
-			userInfo.setWorkEmail(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.MAIL,attributeMap));//闁喕娆�
-			userInfo.setWebSite(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.WWWHOMEPAGE,attributeMap));//缂冩垿銆�
-			//閸︽澘娼�
-			userInfo.setWorkCountry(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.CO,attributeMap));//閸ヨ棄顔�
-			userInfo.setWorkRegion(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.ST,attributeMap));//閻拷
-			userInfo.setWorkLocality(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.L,attributeMap));//閸橈拷
-			userInfo.setWorkStreetAddress(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.STREETADDRESS,attributeMap));//鐞涙浜�
-			userInfo.setWorkPostalCode(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.POSTALCODE,attributeMap));//闁喚绱�
-			userInfo.setWorkAddressFormatted(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.POSTOFFICEBOX,attributeMap));//闁喗鏂傞柇顔绢唸
+			//
+			userInfo.setFamilyName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.SN,attributeMap));//Last Name/SurName
+			userInfo.setGivenName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.GIVENNAME,attributeMap));//First Name
+			userInfo.setNickName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.INITIALS,attributeMap));//Initials
+			userInfo.setNameZhShortSpell(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.INITIALS,attributeMap));//Initials
+			userInfo.setDisplayName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.DISPLAYNAME,attributeMap));//
+			userInfo.setDescription(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.DESCRIPTION,attributeMap));//
+			userInfo.setWorkPhoneNumber(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.TELEPHONENUMBER,attributeMap));//
+			userInfo.setWorkOfficeName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.PHYSICALDELIVERYOFFICENAME,attributeMap));//
+			userInfo.setWorkEmail(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.MAIL,attributeMap));//
+			userInfo.setWebSite(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.WWWHOMEPAGE,attributeMap));//
+			//
+			userInfo.setWorkCountry(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.CO,attributeMap));//
+			userInfo.setWorkRegion(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.ST,attributeMap));//
+			userInfo.setWorkLocality(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.L,attributeMap));//
+			userInfo.setWorkStreetAddress(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.STREETADDRESS,attributeMap));//
+			userInfo.setWorkPostalCode(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.POSTALCODE,attributeMap));//
+			userInfo.setWorkAddressFormatted(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.POSTOFFICEBOX,attributeMap));//
 			
 			if(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.MOBILE,attributeMap).equals("")) {
 			    userInfo.setMobile(userInfo.getId());
 			}else {
-			    userInfo.setMobile(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.MOBILE,attributeMap));//閹靛婧�
+			    userInfo.setMobile(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.MOBILE,attributeMap));//
 			}
-			userInfo.setHomePhoneNumber(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.HOMEPHONE,attributeMap));//鐎硅泛娑甸悽浣冪樈
-			userInfo.setWorkFax(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.FACSIMILETELEPHONENUMBER,attributeMap));//娴肩姷婀�
-			userInfo.setHomeAddressFormatted(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.INFO,attributeMap));//閻絻鐦芥径鍥ㄦ暈
+			userInfo.setHomePhoneNumber(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.HOMEPHONE,attributeMap));//
+			userInfo.setWorkFax(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.FACSIMILETELEPHONENUMBER,attributeMap));//
+			userInfo.setHomeAddressFormatted(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.INFO,attributeMap));//
 			
-			userInfo.setDivision(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.COMPANY,attributeMap)); //閸忣剙寰�
-			//userInfo.setDepartment(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.DEPARTMENT,attributeMap)); //闁劑妫�
-			//userInfo.setDepartmentId(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.DEPARTMENT,attributeMap)); //闁劑妫紓鏍у娇
-			userInfo.setJobTitle(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.TITLE,attributeMap));//閼卞苯濮�
+			userInfo.setDivision(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.COMPANY,attributeMap)); //
+			//userInfo.setDepartment(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.DEPARTMENT,attributeMap)); //
+			//userInfo.setDepartmentId(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.DEPARTMENT,attributeMap)); //
+			userInfo.setJobTitle(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.TITLE,attributeMap));//
 			userInfo.setUserState("RESIDENT");
 			userInfo.setUserType("EMPLOYEE");
 			userInfo.setTimeZone("Asia/Shanghai");

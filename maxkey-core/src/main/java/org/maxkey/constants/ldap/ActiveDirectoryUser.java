@@ -121,7 +121,13 @@ public class ActiveDirectoryUser {
 	public static final String NAME 						= "name";
 	public static final String UID 							= "uid";
 	
+	/**
+	 * First Name
+	 */
 	public static final String GIVENNAME 					= "givenName";
+	/**
+	 * Last Name/SurName
+	 */
 	public static final String SN 							= "sn";
 	public static final String INITIALS 					= "initials";
 	public static final String DESCRIPTION 					= "description";
@@ -143,8 +149,13 @@ public class ActiveDirectoryUser {
 	public static final String INFO 						= "info";
 	public static final String HOMEPHONE 					= "homePhone";
 	
-
+	/**
+	 * admin@maxkey.top
+	 */
 	public static final String USERPRINCIPALNAME 			= "userPrincipalName";
+	/**
+	 * maxkey\admin
+	 */
 	public static final String SAMACCOUNTNAME 				= "sAMAccountname";
 	public static final String LOGONHOURS 					= "logonHours";
 	public static final String LOGONWORKSTATION 			= "logonWorkstation";

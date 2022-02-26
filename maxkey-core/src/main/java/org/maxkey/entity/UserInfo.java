@@ -19,7 +19,6 @@ package org.maxkey.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -271,80 +270,80 @@ public class UserInfo extends JpaBaseEntity {
     
     public static class ONLINE {
         // 在线
-        public static final int ONLINE = 1;
+        public static final int ONLINE 				= 1;
         // 下线
-        public static final int OFFLINE = 0;
+        public static final int OFFLINE 			= 0;
     }
 
     public static class MARRIED {
         // 未知
-        public static final int UNKNOWN = 0;
+        public static final int UNKNOWN 			= 0;
         // 单身
-        public static final int SINGLE = 1;
+        public static final int SINGLE 				= 1;
         // 结婚
-        public static final int MARRIED = 2;
+        public static final int MARRIED 			= 2;
         // 离异
-        public static final int DIVORCE = 3;
+        public static final int DIVORCE 			= 3;
         // 丧偶
-        public static final int WIDOWED = 4;
+        public static final int WIDOWED 			= 4;
 
     }
 
     public static class GENDER {
         // 未知
-        public static final int UNKNOWN = 0;
+        public static final int UNKNOWN 			= 0;
         // 女性
-        public static final int FEMALE = 1;
+        public static final int FEMALE 				= 1;
         // 男性
-        public static final int MALE = 2;
+        public static final int MALE 				= 2;
     }
 
     public static class IDTYPE {
         // 未知
-        public static final int UNKNOWN = 0;
+        public static final int UNKNOWN 			= 0;
         // 身份证
-        public static final int IDCARD = 1;
+        public static final int IDCARD 				= 1;
         // 护照
-        public static final int PASSPORT = 2;
+        public static final int PASSPORT 			= 2;
         // 学生证
-        public static final int STUDENTCARD = 3;
+        public static final int STUDENTCARD 		= 3;
         // 军人证
-        public static final int MILITARYCARD = 4;
+        public static final int MILITARYCARD 		= 4;
     }
 
     public static class AUTHNTYPE {
         // 用户名密码
-        public static final int NORMAL = 1;
+        public static final int NORMAL 				= 1;
         // 手机
-        public static final int MOBILE = 2;
+        public static final int MOBILE 				= 2;
         // 短信
-        public static final int SMS = 3;
+        public static final int SMS 				= 3;
         // 邮箱
-        public static final int EMAIL = 4;
+        public static final int EMAIL 				= 4;
 
-        public static final int TIMEBASED_OPT = 5;
+        public static final int TIMEBASED_OPT 		= 5;
 
-        public static final int COUNTERBASED_OPT = 6;
+        public static final int COUNTERBASED_OPT 	= 6;
 
-        public static final int HOTP_OPT = 7;
+        public static final int HOTP_OPT 			= 7;
 
-        public static final int RSA_OPT = 8;
+        public static final int RSA_OPT 			= 8;
         // 证书
-        public static final int CERTIFICATE = 9;
+        public static final int CERTIFICATE 		= 9;
         // usb证书
-        public static final int USBKEY = 10;
+        public static final int USBKEY 				= 10;
 
     }
 
     public static class EMPLOYMENTSTATUS {
         // 在册人员
-        public static final int ACTIVE = 1;
+        public static final int ACTIVE 				= 1;
         // 离职人员
-        public static final int WITHDRAWN = 2;
+        public static final int WITHDRAWN 			= 2;
         // 停薪留职人员
-        public static final int INACTIVE = 3;
+        public static final int INACTIVE 			= 3;
         // 退休人员
-        public static final int RETIREE = 4;
+        public static final int RETIREE 			= 4;
 
     }
 
@@ -1324,10 +1323,6 @@ public class UserInfo extends JpaBaseEntity {
 		builder.append(gender);
 		builder.append(", birthDate=");
 		builder.append(birthDate);
-		builder.append(", picture=");
-		builder.append(Arrays.toString(picture));
-		builder.append(", pictureFile=");
-		builder.append(pictureFile);
 		builder.append(", idType=");
 		builder.append(idType);
 		builder.append(", idCardNo=");
