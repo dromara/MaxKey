@@ -21,15 +21,17 @@ import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Signature;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.crypto.Cipher;
+
+import org.apache.commons.lang3.StringUtils;
 
 
 /**
@@ -40,31 +42,11 @@ public final class RSAUtils {
 	
 	public static final String 		KEY_ALGORTHM 		= 	"RSA";
 	
-	public static final String 		PUBLIC_KEY 			= 	"RSAPublicKey";
-
-	public static final String 		PRIVATE_KEY 		= 	"RSAPrivateKey";
+	public static final String 		LINE_SEPARATOR 		= 	"\n";
 	
 	public static final int 		KEY_SIZE			= 	1024;
 	
 	public static final int 		PEM_ARRAY_SIZE		= 	64;
-
-	/**
-	 * 生成KEY_SIZE长度的RSA密钥对,存放在keyMap中
-	 * @return keyMap RSA密钥对
-	 * @throws Exception
-	 */
-	public static Map<String, Object> genKeyPair() throws Exception {
-		KeyPair keyPair = genRSAKeyPair();
-
-		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-
-		Map<String, Object> keyMap = new HashMap<String, Object>(2);
-		keyMap.put(PUBLIC_KEY, publicKey);
-		keyMap.put(PRIVATE_KEY, privateKey);
-
-		return keyMap;
-	}
 	
 	/**
 	 * gen RSA KeyPair 
@@ -76,49 +58,31 @@ public final class RSAUtils {
 		keyPairGenerator.initialize(KEY_SIZE);
 		return keyPairGenerator.generateKeyPair();
 	}
-
+	
 	/**
-	 * 获取公钥
-	 * @param keyMap
-	 * @return 公钥
+	 * 通过keyBytes构建私钥
+	 * @param keyBytes
+	 * @return
 	 * @throws Exception
 	 */
-	public static byte[] getPublicKey(Map<String, Object> keyMap)throws Exception {
-		Key key = (Key) keyMap.get(PUBLIC_KEY);
-		return key.getEncoded();
+	public static PrivateKey privateKey(byte[] keyBytes)throws Exception {
+		PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(keyBytes);
+		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORTHM);
+		return  keyFactory.generatePrivate(pkcs8EncodedKeySpec);
 	}
 	
 	/**
-	 * 获取私钥
-	 * @param keyMap
-	 * @return 私钥
+	 * 通过keyBytes构建公钥
+	 * @param keyBytes
+	 * @return
 	 * @throws Exception
 	 */
-	public static byte[] getPrivateKey(Map<String, Object> keyMap)throws Exception {
-		Key key = (Key) keyMap.get(PRIVATE_KEY);
-		return key.getEncoded();
+	public static PublicKey publicKey(byte[] keyBytes)throws Exception {
+		X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);
+		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORTHM);
+		return keyFactory.generatePublic(x509EncodedKeySpec);
 	}
 	
-	/**
-	 * 公钥数据转换为Hex字符串
-	 * @param keyMap
-	 * @return 公钥
-	 * @throws Exception
-	 */
-	public static String getPublicKey2Hex(Map<String, Object> keyMap)throws Exception {
-		return HexUtils.bytes2HexString(getPublicKey(keyMap));
-	}
-	
-	/**
-	 * 私钥数据转换为Hex字符串
-	 * @param keyMap
-	 * @return 私钥
-	 * @throws Exception
-	 */
-	public static String getPrivateKey2Hex(Map<String, Object> keyMap)throws Exception {
-		return HexUtils.bytes2HexString(getPrivateKey(keyMap));
-	}
-
 	/**
 	 * 私钥加密
 	 * @param data  明文数据
@@ -139,16 +103,16 @@ public final class RSAUtils {
 	 * @throws Exception
 	 */
 	public static byte[] encryptByPrivateKey(byte[] data, byte[] keyBytes)throws Exception {
-	
-		PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORTHM);
-		Key privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec);
+		Key privateKey = privateKey(keyBytes);
 
 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
 		cipher.init(Cipher.ENCRYPT_MODE, privateKey);
 
 		return cipher.doFinal(data);
 	}
+	
+
 
 	/**
 	 * 私钥解密
@@ -172,9 +136,8 @@ public final class RSAUtils {
 	 * @throws Exception
 	 */
 	public static byte[] decryptByPrivateKey(byte[] data, byte[] keyBytes)throws Exception {
-		PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORTHM);
-		Key privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec);
+		Key privateKey = privateKey(keyBytes);
 		// 解密
 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
 		cipher.init(Cipher.DECRYPT_MODE, privateKey);
@@ -203,10 +166,8 @@ public final class RSAUtils {
 	 * @throws Exception
 	 */
 	public static byte[] encryptByPublicKey(byte[] data, byte[] keyBytes)throws Exception {
-
-		X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORTHM);
-		Key publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
+		Key publicKey = publicKey(keyBytes);
 
 		// ����ݽ���
 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
@@ -236,16 +197,46 @@ public final class RSAUtils {
 	 * @throws Exception
 	 */
 	public static byte[] decryptByPublicKey(byte[] data, byte[] keyBytes)throws Exception {
-		// 通过keyBytes构建公钥
-		X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);
+		
 		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORTHM);
-		Key publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
+		Key publicKey = publicKey(keyBytes);
 
 		// 解密
 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
 		cipher.init(Cipher.DECRYPT_MODE, publicKey);
 
 		return cipher.doFinal(data);
+	}
+	
+	public byte[]  sign(byte[] src, RSAPrivateKey privateKey, String algorithm) {
+		if(StringUtils.isBlank(algorithm)) {
+			algorithm = "SHA1withRSA";
+		}
+		try {
+			Signature signature = Signature.getInstance(algorithm);
+			signature.initSign(privateKey);
+			signature.update(src);
+			return signature.sign();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public boolean verify(byte[] sign, byte[] src, RSAPublicKey publicKey, String algorithm) {
+		try {
+			if(StringUtils.isBlank(algorithm)) {
+				algorithm = "SHA1withRSA";
+			}
+			
+			Signature signature = Signature.getInstance(algorithm);
+			signature.initVerify(publicKey);
+			signature.update(src);
+			return signature.verify(sign);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	/**
@@ -256,9 +247,9 @@ public final class RSAUtils {
 	public static String getPublicKeyPEM(byte[] encoded) {
 		StringBuffer base64String = 
 				new StringBuffer("");
-		base64String.append("-----BEGIN PUBLIC KEY-----").append("\n");
-		base64String.append(getBase64PEM(encoded));
-		base64String.append("-----END PUBLIC KEY-----").append("\n");
+		base64String.append("-----BEGIN PUBLIC KEY-----").append(LINE_SEPARATOR);
+		base64String.append(getBase64PEM(encoded)).append(LINE_SEPARATOR);
+		base64String.append("-----END PUBLIC KEY-----").append(LINE_SEPARATOR);
 		return base64String.toString();
 	}
 	
@@ -270,9 +261,23 @@ public final class RSAUtils {
 	public static String getPrivateKeyPEM(byte[] encoded) {
 		StringBuffer base64String = 
 				new StringBuffer("");
-		base64String.append("-----BEGIN RSA PRIVATE KEY-----").append("\n");
-		base64String.append(getBase64PEM(encoded));
-		base64String.append("-----END RSA PRIVATE KEY-----").append("\n");
+		base64String.append("-----BEGIN RSA PRIVATE KEY-----").append(LINE_SEPARATOR);
+		base64String.append(getBase64PEM(encoded)).append(LINE_SEPARATOR);
+		base64String.append("-----END RSA PRIVATE KEY-----").append(LINE_SEPARATOR);
+		return base64String.toString();
+	}
+	
+	/**
+	 * 获取Certificate的PEM格式
+	 * @param encoded 公钥
+	 * @return PEM格式公钥
+	 */
+	public static String getCertificatePEM(byte[] encoded) {
+		StringBuffer base64String = 
+				new StringBuffer("");
+		base64String.append("-----BEGIN CERTIFICATE-----").append(LINE_SEPARATOR);
+		base64String.append(getBase64PEM(encoded)).append(LINE_SEPARATOR);
+		base64String.append("-----END CERTIFICATE-----").append(LINE_SEPARATOR);
 		return base64String.toString();
 	}
 	
@@ -282,21 +287,21 @@ public final class RSAUtils {
 	 * @return PEM格式密钥
 	 */
 	public static String getBase64PEM(byte[] encoded) {
-		String base64String = Base64.getEncoder().encodeToString(encoded);
-		StringBuffer base64ArrayString = new StringBuffer("");
-		int startPosition = 0;
-		int endPosition = PEM_ARRAY_SIZE;
-		while(endPosition < base64String.length()) {
-			base64ArrayString.append(base64String.substring(startPosition, endPosition)).append("\n");
-			startPosition = endPosition;
-			endPosition = endPosition + PEM_ARRAY_SIZE;
-		}
-		if(startPosition < base64String.length()) {
-			base64ArrayString.append(base64String.substring(startPosition)).append("\n");
-		}
+		String base64String = 
+				Base64.getMimeEncoder(PEM_ARRAY_SIZE,LINE_SEPARATOR.getBytes()).encodeToString(encoded);
+		//StringBuffer base64ArrayString = new StringBuffer("");
+		//int startPosition = 0;
+		//int endPosition = PEM_ARRAY_SIZE;
+		//while(endPosition < base64String.length()) {
+		//	base64ArrayString.append(base64String.substring(startPosition, endPosition)).append("\n");
+		//	startPosition = endPosition;
+		//	endPosition = endPosition + PEM_ARRAY_SIZE;
+		//}
+		//if(startPosition < base64String.length()) {
+		//	base64ArrayString.append(base64String.substring(startPosition)).append("\n");
+		//}
 		
-		return base64ArrayString.toString();
+		//return base64ArrayString.toString();
+		return base64String;
 	}
-	
-
 }

@@ -17,9 +17,7 @@
 
 package org.maxkey.crypto;
 
-import java.security.Key;
-import java.util.Map;
-
+import java.security.KeyPair;
 import org.junit.Test;
 
 
@@ -29,22 +27,24 @@ public class RSAUtilsTest {
 	public void test() throws Exception {
 
 		// RSA KeyPair
-		Map<String, Object> key = RSAUtils.genKeyPair();
-		String privateKey = RSAUtils.getPublicKey2Hex(key);
-		String publicKey = RSAUtils.getPrivateKey2Hex(key);
+		KeyPair keyPair   = RSAUtils.genRSAKeyPair();
+		String privateKey = HexUtils.hex2String(keyPair.getPrivate().getEncoded());
+		String publicKey = HexUtils.hex2String(keyPair.getPublic().getEncoded());
 		System.out.println("privateKey:" + privateKey);
 		System.out.println("publicKey:" + publicKey);
 		String signString = "my name is shiming";
-		Key keyp = (Key) key.get(RSAUtils.PUBLIC_KEY);
-		System.out.println("privateKey:" + Base64Utils.base64UrlEncode(keyp.getEncoded()));
-
+		System.out.println("privateKey:");
+		System.out.println( Base64Utils.base64UrlEncode(keyPair.getPublic().getEncoded()));
+		System.out.println("PublicKeyPEM:");
+		System.out.println(RSAUtils.getPublicKeyPEM(keyPair.getPublic().getEncoded()));
+		
 		byte[] encodedData = RSAUtils.encryptByPrivateKey(signString.getBytes(), privateKey);
 		System.out.println("encodedData \r\n" + new String(encodedData));
 		System.out.println("encodedData HexString \r\n" + HexUtils.bytes2HexString(encodedData));
 		byte[] decodedData = RSAUtils.decryptByPublicKey(encodedData, publicKey);
 		String target = new String(decodedData);
 		System.out.println("target:" + target);
-
+		
 	}
 
 }
