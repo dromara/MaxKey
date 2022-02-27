@@ -72,15 +72,15 @@ Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitH
 
 3. Standard Authentication Protocols for applications to integrate sso, secure mobile access, secure API, third-party authentication and Internet authentication.
 
-4. Identity Lifecycle management, support SCIM 2 , and realize Identity supply synchronization through connector based on Apache Kafka agent.
+4. Identity Lifecycle management, support SCIM 2 , and realize Identity supply synchronization through connector based on Message Queue.
 
-5. The Multi-Tenancy authentication platform , supports the independent management of multiple enterprises under the group company or the data isolation of different departments under the enterprise, so as to reduce the operation and maintenance cost.
+5. Simplify Microsoft Active Directory , standard LDAP server organization and account management, and reset password through password self-service.
 
-6. The platform independence and diversity of environment. It supports web, mobile phone, mobile devices, such as apple IOS, Android, etc., and covers the certification ability from B/S to mobile applications.
+6. The Multi-Tenancy authentication platform , supports the independent management of multiple enterprises under the group company or the data isolation of different departments under the enterprise, so as to reduce the operation and maintenance cost.
 
-7. Variety of authentication mechanisms coexist, each application system can retain the original authentication mechanism, and integrate the authentication of the MaxKey; the application has a high degree of independence, does not rely on the MaxKey, and can use the authentication of the MaxKey to realize single sign on.
+7. The platform independence and diversity of environment. It supports web, mobile phone, mobile devices, such as apple IOS, Android, etc., and covers the certification ability from B/S to mobile applications.
 
-8. Based on Java EE platform , microservice architecture, Use Spring, MySQL, Tomcat, Redis , Apache Kafka and other open source technologies, and has strong scalability.
+8. Based on Java EE platform , microservice architecture, Use Spring, MySQL, Tomcat, Redis , Kafka , RocketMQ and other open source technologies, and has strong scalability.
 
 9. Open Source, Secure,  Independent and Controllable , License Under Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright</a>. 
 

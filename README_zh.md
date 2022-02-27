@@ -73,15 +73,15 @@ QQ交流群：<b>434469201</b>
 
 3. 提供标准的认证接口以便于其他应用集成SSO，安全的移动接入，安全的API、第三方认证和互联网认证的整合。
 
-4. 提供用户生命周期管理，支持SCIM 2协议，基于Apache Kafka代理，通过连接器(Connector)实现身份供给同步。
+4. 提供用户生命周期管理，支持SCIM 2协议；基于消息队列通过连接器(Connector)实现身份供给同步。
 
-5. 认证多租户功能，支持集团下多企业独立管理或企业下不同部门数据隔离的，降低运维成本。
+5. 简化微软Active Directory域控、标准LDAP服务器机构和账号管理，密码自助服务重置密码。
 
-6. 认证中心具有平台无关性、环境多样性，支持Web、手机、移动设备等, 如Apple iOS，Andriod等，将认证能力从B/S到移动应用全面覆盖。
+6. 认证多租户功能，支持集团下多企业独立管理或企业下不同部门数据隔离的，降低运维成本。
 
-7. 多种认证机制并存，各应用系统可保留原有认证机制，同时集成认证中心的认证；应用具有高度独立性，不依赖认证中心，又可用使用认证中心的认证，实现单点登录。
+7. 认证中心具有平台无关性、环境多样性，支持Web、手机、移动设备等, 如Apple iOS，Andriod等，将认证能力从B/S到移动应用全面覆盖。
 
-8. 基于Java EE平台，微服务架构，采用Spring、MySQL、Tomcat、Redis、Apache Kafka等开源技术，扩展性强。  
+8. 基于Java EE平台，微服务架构，采用Spring、MySQL、Tomcat、Redis、Kafka、RocketMQ等开源技术，扩展性强。  
 
 9. 开源、安全、自主可控，许可证 Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey版权声明</a>。 
 

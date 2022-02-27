@@ -26,7 +26,6 @@ import org.maxkey.crypto.RSAUtils;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ExtraAttrs;
 import org.maxkey.entity.apps.Apps;
-import org.maxkey.util.HttpsTrusts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -50,8 +49,7 @@ public class ExtendApiQiye163ExmailAdapter extends AbstractAuthorizeAdapter {
 
     @Override
 	public ModelAndView authorize(ModelAndView modelAndView) {
-		HttpsTrusts.beforeConnection();
-		
+    	
 		Apps details=(Apps)app;
 		//extraAttrs from Applications
 		ExtraAttrs extraAttrs=null;
