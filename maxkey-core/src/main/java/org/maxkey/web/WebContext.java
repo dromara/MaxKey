@@ -56,6 +56,10 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * @author Crystal.Sea
  * @since 1.5
  */
+/**
+ * @author shimi
+ *
+ */
 public final class WebContext {
     
     final static Logger _logger = LoggerFactory.getLogger(WebContext.class);
@@ -275,22 +279,32 @@ public final class WebContext {
 
     }
     
+    /**
+     * isTraceEnabled print request headers and parameters<br>
+     * see WebInstRequestFilter
+     * @param request
+     */
     public static void printRequest(final HttpServletRequest request) {
-    	_logger.trace("getRequestURL : "+request.getRequestURL());
-    	_logger.trace("getMethod : "+request.getMethod());
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-          String key = (String) headerNames.nextElement();
-          String value = request.getHeader(key);
-          _logger.trace("Header key "+key +" , value " + value);
-        }
-        
-        Enumeration<String> parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-          String key = (String) parameterNames.nextElement();
-          String value = request.getParameter(key);
-          _logger.trace("Parameter "+key +" , value " + value);
-        }
+    	if(_logger.isTraceEnabled()) {
+    		_logger.trace("getContextPath : {}"  , request.getContextPath());
+	    	_logger.trace("getRequestURL : {} " , request.getRequestURL());
+			_logger.trace("URL : {}" , request.getRequestURI().substring(request.getContextPath().length()));
+	    	_logger.trace("getMethod : {} " , request.getMethod());
+	    	
+	        Enumeration<String> headerNames = request.getHeaderNames();
+	        while (headerNames.hasMoreElements()) {
+	          String key = (String) headerNames.nextElement();
+	          String value = request.getHeader(key);
+	          _logger.trace("Header key {} , value {}" , key, value);
+	        }
+	        
+	        Enumeration<String> parameterNames = request.getParameterNames();
+	        while (parameterNames.hasMoreElements()) {
+	          String key = (String) parameterNames.nextElement();
+	          String value = request.getParameter(key);
+	          _logger.trace("Parameter {} , value {}",key , value);
+	        }
+    	}
     }
 
     /**

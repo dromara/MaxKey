@@ -99,8 +99,6 @@ public class LoginEndpoint {
 	public ModelAndView login(HttpServletRequest request) {
 		_logger.debug("LoginController /login.");
 		
-		WebContext.printRequest(request);
-		
 		boolean isAuthenticated= WebContext.isAuthenticated();
 		
 		if(isAuthenticated){

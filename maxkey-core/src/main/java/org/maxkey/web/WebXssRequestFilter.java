@@ -70,15 +70,10 @@ public class WebXssRequestFilter  extends GenericFilterBean {
 	public void doFilter(ServletRequest servletRequest, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		_logger.trace("WebXssRequestFilter");
-		
 		boolean isWebXss = false;
 		HttpServletRequest request= ((HttpServletRequest)servletRequest);
-		String requestURI=request.getRequestURI();
-		_logger.trace("getContextPath " +request.getContextPath());
-		_logger.trace("getRequestURL " + ((HttpServletRequest)request).getRequestURI());
-		_logger.trace("URL " +requestURI.substring(request.getContextPath().length()));
 		
-		if(skipUrlMap.containsKey(requestURI.substring(request.getContextPath().length()))) {
+		if(skipUrlMap.containsKey(request.getRequestURI().substring(request.getContextPath().length()))) {
 			isWebXss = false;
 		}else {
 	        Enumeration<String> parameterNames = request.getParameterNames();

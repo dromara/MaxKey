@@ -85,7 +85,7 @@ public class BasicEntryPoint implements   AsyncHandlerInterceptor {
 		    _logger.info("recreate new session .");
 			request.getSession(true);
 		 }
-		 String basicCredential =request.getHeader(AuthorizationHeaderUtils.AUTHORIZATION_HEADERNAME);
+		 String basicCredential =request.getHeader(AuthorizationHeaderUtils.HEADER_Authorization);
 		 _logger.info("getSession.getId : "+ request.getSession().getId());
 		 
 		 _logger.info("Authorization : " + basicCredential);

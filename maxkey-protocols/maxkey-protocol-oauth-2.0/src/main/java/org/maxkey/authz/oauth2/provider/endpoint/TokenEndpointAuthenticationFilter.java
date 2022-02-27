@@ -136,10 +136,6 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 		final HttpServletRequest request = (HttpServletRequest) req;
 		final HttpServletResponse response = (HttpServletResponse) res;
 
-		if(_logger.isTraceEnabled()) {
-			WebContext.printRequest(request);
-		}
-		
 		try {
 			String grantType = request.getParameter(OAuth2Constants.PARAMETER.GRANT_TYPE);
 			if (grantType != null && grantType.equals(OAuth2Constants.PARAMETER.GRANT_TYPE_PASSWORD)) {

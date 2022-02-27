@@ -18,13 +18,13 @@
 package org.maxkey.authz.oauth2.provider.userinfo.endpoint;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Enumeration;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
@@ -48,7 +48,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,27 +82,18 @@ public class UserInfoEndpoint {
 	@RequestMapping(value=OAuth2Constants.ENDPOINT.ENDPOINT_USERINFO, method={RequestMethod.POST, RequestMethod.GET}) 
 	public void apiV20UserInfo(
 			@RequestParam(value = "access_token", required = false) String access_token,
-			@RequestHeader(value = "authorization", required = false) String authorization_bearer,
             HttpServletRequest request, 
             HttpServletResponse response) {	        
-	        if(access_token == null && authorization_bearer!= null) {
-	        	if(_logger.isTraceEnabled()) {
-		        	_logger.trace("getRequestURL : "+request.getRequestURL());
-			        Enumeration<String> headerNames = request.getHeaderNames();
-			        while (headerNames.hasMoreElements()) {
-			          String key = (String) headerNames.nextElement();
-			          String value = request.getHeader(key);
-			          _logger.trace("Header key "+key +" , value " + value);
-			        }
-		        }
+	        if(StringUtils.isBlank(access_token)) {
 	        	//for header authorization bearer
-	        	access_token = AuthorizationHeaderUtils.resolveBearer(authorization_bearer);
+	        	access_token = AuthorizationHeaderUtils.resolveBearer(request);
 	        }
 	        
-			String principal="";
 			if (!StringGenerator.uuidMatches(access_token)) {
 				httpResponseAdapter.write(response,JsonUtils.gson2Json(accessTokenFormatError(access_token)),"json"); 
 			}
+			
+			String principal="";
 			OAuth2Authentication oAuth2Authentication =null;
 			try{
 				 oAuth2Authentication = oauth20tokenServices.loadAuthentication(access_token);

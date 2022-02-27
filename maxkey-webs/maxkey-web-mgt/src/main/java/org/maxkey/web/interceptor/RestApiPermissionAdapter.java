@@ -65,7 +65,7 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 _logger.trace("RestApiPermissionAdapter preHandle");
-		String  authorization = request.getHeader(AuthorizationHeaderUtils.AUTHORIZATION_HEADERNAME);
+		String  authorization = request.getHeader(AuthorizationHeaderUtils.HEADER_Authorization);
 		AuthorizationHeaderCredential headerCredential = AuthorizationHeaderUtils.resolve(authorization);
 		 
 		//判断应用的AppId和Secret

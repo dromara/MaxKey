@@ -17,6 +17,8 @@
 
 package org.maxkey.util;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.maxkey.crypto.Base64Utils;
 
 /**
@@ -25,7 +27,14 @@ import org.maxkey.crypto.Base64Utils;
  */
 public class AuthorizationHeaderUtils {
 
-    public static final String AUTHORIZATION_HEADERNAME = "Authorization";
+	/**
+	 * first UpperCase
+	 */
+    public static final String HEADER_Authorization = "Authorization";
+    /**
+     * first LowerCase
+     */
+    public static final String HEADER_authorization = "authorization";
 
     public static String createBasic(String username, String password) {
         String authUserPass = username + ":" + password;
@@ -34,7 +43,7 @@ public class AuthorizationHeaderUtils {
     }
 
     public static AuthorizationHeaderCredential resolve(String authorization) {
-        if (isBasic(authorization)) {
+        if (StringUtils.isNotBlank(authorization) && isBasic(authorization)) {
             String decodeUserPass = Base64Utils.decode(authorization.split(" ")[1]);
             String []userPass =decodeUserPass.split(":");
             return new AuthorizationHeaderCredential(userPass[0],userPass[1]);
@@ -56,10 +65,10 @@ public class AuthorizationHeaderUtils {
     }
 
     public static String resolveBearer(String bearer) {
-        if (isBearer(bearer)) {
+        if (StringUtils.isNotBlank(bearer) && isBearer(bearer)) {
             return bearer.split(" ")[1];
         } else {
-            return null;
+            return bearer;
         }
     }
     
@@ -69,6 +78,16 @@ public class AuthorizationHeaderUtils {
         } else {
             return false;
         }
+    }
+    
+    public  static String resolveBearer(HttpServletRequest request) {
+    	String authorization = 
+    			StringUtils.isNotBlank(request.getHeader(HEADER_Authorization)) ? 
+    					request.getHeader(HEADER_Authorization) : request.getHeader(HEADER_authorization);
+    	if(StringUtils.isNotBlank(authorization)) {
+    		return resolveBearer(authorization);
+    	}
+    	return null;
     }
 
 }
