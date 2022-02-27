@@ -208,7 +208,7 @@ public final class RSAUtils {
 		return cipher.doFinal(data);
 	}
 	
-	public byte[]  sign(byte[] src, RSAPrivateKey privateKey, String algorithm) {
+	public static  byte[]  sign(byte[] src, RSAPrivateKey privateKey, String algorithm) {
 		if(StringUtils.isBlank(algorithm)) {
 			algorithm = "SHA1withRSA";
 		}
@@ -223,7 +223,7 @@ public final class RSAUtils {
 		}
 	}
 	
-	public boolean verify(byte[] sign, byte[] src, RSAPublicKey publicKey, String algorithm) {
+	public static boolean verify(byte[] sign, byte[] src, RSAPublicKey publicKey, String algorithm) {
 		try {
 			if(StringUtils.isBlank(algorithm)) {
 				algorithm = "SHA1withRSA";
