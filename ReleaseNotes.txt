@@ -1,4 +1,33 @@
-﻿MaxKey v 3.3.2 GA 2022/02/17
+﻿MaxKey v 3.3.3 GA 2022/03/03
+    *(MAXKEY-220401) 网易企业邮箱单点登录支持
+    *(MAXKEY-220402) Active Directory域控组织、账号同步优化
+    *(MAXKEY-220403) OAuth及OIDC兼容 Authorization/authorization的bearer #I4VFYD(无双的英雄peerless_hero)
+    *(MAXKEY-220404) 优化实时同步，增加RocketMQ支持
+    *(MAXKEY-220405) 官方网站内容优化和完善
+    *(MAXKEY-220406) 图片验证码可配置调整；支持数字和算术计算；长度80，高度40
+    *(MAXKEY-220407) RSAUtils优化增加签名和验证功能，优化PEM生成器功能
+    *(MAXKEY-220408) 管理端登录验证码高度不一致调整
+    *(MAXKEY-220409) docker配置文件中DATABASE_HOST改为localhost
+    *(MAXKEY-220410) 注册默认租户ID设置为1
+    *(MAXKEY-220411) 增加LDAP账号映射功能，登录账号和LDAP账号可进行映射
+    *(MAXKEY-220412) 日志功能优化
+    *(MAXKEY-220413) 配置管理默认登录后地址
+    *(MAXKEY-220414) 服务端删除对maxkey-client-sdk依赖
+    *(MAXKEY-220415) 产品简短说明，添加badges标志，产品功能说明优化
+    *(MAXKEY-220416) 增加用户、机构等表默认值
+    *(MAXKEY-220417) Metadatas功能优化
+    *(MAXKEY-220418) 依赖项引用、更新和升级
+        spring                   5.3.16
+        springBoot               2.6.4
+        springSecurity           5.6.2
+        springData               2.6.2
+        springSession            2.6.2
+        springcloud              3.1.1
+        commonsvalidator         1.7
+        RocketMQclient           4.9.2
+        RocketmMQspringboot      2.2.1
+        
+MaxKey v 3.3.2 GA 2022/02/17
     *(MAXKEY-220301) 统一界面色调
     *(MAXKEY-220302) 增加飞书扫码登录，更新最新飞书图标
     *(MAXKEY-220303) appList GRID界面优化，增加边框和阴影背景

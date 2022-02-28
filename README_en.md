@@ -72,7 +72,7 @@ Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitH
 
 3. Standard Authentication Protocols for applications to integrate sso, secure mobile access, secure API, third-party authentication and Internet authentication.
 
-4. Identity Lifecycle management, support SCIM 2 , and realize Identity supply synchronization through connector based on Message Queue.
+4. Identity Lifecycle management, support SCIM 2 , and The out of the box connector realizes identity supply synchronization.
 
 5. Simplify Microsoft Active Directory , standard LDAP server organization and account management, and reset password through password self-service.
 
