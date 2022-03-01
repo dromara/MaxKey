@@ -87,7 +87,7 @@ public class ProfileController {
                     WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS), 
                     userInfo, MessageType.success,
                     OperateType.add, MessageScope.DB);
-
+            
         } else {
             new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR), MessageType.error);
         }
