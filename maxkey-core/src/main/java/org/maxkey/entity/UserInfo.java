@@ -145,6 +145,8 @@ public class UserInfo extends JpaBaseEntity {
     protected String lastLogoffTime;
     protected int passwordSetType;
     protected Integer loginCount;
+    protected String regionHistory;
+    protected String passwordHistory;
 
     @Column
     protected String locale;
@@ -1278,6 +1280,22 @@ public class UserInfo extends JpaBaseEntity {
 
 	public void setInstName(String instName) {
 		this.instName = instName;
+	}
+
+	public String getRegionHistory() {
+		return regionHistory;
+	}
+
+	public void setRegionHistory(String regionHistory) {
+		this.regionHistory = regionHistory;
+	}
+
+	public String getPasswordHistory() {
+		return passwordHistory;
+	}
+
+	public void setPasswordHistory(String passwordHistory) {
+		this.passwordHistory = passwordHistory;
 	}
 
 	@Override

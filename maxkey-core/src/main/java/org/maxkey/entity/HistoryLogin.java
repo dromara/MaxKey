@@ -64,6 +64,10 @@ public class HistoryLogin  extends JpaBaseEntity  implements Serializable{
 	@Column
 	String sourceIp;
 	@Column
+	String ipRegion;
+	@Column
+	String ipLocation;
+	@Column
 	String browser;
 	@Column
 	String platform;
@@ -169,6 +173,22 @@ public class HistoryLogin  extends JpaBaseEntity  implements Serializable{
 		this.sourceIp = sourceIp;
 	}
 
+	public String getIpRegion() {
+		return ipRegion;
+	}
+
+	public void setIpRegion(String ipRegion) {
+		this.ipRegion = ipRegion;
+	}
+
+	public String getIpLocation() {
+		return ipLocation;
+	}
+
+	public void setIpLocation(String ipLocation) {
+		this.ipLocation = ipLocation;
+	}
+
 	public String getBrowser() {
 		return browser;
 	}
@@ -258,47 +278,55 @@ public class HistoryLogin  extends JpaBaseEntity  implements Serializable{
 	}
 
 	@Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("HistoryLogin [id=");
-        builder.append(id);
-        builder.append(", sessionId=");
-        builder.append(sessionId);
-        builder.append(", userId=");
-        builder.append(userId);
-        builder.append(", username=");
-        builder.append(username);
-        builder.append(", displayName=");
-        builder.append(displayName);
-        builder.append(", loginType=");
-        builder.append(loginType);
-        builder.append(", message=");
-        builder.append(message);
-        builder.append(", code=");
-        builder.append(code);
-        builder.append(", provider=");
-        builder.append(provider);
-        builder.append(", sourceIp=");
-        builder.append(sourceIp);
-        builder.append(", browser=");
-        builder.append(browser);
-        builder.append(", platform=");
-        builder.append(platform);
-        builder.append(", application=");
-        builder.append(application);
-        builder.append(", loginUrl=");
-        builder.append(loginUrl);
-        builder.append(", loginTime=");
-        builder.append(loginTime);
-        builder.append(", logoutTime=");
-        builder.append(logoutTime);
-        builder.append(", startDate=");
-        builder.append(startDate);
-        builder.append(", endDate=");
-        builder.append(endDate);
-        builder.append("]");
-        return builder.toString();
-    }
-
-
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("HistoryLogin [id=");
+		builder.append(id);
+		builder.append(", sessionId=");
+		builder.append(sessionId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", displayName=");
+		builder.append(displayName);
+		builder.append(", loginType=");
+		builder.append(loginType);
+		builder.append(", message=");
+		builder.append(message);
+		builder.append(", code=");
+		builder.append(code);
+		builder.append(", provider=");
+		builder.append(provider);
+		builder.append(", sourceIp=");
+		builder.append(sourceIp);
+		builder.append(", ipRegion=");
+		builder.append(ipRegion);
+		builder.append(", ipLocation=");
+		builder.append(ipLocation);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append(", platform=");
+		builder.append(platform);
+		builder.append(", application=");
+		builder.append(application);
+		builder.append(", loginUrl=");
+		builder.append(loginUrl);
+		builder.append(", loginTime=");
+		builder.append(loginTime);
+		builder.append(", logoutTime=");
+		builder.append(logoutTime);
+		builder.append(", instId=");
+		builder.append(instId);
+		builder.append(", instName=");
+		builder.append(instName);
+		builder.append(", sessionStatus=");
+		builder.append(sessionStatus);
+		builder.append(", startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append("]");
+		return builder.toString();
+	}
 }

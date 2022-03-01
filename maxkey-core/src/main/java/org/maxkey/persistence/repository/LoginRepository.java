@@ -321,6 +321,8 @@ public class LoginRepository {
             userInfo.setLastLoginIp(rs.getString("lastloginip"));
             userInfo.setLastLogoffTime(rs.getString("lastlogofftime"));
             userInfo.setLoginCount(rs.getInt("logincount"));
+            userInfo.setRegionHistory(rs.getString("regionhistory"));
+            userInfo.setPasswordHistory(rs.getString("passwordhistory"));
 
             userInfo.setTimeZone(rs.getString("timezone"));
             userInfo.setLocale(rs.getString("locale"));

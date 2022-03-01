@@ -58,7 +58,7 @@ public class WebInstRequestFilter  extends GenericFilterBean {
 			if(host.indexOf(":")> -1 ) {
 				host = host.split(":")[0];
 			}
-			Institutions institution =institutionsRepository.findByDomain(host);
+			Institutions institution = institutionsRepository.findByDomain(host);
 			_logger.trace("{}" ,institution);
 			request.getSession().setAttribute(WebConstants.CURRENT_INST, institution);
 			WebContext.setCookie((HttpServletResponse)servletResponse, host, WebConstants.INST_COOKIE_NAME, institution.getId());

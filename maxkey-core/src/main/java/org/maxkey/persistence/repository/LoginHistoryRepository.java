@@ -28,7 +28,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class LoginHistoryRepository {
     private static Logger _logger = LoggerFactory.getLogger(LoginHistoryRepository.class);
     
-    private static final String HISTORY_LOGIN_INSERT_STATEMENT = "insert into mxk_history_login (id , sessionid , userid , username , displayname , logintype , message , code , provider , sourceip , browser , platform , application , loginurl , sessionstatus ,instid)values( ? , ? , ? , ? , ? , ? , ?, ? , ? , ?, ? , ? , ?, ? , ? , ?)";
+    private static final String HISTORY_LOGIN_INSERT_STATEMENT = "insert into mxk_history_login (id , sessionid , userid , username , displayname , logintype , message , code , provider , sourceip , ipregion , iplocation, browser , platform , application , loginurl , sessionstatus ,instid)values( ? , ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ?, ? , ? , ?, ? , ? , ?)";
 
     private static final String HISTORY_LOGOUT_UPDATE_STATEMENT = "update mxk_history_login set logouttime = ? ,sessionstatus = 7 where  sessionid = ?";
 
@@ -46,14 +46,15 @@ public class LoginHistoryRepository {
                 new Object[] { 
                         historyLogin.getId(), historyLogin.getSessionId(), historyLogin.getUserId(), historyLogin.getUsername(),
                         historyLogin.getDisplayName(), historyLogin.getLoginType(), historyLogin.getMessage(), historyLogin.getCode(), 
-                        historyLogin.getProvider(), historyLogin.getSourceIp(), historyLogin.getBrowser(), historyLogin.getPlatform(),
-                        "Browser", historyLogin.getLoginUrl() , historyLogin.getSessionStatus(),historyLogin.getInstId()
+                        historyLogin.getProvider(), historyLogin.getSourceIp(),historyLogin.getIpRegion(),historyLogin.getIpLocation(),
+                        historyLogin.getBrowser(), historyLogin.getPlatform(),"Browser", historyLogin.getLoginUrl() , 
+                        historyLogin.getSessionStatus(),historyLogin.getInstId()
                         },
                 new int[] { 
                         Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, 
                         Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR ,Types.INTEGER,
-                        Types.VARCHAR
+                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, 
+                        Types.VARCHAR ,Types.INTEGER, Types.VARCHAR
                         });
     }
     

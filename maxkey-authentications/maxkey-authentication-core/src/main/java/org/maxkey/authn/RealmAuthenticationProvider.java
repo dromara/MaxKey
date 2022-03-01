@@ -228,6 +228,10 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         WebContext.setAuthentication(authenticationToken);
         
         WebContext.setAttribute(WebConstants.CURRENT_USER_SESSION_ID, currentUserSessionId);
+        
+        if(!WebContext.getInst(WebContext.getRequest()).equalsIgnoreCase(userInfo.getInstId())){
+        	//TODO :
+        }
         return authenticationToken;
     }
   

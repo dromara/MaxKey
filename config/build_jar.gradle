@@ -361,9 +361,11 @@ subprojects {
          implementation group: 'io.micrometer', name: 'micrometer-core', version: "${micrometercoreVersion}"
          implementation group: 'org.latencyutils', name: 'LatencyUtils', version: "${LatencyUtilsVersion}"
          implementation group: 'org.codehaus.woodstox', name: 'stax2-api', version: "${stax2apiVersion}"
-         implementation group: 'org.reflections', name: 'reflections', version: '0.9.11'
-         implementation group: 'io.prometheus', name: 'simpleclient', version: '0.5.0'
+         implementation group: 'org.reflections', name: 'reflections', version: "${reflectionsVersion}"
+         implementation group: 'io.prometheus', name: 'simpleclient', version: "${prometheusVersion}"
+         implementation group: 'io.prometheus', name: 'simpleclient_common', version: "${prometheusVersion}"
          implementation group: 'com.belerweb', name: 'pinyin4j', version: "${pinyin4jVersion}"
+         implementation group: 'org.jsoup', name: 'jsoup', version: "${jsoupVersion}"
          
          implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
           //阿里云
