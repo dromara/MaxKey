@@ -77,7 +77,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/formbased/appUpdate");
-		AppsFormBasedDetails formBasedDetails=formBasedDetailsService.getAppDetails(id);
+		AppsFormBasedDetails formBasedDetails=formBasedDetailsService.getAppDetails(id , false);
 		decoderSecret(formBasedDetails);
 		decoderSharedPassword(formBasedDetails);
 		WebContext.setAttribute(formBasedDetails.getId(), formBasedDetails.getIcon());

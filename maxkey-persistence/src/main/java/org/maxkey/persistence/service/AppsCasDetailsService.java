@@ -17,14 +17,25 @@
 
 package org.maxkey.persistence.service;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.entity.apps.AppsCasDetails;
 import org.maxkey.persistence.mapper.AppsCasDetailsMapper;
 import org.springframework.stereotype.Repository;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
 @Repository
 public class AppsCasDetailsService  extends JpaBaseService<AppsCasDetails>{
 
+	protected final static  Cache<String, AppsCasDetails> detailsCache = 
+            Caffeine.newBuilder()
+                .expireAfterWrite(30, TimeUnit.MINUTES)
+                .maximumSize(200000)
+                .build();
+	
 	public AppsCasDetailsService() {
 		super(AppsCasDetailsMapper.class);
 	}
@@ -37,7 +48,17 @@ public class AppsCasDetailsService  extends JpaBaseService<AppsCasDetails>{
 		return (AppsCasDetailsMapper)super.getMapper();
 	}
 	
-	public  AppsCasDetails  getAppDetails(String id) {
-		return getMapper().getAppDetails(id);
+	public  AppsCasDetails  getAppDetails(String id , boolean cached) {
+		AppsCasDetails details = null;
+		if(cached) {
+			details = detailsCache.getIfPresent(id);
+			if(details == null) {
+				details = getMapper().getAppDetails(id);
+				detailsCache.put(id, details);
+			}
+		}else {
+			details = getMapper().getAppDetails(id);
+		}
+		return details;
 	}
 }

@@ -91,8 +91,8 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             String location = applicationConfig.getServerPrefix()+CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1 +"/" + ticket;
             HttpHeaders headers = new HttpHeaders();
             headers.add("location", location);
-            _logger.trace("ticket "+ticket);
-            _logger.trace("location "+location);
+            _logger.trace("ticket {}" , ticket);
+            _logger.trace("location {}" , location);
             return new ResponseEntity<>("Location: " + location, headers ,HttpStatus.CREATED);
  
 	    } catch (final AuthenticationException e) {
@@ -121,10 +121,10 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             TicketGrantingTicketImpl ticketGrantingTicketImpl = 
                     (TicketGrantingTicketImpl) casTicketGrantingTicketServices.get(ticketGrantingTicket);
             
-            AppsCasDetails  casDetails=casDetailsService.getAppDetails(casService);
+            AppsCasDetails  casDetails=casDetailsService.getAppDetails(casService , true);
             
             ServiceTicketImpl serviceTicket=new ServiceTicketImpl(ticketGrantingTicketImpl.getAuthentication(),casDetails);
-            String ticket=ticketServices.createTicket(serviceTicket);
+            String ticket = ticketServices.createTicket(serviceTicket);
             return new ResponseEntity<>(ticket, HttpStatus.OK);
             
         } catch (Exception e) {

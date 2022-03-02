@@ -17,14 +17,25 @@
 
 package org.maxkey.persistence.service;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.entity.apps.AppsFormBasedDetails;
 import org.maxkey.persistence.mapper.AppsFormBasedDetailsMapper;
 import org.springframework.stereotype.Repository;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
 @Repository
 public class AppsFormBasedDetailsService  extends JpaBaseService<AppsFormBasedDetails>{
 
+	protected final static  Cache<String, AppsFormBasedDetails> detailsCache = 
+            Caffeine.newBuilder()
+                .expireAfterWrite(30, TimeUnit.MINUTES)
+                .maximumSize(200000)
+                .build();
+	
 	public AppsFormBasedDetailsService() {
 		super(AppsFormBasedDetailsMapper.class);
 	}
@@ -37,7 +48,17 @@ public class AppsFormBasedDetailsService  extends JpaBaseService<AppsFormBasedDe
 		return (AppsFormBasedDetailsMapper)super.getMapper();
 	}
 	
-	public  AppsFormBasedDetails  getAppDetails(String id) {
-		return getMapper().getAppDetails(id);
+	public  AppsFormBasedDetails  getAppDetails(String id,boolean cached) {
+		AppsFormBasedDetails details = null;
+		if(cached) {
+			details = detailsCache.getIfPresent(id);
+			if(details == null) {
+				details = getMapper().getAppDetails(id);
+				detailsCache.put(id, details);
+			}
+		}else {
+			details = getMapper().getAppDetails(id);
+		}
+		return details;
 	}
 }

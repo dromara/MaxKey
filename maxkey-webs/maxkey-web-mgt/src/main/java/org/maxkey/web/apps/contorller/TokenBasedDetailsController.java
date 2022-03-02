@@ -79,7 +79,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/tokenbased/appUpdate");
-		AppsTokenBasedDetails tokenBasedDetails=tokenBasedDetailsService.getAppDetails(id);
+		AppsTokenBasedDetails tokenBasedDetails=tokenBasedDetailsService.getAppDetails(id , false);
 		decoderSecret(tokenBasedDetails);
 		String algorithmKey=passwordReciprocal.decoder(tokenBasedDetails.getAlgorithmKey());
 		tokenBasedDetails.setAlgorithmKey(algorithmKey);

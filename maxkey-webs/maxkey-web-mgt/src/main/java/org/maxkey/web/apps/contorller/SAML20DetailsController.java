@@ -104,7 +104,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/saml20/appUpdate");
-		AppsSAML20Details saml20Details=saml20DetailsService.getAppDetails(id);
+		AppsSAML20Details saml20Details=saml20DetailsService.getAppDetails(id , false);
 		decoderSecret(saml20Details);
 		WebContext.setAttribute(saml20Details.getId(), saml20Details.getIcon());
 		modelAndView.addObject("model",saml20Details);

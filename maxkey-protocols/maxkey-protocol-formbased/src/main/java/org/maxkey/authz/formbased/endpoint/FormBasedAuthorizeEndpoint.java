@@ -64,7 +64,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			HttpServletRequest request,
 			@PathVariable("id") String id){
 		
-		AppsFormBasedDetails formBasedDetails = formBasedDetailsService.getAppDetails(id);
+		AppsFormBasedDetails formBasedDetails = formBasedDetailsService.getAppDetails(id , true);
 		_logger.debug("formBasedDetails {}",formBasedDetails);
 		Apps  application = getApp(id);
 		formBasedDetails.setAdapter(application.getAdapter());

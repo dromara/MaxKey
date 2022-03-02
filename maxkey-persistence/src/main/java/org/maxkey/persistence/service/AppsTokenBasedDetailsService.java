@@ -17,14 +17,25 @@
 
 package org.maxkey.persistence.service;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.entity.apps.AppsTokenBasedDetails;
 import org.maxkey.persistence.mapper.AppsTokenBasedDetailsMapper;
 import org.springframework.stereotype.Repository;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+
 @Repository
 public class AppsTokenBasedDetailsService  extends JpaBaseService<AppsTokenBasedDetails>{
 
+	protected final static  Cache<String, AppsTokenBasedDetails> detailsCache = 
+            Caffeine.newBuilder()
+                .expireAfterWrite(30, TimeUnit.MINUTES)
+                .maximumSize(200000)
+                .build();
+	
 	public AppsTokenBasedDetailsService() {
 		super(AppsTokenBasedDetailsMapper.class);
 	}
@@ -37,7 +48,17 @@ public class AppsTokenBasedDetailsService  extends JpaBaseService<AppsTokenBased
 		return (AppsTokenBasedDetailsMapper)super.getMapper();
 	}
 	
-	public  AppsTokenBasedDetails  getAppDetails(String id) {
-		return getMapper().getAppDetails(id);
+	public  AppsTokenBasedDetails  getAppDetails(String id , boolean cached) {
+		AppsTokenBasedDetails details = null;
+		if(cached) {
+			details = detailsCache.getIfPresent(id);
+			if(details == null) {
+				details = getMapper().getAppDetails(id);
+				detailsCache.put(id, details);
+			}
+		}else {
+			details = getMapper().getAppDetails(id);
+		}
+		return details;
 	}
 }

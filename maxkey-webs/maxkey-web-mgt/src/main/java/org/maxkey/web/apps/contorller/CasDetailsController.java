@@ -74,7 +74,7 @@ public class CasDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/cas/appUpdate");
-		AppsCasDetails casDetails=casDetailsService.getAppDetails(id);
+		AppsCasDetails casDetails=casDetailsService.getAppDetails(id , false);
 		super.decoderSecret(casDetails);
 		WebContext.setAttribute(casDetails.getId(), casDetails.getIcon());
 

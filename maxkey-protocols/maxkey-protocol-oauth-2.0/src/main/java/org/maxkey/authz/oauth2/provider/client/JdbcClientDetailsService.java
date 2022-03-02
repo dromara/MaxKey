@@ -58,7 +58,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
 
     private static final Log logger = LogFactory.getLog(JdbcClientDetailsService.class);
     
-    protected final static  Cache<String, ClientDetails> clientDetailsCache = 
+    protected final static  Cache<String, ClientDetails> detailsCache = 
             Caffeine.newBuilder()
                 .expireAfterWrite(30, TimeUnit.MINUTES)
                 .maximumSize(200000)
@@ -127,19 +127,27 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
 
     public ClientDetails loadClientByClientId(String clientId,boolean cached) {
         // cache in memory
-        ClientDetails details = null;
-        if(cached) {
-        	details = clientDetailsCache.getIfPresent(clientId);
-        }
-        if(details == null) {
-            try {
-                details = jdbcTemplate.queryForObject(selectClientDetailsSql, new ClientDetailsRowMapper(), clientId);
-                if(cached) {
-                	clientDetailsCache.put(clientId, details);
-                }
-            } catch (EmptyResultDataAccessException e) {
-                throw new NoSuchClientException("No client with requested id: " + clientId);
-            }
+    	ClientDetails details = null;
+    	try {
+	        if(cached) {
+	        	details = detailsCache.getIfPresent(clientId);
+	        	if(details == null) {
+	        		details = jdbcTemplate.queryForObject(
+	        							selectClientDetailsSql, 
+	        							new ClientDetailsRowMapper(), 
+	        							clientId
+	        						);
+	        		detailsCache.put(clientId, details);
+	        	}
+	        }else {
+	        	details = jdbcTemplate.queryForObject(
+	        							selectClientDetailsSql, 
+	        							new ClientDetailsRowMapper(), 
+	        							clientId
+	        						);
+	        }
+    	} catch (EmptyResultDataAccessException e) {
+            throw new NoSuchClientException("No client with requested id: " + clientId);
         }
         return details;
     }
@@ -157,7 +165,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
         if (count != 1) {
             throw new NoSuchClientException("No client found with id = " + clientDetails.getClientId());
         }
-        clientDetailsCache.invalidate(clientDetails.getClientId());
+        detailsCache.invalidate(clientDetails.getClientId());
     }
 
     public void updateClientSecret(String clientId, String secret) throws NoSuchClientException {

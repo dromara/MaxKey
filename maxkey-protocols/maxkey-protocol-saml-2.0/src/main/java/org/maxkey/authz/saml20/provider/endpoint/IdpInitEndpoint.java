@@ -92,7 +92,7 @@ public class IdpInitEndpoint {
 				HttpServletResponse response,
 				@PathVariable("appid") String appId)throws Exception {
 		logger.debug("SAML IDP init , app id is "+appId);
-		AppsSAML20Details saml20Details = saml20DetailsService.getAppDetails(appId);
+		AppsSAML20Details saml20Details = saml20DetailsService.getAppDetails(appId , true);
 		WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, saml20Details);
 		if (saml20Details == null) {
 			logger.error("samlId[" + appId + "] Error .");

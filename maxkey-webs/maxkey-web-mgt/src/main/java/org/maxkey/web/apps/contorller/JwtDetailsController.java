@@ -77,7 +77,7 @@ public class JwtDetailsController  extends BaseAppContorller {
 	@RequestMapping(value = { "/forwardUpdate/{id}" })
 	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
 		ModelAndView modelAndView=new ModelAndView("apps/jwt/appUpdate");
-		AppsJwtDetails jwtDetails=jwtDetailsService.getAppDetails(id);
+		AppsJwtDetails jwtDetails=jwtDetailsService.getAppDetails(id , false);
 		decoderSecret(jwtDetails);
 		WebContext.setAttribute(jwtDetails.getId(), jwtDetails.getIcon());
 

@@ -46,11 +46,11 @@ public class AccountsStrategyJob   implements Job , Serializable {
     @Override
     public void execute(JobExecutionContext context){
         if(jobStatus == JOBSTATUS.RUNNING) {
-            _logger.info("DynamicGroupsJob is in running . " );
+            _logger.info("Accounts Strategy job is in running . " );
             return;
         }
         
-        _logger.debug("DynamicGroupsJob is running ... " );
+        _logger.debug("Accounts Strategy job is running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
             if(accountsService == null) {
@@ -58,15 +58,16 @@ public class AccountsStrategyJob   implements Job , Serializable {
                 		(AccountsService) context.getMergedJobDataMap().get("service");
             }else {
             	accountsService.refreshAllByStrategy();
-            	Thread.sleep(10 *1000);
+            	//10 minutes
+            	Thread.sleep(10 * 1000);
             }
-            _logger.debug("DynamicGroupsJob is success  " );
+            _logger.debug("Accounts Strategy job is success  " );
         }catch(Exception e) {
             _logger.error("Exception " ,e);
             jobStatus = JOBSTATUS.STOP;
         }
         jobStatus = JOBSTATUS.FINISHED;
-        _logger.debug("DynamicGroupsJob is finished . " );
+        _logger.debug("Accounts Strategy job is finished . " );
     }
 
 

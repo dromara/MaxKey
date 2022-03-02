@@ -63,10 +63,9 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			HttpServletResponse response,
 			@RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService){
 	    
-		AppsCasDetails  casDetails=casDetailsService.getAppDetails(casService);
+		AppsCasDetails  casDetails=casDetailsService.getAppDetails(casService , true);
 		
 		return buildCasModelAndView(request,response,casDetails,casService);
-		
 	}
 	
 	@Operation(summary = "CAS页面跳转应用ID认证接口", description = "传递参数应用ID",method="GET")
@@ -76,7 +75,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			HttpServletResponse response,
 			@PathVariable("id") String id){
 		
-		AppsCasDetails casDetails=casDetailsService.getAppDetails(id);
+		AppsCasDetails casDetails=casDetailsService.getAppDetails(id , true);
 		
 		return buildCasModelAndView(request,response,casDetails,casDetails.getCallbackUrl());
 	}

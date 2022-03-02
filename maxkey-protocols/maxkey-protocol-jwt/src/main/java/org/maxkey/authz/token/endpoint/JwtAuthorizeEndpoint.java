@@ -79,7 +79,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			@PathVariable("id") String id){
 		ModelAndView modelAndView=new ModelAndView();
 		Apps  application = getApp(id);
-		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(id);
+		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(id , true);
 		_logger.debug(""+jwtDetails);
 		jwtDetails.setAdapter(application.getAdapter());
 		jwtDetails.setIsAdapter(application.getIsAdapter());
@@ -146,7 +146,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			HttpServletResponse response, 
 			@PathVariable("appid") String appId, 
 			@PathVariable("mediaType") String mediaType) {
-		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(appId);
+		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(appId , true);
 		if(jwtDetails != null) {
 			String jwkSetString = "";
 			if(!jwtDetails.getSignature().equalsIgnoreCase("none")) {
