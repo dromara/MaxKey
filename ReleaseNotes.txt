@@ -1,4 +1,4 @@
-﻿MaxKey v 3.3.3 GA 2022/03/03
+﻿MaxKey v 3.3.3 GA 2022/03/03 
     *(MAXKEY-220401) 网易企业邮箱单点登录支持
     *(MAXKEY-220402) Active Directory域控组织、账号同步优化
     *(MAXKEY-220403) OAuth及OIDC兼容 Authorization/authorization的bearer #I4VFYD(无双的英雄peerless_hero)
