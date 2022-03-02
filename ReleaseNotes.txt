@@ -19,7 +19,8 @@
     *(MAXKEY-220418) Metadatas功能优化
     *(MAXKEY-220419) 头像保存出错BUG修复 #I4VQDD(无双的英雄peerless_hero)
     *(MAXKEY-220420) 用户资料空值问题修复 #I4VNPO(无双的英雄peerless_hero)
-    *(MAXKEY-220421) 依赖项引用、更新和升级
+    *(MAXKEY-220421) 认证缓存的优化
+    *(MAXKEY-220422) 依赖项引用、更新和升级
         spring                   5.3.16
         springBoot               2.6.4
         springSecurity           5.6.2
