@@ -207,7 +207,7 @@ subprojects {
          //implementation group: 'org.springframework', name: 'spring-websocket', version: "${springVersion}"
          // https://mvnrepository.com/artifact/org.springframework.retry/spring-retry
          implementation group: 'org.springframework.retry', name: 'spring-retry', version: "${springretryVersion}"
-         testimplementation group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
+         testImplementation group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
          
          //spring-security
          implementation group: 'org.springframework.security', name: 'spring-security-core', version: "${springSecurityVersion}"
