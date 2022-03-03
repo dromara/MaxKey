@@ -147,5 +147,10 @@ public class RedisConnection {
 	public void setConn(Jedis conn) {
 		this.conn = conn;
 	}
+
+	public Pipeline getPipeline() {
+		return pipeline;
+	}
+	
 	
 }

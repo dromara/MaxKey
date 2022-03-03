@@ -35,6 +35,7 @@ import org.maxkey.util.ObjectTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 import java.util.Date;
 
 /**
@@ -216,14 +217,15 @@ public class RedisTokenStore implements TokenStore {
 		RedisConnection conn = getConnection();
 		try {
 			conn.openPipeline();
-			conn.delete(accessKey);
-			conn.delete(accessToRefreshKey);
-			// Don't remove the refresh token - it's up to the caller to do that
-			conn.delete(authKey);
+			conn.getPipeline().get(accessKey);
+			conn.getPipeline().get(authKey);
+			conn.getPipeline().del(accessKey);
+			conn.getPipeline().del(accessToRefreshKey);
+			 //Don't remove the refresh token - it's up to the caller to do that
+			conn.getPipeline().del(authKey);
 			List<Object> results = conn.closePipeline();
 			String access = (String) results.get(0);
 			String auth = (String) results.get(1);
-
 			OAuth2Authentication authentication = ObjectTransformer.deserialize(auth);
 			if (authentication != null) {
 				String key = authenticationKeyGenerator.extractKey(authentication);
@@ -251,6 +253,7 @@ public class RedisTokenStore implements TokenStore {
 			conn.openPipeline();
 			conn.setObject(refreshKey, refreshToken);
 			conn.setObject(refreshAuthKey, authentication);
+			
 			if (refreshToken instanceof ExpiringOAuth2RefreshToken) {
 				ExpiringOAuth2RefreshToken expiringRefreshToken = (ExpiringOAuth2RefreshToken) refreshToken;
 				Date expiration = expiringRefreshToken.getExpiration();
@@ -314,8 +317,8 @@ public class RedisTokenStore implements TokenStore {
 		RedisConnection conn = getConnection();
 		try {
 			conn.openPipeline();
-			conn.get(key);
-			conn.delete(key);
+			conn.getPipeline().get(key);
+			conn.getPipeline().del(key);
 			results = conn.closePipeline();
 		} finally {
 			conn.close();
@@ -323,11 +326,12 @@ public class RedisTokenStore implements TokenStore {
 		if (results == null) {
 			return;
 		}
-		String  bytes = (String) results.get(0);
-		String accessToken = ObjectTransformer.deserialize(bytes);
+		String  accessToken = (String) results.get(0);
+		//String accessToken = ObjectTransformer.deserialize(bytes);
 		if (accessToken != null) {
 			removeAccessToken(accessToken);
 		}
+		
 	}
 
 	@Override
