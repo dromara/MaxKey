@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.maxkey.authn.realm.IAuthenticationServer;
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.LdapContext;
 import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
 import org.maxkey.persistence.ldap.LdapUtils;
@@ -57,7 +58,8 @@ public class LdapAuthenticationRealmService {
 			            ActiveDirectoryUtils  ldapUtils  = new ActiveDirectoryUtils(
 			            								ldapContext.getProviderUrl(),
 			            								ldapContext.getPrincipal(),
-			            								ldapContext.getCredentials(),
+			            								PasswordReciprocal.getInstance().decoder(
+			            										ldapContext.getCredentials()),
 			            								ldapContext.getMsadDomain());
 			            ldapServer.setActiveDirectoryUtils(ldapUtils);
 			            if(ldapContext.getAccountMapping().equalsIgnoreCase("YES")) {
@@ -70,7 +72,8 @@ public class LdapAuthenticationRealmService {
 						LdapUtils ldapUtils = new LdapUtils(
 													ldapContext.getProviderUrl(),
 													ldapContext.getPrincipal(),
-													ldapContext.getCredentials(),
+													PasswordReciprocal.getInstance().decoder(
+		            										ldapContext.getCredentials()),
 													ldapContext.getBasedn());
 						standardLdapServer.setLdapUtils(ldapUtils);
 						standardLdapServer.setFilterAttribute(ldapContext.getFilters());

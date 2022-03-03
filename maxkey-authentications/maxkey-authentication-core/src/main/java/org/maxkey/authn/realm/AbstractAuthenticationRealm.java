@@ -149,8 +149,9 @@ public abstract class AbstractAuthenticationRealm {
         historyLogin.setBrowser(browser.getName());
         historyLogin.setPlatform(browser.getPlatform());
         historyLogin.setSourceIp(userInfo.getLastLoginIp());
-        historyLogin.setIpRegion(IpRegionFactory.getFactory().region(userInfo.getLastLoginIp()));
-        historyLogin.setIpLocation(IpRegionFactory.getFactory().getLocation(historyLogin.getIpRegion()));
+        //TODO: 
+        //historyLogin.setIpRegion(IpRegionFactory.getFactory().region(userInfo.getLastLoginIp()));
+        //historyLogin.setIpLocation(IpRegionFactory.getFactory().getLocation(historyLogin.getIpRegion()));
         historyLogin.setProvider(provider);
         historyLogin.setCode(code);
         historyLogin.setLoginType(type);

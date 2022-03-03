@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Synchronizers;
 import org.maxkey.synchronizer.SynchronizerJob;
 import org.quartz.CronExpression;
@@ -104,7 +105,9 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 	        	 synchronizer.setProviderUrl(rs.getString("providerurl"));
 	        	 synchronizer.setDriverClass(rs.getString("driverclass"));
 	        	 synchronizer.setPrincipal(  rs.getString("principal"));
-	        	 synchronizer.setCredentials(rs.getString("credentials"));
+	        	 synchronizer.setCredentials(
+	        			 PasswordReciprocal.getInstance().decoder(
+	        					 rs.getString("credentials")));
 	        	 synchronizer.setResumeTime( rs.getString("resumetime"));
 	        	 synchronizer.setSuspendTime(rs.getString("suspendtime"));
 	        	 synchronizer.setFilters(	 rs.getString("filters"));

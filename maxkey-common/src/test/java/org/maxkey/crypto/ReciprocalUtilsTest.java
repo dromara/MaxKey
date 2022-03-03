@@ -45,20 +45,17 @@ public class ReciprocalUtilsTest {
 		 String urlencodeString="中国";
 		 String   urlencode   =   java.net.URLEncoder.encode(urlencodeString,   "utf-8"); 
 		 System.out.println(urlencode);
-		 String urldecodeString="http://exchange.connsec.com/owa/?ae=Item&a=Open&t=IPM.Note&id=RgAAAABPKgpqnlfYQ7BVC%2fBfH2XIBwCS0xhUjzMYSLVky9bw7LddAAAAjov5AACS0xhUjzMYSLVky9bw7LddAAADzoy%2fAAAA&pspid=_1428036768398_867461813";
+		 String urldecodeString="http://exchange.maxkey.top/owa/?ae=Item&a=Open&t=IPM.Note&id=RgAAAABPKgpqnlfYQ7BVC%2fBfH2XIBwCS0xhUjzMYSLVky9bw7LddAAAAjov5AACS0xhUjzMYSLVky9bw7LddAAADzoy%2fAAAA&pspid=_1428036768398_867461813";
 		 String   urldcode   =   java.net.URLDecoder.decode(urldecodeString,   "utf-8");   
 		 
 		
-		 
-		 
-				 
-				
 		 System.out.println(urldcode);*/
 
 		 
-		String encoderString="root";
+		String encoderString="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		encoderString = PasswordReciprocal.getInstance().encode(encoderString);
 		System.out.println( encoderString);
+		System.out.println( "length " + encoderString.length());
 		
 		encoderString=PasswordReciprocal.getInstance().decoder(encoderString);
 		System.out.println(encoderString );

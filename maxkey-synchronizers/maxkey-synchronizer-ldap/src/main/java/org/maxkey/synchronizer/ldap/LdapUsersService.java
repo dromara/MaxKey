@@ -108,40 +108,60 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
         
 		try {
 		    userInfo.setId(userInfo.generateId());
-			userInfo.setFormattedName(LdapUtils.getAttributeStringValue(InetOrgPerson.CN,attributeMap));//閸忋劌鎮�
-			//鐠愶附鍩�
-			userInfo.setUsername(LdapUtils.getAttributeStringValue(InetOrgPerson.UID,attributeMap));//鐠愶箑褰�
-			userInfo.setFamilyName(LdapUtils.getAttributeStringValue(InetOrgPerson.SN,attributeMap));//婵拷
-			userInfo.setGivenName(LdapUtils.getAttributeStringValue(InetOrgPerson.GIVENNAME,attributeMap));//閸氾拷
-			userInfo.setNickName(LdapUtils.getAttributeStringValue(InetOrgPerson.INITIALS,attributeMap));//閺勭數袨
-			userInfo.setNameZhShortSpell(LdapUtils.getAttributeStringValue(InetOrgPerson.INITIALS,attributeMap));//閼昏鲸鏋冪紓鈺佸晸
-			userInfo.setDisplayName(LdapUtils.getAttributeStringValue(InetOrgPerson.DISPLAYNAME,attributeMap));//閺勫墽銇氶崥宥囆�
+		    String cn  = LdapUtils.getAttributeStringValue(InetOrgPerson.CN,attributeMap);
+			String uid = LdapUtils.getAttributeStringValue(InetOrgPerson.UID,attributeMap);
+			String sn  = LdapUtils.getAttributeStringValue(InetOrgPerson.SN,attributeMap);
+			String givenName = LdapUtils.getAttributeStringValue(InetOrgPerson.GIVENNAME,attributeMap);
+			String initials  = LdapUtils.getAttributeStringValue(InetOrgPerson.INITIALS,attributeMap);
+			String displayName = LdapUtils.getAttributeStringValue(InetOrgPerson.DISPLAYNAME,attributeMap);
+			userInfo.setFormattedName(sn + givenName);
+			if(StringUtils.isBlank(uid)) {
+				userInfo.setUsername(cn);
+				userInfo.setWindowsAccount(cn);
+			}else {
+				userInfo.setUsername(uid);
+				userInfo.setWindowsAccount(uid);
+			}
+			userInfo.setFamilyName(sn);
+			userInfo.setGivenName(givenName);
+			if(StringUtils.isBlank(initials)) {
+				userInfo.setNickName(sn + givenName);
+				userInfo.setNameZhShortSpell(sn + givenName);
+			}else {
+				userInfo.setNickName(initials);
+				userInfo.setNameZhShortSpell(initials);
+			}
+			if(StringUtils.isBlank(displayName)) {
+				userInfo.setDisplayName(sn + givenName);
+			}else {
+				userInfo.setDisplayName(displayName);
+			}
 			
 			userInfo.setEmployeeNumber(LdapUtils.getAttributeStringValue(InetOrgPerson.EMPLOYEENUMBER,attributeMap));
 			//userInfo.setDepartment(LdapUtils.getAttributeStringValue(InetOrgPerson.OU,attributeMap));
 			//userInfo.setDepartmentId(LdapUtils.getAttributeStringValue(InetOrgPerson.DEPARTMENTNUMBER,attributeMap));
-			userInfo.setJobTitle(LdapUtils.getAttributeStringValue(InetOrgPerson.TITLE,attributeMap));//閼卞苯濮�
-			userInfo.setWorkOfficeName(LdapUtils.getAttributeStringValue(InetOrgPerson.PHYSICALDELIVERYOFFICENAME,attributeMap));//閸旂偛鍙曠�癸拷
-			userInfo.setWorkEmail(LdapUtils.getAttributeStringValue(InetOrgPerson.MAIL,attributeMap));//闁喕娆�
-			userInfo.setWorkRegion(LdapUtils.getAttributeStringValue(InetOrgPerson.ST,attributeMap));//閻拷
-			userInfo.setWorkLocality(LdapUtils.getAttributeStringValue(InetOrgPerson.L,attributeMap));//閸橈拷
-			userInfo.setWorkStreetAddress(LdapUtils.getAttributeStringValue(InetOrgPerson.STREET,attributeMap));//鐞涙浜�
-			userInfo.setWorkPostalCode(LdapUtils.getAttributeStringValue(InetOrgPerson.POSTALCODE,attributeMap));//闁喚绱�
-			userInfo.setWorkAddressFormatted(LdapUtils.getAttributeStringValue(InetOrgPerson.POSTOFFICEBOX,attributeMap));//闁喗鏂傞柇顔绢唸
+			userInfo.setJobTitle(LdapUtils.getAttributeStringValue(InetOrgPerson.TITLE,attributeMap));
+			userInfo.setWorkOfficeName(LdapUtils.getAttributeStringValue(InetOrgPerson.PHYSICALDELIVERYOFFICENAME,attributeMap));
+			userInfo.setWorkEmail(LdapUtils.getAttributeStringValue(InetOrgPerson.MAIL,attributeMap));
+			userInfo.setWorkRegion(LdapUtils.getAttributeStringValue(InetOrgPerson.ST,attributeMap));
+			userInfo.setWorkLocality(LdapUtils.getAttributeStringValue(InetOrgPerson.L,attributeMap));
+			userInfo.setWorkStreetAddress(LdapUtils.getAttributeStringValue(InetOrgPerson.STREET,attributeMap));
+			userInfo.setWorkPostalCode(LdapUtils.getAttributeStringValue(InetOrgPerson.POSTALCODE,attributeMap));
+			userInfo.setWorkAddressFormatted(LdapUtils.getAttributeStringValue(InetOrgPerson.POSTOFFICEBOX,attributeMap));
 			userInfo.setWorkFax(LdapUtils.getAttributeStringValue(InetOrgPerson.FACSIMILETELEPHONENUMBER,attributeMap));
 			
-			userInfo.setHomePhoneNumber(LdapUtils.getAttributeStringValue(InetOrgPerson.HOMEPHONE,attributeMap));//鐎硅泛娑甸悽浣冪樈
-			userInfo.setHomeAddressFormatted(LdapUtils.getAttributeStringValue(InetOrgPerson.HOMEPOSTALADDRESS,attributeMap));//閻絻鐦芥径鍥ㄦ暈
+			userInfo.setHomePhoneNumber(LdapUtils.getAttributeStringValue(InetOrgPerson.HOMEPHONE,attributeMap));
+			userInfo.setHomeAddressFormatted(LdapUtils.getAttributeStringValue(InetOrgPerson.HOMEPOSTALADDRESS,attributeMap));
 			
 			if(LdapUtils.getAttributeStringValue(InetOrgPerson.MOBILE,attributeMap).equals("")) {
 			    userInfo.setMobile(userInfo.getId());
 			}else {
-			    userInfo.setMobile(LdapUtils.getAttributeStringValue(InetOrgPerson.MOBILE,attributeMap));//閹靛婧�
+			    userInfo.setMobile(LdapUtils.getAttributeStringValue(InetOrgPerson.MOBILE,attributeMap));
             }
 			
-			userInfo.setPreferredLanguage(LdapUtils.getAttributeStringValue(InetOrgPerson.PREFERREDLANGUAGE,attributeMap));//鐠囶叀鈻�
+			userInfo.setPreferredLanguage(LdapUtils.getAttributeStringValue(InetOrgPerson.PREFERREDLANGUAGE,attributeMap));
 			
-			userInfo.setDescription(LdapUtils.getAttributeStringValue(InetOrgPerson.DESCRIPTION,attributeMap));//閹诲繗鍫�
+			userInfo.setDescription(LdapUtils.getAttributeStringValue(InetOrgPerson.DESCRIPTION,attributeMap));
 			userInfo.setUserState("RESIDENT");
 			userInfo.setUserType("EMPLOYEE");
 			userInfo.setTimeZone("Asia/Shanghai");
