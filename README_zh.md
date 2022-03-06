@@ -121,15 +121,11 @@ QQ交流群：<b>434469201</b>
 
 | 序号    | 计划    |  时间  |
 | --------| :-----  | :----  |
-| 1     | Maxkey-Cloud (micro service support)                      |  2021Q3  |
-| 2     | Zero trust scenario integration                           |  2021Q4  |
-| 3     | OAuth 2.1                                                 |  2022Q1  |
-| 4     | React, and Ant Design                                     |  2022Q2  |
-| 5     | OpenID Connect optimize                                   |  2022Q2  |
-| 6     | Java 17+                                                  |  2022Q3  |
-| 7     | Jakarta EE 9+                                             |  2022Q3  |
-| 8     | Spring Framework 6                                        |  2022Q4  |
-| 9     | Spring Boot 3                                             |  2022Q4  |
+| 1     | React, and Ant Design                                     |  2022Q2  |
+| 2     | Java 17+                                                  |  2022Q4  |
+| 3     | Jakarta EE 9+                                             |  2022Q4  |
+| 4     | Spring Framework 6                                        |  2022Q4  |
+| 5     | Spring Boot 3                                             |  2022Q4  |
 
 
 # 接入登记
