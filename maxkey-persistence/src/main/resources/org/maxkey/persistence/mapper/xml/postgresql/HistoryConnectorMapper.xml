@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.HistoryConnectorMapper">
+
+    <sql id="where_statement">
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+
+        <if test="conName != null and conName != ''">
+            and conName = #{conName}
+        </if>
+
+        <if test="conType != null and conType != ''">
+            and conType = #{conType}
+        </if>
+
+        <if test="sourceId != null and sourceId != ''">
+            and sourceId = #{sourceId}
+        </if>
+
+        <if test="sourceName != null and sourceName != ''">
+            and sourceName = #{sourceName}
+        </if>
+
+        <if test="objectId != null and objectId != ''">
+            and objectId = #{objectId}
+        </if>
+
+        <if test="objectName != null and objectName != ''">
+            and objectname = #{objectName}
+        </if>
+
+        <if test="result != null and result != ''">
+            and result = #{result}
+        </if>
+
+        <if test="startDate != null and startDate != ''">
+            and synctime >= #{startDate}
+        </if>
+
+        <if test="endDate != null and endDate != ''">
+            and #{endDate} >= synctime
+        </if>
+
+        <if test="description != null and description != ''">
+            and description like '%${description}%'
+        </if>
+    </sql>
+
+
+    <select id="queryPageResults" parameterType="HistoryConnector" resultType="HistoryConnector">
+        select
+        *
+        from mxk_history_connector
+        where instid = #{instId}
+        <include refid="where_statement"/>
+
+        order by synctime desc
+    </select>
+
+</mapper>

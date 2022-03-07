@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.AccountsStrategyMapper">
+
+    <sql id="where_statement">
+        <if test="id != null and id != ''">
+            and mas.id = #{id}
+        </if>
+        <if test="appId != null and appId != ''">
+            and mas.appid = #{appId}
+        </if>
+        <if test="name != null and name != ''">
+            and mas.name = #{name}
+        </if>
+    </sql>
+
+
+    <select id="queryPageResults" parameterType="AccountsStrategy" resultType="AccountsStrategy">
+        select
+        mas.*,
+        ma.icon appicon
+        from
+        mxk_accounts_strategy mas,
+        mxk_apps ma
+        where ma.instid = #{instId}
+        and mas.instid = #{instId}
+        and mas.appid = ma.id
+        <include refid="where_statement"/>
+    </select>
+
+</mapper>

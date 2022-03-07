@@ -259,7 +259,7 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 	}
 	
 	public boolean isCaptchaSupport() {
-		return (captchaSupport !=null && captchaSupport.equalsIgnoreCase("YES") ? true : false);
+		return "YES".equalsIgnoreCase(captchaSupport);
 	}
 	
 	
