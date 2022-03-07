@@ -314,7 +314,7 @@
 					<td>
 						<img id="picture" width="150px" height="215px" 
 						<#if  model.picture ?? >
-						    src="<@base/>/image/${model.id}" />
+						    src="${model.pictureBase64}" />
 						<#else>
 							src="<@base/>/static/images/uploadimage.jpg" /> 
 						</#if>

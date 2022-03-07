@@ -47,7 +47,7 @@ public class ProfileController {
     public ModelAndView forwardBasic() {
         ModelAndView modelAndView = new ModelAndView("profile/myProfile");
         UserInfo userInfo = userInfoService.findByUsername(WebContext.getUserInfo().getUsername());
-        WebContext.getSession().setAttribute(userInfo.getId(), userInfo.getPicture());
+        userInfo.transPictureBase64();
 
         //  HashMap<String,Object>extraAttributeMap=new HashMap<String,Object>();
         //  extraAttributeMap=(HashMap<String,Object>)JsonUtils.json2Object(userInfo.getExtraAttribute(),extraAttributeMap);

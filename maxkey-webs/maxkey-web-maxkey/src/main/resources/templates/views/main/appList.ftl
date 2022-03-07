@@ -31,7 +31,7 @@
 	  							<#if "IDP"==app.inducer>
 	  								href="<@base/>/authz/${app.id}"
 	  							</#if>  >
-	  							<img src="<@base/>/image/${app.id}" title="${app.name}" class="appListimage"/>
+	  							<img src="${app.iconBase64}" title="${app.name}" class="appListimage"/>
 	  						</a><br>
 	  						${app.name}
 	  					</td></tr>
@@ -76,7 +76,7 @@
 						href="<@base/>/authz/${app.id}"
 					</#if>
 					 target="_blank" title="${app.name}" >
-					<img src="<@base/>/image/${app.id}" title="${app.name}" class="appListimage"/>
+					<img src="${app.iconBase64}" title="${app.name}" class="appListimage"/>
 				</a>
 		</td>
 		<td style="">${app.name}</td>

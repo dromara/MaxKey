@@ -34,7 +34,7 @@
 	<tr>
 		<td>${app_index +1 }</td>
 		<td>
-			<img src="<@base/>/image/${app.id}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
+			<img src="${app.iconBase64}" title="${app.name}" width="65px" height="65px"  style="border:0;"/>
 		</td>
 		<td>${app.name}</td>
 		<td>

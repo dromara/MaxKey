@@ -83,7 +83,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		decoderSecret(tokenBasedDetails);
 		String algorithmKey=passwordReciprocal.decoder(tokenBasedDetails.getAlgorithmKey());
 		tokenBasedDetails.setAlgorithmKey(algorithmKey);
-		WebContext.setAttribute(tokenBasedDetails.getId(), tokenBasedDetails.getIcon());
+		tokenBasedDetails.transIconBase64();
 
 		modelAndView.addObject("model",tokenBasedDetails);
 		return modelAndView;

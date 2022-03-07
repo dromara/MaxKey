@@ -76,8 +76,8 @@ public class CasDetailsController  extends BaseAppContorller {
 		ModelAndView modelAndView=new ModelAndView("apps/cas/appUpdate");
 		AppsCasDetails casDetails=casDetailsService.getAppDetails(id , false);
 		super.decoderSecret(casDetails);
-		WebContext.setAttribute(casDetails.getId(), casDetails.getIcon());
-
+		casDetails.transIconBase64();
+		
 		modelAndView.addObject("model",casDetails);
 		return modelAndView;
 	}

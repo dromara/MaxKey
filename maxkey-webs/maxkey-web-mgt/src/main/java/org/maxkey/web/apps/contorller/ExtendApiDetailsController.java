@@ -76,8 +76,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 		super.decoderSecret(application);
 		AppsExtendApiDetails extendApiDetails=new AppsExtendApiDetails();
 		BeanUtils.copyProperties(application, extendApiDetails);
-		
-		WebContext.setAttribute(extendApiDetails.getId(), extendApiDetails.getIcon());
+		extendApiDetails.transIconBase64();
 
 		modelAndView.addObject("model",extendApiDetails);
 		return modelAndView;

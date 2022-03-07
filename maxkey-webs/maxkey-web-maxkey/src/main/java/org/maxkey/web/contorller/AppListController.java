@@ -96,7 +96,7 @@ public class AppListController {
         userApplications.setInstId(WebContext.getUserInfo().getInstId());
         List<UserApps> appList = appsService.queryMyApps(userApplications);
         for (UserApps app : appList) {
-            WebContext.setAttribute(app.getId(), app.getIcon());
+        	app.transIconBase64();
         }
 
         return appList;

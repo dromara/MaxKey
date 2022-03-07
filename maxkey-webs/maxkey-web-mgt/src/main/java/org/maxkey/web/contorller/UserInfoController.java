@@ -145,7 +145,7 @@ public class UserInfoController {
 		ModelAndView modelAndView=new ModelAndView("/userinfo/userUpdate");
 		UserInfo userInfo=userInfoService.get(id);
 		if(userInfo.getPicture()!=null){
-			WebContext.getSession().setAttribute(userInfo.getId(), userInfo.getPicture());
+			userInfo.transPictureBase64();
 		}
 		
 		modelAndView.addObject("model", userInfo);

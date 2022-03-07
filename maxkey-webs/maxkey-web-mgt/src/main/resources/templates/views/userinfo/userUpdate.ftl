@@ -109,8 +109,14 @@
 		</td>
 		<td rowspan="3"><@locale code="userinfo.picture" /></td>
 		<td rowspan="3">
-			<img id="picture" width="150px" height="150px" src="<@base/>/static/images/uploadimage.jpg" />
-			<input type="file" id="pictureFile" name="pictureFile" style="display:none" />
+		  <img id="picture" width="150px" height="150px" 
+		  <#if  model.pictureBase64 ?? >
+                src="${model.pictureBase64}" 
+          <#else>
+                src="<@base/>/static/images/uploadimage.jpg"
+          </#if>            
+		  />
+		  <input type="file" id="pictureFile" name="pictureFile" style="display:none" />
 					</td>
 	</tr>
 	<tr>

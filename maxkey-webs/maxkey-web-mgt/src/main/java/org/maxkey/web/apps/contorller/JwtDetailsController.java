@@ -79,7 +79,7 @@ public class JwtDetailsController  extends BaseAppContorller {
 		ModelAndView modelAndView=new ModelAndView("apps/jwt/appUpdate");
 		AppsJwtDetails jwtDetails=jwtDetailsService.getAppDetails(id , false);
 		decoderSecret(jwtDetails);
-		WebContext.setAttribute(jwtDetails.getId(), jwtDetails.getIcon());
+		jwtDetails.transIconBase64();
 
 		modelAndView.addObject("model",jwtDetails);
 		return modelAndView;

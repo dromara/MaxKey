@@ -72,7 +72,7 @@ public class BasicDetailsController  extends BaseAppContorller {
 		ModelAndView modelAndView=new ModelAndView("apps/basic/appUpdate");
 		Apps appDetails=appsService.get(id);
 		super.decoderSecret(appDetails);
-		WebContext.setAttribute(appDetails.getId(), appDetails.getIcon());
+		appDetails.transIconBase64();
 		modelAndView.addObject("model",appDetails);
 		return modelAndView;
 	}

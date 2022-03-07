@@ -288,14 +288,6 @@ body{
 	font-weight: bold;	
 }
 
-
-
-#j_captchaimg{
-	width:70px;
-	height: 35px;
-	vertical-align: top;
-}
-
 .login_form_table #j_captchaimg{
     width: 100px;
     height: 40px;

@@ -18,6 +18,7 @@
 package org.maxkey.entity.apps;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -78,6 +79,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
      */
     @Column
     private byte[] icon;
+    private String iconBase64;
     private MultipartFile iconFile;
     @Column
     private int visible;
@@ -270,7 +272,22 @@ public class Apps extends JpaBaseEntity implements Serializable {
         this.icon = icon;
     }
 
-    /**
+    public String getIconBase64() {
+		return iconBase64;
+	}
+
+	public void setIconBase64(String iconBase64) {
+		this.iconBase64 = iconBase64;
+	}
+	
+	public void transIconBase64() {
+		if(icon !=null) {
+			this.iconBase64 = "data:image/png;base64," + 
+					Base64.getEncoder().encodeToString(icon);
+		}
+	}
+
+	/**
      * @return the iconFile
      */
     public MultipartFile getIconFile() {

@@ -62,7 +62,7 @@ public class GroupPrivilegesController {
 
 		if(groupPrivileges!=null&&groupPrivileges.getRows()!=null){
 			for (Apps app : groupPrivileges.getRows()){
-				WebContext.setAttribute(app.getId(), app.getIcon());
+				app.transIconBase64();
 			}
 		}
 		return groupPrivileges;
@@ -86,7 +86,7 @@ public class GroupPrivilegesController {
 
 		if(groupPrivileges!=null&&groupPrivileges.getRows()!=null){
 			for (Apps app : groupPrivileges.getRows()){
-				WebContext.setAttribute(app.getId(), app.getIcon());
+				app.transIconBase64();
 			}
 		}
 		return groupPrivileges;

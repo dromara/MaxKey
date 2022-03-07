@@ -19,6 +19,7 @@ package org.maxkey.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 
@@ -101,6 +102,7 @@ public class UserInfo extends JpaBaseEntity {
     @JsonIgnore
     @Column
     protected byte[] picture;
+    protected String pictureBase64;
     @JsonIgnore
     protected MultipartFile pictureFile;
     @Column
@@ -399,7 +401,22 @@ public class UserInfo extends JpaBaseEntity {
         return picture;
     }
 
-    /**
+    public String getPictureBase64() {
+		return pictureBase64;
+	}
+
+	public void setPictureBase64(String pictureBase64) {
+		this.pictureBase64 = pictureBase64;
+	}
+
+	public void transPictureBase64() {
+		if(picture != null) {
+			this.pictureBase64 = "data:image/png;base64," + 
+					Base64.getEncoder().encodeToString(picture);
+		}
+	}
+	
+	/**
      * @return the protectedAppsMap
      */
     public HashMap<String, String> getProtectedAppsMap() {

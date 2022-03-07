@@ -80,7 +80,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 		AppsFormBasedDetails formBasedDetails=formBasedDetailsService.getAppDetails(id , false);
 		decoderSecret(formBasedDetails);
 		decoderSharedPassword(formBasedDetails);
-		WebContext.setAttribute(formBasedDetails.getId(), formBasedDetails.getIcon());
+		formBasedDetails.transIconBase64();
 
 		modelAndView.addObject("model",formBasedDetails);
 		return modelAndView;

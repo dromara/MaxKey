@@ -29,11 +29,37 @@ $(function(){
         });
     });
     
-    var captchaImageUrl = $('.captcha-image').attr("src");
+    
+    //captcha-image
+    if($('.captcha-image').length > 0){
+        $('.captcha-image').attr("url",
+            $('.captcha-image').attr("src").indexOf("?")>-1?
+            $('.captcha-image').attr("src"):$('.captcha-image').attr("src")+"?data=img");
+    }
 	//on captcha image click ,new a captcha code
 	$('.captcha-image').click(function () {//
-		$(this).attr("src", captchaImageUrl+"&"+(new Date()).getTime()); 
+		$(this).attr("src", $(this).attr("url")+"&"+(new Date()).getTime()); 
 	});
+    
+    //captcha-imageb64
+    if($('.captcha-imageb64').length > 0){
+        $('.captcha-imageb64').attr("url",
+            $('.captcha-imageb64').attr("src").indexOf("?")>-1?
+            $('.captcha-imageb64').attr("src"):$('.captcha-imageb64').attr("src")+"?data=img");
+    }
+    $(".captcha-imageb64").each(function(){
+        var _this = this;
+        $.get($(this).attr("url")+"&"+(new Date()).getTime(), function(result){
+            $(_this).attr("src",result);
+        });
+    });
+    //on captcha image click ,new a captcha code
+    $('.captcha-imageb64').click(function () {//
+        var _this = this;
+        $.get($(this).attr("url")+"&"+(new Date()).getTime(), function(result){
+            $(_this).attr("src",result);
+        });
+    });
     
     //passwdeye
     $('.passwdeye').click(function () {//

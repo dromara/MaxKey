@@ -77,7 +77,7 @@ public class ApplicationsController extends BaseAppContorller {
 		JpaPageResults<Apps> apps=appsService.queryPageResults(applications);
 		if(apps!=null&&apps.getRows()!=null){
 			for (Apps app : apps.getRows()){
-				WebContext.setAttribute(app.getId(), app.getIcon());
+				app.transIconBase64();
 			}
 		}
 		return apps;

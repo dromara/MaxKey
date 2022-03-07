@@ -5,7 +5,7 @@
 	<#include  "../layout/common.cssjs.ftl"/>
 <script type="text/javascript">				
 	function iconFormatter(value, row, index){
-  			return "<img height='30' border='0px' src='<@base/>/image/"+value+"'/>";
+  			return "<img height='30' border='0px' src='"+value+"'";
 	};
 	
 	function vendorFormatter(value, options, rData){
@@ -198,7 +198,7 @@
                 <tr>
                     <th data-checkbox="true"></th>
                     <th data-sortable="true" data-field="id"   data-visible="false">Id</th>
-                    <th data-field="id" data-formatter="iconFormatter"><@locale code="apps.icon"/></th>
+                    <th data-field="iconBase64" data-formatter="iconFormatter"><@locale code="apps.icon"/></th>
                     <th data-field="name"><@locale code="apps.name"/></th>
                     <th data-field="protocol"><@locale code="apps.protocol"/></th>
                     <th data-field="category"><@locale code="apps.category"/></th>

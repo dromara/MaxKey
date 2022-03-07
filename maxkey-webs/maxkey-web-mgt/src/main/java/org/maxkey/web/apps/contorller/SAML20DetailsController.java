@@ -106,7 +106,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		ModelAndView modelAndView=new ModelAndView("apps/saml20/appUpdate");
 		AppsSAML20Details saml20Details=saml20DetailsService.getAppDetails(id , false);
 		decoderSecret(saml20Details);
-		WebContext.setAttribute(saml20Details.getId(), saml20Details.getIcon());
+		saml20Details.transIconBase64();
 		modelAndView.addObject("model",saml20Details);
 		modelAndView.addObject("authzURI",applicationConfig.getAuthzUri());
 		return modelAndView;

@@ -94,7 +94,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		oauth20Details.setSecret(application.getSecret());
 		oauth20Details.setClientSecret(application.getSecret());
 		_logger.debug("forwardUpdate "+oauth20Details);
-		WebContext.setAttribute(oauth20Details.getId(), oauth20Details.getIcon());
+		oauth20Details.transIconBase64();
 		modelAndView.addObject("model",oauth20Details);
 		return modelAndView;
 	}

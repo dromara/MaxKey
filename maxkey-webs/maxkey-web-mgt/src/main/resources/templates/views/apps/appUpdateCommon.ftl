@@ -33,7 +33,7 @@
          </td>
         <th><@locale code="apps.icon"/></th>
         <td>
-            <img id="iconFileImg" height='30' src='<@base/>/image/${model.id!}'/>
+            <img id="iconFileImg" height='30' src='${model.iconBase64!}'/>
         </td>
       </tr>
       <tr>
