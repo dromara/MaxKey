@@ -41,7 +41,7 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
 	
 	String access_token;
 	
-	static String USERS_URL="https://open.feishu.cn/open-apis/contact/v3/users/find_by_department";
+	static String USERS_URL="https://open.feishu.cn/open-apis/contact/v3/users/find_by_department?department_id=%s&page_size=50";
 	
 	public void sync() {
 		_logger.info("Sync Feishu Users...");
@@ -54,15 +54,16 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
 				HttpRequestAdapter request =new HttpRequestAdapter();
 				HashMap<String,String> headers =new HashMap<String,String>();
 				headers.put("Authorization", AuthorizationHeaderUtils.createBearer(access_token));
-				String responseBody = request.get(String.format(USERS_URL, access_token,dept.getId()),headers);
+				String responseBody = request.get(String.format(USERS_URL,dept.getId()),headers);
 				FeishuUsersResponse usersResponse  =JsonUtils.gson2Object(responseBody, FeishuUsersResponse.class);
 				_logger.info("response : " + responseBody);
-				
-				for(FeishuUsers user : usersResponse.getData().getItems()) {
-					UserInfo userInfo  = buildUserInfo(user);
-					_logger.info("userInfo : " + userInfo);
-					userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
-					userInfoService.saveOrUpdate(userInfo);
+				if(usersResponse.getCode() == 0 && usersResponse.getData().getItems() != null) {
+					for(FeishuUsers user : usersResponse.getData().getItems()) {
+						UserInfo userInfo  = buildUserInfo(user);
+						_logger.info("userInfo : " + userInfo);
+						userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
+						userInfoService.saveOrUpdate(userInfo);
+					}
 				}
 			}
 			

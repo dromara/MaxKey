@@ -51,14 +51,20 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
 		try {
 			while(deptsQueue.element() != null) {
 				FeishuDeptsResponse rsp = requestDepartmentList(access_token,deptsQueue.poll());
-				
-				for(FeishuDepts dept : rsp.getData().getItems()) {
-					_logger.info("dept : " + dept.getDepartment_id()+" "+ dept.getName()+" "+ dept.getParent_department_id());
-					deptsQueue.add(dept.getDepartment_id());
-					deptMap.put(dept.getDepartment_id(), dept);
-					Organizations organization = buildOrganization(dept,deptMap.get(dept.getParent_department_id()));
-					organizationsService.saveOrUpdate(organization);
-					_logger.info("Organizations : " + organization);
+				if(rsp.getCode() == 0 && rsp.getData().getItems() != null) {
+					for(FeishuDepts dept : rsp.getData().getItems()) {
+						_logger.info("dept : id {} , Parent {} , Name {} , od {}" ,
+								 dept.getDepartment_id(),
+								 dept.getParent_department_id(),
+								 dept.getName(),
+								 dept.getOpen_department_id()
+								 );
+						deptsQueue.add(dept.getOpen_department_id());
+						deptMap.put(dept.getOpen_department_id(), dept);
+						Organizations organization = buildOrganization(dept,deptMap.get(dept.getParent_department_id()));
+						organizationsService.saveOrUpdate(organization);
+						_logger.info("Organizations : " + organization);
+					}
 				}
 			}
 		} catch (NoSuchElementException e) {
@@ -81,12 +87,13 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
 	
 	public Organizations buildOrganization(FeishuDepts dept,FeishuDepts parentDept) {
 		Organizations org = new Organizations();
-		org.setId(dept.getDepartment_id()+"");
+		org.setId(dept.getOpen_department_id()+"");
+		org.setCode(dept.getDepartment_id()+"");
 		org.setName(dept.getName());
 		if(parentDept == null) {
 			org.setParentId("1");
 		}else {
-			org.setParentId(dept.getParent_department_id()+"");
+			org.setParentId(parentDept.getOpen_department_id()+"");
 		}
 		org.setSortIndex(Integer.parseInt(dept.getOrder()));
 		org.setInstId(this.synchronizer.getInstId());
