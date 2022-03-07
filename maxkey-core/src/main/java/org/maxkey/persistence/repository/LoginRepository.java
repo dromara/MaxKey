@@ -257,13 +257,13 @@ public class LoginRepository {
                 				userInfo.getLoginCount() + 1, 
                 				userInfo.getId() 
                 			},
-                new int[] { Types.VARCHAR, Types.VARCHAR, Types.INTEGER, Types.VARCHAR });
+                new int[] { Types.TIMESTAMP, Types.VARCHAR, Types.INTEGER, Types.VARCHAR });
     }
     
     public void updateLastLogoff(UserInfo userInfo) {
         jdbcTemplate.update(	LOGOUT_USERINFO_UPDATE_STATEMENT, 
         		new Object[] { 	userInfo.getLastLogoffTime(), userInfo.getId() },
-                new int[] { 	Types.VARCHAR, Types.VARCHAR });
+                new int[] { 	Types.TIMESTAMP, Types.VARCHAR });
     }
     
     public class UserInfoRowMapper implements RowMapper<UserInfo> {

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.HistorySynchronizerMapper">
+
+    <sql id="where_statement">
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="syncId != null and syncId != ''">
+            and syncid = #{syncId}
+        </if>
+        <if test="objectName != null and objectName != ''">
+            and objectname = #{objectName}
+        </if>
+        <if test="result != null and result != ''">
+            and result = #{result}
+        </if>
+        <if test="startDate != null and startDate != ''">
+            and synctime >= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and #{endDate} >= synctime
+        </if>
+    </sql>
+
+
+    <select id="queryPageResults" parameterType="HistorySynchronizer" resultType="HistorySynchronizer">
+        select
+        *
+        from mxk_history_synchronizer
+        where instid = #{instId}
+        <include refid="where_statement"/>
+
+        order by synctime desc
+    </select>
+
+</mapper>
