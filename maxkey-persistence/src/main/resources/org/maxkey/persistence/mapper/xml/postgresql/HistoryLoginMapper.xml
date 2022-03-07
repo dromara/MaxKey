@@ -1,72 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.maxkey.persistence.mapper.HistoryLoginMapper" >
+<mapper namespace="org.maxkey.persistence.mapper.HistoryLoginMapper">
 
-	<sql id="dao_where_statement">
-    	<if test="id != null and id != ''">
-			and	id	=	#{id}
-		</if> 
-		<if test="userId != null and userId != ''">
-			and	userId	=	#{userId}
-		</if> 
-		<if test="username != null and username != '' ">
-			and lower(username) like lower(concat('%',#{username},'%'))
-		</if>
-		<if test="message != null and message != '' ">
-			and lower(message) like lower(concat('%',#{message},'%'))
-		</if>
-		<if test="displayName != null and displayName != '' ">
-			and lower(displayname) like lower(concat('%',#{displayName},'%'))
-		</if>
+    <sql id="dao_where_statement">
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="userId != null and userId != ''">
+            and userId = #{userId}
+        </if>
+        <if test="username != null and username != '' ">
+            and lower(username) like lower(concat('%',#{username},'%'))
+        </if>
+        <if test="message != null and message != '' ">
+            and lower(message) like lower(concat('%',#{message},'%'))
+        </if>
+        <if test="displayName != null and displayName != '' ">
+            and lower(displayname) like lower(concat('%',#{displayName},'%'))
+        </if>
 
-		<if test="startDate != null and startDate != ''">
-			and	logintime	>=	#{startDate}
-		</if>
-		<if test="endDate != null and endDate != ''">
-			and	 #{endDate}	>=	logintime
-		</if>
-		<if test="sessionId != null and sessionId != ''">
-			and	sessionid	=	#{sessionId}
-		</if> 
-		<if test="loginType != null and loginType != ''">
-			and	logintype	=	#{loginType}
-		</if>
-		<if test="sourceIp != null and sourceIp != ''">
-			and	sourceip	=	#{sourceIp}
-		</if>
+        <if test="startDate != null and startDate != ''">
+            and logintime >= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and #{endDate} >= logintime
+        </if>
+        <if test="sessionId != null and sessionId != ''">
+            and sessionid = #{sessionId}
+        </if>
+        <if test="loginType != null and loginType != ''">
+            and logintype = #{loginType}
+        </if>
+        <if test="sourceIp != null and sourceIp != ''">
+            and sourceip = #{sourceIp}
+        </if>
     </sql>
-	
-   
-    
-     <select id="queryPageResults" parameterType="HistoryLogin" resultType="HistoryLogin">
-    	select 
-			id,
-	   		sessionid,
-			userId,
-			username,
-			displayname,
-			logintype,
-			message,
-			code,
-			provider,
-			sourceip,
-			browser,
-			platform,
-			application,
-			loginurl,
-			to_char(logintime,'YYYY-MM-DD HH24:MI:SS') as logintime,
-			to_char(logouttime,'YYYY-MM-DD HH24:MI:SS') as logouttime
-    	from mxk_history_login
-    	where	1	=	1
-    	<include refid="dao_where_statement"/>
-    	
-    	order by logintime desc
+
+
+    <select id="queryPageResults" parameterType="HistoryLogin" resultType="HistoryLogin">
+        select
+        id,
+        sessionid,
+        userId,
+        username,
+        displayname,
+        logintype,
+        message,
+        code,
+        provider,
+        sourceip,
+        browser,
+        platform,
+        application,
+        loginurl,
+        to_char(logintime,'YYYY-MM-DD HH24:MI:SS') as logintime,
+        logouttime
+        from mxk_history_login
+        where instid = #{instId}
+        <include refid="dao_where_statement"/>
+
+        order by logintime desc
     </select>
-    
-    <update id="logout" parameterType="java.lang.String" >
-    	update mxk_history_login set
-			logouttime			=	current_timestamp
-		where
-			sessionid	=	#{value}
+
+
+    <select id="queryOnlineSession" parameterType="HistoryLogin" resultType="HistoryLogin">
+        select
+        sessionid id,
+        sessionid,
+        userId,
+        username,
+        displayname,
+        logintype,
+        message,
+        code,
+        provider,
+        sourceip,
+        browser,
+        platform,
+        application,
+        loginurl,
+        to_char(logintime,'YYYY-MM-DD HH24:MI:SS') as logintime,
+        logouttime
+        from mxk_history_login
+        where instid = #{instId}
+        and sessionstatus = 1
+
+        <include refid="dao_where_statement"/>
+
+        order by logintime desc
+    </select>
+
+    <update id="logout" parameterType="java.lang.String">
+        update mxk_history_login
+        set logouttime = current_timestamp
+        where sessionid = #{value}
     </update>
 </mapper>

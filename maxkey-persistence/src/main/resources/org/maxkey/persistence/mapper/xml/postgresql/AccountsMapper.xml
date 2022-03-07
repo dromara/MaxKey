@@ -2,31 +2,68 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.maxkey.persistence.mapper.AccountsMapper">
 
-	<sql id="where_statement">
-    	<if test="id != null and id != ''">
-			and	id = #{id}
-		</if> 
-		<if test="appId != null and appId != ''">
-			and	appid =	#{appId}
-		</if> 
-		<if test="username != null and username != ''">
-			and	username = #{username}
-		</if> 
-		<if test="relatedUsername != null and relatedUsername != ''">
-			and	relatedusername	= #{relatedUsername}
-		</if> 
+    <sql id="where_statement">
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="appId != null and appId != ''">
+            and appid = #{appId}
+        </if>
+        <if test="username != null and username != ''">
+            and username = #{username}
+        </if>
+        <if test="relatedUsername != null and relatedUsername != ''">
+            and relatedusername = #{relatedUsername}
+        </if>
     </sql>
-    
-	
-	
-	<select id="queryPageResults" parameterType="Accounts" resultType="Accounts">
-		select
-			*
-		from
-			mxk_accounts
-		where
-			 (1=1)	
-		<include refid="where_statement"/>
-	</select>
-	
+
+
+    <select id="queryPageResults" parameterType="Accounts" resultType="Accounts">
+        select
+        *
+        from
+        mxk_accounts
+        where instid = #{instId}
+        <include refid="where_statement"/>
+    </select>
+
+    <select id="queryUserNotInStrategy" parameterType="AccountsStrategy" resultType="UserInfo">
+        select
+        *
+        from mxk_userinfo u
+        where u.instid = #{instId}
+        and not exists(
+        select 1 from mxk_accounts ac
+        where ac.appid = #{appId}
+        and ac.instid = #{instId}
+        and ac.userid = u.id
+        and ac.createtype='automatic'
+        )
+        <if test="filters != null and filters != ''">
+            and (${filters})
+        </if>
+        <if test="orgIdsList != null and orgIdsList != ''">
+            and u.departmentid in( ${orgIdsList})
+        </if>
+    </select>
+
+    <delete id="deleteByStrategy" parameterType="AccountsStrategy">
+        delete from mxk_accounts ac
+        where ac.instid = #{instId}
+        and ac.createtype = 'automatic'
+        and ac.appid = #{appId}
+        and ac.strategyid = #{id}
+        and not exists(
+        select 1
+        from mxk_userinfo u
+        where instid = #{instId}
+        and u.id=ac.userid
+        <if test="filters != null and filters != ''">
+            and (${filters})
+        </if>
+        <if test="orgIdsList != null and orgIdsList != ''">
+            and u.departmentid in ( ${orgIdsList})
+        </if>
+        )
+    </delete>
 </mapper>
