@@ -58,7 +58,37 @@
          </td>
          <th ><@locale code="apps.category"/></th>
          <td>
-            <input type="text"class="form-control"  id="category" name="category"  title="" value="${model.category!}"/>
+            <select  id="category" name="category" class="form-control  form-select" >
+                <option value="none" selected ><@locale code="apps.category.none"/></option>
+                <option value="1011" ><@locale code="apps.category.1011"/></option>
+                <option value="1012" ><@locale code="apps.category.1012"/></option>
+                <option value="1013" ><@locale code="apps.category.1013"/></option>
+                <option value="1014" ><@locale code="apps.category.1014"/></option>
+                <option value="1015" ><@locale code="apps.category.1015"/></option>
+                <option value="1016" ><@locale code="apps.category.1016"/></option>
+                <option value="1017" ><@locale code="apps.category.1017"/></option>
+                <option value="1012" ><@locale code="apps.category.1012"/></option>
+                <option value="1111" ><@locale code="apps.category.1111"/></option>
+                <option value="1112" ><@locale code="apps.category.1112"/></option>
+                <option value="1113" ><@locale code="apps.category.1113"/></option>
+                <option value="1114" ><@locale code="apps.category.1114"/></option>
+                <option value="1211" ><@locale code="apps.category.1211"/></option>
+                <option value="1212" ><@locale code="apps.category.1212"/></option>
+                <option value="1213" ><@locale code="apps.category.1213"/></option>
+                <option value="1214" ><@locale code="apps.category.1214"/></option>
+                <option value="1215" ><@locale code="apps.category.1215"/></option>
+                <option value="1311" ><@locale code="apps.category.1311"/></option>
+                <option value="1411" ><@locale code="apps.category.1411"/></option>
+                <option value="1511" ><@locale code="apps.category.1511"/></option>
+                <option value="1512" ><@locale code="apps.category.1512"/></option>
+                <option value="1611" ><@locale code="apps.category.1611"/></option>
+                <option value="1711" ><@locale code="apps.category.1711"/></option>
+                <option value="1712" ><@locale code="apps.category.1712"/></option>
+                <option value="1811" ><@locale code="apps.category.1811"/></option>
+                <option value="1812" ><@locale code="apps.category.1812"/></option>
+                <option value="1911" ><@locale code="apps.category.1911"/></option>
+                <option value="1912" ><@locale code="apps.category.1912"/></option>
+            </select>
          </td>
       </tr>
       <tr>

@@ -68,7 +68,37 @@
          </td>
          <th><@locale code="apps.category"/></th>
          <td>
-            <input type="text"class="form-control"  id="category" name="category"  title="" value="${model.category!}"/>
+            <select  id="category" name="category" class="form-control  form-select" >
+                <option value="none" <#if 'none'==model.category!>selected</#if> ><@locale code="apps.category.none"/></option>
+                <option value="1011" <#if '1011'==model.category!>selected</#if> ><@locale code="apps.category.1011"/></option>
+                <option value="1012" <#if '1012'==model.category!>selected</#if> ><@locale code="apps.category.1012"/></option>
+                <option value="1013" <#if '1013'==model.category!>selected</#if> ><@locale code="apps.category.1013"/></option>
+                <option value="1014" <#if '1014'==model.category!>selected</#if> ><@locale code="apps.category.1014"/></option>
+                <option value="1015" <#if '1015'==model.category!>selected</#if> ><@locale code="apps.category.1015"/></option>
+                <option value="1016" <#if '1016'==model.category!>selected</#if> ><@locale code="apps.category.1016"/></option>
+                <option value="1017" <#if '1017'==model.category!>selected</#if>  ><@locale code="apps.category.1017"/></option>
+                <option value="1012" <#if '1012'==model.category!>selected</#if> ><@locale code="apps.category.1012"/></option>
+                <option value="1111" <#if '1111'==model.category!>selected</#if> ><@locale code="apps.category.1111"/></option>
+                <option value="1112" <#if '1112'==model.category!>selected</#if> ><@locale code="apps.category.1112"/></option>
+                <option value="1113" <#if '1113'==model.category!>selected</#if> ><@locale code="apps.category.1113"/></option>
+                <option value="1114" <#if '1114'==model.category!>selected</#if> ><@locale code="apps.category.1114"/></option>
+                <option value="1211" <#if '1211'==model.category!>selected</#if> ><@locale code="apps.category.1211"/></option>
+                <option value="1212" <#if '1212'==model.category!>selected</#if> ><@locale code="apps.category.1212"/></option>
+                <option value="1213" <#if '1213'==model.category!>selected</#if> ><@locale code="apps.category.1213"/></option>
+                <option value="1214" <#if '1214'==model.category!>selected</#if> ><@locale code="apps.category.1214"/></option>
+                <option value="1215" <#if '1215'==model.category!>selected</#if> ><@locale code="apps.category.1215"/></option>
+                <option value="1311" <#if '1311'==model.category!>selected</#if> ><@locale code="apps.category.1311"/></option>
+                <option value="1411" <#if '1411'==model.category!>selected</#if> ><@locale code="apps.category.1411"/></option>
+                <option value="1511" <#if '1511'==model.category!>selected</#if> ><@locale code="apps.category.1511"/></option>
+                <option value="1512" <#if '1512'==model.category!>selected</#if> ><@locale code="apps.category.1512"/></option>
+                <option value="1611" <#if '1611'==model.category!>selected</#if> ><@locale code="apps.category.1611"/></option>
+                <option value="1711" <#if '1711'==model.category!>selected</#if> ><@locale code="apps.category.1711"/></option>
+                <option value="1712" <#if '1712'==model.category!>selected</#if> ><@locale code="apps.category.1712"/></option>
+                <option value="1811" <#if '1811'==model.category!>selected</#if> ><@locale code="apps.category.1811"/></option>
+                <option value="1812" <#if '1812'==model.category!>selected</#if> ><@locale code="apps.category.1812"/></option>
+                <option value="1911" <#if '1911'==model.category!>selected</#if> ><@locale code="apps.category.1911"/></option>
+                <option value="1912" <#if '1912'==model.category!>selected</#if> ><@locale code="apps.category.1912"/></option>
+            </select>
          </td>
       </tr>
       <tr>
