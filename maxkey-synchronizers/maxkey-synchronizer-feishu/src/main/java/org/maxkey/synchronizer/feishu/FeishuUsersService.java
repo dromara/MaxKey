@@ -61,7 +61,7 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
 					for(FeishuUsers user : usersResponse.getData().getItems()) {
 						UserInfo userInfo  = buildUserInfo(user);
 						_logger.info("userInfo : " + userInfo);
-						userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
+						userInfo.setPassword(userInfo.getUsername() + UserInfo.DEFAULT_PASSWORD_SUFFIX);
 						userInfoService.saveOrUpdate(userInfo);
 					}
 				}

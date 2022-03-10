@@ -76,7 +76,7 @@
                 <option value="1014" <#if '1014'==model.category!>selected</#if> ><@locale code="apps.category.1014"/></option>
                 <option value="1015" <#if '1015'==model.category!>selected</#if> ><@locale code="apps.category.1015"/></option>
                 <option value="1016" <#if '1016'==model.category!>selected</#if> ><@locale code="apps.category.1016"/></option>
-                <option value="1017" <#if '1017'==model.category!>selected</#if>  ><@locale code="apps.category.1017"/></option>
+                <option value="1017" <#if '1017'==model.category!>selected</#if> ><@locale code="apps.category.1017"/></option>
                 <option value="1012" <#if '1012'==model.category!>selected</#if> ><@locale code="apps.category.1012"/></option>
                 <option value="1111" <#if '1111'==model.category!>selected</#if> ><@locale code="apps.category.1111"/></option>
                 <option value="1112" <#if '1112'==model.category!>selected</#if> ><@locale code="apps.category.1112"/></option>

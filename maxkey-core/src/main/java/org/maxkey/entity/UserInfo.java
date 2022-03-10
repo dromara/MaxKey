@@ -43,6 +43,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Table(name = "MXK_USERINFO")
 public class UserInfo extends JpaBaseEntity {
     private static final long serialVersionUID = 6402443942083382236L;
+    
+    public  static final String DEFAULT_PASSWORD_SUFFIX = "MaxKey@888";
+    
     //
     @Id
     @Column

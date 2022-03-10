@@ -70,7 +70,7 @@ public class DingtalkUsersService  extends AbstractSynchronizerService implement
 						_logger.debug("name : {} , {} , {}", user.getName(),user.getLoginId(),user.getUserid());
 						UserInfo userInfo  = buildUserInfo(user);
 						_logger.trace("userInfo {}" , userInfo);
-						userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
+						userInfo.setPassword(userInfo.getUsername() + UserInfo.DEFAULT_PASSWORD_SUFFIX);
 						userInfoService.saveOrUpdate(userInfo);
 					}
 				}

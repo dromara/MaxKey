@@ -81,7 +81,7 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 					
 					UserInfo userInfo =buildUserInfo(attributeMap,sr.getName(),sr.getNameInNamespace());
 					if(userInfo != null) {
-						userInfo.setPassword(userInfo.getUsername() + "Maxkey@888");
+						userInfo.setPassword(userInfo.getUsername() + UserInfo.DEFAULT_PASSWORD_SUFFIX);
 						userInfoService.saveOrUpdate(userInfo);
 						_logger.info("userInfo " + userInfo);
 					}

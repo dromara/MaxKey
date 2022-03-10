@@ -43,6 +43,9 @@ import org.hibernate.validator.constraints.Length;
 @Table(name = "MXK_ACCOUNTS")
 public class Accounts extends JpaBaseEntity implements Serializable {
     private static final long serialVersionUID = 6829592256223630307L;
+    
+    public  static final String DEFAULT_PASSWORD_SUFFIX = UserInfo.DEFAULT_PASSWORD_SUFFIX;
+    
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
