@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,20 @@
  */
  
 
-package org.maxkey.authn.support.socialsignon.service;
+/**
+ * 
+ */
+package org.maxkey.persistence.mapper;
 
-import java.util.List;
+import org.apache.ibatis.annotations.Update;
+import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
+import org.maxkey.entity.SynchroRelated;
 
-import org.maxkey.entity.SocialsAssociate;
-
-
-public interface SocialsAssociateService{
-
-	public boolean insert(SocialsAssociate socialsAssociate); 
-	
-	public List<SocialsAssociate> query (SocialsAssociate socialsAssociate);
-	
-	public SocialsAssociate get (SocialsAssociate socialsAssociate);
-	
-	public boolean delete (SocialsAssociate socialsAssociate);
-	
-	public boolean update (SocialsAssociate socialsAssociate);
-	
+/**
+ * @author Crystal.sea
+ *
+ */
+public  interface SynchroRelatedMapper extends IJpaBaseMapper<SynchroRelated> {
+	@Update("update mxk_synchro_related set synctime = #{syncTime} where id= #{id} ")
+	public int updateSyncTime(SynchroRelated synchroRelated);
 }

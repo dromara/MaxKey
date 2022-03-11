@@ -27,8 +27,10 @@ import javax.naming.directory.SearchResult;
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.constants.ConstsStatus;
 import org.maxkey.constants.ldap.ActiveDirectoryUser;
+import org.maxkey.crypto.DigestUtils;
 import org.maxkey.entity.HistorySynchronizer;
 import org.maxkey.entity.Organizations;
+import org.maxkey.entity.SynchroRelated;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
 import org.maxkey.persistence.ldap.LdapUtils;
@@ -46,7 +48,7 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 	
 	public void sync() {
 		_logger.info("Sync ActiveDirectory Users...");
-		loadOrgsById("1");
+		loadOrgsByInstId(this.synchronizer.getInstId(),Organizations.ROOT_ORG_ID);
 		try {
 			SearchControls constraints = new SearchControls();
 			constraints.setSearchScope(ldapUtils.getSearchScope());
@@ -79,11 +81,29 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 						attributeMap.put(objAttrs.getID().toLowerCase(), objAttrs);
 					}
 					
+					String originId = DigestUtils.md5B64(sr.getNameInNamespace());
+					
 					UserInfo userInfo =buildUserInfo(attributeMap,sr.getName(),sr.getNameInNamespace());
 					if(userInfo != null) {
 						userInfo.setPassword(userInfo.getUsername() + UserInfo.DEFAULT_PASSWORD_SUFFIX);
 						userInfoService.saveOrUpdate(userInfo);
 						_logger.info("userInfo " + userInfo);
+						
+						SynchroRelated synchroRelated = new SynchroRelated(
+								userInfo.getId(),
+								userInfo.getUsername(),
+								userInfo.getDisplayName(),
+								UserInfo.CLASS_TYPE,
+								synchronizer.getId(),
+								synchronizer.getName(),
+								originId,
+								userInfo.getDisplayName(),
+								"",
+								"",
+								synchronizer.getInstId());
+						
+						synchroRelatedService.updateSynchroRelated(
+								this.synchronizer,synchroRelated,UserInfo.CLASS_TYPE);
 					}
 				}
 			}

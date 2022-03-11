@@ -23,8 +23,8 @@ package org.maxkey.authn.support.socialsignon;
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authn.LoginCredential;
-import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
 import org.maxkey.constants.ConstsLoginType;
+import org.maxkey.entity.SocialsAssociate;
 import org.maxkey.entity.SocialsProvider;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;

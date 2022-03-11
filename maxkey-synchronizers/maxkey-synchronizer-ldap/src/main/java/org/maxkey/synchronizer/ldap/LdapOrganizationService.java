@@ -31,6 +31,7 @@ import org.maxkey.constants.ConstsStatus;
 import org.maxkey.constants.ldap.OrganizationalUnit;
 import org.maxkey.entity.HistorySynchronizer;
 import org.maxkey.entity.Organizations;
+import org.maxkey.entity.SynchroRelated;
 import org.maxkey.persistence.ldap.LdapUtils;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
@@ -46,44 +47,12 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 	
 	public void sync() {
 		_logger.info("Sync Ldap Organizations ...");
-		loadOrgsById("1");
+		loadOrgsByInstId(this.synchronizer.getInstId(),Organizations.ROOT_ORG_ID);
 		try {
-			SearchControls constraints = new SearchControls();
-			constraints.setSearchScope(ldapUtils.getSearchScope());
-			String filter = "(&(objectClass=OrganizationalUnit))";
-			if(StringUtils.isNotBlank(this.getSynchronizer().getFilters())) {
-				//filter = this.getSynchronizer().getFilters();
-			}
-			NamingEnumeration<SearchResult> results = 
-					ldapUtils.getConnection().search(ldapUtils.getBaseDN(), filter , constraints);
-			
-			ArrayList<Organizations> orgsList = new ArrayList<Organizations>();
+			ArrayList<Organizations> orgsList = queryLdap();
 			int  maxLevel 		= 0;
-			long recordCount 	= 0;
-			while (null != results && results.hasMoreElements()) {
-				Object obj = results.nextElement();
-				if (obj instanceof SearchResult) {
-					SearchResult sr = (SearchResult) obj;
-					_logger.debug("Sync OrganizationalUnit {} , name [{}] , NameInNamespace [{}]" , 
-										(++recordCount),sr.getName(),sr.getNameInNamespace());
-					
-					HashMap<String,Attribute> attributeMap = new HashMap<String,Attribute>();
-					NamingEnumeration<? extends Attribute>  attrs = sr.getAttributes().getAll();
-					while (null != attrs && attrs.hasMoreElements()) {
-						Attribute  objAttrs = attrs.nextElement();
-						_logger.trace("attribute {} : {}" ,
-											objAttrs.getID(), 
-											LdapUtils.getAttrStringValue(objAttrs)
-								);
-						attributeMap.put(objAttrs.getID().toLowerCase(), objAttrs);
-					}
-					
-					Organizations organization = buildOrganization(attributeMap,sr.getName(),sr.getNameInNamespace());
-					if(organization != null) {
-						orgsList.add(organization);
-						maxLevel = (maxLevel < organization.getLevel()) ? organization.getLevel() : maxLevel ;
-					}
-				}
+			for(Organizations organization : orgsList) {
+				maxLevel = (maxLevel < organization.getLevel()) ? organization.getLevel() : maxLevel ;
 			}
 			
 			for (int level = 2 ; level <= maxLevel ; level++) {
@@ -105,7 +74,24 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 						organization.setCodePath(parentOrg.getCodePath()+"/"+organization.getId());
 						_logger.info("parentNamePath " + parentNamePath+" , namePah " + organization.getNamePath());
 						
-						organizationsService.saveOrUpdate(organization);
+						//synchro Related
+						SynchroRelated synchroRelated = 
+								synchroRelatedService.findByOriginId(
+										this.synchronizer,organization.getLdapDn(),Organizations.CLASS_TYPE );
+						if(synchroRelated == null) {
+							organization.setId(organization.generateId());
+							organizationsService.insert(organization);
+							_logger.debug("Organizations : " + organization);
+							
+							synchroRelated = buildSynchroRelated(organization,organization.getLdapDn(),organization.getName());
+						}else {
+							organization.setId(synchroRelated.getObjectId());
+							organizationsService.update(organization);
+						}
+						
+						synchroRelatedService.updateSynchroRelated(
+								this.synchronizer,synchroRelated,Organizations.CLASS_TYPE);
+						
 						orgsNamePathMap.put(organization.getNamePath(), organization);
 						
 						_logger.info("Organizations " + organization);
@@ -127,6 +113,61 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private ArrayList<Organizations> queryLdap() throws NamingException {
+		SearchControls constraints = new SearchControls();
+		constraints.setSearchScope(ldapUtils.getSearchScope());
+		String filter = "(&(objectClass=OrganizationalUnit))";
+		if(StringUtils.isNotBlank(this.getSynchronizer().getFilters())) {
+			//filter = this.getSynchronizer().getFilters();
+		}
+		NamingEnumeration<SearchResult> results = 
+				ldapUtils.getConnection().search(ldapUtils.getBaseDN(), filter , constraints);
+		
+		ArrayList<Organizations> orgsList = new ArrayList<Organizations>();
+		
+		long recordCount 	= 0;
+		while (null != results && results.hasMoreElements()) {
+			Object obj = results.nextElement();
+			if (obj instanceof SearchResult) {
+				SearchResult sr = (SearchResult) obj;
+				_logger.debug("Sync OrganizationalUnit {} , name [{}] , NameInNamespace [{}]" , 
+									(++recordCount),sr.getName(),sr.getNameInNamespace());
+				
+				HashMap<String,Attribute> attributeMap = new HashMap<String,Attribute>();
+				NamingEnumeration<? extends Attribute>  attrs = sr.getAttributes().getAll();
+				while (null != attrs && attrs.hasMoreElements()) {
+					Attribute  objAttrs = attrs.nextElement();
+					_logger.trace("attribute {} : {}" ,
+										objAttrs.getID(), 
+										LdapUtils.getAttrStringValue(objAttrs)
+							);
+					attributeMap.put(objAttrs.getID().toLowerCase(), objAttrs);
+				}
+				
+				Organizations organization = buildOrganization(attributeMap,sr.getName(),sr.getNameInNamespace());
+				if(organization != null) {
+					orgsList.add(organization);
+				}
+			}
+		}
+		return orgsList;
+	}
+	
+	public SynchroRelated buildSynchroRelated(Organizations organization,String ldapDN,String name) {
+		return new SynchroRelated(
+					organization.getId(),
+					organization.getName(),
+					organization.getName(),
+					Organizations.CLASS_TYPE,
+					synchronizer.getId(),
+					synchronizer.getName(),
+					ldapDN,
+					name,
+					"",
+					organization.getParentId(),
+					synchronizer.getInstId());
 	}
 	
 	public Organizations buildOrganization(HashMap<String,Attribute> attributeMap,String name,String nameInNamespace) {
@@ -158,16 +199,6 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 			org.setInstId(this.synchronizer.getInstId());
 			org.setStatus(ConstsStatus.ACTIVE);
             _logger.info("org " + org);
-            HistorySynchronizer historySynchronizer =new HistorySynchronizer();
-            historySynchronizer.setId(historySynchronizer.generateId());
-            historySynchronizer.setSyncId(this.synchronizer.getId());
-            historySynchronizer.setSyncName(this.synchronizer.getName());
-            historySynchronizer.setObjectId(org.getId());
-            historySynchronizer.setObjectName(org.getName());
-            historySynchronizer.setObjectType(Organizations.class.getSimpleName());
-            historySynchronizer.setInstId(synchronizer.getInstId());
-            historySynchronizer.setResult("success");
-            this.historySynchronizerService.insert(historySynchronizer);
             return org;
 		} catch (NamingException e) {
 			_logger.error("NamingException " , e);

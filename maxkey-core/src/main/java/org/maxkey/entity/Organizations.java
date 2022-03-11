@@ -31,6 +31,9 @@ public class Organizations extends JpaBaseEntity implements Serializable {
 
     private static final long serialVersionUID = 5085413816404119803L;
     
+    public static final String CLASS_TYPE = "Organization";
+    public static final String ROOT_ORG_ID = "1";
+    
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
@@ -99,6 +102,14 @@ public class Organizations extends JpaBaseEntity implements Serializable {
 	private String instId;
 
 	private String instName;
+	
+    String syncId;
+    
+    String syncName;
+    
+    String originId;
+    
+    String originId2;
     
     private int isPrimary = 0;
     
@@ -390,6 +401,39 @@ public class Organizations extends JpaBaseEntity implements Serializable {
 
 	public void setInstName(String instName) {
 		this.instName = instName;
+	}
+
+	
+	public String getSyncId() {
+		return syncId;
+	}
+
+	public void setSyncId(String syncId) {
+		this.syncId = syncId;
+	}
+
+	public String getSyncName() {
+		return syncName;
+	}
+
+	public void setSyncName(String syncName) {
+		this.syncName = syncName;
+	}
+
+	public String getOriginId() {
+		return originId;
+	}
+
+	public void setOriginId(String originId) {
+		this.originId = originId;
+	}
+
+	public String getOriginId2() {
+		return originId2;
+	}
+
+	public void setOriginId2(String originId2) {
+		this.originId2 = originId2;
 	}
 
 	@Override

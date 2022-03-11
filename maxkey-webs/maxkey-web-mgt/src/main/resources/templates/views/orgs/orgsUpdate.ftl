@@ -3,7 +3,7 @@
 <head>
 	<#include  "../layout/header.ftl"/>
 	<#include  "../layout/common.cssjs.ftl"/>
-
+    <#setting number_format="#">
 <script type="text/javascript">
 	
 $(function () {

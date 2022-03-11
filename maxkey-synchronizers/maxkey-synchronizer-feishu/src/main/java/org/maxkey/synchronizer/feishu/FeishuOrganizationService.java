@@ -23,6 +23,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Organizations;
+import org.maxkey.entity.SynchroRelated;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.maxkey.synchronizer.feishu.entity.FeishuDepts;
@@ -40,30 +41,55 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
 	
 	String access_token;
 	
-	static String DEPTS_URL="https://open.feishu.cn/open-apis/contact/v3/departments/%s/children?page_size=50";
-	
+	static String DEPTS_URL = "https://open.feishu.cn/open-apis/contact/v3/departments/%s/children?page_size=50";
+	static String ROOT_DEPT_URL = "https://open.feishu.cn/open-apis/contact/v3/departments/%s";
+	static String ROOT_DEPT_ID = "0";
 	public void sync() {
 		_logger.info("Sync Feishu Organizations ...");
 
 		LinkedBlockingQueue<String> deptsQueue = new LinkedBlockingQueue<String>();
-		deptsQueue.add("0");
-		HashMap<String,FeishuDepts> deptMap = new HashMap<String,FeishuDepts>();
+		
+		deptsQueue.add(ROOT_DEPT_ID);
+		//root
+		FeishuDeptsResponse rspRoot = requestDepartment(ROOT_DEPT_URL,ROOT_DEPT_ID,access_token);
+		Organizations rootOrganization = organizationsService.get(Organizations.ROOT_ORG_ID);
+		SynchroRelated rootSynchroRelated = buildSynchroRelated(rootOrganization,rspRoot.getData().getDepartment());
+				
+		synchroRelatedService.updateSynchroRelated(
+				this.synchronizer,rootSynchroRelated,Organizations.CLASS_TYPE);
+		
+		//child
 		try {
 			while(deptsQueue.element() != null) {
 				FeishuDeptsResponse rsp = requestDepartmentList(access_token,deptsQueue.poll());
 				if(rsp.getCode() == 0 && rsp.getData().getItems() != null) {
 					for(FeishuDepts dept : rsp.getData().getItems()) {
-						_logger.info("dept : id {} , Parent {} , Name {} , od {}" ,
+						_logger.debug("dept : id {} , Parent {} , Name {} , od {}" ,
 								 dept.getDepartment_id(),
 								 dept.getParent_department_id(),
 								 dept.getName(),
 								 dept.getOpen_department_id()
 								 );
 						deptsQueue.add(dept.getOpen_department_id());
-						deptMap.put(dept.getOpen_department_id(), dept);
-						Organizations organization = buildOrganization(dept,deptMap.get(dept.getParent_department_id()));
-						organizationsService.saveOrUpdate(organization);
-						_logger.info("Organizations : " + organization);
+						//synchro Related
+						SynchroRelated synchroRelated = 
+								synchroRelatedService.findByOriginId(
+										this.synchronizer,dept.getOpen_department_id(),Organizations.CLASS_TYPE );
+						Organizations organization = buildOrganization(dept);
+						if(synchroRelated == null) {
+							organization.setId(organization.generateId());
+							organizationsService.insert(organization);
+							_logger.debug("Organizations : " + organization);
+							synchroRelated = buildSynchroRelated(organization,dept);
+							
+						}else {
+							organization.setId(synchroRelated.getObjectId());
+							organizationsService.update(organization);
+						}
+						
+						
+						synchroRelatedService.updateSynchroRelated(
+								this.synchronizer,synchroRelated,Organizations.CLASS_TYPE);
 					}
 				}
 			}
@@ -80,21 +106,50 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
 		String responseBody = request.get(String.format(DEPTS_URL, deptId),headers);
 		FeishuDeptsResponse deptsResponse  =JsonUtils.gson2Object(responseBody, FeishuDeptsResponse.class);
 		
-		_logger.info("response : " + responseBody);
+		_logger.trace("response : " + responseBody);
 
 		return deptsResponse;
 	}
 	
-	public Organizations buildOrganization(FeishuDepts dept,FeishuDepts parentDept) {
+	public FeishuDeptsResponse requestDepartment(String url ,String deptId ,String access_token) {
+		HttpRequestAdapter request =new HttpRequestAdapter();
+		HashMap<String,String> headers =new HashMap<String,String>();
+		headers.put("Authorization", AuthorizationHeaderUtils.createBearer(access_token));
+		String responseBody = request.get(String.format(url, deptId),headers);
+		FeishuDeptsResponse deptsResponse  =JsonUtils.gson2Object(responseBody, FeishuDeptsResponse.class);
+		
+		_logger.trace("response : " + responseBody);
+
+		return deptsResponse;
+	}
+	
+	public SynchroRelated buildSynchroRelated(Organizations org,FeishuDepts dept) {
+		return  new SynchroRelated(
+				org.getId(),
+				org.getName(),
+				org.getName(),
+				Organizations.CLASS_TYPE,
+				synchronizer.getId(),
+				synchronizer.getName(),
+				dept.getOpen_department_id(),
+				dept.getName(),
+				dept.getDepartment_id(),
+				dept.getParent_department_id(),
+				synchronizer.getInstId());
+	}
+	
+	public Organizations buildOrganization(FeishuDepts dept) {
+		//Parent
+		SynchroRelated synchroRelatedParent = 
+				synchroRelatedService.findByOriginId(
+				this.synchronizer,dept.getParent_department_id(),Organizations.CLASS_TYPE);
+		
 		Organizations org = new Organizations();
-		org.setId(dept.getOpen_department_id()+"");
 		org.setCode(dept.getDepartment_id()+"");
 		org.setName(dept.getName());
-		if(parentDept == null) {
-			org.setParentId("1");
-		}else {
-			org.setParentId(parentDept.getOpen_department_id()+"");
-		}
+		org.setFullName(dept.getName());
+		org.setParentId(synchroRelatedParent.getObjectId());
+		org.setParentName(synchroRelatedParent.getObjectName());
 		org.setSortIndex(Integer.parseInt(dept.getOrder()));
 		org.setInstId(this.synchronizer.getInstId());
 		org.setStatus(ConstsStatus.ACTIVE);

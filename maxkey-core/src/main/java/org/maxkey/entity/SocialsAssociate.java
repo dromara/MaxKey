@@ -15,7 +15,14 @@
  */
  
 
-package org.maxkey.authn.support.socialsignon.service;
+package org.maxkey.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 
@@ -23,22 +30,35 @@ import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
  * 
  * @author Crystal.Sea
  */
+@Entity
+@Table(name = "MXK_SOCIALS_ASSOCIATE")
 public class SocialsAssociate extends JpaBaseEntity {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2151179554190800162L;
+	@Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO,generator = "snowflakeid")
 	private String id;
+	@Column
 	private String provider;
+	@Column
 	private String userId;
+	@Column
 	private String username;
+	@Column
 	private String socialUserId;
+	@Column
 	private String socialUserInfo;
 	private String accessToken;
 	private String exAttribute; 
+	@Column
     private String createdDate;
+    @Column
     private String updatedDate;
+    @Column
     private String instId;
 	
 	public SocialsAssociate() {}

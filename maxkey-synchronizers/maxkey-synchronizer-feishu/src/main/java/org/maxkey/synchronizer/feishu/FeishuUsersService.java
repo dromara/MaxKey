@@ -17,12 +17,11 @@
 
 package org.maxkey.synchronizer.feishu;
 
-import java.sql.Types;
 import java.util.HashMap;
 import java.util.List;
 
 import org.maxkey.constants.ConstsStatus;
-import org.maxkey.entity.Organizations;
+import org.maxkey.entity.SynchroRelated;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
@@ -46,23 +45,41 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
 	public void sync() {
 		_logger.info("Sync Feishu Users...");
 		try {
-			List<Organizations> organizations = 
-					 organizationsService.find("instid = ?",
-									 		new Object[] { this.synchronizer.getInstId() },
-					                        new int[] { Types.VARCHAR});
-			for(Organizations dept : organizations) {
+			List<SynchroRelated> synchroRelateds = 
+					synchroRelatedService.findOrgs(this.synchronizer);
+					
+			for(SynchroRelated relatedOrg : synchroRelateds) {
 				HttpRequestAdapter request =new HttpRequestAdapter();
 				HashMap<String,String> headers =new HashMap<String,String>();
 				headers.put("Authorization", AuthorizationHeaderUtils.createBearer(access_token));
-				String responseBody = request.get(String.format(USERS_URL,dept.getId()),headers);
+				String responseBody = request.get(String.format(USERS_URL,relatedOrg.getOriginId()),headers);
 				FeishuUsersResponse usersResponse  =JsonUtils.gson2Object(responseBody, FeishuUsersResponse.class);
-				_logger.info("response : " + responseBody);
+				_logger.trace("response : " + responseBody);
 				if(usersResponse.getCode() == 0 && usersResponse.getData().getItems() != null) {
-					for(FeishuUsers user : usersResponse.getData().getItems()) {
-						UserInfo userInfo  = buildUserInfo(user);
-						_logger.info("userInfo : " + userInfo);
+					for(FeishuUsers feiShuUser : usersResponse.getData().getItems()) {
+						UserInfo userInfo  = buildUserInfo(feiShuUser,relatedOrg);
+						_logger.debug("userInfo : " + userInfo);
 						userInfo.setPassword(userInfo.getUsername() + UserInfo.DEFAULT_PASSWORD_SUFFIX);
 						userInfoService.saveOrUpdate(userInfo);
+						
+						SynchroRelated synchroRelated = new SynchroRelated(
+								userInfo.getId(),
+								userInfo.getUsername(),
+								userInfo.getDisplayName(),
+								UserInfo.CLASS_TYPE,
+								synchronizer.getId(),
+								synchronizer.getName(),
+								feiShuUser.getOpen_id(),
+								feiShuUser.getName(),
+								feiShuUser.getUser_id(),
+								feiShuUser.getUnion_id(),
+								synchronizer.getInstId());
+						synchroRelatedService.updateSynchroRelated(
+								this.synchronizer,synchroRelated,UserInfo.CLASS_TYPE);
+						
+						synchroRelated.setOriginId(feiShuUser.getUnion_id());
+						socialsAssociate(synchroRelated,"feishu");
+						
 					}
 				}
 			}
@@ -77,8 +94,9 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
 		
 	}
 
-	public UserInfo buildUserInfo(FeishuUsers user) {
+	public UserInfo buildUserInfo(FeishuUsers user,SynchroRelated relatedOrg) {
 		UserInfo userInfo = new  UserInfo();
+		userInfo.setId(userInfo.generateId());
 		userInfo.setUsername(user.getUser_id());//账号
 		userInfo.setNickName(user.getNickname());//名字
 		userInfo.setDisplayName(user.getName());//名字
@@ -89,7 +107,10 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
 		
 		userInfo.setEmployeeNumber(user.getEmployee_no());
 		userInfo.setWorkPhoneNumber(user.getMobile());//工作电话
-		userInfo.setDepartmentId(user.getDepartment_ids()[0]+"");
+		
+		userInfo.setDepartmentId(relatedOrg.getObjectId());
+		userInfo.setDepartment(relatedOrg.getObjectName());
+		
 		userInfo.setJobTitle(user.getJob_title());//职务
 		userInfo.setWorkAddressFormatted(user.getWork_station());//工作地点
 

@@ -17,11 +17,10 @@
 
 package org.maxkey.synchronizer.workweixin;
 
-import java.sql.Types;
 import java.util.List;
 
 import org.maxkey.constants.ConstsStatus;
-import org.maxkey.entity.Organizations;
+import org.maxkey.entity.SynchroRelated;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
@@ -44,21 +43,38 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 	public void sync() {
 		_logger.info("Sync Workweixin Users...");
 		try {
-			List<Organizations> organizations = 
-					 organizationsService.find("instid = ?",
-									 		new Object[] { this.synchronizer.getInstId() },
-					                        new int[] { Types.VARCHAR});
-			for(Organizations dept : organizations) {
+			List<SynchroRelated> synchroRelateds = 
+					synchroRelatedService.findOrgs(this.synchronizer);
+			
+			for(SynchroRelated relatedOrg : synchroRelateds) {
 				HttpRequestAdapter request =new HttpRequestAdapter();
-				String responseBody = request.get(String.format(USERS_URL, access_token,dept.getId()));
+				String responseBody = request.get(String.format(USERS_URL, access_token,relatedOrg.getOriginId()));
 				WorkWeixinUsersResponse usersResponse  =JsonUtils.gson2Object(responseBody, WorkWeixinUsersResponse.class);
-				_logger.info("response : " + responseBody);
+				_logger.trace("response : " + responseBody);
 				
 				for(WorkWeixinUsers user : usersResponse.getUserlist()) {
 					UserInfo userInfo  = buildUserInfo(user);
-					_logger.info("userInfo : " + userInfo);
+					_logger.debug("userInfo : " + userInfo);
 					userInfo.setPassword(userInfo.getUsername() + UserInfo.DEFAULT_PASSWORD_SUFFIX);
 					userInfoService.saveOrUpdate(userInfo);
+					
+					SynchroRelated synchroRelated = new SynchroRelated(
+							userInfo.getId(),
+							userInfo.getUsername(),
+							userInfo.getDisplayName(),
+							UserInfo.CLASS_TYPE,
+							synchronizer.getId(),
+							synchronizer.getName(),
+							user.getUserid(),
+							user.getName(),
+							user.getUserid(),
+							"",
+							synchronizer.getInstId());
+					
+					synchroRelatedService.updateSynchroRelated(
+							this.synchronizer,synchroRelated,UserInfo.CLASS_TYPE);
+					
+					socialsAssociate(synchroRelated,"workweixin");
 				}
 			}
 			

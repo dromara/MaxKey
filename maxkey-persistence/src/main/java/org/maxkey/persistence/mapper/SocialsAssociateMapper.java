@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,10 @@
  */
  
 
-package org.maxkey.authn.support.socialsignon.service;
-
-import java.util.List;
-
+package org.maxkey.persistence.mapper;
+import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.entity.SocialsAssociate;
 
+public interface SocialsAssociateMapper extends IJpaBaseMapper<SocialsAssociate> {
 
-public interface SocialsAssociateService{
-
-	public boolean insert(SocialsAssociate socialsAssociate); 
-	
-	public List<SocialsAssociate> query (SocialsAssociate socialsAssociate);
-	
-	public SocialsAssociate get (SocialsAssociate socialsAssociate);
-	
-	public boolean delete (SocialsAssociate socialsAssociate);
-	
-	public boolean update (SocialsAssociate socialsAssociate);
-	
 }

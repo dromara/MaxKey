@@ -68,11 +68,13 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
      }
  
 	 public void saveOrUpdate(Organizations organization) {
-		 if(findOne(" id = ? and instid = ?", 
+		 Organizations loadOrg =findOne(" id = ? and instid = ?", 
 					new Object[] { organization.getId().toString(), organization.getInstId() },
-                 new int[] { Types.VARCHAR, Types.VARCHAR }) == null) {
+              new int[] { Types.VARCHAR, Types.VARCHAR });
+		 if( loadOrg == null) {
 				insert(organization);
 			}else {
+				organization.setId(organization.getId());
 				update(organization);
 			}
 	 }

@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.maxkey.constants.ConstsDatabase;
+import org.maxkey.entity.SocialsAssociate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;

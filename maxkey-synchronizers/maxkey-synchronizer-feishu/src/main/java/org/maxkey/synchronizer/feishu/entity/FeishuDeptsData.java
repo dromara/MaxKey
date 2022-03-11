@@ -26,6 +26,8 @@ public class FeishuDeptsData extends ResponseData {
 	String page_token;
 	ArrayList<FeishuDepts> items;
 
+	FeishuDepts department;
+	
 	public boolean isHas_more() {
 		return has_more;
 	}
@@ -48,6 +50,14 @@ public class FeishuDeptsData extends ResponseData {
 
 	public void setItems(ArrayList<FeishuDepts> items) {
 		this.items = items;
+	}
+
+	public FeishuDepts getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(FeishuDepts department) {
+		this.department = department;
 	}
 
 	public FeishuDeptsData() {

@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
-import org.maxkey.authn.support.socialsignon.service.SocialsAssociate;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
+import org.maxkey.entity.SocialsAssociate;
 import org.maxkey.entity.SocialsProvider;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;

@@ -17,14 +17,19 @@
 
 package org.maxkey.synchronizer;
 
+import java.sql.Types;
 import java.util.HashMap;
 import java.util.List;
 
 import org.maxkey.entity.Organizations;
+import org.maxkey.entity.SocialsAssociate;
+import org.maxkey.entity.SynchroRelated;
 import org.maxkey.entity.Synchronizers;
 import org.maxkey.persistence.service.HistorySynchronizerService;
 import org.maxkey.persistence.service.OrganizationsService;
+import org.maxkey.persistence.service.SynchroRelatedService;
 import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.persistence.service.SocialsAssociatesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +40,12 @@ public abstract class AbstractSynchronizerService {
     
     @Autowired
     protected OrganizationsService organizationsService;
-    
     @Autowired
     protected UserInfoService userInfoService;
-    
+    @Autowired
+    protected SynchroRelatedService synchroRelatedService;
+    @Autowired
+    protected SocialsAssociatesService socialsAssociatesService;
     @Autowired
     protected HistorySynchronizerService historySynchronizerService;
     
@@ -49,20 +56,20 @@ public abstract class AbstractSynchronizerService {
     protected Organizations rootOrganization = null;
     
     
-    public HashMap<String,Organizations> loadOrgsById(String orgId) {
-        List<Organizations> orgsList = organizationsService.query(null);
-        if(orgId== null || orgId.equals("")) {
-            orgId="1";
+    public HashMap<String,Organizations> loadOrgsByInstId(String instId,String rootOrgId) {
+        List<Organizations> orgsList = organizationsService.find("instid = '" + instId + "'");
+        if(rootOrgId== null || rootOrgId.equals("")) {
+        	rootOrgId="1";
         }
         
         for(Organizations org : orgsList) {
-           if(org.getId().equals(orgId) && orgId.equals("1")) {
+           if(org.getId().equals(rootOrgId) && rootOrgId.equals("1")) {
                rootOrganization = org; 
                rootOrganization.setNamePath("/"+rootOrganization.getName());
                rootOrganization.setCodePath("/1");
                rootOrganization.setParentId("-1");
                rootOrganization.setParentName("");
-           }else if(org.getId().equals(orgId)){
+           }else if(org.getId().equals(rootOrgId)){
                rootOrganization = org; 
            }
         }
@@ -75,6 +82,26 @@ public abstract class AbstractSynchronizerService {
         return orgsNamePathMap;
     }
     
+    public void socialsAssociate(SynchroRelated synchroRelated,String provider) {
+    	SocialsAssociate socialsAssociate =
+    			socialsAssociatesService.findOne("instid = ? and userid = ? and socialuserid = ? and provider = ? ",
+    					new Object[] { 
+    							synchroRelated.getInstId(),
+    							synchroRelated.getObjectId(),
+    							synchroRelated.getOriginId(),
+    							provider 
+    					},
+    					new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR});
+    	if(socialsAssociate == null) {
+    		socialsAssociate = new SocialsAssociate();
+    		socialsAssociate.setUserId(synchroRelated.getObjectId());
+    		socialsAssociate.setUsername(synchroRelated.getObjectName());
+    		socialsAssociate.setInstId(synchroRelated.getInstId());
+    		socialsAssociate.setProvider(provider);
+    		socialsAssociate.setSocialUserId(synchroRelated.getOriginId());
+    		socialsAssociatesService.insert(socialsAssociate);
+    	}
+    }
     public void push(HashMap<String,Organizations> orgsNamePathMap,
                      List<Organizations> orgsList,
                      Organizations parentOrg) {
@@ -141,6 +168,14 @@ public abstract class AbstractSynchronizerService {
     public void setHistorySynchronizerService(HistorySynchronizerService historySynchronizerService) {
         this.historySynchronizerService = historySynchronizerService;
     }
+
+	public SynchroRelatedService getSynchroRelatedService() {
+		return synchroRelatedService;
+	}
+
+	public void setSynchroRelatedService(SynchroRelatedService synchroRelatedService) {
+		this.synchroRelatedService = synchroRelatedService;
+	}
     
     
 }

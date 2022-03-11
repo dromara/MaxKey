@@ -19,6 +19,7 @@ package org.maxkey.synchronizer.workweixin;
 
 import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Organizations;
+import org.maxkey.entity.SynchroRelated;
 import org.maxkey.synchronizer.AbstractSynchronizerService;
 import org.maxkey.synchronizer.ISynchronizerService;
 import org.maxkey.synchronizer.workweixin.entity.WorkWeixinDepts;
@@ -36,6 +37,7 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 	String access_token;
 	
 	static String DEPTS_URL="https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=%s";
+	static long ROOT_DEPT_ID = 1;
 	
 	public void sync() {
 		_logger.info("Sync Workweixin Organizations ...");
@@ -44,9 +46,34 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 			WorkWeixinDeptsResponse rsp = requestDepartmentList(access_token);
 			
 			for(WorkWeixinDepts dept : rsp.getDepartment()) {
-				_logger.info("dept : " + dept.getId()+" "+ dept.getName()+" "+ dept.getParentid());
-				Organizations organization = buildOrganization(dept);
-				organizationsService.saveOrUpdate(organization);
+				_logger.debug("dept : " + dept.getId()+" "+ dept.getName()+" "+ dept.getParentid());
+				//root
+				if(dept.getId() == ROOT_DEPT_ID) {
+					Organizations rootOrganization = organizationsService.get(Organizations.ROOT_ORG_ID);
+					SynchroRelated rootSynchroRelated = buildSynchroRelated(rootOrganization,dept);
+					synchroRelatedService.updateSynchroRelated(
+							this.synchronizer,rootSynchroRelated,Organizations.CLASS_TYPE);
+				}else {
+					//synchro Related
+					SynchroRelated synchroRelated = 
+							synchroRelatedService.findByOriginId(
+									this.synchronizer,dept.getId() + "",Organizations.CLASS_TYPE );
+					
+					Organizations organization = buildOrganization(dept);
+					if(synchroRelated == null) {
+						organization.setId(organization.generateId());
+						organizationsService.insert(organization);
+						_logger.debug("Organizations : " + organization);
+						
+						synchroRelated = buildSynchroRelated(organization,dept);
+					}else {
+						organization.setId(synchroRelated.getObjectId());
+						organizationsService.update(organization);
+					}
+					
+					synchroRelatedService.updateSynchroRelated(
+							this.synchronizer,synchroRelated,Organizations.CLASS_TYPE);
+				}
 			}
 
 		} catch (Exception e) {
@@ -55,23 +82,43 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 		
 	}
 	
+	public SynchroRelated buildSynchroRelated(Organizations organization,WorkWeixinDepts dept) {
+		return new SynchroRelated(
+					organization.getId(),
+					organization.getName(),
+					organization.getName(),
+					Organizations.CLASS_TYPE,
+					synchronizer.getId(),
+					synchronizer.getName(),
+					dept.getId()+"",
+					dept.getName(),
+					"",
+					dept.getParentid()+"",
+					synchronizer.getInstId());
+	}
+	
 	public WorkWeixinDeptsResponse requestDepartmentList(String access_token) {
 		HttpRequestAdapter request =new HttpRequestAdapter();
 		String responseBody = request.get(String.format(DEPTS_URL, access_token));
 		WorkWeixinDeptsResponse deptsResponse  =JsonUtils.gson2Object(responseBody, WorkWeixinDeptsResponse.class);
 		
-		_logger.info("response : " + responseBody);
+		_logger.trace("response : " + responseBody);
 		for(WorkWeixinDepts dept : deptsResponse.getDepartment()) {
-			_logger.info("WorkWeixinDepts : " + dept);
+			_logger.debug("WorkWeixinDepts : " + dept);
 		}
 		return deptsResponse;
 	}
 	
 	public Organizations buildOrganization(WorkWeixinDepts dept) {
+		//Parent
+		SynchroRelated synchroRelatedParent = 
+				synchroRelatedService.findByOriginId(
+				this.synchronizer,dept.getParentid() + "",Organizations.CLASS_TYPE);
 		Organizations org = new Organizations();
-		org.setId(dept.getId()+"");
 		org.setName(dept.getName());
-		org.setParentId(dept.getParentid()+"");
+		org.setCode(dept.getId()+"");
+		org.setParentId(synchroRelatedParent.getObjectId());
+		org.setParentName(synchroRelatedParent.getObjectName());
 		org.setSortIndex(dept.getOrder());
 		org.setInstId(this.synchronizer.getInstId());
 		org.setStatus(ConstsStatus.ACTIVE);

@@ -166,11 +166,13 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
 	
 	public void saveOrUpdate(UserInfo userInfo) {
-		if(findOne(" username = ? and instid = ?",
+		UserInfo loadUserInfo = findOne(" username = ? and instid = ?",
 				new Object[] { userInfo.getUsername(),userInfo.getInstId() },
-                new int[] { Types.VARCHAR,Types.VARCHAR}) == null) {
+                new int[] { Types.VARCHAR,Types.VARCHAR});
+		if(loadUserInfo == null) {
 			insert(userInfo);
 		}else {
+			userInfo.setId(loadUserInfo.getId());
 			userInfo.setPassword(null);
 			update(userInfo);
 		}

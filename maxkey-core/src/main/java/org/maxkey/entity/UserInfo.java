@@ -44,6 +44,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserInfo extends JpaBaseEntity {
     private static final long serialVersionUID = 6402443942083382236L;
     
+    public static final String CLASS_TYPE = "UserInfo";
+    
     public  static final String DEFAULT_PASSWORD_SUFFIX = "MaxKey@888";
     
     //
@@ -270,6 +272,14 @@ public class UserInfo extends JpaBaseEntity {
 	private String instId;
 
 	private String instName;
+	
+    String syncId;
+    
+    String syncName;
+
+    String originId;
+
+    String originId2;
 	
     List<Organizations> depts;
     
@@ -1316,6 +1326,38 @@ public class UserInfo extends JpaBaseEntity {
 
 	public void setPasswordHistory(String passwordHistory) {
 		this.passwordHistory = passwordHistory;
+	}
+
+	public String getSyncId() {
+		return syncId;
+	}
+
+	public void setSyncId(String syncId) {
+		this.syncId = syncId;
+	}
+
+	public String getSyncName() {
+		return syncName;
+	}
+
+	public void setSyncName(String syncName) {
+		this.syncName = syncName;
+	}
+
+	public String getOriginId() {
+		return originId;
+	}
+
+	public void setOriginId(String originId) {
+		this.originId = originId;
+	}
+
+	public String getOriginId2() {
+		return originId2;
+	}
+
+	public void setOriginId2(String originId2) {
+		this.originId2 = originId2;
 	}
 
 	@Override
