@@ -242,8 +242,8 @@
                                                     <label class="col-sm-3 col-form-label"><@locale code="institutions.captchaSupport" /></label>
                                                     <div class="col-sm-9">
                                                         <select  id="captchaSupport" name="captchaSupport" class="form-control  form-select" >
-								                            <option value="YES" <#if 'YES'==model.captchaSupport!>selected</#if>><@locale code="common.text.yes"/></option>
-								                            <option value="NO" <#if 'NO'==model.captchaSupport!>selected</#if>><@locale code="common.text.no"/></option>
+								                            <option value="YES" <#if 'YES' == model.captchaSupport!>selected</#if>><@locale code="common.text.yes"/></option>
+								                            <option value="NO" <#if 'NO' == model.captchaSupport!>selected</#if>><@locale code="common.text.no"/></option>
 								                          </select>
                                                     </div>
                                                 </div>

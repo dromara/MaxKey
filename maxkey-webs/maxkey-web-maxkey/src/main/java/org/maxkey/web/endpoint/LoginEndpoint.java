@@ -121,7 +121,7 @@ public class LoginEndpoint {
 			modelAndView.addObject("userDomainUrlJson", kerberosService.buildKerberosProxys());
 		}
 		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-		modelAndView.addObject("isCaptcha", inst.isCaptchaSupport());
+		modelAndView.addObject("isCaptcha", inst.isTrueCaptchaSupport());
 		modelAndView.addObject("captcha", inst.getCaptcha());
 		modelAndView.addObject("sessionid", WebContext.getSession().getId());
 		//modelAndView.addObject("jwtToken",jwtLoginService.buildLoginJwt());
