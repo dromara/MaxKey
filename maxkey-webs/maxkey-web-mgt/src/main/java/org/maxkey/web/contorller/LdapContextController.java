@@ -18,25 +18,25 @@
 package org.maxkey.web.contorller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.CurrentUser;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.LdapContext;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.LdapContextService;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value={"/ldapcontext"})
+@RequestMapping(value={"/config/ldapcontext"})
 public class LdapContextController {
 
 
@@ -49,13 +49,13 @@ public class LdapContextController {
 		 * 读取
 		 * @return
 		 */
-		@RequestMapping(value={"/forward"})
-		public ModelAndView forward(){
-			LdapContext ldapContext = ldapContextService.get(WebContext.getUserInfo().getInstId());
+		@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+		public ResponseEntity<?> get(@CurrentUser UserInfo currentUser){
+			LdapContext ldapContext = ldapContextService.get(currentUser.getInstId());
 			if(ldapContext != null && StringUtils.isNoneBlank(ldapContext.getCredentials())) {
 				ldapContext.setCredentials(PasswordReciprocal.getInstance().decoder(ldapContext.getCredentials()));
 			}
-			return new ModelAndView("ldapcontext/updateLdapContext","model",ldapContext);
+			return new Message<LdapContext>(ldapContext).buildResponse();
 		}
 		
 		/**
@@ -65,10 +65,10 @@ public class LdapContextController {
 		 */
 		@RequestMapping(value={"/update"})
 		@ResponseBody
-		public Message update(@ModelAttribute("ldapContext") LdapContext ldapContext,BindingResult result) {
+		public ResponseEntity<?> update( @RequestBody LdapContext ldapContext,@CurrentUser UserInfo currentUser,BindingResult result) {
 			_logger.debug("update ldapContext : "+ldapContext);
 			ldapContext.setCredentials(PasswordReciprocal.getInstance().encode(ldapContext.getCredentials()));
-			ldapContext.setInstId(WebContext.getUserInfo().getInstId());
+			ldapContext.setInstId(currentUser.getInstId());
 			boolean updateResult = false;
 			if(StringUtils.isBlank(ldapContext.getId())) {
 				ldapContext.setId(ldapContext.getInstId());
@@ -77,9 +77,9 @@ public class LdapContextController {
 				updateResult = ldapContextService.update(ldapContext);
 			}
 			if(updateResult) {
-				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+				return new Message<LdapContext>(Message.SUCCESS).buildResponse();
 			} else {
-				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
+				return new Message<LdapContext>(Message.FAIL).buildResponse();
 			}
 		}
 		

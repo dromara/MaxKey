@@ -68,6 +68,7 @@
             and date(logintime) >date_add(curdate(), interval - day(curdate()) -31 day)
     	group by reportstring
     	order by reportcount desc
+    	limit 10
     </select>
     
     <!-- 30天应用单点登录的访问统计 -->
@@ -79,6 +80,7 @@
     	where  instid   =   #{instId} 
     	   and date(logintime) >date_add(curdate(), interval - day(curdate()) -31 day)
     	group by appname order by reportcount desc
+    	limit 10
     </select>
 
 </mapper>

@@ -20,7 +20,7 @@ package org.maxkey.authn;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.maxkey.authn.online.OnlineTicketServices;
+import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
@@ -64,7 +64,7 @@ public abstract class AbstractAuthenticationProvider {
 
     protected AbstractRemeberMeService remeberMeService;
     
-    protected OnlineTicketServices onlineTicketServices;
+    protected OnlineTicketService onlineTicketServices;
     
     public static  ArrayList<GrantedAuthority> grantedAdministratorsAuthoritys = new ArrayList<GrantedAuthority>();
     
@@ -380,7 +380,7 @@ public abstract class AbstractAuthenticationProvider {
         this.remeberMeService = remeberMeService;
     }
 
-    public void setOnlineTicketServices(OnlineTicketServices onlineTicketServices) {
+    public void setOnlineTicketServices(OnlineTicketService onlineTicketServices) {
         this.onlineTicketServices = onlineTicketServices;
     }
 

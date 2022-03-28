@@ -20,7 +20,7 @@ package org.maxkey.authn;
 import java.util.ArrayList;
 
 import org.maxkey.authn.online.OnlineTicket;
-import org.maxkey.authn.online.OnlineTicketServices;
+import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
@@ -66,7 +66,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     	    AbstractOtpAuthn tfaOtpAuthn,
     	    OtpAuthnService otpAuthnService,
     	    AbstractRemeberMeService remeberMeService,
-    	    OnlineTicketServices onlineTicketServices) {
+    	    OnlineTicketService onlineTicketServices) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
 		this.tfaOtpAuthn = tfaOtpAuthn;
@@ -80,7 +80,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 
         _logger.debug("authentication " + loginCredential);
 
-        sessionValid(loginCredential.getSessionId());
+        //sessionValid(loginCredential.getSessionId());
 
         //jwtTokenValid(j_jwtToken);
 

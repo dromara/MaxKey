@@ -20,14 +20,17 @@ package org.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.authn.CurrentUser;
 import org.maxkey.entity.HistoryLogs;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.util.DateUtils;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -50,28 +53,22 @@ final static Logger _logger = LoggerFactory.getLogger(SystemLogsController.class
 	@Autowired
 	HistorySystemLogsService historySystemLogsService;
 	
-	
-    @RequestMapping(value={"/systemLogsList"})
-    public String List(){
-        return "historys/systemLogsList";
-    }
-    
 	/**
 	 * 查询操作日志
 	 * @param logs
 	 * @return
 	 */
-	@RequestMapping(value={"/systemLogsList/grid"})
+	@RequestMapping(value={"/systemLogsList/fetch"})
 	@ResponseBody
-	public JpaPageResults<HistoryLogs> logsDataGrid(@ModelAttribute("historyLog") HistoryLogs historyLog){
-		_logger.debug("historys/historyLog/ logsGrid() "+historyLog);
-		historyLog.setInstId(WebContext.getUserInfo().getInstId());
-		return historySystemLogsService.queryPageResults(historyLog);
+	public ResponseEntity<?> fetch(@ModelAttribute("historyLog") HistoryLogs historyLog,
+			@CurrentUser UserInfo currentUser){
+		_logger.debug("historys/historyLog/fetch {} ",historyLog);
+		historyLog.setInstId(currentUser.getInstId());
+		return new Message<JpaPageResults<HistoryLogs>>(
+				 	historySystemLogsService.queryPageResults(historyLog)
+				).buildResponse();
 	}
 	
-	
-
-
 	@InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.FORMAT_DATE_HH_MM_SS);

@@ -27,5 +27,4 @@ dependencies {
    	implementation project(":maxkey-synchronizers:maxkey-synchronizer-workweixin")
    	implementation project(":maxkey-synchronizers:maxkey-synchronizer-dingtalk")
    	
-   	implementation project(":maxkey-webs:maxkey-web-resources")
 }

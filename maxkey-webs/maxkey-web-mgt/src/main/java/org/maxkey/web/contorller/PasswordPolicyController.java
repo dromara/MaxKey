@@ -19,22 +19,21 @@ package org.maxkey.web.contorller;
 
 import javax.validation.Valid;
 
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.CurrentUser;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.PasswordPolicy;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.PasswordPolicyService;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value={"/config/passwordpolicy"})
@@ -50,10 +49,10 @@ public class PasswordPolicyController {
 		 * 读取
 		 * @return
 		 */
-		@RequestMapping(value={"/forward"})
-		public ModelAndView sysConfig(){
-			PasswordPolicy passwordPolicy = passwordPolicyService.get("1");
-			return new ModelAndView("config/passwordpolicy/passwordpolicy","model",passwordPolicy);
+		@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+		public ResponseEntity<?> get(@CurrentUser UserInfo currentUser){
+			PasswordPolicy passwordPolicy = passwordPolicyService.get(currentUser.getInstId());
+			return new Message<PasswordPolicy>(passwordPolicy).buildResponse();
 		}
 		
 		/**
@@ -61,18 +60,15 @@ public class PasswordPolicyController {
 		 * @param sysConfig
 		 * @return
 		 */
-		@RequestMapping(value={"/update"})
-		@ResponseBody
-		public Message updatSysConfig(@Valid @ModelAttribute("passwordPolicy") PasswordPolicy passwordPolicy,BindingResult result) {
+		@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+		public ResponseEntity<?> update(@Valid @RequestBody PasswordPolicy passwordPolicy,@CurrentUser UserInfo currentUser,BindingResult result) {
 			_logger.debug("updateRole passwordPolicy : "+passwordPolicy);
-			Message message = this.validate(result, passwordPolicy);
-			if(message != null) {
-				return message;
-			}
+			//Message message = this.validate(result, passwordPolicy);
+			
 			if(passwordPolicyService.update(passwordPolicy)) {
-				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+				return new Message<PasswordPolicy>(Message.SUCCESS).buildResponse();
 			} else {
-				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
+				return new Message<PasswordPolicy>(Message.ERROR).buildResponse();
 			}
 		}
 		
@@ -82,7 +78,7 @@ public class PasswordPolicyController {
 		 * @param passwordPolicy
 		 * @return
 		 */
-		private Message validate(BindingResult result,PasswordPolicy passwordPolicy) {
+		public Message validate(BindingResult result,PasswordPolicy passwordPolicy) {
 			if (result.hasErrors()) {
 				return new Message(result);
 			}

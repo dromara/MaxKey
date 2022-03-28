@@ -18,27 +18,26 @@
 package org.maxkey.web.contorller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.CurrentUser;
 import org.maxkey.crypto.password.PasswordReciprocal;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.SmsProvider;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.SmsProviderService;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value={"/smsprovider"})
+@RequestMapping(value={"/config/smsprovider"})
 public class SmsProviderController {
-
 
 		final static Logger _logger = LoggerFactory.getLogger(SmsProviderController.class);
 		
@@ -49,13 +48,13 @@ public class SmsProviderController {
 		 * 读取
 		 * @return
 		 */
-		@RequestMapping(value={"/forward"})
-		public ModelAndView forward(){
-			SmsProvider smsProvider = smsProviderService.get(WebContext.getUserInfo().getInstId());
+		@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+		public ResponseEntity<?> get(@CurrentUser UserInfo currentUser){
+			SmsProvider smsProvider = smsProviderService.get(currentUser.getInstId());
 			if(smsProvider != null && StringUtils.isNoneBlank(smsProvider.getId())) {
 				smsProvider.setAppSecret(PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()));
 			}
-			return new ModelAndView("smsprovider/updateSmsProvider","model",smsProvider);
+			return new Message<SmsProvider>(smsProvider).buildResponse();
 		}
 		
 		/**
@@ -65,10 +64,10 @@ public class SmsProviderController {
 		 */
 		@RequestMapping(value={"/update"})
 		@ResponseBody
-		public Message update(@ModelAttribute SmsProvider smsProvider,BindingResult result) {
+		public ResponseEntity<?> update( @RequestBody SmsProvider smsProvider,@CurrentUser UserInfo currentUser,BindingResult result) {
 			_logger.debug("update smsProvider : "+smsProvider);
 			smsProvider.setAppSecret(PasswordReciprocal.getInstance().encode(smsProvider.getAppSecret()));
-			smsProvider.setInstId(WebContext.getUserInfo().getInstId());
+			smsProvider.setInstId(currentUser.getInstId());
 			boolean updateResult = false;
 			if(StringUtils.isBlank(smsProvider.getId())) {
 				smsProvider.setId(smsProvider.getInstId());
@@ -77,9 +76,9 @@ public class SmsProviderController {
 				updateResult = smsProviderService.update(smsProvider);
 			}
 			if(updateResult) {
-				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+				return new Message<SmsProvider>(Message.SUCCESS).buildResponse();
 			} else {
-				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
+				return new Message<SmsProvider>(Message.FAIL).buildResponse();
 			}
 		}
 		

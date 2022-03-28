@@ -17,25 +17,30 @@
 
 package org.maxkey;
 
+import java.util.List;
+
 import org.maxkey.authn.AbstractAuthenticationProvider;
+import org.maxkey.authn.CurrentUserMethodArgumentResolver;
+import org.maxkey.authn.interceptor.PermissionAdapter;
 import org.maxkey.authn.support.jwt.HttpJwtEntryPoint;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.HttpRemeberMeEntryPoint;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.interceptor.HistoryLogsAdapter;
-import org.maxkey.web.interceptor.PermissionAdapter;
 import org.maxkey.web.interceptor.RestApiPermissionAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 @Configuration
 @EnableWebMvc
@@ -110,7 +115,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
         	.addPathPatterns("/login");
         
         registry.addInterceptor(permissionAdapter)
-                .addPathPatterns("/main/**")
+                .addPathPatterns("/dashboard/**")
                 .addPathPatterns("/orgs/**")
                 .addPathPatterns("/userinfo/**")
                 .addPathPatterns("/apps/**")
@@ -123,6 +128,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/resources/**")
                 .addPathPatterns("/permissions/**")
                 .addPathPatterns("/config/**")
+                .addPathPatterns("/config/**/**")
                 .addPathPatterns("/logs/**")
                 .addPathPatterns("/historys/**")
                 .addPathPatterns("/historys/**/**")
@@ -131,9 +137,6 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/accountsstrategy/**")
                 .addPathPatterns("/institutions/**")
                 .addPathPatterns("/localization/**")
-                .addPathPatterns("/ldapcontext/**")
-                .addPathPatterns("/emailsenders/**")
-                .addPathPatterns("/smsprovider/**")
                 .addPathPatterns("/synchronizers/**")
                 
                 ;
@@ -170,6 +173,16 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
 		
         _logger.debug("add RestApiPermissionAdapter");
         
+    }
+    
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(currentUserMethodArgumentResolver());
+    }
+    
+    @Bean
+    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
+        return new CurrentUserMethodArgumentResolver();
     }
 
 }

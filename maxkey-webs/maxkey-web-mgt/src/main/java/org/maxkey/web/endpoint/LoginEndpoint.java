@@ -19,18 +19,24 @@ package org.maxkey.web.endpoint;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
+import org.maxkey.authn.jwt.AuthJwt;
+import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
+import org.maxkey.entity.Message;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.http.MediaType;
 
 
 /**
@@ -40,6 +46,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginEndpoint {
 	private static Logger _logger = LoggerFactory.getLogger(LoginEndpoint.class);
+	
+	@Autowired
+  	@Qualifier("authJwtService")
+	AuthJwtService authJwtService;
 	
 	@Autowired
   	@Qualifier("applicationConfig")
@@ -63,7 +73,7 @@ public class LoginEndpoint {
 		if(isAuthenticated){
 			return WebContext.redirect("/main");
 		}
-		
+
 		ModelAndView modelAndView = new ModelAndView();
 		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
 		modelAndView.addObject("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
@@ -77,14 +87,11 @@ public class LoginEndpoint {
 		return modelAndView;
 	}
  	
- 	@RequestMapping(value={"/logon.do"})
-	public ModelAndView logon(@ModelAttribute("loginCredential") LoginCredential loginCredential) {
- 		
- 		if(WebContext.isAuthenticated()){
- 			return WebContext.redirect("/main");
-		}else{
-			authenticationProvider.authenticate(loginCredential);
-			return WebContext.redirect("/login");
-		}
+ 	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
+ 		Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
+ 		String jwt = authJwtService.generateToken(authentication);
+ 		return new Message<AuthJwt>(new AuthJwt(jwt, authentication)).buildResponse();
  	}
+ 	
 }

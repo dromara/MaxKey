@@ -18,6 +18,7 @@
 package org.maxkey.autoconfigure;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.Filter;
@@ -51,6 +52,9 @@ import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -259,6 +263,22 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
     }
     
     @Bean
+    public FilterRegistrationBean<CorsFilter> corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setAllowedOriginPatterns(Collections.singletonList(CorsConfiguration.ALL));
+        corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
+        corsConfiguration.addAllowedMethod(CorsConfiguration.ALL);
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>();
+        bean.setOrder(1);
+        bean.setFilter(new CorsFilter(source));
+        bean.addUrlPatterns("/*");
+        return bean;
+    }
+    
+    @Bean
     public FilterRegistrationBean<Filter> delegatingFilterProxy() {
         _logger.debug("delegatingFilterProxy init for /* ");
         FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>();
@@ -266,7 +286,7 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
         registrationBean.addUrlPatterns("/*");
         //registrationBean.
         registrationBean.setName("delegatingFilterProxy");
-        registrationBean.setOrder(1);
+        registrationBean.setOrder(2);
         
         return registrationBean;
     }
@@ -277,10 +297,9 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
         FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>(new WebXssRequestFilter());
         registrationBean.addUrlPatterns("/*");
         registrationBean.setName("webXssRequestFilter");
-        registrationBean.setOrder(2);
+        registrationBean.setOrder(3);
         return registrationBean;
     }
-    
     
     @Bean
     public FilterRegistrationBean<Filter> WebInstRequestFilter(
@@ -291,7 +310,7 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
         		new FilterRegistrationBean<Filter>(new WebInstRequestFilter(institutionsRepository,applicationConfig));
         registrationBean.addUrlPatterns("/*");
         registrationBean.setName("webInstRequestFilter");
-        registrationBean.setOrder(3);
+        registrationBean.setOrder(4);
         return registrationBean;
     }
     

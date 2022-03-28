@@ -20,12 +20,14 @@ package org.maxkey.autoconfigure;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
-import org.maxkey.authn.online.OnlineTicketServices;
-import org.maxkey.authn.online.OnlineTicketServicesFactory;
+import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.online.OnlineTicketService;
+import org.maxkey.authn.online.OnlineTicketServiceFactory;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.RemeberMeServiceFactory;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.configuration.AuthJwkConfig;
 import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.OtpAuthnService;
@@ -44,6 +46,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.nimbusds.jose.JOSEException;
 
 
 @Configuration
@@ -65,7 +69,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     	    AbstractOtpAuthn tfaOtpAuthn,
     	    OtpAuthnService otpAuthnService,
     	    AbstractRemeberMeService remeberMeService,
-    	    OnlineTicketServices onlineTicketServices
+    	    OnlineTicketService onlineTicketServices
     		) {
        
     	_logger.debug("init authentication Provider .");
@@ -78,6 +82,12 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         		onlineTicketServices
         		);
         
+    }
+    
+    @Bean(name = "authJwtService")
+    public AuthJwtService authJwtService(AuthJwkConfig authJwkConfig) throws JOSEException {
+    	AuthJwtService authJwtService = new AuthJwtService(authJwkConfig);
+    	return authJwtService;
     }
     
     @Bean(name = "otpAuthnService")
@@ -127,18 +137,18 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         return new RemeberMeServiceFactory().getService(persistence, jdbcTemplate, redisConnFactory);
     }
     
-    @Bean(name = "onlineTicketServices")
-    public OnlineTicketServices onlineTicketServices(
+    @Bean(name = "onlineTicketService")
+    public OnlineTicketService onlineTicketService(
             @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory,
             @Value("${server.servlet.session.timeout:1800}") int timeout
             ) {
-        OnlineTicketServices  onlineTicketServices  = 
-                new OnlineTicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
-        onlineTicketServices.setValiditySeconds(timeout);
+        OnlineTicketService  onlineTicketService  = 
+                new OnlineTicketServiceFactory().getService(persistence, jdbcTemplate, redisConnFactory);
+        onlineTicketService.setValiditySeconds(timeout);
         _logger.trace("onlineTicket timeout " + timeout);
-        return onlineTicketServices;
+        return onlineTicketService;
     }
     
     @Override

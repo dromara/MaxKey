@@ -20,14 +20,17 @@ package org.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.authn.CurrentUser;
 import org.maxkey.entity.HistoryLoginApps;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistoryLoginAppsService;
 import org.maxkey.util.DateUtils;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -50,25 +53,22 @@ final static Logger _logger = LoggerFactory.getLogger(LoginAppsHistoryController
 	@Autowired
   	protected HistoryLoginAppsService historyLoginAppsService;
 	
-
-	@RequestMapping(value={"/loginAppsHistoryList"})
-	public String loginAppsHistoryList(){
-		return "historys/loginAppsHistoryList";
-	}
-	
 	/**
 	 * @param loginAppsHistory
 	 * @return
 	 */
-	@RequestMapping(value={"/loginAppsHistoryList/grid"})
+	@RequestMapping(value={"/loginAppsHistoryList/fetch"})
 	@ResponseBody
-	public JpaPageResults<HistoryLoginApps> loginAppsHistoryGrid(@ModelAttribute("historyLoginApp") HistoryLoginApps historyLoginApp){
-		_logger.debug("historys/loginAppsHistory/datagrid/  "+historyLoginApp);
+	public ResponseEntity<?> fetch(
+				@ModelAttribute("historyLoginApp") HistoryLoginApps historyLoginApp,
+				@CurrentUser UserInfo currentUser){
+		_logger.debug("historys/loginAppsHistory/fetch/  {}",historyLoginApp);
 		historyLoginApp.setId(null);
-		historyLoginApp.setInstId(WebContext.getUserInfo().getInstId());
-		return historyLoginAppsService.queryPageResults(historyLoginApp);
+		historyLoginApp.setInstId(currentUser.getInstId());
+		return new Message<JpaPageResults<HistoryLoginApps>>(
+					historyLoginAppsService.queryPageResults(historyLoginApp)
+				).buildResponse();
 	}
-
 
 	@InitBinder
     public void initBinder(WebDataBinder binder) {

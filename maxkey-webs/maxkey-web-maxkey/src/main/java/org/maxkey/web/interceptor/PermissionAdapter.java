@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.online.OnlineTicket;
-import org.maxkey.authn.online.OnlineTicketServices;
+import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsPasswordSetType;
 import org.maxkey.web.WebConstants;
@@ -63,8 +63,8 @@ public class PermissionAdapter  implements AsyncHandlerInterceptor  {
     static ConcurrentHashMap<String, String> navigationsMap = null;
     
     @Autowired
-    @Qualifier("onlineTicketServices")
-    protected OnlineTicketServices onlineTicketServices;
+    @Qualifier("onlineTicketService")
+    protected OnlineTicketService onlineTicketService;
 
     /*
      * 请求前处理 (non-Javadoc)
@@ -142,7 +142,7 @@ public class PermissionAdapter  implements AsyncHandlerInterceptor  {
 	            SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal();
 	            //if onlineTicket refresh is removed or timeout then Exception 
 	            OnlineTicket onlineTicket = signinPrincipal.getOnlineTicket();
-	            onlineTicketServices.refresh(onlineTicket.getTicketId());
+	            onlineTicketService.refresh(onlineTicket.getTicketId());
 	        }
         }catch(Exception e) {
             _logger.debug("Online Ticket timeout ... forward to /login");

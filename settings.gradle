@@ -51,8 +51,6 @@ include (
 	'maxkey-protocols:maxkey-protocol-tokenbased',
 	'maxkey-protocols:maxkey-protocol-extendapi',
 	//webs
-	//static
-	'maxkey-webs:maxkey-web-resources',
 	//maxkey
 	'maxkey-webs:maxkey-web-maxkey',
 	//management(mgt)

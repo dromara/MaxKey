@@ -18,7 +18,7 @@
 package org.maxkey.authz.endpoint;
 
 import org.maxkey.authn.online.OnlineTicket;
-import org.maxkey.authn.online.OnlineTicketServices;
+import org.maxkey.authn.online.OnlineTicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -36,7 +36,7 @@ public class OnlineTicketEndpoint {
 
     @Autowired
     @Qualifier("onlineTicketServices")
-    protected OnlineTicketServices onlineTicketServices;
+    protected OnlineTicketService onlineTicketServices;
     
     @Operation(summary = "在线ticket验证接口", description = "",method="GET")
     @ResponseBody

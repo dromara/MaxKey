@@ -22,5 +22,4 @@ dependencies {
    	implementation project(":maxkey-protocols:maxkey-protocol-saml-2.0")
 	implementation project(":maxkey-protocols:maxkey-protocol-jwt")
 	
-	implementation project(":maxkey-webs:maxkey-web-resources")
 }

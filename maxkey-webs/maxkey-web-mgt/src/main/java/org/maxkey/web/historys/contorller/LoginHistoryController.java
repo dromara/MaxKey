@@ -20,14 +20,17 @@ package org.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.authn.CurrentUser;
 import org.maxkey.entity.HistoryLogin;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistoryLoginService;
 import org.maxkey.util.DateUtils;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -50,22 +53,21 @@ final static Logger _logger = LoggerFactory.getLogger(LoginHistoryController.cla
 	@Autowired
 	HistoryLoginService loginHistoryService;
 	
-	
-	@RequestMapping(value={"/loginHistoryList"})
-	public String loginHistoryList(){
-		return "historys/loginHistoryList";
-	}
-	
 	/**
 	 * @param HistoryLogin
 	 * @return
 	 */
-	@RequestMapping(value={"/loginHistoryList/grid"})
+	@RequestMapping(value={"/loginHistoryList/fetch"})
 	@ResponseBody
-	public JpaPageResults<HistoryLogin> logAuthsGrid(@ModelAttribute("historyLogin") HistoryLogin historyLogin){
-		_logger.debug("historys/loginHistory/datagrid/ "+historyLogin);
-		historyLogin.setInstId(WebContext.getUserInfo().getInstId());
-		return loginHistoryService.queryPageResults(historyLogin);
+	public ResponseEntity<?> fetch(
+				@ModelAttribute("historyLogin") HistoryLogin historyLogin,
+				@CurrentUser UserInfo currentUser
+			){
+		_logger.debug("historys/loginHistory/fetch/ {}",historyLogin);
+		historyLogin.setInstId(currentUser.getInstId());
+		return new Message<JpaPageResults<HistoryLogin>>(
+					loginHistoryService.queryPageResults(historyLogin)
+				).buildResponse();
 	}
 	
 	@InitBinder

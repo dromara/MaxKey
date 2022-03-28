@@ -18,25 +18,24 @@
 package org.maxkey.web.contorller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.CurrentUser;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.EmailSenders;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.EmailSendersService;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value={"/emailsenders"})
+@RequestMapping(value={"/config/emailsenders"})
 public class EmailSendersController {
 
 
@@ -49,9 +48,9 @@ public class EmailSendersController {
 		 * 读取
 		 * @return
 		 */
-		@RequestMapping(value={"/forward"})
-		public ModelAndView forward(){
-			EmailSenders emailSenders = emailSendersService.get(WebContext.getUserInfo().getInstId());
+		@RequestMapping(value={"/get"})
+		public ResponseEntity<?> get(@CurrentUser UserInfo currentUser){
+			EmailSenders emailSenders = emailSendersService.get(currentUser.getInstId());
 			if(emailSenders != null && StringUtils.isNotBlank(emailSenders.getCredentials())) {
 				emailSenders.setCredentials(PasswordReciprocal.getInstance().decoder(emailSenders.getCredentials()));
 			}else {
@@ -59,7 +58,7 @@ public class EmailSendersController {
 				emailSenders.setProtocol("smtp");
 				emailSenders.setEncoding("utf-8");
 			}
-			return new ModelAndView("emailsenders/updateEmailSenders","model",emailSenders);	
+			return new Message<EmailSenders>(emailSenders).buildResponse();	
 		}
 		
 		/**
@@ -69,23 +68,25 @@ public class EmailSendersController {
 		 */
 		@RequestMapping(value={"/update"})
 		@ResponseBody
-		public Message update(@ModelAttribute("emailSenders") EmailSenders emailSenders,BindingResult result) {
+		public ResponseEntity<?> update( @RequestBody  EmailSenders emailSenders,@CurrentUser UserInfo currentUser,BindingResult result) {
 			_logger.debug("update emailSenders : "+emailSenders);
-			emailSenders.setInstId(WebContext.getUserInfo().getInstId());
+			emailSenders.setInstId(currentUser.getInstId());
 			emailSenders.setCredentials(PasswordReciprocal.getInstance().encode(emailSenders.getCredentials()));
-			boolean updateResult = false;
 			if(StringUtils.isBlank(emailSenders.getId())) {
 				emailSenders.setId(emailSenders.getInstId());
-				updateResult = emailSendersService.insert(emailSenders);
+				if(emailSendersService.insert(emailSenders)) {
+					return new Message<EmailSenders>(Message.SUCCESS).buildResponse();
+				}else {
+					return new Message<EmailSenders>(Message.ERROR).buildResponse();
+				}
 			}else {
-				updateResult = emailSendersService.update(emailSenders);
+				if(emailSendersService.update(emailSenders)) {
+					return new Message<EmailSenders>(Message.SUCCESS).buildResponse();
+				}else {
+					return new Message<EmailSenders>(Message.ERROR).buildResponse();
+				}
 			}
 			
-			if(updateResult) {
-				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
-			} else {
-				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
-			}
 		}
 		
 

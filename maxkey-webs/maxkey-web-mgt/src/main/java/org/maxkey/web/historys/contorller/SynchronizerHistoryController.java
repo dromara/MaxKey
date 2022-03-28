@@ -20,15 +20,18 @@ package org.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.authn.CurrentUser;
 import org.maxkey.entity.HistorySynchronizer;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistorySynchronizerService;
 import org.maxkey.util.DateUtils;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -52,24 +55,21 @@ final static Logger _logger = LoggerFactory.getLogger(SynchronizerHistoryControl
     @Qualifier("historySynchronizerService")
 	HistorySynchronizerService historySynchronizerService;
 	
-	
-	@RequestMapping(value={"/synchronizerHistoryList"})
-    public String historySynchronizerList(){
-        return "historys/synchronizerHistoryList";
-    }
-	
 	/**
      * @param historySynchronizer
      * @return
      */
-    @RequestMapping(value={"/synchronizerHistoryList/grid"})
+    @RequestMapping(value={"/synchronizerHistoryList/fetch"})
     @ResponseBody
-    public JpaPageResults<HistorySynchronizer> historySynchronizerGrid(@ModelAttribute("historySynchronizer") HistorySynchronizer historySynchronizer){
-        _logger.debug("historys/synchronizerHistory/grid/ "+historySynchronizer);
-        historySynchronizer.setInstId(WebContext.getUserInfo().getInstId());
-        return historySynchronizerService.queryPageResults(historySynchronizer);
+    public ResponseEntity<?> fetch(
+    			@ModelAttribute("historySynchronizer") HistorySynchronizer historySynchronizer,
+    			@CurrentUser UserInfo currentUser){
+        _logger.debug("historys/synchronizerHistory/fetch/ {}",historySynchronizer);
+        historySynchronizer.setInstId(currentUser.getInstId());
+        return new Message<JpaPageResults<HistorySynchronizer>>(
+        		historySynchronizerService.queryPageResults(historySynchronizer)
+        	).buildResponse();
     }
-
 
 	@InitBinder
     public void initBinder(WebDataBinder binder) {

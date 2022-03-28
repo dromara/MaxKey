@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.online.OnlineTicket;
-import org.maxkey.authn.online.OnlineTicketServices;
+import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authz.singlelogout.SamlSingleLogout;
 import org.maxkey.authz.singlelogout.DefaultSingleLogout;
@@ -68,7 +68,7 @@ public class LogoutEndpoint {
 	
 	@Autowired
     @Qualifier("onlineTicketServices")
-    protected OnlineTicketServices onlineTicketServices;
+    protected OnlineTicketService onlineTicketServices;
 	
 	@Operation(summary = "单点注销接口", description = "reLoginUrl跳转地址",method="GET")
  	@RequestMapping(value={"/logout"})

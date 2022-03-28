@@ -20,15 +20,18 @@ package org.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.authn.CurrentUser;
 import org.maxkey.entity.HistoryConnector;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistoryConnectorService;
 import org.maxkey.util.DateUtils;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -52,24 +55,21 @@ final static Logger _logger = LoggerFactory.getLogger(ConnectorHistoryController
     @Qualifier("historyConnectorService")
 	HistoryConnectorService historyConnectorService;
 	
-	
-	@RequestMapping(value={"/connectorHistoryList"})
-    public String historySynchronizerList(){
-        return "historys/connectorHistoryList";
-    }
-	
 	/**
      * @param historySynchronizer
      * @return
      */
-    @RequestMapping(value={"/connectorHistoryList/grid"})
+    @RequestMapping(value={"/connectorHistoryList/fetch"})
     @ResponseBody
-    public JpaPageResults<HistoryConnector> historySynchronizerGrid(@ModelAttribute("historyConnector") HistoryConnector historyConnector){
-        _logger.debug("historys/historyConnector/grid/ "+historyConnector);
-        historyConnector.setInstId(WebContext.getUserInfo().getInstId());
-        return historyConnectorService.queryPageResults(historyConnector);
+    public ResponseEntity<?> fetch(
+    		@ModelAttribute("historyConnector") HistoryConnector historyConnector,
+			@CurrentUser UserInfo currentUser){
+        _logger.debug("historys/historyConnector/fetch/ {}",historyConnector);
+        historyConnector.setInstId(currentUser.getInstId());
+        return new Message<JpaPageResults<HistoryConnector>>(
+        			historyConnectorService.queryPageResults(historyConnector)
+        		).buildResponse();
     }
-
 
 	@InitBinder
     public void initBinder(WebDataBinder binder) {

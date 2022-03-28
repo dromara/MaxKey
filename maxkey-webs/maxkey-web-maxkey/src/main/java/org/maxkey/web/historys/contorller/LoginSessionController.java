@@ -20,7 +20,7 @@ package org.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.authn.online.OnlineTicketServices;
+import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.UserInfo;
@@ -66,7 +66,7 @@ public class LoginSessionController {
     LoginHistoryRepository loginHistoryRepository;
     
     @Autowired
-    OnlineTicketServices onlineTicketServices;
+    OnlineTicketService onlineTicketServices;
     
     @RequestMapping(value = { "/sessionList" })
     public String authList() {
