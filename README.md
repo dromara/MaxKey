@@ -120,7 +120,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 
 | No.     | Plan    |  Date   |
 | --------| :-----  | :----  |
-| 1     | React, and Ant Design                                     |  2022Q2  |
+| 1     | Ant Design of Angular                                     |  2022Q2  |
 | 2     | Java 17+                                                  |  2022Q4  |
 | 3     | Jakarta EE 9+                                             |  2022Q4  |
 | 4     | Spring Framework 6                                        |  2022Q4  |
@@ -137,6 +137,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | --------| :-----  |
 | 院校    | 兰州现代职业学院                            |
 | 院校    | 长春职业技术学院                            |
+| 院校    | 云南师范大学                                |
 | 教育    | 重庆市北碚图书馆                            |
 | 教育    | 德清智慧教育平台                            |
 | 教育    | 余姚市教育局                                |
@@ -165,6 +166,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 企业    | 新开普电子股份有限公司                      |
 | 企业    | 杭州润为数据科技有限公司                    |
 | 企业    | 百安居中国                                  |
+| 企业    | 广州携旅信息科技有限公司                    |
 | 科技    | 广州思迈特软件有限公司                      |
 | 科技    | 尚企云链                                    |
 | 科技    | 北京博亚思科技有限公司                      |
