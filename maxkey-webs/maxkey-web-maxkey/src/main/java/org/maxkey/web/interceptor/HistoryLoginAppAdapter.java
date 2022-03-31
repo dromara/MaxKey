@@ -83,7 +83,7 @@ public class HistoryLoginAppAdapter  implements AsyncHandlerInterceptor  {
         _logger.debug("postHandle");
        
         final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
-        String sessionId = (String)WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID);
+        String sessionId = "";//(String)WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID);
         final UserInfo userInfo = WebContext.getUserInfo();
         _logger.debug("sessionId : " + sessionId + " ,appId : " + app.getId());
         HistoryLoginApps historyLoginApps = new HistoryLoginApps();

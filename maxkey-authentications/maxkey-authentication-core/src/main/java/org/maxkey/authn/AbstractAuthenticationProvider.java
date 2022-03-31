@@ -118,7 +118,7 @@ public abstract class AbstractAuthenticationProvider {
         
         changeSession(authentication);
         
-        authenticationRealm.insertLoginHistory( WebContext.getUserInfo(), 
+        authenticationRealm.insertLoginHistory(((SigninPrincipal) authentication.getPrincipal()).getUserInfo(), 
 						        				ConstsLoginType.LOCAL, 
 								                "", 
 								                "xe00000004", 
@@ -141,10 +141,6 @@ public abstract class AbstractAuthenticationProvider {
         for(String attributeName : WebContext.sessionAttributeNameList) {
             WebContext.setAttribute(attributeName, sessionAttributeMap.get(attributeName));
         }
-        
-        _logger.debug("Login Success Session {} Mapping to user Session {}.",
-                        WebContext.getSession().getId(),
-                        WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID));
     }
    
 

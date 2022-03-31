@@ -20,7 +20,7 @@ package org.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.authn.CurrentUser;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.HistoryConnector;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
@@ -59,7 +59,7 @@ final static Logger _logger = LoggerFactory.getLogger(ConnectorHistoryController
      * @param historySynchronizer
      * @return
      */
-    @RequestMapping(value={"/connectorHistoryList/fetch"})
+    @RequestMapping(value={"/connectorHistory/fetch"})
     @ResponseBody
     public ResponseEntity<?> fetch(
     		@ModelAttribute("historyConnector") HistoryConnector historyConnector,

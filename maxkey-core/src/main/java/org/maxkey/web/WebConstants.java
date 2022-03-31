@@ -31,8 +31,6 @@ public class WebConstants {
 
     public static final  String CURRENT_USER = "current_user";
 
-    public static final  String CURRENT_USER_SESSION_ID = "current_user_session_id";
-
     public static final  String CURRENT_COMPANY = "current_user_company";
 
     public static final  String CURRENT_DEPARTMENT = "current_user_department";

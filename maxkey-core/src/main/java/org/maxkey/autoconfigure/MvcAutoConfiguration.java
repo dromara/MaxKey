@@ -28,7 +28,6 @@ import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.persistence.repository.InstitutionsRepository;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
 import org.maxkey.persistence.repository.LoginRepository;
-import org.maxkey.web.SessionListenerAdapter;
 import org.maxkey.web.WebXssRequestFilter;
 import org.maxkey.web.WebInstRequestFilter;
 import org.slf4j.Logger;
@@ -312,16 +311,6 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
         registrationBean.setName("webInstRequestFilter");
         registrationBean.setOrder(4);
         return registrationBean;
-    }
-    
-    @Bean(name = "sessionListenerAdapter")
-    public SessionListenerAdapter sessionListenerAdapter(
-                LoginRepository loginRepository,
-                LoginHistoryRepository loginHistoryRepository
-            ) {
-        SessionListenerAdapter sessionListenerAdapter =
-                new SessionListenerAdapter(loginRepository,loginHistoryRepository);
-        return sessionListenerAdapter;
     }
     
     @Override

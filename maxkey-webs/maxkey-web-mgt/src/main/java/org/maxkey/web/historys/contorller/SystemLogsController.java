@@ -20,7 +20,7 @@ package org.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.authn.CurrentUser;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.HistoryLogs;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
@@ -58,7 +58,7 @@ final static Logger _logger = LoggerFactory.getLogger(SystemLogsController.class
 	 * @param logs
 	 * @return
 	 */
-	@RequestMapping(value={"/systemLogsList/fetch"})
+	@RequestMapping(value={"/systemLogs/fetch"})
 	@ResponseBody
 	public ResponseEntity<?> fetch(@ModelAttribute("historyLog") HistoryLogs historyLog,
 			@CurrentUser UserInfo currentUser){

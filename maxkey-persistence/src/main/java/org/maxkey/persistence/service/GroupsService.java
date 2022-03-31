@@ -80,7 +80,8 @@ public class GroupsService  extends JpaBaseService<Groups> implements Serializab
 	        boolean isDynamicTimeSupport = false;
 	        boolean isBetweenEffectiveTime = false;
 	        if(StringUtils.isNotBlank(dynamicGroup.getResumeTime())
-	                &&StringUtils.isNotBlank(dynamicGroup.getSuspendTime())) {
+	                &&StringUtils.isNotBlank(dynamicGroup.getSuspendTime())
+	                &&!dynamicGroup.getSuspendTime().equals("00:00")) {
 	            LocalTime currentTime = LocalDateTime.now().toLocalTime();
 	            LocalTime resumeTime = LocalTime.parse(dynamicGroup.getResumeTime());
 	            LocalTime suspendTime = LocalTime.parse(dynamicGroup.getSuspendTime());
@@ -100,15 +101,16 @@ public class GroupsService  extends JpaBaseService<Groups> implements Serializab
     	        dynamicGroup.setOrgIdsList("'"+dynamicGroup.getOrgIdsList().replace(",", "','")+"'");
     	    }
     	    String filters = dynamicGroup.getFilters();
-    	    if(StringUtils.filtersSQLInjection(filters.toLowerCase())) {  
-    	        _logger.info("filters include SQL Injection Attack Risk.");
-    	        return;
+    	    if(StringUtils.isNotBlank(filters)) {
+	    		if(StringUtils.filtersSQLInjection(filters.toLowerCase())) {  
+	    			_logger.info("filters include SQL Injection Attack Risk.");
+	    			return;
+	    		}
+	    		filters = filters.replace("&", " AND ");
+	    	    filters = filters.replace("|", " OR ");
+	    	    
+	    	    dynamicGroup.setFilters(filters);
     	    }
-    	    
-    	    filters = filters.replace("&", " AND ");
-    	    filters = filters.replace("|", " OR ");
-    	    
-    	    dynamicGroup.setFilters(filters);
     	    
     	    if(isDynamicTimeSupport) {
     	        if(isBetweenEffectiveTime) {

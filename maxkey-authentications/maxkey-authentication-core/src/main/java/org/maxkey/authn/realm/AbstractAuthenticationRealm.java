@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.entity.Groups;
@@ -38,6 +39,7 @@ import org.maxkey.web.ipregion.IpRegionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -135,9 +137,10 @@ public abstract class AbstractAuthenticationRealm {
         HistoryLogin historyLogin = new HistoryLogin();
         historyLogin.setSessionId(WebContext.genId());
         historyLogin.setSessionStatus(7);
-        if(WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID) != null) {
-            historyLogin.setSessionStatus(1);
-            historyLogin.setSessionId(WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID).toString());
+        Authentication  authentication  = (Authentication ) WebContext.getAttribute(WebConstants.AUTHENTICATION);
+        if(authentication.getPrincipal() instanceof SigninPrincipal) {
+        	  historyLogin.setSessionStatus(1);
+              historyLogin.setSessionId(userInfo.getOnlineTicket());
         }
         
         _logger.debug("user session id is {} . ",historyLogin.getSessionId());
@@ -174,24 +177,23 @@ public abstract class AbstractAuthenticationRealm {
      * @return
      */
     public boolean logout(HttpServletResponse response) {
-        if (isAuthenticated()) {
-            Object sessionIdAttribute = WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID);
-            UserInfo userInfo = WebContext.getUserInfo();
+    	 Authentication  authentication  = (Authentication ) WebContext.getAttribute(WebConstants.AUTHENTICATION);
+    	 
+         if(authentication != null && authentication.getPrincipal() instanceof SigninPrincipal) {
+         	SigninPrincipal signinPrincipal = ((SigninPrincipal) authentication.getPrincipal());
+         	UserInfo userInfo = signinPrincipal.getUserInfo();
             userInfo.setLastLogoffTime(DateUtils.formatDateTime(new Date()));
             
-            if (sessionIdAttribute != null) {
-                remeberMeService.removeRemeberMe(response);
+            remeberMeService.removeRemeberMe(response);
 
-                loginHistoryRepository.logoff(userInfo.getLastLogoffTime(), sessionIdAttribute.toString());
-            }
+            loginHistoryRepository.logoff(userInfo.getLastLogoffTime(), signinPrincipal.getOnlineTicket().getTicketId());
+
             
             loginRepository.updateLastLogoff(userInfo);
             
-            _logger.debug("Session " + WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID) + ", user "
+            _logger.debug("Session " + signinPrincipal.getOnlineTicket().getTicketId() + ", user "
                     + userInfo.getUsername() + " Logout, datetime " + userInfo.getLastLogoffTime() + " .");
-          //remove login user session id
-            WebContext.removeAttribute(WebConstants.CURRENT_USER_SESSION_ID);
-        }
+         }
         return true;
 
     }

@@ -84,7 +84,6 @@ public final class WebContext {
         
         sessionAttributeNameList.add(WebConstants.CURRENT_USER);
         sessionAttributeNameList.add(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE);
-        sessionAttributeNameList.add(WebConstants.CURRENT_USER_SESSION_ID);
         
         sessionAttributeNameList.add(WebConstants.CURRENT_INST);
         
@@ -100,7 +99,6 @@ public final class WebContext {
         
         logoutAttributeNameList.add(WebConstants.CURRENT_USER);
         logoutAttributeNameList.add(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE);
-        logoutAttributeNameList.add(WebConstants.CURRENT_USER_SESSION_ID);
         
         
         logoutAttributeNameList.add(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);

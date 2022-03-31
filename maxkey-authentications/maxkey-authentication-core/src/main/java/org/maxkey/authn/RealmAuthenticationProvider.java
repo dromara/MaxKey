@@ -189,6 +189,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
                 this.applicationConfig.getBaseDomainName(), 
                 WebConstants.ONLINE_TICKET_NAME, 
                 onlineTickitId);
+        userInfo.setOnlineTicket(currentUserSessionId);
         
         SigninPrincipal signinPrincipal = new SigninPrincipal(userInfo);
         //set OnlineTicket
@@ -218,20 +219,14 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         
         onlineTicket.setAuthentication(authenticationToken);
         
+        //store onlineTicket
         this.onlineTicketServices.store(onlineTickitId, onlineTicket);
         
         /*
-         *  put userInfo to current session context
+         *  put Authentication to current session context
          */
-        WebContext.setUserInfo(userInfo);
-        
         WebContext.setAuthentication(authenticationToken);
-        
-        WebContext.setAttribute(WebConstants.CURRENT_USER_SESSION_ID, currentUserSessionId);
-        
-        if(!WebContext.getInst(WebContext.getRequest()).equalsIgnoreCase(userInfo.getInstId())){
-        	//TODO :
-        }
+     
         return authenticationToken;
     }
   

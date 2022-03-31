@@ -26,6 +26,7 @@ import org.maxkey.authn.online.OnlineTicketServiceFactory;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.RemeberMeServiceFactory;
+import org.maxkey.authn.web.SessionListenerAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.configuration.AuthJwkConfig;
 import org.maxkey.constants.ConstsPersistence;
@@ -149,6 +150,16 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         onlineTicketService.setValiditySeconds(timeout);
         _logger.trace("onlineTicket timeout " + timeout);
         return onlineTicketService;
+    }
+    
+    @Bean(name = "sessionListenerAdapter")
+    public SessionListenerAdapter sessionListenerAdapter(
+                LoginRepository loginRepository,
+                LoginHistoryRepository loginHistoryRepository
+            ) {
+        SessionListenerAdapter sessionListenerAdapter =
+                new SessionListenerAdapter(loginRepository,loginHistoryRepository);
+        return sessionListenerAdapter;
     }
     
     @Override

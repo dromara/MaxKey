@@ -20,12 +20,12 @@ package org.maxkey;
 import java.util.List;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
-import org.maxkey.authn.CurrentUserMethodArgumentResolver;
-import org.maxkey.authn.interceptor.PermissionAdapter;
 import org.maxkey.authn.support.jwt.HttpJwtEntryPoint;
 import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.HttpRemeberMeEntryPoint;
+import org.maxkey.authn.web.CurrentUserMethodArgumentResolver;
+import org.maxkey.authn.web.interceptor.PermissionAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.interceptor.HistoryLogsAdapter;
 import org.maxkey.web.interceptor.RestApiPermissionAdapter;
@@ -126,13 +126,19 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/roles/**")
                 .addPathPatterns("/rolemembers/**")
                 .addPathPatterns("/resources/**")
+                
+                .addPathPatterns("/access/**")
+                .addPathPatterns("/access/**/**")
+                
                 .addPathPatterns("/permissions/**")
+                .addPathPatterns("/permissions/**/**")
+                
                 .addPathPatterns("/config/**")
                 .addPathPatterns("/config/**/**")
-                .addPathPatterns("/logs/**")
+                
                 .addPathPatterns("/historys/**")
                 .addPathPatterns("/historys/**/**")
-                .addPathPatterns("/session/**")
+                
                 .addPathPatterns("/socialsprovider/**")
                 .addPathPatterns("/accountsstrategy/**")
                 .addPathPatterns("/institutions/**")
