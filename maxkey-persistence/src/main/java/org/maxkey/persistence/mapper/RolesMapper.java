@@ -23,7 +23,7 @@ package org.maxkey.persistence.mapper;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.entity.RolePermissions;
+import org.maxkey.entity.RolePrivileges;
 import org.maxkey.entity.Roles;
 
 /**
@@ -33,11 +33,11 @@ import org.maxkey.entity.Roles;
 
 public  interface RolesMapper extends IJpaBaseMapper<Roles> {
     
-    public int insertRolePermissions(List<RolePermissions> rolePermissionsList);
+    public int insertRolePrivileges(List<RolePrivileges> rolePermissionsList);
     
-    public int logisticDeleteRolePermissions(List<RolePermissions> rolePermissionsList);
+    public int deleteRolePrivileges(List<RolePrivileges> rolePermissionsList);
         
-    public List<RolePermissions> queryRolePermissions(RolePermissions rolePermissions);
+    public List<RolePrivileges> queryRolePrivileges(RolePrivileges rolePermissions);
 
     public List<Roles> queryDynamicRoles(Roles role);
 }

@@ -29,8 +29,8 @@ import org.maxkey.constants.ConstsStatus;
 import org.maxkey.web.WebContext;
 
 @Entity
-@Table(name = "MXK_ROLE_PERMISSIONS")
-public class RolePermissions  extends JpaBaseEntity implements Serializable {
+@Table(name = "MXK_ROLE_PRIVILEGES")
+public class RolePrivileges  extends JpaBaseEntity implements Serializable {
     private static final long serialVersionUID = -8783585691243853899L;
     
     @Id
@@ -50,10 +50,10 @@ public class RolePermissions  extends JpaBaseEntity implements Serializable {
 
 	private String instName;
 	
-    public RolePermissions() {
+    public RolePrivileges() {
     }
 
-    public RolePermissions(String appId, String roleId, String instId) {
+    public RolePrivileges(String appId, String roleId, String instId) {
         this.appId = appId;
         this.roleId = roleId;
         this.instId = instId;
@@ -65,7 +65,7 @@ public class RolePermissions  extends JpaBaseEntity implements Serializable {
      * @param roleId String
      * @param resourceId String
      */
-    public RolePermissions(String appId, String roleId, String resourceId , String instId) {
+    public RolePrivileges(String appId, String roleId, String resourceId , String instId) {
         this.id = WebContext.genId();
         this.appId = appId;
         this.roleId = roleId;
@@ -136,7 +136,7 @@ public class RolePermissions  extends JpaBaseEntity implements Serializable {
 	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("RolePermissions [id=");
+        builder.append("RolePrivileges [id=");
         builder.append(id);
         builder.append(", appId=");
         builder.append(appId);

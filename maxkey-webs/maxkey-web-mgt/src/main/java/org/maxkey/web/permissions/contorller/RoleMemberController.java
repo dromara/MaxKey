@@ -63,9 +63,9 @@ public class RoleMemberController {
 	
 	@RequestMapping(value = { "/memberInRole" })
 	@ResponseBody
-	public  ResponseEntity<?> memberInRole(@ModelAttribute  RoleMember roleMember) {
+	public  ResponseEntity<?> memberInRole(@ModelAttribute  RoleMember roleMember,@CurrentUser UserInfo currentUser) {
 		_logger.debug("roleMember : "+roleMember);
-		roleMember.setInstId(WebContext.getUserInfo().getInstId());
+		roleMember.setInstId(currentUser.getInstId());
 		if(roleMember.getRoleId()==null||roleMember.getRoleId().equals("")||roleMember.getRoleId().equals("ALL_USER_ROLE")){
 			return new Message<JpaPageResults<RoleMember>>(
 					roleMemberService.queryPageResults("allMemberInRole",roleMember)).buildResponse();
@@ -77,15 +77,15 @@ public class RoleMemberController {
 
 	@RequestMapping(value = { "/memberNotInRole" })
 	@ResponseBody
-	public ResponseEntity<?> memberNotInRole(@ModelAttribute  RoleMember roleMember) {
-		roleMember.setInstId(WebContext.getUserInfo().getInstId());
+	public ResponseEntity<?> memberNotInRole(@ModelAttribute  RoleMember roleMember,@CurrentUser UserInfo currentUser) {
+		roleMember.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<RoleMember>>(
-				roleMemberService.queryPageResults("memberNotInGroup",roleMember)).buildResponse();
+				roleMemberService.queryPageResults("memberNotInRole",roleMember)).buildResponse();
 	}
 	
 	@RequestMapping(value = {"/add"})
 	@ResponseBody
-	public ResponseEntity<?> add(@ModelAttribute RoleMember roleMember) {
+	public ResponseEntity<?> add(@ModelAttribute RoleMember roleMember,@CurrentUser UserInfo currentUser) {
 		if (roleMember == null || roleMember.getRoleId() == null) {
 			return new Message<RoleMember>(Message.FAIL).buildResponse();
 		}
@@ -106,7 +106,7 @@ public class RoleMemberController {
 								arrMemberIds[i], 
 								arrMemberNames[i],
 								"USER",
-								WebContext.getUserInfo().getInstId());
+								currentUser.getInstId());
 				newRoleMember.setId(WebContext.genId());
 				result = roleMemberService.insert(newRoleMember);
 			}

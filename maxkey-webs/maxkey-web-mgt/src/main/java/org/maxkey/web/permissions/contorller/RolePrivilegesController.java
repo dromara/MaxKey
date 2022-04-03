@@ -21,22 +21,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.maxkey.constants.ConstsOperateMessage;
-import org.maxkey.entity.RolePermissions;
+import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.RolePrivileges;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.RolesService;
 import org.maxkey.util.StringUtils;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -47,85 +47,83 @@ public class RolePrivilegesController {
 	@Autowired
     @Qualifier("rolesService")
     RolesService rolesService;
-
-	
-	
-	@RequestMapping(value={"/list"})
-	public ModelAndView resourcesList(){
-		return new ModelAndView("permissions/permissionsList");
-	}
-
 	
 	@ResponseBody
-	@RequestMapping(value={"/savepermissions"})
-	public Message insert(@ModelAttribute("rolePermissions") RolePermissions rolePermissions) {
-		_logger.debug("-save  :" + rolePermissions);
+	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public  ResponseEntity<?> update(
+			@ModelAttribute RolePrivileges rolePrivileges,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("-update  : " + rolePrivileges);
 		//have
-		String instId = WebContext.getUserInfo().getInstId();
-		RolePermissions queryRolePermissions = 
-				new RolePermissions(
-						rolePermissions.getAppId(),
-						rolePermissions.getRoleId(),
-						instId);
-		List<RolePermissions> rolePermissionsedList = rolesService.queryRolePermissions(queryRolePermissions);
+		RolePrivileges queryRolePrivileges = 
+				new RolePrivileges(
+						rolePrivileges.getAppId(),
+						rolePrivileges.getRoleId(),
+						currentUser.getInstId());
+		List<RolePrivileges> roleRolePrivilegesList = rolesService.queryRolePrivileges(queryRolePrivileges);
 		
-		HashMap<String,String >permedMap =new HashMap<String,String >();
-		for(RolePermissions rolePerms : rolePermissionsedList) {
-		    permedMap.put(rolePerms.getUniqueId(),rolePerms.getId());
+		HashMap<String,String >privilegeMap =new HashMap<String,String >();
+		for(RolePrivileges rolePrivilege : roleRolePrivilegesList) {
+			privilegeMap.put(rolePrivilege.getUniqueId(),rolePrivilege.getId());
 		}
 		//Maybe insert
-		ArrayList<RolePermissions> rolePermissionsList =new ArrayList<RolePermissions>();
-		List<String>resourceIds = StringUtils.string2List(rolePermissions.getResourceId(), ",");
-		HashMap<String,String >newPermsMap =new HashMap<String,String >();
+		ArrayList<RolePrivileges> newRolePrivilegesList =new ArrayList<RolePrivileges>();
+		List<String>resourceIds = StringUtils.string2List(rolePrivileges.getResourceId(), ",");
+		HashMap<String,String >newPrivilegesMap =new HashMap<String,String >();
 		for(String resourceId : resourceIds) {
-		    
-		    RolePermissions newRolePermissions=new RolePermissions(
-                    rolePermissions.getAppId(),
-                    rolePermissions.getRoleId(),
+		    RolePrivileges newRolePrivilege=new RolePrivileges(
+		    		rolePrivileges.getAppId(),
+		    		rolePrivileges.getRoleId(),
                     resourceId,
-                    instId);
-		    newRolePermissions.setId(newRolePermissions.generateId());
-		    newPermsMap.put(newRolePermissions.getUniqueId(), rolePermissions.getAppId());
+                    currentUser.getInstId());
+		    newRolePrivilege.setId(newRolePrivilege.generateId());
+		    newPrivilegesMap.put(newRolePrivilege.getUniqueId(), rolePrivileges.getAppId());
 		    
-		    if(!rolePermissions.getAppId().equalsIgnoreCase(resourceId) &&
-		            !permedMap.containsKey(newRolePermissions.getUniqueId())) {
-    		    rolePermissionsList.add(newRolePermissions);
+		    if(!rolePrivileges.getAppId().equalsIgnoreCase(resourceId) &&
+		            !privilegeMap.containsKey(newRolePrivilege.getUniqueId())) {
+		    	newRolePrivilegesList.add(newRolePrivilege);
 		    }
 		}
 		
 		//delete 
-		ArrayList<RolePermissions> deleteRolePermissionsList =new ArrayList<RolePermissions>();
-		for(RolePermissions rolePerms : rolePermissionsedList) {
-           if(!newPermsMap.containsKey(rolePerms.getUniqueId())) {
-        	   rolePerms.setInstId(instId);
-               deleteRolePermissionsList.add(rolePerms);
+		ArrayList<RolePrivileges> deleteRolePrivilegesList =new ArrayList<RolePrivileges>();
+		for(RolePrivileges rolePrivilege : roleRolePrivilegesList) {
+           if(!newPrivilegesMap.containsKey(rolePrivilege.getUniqueId())) {
+        	   rolePrivilege.setInstId(currentUser.getInstId());
+        	   deleteRolePrivilegesList.add(rolePrivilege);
            }
         }
-		if (!deleteRolePermissionsList.isEmpty()) {
-		    rolesService.logisticDeleteRolePermissions(deleteRolePermissionsList);
+		if (!deleteRolePrivilegesList.isEmpty()) {
+			_logger.debug("-remove  : " + deleteRolePrivilegesList);
+		    rolesService.deleteRolePrivileges(deleteRolePrivilegesList);
 		}
 		
-		if (!rolePermissionsList.isEmpty() && rolesService.insertRolePermissions(rolePermissionsList)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
+		if (!newRolePrivilegesList.isEmpty() && rolesService.insertRolePrivileges(newRolePrivilegesList)) {
+			_logger.debug("-insert  : " + newRolePrivilegesList);
+			return new Message<RolePrivileges>(Message.SUCCESS).buildResponse();
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			return new Message<RolePrivileges>(Message.SUCCESS).buildResponse();
 		}
 		
 	}
 	
 	@ResponseBody
-    @RequestMapping(value={"/querypermissions"})
-    public List<RolePermissions> querypermissions(@ModelAttribute("rolePermissions") RolePermissions rolePermissions) {
-        _logger.debug("-querypermissions  :" + rolePermissions);
+    @RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public  ResponseEntity<?> get(
+    		@ModelAttribute RolePrivileges rolePrivileges,
+    		@CurrentUser UserInfo currentUser) {
+        _logger.debug("-get  :" + rolePrivileges);
         //have
-        RolePermissions queryRolePermissions = 
-        		new RolePermissions(
-        				rolePermissions.getAppId(),
-        				rolePermissions.getRoleId(),
-        				WebContext.getUserInfo().getInstId());
-        List<RolePermissions> rolePermissionsedList = rolesService.queryRolePermissions(queryRolePermissions);
-        return rolePermissionsedList;
+        RolePrivileges queryRolePrivilege = 
+        		new RolePrivileges(
+        				rolePrivileges.getAppId(),
+        				rolePrivileges.getRoleId(),
+        				currentUser.getInstId());
+        List<RolePrivileges> rolePrivilegeList = rolesService.queryRolePrivileges(queryRolePrivilege);
+        
+        return new Message<List<RolePrivileges>>(
+        		rolePrivilegeList).buildResponse();
 	}
 
 	

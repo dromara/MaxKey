@@ -20,7 +20,7 @@ package org.maxkey.persistence.service;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.entity.RolePermissions;
+import org.maxkey.entity.RolePrivileges;
 import org.maxkey.entity.Roles;
 import org.maxkey.persistence.mapper.RolesMapper;
 import org.maxkey.util.StringUtils;
@@ -50,16 +50,16 @@ public class RolesService  extends JpaBaseService<Roles>{
 		return (RolesMapper)super.getMapper();
 	}
 	
-	public boolean insertRolePermissions(List<RolePermissions> rolePermissionsList) {
-	    return getMapper().insertRolePermissions(rolePermissionsList)>0;
+	public boolean insertRolePrivileges(List<RolePrivileges> rolePermissionsList) {
+	    return getMapper().insertRolePrivileges(rolePermissionsList)>0;
 	};
     
-	public boolean logisticDeleteRolePermissions(List<RolePermissions> rolePermissionsList) {
-	     return getMapper().logisticDeleteRolePermissions(rolePermissionsList)>=0;
+	public boolean deleteRolePrivileges(List<RolePrivileges> rolePermissionsList) {
+	     return getMapper().deleteRolePrivileges(rolePermissionsList)>=0;
 	 }
 	
-    public List<RolePermissions> queryRolePermissions(RolePermissions rolePermissions){
-        return getMapper().queryRolePermissions(rolePermissions);
+    public List<RolePrivileges> queryRolePrivileges(RolePrivileges rolePermissions){
+        return getMapper().queryRolePrivileges(rolePermissions);
     }
     
     public List<Roles> queryDynamicRoles(Roles dynamicRole){

@@ -56,11 +56,11 @@
     </update>
     
     
-    <select id="queryRolePermissions" parameterType="RolePermissions" resultType="RolePermissions">
+    <select id="queryRolePrivileges" parameterType="RolePrivileges" resultType="RolePrivileges">
         select
             *
         from
-            mxk_role_permissions
+            mxk_role_privileges
         where   instid   =   #{instId} 
             and status   = 1
        <if test="id != null and id != ''">
@@ -75,8 +75,8 @@
         
     </select>
     
-    <update id="logisticDeleteRolePermissions" parameterType="java.util.List">
-        update mxk_role_permissions 
+    <update id="deleteRolePrivileges" parameterType="java.util.List">
+        update mxk_role_privileges 
         set status = 9 
         where 1 = 1 and 
             <foreach item="item" collection="list" open="(" separator="or" close=")">
@@ -84,8 +84,8 @@
             </foreach>
     </update>
     
-    <insert id="insertRolePermissions"  parameterType="java.util.List">
-	    insert into mxk_role_permissions ( id,appid,roleid,resourceid,status,instid) 
+    <insert id="insertRolePrivileges"  parameterType="java.util.List">
+	    insert into mxk_role_privileges ( id,appid,roleid,resourceid,status,instid) 
 	    values 
 	    <foreach collection="list" item="item" index="index" separator=",">
 	        (#{item.id},#{item.appId},#{item.roleId},#{item.resourceId},#{item.status},#{item.instId})
