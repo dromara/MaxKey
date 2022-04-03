@@ -17,8 +17,6 @@
 
 package org.maxkey.web.component;
 
-import java.util.HashMap;
-
 /**
  * 数控件的节点 使用HashMap<String,Object> attr存储节点数据.
  * 
@@ -26,71 +24,119 @@ import java.util.HashMap;
  *
  */
 public class TreeNode {
+	String key;
+	String code;
+	String title;
+	
+	String codePath;
+	String namePath;
+	
+	String parentKey;
+	String parentCode;
+	String parentTitle;
+	
+	
+	boolean expanded;
+	boolean isLeaf;
+	
     // TreeNode
-    HashMap<String, Object> attr = new HashMap<String, Object>();
+    Object attrs;
 
     public TreeNode() {
         super();
     }
 
-    public TreeNode(String id, String name) {
-        attr.put("id", id);
-        attr.put("name", name);
+    public TreeNode(String key, String title) {
+        this.key = key;
+        this.title = title;
     }
 
-    public TreeNode(String id, String name, boolean hasChild) {
-        attr.put("id", id);
-        attr.put("name", name);
-        attr.put("isParent", hasChild);
-    }
+	public String getKey() {
+		return key;
+	}
 
-    public TreeNode(String id, String name, String pId) {
-        attr.put("id", id);
-        attr.put("name", name);
-        attr.put("pId", pId);
-    }
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    public TreeNode(String id, String name, String pId, String url) {
-        attr.put("id", id);
-        attr.put("name", name);
-        attr.put("pId", pId);
-        attr.put("url", url);
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public TreeNode(String id, String name, String pId, String url, String target) {
-        attr.put("id", id);
-        attr.put("name", name);
-        attr.put("pId", pId);
-        attr.put("url", url);
-        attr.put("target", target);
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public void setChecked() {
-        attr.put("checked", true);
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setHasChild() {
-        attr.put("isParent", true);
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setPId(String pId) {
-        attr.put("pId", pId);
-    }
+	public String getCodePath() {
+		return codePath;
+	}
 
-    public void setIcon(String icon) {
-        attr.put("icon", icon);
-    }
+	public void setCodePath(String codePath) {
+		this.codePath = codePath;
+	}
 
-    public HashMap<String, Object> getAttr() {
-        return attr;
-    }
+	public String getNamePath() {
+		return namePath;
+	}
 
-    public void setAttr(String attrName, Object value) {
-        this.attr.put(attrName, value);
-    }
+	public void setNamePath(String namePath) {
+		this.namePath = namePath;
+	}
 
-    public void setAttr(HashMap<String, Object> attr) {
-        this.attr = attr;
-    }
+	public String getParentKey() {
+		return parentKey;
+	}
+
+	public void setParentKey(String parentKey) {
+		this.parentKey = parentKey;
+	}
+
+	public String getParentCode() {
+		return parentCode;
+	}
+
+	public void setParentCode(String parentCode) {
+		this.parentCode = parentCode;
+	}
+
+	public String getParentTitle() {
+		return parentTitle;
+	}
+
+	public void setParentTitle(String parentTitle) {
+		this.parentTitle = parentTitle;
+	}
+
+	public boolean isExpanded() {
+		return expanded;
+	}
+
+	public void setExpanded(boolean expanded) {
+		this.expanded = expanded;
+	}
+
+	public boolean getIsLeaf() {
+		return isLeaf;
+	}
+
+	public void setLeaf(boolean isLeaf) {
+		this.isLeaf = isLeaf;
+	}
+
+	public Object getAttrs() {
+		return attrs;
+	}
+
+	public void setAttrs(Object attrs) {
+		this.attrs = attrs;
+	}
 
 }

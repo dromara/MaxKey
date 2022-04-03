@@ -117,15 +117,9 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(permissionAdapter)
                 .addPathPatterns("/dashboard/**")
                 .addPathPatterns("/orgs/**")
-                .addPathPatterns("/userinfo/**")
+                .addPathPatterns("/users/**")
                 .addPathPatterns("/apps/**")
-                .addPathPatterns("/app/accounts/**")
-                .addPathPatterns("/groups/**")
-                .addPathPatterns("/groupMember/**")
-                .addPathPatterns("/groupPrivileges/**")
-                .addPathPatterns("/roles/**")
-                .addPathPatterns("/rolemembers/**")
-                .addPathPatterns("/resources/**")
+                .addPathPatterns("/accounts/**")
                 
                 .addPathPatterns("/access/**")
                 .addPathPatterns("/access/**/**")
@@ -139,11 +133,8 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/historys/**")
                 .addPathPatterns("/historys/**/**")
                 
-                .addPathPatterns("/socialsprovider/**")
-                .addPathPatterns("/accountsstrategy/**")
                 .addPathPatterns("/institutions/**")
                 .addPathPatterns("/localization/**")
-                .addPathPatterns("/synchronizers/**")
                 
                 ;
         

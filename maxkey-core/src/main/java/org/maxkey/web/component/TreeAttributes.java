@@ -13,46 +13,56 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 package org.maxkey.web.component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
- * 数控件节点列表
- * 列表的元素为HashMap<String,Object>
+ * 数控件节点列表 列表的元素为TreeNode
  * 
  * @author Crystal.Sea
  *
  */
-public class TreeNodeList {
-	
-	ArrayList<HashMap<String,Object>> treeNodeList=new ArrayList<HashMap<String,Object>>();
+public class TreeAttributes {
 
-	/**
-	 * 获取列表
-	 * @return treeNodeList
-	 */
-	public ArrayList<HashMap<String, Object>> getTreeNodeList() {
-		return treeNodeList;
+	TreeNode rootNode;
+
+	int nodeCount;
+
+	ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
+
+	public ArrayList<TreeNode> getNodes() {
+		return nodes;
 	}
 
-	/**
-	 * 设置节点列表
-	 * @param treeNodeList
-	 */
-	public void setTreeNodeList(ArrayList<HashMap<String, Object>> treeNodeList) {
-		this.treeNodeList = treeNodeList;
+	public void setNodes(ArrayList<TreeNode> nodes) {
+		this.nodes = nodes;
+	}
+
+	public TreeNode getRootNode() {
+		return rootNode;
+	}
+
+	public void setRootNode(TreeNode rootNode) {
+		this.rootNode = rootNode;
+	}
+
+	public int getNodeCount() {
+		return nodeCount;
+	}
+
+	public void setNodeCount(int nodeCount) {
+		this.nodeCount = nodeCount;
 	}
 
 	/**
 	 * 新增节点到列表
+	 * 
 	 * @param treeNode
 	 */
-	public void addTreeNode(HashMap<String, Object> treeNode) {
-		this.treeNodeList .add(treeNode);
+	public void addNode(TreeNode treeNode) {
+		this.nodes.add(treeNode);
 	}
-	
+
 }

@@ -19,24 +19,24 @@ package org.maxkey.web.apps.contorller;
 
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.entity.ExtraAttr;
 import org.maxkey.entity.ExtraAttrs;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -53,68 +53,82 @@ import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 public class ApplicationsController extends BaseAppContorller {
 	final static Logger _logger = LoggerFactory.getLogger(ApplicationsController.class);
 	
-	@RequestMapping(value={"/list"})
-	public ModelAndView applicationsList(){
-		return new ModelAndView("apps/appsList");
-	}
-	
-	@RequestMapping(value={"/select"})
-	public ModelAndView select(@RequestParam(name="accountMgmt",required=false) String accountMgmt){
-		ModelAndView modelAndView=new ModelAndView("apps/selectAppsList");
-		if(accountMgmt != null) {
-			modelAndView.addObject("accountMgmt", accountMgmt);
-		}else {
-			modelAndView.addObject("accountMgmt", 3);
-		}
-		return modelAndView;
-	}
-	
-	
-	@RequestMapping(value = { "/grid" })
+	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public JpaPageResults<Apps> queryDataGrid(@ModelAttribute("applications") Apps applications) {
-		applications.setInstId(WebContext.getUserInfo().getInstId());
-		JpaPageResults<Apps> apps=appsService.queryPageResults(applications);
-		if(apps!=null&&apps.getRows()!=null){
-			for (Apps app : apps.getRows()){
-				app.transIconBase64();
-			}
+	public ResponseEntity<?> fetch(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
+		apps.setInstId(currentUser.getInstId());
+		JpaPageResults<Apps> appsList =appsService.queryPageResults(apps);
+		for (Apps app : appsList.getRows()){
+			app.transIconBase64();
 		}
-		return apps;
+		_logger.debug("List "+appsList);
+		return new Message<JpaPageResults<Apps>>(appsList).buildResponse();
 	}
-	
-	@RequestMapping(value = { "/forwardAdd" })
-	public ModelAndView forwardAdd() {
-		return new ModelAndView("apps/appAdd");
-	}
-	
-	
+
 	@ResponseBody
-	@RequestMapping(value={"/add"})
-	public Message insert(@ModelAttribute("application") Apps application) {
-		_logger.debug("-Add  :" + application);
-		
-		transform(application);
-		application.setInstId(WebContext.getUserInfo().getInstId());
-		if (appsService.insert(application)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
-			
+	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> query(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-query  :" + apps);
+		if (appsService.load(apps)!=null) {
+			 return new Message<Apps>(Message.SUCCESS).buildResponse();
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			 return new Message<Apps>(Message.SUCCESS).buildResponse();
 		}
-		
 	}
+	
+	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> get(@PathVariable("id") String id) {
+		Apps apps = appsService.get(id);
+		return new Message<Apps>(apps).buildResponse();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> insert(@RequestBody Apps apps,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-Add  :" + apps);
+		transform(apps);
+		apps.setInstId(currentUser.getInstId());
+		if (appsService.insert(apps)) {
+			return new Message<Apps>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<Apps>(Message.FAIL).buildResponse();
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> update(@RequestBody  Apps apps,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-update  :" + apps);
+		transform(apps);
+		apps.setInstId(currentUser.getInstId());
+		if (appsService.update(apps)) {
+		    return new Message<Apps>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<Apps>(Message.FAIL).buildResponse();
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-delete  ids : {} " , ids);
+		if (appsService.deleteBatch(ids)) {
+			 return new Message<Apps>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<Apps>(Message.FAIL).buildResponse();
+		}
+	}
+	
 	
 	@RequestMapping(value = { "/forwardAppsExtendAttr/{id}" })
-	public ModelAndView forwardExtendAttr(@PathVariable("id") String id) {
-		ModelAndView modelAndView=new ModelAndView("apps/appsExtendAttr");
-		modelAndView.addObject("model",appsService.get(id));
-		return modelAndView;
+	public ResponseEntity<?> forwardExtendAttr(@PathVariable("id") String id) {
+		Apps apps = appsService.get(id);
+		return new Message<Apps>(apps).buildResponse();
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = { "/updateExtendAttr" })
-	public Message updateExtendAttr(@ModelAttribute("application") Apps application,@ModelAttribute("extraAttrs") ExtraAttr extraAttr) {
+	public ResponseEntity<?> updateExtendAttr(@ModelAttribute("application") Apps application,@ModelAttribute("extraAttrs") ExtraAttr extraAttr) {
 		if(extraAttr.getAttr()!=null){
 			String []attributes=extraAttr.getAttr().split(",");
 			String []attributeType=extraAttr.getType().split(",");
@@ -127,67 +141,16 @@ public class ApplicationsController extends BaseAppContorller {
 		}
 		
 		if (appsService.updateExtendAttr(application)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
-			
+			return new Message<Apps>(Message.SUCCESS).buildResponse();
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
+			return new Message<Apps>(Message.FAIL).buildResponse();
 		}
 	}
 	
-	/**
-	 * query
-	 * @param application
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value={"/query"}) 
-	public Message query(@ModelAttribute("application") Apps application) {
-		_logger.debug("-query  :" + application);
-		if (appsService.load(application)!=null) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
-			
-		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
-		}
-		
-	}
-	
-	/**
-	 * modify
-	 * @param application
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value={"/update"})  
-	public Message update(@ModelAttribute("application") Apps application) {
-		_logger.debug("-update  application :" + application);
-		application.setInstId(WebContext.getUserInfo().getInstId());
-		if (appsService.update(application)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
-			
-		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
-		}
-		
-	}
-	
-
-	@ResponseBody
-	@RequestMapping(value={"/delete"})
-	public Message delete(@ModelAttribute("application") Apps application) {
-		_logger.debug("-delete  application :" + application);
-		if (appsService.deleteBatch(application.getId())) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
-			
-		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
-		}
-		
-	}
 	
 	@ResponseBody
 	@RequestMapping(value = { "/generate/secret/{type}" })
-	public String generateSecret(@PathVariable("type") String type,@RequestParam(name="id",required=false) String id) throws JOSEException {
+	public ResponseEntity<?> generateSecret(@PathVariable("type") String type,@RequestParam(name="id",required=false) String id) throws JOSEException {
 		String secret="";
 		type=type.toLowerCase();
 		if(type.equals("des")){
@@ -242,7 +205,7 @@ public class ApplicationsController extends BaseAppContorller {
 			secret=ReciprocalUtils.generateKey("");
 		}
 		
-		return secret;
+		return new Message<Object>(Message.SUCCESS,(Object)secret).buildResponse();
 	}
 	
 	

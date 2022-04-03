@@ -18,95 +18,78 @@
 package org.maxkey.web.permissions.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.RoleMember;
-import org.maxkey.entity.Roles;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.RoleMemberService;
 import org.maxkey.persistence.service.RolesService;
 import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping(value={"/rolemembers"})
+@RequestMapping(value={"/permissions/rolemembers"})
 public class RoleMemberController {
 	final static Logger _logger = LoggerFactory.getLogger(RoleMemberController.class);
 	
 	@Autowired
-	@Qualifier("roleMemberService")
 	RoleMemberService roleMemberService;
 
 	@Autowired
-	@Qualifier("rolesService")
 	RolesService rolesService;
 	
-	
-	
-	@RequestMapping(value={"/list"})
-	public ModelAndView groupsList(){
-		return new ModelAndView("roleusers/roleUsersList");
-	}
-	
-	
-	@RequestMapping(value = { "/grid" })
+	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public JpaPageResults<RoleMember> grid(@ModelAttribute("roleMember") RoleMember roleMember) {
+	public ResponseEntity<?> fetch(
+			@ModelAttribute("roleMember") RoleMember roleMember,
+			@CurrentUser UserInfo currentUser) {
 		if(roleMember.getRoleId()==null||roleMember.getRoleId().equals("")){
 			return null;
 		}
-		roleMember.setInstId(WebContext.getUserInfo().getInstId());
-		return roleMemberService.queryPageResults(roleMember);
+		roleMember.setInstId(currentUser.getInstId());
+		return new Message<JpaPageResults<RoleMember>>(
+				roleMemberService.queryPageResults(roleMember)).buildResponse();
 	}
 	
-	
-	@RequestMapping(value = { "/queryMemberInRole" })
+	@RequestMapping(value = { "/memberInRole" })
 	@ResponseBody
-	public JpaPageResults<RoleMember> queryMemberInRole(@ModelAttribute("roleMember")  RoleMember roleMember) {
+	public  ResponseEntity<?> memberInRole(@ModelAttribute  RoleMember roleMember) {
 		_logger.debug("roleMember : "+roleMember);
 		roleMember.setInstId(WebContext.getUserInfo().getInstId());
 		if(roleMember.getRoleId()==null||roleMember.getRoleId().equals("")||roleMember.getRoleId().equals("ALL_USER_ROLE")){
-			return roleMemberService.queryPageResults("allMemberInRole",roleMember);
+			return new Message<JpaPageResults<RoleMember>>(
+					roleMemberService.queryPageResults("allMemberInRole",roleMember)).buildResponse();
 		}else{
-			return roleMemberService.queryPageResults("memberInRole",roleMember);
+			return new Message<JpaPageResults<RoleMember>>(
+					roleMemberService.queryPageResults("memberInRole",roleMember)).buildResponse();
 		}
 	}
-	
-	
-	@RequestMapping(value={"/addRoleAppsList/{roleId}"})
-	public ModelAndView addGroupAppsList(@PathVariable("roleId") String roleId){
-		ModelAndView modelAndView=new ModelAndView("roleusers/addRoleUsersList");
-		Roles role=rolesService.get(roleId);
-		modelAndView.addObject("role", role);
-		return modelAndView;
-	}
-	
-	@RequestMapping(value = { "/queryMemberNotInRole" })
+
+	@RequestMapping(value = { "/memberNotInRole" })
 	@ResponseBody
-	public JpaPageResults<RoleMember> queryMemberNotInGroupGrid(@ModelAttribute("roleMember")  RoleMember roleMember) {
+	public ResponseEntity<?> memberNotInRole(@ModelAttribute  RoleMember roleMember) {
 		roleMember.setInstId(WebContext.getUserInfo().getInstId());
-		return roleMemberService.queryPageResults("memberNotInRole",roleMember);
+		return new Message<JpaPageResults<RoleMember>>(
+				roleMemberService.queryPageResults("memberNotInGroup",roleMember)).buildResponse();
 	}
 	
-	
-	@RequestMapping(value = {"/insert"})
+	@RequestMapping(value = {"/add"})
 	@ResponseBody
-	public Message insertRoleUsers(@ModelAttribute("roleMember")  RoleMember roleMember) {
+	public ResponseEntity<?> add(@ModelAttribute RoleMember roleMember) {
 		if (roleMember == null || roleMember.getRoleId() == null) {
-			return  new Message("传入参数为空",MessageType.error);
+			return new Message<RoleMember>(Message.FAIL).buildResponse();
 		}
 		String groupId = roleMember.getRoleId();
-		
 		
 		boolean result = true;
 		String memberIds = roleMember.getMemberId();
@@ -127,26 +110,21 @@ public class RoleMemberController {
 				newRoleMember.setId(WebContext.genId());
 				result = roleMemberService.insert(newRoleMember);
 			}
-			if(!result) {
-				return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
+			if(result) {
+				return new Message<RoleMember>(Message.SUCCESS).buildResponse();
 			}
-			
 		}
-		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.info);
+		return new Message<RoleMember>(Message.FAIL).buildResponse();
 	}
 	
-	@RequestMapping(value = {"/delete"})
 	@ResponseBody
-	public Message deleteGroupMember(@ModelAttribute("roleMember")  RoleMember roleMember) {
-		_logger.debug("roleMember : "+roleMember);
-		
-		if (roleMember == null || roleMember.getId() == null) {
-			return  new Message("传入参数为空",MessageType.error);
+	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-delete ids : {}" , ids);
+		if (roleMemberService.deleteBatch(ids)) {
+			 return new Message<RoleMember>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<RoleMember>(Message.FAIL).buildResponse();
 		}
-		
-		if(roleMemberService.deleteBatch(roleMember.getId())) {
-		    return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.info);
-		}
-		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
 	}
 }

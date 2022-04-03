@@ -14,28 +14,26 @@
  * limitations under the License.
  */
  
-
 package org.maxkey.web.access.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.GroupPrivileges;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.GroupPrivilegesService;
 import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 
 @Controller
 @RequestMapping(value={"/access/privileges"})
@@ -43,100 +41,78 @@ public class GroupPrivilegesController {
 	final static Logger _logger = LoggerFactory.getLogger(GroupPrivilegesController.class);
 	
 	@Autowired
-	@Qualifier("groupPrivilegesService")
 	GroupPrivilegesService groupPrivilegesService;
 
-	
-	@RequestMapping(value={"/list"})
-	public ModelAndView groupsList(){
-		return new ModelAndView("groupapp/groupAppsList");
-	}
-	
-	@RequestMapping(value = { "/queryAppsInGroup" })
+	@RequestMapping(value = { "/appsInGroup" })
 	@ResponseBody
-	public JpaPageResults<GroupPrivileges> queryAppsInGroup(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
-		
+	public ResponseEntity<?> appsInGroup(
+			@ModelAttribute GroupPrivileges groupPrivilege,
+			@CurrentUser UserInfo currentUser) {
 		JpaPageResults<GroupPrivileges> groupPrivileges;
-		groupApp.setInstId(WebContext.getUserInfo().getInstId());
-		groupPrivileges= groupPrivilegesService.queryPageResults("appsInGroup",groupApp);
+		groupPrivilege.setInstId(currentUser.getInstId());
+		groupPrivileges= groupPrivilegesService.queryPageResults("appsInGroup",groupPrivilege);
 
 		if(groupPrivileges!=null&&groupPrivileges.getRows()!=null){
 			for (Apps app : groupPrivileges.getRows()){
 				app.transIconBase64();
 			}
 		}
-		return groupPrivileges;
-
+		return new Message<JpaPageResults<GroupPrivileges>>(Message.FAIL,groupPrivileges).buildResponse();
 	}
 	
-	@RequestMapping(value={"/addGroupAppsList/{groupId}"})
-	public ModelAndView appsNotInGroupList(@PathVariable("groupId") String groupId){
-		ModelAndView modelAndView=new ModelAndView("groupapp/addGroupAppsList");
-		modelAndView.addObject("groupId", groupId);
-		return modelAndView;
-	}
-	
-	
-	@RequestMapping(value = { "/queryAppsNotInGroup" })
+	@RequestMapping(value = { "/appsNotInGroup" })
 	@ResponseBody
-	public JpaPageResults<GroupPrivileges> queryAppsNotInGroup(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
+	public ResponseEntity<?> appsNotInGroup(
+				@ModelAttribute GroupPrivileges groupPrivilege,
+				@CurrentUser UserInfo currentUser) {
 		JpaPageResults<GroupPrivileges> groupPrivileges;
-		groupApp.setInstId(WebContext.getUserInfo().getInstId());
-		groupPrivileges= groupPrivilegesService.queryPageResults("appsNotInGroup",groupApp);
+		groupPrivilege.setInstId(currentUser.getInstId());
+		groupPrivileges= groupPrivilegesService.queryPageResults("appsNotInGroup",groupPrivilege);
 
 		if(groupPrivileges!=null&&groupPrivileges.getRows()!=null){
 			for (Apps app : groupPrivileges.getRows()){
 				app.transIconBase64();
 			}
 		}
-		return groupPrivileges;
-
+		return new Message<JpaPageResults<GroupPrivileges>>(Message.FAIL,groupPrivileges).buildResponse();
 	}
 
-	
-	@RequestMapping(value = {"/insert"})
+	@RequestMapping(value = {"/add"})
 	@ResponseBody
-	public Message insertGroupApp(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
-		if (groupApp == null || groupApp.getGroupId() == null) {
-			return  new Message("传入参数为空",MessageType.error);
+	public ResponseEntity<?> insertGroupApp(
+				@ModelAttribute GroupPrivileges groupPrivileges,
+				@CurrentUser UserInfo currentUser) {
+		if (groupPrivileges == null || groupPrivileges.getGroupId() == null) {
+			return new Message<GroupPrivileges>(Message.FAIL).buildResponse();
 		}
-		String groupId = groupApp.getGroupId();
-		
+		String groupId = groupPrivileges.getGroupId();
 		
 		boolean result = true;
-		String appIds = groupApp.getAppId();
+		String appIds = groupPrivileges.getAppId();
 		if (appIds != null) {
 			String[] arrAppIds = appIds.split(",");
-			
 			for (int i = 0; i < arrAppIds.length; i++) {
-				GroupPrivileges newGroupApp = 
-						new GroupPrivileges(groupId, arrAppIds[i],WebContext.getUserInfo().getInstId());
-				newGroupApp.setId(WebContext.genId());
-				result = groupPrivilegesService.insert(newGroupApp);
+				GroupPrivileges newGroupPrivilege = 
+						new GroupPrivileges(groupId, arrAppIds[i],currentUser.getInstId());
+				newGroupPrivilege.setId(WebContext.genId());
+				result = groupPrivilegesService.insert(newGroupPrivilege);
 			}
-			if(!result) {
-				return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
+			if(result) {
+				return new Message<GroupPrivileges>(Message.SUCCESS).buildResponse();
 			}
-			
 		}
-		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.info);
+		return new Message<GroupPrivileges>(Message.FAIL).buildResponse();
 	}
 	
-	@RequestMapping(value = {"/delete"})
 	@ResponseBody
-	public Message deleteGroupApp(@ModelAttribute("groupApp") GroupPrivileges groupApp) {
-		if (groupApp == null || groupApp.getId() == null) {
-			return  new Message("传入参数为空",MessageType.error);
+	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-delete ids : {}" , ids);
+		if (groupPrivilegesService.deleteBatch(ids)) {
+			 return new Message<GroupPrivileges>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<GroupPrivileges>(Message.FAIL).buildResponse();
 		}
-	
-		if(groupPrivilegesService.deleteBatch(groupApp.getId())) {
-		    return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.info);
-		}
-		
-		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
 	}
-	
-	
-
 
 }

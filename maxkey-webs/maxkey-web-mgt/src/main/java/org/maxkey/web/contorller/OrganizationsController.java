@@ -20,7 +20,6 @@ package org.maxkey.web.contorller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -29,30 +28,29 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.ExcelImport;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.Organizations;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.OrganizationsService;
 import org.maxkey.util.ExcelUtils;
 import org.maxkey.web.WebContext;
+import org.maxkey.web.component.TreeAttributes;
 import org.maxkey.web.component.TreeNode;
-import org.maxkey.web.component.TreeNodeList;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageScope;
-import org.maxkey.web.message.MessageType;
-import org.maxkey.web.message.OperateType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.google.common.collect.Lists;
 
 
@@ -61,132 +59,109 @@ import com.google.common.collect.Lists;
 public class OrganizationsController {
   static final Logger _logger = LoggerFactory.getLogger(OrganizationsController.class);
 
-  @Autowired
-  OrganizationsService organizationsService;
+	@Autowired
+	OrganizationsService organizationsService;
 
-  @ResponseBody
-  @RequestMapping({"/tree"})
-  public List<HashMap<String, Object>> organizationsTree(@RequestParam(value = "id", required = false) String id) {
-    _logger.debug("organizationsTree id :" + id);
-    Organizations queryOrg = new Organizations();
-    queryOrg.setInstId(WebContext.getUserInfo().getInstId());
-    List<Organizations> organizationsList = this.organizationsService.queryOrgs(queryOrg);
-    TreeNodeList treeNodeList = new TreeNodeList();
-    
-    for (Organizations org : organizationsList) {
-      TreeNode treeNode = new TreeNode(org.getId(), org.getName());
-      if (org.getHasChild() != null && org.getHasChild().startsWith("Y")) {
-        treeNode.setHasChild();
-      }
-      
-      treeNode.setAttr("data", org);
-      treeNode.setPId(org.getParentId());
-      if (org.getId().equals("1")) {
-        treeNode.setAttr("open", Boolean.valueOf(true));
-      } else {
-        treeNode.setAttr("open", Boolean.valueOf(false));
-      } 
-      treeNodeList.addTreeNode(treeNode.getAttr());
-    } 
-
-    
-    return treeNodeList.getTreeNodeList();
-  }
-
-	@RequestMapping({ "/list" })
-	public ModelAndView orgsTreeList() {
-		return new ModelAndView("orgs/orgsList");
-	}
-
-	@RequestMapping(value = { "/pageresults" })
+	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public JpaPageResults<Organizations> pageResults(@ModelAttribute("orgs") Organizations orgs) {
-		orgs.setInstId(WebContext.getUserInfo().getInstId());
-		return organizationsService.queryPageResults(orgs);
-
+	public ResponseEntity<?> fetch(@ModelAttribute Organizations org,@CurrentUser UserInfo currentUser) {
+		_logger.debug("fetch {}" , org);
+		org.setInstId(currentUser.getInstId());
+		return new Message<JpaPageResults<Organizations>>(
+				organizationsService.queryPageResults(org)).buildResponse();
 	}
-
-  @RequestMapping({"/orgsSelect/{deptId}/{department}"})
-  public ModelAndView orgsSelect(@PathVariable("deptId") String deptId, @PathVariable("department") String department) {
-    ModelAndView modelAndView = new ModelAndView("orgs/orgsSelect");
-    modelAndView.addObject("deptId", deptId);
-    modelAndView.addObject("department", department);
-    return modelAndView;
-  }
-
-	@RequestMapping(value = { "/forwardAdd" })
-	public ModelAndView forwardAdd(@ModelAttribute("org") Organizations org) {
-		ModelAndView modelAndView=new ModelAndView("/orgs/orgsAdd");
-		org =organizationsService.get(org.getId());
-		modelAndView.addObject("model",org);
-		return modelAndView;
-	}
-
-  @ResponseBody
-  @RequestMapping({"/add"})
-  public Message insert(@ModelAttribute("org") Organizations org) {
-    _logger.debug("-Add  :" + org);
-    if (null == org.getId() || org.getId().equals("")) {
-    	org.generateId();
-    }
-    
-    org.setInstId(WebContext.getUserInfo().getInstId());
-    if (this.organizationsService.insert(org)) {
-      return new Message(WebContext.getI18nValue("message.action.insert.success"), MessageType.success);
-    }
-    
-    return new Message(WebContext.getI18nValue("message.action.insert.success"), MessageType.error);
-  }
 
 	@ResponseBody
-	@RequestMapping({"/query"})
-	public Message query(@ModelAttribute("org") Organizations org) {
-		_logger.debug("-query  :" + org);
-		org.setInstId(WebContext.getUserInfo().getInstId());
-		if (this.organizationsService.load(org) != null) {
-			return new Message(WebContext.getI18nValue("message.action.insert.success"), MessageType.success);
+	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> query(@ModelAttribute Organizations org,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-query  {}" , org);
+		org.setInstId(currentUser.getInstId());
+		List<Organizations>  orgList = organizationsService.query(org);
+		if (orgList != null) {
+			 return new Message<List<Organizations>>(Message.SUCCESS,orgList).buildResponse();
+		} else {
+			 return new Message<List<Organizations>>(Message.FAIL).buildResponse();
 		}
-    
-    	return new Message(WebContext.getI18nValue("message.action.insert.error"), MessageType.error);
 	}
-
-	@RequestMapping(value = { "/forwardUpdate/{id}" })
-	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
-		ModelAndView modelAndView=new ModelAndView("/orgs/orgsUpdate");
-		Organizations org =organizationsService.get(id);
-		
-		modelAndView.addObject("model",org);
-		return modelAndView;
+	
+	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> get(@PathVariable("id") String id) {
+		Organizations org=organizationsService.get(id);
+		return new Message<Organizations>(org).buildResponse();
 	}
-
+	
 	@ResponseBody
-	@RequestMapping({"/update"})
-	public Message update(@ModelAttribute("org") Organizations org) {
-		_logger.debug("-update  organization :" + org);
-		org.setInstId(WebContext.getUserInfo().getInstId());
-    	if (this.organizationsService.update(org)) {
-    		return new Message(WebContext.getI18nValue("message.action.update.success"), MessageType.success);
-    	}
-    
-    	return new Message(WebContext.getI18nValue("message.action.update.error"), MessageType.error);
+	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> insert(@RequestBody Organizations org,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-Add  :" + org);
+		org.setInstId(currentUser.getInstId());
+		if (organizationsService.insert(org)) {
+			return new Message<Organizations>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<Organizations>(Message.FAIL).buildResponse();
+		}
 	}
-
+	
 	@ResponseBody
-	@RequestMapping({"/delete"})
-	public Message delete(@ModelAttribute("org") Organizations org) {
-		_logger.debug("-delete  organization :" + org);
-    	if (this.organizationsService.deleteBatch(org.getId())) {
-    		return new Message(WebContext.getI18nValue("message.action.delete.success"), MessageType.success);
-    	}
-    
-    	return new Message(WebContext.getI18nValue("message.action.delete.success"), MessageType.error);
+	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> update(@RequestBody  Organizations org,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-update  :" + org);
+		org.setInstId(currentUser.getInstId());
+		if (organizationsService.update(org)) {
+		    return new Message<Organizations>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<Organizations>(Message.FAIL).buildResponse();
+		}
 	}
-
-  @RequestMapping({"/orgUsersList"})
-  public ModelAndView orgUsersList() { return new ModelAndView("orgs/orgUsersList"); }
+	
+	@ResponseBody
+	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-delete  ids : {} " , ids);
+		if (organizationsService.deleteBatch(ids)) {
+			 return new Message<Organizations>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<Organizations>(Message.FAIL).buildResponse();
+		}
+	}
+  
+  
+	@ResponseBody
+	@RequestMapping(value={"/tree"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> tree(@ModelAttribute Organizations organization,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-query  {}" , organization);
+		organization.setInstId(currentUser.getInstId());
+		List<Organizations>  orgList = organizationsService.query(organization);
+		if (orgList != null) {
+			TreeAttributes treeAttributes = new TreeAttributes();
+			int nodeCount = 0;
+			for (Organizations org : orgList) {
+				TreeNode treeNode = new TreeNode(org.getId(),org.getName());
+				treeNode.setCode(org.getCode());
+				treeNode.setCodePath(org.getCodePath());
+				treeNode.setNamePath(org.getNamePath());
+				treeNode.setParentKey(org.getParentId());
+				treeNode.setParentTitle(org.getParentName());
+				treeNode.setParentCode(org.getParentCode());
+				treeNode.setAttrs(org);
+				treeNode.setLeaf(true);
+				treeAttributes.addNode(treeNode);
+				nodeCount ++;
+				if(org.getId().equalsIgnoreCase(currentUser.getInstId())) {
+					treeNode.setExpanded(true);
+					treeNode.setLeaf(false);
+					treeAttributes.setRootNode(treeNode);
+				}
+			}
+			treeAttributes.setNodeCount(nodeCount);
+			 return new Message<TreeAttributes>(Message.SUCCESS,treeAttributes).buildResponse();
+		} else {
+			 return new Message<TreeAttributes>(Message.FAIL).buildResponse();
+		}
+	}
 
   @RequestMapping(value = "/import")
-  public ModelAndView importing(@ModelAttribute("excelImportFile")ExcelImport excelImportFile)  {
+  public ResponseEntity<?> importingOrganizations(@ModelAttribute("excelImportFile")ExcelImport excelImportFile)  {
       if (excelImportFile.isExcelNotEmpty() ) {
         try {
             List<Organizations> orgsList = Lists.newArrayList();
@@ -209,9 +184,9 @@ public class OrganizationsController {
             if(!CollectionUtils.isEmpty(orgsList)){
                 orgsList = orgsList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getId()))), ArrayList::new));
                 if(organizationsService.insertBatch(orgsList)) {
-		        	new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS), null, MessageType.success, OperateType.add, MessageScope.DB);
+                	return new Message<Organizations>(Message.SUCCESS).buildResponse();
 		        }else {
-		        	new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR), MessageType.error);
+		        	return new Message<Organizations>(Message.FAIL).buildResponse();
 		        }
             }
         } catch (IOException e) {
@@ -219,11 +194,10 @@ public class OrganizationsController {
         }finally {
         	excelImportFile.closeWorkbook();
         }
-	}else {
-		new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR), MessageType.error);
 	}
       
-	return new ModelAndView("/orgs/orgsImport");
+	return new Message<Organizations>(Message.FAIL).buildResponse();
+      
   }
 
   public Organizations buildOrganizationsFromSheetRow(Row row) {

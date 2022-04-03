@@ -12,6 +12,9 @@
 		<if test="username != null and username != ''">
 			and	username	=	#{username}
 		</if> 
+		<if test="appName != null and appName != ''">
+            and appName    =   #{appName}
+        </if> 
 		<if test="relatedUsername != null and relatedUsername != ''">
 			and	relatedusername	=	#{relatedUsername}
 		</if> 

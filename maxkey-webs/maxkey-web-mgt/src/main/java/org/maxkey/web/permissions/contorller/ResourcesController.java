@@ -17,167 +17,138 @@
 
 package org.maxkey.web.permissions.contorller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.Resources;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.ResourcesService;
-import org.maxkey.web.WebContext;
+import org.maxkey.web.component.TreeAttributes;
 import org.maxkey.web.component.TreeNode;
-import org.maxkey.web.component.TreeNodeList;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping(value={"/resources"})
+@RequestMapping(value={"/permissions/resources"})
 public class ResourcesController {
 	final static Logger _logger = LoggerFactory.getLogger(ResourcesController.class);
 	
 	@Autowired
-	@Qualifier("resourcesService")
 	ResourcesService resourcesService;
 
-	
-	
-	@RequestMapping(value={"/list"})
-	public ModelAndView resourcesList(){
-		return new ModelAndView("resources/resourcesList");
-	}
-	
-	@RequestMapping(value={"/selectResourcesList"})
-	public ModelAndView selectResourcesList(){
-		return new ModelAndView("resources/selectResourcesList");
-	}
-	
-	
-	@RequestMapping(value = { "/grid" })
+	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public JpaPageResults<Resources> queryDataGrid(@ModelAttribute("resources") Resources resources) {
-		_logger.debug(""+resources);
-		resources.setInstId(WebContext.getUserInfo().getInstId());
-		return resourcesService.queryPageResults(resources);
+	public ResponseEntity<?> fetch(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
+		_logger.debug("fetch {}" , resource);
+		resource.setInstId(currentUser.getInstId());
+		return new Message<JpaPageResults<Resources>>(
+				resourcesService.queryPageResults(resource)).buildResponse();
 	}
 
-	
-	@RequestMapping(value = { "/forwardAdd" })
-	public ModelAndView forwardAdd() {
-		return new ModelAndView("resources/resourceAdd");
+	@ResponseBody
+	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> query(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-query  {}" , resource);
+		resource.setInstId(currentUser.getInstId());
+		List<Resources>  resourceList = resourcesService.query(resource);
+		if (resourceList != null) {
+			 return new Message<List<Resources>>(Message.SUCCESS,resourceList).buildResponse();
+		} else {
+			 return new Message<List<Resources>>(Message.FAIL).buildResponse();
+		}
 	}
 	
-	@RequestMapping(value = { "/forwardUpdate/{id}" })
-	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
-		ModelAndView modelAndView=new ModelAndView("resources/resourceUpdate");
+	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> get(@PathVariable("id") String id) {
 		Resources resource=resourcesService.get(id);
-		modelAndView.addObject("model",resource);
-		return modelAndView;
+		return new Message<Resources>(resource).buildResponse();
 	}
 	
 	@ResponseBody
-	@RequestMapping(value={"/add"})
-	public Message insert(@ModelAttribute("resource") Resources resource) {
+	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> insert(@RequestBody Resources resource,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-Add  :" + resource);
-		resource.setInstId(WebContext.getUserInfo().getInstId());
+		resource.setInstId(currentUser.getInstId());
 		if (resourcesService.insert(resource)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
-			
+			return new Message<Resources>(Message.SUCCESS).buildResponse();
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			return new Message<Resources>(Message.FAIL).buildResponse();
 		}
-		
 	}
 	
-	/**
-	 * 查询
-	 * @param resource
-	 * @return
-	 */
 	@ResponseBody
-	@RequestMapping(value={"/query"}) 
-	public Message query(@ModelAttribute("resource") Resources resource) {
-		_logger.debug("-query  :" + resource);
-		resource.setInstId(WebContext.getUserInfo().getInstId());
-		if (resourcesService.load(resource)!=null) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
-			
-		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
-		}
-		
-	}
-	
-	/**
-	 * 修改
-	 * @param resource
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value={"/update"})  
-	public Message update(@ModelAttribute("resource") Resources resource) {
-		_logger.debug("-update  resource :" + resource);
-		resource.setInstId(WebContext.getUserInfo().getInstId());
+	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> update(@RequestBody  Resources resource,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-update  :" + resource);
+		resource.setInstId(currentUser.getInstId());
 		if (resourcesService.update(resource)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
-			
+		    return new Message<Resources>(Message.SUCCESS).buildResponse();
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
+			return new Message<Resources>(Message.FAIL).buildResponse();
 		}
-		
 	}
 	
-
 	@ResponseBody
-	@RequestMapping(value={"/delete"})
-	public Message delete(@ModelAttribute("resource") Resources resource) {
-		_logger.debug("-delete  resource :" + resource);
-		
-		if (resourcesService.deleteBatch(resource.getId())) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
-			
+	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-delete  ids : {} " , ids);
+		if (resourcesService.deleteBatch(ids)) {
+			 return new Message<Resources>(Message.SUCCESS).buildResponse();
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return new Message<Resources>(Message.FAIL).buildResponse();
 		}
-		
+	}
+  
+  
+	@ResponseBody
+	@RequestMapping(value={"/tree"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> tree(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-query  {}" , resource);
+		resource.setInstId(currentUser.getInstId());
+		List<Resources>  resourceList = resourcesService.query(resource);
+		if (resourceList != null) {
+			TreeAttributes treeAttributes = new TreeAttributes();
+			int nodeCount = 0;
+			for (Resources r : resourceList) {
+				TreeNode treeNode = new TreeNode(r.getId(),r.getName());
+				treeNode.setParentKey(r.getParentId());
+				treeNode.setParentTitle(r.getParentName());
+				treeNode.setAttrs(r);
+				treeNode.setLeaf(true);
+				treeAttributes.addNode(treeNode);
+				nodeCount ++;
+				if(r.getId().equalsIgnoreCase(currentUser.getInstId())) {
+					treeNode.setExpanded(true);
+					treeNode.setLeaf(false);
+					treeAttributes.setRootNode(treeNode);
+				}
+			}
+			
+			TreeNode rootNode = new TreeNode(resource.getAppId(),resource.getAppName());
+			rootNode.setParentKey(resource.getAppId());
+			rootNode.setExpanded(true);
+			rootNode.setLeaf(false);
+			treeAttributes.setRootNode(rootNode);
+			
+			treeAttributes.setNodeCount(nodeCount);
+			 return new Message<TreeAttributes>(Message.SUCCESS,treeAttributes).buildResponse();
+		} else {
+			 return new Message<TreeAttributes>(Message.FAIL).buildResponse();
+		}
 	}
 	
-	  @ResponseBody
-	  @RequestMapping({"/tree"})
-	  public List<HashMap<String, Object>> resourcesTree(
-	          @RequestParam(value = "appId", required = false) String appId,
-	          @RequestParam(value = "appName", required = false) String appName
-	          ) {
-	    _logger.debug("resourcesTree appId :" + appId + " ,appName " + appName);
-	    Resources queryRes = new Resources();
-	    queryRes.setAppId(appId);
-	    queryRes.setInstId(WebContext.getUserInfo().getInstId());
-	    List<Resources> resourcesList = this.resourcesService.queryResourcesTree(queryRes);
-	    TreeNodeList treeNodeList = new TreeNodeList();
-	    
-	    TreeNode rootNode = new TreeNode(appId, appName);
-	    rootNode.setAttr("open", Boolean.valueOf(true));
-	    treeNodeList.addTreeNode(rootNode.getAttr());
-	    
-	    for (Resources res : resourcesList) {
-	      TreeNode treeNode = new TreeNode(res.getId(), res.getName());
-	      treeNode.setAttr("data", res);
-	      treeNode.setPId(res.getParentId());
-	      treeNodeList.addTreeNode(treeNode.getAttr());
-	    } 
 
-	    
-	    return treeNodeList.getTreeNodeList();
-	  }
 }

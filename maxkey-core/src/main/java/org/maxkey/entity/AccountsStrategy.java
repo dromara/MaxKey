@@ -18,6 +18,8 @@
 package org.maxkey.entity;
 
 import java.io.Serializable;
+import java.util.Base64;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,6 +45,7 @@ public class AccountsStrategy extends JpaBaseEntity implements Serializable {
     @Column
     private String appId;
     private byte[] appIcon;
+    private String appIconBase64;
     @Column
     private String appName;
     @Column
@@ -185,6 +188,14 @@ public class AccountsStrategy extends JpaBaseEntity implements Serializable {
 		return appIcon;
 	}
 
+	public String getAppIconBase64() {
+		return appIconBase64;
+	}
+
+	public void setAppIconBase64(String appIconBase64) {
+		this.appIconBase64 = appIconBase64;
+	}
+
 	public void setAppIcon(byte[] appIcon) {
 		this.appIcon = appIcon;
 	}
@@ -221,6 +232,15 @@ public class AccountsStrategy extends JpaBaseEntity implements Serializable {
 		this.instName = instName;
 	}
 
+	
+	public void transIconBase64() {
+		if(this.appIcon !=null) {
+			this.appIconBase64 = "data:image/png;base64," + 
+					Base64.getEncoder().encodeToString(appIcon);
+		}
+	}
+	
+	
 	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

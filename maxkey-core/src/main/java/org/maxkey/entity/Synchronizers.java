@@ -84,7 +84,7 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
     String modifiedDate;
     @Column
     String status;
-    
+    @Column
     String service;
     
 	@Column

@@ -40,9 +40,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping(value={"/permissions"})
-public class PermissionsController {
-	final static Logger _logger = LoggerFactory.getLogger(PermissionsController.class);
+@RequestMapping(value={"/permissions/privileges"})
+public class RolePrivilegesController {
+	final static Logger _logger = LoggerFactory.getLogger(RolePrivilegesController.class);
 	
 	@Autowired
     @Qualifier("rolesService")

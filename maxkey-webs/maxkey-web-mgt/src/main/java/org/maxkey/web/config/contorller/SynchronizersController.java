@@ -79,8 +79,8 @@ public class SynchronizersController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value={"/sync"})  
-	public ResponseEntity<?> sync(@RequestParam("id") String id) {
+	@RequestMapping(value={"/synchr"})  
+	public ResponseEntity<?> synchr(@RequestParam("id") String id) {
 		_logger.debug("-sync ids :" + id);
 		
 		List<String> ids = StringUtils.string2List(id, ",");

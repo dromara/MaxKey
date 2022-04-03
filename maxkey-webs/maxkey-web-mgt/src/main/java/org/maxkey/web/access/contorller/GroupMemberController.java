@@ -18,24 +18,24 @@
 package org.maxkey.web.access.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.GroupMember;
-import org.maxkey.entity.Groups;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.GroupMemberService;
 import org.maxkey.persistence.service.GroupsService;
 import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -51,72 +51,46 @@ public class GroupMemberController {
 	@Qualifier("groupsService")
 	GroupsService groupsService;
 	
-	
-	
-	@RequestMapping(value={"/list"})
-	public ModelAndView groupsList(){
-		return new ModelAndView("groupuser/groupUsersList");
-	}
-	
-	
-	@RequestMapping(value = { "/grid" })
+	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public JpaPageResults<GroupMember> grid(@ModelAttribute("groupMember") GroupMember groupMember) {
-		if(groupMember.getGroupId()==null||groupMember.getGroupId().equals("")){
-			return null;
-		}
-		groupMember.setInstId(WebContext.getUserInfo().getInstId());
-		return groupMemberService.queryPageResults(groupMember);
+	public ResponseEntity<?> fetch(
+			@ModelAttribute GroupMember groupMember,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("fetch "+groupMember);
+		groupMember.setInstId(currentUser.getInstId());
+		return new Message<JpaPageResults<GroupMember>>(
+				groupMemberService.queryPageResults(groupMember)).buildResponse();
 	}
-	
-	@RequestMapping(value = { "/forwardAdd" })
-	public ModelAndView forwardAdd() {
-		return new ModelAndView("groups/groupAdd");
-	}
-	
-	@RequestMapping(value = { "/forwardUpdate/{id}" })
-	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
-		ModelAndView modelAndView=new ModelAndView("groups/groupUpdate");
-		GroupMember groupMember=groupMemberService.get(id);
-		modelAndView.addObject("model",groupMember);
-		return modelAndView;
-	}
-	
-	
-	@RequestMapping(value = { "/queryMemberInGroup" })
+
+	@RequestMapping(value = { "/memberInGroup" })
 	@ResponseBody
-	public JpaPageResults<GroupMember> queryMemberInGroup(@ModelAttribute("groupMember")  GroupMember groupMember) {
+	public ResponseEntity<?> memberInGroup(@ModelAttribute GroupMember groupMember,@CurrentUser UserInfo currentUser) {
 		_logger.debug("groupMember : "+groupMember);
-		groupMember.setInstId(WebContext.getUserInfo().getInstId());
+		groupMember.setInstId(currentUser.getInstId());
 		if(groupMember.getGroupId()==null||groupMember.getGroupId().equals("")||groupMember.getGroupId().equals("ROLE_ALL_USER")){
-			return groupMemberService.queryPageResults("allMemberInGroup",groupMember);
+			return new Message<JpaPageResults<GroupMember>>(
+					groupMemberService.queryPageResults("allMemberInGroup",groupMember)).buildResponse();
 		}else{
-			return groupMemberService.queryPageResults("memberInGroup",groupMember);
+			return new Message<JpaPageResults<GroupMember>>(
+					groupMemberService.queryPageResults("memberInGroup",groupMember)).buildResponse();
 		}
 	}
+
 	
-	
-	@RequestMapping(value={"/addGroupAppsList/{groupId}"})
-	public ModelAndView addGroupAppsList(@PathVariable("groupId") String groupId){
-		ModelAndView modelAndView=new ModelAndView("groupuser/addGroupUsersList");
-		Groups group=groupsService.get(groupId);
-		modelAndView.addObject("group", group);
-		return modelAndView;
-	}
-	
-	@RequestMapping(value = { "/queryMemberNotInGroup" })
+	@RequestMapping(value = { "/memberNotInGroup" })
 	@ResponseBody
-	public JpaPageResults<GroupMember> queryMemberNotInGroupGrid(@ModelAttribute("groupMember")  GroupMember groupMember) {
-		groupMember.setInstId(WebContext.getUserInfo().getInstId());
-		return groupMemberService.queryPageResults("memberNotInGroup",groupMember);
+	public ResponseEntity<?> memberNotInGroup(@ModelAttribute  GroupMember groupMember,@CurrentUser UserInfo currentUser) {
+		groupMember.setInstId(currentUser.getInstId());
+		return new Message<JpaPageResults<GroupMember>>(
+				groupMemberService.queryPageResults("memberNotInGroup",groupMember)).buildResponse();
 	}
 	
 	
-	@RequestMapping(value = {"/insert"})
+	@RequestMapping(value = {"/add"})
 	@ResponseBody
-	public Message insertGroupUser(@ModelAttribute("groupMember") GroupMember groupMember) {
+	public ResponseEntity<?> addGroupMember(@ModelAttribute("groupMember") GroupMember groupMember,@CurrentUser UserInfo currentUser) {
 		if (groupMember == null || groupMember.getGroupId() == null) {
-			return  new Message("传入参数为空",MessageType.error);
+			return new Message<GroupMember>(Message.FAIL).buildResponse();
 		}
 		String groupId = groupMember.getGroupId();
 		
@@ -136,31 +110,25 @@ public class GroupMemberController {
 							arrMemberIds[i], 
 							arrMemberNames[i],
 							"USER",
-							WebContext.getUserInfo().getInstId());
+							currentUser.getInstId());
 				newGroupMember.setId(WebContext.genId());
 				result = groupMemberService.insert(newGroupMember);
 			}
-			if(!result) {
-				return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
+			if(result) {
+				return new Message<GroupMember>(Message.SUCCESS).buildResponse();
 			}
-			
 		}
-		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.info);
+		return new Message<GroupMember>(Message.FAIL).buildResponse();
 	}
 	
-	@RequestMapping(value = {"/delete"})
 	@ResponseBody
-	public Message deleteGroupMember(@ModelAttribute("groupMember") GroupMember groupMember) {
-		_logger.debug("groupMember : "+groupMember);
-		
-		if (groupMember == null || groupMember.getId() == null) {
-			return  new Message("传入参数为空",MessageType.error);
+	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-delete ids : {}" , ids);
+		if (groupMemberService.deleteBatch(ids)) {
+			 return new Message<GroupMember>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<GroupMember>(Message.FAIL).buildResponse();
 		}
-		
-		if(groupMemberService.deleteBatch(groupMember.getId())) {
-		    return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.info);
-		}
-		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);	
-		
 	}
 }
