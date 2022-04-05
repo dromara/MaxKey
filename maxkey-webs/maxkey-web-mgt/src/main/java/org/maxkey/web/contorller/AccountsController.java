@@ -83,6 +83,7 @@ public class AccountsController {
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> get(@PathVariable("id") String id) {
 		Accounts account=accountsService.get(id);
+		account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));
 		return new Message<Accounts>(account).buildResponse();
 	}
 
@@ -127,10 +128,13 @@ public class AccountsController {
 	
     @ResponseBody
     @RequestMapping(value = "/generate")
-    public String generate(@ModelAttribute Accounts account) {
+    public ResponseEntity<?> generate(@ModelAttribute Accounts account) {
     	AccountsStrategy accountsStrategy = accountsStrategyService.get(account.getStrategyId());
        	UserInfo  userInfo  = userInfoService.get(account.getUserId());
-    	return accountsService.generateAccount(userInfo,accountsStrategy);
+        return new Message<Object>(
+        		Message.SUCCESS,
+        		(Object)accountsService.generateAccount(userInfo,accountsStrategy)
+        	).buildResponse();
     }
 
 }

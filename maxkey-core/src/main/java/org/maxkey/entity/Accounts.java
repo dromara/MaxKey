@@ -71,6 +71,8 @@ public class Accounts extends JpaBaseEntity implements Serializable {
     @Column
     private String strategyId;
     @Column
+    private String strategyName;
+    @Column
     private int status;
     
     @Column
@@ -214,7 +216,15 @@ public class Accounts extends JpaBaseEntity implements Serializable {
         }
     }
 
-    public String getInstId() {
+    public String getStrategyName() {
+		return strategyName;
+	}
+
+	public void setStrategyName(String strategyName) {
+		this.strategyName = strategyName;
+	}
+
+	public String getInstId() {
 		return instId;
 	}
 

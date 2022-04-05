@@ -121,6 +121,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/apps/**")
                 .addPathPatterns("/accounts/**")
                 
+                
                 .addPathPatterns("/access/**")
                 .addPathPatterns("/access/**/**")
                 
@@ -135,6 +136,8 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 
                 .addPathPatterns("/institutions/**")
                 .addPathPatterns("/localization/**")
+                
+                .addPathPatterns("/file/upload/")
                 
                 ;
         

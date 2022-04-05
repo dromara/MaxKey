@@ -18,7 +18,6 @@
 package org.maxkey.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.IOException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +30,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.maxkey.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * .
@@ -110,8 +108,7 @@ public class UserInfo extends JpaBaseEntity {
     @Column
     protected byte[] picture;
     protected String pictureBase64;
-    @JsonIgnore
-    protected MultipartFile pictureFile;
+    protected String  pictureId;
     @Column
     protected int idType;
     @Column
@@ -413,16 +410,6 @@ public class UserInfo extends JpaBaseEntity {
         this.password = password;
     }
 
-    public byte[] getPicture() {
-        if (pictureFile != null && !pictureFile.isEmpty()) {
-            try {
-                picture = pictureFile.getBytes();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return picture;
-    }
 
     public String getPictureBase64() {
 		return pictureBase64;
@@ -439,6 +426,10 @@ public class UserInfo extends JpaBaseEntity {
 		}
 	}
 	
+	public byte[] getPicture() {
+		return picture;
+	}
+
 	/**
      * @return the protectedAppsMap
      */
@@ -628,15 +619,15 @@ public class UserInfo extends JpaBaseEntity {
         this.birthDate = birthDate;
     }
 
-    public MultipartFile getPictureFile() {
-        return pictureFile;
-    }
+	public String getPictureId() {
+		return pictureId;
+	}
 
-    public void setPictureFile(MultipartFile pictureFile) {
-        this.pictureFile = pictureFile;
-    }
+	public void setPictureId(String pictureId) {
+		this.pictureId = pictureId;
+	}
 
-    public int getIdType() {
+	public int getIdType() {
         return idType;
     }
 

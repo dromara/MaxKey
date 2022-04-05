@@ -38,6 +38,7 @@ import org.maxkey.constants.ConstsPasswordSetType;
 import org.maxkey.entity.ExcelImport;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.service.FileUploadService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.ExcelUtils;
@@ -73,6 +74,9 @@ public class UserInfoController {
 	
 	@Autowired
 	private UserInfoService userInfoService;
+	
+	@Autowired
+	FileUploadService fileUploadService;
 
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -101,6 +105,8 @@ public class UserInfoController {
 		if(userInfo.getPicture()!=null){
 			userInfo.transPictureBase64();
 		}
+		userInfo.setPassword("");
+		userInfo.setDecipherable("");
 		return new Message<UserInfo>(userInfo).buildResponse();
 	}
 	
@@ -110,6 +116,10 @@ public class UserInfoController {
 		_logger.debug("-Add  :" + userInfo);
 		userInfo.setId(WebContext.genId());
 		userInfo.setInstId(currentUser.getInstId());
+		if(StringUtils.isNotBlank(userInfo.getPictureId())) {
+			userInfo.setPicture(fileUploadService.get(userInfo.getPictureId()).getUploaded());
+			fileUploadService.remove(userInfo.getPictureId());
+		}
 		if (userInfoService.insert(userInfo)) {
 			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
@@ -128,6 +138,10 @@ public class UserInfoController {
 		convertExtraAttribute(userInfo) ;
 		_logger.info(userInfo.getExtraAttribute());
 		userInfo.setInstId(currentUser.getInstId());
+		if(StringUtils.isNotBlank(userInfo.getPictureId())) {
+			userInfo.setPicture(fileUploadService.get(userInfo.getPictureId()).getUploaded());
+			fileUploadService.remove(userInfo.getPictureId());
+		}
 		if (userInfoService.update(userInfo)) {
 		    return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
@@ -148,9 +162,12 @@ public class UserInfoController {
 
 	
     @ResponseBody
-    @RequestMapping(value = "/randomPassword")
-    public String randomPassword() {
-        return userInfoService.randomPassword();
+    @RequestMapping(value = "/randomPassword", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> randomPassword() {
+        return new Message<Object>(
+        		Message.SUCCESS,
+        		(Object)userInfoService.randomPassword()
+        	).buildResponse();
     }
 	   
 	
@@ -169,7 +186,7 @@ public class UserInfoController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/changePassword")  
+	@RequestMapping(value="/changePassword", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> changePassword( @ModelAttribute("userInfo")UserInfo userInfo) {
 		_logger.debug(userInfo.getId());
 		userInfo.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
