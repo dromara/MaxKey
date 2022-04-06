@@ -17,23 +17,24 @@
 
 package org.maxkey.web.apps.contorller;
 
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsFormBasedDetails;
 import org.maxkey.persistence.service.AppsFormBasedDetailsService;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -44,77 +45,69 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 	@Autowired
 	AppsFormBasedDetailsService formBasedDetailsService;
 	
-	
-	@RequestMapping(value = { "/forwardAdd" })
-	public ModelAndView forwardAdd() {
-		ModelAndView modelAndView=new ModelAndView("apps/formbased/appAdd");
+	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> init() {
 		AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
 		formBasedDetails.setId(formBasedDetails.generateId());
 		formBasedDetails.setProtocol(ConstsProtocols.FORMBASED);
 		formBasedDetails.setSecret(ReciprocalUtils.generateKey(""));
-
-		modelAndView.addObject("model",formBasedDetails);
-		return modelAndView;
+		return new Message<AppsFormBasedDetails>(formBasedDetails).buildResponse();
 	}
 	
-	
-
-	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("formBasedDetails") AppsFormBasedDetails formBasedDetails) {
-		_logger.debug("-Add  :" + formBasedDetails);
-		
-		transform(formBasedDetails);
-		formBasedDetails.setInstId(WebContext.getUserInfo().getInstId());
-		if (formBasedDetailsService.insert(formBasedDetails)&&appsService.insertApp(formBasedDetails)) {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
-			
-		} else {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
-		}
-		return   WebContext.forward("forwardUpdate/"+formBasedDetails.getId());
-	}
-	
-	@RequestMapping(value = { "/forwardUpdate/{id}" })
-	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
-		ModelAndView modelAndView=new ModelAndView("apps/formbased/appUpdate");
+	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> get(@PathVariable("id") String id) {
 		AppsFormBasedDetails formBasedDetails=formBasedDetailsService.getAppDetails(id , false);
 		decoderSecret(formBasedDetails);
 		decoderSharedPassword(formBasedDetails);
 		formBasedDetails.transIconBase64();
-
-		modelAndView.addObject("model",formBasedDetails);
-		return modelAndView;
-	}
-	/**
-	 * modify
-	 * @param application
-	 * @return
-	 */
-	@RequestMapping(value={"/update"})  
-	public ModelAndView update(@ModelAttribute("formBasedDetails") AppsFormBasedDetails formBasedDetails) {
-		//
-		_logger.debug("-update  application :" + formBasedDetails);
-		transform(formBasedDetails);
-		formBasedDetails.setInstId(WebContext.getUserInfo().getInstId());
-		if (formBasedDetailsService.update(formBasedDetails)&&appsService.updateApp(formBasedDetails)) {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
-			
-		} else {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
-		}
-		return   WebContext.forward("forwardUpdate/"+formBasedDetails.getId());
+		return new Message<AppsFormBasedDetails>(formBasedDetails).buildResponse();
 	}
 	
-
 	@ResponseBody
-	@RequestMapping(value={"/delete/{id}"})
-	public Message delete(@PathVariable("id") String id) {
-		_logger.debug("-delete  application :" + id);
-		if (formBasedDetailsService.remove(id)&&appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
-			
+	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> add(
+			@RequestBody AppsFormBasedDetails formBasedDetails,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("-Add  :" + formBasedDetails);
+		
+		transform(formBasedDetails);
+		formBasedDetails.setInstId(currentUser.getInstId());
+		if (formBasedDetailsService.insert(formBasedDetails)
+				&&appsService.insertApp(formBasedDetails)) {
+			return new Message<AppsFormBasedDetails>(Message.SUCCESS).buildResponse();
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_ERROR),MessageType.error);
+			return new Message<AppsFormBasedDetails>(Message.FAIL).buildResponse();
 		}
 	}
+	
+	@ResponseBody
+	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> update(
+			@RequestBody AppsFormBasedDetails formBasedDetails,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("-update  :" + formBasedDetails);
+		transform(formBasedDetails);
+		formBasedDetails.setInstId(currentUser.getInstId());
+		if (formBasedDetailsService.update(formBasedDetails)
+				&&appsService.updateApp(formBasedDetails)) {
+		    return new Message<AppsFormBasedDetails>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<AppsFormBasedDetails>(Message.FAIL).buildResponse();
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> delete(
+			@RequestParam("ids") String ids,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("-delete  ids : {} " , ids);
+		if (formBasedDetailsService.deleteBatch(ids)
+				&& appsService.deleteBatch(ids)) {
+			 return new Message<AppsFormBasedDetails>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<AppsFormBasedDetails>(Message.FAIL).buildResponse();
+		}
+	}
+	
 }

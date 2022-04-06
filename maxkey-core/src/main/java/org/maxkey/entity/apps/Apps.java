@@ -29,7 +29,6 @@ import javax.persistence.Table;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.maxkey.constants.ConstsBoolean;
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "MXK_APPS")
@@ -80,11 +79,11 @@ public class Apps extends JpaBaseEntity implements Serializable {
     @Column
     private byte[] icon;
     private String iconBase64;
-    private MultipartFile iconFile;
+    String iconId;
+    
     @Column
     private int visible;
     
-
     //引导方式 IDP OR SP,default is IDP
     private String inducer;
     /*
@@ -144,7 +143,6 @@ public class Apps extends JpaBaseEntity implements Serializable {
 
     @Column
     protected int sortIndex;
-
     @Column
     protected int status;
     @Column
@@ -287,14 +285,15 @@ public class Apps extends JpaBaseEntity implements Serializable {
 		}
 	}
 
-	/**
-     * @return the iconFile
-     */
-    public MultipartFile getIconFile() {
-        return iconFile;
-    }
+    public String getIconId() {
+		return iconId;
+	}
 
-    /**
+	public void setIconId(String iconId) {
+		this.iconId = iconId;
+	}
+
+	/**
      * @return the description
      */
     public String getDescription() {
@@ -308,12 +307,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
         this.description = description;
     }
 
-    /**
-     * @param iconFile the iconFile to set
-     */
-    public void setIconFile(MultipartFile iconFile) {
-        this.iconFile = iconFile;
-    }
+ 
 
     /**
      * @return the vendor
@@ -624,8 +618,8 @@ public class Apps extends JpaBaseEntity implements Serializable {
 		builder.append(protocol);
 		builder.append(", secret=");
 		builder.append(secret);
-		builder.append(", iconFile=");
-		builder.append(iconFile);
+		builder.append(", iconId=");
+		builder.append(iconId);
 		builder.append(", visible=");
 		builder.append(visible);
 		builder.append(", inducer=");

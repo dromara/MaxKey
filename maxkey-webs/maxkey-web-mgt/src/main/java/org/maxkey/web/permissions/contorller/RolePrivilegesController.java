@@ -35,6 +35,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -51,7 +52,7 @@ public class RolePrivilegesController {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public  ResponseEntity<?> update(
-			@ModelAttribute RolePrivileges rolePrivileges,
+			@RequestBody RolePrivileges rolePrivileges,
 			@CurrentUser UserInfo currentUser) {
 		_logger.debug("-update  : " + rolePrivileges);
 		//have

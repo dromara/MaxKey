@@ -20,61 +20,49 @@
  */
 package org.maxkey.web.apps.contorller;
 
-import java.io.IOException;
-
 import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.AppsService;
+import org.maxkey.persistence.service.FileUploadService;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * @author Crystal.Sea
  *
  */
 public class BaseAppContorller {
-
 	final static Logger _logger = LoggerFactory.getLogger(BaseAppContorller.class);
 	
 	@Autowired
-	@Qualifier("appsService")
 	protected AppsService appsService;
 
-	
 	@Autowired
-	@Qualifier("passwordReciprocal")
 	protected PasswordReciprocal passwordReciprocal;
 	
+	@Autowired
+	protected FileUploadService fileUploadService;
 	
 	public void setAppsService(AppsService appsService) {
 		this.appsService = appsService;
 	}
 
 	protected void transform(Apps application) {
-		
 		encodeSharedPassword(application);
-		
 		encodeSecret(application);
-		
 		/*
 		 * string field encoding
 		 */
 		encoding(application);
-
 		/*
-		 * upload iconFile MultipartFile  to icon Bytes
+		 * upload icon Bytes
 		 */
-		if(null!=application.getIconFile()&&!application.getIconFile().isEmpty()){
-			try {
-				application.setIcon(application.getIconFile().getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		
+		if(StringUtils.isNotBlank(application.getIconId())){
+			application.setIcon(fileUploadService.get(application.getIconId()).getUploaded());
+			fileUploadService.remove(application.getIconId());
 		}
 		
 	}
@@ -82,8 +70,9 @@ public class BaseAppContorller {
 	protected void encodeSharedPassword(Apps application){
 		if(application.getCredential()!=Apps.CREDENTIALS.SHARED){
 			if(application.getProtocol().equals(ConstsProtocols.FORMBASED)){
-				if(StringUtils.isNotEmpty(application.getSharedPassword())){
-					application.setSharedPassword(PasswordReciprocal.getInstance().encode(application.getSharedPassword()));
+				if(StringUtils.isNotBlank(application.getSharedPassword())){
+					application.setSharedPassword(
+							PasswordReciprocal.getInstance().encode(application.getSharedPassword()));
 				}
 			}
 		}
@@ -92,8 +81,9 @@ public class BaseAppContorller {
 	protected void decoderSharedPassword(Apps application){
 		if(application.getCredential()!=Apps.CREDENTIALS.SHARED){
 			if(application.getProtocol().equals(ConstsProtocols.FORMBASED)){
-				if(StringUtils.isNotEmpty(application.getSharedPassword())){
-					application.setSharedPassword(PasswordReciprocal.getInstance().decoder(application.getSharedPassword()));
+				if(StringUtils.isNotBlank(application.getSharedPassword())){
+					application.setSharedPassword(
+							PasswordReciprocal.getInstance().decoder(application.getSharedPassword()));
 				}
 			}
 		}
@@ -101,24 +91,17 @@ public class BaseAppContorller {
 	
 	protected void encoding(Apps application){
 		
-		//application.setName(WebContext.encoding(application.getName()));
-		if(null!=application.getDescription()){
-		//	application.setDescription(WebContext.encoding(application.getDescription()));
-		}
-		
 	}
 	
-	
 	protected void encodeSecret(Apps application){
-		if(application.getSecret()!=null&&!application.getSecret().equals("")){
-			//
+		if(StringUtils.isNotBlank(application.getSecret())){
 			String encodeSecret=passwordReciprocal.encode(application.getSecret());
 			application.setSecret(encodeSecret);
 		}
 	}
 	
 	protected void decoderSecret(Apps application){
-		if(application.getSecret()!=null&&!application.getSecret().equals("")){
+		if(StringUtils.isNotBlank(application.getSecret())){
 			String decodeSecret=passwordReciprocal.decoder(application.getSecret());
 			application.setSecret(decodeSecret);
 		}

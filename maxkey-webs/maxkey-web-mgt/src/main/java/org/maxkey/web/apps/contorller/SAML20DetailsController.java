@@ -25,19 +25,18 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.authz.saml20.metadata.MetadataDescriptorUtil;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.crypto.cert.X509CertUtils;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.keystore.KeyStoreUtil;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsSAML20Details;
 import org.maxkey.persistence.service.AppsSaml20DetailsService;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.opensaml.common.xml.SAMLConstants;
 import org.opensaml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml2.metadata.SPSSODescriptor;
@@ -45,12 +44,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -68,88 +69,83 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	@Autowired
 	ApplicationConfig applicationConfig;
 	
-	@RequestMapping(value = { "/forwardAdd" })
-	public ModelAndView forwardAdd() {
-		ModelAndView modelAndView=new ModelAndView("apps/saml20/appAdd");
+	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> init() {
 		AppsSAML20Details saml20Details=new AppsSAML20Details();
 		saml20Details.setSecret(ReciprocalUtils.generateKey(""));
 		saml20Details.setProtocol(ConstsProtocols.SAML20);
 		saml20Details.setId(saml20Details.generateId());
-		modelAndView.addObject("model",saml20Details);
-		 
-		return modelAndView;
+		return new Message<AppsSAML20Details>(saml20Details).buildResponse();
 	}
 	
-	
-	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("saml20Details") AppsSAML20Details saml20Details) {
-		_logger.debug("-Add  :" + saml20Details);
-
-		try {
-			transform(saml20Details);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		saml20Details.setInstId(WebContext.getUserInfo().getInstId());
-		saml20DetailsService.insert(saml20Details);
-		if (appsService.insertApp(saml20Details)) {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
-			
-		} else {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
-		}
-		return   WebContext.forward("forwardUpdate/"+saml20Details.getId());
-	}
-	
-	@RequestMapping(value = { "/forwardUpdate/{id}" })
-	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
-		ModelAndView modelAndView=new ModelAndView("apps/saml20/appUpdate");
+	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> get(@PathVariable("id") String id) {
 		AppsSAML20Details saml20Details=saml20DetailsService.getAppDetails(id , false);
 		decoderSecret(saml20Details);
 		saml20Details.transIconBase64();
-		modelAndView.addObject("model",saml20Details);
-		modelAndView.addObject("authzURI",applicationConfig.getAuthzUri());
-		return modelAndView;
+		//modelAndView.addObject("model",saml20Details);
+		//modelAndView.addObject("authzURI",applicationConfig.getAuthzUri());
+		return new Message<AppsSAML20Details>(saml20Details).buildResponse();
 	}
-	/**
-	 * modify
-	 * @param application
-	 * @return
-	 */
-	@RequestMapping(value={"/update"})  
-	public ModelAndView update(@ModelAttribute("saml20Details") AppsSAML20Details saml20Details) {
-		//
-		_logger.debug("-update  application :" + saml20Details);
-	   _logger.debug("");
+	
+	@ResponseBody
+	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> add(
+			@RequestBody AppsSAML20Details saml20Details,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("-Add  :" + saml20Details);
+		
 		try {
 			transform(saml20Details);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		saml20Details.setInstId(WebContext.getUserInfo().getInstId());
+		saml20Details.setInstId(currentUser.getInstId());
+		saml20DetailsService.insert(saml20Details);
+		if (appsService.insertApp(saml20Details)) {
+			return new Message<AppsSAML20Details>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<AppsSAML20Details>(Message.FAIL).buildResponse();
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> update(
+			@RequestBody AppsSAML20Details saml20Details,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("-update  :" + saml20Details);
+		try {
+			transform(saml20Details);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		saml20Details.setInstId(currentUser.getInstId());
 		saml20DetailsService.update(saml20Details);
 		if (appsService.updateApp(saml20Details)) {
-			 new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
-			
+		    return new Message<AppsSAML20Details>(Message.SUCCESS).buildResponse();
 		} else {
-			 new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
+			return new Message<AppsSAML20Details>(Message.FAIL).buildResponse();
 		}
-		return   WebContext.forward("forwardUpdate/"+saml20Details.getId());
 	}
+	
+	@ResponseBody
+	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> delete(
+			@RequestParam("ids") String ids,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("-delete  ids : {} " , ids);
+		if (saml20DetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
+			 return new Message<AppsSAML20Details>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<AppsSAML20Details>(Message.FAIL).buildResponse();
+		}
+	}
+	
+	//////////////////////////////
+
 	
 
-	@ResponseBody
-	@RequestMapping(value={"/delete/{id}"})
-	public Message delete(@PathVariable("id") String id) {
-		_logger.debug("-delete  application :" + id);
-		if (saml20DetailsService.remove(id)&&appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
-			
-		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
-		}
-	}
-	
 	protected AppsSAML20Details transform(AppsSAML20Details samlDetails) throws Exception{
 		
 		super.transform(samlDetails);

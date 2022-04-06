@@ -17,23 +17,24 @@
 
 package org.maxkey.web.apps.contorller;
 
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsCasDetails;
 import org.maxkey.persistence.service.AppsCasDetailsService;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -44,76 +45,58 @@ public class CasDetailsController  extends BaseAppContorller {
 	@Autowired
 	AppsCasDetailsService casDetailsService;
 	
-	@RequestMapping(value = { "/forwardAdd" })
-	public ModelAndView forwardAdd() {
-		ModelAndView modelAndView=new ModelAndView("apps/cas/appAdd");
+	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> init() {
 		AppsCasDetails casDetails =new AppsCasDetails();
 		casDetails.setId(casDetails.generateId());
 		casDetails.setProtocol(ConstsProtocols.CAS);
 		casDetails.setSecret(ReciprocalUtils.generateKey(""));
-		modelAndView.addObject("model",casDetails);
-		return modelAndView;
+		return new Message<AppsCasDetails>(casDetails).buildResponse();
 	}
 	
-	
-	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("casDetails") AppsCasDetails casDetails) {
-		_logger.debug("-Add  :" + casDetails);
-
-		transform(casDetails);
-		casDetails.setInstId(WebContext.getUserInfo().getInstId());
-		if (casDetailsService.insert(casDetails)&&appsService.insertApp(casDetails)) {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
-			
-		} else {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
-		}
-		return   WebContext.forward("forwardUpdate/"+casDetails.getId());
-	}
-	
-	@RequestMapping(value = { "/forwardUpdate/{id}" })
-	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
-		ModelAndView modelAndView=new ModelAndView("apps/cas/appUpdate");
+	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> get(@PathVariable("id") String id) {
 		AppsCasDetails casDetails=casDetailsService.getAppDetails(id , false);
 		super.decoderSecret(casDetails);
 		casDetails.transIconBase64();
-		
-		modelAndView.addObject("model",casDetails);
-		return modelAndView;
+		return new Message<AppsCasDetails>(casDetails).buildResponse();
 	}
 	
-	/**
-	 * modify
-	 * @param application
-	 * @return
-	 */
-	@RequestMapping(value={"/update"})  
-	public ModelAndView update(@ModelAttribute("casDetails") AppsCasDetails casDetails) {
-		//
-		_logger.debug("-update  application :" + casDetails);
-		transform(casDetails);
-		casDetails.setInstId(WebContext.getUserInfo().getInstId());
-		if (casDetailsService.update(casDetails)&&appsService.updateApp(casDetails)) {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
-			
-		} else {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
-		}
-		return   WebContext.forward("forwardUpdate/"+casDetails.getId());
-	}
-	
-
 	@ResponseBody
-	@RequestMapping(value={"/delete/{id}"})
-	public Message delete(@PathVariable("id") String id) {
-		_logger.debug("-delete  application :" + id);
-		if (casDetailsService.remove(id)&&appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
-			
+	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> insert(@RequestBody AppsCasDetails casDetails,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-Add  :" + casDetails);
+		transform(casDetails);
+		casDetails.setInstId(currentUser.getInstId());
+		if (casDetailsService.insert(casDetails)&&appsService.insertApp(casDetails)) {
+			return new Message<AppsCasDetails>(Message.SUCCESS).buildResponse();
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return new Message<AppsCasDetails>(Message.FAIL).buildResponse();
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> update(@RequestBody AppsCasDetails casDetails,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-update  :" + casDetails);
+		transform(casDetails);
+		casDetails.setInstId(currentUser.getInstId());
+		if (casDetailsService.update(casDetails)&&appsService.updateApp(casDetails)) {
+		    return new Message<AppsCasDetails>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<AppsCasDetails>(Message.FAIL).buildResponse();
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-delete  ids : {} " , ids);
+		if (casDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
+			 return new Message<AppsCasDetails>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<AppsCasDetails>(Message.FAIL).buildResponse();
+		}
+	}
 	
 }

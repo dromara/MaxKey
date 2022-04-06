@@ -20,6 +20,7 @@ package org.maxkey.web.apps.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.entity.ExtraAttr;
 import org.maxkey.entity.ExtraAttrs;
@@ -53,6 +54,16 @@ import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 public class ApplicationsController extends BaseAppContorller {
 	final static Logger _logger = LoggerFactory.getLogger(ApplicationsController.class);
 	
+	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> init() {
+		Apps app=new Apps();
+		app.setId(app.generateId());
+		app.setProtocol(ConstsProtocols.FORMBASED);
+		app.setSecret(ReciprocalUtils.generateKey(""));
+		return new Message<Apps>(app).buildResponse();
+	}
+	
+	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> fetch(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
@@ -60,6 +71,8 @@ public class ApplicationsController extends BaseAppContorller {
 		JpaPageResults<Apps> appsList =appsService.queryPageResults(apps);
 		for (Apps app : appsList.getRows()){
 			app.transIconBase64();
+			app.setSecret(null);
+			app.setSharedPassword(null);
 		}
 		_logger.debug("List "+appsList);
 		return new Message<JpaPageResults<Apps>>(appsList).buildResponse();
@@ -79,6 +92,8 @@ public class ApplicationsController extends BaseAppContorller {
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> get(@PathVariable("id") String id) {
 		Apps apps = appsService.get(id);
+		decoderSecret(apps);
+		apps.transIconBase64();
 		return new Message<Apps>(apps).buildResponse();
 	}
 	

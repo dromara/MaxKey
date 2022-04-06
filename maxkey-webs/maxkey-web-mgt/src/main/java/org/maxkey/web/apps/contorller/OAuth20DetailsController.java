@@ -17,26 +17,28 @@
 
 package org.maxkey.web.apps.contorller;
 
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
-import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsOAuth20Details;
 import org.maxkey.entity.apps.oauth2.provider.client.BaseClientDetails;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
+import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -47,46 +49,19 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	@Autowired
 	JdbcClientDetailsService oauth20JdbcClientDetailsService;
 
-	
-	@RequestMapping(value = { "/forwardAdd" })
-	public ModelAndView forwardAdd() {
-		ModelAndView modelAndView=new ModelAndView("apps/oauth20/appAdd");
+	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> init() {
 		AppsOAuth20Details oauth20Details=new AppsOAuth20Details();
 		oauth20Details.setId(oauth20Details.generateId());
 		oauth20Details.setSecret(ReciprocalUtils.generateKey(""));
 		oauth20Details.setClientId(oauth20Details.getId());
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
 		oauth20Details.setProtocol(ConstsProtocols.OAUTH20);
-		modelAndView.addObject("model",oauth20Details);
-		return modelAndView;
+		return new Message<AppsOAuth20Details>(oauth20Details).buildResponse();
 	}
 	
-	
-	@RequestMapping(value={"/add"})
-	public ModelAndView insert(@ModelAttribute("oauth20Details") AppsOAuth20Details oauth20Details ) {
-		_logger.debug("-Add  :" + oauth20Details);
-		
-		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
-		    oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
-		}
-		transform(oauth20Details);
-
-		oauth20Details.setClientSecret(oauth20Details.getSecret());
-		oauth20Details.setInstId(WebContext.getUserInfo().getInstId());
-		
-		oauth20JdbcClientDetailsService.addClientDetails(oauth20Details.clientDetailsRowMapper());
-		if (appsService.insertApp(oauth20Details)) {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
-			
-		} else {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
-		}
-		return   WebContext.forward("forwardUpdate/"+oauth20Details.getId());
-	}
-	
-	@RequestMapping(value = { "/forwardUpdate/{id}" })
-	public ModelAndView forwardUpdate(@PathVariable("id") String id) {
-		ModelAndView modelAndView=new ModelAndView("apps/oauth20/appUpdate");
+	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> get(@PathVariable("id") String id) {
 		BaseClientDetails baseClientDetails=(BaseClientDetails)oauth20JdbcClientDetailsService.loadClientByClientId(id,false);
 		Apps application=appsService.get(id);//
 		decoderSecret(application);
@@ -95,53 +70,71 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		oauth20Details.setClientSecret(application.getSecret());
 		_logger.debug("forwardUpdate "+oauth20Details);
 		oauth20Details.transIconBase64();
-		modelAndView.addObject("model",oauth20Details);
-		return modelAndView;
+		return new Message<AppsOAuth20Details>(oauth20Details).buildResponse();
 	}
-	/**
-	 * modify
-	 * @param application
-	 * @return
-	 */
-	@RequestMapping(value={"/update"})  
-	public ModelAndView update( @ModelAttribute("oauth20Details") AppsOAuth20Details oauth20Details) {
-		//
+	
+	@ResponseBody
+	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> add(
+			@RequestBody  AppsOAuth20Details oauth20Details,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("-Add  :" + oauth20Details);
+		
+		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
+		    oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
+		}
+		transform(oauth20Details);
+
+		oauth20Details.setClientSecret(oauth20Details.getSecret());
+		oauth20Details.setInstId(currentUser.getInstId());
+		
+		oauth20JdbcClientDetailsService.addClientDetails(oauth20Details.clientDetailsRowMapper());
+		if (appsService.insertApp(oauth20Details)) {
+			return new Message<AppsOAuth20Details>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<AppsOAuth20Details>(Message.FAIL).buildResponse();
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> update(
+			@RequestBody  AppsOAuth20Details oauth20Details,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("-update  :" + oauth20Details);
 		_logger.debug("-update  application :" + oauth20Details);
 		_logger.debug("-update  oauth20Details use oauth20JdbcClientDetails" );
 		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
             oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
         }
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
-		oauth20Details.setInstId(WebContext.getUserInfo().getInstId());
+		oauth20Details.setInstId(currentUser.getInstId());
         oauth20JdbcClientDetailsService.updateClientDetails(oauth20Details.clientDetailsRowMapper());
         oauth20JdbcClientDetailsService.updateClientSecret(oauth20Details.getClientId(), oauth20Details.getClientSecret());
         
 		transform(oauth20Details);
 		
 		if (appsService.updateApp(oauth20Details)) {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+		    return new Message<AppsOAuth20Details>(Message.SUCCESS).buildResponse();
 		} else {
-			  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
+			return new Message<AppsOAuth20Details>(Message.FAIL).buildResponse();
 		}
-		return   WebContext.forward("forwardUpdate/"+oauth20Details.getId());
 	}
 	
-
 	@ResponseBody
-	@RequestMapping(value={"/delete/{id}"})
-	public Message delete(@PathVariable("id") String id) {
-		_logger.debug("-delete  application :" + id);
-		oauth20JdbcClientDetailsService.removeClientDetails(id);
-		if (appsService.remove(id)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
-			
+	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> delete(
+			@RequestParam("ids") String ids,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("-delete  ids : {} " , ids);
+		for (String id : StringUtils.split(ids, ",")){
+			oauth20JdbcClientDetailsService.removeClientDetails(id);
+		}
+		if (appsService.deleteBatch(ids)) {
+			 return new Message<AppsOAuth20Details>(Message.SUCCESS).buildResponse();
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return new Message<AppsOAuth20Details>(Message.FAIL).buildResponse();
 		}
 	}
-	
-	
-	
-	
 	
 }

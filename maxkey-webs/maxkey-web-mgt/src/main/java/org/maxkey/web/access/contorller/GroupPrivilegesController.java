@@ -31,6 +31,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -80,7 +81,7 @@ public class GroupPrivilegesController {
 	@RequestMapping(value = {"/add"})
 	@ResponseBody
 	public ResponseEntity<?> insertGroupApp(
-				@ModelAttribute GroupPrivileges groupPrivileges,
+				@RequestBody GroupPrivileges groupPrivileges,
 				@CurrentUser UserInfo currentUser) {
 		if (groupPrivileges == null || groupPrivileges.getGroupId() == null) {
 			return new Message<GroupPrivileges>(Message.FAIL).buildResponse();
