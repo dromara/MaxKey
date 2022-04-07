@@ -84,12 +84,12 @@ public class SubjectGenerator {
 		    nameIdValue = nameIdValue + saml20Details.getNameIdSuffix();
 		}
 		
-		if(saml20Details.getNameIdConvert()==0) {
-		    
-		}else if(saml20Details.getNameIdConvert()==1) {
+		if(saml20Details.getNameIdConvert().equalsIgnoreCase("uppercase")) {
 		    nameIdValue = nameIdValue.toUpperCase();
-        }else if(saml20Details.getNameIdConvert()==1) {
+        }else if(saml20Details.getNameIdConvert().equalsIgnoreCase("lowercase")) {
             nameIdValue = nameIdValue.toLowerCase();
+        }else {
+        	//do nothing
         }
 		
 		NameID nameID =builderNameID(nameIdValue,assertionConsumerURL);

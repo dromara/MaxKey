@@ -78,8 +78,8 @@ public class PermissionAdapter  implements AsyncHandlerInterceptor  {
 			//判断用户是否登录
 	        if(WebContext.getAuthentication()==null
 	                ||WebContext.getAuthentication().getAuthorities()==null){//判断用户和角色，判断用户是否登录用户
-	            _logger.trace("No Authentication ... forward to /login");
-	            RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+	            _logger.trace("No Authentication ... forward to /auth/entrypoint");
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/auth/entrypoint");
 	            dispatcher.forward(request, response);
 	            return false;
 	        }

@@ -78,7 +78,7 @@ public class AuthnResponseGenerator {
 											attributeMap);
 		
 		//Encrypt 
-		if(ConstsBoolean.isTrue(saml20Details.getEncrypted())) {
+		if(ConstsBoolean.isYes(saml20Details.getEncrypted())) {
 			logger.info("begin to encrypt assertion");
 			try {
 				// Assume this contains a recipient's RSA public

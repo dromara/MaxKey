@@ -26,8 +26,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.web.multipart.MultipartFile;
-
 /**
  * @author Crystal.Sea
  *
@@ -79,16 +77,13 @@ public class AppsSAML20Details extends Apps {
      * 0 false 1 true
      */
     @Column
-    private int encrypted;
-
-    /**
-     * for upload
-     */
-    private MultipartFile metaFile;
+    private String encrypted;
     /**
      * metadata_file metadata_url or certificate
      */
     private String fileType;
+    
+    String metaFileId;
     
     X509Certificate trustCert = null;
     /**
@@ -101,7 +96,7 @@ public class AppsSAML20Details extends Apps {
      * 0 original 1 uppercase 2 lowercase
      */
     @Column
-    private int nameIdConvert;
+    private String nameIdConvert;
     
     @Column
     private String nameIdSuffix;
@@ -283,15 +278,7 @@ public class AppsSAML20Details extends Apps {
         this.validityInterval = validityInterval;
     }
 
-  
-
-    public MultipartFile getMetaFile() {
-        return metaFile;
-    }
-
-    public void setMetaFile(MultipartFile metaFile) {
-        this.metaFile = metaFile;
-    }
+ 
 
     /**
      * @return the fileType
@@ -307,7 +294,15 @@ public class AppsSAML20Details extends Apps {
         this.fileType = fileType;
     }
 
-    public String getBinding() {
+    public String getMetaFileId() {
+		return metaFileId;
+	}
+
+	public void setMetaFileId(String metaFileId) {
+		this.metaFileId = metaFileId;
+	}
+
+	public String getBinding() {
         return binding;
     }
 
@@ -315,19 +310,19 @@ public class AppsSAML20Details extends Apps {
         this.binding = binding;
     }
 
-    public int getEncrypted() {
+    public String getEncrypted() {
         return encrypted;
     }
 
-    public void setEncrypted(int encrypted) {
+    public void setEncrypted(String encrypted) {
         this.encrypted = encrypted;
     }
 
-    public int getNameIdConvert() {
+    public String getNameIdConvert() {
         return nameIdConvert;
     }
 
-    public void setNameIdConvert(int nameIdConvert) {
+    public void setNameIdConvert(String nameIdConvert) {
         this.nameIdConvert = nameIdConvert;
     }
 

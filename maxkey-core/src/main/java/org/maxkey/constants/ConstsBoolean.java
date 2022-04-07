@@ -50,6 +50,10 @@ public class ConstsBoolean {
     public static boolean isTrue(int value) {
         return TRUE == value;
     }
+    
+    public static boolean isYes(String value) {
+        return "YES" == value.toUpperCase();
+    }
 
     public static boolean isFalse(int value) {
         return FALSE == value;

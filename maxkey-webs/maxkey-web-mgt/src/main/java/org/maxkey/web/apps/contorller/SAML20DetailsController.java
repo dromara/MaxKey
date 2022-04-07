@@ -17,10 +17,13 @@
 
 package org.maxkey.web.apps.contorller;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.cert.X509Certificate;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -83,7 +86,6 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		AppsSAML20Details saml20Details=saml20DetailsService.getAppDetails(id , false);
 		decoderSecret(saml20Details);
 		saml20Details.transIconBase64();
-		//modelAndView.addObject("model",saml20Details);
 		//modelAndView.addObject("authzURI",applicationConfig.getAuthzUri());
 		return new Message<AppsSAML20Details>(saml20Details).buildResponse();
 	}
@@ -142,60 +144,57 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		}
 	}
 	
-	//////////////////////////////
-
-	
-
 	protected AppsSAML20Details transform(AppsSAML20Details samlDetails) throws Exception{
-		
 		super.transform(samlDetails);
 		
-		if(null==samlDetails.getFileType()||samlDetails.getFileType().equals("certificate")){//certificate file
-			try {
-			    if (null!=samlDetails.getMetaFile()&&!samlDetails.getMetaFile().isEmpty()) {
-					InputStream isCert = samlDetails.getMetaFile().getInputStream();
-					X509Certificate trustCert = X509CertUtils.loadCertFromInputStream(isCert);
-					samlDetails.setTrustCert(trustCert);
-					isCert.close();
-			    }
-			} catch (IOException e) {
-				_logger.error("read certificate file error .", e);
-				throw new Exception("read certificate file error", e);
+		if(StringUtils.isNotBlank(samlDetails.getFileType())){
+			if(StringUtils.isNotBlank(samlDetails.getMetaFileId())) {
+				ByteArrayInputStream bArrayInputStream = new ByteArrayInputStream(
+						fileUploadService.get(samlDetails.getMetaFileId()).getUploaded());;
+				if(samlDetails.getFileType().equals("certificate")){//certificate file
+					try {
+						X509Certificate trustCert = X509CertUtils.loadCertFromInputStream(bArrayInputStream);
+						samlDetails.setTrustCert(trustCert);
+					} catch (IOException e) {
+						_logger.error("read certificate file error .", e);
+						throw new Exception("read certificate file error", e);
+					}
+				}else if(samlDetails.getFileType().equals("metadata_file")){//metadata file
+					samlDetails = resolveMetaData(samlDetails,bArrayInputStream);
+				}
 			}
-		}else if(samlDetails.getFileType().equals("metadata_file")){//metadata file
-		    if (null!=samlDetails.getMetaFile()&&!samlDetails.getMetaFile().isEmpty()) {
-		        samlDetails = resolveMetaData(samlDetails,samlDetails.getMetaFile().getInputStream());
-		    }
-		}else if(samlDetails.getFileType().equals("metadata_url")){//metadata url
-		    CloseableHttpClient httpClient = HttpClients.createDefault();
-		    HttpPost post = new HttpPost(samlDetails.getMetaUrl());
-            CloseableHttpResponse response = httpClient.execute(post);
-            samlDetails = resolveMetaData(samlDetails,response.getEntity().getContent());;
-            response.close();
-            httpClient.close();
+			
+			if(samlDetails.getFileType().equals("metadata_url")
+					&&StringUtils.isNotBlank(samlDetails.getMetaUrl())){//metadata url
+			    CloseableHttpClient httpClient = HttpClients.createDefault();
+			    HttpPost post = new HttpPost(samlDetails.getMetaUrl());
+	            CloseableHttpResponse response = httpClient.execute(post);
+	            samlDetails = resolveMetaData(samlDetails,response.getEntity().getContent());;
+	            response.close();
+	            httpClient.close();
+			}
+			
+			if(samlDetails.getTrustCert()!=null) {
+	    		samlDetails.setCertSubject(samlDetails.getTrustCert().getSubjectDN().getName());
+	    		samlDetails.setCertExpiration(samlDetails.getTrustCert().getNotAfter().toString());
+	    
+	    		samlDetails.setCertIssuer(X509CertUtils.getCommonName(samlDetails.getTrustCert().getIssuerX500Principal()));
+	    		
+	    		KeyStore keyStore = KeyStoreUtil.clone(idpKeyStoreLoader.getKeyStore(),idpKeyStoreLoader.getKeystorePassword());
+	    
+	    		KeyStore trustKeyStore = null;
+	    		if (!samlDetails.getEntityId().equals("")) {
+	    			trustKeyStore = KeyStoreUtil.importTrustCertificate(keyStore,samlDetails.getTrustCert(), samlDetails.getEntityId());
+	    		} else {
+	    			trustKeyStore = KeyStoreUtil.importTrustCertificate(keyStore,samlDetails.getTrustCert());
+	    		}
+	    
+	    		byte[] keyStoreByte = KeyStoreUtil.keyStore2Bytes(trustKeyStore,idpKeyStoreLoader.getKeystorePassword());
+	    
+	    		// store KeyStore content
+	    		samlDetails.setKeyStore(keyStoreByte);
+			}
 		}
-		
-		if(samlDetails.getTrustCert()!=null) {
-    		samlDetails.setCertSubject(samlDetails.getTrustCert().getSubjectDN().getName());
-    		samlDetails.setCertExpiration(samlDetails.getTrustCert().getNotAfter().toString());
-    
-    		samlDetails.setCertIssuer(X509CertUtils.getCommonName(samlDetails.getTrustCert().getIssuerX500Principal()));
-    		
-    		KeyStore keyStore = KeyStoreUtil.clone(idpKeyStoreLoader.getKeyStore(),idpKeyStoreLoader.getKeystorePassword());
-    
-    		KeyStore trustKeyStore = null;
-    		if (!samlDetails.getEntityId().equals("")) {
-    			trustKeyStore = KeyStoreUtil.importTrustCertificate(keyStore,samlDetails.getTrustCert(), samlDetails.getEntityId());
-    		} else {
-    			trustKeyStore = KeyStoreUtil.importTrustCertificate(keyStore,samlDetails.getTrustCert());
-    		}
-    
-    		byte[] keyStoreByte = KeyStoreUtil.keyStore2Bytes(trustKeyStore,idpKeyStoreLoader.getKeystorePassword());
-    
-    		// store KeyStore content
-    		samlDetails.setKeyStore(keyStoreByte);
-		}
-		
 		return samlDetails;
 	}
 	
