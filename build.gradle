@@ -53,7 +53,7 @@ def libjarsmapper=[
     'maxkey-synchronizer-dingtalk'          :'maxkey_mgt',
     'maxkey-synchronizer-workweixin'        :'maxkey_mgt',
 	'maxkey-synchronizer-reorgdept'         :'maxkey_mgt',
-    'maxkey-boot-monitor'                   :'maxkey_monitor'
+    'maxkey-monitor'                        :'maxkey_monitor'
 ]
 
 configurations.all {
@@ -510,7 +510,7 @@ project('maxkey-common')  {
 }
 
 //copy Dep Jars to /build/maxkey-depjars,only maxkey-boot-monitor deps
-project('maxkey-webs:maxkey-boot-monitor')  {
+project('maxkey-monitor')  {
     task copyDepJars(type:Copy) {
         dependsOn   assemble
         //项目名 项目所在的group version 版本号
