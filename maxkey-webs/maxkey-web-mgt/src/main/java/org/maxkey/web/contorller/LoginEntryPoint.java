@@ -44,8 +44,8 @@ import org.springframework.http.MediaType;
  *
  */
 @Controller
-public class LoginEndpoint {
-	private static Logger _logger = LoggerFactory.getLogger(LoginEndpoint.class);
+public class LoginEntryPoint {
+	private static Logger _logger = LoggerFactory.getLogger(LoginEntryPoint.class);
 	
 	@Autowired
   	@Qualifier("authJwtService")

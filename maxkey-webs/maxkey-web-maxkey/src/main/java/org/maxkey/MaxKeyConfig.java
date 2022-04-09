@@ -57,6 +57,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @ComponentScan(basePackages = {
+		"org.maxkey.authn",
         "org.maxkey.configuration",
         "org.maxkey.domain",
         "org.maxkey.domain.apps",

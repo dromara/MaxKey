@@ -26,10 +26,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
+import org.maxkey.authn.jwt.AuthJwt;
+import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.OtpAuthnService;
@@ -40,9 +43,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -56,8 +63,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @Tag(name = "1-1-登录接口文档模块")
 @Controller
-public class LoginEndpoint {
-	private static Logger _logger = LoggerFactory.getLogger(LoginEndpoint.class);
+public class LoginEntryPoint {
+	private static Logger _logger = LoggerFactory.getLogger(LoginEntryPoint.class);
+	
+	@Autowired
+  	@Qualifier("authJwtService")
+	AuthJwtService authJwtService;
 	
 	@Autowired
   	@Qualifier("applicationConfig")
@@ -174,5 +185,16 @@ public class LoginEndpoint {
         
         return "fail";
     }
+ 	
+ 	
+ 	
+ 	////////////////////
+ 	
+ 	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
+ 		Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
+ 		String jwt = authJwtService.generateToken(authentication);
+ 		return new Message<AuthJwt>(new AuthJwt(jwt, authentication)).buildResponse();
+ 	}
 
 }

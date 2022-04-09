@@ -150,11 +150,11 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		
 		if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
 		    String onlineTicketId = ((SigninPrincipal)WebContext.getAuthentication().getPrincipal()).getOnlineTicket().getTicketId();
-		    OnlineTicket onlineTicket  = onlineTicketServices.get(onlineTicketId);
+		    OnlineTicket onlineTicket  = onlineTicketService.get(onlineTicketId);
 		    //set cas ticket as OnlineTicketId
 		    casDetails.setOnlineTicket(ticket);
 		    onlineTicket.setAuthorizedApp(casDetails);
-		    onlineTicketServices.store(onlineTicketId, onlineTicket);
+		    onlineTicketService.store(onlineTicketId, onlineTicket);
 		}
 		
 		_logger.debug("redirect to CAS Client URL {}" , callbackUrl);

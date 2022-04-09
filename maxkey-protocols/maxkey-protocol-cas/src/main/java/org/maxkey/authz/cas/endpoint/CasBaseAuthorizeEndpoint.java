@@ -49,8 +49,7 @@ public class CasBaseAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
     protected TicketServices casTicketGrantingTicketServices;
     
     @Autowired
-    @Qualifier("onlineTicketServices")
-    protected OnlineTicketService onlineTicketServices;
+    protected OnlineTicketService onlineTicketService;
     
     @Autowired
     @Qualifier("casProxyGrantingTicketServices")

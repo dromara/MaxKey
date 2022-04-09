@@ -67,8 +67,7 @@ public class LogoutEndpoint {
 	ApplicationConfig applicationConfig;
 	
 	@Autowired
-    @Qualifier("onlineTicketServices")
-    protected OnlineTicketService onlineTicketServices;
+    protected OnlineTicketService onlineTicketService;
 	
 	@Operation(summary = "单点注销接口", description = "reLoginUrl跳转地址",method="GET")
  	@RequestMapping(value={"/logout"})
@@ -120,7 +119,7 @@ public class LogoutEndpoint {
  		//if logined in have onlineTicket ,need remove or logout back
  		if(WebContext.getAuthentication() != null) {
  			String onlineTicketId = ((SigninPrincipal)WebContext.getAuthentication().getPrincipal()).getOnlineTicket().getTicketId();
- 	 		OnlineTicket onlineTicket = onlineTicketServices.get(onlineTicketId);
+ 	 		OnlineTicket onlineTicket = onlineTicketService.get(onlineTicketId);
  	 		if(onlineTicket != null) {
 		 		Set<Entry<String, Apps>> entrySet = onlineTicket.getAuthorizedApps().entrySet();
 		 
@@ -138,7 +137,7 @@ public class LogoutEndpoint {
 		                singleLogout.sendRequest(onlineTicket.getAuthentication(), mapEntry.getValue());
 		            }
 		        }
-		 		onlineTicketServices.remove(onlineTicketId);
+		        onlineTicketService.remove(onlineTicketId);
  	 		}
  		}
  		//remove ONLINE_TICKET cookie
