@@ -17,57 +17,45 @@
 
 package org.maxkey.web.config.contorller;
 
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.Institutions;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.InstitutionsService;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value={"/institutions"})
+@RequestMapping(value={"/config/institutions"})
 public class InstitutionsController {
-
-
 		final static Logger _logger = LoggerFactory.getLogger(InstitutionsController.class);
 		
 		@Autowired
 		private InstitutionsService institutionsService;
 		
-		/**
-		 * 读取
-		 * @return
-		 */
-		@RequestMapping(value={"/forward"})
-		public ModelAndView forward(){
-			Institutions institutions = institutionsService.get(WebContext.getUserInfo().getInstId());
-			return new ModelAndView("institutions/updateInstitutions","model",institutions);
+		@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+		public ResponseEntity<?> get(@CurrentUser UserInfo currentUser){
+			Institutions institutions = institutionsService.get(currentUser.getInstId());
+			return new Message<Institutions>(Message.SUCCESS,institutions).buildResponse();
 		}
 		
-		/**
-		 * 更新
-		 * @param sysConfig
-		 * @return
-		 */
-		@RequestMapping(value={"/update"})
-		@ResponseBody
-		public Message updat(@ModelAttribute("institutions") Institutions institutions,BindingResult result) {
+		@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+		public ResponseEntity<?> update(
+				@RequestBody  Institutions institutions,
+				@CurrentUser UserInfo currentUser,
+				BindingResult result) {
 			_logger.debug("updateRole institutions : "+institutions);
 			if(institutionsService.update(institutions)) {
-				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+				return new Message<Institutions>(Message.SUCCESS).buildResponse();
 			} else {
-				return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
+				return new Message<Institutions>(Message.FAIL).buildResponse();
 			}
 		}
-		
-
 }

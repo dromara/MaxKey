@@ -58,7 +58,7 @@ public class ApplicationsController extends BaseAppContorller {
 	public ResponseEntity<?> init() {
 		Apps app=new Apps();
 		app.setId(app.generateId());
-		app.setProtocol(ConstsProtocols.FORMBASED);
+		app.setProtocol(ConstsProtocols.BASIC);
 		app.setSecret(ReciprocalUtils.generateKey(""));
 		return new Message<Apps>(app).buildResponse();
 	}

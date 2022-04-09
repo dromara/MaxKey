@@ -21,13 +21,13 @@
 package org.maxkey.persistence.mapper;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.maxkey.entity.HistoryLogs;
+import org.maxkey.entity.HistorySystemLogs;
 
 /**
  * @author Crystal.sea
  *
  */
-public  interface HistorySystemLogsMapper extends IJpaBaseMapper<HistoryLogs> {
+public  interface HistorySystemLogsMapper extends IJpaBaseMapper<HistorySystemLogs> {
 	
 
 }

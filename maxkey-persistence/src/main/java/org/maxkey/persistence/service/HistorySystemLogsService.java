@@ -18,12 +18,12 @@
 package org.maxkey.persistence.service;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.entity.HistoryLogs;
+import org.maxkey.entity.HistorySystemLogs;
 import org.maxkey.persistence.mapper.HistorySystemLogsMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistorySystemLogsService  extends JpaBaseService<HistoryLogs>{
+public class HistorySystemLogsService  extends JpaBaseService<HistorySystemLogs>{
 
 	public HistorySystemLogsService() {
 		super(HistorySystemLogsMapper.class);

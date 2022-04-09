@@ -6,50 +6,37 @@
     	<if test="id != null and id != ''">
 			and	id	=	#{id}
 		</if> 
-		<if test="serviceName != null and serviceName != '' ">
-			and	 lower(servicename) like lower(concat('%',#{serviceName},'%'))
+		<if test="topic != null and topic != '' ">
+			and	 lower(topic) like lower(concat('%',#{topic},'%'))
 		</if>
 		<if test="message != null and message != '' ">
 			and	 lower(message) like lower(concat('%',#{message},'%'))
 		</if>
 		<if test="startDate != null  and startDate != '' ">
-			and createddate  between 	#{startDate} and	#{endDate}
+			and executeTime  between 	#{startDate} and	#{endDate}
 		</if>
-		<if test="createdBy != null and createdBy != ''">
-			and	createdby	=	#{createdBy}
-		</if>
-
 		<if test="username != null and username != ''">
 			and	 lower(username) like lower(concat('%',#{username},'%'))
 		</if>
+		<if test="displayName != null and displayName != ''">
+            and  lower(displayName) like lower(concat('%',#{displayName},'%'))
+        </if>
 		<if test="messageType != null and messageType != ''">
-			and	messagetype	=	#{messageType}
+			and	messageType	=	#{messageType}
 		</if>
-		<if test="operateType != null and operateType != ''">
-			and	operatetype	=	#{operateType}
+		<if test="messageResult != null and messageResult != ''">
+			and	messageResult	=	#{messageResult}
 		</if>
     </sql>
 	
     
-     <select id="queryPageResults" parameterType="HistoryLogs" resultType="HistoryLogs">
-    	select 
-			id,
-			tid,
-			tname,
-			servicename ,
-			code,
-			message ,
-			content,
-			operatetype,
-			messagetype,
-			username,
-			createddate,
-			createdby
-    	from mxk_history_logs 
+     <select id="queryPageResults" parameterType="HistorySystemLogs" resultType="HistorySystemLogs">
+    	select *
+    	from mxk_history_system_logs 
     	where	instid   =   #{instId} 
     	<include refid="where_statement"/>
     	
-    	order by createddate desc
+    	order by executeTime desc
     </select>
   
 </mapper>

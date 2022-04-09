@@ -32,6 +32,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -85,7 +86,7 @@ public class RoleMemberController {
 	
 	@RequestMapping(value = {"/add"})
 	@ResponseBody
-	public ResponseEntity<?> add(@ModelAttribute RoleMember roleMember,@CurrentUser UserInfo currentUser) {
+	public ResponseEntity<?> add(@RequestBody RoleMember roleMember,@CurrentUser UserInfo currentUser) {
 		if (roleMember == null || roleMember.getRoleId() == null) {
 			return new Message<RoleMember>(Message.FAIL).buildResponse();
 		}

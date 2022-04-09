@@ -39,7 +39,7 @@ import org.springframework.validation.FieldError;
 public class Message {
     static final  Logger _logger = LoggerFactory.getLogger(Message.class);
     // 服务名称
-    private String serviceName;
+    private String topic;
     // 信息内容
     private String message;
     // 信息代码
@@ -119,9 +119,9 @@ public class Message {
         WebContext.setMessage(this);
     }
 
-    public Message(String serviceName, String message, Object messageObject, BindingResult result,
+    public Message(String topic, String message, Object messageObject, BindingResult result,
             MessageType messageType, OperateType operateType, MessageScope messageScope) {
-        this.serviceName = serviceName;
+        this.topic = topic;
         this.message = message;
         this.messageObject = messageObject;
         this.operateType = operateType;
@@ -233,12 +233,14 @@ public class Message {
         this.messageScope = messageScope;
     }
 
-    public String getServiceName() {
-        return serviceName;
-    }
+	public String getTopic() {
+		return topic;
+	}
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
-    }
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+
+
 
 }

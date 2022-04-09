@@ -64,7 +64,7 @@ public class LocalizationRepository {
 		}else if(code.equals("global.title")) {
 			message = getFromStore(code, htmlTag, locale, inst);
 			if(message == null) {
-				message = institutionService.get(inst).getTitle();
+				message = institutionService.get(inst).getFrontTitle();
 			}
 		}else if(code.equals("global.consoleTitle")) {
 			message = getFromStore(code, htmlTag, locale, inst);

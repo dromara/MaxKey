@@ -19,10 +19,9 @@ package org.maxkey.web.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.maxkey.entity.HistoryLogs;
+import org.maxkey.entity.HistorySystemLogs;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistorySystemLogsService;
-import org.maxkey.util.JsonUtils;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
 import org.maxkey.web.message.MessageScope;
@@ -58,20 +57,14 @@ public class HistoryLogsAdapter  implements AsyncHandlerInterceptor  {
 			if(message.getMessageScope() == MessageScope.DB || message.getMessageScope() == MessageScope.DB_CLIENT) {//判断message类型
 				UserInfo userInfo =WebContext.getUserInfo();//取得当前用户信息
 				//创建日志记录
-				HistoryLogs historyLog = new HistoryLogs(
-					message.getServiceName(),
-					message.getCode(),
-					message.getMessage(),
-					JsonUtils.object2Json(message.getMessageObject()),
-					message.getMessageType().toString(),
-					message.getOperateType().toString(),
-					userInfo==null?null:userInfo.getId(),
-					userInfo==null?null:userInfo.getUsername(),
-					""
-				);
-				historyLog.setInstId(userInfo.getInstId());
-				_logger.debug("insert db logs content : " + historyLog);
-				historySystemLogsService.insert(historyLog);//日志插入数据库
+				HistorySystemLogs historySystemLog = new HistorySystemLogs();
+				historySystemLog.setTopic(message.getTopic());
+				historySystemLog.setUserId(userInfo.getId());
+				historySystemLog.setUsername(userInfo.getUsername());
+				historySystemLog.setDisplayName(userInfo.getDisplayName());
+				historySystemLog.setInstId(userInfo.getInstId());
+				_logger.debug("insert db logs content : " + historySystemLog);
+				historySystemLogsService.insert(historySystemLog);//日志插入数据库
 				if(message.getMessageScope() == MessageScope.DB) {//message类型仅插入数据库
 					WebContext.clearMessage();//清除message
 				}

@@ -65,32 +65,22 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 	@Column
 	private String description;
 
-	@Column
-	private int status;
 
 	@Column
 	private String logo;
 	@Column
-	private String title;
+	private String frontTitle;
 	@Column
 	private String consoleTitle;
 	@Column
 	private String domain;
 	@Column
-	private String captcha;
+	private String captchaType;
 	@Column
 	private String captchaSupport;
 	@Column
 	private String defaultUri;
 
-	@Column
-	String createdBy;
-	@Column
-	String createdDate;
-	@Column
-	String modifiedBy;
-	@Column
-	String modifiedDate;
 
 	public Institutions() {
 		super();
@@ -128,12 +118,21 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 		this.logo = logo;
 	}
 
-	public String getTitle() {
-		return title;
+
+	public String getFrontTitle() {
+		return frontTitle;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setFrontTitle(String frontTitle) {
+		this.frontTitle = frontTitle;
+	}
+
+	public String getCaptchaType() {
+		return captchaType;
+	}
+
+	public void setCaptchaType(String captchaType) {
+		this.captchaType = captchaType;
 	}
 
 	public String getConsoleTitle() {
@@ -248,60 +247,9 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 		this.description = description;
 	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public String getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(String createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public String getModifiedBy() {
-		return modifiedBy;
-	}
-
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public String getModifiedDate() {
-		return modifiedDate;
-	}
-
-	public void setModifiedDate(String modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
-
-	public String getCaptcha() {
-		return captcha;
-	}
-
-	public void setCaptcha(String captcha) {
-		this.captcha = captcha;
-	}
 
 	public String getCaptchaSupport() {
 		return captchaSupport;
-	}
-
-	public boolean isTrueCaptchaSupport() {
-		return "YES".equalsIgnoreCase(captchaSupport);
 	}
 
 	public void setCaptchaSupport(String captchaSupport) {
@@ -325,14 +273,6 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 		builder.append(name);
 		builder.append(", fullName=");
 		builder.append(fullName);
-		builder.append(", logo=");
-		builder.append(logo);
-		builder.append(", title=");
-		builder.append(title);
-		builder.append(", consoleTitle=");
-		builder.append(consoleTitle);
-		builder.append(", domain=");
-		builder.append(domain);
 		builder.append(", division=");
 		builder.append(division);
 		builder.append(", country=");
@@ -357,16 +297,20 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 		builder.append(email);
 		builder.append(", description=");
 		builder.append(description);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", createdBy=");
-		builder.append(createdBy);
-		builder.append(", createdDate=");
-		builder.append(createdDate);
-		builder.append(", modifiedBy=");
-		builder.append(modifiedBy);
-		builder.append(", modifiedDate=");
-		builder.append(modifiedDate);
+		builder.append(", logo=");
+		builder.append(logo);
+		builder.append(", frontTitle=");
+		builder.append(frontTitle);
+		builder.append(", consoleTitle=");
+		builder.append(consoleTitle);
+		builder.append(", domain=");
+		builder.append(domain);
+		builder.append(", captchaType=");
+		builder.append(captchaType);
+		builder.append(", captchaSupport=");
+		builder.append(captchaSupport);
+		builder.append(", defaultUri=");
+		builder.append(defaultUri);
 		builder.append("]");
 		return builder.toString();
 	}

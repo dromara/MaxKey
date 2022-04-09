@@ -87,7 +87,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         authTypeValid(loginCredential.getAuthType());
         
         Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-        if(inst.getCaptcha().equalsIgnoreCase("YES")) {
+        if(inst.getCaptchaSupport().equalsIgnoreCase("YES")) {
         	captchaValid(loginCredential.getCaptcha(),loginCredential.getAuthType());
         }
 

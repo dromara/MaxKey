@@ -20,7 +20,7 @@ package org.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
-import org.maxkey.entity.HistoryLogs;
+import org.maxkey.entity.HistorySystemLogs;
 import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.web.WebContext;
@@ -63,7 +63,7 @@ public class HistorySystemLogsController {
      */
     @RequestMapping(value = { "/systemLogsList/grid" })
     @ResponseBody
-    public JpaPageResults<HistoryLogs> logsDataGrid(@ModelAttribute("historyLogs") HistoryLogs historyLogs) {
+    public JpaPageResults<HistorySystemLogs> logsDataGrid(@ModelAttribute("historyLogs") HistorySystemLogs historyLogs) {
         _logger.debug("history/systemLogs/grid/ systemLogs() " + historyLogs);
         historyLogs.setInstId(WebContext.getUserInfo().getInstId());
         return historySystemLogsService.queryPageResults(historyLogs);

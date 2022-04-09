@@ -33,6 +33,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -88,7 +89,7 @@ public class GroupMemberController {
 	
 	@RequestMapping(value = {"/add"})
 	@ResponseBody
-	public ResponseEntity<?> addGroupMember(@ModelAttribute("groupMember") GroupMember groupMember,@CurrentUser UserInfo currentUser) {
+	public ResponseEntity<?> addGroupMember(@RequestBody GroupMember groupMember,@CurrentUser UserInfo currentUser) {
 		if (groupMember == null || groupMember.getGroupId() == null) {
 			return new Message<GroupMember>(Message.FAIL).buildResponse();
 		}

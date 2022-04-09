@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
-import org.maxkey.entity.HistoryLogs;
+import org.maxkey.entity.HistorySystemLogs;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistorySystemLogsService;
@@ -60,11 +60,11 @@ final static Logger _logger = LoggerFactory.getLogger(SystemLogsController.class
 	 */
 	@RequestMapping(value={"/systemLogs/fetch"})
 	@ResponseBody
-	public ResponseEntity<?> fetch(@ModelAttribute("historyLog") HistoryLogs historyLog,
+	public ResponseEntity<?> fetch(@ModelAttribute("historyLog") HistorySystemLogs historyLog,
 			@CurrentUser UserInfo currentUser){
 		_logger.debug("historys/historyLog/fetch {} ",historyLog);
 		historyLog.setInstId(currentUser.getInstId());
-		return new Message<JpaPageResults<HistoryLogs>>(
+		return new Message<JpaPageResults<HistorySystemLogs>>(
 				 	historySystemLogsService.queryPageResults(historyLog)
 				).buildResponse();
 	}

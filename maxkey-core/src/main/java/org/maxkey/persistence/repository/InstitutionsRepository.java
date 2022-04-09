@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Institutions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,10 +36,10 @@ public class InstitutionsRepository {
     private static Logger _logger = LoggerFactory.getLogger(InstitutionsRepository.class);
     
     private static final String SELECT_STATEMENT = 
-    						"select * from  mxk_institutions where domain = ? and status = " + ConstsStatus.ACTIVE;
+    						"select * from  mxk_institutions where domain = ? " ;
 
     private static final String SELECT_STATEMENT_BY_ID = 
-    						"select * from  mxk_institutions where id = ? and status = " + ConstsStatus.ACTIVE;
+    						"select * from  mxk_institutions where id = ? " ;
 
     protected static final Cache<String, Institutions> institutionsStore = 
             Caffeine.newBuilder()
@@ -102,11 +101,11 @@ public class InstitutionsRepository {
         	institution.setFullName(rs.getString("fullname"));
         	institution.setLogo(rs.getString("logo"));
         	institution.setDomain(rs.getString("domain"));
-        	institution.setTitle(rs.getString("title"));
+        	institution.setFrontTitle(rs.getString("fronttitle"));
         	institution.setConsoleTitle(rs.getString("consoletitle"));
-        	institution.setCaptcha(rs.getString("captcha"));
-        	institution.setCaptchaSupport(rs.getString("CaptchaSupport"));
-        	institution.setDefaultUri(rs.getString("DefaultUri"));
+        	institution.setCaptchaType(rs.getString("captchatype"));
+        	institution.setCaptchaSupport(rs.getString("captchasupport"));
+        	institution.setDefaultUri(rs.getString("defaultUri"));
             return institution;
         }
     }

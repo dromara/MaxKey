@@ -77,8 +77,8 @@ public class LoginEndpoint {
 		ModelAndView modelAndView = new ModelAndView();
 		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
 		modelAndView.addObject("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
-		modelAndView.addObject("isCaptcha", inst.isTrueCaptchaSupport());
-		modelAndView.addObject("captcha", inst.getCaptcha());
+		modelAndView.addObject("captchaSupport", inst.getCaptchaSupport());
+		modelAndView.addObject("captchaType", inst.getCaptchaType());
 		modelAndView.addObject("sessionid", WebContext.getSession().getId());
 		Object loginErrorMessage=WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
         modelAndView.addObject("loginErrorMessage", loginErrorMessage==null?"":loginErrorMessage);

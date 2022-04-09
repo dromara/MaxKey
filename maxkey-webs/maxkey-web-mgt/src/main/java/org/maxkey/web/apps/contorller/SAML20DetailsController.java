@@ -146,25 +146,28 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	
 	protected AppsSAML20Details transform(AppsSAML20Details samlDetails) throws Exception{
 		super.transform(samlDetails);
+		ByteArrayInputStream bArrayInputStream = null;
+		if(StringUtils.isNotBlank(samlDetails.getMetaFileId())) {
+			bArrayInputStream = new ByteArrayInputStream(
+					fileUploadService.get(samlDetails.getMetaFileId()).getUploaded());
+			fileUploadService.remove(samlDetails.getMetaFileId());
+		}
 		
 		if(StringUtils.isNotBlank(samlDetails.getFileType())){
-			if(StringUtils.isNotBlank(samlDetails.getMetaFileId())) {
-				ByteArrayInputStream bArrayInputStream = new ByteArrayInputStream(
-						fileUploadService.get(samlDetails.getMetaFileId()).getUploaded());;
-				if(samlDetails.getFileType().equals("certificate")){//certificate file
-					try {
-						X509Certificate trustCert = X509CertUtils.loadCertFromInputStream(bArrayInputStream);
-						samlDetails.setTrustCert(trustCert);
-					} catch (IOException e) {
-						_logger.error("read certificate file error .", e);
-						throw new Exception("read certificate file error", e);
+			if(samlDetails.getFileType().equals("certificate")){//certificate file
+				try {
+					if(bArrayInputStream != null) {
+						samlDetails.setTrustCert(
+								X509CertUtils.loadCertFromInputStream(bArrayInputStream));
 					}
-				}else if(samlDetails.getFileType().equals("metadata_file")){//metadata file
+				} catch (IOException e) {
+					_logger.error("read certificate file error .", e);
+				}
+			}else if(samlDetails.getFileType().equals("metadata_file")){//metadata file
+				if(bArrayInputStream != null) {
 					samlDetails = resolveMetaData(samlDetails,bArrayInputStream);
 				}
-			}
-			
-			if(samlDetails.getFileType().equals("metadata_url")
+			}else if(samlDetails.getFileType().equals("metadata_url")
 					&&StringUtils.isNotBlank(samlDetails.getMetaUrl())){//metadata url
 			    CloseableHttpClient httpClient = HttpClients.createDefault();
 			    HttpPost post = new HttpPost(samlDetails.getMetaUrl());
@@ -173,27 +176,27 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	            response.close();
 	            httpClient.close();
 			}
+		}
 			
-			if(samlDetails.getTrustCert()!=null) {
-	    		samlDetails.setCertSubject(samlDetails.getTrustCert().getSubjectDN().getName());
-	    		samlDetails.setCertExpiration(samlDetails.getTrustCert().getNotAfter().toString());
-	    
-	    		samlDetails.setCertIssuer(X509CertUtils.getCommonName(samlDetails.getTrustCert().getIssuerX500Principal()));
-	    		
-	    		KeyStore keyStore = KeyStoreUtil.clone(idpKeyStoreLoader.getKeyStore(),idpKeyStoreLoader.getKeystorePassword());
-	    
-	    		KeyStore trustKeyStore = null;
-	    		if (!samlDetails.getEntityId().equals("")) {
-	    			trustKeyStore = KeyStoreUtil.importTrustCertificate(keyStore,samlDetails.getTrustCert(), samlDetails.getEntityId());
-	    		} else {
-	    			trustKeyStore = KeyStoreUtil.importTrustCertificate(keyStore,samlDetails.getTrustCert());
-	    		}
-	    
-	    		byte[] keyStoreByte = KeyStoreUtil.keyStore2Bytes(trustKeyStore,idpKeyStoreLoader.getKeystorePassword());
-	    
-	    		// store KeyStore content
-	    		samlDetails.setKeyStore(keyStoreByte);
+		if(samlDetails.getTrustCert()!=null) {
+			samlDetails.setCertSubject(samlDetails.getTrustCert().getSubjectDN().getName());
+			samlDetails.setCertExpiration(samlDetails.getTrustCert().getNotAfter().toString());
+		
+			samlDetails.setCertIssuer(X509CertUtils.getCommonName(samlDetails.getTrustCert().getIssuerX500Principal()));
+			
+			KeyStore keyStore = KeyStoreUtil.clone(idpKeyStoreLoader.getKeyStore(),idpKeyStoreLoader.getKeystorePassword());
+		
+			KeyStore trustKeyStore = null;
+			if (!samlDetails.getEntityId().equals("")) {
+				trustKeyStore = KeyStoreUtil.importTrustCertificate(keyStore,samlDetails.getTrustCert(), samlDetails.getEntityId());
+			} else {
+				trustKeyStore = KeyStoreUtil.importTrustCertificate(keyStore,samlDetails.getTrustCert());
 			}
+		
+			byte[] keyStoreByte = KeyStoreUtil.keyStore2Bytes(trustKeyStore,idpKeyStoreLoader.getKeystorePassword());
+		
+			// store KeyStore content
+			samlDetails.setKeyStore(keyStoreByte);
 		}
 		return samlDetails;
 	}
