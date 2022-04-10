@@ -17,33 +17,29 @@
 
 package org.maxkey.web.contorller;
 
-import java.security.Principal;
 import java.util.List;
 
-import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstsOperateMessage;
-import org.maxkey.constants.ConstsProtocols;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.UserApps;
 import org.maxkey.persistence.service.AccountsService;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.persistence.service.UserInfoService;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * AppListController.
@@ -54,15 +50,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AppListController {
     static final Logger _logger = LoggerFactory.getLogger(AppListController.class);
-
-    @Autowired
-  	protected ApplicationConfig applicationConfig;
     
     @Autowired
     private UserInfoService userInfoService;
 
     @Autowired
-    AccountsService appUsersService;
+    AccountsService accountsService;
 
     @Autowired
     AppsService appsService;
@@ -72,202 +65,77 @@ public class AppListController {
      * @param gridList 类型
      * @return
      */
-    @RequestMapping(value = { "/appList" })
-    public ModelAndView appList(
-            @RequestParam(value = "gridList", required = false) String gridList,Principal principal) {
-        ModelAndView modelAndView = new ModelAndView("main/appList");
+    @RequestMapping(value = { "/appList" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public ResponseEntity<?> appList(
+            @RequestParam(value = "gridList", required = false) String gridList,
+            @CurrentUser UserInfo currentUser) {
         userInfoService.updateGridList(gridList);
-        modelAndView.addObject("appList", queryAccessableApps());
-        modelAndView.addObject("noticesVisible", applicationConfig.isNoticesVisible());
-        return modelAndView;
-    }
-
-    @RequestMapping(value = { "/appConfigList" })
-    public ModelAndView appConfigList() {
-        ModelAndView modelAndView = new ModelAndView("main/appConfigList");
-        modelAndView.addObject("appList", queryAccessableApps());
-        
-        return modelAndView;
-    }
-
-    private List<UserApps> queryAccessableApps() {
-        UserApps userApplications = new UserApps();
-        userApplications.setUsername(WebContext.getUserInfo().getUsername());
-        userApplications.setInstId(WebContext.getUserInfo().getInstId());
-        List<UserApps> appList = appsService.queryMyApps(userApplications);
+        UserApps userApps = new UserApps();
+        userApps.setUsername(currentUser.getUsername());
+        userApps.setInstId(currentUser.getInstId());
+        List<UserApps> appList = appsService.queryMyApps(userApps);
         for (UserApps app : appList) {
         	app.transIconBase64();
         }
-
-        return appList;
+        return new Message<List<UserApps>>(appList).buildResponse();
     }
-
-    /**
-     * forwardAppLoginConfig.
-     * @param protocol protocol
-     * @param credential credential
-     * @param appId appId
-     * @return
-     */
-    @RequestMapping(value = { "/forward/appProtectedConfig/{protocol}/{credential}/{appId}" })
-    public ModelAndView forwardAppLoginConfig(@PathVariable("protocol") String protocol,
-            @PathVariable("credential") int credential, @PathVariable("appId") String appId) {
-        ModelAndView modelAndView = new ModelAndView("main/appProtectedConfig");
-
-        UserInfo userInfo = WebContext.getUserInfo();
-
-        if (userInfo.getProtectedAppsMap().get(appId) != null) {
-            modelAndView.addObject("protectedappId", true);
-        } else {
-            modelAndView.addObject("protectedappId", false);
-        }
-        modelAndView.addObject("userId", userInfo.getId());
-        modelAndView.addObject("appId", appId);
-        modelAndView.addObject("protocol", protocol);
-        modelAndView.addObject("credential", credential);
-        return modelAndView;
-
-    }
-
-    /**
-     * appLoginConfig.
-     * @param protocol protocol
-     * @param credential credential
-     * @param appId appId
-     * @param protectedappId protectedappId
-     * @param password password
-     * @return
-     */
+ 
+    
+    @RequestMapping(value = { "/account/get" })
     @ResponseBody
-    @RequestMapping(value = { "/appProtectedConfig" })
-    public Message appLoginConfig(
-                @RequestParam("protocol") String protocol, 
-                @RequestParam("credential") int credential,
-                @RequestParam("appId") String appId, 
-                @RequestParam("protectedappId") String protectedappId,
-                @RequestParam("password") String password) {
-
-        UserInfo userInfo = WebContext.getUserInfo();
-        String userAppProtectedPassword = PasswordReciprocal.getInstance().decoder(userInfo.getAppLoginPassword());
-        if (userAppProtectedPassword.equals(password)) {
-
-            if (protectedappId.equalsIgnoreCase("YES")) {
-                if (userInfo.getProtectedApps() != null 
-                        && userInfo.getProtectedApps().indexOf(appId) < 0) {
-                    userInfo.setProtectedApps(userInfo.getProtectedApps() + "," + appId);
-                    if (userInfo.getProtectedAppsMap() != null) {
-                        userInfo.getProtectedAppsMap().put(appId, appId);
-                    }
-                } else {
-                    userInfo.setProtectedApps("," + appId);
-                }
-            } else {
-                if (userInfo.getProtectedApps() != null 
-                        && userInfo.getProtectedApps().indexOf(appId) > -1) {
-                    // userInfo.setSecondProtectedApps(userInfo.getSecondProtectedApps()+","+appId);
-                    String[] protectedApps = userInfo.getProtectedApps().split(",");
-                    String protectedAppIds = "";
-                    if (userInfo.getProtectedAppsMap() != null) {
-                        userInfo.getProtectedAppsMap().remove(appId);
-                    }
-                    for (String protectedAppId : protectedApps) {
-                        if (protectedAppId.equalsIgnoreCase(appId) 
-                                || protectedAppId.trim().equals("")) {
-                            continue;
-                        }
-                        protectedAppIds = protectedAppIds + "," + protectedAppId;
-                    }
-                    userInfo.setProtectedApps(protectedAppIds);
-                }
-            }
-
-            userInfoService.updateProtectedApps(userInfo);
-        } else {
-            return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR), MessageType.error);
-        }
-
-        return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS), MessageType.success);
-    }
-
-    @RequestMapping(value = { "/forward/appUserConfig/{protocol}/{credential}/{appId}" })
-    public ModelAndView forwardAppUserConfig(@PathVariable("protocol") String protocol,
-            @PathVariable("credential") int credential, @PathVariable("appId") String appId) {
-        ModelAndView modelAndView = new ModelAndView("main/appUserConfig");
-        // modelAndView.addObject("appList",appList);
-
-        Accounts appUsers = new Accounts();
-        UserInfo userInfo = WebContext.getUserInfo();
+	public ResponseEntity<?> getAccount(
+    		@RequestParam("credential") int credential,
+    		@RequestParam("appId") String appId,
+    		@CurrentUser UserInfo currentUser) {
+        Accounts account = null ;
+        
         if (credential == Apps.CREDENTIALS.USER_DEFINED) {
-            appUsers = appUsersService.load(new Accounts(userInfo.getId(), appId));
-            if (protocol.equalsIgnoreCase(ConstsProtocols.FORMBASED)
-                    || protocol.equalsIgnoreCase(ConstsProtocols.BASIC) 
-                    || protocol.equalsIgnoreCase(ConstsProtocols.EXTEND_API)) {
-
-                modelAndView.addObject("username", true);
-                modelAndView.addObject("password", true);
-            } else if (protocol.equalsIgnoreCase(ConstsProtocols.SAML20)) {
-                modelAndView.addObject("username", true);
-                modelAndView.addObject("password", false);
-            } else {
-                modelAndView.addObject("username", false);
-                modelAndView.addObject("password", false);
-            }
-            if (appUsers != null) {
-                modelAndView.addObject("identity_username", appUsers.getRelatedUsername());
-                modelAndView.addObject("identity_password", PasswordReciprocal.getInstance().decoder(appUsers.getRelatedPassword()));
-            } else {
-                modelAndView.addObject("identity_username", "");
-                modelAndView.addObject("identity_password", "");
-            }
-        } else {
-            modelAndView.addObject("username", false);
-            modelAndView.addObject("password", false);
+        	account = accountsService.load(new Accounts(currentUser.getId(), appId));
+        	account.setRelatedPassword(
+        			PasswordReciprocal.getInstance().decoder(
+        					account.getRelatedPassword()));
+        }else {
+        	account = new Accounts();
+        	account.setAppId(appId);
+        	account.setUserId(currentUser.getId());
+        	account.setUsername(currentUser.getUsername());
+        	account.setDisplayName(currentUser.getDisplayName());
         }
-
-        modelAndView.addObject("userId", userInfo.getId());
-        modelAndView.addObject("appId", appId);
-        modelAndView.addObject("protocol", protocol);
-        modelAndView.addObject("credential", credential);
-        return modelAndView;
+        return new Message<Accounts>(account).buildResponse();
 
     }
 
+    @RequestMapping(value = { "/account/update" })
     @ResponseBody
-    @RequestMapping(value = { "/appUserConfig" })
-    public Message appUserConfig(@RequestParam("protocol") String protocol, @RequestParam("credential") int credential,
-            @RequestParam("appId") String appId, @RequestParam("identity_username") String identity_username,
-            @RequestParam("identity_password") String identity_password) {
-
-        Apps app = appsService.get(appId);
-        UserInfo userInfo = WebContext.getUserInfo();
-
+	public ResponseEntity<?> updateAccount(
+    		@RequestParam("credential") int credential,
+    		@ModelAttribute Accounts account,
+            @CurrentUser UserInfo currentUser) {
         Accounts appUsers = new Accounts();
-        appUsers.setAppId(appId);
-        appUsers.setUserId(userInfo.getId());
 
-        if (identity_password != null && !identity_password.equals("") && credential == Apps.CREDENTIALS.USER_DEFINED) {
-            appUsers = appUsersService.load(new Accounts(userInfo.getId(), appId));
+        if (credential == Apps.CREDENTIALS.USER_DEFINED) {
+            appUsers = accountsService.load(new Accounts(currentUser.getId(), account.getAppId()));
             if (appUsers == null) {
                 appUsers = new Accounts();
                 appUsers.setId(appUsers.generateId());
-                appUsers.setAppId(appId);
-                appUsers.setAppName(app.getName());
-                appUsers.setUserId(userInfo.getId());
-                appUsers.setUsername(userInfo.getUsername());
-                appUsers.setDisplayName(userInfo.getDisplayName());
+                appUsers.setUserId(currentUser.getId());
+                appUsers.setUsername(currentUser.getUsername());
+                appUsers.setDisplayName(currentUser.getDisplayName());
 
-                appUsers.setRelatedUsername(identity_username);
-                appUsers.setRelatedPassword(PasswordReciprocal.getInstance().encode(identity_password));
-                appUsers.setInstId(userInfo.getInstId());
+                appUsers.setRelatedPassword(
+                		PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
+                appUsers.setInstId(currentUser.getInstId());
                 appUsers.setStatus(ConstsStatus.ACTIVE);
-                appUsersService.insert(appUsers);
+                accountsService.insert(appUsers);
             } else {
-                appUsers.setRelatedUsername(identity_username);
-                appUsers.setRelatedPassword(PasswordReciprocal.getInstance().encode(identity_password));
-                appUsersService.update(appUsers);
+                appUsers.setRelatedUsername(account.getRelatedUsername());
+                appUsers.setRelatedPassword(
+                		PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
+                accountsService.update(appUsers);
             }
         }
 
-        return new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS), MessageType.success);
+        return new Message<Accounts>().buildResponse();
     }
 }

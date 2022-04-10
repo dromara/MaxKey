@@ -17,6 +17,8 @@
 
 package org.maxkey;
 
+import java.util.List;
+
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.basic.BasicEntryPoint;
 import org.maxkey.authn.support.httpheader.HttpHeaderEntryPoint;
@@ -24,6 +26,7 @@ import org.maxkey.authn.support.kerberos.HttpKerberosEntryPoint;
 import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.authn.support.rememberme.HttpRemeberMeEntryPoint;
+import org.maxkey.authn.web.CurrentUserMethodArgumentResolver;
 import org.maxkey.authn.web.interceptor.PermissionAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.interceptor.HistoryLoginAppAdapter;
@@ -34,7 +37,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -143,8 +148,8 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/profile/**")
                 .addPathPatterns("/safe/**")
                 .addPathPatterns("/historys/**")
-                .addPathPatterns("/session/**")
-                .addPathPatterns("/session/**/**")
+                .addPathPatterns("/access/session/**")
+                .addPathPatterns("/access/session/**/**")
                 .addPathPatterns("/appList")
                 .addPathPatterns("/appList/**")
                 .addPathPatterns("/socialsignon/**")
@@ -245,6 +250,16 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         _logger.debug("add LocaleChangeInterceptor");
         
 
+    }
+    
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(currentUserMethodArgumentResolver());
+    }
+    
+    @Bean
+    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
+        return new CurrentUserMethodArgumentResolver();
     }
     
 }

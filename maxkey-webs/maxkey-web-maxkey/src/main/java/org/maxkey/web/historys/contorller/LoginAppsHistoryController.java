@@ -20,14 +20,17 @@ package org.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.HistoryLoginApps;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistoryLoginAppsService;
 import org.maxkey.util.DateUtils;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -36,47 +39,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * 单点登录日志查询.
+ * 单点登录日志查询
  * 
  * @author Crystal.sea
  *
  */
 
 @Controller
-@RequestMapping(value = { "/historys" })
-public class HistoryLoginAppsController {
-    static final Logger _logger = LoggerFactory.getLogger(HistoryLoginAppsController.class);
+@RequestMapping(value={"/historys"})
+public class LoginAppsHistoryController {
+final static Logger _logger = LoggerFactory.getLogger(LoginAppsHistoryController.class);
+	
+	@Autowired
+  	protected HistoryLoginAppsService historyLoginAppsService;
+	
+	/**
+	 * @param loginAppsHistory
+	 * @return
+	 */
+	@RequestMapping(value={"/loginAppsHistory/fetch"})
+	@ResponseBody
+	public ResponseEntity<?> fetch(
+				@ModelAttribute("historyLoginApp") HistoryLoginApps historyLoginApp,
+				@CurrentUser UserInfo currentUser){
+		_logger.debug("historys/loginAppsHistory/fetch/  {}",historyLoginApp);
+		historyLoginApp.setId(null);
+		historyLoginApp.setUserId(currentUser.getId());
+		historyLoginApp.setInstId(currentUser.getInstId());
+		return new Message<JpaPageResults<HistoryLoginApps>>(
+					historyLoginAppsService.queryPageResults(historyLoginApp)
+				).buildResponse();
+	}
 
-    @Autowired
-    protected HistoryLoginAppsService historyLoginAppsService;
-
-    @RequestMapping(value = { "/loginAppsList" })
-    public String loginAppHistoryList() {
-        return "historys/loginAppsList";
-    }
-
-    /**
-     * 查询单点登录日志.
-     * 
-     * @param logsSso
-     * @return
-     */
-    @RequestMapping(value = { "/loginAppsList/grid" })
-    @ResponseBody
-    public JpaPageResults<HistoryLoginApps> logsSsoGrid(
-            @ModelAttribute("historyLoginApps") HistoryLoginApps historyLoginApps) {
-        _logger.debug("history/loginApps/grid/ logsGrid() " + historyLoginApps);
-        historyLoginApps.setId(null);
-        historyLoginApps.setInstId(WebContext.getUserInfo().getInstId());
-        historyLoginApps.setUsername(WebContext.getUserInfo().getUsername());
-        return historyLoginAppsService.queryPageResults(historyLoginApps);
-
-    }
-
-    @InitBinder
+	@InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.FORMAT_DATE_HH_MM_SS);
-        dateFormat.setLenient(false);
+        dateFormat.setLenient(false);  
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }

@@ -15,27 +15,26 @@
  */
  
 
-package org.maxkey.web.historys.contorller;
+package org.maxkey.web.access.contorller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.authn.online.OnlineTicketService;
-import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.HistoryLogin;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
 import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.persistence.service.HistoryLoginService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -45,14 +44,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * 登录日志查询.
+ * 登录会话管理.
  * 
  * @author Crystal.sea
  *
  */
 
 @Controller
-@RequestMapping(value = { "/session" })
+@RequestMapping(value = { "/access/session" })
 public class LoginSessionController {
     static final Logger _logger = LoggerFactory.getLogger(LoginSessionController.class);
 
@@ -65,12 +64,7 @@ public class LoginSessionController {
     LoginHistoryRepository loginHistoryRepository;
     
     @Autowired
-    OnlineTicketService onlineTicketServices;
-    
-    @RequestMapping(value = { "/sessionList" })
-    public String authList() {
-        return "historys/sessionList";
-    }
+    OnlineTicketService onlineTicketService;
 
     /**
      * 查询登录日志.
@@ -78,36 +72,36 @@ public class LoginSessionController {
      * @param logsAuth
      * @return
      */
-    @RequestMapping(value = { "/sessionList/grid" })
+    @RequestMapping(value = { "/fetch" })
     @ResponseBody
-    public JpaPageResults<HistoryLogin> loginSessionListGrid(@ModelAttribute("historyLogin") HistoryLogin historyLogin) {
-        _logger.debug("history/session/ sessionListGrid() " + historyLogin);
-        historyLogin.setInstId(WebContext.getUserInfo().getInstId());
-        historyLogin.setUserId(WebContext.getUserInfo().getId());
-        return historyLoginService.queryOnlineSession(historyLogin);
+    public ResponseEntity<?> fetch(
+    			@ModelAttribute("historyLogin") HistoryLogin historyLogin,
+    			@CurrentUser UserInfo currentUser) {
+        _logger.debug("history/session/fetch {}" , historyLogin);
+        historyLogin.setUserId(currentUser.getId());
+        historyLogin.setInstId(currentUser.getInstId());
+        return new Message<JpaPageResults<HistoryLogin>>(
+        			historyLoginService.queryOnlineSession(historyLogin)
+        		).buildResponse();
     }
 
 
     
     @ResponseBody
     @RequestMapping(value="/terminate")  
-    public Message deleteUsersById(@RequestParam("id") String ids) {
+    public ResponseEntity<?> terminate(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
         _logger.debug(ids);
         boolean isTerminated = false;
         try {
-            String currentUserSessionId = "";
-           
             for(String sessionId : StringUtils.string2List(ids, ",")) {
                 _logger.trace("terminate session Id {} ",sessionId);
-                if(currentUserSessionId.contains(sessionId)) {
-                    //skip current session
-                    continue;
+                if(currentUser.getOnlineTicket().contains(sessionId)) {
+                    continue;//skip current session
                 }
-                UserInfo userInfo = WebContext.getUserInfo();
                 String lastLogoffTime = DateUtils.formatDateTime(new Date());
-                loginRepository.updateLastLogoff(userInfo);
+                loginRepository.updateLastLogoff(currentUser);
                 loginHistoryRepository.logoff(lastLogoffTime, sessionId);
-                onlineTicketServices.remove("OT-" + sessionId);
+                onlineTicketService.remove("OT-" + sessionId);
             }
             isTerminated = true;
         }catch(Exception e) {
@@ -115,11 +109,12 @@ public class LoginSessionController {
         }
         
         if(isTerminated) {
-            return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
+        	return new Message<HistoryLogin>(Message.SUCCESS).buildResponse();
         } else {
-            return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_ERROR),MessageType.error);
+        	return new Message<HistoryLogin>(Message.ERROR).buildResponse();
         }
     }
+    
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.FORMAT_DATE_HH_MM_SS);
