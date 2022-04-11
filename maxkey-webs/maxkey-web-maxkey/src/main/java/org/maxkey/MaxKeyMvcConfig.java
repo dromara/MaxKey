@@ -146,7 +146,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/logs/**")
                 .addPathPatterns("/userinfo/**")
                 .addPathPatterns("/profile/**")
-                .addPathPatterns("/safe/**")
+                .addPathPatterns("/config/**")
                 .addPathPatterns("/historys/**")
                 .addPathPatterns("/access/session/**")
                 .addPathPatterns("/access/session/**/**")

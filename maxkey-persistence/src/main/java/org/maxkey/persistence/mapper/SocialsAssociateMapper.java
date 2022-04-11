@@ -16,9 +16,13 @@
  
 
 package org.maxkey.persistence.mapper;
+import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.entity.SocialsAssociate;
+import org.maxkey.entity.UserInfo;
 
 public interface SocialsAssociateMapper extends IJpaBaseMapper<SocialsAssociate> {
 
+	public List<SocialsAssociate> queryByUser(UserInfo user);
 }

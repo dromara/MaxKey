@@ -17,8 +17,11 @@
 
 package org.maxkey.persistence.service;
 
+import java.util.List;
+
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.entity.SocialsAssociate;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.mapper.SocialsAssociateMapper;
 import org.springframework.stereotype.Repository;
 
@@ -38,5 +41,9 @@ public class SocialsAssociatesService  extends JpaBaseService<SocialsAssociate>{
 		return (SocialsAssociateMapper)super.getMapper();
 	}
  
+	
+	public List<SocialsAssociate>  queryByUser(UserInfo user) {
+		return getMapper().queryByUser(user);
+	}
 	 
 }

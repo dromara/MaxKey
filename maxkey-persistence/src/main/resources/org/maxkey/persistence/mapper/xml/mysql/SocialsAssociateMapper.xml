@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.SocialsAssociateMapper">
+
+		
+	<select id="queryByUser" parameterType="UserInfo" resultType="SocialsAssociate">
+		select
+            p.provider,
+            p.providerName,
+            p.icon,
+            a.id,
+			a.userid,
+			a.username,
+			a.createdDate,
+			a.updatedDate
+		from
+            mxk_socials_provider p
+		left join
+            mxk_socials_associate a 
+            
+		on  a.provider = p.provider and a.userid = #{id}   
+		
+		where
+            a.instid   =   p.instid
+			and  a.instid   =   #{instId} 	
+			and  p.status =1
+		order by  p.sortindex
+	</select>
+
+	
+</mapper>

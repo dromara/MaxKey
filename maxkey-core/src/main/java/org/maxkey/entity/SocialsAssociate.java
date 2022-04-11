@@ -44,6 +44,9 @@ public class SocialsAssociate extends JpaBaseEntity {
 	private String id;
 	@Column
 	private String provider;
+	private String providerName;
+	private String icon;
+	
 	@Column
 	private String userId;
 	@Column
@@ -155,6 +158,23 @@ public class SocialsAssociate extends JpaBaseEntity {
 
 	public void setInstId(String instId) {
 		this.instId = instId;
+	}
+
+	
+	public String getProviderName() {
+		return providerName;
+	}
+
+	public void setProviderName(String providerName) {
+		this.providerName = providerName;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	@Override

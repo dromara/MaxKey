@@ -17,76 +17,39 @@
 
 package org.maxkey.web.contorller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
-import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
-import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.entity.Institutions;
+import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.SocialsAssociate;
-import org.maxkey.entity.SocialsProvider;
-import org.maxkey.web.WebConstants;
-import org.maxkey.web.WebContext;
+import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.service.SocialsAssociatesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
-@RequestMapping(value={"/socialsignon"})
+@RequestMapping(value={"/config/socialsignon"})
 public class SocialSignOnListController {
 	final static Logger _logger = LoggerFactory.getLogger(SocialSignOnListController.class);
 	
 	@Autowired
-	SocialSignOnProviderService socialSignOnProviderService;
+	protected SocialsAssociatesService socialsAssociatesService;
 	
-	@Autowired
-	protected SocialsAssociateService socialSignOnUserService;
 	
-	@Autowired
-  	@Qualifier("applicationConfig")
-  	protected ApplicationConfig applicationConfig;
-	
-	@RequestMapping(value = { "/list" })
-	public ModelAndView forwardUpdate() {
+	@RequestMapping(value={"/fetch"})
+	@ResponseBody
+	public ResponseEntity<?> fetch(@CurrentUser UserInfo currentUser){
 		
-		ModelAndView modelAndView=new ModelAndView("social/socialSignOnProvider");
-
-		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-		List<SocialsProvider>  listSocialSignOnProvider = 
-								socialSignOnProviderService.loadSocialsProviders(inst.getId()).getSocialSignOnProviders();
+		List<SocialsAssociate>  listSocialsAssociate= 
+				socialsAssociatesService.queryByUser(currentUser);
 		
-		SocialsAssociate socialSignOnUser=new SocialsAssociate();
-		socialSignOnUser.setUserId(WebContext.getUserInfo().getId());
-		List<SocialsAssociate>  listSocialSignOnUserToken= socialSignOnUserService.query(socialSignOnUser);
-		List<SocialsProvider>  listBindSocialSignOnProvider=new ArrayList<SocialsProvider>();
-		_logger.debug("list SocialSignOnProvider : "+listSocialSignOnProvider);
-		_logger.debug("list SocialSignOnUserToken : "+listSocialSignOnUserToken);
-		for (SocialsProvider ssop : listSocialSignOnProvider){
-			SocialsProvider socialSignOnProvider=new SocialsProvider();
-			socialSignOnProvider.setProvider(ssop.getProvider());
-			socialSignOnProvider.setProviderName(ssop.getProviderName());
-			socialSignOnProvider.setIcon(ssop.getIcon());
-			socialSignOnProvider.setSortOrder(ssop.getSortOrder());
-			for(SocialsAssociate ssout :listSocialSignOnUserToken){
-				if(ssout.getProvider().equals(ssop.getProvider())){
-					socialSignOnProvider.setUserBind(true);
-					socialSignOnProvider.setBindTime(ssout.getCreatedDate());
-					socialSignOnProvider.setLastLoginTime(ssout.getUpdatedDate());
-					_logger.debug("binded provider : "+ssout.getProvider());
-				}
-			}
-			listBindSocialSignOnProvider.add(socialSignOnProvider);
-		}
-		
-		modelAndView.addObject("listSocialSignOnProvider", listBindSocialSignOnProvider);
-		
-		return modelAndView;
+		return new Message<List<SocialsAssociate>>(listSocialsAssociate).buildResponse();
 	}
 	
 }
