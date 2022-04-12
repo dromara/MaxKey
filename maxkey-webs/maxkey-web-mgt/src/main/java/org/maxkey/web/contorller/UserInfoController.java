@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.constants.ConstsPasswordSetType;
+import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.ExcelImport;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
@@ -102,11 +103,7 @@ public class UserInfoController {
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> get(@PathVariable("id") String id) {
 		UserInfo userInfo=userInfoService.get(id);
-		if(userInfo.getPicture()!=null){
-			userInfo.transPictureBase64();
-		}
-		userInfo.setPassword("");
-		userInfo.setDecipherable("");
+		userInfo.trans();
 		return new Message<UserInfo>(userInfo).buildResponse();
 	}
 	
@@ -187,10 +184,12 @@ public class UserInfoController {
 	
 	@ResponseBody
 	@RequestMapping(value="/changePassword", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> changePassword( @ModelAttribute("userInfo")UserInfo userInfo) {
-		_logger.debug(userInfo.getId());
-		userInfo.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
-		if(userInfoService.changePassword(userInfo,true)) {
+	public ResponseEntity<?> changePassword(
+			@ModelAttribute ChangePassword changePassword,
+			@CurrentUser UserInfo currentUser) {
+		_logger.debug("UserId {}",changePassword.getUserId());
+		changePassword.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
+		if(userInfoService.changePassword(changePassword,true)) {
 			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 			
 		} else {
@@ -199,7 +198,9 @@ public class UserInfoController {
 	}
 	
     @RequestMapping(value = "/import")
-    public ResponseEntity<?> importingUsers(@ModelAttribute("excelImportFile")ExcelImport excelImportFile)  {
+    public ResponseEntity<?> importingUsers(
+    		@ModelAttribute("excelImportFile")ExcelImport excelImportFile,
+    		@CurrentUser UserInfo currentUser)  {
         if (excelImportFile.isExcelNotEmpty() ) {
             try {
                 List<UserInfo> userInfoList = Lists.newArrayList();
@@ -214,7 +215,7 @@ public class UserInfoController {
                         if (row == null || j <3 ) {//略过空行和前3行
                             continue;
                         } else {//其他行是数据行
-                        	UserInfo userInfo = buildUserFromSheetRow(row);
+                        	UserInfo userInfo = buildUserFromSheetRow(row,currentUser);
                             userInfoList.add(userInfo);
                             recordCount ++;
                             _logger.debug("record {} user {} account {}",recordCount,userInfo.getDisplayName(),userInfo.getUsername());
@@ -258,7 +259,7 @@ public class UserInfoController {
 	}
 	
 	
-	public UserInfo buildUserFromSheetRow(Row row) {
+	public UserInfo buildUserFromSheetRow(Row row,UserInfo currentUser) {
 		UserInfo userInfo = new UserInfo();
         userInfo.setCreatedDate(DateUtils.formatDateTime(new Date()));
 		// 登录账号
@@ -358,7 +359,7 @@ public class UserInfoController {
 		userInfo.setHomeEmail(ExcelUtils.getValue(row, 46));
 		userInfoService.passwordEncoder(userInfo);
         userInfo.setStatus(1);
-        userInfo.setInstId(WebContext.getUserInfo().getInstId());
+        userInfo.setInstId(currentUser.getInstId());
         return userInfo;
 	}
 

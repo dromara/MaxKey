@@ -19,6 +19,8 @@ package org.maxkey.web.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.entity.HistorySystemLogs;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistorySystemLogsService;
@@ -55,7 +57,7 @@ public class HistoryLogsAdapter  implements AsyncHandlerInterceptor  {
 		
 		if(message != null){
 			if(message.getMessageScope() == MessageScope.DB || message.getMessageScope() == MessageScope.DB_CLIENT) {//判断message类型
-				UserInfo userInfo =WebContext.getUserInfo();//取得当前用户信息
+				UserInfo userInfo = AuthorizationUtils.getUserInfo();//取得当前用户信息
 				//创建日志记录
 				HistorySystemLogs historySystemLog = new HistorySystemLogs();
 				historySystemLog.setTopic(message.getTopic());

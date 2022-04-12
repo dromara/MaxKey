@@ -30,6 +30,7 @@ import org.maxkey.authn.jwt.AuthJwt;
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
 import org.maxkey.entity.Message;
@@ -110,7 +111,7 @@ public class LoginEntryPoint {
 	public ModelAndView login(HttpServletRequest request) {
 		_logger.debug("LoginController /login.");
 		
-		boolean isAuthenticated= WebContext.isAuthenticated();
+		boolean isAuthenticated= AuthorizationUtils.isAuthenticated();
 		
 		if(isAuthenticated){
 			return  WebContext.redirect("/forwardindex");
@@ -153,7 +154,7 @@ public class LoginEntryPoint {
 
         authenticationProvider.authenticate(loginCredential);
 
-        if (WebContext.isAuthenticated()) {
+        if (AuthorizationUtils.isAuthenticated()) {
             return WebContext.redirect("/forwardindex");
         } else {
             return WebContext.redirect("/login");
@@ -193,6 +194,9 @@ public class LoginEntryPoint {
  	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
  		Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
+ 		if(authentication == null) {
+ 			return new Message<AuthJwt>(Message.FAIL).buildResponse();
+ 		}
  		String jwt = authJwtService.generateToken(authentication);
  		return new Message<AuthJwt>(new AuthJwt(jwt, authentication)).buildResponse();
  	}

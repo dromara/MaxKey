@@ -19,6 +19,7 @@ package org.maxkey.identity.rest;
 
 import java.io.IOException;
 
+import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,9 +76,7 @@ public class RestUserInfoController {
                                                       UriComponentsBuilder builder) throws IOException {
         UserInfo loadUserInfo = userInfoService.findByUsername(username);
         if(loadUserInfo != null) {
-        	UserInfo changePassword  = new UserInfo();
-        	changePassword.setId(loadUserInfo.getId());
-        	changePassword.setUsername(username);
+        	ChangePassword changePassword  = new ChangePassword(loadUserInfo);
         	changePassword.setPassword(password);
         	changePassword.setDecipherable(loadUserInfo.getDecipherable());
             userInfoService.changePassword(changePassword,true);

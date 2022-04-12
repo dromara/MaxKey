@@ -18,24 +18,24 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
-public class AuthEntryPoint {
-	private static final Logger _logger = LoggerFactory.getLogger(AuthEntryPoint.class);
+public class UnauthorizedEntryPoint {
+	private static final Logger _logger = LoggerFactory.getLogger(UnauthorizedEntryPoint.class);
 	
  	@RequestMapping(value={"/auth/entrypoint"})
 	public void entryPoint(
 			HttpServletRequest request, HttpServletResponse response) 
 					throws StreamWriteException, DatabindException, IOException {
- 		_logger.trace("AuthEntryPoint /entrypoint.");
- 		 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+ 		_logger.trace("UnauthorizedEntryPoint /entrypoint.");
+ 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
  	    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
- 	    final Map<String, Object> body = new HashMap<>();
- 	    body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
- 	    body.put("error", "Unauthorized");
- 	    body.put("message", "Unauthorized");
- 	    body.put("path", request.getServletPath());
+ 	    final Map<String, Object> responseBody = new HashMap<>();
+ 	    responseBody.put("status", HttpServletResponse.SC_UNAUTHORIZED);
+ 	    responseBody.put("error", "Unauthorized");
+ 	    responseBody.put("message", "Unauthorized");
+ 	    responseBody.put("path", request.getServletPath());
 
  	    final ObjectMapper mapper = new ObjectMapper();
- 	    mapper.writeValue(response.getOutputStream(), body);
+ 	    mapper.writeValue(response.getOutputStream(), responseBody);
  	}	
 }

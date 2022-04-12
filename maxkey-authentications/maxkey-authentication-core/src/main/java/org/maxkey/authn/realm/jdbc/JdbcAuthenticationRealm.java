@@ -20,8 +20,8 @@ package org.maxkey.authn.realm.jdbc;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealm;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.constants.ConstsLoginType;
+import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.PasswordPolicy;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
@@ -59,7 +59,6 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     		PasswordPolicyValidator passwordPolicyValidator,
     		LoginRepository loginRepository,
     		LoginHistoryRepository loginHistoryRepository,
-    		AbstractRemeberMeService remeberMeService,
     		UserInfoService userInfoService,
     	    JdbcTemplate jdbcTemplate) {
     	
@@ -67,7 +66,6 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     	this.passwordPolicyValidator=passwordPolicyValidator;
     	this.loginRepository = loginRepository;
     	this.loginHistoryRepository = loginHistoryRepository;
-    	this.remeberMeService = remeberMeService;
     	this.userInfoService = userInfoService;
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -77,7 +75,6 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     		PasswordPolicyValidator passwordPolicyValidator,
     		LoginRepository loginRepository,
     		LoginHistoryRepository loginHistoryRepository,
-    		AbstractRemeberMeService remeberMeService,
     		UserInfoService userInfoService,
     	    JdbcTemplate jdbcTemplate,
     	    LdapAuthenticationRealmService ldapAuthenticationRealmService) {
@@ -85,7 +82,6 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
 		this.passwordPolicyValidator = passwordPolicyValidator;
 		this.loginRepository = loginRepository;
 		this.loginHistoryRepository = loginHistoryRepository;
-		this.remeberMeService = remeberMeService;
 		this.userInfoService = userInfoService;
 		this.jdbcTemplate = jdbcTemplate;
 		this.ldapAuthenticationRealmService = ldapAuthenticationRealmService;
@@ -109,11 +105,9 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
 	            passwordMatches = ldapRealm.passwordMatches(userInfo, password);
 	            if(passwordMatches) {
 	                //write password to database Realm
-	                UserInfo changePasswordUser = new UserInfo();
-	                changePasswordUser.setId(userInfo.getId());
-	                changePasswordUser.setUsername(userInfo.getUsername());
-	                changePasswordUser.setPassword(password);
-	                userInfoService.changePassword(changePasswordUser, false);
+	            	ChangePassword changePassword = new ChangePassword(userInfo);
+	                changePassword.setPassword(password);
+	                userInfoService.changePassword(changePassword, false);
 	            }
 	        }
         }

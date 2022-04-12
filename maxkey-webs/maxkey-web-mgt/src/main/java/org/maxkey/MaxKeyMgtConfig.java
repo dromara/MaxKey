@@ -24,7 +24,6 @@ import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -44,7 +43,6 @@ public class MaxKeyMgtConfig  implements InitializingBean {
 	    		PasswordPolicyValidator passwordPolicyValidator,
 	    		LoginRepository loginRepository,
 	    		LoginHistoryRepository loginHistoryRepository,
-	    		AbstractRemeberMeService remeberMeService,
 	    		UserInfoService userInfoService,
              JdbcTemplate jdbcTemplate) {
 		
@@ -53,7 +51,6 @@ public class MaxKeyMgtConfig  implements InitializingBean {
         		passwordPolicyValidator,
         		loginRepository,
         		loginHistoryRepository,
-        		remeberMeService,
         		userInfoService,
         		jdbcTemplate);
         

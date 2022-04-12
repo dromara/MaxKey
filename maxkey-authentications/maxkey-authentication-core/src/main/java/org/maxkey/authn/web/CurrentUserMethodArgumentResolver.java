@@ -24,7 +24,7 @@ public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentR
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
     	UserInfo userInfo = null;
     	Authentication  authentication  = (Authentication ) webRequest.getAttribute(WebConstants.AUTHENTICATION, RequestAttributes.SCOPE_SESSION);
-        if(authentication.getPrincipal() instanceof SigninPrincipal) {
+        if((authentication != null) && (authentication.getPrincipal() instanceof SigninPrincipal)) {
         	SigninPrincipal signinPrincipal = ((SigninPrincipal) authentication.getPrincipal());
         	userInfo = signinPrincipal.getUserInfo();
         	if (userInfo != null) {

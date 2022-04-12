@@ -21,10 +21,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.joda.time.DateTime;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.saml.service.IDService;
 import org.maxkey.authz.saml.service.TimeService;
 import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.xml.IssuerGenerator;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsSAML20Details;
 import org.maxkey.web.WebContext;
 import org.opensaml.Configuration;
@@ -79,7 +81,8 @@ public class AssertionGenerator {
 							String inResponseTo, 
 							String audienceUrl,
 							int validInSeconds,
-							HashMap<String,String>attributeMap
+							HashMap<String,String>attributeMap,
+							UserInfo userInfo
 							) {
 
 		Assertion assertion = new AssertionBuilder().buildObject();;
@@ -88,7 +91,8 @@ public class AssertionGenerator {
 		                saml20Details,
 						assertionConsumerURL,
 						inResponseTo,
-						validInSeconds);
+						validInSeconds,
+						userInfo);
 		assertion.setSubject(subject);
 		//issuer
 		Issuer issuer = issuerGenerator.generateIssuer();
@@ -100,11 +104,15 @@ public class AssertionGenerator {
 		//AttributeStatements
 		ArrayList<GrantedAuthority> grantedAuthoritys = new ArrayList<GrantedAuthority>();
 		grantedAuthoritys.add(new SimpleGrantedAuthority("ROLE_USER"));
-		for(GrantedAuthority anthGrantedAuthority:  ((UsernamePasswordAuthenticationToken)WebContext.getAuthentication()).getAuthorities()){
+		for(GrantedAuthority anthGrantedAuthority:  ((UsernamePasswordAuthenticationToken)AuthorizationUtils.getAuthentication()).getAuthorities()){
 			grantedAuthoritys.add(anthGrantedAuthority);
 		}
-		AttributeStatement attributeStatement =attributeStatementGenerator.generateAttributeStatement(
-									saml20Details, grantedAuthoritys,attributeMap);
+		AttributeStatement attributeStatement =
+				attributeStatementGenerator.generateAttributeStatement(
+									saml20Details, 
+									grantedAuthoritys,
+									attributeMap,
+									userInfo);
 		assertion.getAttributeStatements().add(attributeStatement);
 		//ID
 		assertion.setID(idService.generateID());

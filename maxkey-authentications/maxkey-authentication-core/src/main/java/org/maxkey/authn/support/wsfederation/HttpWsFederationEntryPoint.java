@@ -21,10 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.util.StringUtils;
-import org.maxkey.web.WebContext;
 import org.opensaml.saml1.core.impl.AssertionImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +44,7 @@ public class HttpWsFederationEntryPoint implements AsyncHandlerInterceptor {
 	
 	 @Override
 	 public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		 boolean isAuthenticated= WebContext.isAuthenticated();
+		 boolean isAuthenticated= AuthorizationUtils.isAuthenticated();
 		 String wsFederationWA = request.getParameter(WsFederationConstants.WA);
 		 String wsFederationWResult = request.getParameter(WsFederationConstants.WRESULT);
 		 

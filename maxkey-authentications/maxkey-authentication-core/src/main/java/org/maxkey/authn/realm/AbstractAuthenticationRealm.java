@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.entity.Groups;
 import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.UserInfo;
@@ -57,8 +56,6 @@ public abstract class AbstractAuthenticationRealm {
     protected LoginRepository loginRepository;
 
     protected LoginHistoryRepository loginHistoryRepository;
-
-    protected AbstractRemeberMeService remeberMeService;
     
     protected UserInfoService userInfoService;
     
@@ -90,16 +87,6 @@ public abstract class AbstractAuthenticationRealm {
 
     public abstract boolean passwordMatches(UserInfo userInfo, String password);
     
-
-    public static boolean isAuthenticated() {
-        if (WebContext.getUserInfo() != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
     public List<Groups> queryGroups(UserInfo userInfo) {
        return loginRepository.queryGroups(userInfo);
     }
@@ -183,9 +170,7 @@ public abstract class AbstractAuthenticationRealm {
          	SigninPrincipal signinPrincipal = ((SigninPrincipal) authentication.getPrincipal());
          	UserInfo userInfo = signinPrincipal.getUserInfo();
             userInfo.setLastLogoffTime(DateUtils.formatDateTime(new Date()));
-            
-            remeberMeService.removeRemeberMe(response);
-
+        
             loginHistoryRepository.logoff(userInfo.getLastLogoffTime(), signinPrincipal.getOnlineTicket().getTicketId());
 
             

@@ -22,10 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.web.WebConstants;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
@@ -46,7 +46,7 @@ public class HttpJwtEntryPoint implements AsyncHandlerInterceptor {
 	
 	 @Override
 	 public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		 boolean isAuthenticated= WebContext.isAuthenticated();
+		 boolean isAuthenticated= AuthorizationUtils.isAuthenticated();
 		 String jwt = request.getParameter(WebConstants.JWT_TOKEN_PARAMETER);
 		 
 		 if(!enable 

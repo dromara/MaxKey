@@ -1360,6 +1360,12 @@ public class UserInfo extends JpaBaseEntity {
 	public void setOriginId2(String originId2) {
 		this.originId2 = originId2;
 	}
+	
+	public void trans() {
+		this.setPassword("");
+		this.setDecipherable("");
+		this.transPictureBase64();
+	}
 
 	@Override
 	public String toString() {

@@ -70,7 +70,7 @@ public class AppListController {
 	public ResponseEntity<?> appList(
             @RequestParam(value = "gridList", required = false) String gridList,
             @CurrentUser UserInfo currentUser) {
-        userInfoService.updateGridList(gridList);
+        userInfoService.updateGridList(gridList,currentUser);
         UserApps userApps = new UserApps();
         userApps.setUsername(currentUser.getUsername());
         userApps.setInstId(currentUser.getInstId());

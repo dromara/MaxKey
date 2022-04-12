@@ -30,6 +30,7 @@ import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.oauth2.common.DefaultOAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
@@ -40,7 +41,6 @@ import org.maxkey.configuration.oidc.OIDCProviderMetadata;
 import org.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
-import org.maxkey.web.WebContext;
 
 import com.nimbusds.jose.util.Base64URL;
 import org.slf4j.Logger;
@@ -125,7 +125,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 			if (request.getExtensions().containsKey("max_age")
 					|| (request.getExtensions().containsKey("idtoken")) // parse the ID Token claims (#473) -- for now assume it could be in there
 					) {
-				DateTime loginDate = DateTime.parse(WebContext.getUserInfo().getLastLoginTime(), DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+				DateTime loginDate = DateTime.parse(AuthorizationUtils.getUserInfo().getLastLoginTime(), DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
 				builder.claim("auth_time",  loginDate.getMillis()/1000);
 			}
 			

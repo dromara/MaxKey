@@ -22,17 +22,18 @@ package org.maxkey.authz.formbased.endpoint;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.formbased.endpoint.adapter.FormBasedDefaultAdapter;
 import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.entity.Accounts;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsFormBasedDetails;
 import org.maxkey.persistence.service.AppsFormBasedDetailsService;
 import org.maxkey.util.Instance;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,8 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	@RequestMapping("/authz/formbased/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,
-			@PathVariable("id") String id){
+			@PathVariable("id") String id,
+			@CurrentUser UserInfo currentUser){
 		
 		AppsFormBasedDetails formBasedDetails = formBasedDetailsService.getAppDetails(id , true);
 		_logger.debug("formBasedDetails {}",formBasedDetails);
@@ -71,7 +73,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		formBasedDetails.setIsAdapter(application.getIsAdapter());
 		ModelAndView modelAndView=null;
 		
-		Accounts account = getAccounts(formBasedDetails);
+		Accounts account = getAccounts(formBasedDetails,currentUser);
 		_logger.debug("Accounts {}",account);
 		
 		if(account	==	null){
@@ -88,8 +90,8 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 				FormBasedDefaultAdapter formBasedDefaultAdapter =new FormBasedDefaultAdapter();
 				adapter =(AbstractAuthorizeAdapter)formBasedDefaultAdapter;
 			}
-			adapter.setAuthentication((SigninPrincipal)WebContext.getAuthentication().getPrincipal());
-			adapter.setUserInfo(WebContext.getUserInfo());
+			adapter.setAuthentication(AuthorizationUtils.getPrincipal());
+			adapter.setUserInfo(currentUser);
 			adapter.setApp(formBasedDetails);
 			adapter.setAccount(account);
 			

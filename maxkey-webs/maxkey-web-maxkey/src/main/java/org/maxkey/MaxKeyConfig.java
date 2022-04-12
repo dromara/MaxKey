@@ -28,7 +28,6 @@ import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
 import org.maxkey.authn.support.kerberos.KerberosProxy;
 import org.maxkey.authn.support.kerberos.RemoteKerberosService;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.EmailConfig;
 import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
@@ -103,7 +102,6 @@ public class MaxKeyConfig  implements InitializingBean {
 	    		PasswordPolicyValidator passwordPolicyValidator,
 	    		LoginRepository loginService,
 	    		LoginHistoryRepository loginHistoryService,
-	    		AbstractRemeberMeService remeberMeService,
 	    		UserInfoService userInfoService,
                 JdbcTemplate jdbcTemplate,
                 OtpAuthnService otpAuthnService,
@@ -114,7 +112,6 @@ public class MaxKeyConfig  implements InitializingBean {
         		passwordPolicyValidator,
         		loginService,
         		loginHistoryService,
-        		remeberMeService,
         		userInfoService,
         		jdbcTemplate,
         		ldapRealmService

@@ -23,9 +23,11 @@ package org.maxkey.authn.support.socialsignon;
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authn.LoginCredential;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.SocialsAssociate;
 import org.maxkey.entity.SocialsProvider;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,30 +71,6 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		WebContext.setAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI, request.getParameter(SOCIALSIGNON_REDIRECT_URI));
 		WebContext.setAttribute(SOCIALSIGNON_TYPE_SESSION, SOCIALSIGNON_TYPE.SOCIALSIGNON_TYPE_BIND);
 		return socialSignOnAuthorize(request,provider);
-	}
-	
-	@RequestMapping(value={"/unbind/{provider}"}, method = RequestMethod.GET)
-	public ModelAndView unbind(HttpServletRequest request,
-				@PathVariable String provider) {
-		WebContext.setAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI, request.getParameter(SOCIALSIGNON_REDIRECT_URI));
-		SocialsAssociate socialSignOnUser =new SocialsAssociate();
-		socialSignOnUser.setProvider(provider);
-		socialSignOnUser.setUserId(WebContext.getUserInfo().getId());
-		socialSignOnUser.setUsername(WebContext.getUserInfo().getUsername());
-		_logger.debug("Social Sign On unbind {} from user {}",
-		                provider,
-		                WebContext.getUserInfo().getUsername()
-		          );
-		
-		socialsAssociateService.delete(socialSignOnUser);
-		
-		Object redirect_uri = WebContext.getAttribute(SOCIALSIGNON_SESSION_REDIRECT_URI);
-		if(redirect_uri != null){
-			return WebContext.redirect(redirect_uri.toString());
-		}else{
-			return WebContext.forward("/socialsignon/list");
-		}
-		
 	}
 	
 	@RequestMapping(value={"/authorize/{provider}/{appid}"}, method = RequestMethod.GET)
@@ -177,9 +155,10 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	        return false;
 	    }
 	    
+	    UserInfo userInfo = AuthorizationUtils.getUserInfo();
 	    socialsAssociate.setSocialUserInfo(accountJsonString);
-	    socialsAssociate.setUserId(WebContext.getUserInfo().getId());
-		socialsAssociate.setUsername(WebContext.getUserInfo().getUsername());
+	    socialsAssociate.setUserId(userInfo.getId());
+		socialsAssociate.setUsername(userInfo.getUsername());
 		//socialsAssociate.setAccessToken(JsonUtils.object2Json(accessToken));
 		//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
 		_logger.debug("Social Bind : "+socialsAssociate);

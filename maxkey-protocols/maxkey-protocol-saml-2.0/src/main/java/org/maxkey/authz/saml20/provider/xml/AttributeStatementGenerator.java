@@ -30,7 +30,6 @@ import org.maxkey.entity.ExtraAttr;
 import org.maxkey.entity.ExtraAttrs;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsSAML20Details;
-import org.maxkey.web.WebContext;
 import org.opensaml.Configuration;
 import org.opensaml.saml2.core.Attribute;
 import org.opensaml.saml2.core.AttributeStatement;
@@ -52,15 +51,20 @@ public class AttributeStatementGenerator {
 	public static String COMMA 				= ",";
 	public static String COMMA_ISO8859_1 	= "#44;"; //#44; ->,
 	
-	public AttributeStatement generateAttributeStatement(AppsSAML20Details saml20Details,ArrayList<GrantedAuthority> grantedAuthoritys) {
-		return generateAttributeStatement(saml20Details, grantedAuthoritys,null);
+	public AttributeStatement generateAttributeStatement(
+			AppsSAML20Details saml20Details,
+			ArrayList<GrantedAuthority> grantedAuthoritys,
+			UserInfo userInfo) {
+		return generateAttributeStatement(
+				saml20Details, grantedAuthoritys,null,userInfo);
 
 	}
 
 	public AttributeStatement generateAttributeStatement(
 					AppsSAML20Details saml20Details,
 					ArrayList<GrantedAuthority> grantedAuthoritys,
-					HashMap<String,String>attributeMap) {
+					HashMap<String,String>attributeMap,
+					UserInfo userInfo) {
 
 		AttributeStatementBuilder attributeStatementBuilder = (AttributeStatementBuilder) builderFactory.getBuilder(AttributeStatement.DEFAULT_ELEMENT_NAME);
 		AttributeStatement attributeStatement = attributeStatementBuilder.buildObject();
@@ -68,7 +72,7 @@ public class AttributeStatementGenerator {
 		Attribute attributeGrantedAuthority=builderGrantedAuthority(grantedAuthoritys);
 		attributeStatement.getAttributes().add(attributeGrantedAuthority);
 		
-		putUserAttributes(attributeMap);
+		putUserAttributes(attributeMap,userInfo);
 		
 		if(null!=attributeMap){
 			Iterator<Entry<String, String>> iterator = attributeMap.entrySet().iterator();
@@ -137,8 +141,9 @@ public class AttributeStatementGenerator {
 		return xsStringValue;
 	}
 	
-	public HashMap <String,String> putUserAttributes(HashMap <String,String> attributeMap){
-        UserInfo userInfo = WebContext.getUserInfo();
+	public HashMap <String,String> putUserAttributes(
+			HashMap <String,String> attributeMap,
+			UserInfo userInfo){
         attributeMap.put(ActiveDirectoryUser.USERNAME, userInfo.getUsername());
         attributeMap.put(ActiveDirectoryUser.UID, userInfo.getUsername());
         

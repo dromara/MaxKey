@@ -22,13 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.crypto.ReciprocalUtils;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.web.WebConstants;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
@@ -47,7 +47,7 @@ public class HttpKerberosEntryPoint implements AsyncHandlerInterceptor {
 	
 	 @Override
 	 public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		 boolean isAuthenticated= WebContext.isAuthenticated();
+		 boolean isAuthenticated= AuthorizationUtils.isAuthenticated();
 		 String kerberosTokenString = request.getParameter(WebConstants.KERBEROS_TOKEN_PARAMETER);
 		 String kerberosUserDomain = request.getParameter(WebConstants.KERBEROS_USERDOMAIN_PARAMETER);
 		 

@@ -26,8 +26,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.online.OnlineTicket;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
 import org.maxkey.authz.singlelogout.LogoutType;
@@ -117,7 +117,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			HttpServletRequest request,
 			HttpServletResponse response){
 		AppsCasDetails casDetails = (AppsCasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
-		ServiceTicketImpl serviceTicket = new ServiceTicketImpl(WebContext.getAuthentication(),casDetails);
+		ServiceTicketImpl serviceTicket = new ServiceTicketImpl(AuthorizationUtils.getAuthentication(),casDetails);
 
 		String ticket = ticketServices.createTicket(serviceTicket,casDetails.getExpires());
 		
@@ -149,7 +149,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		}
 		
 		if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
-		    String onlineTicketId = ((SigninPrincipal)WebContext.getAuthentication().getPrincipal()).getOnlineTicket().getTicketId();
+		    String onlineTicketId = AuthorizationUtils.getPrincipal().getOnlineTicket().getTicketId();
 		    OnlineTicket onlineTicket  = onlineTicketService.get(onlineTicketId);
 		    //set cas ticket as OnlineTicketId
 		    casDetails.setOnlineTicket(ticket);

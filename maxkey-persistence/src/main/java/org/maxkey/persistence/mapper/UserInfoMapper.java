@@ -23,6 +23,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.constants.ConstsStatus;
+import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.Organizations;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.UserInfoAdjoint;
@@ -53,7 +54,7 @@ public interface UserInfoMapper  extends IJpaBaseMapper<UserInfo>{
 
 	public void updateBadPWDCount(UserInfo userInfo);
 	
-	public int 	updatePassword(UserInfo userInfo);
+	public int 	changePassword(ChangePassword changePassword);
 	
 	public int 	updateAppLoginPassword(UserInfo userInfo);
 	

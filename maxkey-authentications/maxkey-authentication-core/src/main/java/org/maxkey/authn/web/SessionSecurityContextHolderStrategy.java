@@ -45,7 +45,7 @@ public class SessionSecurityContextHolderStrategy implements SecurityContextHold
         SecurityContext ctx =  createEmptyContext();
         Authentication  authentication = null;
         try {
-            authentication = (Authentication)WebContext.getAuthentication();
+            authentication = (Authentication)AuthorizationUtils.getAuthentication();
             if (authentication != null) {
                 ctx.setAuthentication(authentication);
             }
@@ -59,7 +59,7 @@ public class SessionSecurityContextHolderStrategy implements SecurityContextHold
 
     @Override
     public void setContext(SecurityContext context) {
-        WebContext.setAuthentication(context.getAuthentication());
+    	AuthorizationUtils.setAuthentication(context.getAuthentication());
     }
 
     @Override

@@ -18,8 +18,10 @@
 package org.maxkey.web.config.contorller;
 
 import org.apache.commons.lang3.StringUtils;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.entity.Localization;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.repository.LocalizationRepository;
 import org.maxkey.web.WebContext;
 import org.maxkey.web.message.Message;
@@ -50,11 +52,11 @@ public class LocalizationController {
 		 * @return
 		 */
 		@RequestMapping(value={"/forward/{property}"})
-		public ModelAndView forward(@PathVariable("property") String property){
-			Localization localization = localizationRepository.get(property,WebContext.getUserInfo().getInstId());
+		public ModelAndView forward(@PathVariable("property") String property,@CurrentUser UserInfo currentUser){
+			Localization localization = localizationRepository.get(property,currentUser.getInstId());
 			if(localization == null )localization = new Localization();
 			localization.setProperty(property);
-			localization.setInstId(WebContext.getUserInfo().getInstId());
+			localization.setInstId(currentUser.getInstId());
 			return new ModelAndView("localization/updateLocalization","model",localization);
 		}
 		
@@ -65,9 +67,9 @@ public class LocalizationController {
 		 */
 		@RequestMapping(value={"/update"})
 		@ResponseBody
-		public Message updat(@ModelAttribute("localization") Localization localization,BindingResult result) {
+		public Message updat(@ModelAttribute("localization") Localization localization,@CurrentUser UserInfo currentUser,BindingResult result) {
 			_logger.debug("update  localization : "+localization);
-			localization.setInstId(WebContext.getUserInfo().getInstId());
+			localization.setInstId(currentUser.getInstId());
 			if(StringUtils.isBlank(localization.getId())){
 				localization.setId(localization.generateId());
 				if(localizationRepository.insert(localization)) {

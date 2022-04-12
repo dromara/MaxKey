@@ -22,12 +22,12 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.maxkey.util.AuthorizationHeaderCredential;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.util.StringUtils;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +102,7 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 			}
 			
 			if(authenticationToken !=null && authenticationToken.isAuthenticated()) {
-				WebContext.setAuthentication(authenticationToken);
+				AuthorizationUtils.setAuthentication(authenticationToken);
 				return true;
 			}
 		}

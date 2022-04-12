@@ -22,7 +22,6 @@ import java.util.HashMap;
 
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.constants.ConstsStatus;
@@ -62,8 +61,6 @@ public abstract class AbstractAuthenticationProvider {
     
     protected OtpAuthnService otpAuthnService;
 
-    protected AbstractRemeberMeService remeberMeService;
-    
     protected OnlineTicketService onlineTicketServices;
     
     public static  ArrayList<GrantedAuthority> grantedAdministratorsAuthoritys = new ArrayList<GrantedAuthority>();
@@ -370,10 +367,6 @@ public abstract class AbstractAuthenticationProvider {
 
     public void setTfaOtpAuthn(AbstractOtpAuthn tfaOtpAuthn) {
         this.tfaOtpAuthn = tfaOtpAuthn;
-    }
-
-    public void setRemeberMeService(AbstractRemeberMeService remeberMeService) {
-        this.remeberMeService = remeberMeService;
     }
 
     public void setOnlineTicketServices(OnlineTicketService onlineTicketServices) {

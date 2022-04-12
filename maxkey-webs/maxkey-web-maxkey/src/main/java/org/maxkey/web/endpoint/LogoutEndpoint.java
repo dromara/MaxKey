@@ -24,10 +24,10 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.singlelogout.SamlSingleLogout;
 import org.maxkey.authz.singlelogout.DefaultSingleLogout;
 import org.maxkey.authz.singlelogout.LogoutType;
@@ -117,8 +117,8 @@ public class LogoutEndpoint {
  		modelAndView.addObject("reloginUrl",reLoginUrl);
  		
  		//if logined in have onlineTicket ,need remove or logout back
- 		if(WebContext.getAuthentication() != null) {
- 			String onlineTicketId = ((SigninPrincipal)WebContext.getAuthentication().getPrincipal()).getOnlineTicket().getTicketId();
+ 		if(AuthorizationUtils.getAuthentication() != null) {
+ 			String onlineTicketId = (AuthorizationUtils.getPrincipal()).getOnlineTicket().getTicketId();
  	 		OnlineTicket onlineTicket = onlineTicketService.get(onlineTicketId);
  	 		if(onlineTicket != null) {
 		 		Set<Entry<String, Apps>> entrySet = onlineTicket.getAuthorizedApps().entrySet();

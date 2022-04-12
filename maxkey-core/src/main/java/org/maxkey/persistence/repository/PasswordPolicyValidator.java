@@ -25,6 +25,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.maxkey.constants.ConstsPasswordSetType;
 import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordGen;
+import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.PasswordPolicy;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.util.StringUtils;
@@ -73,11 +74,11 @@ public class PasswordPolicyValidator {
      * @param userInfo
      * @return boolean
      */
-   public boolean validator(UserInfo userInfo) {
+   public boolean validator(ChangePassword changePassword) {
        
        
-       String password = userInfo.getPassword();
-       String username = userInfo.getUsername();
+       String password = changePassword.getPassword();
+       String username = changePassword.getUsername();
        
        if(password.equals("") || password==null){
            _logger.debug("password  is Empty ");

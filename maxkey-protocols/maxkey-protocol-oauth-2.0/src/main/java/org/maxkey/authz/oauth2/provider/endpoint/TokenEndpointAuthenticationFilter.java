@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
@@ -154,7 +155,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 				}
 				auth.setAuthenticated(true);
 				UsernamePasswordAuthenticationToken simpleUserAuthentication = new UsernamePasswordAuthenticationToken(auth, authentication.getCredentials(), authentication.getAuthorities());
-				WebContext.setAuthentication(simpleUserAuthentication);
+				AuthorizationUtils.setAuthentication(simpleUserAuthentication);
 			}
 
 		}
@@ -208,7 +209,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 	
 			OAuth2Request storedOAuth2Request = oAuth2RequestFactory.createOAuth2Request(authorizationRequest);
 			
-			WebContext.setAuthentication(new OAuth2Authentication(storedOAuth2Request, authResult));
+			AuthorizationUtils.setAuthentication(new OAuth2Authentication(storedOAuth2Request, authResult));
 	
 			onSuccessfulAuthentication(request, response, authResult);
 	

@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.entity.HistoryLoginApps;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
@@ -39,8 +40,8 @@ import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 @Component
-public class HistoryLoginAppAdapter  implements AsyncHandlerInterceptor  {
-    private static final Logger _logger = LoggerFactory.getLogger(HistoryLoginAppAdapter.class);
+public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
+    private static final Logger _logger = LoggerFactory.getLogger(HistorySignOnAppInterceptor.class);
 
     @Autowired
     HistoryLoginAppsService historyLoginAppsService;
@@ -58,7 +59,7 @@ public class HistoryLoginAppAdapter  implements AsyncHandlerInterceptor  {
             throws Exception {
         _logger.debug("preHandle");
         final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
-        Authentication authentication = WebContext.getAuthentication();
+        Authentication authentication = AuthorizationUtils.getAuthentication();
         if(authentication.getPrincipal() instanceof SigninPrincipal) {
             SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal() ;
             if(signinPrincipal.getGrantedAuthorityApps().contains(new SimpleGrantedAuthority(app.getId()))) {
@@ -83,19 +84,26 @@ public class HistoryLoginAppAdapter  implements AsyncHandlerInterceptor  {
         _logger.debug("postHandle");
        
         final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
-        String sessionId = "";//(String)WebContext.getAttribute(WebConstants.CURRENT_USER_SESSION_ID);
-        final UserInfo userInfo = WebContext.getUserInfo();
-        _logger.debug("sessionId : " + sessionId + " ,appId : " + app.getId());
-        HistoryLoginApps historyLoginApps = new HistoryLoginApps();
-        historyLoginApps.setAppId(app.getId());
-        historyLoginApps.setSessionId(sessionId);
-        historyLoginApps.setAppName(app.getName());
-        historyLoginApps.setUserId(userInfo.getId());
-        historyLoginApps.setUsername(userInfo.getUsername());
-        historyLoginApps.setDisplayName(userInfo.getDisplayName());
-        historyLoginApps.setInstId(userInfo.getInstId());
-        historyLoginAppsService.insert(historyLoginApps);
-        WebContext.removeAttribute(WebConstants.CURRENT_SINGLESIGNON_URI);
-        WebContext.removeAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID);
+        
+        Authentication  authentication  = AuthorizationUtils.getAuthentication();
+        if((authentication != null)
+        		&& (authentication.getPrincipal() instanceof SigninPrincipal)) {
+        	SigninPrincipal signinPrincipal = AuthorizationUtils.getPrincipal();
+        	final UserInfo userInfo = signinPrincipal.getUserInfo();
+        	String sessionId = signinPrincipal.getOnlineTicket().getTicketId().substring(3);
+        	 _logger.debug("sessionId : " + sessionId + " ,appId : " + app.getId());
+             HistoryLoginApps historyLoginApps = new HistoryLoginApps();
+             historyLoginApps.setAppId(app.getId());
+             historyLoginApps.setSessionId(sessionId);
+             historyLoginApps.setAppName(app.getName());
+             historyLoginApps.setUserId(userInfo.getId());
+             historyLoginApps.setUsername(userInfo.getUsername());
+             historyLoginApps.setDisplayName(userInfo.getDisplayName());
+             historyLoginApps.setInstId(userInfo.getInstId());
+             historyLoginAppsService.insert(historyLoginApps);
+             WebContext.removeAttribute(WebConstants.CURRENT_SINGLESIGNON_URI);
+             WebContext.removeAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID);
+        }
+       
     }
 }

@@ -77,7 +77,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	}
 	
     public boolean insert(UserInfo userInfo) {
-        userInfo = passwordEncoder(userInfo);
+    	this.passwordEncoder(userInfo);
         if (super.insert(userInfo)) {
         	if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
                 UserInfo loadUserInfo = findUserRelated(userInfo.getId());
@@ -94,7 +94,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     }
 	
     public boolean update(UserInfo userInfo) {
-        userInfo = passwordEncoder(userInfo);
+    	ChangePassword changePassword = this.passwordEncoder(userInfo);
         if (super.update(userInfo)) {
         	if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
                 UserInfo loadUserInfo = findUserRelated(userInfo.getId());
@@ -105,7 +105,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
                         MqIdentityAction.UPDATE_ACTION);
             }
             
-            changePasswordProvisioning(userInfo);
+            changePasswordProvisioning(changePassword);
             return true;
         }
         return false;
@@ -151,11 +151,11 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	    return loadUserInfo;
 	}
 	
-	public boolean updateGridList(String gridList) {
+	public boolean updateGridList(String gridList,UserInfo userInfo) {
 	    try {
     	    if (gridList != null && !gridList.equals("")) {
-                WebContext.getUserInfo().setGridList(Integer.parseInt(gridList));
-                getMapper().updateGridList(WebContext.getUserInfo());
+    	    	userInfo.setGridList(Integer.parseInt(gridList));
+                getMapper().updateGridList(userInfo);
             }
 	    }catch(Exception e) {
             e.printStackTrace();
@@ -180,9 +180,6 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
 	public boolean updateProtectedApps(UserInfo userinfo) {
 		try {
-			if(WebContext.getUserInfo() != null) {
-				userinfo.setModifiedBy(WebContext.getUserInfo().getId());
-			}
 			userinfo.setModifiedDate(DateUtils.getCurrentDateTimeAsString());
 			return getMapper().updateProtectedApps(userinfo) > 0;
 		} catch (Exception e) {
@@ -210,21 +207,32 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		return null;
 	}
 	
-	public UserInfo passwordEncoder(UserInfo userInfo) {
+	public ChangePassword passwordEncoder(UserInfo userInfo) {
+		ChangePassword changePassword = null;
+		if(StringUtils.isNotBlank(userInfo.getPassword())) {
+    		changePassword = new ChangePassword(userInfo);
+    		passwordEncoder(changePassword);
+    		userInfo.setPassword(changePassword.getPassword());
+    		userInfo.setDecipherable(changePassword.getDecipherable());
+    		userInfo.setPasswordLastSetTime(changePassword.getPasswordLastSetTime());
+    	}
+		return changePassword;
+	}
+	
+	public ChangePassword passwordEncoder(ChangePassword changePassword) {
 	    //密码不为空，则需要进行加密处理
-	    if(!StringUtils.isBlank(userInfo.getPassword())) {
-    	    String password = passwordEncoder.encode(userInfo.getPassword());
-            userInfo.setDecipherable(PasswordReciprocal.getInstance().encode(userInfo.getPassword()));
-            _logger.debug("decipherable : "+userInfo.getDecipherable());
-            userInfo.setPassword(password);
-            userInfo.setPasswordLastSetTime(DateUtils.getCurrentDateTimeAsString());
+	    if(StringUtils.isNotBlank(changePassword.getPassword())) {
+    	    String password = passwordEncoder.encode(changePassword.getPassword());
+    	    changePassword.setDecipherable(PasswordReciprocal.getInstance().encode(changePassword.getPassword()));
+            _logger.debug("decipherable : "+changePassword.getDecipherable());
+            changePassword.setPassword(password);
+            changePassword.setPasswordLastSetTime(DateUtils.getCurrentDateTimeAsString());
             
-            userInfo.setModifiedDate(DateUtils.getCurrentDateTimeAsString());
 	    }else {
-	    	userInfo.setPassword(null);
-	    	userInfo.setDecipherable(null);
+	    	changePassword.setPassword(null);
+	    	changePassword.setDecipherable(null);
 	    }
-        return userInfo;
+        return changePassword;
 	}
 	
 	/**
@@ -235,32 +243,20 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	 * @param passwordSetType
 	 * @return
 	 */
-	public boolean changePassword(  String oldPassword,
-                                    String newPassword,
-                                    String confirmPassword,
-                                    int passwordSetType) {
+	public boolean changePassword(  ChangePassword changePassword) {
 		try {
 		    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, "");
-	        UserInfo userInfo = WebContext.getUserInfo();
-	        UserInfo changeUserInfo = new UserInfo();
-	        changeUserInfo.setUsername(userInfo.getUsername());
-	        changeUserInfo.setPassword(newPassword);
-	        changeUserInfo.setId(userInfo.getId());
-	        changeUserInfo.setDecipherable(userInfo.getDecipherable());
-	        changeUserInfo.setPasswordSetType(passwordSetType);
-	        
-	        if(newPassword.equals(confirmPassword)){
-	            if(oldPassword==null || 
-	                    passwordEncoder.matches(oldPassword, userInfo.getPassword())){
-	                if(changePassword(changeUserInfo,true) ){
-	                    userInfo.setPassword(changeUserInfo.getPassword());
-                        userInfo.setDecipherable(changeUserInfo.getDecipherable());
+		    UserInfo userInfo = this.findByUsername(changePassword.getUsername());
+	        if(changePassword.getPassword().equals(changePassword.getConfirmPassword())){
+	            if(StringUtils.isNotBlank(changePassword.getOldPassword()) || 
+	                    passwordEncoder.matches(changePassword.getOldPassword(), userInfo.getPassword())){
+	                if(changePassword(changePassword,true) ){
 	                    return true;
 	                }
 	                return false;	               
 	            }else {
-	                if(oldPassword!=null &&
-	                        passwordEncoder.matches(newPassword, userInfo.getPassword())) {
+	                if(StringUtils.isNotBlank(changePassword.getOldPassword())&&
+	                        passwordEncoder.matches(changePassword.getPassword(), userInfo.getPassword())) {
 	                    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, 
 	                            WebContext.getI18nValue("PasswordPolicy.OLD_PASSWORD_MATCH"));
 	                }else {
@@ -285,23 +281,19 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	 * @param passwordPolicy
 	 * @return
 	 */
-    public boolean changePassword(UserInfo changeUserInfo,boolean passwordPolicy) {
+    public boolean changePassword(ChangePassword changePassword,boolean passwordPolicy) {
         try {
-            _logger.debug("decipherable old : " + changeUserInfo.getDecipherable());
-            _logger.debug("decipherable new : " + PasswordReciprocal.getInstance().encode(changeUserInfo.getPassword()));
+            _logger.debug("decipherable old : " + changePassword.getDecipherable());
+            _logger.debug("decipherable new : " + PasswordReciprocal.getInstance().encode(changePassword.getDecipherable()));
 
-            if (passwordPolicy && passwordPolicyValidator.validator(changeUserInfo) == false) {
+            if (passwordPolicy && passwordPolicyValidator.validator(changePassword) == false) {
                 return false;
             }
 
-            if (WebContext.getUserInfo() != null) {
-                changeUserInfo.setModifiedBy(WebContext.getUserInfo().getId());
-            }
+            changePassword = passwordEncoder(changePassword);
 
-            changeUserInfo = passwordEncoder(changeUserInfo);
-
-            if (getMapper().updatePassword(changeUserInfo) > 0) {
-                changePasswordProvisioning(changeUserInfo);
+            if (getMapper().changePassword(changePassword) > 0) {
+                changePasswordProvisioning(changePassword);
                 return true;
             }
             return false;
@@ -317,20 +309,10 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	    return passwordPolicyValidator.generateRandomPassword();
 	}
 	
-	public void changePasswordProvisioning(UserInfo userInfo) {
-	    if(StringUtils.isNotBlank(userInfo.getPassword())) {
-	    	UserInfo loadUserInfo = findByUsername(userInfo.getUsername());
-    	    ChangePassword changePassword=new ChangePassword();
-            changePassword.setId(loadUserInfo.getId());
-            changePassword.setUserId(loadUserInfo.getId());
-            changePassword.setUsername(loadUserInfo.getUsername());
-            changePassword.setWindowsAccount(loadUserInfo.getWindowsAccount());
-            changePassword.setMobile(loadUserInfo.getMobile());
-            changePassword.setEmail(loadUserInfo.getEmail());
-            changePassword.setEmployeeNumber(loadUserInfo.getEmployeeNumber());
-            changePassword.setDecipherable(loadUserInfo.getDecipherable());
-            changePassword.setPassword(loadUserInfo.getPassword());
-            changePassword.setInstId(loadUserInfo.getInstId());
+	public void changePasswordProvisioning(ChangePassword changePassworded) {
+	    if(changePassworded !=null && StringUtils.isNotBlank(changePassworded.getPassword())) {
+	    	UserInfo loadUserInfo = findByUsername(changePassworded.getUsername());
+    	    ChangePassword changePassword = new ChangePassword(loadUserInfo);
             mqPersistService.send(
                     MqIdentityTopic.PASSWORD_TOPIC, 
                     changePassword, 
@@ -340,9 +322,6 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
 	public boolean updateAppLoginPassword(UserInfo userinfo) {
 		try {
-			if(WebContext.getUserInfo() != null) {
-				userinfo.setModifiedBy(WebContext.getUserInfo().getId());
-			}
 			userinfo.setModifiedDate(DateUtils.getCurrentDateTimeAsString());
 			return getMapper().updateAppLoginPassword(userinfo) > 0;
 		} catch (Exception e) {

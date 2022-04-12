@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.exceptions.InvalidClientException;
@@ -150,7 +152,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	            @RequestParam Map<String, String> parameters,
 	            SessionStatus sessionStatus) {
 	    
-		 Principal principal=(Principal)WebContext.getAuthentication();
+		 Principal principal=(Principal)AuthorizationUtils.getAuthentication();
 		// Pull out the authorization request first, using the OAuth2RequestFactory. All further logic should
 		// query off of the authorization request instead of referring back to the parameters map. The contents of the
 		// parameters map will be stored without change in the AuthorizationRequest object once it is created.
@@ -241,7 +243,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	                Map<String, ?> model,
 	                SessionStatus sessionStatus) {
 	    
-		Principal principal=(Principal)WebContext.getAuthentication();
+		Principal principal=(Principal)AuthorizationUtils.getAuthentication();
 		if (!(principal instanceof Authentication)) {
 			sessionStatus.setComplete();
 			throw new InsufficientAuthenticationException(

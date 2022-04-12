@@ -47,8 +47,8 @@ public class SubjectGenerator {
 	public Subject generateSubject( AppsSAML20Details saml20Details,
 							String assertionConsumerURL, 
 							String inResponseTo, 
-							int validInSeconds) {
-		UserInfo userInfo = WebContext.getUserInfo();
+							int validInSeconds,
+							UserInfo userInfo) {
 		String nameIdValue = userInfo.getUsername();
 		if(saml20Details.getNameidFormat().equalsIgnoreCase("persistent")) {
 		    

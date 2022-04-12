@@ -21,6 +21,8 @@
 package org.maxkey.authz.endpoint;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.UserInfo;
@@ -41,12 +43,13 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 	@RequestMapping("/authz/credential/forward")
 	public ModelAndView authorizeCredentialForward(
 			@RequestParam("appId") String appId,
-			@RequestParam("redirect_uri") String redirect_uri){
+			@RequestParam("redirect_uri") String redirect_uri,
+			@CurrentUser UserInfo currentUser){
 		ModelAndView modelAndView=new ModelAndView("authorize/init_sso_credential");
 		modelAndView.addObject("username", "");
 		modelAndView.addObject("password", "");
 		modelAndView.addObject("setpassword", true);
-		modelAndView.addObject("userId", WebContext.getUserInfo().getId());
+		modelAndView.addObject("userId", currentUser.getId());
 		modelAndView.addObject("appId", appId);
 		modelAndView.addObject("appName",getApp(appId).getName());
 		modelAndView.addObject("redirect_uri", redirect_uri);
@@ -60,16 +63,17 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 			@RequestParam("appId") String appId,
 			@RequestParam("identity_username") String identity_username,
 			@RequestParam("identity_password") String identity_password,
-			@RequestParam("redirect_uri") String redirect_uri){
+			@RequestParam("redirect_uri") String redirect_uri,
+			@CurrentUser UserInfo currentUser){
 		
 		if(StringUtils.isNotEmpty(identity_username)&&StringUtils.isNotEmpty(identity_password)){
 			Accounts appUser =new Accounts ();
-			UserInfo userInfo=WebContext.getUserInfo();
+			
 			appUser.setId(appUser.generateId());
 			
-			appUser.setUserId(userInfo.getId());
-			appUser.setUsername(userInfo.getUsername());
-			appUser.setDisplayName(userInfo.getDisplayName());
+			appUser.setUserId(currentUser.getId());
+			appUser.setUsername(currentUser.getUsername());
+			appUser.setDisplayName(currentUser.getDisplayName());
 			
 			appUser.setAppId(appId);
 			appUser.setAppName(getApp(appId).getName());
@@ -77,7 +81,7 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 			appUser.setRelatedUsername(identity_username);
 			appUser.setRelatedPassword(PasswordReciprocal.getInstance().encode(identity_password));
 			
-			appUser.setInstId(WebContext.getUserInfo().getInstId());
+			appUser.setInstId(currentUser.getInstId());
 			
 			if(accountsService.insert(appUser)){
 				

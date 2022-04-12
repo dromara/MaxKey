@@ -24,8 +24,6 @@ import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.online.OnlineTicketServiceFactory;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
-import org.maxkey.authn.support.rememberme.RemeberMeServiceFactory;
 import org.maxkey.authn.web.SessionListenerAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.configuration.AuthJwkConfig;
@@ -69,7 +67,6 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     		ApplicationConfig applicationConfig,
     	    AbstractOtpAuthn tfaOtpAuthn,
     	    OtpAuthnService otpAuthnService,
-    	    AbstractRemeberMeService remeberMeService,
     	    OnlineTicketService onlineTicketServices
     		) {
        
@@ -79,7 +76,6 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         		applicationConfig,
         		tfaOtpAuthn,
         		otpAuthnService,
-        		remeberMeService,
         		onlineTicketServices
         		);
         
@@ -125,18 +121,6 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         return new LoginHistoryRepository(jdbcTemplate);
     }
     
-    /**
-     * remeberMeService .
-     * @return
-     */
-    @Bean(name = "remeberMeService")
-    public AbstractRemeberMeService remeberMeService(
-            @Value("${maxkey.server.persistence}") int persistence,
-            @Value("${maxkey.login.remeberme.validity}") int validity,
-            JdbcTemplate jdbcTemplate,
-            RedisConnectionFactory redisConnFactory) {
-        return new RemeberMeServiceFactory().getService(persistence, jdbcTemplate, redisConnFactory);
-    }
     
     @Bean(name = "onlineTicketService")
     public OnlineTicketService onlineTicketService(

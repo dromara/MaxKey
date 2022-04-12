@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,45 +17,34 @@
 
 package org.maxkey.web.contorller;
 
-import javax.validation.Valid;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageScope;
-import org.maxkey.web.message.MessageType;
-import org.maxkey.web.message.OperateType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = { "/profile" })
+@RequestMapping(value = { "/config/profile" })
 public class ProfileController {
     static final Logger _logger = LoggerFactory.getLogger(ProfileController.class);
 
     @Autowired
     private UserInfoService userInfoService;
 
-    @RequestMapping(value = { "/myProfile" })
-    public ModelAndView forwardBasic() {
-        ModelAndView modelAndView = new ModelAndView("profile/myProfile");
-        UserInfo userInfo = userInfoService.findByUsername(WebContext.getUserInfo().getUsername());
-        userInfo.transPictureBase64();
-
-        //  HashMap<String,Object>extraAttributeMap=new HashMap<String,Object>();
-        //  extraAttributeMap=(HashMap<String,Object>)JsonUtils.json2Object(userInfo.getExtraAttribute(),extraAttributeMap);
-        //  modelAndView.addObject("extraAttributeMap", extraAttributeMap);
-        //  _logger.info("extraAttributeMap : "+extraAttributeMap);
-        //
-        modelAndView.addObject("model", userInfo);
-        return modelAndView;
+    @RequestMapping(value = { "/get" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> get(@CurrentUser UserInfo currentUser) {
+        UserInfo userInfo = userInfoService.findByUsername(currentUser.getUsername());
+		userInfo.trans();
+        return new Message<UserInfo>(userInfo).buildResponse();
     }
 
     /**
@@ -65,9 +54,11 @@ public class ProfileController {
      * @param result
      * @return
      */
-    @RequestMapping(value = "/update/myProfile")
-    public ModelAndView updatebasic(
-                @Valid @ModelAttribute("userInfo") UserInfo userInfo,
+    @ResponseBody
+	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> update(
+				@RequestBody  UserInfo userInfo,
+				@CurrentUser UserInfo currentUser,
                 BindingResult result) {
         _logger.debug(userInfo.toString());
 
@@ -83,17 +74,11 @@ public class ProfileController {
 //		}
 
         if (userInfoService.updateProfile(userInfo) > 0) {
-            new Message(
-                    WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS), 
-                    userInfo, MessageType.success,
-                    OperateType.add, MessageScope.DB);
-            
-        } else {
-            new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR), MessageType.error);
-        }
-
-        return WebContext.redirect("/profile/myProfile");
-
+        	return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+        } 
+        
+        return new Message<UserInfo>(Message.FAIL).buildResponse();
+        
     }
 
 }

@@ -22,8 +22,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.constants.ConstsPasswordSetType;
 import org.maxkey.constants.ConstsTimeInterval;
+import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -33,58 +36,39 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value={"/safe"})
-public class SafeController {
-	final static Logger _logger = LoggerFactory.getLogger(SafeController.class);
+@RequestMapping(value={"/config"})
+public class ChangePasswodController {
+	final static Logger _logger = LoggerFactory.getLogger(ChangePasswodController.class);
 	
 	@Autowired
 	private UserInfoService userInfoService;
 	
-
-	
-	
-	@RequestMapping(value="/forward/setting") 
-	public ModelAndView fowardSetting(@CurrentUser UserInfo currentUser) {
-			ModelAndView modelAndView=new ModelAndView("safe/setting");
-			modelAndView.addObject("model", currentUser);
-			return modelAndView;
-	}
-	
 	@ResponseBody
-	@RequestMapping(value="/setting") 
-	public Message setting(
-	        HttpServletRequest request,
-            HttpServletResponse response,
-			@RequestParam("authnType") String authnType,
-			@RequestParam("mobile") String mobile,
-			@RequestParam("mobileVerify") String mobileVerify,
-			@RequestParam("email") String email,
-			@RequestParam("emailVerify") String emailVerify,
-			@RequestParam("theme") String theme,
+	@RequestMapping(value="/changePassword") 
+	public Message changePasswod(
+			@RequestBody ChangePassword changePassword,
 			@CurrentUser UserInfo currentUser) {
-		currentUser.setAuthnType(Integer.parseInt(authnType));
-		userInfoService.updateAuthnType(currentUser);
 		
-		currentUser.setMobile(mobile);
-		userInfoService.updateMobile(currentUser);
-		
-		currentUser.setEmail(email);
-
-		currentUser.setTheme(theme);
-        WebContext.setCookie(response,null, WebConstants.THEME_COOKIE_NAME, theme, ConstsTimeInterval.ONE_WEEK);
-        
-		userInfoService.updateEmail(currentUser);
-		
-		
-		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
-		
+			changePassword.setUserId(currentUser.getId());
+			changePassword.setUsername(currentUser.getUsername());
+			changePassword.setInstId(currentUser.getInstId());
+			changePassword.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
+			if(userInfoService.changePassword(changePassword)) {
+				return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			}else {
+				return  new Message(
+				        WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR)+"<br>"
+				        +WebContext.getAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT),
+				        MessageType.error);
+			}	
 	}
-	
-	
+
 }

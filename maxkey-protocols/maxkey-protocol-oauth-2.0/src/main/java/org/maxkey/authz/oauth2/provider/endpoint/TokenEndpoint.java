@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.oauth2.common.DefaultOAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
@@ -38,7 +39,6 @@ import org.maxkey.authz.oauth2.provider.TokenRequest;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestValidator;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.util.StringGenerator;
-import org.maxkey.web.WebContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -114,7 +114,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 		// TokenEndpointAuthenticationFilter
 		OAuth2AccessToken token = null;
 	    try {
-		    Object principal = WebContext.getAuthentication();
+		    Object principal = AuthorizationUtils.getAuthentication();
 	
 			if (!(principal instanceof Authentication)) {
 				throw new InsufficientAuthenticationException(

@@ -24,14 +24,12 @@ import org.maxkey.authn.support.basic.BasicEntryPoint;
 import org.maxkey.authn.support.httpheader.HttpHeaderEntryPoint;
 import org.maxkey.authn.support.kerberos.HttpKerberosEntryPoint;
 import org.maxkey.authn.support.kerberos.KerberosService;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
-import org.maxkey.authn.support.rememberme.HttpRemeberMeEntryPoint;
 import org.maxkey.authn.web.CurrentUserMethodArgumentResolver;
-import org.maxkey.authn.web.interceptor.PermissionAdapter;
+import org.maxkey.authn.web.interceptor.PermissionInterceptor;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.web.interceptor.HistoryLoginAppAdapter;
-import org.maxkey.web.interceptor.HistoryLogsAdapter;
-import org.maxkey.web.interceptor.PreLoginAppAdapter;
+import org.maxkey.web.interceptor.HistorySignOnAppInterceptor;
+import org.maxkey.web.interceptor.HistoryLogsInterceptor;
+import org.maxkey.web.interceptor.SingleSignOnInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +42,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 @Configuration
 @EnableWebMvc
@@ -60,27 +57,21 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     AbstractAuthenticationProvider authenticationProvider ;
     
     @Autowired
-	@Qualifier("remeberMeService")
-	AbstractRemeberMeService remeberMeService;
-    
-    @Autowired
 	@Qualifier("kerberosService")
     KerberosService kerberosService;
     
     @Autowired
-    PermissionAdapter permissionAdapter;
+    PermissionInterceptor permissionInterceptor;
     
     @Autowired
-    HistoryLogsAdapter historyLogsAdapter;
+    HistoryLogsInterceptor historyLogsInterceptor;
+    
     
     @Autowired
-    LocaleChangeInterceptor localeChangeInterceptor;
+    SingleSignOnInterceptor singleSignOnInterceptor;
     
     @Autowired
-    PreLoginAppAdapter preLoginAppAdapter;
-    
-    @Autowired
-    HistoryLoginAppAdapter historyLoginAppAdapter;
+    HistorySignOnAppInterceptor historySignOnAppInterceptor;
     
     @Value("${maxkey.login.httpheader.enable:false}")
     private boolean httpHeaderEnable;
@@ -118,10 +109,6 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //addPathPatterns 用于添加拦截规则 ， 先把所有路径都加入拦截， 再一个个排除
         //excludePathPatterns 表示改路径不用拦截
-        _logger.debug("add HttpRemeberMeEntryPoint");
-        registry.addInterceptor(new HttpRemeberMeEntryPoint(
-        			authenticationProvider,remeberMeService,applicationConfig,true))
-        		.addPathPatterns("/login");
         
         _logger.debug("add HttpKerberosEntryPoint");
         registry.addInterceptor(new HttpKerberosEntryPoint(
@@ -141,11 +128,8 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
             _logger.debug("add BasicEntryPoint");
         }
         
-        registry.addInterceptor(permissionAdapter)
-                .addPathPatterns("/index/**")
-                .addPathPatterns("/logs/**")
-                .addPathPatterns("/userinfo/**")
-                .addPathPatterns("/profile/**")
+        //for frontend
+        registry.addInterceptor(permissionInterceptor)
                 .addPathPatterns("/config/**")
                 .addPathPatterns("/historys/**")
                 .addPathPatterns("/access/session/**")
@@ -153,9 +137,17 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/appList")
                 .addPathPatterns("/appList/**")
                 .addPathPatterns("/socialsignon/**")
-                
+                ;
+        _logger.debug("add Permission Interceptor");
+        
+        registry.addInterceptor(historyLogsInterceptor)
+                .addPathPatterns("/config/changePassword/**")
+                ;
+        _logger.debug("add historyLogs Interceptor");
+
+        //for Single Sign On
+        registry.addInterceptor(singleSignOnInterceptor)
                 .addPathPatterns("/authz/basic/*")
-                .addPathPatterns("/authz/ltpa/*")
                 //Form based
                 .addPathPatterns("/authz/formbased/*")
                 //Token based
@@ -197,34 +189,10 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 //online ticket Validate
                 .excludePathPatterns("/onlineticket/ticketValidate")
                 .excludePathPatterns("/onlineticket/ticketValidate/*")
-                ;
-        
-        _logger.debug("add PermissionAdapter");
-        
-        registry.addInterceptor(historyLogsAdapter)
-                .addPathPatterns("/safe/changePassword/**")
-                ;
-        _logger.debug("add HistoryLogsAdapter");
-
-        registry.addInterceptor(preLoginAppAdapter)
-                .addPathPatterns("/authz/basic/*")
-                .addPathPatterns("/authz/ltpa/*")
-                //Form based
-                .addPathPatterns("/authz/formbased/*")
-                //Token based
-                .addPathPatterns("/authz/tokenbased/*")
-                //JWT
-                .addPathPatterns("/authz/jwt/*")
-                //SAML
-                .addPathPatterns("/authz/saml20/idpinit/*")
-                .addPathPatterns("/authz/saml20/assertion")
-                //CAS
-                .addPathPatterns("/authz/cas/login")
-                .addPathPatterns("/authz/cas/granting")
         ;
-        _logger.debug("add PreLoginAppAdapter");
+        _logger.debug("add Single SignOn Interceptor");
         
-        registry.addInterceptor(historyLoginAppAdapter)
+        registry.addInterceptor(historySignOnAppInterceptor)
                 .addPathPatterns("/authz/basic/*")
                 .addPathPatterns("/authz/ltpa/*")
                 //Extend api
@@ -243,11 +211,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 //OAuth
                 .addPathPatterns("/authz/oauth/v20/approval_confirm")
         ;
-        _logger.debug("add HistoryLoginAppAdapter");
-        
-       
-        registry.addInterceptor(localeChangeInterceptor);
-        _logger.debug("add LocaleChangeInterceptor");
+        _logger.debug("add history SignOn App Interceptor");
         
 
     }

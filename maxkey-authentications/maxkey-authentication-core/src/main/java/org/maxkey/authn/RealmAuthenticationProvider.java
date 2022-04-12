@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
 import org.maxkey.entity.UserInfo;
@@ -37,8 +37,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 /**
@@ -65,13 +63,11 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     		ApplicationConfig applicationConfig,
     	    AbstractOtpAuthn tfaOtpAuthn,
     	    OtpAuthnService otpAuthnService,
-    	    AbstractRemeberMeService remeberMeService,
     	    OnlineTicketService onlineTicketServices) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
 		this.tfaOtpAuthn = tfaOtpAuthn;
 		this.otpAuthnService = otpAuthnService;
-		this.remeberMeService =  remeberMeService;
 		this.onlineTicketServices = onlineTicketServices;
 	}
 
@@ -115,20 +111,6 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
         
         UsernamePasswordAuthenticationToken authenticationToken = createOnlineSession(loginCredential,userInfo);
-        //RemeberMe Config check then set  RemeberMe cookies
-        if (applicationConfig.getLoginConfig().isRemeberMe()) {
-            if (loginCredential.getRemeberMe() != null && loginCredential.getRemeberMe().equals("remeberMe")) {
-                WebContext.getSession().setAttribute(
-                        WebConstants.REMEBER_ME_SESSION,loginCredential.getUsername());
-                _logger.debug("do Remeber Me");
-                remeberMeService.createRemeberMe(
-                        userInfo.getUsername(), 
-                        WebContext.getRequest(), 
-                        ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
-                            .getResponse()
-                );
-            }
-        }
         
         return  authenticationToken;
     }
@@ -225,7 +207,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         /*
          *  put Authentication to current session context
          */
-        WebContext.setAuthentication(authenticationToken);
+        AuthorizationUtils.setAuthentication(authenticationToken);
      
         return authenticationToken;
     }

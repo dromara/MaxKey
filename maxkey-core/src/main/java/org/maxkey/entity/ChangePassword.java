@@ -36,9 +36,11 @@ public class ChangePassword extends JpaBaseEntity{
 	private String displayName;
 	private String oldPassword;
 	private String password;
-	private String confirmpassword;
+	private String confirmPassword;
 	private String decipherable;
 	private String instId;
+	private int passwordSetType;
+	private String passwordLastSetTime;
 	
 	/**
 	 * 
@@ -46,7 +48,24 @@ public class ChangePassword extends JpaBaseEntity{
 	public ChangePassword() {
 
 	}
-
+	
+	public ChangePassword(String username,String password) {
+		this.username = username;
+		this.password = password;
+	}
+	
+	public ChangePassword(UserInfo userInfo) {
+		this.setId(userInfo.getId());
+		this.setUserId(userInfo.getId());
+		this.setUsername(userInfo.getUsername());
+		this.setWindowsAccount(userInfo.getWindowsAccount());
+		this.setMobile(userInfo.getMobile());
+		this.setEmail(userInfo.getEmail());
+		this.setEmployeeNumber(userInfo.getEmployeeNumber());
+		this.setDecipherable(userInfo.getDecipherable());
+		this.setPassword(userInfo.getPassword());
+		this.setInstId(userInfo.getInstId());
+	}
 	
 	/**
 	 * @return the id
@@ -127,22 +146,13 @@ public class ChangePassword extends JpaBaseEntity{
 		this.password = password;
 	}
 
-
-	/**
-	 * @return the confirmpassword
-	 */
-	public String getConfirmpassword() {
-		return confirmpassword;
+	public String getConfirmPassword() {
+		return confirmPassword;
 	}
 
-
-	/**
-	 * @param confirmpassword the confirmpassword to set
-	 */
-	public void setConfirmpassword(String confirmpassword) {
-		this.confirmpassword = confirmpassword;
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
-
 
 	/**
 	 * @return the decipherable
@@ -217,6 +227,27 @@ public class ChangePassword extends JpaBaseEntity{
 		this.instId = instId;
 	}
 
+	
+	public int getPasswordSetType() {
+		return passwordSetType;
+	}
+
+
+	public void setPasswordSetType(int passwordSetType) {
+		this.passwordSetType = passwordSetType;
+	}
+
+
+	public String getPasswordLastSetTime() {
+		return passwordLastSetTime;
+	}
+
+
+	public void setPasswordLastSetTime(String passwordLastSetTime) {
+		this.passwordLastSetTime = passwordLastSetTime;
+	}
+
+
 	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -232,8 +263,8 @@ public class ChangePassword extends JpaBaseEntity{
         builder.append(oldPassword);
         builder.append(", password=");
         builder.append(password);
-        builder.append(", confirmpassword=");
-        builder.append(confirmpassword);
+        builder.append(", confirmPassword=");
+        builder.append(confirmPassword);
         builder.append(", decipherable=");
         builder.append(decipherable);
         builder.append("]");

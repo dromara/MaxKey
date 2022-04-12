@@ -22,13 +22,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -74,19 +71,12 @@ public class SavedRequestAwareAuthenticationSuccessHandler
     protected final Logger _logger = LoggerFactory.getLogger(
             SavedRequestAwareAuthenticationSuccessHandler.class);
 
-    @Autowired
-    @Qualifier("remeberMeService")
-    protected AbstractRemeberMeService remeberMeService;
-
     private RequestCache requestCache = new HttpSessionRequestCache();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws ServletException, IOException {
         SavedRequest savedRequest = requestCache.getRequest(request, response);
-
-        remeberMeService.createRemeberMe(
-                authentication.getPrincipal().toString(), request, response);
 
         if (savedRequest == null) {
             super.onAuthenticationSuccess(request, response, authentication);

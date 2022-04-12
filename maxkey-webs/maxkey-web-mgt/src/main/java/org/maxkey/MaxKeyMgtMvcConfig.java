@@ -22,17 +22,14 @@ import java.util.List;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.jwt.HttpJwtEntryPoint;
 import org.maxkey.authn.support.jwt.JwtLoginService;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
-import org.maxkey.authn.support.rememberme.HttpRemeberMeEntryPoint;
 import org.maxkey.authn.web.CurrentUserMethodArgumentResolver;
-import org.maxkey.authn.web.interceptor.PermissionAdapter;
+import org.maxkey.authn.web.interceptor.PermissionInterceptor;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.interceptor.HistoryLogsAdapter;
 import org.maxkey.web.interceptor.RestApiPermissionAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -48,23 +45,16 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMgtMvcConfig.class);
     
     @Autowired
-  	@Qualifier("applicationConfig")
   	ApplicationConfig applicationConfig;
     
     @Autowired
-    @Qualifier("authenticationProvider")
     AbstractAuthenticationProvider authenticationProvider ;
     
     @Autowired
-	@Qualifier("remeberMeService")
-	AbstractRemeberMeService remeberMeService;
-    
-    @Autowired
-   	@Qualifier("jwtLoginService")
     JwtLoginService jwtLoginService;
     
     @Autowired
-    PermissionAdapter permissionAdapter;
+    PermissionInterceptor permissionInterceptor;
     
     @Autowired
     HistoryLogsAdapter historyLogsAdapter;
@@ -103,18 +93,12 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //addPathPatterns 用于添加拦截规则 ， 先把所有路径都加入拦截， 再一个个排除
         //excludePathPatterns 表示改路径不用拦截
-    	
-    	_logger.debug("add HttpRemeberMeEntryPoint");
-        registry.addInterceptor(new HttpRemeberMeEntryPoint(
-        			authenticationProvider,remeberMeService,applicationConfig,true))
-        		.addPathPatterns("/login");
-        
         _logger.debug("add HttpJwtEntryPoint");
         registry.addInterceptor(new HttpJwtEntryPoint(
         		authenticationProvider,jwtLoginService,applicationConfig,true))
         	.addPathPatterns("/login");
         
-        registry.addInterceptor(permissionAdapter)
+        registry.addInterceptor(permissionInterceptor)
                 .addPathPatterns("/dashboard/**")
                 .addPathPatterns("/orgs/**")
                 .addPathPatterns("/users/**")

@@ -8,16 +8,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 public class AuthJwt {
-	  private String token;
-	  private String type = "Bearer";
-	  private String id;
-	  private String name;
-	  private String username;
-	  private String displayName;
-	  private String email;
-	  private String instId;
-	  private String instName;
-	  private List<String> authorities;
+	private String ticket;
+	private String token;
+	private String type = "Bearer";
+	private String id;
+	private String name;
+	private String username;
+	private String displayName;
+	private String email;
+	private String instId;
+	private String instName;
+	private List<String> authorities;
 	  
 	  
 	public AuthJwt(String token, String id, String username, String displayName, String email, String instId,
@@ -37,6 +38,8 @@ public class AuthJwt {
 		SigninPrincipal signinPrincipal = ((SigninPrincipal)authentication.getPrincipal());
 		
 		this.token = token;
+		this.ticket = signinPrincipal.getOnlineTicket().getTicketId().substring(3);
+		
 		this.id = signinPrincipal.getUserInfo().getId();
 		this.username = signinPrincipal.getUserInfo().getUsername();
 		this.name = this.username;
@@ -115,6 +118,15 @@ public class AuthJwt {
 	public void setAuthorities(List<String> authorities) {
 		this.authorities = authorities;
 	}
+	
+	public String getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

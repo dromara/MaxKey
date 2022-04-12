@@ -21,6 +21,8 @@
 package org.maxkey.authz.endpoint;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.web.WebConstants;
@@ -49,9 +51,9 @@ public class AuthorizeProtectedEndpoint{
 	@RequestMapping("/authz/protected")
 	public ModelAndView authorizeProtected(
 			@RequestParam("password") String password,
-			@RequestParam("redirect_uri") String redirect_uri){
-		 UserInfo userInfo=WebContext.getUserInfo();
-		if( userInfo.getAppLoginPassword().equals(PasswordReciprocal.getInstance().encode(password))){
+			@RequestParam("redirect_uri") String redirect_uri,
+			@CurrentUser UserInfo currentUser){
+		if( currentUser.getAppLoginPassword().equals(PasswordReciprocal.getInstance().encode(password))){
 			WebContext.setAttribute(WebConstants.CURRENT_SINGLESIGNON_URI, redirect_uri);
 			return WebContext.redirect(redirect_uri);
 		}

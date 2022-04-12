@@ -33,7 +33,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
-import org.maxkey.entity.UserInfo;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.IdGenerator;
 import org.maxkey.web.message.Message;
@@ -42,7 +41,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.StandardEnvironment;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -107,25 +105,7 @@ public final class WebContext {
         
     }
      
-    /**
-     * set Current login user to session.
-     * 
-     * @see WebConstants.CURRENT_USER
-     */
-    public static void setUserInfo(UserInfo userInfo) {
-        setAttribute(WebConstants.CURRENT_USER, userInfo);
-    }
-
-    /**
-     * get Current login user from session.
-     * 
-     * @see WebConstants.CURRENT_USER
-     * @return UserInfo
-     */
-    public static UserInfo getUserInfo() {
-        return ((UserInfo) getAttribute(WebConstants.CURRENT_USER));
-    }
-    
+  
     public static String getInst(HttpServletRequest request) {
     	String instId = "1";
     	//from session
@@ -133,7 +113,7 @@ public final class WebContext {
     		instId = ((Institutions)request.getSession().getAttribute(WebConstants.CURRENT_INST)).getId();
     	}else {
     	//from cookie
-    		instId = WebContext.readCookieByName(request, WebConstants.INST_COOKIE_NAME).getValue();
+    		instId = WebContext.getCookie(request, WebConstants.INST_COOKIE_NAME).getValue();
     	}
         return StringUtils.isBlank(instId) ? "1" : instId;
     }
@@ -167,25 +147,7 @@ public final class WebContext {
         removeAttribute(WebConstants.CURRENT_MESSAGE);
     }
 
-    public static void setAuthentication(Authentication authentication) {
-        setAttribute(WebConstants.AUTHENTICATION, authentication);
-    }
 
-    public static Authentication getAuthentication() {
-        Authentication authentication = (Authentication) getAttribute(WebConstants.AUTHENTICATION);
-        return authentication;
-    }
-
-    /**
-     * isAuthenticated.
-     * @return isAuthenticated
-     */
-    public static boolean isAuthenticated() {
-        if (getUserInfo() != null) {
-            return true;
-        }
-        return false;
-    }
 
     /**
      * get ApplicationContext from web  ServletContext configuration
@@ -413,8 +375,8 @@ public final class WebContext {
      * @param name  cookie名字
      * @return Cookie
      */
-    public static Cookie readCookieByName(HttpServletRequest request, String name) {
-        Map<String, Cookie> cookieMap = readCookieAll(request);
+    public static Cookie getCookie(HttpServletRequest request, String name) {
+        Map<String, Cookie> cookieMap = getCookieAll(request);
         if (cookieMap.containsKey(name)) {
             Cookie cookie = (Cookie) cookieMap.get(name);
             return cookie;
@@ -429,7 +391,7 @@ public final class WebContext {
      * @param request HttpServletRequest
      * @return Map 
      */
-    private static Map<String, Cookie> readCookieAll(HttpServletRequest request) {
+    private static Map<String, Cookie> getCookieAll(HttpServletRequest request) {
         Map<String, Cookie> cookieMap = new HashMap<String, Cookie>();
         Cookie[] cookies = request.getCookies();
         if (null != cookies) {

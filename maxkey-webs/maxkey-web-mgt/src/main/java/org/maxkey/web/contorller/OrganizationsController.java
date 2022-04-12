@@ -35,7 +35,6 @@ import org.maxkey.entity.Organizations;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.OrganizationsService;
 import org.maxkey.util.ExcelUtils;
-import org.maxkey.web.WebContext;
 import org.maxkey.web.component.TreeAttributes;
 import org.maxkey.web.component.TreeNode;
 import org.slf4j.Logger;
@@ -161,7 +160,9 @@ public class OrganizationsController {
 	}
 
   @RequestMapping(value = "/import")
-  public ResponseEntity<?> importingOrganizations(@ModelAttribute("excelImportFile")ExcelImport excelImportFile)  {
+  public ResponseEntity<?> importingOrganizations(
+		  @ModelAttribute("excelImportFile")ExcelImport excelImportFile,
+		  @CurrentUser UserInfo currentUser)  {
       if (excelImportFile.isExcelNotEmpty() ) {
         try {
             List<Organizations> orgsList = Lists.newArrayList();
@@ -176,7 +177,7 @@ public class OrganizationsController {
                     if (row == null || j <3 ) {//略过空行和前3行
                         continue;
                     } else {//其他行是数据行
-                        orgsList.add(buildOrganizationsFromSheetRow(row));
+                        orgsList.add(buildOrganizationsFromSheetRow(row,currentUser));
                     }
                 }
             }
@@ -200,7 +201,7 @@ public class OrganizationsController {
       
   }
 
-  public Organizations buildOrganizationsFromSheetRow(Row row) {
+  public Organizations buildOrganizationsFromSheetRow(Row row,UserInfo currentUser) {
 		Organizations organization = new Organizations();
 		// 上级编码
 		organization.setParentId(ExcelUtils.getValue(row, 0));
@@ -248,7 +249,7 @@ public class OrganizationsController {
 		organization.setDescription(ExcelUtils.getValue(row, 20));
 		organization.setStatus(1);
 		
-		organization.setInstId(WebContext.getUserInfo().getInstId());
+		organization.setInstId(currentUser.getInstId());
       return organization;
   }
 }

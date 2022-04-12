@@ -68,7 +68,7 @@ public class LoginEntryPoint {
 	public ModelAndView login() {
 		_logger.debug("LoginController /login.");
 		
-		boolean isAuthenticated= WebContext.isAuthenticated();
+		boolean isAuthenticated= false;//WebContext.isAuthenticated();
 		//for normal login
 		if(isAuthenticated){
 			return WebContext.redirect("/main");

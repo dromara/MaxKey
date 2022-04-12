@@ -145,13 +145,14 @@ public class ForgotPasswordContorller {
             if ((forgotType == ForgotType.EMAIL && mailOtpAuthn.validate(userInfo, captcha)) ||
                     (forgotType == ForgotType.MOBILE && smsOtpAuthn.validate(userInfo, captcha))
                 ) {
+            	/**
                 if(userInfoService.changePassword(userInfo,true)) {
                 	modelAndView.addObject("passwordResetResult", PasswordResetResult.SUCCESS);
                 }else {
                 	;
                 	modelAndView.addObject("validate_result", WebContext.getAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT));
                 	modelAndView.addObject("passwordResetResult", PasswordResetResult.PASSWORDERROR);
-                }
+                }*/
             } else {
                 modelAndView.addObject("passwordResetResult", PasswordResetResult.CAPTCHAERROR);
             }

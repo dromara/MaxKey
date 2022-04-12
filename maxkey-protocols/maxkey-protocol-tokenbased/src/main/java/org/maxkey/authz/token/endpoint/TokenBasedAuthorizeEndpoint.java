@@ -24,12 +24,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.token.endpoint.adapter.TokenBasedDefaultAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsBoolean;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsTokenBasedDetails;
 import org.maxkey.persistence.service.AppsTokenBasedDetailsService;
@@ -66,7 +68,8 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	public ModelAndView authorize(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			@PathVariable("id") String id){
+			@PathVariable("id") String id,
+			@CurrentUser UserInfo currentUser){
 		ModelAndView modelAndView=new ModelAndView();
 		
 		
@@ -84,8 +87,8 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		}else{
 			adapter =(AbstractAuthorizeAdapter)new TokenBasedDefaultAdapter();
 		}
-		adapter.setAuthentication((SigninPrincipal)WebContext.getAuthentication().getPrincipal());
-		adapter.setUserInfo(WebContext.getUserInfo());
+		adapter.setAuthentication(AuthorizationUtils.getPrincipal());
+		adapter.setUserInfo(currentUser);
 		adapter.setApp(tokenBasedDetails);
 		
 		adapter.generateInfo();

@@ -73,8 +73,7 @@ public class AuthorizeBaseEndpoint {
 		return app;
 	}
 	
-	protected Accounts getAccounts(Apps app){
-		UserInfo userInfo = WebContext.getUserInfo();
+	protected Accounts getAccounts(Apps app,UserInfo userInfo){
 		Apps  loadApp = getApp(app.getId());
 		
 		Accounts account = new Accounts(userInfo.getId(),loadApp.getId());
@@ -97,7 +96,7 @@ public class AuthorizeBaseEndpoint {
 			);
 			//decoder database stored encode password
 			account.setRelatedPassword(
-					PasswordReciprocal.getInstance().decoder(WebContext.getUserInfo().getDecipherable()));
+					PasswordReciprocal.getInstance().decoder(userInfo.getDecipherable()));
 		}else if(loadApp.getCredential()==Apps.CREDENTIALS.NONE){
 			account.setUsername(userInfo.getUsername());
 			account.setRelatedPassword(userInfo.getUsername());

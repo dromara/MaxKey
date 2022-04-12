@@ -84,7 +84,7 @@
 			id	=	#{id}
     </update>
     	
-	<update id="updatePassword" parameterType="UserInfo" >
+	<update id="changePassword" parameterType="ChangePassword" >
     	update mxk_userinfo set
     	<if test="password != null">
     		password			=	#{password},
@@ -93,7 +93,7 @@
 		</if>
 			passwordlastsettime		=	current_timestamp
 		where 
-			id	=	#{id}
+			id	=	#{userId}
     </update>
     
     <update id="updateSharedSecret" parameterType="UserInfo" >

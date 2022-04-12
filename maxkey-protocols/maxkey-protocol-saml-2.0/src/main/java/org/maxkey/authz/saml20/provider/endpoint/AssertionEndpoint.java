@@ -22,14 +22,15 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.provider.xml.AuthnResponseGenerator;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsSAML20Details;
 import org.maxkey.web.WebConstants;
-import org.maxkey.web.WebContext;
 import org.opensaml.saml2.core.Response;
 import org.opensaml.saml2.metadata.Endpoint;
 import org.opensaml.ws.message.encoder.MessageEncodingException;
@@ -57,7 +58,10 @@ public class AssertionEndpoint {
 	AuthnResponseGenerator authnResponseGenerator;
 
 	@RequestMapping(value = "/authz/saml20/assertion")
-	public ModelAndView assertion(HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public ModelAndView assertion(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@CurrentUser UserInfo currentUser) throws Exception {
 		logger.debug("saml20 assertion start.");
 		bindingAdapter = (BindingAdapter) request.getSession().getAttribute(
 		        WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER);
@@ -74,14 +78,15 @@ public class AssertionEndpoint {
 		logger.debug("AuthnRequestInfo: {}", authnRequestInfo);
 		HashMap <String,String>attributeMap=new HashMap<String,String>();
 		attributeMap.put(WebConstants.ONLINE_TICKET_NAME, 
-		        ((SigninPrincipal)WebContext.getAuthentication().getPrincipal()).getOnlineTicket().getTicketId());
+		        AuthorizationUtils.getPrincipal().getOnlineTicket().getTicketId());
 		
 		//saml20Details
 		Response authResponse = authnResponseGenerator.generateAuthnResponse(
 				saml20Details,
 				authnRequestInfo,
 				attributeMap,
-				bindingAdapter);
+				bindingAdapter,
+				currentUser);
 		
 		Endpoint endpoint = endpointGenerator.generateEndpoint(saml20Details.getSpAcsUrl());
 

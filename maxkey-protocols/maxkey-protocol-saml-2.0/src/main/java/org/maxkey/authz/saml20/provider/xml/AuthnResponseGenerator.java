@@ -26,6 +26,7 @@ import org.maxkey.authz.saml.service.TimeService;
 import org.maxkey.authz.saml20.binding.BindingAdapter;
 import org.maxkey.authz.saml20.xml.IssuerGenerator;
 import org.maxkey.constants.ConstsBoolean;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.Configuration;
 import org.opensaml.saml2.core.Assertion;
@@ -64,7 +65,8 @@ public class AuthnResponseGenerator {
 	public Response generateAuthnResponse(  AppsSAML20Details saml20Details,
 											AuthnRequestInfo authnRequestInfo,
 											HashMap<String,String>attributeMap, 
-											BindingAdapter bindingAdapter){
+											BindingAdapter bindingAdapter,
+											UserInfo currentUser){
 		
 		Response authResponse = new ResponseBuilder().buildObject();
 		//builder Assertion
@@ -75,7 +77,8 @@ public class AuthnResponseGenerator {
 											authnRequestInfo.getAuthnRequestID(),
 											saml20Details.getAudience(),
 											Integer.parseInt(saml20Details.getValidityInterval()), 
-											attributeMap);
+											attributeMap,
+											currentUser);
 		
 		//Encrypt 
 		if(ConstsBoolean.isYes(saml20Details.getEncrypted())) {

@@ -19,6 +19,8 @@ package org.maxkey.web.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.entity.HistorySystemLogs;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistorySystemLogsService;
@@ -40,9 +42,9 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Component
-public class HistoryLogsAdapter  implements AsyncHandlerInterceptor  {
+public class HistoryLogsInterceptor  implements AsyncHandlerInterceptor  {
 
-    private static final Logger _logger = LoggerFactory.getLogger(HistoryLogsAdapter.class);
+    private static final Logger _logger = LoggerFactory.getLogger(HistoryLogsInterceptor.class);
 
     @Autowired
     private HistorySystemLogsService historySystemLogsService;
@@ -60,13 +62,13 @@ public class HistoryLogsAdapter  implements AsyncHandlerInterceptor  {
             //判断message类型
             if (message.getMessageScope() == MessageScope.DB
                     || message.getMessageScope() == MessageScope.DB_CLIENT) {
-                UserInfo userInfo = WebContext.getUserInfo();//取得当前用户信息
+                UserInfo userInfo = AuthorizationUtils.getUserInfo();//取得当前用户信息
 
                 //创建日志记录
-                HistorySystemLogs historyLogs = new HistorySystemLogs();
-                historyLogs.setInstId(userInfo.getInstId());
-                _logger.debug("insert db historyLogs content : " + historyLogs);
-                historySystemLogsService.insert(historyLogs);//日志插入数据库
+                HistorySystemLogs historySystemLogs = new HistorySystemLogs();
+                historySystemLogs.setInstId(userInfo.getInstId());
+                _logger.debug("insert db historyLogs content : " + historySystemLogs);
+                historySystemLogsService.insert(historySystemLogs);//日志插入数据库
                 //message类型仅插入数据库
                 if (message.getMessageScope() == MessageScope.DB) {
                     WebContext.clearMessage();//清除message

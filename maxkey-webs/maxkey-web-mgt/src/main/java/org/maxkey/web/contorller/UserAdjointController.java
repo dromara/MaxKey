@@ -18,7 +18,9 @@
 package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.UserInfoAdjoint;
 import org.maxkey.persistence.service.UserInfoAdjointService;
 import org.maxkey.web.WebContext;
@@ -56,9 +58,11 @@ public class UserAdjointController {
 	
 	@RequestMapping(value = { "/grid" })
 	@ResponseBody
-	public JpaPageResults<UserInfoAdjoint> queryDataGrid(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
+	public JpaPageResults<UserInfoAdjoint> queryDataGrid(
+			@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint,
+			@CurrentUser UserInfo currentUser){
 		_logger.debug(""+userInfoAdjoint);
-		userInfoAdjoint.setInstId(WebContext.getUserInfo().getInstId());
+		userInfoAdjoint.setInstId(currentUser.getInstId());
 		return userInfoAdjointService.queryPageResults(userInfoAdjoint);
 	}
 
@@ -80,9 +84,11 @@ public class UserAdjointController {
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"})
-	public Message insert(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
+	public Message insert(
+			@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint,
+			@CurrentUser UserInfo currentUser) {
 		_logger.debug("-Add  :" + userInfoAdjoint);
-		userInfoAdjoint.setInstId(WebContext.getUserInfo().getInstId());
+		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.insert(userInfoAdjoint)) {
 			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -99,9 +105,11 @@ public class UserAdjointController {
 	 */
 	@ResponseBody
 	@RequestMapping(value={"/query"}) 
-	public Message query(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
+	public Message query(
+			@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint,
+			@CurrentUser UserInfo currentUser) {
 		_logger.debug("-query  :" + userInfoAdjoint);
-		userInfoAdjoint.setInstId(WebContext.getUserInfo().getInstId());
+		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.load(userInfoAdjoint)!=null) {
 			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
 			
@@ -118,9 +126,11 @@ public class UserAdjointController {
 	 */
 	@ResponseBody
 	@RequestMapping(value={"/update"})  
-	public Message update(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
+	public Message update(
+			@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint,
+			@CurrentUser UserInfo currentUser) {
 		_logger.debug("-update  userInfoAdjoint :" + userInfoAdjoint);
-		userInfoAdjoint.setInstId(WebContext.getUserInfo().getInstId());
+		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.update(userInfoAdjoint)) {
 			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
 			
