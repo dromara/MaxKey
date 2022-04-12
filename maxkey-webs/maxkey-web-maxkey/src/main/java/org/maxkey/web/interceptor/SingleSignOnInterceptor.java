@@ -52,7 +52,7 @@ public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
     	AuthorizationUtils.authenticateWithCookie(
     				request,authJwtService,onlineTicketService);
 
-        if(AuthorizationUtils.isAuthenticated()){
+        if(AuthorizationUtils.isNotAuthenticated()){
         	//http://sso.maxkey.top/sign/
         	String loginUrl = "http://sso.maxkey.top:4200/#/passport/login";
         	String savedRequestUrl = UrlUtils.buildFullRequestUrl(request);
