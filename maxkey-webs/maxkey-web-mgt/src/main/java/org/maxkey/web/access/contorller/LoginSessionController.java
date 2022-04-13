@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,10 +97,7 @@ public class LoginSessionController {
                 if(currentUser.getOnlineTicket().contains(sessionId)) {
                     continue;//skip current session
                 }
-                String lastLogoffTime = DateUtils.formatDateTime(new Date());
-                loginRepository.updateLastLogoff(currentUser);
-                loginHistoryRepository.logoff(lastLogoffTime, sessionId);
-                onlineTicketService.remove("OT-" + sessionId);
+                onlineTicketService.terminate(sessionId,currentUser.getId(),currentUser.getUsername());
             }
             isTerminated = true;
         }catch(Exception e) {

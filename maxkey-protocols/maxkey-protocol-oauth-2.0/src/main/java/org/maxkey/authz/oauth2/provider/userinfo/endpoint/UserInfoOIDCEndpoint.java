@@ -134,7 +134,7 @@ public class UserInfoOIDCEndpoint {
 			 
 			 jwtClaimsSetBuilder.claim("sub", subject);
 			 jwtClaimsSetBuilder.claim("institution", userInfo.getInstId());
-			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId());
+			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getFormattedTicketId());
 			 
 		 	if(scopes.contains("profile")){
 		 		jwtClaimsSetBuilder.claim("userId", userInfo.getId());

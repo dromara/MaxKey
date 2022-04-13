@@ -87,8 +87,7 @@ public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		}else{
 			adapter =(AbstractAuthorizeAdapter)new TokenBasedDefaultAdapter();
 		}
-		adapter.setAuthentication(AuthorizationUtils.getPrincipal());
-		adapter.setUserInfo(currentUser);
+		adapter.setPrincipal(AuthorizationUtils.getPrincipal());
 		adapter.setApp(tokenBasedDetails);
 		
 		adapter.generateInfo();

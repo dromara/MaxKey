@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,8 +33,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 /**
  * 权限Interceptor处理
- * 权限处理需在servlet.xml中配置
- *  mvc:interceptors  permission
  * @author Crystal.Sea
  *
  */
@@ -51,6 +49,8 @@ public class PermissionInterceptor  implements AsyncHandlerInterceptor  {
 	@Autowired
 	AuthJwtService authJwtService ;
 	
+	boolean mgmt = false;
+	
 	/*
 	 * 请求前处理
 	 *  (non-Javadoc)
@@ -60,25 +60,29 @@ public class PermissionInterceptor  implements AsyncHandlerInterceptor  {
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 _logger.trace("PermissionAdapter preHandle");
 		 AuthorizationUtils.authenticate(request, authJwtService, onlineTicketService);
-		//判断用户是否登录
-		if(AuthorizationUtils.getAuthentication()==null
-		        ||AuthorizationUtils.getAuthentication().getAuthorities()==null){//判断用户和角色，判断用户是否登录用户
+		 SigninPrincipal principal = AuthorizationUtils.getPrincipal();
+		//判断用户是否登录,判断用户是否登录用户
+		if(principal == null){
 			_logger.trace("No Authentication ... forward to /auth/entrypoint");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/auth/entrypoint");
 		    dispatcher.forward(request, response);
 		    return false;
 		}
 		
-		//非管理员用户直接注销
-		if (!((SigninPrincipal) AuthorizationUtils.getAuthentication().getPrincipal()).isRoleAdministrators()) {
+		//管理端必须使用管理员登录,非管理员用户直接注销
+		if (this.mgmt && !principal.isRoleAdministrators()) {
 		    _logger.debug("Not ADMINISTRATORS Authentication .");
-		    RequestDispatcher dispatcher = request.getRequestDispatcher("/logout");
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("/auth/entrypoint");
 		    dispatcher.forward(request, response);
 		    return false;
 		}
 		
-		boolean hasAccess=true;
-		
-		return hasAccess;
+		return true;
 	}
+
+	public void setMgmt(boolean mgmt) {
+		this.mgmt = mgmt;
+		_logger.debug("Permission for ADMINISTRATORS {}", this.mgmt);
+	}
+	
 }

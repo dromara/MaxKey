@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,7 +75,7 @@ public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
 		serviceResponseBuilder.setAttribute("departmentId", userInfo.getDepartmentId());
 		serviceResponseBuilder.setAttribute("workRegion",base64Attr(userInfo.getWorkRegion()));
 		serviceResponseBuilder.setAttribute("institution", userInfo.getInstId());
-		serviceResponseBuilder.setAttribute(WebConstants.ONLINE_TICKET_NAME,authentication.getOnlineTicket().getTicketId());
+		serviceResponseBuilder.setAttribute(WebConstants.ONLINE_TICKET_NAME,principal.getOnlineTicket().getFormattedTicketId());
 	
 		return serviceResponseBuilder;
 	}

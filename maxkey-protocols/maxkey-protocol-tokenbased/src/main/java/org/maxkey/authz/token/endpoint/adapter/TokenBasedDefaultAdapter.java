@@ -73,7 +73,7 @@ public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 		}
 		
 		beanMap.put("displayName", userInfo.getDisplayName());
-		beanMap.put(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId());
+		beanMap.put(WebConstants.ONLINE_TICKET_NAME, principal.getOnlineTicket().getFormattedTicketId());
 		
 		/*
 		 * use UTC date time format

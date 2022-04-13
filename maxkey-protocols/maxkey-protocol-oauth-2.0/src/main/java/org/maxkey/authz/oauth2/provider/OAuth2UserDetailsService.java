@@ -47,25 +47,25 @@ public class OAuth2UserDetailsService implements UserDetailsService {
 		
 		String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + java.util.UUID.randomUUID().toString().toLowerCase();
 		
-		SigninPrincipal signinPrincipal = new SigninPrincipal(userInfo);
+		SigninPrincipal principal = new SigninPrincipal(userInfo);
 		OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId);
 		//set OnlineTicket
-        signinPrincipal.setOnlineTicket(onlineTicket);
+		principal.setOnlineTicket(onlineTicket);
         
         ArrayList<GrantedAuthority> grantedAuthoritys = loginRepository.grantAuthority(userInfo);
-        signinPrincipal.setAuthenticated(true);
+        principal.setAuthenticated(true);
         
         for(GrantedAuthority administratorsAuthority : AbstractAuthenticationProvider.grantedAdministratorsAuthoritys) {
             if(grantedAuthoritys.contains(administratorsAuthority)) {
-                signinPrincipal.setRoleAdministrators(true);
+            	principal.setRoleAdministrators(true);
                 _logger.trace("ROLE ADMINISTRATORS Authentication .");
             }
         }
         _logger.debug("Granted Authority " + grantedAuthoritys);
         
-        signinPrincipal.setGrantedAuthorityApps(grantedAuthoritys);
+        principal.setGrantedAuthorityApps(grantedAuthoritys);
         
-		return signinPrincipal;
+		return principal;
 	}
 
 	public void setLoginRepository(LoginRepository loginRepository) {

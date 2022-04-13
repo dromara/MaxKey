@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,62 +17,29 @@
 
 package org.maxkey.web.contorller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.web.WebConstants;
-import org.maxkey.web.WebContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.authn.online.OnlineTicketService;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LogoutEndpoint {
 	
-	private static Logger _logger = LoggerFactory.getLogger(LogoutEndpoint.class);
-	
-	public static final String RE_LOGIN_URL    =   "reLoginUrl";
-	
 	@Autowired
-	@Qualifier("authenticationRealm")
-	AbstractAuthenticationRealm authenticationRealm;
+    protected OnlineTicketService onlineTicketService;
 	
- 	@RequestMapping(value={"/logout"})
- 	public ModelAndView logout( HttpServletRequest request, 
- 	                            HttpServletResponse response,
- 	                            @RequestParam(value=RE_LOGIN_URL,required=false) String reLoginUrl){
- 		ModelAndView modelAndView = new ModelAndView();
- 		authenticationRealm.logout(response);
- 		SavedRequest  firstSavedRequest = (SavedRequest)WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
- 		
- 		if(reLoginUrl==null ||reLoginUrl.equals("")) {
- 		    reLoginUrl="/login";
- 		}
- 		
- 		if(firstSavedRequest!=null){
- 			reLoginUrl= firstSavedRequest.getRedirectUrl();
- 		}
- 		
- 		if(reLoginUrl!=null && !reLoginUrl.toLowerCase().startsWith("http")) {
-            if(reLoginUrl.startsWith("/")) {
-                reLoginUrl=request.getContextPath()+reLoginUrl;
-            }else {
-               reLoginUrl=request.getContextPath()+"/"+reLoginUrl;
-            }
-        }
- 		_logger.debug("re Login URL : "+ reLoginUrl);
- 		modelAndView.addObject("reloginUrl",reLoginUrl);
- 		request.getSession().invalidate();
-	 		
- 		modelAndView.setViewName("loggedout");
-		return modelAndView;
+ 	@RequestMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+ 	public  ResponseEntity<?> logout(@CurrentUser UserInfo currentUser){
+ 		onlineTicketService.terminate(
+ 				currentUser.getOnlineTicket(), 
+ 				currentUser.getId(),
+ 				currentUser.getUsername());
+ 		return new Message<String>().buildResponse();
  	}
  	
 }

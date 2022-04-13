@@ -34,12 +34,12 @@ public class OnlineTicketServiceFactory {
 		 
 		 OnlineTicketService onlineTicketServices = null;
 		if (persistence == ConstsPersistence.INMEMORY) {
-		    onlineTicketServices = new InMemoryOnlineTicketService();
+		    onlineTicketServices = new InMemoryOnlineTicketService(jdbcTemplate);
 		    _logger.debug("InMemoryOnlineTicketServices");
 		} else if (persistence == ConstsPersistence.JDBC) {
 		    _logger.debug("OnlineTicketServices not support "); 
 		} else if (persistence == ConstsPersistence.REDIS) {
-		    onlineTicketServices = new RedisOnlineTicketService(redisConnFactory);
+		    onlineTicketServices = new RedisOnlineTicketService(redisConnFactory,jdbcTemplate);
 		    _logger.debug("RedisOnlineTicketServices");
 		}
 		

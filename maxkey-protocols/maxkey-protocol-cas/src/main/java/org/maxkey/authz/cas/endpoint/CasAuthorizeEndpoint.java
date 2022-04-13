@@ -149,7 +149,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		}
 		
 		if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
-		    String onlineTicketId = AuthorizationUtils.getPrincipal().getOnlineTicket().getTicketId();
+		    String onlineTicketId = AuthorizationUtils.getPrincipal().getOnlineTicket().getFormattedTicketId();
 		    OnlineTicket onlineTicket  = onlineTicketService.get(onlineTicketId);
 		    //set cas ticket as OnlineTicketId
 		    casDetails.setOnlineTicket(ticket);

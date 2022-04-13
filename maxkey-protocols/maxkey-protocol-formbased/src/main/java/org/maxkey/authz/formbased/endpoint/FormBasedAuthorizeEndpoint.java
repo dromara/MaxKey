@@ -90,8 +90,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 				FormBasedDefaultAdapter formBasedDefaultAdapter =new FormBasedDefaultAdapter();
 				adapter =(AbstractAuthorizeAdapter)formBasedDefaultAdapter;
 			}
-			adapter.setAuthentication(AuthorizationUtils.getPrincipal());
-			adapter.setUserInfo(currentUser);
+			adapter.setPrincipal(AuthorizationUtils.getPrincipal());
 			adapter.setApp(formBasedDetails);
 			adapter.setAccount(account);
 			

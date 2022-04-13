@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,141 +19,66 @@ package org.maxkey.web.endpoint;
 
 import java.util.Iterator;
 import java.util.Set;
-import java.util.UUID;
 import java.util.Map.Entry;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authn.online.OnlineTicketService;
-import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.singlelogout.SamlSingleLogout;
 import org.maxkey.authz.singlelogout.DefaultSingleLogout;
 import org.maxkey.authz.singlelogout.LogoutType;
 import org.maxkey.authz.singlelogout.SingleLogout;
-import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsProtocols;
+import org.maxkey.entity.Message;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
-import org.maxkey.web.WebConstants;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "1-3-单点注销接口文档模块")
 @Controller
 public class LogoutEndpoint {
-	
 	private static Logger _logger = LoggerFactory.getLogger(LogoutEndpoint.class);
-	
-	public static final String RE_LOGIN_URL	=	"reLoginUrl";
-	
-	@Autowired
-	@Qualifier("authenticationRealm")
-	AbstractAuthenticationRealm authenticationRealm;
-	
-	@Autowired
-	ApplicationConfig applicationConfig;
-	
+
 	@Autowired
     protected OnlineTicketService onlineTicketService;
 	
 	@Operation(summary = "单点注销接口", description = "reLoginUrl跳转地址",method="GET")
- 	@RequestMapping(value={"/logout"})
- 	public ModelAndView logout(
- 					HttpServletRequest request, 
- 					HttpServletResponse response,
- 					@RequestParam(value=RE_LOGIN_URL,required=false) String reLoginUrl){
- 		
- 		return logoutModelAndView(request,response,"loggedout",reLoginUrl);
- 	}
- 	
-	@Operation(summary = "登录超时接口", description = "",method="GET")
- 	@RequestMapping(value={"/timeout"})
- 	public ModelAndView timeout(HttpServletRequest request, HttpServletResponse response){
- 		return logoutModelAndView(request,response,"timeout",null);
- 	}
- 	
- 	
- 	private ModelAndView logoutModelAndView(
- 			HttpServletRequest request,
- 			HttpServletResponse response,
- 			String viewName,
- 			String reLoginUrl){
- 		ModelAndView modelAndView = new ModelAndView();
- 		authenticationRealm.logout(response);
- 		
- 		if(reLoginUrl==null ||reLoginUrl.equals("")){
-	 		SavedRequest  firstSavedRequest = (SavedRequest)WebContext.getAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
-	 		reLoginUrl="/login";
-	 		if(firstSavedRequest!=null){
-	 			reLoginUrl= firstSavedRequest.getRedirectUrl();
-	 			WebContext.removeAttribute(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
-	 		}
+	@RequestMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+ 	public  ResponseEntity<?> logout(@CurrentUser UserInfo currentUser){
+		//if logined in have onlineTicket ,need remove or logout back
+		String onlineTicketId = currentUser.getOnlineTicket();
+ 		OnlineTicket onlineTicket = onlineTicketService.get(onlineTicketId);
+ 		if(onlineTicket != null) {
+	 		Set<Entry<String, Apps>> entrySet = onlineTicket.getAuthorizedApps().entrySet();
+	 
+	        Iterator<Entry<String, Apps>> iterator = entrySet.iterator();
+	        while (iterator.hasNext()) {
+	            Entry<String, Apps> mapEntry = iterator.next();
+	            _logger.debug("App Id : "+ mapEntry.getKey()+ " , " +mapEntry.getValue());
+	            if( mapEntry.getValue().getLogoutType() == LogoutType.BACK_CHANNEL){
+	                SingleLogout singleLogout;
+	                if(mapEntry.getValue().getProtocol().equalsIgnoreCase(ConstsProtocols.CAS)) {
+	                    singleLogout =new SamlSingleLogout();
+	                }else {
+	                    singleLogout = new DefaultSingleLogout();
+	                }
+	                singleLogout.sendRequest(onlineTicket.getAuthentication(), mapEntry.getValue());
+	            }
+	        }
+	        
+	        onlineTicketService.terminate(
+	        		onlineTicketId, 
+	        		currentUser.getId(),
+	        		currentUser.getUsername());
  		}
- 		
- 		//not start with http or https
- 		if(reLoginUrl!=null && !reLoginUrl.toLowerCase().startsWith("http")) {
- 		    if(reLoginUrl.startsWith("/")) {
- 		        reLoginUrl=request.getContextPath()+reLoginUrl;
- 		    }else {
- 		       reLoginUrl=request.getContextPath()+"/"+reLoginUrl;
- 		    }
- 		}
- 		
- 		_logger.debug("re Login URL : "+ reLoginUrl);
- 		
- 		modelAndView.addObject("reloginUrl",reLoginUrl);
- 		
- 		//if logined in have onlineTicket ,need remove or logout back
- 		if(AuthorizationUtils.getAuthentication() != null) {
- 			String onlineTicketId = (AuthorizationUtils.getPrincipal()).getOnlineTicket().getTicketId();
- 	 		OnlineTicket onlineTicket = onlineTicketService.get(onlineTicketId);
- 	 		if(onlineTicket != null) {
-		 		Set<Entry<String, Apps>> entrySet = onlineTicket.getAuthorizedApps().entrySet();
-		 
-		        Iterator<Entry<String, Apps>> iterator = entrySet.iterator();
-		        while (iterator.hasNext()) {
-		            Entry<String, Apps> mapEntry = iterator.next();
-		            _logger.debug("App Id : "+ mapEntry.getKey()+ " , " +mapEntry.getValue());
-		            if( mapEntry.getValue().getLogoutType() == LogoutType.BACK_CHANNEL){
-		                SingleLogout singleLogout;
-		                if(mapEntry.getValue().getProtocol().equalsIgnoreCase(ConstsProtocols.CAS)) {
-		                    singleLogout =new SamlSingleLogout();
-		                }else {
-		                    singleLogout = new DefaultSingleLogout();
-		                }
-		                singleLogout.sendRequest(onlineTicket.getAuthentication(), mapEntry.getValue());
-		            }
-		        }
-		        onlineTicketService.remove(onlineTicketId);
- 	 		}
- 		}
- 		//remove ONLINE_TICKET cookie
- 		WebContext.expiryCookie(
- 					WebContext.getResponse(), 
- 					this.applicationConfig.getBaseDomainName(), 
- 					WebConstants.ONLINE_TICKET_NAME, 
- 					UUID.randomUUID().toString()
- 		);
- 		request.getSession().invalidate();
- 		//for(String removeAttribute : WebContext.logoutAttributeNameList) {
- 		//	request.getSession().removeAttribute(removeAttribute);
- 		//}
- 		SecurityContextHolder.clearContext();
- 		
- 		modelAndView.setViewName(viewName);
- 		return modelAndView;
+ 		return new Message<String>().buildResponse();
  	}
 }

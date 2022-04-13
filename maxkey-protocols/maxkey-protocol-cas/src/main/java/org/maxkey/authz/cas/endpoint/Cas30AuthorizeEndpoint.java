@@ -36,7 +36,6 @@ import org.maxkey.authz.cas.endpoint.ticket.ProxyTicketImpl;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.ConstsBoolean;
-import org.maxkey.entity.UserInfo;
 import org.maxkey.util.Instance;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.HttpResponseConstants;
@@ -109,11 +108,8 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 					_logger.error("setProperty error . ", e);
 				}
 				
-				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(authentication.getUsername());
-				
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)samlAdapter;
-				adapter.setAuthentication(authentication);
-				adapter.setUserInfo(userInfo);
+				adapter.setPrincipal(authentication);
 				adapter.setApp(storedTicket.getCasDetails());
 				adapter.generateInfo();
 			}
@@ -190,11 +186,8 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 					_logger.error("setProperty error . ", e);
 				}
 				
-				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(authentication.getUsername());
-				
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)samlAdapter;
-				adapter.setAuthentication(authentication);
-				adapter.setUserInfo(userInfo);
+				adapter.setPrincipal(authentication);
 				adapter.setApp(storedTicket.getCasDetails());
 				adapter.generateInfo();
 			}

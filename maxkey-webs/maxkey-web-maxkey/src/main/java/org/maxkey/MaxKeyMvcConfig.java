@@ -33,7 +33,6 @@ import org.maxkey.web.interceptor.SingleSignOnInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,15 +48,12 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMvcConfig.class);
     
     @Autowired
-  	@Qualifier("applicationConfig")
   	ApplicationConfig applicationConfig;
     
     @Autowired
-    @Qualifier("authenticationProvider")
     AbstractAuthenticationProvider authenticationProvider ;
     
     @Autowired
-	@Qualifier("kerberosService")
     KerberosService kerberosService;
     
     @Autowired

@@ -13,6 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+package org.maxkey.jobs;
 
-package org.maxkey.web.permissions.contorller;
+import java.io.Serializable;
+
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class OnlineTicketListenerJob   implements Job , Serializable {
+	final static Logger _logger = LoggerFactory.getLogger(OnlineTicketListenerJob.class);
+	
+	private static final long serialVersionUID = 4782358765969474833L;
+
+	
+	@Override
+	public void execute(JobExecutionContext context) throws JobExecutionException {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

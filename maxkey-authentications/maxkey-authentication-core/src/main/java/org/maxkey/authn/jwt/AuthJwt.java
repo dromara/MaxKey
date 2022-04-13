@@ -1,3 +1,20 @@
+/*
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+
 package org.maxkey.authn.jwt;
 
 import java.util.ArrayList;
@@ -35,18 +52,18 @@ public class AuthJwt {
 	}
 	
 	public AuthJwt(String token, Authentication  authentication) {
-		SigninPrincipal signinPrincipal = ((SigninPrincipal)authentication.getPrincipal());
+		SigninPrincipal principal = ((SigninPrincipal)authentication.getPrincipal());
 		
 		this.token = token;
-		this.ticket = signinPrincipal.getOnlineTicket().getTicketId().substring(3);
+		this.ticket = principal.getOnlineTicket().getTicketId();
 		
-		this.id = signinPrincipal.getUserInfo().getId();
-		this.username = signinPrincipal.getUserInfo().getUsername();
+		this.id = principal.getUserInfo().getId();
+		this.username = principal.getUserInfo().getUsername();
 		this.name = this.username;
-		this.displayName = signinPrincipal.getUserInfo().getDisplayName();
-		this.email = signinPrincipal.getUserInfo().getEmail();
-		this.instId = signinPrincipal.getUserInfo().getInstId();
-		this.instName = signinPrincipal.getUserInfo().getInstName();
+		this.displayName = principal.getUserInfo().getDisplayName();
+		this.email = principal.getUserInfo().getEmail();
+		this.instId = principal.getUserInfo().getInstId();
+		this.instName = principal.getUserInfo().getInstName();
 		
 		this.authorities = new ArrayList<String>();
 		for(GrantedAuthority grantedAuthority :authentication.getAuthorities()) {

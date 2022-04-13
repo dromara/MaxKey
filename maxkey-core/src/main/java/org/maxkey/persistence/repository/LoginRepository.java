@@ -49,8 +49,7 @@ public class LoginRepository {
     private static final String LOGIN_USERINFO_UPDATE_STATEMENT = "update mxk_userinfo set lastlogintime = ?  , lastloginip = ? , logincount = ?, online = "
             + UserInfo.ONLINE.ONLINE + "  where id = ?";
 
-    private static final String LOGOUT_USERINFO_UPDATE_STATEMENT = "update mxk_userinfo set lastlogofftime = ? , online = "
-            + UserInfo.ONLINE.OFFLINE + "  where id = ?";
+
 
     private static final String GROUPS_SELECT_STATEMENT = "select distinct g.id,g.name from mxk_userinfo u,mxk_groups g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
 
@@ -258,12 +257,6 @@ public class LoginRepository {
                 				userInfo.getId() 
                 			},
                 new int[] { Types.TIMESTAMP, Types.VARCHAR, Types.INTEGER, Types.VARCHAR });
-    }
-    
-    public void updateLastLogoff(UserInfo userInfo) {
-        jdbcTemplate.update(	LOGOUT_USERINFO_UPDATE_STATEMENT, 
-        		new Object[] { 	userInfo.getLastLogoffTime(), userInfo.getId() },
-                new int[] { 	Types.TIMESTAMP, Types.VARCHAR });
     }
     
     public class UserInfoRowMapper implements RowMapper<UserInfo> {

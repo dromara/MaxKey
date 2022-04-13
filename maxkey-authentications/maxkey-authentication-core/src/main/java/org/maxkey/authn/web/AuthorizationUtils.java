@@ -1,3 +1,20 @@
+/*
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+
 package org.maxkey.authn.web;
 
 import java.text.ParseException;
@@ -17,7 +34,7 @@ import org.springframework.security.core.Authentication;
 
 public class AuthorizationUtils {
 
-	static final String Authorization = "Authorization";
+	static final String Authorization_Cookie = "AuthJWT";
 	
 	public static  void authenticateWithCookie(
 			HttpServletRequest request,
@@ -25,10 +42,10 @@ public class AuthorizationUtils {
 			OnlineTicketService onlineTicketService
 			) throws ParseException{
 		 if(getAuthentication() == null) {
-			Cookie authCookie = WebContext.getCookie(request, Authorization);
+			Cookie authCookie = WebContext.getCookie(request, Authorization_Cookie);
 			if(authCookie != null ) {
 		    	String  authorization =  authCookie.getValue();
-		    	doAuthenticate(authorization,authJwtService,onlineTicketService);
+		    	doJwtAuthenticate(authorization,authJwtService,onlineTicketService);
 			}
 		 }
 	}
@@ -41,12 +58,12 @@ public class AuthorizationUtils {
 		 if(getAuthentication() == null) {
 			 String  authorization = AuthorizationHeaderUtils.resolveBearer(request);
 			if(authorization != null ) {
-		    	doAuthenticate(authorization,authJwtService,onlineTicketService);
+				doJwtAuthenticate(authorization,authJwtService,onlineTicketService);
 			}
 		 }
 	}
 	
-	public static void doAuthenticate(
+	public static void doJwtAuthenticate(
 			String  authorization,
 			AuthJwtService authJwtService,
 			OnlineTicketService onlineTicketService) throws ParseException {
@@ -59,13 +76,17 @@ public class AuthorizationUtils {
 		}
 	}
 	
-	
     public static void setAuthentication(Authentication authentication) {
     	WebContext.setAttribute(WebConstants.AUTHENTICATION, authentication);
     }
 
     public static Authentication getAuthentication() {
-        Authentication authentication = (Authentication) WebContext.getAttribute(WebConstants.AUTHENTICATION);
+        Authentication authentication = (Authentication) getAuthentication(WebContext.getRequest());
+        return authentication;
+    }
+    
+    public static Authentication getAuthentication(HttpServletRequest request) {
+        Authentication authentication = (Authentication) request.getSession().getAttribute(WebConstants.AUTHENTICATION);
         return authentication;
     }
     
@@ -74,22 +95,29 @@ public class AuthorizationUtils {
     }
     
     public static  boolean isNotAuthenticated() {
-    	return getAuthentication() == null;
+    	return ! isAuthenticated();
     }
     
     public static SigninPrincipal getPrincipal() {
     	 Authentication authentication =  getAuthentication();
-    	return authentication == null ? null :(SigninPrincipal) authentication.getPrincipal();
+    	return getPrincipal(authentication);
+    }
+    
+    public static SigninPrincipal getPrincipal(Authentication authentication) {
+    	return authentication == null ? null : (SigninPrincipal) authentication.getPrincipal();
+   }
+    
+    public static UserInfo getUserInfo(Authentication authentication) {
+    	UserInfo userInfo = null;
+    	SigninPrincipal principal = getPrincipal(authentication);
+    	if(principal != null ) {
+        	userInfo = principal.getUserInfo();
+        }
+    	return userInfo;
     }
     
     public static UserInfo getUserInfo() {
-    	Authentication authentication =  getAuthentication();
-    	UserInfo userInfo = null;
-    	if(isAuthenticated() && (authentication.getPrincipal() instanceof SigninPrincipal)) {
-        	SigninPrincipal signinPrincipal = ((SigninPrincipal) authentication.getPrincipal());
-        	userInfo = signinPrincipal.getUserInfo();
-        }
-    	return userInfo;
+    	return getUserInfo(getAuthentication());
     }
 	
 }

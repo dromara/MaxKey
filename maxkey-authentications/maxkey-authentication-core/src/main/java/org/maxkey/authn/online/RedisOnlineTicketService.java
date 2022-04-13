@@ -24,9 +24,10 @@ import org.maxkey.persistence.redis.RedisConnection;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 
-public class RedisOnlineTicketService implements OnlineTicketService {
+public class RedisOnlineTicketService extends AbstractOnlineTicketService {
     private static final Logger _logger = LoggerFactory.getLogger(RedisOnlineTicketService.class);
 	
 	protected int serviceTicketValiditySeconds = 60 * 30; //default 30 minutes.
@@ -37,9 +38,12 @@ public class RedisOnlineTicketService implements OnlineTicketService {
 	/**
 	 * @param connectionFactory
 	 */
-	public RedisOnlineTicketService(RedisConnectionFactory connectionFactory) {
+	public RedisOnlineTicketService(
+			RedisConnectionFactory connectionFactory,
+			JdbcTemplate jdbcTemplate) {
 		super();
 		this.connectionFactory = connectionFactory;
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 	/**

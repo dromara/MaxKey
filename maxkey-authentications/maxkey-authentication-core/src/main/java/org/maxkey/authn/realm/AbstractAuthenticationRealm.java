@@ -20,7 +20,6 @@ package org.maxkey.authn.realm;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
@@ -157,32 +156,6 @@ public abstract class AbstractAuthenticationRealm {
 
         return true;
     }
-
-    /**
-     * logout user and remove RemeberMe token 
-     * @param response
-     * @return
-     */
-    public boolean logout(HttpServletResponse response) {
-    	 Authentication  authentication  = (Authentication ) WebContext.getAttribute(WebConstants.AUTHENTICATION);
-    	 
-         if(authentication != null && authentication.getPrincipal() instanceof SigninPrincipal) {
-         	SigninPrincipal signinPrincipal = ((SigninPrincipal) authentication.getPrincipal());
-         	UserInfo userInfo = signinPrincipal.getUserInfo();
-            userInfo.setLastLogoffTime(DateUtils.formatDateTime(new Date()));
-        
-            loginHistoryRepository.logoff(userInfo.getLastLogoffTime(), signinPrincipal.getOnlineTicket().getTicketId());
-
-            
-            loginRepository.updateLastLogoff(userInfo);
-            
-            _logger.debug("Session " + signinPrincipal.getOnlineTicket().getTicketId() + ", user "
-                    + userInfo.getUsername() + " Logout, datetime " + userInfo.getLastLogoffTime() + " .");
-         }
-        return true;
-
-    }
-    
     
     public Browser  resolveBrowser() {
         Browser browser =new Browser();

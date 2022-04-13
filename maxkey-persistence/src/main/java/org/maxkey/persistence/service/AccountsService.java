@@ -29,7 +29,7 @@ import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.mapper.AccountsMapper;
 import org.maxkey.persistence.mq.MqIdentityAction;
 import org.maxkey.persistence.mq.MqIdentityTopic;
-import org.maxkey.persistence.mq.MqPersistService;
+import org.maxkey.persistence.mq.MessageQueueService;
 import org.maxkey.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,7 +45,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 public class AccountsService  extends JpaBaseService<Accounts>{
 
     @Autowired
-    MqPersistService mqPersistService;
+    MessageQueueService mqPersistService;
     
     @Autowired
     UserInfoService  userInfoService;

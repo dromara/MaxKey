@@ -32,8 +32,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MqPersistService {
-    private static final Logger _logger = LoggerFactory.getLogger(MqPersistService.class);
+public class MessageQueueService {
+    private static final Logger _logger = LoggerFactory.getLogger(MessageQueueService.class);
     
     @Autowired
     protected ApplicationConfig applicationConfig;

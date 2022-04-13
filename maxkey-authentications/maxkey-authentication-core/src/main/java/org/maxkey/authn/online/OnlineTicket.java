@@ -22,18 +22,16 @@ import java.time.LocalTime;
 import java.util.HashMap;
 
 import org.maxkey.entity.apps.Apps;
+import org.maxkey.web.WebContext;
 import org.springframework.security.core.Authentication;
 
 public class OnlineTicket implements Serializable{
-
-    /**
-     * 
-     */
+	private static final long   serialVersionUID = 9008067569150338296L;
+	
+	public static final  String ONLINE_TICKET_PREFIX = "OT";
     
     public static final  int    MAX_EXPIRY_DURATION = 60 * 10; //default 10 minutes.
     
-    private static final long   serialVersionUID = 9008067569150338296L;
-
     public String ticketId;
     
     public LocalTime ticketTime;
@@ -42,6 +40,11 @@ public class OnlineTicket implements Serializable{
     
     private HashMap<String , Apps> authorizedApps = new HashMap<String , Apps>();
     
+    public OnlineTicket() {
+        super();
+        this.ticketId = WebContext.genId();;
+        this.ticketTime = LocalTime.now();
+    }
 
     public OnlineTicket(String ticketId) {
         super();
@@ -56,18 +59,17 @@ public class OnlineTicket implements Serializable{
         this.ticketTime = LocalTime.now();
     }
     
-    
-
     public String getTicketId() {
+		return ticketId;
+	}
+
+	public String getFormattedTicketId() {
         return ticketId;
     }
-
-
 
     public void setTicketId(String ticketId) {
         this.ticketId = ticketId;
     }
-
     
     public LocalTime getTicketTime() {
         return ticketTime;
@@ -81,19 +83,13 @@ public class OnlineTicket implements Serializable{
         return authentication;
     }
 
-
-
     public void setAuthentication(Authentication authentication) {
         this.authentication = authentication;
     }
 
-  
-
     public HashMap<String, Apps> getAuthorizedApps() {
         return authorizedApps;
     }
-
-
 
     public void setAuthorizedApps(HashMap<String, Apps> authorizedApps) {
         this.authorizedApps = authorizedApps;
@@ -102,8 +98,6 @@ public class OnlineTicket implements Serializable{
     public void setAuthorizedApp(Apps authorizedApp) {
         this.authorizedApps.put(authorizedApp.getId(), authorizedApp);
     }
-
-
 
     @Override
     public String toString() {

@@ -32,8 +32,6 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
@@ -47,7 +45,6 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
     HistoryLoginAppsService historyLoginAppsService;
 
     @Autowired
-    @Qualifier("appsService")
     protected AppsService appsService;
     
     /**
@@ -59,10 +56,9 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
             throws Exception {
         _logger.debug("preHandle");
         final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
-        Authentication authentication = AuthorizationUtils.getAuthentication();
-        if(authentication.getPrincipal() instanceof SigninPrincipal) {
-            SigninPrincipal signinPrincipal = (SigninPrincipal)authentication.getPrincipal() ;
-            if(signinPrincipal.getGrantedAuthorityApps().contains(new SimpleGrantedAuthority(app.getId()))) {
+        SigninPrincipal principal = AuthorizationUtils.getPrincipal();
+        if(principal != null) {
+            if(principal.getGrantedAuthorityApps().contains(new SimpleGrantedAuthority(app.getId()))) {
                 _logger.trace("preHandle have authority access " + app);
                 return true;
             }
@@ -85,12 +81,10 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
        
         final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
         
-        Authentication  authentication  = AuthorizationUtils.getAuthentication();
-        if((authentication != null)
-        		&& (authentication.getPrincipal() instanceof SigninPrincipal)) {
-        	SigninPrincipal signinPrincipal = AuthorizationUtils.getPrincipal();
-        	final UserInfo userInfo = signinPrincipal.getUserInfo();
-        	String sessionId = signinPrincipal.getOnlineTicket().getTicketId().substring(3);
+        SigninPrincipal principal = AuthorizationUtils.getPrincipal();
+        if(principal != null) {
+        	final UserInfo userInfo = principal.getUserInfo();
+        	String sessionId = principal.getOnlineTicket().getFormattedTicketId().substring(3);
         	 _logger.debug("sessionId : " + sessionId + " ,appId : " + app.getId());
              HistoryLoginApps historyLoginApps = new HistoryLoginApps();
              historyLoginApps.setAppId(app.getId());

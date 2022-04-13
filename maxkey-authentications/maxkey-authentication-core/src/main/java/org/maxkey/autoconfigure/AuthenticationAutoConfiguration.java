@@ -137,13 +137,8 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     }
     
     @Bean(name = "sessionListenerAdapter")
-    public SessionListenerAdapter sessionListenerAdapter(
-                LoginRepository loginRepository,
-                LoginHistoryRepository loginHistoryRepository
-            ) {
-        SessionListenerAdapter sessionListenerAdapter =
-                new SessionListenerAdapter(loginRepository,loginHistoryRepository);
-        return sessionListenerAdapter;
+    public SessionListenerAdapter sessionListenerAdapter() {
+        return new SessionListenerAdapter();
     }
     
     @Override

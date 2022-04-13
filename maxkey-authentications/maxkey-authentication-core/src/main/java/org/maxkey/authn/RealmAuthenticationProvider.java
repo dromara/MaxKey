@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -156,42 +156,30 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
     }
     
     public UsernamePasswordAuthenticationToken createOnlineSession(LoginCredential credential,UserInfo userInfo) {
-        String currentUserSessionId = WebContext.genId();
-        //Online Tickit Id
-        String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + currentUserSessionId;
-        _logger.debug("set online Tickit Cookie {} on domain {}",
-                        onlineTickitId, 
-                        this.applicationConfig.getBaseDomainName()
-                    );
+        //Online Tickit
+        OnlineTicket onlineTicket = new OnlineTicket();
+
+        userInfo.setOnlineTicket(onlineTicket.getTicketId());
         
-        OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId);
-        
-        //set ONLINE_TICKET cookie
-        WebContext.setCookie(WebContext.getResponse(), 
-                this.applicationConfig.getBaseDomainName(), 
-                WebConstants.ONLINE_TICKET_NAME, 
-                onlineTickitId);
-        userInfo.setOnlineTicket(currentUserSessionId);
-        
-        SigninPrincipal signinPrincipal = new SigninPrincipal(userInfo);
+        SigninPrincipal principal = new SigninPrincipal(userInfo);
         //set OnlineTicket
-        signinPrincipal.setOnlineTicket(onlineTicket);
+        principal.setOnlineTicket(onlineTicket);
         ArrayList<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
-        signinPrincipal.setAuthenticated(true);
+        principal.setAuthenticated(true);
         
         for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
             if(grantedAuthoritys.contains(administratorsAuthority)) {
-                signinPrincipal.setRoleAdministrators(true);
+            	principal.setRoleAdministrators(true);
                 _logger.trace("ROLE ADMINISTRATORS Authentication .");
             }
         }
         _logger.debug("Granted Authority {}" , grantedAuthoritys);
         
-        signinPrincipal.setGrantedAuthorityApps(authenticationRealm.queryAuthorizedApps(grantedAuthoritys));
+        principal.setGrantedAuthorityApps(authenticationRealm.queryAuthorizedApps(grantedAuthoritys));
         
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
-                        signinPrincipal, 
+                		principal, 
                         "PASSWORD", 
                         grantedAuthoritys
                 );
@@ -202,7 +190,7 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         onlineTicket.setAuthentication(authenticationToken);
         
         //store onlineTicket
-        this.onlineTicketServices.store(onlineTickitId, onlineTicket);
+        this.onlineTicketServices.store(onlineTicket.getTicketId(), onlineTicket);
         
         /*
          *  put Authentication to current session context

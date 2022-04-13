@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ public class OAuthDefaultUserInfoAdapter extends AbstractAuthorizeAdapter {
 		beanMap.put("state", userInfo.getWorkRegion());
 		beanMap.put("gender", userInfo.getGender());
 		beanMap.put("institution", userInfo.getInstId());
-		beanMap.put(WebConstants.ONLINE_TICKET_NAME, authentication.getOnlineTicket().getTicketId());
+		beanMap.put(WebConstants.ONLINE_TICKET_NAME, principal.getOnlineTicket().getFormattedTicketId());
 		
 		String info= JsonUtils.object2Json(beanMap);
 		

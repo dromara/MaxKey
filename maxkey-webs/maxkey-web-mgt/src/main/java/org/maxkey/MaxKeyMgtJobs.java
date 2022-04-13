@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@ package org.maxkey;
 
 import org.maxkey.jobs.AccountsStrategyJob;
 import org.maxkey.jobs.DynamicGroupsJob;
+import org.maxkey.persistence.repository.LoginHistoryRepository;
+import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.persistence.service.AccountsService;
 import org.maxkey.persistence.service.GroupsService;
 import org.opensaml.xml.ConfigurationException;
@@ -133,6 +135,14 @@ public class MaxKeyMgtJobs  implements InitializingBean {
 		
 		scheduler.scheduleJob(jobDetail,cronTrigger);    
 	}
+    
+    public String  SessionListenerJob(
+    		SchedulerFactoryBean schedulerFactoryBean,
+    		LoginRepository loginRepository,
+    		LoginHistoryRepository loginHistoryRepository) {
+    	
+    	return "sessionListenerJob";
+    }
     
     @Override
     public void afterPropertiesSet() throws Exception {

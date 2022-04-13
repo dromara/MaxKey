@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ public abstract class AbstractAuthorizeAdapter {
 	
 	protected Accounts account;
 	
-	protected SigninPrincipal authentication;
+	protected SigninPrincipal principal;
 	
 	public abstract Object generateInfo();
 	
@@ -127,12 +127,9 @@ public abstract class AbstractAuthorizeAdapter {
 		return "";
 	};
 
-	public void setAuthentication(SigninPrincipal authentication) {
-		this.authentication = authentication;
-	}
-
-	public void setUserInfo(UserInfo userInfo) {
-		this.userInfo = userInfo;
+	public void setPrincipal(SigninPrincipal principal) {
+		this.principal = principal;
+		this.userInfo = principal.getUserInfo();
 	}
 
 	public void setApp(Apps app) {

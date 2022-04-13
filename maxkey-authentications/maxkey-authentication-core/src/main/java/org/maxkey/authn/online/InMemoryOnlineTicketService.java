@@ -23,12 +23,13 @@ import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 
-public class InMemoryOnlineTicketService implements OnlineTicketService{
+public class InMemoryOnlineTicketService extends AbstractOnlineTicketService{
     private static final Logger _logger = LoggerFactory.getLogger(InMemoryOnlineTicketService.class);
 
 	protected  static  Cache<String, OnlineTicket> onlineTicketStore = 
@@ -37,8 +38,9 @@ public class InMemoryOnlineTicketService implements OnlineTicketService{
         	            .maximumSize(200000)
         	            .build();
 	
-	public InMemoryOnlineTicketService() {
+	public InMemoryOnlineTicketService(JdbcTemplate jdbcTemplate) {
         super();
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override

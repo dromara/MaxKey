@@ -29,7 +29,7 @@ import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.mapper.UserInfoMapper;
 import org.maxkey.persistence.mq.MqIdentityAction;
 import org.maxkey.persistence.mq.MqIdentityTopic;
-import org.maxkey.persistence.mq.MqPersistService;
+import org.maxkey.persistence.mq.MessageQueueService;
 import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
@@ -37,7 +37,6 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
@@ -57,12 +56,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	PasswordPolicyValidator passwordPolicyValidator;
 	
 	@Autowired
-	MqPersistService mqPersistService;
-	
-	 @Autowired
-	 protected JdbcTemplate jdbcTemplate;
-	 
-	 AccountsService accountsService;
+	MessageQueueService messageQueueService;
+
+	AccountsService accountsService;
 	
 	public UserInfoService() {
 		super(UserInfoMapper.class);
@@ -79,9 +75,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean insert(UserInfo userInfo) {
     	this.passwordEncoder(userInfo);
         if (super.insert(userInfo)) {
-        	if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
+        	if(messageQueueService.getApplicationConfig().isMessageQueueSupport()) {
                 UserInfo loadUserInfo = findUserRelated(userInfo.getId());
-                mqPersistService.send(
+                messageQueueService.send(
                         MqIdentityTopic.USERINFO_TOPIC, 
                         loadUserInfo,
                         MqIdentityAction.CREATE_ACTION);
@@ -96,10 +92,10 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean update(UserInfo userInfo) {
     	ChangePassword changePassword = this.passwordEncoder(userInfo);
         if (super.update(userInfo)) {
-        	if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
+        	if(messageQueueService.getApplicationConfig().isMessageQueueSupport()) {
                 UserInfo loadUserInfo = findUserRelated(userInfo.getId());
                 accountUpdate(loadUserInfo);
-                mqPersistService.send(
+                messageQueueService.send(
                         MqIdentityTopic.USERINFO_TOPIC, 
                         loadUserInfo,
                         MqIdentityAction.UPDATE_ACTION);
@@ -113,12 +109,12 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
 	public boolean delete(UserInfo userInfo) {
 	    UserInfo loadUserInfo = null;
-	    if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
+	    if(messageQueueService.getApplicationConfig().isMessageQueueSupport()) {
 	        loadUserInfo = findUserRelated(userInfo.getId());
 	    }
 	    
 		if( super.delete(userInfo)){
-			mqPersistService.send(
+			messageQueueService.send(
 		            MqIdentityTopic.USERINFO_TOPIC, 
 		            loadUserInfo, 
 		            MqIdentityAction.DELETE_ACTION);
@@ -313,7 +309,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	    if(changePassworded !=null && StringUtils.isNotBlank(changePassworded.getPassword())) {
 	    	UserInfo loadUserInfo = findByUsername(changePassworded.getUsername());
     	    ChangePassword changePassword = new ChangePassword(loadUserInfo);
-            mqPersistService.send(
+    	    messageQueueService.send(
                     MqIdentityTopic.PASSWORD_TOPIC, 
                     changePassword, 
                     MqIdentityAction.PASSWORD_ACTION);

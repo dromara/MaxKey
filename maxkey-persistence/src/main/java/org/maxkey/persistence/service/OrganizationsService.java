@@ -26,7 +26,7 @@ import org.maxkey.entity.Organizations;
 import org.maxkey.persistence.mapper.OrganizationsMapper;
 import org.maxkey.persistence.mq.MqIdentityAction;
 import org.maxkey.persistence.mq.MqIdentityTopic;
-import org.maxkey.persistence.mq.MqPersistService;
+import org.maxkey.persistence.mq.MessageQueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 public class OrganizationsService  extends JpaBaseService<Organizations>{
 
     @Autowired
-    MqPersistService mqPersistService;
+    MessageQueueService messageQueueService;
     
 	public OrganizationsService() {
 		super(OrganizationsMapper.class);
@@ -51,7 +51,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	
 	 public boolean insert(Organizations organization) {
 	     if(super.insert(organization)){
-	    	 mqPersistService.send(
+	    	 messageQueueService.send(
                      MqIdentityTopic.ORG_TOPIC, organization, MqIdentityAction.CREATE_ACTION);
              return true;
          }
@@ -60,7 +60,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	 
 	 public boolean update(Organizations organization) {
 	     if(super.update(organization)){
-	    	 mqPersistService.send(
+	    	 messageQueueService.send(
                      MqIdentityTopic.ORG_TOPIC, organization, MqIdentityAction.UPDATE_ACTION);
              return true;
          }
@@ -84,7 +84,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	 
 	 public boolean delete(Organizations organization) {
 	     if(super.delete(organization)){
-	    	 mqPersistService.send(
+	    	 messageQueueService.send(
                      MqIdentityTopic.ORG_TOPIC, organization, MqIdentityAction.DELETE_ACTION);
              return true;
          }

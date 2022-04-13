@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +25,6 @@ import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.repository.LoginHistoryRepository;
-import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.persistence.service.HistoryLoginService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
@@ -57,11 +55,6 @@ public class LoginSessionController {
 
     @Autowired
     HistoryLoginService historyLoginService;
-    @Autowired
-    LoginRepository loginRepository;
-    
-    @Autowired
-    LoginHistoryRepository loginHistoryRepository;
     
     @Autowired
     OnlineTicketService onlineTicketService;
@@ -85,8 +78,6 @@ public class LoginSessionController {
         		).buildResponse();
     }
 
-
-    
     @ResponseBody
     @RequestMapping(value="/terminate")  
     public ResponseEntity<?> terminate(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
@@ -98,10 +89,11 @@ public class LoginSessionController {
                 if(currentUser.getOnlineTicket().contains(sessionId)) {
                     continue;//skip current session
                 }
-                String lastLogoffTime = DateUtils.formatDateTime(new Date());
-                loginRepository.updateLastLogoff(currentUser);
-                loginHistoryRepository.logoff(lastLogoffTime, sessionId);
-                onlineTicketService.remove("OT-" + sessionId);
+                
+                onlineTicketService.terminate(
+                		sessionId,
+                		currentUser.getId(),
+                		currentUser.getUsername());
             }
             isTerminated = true;
         }catch(Exception e) {

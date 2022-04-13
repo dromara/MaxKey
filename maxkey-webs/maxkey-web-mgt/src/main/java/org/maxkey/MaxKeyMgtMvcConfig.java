@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,6 +97,8 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new HttpJwtEntryPoint(
         		authenticationProvider,jwtLoginService,applicationConfig,true))
         	.addPathPatterns("/login");
+        
+        permissionInterceptor.setMgmt(true);
         
         registry.addInterceptor(permissionInterceptor)
                 .addPathPatterns("/dashboard/**")

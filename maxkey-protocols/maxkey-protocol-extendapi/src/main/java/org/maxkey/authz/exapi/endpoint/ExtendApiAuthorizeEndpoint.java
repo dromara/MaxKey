@@ -67,8 +67,7 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 				return generateInitCredentialModelAndView(id,"/authorize/api/"+id);
 			}
 			
-			adapter.setAuthentication(AuthorizationUtils.getPrincipal());
-			adapter.setUserInfo(currentUser);
+			adapter.setPrincipal(AuthorizationUtils.getPrincipal());
 			adapter.setApp(apps);
 			adapter.setAccount(account);
 			

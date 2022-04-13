@@ -36,7 +36,6 @@ import org.maxkey.authz.cas.endpoint.ticket.ProxyTicketImpl;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.constants.ConstsBoolean;
-import org.maxkey.entity.UserInfo;
 import org.maxkey.util.Instance;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.HttpResponseConstants;
@@ -228,11 +227,8 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 					_logger.error("setProperty error . ", e);
 				}
 				
-				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(authentication.getUsername());
-				
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)samlAdapter;
-				adapter.setAuthentication(authentication);
-				adapter.setUserInfo(userInfo);
+				adapter.setPrincipal(authentication);
 				adapter.setApp(storedTicket.getCasDetails());
 				adapter.generateInfo();
 			}
@@ -345,11 +341,8 @@ Response on ticket validation failure:
 					_logger.error("setProperty error . ", e);
 				}
 				
-				UserInfo userInfo = (UserInfo) userInfoService.findByUsername(authentication.getUsername());
-				
 				AbstractAuthorizeAdapter adapter =(AbstractAuthorizeAdapter)samlAdapter;
-				adapter.setAuthentication(authentication);
-				adapter.setUserInfo(userInfo);
+				adapter.setPrincipal(authentication);
 				adapter.setApp(storedTicket.getCasDetails());
 				adapter.generateInfo();
 			}

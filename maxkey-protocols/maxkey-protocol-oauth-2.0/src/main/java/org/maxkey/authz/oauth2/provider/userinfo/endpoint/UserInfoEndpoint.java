@@ -93,18 +93,14 @@ public class UserInfoEndpoint {
 				httpResponseAdapter.write(response,JsonUtils.gson2Json(accessTokenFormatError(access_token)),"json"); 
 			}
 			
-			String principal="";
 			OAuth2Authentication oAuth2Authentication =null;
 			try{
 				 oAuth2Authentication = oauth20tokenServices.loadAuthentication(access_token);
-				 
-				 principal=((SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal()).getUsername();
 				 
 				 String client_id= oAuth2Authentication.getOAuth2Request().getClientId();
 				 ClientDetails clientDetails = 
 						 clientDetailsService.loadClientByClientId(client_id,true);
 				 
-				 UserInfo userInfo=queryUserInfo(principal);
 				 Apps app = appsService.get(client_id);
 				 
 				 AbstractAuthorizeAdapter adapter;
@@ -118,8 +114,7 @@ public class UserInfoEndpoint {
 				 }else{
 					adapter =(AbstractAuthorizeAdapter)new OAuthDefaultUserInfoAdapter(clientDetails);
 				 }
-				 adapter.setAuthentication((SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal());
-				 adapter.setUserInfo(userInfo);
+				 adapter.setPrincipal((SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal());
 				 adapter.setApp(app);
 				 
 				Object jsonData = adapter.generateInfo();

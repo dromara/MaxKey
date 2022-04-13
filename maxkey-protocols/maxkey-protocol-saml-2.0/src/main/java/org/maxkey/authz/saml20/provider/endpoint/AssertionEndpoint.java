@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,7 +78,7 @@ public class AssertionEndpoint {
 		logger.debug("AuthnRequestInfo: {}", authnRequestInfo);
 		HashMap <String,String>attributeMap=new HashMap<String,String>();
 		attributeMap.put(WebConstants.ONLINE_TICKET_NAME, 
-		        AuthorizationUtils.getPrincipal().getOnlineTicket().getTicketId());
+		        AuthorizationUtils.getPrincipal().getOnlineTicket().getFormattedTicketId());
 		
 		//saml20Details
 		Response authResponse = authnResponseGenerator.generateAuthnResponse(

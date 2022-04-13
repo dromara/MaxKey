@@ -101,8 +101,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			adapter = (AbstractAuthorizeAdapter)jwtAdapter;
 		}
 		
-		adapter.setAuthentication(AuthorizationUtils.getPrincipal());
-		adapter.setUserInfo(currentUser);
+		adapter.setPrincipal(AuthorizationUtils.getPrincipal());
 		
 		adapter.generateInfo();
 		//sign
