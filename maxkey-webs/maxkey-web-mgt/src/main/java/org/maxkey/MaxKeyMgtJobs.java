@@ -55,7 +55,7 @@ public class MaxKeyMgtJobs  implements InitializingBean {
     			TicketListenerJob.class,
     			schedulerFactoryBean,
     			jobDataMap,
-    			"0 0/1 * * * ?",//10 minutes
+    			"0 0/10 * * * ?",//10 minutes
     			"TicketListener"
     		);
     	
