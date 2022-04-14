@@ -19,9 +19,9 @@ package org.maxkey.synchronizer;
 
 import java.util.HashMap;
 
-import org.apache.mybatis.jpa.util.WebContext;
 import org.maxkey.entity.Synchronizers;
 import org.maxkey.persistence.service.SynchronizersService;
+import org.maxkey.web.WebContext;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;

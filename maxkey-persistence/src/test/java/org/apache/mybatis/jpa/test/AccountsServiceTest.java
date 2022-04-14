@@ -19,7 +19,7 @@ package org.apache.mybatis.jpa.test;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.apache.mybatis.jpa.util.WebContext;
+import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.maxkey.entity.Accounts;
@@ -38,7 +38,7 @@ public class AccountsServiceTest {
 	public static AccountsService service;
 	
 	public AccountsService getservice() {
-		service=(AccountsService)WebContext.getBean("accountsService");
+		service=(AccountsService)JpaWebContext.getBean("accountsService");
 		return service;
 	}
 	
@@ -93,7 +93,7 @@ public class AccountsServiceTest {
 		
 		_logger.info("Application dir "+System.getProperty("user.dir"));
 		context = new ClassPathXmlApplicationContext(new String[] {"spring/applicationContext.xml"});
-		WebContext.applicationContext=context;
+		JpaWebContext.applicationContext=context;
 		getservice();
 		System.out.println("init ...");
 		

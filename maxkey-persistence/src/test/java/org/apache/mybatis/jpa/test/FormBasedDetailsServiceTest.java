@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.mybatis.jpa.util.WebContext;
+import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.maxkey.entity.apps.AppsFormBasedDetails;
@@ -41,7 +41,7 @@ public class FormBasedDetailsServiceTest {
 	public static AppsFormBasedDetailsService service;
 	
 	public AppsFormBasedDetailsService getservice() {
-		service=(AppsFormBasedDetailsService)WebContext.getBean("appsFormBasedDetailsService");
+		service=(AppsFormBasedDetailsService)JpaWebContext.getBean("appsFormBasedDetailsService");
 		return service;
 	}
 	
@@ -142,7 +142,7 @@ public class FormBasedDetailsServiceTest {
 		
 		_logger.info("Application dir "+System.getProperty("user.dir"));
 		context = new ClassPathXmlApplicationContext(new String[] {"spring/applicationContext.xml"});
-		WebContext.applicationContext=context;
+		JpaWebContext.applicationContext=context;
 		getservice();
 		System.out.println("init ...");
 		

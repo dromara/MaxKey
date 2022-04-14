@@ -23,6 +23,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
@@ -90,6 +91,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * 
  * @author Dave Syer
  * @author Vladimir Kryachko
+ * @author Crystal.sea 2022-04-14
  * 
  */
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
@@ -326,7 +328,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			return jwkSetKeyStore.toString(mediaType);
 		}
 		
-		return appId + " not exist.";
+		return appId + " not exist . \n" + JpaWebContext.version();
 	}
 
 	// We need explicit approval from the user.

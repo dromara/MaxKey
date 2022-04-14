@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
@@ -172,6 +173,6 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			return jwkSetKeyStore.toString(mediaType);
 			
 		}
-		return appId + " not exist.";
+		return appId + " not exist. \n" + JpaWebContext.version();
 	}
 }

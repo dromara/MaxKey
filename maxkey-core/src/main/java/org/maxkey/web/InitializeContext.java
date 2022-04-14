@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 package org.maxkey.web;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Map;
@@ -29,8 +30,10 @@ import javax.servlet.http.HttpServlet;
 
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang3.ArchUtils;
+import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.joda.time.DateTime;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.crypto.Md5Sum;
 import org.maxkey.util.PathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +67,7 @@ public class InitializeContext extends HttpServlet {
         
         WebContext.applicationContext = applicationContext;
         
-        org.apache.mybatis.jpa.util.WebContext.applicationContext = applicationContext;
+        JpaWebContext.applicationContext = applicationContext;
         
         // List Environment Variables
         listEnvVars();
@@ -110,7 +113,7 @@ public class InitializeContext extends HttpServlet {
                         ((javax.sql.DataSource) applicationContext.getBean("dataSource"))
                         .getConnection();
 
-                java.sql.DatabaseMetaData databaseMetaData = connection.getMetaData();
+                DatabaseMetaData databaseMetaData = connection.getMetaData();
                 ApplicationConfig.databaseProduct = databaseMetaData.getDatabaseProductName();
                 
                 _logger.debug("DatabaseProductName   :   {}", 
@@ -142,6 +145,9 @@ public class InitializeContext extends HttpServlet {
                 _logger.debug("UserName              :   {}" ,
                          databaseMetaData.getUserName());
                 _logger.debug("-----------------------------------------------------------");
+                if(Md5Sum.checkVersion()) {
+                	_logger.trace("The Version dependent on is Reliable .");
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
                 _logger.error("DatabaseMetaData Variables Error .",e);
@@ -164,11 +170,13 @@ public class InitializeContext extends HttpServlet {
                     .getAppliedPropertySources()
                     .get(PropertySourcesPlaceholderConfigurer.ENVIRONMENT_PROPERTIES_PROPERTY_SOURCE_NAME)
                     .getSource();
-  
+            
             Iterator<PropertySource<?>> it =WebContext.properties.getPropertySources().iterator();
             while(it.hasNext()) {
             	 _logger.debug("propertySource {}" , it.next());
             }
+            
+            JpaWebContext.properties = WebContext.properties;
             _logger.trace("-----------------------------------------------------------");
         }
     }
