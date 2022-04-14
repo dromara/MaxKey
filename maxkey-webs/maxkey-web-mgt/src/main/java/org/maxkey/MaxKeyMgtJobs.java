@@ -20,7 +20,7 @@ package org.maxkey;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.jobs.AccountsStrategyJob;
 import org.maxkey.jobs.DynamicGroupsJob;
-import org.maxkey.jobs.OnlineTicketListenerJob;
+import org.maxkey.jobs.TicketListenerJob;
 import org.maxkey.persistence.service.AccountsService;
 import org.maxkey.persistence.service.GroupsService;
 import org.quartz.CronScheduleBuilder;
@@ -52,10 +52,10 @@ public class MaxKeyMgtJobs  implements InitializingBean {
     	JobDataMap jobDataMap = new JobDataMap();
         jobDataMap.put("service", onlineTicketService);
     	addJobScheduler(
-    			OnlineTicketListenerJob.class,
+    			TicketListenerJob.class,
     			schedulerFactoryBean,
     			jobDataMap,
-    			"* 10 * * * ? ",//10 minutes
+    			"0 0/1 * * * ?",//10 minutes
     			"TicketListener"
     		);
     	

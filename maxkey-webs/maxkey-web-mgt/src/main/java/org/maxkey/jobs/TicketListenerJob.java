@@ -25,8 +25,8 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OnlineTicketListenerJob extends AbstractScheduleJob   implements Job , Serializable {
-	final static Logger _logger = LoggerFactory.getLogger(OnlineTicketListenerJob.class);
+public class TicketListenerJob extends AbstractScheduleJob   implements Job , Serializable {
+	final static Logger _logger = LoggerFactory.getLogger(TicketListenerJob.class);
 	
 	private static final long serialVersionUID = 4782358765969474833L;
 	
@@ -37,7 +37,7 @@ public class OnlineTicketListenerJob extends AbstractScheduleJob   implements Jo
 		 if(jobStatus == JOBSTATUS.RUNNING) {return;}
 		 init(context);
 		 	
-		 _logger.debug("OnlineTicketListener Job is running ... " );
+		 _logger.debug("TicketListener Job is running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
             if(onlineTicketService != null) { 
@@ -50,7 +50,7 @@ public class OnlineTicketListenerJob extends AbstractScheduleJob   implements Jo
             		}
             	}
             }
-            _logger.debug("OnlineTicketListener Job finished  " );
+            _logger.debug("TicketListener Job finished  " );
             jobStatus = JOBSTATUS.FINISHED;
         }catch(Exception e) {
             jobStatus = JOBSTATUS.ERROR;
@@ -60,10 +60,10 @@ public class OnlineTicketListenerJob extends AbstractScheduleJob   implements Jo
 	}
 
 	 @Override
-	    void init(JobExecutionContext context){
-	    	if(onlineTicketService == null) {
-	    		onlineTicketService = 
-	            		(OnlineTicketService) context.getMergedJobDataMap().get("service");
-	        }
-	    }
+    void init(JobExecutionContext context){
+    	if(onlineTicketService == null) {
+    		onlineTicketService = 
+            		(OnlineTicketService) context.getMergedJobDataMap().get("service");
+        }
+    }
 }

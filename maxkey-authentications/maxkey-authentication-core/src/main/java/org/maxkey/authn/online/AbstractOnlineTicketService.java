@@ -73,7 +73,7 @@ public class AbstractOnlineTicketService  implements OnlineTicketService{
     	String lastLogoffTime = DateUtils.formatDateTime(new Date());
     	 _logger.trace("{} user {} terminate Ticket {} ." ,lastLogoffTime,username, onlineTicket);
     	this.profileLastLogoffTime(userId, lastLogoffTime);
-    	this.sessionLogoff(userId, lastLogoffTime);
+    	this.sessionLogoff(onlineTicket, lastLogoffTime);
     	remove(onlineTicket);
     }
     
