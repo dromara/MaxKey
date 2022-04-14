@@ -180,7 +180,7 @@ public class LoginEntryPoint {
     public String produceOtp(@PathVariable("mobile") String mobile,HttpServletRequest request) {
         UserInfo queryUserInfo=userInfoService.findByEmailMobile(mobile);
         if(queryUserInfo!=null) {
-        	otpAuthnService.getByInstId(WebContext.getInst(request)).produce(queryUserInfo);
+        	//otpAuthnService.getByInstId(WebContext.getInst(request)).produce(queryUserInfo);
             return "ok";
         }
         

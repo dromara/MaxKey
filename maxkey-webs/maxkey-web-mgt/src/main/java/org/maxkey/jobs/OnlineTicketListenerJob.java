@@ -28,7 +28,6 @@ public class OnlineTicketListenerJob   implements Job , Serializable {
 	
 	private static final long serialVersionUID = 4782358765969474833L;
 
-	
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		// TODO Auto-generated method stub

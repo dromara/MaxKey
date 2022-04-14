@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,10 +29,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.entity.Institutions;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.IdGenerator;
 import org.maxkey.web.message.Message;
@@ -104,19 +102,6 @@ public final class WebContext {
         logoutAttributeNameList.add(WebConstants.REMEBER_ME_SESSION);
         
     }
-     
-  
-    public static String getInst(HttpServletRequest request) {
-    	String instId = "1";
-    	//from session
-    	if(getAttribute(WebConstants.CURRENT_INST) != null) {
-    		instId = ((Institutions)request.getSession().getAttribute(WebConstants.CURRENT_INST)).getId();
-    	}else {
-    	//from cookie
-    		instId = WebContext.getCookie(request, WebConstants.INST_COOKIE_NAME).getValue();
-    	}
-        return StringUtils.isBlank(instId) ? "1" : instId;
-    }
 
     /**
      * set Message to session,session id is Constants.MESSAGE
@@ -163,7 +148,7 @@ public final class WebContext {
      * @return Object
      */
     public static Object getBean(String name){
-        if(applicationContext==null) {
+        if(applicationContext == null) {
             return getApplicationContext().getBean(name);
         }else {
             return applicationContext.getBean(name);

@@ -121,7 +121,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
     		socialsAssociate =new SocialsAssociate();
     		socialsAssociate.setProvider(provider);
     		socialsAssociate.setSocialUserId(this.accountId);
-    		socialsAssociate.setInstId(WebContext.getInst(WebContext.getRequest()));
+    		//socialsAssociate.setInstId(WebContext.getInst(WebContext.getRequest()));
     		
     		//for login
     		String socialSignOnType= 

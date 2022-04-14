@@ -71,21 +71,13 @@ public class LocaleTagDirective implements TemplateDirectiveModel {
                 || code.equals("application.version")) {
             message = WebContext.properties.getProperty("application.formatted-version");
         } else if (code.equals("global.logo")) {
-        	message = localizationService.getLocale(
-        						code,
-        						htmlTag,
-        						WebContext.getLocale(),
-        						WebContext.getInst(request));
+
         	if(!message.startsWith("http")) {
             	message = request.getContextPath() + message;
             }
         }else if (code.equals("global.title")
         			||code.equals("global.consoleTitle")) {
-        	message = localizationService.getLocale(
-        						code,
-        						htmlTag,
-        						WebContext.getLocale(),
-        						WebContext.getInst(request));
+   
         } else {
             try {
                 message = webApplicationContext.getMessage(
