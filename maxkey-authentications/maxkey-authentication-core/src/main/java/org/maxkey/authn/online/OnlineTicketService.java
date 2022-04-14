@@ -18,6 +18,9 @@
 package org.maxkey.authn.online;
 
 import java.time.LocalTime;
+import java.util.List;
+
+import org.maxkey.entity.HistoryLogin;
 
 public interface OnlineTicketService {
 
@@ -32,6 +35,8 @@ public interface OnlineTicketService {
     public void refresh(String ticketId);
 
     public void setValiditySeconds(int validitySeconds);
+    
+    public List<HistoryLogin> queryOnlineTicket();
     
     public void terminate(String onlineTicket,String userId,String username);
 }

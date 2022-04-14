@@ -46,8 +46,8 @@ public class AbstractOnlineTicketService  implements OnlineTicketService{
     private static final String HISTORY_LOGOUT_UPDATE_STATEMENT = 
     		"update mxk_history_login set logouttime = ? ,sessionstatus = 7 where  sessionid = ?";
 
-    
-	public List<HistoryLogin> query() {
+    @Override
+	public List<HistoryLogin> queryOnlineTicket() {
 		List<HistoryLogin> listOnlineTicket = jdbcTemplate.query(
 				DEFAULT_DEFAULT_SELECT_STATEMENT, 
 				new OnlineTicketRowMapper());

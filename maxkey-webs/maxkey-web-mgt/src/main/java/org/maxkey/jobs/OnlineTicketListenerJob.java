@@ -17,21 +17,53 @@ package org.maxkey.jobs;
 
 import java.io.Serializable;
 
+import org.maxkey.authn.online.OnlineTicketService;
+import org.maxkey.entity.HistoryLogin;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OnlineTicketListenerJob   implements Job , Serializable {
+public class OnlineTicketListenerJob extends AbstractScheduleJob   implements Job , Serializable {
 	final static Logger _logger = LoggerFactory.getLogger(OnlineTicketListenerJob.class);
 	
 	private static final long serialVersionUID = 4782358765969474833L;
+	
+	OnlineTicketService onlineTicketService;
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		// TODO Auto-generated method stub
+		 if(jobStatus == JOBSTATUS.RUNNING) {return;}
+		 init(context);
+		 	
+		 _logger.debug("OnlineTicketListener Job is running ... " );
+        jobStatus = JOBSTATUS.RUNNING;
+        try {
+            if(onlineTicketService != null) { 
+            	for (HistoryLogin onlineTicket : onlineTicketService.queryOnlineTicket()) {
+            		if(onlineTicketService.get(onlineTicket.getSessionId()) == null) {
+            			onlineTicketService.terminate(
+            					onlineTicket.getSessionId(), 
+            					onlineTicket.getUserId(), 
+            					onlineTicket.getUsername());
+            		}
+            	}
+            }
+            _logger.debug("OnlineTicketListener Job finished  " );
+            jobStatus = JOBSTATUS.FINISHED;
+        }catch(Exception e) {
+            jobStatus = JOBSTATUS.ERROR;
+            _logger.error("Exception " ,e);
+        }
 		
 	}
 
+	 @Override
+	    void init(JobExecutionContext context){
+	    	if(onlineTicketService == null) {
+	    		onlineTicketService = 
+	            		(OnlineTicketService) context.getMergedJobDataMap().get("service");
+	        }
+	    }
 }

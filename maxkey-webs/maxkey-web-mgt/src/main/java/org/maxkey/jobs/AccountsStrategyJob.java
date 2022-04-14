@@ -24,7 +24,7 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AccountsStrategyJob   implements Job , Serializable {
+public class AccountsStrategyJob extends AbstractScheduleJob  implements Job , Serializable {
 
    /**
      * 
@@ -35,40 +35,33 @@ public class AccountsStrategyJob   implements Job , Serializable {
     
     private static  AccountsService accountsService = null;
     
-    public static class JOBSTATUS{
-        public static int STOP = 0;
-        public static int RUNNING = 1;
-        public static int FINISHED = 2;
-    }
-    
-    private static int jobStatus = JOBSTATUS.STOP;
-
     @Override
     public void execute(JobExecutionContext context){
-        if(jobStatus == JOBSTATUS.RUNNING) {
-            _logger.info("Accounts Strategy job is in running . " );
-            return;
-        }
+        if(jobStatus == JOBSTATUS.RUNNING) {return;}
         
-        _logger.debug("Accounts Strategy job is running ... " );
+        init(context);
+        
+        _logger.debug("Accounts Strategy Job running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
-            if(accountsService == null) {
-                accountsService = 
-                		(AccountsService) context.getMergedJobDataMap().get("service");
-            }else {
+            if(accountsService != null) { 
             	accountsService.refreshAllByStrategy();
-            	//10 minutes
-            	Thread.sleep(10 * 1000);
+            	Thread.sleep(10 * 1000);//10 minutes
             }
-            _logger.debug("Accounts Strategy job is success  " );
+            _logger.debug("Accounts Strategy Job finished  " );
+            jobStatus = JOBSTATUS.FINISHED;
         }catch(Exception e) {
+            jobStatus = JOBSTATUS.ERROR;
             _logger.error("Exception " ,e);
-            jobStatus = JOBSTATUS.STOP;
         }
-        jobStatus = JOBSTATUS.FINISHED;
-        _logger.debug("Accounts Strategy job is finished . " );
     }
 
+    @Override
+    void init(JobExecutionContext context){
+    	if(accountsService == null) {
+            accountsService = 
+            		(AccountsService) context.getMergedJobDataMap().get("service");
+        }
+    }
 
 }

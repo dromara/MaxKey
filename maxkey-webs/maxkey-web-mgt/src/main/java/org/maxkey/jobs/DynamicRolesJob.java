@@ -17,6 +17,6 @@
 
 package org.maxkey.jobs;
 
-public class DynamicRolesJob {
+public class DynamicRolesJob extends AbstractScheduleJob {
 
 }

@@ -17,13 +17,12 @@
 
 package org.maxkey;
 
+import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.jobs.AccountsStrategyJob;
 import org.maxkey.jobs.DynamicGroupsJob;
-import org.maxkey.persistence.repository.LoginHistoryRepository;
-import org.maxkey.persistence.repository.LoginRepository;
+import org.maxkey.jobs.OnlineTicketListenerJob;
 import org.maxkey.persistence.service.AccountsService;
 import org.maxkey.persistence.service.GroupsService;
-import org.opensaml.xml.ConfigurationException;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.Job;
@@ -45,58 +44,78 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 public class MaxKeyMgtJobs  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMgtJobs.class);
  
-    /**
-     * schedulerJobsInit.
-     * @return schedulerJobsInit
-     * @throws ConfigurationException 
-     * @throws SchedulerException 
-     */
-    @Bean(name = "schedulerJobs")
-    public String  schedulerJobs(
-            SchedulerFactoryBean schedulerFactoryBean,
-            GroupsService groupsService,
-            AccountsService accountsService,
-            @Value("${maxkey.job.cron.schedule}") String cronSchedule
-            ) throws SchedulerException {
-    	_logger.debug("cron schedule : " + cronSchedule);
+    @Bean(name = "schedulerTicketListenerJobs")
+    public String  ticketListenerJob(
+    		SchedulerFactoryBean schedulerFactoryBean,
+    		OnlineTicketService onlineTicketService) throws SchedulerException {
     	
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        
-        addDynamicGroupsJob(
-        			DynamicGroupsJob.class,
-        			scheduler,
-        			groupsService,
-        			cronSchedule,
-        			"DynamicGroups"
-        		);
-        
-        addAccountsStrategyJob(
-        			AccountsStrategyJob.class,
-        			scheduler,
-        			accountsService,
-        			cronSchedule,
-        			"AccountsStrategy"
-        		);
-        
-        return "schedulerJobs";
+    	JobDataMap jobDataMap = new JobDataMap();
+        jobDataMap.put("service", onlineTicketService);
+    	addJobScheduler(
+    			OnlineTicketListenerJob.class,
+    			schedulerFactoryBean,
+    			jobDataMap,
+    			"* 10 * * * ? ",//10 minutes
+    			"TicketListener"
+    		);
+    	
+    	return "schedulerTicketListenerJobs";
     }
     
-	
-    private void addDynamicGroupsJob(	Class <? extends Job> jobClass,
-    									Scheduler scheduler ,
-            							GroupsService groupsService,
+    @Bean(name = "schedulerDynamicGroupsJobs")
+    public String  dynamicGroupsJobs(
+            SchedulerFactoryBean schedulerFactoryBean,
+            GroupsService groupsService,
+            @Value("${maxkey.job.cron.schedule}") String cronSchedule
+            ) throws SchedulerException {
+        JobDataMap jobDataMap = new JobDataMap();
+        jobDataMap.put("service", groupsService);
+        
+        addJobScheduler(
+    			DynamicGroupsJob.class,
+    			schedulerFactoryBean,
+    			jobDataMap,
+    			cronSchedule,
+    			"DynamicGroups"
+    		);
+        
+        return "schedulerDynamicGroupsJobs";
+    }
+    
+    @Bean(name = "schedulerAccountsStrategyJobs")
+    public String  accountsStrategyJobs(
+            SchedulerFactoryBean schedulerFactoryBean,
+            AccountsService accountsService,
+            @Value("${maxkey.job.cron.schedule}") String cronSchedule
+            ) throws SchedulerException {    	
+        JobDataMap jobDataMap = new JobDataMap();
+        jobDataMap.put("service", accountsService);
+        addJobScheduler(
+        		AccountsStrategyJob.class,
+    			schedulerFactoryBean,
+    			jobDataMap,
+    			cronSchedule,
+    			"AccountsStrategy"
+    		);
+        
+        return "schedulerAccountsStrategyJobs";
+    }
+    
+    private void addJobScheduler(	Class <? extends Job> jobClass,
+    									SchedulerFactoryBean schedulerFactoryBean ,
+    									JobDataMap jobDataMap,
             							String cronSchedule,
             							String identity
             						) throws SchedulerException {
+    	_logger.debug("Cron {}  , Job schedule {}  ", cronSchedule , identity );
+    	Scheduler scheduler = schedulerFactoryBean.getScheduler();
     	
-    	_logger.debug("add DynamicGroups Job");
 		JobDetail jobDetail = 
 				JobBuilder.newJob(jobClass) 
 					.withIdentity(identity + "Job", identity + "Group")
 					.build();
 		
-		JobDataMap jobDataMap = new JobDataMap();
-		jobDataMap.put("service", groupsService);
+		
 		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronSchedule);
 		
 		CronTrigger cronTrigger = 
@@ -108,41 +127,6 @@ public class MaxKeyMgtJobs  implements InitializingBean {
 		
 		scheduler.scheduleJob(jobDetail,cronTrigger);    
 	}
-
-    private void addAccountsStrategyJob(Class <? extends Job> jobClass,
-    									Scheduler scheduler ,
-            							AccountsService accountsService,
-            							String cronSchedule,
-            							String identity
-            						) throws SchedulerException {
-    	
-    	_logger.debug("add Accounts Strategy Job");
-		JobDetail jobDetail = 
-		JobBuilder.newJob(jobClass) 
-			.withIdentity(identity + "Job", identity + "Group")
-			.build();
-		
-		JobDataMap jobDataMap = new JobDataMap();
-		jobDataMap.put("service", accountsService);
-		
-		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronSchedule);
-		CronTrigger cronTrigger = 
-		TriggerBuilder.newTrigger()
-			.withIdentity("trigger" + identity, identity + "TriggerGroup")
-			.usingJobData(jobDataMap)
-			.withSchedule(scheduleBuilder)
-			.build();
-		
-		scheduler.scheduleJob(jobDetail,cronTrigger);    
-	}
-    
-    public String  SessionListenerJob(
-    		SchedulerFactoryBean schedulerFactoryBean,
-    		LoginRepository loginRepository,
-    		LoginHistoryRepository loginHistoryRepository) {
-    	
-    	return "sessionListenerJob";
-    }
     
     @Override
     public void afterPropertiesSet() throws Exception {

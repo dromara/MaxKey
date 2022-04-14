@@ -25,8 +25,6 @@ import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.repository.LoginHistoryRepository;
-import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.persistence.service.HistoryLoginService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
@@ -57,11 +55,6 @@ public class LoginSessionController {
 
     @Autowired
     HistoryLoginService historyLoginService;
-    @Autowired
-    LoginRepository loginRepository;
-    
-    @Autowired
-    LoginHistoryRepository loginHistoryRepository;
     
     @Autowired
     OnlineTicketService onlineTicketService;

@@ -24,7 +24,7 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DynamicGroupsJob  implements Job , Serializable {
+public class DynamicGroupsJob extends AbstractScheduleJob  implements Job , Serializable {
     /**
      * 
      */
@@ -33,40 +33,34 @@ public class DynamicGroupsJob  implements Job , Serializable {
     final static Logger _logger = LoggerFactory.getLogger(DynamicGroupsJob.class);
     
     private static  GroupsService groupsService = null;
-    
-    public static class JOBSTATUS{
-        public static int STOP = 0;
-        public static int RUNNING = 1;
-        public static int FINISHED = 2;
-    }
-    
-    private static int jobStatus = JOBSTATUS.STOP;
 
     @Override
     public void execute(JobExecutionContext context){
-        if(jobStatus == JOBSTATUS.RUNNING) {
-            _logger.info("DynamicGroupsJob is in running . " );
-            return;
-        }
+        if(jobStatus == JOBSTATUS.RUNNING) {return;}
         
-        _logger.debug("DynamicGroupsJob is running ... " );
+        init(context);
+        
+        _logger.debug("DynamicGroups Job running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
-            if(groupsService == null) {
-                groupsService = 
-                		(GroupsService) context.getMergedJobDataMap().get("service");
-            }else {
+            if(groupsService != null) {
             	groupsService.refreshAllDynamicGroups();
-            	Thread.sleep(10 *1000);
+            	Thread.sleep(10 * 1000);//10 minutes
             }
-            _logger.debug("DynamicGroupsJob is success  " );
+            _logger.debug("DynamicGroups Job finished  " );
+            jobStatus = JOBSTATUS.FINISHED;
         }catch(Exception e) {
+            jobStatus = JOBSTATUS.ERROR;
             _logger.error("Exception " ,e);
-            jobStatus = JOBSTATUS.STOP;
         }
-        jobStatus = JOBSTATUS.FINISHED;
-        _logger.debug("DynamicGroupsJob is finished . " );
     }
 
+    @Override
+    void init(JobExecutionContext context){
+    	if(groupsService == null) {
+            groupsService = 
+            		(GroupsService) context.getMergedJobDataMap().get("service");
+        }
+    }
 
 }

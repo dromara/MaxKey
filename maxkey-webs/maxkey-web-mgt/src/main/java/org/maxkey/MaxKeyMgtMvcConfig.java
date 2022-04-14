@@ -36,7 +36,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 @Configuration
@@ -58,9 +57,6 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
     
     @Autowired
     HistoryLogsAdapter historyLogsAdapter;
-    
-    @Autowired
-    LocaleChangeInterceptor localeChangeInterceptor;
     
     @Autowired
     RestApiPermissionAdapter restApiPermissionAdapter;
@@ -141,10 +137,6 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/approles/**")
                 ;
         _logger.debug("add HistoryLogsAdapter");
-        
-        registry.addInterceptor(localeChangeInterceptor);
-        _logger.debug("add LocaleChangeInterceptor");
-        
         
         /*
          * api
