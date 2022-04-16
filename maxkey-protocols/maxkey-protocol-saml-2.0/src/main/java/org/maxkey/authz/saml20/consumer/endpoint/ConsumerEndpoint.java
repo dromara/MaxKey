@@ -32,6 +32,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
+import org.maxkey.authn.jwt.AuthJwt;
+import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.authz.saml.service.IDService;
@@ -68,6 +70,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -115,6 +118,9 @@ public class ConsumerEndpoint {
 	@Autowired
 	@Qualifier("messageReplayRule")
 	private MessageReplayRule messageReplayRule;
+	
+	@Autowired
+	AuthJwtService authJwtService;
 
 	EndpointGenerator endpointGenerator;
 	AuthnRequestGenerator authnRequestGenerator;
@@ -124,14 +130,14 @@ public class ConsumerEndpoint {
 	
 	SAML2ValidatorSuite validatorSuite = new SAML2ValidatorSuite();
 
-	@RequestMapping(value = "/consumer/saml/v20/{spId}")
+	@RequestMapping(value = "/consumer/saml/v20/{id}")
 	public ModelAndView consumer(HttpServletRequest request,
-			HttpServletResponse response, @PathVariable("spId") String spId)
+			HttpServletResponse response, @PathVariable("id") String appId)
 			throws Exception {
 
 		logger.debug("Attempting authentication.");
 		// 初始化SP 证书
-		initCredential(spId);
+		initCredential(appId);
 
 		SAMLMessageContext messageContext=null;
 		/*
@@ -188,11 +194,13 @@ public class ConsumerEndpoint {
 		logger.debug("assertion.getID() ", assertion.getAuthnStatements());
 		LoginCredential loginCredential =new LoginCredential(
 		        username,"",ConstsLoginType.SAMLTRUST);
-        authenticationProvider.authentication(loginCredential,true);
-
+		
+		Authentication  authentication = authenticationProvider.authentication(loginCredential,true);
+		if(authentication == null) {
+			String congress = authJwtService.createCongress(authentication);
+		}
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("username", username);
-
 		mav.setViewName("redirect:/appList");
 		return mav;
 	}
@@ -223,11 +231,11 @@ public class ConsumerEndpoint {
 	 * 
 	 * @throws Exception
 	 */
-	private void initCredential(String spId) throws Exception {
+	private void initCredential(String appId) throws Exception {
 		// 1. 获取 sp keyStore
-		AppsSAML20Details saml20Details = saml20DetailsService.get(spId);
+		AppsSAML20Details saml20Details = saml20DetailsService.get(appId);
 		if (saml20Details == null) {
-			logger.error("spid[" + spId + "] not exists");
+			logger.error("appId[" + appId + "] not exists");
 			throw new Exception();
 		}
 		byte[] keyStoreBytes = saml20Details.getKeyStore();

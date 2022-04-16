@@ -77,7 +77,7 @@ public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		_logger.debug("Accounts {}",account);
 		
 		if(account	==	null){
-			return generateInitCredentialModelAndView(id,"/authz/formbased/"+id);
+			return initCredentialView(id,"/authz/formbased/"+id);
 		}else{
 			modelAndView=new ModelAndView();
 			

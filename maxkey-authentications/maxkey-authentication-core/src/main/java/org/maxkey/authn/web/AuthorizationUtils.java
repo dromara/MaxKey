@@ -30,11 +30,14 @@ import org.maxkey.entity.UserInfo;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 
 public class AuthorizationUtils {
-
-	static final String Authorization_Cookie = "AuthJWT";
+	private static final Logger _logger = LoggerFactory.getLogger(AuthorizationUtils.class);
+	
+	public static final String Authorization_Cookie = "congress";
 	
 	public static  void authenticateWithCookie(
 			HttpServletRequest request,
@@ -46,6 +49,7 @@ public class AuthorizationUtils {
 			if(authCookie != null ) {
 		    	String  authorization =  authCookie.getValue();
 		    	doJwtAuthenticate(authorization,authJwtService,onlineTicketService);
+		    	_logger.debug("congress automatic authenticated .");
 			}
 		 }
 	}
@@ -59,6 +63,7 @@ public class AuthorizationUtils {
 			 String  authorization = AuthorizationHeaderUtils.resolveBearer(request);
 			if(authorization != null ) {
 				doJwtAuthenticate(authorization,authJwtService,onlineTicketService);
+				_logger.debug("Authorization automatic authenticated .");
 			}
 		 }
 	}

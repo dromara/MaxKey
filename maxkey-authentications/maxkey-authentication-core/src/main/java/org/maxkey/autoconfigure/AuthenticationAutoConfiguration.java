@@ -21,6 +21,9 @@ import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
 import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.CongressService;
+import org.maxkey.authn.jwt.InMemoryCongressService;
+import org.maxkey.authn.jwt.RedisCongressService;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.online.OnlineTicketServiceFactory;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
@@ -82,8 +85,19 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     }
     
     @Bean(name = "authJwtService")
-    public AuthJwtService authJwtService(AuthJwkConfig authJwkConfig) throws JOSEException {
-    	AuthJwtService authJwtService = new AuthJwtService(authJwkConfig);
+    public AuthJwtService authJwtService(
+    		AuthJwkConfig authJwkConfig,
+    		RedisConnectionFactory redisConnFactory,
+    		@Value("${maxkey.server.persistence}") int persistence) throws JOSEException {
+    	CongressService congressService;
+    	if (persistence == ConstsPersistence.REDIS) {
+    		congressService = new RedisCongressService(redisConnFactory);
+    	}else {
+    		congressService = new InMemoryCongressService();
+    	}
+    	
+    	AuthJwtService authJwtService = new AuthJwtService(authJwkConfig,congressService);
+    	
     	return authJwtService;
     }
     

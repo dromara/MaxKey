@@ -36,7 +36,7 @@ public class AppsService extends JpaBaseService<Apps>{
 	
 	public final static 	String DETAIL_SUFFIX	=	"_detail";
 	
-	protected final static  Cache<String, Apps> appsDetailsCacheStore = 
+	protected final static  Cache<String, Apps> detailsCacheStore = 
 										Caffeine.newBuilder()
 							                .expireAfterWrite(30, TimeUnit.MINUTES)
 							                .build();
@@ -69,23 +69,23 @@ public class AppsService extends JpaBaseService<Apps>{
     }
 
     //cache for running
-    public void storeCacheAppDetails(String appId, Apps appDetails) {
-    	appsDetailsCacheStore.put(appId + DETAIL_SUFFIX, appDetails);
+    public void put(String appId, Apps appDetails) {
+    	detailsCacheStore.put(appId + DETAIL_SUFFIX, appDetails);
 	}
 	
-    public Apps getCacheAppDetails(String appId) {
-    	Apps appDetails=appsDetailsCacheStore.getIfPresent(appId + DETAIL_SUFFIX); 
-        return appDetails;
-    }
-
-    public Apps  loadById(String id) {
-    	id = id.equalsIgnoreCase("maxkey_mgt") ? MGT_APP_ID : id;
-    	Apps app = appsDetailsCacheStore.getIfPresent(id); 
-    	if(app == null) {
-    		app = get(id);
-    		appsDetailsCacheStore.put(id, app);
+    public Apps get(String appId, boolean cached) {
+    	appId = appId.equalsIgnoreCase("maxkey_mgt") ? MGT_APP_ID : appId;
+    	Apps appDetails = null;
+    	if(cached) {
+    		appDetails = detailsCacheStore.getIfPresent(appId + DETAIL_SUFFIX); 
+    		if(appDetails == null) {
+    			appDetails = this.get(appId);
+    			detailsCacheStore.put(appId, appDetails);
+    		}
+    	}else {
+    		appDetails = this.get(appId);
     	}
-    	return app;
+        return appDetails;
     }
     
 }

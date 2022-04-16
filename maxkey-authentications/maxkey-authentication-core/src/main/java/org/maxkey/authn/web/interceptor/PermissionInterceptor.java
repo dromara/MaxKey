@@ -58,7 +58,7 @@ public class PermissionInterceptor  implements AsyncHandlerInterceptor  {
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		 _logger.trace("PermissionAdapter preHandle");
+		 _logger.trace("Permission Interceptor .");
 		 AuthorizationUtils.authenticate(request, authJwtService, onlineTicketService);
 		 SigninPrincipal principal = AuthorizationUtils.getPrincipal();
 		//判断用户是否登录,判断用户是否登录用户

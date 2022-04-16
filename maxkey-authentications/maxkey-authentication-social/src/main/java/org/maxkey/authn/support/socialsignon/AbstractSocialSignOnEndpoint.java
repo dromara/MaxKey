@@ -21,6 +21,7 @@
 package org.maxkey.authn.support.socialsignon;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
+import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.authn.support.socialsignon.service.SocialsAssociateService;
 import org.maxkey.configuration.ApplicationConfig;
@@ -78,6 +79,9 @@ public class AbstractSocialSignOnEndpoint {
 	@Autowired
     @Qualifier("authenticationProvider")
 	AbstractAuthenticationProvider authenticationProvider ;
+	
+	@Autowired
+	AuthJwtService authJwtService;
 	
 	@Autowired
 	ApplicationConfig applicationConfig;

@@ -32,6 +32,7 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -132,6 +133,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
     		if(socialSignOnType.equals(SOCIALSIGNON_TYPE.SOCIALSIGNON_TYPE_LOGON)
     		        ||socialSignOnType.equals("")){
     			socialSignOn(socialsAssociate);
+    			
     			return WebContext.redirect("/index");
     		}else{
     			socialBind(socialsAssociate);
@@ -187,7 +189,10 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 		LoginCredential loginCredential =new LoginCredential(
 		        socialsAssociate.getUsername(),"",ConstsLoginType.SOCIALSIGNON);
 		loginCredential.setProvider(this.socialSignOnProvider.getProviderName());
-        authenticationProvider.authentication(loginCredential,true);
+		Authentication  authentication = authenticationProvider.authentication(loginCredential,true);
+		if(authentication == null) {
+			String congress = authJwtService.createCongress(authentication);
+		}
         //socialsAssociate.setAccessToken(JsonUtils.object2Json(this.accessToken));
 		socialsAssociate.setSocialUserInfo(accountJsonString);
 		//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));

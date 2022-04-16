@@ -21,12 +21,15 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.maxkey.util.ObjectTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 
 public class RedisConnection {
-
+	private static final Logger _logger = LoggerFactory.getLogger(RedisConnection.class);
+	
 	Jedis conn ;
 	RedisConnectionFactory connectionFactory;
 	
@@ -54,12 +57,20 @@ public class RedisConnection {
 	 * @param key
 	 * @param value
 	 */
-	public  void setObject(String key, Serializable object){
-		set(key, ObjectTransformer.serialize(object));
+	public  void setObject(String key, Object value){
+		if(value instanceof Serializable) {
+			set(key, ObjectTransformer.serialize((Serializable)value));
+		}else {
+			_logger.error("value must implements of Serializable .");
+		}
 	}
 	
-	public  void setexObject(String key,int seconds, Serializable object){
-		setex(key, seconds, ObjectTransformer.serialize(object));
+	public  void setexObject(String key,int seconds, Object value){
+		if(value instanceof Serializable) {
+			setex(key, seconds, ObjectTransformer.serialize((Serializable)value));
+		}else {
+			_logger.error("value must implements of Serializable .");
+		}
 	}
 	
 	/**

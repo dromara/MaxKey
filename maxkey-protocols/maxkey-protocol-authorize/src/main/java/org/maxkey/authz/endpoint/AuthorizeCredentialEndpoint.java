@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,75 +20,74 @@
  */
 package org.maxkey.authz.endpoint;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.apps.Apps;
 import org.maxkey.util.StringUtils;
-import org.maxkey.web.WebContext;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Crystal.Sea
  *
  */
 @Controller
+@RequestMapping(value = { "/authz/credential" })
 public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 
-	@RequestMapping("/authz/credential/forward")
-	public ModelAndView authorizeCredentialForward(
-			@RequestParam("appId") String appId,
-			@RequestParam("redirect_uri") String redirect_uri,
+	@RequestMapping("/get/{appId}")
+	@ResponseBody
+	public ResponseEntity<?>  get(
+			@PathVariable("appId") String appId,
 			@CurrentUser UserInfo currentUser){
-		ModelAndView modelAndView=new ModelAndView("authorize/init_sso_credential");
-		modelAndView.addObject("username", "");
-		modelAndView.addObject("password", "");
-		modelAndView.addObject("setpassword", true);
-		modelAndView.addObject("userId", currentUser.getId());
-		modelAndView.addObject("appId", appId);
-		modelAndView.addObject("appName",getApp(appId).getName());
-		modelAndView.addObject("redirect_uri", redirect_uri);
-		return modelAndView;
+		Apps app = getApp(appId);
+		Accounts account = getAccounts(app,currentUser);
+		if(account == null) {
+			account =new Accounts ();
+			account.setId(account.generateId());
+			
+			account.setUserId(currentUser.getId());
+			account.setUsername(currentUser.getUsername());
+			account.setDisplayName(currentUser.getDisplayName());
+			
+			account.setAppId(appId);
+			account.setAppName(app.getName());
+			account.setInstId(currentUser.getInstId());
+			account.setCreateType("manual");
+			account.setStatus(ConstsStatus.ACTIVE);
+		}
+		return new Message<Accounts>(account).buildResponse();
 	}
 	
-	@RequestMapping("/authz/credential")
-	public ModelAndView authorizeCredential(
-			HttpServletRequest request,
-			@RequestParam("userId") String userId,
-			@RequestParam("appId") String appId,
-			@RequestParam("identity_username") String identity_username,
-			@RequestParam("identity_password") String identity_password,
-			@RequestParam("redirect_uri") String redirect_uri,
+	@RequestMapping("/update")
+	public ResponseEntity<?>  update(
+			@RequestBody  Accounts account,
 			@CurrentUser UserInfo currentUser){
-		
-		if(StringUtils.isNotEmpty(identity_username)&&StringUtils.isNotEmpty(identity_password)){
-			Accounts appUser =new Accounts ();
-			
-			appUser.setId(appUser.generateId());
-			
-			appUser.setUserId(currentUser.getId());
-			appUser.setUsername(currentUser.getUsername());
-			appUser.setDisplayName(currentUser.getDisplayName());
-			
-			appUser.setAppId(appId);
-			appUser.setAppName(getApp(appId).getName());
-			
-			appUser.setRelatedUsername(identity_username);
-			appUser.setRelatedPassword(PasswordReciprocal.getInstance().encode(identity_password));
-			
-			appUser.setInstId(currentUser.getInstId());
-			
-			if(accountsService.insert(appUser)){
-				
+		if(StringUtils.isNotEmpty(account.getRelatedPassword())
+				&&StringUtils.isNotEmpty(account.getRelatedPassword())){
+			account.setInstId(currentUser.getInstId());
+			account.setRelatedPassword(
+					PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
+			if(accountsService.get(account.getId()) == null) {
+				if(accountsService.insert(account)){
+					return new Message<Accounts>().buildResponse();
+				}
+			}else {
+				if(accountsService.update(account)){
+					return new Message<Accounts>().buildResponse();
+				}
 			}
 		}
 		
-		return WebContext.redirect(redirect_uri);
+		return new Message<Accounts>(Message.FAIL).buildResponse();
 	}
 			
 }

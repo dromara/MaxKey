@@ -17,6 +17,7 @@
 
 package org.maxkey.authn.jwt;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,10 @@ import org.maxkey.authn.SigninPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-public class AuthJwt {
+public class AuthJwt implements Serializable {
+	
+	private static final long serialVersionUID = -914373258878811144L;
+	
 	private String ticket;
 	private String token;
 	private String type = "Bearer";

@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.jwt.AuthJwt;
@@ -193,12 +195,20 @@ public class LoginEntryPoint {
  	
  	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
- 		Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
+ 		//for congress
+ 		if(StringUtils.isNotBlank(loginCredential.getCongress())){
+ 			AuthJwt authJwt = authJwtService.consumeCongress(loginCredential.getCongress());
+ 			if(authJwt != null) {
+ 				return new Message<AuthJwt>(authJwt).buildResponse();
+ 			}
+ 		}
+ 		
+ 		//normal
+ 		Authentication  authentication = authenticationProvider.authenticate(loginCredential);
  		if(authentication == null) {
  			return new Message<AuthJwt>(Message.FAIL).buildResponse();
  		}
- 		String jwt = authJwtService.generateToken(authentication);
- 		return new Message<AuthJwt>(new AuthJwt(jwt, authentication)).buildResponse();
+ 		return new Message<AuthJwt>(authJwtService.generateAuthJwt(authentication)).buildResponse();
  	}
 
 }

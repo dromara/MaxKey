@@ -30,6 +30,7 @@ public class LoginCredential  implements Authentication {
      * 
      */
     private static final long serialVersionUID = 3125709257481600320L;
+    String congress;
     String username;
     String password;
     String sessionId;
@@ -64,7 +65,15 @@ public class LoginCredential  implements Authentication {
         this.authType = authType;
     }
     
-    @Override
+    public String getCongress() {
+		return congress;
+	}
+
+	public void setCongress(String congress) {
+		this.congress = congress;
+	}
+
+	@Override
     public String getName() {
         return "Login Credential";
     }

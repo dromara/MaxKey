@@ -57,7 +57,7 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
         _logger.debug("preHandle");
         final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
         SigninPrincipal principal = AuthorizationUtils.getPrincipal();
-        if(principal != null) {
+        if(principal != null && app !=null) {
             if(principal.getGrantedAuthorityApps().contains(new SimpleGrantedAuthority(app.getId()))) {
                 _logger.trace("preHandle have authority access " + app);
                 return true;
@@ -82,9 +82,9 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
         final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
         
         SigninPrincipal principal = AuthorizationUtils.getPrincipal();
-        if(principal != null) {
+        if(principal != null && app !=null) {
         	final UserInfo userInfo = principal.getUserInfo();
-        	String sessionId = principal.getOnlineTicket().getFormattedTicketId().substring(3);
+        	String sessionId = principal.getOnlineTicket().getTicketId();
         	 _logger.debug("sessionId : " + sessionId + " ,appId : " + app.getId());
              HistoryLoginApps historyLoginApps = new HistoryLoginApps();
              historyLoginApps.setAppId(app.getId());

@@ -35,6 +35,7 @@ import org.maxkey.authz.oauth2.provider.refresh.RefreshTokenGranter;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.persistence.MomentaryService;
 import org.maxkey.persistence.service.AppsService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,9 @@ public class AbstractEndpoint implements InitializingBean {
 	@Autowired 
     @Qualifier("applicationConfig")
     protected ApplicationConfig applicationConfig;
+	
+	@Autowired 
+	protected MomentaryService momentaryService;
 	
 	
 	public void afterPropertiesSet() throws Exception {

@@ -16,13 +16,13 @@
  
 
 package org.maxkey.web.interceptor;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.web.AuthorizationUtils;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.crypto.Base64Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,8 @@ import org.springframework.web.servlet.AsyncHandlerInterceptor;
 public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
     private static final Logger _logger = LoggerFactory.getLogger(SingleSignOnInterceptor.class);
     
-    
+    @Autowired
+    ApplicationConfig applicationConfig;
     
     @Autowired
 	OnlineTicketService onlineTicketService;
@@ -47,23 +48,18 @@ public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, 
             HttpServletResponse response, Object handler)
             throws Exception {
-    	_logger.debug("Single Sign On Interceptor automatic Auth");
+    	_logger.trace("Single Sign On Interceptor");
        
     	AuthorizationUtils.authenticateWithCookie(
     				request,authJwtService,onlineTicketService);
 
         if(AuthorizationUtils.isNotAuthenticated()){
-        	//http://sso.maxkey.top/sign/
-        	String loginUrl = "http://sso.maxkey.top:4200/#/passport/login";
-        	String savedRequestUrl = UrlUtils.buildFullRequestUrl(request);
-        	String base64RequestUrl = Base64Utils.base64UrlEncode(savedRequestUrl.getBytes());
-        	
-            _logger.trace("No Authentication ... forward to /auth/entrypoint");
-            RequestDispatcher dispatcher = request.getRequestDispatcher(loginUrl + "?redirect_uri=" + base64RequestUrl);
-            dispatcher.forward(request, response);
-            return false;
+        	String loginUrl = applicationConfig.getFrontendUri() + "/#/passport/login?redirect_uri=%s";
+        	String redirect_uri = UrlUtils.buildFullRequestUrl(request);
+        	String base64RequestUrl = Base64Utils.base64UrlEncode(redirect_uri.getBytes());
+        	_logger.debug("No Authentication ... Redirect to /passport/login , redirect_uri {}",redirect_uri);
+        	response.sendRedirect(String.format(loginUrl,base64RequestUrl));
         }
-
         return true;
     }
 

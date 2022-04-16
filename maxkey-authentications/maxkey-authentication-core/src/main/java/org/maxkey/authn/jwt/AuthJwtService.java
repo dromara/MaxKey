@@ -24,6 +24,7 @@ import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.configuration.AuthJwkConfig;
 import org.maxkey.crypto.jwt.HMAC512Service;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -41,11 +42,24 @@ public class AuthJwtService {
 	HMAC512Service hmac512Service;
 	
 	AuthJwkConfig authJwkConfig;
+	
+	CongressService congressService;
 
 	public AuthJwtService(AuthJwkConfig authJwkConfig) throws JOSEException {
 		this.authJwkConfig = authJwkConfig;
 		
 		this.hmac512Service = new HMAC512Service(authJwkConfig.getSecret());
+	}
+	
+	public AuthJwtService(AuthJwkConfig authJwkConfig,CongressService congressService) throws JOSEException {
+		this.authJwkConfig = authJwkConfig;
+		
+		this.congressService = congressService;
+		
+		this.hmac512Service = new HMAC512Service(authJwkConfig.getSecret());
+	}
+	public AuthJwt generateAuthJwt(Authentication authentication) {
+		return new AuthJwt(generateToken(authentication), authentication);
 	}
 	
 	public String generateToken(Authentication authentication) {
@@ -93,6 +107,22 @@ public class AuthJwtService {
 	public String resolveTicket(String authToken) throws ParseException {
 		JWTClaimsSet claims = resolve(authToken); 
 		return claims.getJWTID();
+	}
+	
+	public String createCongress(Authentication  authentication) {
+		String congress = WebContext.genId();
+		congressService.store(
+				congress, 
+				new AuthJwt(
+						generateToken(authentication), 
+						authentication)
+			);
+		return congress;
+	}
+	
+	public AuthJwt consumeCongress(String congress) {
+		AuthJwt authJwt = congressService.consume(congress);
+		return authJwt;
 	}
 	
 }

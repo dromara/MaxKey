@@ -66,6 +66,9 @@ public class ApplicationConfig {
     
     @Value("${maxkey.server.authz.uri}")
     private String authzUri;
+    
+    @Value("${maxkey.server.frontend.uri:http://sso.maxkey.top:4200}")
+    private String frontendUri;
 
     @Value("${server.port:8080}")
     private int port;
@@ -132,7 +135,15 @@ public class ApplicationConfig {
         this.serverPrefix = serverPrefix;
     }
 
-    /**
+    public String getFrontendUri() {
+		return frontendUri;
+	}
+
+	public void setFrontendUri(String frontendUri) {
+		this.frontendUri = frontendUri;
+	}
+
+	/**
      * @return the domainName
      */
     public String getDomainName() {

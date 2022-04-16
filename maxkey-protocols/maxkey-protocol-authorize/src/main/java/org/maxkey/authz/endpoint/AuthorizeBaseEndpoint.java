@@ -63,7 +63,7 @@ public class AuthorizeBaseEndpoint {
 		}else {
 			//session中为空或者id不一致重新加载
 			if(app == null || !app.getId().equalsIgnoreCase(id)) {
-				app=appsService.loadById(id);
+				app = appsService.get(id,true);
 				WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
 			}
 		}
@@ -105,11 +105,15 @@ public class AuthorizeBaseEndpoint {
 		return account;
 	}
 	
-	public ModelAndView generateInitCredentialModelAndView(String appId,String redirect_uri){
-		ModelAndView modelAndView = 
-				new ModelAndView(String.format(InitCredentialURL,appId, redirect_uri));
-		return modelAndView;
+	public ModelAndView initCredentialView(String appId,String redirect_uri){
+		String initCredentialURL = 
+				"redirect:" + 
+				applicationConfig.getFrontendUri() + 
+				"/#/authz/credential?appId=%s&redirect_uri=%s";
+		
+		initCredentialURL = String.format(initCredentialURL,appId, redirect_uri);
+		_logger.debug("redirect to {}.",initCredentialURL);
+		return new ModelAndView(initCredentialURL);
 	}
 	
-	public static String InitCredentialURL = "redirect:/authz/credential/forward?appId=%s&redirect_uri=%s";
 }

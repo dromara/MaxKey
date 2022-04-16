@@ -30,6 +30,8 @@ import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /*
    ID                   varchar(40)                    not null,
    UID                  varchar(40)                    null,
@@ -82,6 +84,7 @@ public class Accounts extends JpaBaseEntity implements Serializable {
     
     UserInfo userInfo;
     
+    @JsonIgnore
     private HashMap<String,OrganizationsCast> orgCast =new HashMap<String,OrganizationsCast>();
 
     public Accounts() {

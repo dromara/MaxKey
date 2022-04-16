@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
 
+import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.crypto.keystore.KeyStoreLoader;
 import org.maxkey.crypto.password.LdapShaPasswordEncoder;
 import org.maxkey.crypto.password.Md4PasswordEncoder;
@@ -29,6 +30,10 @@ import org.maxkey.crypto.password.MessageDigestPasswordEncoder;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.crypto.password.SM3PasswordEncoder;
 import org.maxkey.crypto.password.StandardPasswordEncoder;
+import org.maxkey.persistence.InMemoryMomentaryService;
+import org.maxkey.persistence.MomentaryService;
+import org.maxkey.persistence.RedisMomentaryService;
+import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.maxkey.persistence.repository.InstitutionsRepository;
 import org.maxkey.persistence.repository.LocalizationRepository;
 import org.maxkey.util.IdGenerator;
@@ -49,6 +54,8 @@ import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+
+import com.nimbusds.jose.JOSEException;
 
 @Configuration
 public class ApplicationAutoConfiguration  implements InitializingBean {
@@ -174,6 +181,21 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
         return idGenerator;
     }
 
+    
+    @Bean(name = "momentaryService")
+    public MomentaryService momentaryService(
+    		RedisConnectionFactory redisConnFactory,
+    		@Value("${maxkey.server.persistence}") int persistence) throws JOSEException {
+    	MomentaryService momentaryService;
+    	if (persistence == ConstsPersistence.REDIS) {
+    		momentaryService = new RedisMomentaryService(redisConnFactory);
+    	}else {
+    		momentaryService = new InMemoryMomentaryService();
+    	}
+    	
+    	return momentaryService;
+    }
+    
 
     @Override
     public void afterPropertiesSet() throws Exception {

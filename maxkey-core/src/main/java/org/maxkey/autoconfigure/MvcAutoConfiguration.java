@@ -26,8 +26,6 @@ import javax.servlet.Filter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.persistence.repository.InstitutionsRepository;
-import org.maxkey.persistence.repository.LoginHistoryRepository;
-import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.web.WebXssRequestFilter;
 import org.maxkey.web.WebInstRequestFilter;
 import org.slf4j.Logger;
