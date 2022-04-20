@@ -58,12 +58,22 @@ public class AuthJwtService {
 		
 		this.hmac512Service = new HMAC512Service(authJwkConfig.getSecret());
 	}
-	public AuthJwt generateAuthJwt(Authentication authentication) {
-		return new AuthJwt(generateToken(authentication), authentication);
+	
+	/**
+	 * create AuthJwt use Authentication JWT
+	 * @param authentication
+	 * @return AuthJwt
+	 */
+	public AuthJwt genAuthJwt(Authentication authentication) {
+		return new AuthJwt(genJwt(authentication), authentication);
 	}
 	
-	public String generateToken(Authentication authentication) {
-		String token = "";
+	/**
+	 * JWT with Authentication
+	 * @param authentication
+	 * @return
+	 */
+	public String genJwt(Authentication authentication) {
 		SigninPrincipal principal = ((SigninPrincipal)authentication.getPrincipal());
 		UserInfo userInfo = principal.getUserInfo();
 		DateTime currentDateTime = DateTime.now();
@@ -75,7 +85,7 @@ public class AuthJwtService {
 		 JWTClaimsSet jwtClaims =new  JWTClaimsSet.Builder()
 				.issuer(authJwkConfig.getIssuer())
 				.subject(subject)
-				.jwtID(principal.getOnlineTicket().getFormattedTicketId())
+				.jwtID(principal.getOnlineTicket().getTicketId())
 				.issueTime(currentDateTime.toDate())
 				.expirationTime(expirationTime)
 				.claim("locale", userInfo.getLocale())
@@ -83,15 +93,54 @@ public class AuthJwtService {
 				.claim("institution", userInfo.getInstId())
 				.build();
 		
+		return signedJWT(jwtClaims);
+	}
+	
+	/**
+	 * JWT with subject
+	 * @param subject subject
+	 * @return
+	 */
+	public String genJwt(String subject) {
+		DateTime currentDateTime = DateTime.now();
+		Date expirationTime = currentDateTime.plusSeconds(authJwkConfig.getExpires()).toDate();
+		_logger.debug("expiration Time : {}" , expirationTime);
+		_logger.trace("jwt subject : {}" , subject);
+		
+		 JWTClaimsSet jwtClaims =new  JWTClaimsSet.Builder()
+				.issuer(authJwkConfig.getIssuer())
+				.subject(subject)
+				.jwtID(WebContext.genId())
+				.issueTime(currentDateTime.toDate())
+				.expirationTime(expirationTime)
+				.build();
+		 
+		return signedJWT(jwtClaims);
+	}
+	
+	/**
+	 * Random JWT
+	 * @return
+	 */
+	public String genJwt() {
+		DateTime currentDateTime = DateTime.now();
+		Date expirationTime = currentDateTime.plusSeconds(authJwkConfig.getExpires()).toDate();
+		_logger.debug("expiration Time : {}" , expirationTime);
+		
+		 JWTClaimsSet jwtClaims =new  JWTClaimsSet.Builder()
+				.jwtID(WebContext.genId())
+				.expirationTime(expirationTime)
+				.build();
+		
+		return signedJWT(jwtClaims);
+	}
+	
+	public String signedJWT(JWTClaimsSet jwtClaims) {
 		_logger.trace("jwt Claims : {}" , jwtClaims);
-		
 		SignedJWT  jwtToken = new SignedJWT(
-								new JWSHeader(JWSAlgorithm.HS512), 
-								jwtClaims);
-		
-		token = hmac512Service.sign(jwtToken.getPayload());
-		
-		return token ;
+				new JWSHeader(JWSAlgorithm.HS512), 
+				jwtClaims);
+		return hmac512Service.sign(jwtToken.getPayload());
 	}
 	
 	public boolean validateJwtToken(String authToken) {
@@ -114,7 +163,7 @@ public class AuthJwtService {
 		congressService.store(
 				congress, 
 				new AuthJwt(
-						generateToken(authentication), 
+						genJwt(authentication), 
 						authentication)
 			);
 		return congress;

@@ -17,13 +17,8 @@
 
 package org.maxkey.web.endpoint;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.Pattern;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.AbstractAuthenticationProvider;
@@ -32,7 +27,6 @@ import org.maxkey.authn.jwt.AuthJwt;
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.support.kerberos.KerberosService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
-import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
 import org.maxkey.entity.Message;
@@ -50,13 +44,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -66,6 +56,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @Tag(name = "1-1-登录接口文档模块")
 @Controller
+@RequestMapping(value = "/login")
 public class LoginEntryPoint {
 	private static Logger _logger = LoggerFactory.getLogger(LoginEntryPoint.class);
 	
@@ -109,106 +100,74 @@ public class LoginEntryPoint {
 	 * @return
 	 */
 	@Operation(summary  = "登录接口", description  = "用户登录地址",method="GET")
- 	@RequestMapping(value={"/login"})
-	public ModelAndView login(HttpServletRequest request) {
-		_logger.debug("LoginController /login.");
-		
-		boolean isAuthenticated= AuthorizationUtils.isAuthenticated();
-		
-		if(isAuthenticated){
-			return  WebContext.redirect("/forwardindex");
-		}
-		
-		_logger.trace("Session Timeout MaxInactiveInterval " + WebContext.getRequest().getSession().getMaxInactiveInterval());
-		
+	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> get() {
+		_logger.debug("LoginController /get.");
 		//for normal login
-		ModelAndView modelAndView = new ModelAndView("login");
-		modelAndView.addObject("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
-		modelAndView.addObject("isKerberos", applicationConfig.getLoginConfig().isKerberos());
-		modelAndView.addObject("isMfa", applicationConfig.getLoginConfig().isMfa());
+		HashMap<String , Object> model = new HashMap<String , Object>();
+		model.put("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
+		model.put("isKerberos", applicationConfig.getLoginConfig().isKerberos());
 		if(applicationConfig.getLoginConfig().isMfa()) {
-		    modelAndView.addObject("otpType", tfaOtpAuthn.getOtpType());
-		    modelAndView.addObject("otpInterval", tfaOtpAuthn.getInterval());
+			model.put("otpType", tfaOtpAuthn.getOtpType());
+			model.put("otpInterval", tfaOtpAuthn.getInterval());
 		}
 		
 		if( applicationConfig.getLoginConfig().isKerberos()){
-			modelAndView.addObject("userDomainUrlJson", kerberosService.buildKerberosProxys());
+			model.put("userDomainUrlJson", kerberosService.buildKerberosProxys());
 		}
-		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-		modelAndView.addObject("captchaSupport", inst.getCaptchaSupport());
-		modelAndView.addObject("captchaType", inst.getCaptchaType());
-		modelAndView.addObject("sessionid", WebContext.getSession().getId());
-		//modelAndView.addObject("jwtToken",jwtLoginService.buildLoginJwt());
-		//load Social Sign On Providers
-		modelAndView.addObject("sspLogin", socialSignOnProviderService.loadSocialsProviders(inst.getId()));
 		
-		Object loginErrorMessage=WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
-        modelAndView.addObject("loginErrorMessage", loginErrorMessage==null?"":loginErrorMessage);
-        WebContext.removeAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
-		return modelAndView;
+		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
+		model.put("inst", inst);
+		model.put("captcha", inst.getCaptchaSupport());
+		model.put("captchaType", inst.getCaptchaType());
+		model.put("state", authJwtService.genJwt());
+		//load Social Sign On Providers
+		model.put("socials", socialSignOnProviderService.loadSocials(inst.getId()));
+		
+		return new Message<HashMap<String , Object>>(model).buildResponse();
 	}
  	
- 	@RequestMapping(value={"/logon.do"})
-	public ModelAndView logon(
-	                    HttpServletRequest request,
-	                    HttpServletResponse response,
-	                    @ModelAttribute("loginCredential") LoginCredential loginCredential) throws ServletException, IOException {
 
-        authenticationProvider.authenticate(loginCredential);
-
-        if (AuthorizationUtils.isAuthenticated()) {
-            return WebContext.redirect("/forwardindex");
-        } else {
-            return WebContext.redirect("/login");
-        }
- 		
- 	}
-	
- 	
- 	@RequestMapping("/login/{username}")
-	@ResponseBody
-	public HashMap <String,Object> queryLoginUserAuth(@PathVariable("username") String username) {
- 		UserInfo userInfo=userInfoService.findByUsername(username);
- 		
- 		HashMap <String,Object> authnType=new HashMap <String,Object>();
- 		authnType.put("authnType", userInfo.getAuthnType());
- 		authnType.put("appLoginAuthnType", userInfo.getAppLoginAuthnType());
- 		
- 		return authnType;
- 	}
- 	
- 	@RequestMapping("/login/sendsms/{mobile}")
-    @ResponseBody
-    public String produceOtp(@PathVariable("mobile") String mobile,HttpServletRequest request) {
-        UserInfo queryUserInfo=userInfoService.findByEmailMobile(mobile);
-        if(queryUserInfo!=null) {
-        	//otpAuthnService.getByInstId(WebContext.getInst(request)).produce(queryUserInfo);
-            return "ok";
+ 	@RequestMapping(value={"/sendotp/{mobile}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> produceOtp(@PathVariable("mobile") String mobile) {
+        UserInfo userInfo=userInfoService.findByEmailMobile(mobile);
+        if(userInfo != null) {
+        	otpAuthnService.getByInstId(WebContext.getInst().getId()).produce(userInfo);
+        	return new Message<AuthJwt>(Message.SUCCESS).buildResponse();
         }
         
-        return "fail";
+        return new Message<AuthJwt>(Message.FAIL).buildResponse();
     }
  	
- 	
- 	
- 	////////////////////
- 	
+ 	/**
+ 	 * normal
+ 	 * @param loginCredential
+ 	 * @return
+ 	 */
  	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
- 		//for congress
+ 		
+ 		Authentication  authentication = authenticationProvider.authenticate(loginCredential);
+ 		if(authentication == null) {
+ 			return new Message<AuthJwt>(Message.FAIL).buildResponse();
+ 		}
+ 		return new Message<AuthJwt>(authJwtService.genAuthJwt(authentication)).buildResponse();
+ 	}
+ 	
+ 	/**
+ 	 * for congress
+ 	 * @param loginCredential
+ 	 * @return
+ 	 */
+ 	@RequestMapping(value={"/congress"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> congress( @RequestBody LoginCredential loginCredential) {
  		if(StringUtils.isNotBlank(loginCredential.getCongress())){
  			AuthJwt authJwt = authJwtService.consumeCongress(loginCredential.getCongress());
  			if(authJwt != null) {
  				return new Message<AuthJwt>(authJwt).buildResponse();
  			}
  		}
- 		
- 		//normal
- 		Authentication  authentication = authenticationProvider.authenticate(loginCredential);
- 		if(authentication == null) {
- 			return new Message<AuthJwt>(Message.FAIL).buildResponse();
- 		}
- 		return new Message<AuthJwt>(authJwtService.generateAuthJwt(authentication)).buildResponse();
+ 		return new Message<AuthJwt>(Message.FAIL).buildResponse();
  	}
 
 }

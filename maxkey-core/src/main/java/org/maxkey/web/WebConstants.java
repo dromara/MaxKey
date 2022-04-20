@@ -49,6 +49,8 @@ public class WebConstants {
     public static final  String CURRENT_INST 		= "current_inst";
     
     public final static  String INST_COOKIE_NAME 	= "mxk_inst";
+    
+    public final static  String FRONTEND_BASE_URI 		= "mxk_frontend_base_uri";
 
     // SPRING_SECURITY_SAVED_REQUEST
     public static final  String FIRST_SAVED_REQUEST_PARAMETER 

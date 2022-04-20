@@ -24,7 +24,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.configuration.ApplicationConfig;
@@ -37,7 +36,9 @@ import org.springframework.web.filter.GenericFilterBean;
 public class WebInstRequestFilter  extends GenericFilterBean {
 	final static Logger _logger = LoggerFactory.getLogger(GenericFilterBean.class);	
 	
-	public final static String  HEADER_HOST = "host";
+	public final static String  HEADER_HOST 		= "host";
+	public final static String  HEADER_HOSTNAME 	= "hostname";
+	public final static String  HEADER_ORIGIN		= "Origin";	
 	
 	InstitutionsRepository institutionsRepository;
 	
@@ -51,17 +52,29 @@ public class WebInstRequestFilter  extends GenericFilterBean {
 		
 		if(request.getSession().getAttribute(WebConstants.CURRENT_INST) == null) {
 			WebContext.printRequest(request);
-			String host = request.getHeader(HEADER_HOST);
+			String host = request.getHeader(HEADER_HOSTNAME);
+			_logger.trace("hostname {}",host);
+			if(StringUtils.isEmpty(host)) {
+				host = request.getHeader(HEADER_HOST);
+				_logger.trace("host {}",host);
+			}
 			if(StringUtils.isEmpty(host)) {
 				host = applicationConfig.getDomainName();
+				_logger.trace("config domain {}",host);
 			}
 			if(host.indexOf(":")> -1 ) {
 				host = host.split(":")[0];
+				_logger.trace("domain split {}",host);
 			}
-			Institutions institution = institutionsRepository.findByDomain(host);
+			Institutions institution = institutionsRepository.get(host);
 			_logger.trace("{}" ,institution);
 			request.getSession().setAttribute(WebConstants.CURRENT_INST, institution);
-			WebContext.setCookie((HttpServletResponse)servletResponse, host, WebConstants.INST_COOKIE_NAME, institution.getId());
+			
+			String origin = request.getHeader(HEADER_ORIGIN);
+			if(StringUtils.isEmpty(origin)) {
+				origin = applicationConfig.getFrontendUri();
+			}
+			request.getSession().setAttribute(WebConstants.FRONTEND_BASE_URI, origin);
 		}
         chain.doFilter(servletRequest, servletResponse);
 	}

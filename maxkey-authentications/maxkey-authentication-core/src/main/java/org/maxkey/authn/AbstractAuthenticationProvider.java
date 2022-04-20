@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 /**
@@ -71,59 +70,15 @@ public abstract class AbstractAuthenticationProvider {
 
     protected abstract String getProviderName();
 
-    protected abstract Authentication doInternalAuthenticate(LoginCredential authentication);
+    public abstract Authentication authenticate(LoginCredential authentication);
     
-    public    abstract Authentication authentication(LoginCredential loginCredential,boolean isTrusted);
+    public abstract Authentication authentication(LoginCredential loginCredential,boolean isTrusted);
     
     @SuppressWarnings("rawtypes")
     public boolean supports(Class authentication) {
         return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
     }
 
-    /**
-     * authenticate .
-     * 
-     */
-    public Authentication authenticate(LoginCredential loginCredential) 
-            throws AuthenticationException {
-        _logger.debug("Trying to authenticate user '{}' via {}", 
-                loginCredential.getPrincipal(), getProviderName());
-        // 登录SESSION
-        _logger.debug("Login  Session {}.", WebContext.getSession().getId());
-        Authentication authentication = null;
-        try {
-            authentication = doInternalAuthenticate(loginCredential);
-        } catch (AuthenticationException e) {
-            _logger.error("Failed to authenticate user {} via {}: {}",
-                    new Object[] {  loginCredential.getPrincipal(),
-                                    getProviderName(),
-                                    e.getMessage() });
-            WebContext.setAttribute(
-                    WebConstants.LOGIN_ERROR_SESSION_MESSAGE, e.getMessage());
-        } catch (Exception e) {
-            _logger.error("Login error Unexpected exception in {} authentication:\n{}" ,
-                            getProviderName(), e.getMessage());
-        }
-        
-        if (authentication== null || !authentication.isAuthenticated()) {
-            return authentication;
-        }
-
-        // user authenticated
-        _logger.debug("'{}' authenticated successfully by {}.", 
-                authentication.getPrincipal(), getProviderName());
-        
-        changeSession(authentication);
-        
-        authenticationRealm.insertLoginHistory(((SigninPrincipal) authentication.getPrincipal()).getUserInfo(), 
-						        				ConstsLoginType.LOCAL, 
-								                "", 
-								                "xe00000004", 
-								                WebConstants.LOGIN_RESULT.SUCCESS);
-        
-        return authentication;
-    }
-    
     protected void changeSession(Authentication authentication) {
         
         HashMap<String,Object> sessionAttributeMap = new HashMap<String,Object>();

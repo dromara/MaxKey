@@ -33,56 +33,28 @@ public class SocialsProviderLogin implements Serializable {
 	 */
 	private static final long serialVersionUID = -2672107566766342357L;
 	
-	List<SocialsProvider> socialSignOnProviders = new ArrayList<SocialsProvider>();
+	List<SocialsProvider> providers = new ArrayList<SocialsProvider>();
 	
-	String dingTalkLogin 		= "none";
-	
-	String workWeixinLogin 		= "none";
-	
-	String feiShuLogin 			= "none";
-	
-	String weLinkLogin 			= "none";
+	String qrScan = null;
 
 	public SocialsProviderLogin(List<SocialsProvider> socialSignOnProviders) {
 		super();
-		this.socialSignOnProviders = socialSignOnProviders;
+		this.providers = socialSignOnProviders;
 	}
 
-	public String getDingTalkLogin() {
-		return dingTalkLogin;
+	public String getQrScan() {
+		return qrScan;
 	}
 
-	public void setDingTalkLogin(String dingTalkLogin) {
-		this.dingTalkLogin = dingTalkLogin;
+	public void setQrScan(String qrScan) {
+		this.qrScan = qrScan;
 	}
 
-	public String getWorkWeixinLogin() {
-		return workWeixinLogin;
+	public List<SocialsProvider> getProviders() {
+		return providers;
 	}
 
-	public void setWorkWeixinLogin(String workWeixinLogin) {
-		this.workWeixinLogin = workWeixinLogin;
+	public void setProviders(List<SocialsProvider> providers) {
+		this.providers = providers;
 	}
-
-	public String getFeiShuLogin() {
-		return feiShuLogin;
-	}
-
-	public void setFeiShuLogin(String feiShuLogin) {
-		this.feiShuLogin = feiShuLogin;
-	}
-
-	public String getWeLinkLogin() {
-		return weLinkLogin;
-	}
-
-	public void setWeLinkLogin(String weLinkLogin) {
-		this.weLinkLogin = weLinkLogin;
-	}
-
-	public List<SocialsProvider> getSocialSignOnProviders() {
-		return socialSignOnProviders;
-	}
-
-	
 }

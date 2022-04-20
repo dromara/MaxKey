@@ -90,8 +90,8 @@ public class LoginEntryPoint {
  	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
  		Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
- 		String jwt = authJwtService.generateToken(authentication);
- 		return new Message<AuthJwt>(new AuthJwt(jwt, authentication)).buildResponse();
+ 		AuthJwt authJwt = authJwtService.genAuthJwt(authentication);
+ 		return new Message<AuthJwt>(authJwt).buildResponse();
  	}
  	
 }

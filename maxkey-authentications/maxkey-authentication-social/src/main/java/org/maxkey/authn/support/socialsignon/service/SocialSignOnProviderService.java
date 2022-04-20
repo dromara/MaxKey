@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.SocialsProvider;
@@ -47,12 +46,12 @@ public class SocialSignOnProviderService{
 	
 	private static final String DEFAULT_SELECT_STATEMENT = "select * from mxk_socials_provider where instid = ? and status = 1  order by sortindex";
 	
-	protected static final Cache<String, SocialsProviderLogin> socialSignOnProvidersStore = 
+	protected static final Cache<String, SocialsProviderLogin> socialsProviderLoginStore = 
             Caffeine.newBuilder()
                 .expireAfterWrite(ConstsTimeInterval.ONE_HOUR, TimeUnit.MINUTES)
                 .build();
 	
-	HashMap<String ,SocialsProvider>socialSignOnProviderMaps=new HashMap<String ,SocialsProvider>();
+	HashMap<String ,SocialsProvider>socialSignOnProviderMaps = new HashMap<String ,SocialsProvider>();
 	
 	private final JdbcTemplate jdbcTemplate;
 	
@@ -60,16 +59,20 @@ public class SocialSignOnProviderService{
         this.jdbcTemplate=jdbcTemplate; 
     }
 
-	public SocialsProvider get(String provider){
-		return socialSignOnProviderMaps.get(provider);
+	public SocialsProvider get(String instId,String provider){
+		return socialSignOnProviderMaps.get(instId + "_" + provider);
 	}
 	
-	public AuthRequest  getAuthRequest(String provider,ApplicationConfig applicationConfig)  throws Exception {
+	public String getRedirectUri(String baseUri,String provider) {
+		return baseUri + "/passport/callback/"+provider;
+	}
+	
+	public AuthRequest  getAuthRequest(String instId,String provider,String baseUri)  throws Exception {
 		AuthRequest authRequest = null;
 		AuthConfig authConfig = AuthConfig.builder()
-				.clientId(this.get(provider).getClientId())
-				.clientSecret(this.get(provider).getClientSecret())
-				.redirectUri(applicationConfig.getServerPrefix()+ "/logon/oauth20/callback/"+provider)
+				.clientId(this.get(instId,provider).getClientId())
+				.clientSecret(this.get(instId,provider).getClientSecret())
+				.redirectUri(getRedirectUri(baseUri , provider))
 				.build();
 		
 		if(provider.equalsIgnoreCase("WeChatOpen")) {
@@ -175,42 +178,37 @@ public class SocialSignOnProviderService{
 	    return null;
 	}
 	
-	public SocialsProviderLogin loadSocialsProviders(String instId) {
-		SocialsProviderLogin ssl = socialSignOnProvidersStore.getIfPresent(instId);
-		if(ssl == null) {
-		    List<SocialsProvider> listSocialsProvider=jdbcTemplate.query(
+	public SocialsProviderLogin loadSocials(String instId) {
+		SocialsProviderLogin socialsLogin = socialsProviderLoginStore.getIfPresent(instId);
+		if(socialsLogin == null) {
+		    List<SocialsProvider> listSocialsProvider = jdbcTemplate.query(
 		            DEFAULT_SELECT_STATEMENT,
 	                new SocialsProviderRowMapper(),instId);
 	        _logger.trace("query SocialsProvider " + listSocialsProvider);
 	        
-	        
 	        List<SocialsProvider> socialSignOnProviders = new ArrayList<SocialsProvider>();
-	        ssl = new SocialsProviderLogin(socialSignOnProviders);
-	        
+	        socialsLogin = new SocialsProviderLogin(socialSignOnProviders);
 	        for(SocialsProvider socialsProvider : listSocialsProvider){
-	            socialSignOnProviderMaps.put(socialsProvider.getProvider(), socialsProvider);
-	            _logger.debug("Social Provider " + socialsProvider.getProvider() 
-	                                             + "(" + socialsProvider.getProviderName()+")");
+	            _logger.debug("Social Provider {} ({})" ,
+	            		socialsProvider.getProvider()  ,socialsProvider.getProviderName());
+	            
 	            if(!socialsProvider.getHidden().equals("true")) {
-	                socialSignOnProviders.add(socialsProvider);
+	                socialSignOnProviders.add(new SocialsProvider(socialsProvider));
 	            }
 	            
-	            if(socialsProvider.getProvider().equalsIgnoreCase("workweixin")) {
-	            	ssl.setWorkWeixinLogin(socialsProvider.getScanCode());
-	            }else if(socialsProvider.getProvider().equalsIgnoreCase("dingtalk")) {
-	            	ssl.setDingTalkLogin(socialsProvider.getScanCode());
-	            }else if(socialsProvider.getProvider().equalsIgnoreCase("feishu")) {
-	            	ssl.setFeiShuLogin(socialsProvider.getScanCode());
-	            }else if(socialsProvider.getProvider().equalsIgnoreCase("welink")) {
-	            	ssl.setWeLinkLogin(socialsProvider.getScanCode());
+	            if(socialsProvider.getScanCode().equalsIgnoreCase("true")) {
+	            	socialsLogin.setQrScan(socialsProvider.getProvider());
 	            }
+	            
+	            //add to socialSignOnProviderMaps
+	            socialSignOnProviderMaps.put(instId + "_" + socialsProvider.getProvider() , socialsProvider);
 	        }
 	        
-	        _logger.debug("social SignOn Providers Login {}" , ssl);
+	        _logger.debug("social SignOn Providers Login {}" , socialsLogin);
 	       
-	        socialSignOnProvidersStore.put(instId, ssl);
+	        socialsProviderLoginStore.put(instId, socialsLogin);
 		}
-        return ssl;
+        return socialsLogin;
 	}
 	
 	
@@ -232,6 +230,7 @@ public class SocialSignOnProviderService{
             socialsProvider.setSortIndex(rs.getInt("sortindex"));
             socialsProvider.setScanCode(rs.getString("scancode"));
             socialsProvider.setStatus(rs.getInt("status"));
+            socialsProvider.setInstId(rs.getString("instid"));
             return socialsProvider;
         }
     }

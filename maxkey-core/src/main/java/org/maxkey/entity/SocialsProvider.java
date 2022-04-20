@@ -91,6 +91,16 @@ public class SocialsProvider extends JpaBaseEntity implements Serializable {
 	public SocialsProvider() {
 
 	}
+	
+	public SocialsProvider(SocialsProvider copy) {
+		this.clientId = copy.getClientId();
+		this.id = copy.getId();
+		this.provider = copy.getProvider();
+		this.providerName = copy.getProviderName();
+		this.agentId = copy.getAgentId();
+		this.icon = copy.getIcon();
+		this.scanCode = copy.getScanCode();
+	}
 
 	public String getProvider() {
 		return provider;

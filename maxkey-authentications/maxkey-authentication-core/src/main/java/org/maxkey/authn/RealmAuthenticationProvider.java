@@ -24,6 +24,7 @@ import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.Institutions;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
@@ -35,6 +36,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
@@ -71,47 +73,73 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 		this.onlineTicketServices = onlineTicketServices;
 	}
 
-	@Override
-    protected Authentication doInternalAuthenticate(LoginCredential loginCredential) {
-
-        _logger.debug("authentication " + loginCredential);
-
-        //sessionValid(loginCredential.getSessionId());
-
-        //jwtTokenValid(j_jwtToken);
-
-        authTypeValid(loginCredential.getAuthType());
-        
-        Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-        if(inst.getCaptchaSupport().equalsIgnoreCase("YES")) {
-        	captchaValid(loginCredential.getCaptcha(),loginCredential.getAuthType());
+    @Override
+	public Authentication authenticate(LoginCredential loginCredential) {
+		UsernamePasswordAuthenticationToken authenticationToken = null;
+		_logger.debug("Trying to authenticate user '{}' via {}", 
+                loginCredential.getPrincipal(), getProviderName());
+        try {
+        	
+	        _logger.debug("authentication " + loginCredential);
+	
+	        //sessionValid(loginCredential.getSessionId());
+	
+	        //jwtTokenValid(j_jwtToken);
+	
+	        authTypeValid(loginCredential.getAuthType());
+	        
+	        Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
+	        if(inst.getCaptchaSupport().equalsIgnoreCase("YES")) {
+	        	captchaValid(loginCredential.getCaptcha(),loginCredential.getAuthType());
+	        }
+	
+	        emptyPasswordValid(loginCredential.getPassword());
+	
+	        UserInfo userInfo = null;
+	
+	        emptyUsernameValid(loginCredential.getUsername());
+	
+	        userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
+	
+	        statusValid(loginCredential , userInfo);
+	        //mfa 
+	        tftcaptchaValid(loginCredential.getOtpCaptcha(),loginCredential.getAuthType(),userInfo);
+	        
+	        //Validate PasswordPolicy
+	        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
+	        if(loginCredential.getAuthType().equalsIgnoreCase(AuthType.MOBILE)) {
+	        	mobilecaptchaValid(loginCredential.getPassword(),loginCredential.getAuthType(),userInfo);
+	        }else {            
+	            //Match password 
+	        	authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
+	        }
+	        //apply PasswordSetType and resetBadPasswordCount
+	        authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
+	        
+	        authenticationToken = createOnlineSession(loginCredential,userInfo);
+	        // user authenticated
+	        _logger.debug("'{}' authenticated successfully by {}.", 
+	        		loginCredential.getPrincipal(), getProviderName());
+	        
+	        changeSession(authenticationToken);
+	        
+	        authenticationRealm.insertLoginHistory(userInfo, 
+							        				ConstsLoginType.LOCAL, 
+									                "", 
+									                "xe00000004", 
+									                WebConstants.LOGIN_RESULT.SUCCESS);
+        } catch (AuthenticationException e) {
+            _logger.error("Failed to authenticate user {} via {}: {}",
+                    new Object[] {  loginCredential.getPrincipal(),
+                                    getProviderName(),
+                                    e.getMessage() });
+            WebContext.setAttribute(
+                    WebConstants.LOGIN_ERROR_SESSION_MESSAGE, e.getMessage());
+        } catch (Exception e) {
+            _logger.error("Login error Unexpected exception in {} authentication:\n{}" ,
+                            getProviderName(), e.getMessage());
         }
-
-        emptyPasswordValid(loginCredential.getPassword());
-
-        UserInfo userInfo = null;
-
-        emptyUsernameValid(loginCredential.getUsername());
-
-        userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
-
-        statusValid(loginCredential , userInfo);
-        //mfa 
-        tftcaptchaValid(loginCredential.getOtpCaptcha(),loginCredential.getAuthType(),userInfo);
-        
-        //Validate PasswordPolicy
-        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
-        if(loginCredential.getAuthType().equalsIgnoreCase(AuthType.MOBILE)) {
-        	mobilecaptchaValid(loginCredential.getPassword(),loginCredential.getAuthType(),userInfo);
-        }else {            
-            //Match password 
-        	authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
-        }
-        //apply PasswordSetType and resetBadPasswordCount
-        authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
-        
-        UsernamePasswordAuthenticationToken authenticationToken = createOnlineSession(loginCredential,userInfo);
-        
+       
         return  authenticationToken;
     }
 

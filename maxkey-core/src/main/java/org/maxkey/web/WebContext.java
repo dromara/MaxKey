@@ -31,6 +31,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.LogFactory;
 import org.maxkey.configuration.ApplicationConfig;
+import org.maxkey.entity.Institutions;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.IdGenerator;
 import org.maxkey.web.message.Message;
@@ -309,6 +310,15 @@ public final class WebContext {
     public static String getParameter(String name) {
         return getRequest().getParameter(name);
     }
+    
+    public static Institutions getInst() {
+        return (Institutions)getAttribute(WebConstants.CURRENT_INST);
+    }
+    
+    public static String getBaseUri() {
+        return (String)getAttribute(WebConstants.FRONTEND_BASE_URI);
+    }
+    
 
     /**
      * encoding encodingString by ApplicationConfig.
