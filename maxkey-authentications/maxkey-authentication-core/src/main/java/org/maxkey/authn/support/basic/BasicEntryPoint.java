@@ -131,7 +131,7 @@ public class BasicEntryPoint implements   AsyncHandlerInterceptor {
 		 
 		 if(!isAuthenticated){
 		     LoginCredential loginCredential =new LoginCredential(headerCredential.getUsername(),"",ConstsLoginType.BASIC);
-			 authenticationProvider.authentication(loginCredential,true);
+			 authenticationProvider.authenticate(loginCredential,true);
 			 _logger.info("Authentication  "+headerCredential.getUsername()+" successful .");
 		 }
 		

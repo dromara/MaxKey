@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +18,24 @@
 package org.maxkey.web.contorller;
 
 import com.google.code.kaptcha.Producer;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.nimbusds.jwt.JWTClaimsSet;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.util.Base64;
+
+import javax.imageio.ImageIO;
+
+import org.apache.commons.lang3.StringUtils;
+import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.entity.Message;
+import org.maxkey.persistence.MomentaryService;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,13 +49,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ImageCaptchaEndpoint {
     private static final Logger _logger = LoggerFactory.getLogger(ImageCaptchaEndpoint.class);
-
-    public static final	String IMAGE_GIF 			= "image/gif";
-    
-    public static final	String KAPTCHA_SESSION_KEY 	= "kaptcha_session_key";
     
     @Autowired
     private Producer captchaProducer;
+    
+    @Autowired 
+	protected MomentaryService momentaryService;
+    
+    @Autowired
+	AuthJwtService authJwtService;
 
     /**
      * captcha image Producer.
@@ -55,75 +65,55 @@ public class ImageCaptchaEndpoint {
      * @param request HttpServletRequest
      * @param response HttpServletResponse
      */
-    @RequestMapping(value = "/captcha")
-    public void captchaHandleRequest(HttpServletRequest  request, 
-    								 HttpServletResponse response, 
-    								 @RequestParam(value="captcha",required=false,defaultValue="text") String captchaType) {
+    @RequestMapping(value={"/captcha"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public  ResponseEntity<?> captchaHandleRequest( 
+    			@RequestParam(value="captcha",required=false,defaultValue="text") String captchaType,
+    			@RequestParam(value="state",required=false,defaultValue="state") String state) {
         try {
-        	
             String kaptchaText = captchaProducer.createText();
+            String kaptchaValue = kaptchaText;
             if (captchaType.equalsIgnoreCase("Arithmetic")) {
-                Integer intParamA = Integer.valueOf(kaptchaText.substring(0, 1));
-                Integer intParamB = Integer.valueOf(kaptchaText.substring(1, 2));
-                Integer calculateValue = 0;
-                if ((intParamA > intParamB) && ((intParamA + intParamB) % 5 > 3)) {
-                    calculateValue = intParamA - intParamB;
-                    kaptchaText = intParamA + "-" + intParamB + "=?";
+                Integer minuend = Integer.valueOf(kaptchaText.substring(0, 1));
+                Integer subtrahend = Integer.valueOf(kaptchaText.substring(1, 2));
+                if (minuend - subtrahend > 0) {
+                	kaptchaValue = (minuend - subtrahend ) + "";
+                    kaptchaText = minuend + "-" + subtrahend + "=?";
                 } else {
-                    calculateValue = intParamA + intParamB;
-                    kaptchaText = intParamA + "+" + intParamB + "=?";
+                	kaptchaValue = (minuend + subtrahend) + "";
+                    kaptchaText = minuend + "+" + subtrahend + "=?";
                 }
-                _logger.trace("Sesssion id " + request.getSession().getId() 
-                        + " , Arithmetic calculate Value is " + calculateValue);
-                request.getSession().setAttribute(
-                        KAPTCHA_SESSION_KEY, calculateValue + "");
-            } else {
-                // store the text in the session
-                request.getSession().setAttribute(KAPTCHA_SESSION_KEY, kaptchaText);
             }
-            _logger.trace("Sesssion id " + request.getSession().getId() 
-                                + " , Captcha Text is " + kaptchaText);
+            String kaptchaKey = "";
+            if(StringUtils.isNotBlank(state) 
+            		&& !state.equalsIgnoreCase("state")
+            		&& authJwtService.validateJwtToken(state)) {
+            	JWTClaimsSet claim = authJwtService.resolve(state);
+            	kaptchaKey = claim.getJWTID();
+            }else {
+            	kaptchaKey = WebContext.genId();
+            }
+            _logger.trace("kaptchaKey {} , Captcha Text is {}" ,kaptchaKey, kaptchaValue);
            
+            momentaryService.put("", kaptchaKey, kaptchaValue);
             // create the image with the text
             BufferedImage bufferedImage = captchaProducer.createImage(kaptchaText);
-            producerImage(request,response,bufferedImage);
+            // write the data out
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImage, "png", stream);
+			
+			String b64Image = "data:image/png;base64," + 
+					Base64.getEncoder().encodeToString(stream.toByteArray());
+           
+            _logger.trace("b64Image {}" , b64Image);
+            
+            stream.close();
+            return new Message<ImageCaptcha>(
+            			new ImageCaptcha(kaptchaKey,b64Image)
+            		).buildResponse();
         } catch (Exception e) {
             _logger.error("captcha Producer Error " + e.getMessage());
         }
-    }
-
-    /**
-     * producerImage.
-     * @param request HttpServletRequest
-     * @param response HttpServletResponse
-     * @param bufferedImage BufferedImage
-     * @throws IOException error
-     */
-    public static void producerImage(HttpServletRequest request, 
-                              HttpServletResponse response,
-                              BufferedImage bufferedImage) throws IOException {
-        // Set to expire far in the past.
-        response.setDateHeader("Expires", 0);
-        // Set standard HTTP/1.1 no-cache headers.
-        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
-        // Set IE extended HTTP/1.1 no-cache headers (use addHeader).
-        response.addHeader("Cache-Control", "post-check=0, pre-check=0");
-        // Set standard HTTP/1.0 no-cache header.
-        response.setHeader("Pragma", "no-cache");
-        // return a jpeg/gif
-        response.setContentType(IMAGE_GIF);
-        _logger.trace("create the image");
-        // create the image
-        if (bufferedImage != null) {
-            ServletOutputStream out = response.getOutputStream();
-            // write the data out
-            ImageIO.write(bufferedImage, "gif", out);
-            try {
-                out.flush();
-            } finally {
-                out.close();
-            }
-        }
+        return new Message< Object>(Message.FAIL).buildResponse();
     }
 
 	public void setCaptchaProducer(Producer captchaProducer) {

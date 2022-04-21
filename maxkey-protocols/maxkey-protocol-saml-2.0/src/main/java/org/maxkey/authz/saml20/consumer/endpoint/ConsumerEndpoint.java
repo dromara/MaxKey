@@ -195,7 +195,7 @@ public class ConsumerEndpoint {
 		LoginCredential loginCredential =new LoginCredential(
 		        username,"",ConstsLoginType.SAMLTRUST);
 		
-		Authentication  authentication = authenticationProvider.authentication(loginCredential,true);
+		Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
 		if(authentication == null) {
 			String congress = authJwtService.createCongress(authentication);
 		}

@@ -100,7 +100,7 @@ public class HttpWsFederationEntryPoint implements AsyncHandlerInterceptor {
                     }
                     LoginCredential loginCredential =new LoginCredential(
                             wsFederationCredential.getAttributes().get("").toString(),"",ConstsLoginType.WSFEDERATION);
-                    authenticationProvider.authentication(loginCredential,true);
+                    authenticationProvider.authenticate(loginCredential,true);
                     return true;
                 } else {
                     _logger.warn("SAML assertions are blank or no longer valid.");

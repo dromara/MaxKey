@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 public class RedisMomentaryService implements MomentaryService {
     private static final Logger _logger = LoggerFactory.getLogger(RedisMomentaryService.class);
 	
-	protected int validitySeconds = 60 * 3; //default 3 minutes.
+	protected int validitySeconds = 60 * 5; //default 5 minutes.
 	
 	RedisConnectionFactory connectionFactory;
 	

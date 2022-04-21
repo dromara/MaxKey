@@ -15,10 +15,14 @@
  */
  
 
-package org.maxkey.authn;
+package org.maxkey.authn.provider;
 
 import java.util.ArrayList;
 
+import org.maxkey.authn.AbstractAuthenticationProvider;
+import org.maxkey.authn.LoginCredential;
+import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
@@ -27,13 +31,11 @@ import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.Institutions;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
-import org.maxkey.password.onetimepwd.OtpAuthnService;
+import org.maxkey.persistence.MomentaryService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -46,47 +48,40 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
  * @author Crystal.Sea
  *
  */
-public class RealmAuthenticationProvider extends AbstractAuthenticationProvider {
+public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
     private static final Logger _logger =
-            LoggerFactory.getLogger(RealmAuthenticationProvider.class);
+            LoggerFactory.getLogger(MfaAuthenticationProvider.class);
 
-    protected String getProviderName() {
-        return "RealmAuthenticationProvider";
+    public String getProviderName() {
+        return "normal" + PROVIDER_SUFFIX;
     }
     
 
-    public RealmAuthenticationProvider() {
+    public MfaAuthenticationProvider() {
 		super();
 	}
 
-
-    public RealmAuthenticationProvider(
+    public MfaAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
-    	    AbstractOtpAuthn tfaOtpAuthn,
-    	    OtpAuthnService otpAuthnService,
-    	    OnlineTicketService onlineTicketServices) {
+    	    OnlineTicketService onlineTicketServices,
+    	    AuthJwtService authJwtService,
+    	    MomentaryService momentaryService) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
-		this.tfaOtpAuthn = tfaOtpAuthn;
-		this.otpAuthnService = otpAuthnService;
 		this.onlineTicketServices = onlineTicketServices;
+		this.authJwtService = authJwtService;
+		this.momentaryService = momentaryService;
 	}
 
     @Override
-	public Authentication authenticate(LoginCredential loginCredential) {
+	public Authentication doAuthenticate(LoginCredential loginCredential) {
 		UsernamePasswordAuthenticationToken authenticationToken = null;
 		_logger.debug("Trying to authenticate user '{}' via {}", 
                 loginCredential.getPrincipal(), getProviderName());
         try {
         	
 	        _logger.debug("authentication " + loginCredential);
-	
-	        //sessionValid(loginCredential.getSessionId());
-	
-	        //jwtTokenValid(j_jwtToken);
-	
-	        authTypeValid(loginCredential.getAuthType());
 	        
 	        Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
 	        if(inst.getCaptchaSupport().equalsIgnoreCase("YES")) {
@@ -107,12 +102,10 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 	        
 	        //Validate PasswordPolicy
 	        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
-	        if(loginCredential.getAuthType().equalsIgnoreCase(AuthType.MOBILE)) {
-	        	mobilecaptchaValid(loginCredential.getPassword(),loginCredential.getAuthType(),userInfo);
-	        }else {            
-	            //Match password 
-	        	authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
-	        }
+	             
+	        //Match password 
+	        authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
+
 	        //apply PasswordSetType and resetBadPasswordCount
 	        authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
 	        
@@ -120,8 +113,6 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
 	        // user authenticated
 	        _logger.debug("'{}' authenticated successfully by {}.", 
 	        		loginCredential.getPrincipal(), getProviderName());
-	        
-	        changeSession(authenticationToken);
 	        
 	        authenticationRealm.insertLoginHistory(userInfo, 
 							        				ConstsLoginType.LOCAL, 
@@ -143,46 +134,6 @@ public class RealmAuthenticationProvider extends AbstractAuthenticationProvider 
         return  authenticationToken;
     }
 
-    /**
-     * trustAuthentication.
-     * @param username String
-     * @param type String
-     * @param provider String
-     * @param code String
-     * @param message String
-     * @return boolean
-     */
-    @Override
-    public  Authentication authentication(LoginCredential loginCredential,boolean isTrusted) {
-        UserInfo loadeduserInfo = loadUserInfo(loginCredential.getUsername(), "");
-        statusValid(loginCredential , loadeduserInfo);
-        if (loadeduserInfo != null) {
-        	
-            //Validate PasswordPolicy
-            authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(loadeduserInfo);
-            if(!isTrusted) {
-                authenticationRealm.passwordMatches(loadeduserInfo, loginCredential.getPassword());
-            }
-            //apply PasswordSetType and resetBadPasswordCount
-            authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(loadeduserInfo);
-            Authentication authentication = createOnlineSession(loginCredential,loadeduserInfo);
-            
-            authenticationRealm.insertLoginHistory( loadeduserInfo, 
-                                                    loginCredential.getAuthType(), 
-                                                    loginCredential.getProvider(), 
-                                                    loginCredential.getCode(), 
-                                                    loginCredential.getMessage()
-                                                );
-            
-            return authentication;
-        }else {
-            String i18nMessage = WebContext.getI18nValue("login.error.username");
-            _logger.debug("login user {} not in this System . {}" , 
-                            loginCredential.getUsername(),i18nMessage);
-            throw new BadCredentialsException(WebContext.getI18nValue("login.error.username"));
-        }
-    }
-    
     public UsernamePasswordAuthenticationToken createOnlineSession(LoginCredential credential,UserInfo userInfo) {
         //Online Tickit
         OnlineTicket onlineTicket = new OnlineTicket();

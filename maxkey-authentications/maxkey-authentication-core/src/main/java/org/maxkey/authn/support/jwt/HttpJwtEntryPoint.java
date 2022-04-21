@@ -79,7 +79,7 @@ public class HttpJwtEntryPoint implements AsyncHandlerInterceptor {
 		 if(signedJWT != null) {
 			 String username =signedJWT.getJWTClaimsSet().getSubject();
 			 LoginCredential loginCredential =new LoginCredential(username,"",ConstsLoginType.JWT);
-			 authenticationProvider.authentication(loginCredential,true);
+			 authenticationProvider.authenticate(loginCredential,true);
 			 _logger.debug("JWT Logined in , username " + username);
 		 }
 		

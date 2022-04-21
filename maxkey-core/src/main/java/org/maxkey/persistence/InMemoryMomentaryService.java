@@ -30,7 +30,7 @@ public class InMemoryMomentaryService implements MomentaryService{
 
 	protected  static  Cache<String, Object> momentaryStore = 
         	        Caffeine.newBuilder()
-        	            .expireAfterWrite(3, TimeUnit.MINUTES)
+        	            .expireAfterWrite(5, TimeUnit.MINUTES)
         	            .maximumSize(200000)
         	            .build();
 	

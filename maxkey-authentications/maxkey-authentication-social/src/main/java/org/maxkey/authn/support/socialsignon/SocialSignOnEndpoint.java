@@ -133,7 +133,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	    	SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(instId,provider);
 	    	loginCredential.setProvider(socialSignOnProvider.getProviderName());
 	    	
-	    	Authentication  authentication = authenticationProvider.authentication(loginCredential,true);
+	    	Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
 	    	//socialsAssociate.setAccessToken(JsonUtils.object2Json(this.accessToken));
 	    	socialsAssociate.setSocialUserInfo(accountJsonString);
 	    	//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));

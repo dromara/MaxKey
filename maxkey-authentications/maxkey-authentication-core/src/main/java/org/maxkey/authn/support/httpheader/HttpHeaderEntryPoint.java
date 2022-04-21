@@ -110,7 +110,7 @@ public class HttpHeaderEntryPoint implements AsyncHandlerInterceptor {
 		 
 		 if(!isAuthenticated){
 			LoginCredential loginCredential =new LoginCredential(httpHeaderUsername,"",ConstsLoginType.HTTPHEADER);
-            authenticationProvider.authentication(loginCredential,true);
+            authenticationProvider.authenticate(loginCredential,true);
 			_logger.info("Authentication  "+httpHeaderUsername+" successful .");
 		 }
 		

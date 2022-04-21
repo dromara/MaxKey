@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 package org.maxkey.autoconfigure;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
-import org.maxkey.authn.RealmAuthenticationProvider;
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.jwt.CongressService;
@@ -26,6 +25,9 @@ import org.maxkey.authn.jwt.InMemoryCongressService;
 import org.maxkey.authn.jwt.RedisCongressService;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.online.OnlineTicketServiceFactory;
+import org.maxkey.authn.provider.MobileAuthenticationProvider;
+import org.maxkey.authn.provider.NormalAuthenticationProvider;
+import org.maxkey.authn.provider.TrustedAuthenticationProvider;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.web.SessionListenerAdapter;
 import org.maxkey.configuration.ApplicationConfig;
@@ -34,6 +36,7 @@ import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.OtpAuthnService;
 import org.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
+import org.maxkey.persistence.MomentaryService;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
 import org.maxkey.persistence.repository.LoginRepository;
@@ -68,20 +71,61 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     public AbstractAuthenticationProvider authenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
-    	    AbstractOtpAuthn tfaOtpAuthn,
-    	    OtpAuthnService otpAuthnService,
-    	    OnlineTicketService onlineTicketServices
+    	    OnlineTicketService onlineTicketServices,
+    	    AuthJwtService authJwtService,
+    	    MomentaryService momentaryService
     		) {
        
     	_logger.debug("init authentication Provider .");
-        return new RealmAuthenticationProvider(
+    	NormalAuthenticationProvider normal = new NormalAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
-        		tfaOtpAuthn,
+        		onlineTicketServices,
+        		authJwtService,
+        		momentaryService
+        	);
+    	
+    	normal.addAuthenticationProvider(normal);
+    	return normal;
+    }
+    
+    @Bean(name = "mobileAuthenticationProvider")
+    public AbstractAuthenticationProvider mobileAuthenticationProvider(
+    		AbstractAuthenticationRealm authenticationRealm,
+    		ApplicationConfig applicationConfig,
+    	    OtpAuthnService otpAuthnService,
+    	    OnlineTicketService onlineTicketServices,
+    	    AbstractAuthenticationProvider authenticationProvider
+    		) {
+    	MobileAuthenticationProvider mobile = new MobileAuthenticationProvider(
+        		authenticationRealm,
+        		applicationConfig,
         		otpAuthnService,
         		onlineTicketServices
-        		);
-        
+        	);
+    	
+    	authenticationProvider.addAuthenticationProvider(mobile);
+    	_logger.debug("init Mobile authentication Provider .");
+        return mobile;
+    }
+    
+    
+    @Bean(name = "trustedAuthenticationProvider")
+    public AbstractAuthenticationProvider trustedAuthenticationProvider(
+    		AbstractAuthenticationRealm authenticationRealm,
+    		ApplicationConfig applicationConfig,
+    	    OnlineTicketService onlineTicketServices,
+    	    AbstractAuthenticationProvider authenticationProvider
+    		) {
+    	TrustedAuthenticationProvider trusted = new TrustedAuthenticationProvider(
+        		authenticationRealm,
+        		applicationConfig,
+        		onlineTicketServices
+        	);
+    	
+    	authenticationProvider.addAuthenticationProvider(trusted);
+    	_logger.debug("init Mobile authentication Provider .");
+        return trusted;
     }
     
     @Bean(name = "authJwtService")

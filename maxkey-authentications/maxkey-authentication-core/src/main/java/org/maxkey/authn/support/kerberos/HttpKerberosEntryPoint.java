@@ -97,7 +97,7 @@ public class HttpKerberosEntryPoint implements AsyncHandlerInterceptor {
 		if(notOnOrAfter.isAfterNow()){
 		    LoginCredential loginCredential =new LoginCredential(kerberosToken.getPrincipal(),"",ConstsLoginType.KERBEROS);
 		    loginCredential.setProvider(kerberosUserDomain);
-            authenticationProvider.authentication(loginCredential,true);
+            authenticationProvider.authenticate(loginCredential,true);
 	    	_logger.debug("Kerberos Logined in , username " + kerberosToken.getPrincipal());
 		}
 		

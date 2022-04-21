@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
  
 
 package org.maxkey.web.contorller;
+
+import java.util.HashMap;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
@@ -35,7 +37,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.http.MediaType;
 
 
@@ -48,14 +49,11 @@ public class LoginEntryPoint {
 	private static Logger _logger = LoggerFactory.getLogger(LoginEntryPoint.class);
 	
 	@Autowired
-  	@Qualifier("authJwtService")
 	AuthJwtService authJwtService;
 	
 	@Autowired
-  	@Qualifier("applicationConfig")
   	protected ApplicationConfig applicationConfig;
  	
-
 	@Autowired
 	@Qualifier("authenticationProvider")
 	AbstractAuthenticationProvider authenticationProvider ;
@@ -64,34 +62,28 @@ public class LoginEntryPoint {
 	 * init login
 	 * @return
 	 */
- 	@RequestMapping(value={"/login"})
-	public ModelAndView login() {
+ 	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> get() {
 		_logger.debug("LoginController /login.");
 		
-		boolean isAuthenticated= false;//WebContext.isAuthenticated();
-		//for normal login
-		if(isAuthenticated){
-			return WebContext.redirect("/main");
-		}
-
-		ModelAndView modelAndView = new ModelAndView();
+		HashMap<String , Object> model = new HashMap<String , Object>();
+		model.put("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
 		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-		modelAndView.addObject("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
-		modelAndView.addObject("captchaSupport", inst.getCaptchaSupport());
-		modelAndView.addObject("captchaType", inst.getCaptchaType());
-		modelAndView.addObject("sessionid", WebContext.getSession().getId());
-		Object loginErrorMessage=WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
-        modelAndView.addObject("loginErrorMessage", loginErrorMessage==null?"":loginErrorMessage);
-        WebContext.removeAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE);
-		modelAndView.setViewName("login");
-		return modelAndView;
+		model.put("inst", inst);
+		model.put("captcha", inst.getCaptchaSupport());
+		model.put("captchaType", inst.getCaptchaType());
+		model.put("state", authJwtService.genJwt());
+		return new Message<HashMap<String , Object>>(model).buildResponse();
 	}
  	
  	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
- 		Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
- 		AuthJwt authJwt = authJwtService.genAuthJwt(authentication);
- 		return new Message<AuthJwt>(authJwt).buildResponse();
+ 		if(authJwtService.validateJwtToken(loginCredential.getState())){
+	 		Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
+	 		AuthJwt authJwt = authJwtService.genAuthJwt(authentication);
+	 		return new Message<AuthJwt>(authJwt).buildResponse();
+ 		}
+ 		return new Message<AuthJwt>(Message.FAIL).buildResponse();
  	}
  	
 }

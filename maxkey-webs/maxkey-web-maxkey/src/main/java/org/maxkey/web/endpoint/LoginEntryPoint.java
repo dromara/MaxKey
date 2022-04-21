@@ -71,7 +71,7 @@ public class LoginEntryPoint {
 	@Autowired
 	@Qualifier("authenticationProvider")
 	AbstractAuthenticationProvider authenticationProvider ;
-	
+
 	@Autowired
 	@Qualifier("socialSignOnProviderService")
 	SocialSignOnProviderService socialSignOnProviderService;
@@ -146,12 +146,20 @@ public class LoginEntryPoint {
  	 */
  	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
- 		
- 		Authentication  authentication = authenticationProvider.authenticate(loginCredential);
- 		if(authentication == null) {
- 			return new Message<AuthJwt>(Message.FAIL).buildResponse();
+ 		Message<AuthJwt> authJwtMessage = new Message<AuthJwt>(Message.FAIL);
+ 		if(authJwtService.validateJwtToken(loginCredential.getState())){
+ 			String authType =  loginCredential.getAuthType();
+ 			 _logger.debug("Login AuthN Type  " + authType);
+ 	        if (StringUtils.isNotBlank(authType)){
+		 		Authentication  authentication = authenticationProvider.doAuthenticate(loginCredential);	 				
+		 		if(authentication != null) {
+		 			authJwtMessage = new Message<AuthJwt>(authJwtService.genAuthJwt(authentication));
+		 		}
+ 	        }else {
+ 	        	_logger.error("Login AuthN type must eq normal , tfa or mobile . ");
+ 	        }
  		}
- 		return new Message<AuthJwt>(authJwtService.genAuthJwt(authentication)).buildResponse();
+ 		return authJwtMessage.buildResponse();
  	}
  	
  	/**
