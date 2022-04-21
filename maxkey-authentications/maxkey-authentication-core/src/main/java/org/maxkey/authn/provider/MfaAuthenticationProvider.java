@@ -17,16 +17,11 @@
 
 package org.maxkey.authn.provider;
 
-import java.util.ArrayList;
-
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.jwt.AuthJwtService;
-import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.Institutions;
@@ -36,11 +31,10 @@ import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 
 /**
@@ -84,10 +78,7 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
 	        _logger.debug("authentication " + loginCredential);
 	        
 	        Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-	        if(inst.getCaptchaSupport().equalsIgnoreCase("YES")) {
-	        	captchaValid(loginCredential.getCaptcha(),loginCredential.getAuthType());
-	        }
-	
+
 	        emptyPasswordValid(loginCredential.getPassword());
 	
 	        UserInfo userInfo = null;
@@ -98,7 +89,7 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
 	
 	        statusValid(loginCredential , userInfo);
 	        //mfa 
-	        tftcaptchaValid(loginCredential.getOtpCaptcha(),loginCredential.getAuthType(),userInfo);
+	        mfacaptchaValid(loginCredential.getOtpCaptcha(),userInfo);
 	        
 	        //Validate PasswordPolicy
 	        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
@@ -109,7 +100,7 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
 	        //apply PasswordSetType and resetBadPasswordCount
 	        authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
 	        
-	        authenticationToken = createOnlineSession(loginCredential,userInfo);
+	        authenticationToken = createOnlineTicket(loginCredential,userInfo);
 	        // user authenticated
 	        _logger.debug("'{}' authenticated successfully by {}.", 
 	        		loginCredential.getPrincipal(), getProviderName());
@@ -133,50 +124,30 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
        
         return  authenticationToken;
     }
+    
+    
 
-    public UsernamePasswordAuthenticationToken createOnlineSession(LoginCredential credential,UserInfo userInfo) {
-        //Online Tickit
-        OnlineTicket onlineTicket = new OnlineTicket();
-
-        userInfo.setOnlineTicket(onlineTicket.getTicketId());
-        
-        SigninPrincipal principal = new SigninPrincipal(userInfo);
-        //set OnlineTicket
-        principal.setOnlineTicket(onlineTicket);
-        ArrayList<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
-        principal.setAuthenticated(true);
-        
-        for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
-            if(grantedAuthoritys.contains(administratorsAuthority)) {
-            	principal.setRoleAdministrators(true);
-                _logger.trace("ROLE ADMINISTRATORS Authentication .");
+    /**
+     * captcha validate.
+     * 
+     * @param otpCaptcha String
+     * @param authType   String
+     * @param userInfo   UserInfo
+     */
+    protected void mfacaptchaValid(String otpCaptcha, UserInfo userInfo) {
+        // for one time password 2 factor
+        if (applicationConfig.getLoginConfig().isMfa()) {
+            UserInfo validUserInfo = new UserInfo();
+            validUserInfo.setUsername(userInfo.getUsername());
+            validUserInfo.setSharedSecret(userInfo.getSharedSecret());
+            validUserInfo.setSharedCounter(userInfo.getSharedCounter());
+            validUserInfo.setId(userInfo.getId());
+            if (otpCaptcha == null || !tfaOtpAuthn.validate(validUserInfo, otpCaptcha)) {
+                String message = WebContext.getI18nValue("login.error.captcha");
+                _logger.debug("login captcha valid error.");
+                throw new BadCredentialsException(message);
             }
         }
-        _logger.debug("Granted Authority {}" , grantedAuthoritys);
-        
-        principal.setGrantedAuthorityApps(authenticationRealm.queryAuthorizedApps(grantedAuthoritys));
-        
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(
-                		principal, 
-                        "PASSWORD", 
-                        grantedAuthoritys
-                );
-        
-        authenticationToken.setDetails(
-                new WebAuthenticationDetails(WebContext.getRequest()));
-        
-        onlineTicket.setAuthentication(authenticationToken);
-        
-        //store onlineTicket
-        this.onlineTicketServices.store(onlineTicket.getTicketId(), onlineTicket);
-        
-        /*
-         *  put Authentication to current session context
-         */
-        AuthorizationUtils.setAuthentication(authenticationToken);
-     
-        return authenticationToken;
     }
-  
+
 }

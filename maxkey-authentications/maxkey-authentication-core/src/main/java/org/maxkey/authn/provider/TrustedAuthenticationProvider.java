@@ -17,6 +17,7 @@
 
 package org.maxkey.authn.provider;
 
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
@@ -33,7 +34,7 @@ import org.springframework.security.core.Authentication;
  * @author Crystal.Sea
  *
  */
-public class TrustedAuthenticationProvider extends NormalAuthenticationProvider {
+public class TrustedAuthenticationProvider extends AbstractAuthenticationProvider {
     private static final Logger _logger =
             LoggerFactory.getLogger(TrustedAuthenticationProvider.class);
 
@@ -63,7 +64,7 @@ public class TrustedAuthenticationProvider extends NormalAuthenticationProvider 
             authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(loadeduserInfo);
             //apply PasswordSetType and resetBadPasswordCount
             authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(loadeduserInfo);
-            Authentication authentication = createOnlineSession(loginCredential,loadeduserInfo);
+            Authentication authentication = createOnlineTicket(loginCredential,loadeduserInfo);
             
             authenticationRealm.insertLoginHistory( loadeduserInfo, 
                                                     loginCredential.getAuthType(), 

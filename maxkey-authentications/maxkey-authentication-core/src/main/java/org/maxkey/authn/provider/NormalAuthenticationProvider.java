@@ -17,16 +17,13 @@
 
 package org.maxkey.authn.provider;
 
-import java.util.ArrayList;
-
+import java.text.ParseException;
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
-import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.jwt.AuthJwtService;
-import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.Institutions;
@@ -36,11 +33,11 @@ import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import com.nimbusds.jwt.JWTClaimsSet;
 
 
 /**
@@ -85,7 +82,7 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
 	        
 	        Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
 	        if(inst.getCaptchaSupport().equalsIgnoreCase("YES")) {
-	        	captchaValid(loginCredential.getCaptcha(),loginCredential.getAuthType());
+	        	captchaValid(loginCredential.getState(),loginCredential.getCaptcha());
 	        }
 	
 	        emptyPasswordValid(loginCredential.getPassword());
@@ -105,7 +102,7 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
 	        //apply PasswordSetType and resetBadPasswordCount
 	        authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
 	        
-	        authenticationToken = createOnlineSession(loginCredential,userInfo);
+	        authenticationToken = createOnlineTicket(loginCredential,userInfo);
 	        // user authenticated
 	        _logger.debug("'{}' authenticated successfully by {}.", 
 	        		loginCredential.getPrincipal(), getProviderName());
@@ -129,50 +126,28 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
        
         return  authenticationToken;
     }
-
-    public UsernamePasswordAuthenticationToken createOnlineSession(LoginCredential credential,UserInfo userInfo) {
-        //Online Tickit
-        OnlineTicket onlineTicket = new OnlineTicket();
-
-        userInfo.setOnlineTicket(onlineTicket.getTicketId());
-        
-        SigninPrincipal principal = new SigninPrincipal(userInfo);
-        //set OnlineTicket
-        principal.setOnlineTicket(onlineTicket);
-        ArrayList<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
-        principal.setAuthenticated(true);
-        
-        for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
-            if(grantedAuthoritys.contains(administratorsAuthority)) {
-            	principal.setRoleAdministrators(true);
-                _logger.trace("ROLE ADMINISTRATORS Authentication .");
-            }
+    
+    /**
+     * captcha validate .
+     * 
+     * @param authType String
+     * @param captcha String
+     * @throws ParseException 
+     */
+    protected void captchaValid(String state ,String captcha) throws ParseException {
+        // for basic
+    	JWTClaimsSet claim = authJwtService.resolve(state);
+    	if(claim == null) {
+    		throw new BadCredentialsException(WebContext.getI18nValue("login.error.captcha"));
+    	}
+    	Object momentaryCaptcha = momentaryService.get("", claim.getJWTID());
+        _logger.info("captcha : {} , momentary Captcha : {} " ,captcha, momentaryCaptcha);
+        if (StringUtils.isBlank(captcha) || !captcha.equals(momentaryCaptcha.toString())) {
+            _logger.debug("login captcha valid error.");
+            throw new BadCredentialsException(WebContext.getI18nValue("login.error.captcha"));
         }
-        _logger.debug("Granted Authority {}" , grantedAuthoritys);
-        
-        principal.setGrantedAuthorityApps(authenticationRealm.queryAuthorizedApps(grantedAuthoritys));
-        
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(
-                		principal, 
-                        "PASSWORD", 
-                        grantedAuthoritys
-                );
-        
-        authenticationToken.setDetails(
-                new WebAuthenticationDetails(WebContext.getRequest()));
-        
-        onlineTicket.setAuthentication(authenticationToken);
-        
-        //store onlineTicket
-        this.onlineTicketServices.store(onlineTicket.getTicketId(), onlineTicket);
-        
-        /*
-         *  put Authentication to current session context
-         */
-        AuthorizationUtils.setAuthentication(authenticationToken);
-     
-        return authenticationToken;
     }
+
+   
   
 }

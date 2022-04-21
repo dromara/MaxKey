@@ -21,8 +21,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.online.OnlineTicket;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.constants.ConstsStatus;
@@ -39,6 +41,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 /**
  * login Authentication abstract class.
  * 
@@ -92,6 +95,7 @@ public abstract class AbstractAuthenticationProvider {
 
     public Authentication authenticate(LoginCredential authentication){
     	if(authentication.getAuthType().equalsIgnoreCase("trusted")) {
+    		//risk remove
     		return null;
     	}
     	AbstractAuthenticationProvider provider = providers.get(authentication.getAuthType() + PROVIDER_SUFFIX);
@@ -101,60 +105,64 @@ public abstract class AbstractAuthenticationProvider {
     
     public Authentication authenticate(LoginCredential authentication,boolean trusted){
     	AbstractAuthenticationProvider provider = providers.get(AuthType.TRUSTED + PROVIDER_SUFFIX);
-    	return provider == null ? null : provider.doAuthenticate(authentication);
+    	return provider.doAuthenticate(authentication);
     }
     
     public void addAuthenticationProvider(AbstractAuthenticationProvider provider) {
     	providers.put(provider.getProviderName(), provider);
     }
-    /**
-     * captcha validate .
-     * 
-     * @param authType String
-     * @param captcha String
-     */
-    protected void captchaValid(String captcha, String authType) {
-        // for basic
-        if (authType.equalsIgnoreCase(AuthType.NORMAL)) {
-            _logger.info("captcha : "
-                    + WebContext.getSession().getAttribute(
-                            WebConstants.KAPTCHA_SESSION_KEY).toString());
-            if (captcha == null || !captcha
-                    .equals(WebContext.getSession().getAttribute(
-                                    WebConstants.KAPTCHA_SESSION_KEY).toString())) {
-                String message = WebContext.getI18nValue("login.error.captcha");
-                _logger.debug("login captcha valid error.");
-                throw new BadCredentialsException(message);
-            }
-        }
-    }
 
     /**
-     * captcha validate.
-     * 
-     * @param otpCaptcha String
-     * @param authType   String
-     * @param userInfo   UserInfo
+     * createOnlineSession 
+     * @param credential
+     * @param userInfo
+     * @return
      */
-    protected void tftcaptchaValid(String otpCaptcha, String authType, UserInfo userInfo) {
-        // for one time password 2 factor
-        if (applicationConfig.getLoginConfig().isMfa() 
-        		&& authType.equalsIgnoreCase(AuthType.TFA)) {
-            UserInfo validUserInfo = new UserInfo();
-            validUserInfo.setUsername(userInfo.getUsername());
-            validUserInfo.setSharedSecret(userInfo.getSharedSecret());
-            validUserInfo.setSharedCounter(userInfo.getSharedCounter());
-            validUserInfo.setId(userInfo.getId());
-            if (otpCaptcha == null || !tfaOtpAuthn.validate(validUserInfo, otpCaptcha)) {
-                String message = WebContext.getI18nValue("login.error.captcha");
-                _logger.debug("login captcha valid error.");
-                throw new BadCredentialsException(message);
+    public UsernamePasswordAuthenticationToken createOnlineTicket(LoginCredential credential,UserInfo userInfo) {
+        //Online Tickit
+        OnlineTicket onlineTicket = new OnlineTicket();
+
+        userInfo.setOnlineTicket(onlineTicket.getTicketId());
+        
+        SigninPrincipal principal = new SigninPrincipal(userInfo);
+        //set OnlineTicket
+        principal.setOnlineTicket(onlineTicket);
+        ArrayList<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
+        principal.setAuthenticated(true);
+        
+        for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
+            if(grantedAuthoritys.contains(administratorsAuthority)) {
+            	principal.setRoleAdministrators(true);
+                _logger.trace("ROLE ADMINISTRATORS Authentication .");
             }
         }
+        _logger.debug("Granted Authority {}" , grantedAuthoritys);
+        
+        principal.setGrantedAuthorityApps(authenticationRealm.queryAuthorizedApps(grantedAuthoritys));
+        
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(
+                		principal, 
+                        "PASSWORD", 
+                        grantedAuthoritys
+                );
+        
+        authenticationToken.setDetails(
+                new WebAuthenticationDetails(WebContext.getRequest()));
+        
+        onlineTicket.setAuthentication(authenticationToken);
+        
+        //store onlineTicket
+        this.onlineTicketServices.store(onlineTicket.getTicketId(), onlineTicket);
+        
+        /*
+         *  put Authentication to current session context
+         */
+        AuthorizationUtils.setAuthentication(authenticationToken);
+     
+        return authenticationToken;
     }
     
-
-
     /**
      * login user by j_username and j_cname first query user by j_cname if first
      * step userinfo is null,query user from system.
@@ -254,25 +262,5 @@ public abstract class AbstractAuthenticationProvider {
         }
         return true;
     }
-
-    public void setApplicationConfig(ApplicationConfig applicationConfig) {
-        this.applicationConfig = applicationConfig;
-    }
-
-    public void setAuthenticationRealm(AbstractAuthenticationRealm authenticationRealm) {
-        this.authenticationRealm = authenticationRealm;
-    }
-
-    public void setTfaOtpAuthn(AbstractOtpAuthn tfaOtpAuthn) {
-        this.tfaOtpAuthn = tfaOtpAuthn;
-    }
-
-    public void setOnlineTicketServices(OnlineTicketService onlineTicketServices) {
-        this.onlineTicketServices = onlineTicketServices;
-    }
-
-	public void setOtpAuthnService(OtpAuthnService otpAuthnService) {
-		this.otpAuthnService = otpAuthnService;
-	}
 
 }

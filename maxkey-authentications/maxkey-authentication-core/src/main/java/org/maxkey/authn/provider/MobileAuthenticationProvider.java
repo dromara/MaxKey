@@ -17,6 +17,7 @@
 
 package org.maxkey.authn.provider;
 
+import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
@@ -40,7 +41,7 @@ import org.springframework.security.core.AuthenticationException;
  * @author Crystal.Sea
  *
  */
-public class MobileAuthenticationProvider extends NormalAuthenticationProvider {
+public class MobileAuthenticationProvider extends AbstractAuthenticationProvider {
 	
     private static final Logger _logger =
             LoggerFactory.getLogger(MobileAuthenticationProvider.class);
@@ -67,7 +68,7 @@ public class MobileAuthenticationProvider extends NormalAuthenticationProvider {
 	}
 
     @Override
-	public Authentication authenticate(LoginCredential loginCredential) {
+	public Authentication doAuthenticate(LoginCredential loginCredential) {
 		UsernamePasswordAuthenticationToken authenticationToken = null;
 		_logger.debug("Trying to authenticate user '{}' via {}", 
                 loginCredential.getPrincipal(), getProviderName());
@@ -86,12 +87,12 @@ public class MobileAuthenticationProvider extends NormalAuthenticationProvider {
 	        //Validate PasswordPolicy
 	        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
 	        
-	        mobilecaptchaValid(loginCredential.getPassword(),userInfo);
+	        mobileCaptchaValid(loginCredential.getPassword(),userInfo);
 
 	        //apply PasswordSetType and resetBadPasswordCount
 	        authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
 	        
-	        authenticationToken = createOnlineSession(loginCredential,userInfo);
+	        authenticationToken = createOnlineTicket(loginCredential,userInfo);
 	        // user authenticated
 	        _logger.debug("'{}' authenticated successfully by {}.", 
 	        		loginCredential.getPrincipal(), getProviderName());
@@ -124,7 +125,7 @@ public class MobileAuthenticationProvider extends NormalAuthenticationProvider {
      * @param authType   String
      * @param userInfo   UserInfo
      */
-    protected void mobilecaptchaValid(String password, UserInfo userInfo) {
+    protected void mobileCaptchaValid(String password, UserInfo userInfo) {
         // for mobile password
         if (applicationConfig.getLoginConfig().isMfa()) {
             UserInfo validUserInfo = new UserInfo();
