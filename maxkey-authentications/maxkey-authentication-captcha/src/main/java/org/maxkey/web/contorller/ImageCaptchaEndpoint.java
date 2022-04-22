@@ -84,7 +84,7 @@ public class ImageCaptchaEndpoint {
             if(StringUtils.isNotBlank(state) 
             		&& !state.equalsIgnoreCase("state")
             		&& authJwtService.validateJwtToken(state)) {
-            	//do nothing
+            	//just validate state Token
             }else {
             	state = authJwtService.genJwt();
             }

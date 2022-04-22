@@ -79,7 +79,11 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
 	        _logger.debug("authentication " + loginCredential);
 	        
 	        Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-	        if(inst.getCaptchaSupport().equalsIgnoreCase("YES")) {
+	        
+	        if(this.applicationConfig.getLoginConfig().isCaptcha()) {
+	        	captchaValid(loginCredential.getState(),loginCredential.getCaptcha());
+	        }
+	        else if(inst.getCaptchaSupport().equalsIgnoreCase("YES")) {
 	        	captchaValid(loginCredential.getState(),loginCredential.getCaptcha());
 	        }
 	

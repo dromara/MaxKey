@@ -23,6 +23,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LoginConfig {
     
+	@Value("${maxkey.login.captcha}")
+    boolean captcha;
+	
     @Value("${maxkey.login.mfa}")
     boolean mfa;
     
@@ -41,9 +44,15 @@ public class LoginConfig {
     public LoginConfig() {
     }
 
+    public boolean isCaptcha() {
+		return captcha;
+	}
 
+	public void setCaptcha(boolean captcha) {
+		this.captcha = captcha;
+	}
 
-    public boolean isKerberos() {
+	public boolean isKerberos() {
         return kerberos;
     }
 

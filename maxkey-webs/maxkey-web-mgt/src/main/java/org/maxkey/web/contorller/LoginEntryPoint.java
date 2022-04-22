@@ -70,8 +70,12 @@ public class LoginEntryPoint {
 		model.put("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
 		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
 		model.put("inst", inst);
-		model.put("captcha", inst.getCaptchaSupport());
-		model.put("captchaType", inst.getCaptchaType());
+		if(applicationConfig.getLoginConfig().isCaptcha()) {
+			model.put("captcha", "true");
+		}else {
+			model.put("captcha", inst.getCaptchaSupport());
+			model.put("captchaType", inst.getCaptchaType());
+		}
 		model.put("state", authJwtService.genJwt());
 		return new Message<HashMap<String , Object>>(model).buildResponse();
 	}
