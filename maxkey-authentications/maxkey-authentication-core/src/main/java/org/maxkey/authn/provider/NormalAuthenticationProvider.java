@@ -37,8 +37,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import com.nimbusds.jwt.JWTClaimsSet;
-
 
 /**
  * database Authentication provider.
@@ -136,16 +134,17 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
      */
     protected void captchaValid(String state ,String captcha) throws ParseException {
         // for basic
-    	JWTClaimsSet claim = authJwtService.resolve(state);
-    	if(claim == null) {
+    	String ticket = authJwtService.resolveTicket(state);
+    	if(ticket == null) {
     		throw new BadCredentialsException(WebContext.getI18nValue("login.error.captcha"));
     	}
-    	Object momentaryCaptcha = momentaryService.get("", claim.getJWTID());
+    	Object momentaryCaptcha = momentaryService.get("", ticket);
         _logger.info("captcha : {} , momentary Captcha : {} " ,captcha, momentaryCaptcha);
         if (StringUtils.isBlank(captcha) || !captcha.equals(momentaryCaptcha.toString())) {
             _logger.debug("login captcha valid error.");
             throw new BadCredentialsException(WebContext.getI18nValue("login.error.captcha"));
         }
+        momentaryService.remove("", ticket);
     }
 
    

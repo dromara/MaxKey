@@ -18,8 +18,6 @@
 package org.maxkey.web.contorller;
 
 import com.google.code.kaptcha.Producer;
-import com.nimbusds.jwt.JWTClaimsSet;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
@@ -30,7 +28,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.entity.Message;
 import org.maxkey.persistence.MomentaryService;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,11 +84,11 @@ public class ImageCaptchaEndpoint {
             if(StringUtils.isNotBlank(state) 
             		&& !state.equalsIgnoreCase("state")
             		&& authJwtService.validateJwtToken(state)) {
-            	JWTClaimsSet claim = authJwtService.resolve(state);
-            	kaptchaKey = claim.getJWTID();
+            	//do nothing
             }else {
-            	kaptchaKey = WebContext.genId();
+            	state = authJwtService.genJwt();
             }
+            kaptchaKey = authJwtService.resolveTicket(state);
             _logger.trace("kaptchaKey {} , Captcha Text is {}" ,kaptchaKey, kaptchaValue);
            
             momentaryService.put("", kaptchaKey, kaptchaValue);
@@ -108,7 +105,7 @@ public class ImageCaptchaEndpoint {
             
             stream.close();
             return new Message<ImageCaptcha>(
-            			new ImageCaptcha(kaptchaKey,b64Image)
+            			new ImageCaptcha(state,b64Image)
             		).buildResponse();
         } catch (Exception e) {
             _logger.error("captcha Producer Error " + e.getMessage());
