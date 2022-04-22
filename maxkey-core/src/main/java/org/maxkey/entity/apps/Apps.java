@@ -141,6 +141,9 @@ public class Apps extends JpaBaseEntity implements Serializable {
     @Column
     private String adapter;
 
+	@Column
+	private String frequently;
+	
     @Column
     protected int sortIndex;
     @Column
@@ -157,7 +160,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
     protected String description;
 	@Column
 	private String instId;
-
+	
 	private String instName;
     
     protected String loginDateTime;
@@ -248,7 +251,16 @@ public class Apps extends JpaBaseEntity implements Serializable {
         this.secret = secret;
     }
 
-    /**
+    
+    public String getFrequently() {
+		return frequently;
+	}
+
+	public void setFrequently(String frequently) {
+		this.frequently = frequently;
+	}
+
+	/**
      * @return the icon
      */
     public byte[] getIcon() {

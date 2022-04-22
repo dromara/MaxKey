@@ -65,7 +65,10 @@ public class AuthJwtService {
 	 * @return AuthJwt
 	 */
 	public AuthJwt genAuthJwt(Authentication authentication) {
-		return new AuthJwt(genJwt(authentication), authentication);
+		if(authentication != null) {
+			return new AuthJwt(genJwt(authentication), authentication);
+		}
+		return null;
 	}
 	
 	/**

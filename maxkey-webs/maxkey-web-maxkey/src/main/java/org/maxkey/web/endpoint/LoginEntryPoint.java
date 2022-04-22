@@ -155,7 +155,7 @@ public class LoginEntryPoint {
  			String authType =  loginCredential.getAuthType();
  			 _logger.debug("Login AuthN Type  " + authType);
  	        if (StringUtils.isNotBlank(authType)){
-		 		Authentication  authentication = authenticationProvider.doAuthenticate(loginCredential);	 				
+		 		Authentication  authentication = authenticationProvider.authenticate(loginCredential);	 				
 		 		if(authentication != null) {
 		 			authJwtMessage = new Message<AuthJwt>(authJwtService.genAuthJwt(authentication));
 		 		}

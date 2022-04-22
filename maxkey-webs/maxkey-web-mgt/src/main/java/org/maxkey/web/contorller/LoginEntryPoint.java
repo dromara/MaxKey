@@ -45,6 +45,7 @@ import org.springframework.http.MediaType;
  *
  */
 @Controller
+@RequestMapping(value = "/login")
 public class LoginEntryPoint {
 	private static Logger _logger = LoggerFactory.getLogger(LoginEntryPoint.class);
 	

@@ -37,6 +37,8 @@ public class InstitutionsRepository {
     
     private static final String SELECT_STATEMENT = 
     						"select * from  mxk_institutions where id = ? or domain = ? " ;
+    
+    private static final String DEFAULT_INSTID = "1";
 
     protected static final Cache<String, Institutions> institutionsStore = 
             Caffeine.newBuilder()
@@ -54,7 +56,17 @@ public class InstitutionsRepository {
     
     public Institutions get(String instIdOrDomain) {
         _logger.trace(" instId {}" , instIdOrDomain);
-        Institutions inst = institutionsStore.getIfPresent(mapper.get(instIdOrDomain)==null ? "1" : mapper.get(instIdOrDomain) );
+        Institutions inst = getByInstIdOrDomain(instIdOrDomain);
+        if(inst == null) {//use default inst
+        	inst = getByInstIdOrDomain(DEFAULT_INSTID);
+        	institutionsStore.put(instIdOrDomain, inst);
+        }
+        return inst;
+    }
+    
+    private Institutions getByInstIdOrDomain(String instIdOrDomain) {
+        _logger.trace(" instId {}" , instIdOrDomain);
+        Institutions inst = institutionsStore.getIfPresent(mapper.get(instIdOrDomain)==null ? DEFAULT_INSTID : mapper.get(instIdOrDomain) );
         if(inst == null) {
 	        List<Institutions> institutions = 
 	        		jdbcTemplate.query(SELECT_STATEMENT,new InstitutionsRowMapper(),instIdOrDomain,instIdOrDomain);
@@ -62,8 +74,10 @@ public class InstitutionsRepository {
 	        if (institutions != null && institutions.size() > 0) {
 	        	inst = institutions.get(0);
 	        }
-	        institutionsStore.put(inst.getDomain(), inst);
-	        mapper.put(inst.getId(), inst.getDomain());
+	        if(inst != null ) {
+		        institutionsStore.put(inst.getDomain(), inst);
+		        mapper.put(inst.getId(), inst.getDomain());
+	        }
         }
         
         return inst;

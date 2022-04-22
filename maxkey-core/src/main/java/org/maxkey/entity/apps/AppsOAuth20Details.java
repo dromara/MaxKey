@@ -106,6 +106,7 @@ public class AppsOAuth20Details extends Apps {
         this.setAdapter(application.getAdapter());
         this.setAdapterId(application.getAdapterId());
         this.setAdapterName(application.getAdapterName());
+        this.setFrequently(application.getFrequently());
         
         this.clientSecret = baseClientDetails.getClientSecret();
         this.scope = StringUtils
