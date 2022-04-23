@@ -1,0 +1,103 @@
+<page-header> </page-header>
+<nz-card>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit()" se-container="1">
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzRequired nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.id" [disabled]="true" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">{{ 'mxk.text.status' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_status"
+          [ngModelOptions]="{ standalone: true }"
+          name="status"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="smtpHost">{{ 'mxk.emailsenders.smtpHost' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not validminLength!">
+        <input [(ngModel)]="form.model.smtpHost" [ngModelOptions]="{ standalone: true }" nz-input name="smtpHost" id="smtpHost" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="port">{{ 'mxk.emailsenders.port' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid port!">
+        <nz-input-number
+          [(ngModel)]="form.model.port"
+          [ngModelOptions]="{ standalone: true }"
+          [nzMin]="1"
+          [nzMax]="99999"
+          [nzStep]="1"
+          name="port"
+          id="port"
+        ></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="account">{{ 'mxk.emailsenders.account' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid account!">
+        <input [(ngModel)]="form.model.account" [ngModelOptions]="{ standalone: true }" nz-input name="account" id="account" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="credentials">{{ 'mxk.emailsenders.credentials' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid upperCase!">
+        <input
+          [(ngModel)]="form.model.credentials"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          type="password"
+          name="credentials"
+          id="credentials"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="protocol">{{ 'mxk.emailsenders.protocol' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid protocol!">
+        <input [(ngModel)]="form.model.protocol" [ngModelOptions]="{ standalone: true }" nz-input name="protocol" id="protocol" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="encoding">{{ 'mxk.emailsenders.encoding' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid encoding!">
+        <input [(ngModel)]="form.model.encoding" [ngModelOptions]="{ standalone: true }" nz-input name="encoding" id="encoding" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sender">{{ 'mxk.emailsenders.sender' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid attempts!">
+        <input [(ngModel)]="form.model.sender" [ngModelOptions]="{ standalone: true }" nz-input name="sender" id="sender" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sslSwitch">{{ 'mxk.emailsenders.sslSwitch' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid qwerty!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_sslSwitch"
+          [ngModelOptions]="{ standalone: true }"
+          name="sslSwitch"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item style="width: 100%">
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary" type="submit" [nzLoading]="form.submitting">提交</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>

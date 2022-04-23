@@ -1,0 +1,132 @@
+<page-header> </page-header>
+<nz-card>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit()" se-container="1">
+    <nz-form-item style="display: none">
+      <nz-form-label [nzMd]="6" nzRequired nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.id" [disabled]="true" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="product">{{ 'mxk.ldapcontext.product' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid product !">
+        <nz-select [(ngModel)]="form.model.product" [ngModelOptions]="{ standalone: true }">
+          <nz-option nzValue="ActiveDirectory" nzLabel="ActiveDirectory"></nz-option>
+          <nz-option nzValue="OpenLDAP" nzLabel="OpenLDAP"></nz-option>
+          <nz-option nzValue="StandardLDAP" nzLabel="StandardLDAP"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">{{ 'mxk.text.status' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_status"
+          [ngModelOptions]="{ standalone: true }"
+          name="status"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="providerUrl">{{ 'mxk.ldapcontext.providerUrl' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid providerUrl !">
+        <input [(ngModel)]="form.model.providerUrl" [ngModelOptions]="{ standalone: true }" nz-input name="providerUrl" id="providerUrl" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="accountMapping">{{ 'mxk.ldapcontext.accountMapping' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid accountMapping!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_accountMapping"
+          [ngModelOptions]="{ standalone: true }"
+          name="accountMapping"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="principal">{{ 'mxk.ldapcontext.principal' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid principal!">
+        <input [(ngModel)]="form.model.principal" [ngModelOptions]="{ standalone: true }" nz-input name="principal" id="principal" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="credentials">{{ 'mxk.ldapcontext.credentials' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid upperCase!">
+        <input
+          [(ngModel)]="form.model.credentials"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          type="password"
+          name="credentials"
+          id="credentials"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="filters">{{ 'mxk.ldapcontext.filters' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid filters!">
+        <input [(ngModel)]="form.model.filters" [ngModelOptions]="{ standalone: true }" nz-input name="filters" id="filters" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="basedn">{{ 'mxk.ldapcontext.basedn' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid basedn!">
+        <input [(ngModel)]="form.model.basedn" [ngModelOptions]="{ standalone: true }" nz-input name="basedn" id="basedn" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="msadDomain">{{ 'mxk.ldapcontext.msadDomain' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid msadDomain!">
+        <input [(ngModel)]="form.model.msadDomain" [ngModelOptions]="{ standalone: true }" nz-input name="msadDomain" id="msadDomain" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sslSwitch">{{ 'mxk.ldapcontext.sslSwitch' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid qwerty!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_sslSwitch"
+          [ngModelOptions]="{ standalone: true }"
+          name="sslSwitch"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="trustStore">{{ 'mxk.ldapcontext.trustStore' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid trustStore!">
+        <input [(ngModel)]="form.model.trustStore" [ngModelOptions]="{ standalone: true }" nz-input name="trustStore" id="trustStore" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="trustStorePassword">{{ 'mxk.ldapcontext.trustStorePassword' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid trustStorePassword!">
+        <input
+          [(ngModel)]="form.model.trustStorePassword"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="trustStorePassword"
+          id="trustStorePassword"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="width: 100%">
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary" type="submit" [nzLoading]="form.submitting">提交</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>

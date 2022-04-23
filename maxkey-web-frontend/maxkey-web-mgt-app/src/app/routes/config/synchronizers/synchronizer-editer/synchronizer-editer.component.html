@@ -1,0 +1,155 @@
+<div *nzModalTitle> {{ isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sourceType">{{ 'mxk.synchronizers.sourceType' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid sourceType!">
+        <nz-select [(ngModel)]="form.model.sourceType" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }">
+          <nz-option nzValue="SCIMV20" nzLabel="SCIM v2.0"> </nz-option>
+          <nz-option nzValue="API" nzLabel="API"></nz-option>
+          <nz-option nzValue="MSAD" nzLabel="MSAD"></nz-option>
+          <nz-option nzValue="LDAP" nzLabel="LDAP"></nz-option>
+          <nz-option nzValue="DB" nzLabel="DATABASE"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="service">{{ 'mxk.synchronizers.service' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid icon!">
+        <input [(ngModel)]="form.model.service" [ngModelOptions]="{ standalone: true }" nz-input name="service" id="service" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="scheduler">{{ 'mxk.synchronizers.scheduler' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid icon!">
+        <input [(ngModel)]="form.model.scheduler" [ngModelOptions]="{ standalone: true }" nz-input name="scheduler" id="scheduler" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item
+      *ngIf="
+        form.model.sourceType == 'DB' ||
+        form.model.sourceType == 'LDAP' ||
+        form.model.sourceType == 'MSAD' ||
+        form.model.sourceType == 'SCIMV20'
+      "
+    >
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="providerUrl">{{ 'mxk.synchronizers.providerUrl' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid providerUrl!">
+        <input [(ngModel)]="form.model.providerUrl" [ngModelOptions]="{ standalone: true }" nz-input name="providerUrl" id="providerUrl" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="principal">{{ 'mxk.synchronizers.principal' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid principal!">
+        <input [(ngModel)]="form.model.principal" [ngModelOptions]="{ standalone: true }" nz-input name="principal" id="principal" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="credentials">{{ 'mxk.synchronizers.credentials' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid credentials!">
+        <input [(ngModel)]="form.model.credentials" [ngModelOptions]="{ standalone: true }" nz-input name="credentials" id="credentials" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="form.model.sourceType == 'LDAP' || form.model.sourceType == 'MSAD'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="basedn">{{ 'mxk.synchronizers.basedn' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid basedn!">
+        <input [(ngModel)]="form.model.basedn" [ngModelOptions]="{ standalone: true }" nz-input name="basedn" id="basedn" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="form.model.sourceType == 'DB' || form.model.sourceType == 'LDAP' || form.model.sourceType == 'MSAD'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="filters">{{ 'mxk.synchronizers.filters' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid filters!">
+        <input [(ngModel)]="form.model.filters" [ngModelOptions]="{ standalone: true }" nz-input name="filters" id="filters" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item *ngIf="form.model.sourceType == 'MSAD'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="msadDomain">{{ 'mxk.synchronizers.msadDomain' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid msadDomain!">
+        <input [(ngModel)]="form.model.msadDomain" [ngModelOptions]="{ standalone: true }" nz-input name="msadDomain" id="msadDomain" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="form.model.sourceType == 'LDAP' || form.model.sourceType == 'MSAD'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sslSwitch">{{ 'mxk.synchronizers.sslSwitch' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid sslSwitch!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_sslSwitch"
+          [ngModelOptions]="{ standalone: true }"
+          name="sslSwitch"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="form.model.sourceType == 'LDAP' || form.model.sourceType == 'MSAD'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="trustStore">{{ 'mxk.synchronizers.trustStore' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid trustStore!">
+        <input [(ngModel)]="form.model.trustStore" [ngModelOptions]="{ standalone: true }" nz-input name="trustStore" id="trustStore" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="form.model.sourceType == 'LDAP' || form.model.sourceType == 'MSAD'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="trustStorePassword">{{ 'mxk.synchronizers.trustStorePassword' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid sortIndex!">
+        <input
+          [(ngModel)]="form.model.trustStorePassword"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="trustStorePassword"
+          id="trustStorePassword"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item *ngIf="form.model.sourceType == 'DB' || form.model.sourceType == 'API'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="syncStartTime">{{ 'mxk.synchronizers.syncStartTime' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid syncStartTime!">
+        <input
+          [(ngModel)]="form.model.syncStartTime"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="syncStartTime"
+          id="syncStartTime"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resumeTime">{{ 'mxk.synchronizers.resumeTime' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid resumeTime!">
+        <input [(ngModel)]="form.model.resumeTime" [ngModelOptions]="{ standalone: true }" nz-input name="resumeTime" id="resumeTime" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="suspendTime">{{ 'mxk.synchronizers.suspendTime' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid suspendTime!">
+        <input [(ngModel)]="form.model.suspendTime" [ngModelOptions]="{ standalone: true }" nz-input name="suspendTime" id="suspendTime" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">{{ 'mxk.text.status' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_status"
+          [ngModelOptions]="{ standalone: true }"
+          name="status"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

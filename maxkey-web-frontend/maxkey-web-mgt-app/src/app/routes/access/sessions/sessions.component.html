@@ -1,0 +1,141 @@
+<page-header> </page-header>
+
+<nz-card [nzBordered]="false">
+  <form nz-form [nzLayout]="'inline'" (ngSubmit)="onSearch()" class="search__form">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="username">{{ 'mxk.users.username' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="query.params.username" [ngModelOptions]="{ standalone: true }" name="username" id="username" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="displayName">{{ 'mxk.users.displayName' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              [(ngModel)]="query.params.displayName"
+              [ngModelOptions]="{ standalone: true }"
+              id="displayName"
+              name="displayName"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24" *ngIf="query.expandForm">
+        <nz-form-item>
+          <nz-form-label nzFor="employeeNumber">{{ 'mxk.users.employeeNumber' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              [(ngModel)]="query.params.employeeNumber"
+              [ngModelOptions]="{ standalone: true }"
+              id="employeeNumber"
+              name="employeeNumber"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24" *ngIf="query.expandForm">
+        <nz-form-item>
+          <nz-form-label nzFor="startDatePicker">{{ 'mxk.text.startDate' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker
+              nzShowTime
+              nzFormat="yyyy-MM-dd HH:mm:ss"
+              [(ngModel)]="query.params.startDatePicker"
+              [ngModelOptions]="{ standalone: true }"
+              name="startDatePicker"
+              nzPlaceHolder="startDatePicker"
+            ></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24" *ngIf="query.expandForm">
+        <nz-form-item>
+          <nz-form-label nzFor="endDatePicker">{{ 'mxk.text.endDate' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker
+              nzShowTime
+              nzFormat="yyyy-MM-dd HH:mm:ss"
+              [(ngModel)]="query.params.endDatePicker"
+              [ngModelOptions]="{ standalone: true }"
+              name="endDatePicker"
+              nzPlaceHolder="endDatePicker"
+            ></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="query.expandForm ? 24 : 8" [class.text-right]="query.expandForm">
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
+        <button nz-button type="reset" (click)="onReset()" class="mx-sm">{{ 'mxk.text.reset' | i18n }}</button>
+        <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm">
+          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
+        >
+      </div>
+    </div>
+  </form>
+</nz-card>
+<nz-card>
+  <div nz-col [nzSpan]="24" class="table-list-toolbar">
+    <button nz-button type="button" (click)="onTerminate($event)" [nzType]="'primary'" nzDanger class="mx-sm">{{
+      'mxk.text.terminate' | i18n
+    }}</button>
+  </div>
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      #dynamicTable
+      nzTableLayout="auto"
+      nzSize="small"
+      nzShowSizeChanger
+      [nzBordered]="true"
+      [nzData]="query.results.rows"
+      [nzFrontPagination]="false"
+      [nzTotal]="query.results.records"
+      [nzPageSizeOptions]="query.params.pageSizeOptions"
+      [nzPageSize]="query.params.pageSize"
+      [nzPageIndex]="query.params.pageNumber"
+      [nzLoading]="this.query.tableLoading"
+      (nzQueryParams)="onQueryParamsChange($event)"
+    >
+      <thead>
+        <tr>
+          <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate" (nzCheckedChange)="onTableAllChecked($event)"></th>
+          <th nzAlign="center">{{ 'mxk.history.login.sessionId' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.history.login.username' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.history.login.displayName' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.history.login.message' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.history.login.loginType' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.history.login.sourceIp' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.history.login.browser' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.history.login.platform' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.history.login.loginTime' | i18n }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of query.results.rows">
+          <td
+            [nzChecked]="query.tableCheckedId.has(data.sessionId)"
+            [nzDisabled]="data.disabled"
+            (nzCheckedChange)="onTableItemChecked(data.sessionId, $event)"
+          ></td>
+          <td nzAlign="left">
+            <span>{{ data.sessionId }}</span>
+          </td>
+          <td nzAlign="left">{{ data.username }}</td>
+          <td nzAlign="left">{{ data.displayName }}</td>
+          <td nzAlign="left">{{ data.provider }}</td>
+          <td nzAlign="left">{{ data.loginType }}</td>
+          <td nzAlign="left">{{ data.sourceIp }}</td>
+          <td nzAlign="left">{{ data.browser }}</td>
+          <td nzAlign="left">{{ data.platform }}</td>
+          <td nzAlign="left">{{ data.loginTime }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</nz-card>

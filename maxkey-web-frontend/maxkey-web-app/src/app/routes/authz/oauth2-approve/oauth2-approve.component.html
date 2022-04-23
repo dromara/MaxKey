@@ -1,0 +1,43 @@
+<nz-card class=" {{ form.model.approval_prompt == 'auto' ? 'd-none' : '' }}">
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit()" se-container="1">
+    <div nz-row style="width: 100%">
+      <div nz-col nzMd="6"></div>
+      <div nz-col nzMd="12">
+        <nz-form-item>
+          <div nz-col nzMd="24" style="text-align: center">
+            <h2>{{ 'mxk.apps.oauth.approval.title' | i18n }}</h2>
+          </div>
+        </nz-form-item>
+        <nz-form-item>
+          <div nz-col nzMd="12" style="text-align: right">
+            <img src="{{ form.model.iconBase64 }}" style="margin-right: 50px; width: 120px" />
+          </div>
+          <div nz-col nzMd="12">
+            <nz-form-item style="width: 100%">
+              {{ form.model.appName }}
+            </nz-form-item>
+            <nz-form-item style="width: 100%">
+              {{ 'mxk.apps.oauth.approval.info' | i18n }}
+            </nz-form-item>
+            <nz-form-item style="width: 100%">
+              <label nz-checkbox [(ngModel)]="form.model.user_oauth_approval" [ngModelOptions]="{ standalone: true }">
+                {{ 'mxk.apps.oauth.approval.context' | i18n }}
+              </label>
+            </nz-form-item>
+          </div>
+        </nz-form-item>
+        <nz-form-item style="width: 100%">
+          <nz-form-control [nzOffset]="10" [nzSpan]="12">
+            <button nz-button nzType="primary" type="submit" [nzLoading]="form.submitting">
+              {{ 'mxk.apps.oauth.approval.authorize' | i18n }}
+            </button>
+            <button nz-button nzType="default" type="button" (click)="onDeny()">
+              {{ 'mxk.apps.oauth.approval.deny' | i18n }}
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-col nzMd="6"></div>
+  </form>
+</nz-card>

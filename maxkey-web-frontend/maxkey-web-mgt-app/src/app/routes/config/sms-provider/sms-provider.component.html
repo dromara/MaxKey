@@ -1,0 +1,81 @@
+<page-header> </page-header>
+<nz-card>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit()" se-container="1">
+    <nz-form-item style="display: none">
+      <nz-form-label [nzMd]="6" nzRequired nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.id" [disabled]="true" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="provider">{{ 'mxk.smsprovider.provider' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not validminLength!">
+        <nz-select [(ngModel)]="form.model.provider" [ngModelOptions]="{ standalone: true }">
+          <nz-option nzValue="aliyun" nzLabel="{{ 'mxk.smsprovider.name.aliyun' | i18n }}"></nz-option>
+          <nz-option nzValue="tencentcloud" nzLabel="{{ 'mxk.smsprovider.name.tencentcloud' | i18n }}"></nz-option>
+          <nz-option nzValue="neteasesms" nzLabel="{{ 'mxk.smsprovider.name.neteasesms' | i18n }}"></nz-option>
+          <nz-option nzValue="email" nzLabel="{{ 'mxk.smsprovider.name.email' | i18n }}"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">{{ 'mxk.text.status' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_status"
+          [ngModelOptions]="{ standalone: true }"
+          name="status"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="message">{{ 'mxk.smsprovider.message' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid message!">
+        <input [(ngModel)]="form.model.message" [ngModelOptions]="{ standalone: true }" nz-input name="message" id="message" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="templateId">{{ 'mxk.smsprovider.templateId' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid templateId!">
+        <input [(ngModel)]="form.model.templateId" [ngModelOptions]="{ standalone: true }" nz-input name="templateId" id="templateId" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="appKey">{{ 'mxk.smsprovider.appKey' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid appKey!">
+        <input [(ngModel)]="form.model.appKey" [ngModelOptions]="{ standalone: true }" nz-input type="password" name="appKey" id="appKey" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="appSecret">{{ 'mxk.smsprovider.appSecret' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid appSecret!">
+        <input [(ngModel)]="form.model.appSecret" [ngModelOptions]="{ standalone: true }" nz-input name="appSecret" id="appSecret" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="signName">{{ 'mxk.smsprovider.signName' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid signName!">
+        <input [(ngModel)]="form.model.signName" [ngModelOptions]="{ standalone: true }" nz-input name="signName" id="signName" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="smsSdkAppId">{{ 'mxk.smsprovider.smsSdkAppId' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid smsSdkAppId!">
+        <input [(ngModel)]="form.model.smsSdkAppId" [ngModelOptions]="{ standalone: true }" nz-input name="smsSdkAppId" id="smsSdkAppId" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item style="width: 100%">
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary" type="submit" [nzLoading]="form.submitting">提交</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>

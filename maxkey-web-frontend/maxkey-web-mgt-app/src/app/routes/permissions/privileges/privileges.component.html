@@ -1,0 +1,117 @@
+<page-header> </page-header>
+
+<nz-card [nzBordered]="false">
+  <form nz-form [nzLayout]="'inline'" (ngSubmit)="onSearch()" class="search__form">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="query.params.name" [ngModelOptions]="{ standalone: true }" name="name" placeholder="" id="name" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="10" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">{{ 'mxk.resources.appName' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
+              <input
+                nz-input
+                [(ngModel)]="query.params.appName"
+                [ngModelOptions]="{ standalone: true }"
+                name="appName"
+                readonly
+                placeholder=""
+                id="appName"
+              />
+            </nz-input-group>
+            <ng-template #suffixButton>
+              <button nz-button nzType="primary" (click)="onSelect($event)" nzSearch>{{ 'mxk.text.select' | i18n }}</button>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="query.expandForm ? 24 : 6" [class.text-right]="query.expandForm">
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
+        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n }}</button>
+        <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
+          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
+        >
+      </div>
+    </div>
+  </form>
+</nz-card>
+<nz-card>
+  <div nz-col [nzSpan]="24" class="table-list-toolbar">
+    <button nz-button type="button" [nzType]="'primary'" (click)="onSave($event)">{{ 'mxk.text.save' | i18n }}</button>
+  </div>
+  <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+    <div nz-col [nzSpan]="12">
+      <nz-table
+        #dynamicTable
+        nzTableLayout="auto"
+        nzSize="small"
+        nzBordered
+        nzShowSizeChanger
+        [nzData]="query.results.rows"
+        [nzFrontPagination]="false"
+        [nzTotal]="query.results.records"
+        [nzPageSizeOptions]="query.params.pageSizeOptions"
+        [nzPageSize]="query.params.pageSize"
+        [nzPageIndex]="query.params.pageNumber"
+        [nzLoading]="this.query.tableLoading"
+        (nzQueryParams)="onQueryParamsChange($event)"
+      >
+        <thead>
+          <tr>
+            <!--<th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate" (nzCheckedChange)="onTableAllChecked($event)"></th>
+            -->
+            <th nzAlign="center"></th>
+            <th nzAlign="center" style="display: none">Id</th>
+            <th nzAlign="center">{{ 'mxk.roles.name' | i18n }}</th>
+            <th nzAlign="center">{{ 'mxk.roles.dynamic' | i18n }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of query.results.rows">
+            <td
+              [nzChecked]="query.tableCheckedId.has(data.id)"
+              [nzDisabled]="data.disabled"
+              (nzCheckedChange)="onTableItemChecked(data.id, $event)"
+            ></td>
+            <td nzAlign="left" style="display: none">
+              <span>{{ data.id }}</span>
+            </td>
+            <td nzAlign="left" nzBreakWord="false">{{ data.name }}</td>
+            <td nzAlign="center"> <i *ngIf="data.dynamic == 1" nz-icon nzType="check-circle" nzTheme="fill" style="color: green"></i></td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-tree
+        #nzTreeComponent
+        nzShowLine="false"
+        [nzCheckable]="treeNodes.checkable"
+        [nzCheckedKeys]="treeNodes.checkedKeys"
+        nzBlockNode
+        [nzData]="treeNodes.nodes"
+        (nzDblClick)="openFolder($event)"
+        [nzTreeTemplate]="nzTreeTemplate"
+      ></nz-tree>
+      <ng-template #nzTreeTemplate let-node let-origin="origin">
+        <span class="custom-node">
+          <span *ngIf="!node.isLeaf">
+            <i nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(node)"></i>
+            <span class="folder-name">{{ node.title }}</span>
+          </span>
+          <span *ngIf="node.isLeaf">
+            <i nz-icon nzType="file"></i>
+            <span class="file-name">{{ node.title }}</span>
+          </span>
+        </span>
+      </ng-template>
+    </div>
+  </div>
+</nz-card>

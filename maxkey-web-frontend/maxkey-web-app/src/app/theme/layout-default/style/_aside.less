@@ -1,0 +1,86 @@
+@{alain-default-prefix}__aside {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: @zindex + 5;
+  width: @alain-default-aside-wd;
+  margin-top: @alain-default-header-hg;
+  overflow: hidden;
+  background-color: @alain-default-aside-bg;
+  backface-visibility: hidden;
+  transition: width 0.2s @alain-default-ease, translate 0.2s @alain-default-ease;
+  -webkit-overflow-scrolling: touch;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-right: 1px solid @alain-default-content-heading-border;
+    content: '';
+  }
+
+  &-inner {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: proximity;
+    scroll-snap-points-x: snaplist(100%, 200%, 300%, 400%, 500%);
+    // Firefox
+    scrollbar-width: none;
+    // Chrome
+    &::-webkit-scrollbar {
+      width: @alain-default-aside-scrollbar-height;
+      height: @alain-default-aside-scrollbar-width;
+    }
+
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 @alain-default-aside-scrollbar-width @alain-default-aside-scrollbar-track-color;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: @alain-default-aside-scrollbar-thumb-color;
+    }
+  }
+}
+
+// Desktop
+@media (min-width: @mobile-min) {
+  @{alain-default-prefix}__collapsed {
+    @{alain-default-prefix}__aside {
+      width: @alain-default-aside-collapsed-wd;
+    }
+  }
+}
+
+// Under pad
+@media (max-width: @mobile-max) {
+  @{alain-default-prefix}__aside,
+  @{alain-default-prefix}__content {
+    transition: transform 0.3s ease;
+  }
+  @{alain-default-prefix}__content {
+    transform: translate3d(@alain-default-aside-wd, 0, 0);
+  }
+  @{alain-default-prefix}__collapsed {
+    @{alain-default-prefix}__aside {
+      transform: translate3d(-100%, 0, 0);
+    }
+    @{alain-default-prefix}__content {
+      transform: translateZ(0);
+    }
+  }
+}
+
+.layout-default-aside-rtl-mixin(@enabled) when(@enabled=true) {
+  [dir='rtl'] {
+    @{alain-default-prefix}__aside {
+      &::after {
+        right: inherit;
+        left: 0;
+      }
+    }
+  }
+}
+.layout-default-aside-rtl-mixin(@rtl-enabled);

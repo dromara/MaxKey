@@ -1,0 +1,108 @@
+<div *nzModalTitle> {{ isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="icon">{{ 'mxk.socialsproviders.icon' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid icon!">
+        <input [(ngModel)]="form.model.icon" [ngModelOptions]="{ standalone: true }" nz-input name="icon" id="icon" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="provider">{{ 'mxk.socialsproviders.provider' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid provider!">
+        <input [(ngModel)]="form.model.provider" [ngModelOptions]="{ standalone: true }" nz-input name="provider" id="provider" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="providerName">{{ 'mxk.socialsproviders.providerName' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid providerName!">
+        <input
+          [(ngModel)]="form.model.providerName"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="providerName"
+          id="providerName"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="clientId">{{ 'mxk.socialsproviders.clientId' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid clientId!">
+        <input [(ngModel)]="form.model.clientId" [ngModelOptions]="{ standalone: true }" nz-input name="clientId" id="clientId" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="clientSecret">{{ 'mxk.socialsproviders.clientSecret' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid clientSecret!">
+        <input
+          [(ngModel)]="form.model.clientSecret"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="clientSecret"
+          id="clientSecret"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="agentId">{{ 'mxk.socialsproviders.agentId' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid agentId!">
+        <input [(ngModel)]="form.model.agentId" [ngModelOptions]="{ standalone: true }" nz-input name="agentId" id="agentId" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="scanCode">{{ 'mxk.socialsproviders.scanCode' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid scanCode!">
+        <nz-radio-group [(ngModel)]="form.model.scanCode" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
+          <label nz-radio-button nzValue="none">NONE</label>
+          <label nz-radio-button nzValue="http">HTTP</label>
+          <label nz-radio-button nzValue="https">HTTPS</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sortIndex">{{ 'mxk.text.sortIndex' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid sortIndex!">
+        <input [(ngModel)]="form.model.sortIndex" [ngModelOptions]="{ standalone: true }" nz-input name="sortIndex" id="sortIndex" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="hidden">{{ 'mxk.socialsproviders.hidden' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid hidden!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_hidden"
+          [ngModelOptions]="{ standalone: true }"
+          name="hidden"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">{{ 'mxk.text.status' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_status"
+          [ngModelOptions]="{ standalone: true }"
+          name="status"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

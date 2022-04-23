@@ -1,0 +1,149 @@
+<page-header> </page-header>
+<quick-menu>
+  <nz-list [nzBordered]="false" [nzSplit]="false">
+    <nz-list-item>
+      <a routerLink="/">Home</a>
+    </nz-list-item>
+    <nz-list-item>
+      <a routerLink="/widgets">Widgets</a>
+    </nz-list-item>
+  </nz-list>
+</quick-menu>
+<div nz-row nzGutter="16">
+  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-primary rounded-md">
+      <div nz-col nzSpan="12" class="p-md text-white">
+        <div class="h2 mt0">{{ onlineUsers }}</div>
+        <p class="text-nowrap mb0">{{ 'mxk.home.onlineUsers' | i18n }}</p>
+      </div>
+      <div nz-col nzSpan="12">
+        <g2-mini-bar
+          *ngIf="simulateData"
+          height="35"
+          color="#fff"
+          borderWidth="3"
+          [padding]="[5, 30]"
+          [data]="simulateData"
+          tooltipType="mini"
+          (ready)="fixDark($event)"
+        ></g2-mini-bar>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-success rounded-md">
+      <div nz-col nzSpan="12" class="p-md text-white">
+        <div class="h2 mt0">{{ dayCount }}</div>
+        <p class="text-nowrap mb0">{{ 'mxk.home.dayCount' | i18n }}</p>
+      </div>
+      <div nz-col nzSpan="12">
+        <g2-mini-bar
+          *ngIf="simulateData"
+          height="35"
+          color="#fff"
+          borderWidth="3"
+          [padding]="[5, 30]"
+          [data]="simulateData"
+          tooltipType="mini"
+          (ready)="fixDark($event)"
+        ></g2-mini-bar>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-orange rounded-md">
+      <div nz-col nzSpan="12" class="p-md text-white">
+        <div class="h2 mt0">{{ newUsers }}</div>
+        <p class="text-nowrap mb0">{{ 'mxk.home.newUsers' | i18n }}</p>
+      </div>
+      <div nz-col nzSpan="12">
+        <g2-mini-bar
+          *ngIf="simulateData"
+          height="35"
+          color="#fff"
+          borderWidth="3"
+          [padding]="[5, 30]"
+          [data]="simulateData"
+          tooltipType="mini"
+          (ready)="fixDark($event)"
+        ></g2-mini-bar>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-magenta rounded-md">
+      <div nz-col nzSpan="12" class="p-md text-white">
+        <div class="h2 mt0">{{ activeUsers }}</div>
+        <p class="text-nowrap mb0">{{ 'mxk.home.activeUsers' | i18n }}</p>
+      </div>
+      <div nz-col nzSpan="12">
+        <g2-mini-bar
+          *ngIf="simulateData"
+          height="35"
+          color="#fff"
+          borderWidth="3"
+          [padding]="[5, 30]"
+          [data]="simulateData"
+          tooltipType="mini"
+          (ready)="fixDark($event)"
+        ></g2-mini-bar>
+      </div>
+    </div>
+  </div>
+</div>
+<div nz-row nzGutter="16">
+  <div nz-col nzXs="24" nzMd="24">
+    <nz-card [nzBordered]="false" [nzTitle]="dayAccessTitle">
+      <ng-template #dayAccessTitle>
+        {{ 'mxk.home.dayAccessCount' | i18n }}
+      </ng-template>
+      <g2-bar *ngIf="dayData" height="275" [data]="dayData" color="#fa8c16"></g2-bar>
+    </nz-card>
+  </div>
+  <div nz-col nzXs="24" nzMd="24">
+    <nz-card [nzTitle]="monthAccessTitle" [nzBordered]="false">
+      <ng-template #monthAccessTitle>
+        {{ 'mxk.home.monthAccessCount' | i18n }}
+      </ng-template>
+      <g2-bar *ngIf="mouthData" height="275" [data]="mouthData"></g2-bar>
+    </nz-card>
+  </div>
+  <div nz-col nzXs="24" nzMd="12">
+    <nz-card [nzTitle]="monthAppTitle" [nzBordered]="false">
+      <ng-template #monthAppTitle> {{ 'mxk.home.monthAppCount' | i18n }} </ng-template>
+      <nz-table #basicTable [nzData]="reportApp" [nzFrontPagination]="false">
+        <thead>
+          <tr>
+            <th>{{ 'mxk.home.appName' | i18n }}</th>
+            <th>{{ 'mxk.home.accessCount' | i18n }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of reportApp">
+            <td>{{ data.appname }}</td>
+            <td>{{ data.reportcount }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+  <div nz-col nzXs="24" nzMd="12">
+    <nz-card [nzTitle]="monthBrowserTitle" [nzBordered]="false">
+      <ng-template #monthBrowserTitle> {{ 'mxk.home.monthBrowserCount' | i18n }} </ng-template>
+      <nz-table #basicTable [nzData]="reportBrowser" [nzFrontPagination]="false">
+        <thead>
+          <tr>
+            <th>{{ 'mxk.home.browser' | i18n }}</th>
+            <th>{{ 'mxk.home.accessCount' | i18n }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of reportBrowser">
+            <td>{{ data.reportstring }}</td>
+            <td>{{ data.reportcount }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+</div>

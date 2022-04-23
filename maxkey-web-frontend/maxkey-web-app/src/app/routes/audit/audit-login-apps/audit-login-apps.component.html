@@ -1,0 +1,86 @@
+<nz-card [nzBordered]="false">
+  <form nz-form [nzLayout]="'inline'" (ngSubmit)="onSearch()" class="search__form">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="startDatePicker">{{ 'mxk.text.startDate' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker
+              nzShowTime
+              nzFormat="yyyy-MM-dd HH:mm:ss"
+              [(ngModel)]="query.params.startDatePicker"
+              [ngModelOptions]="{ standalone: true }"
+              name="startDatePicker"
+              nzPlaceHolder="startDatePicker"
+            ></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="endDatePicker">{{ 'mxk.text.endDate' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker
+              nzShowTime
+              nzFormat="yyyy-MM-dd HH:mm:ss"
+              [(ngModel)]="query.params.endDatePicker"
+              [ngModelOptions]="{ standalone: true }"
+              name="endDatePicker"
+              nzPlaceHolder="endDatePicker"
+            ></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="query.expandForm ? 24 : 8" [class.text-right]="query.expandForm">
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
+        <button nz-button type="reset" (click)="onReset()" class="mx-sm">{{ 'mxk.text.reset' | i18n }}</button>
+        <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm d-none">
+          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
+        >
+      </div>
+    </div>
+  </form>
+</nz-card>
+<nz-card>
+  <nz-table
+    #dynamicTable
+    nzTableLayout="auto"
+    nzSize="small"
+    nzShowSizeChanger
+    [nzBordered]="true"
+    [nzData]="query.results.rows"
+    [nzFrontPagination]="false"
+    [nzTotal]="query.results.records"
+    [nzPageSizeOptions]="query.params.pageSizeOptions"
+    [nzPageSize]="query.params.pageSize"
+    [nzPageIndex]="query.params.pageNumber"
+    [nzLoading]="this.query.tableLoading"
+    (nzQueryParams)="onQueryParamsChange($event)"
+  >
+    <thead>
+      <tr>
+        <th nzAlign="center">{{ 'mxk.history.loginapps.sessionId' | i18n }}</th>
+        <th nzAlign="center" style="display: none">{{ 'mxk.history.loginapps.userId' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.history.loginapps.username' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.history.loginapps.displayName' | i18n }}</th>
+        <th nzAlign="center" style="display: none">{{ 'mxk.history.loginapps.appId' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.history.loginapps.appName' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.history.loginapps.loginTime' | i18n }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of query.results.rows">
+        <td nzAlign="left">
+          <span>{{ data.sessionId }}</span>
+        </td>
+        <td nzAlign="left" style="display: none">{{ data.userId }}</td>
+        <td nzAlign="left">{{ data.username }}</td>
+        <td nzAlign="left">{{ data.displayName }}</td>
+        <td nzAlign="left" style="display: none">{{ data.appId }}</td>
+        <td nzAlign="left">{{ data.appName }}</td>
+        <td nzAlign="left">{{ data.loginTime }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

@@ -1,0 +1,85 @@
+<nz-card>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit()" se-container="1">
+    <div nz-row style="width: 100%">
+      <div nz-col nzFlex="2" style="text-align: center"><img src="{{ form.model.rqCode }}" /></div>
+      <div nz-col nzFlex="3">
+        <nz-form-item style="display: none">
+          <nz-form-label [nzMd]="6" nzFor="id">id</nz-form-label>
+          <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+            <input [(ngModel)]="form.model.id" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" value="id" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="displayName">{{ 'mxk.timebased.displayName' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not displayName!">
+            <input
+              nz-input
+              readonly
+              [(ngModel)]="form.model.displayName"
+              [ngModelOptions]="{ standalone: true }"
+              name="displayName"
+              id="displayName"
+              value="0"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="username">{{ 'mxk.timebased.username' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid username!">
+            <input
+              nz-input
+              readonly
+              [(ngModel)]="form.model.username"
+              [ngModelOptions]="{ standalone: true }"
+              name="username"
+              id="username"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="digits">{{ 'mxk.timebased.digits' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid digits!">
+            <input nz-input readonly [(ngModel)]="form.model.digits" [ngModelOptions]="{ standalone: true }" name="digits" id="digits" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="period">{{ 'mxk.timebased.period' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid period!">
+            <input nz-input readonly [(ngModel)]="form.model.period" [ngModelOptions]="{ standalone: true }" name="period" id="period" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sharedSecret">{{ 'mxk.timebased.sharedSecret' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid sharedSecret!">
+            <input
+              nz-input
+              readonly
+              [(ngModel)]="form.model.sharedSecret"
+              [ngModelOptions]="{ standalone: true }"
+              name="sharedSecret"
+              id="sharedSecret"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="hexSharedSecret">{{ 'mxk.timebased.hexSharedSecret' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid hexSharedSecret!">
+            <input
+              nz-input
+              readonly
+              [(ngModel)]="form.model.hexSharedSecret"
+              [ngModelOptions]="{ standalone: true }"
+              name="hexSharedSecret"
+              id="hexSharedSecret"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item style="width: 100%">
+          <nz-form-control [nzOffset]="7" [nzSpan]="12">
+            <button nz-button nzType="primary" type="submit" [nzLoading]="form.submitting">{{ 'mxk.text.generate' | i18n }}</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</nz-card>

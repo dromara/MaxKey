@@ -1,0 +1,7 @@
+
+{
+  "lib": {
+    "flatModuleFile": "layout-default",
+    "entryFile": "public_api.ts"
+  }
+}

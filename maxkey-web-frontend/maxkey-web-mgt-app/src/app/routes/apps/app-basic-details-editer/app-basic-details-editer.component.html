@@ -1,0 +1,266 @@
+<div *nzModalTitle> {{ isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-tabset style="width: 100%">
+      <nz-tab nzTitle="{{ 'mxk.apps.tab.basic' | i18n }}">
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-item style="width: 100%">
+              <nz-form-label [nzMd]="8" nzRequired nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+              <nz-form-control [nzMd]="16" nzErrorTip="The input is not valid id!">
+                <input [(ngModel)]="form.model.id" readonly [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item style="width: 100%">
+              <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="secret">{{ 'mxk.apps.secret' | i18n }}</nz-form-label>
+              <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid secret!">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixPasswordButton">
+                  <input
+                    [(ngModel)]="form.model.secret"
+                    readonly
+                    [ngModelOptions]="{ standalone: true }"
+                    nz-input
+                    name="secret"
+                    id="secret"
+                  />
+                </nz-input-group>
+                <ng-template #suffixPasswordButton>
+                  <button nz-button nzType="primary" nzSearch (click)="onGenerateSecret($event)">{{ 'mxk.text.generate' | i18n }}</button>
+                </ng-template>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="icon">{{ 'mxk.apps.icon' | i18n }}</nz-form-label>
+            <div nz-col class="clearfix" nzSm="16" nzXs="24">
+              <nz-upload
+                nzAction="file/upload/"
+                nzListType="picture-card"
+                [(nzFileList)]="fileList"
+                nzName="uploadFile"
+                [nzShowButton]="fileList.length < 1"
+                [nzPreview]="handlePreview"
+                (nzChange)="uploadImageChange($event)"
+              >
+                <div>
+                  <i nz-icon nzType="plus"></i>
+                  <div style="margin-top: 8px">Upload</div>
+                </div>
+              </nz-upload>
+              <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible = false">
+                <ng-template #modalContent>
+                  <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+                </ng-template>
+              </nz-modal>
+            </div>
+
+            <nz-form-control
+              style="display: none"
+              [nzSm]="16"
+              [nzMd]="16"
+              [nzXs]="36"
+              [nzXl]="48"
+              nzErrorTip="The input is not valid icon!"
+            >
+              <input
+                [(ngModel)]="form.model.iconId"
+                disabled="true"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="icon"
+                id="icon"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid name!">
+              <input [(ngModel)]="form.model.name" [ngModelOptions]="{ standalone: true }" nz-input name="name" id="name" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="frequently">{{ 'mxk.apps.frequently' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid frequently!">
+              <nz-radio-group [(ngModel)]="form.model.frequently" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
+                <label nz-radio-button nzValue="yes">{{ 'mxk.text.yes' | i18n }}</label>
+                <label nz-radio-button nzValue="no">{{ 'mxk.text.no' | i18n }}</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="protocol">{{ 'mxk.apps.protocol' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid protocol!">
+              <input [(ngModel)]="form.model.protocol" [ngModelOptions]="{ standalone: true }" nz-input name="protocol" id="protocol" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="category">{{ 'mxk.apps.category' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid category!">
+              <nz-select [(ngModel)]="form.model.category" [ngModelOptions]="{ standalone: true }" name="category" id="category">
+                <nz-option nzValue="none" nzLabel="{{ 'mxk.apps.category.none' | i18n }}"></nz-option>
+                <nz-option nzValue="1011" nzLabel="{{ 'mxk.apps.category.1011' | i18n }}"></nz-option>
+                <nz-option nzValue="1012" nzLabel="{{ 'mxk.apps.category.1012' | i18n }}"></nz-option>
+                <nz-option nzValue="1013" nzLabel="{{ 'mxk.apps.category.1013' | i18n }}"></nz-option>
+                <nz-option nzValue="1014" nzLabel="{{ 'mxk.apps.category.1014' | i18n }}"></nz-option>
+                <nz-option nzValue="1015" nzLabel="{{ 'mxk.apps.category.1015' | i18n }}"></nz-option>
+                <nz-option nzValue="1016" nzLabel="{{ 'mxk.apps.category.1016' | i18n }}"></nz-option>
+                <nz-option nzValue="1017" nzLabel="{{ 'mxk.apps.category.1017' | i18n }}"></nz-option>
+                <nz-option nzValue="1111" nzLabel="{{ 'mxk.apps.category.1111' | i18n }}"></nz-option>
+                <nz-option nzValue="1112" nzLabel="{{ 'mxk.apps.category.1112' | i18n }}"></nz-option>
+                <nz-option nzValue="1113" nzLabel="{{ 'mxk.apps.category.1113' | i18n }}"></nz-option>
+                <nz-option nzValue="1114" nzLabel="{{ 'mxk.apps.category.1114' | i18n }}"></nz-option>
+                <nz-option nzValue="1211" nzLabel="{{ 'mxk.apps.category.1211' | i18n }}"></nz-option>
+                <nz-option nzValue="1212" nzLabel="{{ 'mxk.apps.category.1212' | i18n }}"></nz-option>
+                <nz-option nzValue="1213" nzLabel="{{ 'mxk.apps.category.1213' | i18n }}"></nz-option>
+                <nz-option nzValue="1214" nzLabel="{{ 'mxk.apps.category.1214' | i18n }}"></nz-option>
+                <nz-option nzValue="1215" nzLabel="{{ 'mxk.apps.category.1215' | i18n }}"></nz-option>
+                <nz-option nzValue="1311" nzLabel="{{ 'mxk.apps.category.1311' | i18n }}"></nz-option>
+                <nz-option nzValue="1411" nzLabel="{{ 'mxk.apps.category.1411' | i18n }}"></nz-option>
+                <nz-option nzValue="1511" nzLabel="{{ 'mxk.apps.category.1511' | i18n }}"></nz-option>
+                <nz-option nzValue="1512" nzLabel="{{ 'mxk.apps.category.1512' | i18n }}"></nz-option>
+                <nz-option nzValue="1611" nzLabel="{{ 'mxk.apps.category.1611' | i18n }}"></nz-option>
+                <nz-option nzValue="1711" nzLabel="{{ 'mxk.apps.category.1711' | i18n }}"></nz-option>
+                <nz-option nzValue="1712" nzLabel="{{ 'mxk.apps.category.1712' | i18n }}"></nz-option>
+                <nz-option nzValue="1811" nzLabel="{{ 'mxk.apps.category.1811' | i18n }}"></nz-option>
+                <nz-option nzValue="1812" nzLabel="{{ 'mxk.apps.category.1812' | i18n }}"></nz-option>
+                <nz-option nzValue="1911" nzLabel="{{ 'mxk.apps.category.1911' | i18n }}"></nz-option>
+                <nz-option nzValue="1912" nzLabel="{{ 'mxk.apps.category.1912' | i18n }}"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item style="width: 100%">
+            <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="loginUrl">{{ 'mxk.apps.loginUrl' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="20" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid loginUrl!">
+              <input [(ngModel)]="form.model.loginUrl" [ngModelOptions]="{ standalone: true }" nz-input name="loginUrl" id="loginUrl" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="{{ 'mxk.apps.tab.extra' | i18n }}">
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="logoutUrl">{{ 'mxk.apps.logoutUrl' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid logoutUrl!">
+              <input [(ngModel)]="form.model.logoutUrl" [ngModelOptions]="{ standalone: true }" nz-input name="logoutUrl" id="logoutUrl" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="logoutType">{{ 'mxk.apps.logoutType' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid logoutType!">
+              <nz-select [(ngModel)]="form.model.logoutType" [ngModelOptions]="{ standalone: true }" name="logoutType" id="logoutType">
+                <nz-option nzValue="0" nzLabel="{{ 'mxk.apps.logoutType.none' | i18n }}"></nz-option>
+                <nz-option nzValue="1" nzLabel="{{ 'mxk.apps.logoutType.back_channel' | i18n }}"></nz-option>
+                <nz-option nzValue="2" nzLabel="{{ 'mxk.apps.logoutType.front_channel' | i18n }}"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="visible">{{ 'mxk.apps.visible' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid visible!">
+              <nz-select [(ngModel)]="form.model.visible" [ngModelOptions]="{ standalone: true }" name="visible" id="visible">
+                <nz-option nzValue="0" nzLabel="{{ 'mxk.apps.visible.hidden' | i18n }}"></nz-option>
+                <nz-option nzValue="1" nzLabel="{{ 'mxk.apps.visible.all' | i18n }}"></nz-option>
+                <nz-option nzValue="2" nzLabel="{{ 'mxk.apps.visible.internet' | i18n }}"></nz-option>
+                <nz-option nzValue="3" nzLabel="{{ 'mxk.apps.visible.intranet' | i18n }}"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="sortIndex">{{ 'mxk.text.sortIndex' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid sortIndex!">
+              <input [(ngModel)]="form.model.sortIndex" [ngModelOptions]="{ standalone: true }" nz-input name="sortIndex" id="sortIndex" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="vendor">{{ 'mxk.apps.vendor' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid vendor!">
+              <input [(ngModel)]="form.model.vendor" [ngModelOptions]="{ standalone: true }" nz-input name="vendor" id="vendor" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="vendorUrl">{{ 'mxk.apps.vendor.url' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid vendorUrl!">
+              <input [(ngModel)]="form.model.vendorUrl" [ngModelOptions]="{ standalone: true }" nz-input name="vendorUrl" id="vendorUrl" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="isAdapter">{{ 'mxk.apps.isAdapter' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid isAdapter!">
+              <nz-select [(ngModel)]="form.model.isAdapter" [ngModelOptions]="{ standalone: true }" name="isAdapter" id="isAdapter">
+                <nz-option nzValue="0" nzLabel="{{ 'mxk.apps.isAdapter.no' | i18n }}"></nz-option>
+                <nz-option nzValue="1" nzLabel="{{ 'mxk.apps.isAdapter.yes' | i18n }}"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="adapterName">{{ 'mxk.apps.adapter' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid adapterName!">
+              <nz-input-group nzSearch [nzAddOnAfter]="suffixAdapterButton">
+                <input
+                  [(ngModel)]="form.model.adapterName"
+                  [ngModelOptions]="{ standalone: true }"
+                  nz-input
+                  name="adapterName"
+                  id="adapterName"
+                />
+              </nz-input-group>
+              <ng-template #suffixAdapterButton>
+                <button nz-button nzType="primary" nzSearch (click)="onSelectAdapter($event)">{{ 'mxk.text.select' | i18n }}</button>
+              </ng-template>
+
+              <input
+                type="hidden"
+                [(ngModel)]="form.model.adapterId"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="adapterId"
+                id="adapterId"
+              />
+              <input
+                type="hidden"
+                [(ngModel)]="form.model.adapter"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="adapter"
+                id="adapter"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-row>
+          <nz-form-item style="width: 100%">
+            <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="description">{{ 'mxk.text.description' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="20" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid description!">
+              <input
+                [(ngModel)]="form.model.description"
+                [ngModelOptions]="{ standalone: true }"
+                nz-input
+                name="description"
+                id="description"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </form>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

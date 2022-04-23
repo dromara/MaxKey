@@ -1,0 +1,188 @@
+<div *nzModalTitle> {{ isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-tabset>
+      <nz-tab nzTitle="{{ 'mxk.organizations.tab.basic' | i18n }}">
+        <nz-form-item style="display: none">
+          <nz-form-label [nzMd]="6" nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+          <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+            <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">{{ 'mxk.organizations.code' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid code!">
+            <input [(ngModel)]="form.model.code" [ngModelOptions]="{ standalone: true }" nz-input name="code" id="code" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.organizations.name' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid name!">
+            <input [(ngModel)]="form.model.name" [ngModelOptions]="{ standalone: true }" nz-input name="name" id="name" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="fullName">{{ 'mxk.organizations.fullName' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid fullName!">
+            <input [(ngModel)]="form.model.fullName" [ngModelOptions]="{ standalone: true }" nz-input name="fullName" id="fullName" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item style="display: none">
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="parentId">{{ 'mxk.organizations.parentId' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid parentId!">
+            <input [(ngModel)]="form.model.parentId" [ngModelOptions]="{ standalone: true }" nz-input name="parentId" id="parentId" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item style="display: none">
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="parentCode">{{ 'mxk.organizations.parentCode' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid parentCode!">
+            <input
+              [(ngModel)]="form.model.parentCode"
+              readonly
+              [ngModelOptions]="{ standalone: true }"
+              nz-input
+              name="parentCode"
+              id="parentCode"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="parentName">{{ 'mxk.organizations.parentName' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid parentName!">
+            <input
+              [(ngModel)]="form.model.parentName"
+              readonly
+              [ngModelOptions]="{ standalone: true }"
+              nz-input
+              name="parentName"
+              id="parentName"
+            />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sortIndex">{{ 'mxk.text.sortIndex' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid sortIndex!">
+            <input [(ngModel)]="form.model.sortIndex" [ngModelOptions]="{ standalone: true }" nz-input name="sortIndex" id="sortIndex" />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="status">{{ 'mxk.text.status' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
+            <nz-switch
+              [(ngModel)]="form.model.switch_status"
+              [ngModelOptions]="{ standalone: true }"
+              name="status"
+              [nzCheckedChildren]="checkedTemplate"
+              [nzUnCheckedChildren]="unCheckedTemplate"
+            ></nz-switch>
+            <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+            <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-tab>
+      <nz-tab nzTitle="{{ 'mxk.organizations.tab.extra' | i18n }}">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="codePath">{{ 'mxk.organizations.codePath' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid codePath!">
+            <input [(ngModel)]="form.model.codePath" [ngModelOptions]="{ standalone: true }" nz-input name="codePath" id="codePath" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="namePath">{{ 'mxk.organizations.namePath' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid namePath!">
+            <input [(ngModel)]="form.model.namePath" [ngModelOptions]="{ standalone: true }" nz-input name="namePath" id="namePath" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="level">{{ 'mxk.organizations.level' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid level!">
+            <input [(ngModel)]="form.model.level" [ngModelOptions]="{ standalone: true }" nz-input name="level" id="level" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="type">{{ 'mxk.organizations.type' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid type!">
+            <input [(ngModel)]="form.model.type" [ngModelOptions]="{ standalone: true }" nz-input name="type" id="type" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="division">{{ 'mxk.organizations.division' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid division!">
+            <input [(ngModel)]="form.model.division" [ngModelOptions]="{ standalone: true }" nz-input name="division" id="division" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-tab>
+      <nz-tab nzTitle="{{ 'mxk.organizations.tab.address' | i18n }}">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="country">{{ 'mxk.organizations.country' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid country!">
+            <input [(ngModel)]="form.model.country" [ngModelOptions]="{ standalone: true }" nz-input name="country" id="country" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="region">{{ 'mxk.organizations.region' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid region!">
+            <input [(ngModel)]="form.model.region" [ngModelOptions]="{ standalone: true }" nz-input name="region" id="region" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="locality">{{ 'mxk.organizations.locality' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid locality!">
+            <input [(ngModel)]="form.model.locality" [ngModelOptions]="{ standalone: true }" nz-input name="locality" id="locality" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="street">{{ 'mxk.organizations.street' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid street!">
+            <input [(ngModel)]="form.model.street" [ngModelOptions]="{ standalone: true }" nz-input name="street" id="street" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="address">{{ 'mxk.organizations.address' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid address!">
+            <input [(ngModel)]="form.model.address" [ngModelOptions]="{ standalone: true }" nz-input name="address" id="address" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="postalCode">{{ 'mxk.organizations.postalCode' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid postalCode!">
+            <input [(ngModel)]="form.model.postalCode" [ngModelOptions]="{ standalone: true }" nz-input name="postalCode" id="postalCode" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-tab>
+      <nz-tab nzTitle="{{ 'mxk.organizations.tab.contact' | i18n }}">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="contact">{{ 'mxk.organizations.contact' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid contact!">
+            <input [(ngModel)]="form.model.contact" [ngModelOptions]="{ standalone: true }" nz-input name="contact" id="contact" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phone">{{ 'mxk.organizations.phone' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid phone!">
+            <input [(ngModel)]="form.model.phone" [ngModelOptions]="{ standalone: true }" nz-input name="phone" id="phone" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">{{ 'mxk.organizations.email' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid email!">
+            <input [(ngModel)]="form.model.email" [ngModelOptions]="{ standalone: true }" nz-input name="email" id="email" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="fax">{{ 'mxk.organizations.fax' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid fax!">
+            <input [(ngModel)]="form.model.fax" [ngModelOptions]="{ standalone: true }" nz-input name="fax" id="fax" />
+          </nz-form-control>
+        </nz-form-item>
+      </nz-tab>
+    </nz-tabset>
+  </form>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

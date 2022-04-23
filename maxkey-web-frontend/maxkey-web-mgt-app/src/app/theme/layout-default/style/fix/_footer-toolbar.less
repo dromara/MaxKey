@@ -1,0 +1,19 @@
+@{footer-toolbar-prefix} {
+  &__left {
+    margin-left: @alain-default-aside-wd;
+  }
+}
+
+@{alain-default-prefix}__collapsed {
+  @{footer-toolbar-prefix} {
+    &__left {
+      margin-left: @alain-default-aside-collapsed-wd;
+    }
+  }
+}
+
+@{footer-toolbar-prefix}__body {
+  @{alain-default-prefix}__content {
+    margin-bottom: @layout-gutter + @footer-toolbar-height;
+  }
+}

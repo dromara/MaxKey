@@ -1,0 +1,101 @@
+{
+  "app": {
+    "name": "MaxKey",
+    "description": "Maxkey Single Sign On System"
+  },
+  "menu": [
+    {
+      "text": "主导航",
+      "i18n": "mxk.menu.main",
+      "group": false,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "应用",
+          "i18n": "mxk.menu.applist",
+          "icon": "anticon-home",
+          "link": "/dashboard/home",
+          "open":false,
+          "children": []
+        },
+        {
+          "text": "会话",
+          "i18n": "mxk.menu.sessions",
+          "link": "/access/sessions",
+          "icon": "anticon-cluster",
+          "open":false,
+          "children": []
+        },
+        {
+          "text": "设置",
+          "i18n": "mxk.menu.config",
+          "link": "/config/setting",
+          "icon": "anticon-setting",
+          "open":false,
+          "children": [
+            {
+              "text": "我的资料",
+              "i18n": "mxk.menu.config.profile",
+              "link": "/config/profile",
+              "icon": "anticon-appstore",
+              "children": []
+            },
+            {
+              "text": "密码修改",
+              "i18n": "mxk.menu.config.password",
+              "link": "/config/password",
+              "icon": "anticon-control",
+              "children": []
+            },
+            {
+              "text": "社交关联",
+              "i18n": "mxk.menu.config.socialsassociate",
+              "link": "/config/socialsassociate",
+              "icon": "anticon-comment",
+              "children": []
+            },
+            {
+              "text": "时间令牌",
+              "i18n": "mxk.menu.config.timebased",
+              "link": "/config/timebased",
+              "icon": "anticon-send",
+              "children": []
+            }
+          ]
+        },
+        {
+          "text": "审计",
+          "i18n": "mxk.menu.audit",
+          "link": "/audit/audit-logins",
+          "icon": "anticon-history",
+          "open":true,
+          "children": [
+            {
+              "text": "登录日志",
+              "i18n": "mxk.menu.audit.logins",
+              "link": "/audit/audit-logins",
+              "icon": "anticon-audit",
+              "children": []
+            },
+            {
+              "text": "应用登录日志",
+              "i18n": "mxk.menu.audit.loginapps",
+              "link": "/audit/audit-login-apps",
+              "icon": "anticon-audit",
+              "children": []
+            }
+          ]
+        }
+        ,
+        {
+          "text": "后台",
+          "i18n": "mxk.menu.mgt",
+          "link": "/mgt",
+          "icon": "anticon-cluster",
+          "open":false,
+          "children": []
+        }
+      ]
+    }
+  ]
+}

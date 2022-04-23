@@ -1,0 +1,30 @@
+.alain-default-widget-app-icons-mixin(@enabled) when(@enabled=true) {
+  .app-icons {
+    padding: @layout-gutter * 2;
+    .@{ant-prefix}-col-6 {
+      padding: (@layout-gutter * 2) 0;
+      text-align: center;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 300ms;
+
+      &:hover {
+        background-color: @item-hover-bg;
+      }
+    }
+
+    i {
+      padding: 15px;
+      font-size: 22px;
+      border-radius: 50%;
+    }
+
+    small {
+      display: block;
+      padding-top: 4px;
+      color: #9c9c9c;
+      font-size: 14px;
+    }
+  }
+}
+.alain-default-widget-app-icons-mixin(@alain-default-widget-app-icons-enabled);

@@ -1,0 +1,52 @@
+<nz-card>
+  <nz-table
+    #dynamicTable
+    nzTableLayout="auto"
+    nzSize="small"
+    nzBordered
+    nzShowSizeChanger
+    [nzData]="query.results.rows"
+    [nzFrontPagination]="false"
+    [nzLoading]="this.query.tableLoading"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    nzWidth="100%"
+  >
+    <thead>
+      <tr>
+        <th nzAlign="center" style="display: none">Id</th>
+        <th nzAlign="center">{{ 'mxk.socialsassociate.icon' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.socialsassociate.provider' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.socialsassociate.providerName' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.socialsassociate.createdDate' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.socialsassociate.updatedDate' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
+        <th nzAlign="center"
+          ><a>{{ 'mxk.text.action' | i18n }}</a></th
+        >
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of query.results.rows">
+        <td nzAlign="left" style="display: none">
+          <span>{{ data.id }}</span>
+        </td>
+        <td nzAlign="left" nzBreakWord="false"><img src="{{ data.icon }}" /></td>
+        <td nzAlign="center"> {{ data.provider }}</td>
+        <td nzAlign="center"> {{ data.providerName }}</td>
+        <td nzAlign="center"> {{ data.createdDate }}</td>
+        <td nzAlign="left">{{ data.updatedDate }}</td>
+        <td nzAlign="left">
+          <i *ngIf="data.updatedDate" nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i>
+        </td>
+        <td nzAlign="left" nzBreakWord="false"
+          ><div nz-col>
+            <button nz-button type="button" [nzType]="'primary'" style="float: left">{{ 'mxk.text.edit' | i18n }}</button>
+            <button nz-button type="button" (click)="onDelete($event, data.id)" [nzType]="'primary'" nzDanger>{{
+              'mxk.text.delete' | i18n
+            }}</button></div
+          ></td
+        >
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

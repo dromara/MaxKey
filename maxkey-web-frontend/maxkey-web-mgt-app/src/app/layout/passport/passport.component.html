@@ -1,0 +1,28 @@
+<div class="container">
+  <div nz-row style="border-bottom: 1px solid #e5e5e5; min-height: 60px; text-shadow: 0 1px 0 #fff">
+    <div nz-col nzMd="2"></div>
+    <div nz-col nzMd="2" style="text-align: right"> <img style="margin-top: 6px" class="logo" src="./assets/logo.jpg" /></div>
+    <div nz-col nzMd="10">
+      <div class="title">{{ 'mxk.login.title' | i18n }}{{ 'mxk.title' | i18n }}</div>
+    </div>
+    <div nz-col nzMd="6"></div>
+    <div nz-col nzXs="0" nzSm="0" nzMd="2"><header-i18n showLangText="false" class="langs"></header-i18n></div>
+    <div nz-col nzMd="2"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="top" nz-col nzXs="0" nzSm="0" nzMd="24">
+      <div class="desc">{{ 'mxk.login.title.sub' | i18n }}</div>
+    </div>
+    <router-outlet></router-outlet>
+    <global-footer style="border-top: 1px solid #e5e5e5; min-height: 60px; text-shadow: 0 1px 0 #fff">
+      <div style="margin-top: 20px">
+        MaxKey v3.5.0 GA<br />
+        Copyright
+        <i nz-icon nzType="copyright"></i> 2022 <a href="//www.maxkey.top" target="_blank">http://www.maxkey.top</a><br />
+        Licensed under the Apache License, Version 2.0
+      </div>
+    </global-footer>
+  </div>
+</div>
+<theme-btn></theme-btn>

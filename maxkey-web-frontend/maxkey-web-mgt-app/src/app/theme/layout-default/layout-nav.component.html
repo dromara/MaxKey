@@ -1,0 +1,75 @@
+<ng-template #icon let-i>
+  <ng-container *ngIf="i" [ngSwitch]="i.type">
+    <i
+      *ngSwitchCase="'icon'"
+      class="sidebar-nav__item-icon"
+      nz-icon
+      [nzType]="i.value"
+      [nzTheme]="i.theme"
+      [nzSpin]="i.spin"
+      [nzTwotoneColor]="i.twoToneColor"
+      [nzIconfont]="i.iconfont"
+      [nzRotate]="i.rotate"
+    ></i>
+    <i *ngSwitchCase="'iconfont'" class="sidebar-nav__item-icon" nz-icon [nzIconfont]="i.iconfont"></i>
+    <img *ngSwitchCase="'img'" [src]="i.value" class="sidebar-nav__item-icon sidebar-nav__item-img" />
+    <span *ngSwitchCase="'svg'" class="sidebar-nav__item-icon sidebar-nav__item-svg" [innerHTML]="i.value"></span>
+    <i *ngSwitchDefault class="sidebar-nav__item-icon {{ i.value }}"></i>
+  </ng-container>
+</ng-template>
+<ng-template #tree let-ls>
+  <ng-container *ngFor="let i of ls">
+    <li
+      *ngIf="i._hidden !== true"
+      class="sidebar-nav__item"
+      [class.sidebar-nav__selected]="i._selected"
+      [class.sidebar-nav__open]="i._open"
+    >
+      <!-- link -->
+      <a
+        *ngIf="i.children.length === 0"
+        (click)="to(i)"
+        [attr.data-id]="i._id"
+        class="sidebar-nav__item-link"
+        [ngClass]="{ 'sidebar-nav__item-disabled': i.disabled }"
+        (mouseenter)="closeSubMenu()"
+      >
+        <ng-container *ngIf="i._needIcon">
+          <ng-container *ngIf="!collapsed">
+            <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }"></ng-template>
+          </ng-container>
+          <span *ngIf="collapsed" nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="i.text">
+            <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }"></ng-template>
+          </span>
+        </ng-container>
+        <span class="sidebar-nav__item-text" [innerHTML]="i._text" [attr.title]="i.text"></span>
+      </a>
+      <!-- has children link -->
+      <a *ngIf="i.children.length > 0" (click)="toggleOpen(i)" (mouseenter)="showSubMenu($event, i)" class="sidebar-nav__item-link">
+        <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }"></ng-template>
+        <span class="sidebar-nav__item-text" [innerHTML]="i._text" [attr.title]="i.text"></span>
+        <i class="sidebar-nav__sub-arrow"></i>
+      </a>
+      <!-- badge -->
+      <nz-badge *ngIf="i.badge" [nzCount]="i.badge" [nzDot]="i.badgeDot" nzStandalone [nzOverflowCount]="9"></nz-badge>
+      <ul *ngIf="i.children.length > 0" class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{ i._depth }}">
+        <ng-template [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: i.children }"></ng-template>
+      </ul>
+    </li>
+  </ng-container>
+</ng-template>
+<ul class="sidebar-nav">
+  <ng-container *ngFor="let group of list">
+    <li class="sidebar-nav__item sidebar-nav__group-title" *ngIf="group.group"> <span [innerHTML]="group._text"></span> </li>
+    <ng-template [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: group.children }"></ng-template>
+  </ng-container>
+  <li>
+    <div
+      class="alain-default__nav-item alain-default__nav-item--collapse"
+      (click)="toggleCollapsed()"
+      style="background-color: aliceblue; color: #000"
+    >
+      <i nz-icon [nzType]="collapsedIcon"></i>
+    </div>
+  </li>
+</ul>

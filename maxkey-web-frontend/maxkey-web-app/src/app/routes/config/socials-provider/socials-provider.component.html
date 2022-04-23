@@ -1,0 +1,97 @@
+<page-header> </page-header>
+
+<nz-card [nzBordered]="false">
+  <form nz-form [nzLayout]="'inline'" (ngSubmit)="onSearch()" class="search__form">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+      <div nz-col nzMd="16" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">{{ 'mxk.socialsproviders.providerName' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              [(ngModel)]="query.params.providerName"
+              [ngModelOptions]="{ standalone: true }"
+              name="providerName"
+              placeholder=""
+              id="providerName"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="query.expandForm ? 24 : 8" [class.text-right]="query.expandForm">
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
+        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n }}</button>
+        <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
+          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
+        >
+      </div>
+    </div>
+  </form>
+</nz-card>
+<nz-card>
+  <div nz-col [nzSpan]="24" class="table-list-toolbar">
+    <button nz-button type="button" [nzType]="'primary'" (click)="onAdd($event)">{{ 'mxk.text.add' | i18n }}</button>
+    <button nz-button type="button" (click)="onBatchDelete($event)" [nzType]="'primary'" nzDanger class="mx-sm">{{
+      'mxk.text.delete' | i18n
+    }}</button>
+  </div>
+  <nz-table
+    #dynamicTable
+    nzTableLayout="auto"
+    nzSize="small"
+    nzBordered
+    nzShowSizeChanger
+    [nzData]="query.results.rows"
+    [nzFrontPagination]="false"
+    [nzTotal]="query.results.records"
+    [nzPageSizeOptions]="query.params.pageSizeOptions"
+    [nzPageSize]="query.params.pageSize"
+    [nzPageIndex]="query.params.pageNumber"
+    [nzLoading]="this.query.tableLoading"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    nzWidth="100%"
+  >
+    <thead>
+      <tr>
+        <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate" (nzCheckedChange)="onTableAllChecked($event)"></th>
+        <th nzAlign="center" style="display: none">Id</th>
+        <th nzAlign="center">{{ 'mxk.socialsproviders.icon' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.socialsproviders.provider' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.socialsproviders.providerName' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.text.sortIndex' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.text.description' | i18n }}</th>
+        <th nzAlign="center"
+          ><a>{{ 'mxk.text.action' | i18n }}</a></th
+        >
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of query.results.rows">
+        <td
+          [nzChecked]="query.tableCheckedId.has(data.id)"
+          [nzDisabled]="data.disabled"
+          (nzCheckedChange)="onTableItemChecked(data.id, $event)"
+        ></td>
+        <td nzAlign="left" style="display: none">
+          <span>{{ data.id }}</span>
+        </td>
+        <td nzAlign="left" nzBreakWord="false"><img src="{{ data.icon }}" /></td>
+        <td nzAlign="center"> {{ data.provider }}</td>
+        <td nzAlign="center"> {{ data.providerName }}</td>
+        <td nzAlign="center"> {{ data.sortIndex }}</td>
+        <td nzAlign="left">{{ data.description }}</td>
+        <td nzAlign="left" nzBreakWord="false"
+          ><div nz-col>
+            <button nz-button type="button" (click)="onEdit($event, data.id)" [nzType]="'primary'" style="float: left">{{
+              'mxk.text.edit' | i18n
+            }}</button>
+            <button nz-button type="button" (click)="onDelete($event, data.id)" [nzType]="'primary'" nzDanger>{{
+              'mxk.text.delete' | i18n
+            }}</button></div
+          ></td
+        >
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

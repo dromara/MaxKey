@@ -1,0 +1,94 @@
+<div *nzModalTitle> {{ isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzRequired nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.groups.name' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not validminLength!">
+        <input [(ngModel)]="form.model.name" [ngModelOptions]="{ standalone: true }" nz-input name="name" id="name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dynamic">{{ 'mxk.groups.dynamic' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_dynamic"
+          [ngModelOptions]="{ standalone: true }"
+          name="dynamic"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resumeTime">{{ 'mxk.groups.resumeTime' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid port!">
+        <nz-time-picker
+          [(ngModel)]="form.model.picker_resumeTime"
+          [ngModelOptions]="{ standalone: true }"
+          nzFormat="HH:mm"
+          name="picker_resumeTime"
+          id="picker_resumeTime"
+        ></nz-time-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="suspendTime">{{ 'mxk.groups.suspendTime' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid suspendTime!">
+        <nz-time-picker
+          [(ngModel)]="form.model.picker_suspendTime"
+          [ngModelOptions]="{ standalone: true }"
+          nzFormat="HH:mm"
+          name="picker_suspendTime"
+          id="picker_suspendTime"
+        ></nz-time-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="orgIdsList">{{ 'mxk.groups.orgIdsList' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid upperCase!">
+        <input [(ngModel)]="form.model.orgIdsList" [ngModelOptions]="{ standalone: true }" nz-input name="orgIdsList" id="orgIdsList" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="filters">{{ 'mxk.groups.filters' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid filters!">
+        <textarea
+          rows="4"
+          nz-input
+          [(ngModel)]="form.model.filters"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="filters"
+          id="filters"
+        ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">{{ 'mxk.text.description' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid encoding!">
+        <textarea
+          rows="4"
+          nz-input
+          [(ngModel)]="form.model.description"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="description"
+          id="description"
+        ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

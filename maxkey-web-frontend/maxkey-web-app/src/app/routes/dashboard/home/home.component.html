@@ -1,0 +1,55 @@
+<div nz-row>
+  <div nz-col nzMd="3"></div>
+  <div nz-col nzMd="18">
+    <nz-list
+      [nzLoading]="loading"
+      [nzDataSource]="appList"
+      [nzRenderItem]="item"
+      [nzGrid]="{ gutter: 24, xl: 6, lg: 8, md: 8, sm: 12, xs: 24 }"
+    >
+      <ng-template #item let-item>
+        <nz-list-item>
+          <nz-card nzHoverable style="">
+            <!--<nz-card nzHoverable [nzActions]="[op1, op2, op3, op4]">
+        
+        <ng-template #op1>
+          <i nz-tooltip nzTooltipTitle="下载" nz-icon nzType="download"></i>
+        </ng-template>
+        <ng-template #op2>
+          <i nz-tooltip nzTooltipTitle="编辑" nz-icon nzType="edit"></i>
+        </ng-template>
+        <ng-template #op3>
+          <i nz-tooltip nzTooltipTitle="分享" nz-icon nzType="share-alt"></i>
+        </ng-template>
+        <ng-template #op4>
+          <i nz-dropdown [nzDropdownMenu]="op4Menu" nzPlacement="bottomLeft" nz-icon nzType="ellipsis"></i>
+          <nz-dropdown-menu #op4Menu="nzDropdownMenu">
+            <i nz-dropdown nz-icon nzType="ellipsis"></i>
+            <ul nz-menu>
+              <li nz-menu-item>1st menu item</li>
+              <li nz-menu-item>2st menu item</li>
+              <li nz-menu-item>3st menu item</li>
+            </ul>
+          </nz-dropdown-menu>
+        </ng-template>-->
+            <nz-card-meta [nzTitle]="item.title" [nzAvatar]="nzAvatar" *ngIf="item.protocol == 'Form_Based'">
+              <ng-template #nzAvatar>
+                <i nz-icon nzType="setting" nzTheme="outline"></i>
+                <!--<nz-avatar nzSize="small" [nzSrc]="item.iconBase64"></nz-avatar>-->
+              </ng-template>
+            </nz-card-meta>
+            <div class="card-info d-flex" style="justify-content: center">
+              <div class="appCard">
+                <p style="text-align: center" (click)="onAuthz($event, item.id)">
+                  <img class="appListimage" src="{{ item.iconBase64 }}" />
+                </p>
+                <p>{{ item.name }}</p>
+              </div>
+            </div>
+          </nz-card>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </div>
+  <div nz-col nzMd="3"></div>
+</div>

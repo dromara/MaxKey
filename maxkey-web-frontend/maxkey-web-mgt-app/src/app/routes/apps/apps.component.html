@@ -1,0 +1,125 @@
+<page-header> </page-header>
+
+<nz-card [nzBordered]="false">
+  <form nz-form [nzLayout]="'inline'" (ngSubmit)="onSearch()" class="search__form">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 24, lg: 24, xl: 48, xxl: 48 }">
+      <div nz-col nzMd="10" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="query.params.name" [ngModelOptions]="{ standalone: true }" name="name" placeholder="" id="name" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="10" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="protocol">{{ 'mxk.apps.protocol' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <nz-select [(ngModel)]="query.params.protocol" [ngModelOptions]="{ standalone: true }">
+              <nz-option nzValue="OAuth_v2.0" nzLabel="OAuth v2.0"></nz-option>
+              <nz-option nzValue="OAuth_v2.1" nzLabel="OAuth v2.1"></nz-option>
+              <nz-option nzValue="OpenID_Connect_v1.0" nzLabel="OpenID Connect v1.0"></nz-option>
+              <nz-option nzValue="SAML_v2.0" nzLabel="SAML v2.0"> </nz-option>
+              <nz-option nzValue="CAS" nzLabel="CAS"></nz-option>
+              <nz-option nzValue="JWT" nzLabel="JWT"></nz-option>
+              <nz-option nzValue="Token_Based" nzLabel="Token Based"></nz-option>
+              <nz-option nzValue="Form_Based" nzLabel="Form Based"></nz-option>
+              <nz-option nzValue="Extend_API" nzLabel="Extend API"></nz-option>
+              <nz-option nzValue="Basic" nzLabel="Basic"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="query.expandForm ? 24 : 4" [class.text-right]="query.expandForm">
+        <nz-form-item>
+          <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
+          <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n }}</button>
+          <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
+            {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
+          ></nz-form-item
+        >
+      </div>
+    </div>
+  </form>
+</nz-card>
+<nz-card>
+  <div nz-col [nzSpan]="24" class="table-list-toolbar">
+    <button nz-button nz-dropdown [nzType]="'primary'" [nzDropdownMenu]="menuAddApps">
+      {{ 'mxk.text.add' | i18n }}
+      <i nz-icon nzType="down"></i>
+    </button>
+    <nz-dropdown-menu #menuAddApps="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item (click)="onAdd($event, 'OAuth_v2.0')">{{ 'mxk.apps.protocol.oauth2.0' | i18n }}</li>
+        <li nz-menu-item (click)="onAdd($event, 'SAML_v2.0')">{{ 'mxk.apps.protocol.saml2.0' | i18n }}</li>
+        <li nz-menu-item (click)="onAdd($event, 'CAS')">{{ 'mxk.apps.protocol.cas' | i18n }}</li>
+        <li nz-menu-item (click)="onAdd($event, 'JWT')">{{ 'mxk.apps.protocol.jwt' | i18n }}</li>
+        <li nz-menu-item (click)="onAdd($event, 'Token_Based')">{{ 'mxk.apps.protocol.tokenbased' | i18n }}</li>
+        <li nz-menu-item (click)="onAdd($event, 'Form_Based')">{{ 'mxk.apps.protocol.formbased' | i18n }}</li>
+        <li nz-menu-item (click)="onAdd($event, 'Extend_API')">{{ 'mxk.apps.protocol.extendapi' | i18n }}</li>
+        <li nz-menu-item (click)="onAdd($event, 'Basic')">{{ 'mxk.apps.protocol.basic' | i18n }}</li>
+      </ul>
+    </nz-dropdown-menu>
+
+    <button nz-button type="button" (click)="onBatchDelete($event)" [nzType]="'primary'" nzDanger class="mx-sm">{{
+      'mxk.text.delete' | i18n
+    }}</button>
+  </div>
+  <nz-table
+    #dynamicTable
+    nzTableLayout="auto"
+    nzSize="small"
+    nzBordered
+    nzShowSizeChanger
+    [nzData]="query.results.rows"
+    [nzFrontPagination]="false"
+    [nzTotal]="query.results.records"
+    [nzPageSizeOptions]="query.params.pageSizeOptions"
+    [nzPageSize]="query.params.pageSize"
+    [nzPageIndex]="query.params.pageNumber"
+    [nzLoading]="this.query.tableLoading"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    nzWidth="100%"
+  >
+    <thead>
+      <tr>
+        <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate" (nzCheckedChange)="onTableAllChecked($event)"></th>
+        <th nzAlign="center" style="display: none">Id</th>
+        <th nzAlign="center">{{ 'mxk.apps.icon' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.apps.name' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.apps.protocol' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.apps.category' | i18n }}</th>
+        <th nzAlign="center"
+          ><a>{{ 'mxk.text.action' | i18n }}</a></th
+        >
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of query.results.rows">
+        <td
+          [nzChecked]="query.tableCheckedId.has(data.id)"
+          [nzDisabled]="data.disabled"
+          (nzCheckedChange)="onTableItemChecked(data.id, $event)"
+        ></td>
+        <td nzAlign="left" style="display: none">
+          <span>{{ data.id }}</span>
+        </td>
+
+        <td nzAlign="center"><img height="30" border="0px" src="{{ data.iconBase64 }}" /></td>
+        <td nzAlign="center"> {{ data.name }}</td>
+        <td nzAlign="center"> {{ data.protocol }}</td>
+        <td nzAlign="left">{{ data.category }}</td>
+        <td nzAlign="left" nzBreakWord="false"
+          ><div nz-col>
+            <button nz-button type="button" (click)="onEdit($event, data.id, data.protocol)" [nzType]="'primary'" style="float: left">{{
+              'mxk.text.edit' | i18n
+            }}</button>
+            <button nz-button type="button" (click)="onDelete($event, data.id)" [nzType]="'primary'" nzDanger>{{
+              'mxk.text.delete' | i18n
+            }}</button></div
+          ></td
+        >
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
