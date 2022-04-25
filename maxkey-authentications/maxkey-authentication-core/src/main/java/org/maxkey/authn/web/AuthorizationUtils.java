@@ -73,7 +73,7 @@ public class AuthorizationUtils {
 			AuthJwtService authJwtService,
 			OnlineTicketService onlineTicketService) throws ParseException {
 		if(authJwtService.validateJwtToken(authorization)) {
-			String ticket = authJwtService.resolveTicket(authorization);
+			String ticket = authJwtService.resolveJWTID(authorization);
 			OnlineTicket onlineTicket = onlineTicketService.get(ticket);
 			if(onlineTicket != null) {
 				setAuthentication(onlineTicket.getAuthentication());

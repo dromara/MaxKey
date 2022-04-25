@@ -89,7 +89,7 @@
       <label nz-checkbox formControlName="remember">{{ 'mxk.login.remember-me' | i18n }}</label>
     </nz-col>
     <nz-col [nzSpan]="12" class="text-right">
-      <a class="forgot" routerLink="/passport/register">{{ 'mxk.login.forgot-password' | i18n }}</a></nz-col
+      <a class="forgot" routerLink="/passport/forgot">{{ 'mxk.login.forgot-password' | i18n }}</a></nz-col
     >
   </nz-form-item>
   <nz-form-item *ngIf="loginType == 'normal' || loginType == 'mobile'">

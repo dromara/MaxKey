@@ -30,7 +30,6 @@ import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.OtpAuthnService;
-import org.maxkey.persistence.MomentaryService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -69,8 +68,6 @@ public abstract class AbstractAuthenticationProvider {
     protected OtpAuthnService otpAuthnService;
 
     protected OnlineTicketService onlineTicketServices;
-    
-    protected MomentaryService momentaryService;
     
     protected AuthJwtService authJwtService;
     

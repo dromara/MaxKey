@@ -21,6 +21,22 @@
       "text.captcha": "Captcha",
       "text.smscode": "Code"
     },
+    "forgot":{
+      "forgot":"Forgot Password",
+      "step1":"Authentication",
+      "step2":"Resetting Password",
+      "type.mobile":"By Mobile",
+      "type.email":"By Email",
+      "mobile":"Mobile Phone Number",
+      "email":"Email",
+      "captcha":"Picture Captcha",
+      "sendCaptcha":"Send Captcha",
+      "password":"New Password",
+      "confirmPassword":"Confirm Password",
+      "login":"Back Login",
+      "next":"Next",
+      "submit":"Confirm"
+    },
     "menu": {
       "applist": "Apps",
       "sessions": "Sessions",
@@ -807,6 +823,7 @@
   "app.login.text.password": "Password",
   "app.login.text.captcha": "CAPTCHA",
   "app.login.text.smscode": "Code",
+  "app.forgot.forgot":"Forgot Password",
   "app.register.register": "Register",
   "app.register.get-verification-code": "Get code",
   "app.register.sign-in": "Already have an account?",

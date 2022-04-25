@@ -1,0 +1,120 @@
+<h3>{{ 'mxk.forgot.forgot' | i18n }}</h3>
+<form nz-form [formGroup]="formGroup" role="form">
+  <nz-form-item style="width: 100%">
+    <nz-steps nzType="navigation" [nzCurrent]="step" style="width: 100%">
+      <nz-step nzTitle="{{ 'mxk.forgot.step1' | i18n }}" nzDescription=""> </nz-step>
+      <nz-step nzTitle="{{ 'mxk.forgot.step2' | i18n }}" nzDescription=""></nz-step>
+    </nz-steps>
+  </nz-form-item>
+  <nz-form-item style="width: 100%" *ngIf="step === 0">
+    <nz-form-item style="width: 100%">
+      <nz-radio-group
+        [(ngModel)]="forgotType"
+        [ngModelOptions]="{ standalone: true }"
+        style="margin-bottom: 8px; width: 100%"
+        nzSize="large"
+        nzButtonStyle="solid"
+        (ngModelChange)="ngModelChange()"
+      >
+        <label nz-radio-button [nzValue]="'mobile'" style="width: 50%">{{ 'mxk.forgot.type.mobile' | i18n }}</label>
+        <label nz-radio-button [nzValue]="'email'" style="width: 50%">{{ 'mxk.forgot.type.email' | i18n }}</label>
+      </nz-radio-group>
+    </nz-form-item>
+    <nz-form-item style="width: 100%" *ngIf="forgotType === 'email'">
+      <nz-form-control nzErrorTip="">
+        <nz-input-group nzSize="large" nzPrefixIcon="mail">
+          <input nz-input formControlName="email" placeholder="{{ 'mxk.forgot.email' | i18n }}" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="width: 100%" *ngIf="forgotType === 'mobile'">
+      <nz-form-control [nzErrorTip]="">
+        <nz-input-group nzSize="large" nzPrefixIcon="mobile">
+          <input nz-input formControlName="mobile" placeholder="{{ 'mxk.forgot.mobile' | i18n }}" />
+        </nz-input-group>
+        <ng-template #mobileErrorTip let-i>
+          <ng-container *ngIf="i.errors.required">
+            {{ 'validation.phone-number.required' | i18n }}
+          </ng-container>
+          <ng-container *ngIf="i.errors.pattern">
+            {{ 'validation.phone-number.wrong-format' | i18n }}
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="width: 100%">
+      <nz-form-control nzErrorTip="">
+        <nz-input-group nzSearch nzSize="large" nzPrefixIcon="lock" nzSearch [nzAddOnAfter]="suffixImageCaptchaButton">
+          <input type="text" formControlName="captcha" nz-input placeholder="{{ 'mxk.forgot.captcha' | i18n }}" />
+        </nz-input-group>
+        <ng-template #suffixImageCaptchaButton>
+          <img src="{{ imageCaptcha }}" (click)="getImageCaptcha()" />
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="width: 100%">
+      <nz-form-control [nzErrorTip]="'' | i18n">
+        <nz-input-group nzSize="large" nzPrefixIcon="mail" nzSearch [nzAddOnAfter]="suffixSendOtpCodeButton">
+          <input nz-input formControlName="otpCaptcha" placeholder="{{ 'mxk.login.text.captcha' | i18n }}" />
+        </nz-input-group>
+        <ng-template #suffixSendOtpCodeButton>
+          <button type="button" nz-button nzSize="large" (click)="sendOtpCode()" [disabled]="count > 0" nzBlock [nzLoading]="loading">
+            {{ count ? count + 's' : ('mxk.forgot.sendCaptcha' | i18n) }}
+          </button>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="width: 100%">
+      <button nz-button nzType="primary" nzSize="large" class="submit" (click)="onNextReset($event)">
+        {{ 'mxk.forgot.next' | i18n }}
+      </button>
+      <a class="login" routerLink="/passport/login">{{ 'mxk.forgot.login' | i18n }}</a>
+    </nz-form-item>
+  </nz-form-item>
+  <nz-form-item style="width: 100%" *ngIf="step === 1">
+    <nz-form-item style="width: 100%">
+      <nz-form-label nzRequired nzFor="password">{{ 'mxk.password.password' | i18n }}</nz-form-label>
+    </nz-form-item>
+    <nz-form-item style="width: 100%">
+      <nz-form-control nzErrorTip="The input is not valid password!">
+        <nz-input-group nzSize="large" [nzSuffix]="suffixPasswordTemplate" style="width: 100%">
+          <input
+            [type]="passwordVisible ? 'text' : 'password'"
+            nz-input
+            placeholder="new password"
+            [(ngModel)]="form.model.password"
+            formControlName="password"
+            id="password"
+          />
+        </nz-input-group>
+        <ng-template #suffixPasswordTemplate>
+          <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></i>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item style="width: 100%">
+      <nz-form-label nzRequired nzFor="confirmPassword">{{ 'mxk.password.confirmPassword' | i18n }}</nz-form-label>
+    </nz-form-item>
+    <nz-form-item style="width: 100%">
+      <nz-form-control nzErrorTip="The input is not valid confirmPassword!">
+        <input
+          nz-input
+          type="password"
+          nzSize="large"
+          placeholder="confirm password"
+          [(ngModel)]="form.model.confirmPassword"
+          formControlName="confirmPassword"
+          name="confirmPassword"
+          id="confirmPassword"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="width: 100%">
+      <button nz-button nzType="primary" nzSize="large" class="submit" (click)="onSubmit($event)">
+        {{ 'mxk.forgot.submit' | i18n }}
+      </button>
+      <a class="login" routerLink="/passport/login">{{ 'mxk.forgot.login' | i18n }}</a>
+    </nz-form-item>
+  </nz-form-item>
+</form>

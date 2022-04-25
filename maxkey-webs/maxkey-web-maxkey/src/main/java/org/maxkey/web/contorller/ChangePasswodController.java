@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,31 +17,21 @@
 
 package org.maxkey.web.contorller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.maxkey.authn.annotation.CurrentUser;
-import org.maxkey.constants.ConstsOperateMessage;
 import org.maxkey.constants.ConstsPasswordSetType;
-import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.entity.ChangePassword;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
-import org.maxkey.web.WebConstants;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value={"/config"})
@@ -52,8 +42,8 @@ public class ChangePasswodController {
 	private UserInfoService userInfoService;
 	
 	@ResponseBody
-	@RequestMapping(value="/changePassword") 
-	public Message changePasswod(
+	@RequestMapping(value = { "/changePassword" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> changePasswod(
 			@RequestBody ChangePassword changePassword,
 			@CurrentUser UserInfo currentUser) {
 		
@@ -62,12 +52,9 @@ public class ChangePasswodController {
 			changePassword.setInstId(currentUser.getInstId());
 			changePassword.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
 			if(userInfoService.changePassword(changePassword)) {
-				return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+				return new Message<ChangePassword>().buildResponse();
 			}else {
-				return  new Message(
-				        WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR)+"<br>"
-				        +WebContext.getAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT),
-				        MessageType.error);
+				return new Message<ChangePassword>(Message.ERROR).buildResponse();
 			}	
 	}
 

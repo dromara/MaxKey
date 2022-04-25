@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutPassportComponent } from '../../layout/passport/passport.component';
 import { CallbackComponent } from './callback.component';
+import { ForgotComponent } from './forgot/forgot.component';
 import { UserLockComponent } from './lock/lock.component';
 import { UserLoginComponent } from './login/login.component';
 import { UserRegisterResultComponent } from './register-result/register-result.component';
@@ -28,6 +29,11 @@ const routes: Routes = [
         path: 'register-result',
         component: UserRegisterResultComponent,
         data: { title: '注册结果', titleI18n: 'app.register.register' }
+      },
+      {
+        path: 'forgot',
+        component: ForgotComponent,
+        data: { title: '忘记密码', titleI18n: 'app.forgot.forgot' }
       },
       {
         path: 'lock',

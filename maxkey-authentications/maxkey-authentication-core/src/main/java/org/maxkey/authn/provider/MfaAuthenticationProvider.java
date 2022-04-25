@@ -26,7 +26,6 @@ import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.Institutions;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.MomentaryService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -59,13 +58,11 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    OnlineTicketService onlineTicketServices,
-    	    AuthJwtService authJwtService,
-    	    MomentaryService momentaryService) {
+    	    AuthJwtService authJwtService) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
 		this.onlineTicketServices = onlineTicketServices;
 		this.authJwtService = authJwtService;
-		this.momentaryService = momentaryService;
 	}
 
     @Override

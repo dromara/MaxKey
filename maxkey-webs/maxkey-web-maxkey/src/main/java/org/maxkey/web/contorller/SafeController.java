@@ -46,9 +46,6 @@ public class SafeController {
 	@Autowired
 	private UserInfoService userInfoService;
 	
-
-	
-	
 	@RequestMapping(value="/forward/setting") 
 	public ModelAndView fowardSetting(@CurrentUser UserInfo currentUser) {
 			ModelAndView modelAndView=new ModelAndView("safe/setting");

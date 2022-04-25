@@ -19,11 +19,14 @@ package org.maxkey.authn.jwt;
 
 import java.text.ParseException;
 import java.util.Date;
+
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.configuration.AuthJwkConfig;
 import org.maxkey.crypto.jwt.HMAC512Service;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.MomentaryService;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +47,8 @@ public class AuthJwtService {
 	AuthJwkConfig authJwkConfig;
 	
 	CongressService congressService;
+	
+	MomentaryService momentaryService;
 
 	public AuthJwtService(AuthJwkConfig authJwkConfig) throws JOSEException {
 		this.authJwkConfig = authJwkConfig;
@@ -51,12 +56,16 @@ public class AuthJwtService {
 		this.hmac512Service = new HMAC512Service(authJwkConfig.getSecret());
 	}
 	
-	public AuthJwtService(AuthJwkConfig authJwkConfig,CongressService congressService) throws JOSEException {
+	public AuthJwtService(AuthJwkConfig authJwkConfig,CongressService congressService,MomentaryService momentaryService) throws JOSEException {
 		this.authJwkConfig = authJwkConfig;
 		
 		this.congressService = congressService;
 		
+		this.momentaryService = momentaryService;
+		
 		this.hmac512Service = new HMAC512Service(authJwkConfig.getSecret());
+		
+		
 	}
 	
 	/**
@@ -156,7 +165,7 @@ public class AuthJwtService {
 		return signedJWT.getJWTClaimsSet();
 	}
 	
-	public String resolveTicket(String authToken) throws ParseException {
+	public String resolveJWTID(String authToken) throws ParseException {
 		JWTClaimsSet claims = resolve(authToken); 
 		return claims.getJWTID();
 	}
@@ -176,5 +185,22 @@ public class AuthJwtService {
 		AuthJwt authJwt = congressService.consume(congress);
 		return authJwt;
 	}
+	
+	public boolean validateCaptcha(String state,String captcha) {
+    	try {
+			String jwtId = resolveJWTID(state);
+			if(StringUtils.isNotBlank(jwtId) &&StringUtils.isNotBlank(captcha)) {
+				Object momentaryCaptcha = momentaryService.get("", jwtId);
+		        _logger.debug("captcha : {}, momentary Captcha : {}" ,captcha, momentaryCaptcha);
+		        if (!StringUtils.isBlank(captcha) && captcha.equals(momentaryCaptcha.toString())) {
+		        	momentaryService.remove("", jwtId);
+		        	return true;
+		        }
+			}
+		} catch (ParseException e) {
+			 _logger.debug("Exception ",e);
+		}
+    	 return false;
+    }
 	
 }

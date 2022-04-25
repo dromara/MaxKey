@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,22 +19,26 @@ package org.maxkey.web.contorller;
 
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.configuration.EmailConfig;
+import org.maxkey.entity.ChangePassword;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.OtpAuthnService;
-import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.persistence.service.UserInfoService;
-import org.maxkey.web.WebConstants;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = { "/forgotpassword" })
@@ -45,7 +49,7 @@ public class ForgotPasswordContorller {
             "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$");
     
     Pattern mobileRegex = Pattern.compile(
-            "^(13[4,5,6,7,8,9]|15[0,8,9,1,7]|188|187)\\\\d{8}$");
+            "^[1][3,4,5,7,8][0-9]{9}$");
     
     @Autowired
     EmailConfig emailConfig;
@@ -64,101 +68,107 @@ public class ForgotPasswordContorller {
     }
     
     @Autowired
-    private UserInfoService userInfoService;
-
+	AuthJwtService authJwtService;
+    
     @Autowired
-    @Qualifier("mailOtpAuthn")
-    protected AbstractOtpAuthn mailOtpAuthn;
+    UserInfoService userInfoService;
     
     @Autowired
     @Qualifier("otpAuthnService")
     OtpAuthnService otpAuthnService;
     
-
-    @RequestMapping(value = { "/forward" })
-    public ModelAndView forwardreg() {
-        _logger.debug("forgotpassword  /forgotpassword/forward.");
-        return new ModelAndView("forgotpassword/findpwd");
-    }
-
-    @RequestMapping(value = { "/emailmobile" })
-    public ModelAndView email(@RequestParam String emailMobile,@RequestParam String captcha) {
-        _logger.debug("forgotpassword  /forgotpassword/emailmobile.");
-        _logger.debug("emailMobile : " + emailMobile);
-        int forgotType = ForgotType.NOTFOUND;
-        UserInfo userInfo = null;
-        if (captcha != null && captcha
-                .equals(WebContext.getSession().getAttribute(
-                                WebConstants.KAPTCHA_SESSION_KEY).toString())) {            
-            if(mobileRegex.matcher(emailMobile).matches()) {
-            	forgotType = ForgotType.MOBILE;
-            }else if(emailRegex.matcher(emailMobile).matches()) {
-            	forgotType = ForgotType.EMAIL;
-            }else {
-            	forgotType = ForgotType.EMAIL;
-            	emailMobile =emailMobile + "@" + emailConfig.getSmtpHost().substring(emailConfig.getSmtpHost().indexOf(".")+1);
-            }
-            
-            userInfo = userInfoService.findByEmailMobile(emailMobile);
-            
-            if(null != userInfo) {
-	            if (forgotType == ForgotType.EMAIL ) {
-	            	mailOtpAuthn.produce(userInfo);
-	            }else if (forgotType == ForgotType.MOBILE) {
-	            	AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(userInfo.getInstId());
-	            	smsOtpAuthn.produce(userInfo);
-	            }
-            }
-           
-        }else {
-            _logger.debug("login captcha valid error.");
-            forgotType = ForgotType.CAPTCHAERROR;
+ 
+    
+    
+    @ResponseBody
+	@RequestMapping(value = { "/produceOtp" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> produceOtp(
+    			@RequestParam String mobile,
+    			@RequestParam String state,
+    			@RequestParam String captcha) {
+        _logger.debug("forgotpassword  /forgotpassword/produceOtp.");
+        _logger.debug(" Mobile {}: " ,mobile);
+        if (!authJwtService.validateCaptcha(state,captcha)) {    
+        	_logger.debug("login captcha valid error.");
+        	return new Message<ChangePassword>(Message.FAIL).buildResponse();
         }
         
-        ModelAndView modelAndView = new ModelAndView("forgotpassword/resetpwd");
-        modelAndView.addObject("userId", userInfo==null ?"":userInfo.getId());
-        modelAndView.addObject("username", userInfo==null ?"":userInfo.getUsername());
-        modelAndView.addObject("emailMobile", emailMobile);
-        modelAndView.addObject("forgotType", forgotType);
+    	ChangePassword change = null;
+    	_logger.debug("Mobile Regex matches {}",mobileRegex.matcher(mobile).matches());
+    	if(StringUtils.isNotBlank(mobile) && mobileRegex.matcher(mobile).matches()) {
+    		UserInfo userInfo = userInfoService.findByEmailMobile(mobile);
+    		if(userInfo != null) {
+	    		change = new ChangePassword(userInfo);
+	            change.clearPassword();
+	        	AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(userInfo.getInstId());
+	        	smsOtpAuthn.produce(userInfo);
+	        	return new Message<ChangePassword>(change).buildResponse();
+    		}
+        }
+            
+        return new Message<ChangePassword>(Message.FAIL).buildResponse();
+    }
+    
+    @ResponseBody
+	@RequestMapping(value = { "/produceEmailOtp" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> produceEmailOtp(
+    			@RequestParam String email,
+    			@RequestParam String state,
+    			@RequestParam String captcha) {
+        _logger.debug("forgotpassword  /forgotpassword/produceEmailOtp.");
+        _logger.debug("Email {} : " , email);
+        if (!authJwtService.validateCaptcha(state,captcha)) {
+        	_logger.debug("login captcha valid error.");
+        	return new Message<ChangePassword>(Message.FAIL).buildResponse();
+        }
         
-        return modelAndView;
+    	ChangePassword change = null;
+    	if(StringUtils.isNotBlank(email) && emailRegex.matcher(email).matches()) {
+    		UserInfo userInfo = userInfoService.findByEmailMobile(email);
+    		if(userInfo != null) {
+	    		change = new ChangePassword(userInfo);
+	            change.clearPassword();
+	            AbstractOtpAuthn mailOtpAuthn =  otpAuthnService.getMailOtpAuthn(userInfo.getInstId());
+	            mailOtpAuthn.produce(userInfo);
+	        	return new Message<ChangePassword>(change).buildResponse();
+    		}
+    	}
+        return new Message<ChangePassword>(Message.FAIL).buildResponse();
     }
 
     @RequestMapping(value = { "/setpassword" })
-    public ModelAndView setPassWord(
-                        @RequestParam String userId, 
-                        @RequestParam String username, 
-                        @RequestParam int forgotType, 
-                        @RequestParam String password,
-                        @RequestParam String confirmpassword,
-                        @RequestParam String captcha) {
-        _logger.debug("forgotPassword  /forgotpassword/pwdreseted.");
-        ModelAndView modelAndView = new ModelAndView("forgotpassword/pwdreseted");
-        if (null != password && password.equals(confirmpassword)) {
-            UserInfo userInfo = new UserInfo();
-            userInfo.setId(userId);
-            userInfo.setUsername(username);
-            userInfo.setPassword(password);
-            userInfo.setDecipherable(password);
-            UserInfo loadedUserInfo = userInfoService.findByUsername(username);
-            AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(loadedUserInfo.getInstId());
-            if ((forgotType == ForgotType.EMAIL && mailOtpAuthn.validate(userInfo, captcha)) ||
-                    (forgotType == ForgotType.MOBILE && smsOtpAuthn.validate(userInfo, captcha))
-                ) {
-            	/**
-                if(userInfoService.changePassword(userInfo,true)) {
-                	modelAndView.addObject("passwordResetResult", PasswordResetResult.SUCCESS);
-                }else {
-                	;
-                	modelAndView.addObject("validate_result", WebContext.getAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT));
-                	modelAndView.addObject("passwordResetResult", PasswordResetResult.PASSWORDERROR);
-                }*/
-            } else {
-                modelAndView.addObject("passwordResetResult", PasswordResetResult.CAPTCHAERROR);
-            }
-        } else {
-            modelAndView.addObject("passwordResetResult", PasswordResetResult.PASSWORDERROR);
+    public ResponseEntity<?> setPassWord(
+    					@ModelAttribute ChangePassword changePassword,
+    					@RequestParam String forgotType,
+                        @RequestParam String otpCaptcha,
+                        @RequestParam String state) {
+        _logger.debug("forgotPassword  /forgotpassword/setpassword.");
+        if (StringUtils.isNotBlank(changePassword.getPassword() )
+        		&& changePassword.getPassword().equals(changePassword.getConfirmPassword())) {
+            UserInfo loadedUserInfo = userInfoService.get(changePassword.getUserId());
+            if(loadedUserInfo != null) {
+	            AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(loadedUserInfo.getInstId());
+	            AbstractOtpAuthn mailOtpAuthn =  otpAuthnService.getMailOtpAuthn(loadedUserInfo.getInstId());
+	            if (
+	            		(forgotType.equalsIgnoreCase("email") 
+	            				&& mailOtpAuthn !=null 
+	            				&& mailOtpAuthn.validate(loadedUserInfo, otpCaptcha)) 
+	            		||
+	            		(forgotType.equalsIgnoreCase("mobile") 
+	            				&& smsOtpAuthn !=null 
+	            				&& smsOtpAuthn.validate(loadedUserInfo, otpCaptcha))
+	               ) {
+	            	
+	                if(userInfoService.changePassword(changePassword,true)) {
+	                	return new Message<ChangePassword>(Message.SUCCESS).buildResponse();
+	                }else {
+	                	return new Message<ChangePassword>(Message.FAIL).buildResponse();
+	                }
+	            } else {
+	            	return new Message<ChangePassword>(Message.FAIL).buildResponse();
+	            }
+	        } 
         }
-        return modelAndView;
+        return new Message<ChangePassword>(Message.FAIL).buildResponse();
     }
 }

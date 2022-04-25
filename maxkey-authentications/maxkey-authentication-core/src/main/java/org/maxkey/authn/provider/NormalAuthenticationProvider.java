@@ -18,7 +18,6 @@
 package org.maxkey.authn.provider;
 
 import java.text.ParseException;
-import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.jwt.AuthJwtService;
@@ -28,7 +27,6 @@ import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.Institutions;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.persistence.MomentaryService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -60,13 +58,11 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    OnlineTicketService onlineTicketServices,
-    	    AuthJwtService authJwtService,
-    	    MomentaryService momentaryService) {
+    	    AuthJwtService authJwtService) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
 		this.onlineTicketServices = onlineTicketServices;
 		this.authJwtService = authJwtService;
-		this.momentaryService = momentaryService;
 	}
 
     @Override
@@ -138,19 +134,8 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
      */
     protected void captchaValid(String state ,String captcha) throws ParseException {
         // for basic
-    	String ticket = authJwtService.resolveTicket(state);
-    	if(ticket == null) {
+    	if(!authJwtService.validateCaptcha(state,captcha)) {
     		throw new BadCredentialsException(WebContext.getI18nValue("login.error.captcha"));
-    	}
-    	Object momentaryCaptcha = momentaryService.get("", ticket);
-        _logger.info("captcha : {} , momentary Captcha : {} " ,captcha, momentaryCaptcha);
-        if (StringUtils.isBlank(captcha) || !captcha.equals(momentaryCaptcha.toString())) {
-            _logger.debug("login captcha valid error.");
-            throw new BadCredentialsException(WebContext.getI18nValue("login.error.captcha"));
-        }
-        momentaryService.remove("", ticket);
+    	}        
     }
-
-   
-  
 }

@@ -87,16 +87,14 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    OnlineTicketService onlineTicketServices,
-    	    AuthJwtService authJwtService,
-    	    MomentaryService momentaryService
+    	    AuthJwtService authJwtService
     		) {
     	_logger.debug("init authentication Provider .");
     	return new NormalAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
         		onlineTicketServices,
-        		authJwtService,
-        		momentaryService
+        		authJwtService
         	);
     }
     
@@ -134,6 +132,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     public AuthJwtService authJwtService(
     		AuthJwkConfig authJwkConfig,
     		RedisConnectionFactory redisConnFactory,
+    		MomentaryService  momentaryService,
     		@Value("${maxkey.server.persistence}") int persistence) throws JOSEException {
     	CongressService congressService;
     	if (persistence == ConstsPersistence.REDIS) {
@@ -142,7 +141,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     		congressService = new InMemoryCongressService();
     	}
     	
-    	AuthJwtService authJwtService = new AuthJwtService(authJwkConfig,congressService);
+    	AuthJwtService authJwtService = new AuthJwtService(authJwkConfig,congressService,momentaryService);
     	
     	return authJwtService;
     }

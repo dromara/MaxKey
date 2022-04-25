@@ -88,7 +88,7 @@ public class ImageCaptchaEndpoint {
             }else {
             	state = authJwtService.genJwt();
             }
-            kaptchaKey = authJwtService.resolveTicket(state);
+            kaptchaKey = authJwtService.resolveJWTID(state);
             _logger.trace("kaptchaKey {} , Captcha Text is {}" ,kaptchaKey, kaptchaValue);
            
             momentaryService.put("", kaptchaKey, kaptchaValue);

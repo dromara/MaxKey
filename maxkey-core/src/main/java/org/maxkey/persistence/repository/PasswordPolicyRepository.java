@@ -152,6 +152,7 @@ public class PasswordPolicyRepository {
   
  
    public ArrayList<Rule> getPasswordPolicyRuleList() {
+	   getPasswordPolicy();
 		return passwordPolicyRuleList;
 	}
 

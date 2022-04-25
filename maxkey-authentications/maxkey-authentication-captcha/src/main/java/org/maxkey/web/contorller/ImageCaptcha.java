@@ -17,21 +17,26 @@
 package org.maxkey.web.contorller;
 
 public class ImageCaptcha {
-	String id;
+	String state;
 	String image;
 	
-	public ImageCaptcha(String id, String image) {
+	public ImageCaptcha(String state, String image) {
 		super();
-		this.id = id;
+		this.state = state;
 		this.image = image;
 	}
 	
-	public String getId() {
-		return id;
+
+	public String getState() {
+		return state;
 	}
-	public void setId(String id) {
-		this.id = id;
+
+
+	public void setState(String state) {
+		this.state = state;
 	}
+
+
 	public String getImage() {
 		return image;
 	}

@@ -67,6 +67,11 @@ public class ChangePassword extends JpaBaseEntity{
 		this.setInstId(userInfo.getInstId());
 	}
 	
+	public void clearPassword() {
+		this.password ="";
+		this.decipherable = "";
+	}
+	
 	/**
 	 * @return the id
 	 */
