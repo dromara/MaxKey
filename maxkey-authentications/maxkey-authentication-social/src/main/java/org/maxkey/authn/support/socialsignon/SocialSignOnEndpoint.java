@@ -23,6 +23,7 @@ package org.maxkey.authn.support.socialsignon;
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authn.LoginCredential;
+import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.authn.jwt.AuthJwt;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.constants.ConstsLoginType;
@@ -87,16 +88,15 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	}	
 	
 	
-	@RequestMapping(value={"/bind/{provider}"}, method = RequestMethod.POST)
-	public ResponseEntity<?> bind(@PathVariable String provider) {
+	@RequestMapping(value={"/bind/{provider}"}, method = RequestMethod.GET)
+	public ResponseEntity<?> bind(@PathVariable String provider,@CurrentUser UserInfo userInfo) {
 		 //auth call back may exception 
 	    try {
-	    	String instId = WebContext.getInst().getId();
-	    	SocialsAssociate socialsAssociate = this.authCallback(instId,provider);
-		    UserInfo userInfo = AuthorizationUtils.getUserInfo();
+	    	SocialsAssociate socialsAssociate = this.authCallback(userInfo.getInstId(),provider);
 		    socialsAssociate.setSocialUserInfo(accountJsonString);
 		    socialsAssociate.setUserId(userInfo.getId());
 			socialsAssociate.setUsername(userInfo.getUsername());
+			socialsAssociate.setInstId(userInfo.getInstId());
 			//socialsAssociate.setAccessToken(JsonUtils.object2Json(accessToken));
 			//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
 			_logger.debug("Social Bind : "+socialsAssociate);

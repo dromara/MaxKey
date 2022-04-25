@@ -260,6 +260,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   }
 
   getQrCode(): void {
+    this.authenticationService.clearUser();
     this.socialsProviderService.scanqrcode(this.socials.qrScan).subscribe(res => {
       if (res.code === 0) {
         if (this.socials.qrScan === 'workweixin') {

@@ -39,6 +39,7 @@ public class AuthJwt implements Serializable {
 	private String email;
 	private String instId;
 	private String instName;
+	private int    passwordSetType;
 	private List<String> authorities;
 	  
 	  
@@ -147,6 +148,15 @@ public class AuthJwt implements Serializable {
 	public void setTicket(String ticket) {
 		this.ticket = ticket;
 	}
+	
+	public int getPasswordSetType() {
+		return passwordSetType;
+	}
+
+	public void setPasswordSetType(int passwordSetType) {
+		this.passwordSetType = passwordSetType;
+	}
+	
 
 	@Override
 	public String toString() {

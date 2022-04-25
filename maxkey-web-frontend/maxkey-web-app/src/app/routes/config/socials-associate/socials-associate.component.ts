@@ -6,9 +6,13 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { logging } from 'protractor';
 
 import { SocialsAssociateService } from '../../../service/socials-associate.service';
+import { SocialsProviderService } from '../../../service/socials-provider.service';
 import { set2String } from '../../../shared/index';
+
+import { log } from 'console';
 
 @Component({
   selector: 'app-socials-associate',
@@ -66,6 +70,7 @@ export class SocialsAssociateComponent implements OnInit {
 
   constructor(
     private modalService: NzModalService,
+    private socialsProviderService: SocialsProviderService,
     private socialsAssociateService: SocialsAssociateService,
     private viewContainerRef: ViewContainerRef,
     private fb: FormBuilder,
@@ -89,22 +94,11 @@ export class SocialsAssociateComponent implements OnInit {
 
   onReset(): void { }
 
-  onAdd(e: MouseEvent): void {
+  onAdd(e: MouseEvent, provider: string): void {
     e.preventDefault();
-    const modal = this.modalService.create({
-      //nzContent: SocialsProviderEditerComponent,
-      nzViewContainerRef: this.viewContainerRef,
-      nzComponentParams: {
-        isEdit: false,
-        id: ''
-      },
-      nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
-    });
-    // Return a result when closed
-    modal.afterClose.subscribe(result => {
-      if (result.refresh) {
-        this.fetch();
-      }
+    this.socialsProviderService.authorize(provider).subscribe(res => {
+      //console.log(res.data);
+      window.location.href = res.data;
     });
   }
 
@@ -135,6 +129,7 @@ export class SocialsAssociateComponent implements OnInit {
       this.query.params.startDate = '';
     }
     this.socialsAssociateService.fetch(this.query.params).subscribe(res => {
+      console.log(res.data);
       this.query.results.rows = res.data;
       this.query.submitLoading = false;
       this.query.tableLoading = false;

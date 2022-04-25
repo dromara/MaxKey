@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.web.endpoint;
+package org.maxkey.web.contorller;
 
 import java.util.Iterator;
 import java.util.Set;

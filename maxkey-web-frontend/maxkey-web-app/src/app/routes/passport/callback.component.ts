@@ -1,5 +1,5 @@
 import { Inject, Optional, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { SettingsService } from '@delon/theme';
 
@@ -14,8 +14,9 @@ export class CallbackComponent implements OnInit {
   provider = '';
 
   constructor(
+    private router: Router,
     private socialsProviderService: SocialsProviderService,
-    private settingsSrv: SettingsService,
+    private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     @Optional()
     @Inject(ReuseTabService)
@@ -25,14 +26,22 @@ export class CallbackComponent implements OnInit {
 
   ngOnInit(): void {
     this.provider = this.route.snapshot.params['provider'];
-    this.socialsProviderService.callback(this.provider, this.route.snapshot.queryParams).subscribe(res => {
-      if (res.code === 0) {
-        // 清空路由复用信息
-        this.reuseTabService.clear();
-        // 设置用户Token信息
-        this.authenticationService.auth(res.data);
-      }
-      this.authenticationService.navigate({});
-    });
+    if (!this.settingsService.user.name) {
+      this.socialsProviderService.callback(this.provider, this.route.snapshot.queryParams).subscribe(res => {
+        if (res.code === 0) {
+          // 清空路由复用信息
+          this.reuseTabService.clear();
+          // 设置用户Token信息
+          this.authenticationService.auth(res.data);
+        }
+        this.authenticationService.navigate({});
+      });
+    } else {
+      this.socialsProviderService.bind(this.provider, this.route.snapshot.queryParams).subscribe(res => {
+        if (res.code === 0) {
+        }
+        this.router.navigateByUrl('/config/socialsassociate');
+      });
+    }
   }
 }

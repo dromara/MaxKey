@@ -20,16 +20,7 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
       <layout-default-header-item direction="left">
         <a href="#">
           <img src="../assets/logo.jpg" alt="logo" style="height: 50px;height: 50px;float: left;" />
-          <div
-            style="letter-spacing: 2px;
-              font-size: 20px;
-              font-weight: bolder;
-              color:white;
-              width: 450px;
-              margin-top: 12px;"
-          >
-            Max<span style="color: #FFD700;">Key</span>{{ 'mxk.title' | i18n }}
-          </div>
+          <div class="alain-default__header-title"> Max<span style="color: #FFD700;">Key</span>{{ 'mxk.title' | i18n }} </div>
         </a>
       </layout-default-header-item>
 

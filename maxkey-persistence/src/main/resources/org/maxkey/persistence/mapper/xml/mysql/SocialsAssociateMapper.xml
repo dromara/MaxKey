@@ -11,6 +11,7 @@
             a.id,
 			a.userid,
 			a.username,
+			a.socialuserid,
 			a.createdDate,
 			a.updatedDate
 		from
@@ -18,12 +19,12 @@
 		left join
             mxk_socials_associate a 
             
-		on  a.provider = p.provider and a.userid = #{id}   
-		
+		on    a.provider  = p.provider  
+		  and a.instid    = p.instid
+		  and a.instid    = #{instId}
+		  and a.userid    = #{id}  
 		where
-            a.instid   =   p.instid
-			and  a.instid   =   #{instId} 	
-			and  p.status =1
+			  p.status =1
 		order by  p.sortindex
 	</select>
 

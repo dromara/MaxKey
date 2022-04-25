@@ -49,6 +49,11 @@ export class AuthenticationService {
     this.tokenService.clear();
   }
 
+  clearUser() {
+    let user: User = {};
+    this.settingsService.setUser(user);
+  }
+
   auth(authJwt: any) {
     let user: User = {
       name: `${authJwt.displayName}(${authJwt.username})`,
@@ -56,7 +61,8 @@ export class AuthenticationService {
       username: authJwt.username,
       userId: authJwt.id,
       avatar: './assets/img/avatar.svg',
-      email: authJwt.email
+      email: authJwt.email,
+      passwordSetType: authJwt.passwordSetType
     };
 
     let hostnames = window.location.hostname.split('.');

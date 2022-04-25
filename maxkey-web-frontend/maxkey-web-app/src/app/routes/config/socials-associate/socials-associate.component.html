@@ -40,9 +40,17 @@
         </td>
         <td nzAlign="left" nzBreakWord="false"
           ><div nz-col>
-            <button nz-button type="button" [nzType]="'primary'" style="float: left">{{ 'mxk.text.edit' | i18n }}</button>
-            <button nz-button type="button" (click)="onDelete($event, data.id)" [nzType]="'primary'" nzDanger>{{
-              'mxk.text.delete' | i18n
+            <button
+              *ngIf="data.updatedDate === null"
+              nz-button
+              type="button"
+              (click)="onAdd($event, data.provider)"
+              [nzType]="'primary'"
+              style="float: left"
+              >{{ 'mxk.socialsassociate.text.bind' | i18n }}</button
+            >
+            <button *ngIf="data.updatedDate" nz-button type="button" (click)="onDelete($event, data.id)" [nzType]="'primary'" nzDanger>{{
+              'mxk.socialsassociate.text.unbind' | i18n
             }}</button></div
           ></td
         >

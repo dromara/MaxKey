@@ -135,10 +135,9 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/socialsignon/**")
                 .addPathPatterns("/authz/credential/**")
                 .addPathPatterns("/authz/oauth/v20/approval_confirm/**")
-        		.addPathPatterns("/authz/oauth/v20/authorize/approval/**");
+        		.addPathPatterns("/authz/oauth/v20/authorize/approval/**")
+        		.addPathPatterns("/logon/oauth20/bind/**");
         
-               
-                ;
         _logger.debug("add Permission Interceptor");
         
         registry.addInterceptor(historyLogsInterceptor)

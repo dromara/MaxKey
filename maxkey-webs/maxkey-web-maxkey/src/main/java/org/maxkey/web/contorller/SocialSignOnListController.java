@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,13 +23,16 @@ import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.SocialsAssociate;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.SocialsAssociatesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -50,6 +53,17 @@ public class SocialSignOnListController {
 				socialsAssociatesService.queryByUser(currentUser);
 		
 		return new Message<List<SocialsAssociate>>(listSocialsAssociate).buildResponse();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+		_logger.debug("-delete  ids : {} " , ids);
+		if (socialsAssociatesService.deleteBatch(ids)) {
+			 return new Message<Apps>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<Apps>(Message.FAIL).buildResponse();
+		}
 	}
 	
 }

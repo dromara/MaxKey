@@ -18,7 +18,7 @@ import { LayoutDefaultOptions } from './types';
     <div class="alain-default__progress-bar" *ngIf="isFetching"></div>
     <layout-default-header [options]="options" [items]="headerItems"></layout-default-header>
     <!--menu-->
-    <div id="mainMenu" nzTheme="dark" style="background: #001529;">
+    <div id="mainMenu" nzTheme="dark" style="background: #001529;" class="alain-default__fixed">
       <!--<ng-container *ngTemplateOutlet="asideUser"></ng-container>-->
       <ng-container *ngTemplateOutlet="nav"></ng-container>
       <layout-default-nav *ngIf="!nav" class="d-block" style="margin-top: 64px; width:80%"></layout-default-nav>

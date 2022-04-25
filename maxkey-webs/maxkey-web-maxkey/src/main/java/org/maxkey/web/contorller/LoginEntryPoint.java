@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.web.endpoint;
+package org.maxkey.web.contorller;
 
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -157,7 +157,11 @@ public class LoginEntryPoint {
  	        if (StringUtils.isNotBlank(authType)){
 		 		Authentication  authentication = authenticationProvider.authenticate(loginCredential);	 				
 		 		if(authentication != null) {
-		 			authJwtMessage = new Message<AuthJwt>(authJwtService.genAuthJwt(authentication));
+		 			AuthJwt authJwt = authJwtService.genAuthJwt(authentication);
+		 			if(WebContext.getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE)!=null)
+		 				authJwt.setPasswordSetType(
+		 					(Integer)WebContext.getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE));
+		 			authJwtMessage = new Message<AuthJwt>(authJwt);
 		 		}
  	        }else {
  	        	_logger.error("Login AuthN type must eq normal , tfa or mobile . ");

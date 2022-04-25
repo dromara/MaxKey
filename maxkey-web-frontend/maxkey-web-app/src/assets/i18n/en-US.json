@@ -18,7 +18,7 @@
       "text.username": "Username",
       "text.mobile": "Mobile Number",
       "text.password": "Password",
-      "text.captcha": "CAPTCHA",
+      "text.captcha": "Captcha",
       "text.smscode": "Code"
     },
     "menu": {
@@ -222,8 +222,10 @@
       "icon": "Icon",
       "provider": "Provider",
       "providerName": "ProviderName",
-      "createdDate": "BindTime ",
-      "updatedDate": "LastLoginTime"
+      "createdDate": "BindTime",
+      "updatedDate": "LastLoginTime",
+      "text.bind": "Bind",
+      "text.unbind": "Unbind"
     },
     "password":{
       "id": "Id",

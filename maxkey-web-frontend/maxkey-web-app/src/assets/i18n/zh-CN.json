@@ -516,7 +516,9 @@
       "provider": "供应商",
       "providerName": "供应商名称",
       "createdDate": "绑定时间",
-      "updatedDate": "最近登录时间"
+      "updatedDate": "最近登录时间",
+      "text.bind": "绑定账号",
+      "text.unbind": "解除绑定"
     },
     "password":{
       "id": "用户编码",

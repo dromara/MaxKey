@@ -26,4 +26,8 @@ export class SocialsProviderService extends BaseService<SocialsProvider> {
   callback(provider: string, params: NzSafeAny): Observable<Message<SocialsProvider>> {
     return this.getByParams(params, `/logon/oauth20/callback/${provider}?_allow_anonymous=true`);
   }
+
+  bind(provider: string, params: NzSafeAny): Observable<Message<SocialsProvider>> {
+    return this.getByParams(params, `/logon/oauth20/bind/${provider}?_allow_anonymous=true`);
+  }
 }
