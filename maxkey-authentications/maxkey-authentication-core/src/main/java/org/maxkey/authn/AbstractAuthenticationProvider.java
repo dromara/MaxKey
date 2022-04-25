@@ -18,7 +18,6 @@
 package org.maxkey.authn;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.online.OnlineTicket;
@@ -52,17 +51,14 @@ public abstract class AbstractAuthenticationProvider {
     private static final Logger _logger = 
             LoggerFactory.getLogger(AbstractAuthenticationProvider.class);
 
+    public static String PROVIDER_SUFFIX = "AuthenticationProvider";
+    
     public class AuthType{
     	public final static String NORMAL 	= "normal";
     	public final static String TFA 		= "tfa";
     	public final static String MOBILE 	= "mobile";
     	public final static String TRUSTED 	= "trusted";
     }
-    
-    protected static String PROVIDER_SUFFIX = "AuthenticationProvider";
-    
-    private  static HashMap<String,AbstractAuthenticationProvider> providers = 
-    									new HashMap<String,AbstractAuthenticationProvider>();
     
     protected ApplicationConfig applicationConfig;
 
@@ -94,24 +90,13 @@ public abstract class AbstractAuthenticationProvider {
     }
 
     public Authentication authenticate(LoginCredential authentication){
-    	if(authentication.getAuthType().equalsIgnoreCase("trusted")) {
-    		//risk remove
-    		return null;
-    	}
-    	AbstractAuthenticationProvider provider = providers.get(authentication.getAuthType() + PROVIDER_SUFFIX);
-    	
-    	return provider == null ? null : provider.doAuthenticate(authentication);
+    	return null;
     }
     
-    public Authentication authenticate(LoginCredential authentication,boolean trusted){
-    	AbstractAuthenticationProvider provider = providers.get(AuthType.TRUSTED + PROVIDER_SUFFIX);
-    	return provider.doAuthenticate(authentication);
+    public Authentication authenticate(LoginCredential authentication,boolean trusted) {
+    	return null;
     }
     
-    public void addAuthenticationProvider(AbstractAuthenticationProvider provider) {
-    	providers.put(provider.getProviderName(), provider);
-    }
-
     /**
      * createOnlineSession 
      * @param credential

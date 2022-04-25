@@ -25,6 +25,7 @@ import org.maxkey.authn.jwt.InMemoryCongressService;
 import org.maxkey.authn.jwt.RedisCongressService;
 import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.online.OnlineTicketServiceFactory;
+import org.maxkey.authn.provider.AuthenticationProviderFactory;
 import org.maxkey.authn.provider.MobileAuthenticationProvider;
 import org.maxkey.authn.provider.NormalAuthenticationProvider;
 import org.maxkey.authn.provider.TrustedAuthenticationProvider;
@@ -69,24 +70,34 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     
     @Bean(name = "authenticationProvider")
     public AbstractAuthenticationProvider authenticationProvider(
+    		AbstractAuthenticationProvider normalAuthenticationProvider,
+    		AbstractAuthenticationProvider mobileAuthenticationProvider,
+    		AbstractAuthenticationProvider trustedAuthenticationProvider
+    		) {
+    	AuthenticationProviderFactory authenticationProvider = new AuthenticationProviderFactory();
+    	authenticationProvider.addAuthenticationProvider(normalAuthenticationProvider);
+    	authenticationProvider.addAuthenticationProvider(mobileAuthenticationProvider);
+    	authenticationProvider.addAuthenticationProvider(trustedAuthenticationProvider);
+    	
+    	return authenticationProvider;
+    }
+    		
+    @Bean
+    public AbstractAuthenticationProvider normalAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    OnlineTicketService onlineTicketServices,
     	    AuthJwtService authJwtService,
     	    MomentaryService momentaryService
     		) {
-       
     	_logger.debug("init authentication Provider .");
-    	NormalAuthenticationProvider normal = new NormalAuthenticationProvider(
+    	return new NormalAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
         		onlineTicketServices,
         		authJwtService,
         		momentaryService
         	);
-    	
-    	normal.addAuthenticationProvider(normal);
-    	return normal;
     }
     
     @Bean(name = "mobileAuthenticationProvider")
@@ -94,38 +105,29 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    OtpAuthnService otpAuthnService,
-    	    OnlineTicketService onlineTicketServices,
-    	    AbstractAuthenticationProvider authenticationProvider
+    	    OnlineTicketService onlineTicketServices
     		) {
-    	MobileAuthenticationProvider mobile = new MobileAuthenticationProvider(
+    	_logger.debug("init Mobile authentication Provider .");
+    	return new MobileAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
         		otpAuthnService,
         		onlineTicketServices
         	);
-    	
-    	authenticationProvider.addAuthenticationProvider(mobile);
-    	_logger.debug("init Mobile authentication Provider .");
-        return mobile;
     }
-    
-    
+
     @Bean(name = "trustedAuthenticationProvider")
     public AbstractAuthenticationProvider trustedAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
-    	    OnlineTicketService onlineTicketServices,
-    	    AbstractAuthenticationProvider authenticationProvider
+    	    OnlineTicketService onlineTicketServices
     		) {
-    	TrustedAuthenticationProvider trusted = new TrustedAuthenticationProvider(
+    	_logger.debug("init Mobile authentication Provider .");
+    	return new TrustedAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
         		onlineTicketServices
         	);
-    	
-    	authenticationProvider.addAuthenticationProvider(trusted);
-    	_logger.debug("init Mobile authentication Provider .");
-        return trusted;
     }
     
     @Bean(name = "authJwtService")
