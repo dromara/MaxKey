@@ -115,10 +115,9 @@ public class ForgotPasswordContorller {
     			@RequestParam String email,
     			@RequestParam String state,
     			@RequestParam String captcha) {
-        _logger.debug("forgotpassword  /forgotpassword/produceEmailOtp.");
-        _logger.debug("Email {} : " , email);
+        _logger.debug("/forgotpassword/produceEmailOtp Email {} : " , email);
         if (!authJwtService.validateCaptcha(state,captcha)) {
-        	_logger.debug("login captcha valid error.");
+        	_logger.debug("captcha valid error.");
         	return new Message<ChangePassword>(Message.FAIL).buildResponse();
         }
         

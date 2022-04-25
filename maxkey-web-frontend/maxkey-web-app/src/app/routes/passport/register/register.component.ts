@@ -4,7 +4,10 @@ import { Router } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import { MatchControl } from '@delon/util/form';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { finalize } from 'rxjs/operators';
+
+import { SignUpService } from '../../../service/signup.service';
 
 @Component({
   selector: 'passport-register',
@@ -13,10 +16,19 @@ import { finalize } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserRegisterComponent implements OnDestroy {
-  constructor(fb: FormBuilder, private router: Router, private http: _HttpClient, private cdr: ChangeDetectorRef) {
+  constructor(
+    fb: FormBuilder,
+    private signUpService: SignUpService,
+    private msg: NzMessageService,
+    private router: Router,
+    private http: _HttpClient,
+    private cdr: ChangeDetectorRef
+  ) {
     this.form = fb.group(
       {
-        mail: [null, [Validators.required, Validators.email]],
+        username: [null, [Validators.required]],
+        displayName: [null, [Validators.required]],
+        email: [null, [Validators.required, Validators.email]],
         password: [null, [Validators.required, Validators.minLength(6), UserRegisterComponent.checkPassword.bind(this)]],
         confirm: [null, [Validators.required, Validators.minLength(6)]],
         mobilePrefix: ['+86'],
@@ -31,8 +43,15 @@ export class UserRegisterComponent implements OnDestroy {
 
   // #region fields
 
-  get mail(): AbstractControl {
-    return this.form.get('mail')!;
+  get username(): AbstractControl {
+    return this.form.get('username')!;
+  }
+
+  get displayName(): AbstractControl {
+    return this.form.get('displayName')!;
+  }
+  get email(): AbstractControl {
+    return this.form.get('email')!;
   }
   get password(): AbstractControl {
     return this.form.get('password')!;
@@ -92,6 +111,13 @@ export class UserRegisterComponent implements OnDestroy {
       this.mobile.updateValueAndValidity({ onlySelf: true });
       return;
     }
+    this.signUpService.produceOtp({ mobile: this.mobile.value }).subscribe(res => {
+      if (res.code !== 0) {
+        this.msg.success(`短信发送失败`);
+        this.cdr.detectChanges();
+      }
+      this.msg.success(`短信发送成功`);
+    });
     this.count = 59;
     this.cdr.detectChanges();
     this.interval$ = setInterval(() => {
@@ -104,7 +130,6 @@ export class UserRegisterComponent implements OnDestroy {
   }
 
   // #endregion
-
   submit(): void {
     this.error = '';
     Object.keys(this.form.controls).forEach(key => {
@@ -118,15 +143,21 @@ export class UserRegisterComponent implements OnDestroy {
     const data = this.form.value;
     this.loading = true;
     this.cdr.detectChanges();
-    this.http
-      .post('/register?_allow_anonymous=true', data)
+    this.signUpService
+      .register(data)
       .pipe(
         finalize(() => {
           this.loading = false;
           this.cdr.detectChanges();
         })
       )
-      .subscribe(() => {
+      .subscribe(res => {
+        if (res.code !== 0) {
+          this.msg.success(`注册失败`);
+          this.cdr.detectChanges();
+          return;
+        }
+        this.msg.success(`注册成功`);
         this.router.navigate(['passport', 'register-result'], { queryParams: { email: data.mail } });
       });
   }
