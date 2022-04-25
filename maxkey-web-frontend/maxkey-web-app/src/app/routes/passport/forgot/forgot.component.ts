@@ -7,7 +7,6 @@ import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { ChangePassword } from '../../../entity/ChangePassword';
 import { ForgotPasswordService } from '../../../service/forgot-password.service';
 import { ImageCaptchaService } from '../../../service/image-captcha.service';
-import { PasswordService } from '../../../service/password.service';
 
 @Component({
   selector: 'app-forgot',
