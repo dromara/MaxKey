@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package org.maxkey.authn.provider;
+package org.maxkey.authn.provider;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
@@ -23,8 +23,8 @@ import org.springframework.security.core.Authentication;
 
 public class AuthenticationProviderFactory extends AbstractAuthenticationProvider {
 
-    private  static HashMap<String,AbstractAuthenticationProvider> providers = 
-    									new HashMap<String,AbstractAuthenticationProvider>();
+    private  static ConcurrentHashMap<String,AbstractAuthenticationProvider> providers = 
+    									new ConcurrentHashMap<String,AbstractAuthenticationProvider>();
     
     @Override
     public Authentication authenticate(LoginCredential authentication){
