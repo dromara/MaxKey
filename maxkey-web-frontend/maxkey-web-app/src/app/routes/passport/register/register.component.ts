@@ -69,6 +69,7 @@ export class UserRegisterComponent implements OnDestroy {
   error = '';
   type = 0;
   loading = false;
+  captchaLoading = false;
   visible = false;
   status = 'pool';
   progress = 0;
@@ -111,13 +112,22 @@ export class UserRegisterComponent implements OnDestroy {
       this.mobile.updateValueAndValidity({ onlySelf: true });
       return;
     }
-    this.signUpService.produceOtp({ mobile: this.mobile.value }).subscribe(res => {
-      if (res.code !== 0) {
-        this.msg.success(`短信发送失败`);
-        this.cdr.detectChanges();
-      }
-      this.msg.success(`短信发送成功`);
-    });
+    this.captchaLoading = true;
+    this.signUpService
+      .produceOtp({ mobile: this.mobile.value })
+      .pipe(
+        finalize(() => {
+          this.captchaLoading = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe(res => {
+        if (res.code !== 0) {
+          this.msg.success(`短信发送失败`);
+          this.cdr.detectChanges();
+        }
+        this.msg.success(`短信发送成功`);
+      });
     this.count = 59;
     this.cdr.detectChanges();
     this.interval$ = setInterval(() => {

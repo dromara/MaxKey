@@ -249,7 +249,8 @@
       "username": "Username",
       "oldPassword": "Old Password",
       "password": "New Password",
-      "confirmPassword": "Confirm Password"
+      "confirmPassword": "Confirm Password",
+      "captcha": "Captcha"
     },
     "ldapcontext":{
       "product": "product",

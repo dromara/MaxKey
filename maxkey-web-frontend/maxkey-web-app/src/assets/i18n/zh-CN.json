@@ -542,7 +542,8 @@
       "username": "账号",
       "oldPassword": "当前密码",
       "password": "新密码",
-      "confirmPassword": "确认密码"
+      "confirmPassword": "确认密码",
+      "captcha": "验证码"
     },
     "socialsproviders":{
       "icon" :"图标",
