@@ -1,0 +1,4 @@
+第三方许可证/Third party licenses
+
+see
+https://maxkey.top/zh/about/dependency.html

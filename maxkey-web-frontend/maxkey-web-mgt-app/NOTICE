@@ -1,0 +1,19 @@
+MaxKey单点登录认证系统，谐音为马克思的钥匙，寓意是最大钥匙，是业界领先的IAM身份管理和身份认证产品；
+支持OAuth 2.x/OpenID Connect、SAML 2.0、JWT、CAS、SCIM等标准协议；
+提供简单、标准、安全和开放的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、资源管理和权限管理等
+
+Maxkey Single Sign On system, which means the Maximum key, Leading-Edge IAM Identity and Access management product , 
+Support OAuth 2.x/OPENID CONNECT, SAML 2.0, JWT, CAS, SCIM and other standard protocols,
+Provide Simple, Standard, Secure and Open Identity management (IDM), Access management (AM), Single Sign On (SSO), RBAC permission management and Resource management.
+
+MaxKey声明/Maxkey Declaration
+
+可直接商用无需授权，必须保留本作品及源码中的所有版权、专利、商标和归属声明。
+It can be used directly without authorization. All copyrights, patents, trademarks and ownership statements in the product and source code must be retained.
+
+页脚中归属声明及版权声明不可忽略，否则视为侵权
+The attribution statement and copyright notice in the footer cannot be ignored, otherwise it will be deemed as infringement.
+
+Copyright  http://www.maxkey.top  All Rights Reserved.
+
+License http://www.maxkey.top/zh/about/licenses.html

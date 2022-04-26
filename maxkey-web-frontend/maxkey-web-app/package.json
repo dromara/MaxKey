@@ -1,19 +1,19 @@
 {
-  "name": "ng-alain",
-  "version": "13.4.0",
-  "description": "ng-zorro-antd admin panel front-end framework",
-  "author": "cipchk <cipchk@qq.com>",
+  "name": "maxkey",
+  "version": "3.5.0",
+  "description": "Leading-Edge IAM Identity and Access Management",
+  "author": "MaxKey <maxkeysupport@163.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ng-alain/ng-alain.git"
+    "url": "https://gitee.com/dromara/MaxKey"
   },
   "bugs": {
-    "url": "https://github.com/ng-alain/ng-alain/issues"
+    "url": "https://gitee.com/dromara/MaxKey/issues"
   },
-  "homepage": "https://ng-alain.com",
-  "license": "MIT",
+  "homepage": "https://www.maxkey.top",
+  "license": "Apache-2.0",
   "keywords": [
-    "delon",
+    "maxkey",
     "antd",
     "ng-zorro-antd",
     "angular",
