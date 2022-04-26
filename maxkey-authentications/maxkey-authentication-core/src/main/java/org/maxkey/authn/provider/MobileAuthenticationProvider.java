@@ -20,7 +20,7 @@ package org.maxkey.authn.provider;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.session.SessionService;
+import org.maxkey.authn.session.SessionManager;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.UserInfo;
@@ -60,11 +60,11 @@ public class MobileAuthenticationProvider extends AbstractAuthenticationProvider
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    OtpAuthnService otpAuthnService,
-    	    SessionService sessionService) {
+    	    SessionManager sessionManager) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
 		this.otpAuthnService = otpAuthnService;
-		this.sessionService = sessionService;
+		this.sessionManager = sessionManager;
 	}
 
     @Override

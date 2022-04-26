@@ -21,7 +21,7 @@ import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.session.SessionService;
+import org.maxkey.authn.session.SessionManager;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.Institutions;
@@ -57,11 +57,11 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
     public MfaAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
-    	    SessionService sessionService,
+    	    SessionManager sessionManager,
     	    AuthJwtService authJwtService) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
-		this.sessionService = sessionService;
+		this.sessionManager = sessionManager;
 		this.authJwtService = authJwtService;
 	}
 

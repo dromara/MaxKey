@@ -150,11 +150,11 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		
 		if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
 		    String sessionId = AuthorizationUtils.getPrincipal().getSession().getFormattedId();
-		    Session session  = sessionService.get(sessionId);
+		    Session session  = sessionManager.get(sessionId);
 		    //set cas ticket as OnlineTicketId
 		    casDetails.setOnlineTicket(ticket);
 		    session.setAuthorizedApp(casDetails);
-		    sessionService.store(sessionId, session);
+		    sessionManager.create(sessionId, session);
 		}
 		
 		_logger.debug("redirect to CAS Client URL {}" , callbackUrl);

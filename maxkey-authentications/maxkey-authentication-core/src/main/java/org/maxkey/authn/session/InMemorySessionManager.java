@@ -19,71 +19,55 @@ package org.maxkey.authn.session;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.concurrent.TimeUnit;
 
-import org.maxkey.persistence.redis.RedisConnection;
-import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
-public class RedisSessionService extends AbstractSessionService {
-    private static final Logger _logger = LoggerFactory.getLogger(RedisSessionService.class);
-	
-	protected int serviceTicketValiditySeconds = 60 * 30; //default 30 minutes.
-	
-	RedisConnectionFactory connectionFactory;
-	
-	public static String PREFIX="REDIS_SESSION_";
-	/**
-	 * @param connectionFactory
-	 */
-	public RedisSessionService(
-			RedisConnectionFactory connectionFactory,
-			JdbcTemplate jdbcTemplate) {
-		super();
-		this.connectionFactory = connectionFactory;
-		this.jdbcTemplate = jdbcTemplate;
-	}
-	
-	/**
-	 * 
-	 */
-	public RedisSessionService() {
-		
-	}
 
-	public void setConnectionFactory(RedisConnectionFactory connectionFactory) {
-		this.connectionFactory = connectionFactory;
-	}
+public class InMemorySessionManager extends AbstractSessionManager{
+    private static final Logger _logger = LoggerFactory.getLogger(InMemorySessionManager.class);
 
-	@Override
-	public void store(String sessionId, Session ticket) {
-		RedisConnection conn=connectionFactory.getConnection();
-		conn.setexObject(PREFIX+sessionId, serviceTicketValiditySeconds, ticket);
-		conn.close();
+	protected  static  Cache<String, Session> sessionStore = 
+        	        Caffeine.newBuilder()
+        	            .expireAfterWrite(30, TimeUnit.MINUTES)
+        	            .maximumSize(200000)
+        	            .build();
+	
+	public InMemorySessionManager(JdbcTemplate jdbcTemplate) {
+        super();
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+	public void create(String sessionId, Session session) {
+    	sessionStore.put(sessionId, session);
 	}
 
 	@Override
 	public Session remove(String sessionId) {
-		RedisConnection conn=connectionFactory.getConnection();
-		Session ticket = conn.getObject(PREFIX+sessionId);
-		conn.delete(PREFIX+sessionId);
-		conn.close();
-		return ticket;
+	    Session session = sessionStore.getIfPresent(sessionId);	
+	    sessionStore.invalidate(sessionId);
+		return session;
 	}
 
     @Override
     public Session get(String sessionId) {
-        RedisConnection conn=connectionFactory.getConnection();
-        Session session = conn.getObject(PREFIX+sessionId);
-        conn.close();
+        Session session = sessionStore.getIfPresent(sessionId); 
         return session;
     }
 
     @Override
     public void setValiditySeconds(int validitySeconds) {
-       this.serviceTicketValiditySeconds = validitySeconds;
+    	sessionStore = 
+                Caffeine.newBuilder()
+                    .expireAfterWrite(validitySeconds/60, TimeUnit.MINUTES)
+                    .maximumSize(200000)
+                    .build();
         
     }
 
@@ -91,9 +75,9 @@ public class RedisSessionService extends AbstractSessionService {
     public void refresh(String sessionId,LocalTime refreshTime) {
         Session session = get(sessionId);
         session.setLastAccessTime(refreshTime);
-        store(sessionId , session);
+        create(sessionId , session);
     }
-    
+
     @Override
     public void refresh(String sessionId) {
         Session session = get(sessionId);
@@ -109,5 +93,4 @@ public class RedisSessionService extends AbstractSessionService {
         }
     }
 
-	
 }

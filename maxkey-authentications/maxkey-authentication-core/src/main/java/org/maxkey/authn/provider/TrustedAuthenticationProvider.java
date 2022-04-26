@@ -20,7 +20,7 @@ package org.maxkey.authn.provider;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
-import org.maxkey.authn.session.SessionService;
+import org.maxkey.authn.session.SessionManager;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.web.WebContext;
@@ -49,10 +49,10 @@ public class TrustedAuthenticationProvider extends AbstractAuthenticationProvide
     public TrustedAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
-    	    SessionService sessionService) {
+    	    SessionManager sessionManager) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
-		this.sessionService = sessionService;
+		this.sessionManager = sessionManager;
 	}
 
     @Override

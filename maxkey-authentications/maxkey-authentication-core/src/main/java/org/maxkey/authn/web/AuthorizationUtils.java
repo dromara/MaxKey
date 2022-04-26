@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.session.Session;
-import org.maxkey.authn.session.SessionService;
+import org.maxkey.authn.session.SessionManager;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.web.WebConstants;
@@ -42,13 +42,13 @@ public class AuthorizationUtils {
 	public static  void authenticateWithCookie(
 			HttpServletRequest request,
 			AuthJwtService authJwtService,
-			SessionService sessionService
+			SessionManager sessionManager
 			) throws ParseException{
 		 if(getSession() == null) {
 			Cookie authCookie = WebContext.getCookie(request, Authorization_Cookie);
 			if(authCookie != null ) {
 		    	String  authorization =  authCookie.getValue();
-		    	doJwtAuthenticate(authorization,authJwtService,sessionService);
+		    	doJwtAuthenticate(authorization,authJwtService,sessionManager);
 		    	_logger.debug("congress automatic authenticated .");
 			}
 		 }
@@ -57,12 +57,12 @@ public class AuthorizationUtils {
 	public static  void authenticate(
 			HttpServletRequest request,
 			AuthJwtService authJwtService,
-			SessionService sessionService
+			SessionManager sessionManager
 			) throws ParseException{
 		 if(getSession() == null) {
 			 String  authorization = AuthorizationHeaderUtils.resolveBearer(request);
 			if(authorization != null ) {
-				doJwtAuthenticate(authorization,authJwtService,sessionService);
+				doJwtAuthenticate(authorization,authJwtService,sessionManager);
 				_logger.debug("Authorization automatic authenticated .");
 			}
 		 }
@@ -71,10 +71,10 @@ public class AuthorizationUtils {
 	public static void doJwtAuthenticate(
 			String  authorization,
 			AuthJwtService authJwtService,
-			SessionService sessionService) throws ParseException {
+			SessionManager sessionManager) throws ParseException {
 		if(authJwtService.validateJwtToken(authorization)) {
 			String sessionId = authJwtService.resolveJWTID(authorization);
-			Session session = sessionService.get(sessionId);
+			Session session = sessionManager.get(sessionId);
 			if(session != null) {
 				setSession(session);
 				setAuthentication(session.getAuthentication());
@@ -82,6 +82,7 @@ public class AuthorizationUtils {
 		}
 	}
 	
+	//set session to http session
     public static void setSession(Session session) {
     	WebContext.setAttribute(WebConstants.SESSION, session);
     }
@@ -91,6 +92,7 @@ public class AuthorizationUtils {
         return session;
     }
     
+    //get session to http session
     public static Session getSession(HttpServletRequest request) {
     	Session session = (Session) request.getSession().getAttribute(WebConstants.SESSION);
         return session;

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.session.Session;
-import org.maxkey.authn.session.SessionService;
+import org.maxkey.authn.session.SessionManager;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
@@ -67,7 +67,7 @@ public abstract class AbstractAuthenticationProvider {
     
     protected OtpAuthnService otpAuthnService;
 
-    protected SessionService sessionService;
+    protected SessionManager sessionManager;
     
     protected AuthJwtService authJwtService;
     
@@ -135,8 +135,8 @@ public abstract class AbstractAuthenticationProvider {
          */
         session.setAuthentication(authenticationToken);
         
-        //store session
-        this.sessionService.store(session.getId(), session);
+        //create session
+        this.sessionManager.create(session.getId(), session);
         
         AuthorizationUtils.setSession(session);
      

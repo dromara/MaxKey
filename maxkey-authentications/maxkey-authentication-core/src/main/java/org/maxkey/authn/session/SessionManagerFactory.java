@@ -23,23 +23,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class SessionServiceFactory {
+public class SessionManagerFactory {
 	private static final  Logger _logger = 
-            LoggerFactory.getLogger(SessionServiceFactory.class);
+            LoggerFactory.getLogger(SessionManagerFactory.class);
 	
-	 public SessionService getService(
+	 public SessionManager getManager(
 			 	int persistence,
 			 	JdbcTemplate jdbcTemplate,
 	            RedisConnectionFactory redisConnFactory){
 		 
-		 SessionService sessionService = null;
+		 SessionManager sessionService = null;
 		if (persistence == ConstsPersistence.INMEMORY) {
-			sessionService = new InMemorySessionService(jdbcTemplate);
+			sessionService = new InMemorySessionManager(jdbcTemplate);
 		    _logger.debug("InMemorySessionService");
 		} else if (persistence == ConstsPersistence.JDBC) {
 		    _logger.debug("JdbcSessionService not support "); 
 		} else if (persistence == ConstsPersistence.REDIS) {
-			sessionService = new RedisSessionService(redisConnFactory,jdbcTemplate);
+			sessionService = new RedisSessionManager(redisConnFactory,jdbcTemplate);
 		    _logger.debug("RedisSessionService");
 		}
 		

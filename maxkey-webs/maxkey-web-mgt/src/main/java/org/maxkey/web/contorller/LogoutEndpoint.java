@@ -18,7 +18,7 @@
 package org.maxkey.web.contorller;
 
 import org.maxkey.authn.annotation.CurrentUser;
-import org.maxkey.authn.session.SessionService;
+import org.maxkey.authn.session.SessionManager;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +31,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LogoutEndpoint {
 	
 	@Autowired
-    protected SessionService sessionService;
+    protected SessionManager sessionManager;
 	
  	@RequestMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
  	public  ResponseEntity<?> logout(@CurrentUser UserInfo currentUser){
- 		sessionService.terminate(
+ 		sessionManager.terminate(
  				currentUser.getSessionId(), 
  				currentUser.getId(),
  				currentUser.getUsername());

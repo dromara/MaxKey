@@ -22,9 +22,9 @@ import java.util.List;
 
 import org.maxkey.entity.HistoryLogin;
 
-public interface SessionService {
+public interface SessionManager {
 
-	public  void store(String sessionId, Session session);
+	public  void create(String sessionId, Session session);
 
     public  Session remove(String sessionId);
     

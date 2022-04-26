@@ -17,10 +17,10 @@
 
 package org.maxkey;
 
-import org.maxkey.authn.session.SessionService;
+import org.maxkey.authn.session.SessionManager;
 import org.maxkey.jobs.AccountsStrategyJob;
 import org.maxkey.jobs.DynamicGroupsJob;
-import org.maxkey.jobs.SessionListenerJob;
+import org.maxkey.jobs.SessionListenerAdapter;
 import org.maxkey.persistence.service.AccountsService;
 import org.maxkey.persistence.service.GroupsService;
 import org.quartz.CronScheduleBuilder;
@@ -44,22 +44,22 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 public class MaxKeyMgtJobs  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMgtJobs.class);
  
-    @Bean(name = "schedulerSessionListenerJobs")
-    public String  ticketListenerJob(
+    @Bean(name = "schedulerSessionListenerAdapter")
+    public String  sessionListenerAdapter(
     		SchedulerFactoryBean schedulerFactoryBean,
-    		SessionService sessionService) throws SchedulerException {
+    		SessionManager sessionManager) throws SchedulerException {
     	
     	JobDataMap jobDataMap = new JobDataMap();
-        jobDataMap.put("service", sessionService);
+        jobDataMap.put("service", sessionManager);
     	addJobScheduler(
-    			SessionListenerJob.class,
+    			SessionListenerAdapter.class,
     			schedulerFactoryBean,
     			jobDataMap,
     			"0 0/10 * * * ?",//10 minutes
-    			"SessionListener"
+    			"SessionListenerAdapter"
     		);
     	
-    	return "schedulerSessionListenerJobs";
+    	return "schedulerSessionListenerAdapter";
     }
     
     @Bean(name = "schedulerDynamicGroupsJobs")

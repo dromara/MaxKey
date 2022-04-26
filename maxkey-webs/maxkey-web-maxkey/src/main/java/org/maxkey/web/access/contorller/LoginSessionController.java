@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
-import org.maxkey.authn.session.SessionService;
+import org.maxkey.authn.session.SessionManager;
 import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
@@ -57,7 +57,7 @@ public class LoginSessionController {
     HistoryLoginService historyLoginService;
     
     @Autowired
-    SessionService sessionService;
+    SessionManager sessionManager;
 
     /**
      * 查询登录日志.
@@ -90,7 +90,7 @@ public class LoginSessionController {
                     continue;//skip current session
                 }
                 
-                sessionService.terminate(
+                sessionManager.terminate(
                 		sessionId,
                 		currentUser.getId(),
                 		currentUser.getUsername());

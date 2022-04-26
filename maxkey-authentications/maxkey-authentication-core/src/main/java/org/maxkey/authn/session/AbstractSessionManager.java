@@ -32,8 +32,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-public class AbstractSessionService  implements SessionService{
-	private static Logger _logger = LoggerFactory.getLogger(AbstractSessionService.class);
+public class AbstractSessionManager  implements SessionManager{
+	private static Logger _logger = LoggerFactory.getLogger(AbstractSessionManager.class);
 	
 	protected JdbcTemplate jdbcTemplate;
 	
@@ -93,7 +93,7 @@ public class AbstractSessionService  implements SessionService{
 	}
 
 	@Override
-	public void store(String sessionId, Session session) {
+	public void create(String sessionId, Session session) {
 		
 	}
 
