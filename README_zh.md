@@ -81,7 +81,7 @@ QQ交流群：<b>434469201</b>
 
 7. 认证中心具有平台无关性、环境多样性，支持Web、手机、移动设备等, 如Apple iOS，Andriod等，将认证能力从B/S到移动应用全面覆盖。
 
-8. 基于Java EE平台，微服务架构，采用Spring、MySQL、Tomcat、Redis、Kafka、RocketMQ等开源技术，扩展性强。  
+8. 基于Java EE平台，微服务架构，采用Spring、MySQL、Tomcat、Redis、MQ等开源技术，扩展性强。  
 
 9. 开源、安全、自主可控，许可证 Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey版权声明</a>。 
 
@@ -121,11 +121,10 @@ QQ交流群：<b>434469201</b>
 
 | 序号    | 计划    |  时间  |
 | --------| :-----  | :----  |
-| 1     | Ant Design of Angular                                     |  2022Q2  |
-| 2     | Java 17+                                                  |  2022Q4  |
-| 3     | Jakarta EE 9+                                             |  2022Q4  |
-| 4     | Spring Framework 6                                        |  2022Q4  |
-| 5     | Spring Boot 3                                             |  2022Q4  |
+| 1     | Java 17+                                                  |  2022Q4  |
+| 2     | Jakarta EE 9+                                             |  2022Q4  |
+| 3     | Spring Framework 6                                        |  2022Q4  |
+| 4     | Spring Boot 3                                             |  2022Q4  |
 
 
 # 接入登记
