@@ -41,7 +41,7 @@ public class SessionListenerJob extends AbstractScheduleJob   implements Job , S
         jobStatus = JOBSTATUS.RUNNING;
         try {
             if(sessionService != null) { 
-            	for (HistoryLogin onlineSession : sessionService.queryOnlineTicket()) {
+            	for (HistoryLogin onlineSession : sessionService.querySessions()) {
             		if(sessionService.get(onlineSession.getSessionId()) == null) {
             			sessionService.terminate(
             					onlineSession.getSessionId(), 

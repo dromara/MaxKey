@@ -52,32 +52,35 @@ public class RedisMomentaryService implements MomentaryService {
 	}
 
 	@Override
-	public  void put(String ticket , String name, Object value){
+	public  void put(String sessionId , String name, Object value){
 		RedisConnection conn = connectionFactory.getConnection();
-		conn.setexObject(getKey(ticket , name), validitySeconds, value);
+		conn.setexObject(getSessionKey(sessionId , name), validitySeconds, value);
+		_logger.trace("key {}, validitySeconds {}, value {}",getSessionKey(sessionId , name),validitySeconds,value);
 		conn.close();
 	}
 
     @Override
-    public Object get(String ticket , String name) {
+    public Object get(String sessionId , String name) {
         RedisConnection conn = connectionFactory.getConnection();
-        Object value = conn.getObject(getKey(ticket , name));
+        Object value = conn.getObject(getSessionKey(sessionId , name));
+        _logger.trace("key {}, value {}",getSessionKey(sessionId , name),value);
         conn.close();
         return value;
     }
 
 	@Override
-	public Object remove(String ticket, String name) {
+	public Object remove(String sessionId, String name) {
 		RedisConnection conn = connectionFactory.getConnection();
-        Object value = conn.getObject(getKey(ticket , name));
-        conn.delete(getKey(ticket , name));
+        Object value = conn.getObject(getSessionKey(sessionId , name));
+        conn.delete(getSessionKey(sessionId , name));
         conn.close();
+        _logger.trace("key {}, value {}",getSessionKey(sessionId , name),value);
         return value;
 	}
 	
 
-    private String getKey(String ticket , String name) {
-    	return PREFIX + ticket + name;
+    private String getSessionKey(String sessionId , String name) {
+    	return PREFIX + sessionId + name;
     }
 
 

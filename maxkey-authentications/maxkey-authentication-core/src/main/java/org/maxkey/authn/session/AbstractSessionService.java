@@ -47,11 +47,11 @@ public class AbstractSessionService  implements SessionService{
     		"update mxk_history_login set logouttime = ? ,sessionstatus = 7 where  sessionid = ?";
 
     @Override
-	public List<HistoryLogin> queryOnlineTicket() {
-		List<HistoryLogin> listOnlineTicket = jdbcTemplate.query(
+	public List<HistoryLogin> querySessions() {
+		List<HistoryLogin> listSessions = jdbcTemplate.query(
 				DEFAULT_DEFAULT_SELECT_STATEMENT, 
 				new OnlineTicketRowMapper());
-		return listOnlineTicket;
+		return listSessions;
 	}
 	
     public void profileLastLogoffTime(String userId,String lastLogoffTime) {
@@ -93,27 +93,27 @@ public class AbstractSessionService  implements SessionService{
 	}
 
 	@Override
-	public void store(String ticketId, Session ticket) {
+	public void store(String sessionId, Session session) {
 		
 	}
 
 	@Override
-	public Session remove(String ticket) {
+	public Session remove(String sessionId) {
 		return null;
 	}
 
 	@Override
-	public Session get(String ticketId) {
+	public Session get(String sessionId) {
 		return null;
 	}
 
 	@Override
-	public void refresh(String ticketId, LocalTime refreshTime) {
+	public void refresh(String sessionId, LocalTime refreshTime) {
 		
 	}
 
 	@Override
-	public void refresh(String ticketId) {
+	public void refresh(String sessionId) {
 		
 	}
 

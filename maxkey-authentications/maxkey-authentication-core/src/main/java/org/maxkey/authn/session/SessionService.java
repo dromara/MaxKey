@@ -24,19 +24,19 @@ import org.maxkey.entity.HistoryLogin;
 
 public interface SessionService {
 
-	public  void store(String ticketId, Session ticket);
+	public  void store(String sessionId, Session session);
 
-    public  Session remove(String ticket);
+    public  Session remove(String sessionId);
     
-    public  Session get(String ticketId);
+    public  Session get(String sessionId);
     
-    public void refresh(String ticketId ,LocalTime refreshTime);
+    public void refresh(String sessionId ,LocalTime refreshTime);
     
-    public void refresh(String ticketId);
+    public void refresh(String sessionId);
 
     public void setValiditySeconds(int validitySeconds);
     
-    public List<HistoryLogin> queryOnlineTicket();
+    public List<HistoryLogin> querySessions();
     
-    public void terminate(String onlineTicket,String userId,String username);
+    public void terminate(String sessionId,String userId,String username);
 }

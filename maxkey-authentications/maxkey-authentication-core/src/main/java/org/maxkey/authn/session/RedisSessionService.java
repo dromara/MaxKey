@@ -58,25 +58,25 @@ public class RedisSessionService extends AbstractSessionService {
 	}
 
 	@Override
-	public void store(String ticketId, Session ticket) {
+	public void store(String sessionId, Session ticket) {
 		RedisConnection conn=connectionFactory.getConnection();
-		conn.setexObject(PREFIX+ticketId, serviceTicketValiditySeconds, ticket);
+		conn.setexObject(PREFIX+sessionId, serviceTicketValiditySeconds, ticket);
 		conn.close();
 	}
 
 	@Override
-	public Session remove(String ticketId) {
+	public Session remove(String sessionId) {
 		RedisConnection conn=connectionFactory.getConnection();
-		Session ticket = conn.getObject(PREFIX+ticketId);
-		conn.delete(PREFIX+ticketId);
+		Session ticket = conn.getObject(PREFIX+sessionId);
+		conn.delete(PREFIX+sessionId);
 		conn.close();
 		return ticket;
 	}
 
     @Override
-    public Session get(String ticketId) {
+    public Session get(String sessionId) {
         RedisConnection conn=connectionFactory.getConnection();
-        Session session = conn.getObject(PREFIX+ticketId);
+        Session session = conn.getObject(PREFIX+sessionId);
         conn.close();
         return session;
     }
@@ -95,8 +95,8 @@ public class RedisSessionService extends AbstractSessionService {
     }
     
     @Override
-    public void refresh(String ticketId) {
-        Session session = get(ticketId);
+    public void refresh(String sessionId) {
+        Session session = get(sessionId);
         
         LocalTime currentTime = LocalTime.now();
         Duration duration = Duration.between(currentTime, session.getLastAccessTime());
@@ -105,7 +105,7 @@ public class RedisSessionService extends AbstractSessionService {
         
         if(duration.getSeconds() > Session.MAX_EXPIRY_DURATION) {
         	session.setLastAccessTime(currentTime);
-            refresh(ticketId,currentTime);
+            refresh(sessionId,currentTime);
         }
     }
 
