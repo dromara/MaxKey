@@ -26,7 +26,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.online.OnlineTicket;
+import org.maxkey.authn.session.Session;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
@@ -149,12 +149,12 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		}
 		
 		if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
-		    String onlineTicketId = AuthorizationUtils.getPrincipal().getOnlineTicket().getFormattedTicketId();
-		    OnlineTicket onlineTicket  = onlineTicketService.get(onlineTicketId);
+		    String sessionId = AuthorizationUtils.getPrincipal().getSession().getFormattedId();
+		    Session session  = sessionService.get(sessionId);
 		    //set cas ticket as OnlineTicketId
 		    casDetails.setOnlineTicket(ticket);
-		    onlineTicket.setAuthorizedApp(casDetails);
-		    onlineTicketService.store(onlineTicketId, onlineTicket);
+		    session.setAuthorizedApp(casDetails);
+		    sessionService.store(sessionId, session);
 		}
 		
 		_logger.debug("redirect to CAS Client URL {}" , callbackUrl);

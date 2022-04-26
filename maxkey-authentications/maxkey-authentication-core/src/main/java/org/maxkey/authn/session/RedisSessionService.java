@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authn.online;
+package org.maxkey.authn.session;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -27,18 +27,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 
-public class RedisOnlineTicketService extends AbstractOnlineTicketService {
-    private static final Logger _logger = LoggerFactory.getLogger(RedisOnlineTicketService.class);
+public class RedisSessionService extends AbstractSessionService {
+    private static final Logger _logger = LoggerFactory.getLogger(RedisSessionService.class);
 	
 	protected int serviceTicketValiditySeconds = 60 * 30; //default 30 minutes.
 	
 	RedisConnectionFactory connectionFactory;
 	
-	public static String PREFIX="REDIS_ONLINE_TICKET_";
+	public static String PREFIX="REDIS_SESSION_";
 	/**
 	 * @param connectionFactory
 	 */
-	public RedisOnlineTicketService(
+	public RedisSessionService(
 			RedisConnectionFactory connectionFactory,
 			JdbcTemplate jdbcTemplate) {
 		super();
@@ -49,7 +49,7 @@ public class RedisOnlineTicketService extends AbstractOnlineTicketService {
 	/**
 	 * 
 	 */
-	public RedisOnlineTicketService() {
+	public RedisSessionService() {
 		
 	}
 
@@ -58,27 +58,27 @@ public class RedisOnlineTicketService extends AbstractOnlineTicketService {
 	}
 
 	@Override
-	public void store(String ticketId, OnlineTicket ticket) {
+	public void store(String ticketId, Session ticket) {
 		RedisConnection conn=connectionFactory.getConnection();
 		conn.setexObject(PREFIX+ticketId, serviceTicketValiditySeconds, ticket);
 		conn.close();
 	}
 
 	@Override
-	public OnlineTicket remove(String ticketId) {
+	public Session remove(String ticketId) {
 		RedisConnection conn=connectionFactory.getConnection();
-		OnlineTicket ticket = conn.getObject(PREFIX+ticketId);
+		Session ticket = conn.getObject(PREFIX+ticketId);
 		conn.delete(PREFIX+ticketId);
 		conn.close();
 		return ticket;
 	}
 
     @Override
-    public OnlineTicket get(String ticketId) {
+    public Session get(String ticketId) {
         RedisConnection conn=connectionFactory.getConnection();
-        OnlineTicket ticket = conn.getObject(PREFIX+ticketId);
+        Session session = conn.getObject(PREFIX+ticketId);
         conn.close();
-        return ticket;
+        return session;
     }
 
     @Override
@@ -88,23 +88,23 @@ public class RedisOnlineTicketService extends AbstractOnlineTicketService {
     }
 
     @Override
-    public void refresh(String ticketId,LocalTime refreshTime) {
-        OnlineTicket onlineTicket = get(ticketId);
-        onlineTicket.setTicketTime(refreshTime);
-        store(ticketId , onlineTicket);
+    public void refresh(String sessionId,LocalTime refreshTime) {
+        Session session = get(sessionId);
+        session.setLastAccessTime(refreshTime);
+        store(sessionId , session);
     }
     
     @Override
     public void refresh(String ticketId) {
-        OnlineTicket onlineTicket = get(ticketId);
+        Session session = get(ticketId);
         
         LocalTime currentTime = LocalTime.now();
-        Duration duration = Duration.between(currentTime, onlineTicket.getTicketTime());
+        Duration duration = Duration.between(currentTime, session.getLastAccessTime());
         
         _logger.trace("OnlineTicket duration " + duration.getSeconds());
         
-        if(duration.getSeconds() > OnlineTicket.MAX_EXPIRY_DURATION) {
-            onlineTicket.setTicketTime(currentTime);
+        if(duration.getSeconds() > Session.MAX_EXPIRY_DURATION) {
+        	session.setLastAccessTime(currentTime);
             refresh(ticketId,currentTime);
         }
     }

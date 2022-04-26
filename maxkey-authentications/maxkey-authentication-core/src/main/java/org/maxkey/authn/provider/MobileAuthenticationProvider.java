@@ -19,8 +19,8 @@ package org.maxkey.authn.provider;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
-import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authn.session.SessionService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.UserInfo;
@@ -60,11 +60,11 @@ public class MobileAuthenticationProvider extends AbstractAuthenticationProvider
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    OtpAuthnService otpAuthnService,
-    	    OnlineTicketService onlineTicketServices) {
+    	    SessionService sessionService) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
 		this.otpAuthnService = otpAuthnService;
-		this.onlineTicketServices = onlineTicketServices;
+		this.sessionService = sessionService;
 	}
 
     @Override

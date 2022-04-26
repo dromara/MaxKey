@@ -97,7 +97,7 @@ public class AuthJwtService {
 		 JWTClaimsSet jwtClaims =new  JWTClaimsSet.Builder()
 				.issuer(authJwkConfig.getIssuer())
 				.subject(subject)
-				.jwtID(principal.getOnlineTicket().getTicketId())
+				.jwtID(principal.getSession().getId())
 				.issueTime(currentDateTime.toDate())
 				.expirationTime(expirationTime)
 				.claim("locale", userInfo.getLocale())

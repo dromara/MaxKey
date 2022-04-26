@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.SigninPrincipal;
-import org.maxkey.authn.online.OnlineTicket;
+import org.maxkey.authn.session.Session;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.web.WebConstants;
@@ -48,9 +48,9 @@ public class OAuth2UserDetailsService implements UserDetailsService {
 		String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + java.util.UUID.randomUUID().toString().toLowerCase();
 		
 		SigninPrincipal principal = new SigninPrincipal(userInfo);
-		OnlineTicket onlineTicket = new OnlineTicket(onlineTickitId);
+		Session onlineTicket = new Session(onlineTickitId);
 		//set OnlineTicket
-		principal.setOnlineTicket(onlineTicket);
+		principal.setSession(onlineTicket);
         
         ArrayList<GrantedAuthority> grantedAuthoritys = loginRepository.grantAuthority(userInfo);
         principal.setAuthenticated(true);

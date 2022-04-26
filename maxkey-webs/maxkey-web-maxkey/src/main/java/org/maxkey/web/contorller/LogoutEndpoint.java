@@ -22,8 +22,8 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import org.maxkey.authn.annotation.CurrentUser;
-import org.maxkey.authn.online.OnlineTicket;
-import org.maxkey.authn.online.OnlineTicketService;
+import org.maxkey.authn.session.Session;
+import org.maxkey.authn.session.SessionService;
 import org.maxkey.authz.singlelogout.SamlSingleLogout;
 import org.maxkey.authz.singlelogout.DefaultSingleLogout;
 import org.maxkey.authz.singlelogout.LogoutType;
@@ -48,14 +48,14 @@ public class LogoutEndpoint {
 	private static Logger _logger = LoggerFactory.getLogger(LogoutEndpoint.class);
 
 	@Autowired
-    protected OnlineTicketService onlineTicketService;
+    protected SessionService sessionService;
 	
 	@Operation(summary = "单点注销接口", description = "reLoginUrl跳转地址",method="GET")
 	@RequestMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
  	public  ResponseEntity<?> logout(@CurrentUser UserInfo currentUser){
 		//if logined in have onlineTicket ,need remove or logout back
 		String onlineTicketId = currentUser.getOnlineTicket();
- 		OnlineTicket onlineTicket = onlineTicketService.get(onlineTicketId);
+ 		Session onlineTicket = sessionService.get(onlineTicketId);
  		if(onlineTicket != null) {
 	 		Set<Entry<String, Apps>> entrySet = onlineTicket.getAuthorizedApps().entrySet();
 	 
@@ -74,7 +74,7 @@ public class LogoutEndpoint {
 	            }
 	        }
 	        
-	        onlineTicketService.terminate(
+	        sessionService.terminate(
 	        		onlineTicketId, 
 	        		currentUser.getId(),
 	        		currentUser.getUsername());

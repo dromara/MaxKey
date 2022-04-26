@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authn.online;
+package org.maxkey.authn.session;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,8 +32,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-public class AbstractOnlineTicketService  implements OnlineTicketService{
-	private static Logger _logger = LoggerFactory.getLogger(AbstractOnlineTicketService.class);
+public class AbstractSessionService  implements SessionService{
+	private static Logger _logger = LoggerFactory.getLogger(AbstractSessionService.class);
 	
 	protected JdbcTemplate jdbcTemplate;
 	
@@ -93,17 +93,17 @@ public class AbstractOnlineTicketService  implements OnlineTicketService{
 	}
 
 	@Override
-	public void store(String ticketId, OnlineTicket ticket) {
+	public void store(String ticketId, Session ticket) {
 		
 	}
 
 	@Override
-	public OnlineTicket remove(String ticket) {
+	public Session remove(String ticket) {
 		return null;
 	}
 
 	@Override
-	public OnlineTicket get(String ticketId) {
+	public Session get(String ticketId) {
 		return null;
 	}
 

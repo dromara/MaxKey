@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authn.online;
+package org.maxkey.authn.session;
 
 import java.io.Serializable;
 import java.time.LocalTime;
@@ -25,61 +25,75 @@ import org.maxkey.entity.apps.Apps;
 import org.maxkey.web.WebContext;
 import org.springframework.security.core.Authentication;
 
-public class OnlineTicket implements Serializable{
+public class Session implements Serializable{
 	private static final long   serialVersionUID = 9008067569150338296L;
 	
-	public static final  String ONLINE_TICKET_PREFIX = "OT";
+	public static final  String SESSION_PREFIX = "OT";
     
     public static final  int    MAX_EXPIRY_DURATION = 60 * 10; //default 10 minutes.
     
-    public String ticketId;
+    public String id;
     
-    public LocalTime ticketTime;
+    public LocalTime startTimestamp;
+    
+    public LocalTime lastAccessTime;
     
     public Authentication authentication;
     
     private HashMap<String , Apps> authorizedApps = new HashMap<String , Apps>();
     
-    public OnlineTicket() {
+    public Session() {
         super();
-        this.ticketId = WebContext.genId();;
-        this.ticketTime = LocalTime.now();
+        this.id = WebContext.genId();;
+        this.startTimestamp = LocalTime.now();
+        this.lastAccessTime = LocalTime.now();
     }
 
-    public OnlineTicket(String ticketId) {
+    public Session(String sessionId) {
         super();
-        this.ticketId = ticketId;
-        this.ticketTime = LocalTime.now();
+        this.id = sessionId;
+        this.startTimestamp = LocalTime.now();
+        this.lastAccessTime = LocalTime.now();
     }
     
-    public OnlineTicket(String ticketId,Authentication authentication) {
+    public Session(String sessionId,Authentication authentication) {
         super();
-        this.ticketId = ticketId;
+        this.id = sessionId;
         this.authentication = authentication;
-        this.ticketTime = LocalTime.now();
+        this.startTimestamp = LocalTime.now();
+        this.lastAccessTime = LocalTime.now();
     }
     
-    public String getTicketId() {
-		return ticketId;
+    public String getId() {
+		return id;
 	}
 
-	public String getFormattedTicketId() {
-        return ticketId;
+	public String getFormattedId() {
+        return id;
     }
 
-    public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
+    public void setId(String ticketId) {
+        this.id = ticketId;
     }
     
-    public LocalTime getTicketTime() {
-        return ticketTime;
-    }
 
-    public void setTicketTime(LocalTime ticketTime) {
-        this.ticketTime = ticketTime;
-    }
+    public LocalTime getStartTimestamp() {
+		return startTimestamp;
+	}
 
-    public Authentication getAuthentication() {
+	public void setStartTimestamp(LocalTime startTimestamp) {
+		this.startTimestamp = startTimestamp;
+	}
+
+	public LocalTime getLastAccessTime() {
+		return lastAccessTime;
+	}
+
+	public void setLastAccessTime(LocalTime lastAccessTime) {
+		this.lastAccessTime = lastAccessTime;
+	}
+
+	public Authentication getAuthentication() {
         return authentication;
     }
 
@@ -100,13 +114,17 @@ public class OnlineTicket implements Serializable{
     }
 
     @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("OnlineTicket [ticketId=");
-        builder.append(ticketId);
-        builder.append("]");
-        return builder.toString();
-    }
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Session [id=");
+		builder.append(id);
+		builder.append(", startTimestamp=");
+		builder.append(startTimestamp);
+		builder.append(", lastAccessTime=");
+		builder.append(lastAccessTime);
+		builder.append("]");
+		return builder.toString();
+	}
     
     
 }

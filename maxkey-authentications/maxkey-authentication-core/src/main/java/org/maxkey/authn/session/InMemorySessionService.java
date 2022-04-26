@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authn.online;
+package org.maxkey.authn.session;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -29,41 +29,41 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 
-public class InMemoryOnlineTicketService extends AbstractOnlineTicketService{
-    private static final Logger _logger = LoggerFactory.getLogger(InMemoryOnlineTicketService.class);
+public class InMemorySessionService extends AbstractSessionService{
+    private static final Logger _logger = LoggerFactory.getLogger(InMemorySessionService.class);
 
-	protected  static  Cache<String, OnlineTicket> onlineTicketStore = 
+	protected  static  Cache<String, Session> sessionStore = 
         	        Caffeine.newBuilder()
         	            .expireAfterWrite(30, TimeUnit.MINUTES)
         	            .maximumSize(200000)
         	            .build();
 	
-	public InMemoryOnlineTicketService(JdbcTemplate jdbcTemplate) {
+	public InMemorySessionService(JdbcTemplate jdbcTemplate) {
         super();
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-	public void store(String ticketId, OnlineTicket ticket) {
-	    onlineTicketStore.put(ticketId, ticket);
+	public void store(String sessionId, Session session) {
+    	sessionStore.put(sessionId, session);
 	}
 
 	@Override
-	public OnlineTicket remove(String ticketId) {
-	    OnlineTicket ticket=onlineTicketStore.getIfPresent(ticketId);	
-	    onlineTicketStore.invalidate(ticketId);
-		return ticket;
+	public Session remove(String sessionId) {
+	    Session session = sessionStore.getIfPresent(sessionId);	
+	    sessionStore.invalidate(sessionId);
+		return session;
 	}
 
     @Override
-    public OnlineTicket get(String ticketId) {
-        OnlineTicket ticket=onlineTicketStore.getIfPresent(ticketId); 
-        return ticket;
+    public Session get(String sessionId) {
+        Session session = sessionStore.getIfPresent(sessionId); 
+        return session;
     }
 
     @Override
     public void setValiditySeconds(int validitySeconds) {
-        onlineTicketStore = 
+    	sessionStore = 
                 Caffeine.newBuilder()
                     .expireAfterWrite(validitySeconds/60, TimeUnit.MINUTES)
                     .maximumSize(200000)
@@ -72,24 +72,24 @@ public class InMemoryOnlineTicketService extends AbstractOnlineTicketService{
     }
 
     @Override
-    public void refresh(String ticketId,LocalTime refreshTime) {
-        OnlineTicket onlineTicket = get(ticketId);
-        onlineTicket.setTicketTime(refreshTime);
-        store(ticketId , onlineTicket);
+    public void refresh(String sessionId,LocalTime refreshTime) {
+        Session session = get(sessionId);
+        session.setLastAccessTime(refreshTime);
+        store(sessionId , session);
     }
 
     @Override
-    public void refresh(String ticketId) {
-        OnlineTicket onlineTicket = get(ticketId);
+    public void refresh(String sessionId) {
+        Session session = get(sessionId);
         
         LocalTime currentTime = LocalTime.now();
-        Duration duration = Duration.between(currentTime, onlineTicket.getTicketTime());
+        Duration duration = Duration.between(currentTime, session.getLastAccessTime());
         
         _logger.trace("OnlineTicket duration " + duration.getSeconds());
         
-        if(duration.getSeconds() > OnlineTicket.MAX_EXPIRY_DURATION) {
-            onlineTicket.setTicketTime(currentTime);
-            refresh(ticketId,currentTime);
+        if(duration.getSeconds() > Session.MAX_EXPIRY_DURATION) {
+        	session.setLastAccessTime(currentTime);
+            refresh(sessionId,currentTime);
         }
     }
 

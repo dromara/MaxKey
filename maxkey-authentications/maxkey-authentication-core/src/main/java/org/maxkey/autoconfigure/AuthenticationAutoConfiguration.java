@@ -23,13 +23,13 @@ import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.jwt.CongressService;
 import org.maxkey.authn.jwt.InMemoryCongressService;
 import org.maxkey.authn.jwt.RedisCongressService;
-import org.maxkey.authn.online.OnlineTicketService;
-import org.maxkey.authn.online.OnlineTicketServiceFactory;
 import org.maxkey.authn.provider.AuthenticationProviderFactory;
 import org.maxkey.authn.provider.MobileAuthenticationProvider;
 import org.maxkey.authn.provider.NormalAuthenticationProvider;
 import org.maxkey.authn.provider.TrustedAuthenticationProvider;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authn.session.SessionService;
+import org.maxkey.authn.session.SessionServiceFactory;
 import org.maxkey.authn.web.SessionListenerAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.configuration.AuthJwkConfig;
@@ -86,14 +86,14 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     public AbstractAuthenticationProvider normalAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
-    	    OnlineTicketService onlineTicketServices,
+    	    SessionService sessionService,
     	    AuthJwtService authJwtService
     		) {
     	_logger.debug("init authentication Provider .");
     	return new NormalAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
-        		onlineTicketServices,
+        		sessionService,
         		authJwtService
         	);
     }
@@ -103,14 +103,14 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    OtpAuthnService otpAuthnService,
-    	    OnlineTicketService onlineTicketServices
+    	    SessionService sessionService
     		) {
     	_logger.debug("init Mobile authentication Provider .");
     	return new MobileAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
         		otpAuthnService,
-        		onlineTicketServices
+        		sessionService
         	);
     }
 
@@ -118,13 +118,13 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     public AbstractAuthenticationProvider trustedAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
-    	    OnlineTicketService onlineTicketServices
+    	    SessionService sessionService
     		) {
     	_logger.debug("init Mobile authentication Provider .");
     	return new TrustedAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
-        		onlineTicketServices
+        		sessionService
         	);
     }
     
@@ -181,18 +181,18 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     }
     
     
-    @Bean(name = "onlineTicketService")
-    public OnlineTicketService onlineTicketService(
+    @Bean(name = "sessionService")
+    public SessionService sessionService(
             @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory,
             @Value("${server.servlet.session.timeout:1800}") int timeout
             ) {
-        OnlineTicketService  onlineTicketService  = 
-                new OnlineTicketServiceFactory().getService(persistence, jdbcTemplate, redisConnFactory);
-        onlineTicketService.setValiditySeconds(timeout);
+        SessionService  sessionService  = 
+                new SessionServiceFactory().getService(persistence, jdbcTemplate, redisConnFactory);
+        sessionService.setValiditySeconds(timeout);
         _logger.trace("onlineTicket timeout " + timeout);
-        return onlineTicketService;
+        return sessionService;
     }
     
     @Bean(name = "sessionListenerAdapter")

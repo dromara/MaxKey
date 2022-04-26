@@ -17,7 +17,7 @@
 
 package org.maxkey.authz.cas.endpoint;
 
-import org.maxkey.authn.online.OnlineTicketService;
+import org.maxkey.authn.session.SessionService;
 import org.maxkey.authz.cas.endpoint.ticket.TicketServices;
 import org.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
 import org.maxkey.persistence.service.AppsCasDetailsService;
@@ -49,7 +49,7 @@ public class CasBaseAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
     protected TicketServices casTicketGrantingTicketServices;
     
     @Autowired
-    protected OnlineTicketService onlineTicketService;
+    protected SessionService sessionService;
     
     @Autowired
     @Qualifier("casProxyGrantingTicketServices")

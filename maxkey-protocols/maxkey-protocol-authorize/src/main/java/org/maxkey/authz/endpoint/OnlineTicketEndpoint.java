@@ -17,8 +17,8 @@
 
 package org.maxkey.authz.endpoint;
 
-import org.maxkey.authn.online.OnlineTicket;
-import org.maxkey.authn.online.OnlineTicketService;
+import org.maxkey.authn.session.Session;
+import org.maxkey.authn.session.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,14 +34,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class OnlineTicketEndpoint {
 
     @Autowired
-    protected OnlineTicketService onlineTicketService;
+    protected SessionService onlineTicketService;
     
     @Operation(summary = "在线ticket验证接口", description = "",method="GET")
     @ResponseBody
     @RequestMapping(value="/validate") 
     public String ticketValidate(
             @RequestParam(value ="ticket",required = true) String ticket) {
-        OnlineTicket onlineTicket = onlineTicketService.get(ticket);
-        return onlineTicket == null ? "" : onlineTicket.getFormattedTicketId();
+        Session onlineTicket = onlineTicketService.get(ticket);
+        return onlineTicket == null ? "" : onlineTicket.getFormattedId();
     }
 }

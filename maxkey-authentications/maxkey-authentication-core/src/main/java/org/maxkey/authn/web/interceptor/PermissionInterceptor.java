@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.jwt.AuthJwtService;
-import org.maxkey.authn.online.OnlineTicketService;
+import org.maxkey.authn.session.SessionService;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.slf4j.Logger;
@@ -44,7 +44,7 @@ public class PermissionInterceptor  implements AsyncHandlerInterceptor  {
 	ApplicationConfig applicationConfig;
 	
 	@Autowired
-	OnlineTicketService onlineTicketService;
+	SessionService sessionService;
 	
 	@Autowired
 	AuthJwtService authJwtService ;
@@ -59,7 +59,7 @@ public class PermissionInterceptor  implements AsyncHandlerInterceptor  {
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 _logger.trace("Permission Interceptor .");
-		 AuthorizationUtils.authenticate(request, authJwtService, onlineTicketService);
+		 AuthorizationUtils.authenticate(request, authJwtService, sessionService);
 		 SigninPrincipal principal = AuthorizationUtils.getPrincipal();
 		//判断用户是否登录,判断用户是否登录用户
 		if(principal == null){

@@ -66,7 +66,7 @@ public class OAuthDefaultUserInfoAdapter extends AbstractAuthorizeAdapter {
 		beanMap.put("state", userInfo.getWorkRegion());
 		beanMap.put("gender", userInfo.getGender());
 		beanMap.put("institution", userInfo.getInstId());
-		beanMap.put(WebConstants.ONLINE_TICKET_NAME, principal.getOnlineTicket().getFormattedTicketId());
+		beanMap.put(WebConstants.ONLINE_TICKET_NAME, principal.getSession().getFormattedId());
 		
 		String info= JsonUtils.object2Json(beanMap);
 		

@@ -15,20 +15,20 @@
  */
  
 
-package org.maxkey.authn.online;
+package org.maxkey.authn.session;
 
 import java.time.LocalTime;
 import java.util.List;
 
 import org.maxkey.entity.HistoryLogin;
 
-public interface OnlineTicketService {
+public interface SessionService {
 
-	public  void store(String ticketId, OnlineTicket ticket);
+	public  void store(String ticketId, Session ticket);
 
-    public  OnlineTicket remove(String ticket);
+    public  Session remove(String ticket);
     
-    public  OnlineTicket get(String ticketId);
+    public  Session get(String ticketId);
     
     public void refresh(String ticketId ,LocalTime refreshTime);
     

@@ -60,7 +60,7 @@ public class AuthJwt implements Serializable {
 		SigninPrincipal principal = ((SigninPrincipal)authentication.getPrincipal());
 		
 		this.token = token;
-		this.ticket = principal.getOnlineTicket().getTicketId();
+		this.ticket = principal.getSession().getId();
 		
 		this.id = principal.getUserInfo().getId();
 		this.username = principal.getUserInfo().getUsername();

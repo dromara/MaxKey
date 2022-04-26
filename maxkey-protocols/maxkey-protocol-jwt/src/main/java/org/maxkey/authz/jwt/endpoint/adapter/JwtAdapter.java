@@ -82,7 +82,7 @@ public class JwtAdapter extends AbstractAuthorizeAdapter {
 				.claim("user_id", userInfo.getId())
 				.claim("external_id", userInfo.getId())
 				.claim("locale", userInfo.getLocale())
-				.claim(WebConstants.ONLINE_TICKET_NAME, principal.getOnlineTicket().getFormattedTicketId())
+				.claim(WebConstants.ONLINE_TICKET_NAME, principal.getSession().getFormattedId())
 				.claim("kid", jwtDetails.getId()+ "_sig")
 				.claim("institution", userInfo.getInstId())
 				.build();

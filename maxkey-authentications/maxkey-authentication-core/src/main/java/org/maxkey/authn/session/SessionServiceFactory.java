@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authn.online;
+package org.maxkey.authn.session;
 
 import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
@@ -23,26 +23,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class OnlineTicketServiceFactory {
+public class SessionServiceFactory {
 	private static final  Logger _logger = 
-            LoggerFactory.getLogger(OnlineTicketServiceFactory.class);
+            LoggerFactory.getLogger(SessionServiceFactory.class);
 	
-	 public OnlineTicketService getService(
+	 public SessionService getService(
 			 	int persistence,
 			 	JdbcTemplate jdbcTemplate,
 	            RedisConnectionFactory redisConnFactory){
 		 
-		 OnlineTicketService onlineTicketServices = null;
+		 SessionService sessionService = null;
 		if (persistence == ConstsPersistence.INMEMORY) {
-		    onlineTicketServices = new InMemoryOnlineTicketService(jdbcTemplate);
-		    _logger.debug("InMemoryOnlineTicketServices");
+			sessionService = new InMemorySessionService(jdbcTemplate);
+		    _logger.debug("InMemorySessionService");
 		} else if (persistence == ConstsPersistence.JDBC) {
-		    _logger.debug("OnlineTicketServices not support "); 
+		    _logger.debug("JdbcSessionService not support "); 
 		} else if (persistence == ConstsPersistence.REDIS) {
-		    onlineTicketServices = new RedisOnlineTicketService(redisConnFactory,jdbcTemplate);
-		    _logger.debug("RedisOnlineTicketServices");
+			sessionService = new RedisSessionService(redisConnFactory,jdbcTemplate);
+		    _logger.debug("RedisSessionService");
 		}
 		
-		return onlineTicketServices;
+		return sessionService;
 	}
 }

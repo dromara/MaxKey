@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authn.SigninPrincipal;
 import org.maxkey.authn.jwt.AuthJwtService;
-import org.maxkey.authn.online.OnlineTicket;
-import org.maxkey.authn.online.OnlineTicketService;
+import org.maxkey.authn.session.Session;
+import org.maxkey.authn.session.SessionService;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.web.WebConstants;
@@ -42,13 +42,13 @@ public class AuthorizationUtils {
 	public static  void authenticateWithCookie(
 			HttpServletRequest request,
 			AuthJwtService authJwtService,
-			OnlineTicketService onlineTicketService
+			SessionService sessionService
 			) throws ParseException{
 		 if(getAuthentication() == null) {
 			Cookie authCookie = WebContext.getCookie(request, Authorization_Cookie);
 			if(authCookie != null ) {
 		    	String  authorization =  authCookie.getValue();
-		    	doJwtAuthenticate(authorization,authJwtService,onlineTicketService);
+		    	doJwtAuthenticate(authorization,authJwtService,sessionService);
 		    	_logger.debug("congress automatic authenticated .");
 			}
 		 }
@@ -57,12 +57,12 @@ public class AuthorizationUtils {
 	public static  void authenticate(
 			HttpServletRequest request,
 			AuthJwtService authJwtService,
-			OnlineTicketService onlineTicketService
+			SessionService sessionService
 			) throws ParseException{
 		 if(getAuthentication() == null) {
 			 String  authorization = AuthorizationHeaderUtils.resolveBearer(request);
 			if(authorization != null ) {
-				doJwtAuthenticate(authorization,authJwtService,onlineTicketService);
+				doJwtAuthenticate(authorization,authJwtService,sessionService);
 				_logger.debug("Authorization automatic authenticated .");
 			}
 		 }
@@ -71,10 +71,10 @@ public class AuthorizationUtils {
 	public static void doJwtAuthenticate(
 			String  authorization,
 			AuthJwtService authJwtService,
-			OnlineTicketService onlineTicketService) throws ParseException {
+			SessionService sessionService) throws ParseException {
 		if(authJwtService.validateJwtToken(authorization)) {
 			String ticket = authJwtService.resolveJWTID(authorization);
-			OnlineTicket onlineTicket = onlineTicketService.get(ticket);
+			Session onlineTicket = sessionService.get(ticket);
 			if(onlineTicket != null) {
 				setAuthentication(onlineTicket.getAuthentication());
 			}

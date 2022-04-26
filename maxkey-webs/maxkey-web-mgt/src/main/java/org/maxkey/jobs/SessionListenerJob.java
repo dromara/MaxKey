@@ -17,7 +17,7 @@ package org.maxkey.jobs;
 
 import java.io.Serializable;
 
-import org.maxkey.authn.online.OnlineTicketService;
+import org.maxkey.authn.session.SessionService;
 import org.maxkey.entity.HistoryLogin;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -25,12 +25,12 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TicketListenerJob extends AbstractScheduleJob   implements Job , Serializable {
-	final static Logger _logger = LoggerFactory.getLogger(TicketListenerJob.class);
+public class SessionListenerJob extends AbstractScheduleJob   implements Job , Serializable {
+	final static Logger _logger = LoggerFactory.getLogger(SessionListenerJob.class);
 	
 	private static final long serialVersionUID = 4782358765969474833L;
 	
-	OnlineTicketService onlineTicketService;
+	SessionService sessionService;
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -40,13 +40,13 @@ public class TicketListenerJob extends AbstractScheduleJob   implements Job , Se
 		 _logger.debug("TicketListener Job is running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
-            if(onlineTicketService != null) { 
-            	for (HistoryLogin onlineTicket : onlineTicketService.queryOnlineTicket()) {
-            		if(onlineTicketService.get(onlineTicket.getSessionId()) == null) {
-            			onlineTicketService.terminate(
-            					onlineTicket.getSessionId(), 
-            					onlineTicket.getUserId(), 
-            					onlineTicket.getUsername());
+            if(sessionService != null) { 
+            	for (HistoryLogin onlineSession : sessionService.queryOnlineTicket()) {
+            		if(sessionService.get(onlineSession.getSessionId()) == null) {
+            			sessionService.terminate(
+            					onlineSession.getSessionId(), 
+            					onlineSession.getUserId(), 
+            					onlineSession.getUsername());
             		}
             	}
             }
@@ -61,9 +61,9 @@ public class TicketListenerJob extends AbstractScheduleJob   implements Job , Se
 
 	 @Override
     void init(JobExecutionContext context){
-    	if(onlineTicketService == null) {
-    		onlineTicketService = 
-            		(OnlineTicketService) context.getMergedJobDataMap().get("service");
+    	if(sessionService == null) {
+    		sessionService = 
+            		(SessionService) context.getMergedJobDataMap().get("service");
         }
     }
 }

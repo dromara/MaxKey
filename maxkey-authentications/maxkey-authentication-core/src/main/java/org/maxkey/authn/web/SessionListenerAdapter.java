@@ -60,7 +60,7 @@ public class SessionListenerAdapter implements HttpSessionListener {
         			session.getId(), 
         			principal.getUserInfo().getId(),
         			principal.getUserInfo().getUsername(),
-        			principal.getOnlineTicket().getTicketId());
+        			principal.getSession().getId());
         }
         
     }

@@ -20,9 +20,9 @@ package org.maxkey.authn;
 import java.util.ArrayList;
 
 import org.maxkey.authn.jwt.AuthJwtService;
-import org.maxkey.authn.online.OnlineTicket;
-import org.maxkey.authn.online.OnlineTicketService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
+import org.maxkey.authn.session.Session;
+import org.maxkey.authn.session.SessionService;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
@@ -67,7 +67,7 @@ public abstract class AbstractAuthenticationProvider {
     
     protected OtpAuthnService otpAuthnService;
 
-    protected OnlineTicketService onlineTicketServices;
+    protected SessionService sessionService;
     
     protected AuthJwtService authJwtService;
     
@@ -102,13 +102,13 @@ public abstract class AbstractAuthenticationProvider {
      */
     public UsernamePasswordAuthenticationToken createOnlineTicket(LoginCredential credential,UserInfo userInfo) {
         //Online Tickit
-        OnlineTicket onlineTicket = new OnlineTicket();
+        Session onlineTicket = new Session();
 
-        userInfo.setOnlineTicket(onlineTicket.getTicketId());
+        userInfo.setOnlineTicket(onlineTicket.getId());
         
         SigninPrincipal principal = new SigninPrincipal(userInfo);
         //set OnlineTicket
-        principal.setOnlineTicket(onlineTicket);
+        principal.setSession(onlineTicket);
         ArrayList<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
         principal.setAuthenticated(true);
         
@@ -134,8 +134,8 @@ public abstract class AbstractAuthenticationProvider {
         
         onlineTicket.setAuthentication(authenticationToken);
         
-        //store onlineTicket
-        this.onlineTicketServices.store(onlineTicket.getTicketId(), onlineTicket);
+        //store session
+        this.sessionService.store(onlineTicket.getId(), onlineTicket);
         
         /*
          *  put Authentication to current session context
