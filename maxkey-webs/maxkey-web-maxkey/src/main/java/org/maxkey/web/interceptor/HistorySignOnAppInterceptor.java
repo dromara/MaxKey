@@ -20,7 +20,7 @@ package org.maxkey.web.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.entity.HistoryLoginApps;
 import org.maxkey.entity.UserInfo;
@@ -56,7 +56,7 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
             throws Exception {
         _logger.debug("preHandle");
         final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
-        SigninPrincipal principal = AuthorizationUtils.getPrincipal();
+        SignPrincipal principal = AuthorizationUtils.getPrincipal();
         if(principal != null && app !=null) {
             if(principal.getGrantedAuthorityApps().contains(new SimpleGrantedAuthority(app.getId()))) {
                 _logger.trace("preHandle have authority access " + app);
@@ -81,7 +81,7 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
        
         final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
         
-        SigninPrincipal principal = AuthorizationUtils.getPrincipal();
+        SignPrincipal principal = AuthorizationUtils.getPrincipal();
         if(principal != null && app !=null) {
         	final UserInfo userInfo = principal.getUserInfo();
         	String sessionId = principal.getSession().getId();

@@ -21,7 +21,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.session.SessionService;
 import org.maxkey.authn.web.AuthorizationUtils;
@@ -60,7 +60,7 @@ public class PermissionInterceptor  implements AsyncHandlerInterceptor  {
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 _logger.trace("Permission Interceptor .");
 		 AuthorizationUtils.authenticate(request, authJwtService, sessionService);
-		 SigninPrincipal principal = AuthorizationUtils.getPrincipal();
+		 SignPrincipal principal = AuthorizationUtils.getPrincipal();
 		//判断用户是否登录,判断用户是否登录用户
 		if(principal == null){
 			_logger.trace("No Authentication ... forward to /auth/entrypoint");

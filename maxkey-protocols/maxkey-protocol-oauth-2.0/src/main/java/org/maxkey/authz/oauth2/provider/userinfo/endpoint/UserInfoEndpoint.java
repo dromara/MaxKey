@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
@@ -114,7 +114,7 @@ public class UserInfoEndpoint {
 				 }else{
 					adapter =(AbstractAuthorizeAdapter)new OAuthDefaultUserInfoAdapter(clientDetails);
 				 }
-				 adapter.setPrincipal((SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal());
+				 adapter.setPrincipal((SignPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal());
 				 adapter.setApp(app);
 				 
 				Object jsonData = adapter.generateInfo();

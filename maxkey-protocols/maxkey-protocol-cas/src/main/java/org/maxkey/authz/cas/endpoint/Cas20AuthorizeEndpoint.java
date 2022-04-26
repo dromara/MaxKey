@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
@@ -204,7 +204,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
-		    SigninPrincipal authentication = ((SigninPrincipal)storedTicket.getAuthentication().getPrincipal());
+		    SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
 			if(StringUtils.isNotBlank(pgtUrl)) {
 				ProxyGrantingTicketIOUImpl proxyGrantingTicketIOUImpl =new ProxyGrantingTicketIOUImpl();
 				String proxyGrantingTicketIOU=casProxyGrantingTicketServices.createTicket(proxyGrantingTicketIOUImpl);
@@ -332,7 +332,7 @@ Response on ticket validation failure:
 		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
 		
 		if(storedTicket!=null){
-		    SigninPrincipal authentication = ((SigninPrincipal)storedTicket.getAuthentication().getPrincipal());
+		    SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
 			if(ConstsBoolean.isTrue(storedTicket.getCasDetails().getIsAdapter())){
 				Object samlAdapter = Instance.newInstance(storedTicket.getCasDetails().getAdapter());
 				try {

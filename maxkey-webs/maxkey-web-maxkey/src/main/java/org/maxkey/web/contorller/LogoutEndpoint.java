@@ -54,10 +54,10 @@ public class LogoutEndpoint {
 	@RequestMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
  	public  ResponseEntity<?> logout(@CurrentUser UserInfo currentUser){
 		//if logined in have onlineTicket ,need remove or logout back
-		String onlineTicketId = currentUser.getOnlineTicket();
- 		Session onlineTicket = sessionService.get(onlineTicketId);
- 		if(onlineTicket != null) {
-	 		Set<Entry<String, Apps>> entrySet = onlineTicket.getAuthorizedApps().entrySet();
+		String sessionId = currentUser.getSessionId();
+ 		Session session = sessionService.get(sessionId);
+ 		if(session != null) {
+	 		Set<Entry<String, Apps>> entrySet = session.getAuthorizedApps().entrySet();
 	 
 	        Iterator<Entry<String, Apps>> iterator = entrySet.iterator();
 	        while (iterator.hasNext()) {
@@ -70,12 +70,12 @@ public class LogoutEndpoint {
 	                }else {
 	                    singleLogout = new DefaultSingleLogout();
 	                }
-	                singleLogout.sendRequest(onlineTicket.getAuthentication(), mapEntry.getValue());
+	                singleLogout.sendRequest(session.getAuthentication(), mapEntry.getValue());
 	            }
 	        }
 	        
 	        sessionService.terminate(
-	        		onlineTicketId, 
+	        		session.getId(), 
 	        		currentUser.getId(),
 	        		currentUser.getUsername());
  		}

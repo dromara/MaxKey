@@ -31,7 +31,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.util.OAuth2Utils;
@@ -145,13 +145,13 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 			}else {
 				Authentication authentication=ClientCredentials(request,response);
 				_logger.trace("getPrincipal " + authentication.getPrincipal().getClass());
-				SigninPrincipal auth = null;
-				if(authentication.getPrincipal() instanceof SigninPrincipal) {
+				SignPrincipal auth = null;
+				if(authentication.getPrincipal() instanceof SignPrincipal) {
 					//authorization_code
-					auth = (SigninPrincipal)authentication.getPrincipal();
+					auth = (SignPrincipal)authentication.getPrincipal();
 				}else {
 					//client_credentials
-					auth =new SigninPrincipal((User)authentication.getPrincipal());
+					auth =new SignPrincipal((User)authentication.getPrincipal());
 				}
 				auth.setAuthenticated(true);
 				UsernamePasswordAuthenticationToken simpleUserAuthentication = new UsernamePasswordAuthenticationToken(auth, authentication.getCredentials(), authentication.getAuthorities());

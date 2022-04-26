@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
@@ -113,7 +113,7 @@ public class UserInfoOIDCEndpoint {
 		try{
 			 oAuth2Authentication = oauth20tokenServices.loadAuthentication(access_token);
 			 
-			 principal=((SigninPrincipal)oAuth2Authentication.getPrincipal()).getUsername();
+			 principal=((SignPrincipal)oAuth2Authentication.getPrincipal()).getUsername();
 			 
 			 Set<String >scopes = oAuth2Authentication.getOAuth2Request().getScope();
 			 ClientDetails clientDetails = 
@@ -123,7 +123,7 @@ public class UserInfoOIDCEndpoint {
 			 String userJson = "";
 			 Builder jwtClaimsSetBuilder= new JWTClaimsSet.Builder();
 			 
-			 SigninPrincipal authentication = (SigninPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal();
+			 SignPrincipal authentication = (SignPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal();
 			 
 			 String subject = AbstractAuthorizeAdapter.getValueByUserAttr(userInfo, clientDetails.getSubject());
 			 _logger.debug("userId : {} , username : {} , displayName : {} , subject : {}" , 

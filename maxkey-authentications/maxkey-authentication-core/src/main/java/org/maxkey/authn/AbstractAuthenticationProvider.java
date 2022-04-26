@@ -101,14 +101,12 @@ public abstract class AbstractAuthenticationProvider {
      * @return
      */
     public UsernamePasswordAuthenticationToken createOnlineTicket(LoginCredential credential,UserInfo userInfo) {
-        //Online Tickit
-        Session onlineTicket = new Session();
+        //create session
+        Session session = new Session();
 
-        userInfo.setOnlineTicket(onlineTicket.getId());
-        
-        SigninPrincipal principal = new SigninPrincipal(userInfo);
-        //set OnlineTicket
-        principal.setSession(onlineTicket);
+        //set session with principal
+        SignPrincipal principal = new SignPrincipal(userInfo,session);
+
         ArrayList<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
         principal.setAuthenticated(true);
         
@@ -132,15 +130,15 @@ public abstract class AbstractAuthenticationProvider {
         authenticationToken.setDetails(
                 new WebAuthenticationDetails(WebContext.getRequest()));
         
-        onlineTicket.setAuthentication(authenticationToken);
-        
-        //store session
-        this.sessionService.store(onlineTicket.getId(), onlineTicket);
-        
         /*
          *  put Authentication to current session context
          */
-        AuthorizationUtils.setAuthentication(authenticationToken);
+        session.setAuthentication(authenticationToken);
+        
+        //store session
+        this.sessionService.store(session.getId(), session);
+        
+        AuthorizationUtils.setSession(session);
      
         return authenticationToken;
     }

@@ -22,7 +22,7 @@ import java.text.ParseException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.session.Session;
 import org.maxkey.authn.session.SessionService;
@@ -44,7 +44,7 @@ public class AuthorizationUtils {
 			AuthJwtService authJwtService,
 			SessionService sessionService
 			) throws ParseException{
-		 if(getAuthentication() == null) {
+		 if(getSession() == null) {
 			Cookie authCookie = WebContext.getCookie(request, Authorization_Cookie);
 			if(authCookie != null ) {
 		    	String  authorization =  authCookie.getValue();
@@ -59,7 +59,7 @@ public class AuthorizationUtils {
 			AuthJwtService authJwtService,
 			SessionService sessionService
 			) throws ParseException{
-		 if(getAuthentication() == null) {
+		 if(getSession() == null) {
 			 String  authorization = AuthorizationHeaderUtils.resolveBearer(request);
 			if(authorization != null ) {
 				doJwtAuthenticate(authorization,authJwtService,sessionService);
@@ -73,48 +73,63 @@ public class AuthorizationUtils {
 			AuthJwtService authJwtService,
 			SessionService sessionService) throws ParseException {
 		if(authJwtService.validateJwtToken(authorization)) {
-			String ticket = authJwtService.resolveJWTID(authorization);
-			Session onlineTicket = sessionService.get(ticket);
-			if(onlineTicket != null) {
-				setAuthentication(onlineTicket.getAuthentication());
+			String sessionId = authJwtService.resolveJWTID(authorization);
+			Session session = sessionService.get(sessionId);
+			if(session != null) {
+				setSession(session);
+				setAuthentication(session.getAuthentication());
 			}
 		}
 	}
 	
-    public static void setAuthentication(Authentication authentication) {
-    	WebContext.setAttribute(WebConstants.AUTHENTICATION, authentication);
+    public static void setSession(Session session) {
+    	WebContext.setAttribute(WebConstants.SESSION, session);
+    }
+
+    public static Session getSession() {
+    	Session session = getSession(WebContext.getRequest());
+        return session;
+    }
+    
+    public static Session getSession(HttpServletRequest request) {
+    	Session session = (Session) request.getSession().getAttribute(WebConstants.SESSION);
+        return session;
     }
 
     public static Authentication getAuthentication() {
-        Authentication authentication = (Authentication) getAuthentication(WebContext.getRequest());
+    	Authentication authentication = (Authentication) getAuthentication(WebContext.getRequest());
         return authentication;
     }
     
     public static Authentication getAuthentication(HttpServletRequest request) {
-        Authentication authentication = (Authentication) request.getSession().getAttribute(WebConstants.AUTHENTICATION);
+    	Authentication authentication = (Authentication) request.getSession().getAttribute(WebConstants.AUTHENTICATION);
         return authentication;
     }
     
+    public static void setAuthentication(Authentication authentication) {
+    	WebContext.setAttribute(WebConstants.AUTHENTICATION, authentication);
+    }
+
     public static  boolean isAuthenticated() {
-    	return getAuthentication() != null;
+    	return getSession() != null;
     }
     
     public static  boolean isNotAuthenticated() {
     	return ! isAuthenticated();
     }
     
-    public static SigninPrincipal getPrincipal() {
+    public static SignPrincipal getPrincipal() {
     	 Authentication authentication =  getAuthentication();
     	return getPrincipal(authentication);
     }
     
-    public static SigninPrincipal getPrincipal(Authentication authentication) {
-    	return authentication == null ? null : (SigninPrincipal) authentication.getPrincipal();
+    public static SignPrincipal getPrincipal(Authentication authentication) {
+    	return authentication == null ? null : (SignPrincipal) authentication.getPrincipal();
    }
     
     public static UserInfo getUserInfo(Authentication authentication) {
     	UserInfo userInfo = null;
-    	SigninPrincipal principal = getPrincipal(authentication);
+    	SignPrincipal principal = getPrincipal(authentication);
     	if(principal != null ) {
         	userInfo = principal.getUserInfo();
         }

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.util.DateUtils;
 import org.maxkey.web.WebConstants;
 import org.slf4j.Logger;
@@ -53,7 +53,7 @@ public class SessionListenerAdapter implements HttpSessionListener {
     public void sessionDestroyed(HttpSessionEvent sessionEvent) {
         HttpSession session = sessionEvent.getSession();
         Authentication  authentication  = (Authentication ) session.getAttribute(WebConstants.AUTHENTICATION);
-        SigninPrincipal principal = AuthorizationUtils.getPrincipal(authentication);
+        SignPrincipal principal = AuthorizationUtils.getPrincipal(authentication);
         if(principal != null ) {
         	_logger.trace("{} HttpSession Id  {} for userId  {} , username  {} @Ticket {} Destroyed" ,
         			DateUtils.formatDateTime(new Date()),

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
 import org.maxkey.entity.Groups;
 import org.maxkey.entity.HistoryLogin;
@@ -124,9 +124,9 @@ public abstract class AbstractAuthenticationRealm {
         historyLogin.setSessionId(WebContext.genId());
         historyLogin.setSessionStatus(7);
         Authentication  authentication  = (Authentication ) WebContext.getAttribute(WebConstants.AUTHENTICATION);
-        if(authentication.getPrincipal() instanceof SigninPrincipal) {
+        if(authentication.getPrincipal() instanceof SignPrincipal) {
         	  historyLogin.setSessionStatus(1);
-              historyLogin.setSessionId(userInfo.getOnlineTicket());
+              historyLogin.setSessionId(userInfo.getSessionId());
         }
         
         _logger.debug("user session id is {} . ",historyLogin.getSessionId());

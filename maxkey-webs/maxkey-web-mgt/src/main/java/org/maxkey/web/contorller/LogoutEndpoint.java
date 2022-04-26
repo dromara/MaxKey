@@ -36,7 +36,7 @@ public class LogoutEndpoint {
  	@RequestMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
  	public  ResponseEntity<?> logout(@CurrentUser UserInfo currentUser){
  		sessionService.terminate(
- 				currentUser.getOnlineTicket(), 
+ 				currentUser.getSessionId(), 
  				currentUser.getId(),
  				currentUser.getUsername());
  		return new Message<String>().buildResponse();

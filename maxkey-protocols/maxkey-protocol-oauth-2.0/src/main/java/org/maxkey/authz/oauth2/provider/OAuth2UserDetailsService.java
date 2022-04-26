@@ -15,7 +15,7 @@ package org.maxkey.authz.oauth2.provider;
 import java.util.ArrayList;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.session.Session;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.repository.LoginRepository;
@@ -47,7 +47,7 @@ public class OAuth2UserDetailsService implements UserDetailsService {
 		
 		String onlineTickitId = WebConstants.ONLINE_TICKET_PREFIX + "-" + java.util.UUID.randomUUID().toString().toLowerCase();
 		
-		SigninPrincipal principal = new SigninPrincipal(userInfo);
+		SignPrincipal principal = new SignPrincipal(userInfo);
 		Session onlineTicket = new Session(onlineTickitId);
 		//set OnlineTicket
 		principal.setSession(onlineTicket);

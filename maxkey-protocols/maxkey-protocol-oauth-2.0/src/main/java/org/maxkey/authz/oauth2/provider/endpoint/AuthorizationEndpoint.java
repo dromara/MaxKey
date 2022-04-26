@@ -227,7 +227,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			// Place auth request into the model so that it is stored in the session
 			// for approveOrDeny to use. That way we make sure that auth request comes from the session,
 			// so any auth request parameters passed to approveOrDeny will be ignored and retrieved from the session.
-            momentaryService.put(currentUser.getOnlineTicket(), "authorizationRequest", authorizationRequest);
+            momentaryService.put(currentUser.getSessionId(), "authorizationRequest", authorizationRequest);
             
 			return getUserApprovalPageResponse(model, authorizationRequest, (Authentication) principal);
 
@@ -255,7 +255,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 					"User must be authenticated with Spring Security before authorizing an access token.");
 		}
 
-		AuthorizationRequest authorizationRequest = (AuthorizationRequest) momentaryService.get(currentUser.getOnlineTicket(), "authorizationRequest");
+		AuthorizationRequest authorizationRequest = (AuthorizationRequest) momentaryService.get(currentUser.getSessionId(), "authorizationRequest");
 
 		if (authorizationRequest == null) {
 			sessionStatus.setComplete();

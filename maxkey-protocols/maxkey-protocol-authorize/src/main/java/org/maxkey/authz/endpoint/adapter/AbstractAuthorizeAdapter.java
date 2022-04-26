@@ -20,7 +20,7 @@ package org.maxkey.authz.endpoint.adapter;
 import java.io.UnsupportedEncodingException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.crypto.Base64Utils;
 import org.maxkey.crypto.ReciprocalUtils;
@@ -44,7 +44,7 @@ public abstract class AbstractAuthorizeAdapter {
 	
 	protected Accounts account;
 	
-	protected SigninPrincipal principal;
+	protected SignPrincipal principal;
 	
 	public abstract Object generateInfo();
 	
@@ -127,7 +127,7 @@ public abstract class AbstractAuthorizeAdapter {
 		return "";
 	};
 
-	public void setPrincipal(SigninPrincipal principal) {
+	public void setPrincipal(SignPrincipal principal) {
 		this.principal = principal;
 		this.userInfo = principal.getUserInfo();
 	}

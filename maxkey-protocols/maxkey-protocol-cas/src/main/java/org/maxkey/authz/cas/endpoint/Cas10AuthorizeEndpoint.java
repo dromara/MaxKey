@@ -23,7 +23,7 @@ package org.maxkey.authz.cas.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authz.cas.endpoint.response.Service10ResponseBuilder;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.maxkey.authz.cas.endpoint.ticket.Ticket;
@@ -105,7 +105,7 @@ renew [OPTIONAL] - if this parameter is set, ticket validation will only succeed
 		}
 		
 		if(storedTicket != null){
-			String principal=((SigninPrincipal)storedTicket.getAuthentication().getPrincipal()).getUsername();
+			String principal=((SignPrincipal)storedTicket.getAuthentication().getPrincipal()).getUsername();
 			_logger.debug("principal "+principal);
 			return new Service10ResponseBuilder().success()
 					.setUser(principal)

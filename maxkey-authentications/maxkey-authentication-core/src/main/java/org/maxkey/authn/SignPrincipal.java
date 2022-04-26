@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-public class SigninPrincipal implements  UserDetails {
+public class SignPrincipal implements  UserDetails {
     private static final long serialVersionUID = -110742975439268030L;
     UserInfo userInfo;
     
@@ -49,13 +49,13 @@ public class SigninPrincipal implements  UserDetails {
     /**
      * SigninPrincipal.
      */
-    public SigninPrincipal() {
+    public SignPrincipal() {
     }
     
     /**
-     * SigninPrincipal.
+     * SignPrincipal.
      */
-    public SigninPrincipal(UserInfo userInfo) {
+    public SignPrincipal(UserInfo userInfo) {
         this.userInfo = userInfo;
         this.authenticated = true;
         this.accountNonExpired = true;
@@ -64,10 +64,21 @@ public class SigninPrincipal implements  UserDetails {
         this.enabled = true;
     }
     
+    public SignPrincipal(UserInfo userInfo,Session session) {
+        this.userInfo = userInfo;
+        this.authenticated = true;
+        this.accountNonExpired = true;
+        this.accountNonLocked  = true;
+        this.credentialsNonExpired =true;
+        this.enabled = true;
+        this.session = session;
+        this.userInfo.setSessionId(session.getId());
+    }
+    
     /**
      * SigninPrincipal.
      */
-    public SigninPrincipal(UserDetails userDetails) {
+    public SignPrincipal(UserDetails userDetails) {
         this.userDetails = userDetails;
         this.authenticated = true;
     }

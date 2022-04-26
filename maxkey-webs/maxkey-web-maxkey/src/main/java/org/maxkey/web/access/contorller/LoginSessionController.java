@@ -86,7 +86,7 @@ public class LoginSessionController {
         try {
             for(String sessionId : StringUtils.string2List(ids, ",")) {
                 _logger.trace("terminate session Id {} ",sessionId);
-                if(currentUser.getOnlineTicket().contains(sessionId)) {
+                if(currentUser.getSessionId().contains(sessionId)) {
                     continue;//skip current session
                 }
                 

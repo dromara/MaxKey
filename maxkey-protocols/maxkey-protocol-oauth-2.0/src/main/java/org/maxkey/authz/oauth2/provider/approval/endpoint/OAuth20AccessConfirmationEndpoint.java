@@ -93,7 +93,7 @@ public class OAuth20AccessConfirmationEndpoint {
     	try {
 	        // Map<String, Object> model
 	        AuthorizationRequest clientAuth = 
-	        		(AuthorizationRequest) momentaryService.get(currentUser.getOnlineTicket(), "authorizationRequest");
+	        		(AuthorizationRequest) momentaryService.get(currentUser.getSessionId(), "authorizationRequest");
 	        ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId(),true);
 	        model.put("oauth_approval", WebContext.genId());
 	        model.put("auth_request", clientAuth);
@@ -139,7 +139,7 @@ public class OAuth20AccessConfirmationEndpoint {
     	if(StringUtils.isNotBlank(oauth_approval)) {
 	    	try {
 		        AuthorizationRequest clientAuth = 
-		        		(AuthorizationRequest) momentaryService.get(currentUser.getOnlineTicket(), "authorizationRequest");
+		        		(AuthorizationRequest) momentaryService.get(currentUser.getSessionId(), "authorizationRequest");
 		        ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId(),true);
 
 		        Apps  app = appsService.get(client.getClientId(),true);

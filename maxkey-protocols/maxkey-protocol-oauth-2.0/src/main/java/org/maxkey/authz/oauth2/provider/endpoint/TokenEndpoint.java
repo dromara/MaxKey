@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.oauth2.common.DefaultOAuth2AccessToken;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
@@ -196,7 +196,7 @@ public class TokenEndpoint extends AbstractEndpoint {
 			clientId = ((OAuth2Authentication) client).getOAuth2Request().getClientId();
 		}
 		if (client instanceof UsernamePasswordAuthenticationToken) {
-		    clientId = ((SigninPrincipal)client.getPrincipal()).getUsername();
+		    clientId = ((SignPrincipal)client.getPrincipal()).getUsername();
 		}
 		return clientId;
 	}

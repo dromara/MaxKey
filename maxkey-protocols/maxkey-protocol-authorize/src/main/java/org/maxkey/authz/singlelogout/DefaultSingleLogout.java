@@ -20,7 +20,7 @@ package org.maxkey.authz.singlelogout;
 import java.util.HashMap;
 import java.util.UUID;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.util.DateUtils;
 import org.springframework.security.core.Authentication;
@@ -34,7 +34,7 @@ public class DefaultSingleLogout extends SingleLogout{
         logoutParameters.put("principal", authentication.getName());
         logoutParameters.put("request",  "logoutRequest");
         logoutParameters.put("issueInstant", DateUtils.getCurrentDateAsString(DateUtils.FORMAT_DATE_ISO_TIMESTAMP));
-        logoutParameters.put("ticket",  ((SigninPrincipal)authentication.getPrincipal()).getSession().getFormattedId());
+        logoutParameters.put("ticket",  ((SignPrincipal)authentication.getPrincipal()).getSession().getFormattedId());
         postMessage(logoutApp.getLogoutUrl(),logoutParameters);
         
     }

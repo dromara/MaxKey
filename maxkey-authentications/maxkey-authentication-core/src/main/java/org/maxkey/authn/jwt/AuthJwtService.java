@@ -22,7 +22,7 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.configuration.AuthJwkConfig;
 import org.maxkey.crypto.jwt.HMAC512Service;
 import org.maxkey.entity.UserInfo;
@@ -86,7 +86,7 @@ public class AuthJwtService {
 	 * @return
 	 */
 	public String genJwt(Authentication authentication) {
-		SigninPrincipal principal = ((SigninPrincipal)authentication.getPrincipal());
+		SignPrincipal principal = ((SignPrincipal)authentication.getPrincipal());
 		UserInfo userInfo = principal.getUserInfo();
 		DateTime currentDateTime = DateTime.now();
 		Date expirationTime = currentDateTime.plusSeconds(authJwkConfig.getExpires()).toDate();

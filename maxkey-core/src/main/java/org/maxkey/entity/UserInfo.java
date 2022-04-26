@@ -46,7 +46,7 @@ public class UserInfo extends JpaBaseEntity {
     
     public  static final String DEFAULT_PASSWORD_SUFFIX = "MaxKey@888";
     
-    String onlineTicket;
+    String sessionId;
     
     //
     @Id
@@ -384,12 +384,12 @@ public class UserInfo extends JpaBaseEntity {
         this.id = id;
     }
 
-    public String getOnlineTicket() {
-		return onlineTicket;
+	public String getSessionId() {
+		return sessionId;
 	}
 
-	public void setOnlineTicket(String onlineTicket) {
-		this.onlineTicket = onlineTicket;
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 
 	/**

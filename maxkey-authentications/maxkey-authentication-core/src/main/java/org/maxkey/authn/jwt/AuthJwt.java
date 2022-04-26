@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.maxkey.authn.SigninPrincipal;
+import org.maxkey.authn.SignPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -57,7 +57,7 @@ public class AuthJwt implements Serializable {
 	}
 	
 	public AuthJwt(String token, Authentication  authentication) {
-		SigninPrincipal principal = ((SigninPrincipal)authentication.getPrincipal());
+		SignPrincipal principal = ((SignPrincipal)authentication.getPrincipal());
 		
 		this.token = token;
 		this.ticket = principal.getSession().getId();
