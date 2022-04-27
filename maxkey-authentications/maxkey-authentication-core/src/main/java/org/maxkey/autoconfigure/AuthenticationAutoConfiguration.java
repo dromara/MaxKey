@@ -30,7 +30,7 @@ import org.maxkey.authn.provider.TrustedAuthenticationProvider;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.session.SessionManager;
 import org.maxkey.authn.session.SessionManagerFactory;
-import org.maxkey.authn.web.SessionListenerAdapter;
+import org.maxkey.authn.web.HttpSessionListenerAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.configuration.AuthJwkConfig;
 import org.maxkey.constants.ConstsPersistence;
@@ -195,9 +195,9 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         return sessionManager;
     }
     
-    @Bean(name = "sessionListenerAdapter")
-    public SessionListenerAdapter sessionListenerAdapter() {
-        return new SessionListenerAdapter();
+    @Bean(name = "httpSessionListenerAdapter")
+    public HttpSessionListenerAdapter httpSessionListenerAdapter() {
+        return new HttpSessionListenerAdapter();
     }
     
     @Override

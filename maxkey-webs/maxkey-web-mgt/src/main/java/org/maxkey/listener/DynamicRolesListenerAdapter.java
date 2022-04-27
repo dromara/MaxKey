@@ -15,8 +15,8 @@
  */
  
 
-package org.maxkey.jobs;
+package org.maxkey.listener;
 
-public class DynamicRolesJob extends AbstractScheduleJob {
+public class DynamicRolesListenerAdapter extends ListenerAdapter {
 
 }

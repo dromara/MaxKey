@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.maxkey.jobs;
+package org.maxkey.listener;
 
 import java.io.Serializable;
 
@@ -25,7 +25,7 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SessionListenerAdapter extends AbstractScheduleJob   implements Job , Serializable {
+public class SessionListenerAdapter extends ListenerAdapter   implements Job , Serializable {
 	final static Logger _logger = LoggerFactory.getLogger(SessionListenerAdapter.class);
 	
 	private static final long serialVersionUID = 4782358765969474833L;
@@ -37,7 +37,7 @@ public class SessionListenerAdapter extends AbstractScheduleJob   implements Job
 		 if(jobStatus == JOBSTATUS.RUNNING) {return;}
 		 init(context);
 		 	
-		 _logger.debug("SessionListener Job is running ... " );
+		 _logger.debug("running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
             if(sessionManager != null) { 
@@ -50,7 +50,7 @@ public class SessionListenerAdapter extends AbstractScheduleJob   implements Job
             		}
             	}
             }
-            _logger.debug("SessionListener Job finished  " );
+            _logger.debug("finished  " );
             jobStatus = JOBSTATUS.FINISHED;
         }catch(Exception e) {
             jobStatus = JOBSTATUS.ERROR;
@@ -61,9 +61,9 @@ public class SessionListenerAdapter extends AbstractScheduleJob   implements Job
 
 	 @Override
     void init(JobExecutionContext context){
+		 super.init(context);
     	if(sessionManager == null) {
-    		sessionManager = 
-            		(SessionManager) context.getMergedJobDataMap().get("service");
+    		sessionManager = getParameter("sessionManager",SessionManager.class);
         }
     }
 }

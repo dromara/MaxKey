@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,39 +15,41 @@
  */
  
 
-package org.maxkey.jobs;
+package org.maxkey.listener;
 
 import java.io.Serializable;
-import org.maxkey.persistence.service.GroupsService;
+
+import org.maxkey.persistence.service.AccountsService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DynamicGroupsJob extends AbstractScheduleJob  implements Job , Serializable {
-    /**
+public class AccountsStrategyListenerAdapter extends ListenerAdapter  implements Job , Serializable {
+
+   /**
      * 
      */
-    private static final long serialVersionUID = 8831626240807856084L;
+    private static final long serialVersionUID = 167999890940939820L;
 
-    final static Logger _logger = LoggerFactory.getLogger(DynamicGroupsJob.class);
+    final static Logger _logger = LoggerFactory.getLogger(AccountsStrategyListenerAdapter.class);
     
-    private static  GroupsService groupsService = null;
-
+    private static  AccountsService accountsService = null;
+    
     @Override
     public void execute(JobExecutionContext context){
         if(jobStatus == JOBSTATUS.RUNNING) {return;}
         
         init(context);
         
-        _logger.debug("DynamicGroups Job running ... " );
+        _logger.debug("running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
-            if(groupsService != null) {
-            	groupsService.refreshAllDynamicGroups();
+            if(accountsService != null) { 
+            	accountsService.refreshAllByStrategy();
             	Thread.sleep(10 * 1000);//10 minutes
             }
-            _logger.debug("DynamicGroups Job finished  " );
+            _logger.debug("finished  " );
             jobStatus = JOBSTATUS.FINISHED;
         }catch(Exception e) {
             jobStatus = JOBSTATUS.ERROR;
@@ -57,9 +59,9 @@ public class DynamicGroupsJob extends AbstractScheduleJob  implements Job , Seri
 
     @Override
     void init(JobExecutionContext context){
-    	if(groupsService == null) {
-            groupsService = 
-            		(GroupsService) context.getMergedJobDataMap().get("service");
+    	super.init(context);
+    	if(accountsService == null) {
+            accountsService = getParameter("accountsService",AccountsService.class);
         }
     }
 

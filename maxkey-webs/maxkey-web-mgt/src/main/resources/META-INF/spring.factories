@@ -10,5 +10,5 @@ org.maxkey.synchronizer.autoconfigure.SynchronizerAutoConfiguration,\
 org.maxkey.autoconfigure.SwaggerConfig,\
 org.maxkey.Oauth20ClientAutoConfiguration,\
 org.maxkey.MaxKeyMgtConfig,\
-org.maxkey.MaxKeyMgtJobs,\
-org.maxkey.MaxKeyMgtMvcConfig
+org.maxkey.MaxKeyMgtMvcConfig,\
+org.maxkey.MaxKeyMgtListenerConfig

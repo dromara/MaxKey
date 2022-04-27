@@ -30,10 +30,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 
 @WebListener
-public class SessionListenerAdapter implements HttpSessionListener {
-    private static final Logger _logger = LoggerFactory.getLogger(SessionListenerAdapter.class);
+public class HttpSessionListenerAdapter implements HttpSessionListener {
+    private static final Logger _logger = LoggerFactory.getLogger(HttpSessionListenerAdapter.class);
     
-    public SessionListenerAdapter() {
+    public HttpSessionListenerAdapter() {
         super();
         _logger.debug("SessionListenerAdapter inited . ");
     }
