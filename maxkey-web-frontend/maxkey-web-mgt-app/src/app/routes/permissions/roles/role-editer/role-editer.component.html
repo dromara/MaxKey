@@ -27,7 +27,7 @@
         <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
+    <nz-form-item *ngIf="form.model.switch_dynamic">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resumeTime">{{ 'mxk.roles.resumeTime' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid port!">
         <nz-time-picker
@@ -39,7 +39,7 @@
         ></nz-time-picker>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
+    <nz-form-item *ngIf="form.model.switch_dynamic">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="suspendTime">{{ 'mxk.roles.suspendTime' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid suspendTime!">
         <nz-time-picker
@@ -51,13 +51,13 @@
         ></nz-time-picker>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
+    <nz-form-item *ngIf="form.model.switch_dynamic">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="orgIdsList">{{ 'mxk.roles.orgIdsList' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid upperCase!">
         <input [(ngModel)]="form.model.orgIdsList" [ngModelOptions]="{ standalone: true }" nz-input name="orgIdsList" id="orgIdsList" />
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
+    <nz-form-item *ngIf="form.model.switch_dynamic">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="filters">{{ 'mxk.roles.filters' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid filters!">
         <textarea

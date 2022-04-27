@@ -67,13 +67,8 @@ public class RoleMemberController {
 	public  ResponseEntity<?> memberInRole(@ModelAttribute  RoleMember roleMember,@CurrentUser UserInfo currentUser) {
 		_logger.debug("roleMember : "+roleMember);
 		roleMember.setInstId(currentUser.getInstId());
-		if(roleMember.getRoleId()==null||roleMember.getRoleId().equals("")||roleMember.getRoleId().equals("ALL_USER_ROLE")){
-			return new Message<JpaPageResults<RoleMember>>(
-					roleMemberService.queryPageResults("allMemberInRole",roleMember)).buildResponse();
-		}else{
-			return new Message<JpaPageResults<RoleMember>>(
-					roleMemberService.queryPageResults("memberInRole",roleMember)).buildResponse();
-		}
+		return new Message<JpaPageResults<RoleMember>>(
+				roleMemberService.queryPageResults("memberInRole",roleMember)).buildResponse();
 	}
 
 	@RequestMapping(value = { "/memberNotInRole" })

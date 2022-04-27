@@ -105,7 +105,7 @@ public class GroupsController {
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-delete ids : {}" , ids);
-		
+		ids = ids.replaceAll("ROLE_ALL_USER", "-1").replaceAll("ROLE_ADMINISTRATORS", "-1");
 		if (groupsService.deleteBatch(ids)) {
 			 return new Message<Groups>(Message.SUCCESS).buildResponse();
 		} else {

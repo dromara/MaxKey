@@ -34,7 +34,6 @@ import org.maxkey.entity.UserInfo;
 
 public  interface GroupMemberMapper extends IJpaBaseMapper<GroupMember> {
 	
-	public List<GroupMember> allMemberInGroup(GroupMember entity);
 	public List<GroupMember> memberInGroup(GroupMember entity);
 	public List<GroupMember> memberNotInGroup(GroupMember entity);
 	public List<GroupMember> groupMemberInGroup(GroupMember entity);

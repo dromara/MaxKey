@@ -42,6 +42,7 @@ public class RoleMember extends UserInfo implements Serializable {
     @Column
     private String roleId;
     private String roleName;
+    private String dynamic;
     @Column
     private String memberId;
     private String memberName;
@@ -80,7 +81,15 @@ public class RoleMember extends UserInfo implements Serializable {
         this.roleName = roleName;
     }
 
-    public String getMemberId() {
+    public String getDynamic() {
+		return dynamic;
+	}
+
+	public void setDynamic(String dynamic) {
+		this.dynamic = dynamic;
+	}
+
+	public String getMemberId() {
         return memberId;
     }
 

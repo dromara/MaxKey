@@ -48,6 +48,7 @@ public class GroupMember extends UserInfo implements Serializable{
 	@Column
 	private String groupId;
 	private String groupName;
+	private String dynamic;
 	@Column
 	private String memberId;
 	private String memberName;
@@ -163,11 +164,17 @@ public class GroupMember extends UserInfo implements Serializable{
 		return memberName;
 	}
 
-
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
 	}
 
+	public String getDynamic() {
+		return dynamic;
+	}
+
+	public void setDynamic(String dynamic) {
+		this.dynamic = dynamic;
+	}
 
 	public String getInstId() {
 		return instId;

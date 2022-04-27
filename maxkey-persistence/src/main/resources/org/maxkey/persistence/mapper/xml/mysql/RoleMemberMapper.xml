@@ -10,52 +10,13 @@
 			and name = #{name}
 		</if>
     </sql>
-    
-
-    <!-- ROLE_MEMBER  User Member-->
-    <select id="allMemberInRole" parameterType="RoleMember" resultType="RoleMember">
-		    select	distinct
-					u.id,
-					u.username,
-					u.usertype,
-					u.windowsaccount,
-					
-					u.displayname ,
-					u.nickname ,
-					u.namezhspell,
-					u.namezhshortspell,
-					u.givenname ,
-					u.middlename ,
-					u.familyname ,
-					
-					u.gender,
-		
-					u.authntype,
-					u.mobile,
-					u.email,
-					u.workemail,
-					u.workphonenumber,
-		
-					u.employeenumber,
-					u.division,
-					u.costcenter,
-					u.organization,
-					u.departmentid,
-					u.department,
-					u.jobtitle,
-					u.joblevel,
-					
-					u.createddate,
-					
-					u.status
-				from
-					mxk_userinfo u
-			where	instid   =   #{instId} 
-	</select>
-	
+   
     <select id="memberInRole" parameterType="RoleMember" resultType="RoleMember">
 			select	distinct
-				rm.id,
+			    r.id as roleid,
+			    r.name as rolename,
+			    r.dynamic dynamic,
+				rm.id as id,
 				u.username,
 				u.usertype,
 				u.windowsaccount,
@@ -211,7 +172,7 @@
     		type
     	)
     	select 
-    		concat('${id}',u.id) id,
+    		concat('${id}_',u.id) id,
     		'${id}' ROLEID,
     		u.id memberid,
     		'USER-DYNAMIC' type

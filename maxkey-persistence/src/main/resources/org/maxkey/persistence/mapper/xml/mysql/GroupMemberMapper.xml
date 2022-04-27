@@ -11,51 +11,12 @@
 		</if>
     </sql>
     
-
-    <!-- GROUP_MEMBER  User Member-->
-    <select id="allMemberInGroup" parameterType="GroupMember" resultType="GroupMember">
-		    select	distinct
-					u.id,
-					u.username,
-					u.usertype,
-					u.windowsaccount,
-					
-					u.displayname ,
-					u.nickname ,
-					u.namezhspell,
-					u.namezhshortspell,
-					u.givenname ,
-					u.middlename ,
-					u.familyname ,
-					
-					u.gender,
-		
-					u.authntype,
-					u.mobile,
-					u.email,
-					u.workemail,
-					u.workphonenumber,
-		
-					u.employeenumber,
-					u.division,
-					u.costcenter,
-					u.organization,
-					u.departmentid,
-					u.department,
-					u.jobtitle,
-					u.joblevel,
-					
-					u.createddate,
-					
-					u.status
-				from
-					mxk_userinfo u
-			where	instid  =   #{instId} 
-	</select>
-	
     <select id="memberInGroup" parameterType="GroupMember" resultType="GroupMember">
 			select	distinct
-				gm.id,
+				gm.id as id,
+				g.id as groupid,
+				g.name as groupname,
+				g.dynamic dynamic,
 				u.username,
 				u.usertype,
 				u.windowsaccount,
@@ -210,7 +171,7 @@
     		instid
     	)
     	select 
-    		concat('${id}',u.id) id,
+    		concat('${id}_',u.id) id,
     		'${id}' groupid,
     		u.id memberid,
     		'USER-DYNAMIC' type,
@@ -250,6 +211,8 @@
     
     <select id="queryMemberByGroupId" parameterType="string"  resultType="UserInfo">
             select  distinct
+                g.groupId,
+                g.groupName,
                 u.id,
                 u.username,
                 u.usertype,
@@ -296,7 +259,7 @@
     
     <delete id="deleteByGroupId" parameterType="string" >
     	delete from mxk_group_member gm
-    	where  gm.groupid=#{value}
+    	where  gm.groupid = #{value} and groupId != 'ROLE_ALL_USER'
     </delete>
 	
 </mapper>

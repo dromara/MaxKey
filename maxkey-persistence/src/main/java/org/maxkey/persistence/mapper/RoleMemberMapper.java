@@ -33,7 +33,6 @@ import org.maxkey.entity.Roles;
 
 public  interface RoleMemberMapper extends IJpaBaseMapper<RoleMember> {
 	
-	public List<RoleMember> allMemberInRole(RoleMember entity);
 	public List<RoleMember> memberInRole(RoleMember entity);
 	public List<RoleMember> memberNotInRole(RoleMember entity);
 	public List<RoleMember> roleMemberInRole(RoleMember entity);

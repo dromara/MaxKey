@@ -68,13 +68,9 @@ public class GroupMemberController {
 	public ResponseEntity<?> memberInGroup(@ModelAttribute GroupMember groupMember,@CurrentUser UserInfo currentUser) {
 		_logger.debug("groupMember : "+groupMember);
 		groupMember.setInstId(currentUser.getInstId());
-		if(groupMember.getGroupId()==null||groupMember.getGroupId().equals("")||groupMember.getGroupId().equals("ROLE_ALL_USER")){
-			return new Message<JpaPageResults<GroupMember>>(
-					groupMemberService.queryPageResults("allMemberInGroup",groupMember)).buildResponse();
-		}else{
-			return new Message<JpaPageResults<GroupMember>>(
-					groupMemberService.queryPageResults("memberInGroup",groupMember)).buildResponse();
-		}
+		return new Message<JpaPageResults<GroupMember>>(
+				groupMemberService.queryPageResults("memberInGroup",groupMember)).buildResponse();
+
 	}
 
 	
