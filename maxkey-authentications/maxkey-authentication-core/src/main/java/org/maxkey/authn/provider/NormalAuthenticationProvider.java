@@ -57,7 +57,7 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
     public NormalAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
-    	    SessionManager sessionService,
+    	    SessionManager sessionManager,
     	    AuthJwtService authJwtService) {
 		this.authenticationRealm = authenticationRealm;
 		this.applicationConfig = applicationConfig;
