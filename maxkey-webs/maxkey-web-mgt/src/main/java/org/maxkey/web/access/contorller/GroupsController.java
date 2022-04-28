@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,6 +92,9 @@ public class GroupsController {
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody Groups group,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-update  group :" + group);
+		if(group.getId().equalsIgnoreCase("ROLE_ALL_USER")) {
+			group.setDefaultAllUser();
+		}
 		group.setInstId(currentUser.getInstId());
 		if (groupsService.update(group)) {
 		    groupsService.refreshDynamicGroups(group);

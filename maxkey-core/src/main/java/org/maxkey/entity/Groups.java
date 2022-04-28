@@ -166,6 +166,17 @@ public class Groups extends JpaBaseEntity implements Serializable {
         this.status = status;
     }
 
+    /**
+     * ROLE_ALL_USER must be 
+     * 		1, dynamic 
+     * 		2, all orgIdsList 
+	 *		3, not filters
+     */
+    public void setDefaultAllUser() {
+    	this.dynamic = "1";
+    	this.orgIdsList ="";
+		this.filters ="";
+    }
     
     public String getDynamic() {
         return dynamic;

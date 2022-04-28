@@ -85,7 +85,7 @@ public class InMemorySessionManager extends AbstractSessionManager{
         LocalTime currentTime = LocalTime.now();
         Duration duration = Duration.between(currentTime, session.getLastAccessTime());
         
-        _logger.trace("OnlineTicket duration " + duration.getSeconds());
+        _logger.trace("Session duration " + duration.getSeconds());
         
         if(duration.getSeconds() > Session.MAX_EXPIRY_DURATION) {
         	session.setLastAccessTime(currentTime);

@@ -59,8 +59,8 @@ public class RedisSessionManager extends AbstractSessionManager {
 
 	@Override
 	public void create(String sessionId, Session ticket) {
-		RedisConnection conn=connectionFactory.getConnection();
-		conn.setexObject(PREFIX+sessionId, serviceTicketValiditySeconds, ticket);
+		RedisConnection conn = connectionFactory.getConnection();
+		conn.setexObject(PREFIX + sessionId, serviceTicketValiditySeconds, ticket);
 		conn.close();
 	}
 
@@ -101,7 +101,7 @@ public class RedisSessionManager extends AbstractSessionManager {
         LocalTime currentTime = LocalTime.now();
         Duration duration = Duration.between(currentTime, session.getLastAccessTime());
         
-        _logger.trace("OnlineTicket duration " + duration.getSeconds());
+        _logger.trace("Session duration " + duration.getSeconds());
         
         if(duration.getSeconds() > Session.MAX_EXPIRY_DURATION) {
         	session.setLastAccessTime(currentTime);

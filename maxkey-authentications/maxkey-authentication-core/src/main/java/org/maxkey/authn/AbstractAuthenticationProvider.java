@@ -138,7 +138,8 @@ public abstract class AbstractAuthenticationProvider {
         //create session
         this.sessionManager.create(session.getId(), session);
         
-        AuthorizationUtils.setSession(session);
+        //set Authentication to http session
+        AuthorizationUtils.setAuthentication(authenticationToken);
      
         return authenticationToken;
     }

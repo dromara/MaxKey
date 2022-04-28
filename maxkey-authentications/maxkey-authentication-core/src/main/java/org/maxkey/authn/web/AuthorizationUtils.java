@@ -44,7 +44,7 @@ public class AuthorizationUtils {
 			AuthJwtService authJwtService,
 			SessionManager sessionManager
 			) throws ParseException{
-		 if(getSession() == null) {
+		 if(getAuthentication() == null) {
 			Cookie authCookie = WebContext.getCookie(request, Authorization_Cookie);
 			if(authCookie != null ) {
 		    	String  authorization =  authCookie.getValue();
@@ -59,7 +59,7 @@ public class AuthorizationUtils {
 			AuthJwtService authJwtService,
 			SessionManager sessionManager
 			) throws ParseException{
-		 if(getSession() == null) {
+		 if(getAuthentication() == null) {
 			 String  authorization = AuthorizationHeaderUtils.resolveBearer(request);
 			if(authorization != null ) {
 				doJwtAuthenticate(authorization,authJwtService,sessionManager);
@@ -76,28 +76,12 @@ public class AuthorizationUtils {
 			String sessionId = authJwtService.resolveJWTID(authorization);
 			Session session = sessionManager.get(sessionId);
 			if(session != null) {
-				setSession(session);
 				setAuthentication(session.getAuthentication());
 			}
 		}
 	}
-	
-	//set session to http session
-    public static void setSession(Session session) {
-    	WebContext.setAttribute(WebConstants.SESSION, session);
-    }
 
-    public static Session getSession() {
-    	Session session = getSession(WebContext.getRequest());
-        return session;
-    }
     
-    //get session to http session
-    public static Session getSession(HttpServletRequest request) {
-    	Session session = (Session) request.getSession().getAttribute(WebConstants.SESSION);
-        return session;
-    }
-
     public static Authentication getAuthentication() {
     	Authentication authentication = (Authentication) getAuthentication(WebContext.getRequest());
         return authentication;
@@ -108,12 +92,13 @@ public class AuthorizationUtils {
         return authentication;
     }
     
+    //set Authentication to http session
     public static void setAuthentication(Authentication authentication) {
     	WebContext.setAttribute(WebConstants.AUTHENTICATION, authentication);
     }
 
     public static  boolean isAuthenticated() {
-    	return getSession() != null;
+    	return getAuthentication() != null;
     }
     
     public static  boolean isNotAuthenticated() {
