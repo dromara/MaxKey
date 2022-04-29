@@ -1,5 +1,5 @@
 /*
- * Copyright [2021] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,17 +30,18 @@ public class SessionManagerFactory {
 	 public SessionManager getManager(
 			 	int persistence,
 			 	JdbcTemplate jdbcTemplate,
-	            RedisConnectionFactory redisConnFactory){
-		 
+	            RedisConnectionFactory redisConnFactory,
+	            int validitySeconds){
 		 SessionManager sessionService = null;
 		if (persistence == ConstsPersistence.INMEMORY) {
-			sessionService = new InMemorySessionManager(jdbcTemplate);
-		    _logger.debug("InMemorySessionService");
+			sessionService = new InMemorySessionManager(jdbcTemplate,validitySeconds);
+		    _logger.debug("InMemorySessionManager");
 		} else if (persistence == ConstsPersistence.JDBC) {
 		    _logger.debug("JdbcSessionService not support "); 
 		} else if (persistence == ConstsPersistence.REDIS) {
-			sessionService = new RedisSessionManager(redisConnFactory,jdbcTemplate);
-		    _logger.debug("RedisSessionService");
+			sessionService = new RedisSessionManager(
+						redisConnFactory,jdbcTemplate,validitySeconds);
+		    _logger.debug("RedisSessionManager");
 		}
 		
 		return sessionService;

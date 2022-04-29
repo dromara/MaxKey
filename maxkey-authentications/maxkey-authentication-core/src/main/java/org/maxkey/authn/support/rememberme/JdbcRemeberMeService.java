@@ -50,10 +50,14 @@ public class JdbcRemeberMeService extends AbstractRemeberMeService {
     public JdbcRemeberMeService(
     			JdbcTemplate jdbcTemplate,
     			ApplicationConfig applicationConfig,
-    			AuthJwtService authJwtService) {
+    			AuthJwtService authJwtService,
+    			int validity) {
         this.jdbcTemplate = jdbcTemplate;
         this.applicationConfig = applicationConfig;
         this.authJwtService = authJwtService;
+        if(validity != 0) {
+        	this.validity = validity;
+        }
     }
 
     @Override

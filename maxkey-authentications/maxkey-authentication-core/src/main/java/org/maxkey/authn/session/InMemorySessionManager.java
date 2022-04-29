@@ -34,13 +34,19 @@ public class InMemorySessionManager extends AbstractSessionManager{
 
 	protected  static  Cache<String, Session> sessionStore = 
         	        Caffeine.newBuilder()
-        	            .expireAfterWrite(30, TimeUnit.MINUTES)
-        	            .maximumSize(200000)
+        	            .expireAfterWrite(10, TimeUnit.MINUTES)
+        	            .maximumSize(2000000)
         	            .build();
 	
-	public InMemorySessionManager(JdbcTemplate jdbcTemplate) {
+	public InMemorySessionManager(JdbcTemplate jdbcTemplate,int validitySeconds) {
         super();
         this.jdbcTemplate = jdbcTemplate;
+        sessionStore = 
+                Caffeine.newBuilder()
+                    .expireAfterWrite(validitySeconds, TimeUnit.SECONDS)
+                    .maximumSize(2000000)
+                    .build();
+        
     }
 
     @Override
@@ -65,7 +71,7 @@ public class InMemorySessionManager extends AbstractSessionManager{
     public void setValiditySeconds(int validitySeconds) {
     	sessionStore = 
                 Caffeine.newBuilder()
-                    .expireAfterWrite(validitySeconds/60, TimeUnit.MINUTES)
+                    .expireAfterWrite(validitySeconds, TimeUnit.SECONDS)
                     .maximumSize(200000)
                     .build();
         

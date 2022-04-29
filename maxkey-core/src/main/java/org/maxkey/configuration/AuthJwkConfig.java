@@ -33,6 +33,12 @@ public class AuthJwkConfig {
 	
 	@Value("${maxkey.auth.jwt.secret}")
 	String 	secret;
+	
+	@Value("${maxkey.session.timeout}")
+	String 	refreshExpire;
+	
+	@Value("${maxkey.auth.jwt.refresh.secret}")
+	String 	refreshSecret;
 
 	public AuthJwkConfig() {
 		super();

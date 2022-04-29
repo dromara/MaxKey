@@ -70,7 +70,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         return new SavedRequestAwareAuthenticationSuccessHandler();
     }
     
-    @Bean(name = "authenticationProvider")
+    @Bean
     public AbstractAuthenticationProvider authenticationProvider(
     		AbstractAuthenticationProvider normalAuthenticationProvider,
     		AbstractAuthenticationProvider mobileAuthenticationProvider,
@@ -100,7 +100,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         	);
     }
     
-    @Bean(name = "mobileAuthenticationProvider")
+    @Bean
     public AbstractAuthenticationProvider mobileAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
@@ -116,7 +116,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         	);
     }
 
-    @Bean(name = "trustedAuthenticationProvider")
+    @Bean
     public AbstractAuthenticationProvider trustedAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
@@ -130,7 +130,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         	);
     }
     
-    @Bean(name = "authJwtService")
+    @Bean
     public AuthJwtService authJwtService(
     		AuthJwkConfig authJwkConfig,
     		RedisConnectionFactory redisConnFactory,
@@ -162,23 +162,22 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
             otpAuthnService.setRedisOptTokenStore(redisOptTokenStore);
         }
         
-        
         _logger.debug("OneTimePasswordService {} inited." , 
         				persistence == ConstsPersistence.REDIS ? "Redis" : "InMemory");
         return otpAuthnService;
     }
     
-    @Bean(name = "passwordPolicyValidator")
+    @Bean
     public PasswordPolicyValidator passwordPolicyValidator(JdbcTemplate jdbcTemplate,MessageSource messageSource) {
         return new PasswordPolicyValidator(jdbcTemplate,messageSource);
     }
     
-    @Bean(name = "loginRepository")
+    @Bean
     public LoginRepository loginRepository(JdbcTemplate jdbcTemplate) {
         return new LoginRepository(jdbcTemplate);
     }
-    @Bean(name = "loginHistoryRepository")
-    public LoginHistoryRepository LoginHistoryRepository(JdbcTemplate jdbcTemplate) {
+    @Bean
+    public LoginHistoryRepository loginHistoryRepository(JdbcTemplate jdbcTemplate) {
         return new LoginHistoryRepository(jdbcTemplate);
     }
     
@@ -188,12 +187,12 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
             @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory,
-            @Value("${server.servlet.session.timeout:1800}") int timeout
+            @Value("${maxkey.session.timeout:1800}") int timeout
             ) {
+    	_logger.trace("session timeout " + timeout);
         SessionManager  sessionManager  = 
-                new SessionManagerFactory().getManager(persistence, jdbcTemplate, redisConnFactory);
-        sessionManager.setValiditySeconds(timeout);
-        _logger.trace("onlineTicket timeout " + timeout);
+                new SessionManagerFactory().getManager(
+                		persistence, jdbcTemplate, redisConnFactory,timeout);
         return sessionManager;
     }
     
@@ -209,7 +208,9 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
             ApplicationConfig applicationConfig,
             AuthJwtService authJwtService,
             JdbcTemplate jdbcTemplate) {
-        return new  JdbcRemeberMeService(jdbcTemplate,applicationConfig,authJwtService);
+    	_logger.trace("init remeberMeService , validity {}." , validity);
+        return new  JdbcRemeberMeService(
+        		jdbcTemplate,applicationConfig,authJwtService,validity);
     }
     
     @Bean

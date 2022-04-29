@@ -30,8 +30,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class RedisSessionManager extends AbstractSessionManager {
     private static final Logger _logger = LoggerFactory.getLogger(RedisSessionManager.class);
 	
-	protected int serviceTicketValiditySeconds = 60 * 30; //default 30 minutes.
-	
 	RedisConnectionFactory connectionFactory;
 	
 	public static String PREFIX="REDIS_SESSION_";
@@ -40,10 +38,11 @@ public class RedisSessionManager extends AbstractSessionManager {
 	 */
 	public RedisSessionManager(
 			RedisConnectionFactory connectionFactory,
-			JdbcTemplate jdbcTemplate) {
+			JdbcTemplate jdbcTemplate,int validitySeconds) {
 		super();
 		this.connectionFactory = connectionFactory;
 		this.jdbcTemplate = jdbcTemplate;
+		this.validitySeconds = validitySeconds;
 	}
 	
 	/**
@@ -58,9 +57,9 @@ public class RedisSessionManager extends AbstractSessionManager {
 	}
 
 	@Override
-	public void create(String sessionId, Session ticket) {
+	public void create(String sessionId, Session session) {
 		RedisConnection conn = connectionFactory.getConnection();
-		conn.setexObject(PREFIX + sessionId, serviceTicketValiditySeconds, ticket);
+		conn.setexObject(PREFIX + sessionId, validitySeconds, session);
 		conn.close();
 	}
 
@@ -81,13 +80,16 @@ public class RedisSessionManager extends AbstractSessionManager {
         return session;
     }
 
-    @Override
-    public void setValiditySeconds(int validitySeconds) {
-       this.serviceTicketValiditySeconds = validitySeconds;
-        
-    }
+   
+    public int getValiditySeconds() {
+		return validitySeconds;
+	}
 
-    @Override
+	public void setValiditySeconds(int validitySeconds) {
+		this.validitySeconds = validitySeconds;
+	}
+
+	@Override
     public void refresh(String sessionId,LocalTime refreshTime) {
         Session session = get(sessionId);
         session.setLastAccessTime(refreshTime);

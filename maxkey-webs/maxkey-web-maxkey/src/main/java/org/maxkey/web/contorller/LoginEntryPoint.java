@@ -108,13 +108,13 @@ public class LoginEntryPoint {
 	@Operation(summary  = "登录接口", description  = "用户登录地址",method="GET")
 	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> get(
-				@RequestParam(value = "remember_me", required = false) String rememberMeToken) {
+				@RequestParam(value = "remember_me", required = false) String rememberMeJwt) {
 		_logger.debug("/get.");
 		//Remember Me
-		if(StringUtils.isNotBlank(rememberMeToken)
-				&& authJwtService.validateJwtToken(rememberMeToken)) {
+		if(StringUtils.isNotBlank(rememberMeJwt)
+				&& authJwtService.validateJwtToken(rememberMeJwt)) {
 			try {
-				RemeberMe remeberMe = remeberMeService.resolve(rememberMeToken);
+				RemeberMe remeberMe = remeberMeService.resolve(rememberMeJwt);
 				if(remeberMe != null) {
 					LoginCredential credential = new LoginCredential();
 					String remeberMeJwt = remeberMeService.updateRemeberMe(remeberMe);
@@ -209,9 +209,9 @@ public class LoginEntryPoint {
  	 * @return
  	 */
  	@RequestMapping(value={"/congress"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> congress( @RequestBody LoginCredential loginCredential) {
- 		if(StringUtils.isNotBlank(loginCredential.getCongress())){
- 			AuthJwt authJwt = authJwtService.consumeCongress(loginCredential.getCongress());
+	public ResponseEntity<?> congress( @RequestBody LoginCredential credential) {
+ 		if(StringUtils.isNotBlank(credential.getCongress())){
+ 			AuthJwt authJwt = authJwtService.consumeCongress(credential.getCongress());
  			if(authJwt != null) {
  				return new Message<AuthJwt>(authJwt).buildResponse();
  			}

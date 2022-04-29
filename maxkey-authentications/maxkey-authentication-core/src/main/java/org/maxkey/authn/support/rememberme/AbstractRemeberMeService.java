@@ -89,8 +89,8 @@ public abstract class AbstractRemeberMeService {
         return true;
     }
     
-    public RemeberMe resolve(String rememberMeToken) throws ParseException {
-    	JWTClaimsSet claims = authJwtService.resolve(rememberMeToken);
+    public RemeberMe resolve(String rememberMeJwt) throws ParseException {
+    	JWTClaimsSet claims = authJwtService.resolve(rememberMeJwt);
     	RemeberMe remeberMe = new RemeberMe();
 		remeberMe.setId(claims.getJWTID());
 		remeberMe.setUsername(claims.getSubject());
@@ -117,7 +117,9 @@ public abstract class AbstractRemeberMeService {
 	}
 
 	public void setValidity(Integer validity) {
-		this.validity = validity;
+		if(validity != 0 ) {
+			this.validity = validity;
+		}
 	}
     
 

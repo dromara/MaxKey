@@ -37,6 +37,8 @@ public class AbstractSessionManager  implements SessionManager{
 	
 	protected JdbcTemplate jdbcTemplate;
 	
+	protected int validitySeconds = 60 * 30; //default 30 minutes.
+	
 	private static final String DEFAULT_DEFAULT_SELECT_STATEMENT = 
 			"select id,sessionid,userId,username,displayname,logintime from mxk_history_login where sessionstatus = 1";
 	
