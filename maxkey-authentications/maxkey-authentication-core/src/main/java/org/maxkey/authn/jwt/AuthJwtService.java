@@ -64,8 +64,6 @@ public class AuthJwtService {
 		this.momentaryService = momentaryService;
 		
 		this.hmac512Service = new HMAC512Service(authJwkConfig.getSecret());
-		
-		
 	}
 	
 	/**

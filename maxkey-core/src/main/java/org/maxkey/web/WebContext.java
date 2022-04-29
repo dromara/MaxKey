@@ -79,14 +79,11 @@ public final class WebContext {
         sessionAttributeNameList.add(WebConstants.AUTHORIZE_SIGN_ON_APP);
         sessionAttributeNameList.add(WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER);
         
-        sessionAttributeNameList.add(WebConstants.CURRENT_USER);
         sessionAttributeNameList.add(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE);
         
         sessionAttributeNameList.add(WebConstants.CURRENT_INST);
         
         sessionAttributeNameList.add(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
-        
-        sessionAttributeNameList.add(WebConstants.REMEBER_ME_SESSION);
         
         //logout
         logoutAttributeNameList.add(WebConstants.AUTHENTICATION);
@@ -94,13 +91,10 @@ public final class WebContext {
         logoutAttributeNameList.add(WebConstants.AUTHORIZE_SIGN_ON_APP);
         logoutAttributeNameList.add(WebConstants.AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER);
         
-        logoutAttributeNameList.add(WebConstants.CURRENT_USER);
         logoutAttributeNameList.add(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE);
         
         
         logoutAttributeNameList.add(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
-        
-        logoutAttributeNameList.add(WebConstants.REMEBER_ME_SESSION);
         
     }
 

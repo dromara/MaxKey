@@ -69,11 +69,11 @@ public class Session implements Serializable{
 	}
 
 	public String getFormattedId() {
-        return id;
+        return SESSION_PREFIX + id;
     }
 
-    public void setId(String ticketId) {
-        this.id = ticketId;
+    public void setId(String sessionId) {
+        this.id = sessionId;
     }
     
 

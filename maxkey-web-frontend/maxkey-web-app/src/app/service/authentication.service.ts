@@ -47,6 +47,7 @@ export class AuthenticationService {
 
   clear() {
     this.tokenService.clear();
+    localStorage.setItem(CONSTS.REMEMBER, '');
   }
 
   clearUser() {
@@ -73,7 +74,9 @@ export class AuthenticationService {
 
     this.cookieService.set(CONSTS.CONGRESS, authJwt.token);
     this.cookieService.set(CONSTS.CONGRESS, authJwt.ticket, { domain: subHostName });
-
+    if (authJwt.remeberMe) {
+      localStorage.setItem(CONSTS.REMEMBER, authJwt.remeberMe);
+    }
     this.settingsService.setUser(user);
     this.tokenService.set(authJwt);
     this.tokenService.get()?.expired;

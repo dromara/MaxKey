@@ -17,8 +17,12 @@
 
 package org.maxkey.web.contorller;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.AbstractAuthenticationProvider;
@@ -26,6 +30,8 @@ import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.jwt.AuthJwt;
 import org.maxkey.authn.jwt.AuthJwtService;
 import org.maxkey.authn.support.kerberos.KerberosService;
+import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
+import org.maxkey.authn.support.rememberme.RemeberMe;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
@@ -47,6 +53,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -60,12 +68,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class LoginEntryPoint {
 	private static Logger _logger = LoggerFactory.getLogger(LoginEntryPoint.class);
 	
+	Pattern mobileRegex = Pattern.compile("^(13[4,5,6,7,8,9]|15[0,8,9,1,7]|188|187)\\\\d{8}$");
+	
 	@Autowired
-  	@Qualifier("authJwtService")
 	AuthJwtService authJwtService;
 	
 	@Autowired
-  	@Qualifier("applicationConfig")
   	ApplicationConfig applicationConfig;
  	
 	@Autowired
@@ -77,11 +85,9 @@ public class LoginEntryPoint {
 	SocialSignOnProviderService socialSignOnProviderService;
 	
 	@Autowired
-	@Qualifier("kerberosService")
 	KerberosService kerberosService;
 	
 	@Autowired
-	@Qualifier("userInfoService")
 	UserInfoService userInfoService;
 	
 	@Autowired
@@ -92,8 +98,8 @@ public class LoginEntryPoint {
     @Qualifier("otpAuthnService")
     protected OtpAuthnService otpAuthnService;
 	
-	Pattern mobileRegex = Pattern.compile(
-	            "^(13[4,5,6,7,8,9]|15[0,8,9,1,7]|188|187)\\\\d{8}$");
+	@Autowired
+	AbstractRemeberMeService remeberMeService;
 	
 	/**
 	 * init login
@@ -101,8 +107,28 @@ public class LoginEntryPoint {
 	 */
 	@Operation(summary  = "登录接口", description  = "用户登录地址",method="GET")
 	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get() {
-		_logger.debug("LoginController /get.");
+	public ResponseEntity<?> get(
+				@RequestParam(value = "remember_me", required = false) String rememberMeToken) {
+		_logger.debug("/get.");
+		//Remember Me
+		if(StringUtils.isNotBlank(rememberMeToken)
+				&& authJwtService.validateJwtToken(rememberMeToken)) {
+			try {
+				RemeberMe remeberMe = remeberMeService.resolve(rememberMeToken);
+				if(remeberMe != null) {
+					LoginCredential credential = new LoginCredential();
+					String remeberMeJwt = remeberMeService.updateRemeberMe(remeberMe);
+					credential.setUsername(remeberMe.getUsername());
+					Authentication  authentication = authenticationProvider.authenticate(credential,true);
+					if(authentication != null) {
+			 			AuthJwt authJwt = authJwtService.genAuthJwt(authentication);
+			 			authJwt.setRemeberMe(remeberMeJwt);
+			 			return new Message<AuthJwt>(authJwt).buildResponse();
+					}
+				}
+			} catch (ParseException e) {
+			}
+		}
 		//for normal login
 		HashMap<String , Object> model = new HashMap<String , Object>();
 		model.put("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
@@ -149,19 +175,26 @@ public class LoginEntryPoint {
  	 * @return
  	 */
  	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
+	public ResponseEntity<?> signin( HttpServletRequest request, HttpServletResponse response,
+					@RequestBody LoginCredential credential) {
  		Message<AuthJwt> authJwtMessage = new Message<AuthJwt>(Message.FAIL);
- 		if(authJwtService.validateJwtToken(loginCredential.getState())){
- 			String authType =  loginCredential.getAuthType();
+ 		if(authJwtService.validateJwtToken(credential.getState())){
+ 			String authType =  credential.getAuthType();
  			 _logger.debug("Login AuthN Type  " + authType);
  	        if (StringUtils.isNotBlank(authType)){
-		 		Authentication  authentication = authenticationProvider.authenticate(loginCredential);	 				
+		 		Authentication  authentication = authenticationProvider.authenticate(credential);	 				
 		 		if(authentication != null) {
 		 			AuthJwt authJwt = authJwtService.genAuthJwt(authentication);
+		 			if(StringUtils.isNotBlank(credential.getRemeberMe())
+		 					&&credential.getRemeberMe().equalsIgnoreCase("true")) {
+		 				String remeberMe = remeberMeService.createRemeberMe(authentication, request, response);
+		 				authJwt.setRemeberMe(remeberMe);
+			 		}
 		 			if(WebContext.getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE)!=null)
 		 				authJwt.setPasswordSetType(
 		 					(Integer)WebContext.getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE));
 		 			authJwtMessage = new Message<AuthJwt>(authJwt);
+		 			
 		 		}
  	        }else {
  	        	_logger.error("Login AuthN type must eq normal , tfa or mobile . ");

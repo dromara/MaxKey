@@ -30,6 +30,8 @@ import org.maxkey.authn.provider.TrustedAuthenticationProvider;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.session.SessionManager;
 import org.maxkey.authn.session.SessionManagerFactory;
+import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
+import org.maxkey.authn.support.rememberme.JdbcRemeberMeService;
 import org.maxkey.authn.web.HttpSessionListenerAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.configuration.AuthJwkConfig;
@@ -181,7 +183,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     }
     
     
-    @Bean(name = "sessionManager")
+    @Bean
     public SessionManager sessionManager(
             @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
@@ -195,7 +197,22 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         return sessionManager;
     }
     
-    @Bean(name = "httpSessionListenerAdapter")
+    
+    /**
+     * remeberMeService .
+     * @return
+     */
+    @Bean
+    public AbstractRemeberMeService remeberMeService(
+            @Value("${maxkey.server.persistence}") int persistence,
+            @Value("${maxkey.login.remeberme.validity}") int validity,
+            ApplicationConfig applicationConfig,
+            AuthJwtService authJwtService,
+            JdbcTemplate jdbcTemplate) {
+        return new  JdbcRemeberMeService(jdbcTemplate,applicationConfig,authJwtService);
+    }
+    
+    @Bean
     public HttpSessionListenerAdapter httpSessionListenerAdapter() {
         return new HttpSessionListenerAdapter();
     }

@@ -79,27 +79,31 @@ export class UserLoginComponent implements OnInit, OnDestroy {
       this.congressLogin(this.route.snapshot.queryParams[CONSTS.CONGRESS]);
     }
 
-    if (localStorage.getItem(CONSTS.REMEMBER) && localStorage.getItem(CONSTS.REMEMBER)?.endsWith('true')) {
-      this.authenticationService.navigate({});
-      //auto auth
-    } else {
-      //init socials,state
-      this.authenticationService.clear();
-      this.authenticationService
-        .get({})
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-            this.cdr.detectChanges();
-          })
-        )
-        .subscribe(res => {
-          this.loading = true;
-          if (res.code !== 0) {
-            this.error = res.msg;
-          } else {
+    //init socials,state
+    this.authenticationService.clear();
+    this.authenticationService
+      .get({ remember_me: localStorage.getItem(CONSTS.REMEMBER) })
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe(res => {
+        this.loading = true;
+        if (res.code !== 0) {
+          this.error = res.msg;
+        } else {
+          // 清空路由复用信息
+          //console.log(res.data);
+          //REMEMBER ME
+          if (res.data.token) {
             // 清空路由复用信息
-            console.log(res.data);
+            this.reuseTabService.clear();
+            // 设置用户Token信息
+            this.authenticationService.auth(res.data);
+            this.authenticationService.navigate({});
+          } else {
             this.socials = res.data.socials;
             this.state = res.data.state;
             this.captchaType = res.data.captchaType;
@@ -109,8 +113,8 @@ export class UserLoginComponent implements OnInit, OnDestroy {
               this.cdr.detectChanges();
             });
           }
-        });
-    }
+        }
+      });
     this.cdr.detectChanges();
   }
 
@@ -156,6 +160,11 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   get otpCaptcha(): AbstractControl {
     return this.form.get('otpCaptcha')!;
   }
+
+  get remember(): AbstractControl {
+    return this.form.get('remember')!;
+  }
+
   // #endregion
 
   // #region get captcha
@@ -224,7 +233,8 @@ export class UserLoginComponent implements OnInit, OnDestroy {
         password: this.password.value,
         captcha: this.captcha.value,
         mobile: this.mobile.value,
-        otpCaptcha: this.otpCaptcha.value
+        otpCaptcha: this.otpCaptcha.value,
+        remeberMe: this.remember.value
       })
       .pipe(
         finalize(() => {

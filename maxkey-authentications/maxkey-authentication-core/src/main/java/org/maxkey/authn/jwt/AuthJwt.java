@@ -32,6 +32,7 @@ public class AuthJwt implements Serializable {
 	private String ticket;
 	private String token;
 	private String type = "Bearer";
+	private String remeberMe;
 	private String id;
 	private String name;
 	private String username;
@@ -157,6 +158,13 @@ public class AuthJwt implements Serializable {
 		this.passwordSetType = passwordSetType;
 	}
 	
+	public String getRemeberMe() {
+		return remeberMe;
+	}
+
+	public void setRemeberMe(String remeberMe) {
+		this.remeberMe = remeberMe;
+	}
 
 	@Override
 	public String toString() {

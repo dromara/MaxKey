@@ -25,22 +25,6 @@ package org.maxkey.web;
  */
 public class WebConstants {
 
-    public static final  String USERNAME = "username";
-
-    public static final  String REMOTE_USERNAME = "remote_username";
-
-    public static final  String CURRENT_USER = "current_user";
-
-    public static final  String CURRENT_COMPANY = "current_user_company";
-
-    public static final  String CURRENT_DEPARTMENT = "current_user_department";
-
-    public static final  String CURRENT_USER_NAVIGATIONS = "current_user_navigations";
-
-    public static final  String CURRENT_USER_ROLES = "current_user_roles";
-
-    public static final  String CURRENT_USER_SYSTEM_ROLES = "current_user_system_roles";
-
     public static final  String CURRENT_USER_PASSWORD_SET_TYPE 
                                     = "current_user_password_set_type";
 
@@ -65,15 +49,13 @@ public class WebConstants {
     public static final  String AUTHORIZE_SIGN_ON_APP_SAMLV20_ADAPTER 
                                     = "authorize_sign_on_app_samlv20_adapter";
     
-    public static final  String REMEBER_ME_SESSION = "remeber_me_session";
-
     public static final  String KERBEROS_TOKEN_PARAMETER = "kerberosToken";
 
     public static final  String CAS_SERVICE_PARAMETER = "service";
 
     public static final  String KERBEROS_USERDOMAIN_PARAMETER = "kerberosUserDomain";
 
-    public static final  String REMEBER_ME_COOKIE = "sign_in_remeber_me";
+    public static final  String REMEBER_ME_COOKIE = "sign_remeber_me";
 
     public static final  String JWT_TOKEN_PARAMETER = "jwt";
 
@@ -88,9 +70,9 @@ public class WebConstants {
     public static final  String LOGIN_ERROR_SESSION_MESSAGE 
                                     = "login_error_session_message_key";
     
-    public static final  String ONLINE_TICKET_NAME = "online_ticket";
-    
     public static final  String ONLINE_TICKET_PREFIX = "OT";
+    
+    public static final  String ONLINE_TICKET_NAME = "online_ticket";
     
 	public static final  String MXK_METADATA_PREFIX = "mxk_metadata_";
 	
