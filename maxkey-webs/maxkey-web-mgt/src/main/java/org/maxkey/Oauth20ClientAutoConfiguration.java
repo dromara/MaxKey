@@ -46,8 +46,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class Oauth20ClientAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(Oauth20ClientAutoConfiguration.class);
     
-    @Bean(name = "oauth20JdbcClientDetailsService")
-    public JdbcClientDetailsService jdbcClientDetailsService(
+    @Bean
+    public JdbcClientDetailsService oauth20JdbcClientDetailsService(
                 DataSource dataSource,PasswordEncoder passwordReciprocal) {
 	    JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
 	    clientDetailsService.setPasswordEncoder(passwordReciprocal);
@@ -60,7 +60,7 @@ public class Oauth20ClientAutoConfiguration  implements InitializingBean {
      * @param persistence int
      * @return oauth20TokenStore
      */
-    @Bean(name = "oauth20TokenStore")
+    @Bean
     public TokenStore oauth20TokenStore(
             @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
@@ -81,8 +81,8 @@ public class Oauth20ClientAutoConfiguration  implements InitializingBean {
      * clientDetailsUserDetailsService. 
      * @return oauth20TokenServices
      */
-    @Bean(name = "oauth20TokenServices")
-    public DefaultTokenServices defaultTokenServices(
+    @Bean
+    public DefaultTokenServices oauth20TokenServices(
             JdbcClientDetailsService oauth20JdbcClientDetailsService,
             TokenStore oauth20TokenStore) {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
@@ -96,7 +96,7 @@ public class Oauth20ClientAutoConfiguration  implements InitializingBean {
      * ProviderManager. 
      * @return oauth20ClientAuthenticationManager
      */
-    @Bean(name = "oauth20ClientAuthenticationManager")
+    @Bean
     public ProviderManager oauth20ClientAuthenticationManager(
             JdbcClientDetailsService oauth20JdbcClientDetailsService,
             PasswordEncoder passwordReciprocal

@@ -19,7 +19,7 @@ package org.maxkey.authn;
 
 import java.util.ArrayList;
 
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.session.Session;
 import org.maxkey.authn.session.SessionManager;
@@ -69,7 +69,7 @@ public abstract class AbstractAuthenticationProvider {
 
     protected SessionManager sessionManager;
     
-    protected AuthJwtService authJwtService;
+    protected AuthTokenService authTokenService;
     
     public static  ArrayList<GrantedAuthority> grantedAdministratorsAuthoritys = new ArrayList<GrantedAuthority>();
     

@@ -31,7 +31,6 @@ import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
@@ -48,12 +47,10 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	private static final Logger _logger = LoggerFactory.getLogger(RestApiPermissionAdapter.class);
 
 	@Autowired
-	@Qualifier("oauth20TokenServices")
 	DefaultTokenServices oauth20TokenServices;
 
 	@Autowired
-    @Qualifier("oauth20ClientAuthenticationManager")
-	ProviderManager authenticationManager;
+	ProviderManager oauth20ClientAuthenticationManager;
 	
 	static  ConcurrentHashMap<String ,String >navigationsMap=null;
 	
@@ -79,7 +76,7 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 							new UsernamePasswordAuthenticationToken(
 									headerCredential.getUsername(),
 									headerCredential.getCredential());
-			    	authenticationToken= (UsernamePasswordAuthenticationToken)authenticationManager.authenticate(authRequest);
+			    	authenticationToken= (UsernamePasswordAuthenticationToken)oauth20ClientAuthenticationManager.authenticate(authRequest);
 			    }
 			}else {
 				_logger.trace("Authentication bearer " + headerCredential.getCredential());

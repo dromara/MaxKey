@@ -41,7 +41,7 @@ public class KaptchaAutoConfiguration  implements InitializingBean {
      * @return Producer
      * @throws IOException kaptcha.properties is null
      */
-    @Bean (name = "captchaProducer")
+    @Bean
     public Producer captchaProducer() throws IOException {
         Resource resource = new ClassPathResource(kaptchaPropertySource);
         _logger.debug("Kaptcha config file " + resource.getURL());

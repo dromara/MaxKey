@@ -45,15 +45,12 @@ public class AuthorizeBaseEndpoint {
 	final static Logger _logger = LoggerFactory.getLogger(AuthorizeBaseEndpoint.class);
 	
 	@Autowired 
-    @Qualifier("applicationConfig")
     protected ApplicationConfig applicationConfig;
 	
 	@Autowired
-	@Qualifier("appsService")
 	protected AppsService appsService;
 		
 	@Autowired
-	@Qualifier("accountsService")
 	protected AccountsService accountsService;
 		
 	protected Apps getApp(String id){

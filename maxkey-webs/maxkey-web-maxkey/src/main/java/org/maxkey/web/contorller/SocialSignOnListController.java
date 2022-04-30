@@ -44,7 +44,6 @@ public class SocialSignOnListController {
 	@Autowired
 	protected SocialsAssociatesService socialsAssociatesService;
 	
-	
 	@RequestMapping(value={"/fetch"})
 	@ResponseBody
 	public ResponseEntity<?> fetch(@CurrentUser UserInfo currentUser){

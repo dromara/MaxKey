@@ -63,8 +63,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	final static Logger _logger = LoggerFactory.getLogger(SAML20DetailsController.class);
 	
 	@Autowired
-	@Qualifier("keyStoreLoader")
-	private KeyStoreLoader idpKeyStoreLoader;
+	private KeyStoreLoader keyStoreLoader;
 	
 	@Autowired
 	AppsSaml20DetailsService saml20DetailsService;
@@ -184,7 +183,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		
 			samlDetails.setCertIssuer(X509CertUtils.getCommonName(samlDetails.getTrustCert().getIssuerX500Principal()));
 			
-			KeyStore keyStore = KeyStoreUtil.clone(idpKeyStoreLoader.getKeyStore(),idpKeyStoreLoader.getKeystorePassword());
+			KeyStore keyStore = KeyStoreUtil.clone(keyStoreLoader.getKeyStore(),keyStoreLoader.getKeystorePassword());
 		
 			KeyStore trustKeyStore = null;
 			if (!samlDetails.getEntityId().equals("")) {
@@ -193,7 +192,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 				trustKeyStore = KeyStoreUtil.importTrustCertificate(keyStore,samlDetails.getTrustCert());
 			}
 		
-			byte[] keyStoreByte = KeyStoreUtil.keyStore2Bytes(trustKeyStore,idpKeyStoreLoader.getKeystorePassword());
+			byte[] keyStoreByte = KeyStoreUtil.keyStore2Bytes(trustKeyStore,keyStoreLoader.getKeystorePassword());
 		
 			// store KeyStore content
 			samlDetails.setKeyStore(keyStoreByte);

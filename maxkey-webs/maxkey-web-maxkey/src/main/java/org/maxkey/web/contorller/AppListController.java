@@ -20,6 +20,7 @@ package org.maxkey.web.contorller;
 import java.util.List;
 
 import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
@@ -78,6 +79,7 @@ public class AppListController {
         for (UserApps app : appList) {
         	app.transIconBase64();
         }
+        //AuthorizationUtils.setAuthentication(null);
         return new Message<List<UserApps>>(appList).buildResponse();
     }
  

@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
@@ -55,7 +55,7 @@ public class RegisterController {
 	Pattern mobileRegex = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
 	
 	@Autowired
-	AuthJwtService authJwtService;
+	AuthTokenService authTokenService;
 	
 	@Autowired 
   	protected ApplicationConfig applicationConfig;

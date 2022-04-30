@@ -25,7 +25,7 @@ import java.util.Base64;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.entity.Message;
 import org.maxkey.persistence.MomentaryService;
 import org.slf4j.Logger;
@@ -54,7 +54,7 @@ public class ImageCaptchaEndpoint {
 	protected MomentaryService momentaryService;
     
     @Autowired
-	AuthJwtService authJwtService;
+	AuthTokenService authTokenService;
 
     /**
      * captcha image Producer.
@@ -83,12 +83,12 @@ public class ImageCaptchaEndpoint {
             String kaptchaKey = "";
             if(StringUtils.isNotBlank(state) 
             		&& !state.equalsIgnoreCase("state")
-            		&& authJwtService.validateJwtToken(state)) {
+            		&& authTokenService.validateJwtToken(state)) {
             	//just validate state Token
             }else {
-            	state = authJwtService.genJwt();
+            	state = authTokenService.genRandomJwt();
             }
-            kaptchaKey = authJwtService.resolveJWTID(state);
+            kaptchaKey = authTokenService.resolveJWTID(state);
             _logger.trace("kaptchaKey {} , Captcha Text is {}" ,kaptchaKey, kaptchaValue);
            
             momentaryService.put("", kaptchaKey, kaptchaValue);

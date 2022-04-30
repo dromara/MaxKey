@@ -35,10 +35,11 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
+@RequestMapping(value = "/auth")
 public class UnauthorizedEntryPoint {
 	private static final Logger _logger = LoggerFactory.getLogger(UnauthorizedEntryPoint.class);
 	
- 	@RequestMapping(value={"/auth/entrypoint"})
+ 	@RequestMapping(value={"/entrypoint"})
 	public void entryPoint(
 			HttpServletRequest request, HttpServletResponse response) 
 					throws StreamWriteException, DatabindException, IOException {

@@ -33,11 +33,9 @@ public class CasBaseAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
     final static Logger _logger = LoggerFactory.getLogger(CasBaseAuthorizeEndpoint.class);
     
     @Autowired
-    @Qualifier("appsCasDetailsService")
     protected AppsCasDetailsService casDetailsService;
     
     @Autowired
-    @Qualifier("userInfoService")
     protected UserInfoService userInfoService;
     
     @Autowired

@@ -31,6 +31,7 @@ public class AuthJwt implements Serializable {
 	
 	private String ticket;
 	private String token;
+	private String refreshToken;
 	private String type = "Bearer";
 	private String remeberMe;
 	private String id;
@@ -57,10 +58,11 @@ public class AuthJwt implements Serializable {
 		this.authorities = authorities;
 	}
 	
-	public AuthJwt(String token, Authentication  authentication) {
+	public AuthJwt(String token,String refreshToken, Authentication  authentication) {
 		SignPrincipal principal = ((SignPrincipal)authentication.getPrincipal());
 		
 		this.token = token;
+		this.refreshToken = refreshToken;
 		this.ticket = principal.getSession().getId();
 		
 		this.id = principal.getUserInfo().getId();
@@ -164,6 +166,14 @@ public class AuthJwt implements Serializable {
 
 	public void setRemeberMe(String remeberMe) {
 		this.remeberMe = remeberMe;
+	}
+
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
 	}
 
 	@Override

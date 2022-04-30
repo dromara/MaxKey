@@ -30,7 +30,7 @@ public class Session implements Serializable{
 	
 	public static final  String SESSION_PREFIX = "OT";
     
-    public static final  int    MAX_EXPIRY_DURATION = 60 * 10; //default 10 minutes.
+    public static final  int    MAX_EXPIRY_DURATION = 60 * 5; //default 5 minutes.
     
     public String id;
     

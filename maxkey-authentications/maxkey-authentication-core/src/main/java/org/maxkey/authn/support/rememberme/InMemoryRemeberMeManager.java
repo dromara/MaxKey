@@ -24,7 +24,7 @@ import org.maxkey.constants.ConstsTimeInterval;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
-public class InMemoryRemeberMeService   extends AbstractRemeberMeService {
+public class InMemoryRemeberMeManager   extends AbstractRemeberMeManager {
 
     protected static final Cache<String, RemeberMe> remeberMeStore = 
             Caffeine.newBuilder()

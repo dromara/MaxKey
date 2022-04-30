@@ -13,8 +13,11 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, filter, mergeMap, switchMap, take } from 'rxjs/operators';
+
+import { CONSTS } from '../../shared/consts';
 
 const CODEMESSAGE: { [key: number]: string } = {
   200: '服务器成功返回请求的数据。',
@@ -54,6 +57,10 @@ export class DefaultInterceptor implements HttpInterceptor {
     return this.injector.get(NzNotificationService);
   }
 
+  private get cookieService(): CookieService {
+    return this.injector.get(CookieService);
+  }
+
   private get tokenSrv(): ITokenService {
     return this.injector.get(DA_SERVICE_TOKEN);
   }
@@ -80,17 +87,18 @@ export class DefaultInterceptor implements HttpInterceptor {
    */
   private refreshTokenRequest(): Observable<any> {
     const model = this.tokenSrv.get();
-    return this.http.post(`/api/auth/refresh`, null, null, { headers: { refresh_token: model?.['refresh_token'] || '' } });
+    return this.http.post(`/auth/token/refresh`, null, null, { headers: { refresh_token: model?.['refreshToken'] || '' } });
   }
 
   // #region 刷新Token方式一：使用 401 重新刷新 Token
 
   private tryRefreshToken(ev: HttpResponseBase, req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     // 1、若请求为刷新Token请求，表示来自刷新Token可以直接跳转登录页
-    if ([`/api/auth/refresh`].some(url => req.url.includes(url))) {
+    if ([`/auth/token/refresh`].some(url => req.url.includes(url))) {
       this.toLogin();
       return throwError(ev);
     }
+
     // 2、如果 `refreshToking` 为 `true` 表示已经在请求刷新 Token 中，后续所有请求转入等待状态，直至结果返回后再重新发起请求
     if (this.refreshToking) {
       return this.refreshToken$.pipe(
@@ -99,17 +107,20 @@ export class DefaultInterceptor implements HttpInterceptor {
         switchMap(() => next.handle(this.reAttachToken(req)))
       );
     }
+
     // 3、尝试调用刷新 Token
     this.refreshToking = true;
     this.refreshToken$.next(null);
 
     return this.refreshTokenRequest().pipe(
       switchMap(res => {
+        console.log(res.data);
         // 通知后续请求继续执行
         this.refreshToking = false;
-        this.refreshToken$.next(res);
+        this.refreshToken$.next(res.data.refreshToken);
+        this.cookieService.set(CONSTS.CONGRESS, res.data.token);
         // 重新保存新 token
-        this.tokenSrv.set(res);
+        this.tokenSrv.set(res.data);
         // 重新发起请求
         return next.handle(this.reAttachToken(req));
       }),
@@ -127,6 +138,7 @@ export class DefaultInterceptor implements HttpInterceptor {
    * > 由于已经发起的请求，不会再走一遍 `@delon/auth` 因此需要结合业务情况重新附加新的 Token
    */
   private reAttachToken(req: HttpRequest<any>): HttpRequest<any> {
+    //console.log('reAttachToken');
     // 以下示例是以 NG-ALAIN 默认使用 `SimpleInterceptor`
     const token = this.tokenSrv.get()?.token;
     return req.clone({

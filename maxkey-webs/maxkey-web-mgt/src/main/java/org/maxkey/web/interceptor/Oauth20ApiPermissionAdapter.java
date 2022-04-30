@@ -30,7 +30,6 @@ import org.maxkey.util.AuthorizationHeaderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
@@ -44,12 +43,10 @@ public class Oauth20ApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	private static final Logger _logger = LoggerFactory.getLogger(Oauth20ApiPermissionAdapter.class);
 	
 	@Autowired
-    @Qualifier("passwordReciprocal")
     protected PasswordReciprocal passwordReciprocal;
 	
 	@Autowired
-    @Qualifier("oauth20TokenServices")
-    private DefaultTokenServices oauth20tokenServices;
+    private DefaultTokenServices oauth20TokenServices;
 	
 	static  ConcurrentHashMap<String ,String >navigationsMap=null;
 	
@@ -64,7 +61,7 @@ public class Oauth20ApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 		String  authorization = request.getHeader(AuthorizationHeaderUtils.HEADER_Authorization);
 		 
 		 String accessToken = AuthorizationHeaderUtils.resolveBearer(authorization);
-		 OAuth2Authentication authentication = oauth20tokenServices.loadAuthentication(accessToken);
+		 OAuth2Authentication authentication = oauth20TokenServices.loadAuthentication(accessToken);
 		 
 		//判断应用的accessToken信息
 		if(authentication != null ){

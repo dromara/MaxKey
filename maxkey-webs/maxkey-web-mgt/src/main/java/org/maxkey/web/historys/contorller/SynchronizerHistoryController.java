@@ -29,7 +29,6 @@ import org.maxkey.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -52,7 +51,6 @@ public class SynchronizerHistoryController {
 final static Logger _logger = LoggerFactory.getLogger(SynchronizerHistoryController.class);
 
 	@Autowired
-    @Qualifier("historySynchronizerService")
 	HistorySynchronizerService historySynchronizerService;
 	
 	/**

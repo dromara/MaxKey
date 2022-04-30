@@ -46,6 +46,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class MaxKeyMvcConfig implements WebMvcConfigurer {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMvcConfig.class);
+   
+    @Value("${maxkey.login.basic.enable:false}")
+    private boolean basicEnable;
+    
+    @Value("${maxkey.login.httpheader.enable:false}")
+    private boolean httpHeaderEnable;
+    
+    @Value("${maxkey.login.httpheader.headername:iv-user}")
+    private String httpHeaderName;
     
     @Autowired
   	ApplicationConfig applicationConfig;
@@ -68,15 +77,6 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     
     @Autowired
     HistorySignOnAppInterceptor historySignOnAppInterceptor;
-    
-    @Value("${maxkey.login.httpheader.enable:false}")
-    private boolean httpHeaderEnable;
-    
-    @Value("${maxkey.login.httpheader.headername:iv-user}")
-    private String httpHeaderName;
-    
-    @Value("${maxkey.login.basic.enable:false}")
-    private boolean basicEnable;
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -62,22 +62,22 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = 
             LoggerFactory.getLogger(ApplicationAutoConfiguration.class);
 
-    @Bean(name = "passwordReciprocal")
+    @Bean
     public PasswordReciprocal passwordReciprocal() {
         return new PasswordReciprocal();
     }
     
-    @Bean(name = "transactionManager")
+    @Bean
     public DataSourceTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
     
-    @Bean(name = "institutionsRepository")
-    public InstitutionsRepository InstitutionsRepository(JdbcTemplate jdbcTemplate) {
+    @Bean
+    public InstitutionsRepository institutionsRepository(JdbcTemplate jdbcTemplate) {
         return new InstitutionsRepository(jdbcTemplate);
     }
     
-    @Bean(name = "localizationRepository")
+    @Bean
     public LocalizationRepository localizationRepository(JdbcTemplate jdbcTemplate,
     											InstitutionsRepository institutionsRepository) {
         return new LocalizationRepository(jdbcTemplate,institutionsRepository);
@@ -87,7 +87,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
      * Authentication Password Encoder .
      * @return
      */
-    @Bean(name = "passwordEncoder")
+    @Bean
     public PasswordEncoder passwordEncoder() {
         String idForEncode = "bcrypt";
         Map<String ,PasswordEncoder > encoders = new HashMap<String ,PasswordEncoder>();
@@ -127,7 +127,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
      * keyStoreLoader .
      * @return
      */
-    @Bean(name = "keyStoreLoader")
+    @Bean
     public KeyStoreLoader keyStoreLoader(
             @Value("${maxkey.saml.v20.idp.issuing.entity.id}") String entityName,
             @Value("${maxkey.saml.v20.idp.keystore.password}") String keystorePassword,
@@ -143,7 +143,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
      * spKeyStoreLoader .
      * @return
      */
-    @Bean(name = "spKeyStoreLoader")
+    @Bean
     public KeyStoreLoader spKeyStoreLoader(
             @Value("${maxkey.saml.v20.sp.issuing.entity.id}") String entityName,
             @Value("${maxkey.saml.v20.sp.keystore.password}") String keystorePassword,
@@ -159,17 +159,17 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
      * spKeyStoreLoader .
      * @return
      */
-    @Bean(name = "spIssuingEntityName")
+    @Bean
     public String spIssuingEntityName(
             @Value("${maxkey.saml.v20.sp.issuing.entity.id}") String spIssuingEntityName) {
         return spIssuingEntityName;
     }
     
     /**
-     * spKeyStoreLoader .
+     * Id Generator .
      * @return
      */
-    @Bean(name = "idGenerator")
+    @Bean
     public IdGenerator idGenerator(
             @Value("${maxkey.id.strategy:SnowFlake}") String strategy,
             @Value("${maxkey.id.datacenterId:0}") int datacenterId,
@@ -182,7 +182,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     }
 
     
-    @Bean(name = "momentaryService")
+    @Bean
     public MomentaryService momentaryService(
     		RedisConnectionFactory redisConnFactory,
     		@Value("${maxkey.server.persistence}") int persistence) throws JOSEException {

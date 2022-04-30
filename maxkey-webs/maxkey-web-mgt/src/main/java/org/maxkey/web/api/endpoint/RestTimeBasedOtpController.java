@@ -21,7 +21,6 @@ import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.persistence.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,11 +35,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class RestTimeBasedOtpController {
 
 	@Autowired
-    @Qualifier("timeBasedOtpAuthn")
     protected AbstractOtpAuthn timeBasedOtpAuthn;
     
     @Autowired
-    @Qualifier("userInfoService")
     private UserInfoService userInfoService;
     
     @Operation(summary = "基于时间令牌验证 API文档模块", description = "传递参数username和token",method="GET")

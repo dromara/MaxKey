@@ -37,7 +37,7 @@ public class MaxKeyMgtConfig  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMgtConfig.class);
     
 	//authenticationRealm for MaxKeyMgtApplication
-	@Bean(name = "authenticationRealm")
+	@Bean
 	public JdbcAuthenticationRealm authenticationRealm(
  			PasswordEncoder passwordEncoder,
 	    		PasswordPolicyValidator passwordPolicyValidator,
@@ -58,7 +58,7 @@ public class MaxKeyMgtConfig  implements InitializingBean {
         return authenticationRealm;
     }
 
-	@Bean(name = "timeBasedOtpAuthn")
+	@Bean
     public AbstractOtpAuthn timeBasedOtpAuthn() {
 		AbstractOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn();
 	    _logger.debug("TimeBasedOtpAuthn inited.");

@@ -30,9 +30,9 @@ public interface SessionManager {
     
     public  Session get(String sessionId);
     
-    public void refresh(String sessionId ,LocalTime refreshTime);
+    public Session refresh(String sessionId ,LocalTime refreshTime);
     
-    public void refresh(String sessionId);
+    public Session refresh(String sessionId);
 
     public void setValiditySeconds(int validitySeconds);
     

@@ -33,7 +33,7 @@ import org.apache.commons.lang.Validate;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.jwt.AuthJwt;
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.authz.saml.service.IDService;
@@ -120,7 +120,7 @@ public class ConsumerEndpoint {
 	private MessageReplayRule messageReplayRule;
 	
 	@Autowired
-	AuthJwtService authJwtService;
+	AuthTokenService authJwtService;
 
 	EndpointGenerator endpointGenerator;
 	AuthnRequestGenerator authnRequestGenerator;

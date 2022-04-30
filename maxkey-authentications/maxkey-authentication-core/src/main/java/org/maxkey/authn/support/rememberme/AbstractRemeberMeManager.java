@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
 import org.maxkey.authn.SignPrincipal;
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.crypto.jwt.HMAC512Service;
 import org.maxkey.entity.UserInfo;
@@ -36,14 +36,14 @@ import org.springframework.security.core.Authentication;
 
 import com.nimbusds.jwt.JWTClaimsSet;
 
-public abstract class AbstractRemeberMeService {
-    private static final Logger _logger = LoggerFactory.getLogger(AbstractRemeberMeService.class);
+public abstract class AbstractRemeberMeManager {
+    private static final Logger _logger = LoggerFactory.getLogger(AbstractRemeberMeManager.class);
 
     protected Integer validity = 7;
 
     protected ApplicationConfig applicationConfig;
     
-    AuthJwtService authJwtService;
+    AuthTokenService authTokenService;
 
     // follow function is for persist
     public abstract void save(RemeberMe remeberMe);
@@ -90,7 +90,7 @@ public abstract class AbstractRemeberMeService {
     }
     
     public RemeberMe resolve(String rememberMeJwt) throws ParseException {
-    	JWTClaimsSet claims = authJwtService.resolve(rememberMeJwt);
+    	JWTClaimsSet claims = authTokenService.resolve(rememberMeJwt);
     	RemeberMe remeberMe = new RemeberMe();
 		remeberMe.setId(claims.getJWTID());
 		remeberMe.setUsername(claims.getSubject());
@@ -109,7 +109,7 @@ public abstract class AbstractRemeberMeService {
 				.claim("kid", HMAC512Service.MXK_AUTH_JWK)
 				.build();
 		
-		return authJwtService.signedJWT(remeberMeJwtClaims);
+		return authTokenService.signedJWT(remeberMeJwtClaims);
 	}
 
 	public Integer getValidity() {

@@ -20,7 +20,7 @@ package org.maxkey.web.contorller;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.configuration.EmailConfig;
 import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.Message;
@@ -68,7 +68,7 @@ public class ForgotPasswordContorller {
     }
     
     @Autowired
-	AuthJwtService authJwtService;
+	AuthTokenService authTokenService;
     
     @Autowired
     UserInfoService userInfoService;
@@ -88,7 +88,7 @@ public class ForgotPasswordContorller {
     			@RequestParam String captcha) {
         _logger.debug("forgotpassword  /forgotpassword/produceOtp.");
         _logger.debug(" Mobile {}: " ,mobile);
-        if (!authJwtService.validateCaptcha(state,captcha)) {    
+        if (!authTokenService.validateCaptcha(state,captcha)) {    
         	_logger.debug("login captcha valid error.");
         	return new Message<ChangePassword>(Message.FAIL).buildResponse();
         }
@@ -116,7 +116,7 @@ public class ForgotPasswordContorller {
     			@RequestParam String state,
     			@RequestParam String captcha) {
         _logger.debug("/forgotpassword/produceEmailOtp Email {} : " , email);
-        if (!authJwtService.validateCaptcha(state,captcha)) {
+        if (!authTokenService.validateCaptcha(state,captcha)) {
         	_logger.debug("captcha valid error.");
         	return new Message<ChangePassword>(Message.FAIL).buildResponse();
         }

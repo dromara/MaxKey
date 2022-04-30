@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,11 @@ public class RedisSessionManager extends AbstractSessionManager {
 	RedisConnectionFactory connectionFactory;
 	
 	public static String PREFIX="REDIS_SESSION_";
+	
+	public String getKey(String sessionId) {
+		return PREFIX + sessionId;
+	}
+	
 	/**
 	 * @param connectionFactory
 	 */
@@ -59,15 +64,15 @@ public class RedisSessionManager extends AbstractSessionManager {
 	@Override
 	public void create(String sessionId, Session session) {
 		RedisConnection conn = connectionFactory.getConnection();
-		conn.setexObject(PREFIX + sessionId, validitySeconds, session);
+		conn.setexObject( getKey(sessionId), validitySeconds, session);
 		conn.close();
 	}
 
 	@Override
 	public Session remove(String sessionId) {
 		RedisConnection conn=connectionFactory.getConnection();
-		Session ticket = conn.getObject(PREFIX+sessionId);
-		conn.delete(PREFIX+sessionId);
+		Session ticket = conn.getObject(getKey(sessionId));
+		conn.delete(getKey(sessionId));
 		conn.close();
 		return ticket;
 	}
@@ -75,7 +80,7 @@ public class RedisSessionManager extends AbstractSessionManager {
     @Override
     public Session get(String sessionId) {
         RedisConnection conn=connectionFactory.getConnection();
-        Session session = conn.getObject(PREFIX+sessionId);
+        Session session = conn.getObject(getKey(sessionId));
         conn.close();
         return session;
     }
@@ -90,14 +95,15 @@ public class RedisSessionManager extends AbstractSessionManager {
 	}
 
 	@Override
-    public void refresh(String sessionId,LocalTime refreshTime) {
+    public Session refresh(String sessionId,LocalTime refreshTime) {
         Session session = get(sessionId);
         session.setLastAccessTime(refreshTime);
         create(sessionId , session);
+        return session;
     }
     
     @Override
-    public void refresh(String sessionId) {
+    public Session refresh(String sessionId) {
         Session session = get(sessionId);
         
         LocalTime currentTime = LocalTime.now();
@@ -107,8 +113,9 @@ public class RedisSessionManager extends AbstractSessionManager {
         
         if(duration.getSeconds() > Session.MAX_EXPIRY_DURATION) {
         	session.setLastAccessTime(currentTime);
-            refresh(sessionId,currentTime);
+           return  refresh(sessionId,currentTime);
         }
+        return session;
     }
 
 	

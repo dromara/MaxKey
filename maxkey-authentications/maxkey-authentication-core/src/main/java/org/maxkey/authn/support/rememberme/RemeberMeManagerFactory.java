@@ -23,18 +23,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class RemeberMeServiceFactory {
+public class RemeberMeManagerFactory {
 	private static final  Logger _logger = 
-            LoggerFactory.getLogger(RemeberMeServiceFactory.class);
+            LoggerFactory.getLogger(RemeberMeManagerFactory.class);
 	
-	 public AbstractRemeberMeService getService(
+	 public AbstractRemeberMeManager getService(
 			 	int persistence,
 			 	JdbcTemplate jdbcTemplate,
 	            RedisConnectionFactory redisConnFactory){
 		 
-		 AbstractRemeberMeService remeberMeService = null;
+		 AbstractRemeberMeManager remeberMeService = null;
 	        if (persistence == ConstsPersistence.INMEMORY) {
-	            remeberMeService = new InMemoryRemeberMeService();
+	            remeberMeService = new InMemoryRemeberMeManager();
 	            _logger.debug("InMemoryRemeberMeService");
 	        } else if (persistence == ConstsPersistence.JDBC) {
 	            //remeberMeService = new JdbcRemeberMeService(jdbcTemplate);

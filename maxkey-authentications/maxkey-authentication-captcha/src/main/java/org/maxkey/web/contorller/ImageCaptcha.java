@@ -17,7 +17,9 @@
 package org.maxkey.web.contorller;
 
 public class ImageCaptcha {
+	
 	String state;
+	
 	String image;
 	
 	public ImageCaptcha(String state, String image) {

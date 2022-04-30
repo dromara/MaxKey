@@ -13,7 +13,7 @@ export const environment = {
   api: {
     baseUrl: 'http://sso.maxkey.top:8080/maxkey',
     refreshTokenEnabled: true,
-    refreshTokenType: 'auth-refresh'
+    refreshTokenType: 're-request'
   },
   modules: [DelonMockModule.forRoot({ data: MOCKDATA })]
 } as Environment;

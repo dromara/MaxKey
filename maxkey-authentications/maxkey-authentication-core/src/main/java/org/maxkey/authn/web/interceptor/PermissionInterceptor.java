@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.SignPrincipal;
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.authn.session.SessionManager;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
@@ -47,7 +47,7 @@ public class PermissionInterceptor  implements AsyncHandlerInterceptor  {
 	SessionManager sessionManager;
 	
 	@Autowired
-	AuthJwtService authJwtService ;
+	AuthTokenService authTokenService ;
 	
 	boolean mgmt = false;
 	
@@ -59,7 +59,7 @@ public class PermissionInterceptor  implements AsyncHandlerInterceptor  {
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 _logger.trace("Permission Interceptor .");
-		 AuthorizationUtils.authenticate(request, authJwtService, sessionManager);
+		 AuthorizationUtils.authenticate(request, authTokenService, sessionManager);
 		 SignPrincipal principal = AuthorizationUtils.getPrincipal();
 		//判断用户是否登录,判断用户是否登录用户
 		if(principal == null){

@@ -41,7 +41,7 @@ public class JwtAuthnAutoConfiguration implements InitializingBean {
      * jwt Login JwkSetKeyStore.
      * @return
      */
-    @Bean(name = "jwtLoginJwkSetKeyStore")
+    @Bean
     public JWKSetKeyStore jwtLoginJwkSetKeyStore() {
         JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore();
         ClassPathResource classPathResource = new ClassPathResource("/config/loginjwkkeystore.jwks");
@@ -57,7 +57,7 @@ public class JwtAuthnAutoConfiguration implements InitializingBean {
      * @throws InvalidKeySpecException 
      * @throws NoSuchAlgorithmException 
      */
-    @Bean(name = "jwtLoginValidationService")
+    @Bean
     public DefaultJwtSigningAndValidationService jwtLoginValidationService(
             JWKSetKeyStore jwtLoginJwkSetKeyStore) 
                     throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
@@ -73,7 +73,7 @@ public class JwtAuthnAutoConfiguration implements InitializingBean {
      * Jwt LoginService.
      * @return
      */
-    @Bean(name = "jwtLoginService")
+    @Bean
     public JwtLoginService jwtLoginService(
             @Value("${maxkey.login.jwt.issuer}")
             String issuer,

@@ -19,7 +19,8 @@ package org.maxkey.autoconfigure;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthRefreshTokenService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.authn.jwt.CongressService;
 import org.maxkey.authn.jwt.InMemoryCongressService;
 import org.maxkey.authn.jwt.RedisCongressService;
@@ -30,8 +31,8 @@ import org.maxkey.authn.provider.TrustedAuthenticationProvider;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.session.SessionManager;
 import org.maxkey.authn.session.SessionManagerFactory;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
-import org.maxkey.authn.support.rememberme.JdbcRemeberMeService;
+import org.maxkey.authn.support.rememberme.AbstractRemeberMeManager;
+import org.maxkey.authn.support.rememberme.JdbcRemeberMeManager;
 import org.maxkey.authn.web.HttpSessionListenerAdapter;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.configuration.AuthJwkConfig;
@@ -89,14 +90,14 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    SessionManager sessionManager,
-    	    AuthJwtService authJwtService
+    	    AuthTokenService authTokenService
     		) {
     	_logger.debug("init authentication Provider .");
     	return new NormalAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
         		sessionManager,
-        		authJwtService
+        		authTokenService
         	);
     }
     
@@ -131,10 +132,11 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     }
     
     @Bean
-    public AuthJwtService authJwtService(
+    public AuthTokenService authTokenService(
     		AuthJwkConfig authJwkConfig,
     		RedisConnectionFactory redisConnFactory,
     		MomentaryService  momentaryService,
+    		AuthRefreshTokenService refreshTokenService,
     		@Value("${maxkey.server.persistence}") int persistence) throws JOSEException {
     	CongressService congressService;
     	if (persistence == ConstsPersistence.REDIS) {
@@ -143,9 +145,20 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     		congressService = new InMemoryCongressService();
     	}
     	
-    	AuthJwtService authJwtService = new AuthJwtService(authJwkConfig,congressService,momentaryService);
+    	AuthTokenService authTokenService = 
+    				new AuthTokenService(
+    							authJwkConfig,
+    							congressService,
+    							momentaryService,
+    							refreshTokenService
+    						);
     	
-    	return authJwtService;
+    	return authTokenService;
+    }
+    
+    @Bean
+    public AuthRefreshTokenService refreshTokenService(AuthJwkConfig authJwkConfig) throws JOSEException {
+    	return new AuthRefreshTokenService(authJwkConfig);
     }
     
     @Bean(name = "otpAuthnService")
@@ -196,21 +209,20 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
         return sessionManager;
     }
     
-    
     /**
      * remeberMeService .
      * @return
      */
     @Bean
-    public AbstractRemeberMeService remeberMeService(
+    public AbstractRemeberMeManager remeberMeManager(
             @Value("${maxkey.server.persistence}") int persistence,
             @Value("${maxkey.login.remeberme.validity}") int validity,
             ApplicationConfig applicationConfig,
-            AuthJwtService authJwtService,
+            AuthTokenService authTokenService,
             JdbcTemplate jdbcTemplate) {
-    	_logger.trace("init remeberMeService , validity {}." , validity);
-        return new  JdbcRemeberMeService(
-        		jdbcTemplate,applicationConfig,authJwtService,validity);
+    	_logger.trace("init RemeberMeManager , validity {}." , validity);
+        return new  JdbcRemeberMeManager(
+        		jdbcTemplate,applicationConfig,authTokenService,validity);
     }
     
     @Bean

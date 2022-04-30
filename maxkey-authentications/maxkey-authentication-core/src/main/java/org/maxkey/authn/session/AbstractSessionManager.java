@@ -110,13 +110,13 @@ public class AbstractSessionManager  implements SessionManager{
 	}
 
 	@Override
-	public void refresh(String sessionId, LocalTime refreshTime) {
-		
+	public Session refresh(String sessionId, LocalTime refreshTime) {
+		return null;
 	}
 
 	@Override
-	public void refresh(String sessionId) {
-		
+	public Session refresh(String sessionId) {
+		return null;
 	}
 
 	@Override

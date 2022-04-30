@@ -19,7 +19,7 @@ package org.maxkey.web.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.authn.session.SessionManager;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.configuration.ApplicationConfig;
@@ -42,7 +42,7 @@ public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
 	SessionManager sessionManager;
     
     @Autowired
-	AuthJwtService authJwtService ;
+	AuthTokenService authTokenService ;
     
     @Override
     public boolean preHandle(HttpServletRequest request, 
@@ -51,7 +51,7 @@ public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
     	_logger.trace("Single Sign On Interceptor");
        
     	AuthorizationUtils.authenticateWithCookie(
-    				request,authJwtService,sessionManager);
+    				request,authTokenService,sessionManager);
 
         if(AuthorizationUtils.isNotAuthenticated()){
         	String loginUrl = applicationConfig.getFrontendUri() + "/#/passport/login?redirect_uri=%s";

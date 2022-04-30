@@ -78,14 +78,15 @@ public class InMemorySessionManager extends AbstractSessionManager{
     }
 
     @Override
-    public void refresh(String sessionId,LocalTime refreshTime) {
+    public Session refresh(String sessionId,LocalTime refreshTime) {
         Session session = get(sessionId);
         session.setLastAccessTime(refreshTime);
         create(sessionId , session);
+        return session;
     }
 
     @Override
-    public void refresh(String sessionId) {
+    public Session refresh(String sessionId) {
         Session session = get(sessionId);
         
         LocalTime currentTime = LocalTime.now();
@@ -95,8 +96,9 @@ public class InMemorySessionManager extends AbstractSessionManager{
         
         if(duration.getSeconds() > Session.MAX_EXPIRY_DURATION) {
         	session.setLastAccessTime(currentTime);
-            refresh(sessionId,currentTime);
+            return refresh(sessionId,currentTime);
         }
+        return session;
     }
 
 }

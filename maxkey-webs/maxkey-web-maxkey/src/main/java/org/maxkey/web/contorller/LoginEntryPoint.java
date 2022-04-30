@@ -28,9 +28,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.jwt.AuthJwt;
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.authn.support.kerberos.KerberosService;
-import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
+import org.maxkey.authn.support.rememberme.AbstractRemeberMeManager;
 import org.maxkey.authn.support.rememberme.RemeberMe;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.configuration.ApplicationConfig;
@@ -45,7 +45,6 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -71,17 +70,15 @@ public class LoginEntryPoint {
 	Pattern mobileRegex = Pattern.compile("^(13[4,5,6,7,8,9]|15[0,8,9,1,7]|188|187)\\\\d{8}$");
 	
 	@Autowired
-	AuthJwtService authJwtService;
+	AuthTokenService authTokenService;
 	
 	@Autowired
   	ApplicationConfig applicationConfig;
  	
 	@Autowired
-	@Qualifier("authenticationProvider")
 	AbstractAuthenticationProvider authenticationProvider ;
 
 	@Autowired
-	@Qualifier("socialSignOnProviderService")
 	SocialSignOnProviderService socialSignOnProviderService;
 	
 	@Autowired
@@ -91,15 +88,13 @@ public class LoginEntryPoint {
 	UserInfoService userInfoService;
 	
 	@Autowired
-    @Qualifier("tfaOtpAuthn")
-    protected AbstractOtpAuthn tfaOtpAuthn;
+    AbstractOtpAuthn tfaOtpAuthn;
 	
 	@Autowired
-    @Qualifier("otpAuthnService")
-    protected OtpAuthnService otpAuthnService;
+    OtpAuthnService otpAuthnService;
 	
 	@Autowired
-	AbstractRemeberMeService remeberMeService;
+	AbstractRemeberMeManager remeberMeManager;
 	
 	/**
 	 * init login
@@ -112,16 +107,16 @@ public class LoginEntryPoint {
 		_logger.debug("/get.");
 		//Remember Me
 		if(StringUtils.isNotBlank(rememberMeJwt)
-				&& authJwtService.validateJwtToken(rememberMeJwt)) {
+				&& authTokenService.validateJwtToken(rememberMeJwt)) {
 			try {
-				RemeberMe remeberMe = remeberMeService.resolve(rememberMeJwt);
+				RemeberMe remeberMe = remeberMeManager.resolve(rememberMeJwt);
 				if(remeberMe != null) {
 					LoginCredential credential = new LoginCredential();
-					String remeberMeJwt = remeberMeService.updateRemeberMe(remeberMe);
+					String remeberMeJwt = remeberMeManager.updateRemeberMe(remeberMe);
 					credential.setUsername(remeberMe.getUsername());
 					Authentication  authentication = authenticationProvider.authenticate(credential,true);
 					if(authentication != null) {
-			 			AuthJwt authJwt = authJwtService.genAuthJwt(authentication);
+			 			AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
 			 			authJwt.setRemeberMe(remeberMeJwt);
 			 			return new Message<AuthJwt>(authJwt).buildResponse();
 					}
@@ -150,7 +145,7 @@ public class LoginEntryPoint {
 			model.put("captcha", inst.getCaptchaSupport());
 			model.put("captchaType", inst.getCaptchaType());
 		}
-		model.put("state", authJwtService.genJwt());
+		model.put("state", authTokenService.genRandomJwt());
 		//load Social Sign On Providers
 		model.put("socials", socialSignOnProviderService.loadSocials(inst.getId()));
 		
@@ -178,16 +173,16 @@ public class LoginEntryPoint {
 	public ResponseEntity<?> signin( HttpServletRequest request, HttpServletResponse response,
 					@RequestBody LoginCredential credential) {
  		Message<AuthJwt> authJwtMessage = new Message<AuthJwt>(Message.FAIL);
- 		if(authJwtService.validateJwtToken(credential.getState())){
+ 		if(authTokenService.validateJwtToken(credential.getState())){
  			String authType =  credential.getAuthType();
  			 _logger.debug("Login AuthN Type  " + authType);
  	        if (StringUtils.isNotBlank(authType)){
 		 		Authentication  authentication = authenticationProvider.authenticate(credential);	 				
 		 		if(authentication != null) {
-		 			AuthJwt authJwt = authJwtService.genAuthJwt(authentication);
+		 			AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
 		 			if(StringUtils.isNotBlank(credential.getRemeberMe())
 		 					&&credential.getRemeberMe().equalsIgnoreCase("true")) {
-		 				String remeberMe = remeberMeService.createRemeberMe(authentication, request, response);
+		 				String remeberMe = remeberMeManager.createRemeberMe(authentication, request, response);
 		 				authJwt.setRemeberMe(remeberMe);
 			 		}
 		 			if(WebContext.getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE)!=null)
@@ -211,7 +206,7 @@ public class LoginEntryPoint {
  	@RequestMapping(value={"/congress"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> congress( @RequestBody LoginCredential credential) {
  		if(StringUtils.isNotBlank(credential.getCongress())){
- 			AuthJwt authJwt = authJwtService.consumeCongress(credential.getCongress());
+ 			AuthJwt authJwt = authTokenService.consumeCongress(credential.getCongress());
  			if(authJwt != null) {
  				return new Message<AuthJwt>(authJwt).buildResponse();
  			}

@@ -25,9 +25,6 @@ import org.springframework.stereotype.Component;
 @Configuration
 public class AuthJwkConfig {
 
-	@Value("${maxkey.auth.jwt.issuer:https://sso.maxkey.top/}")
-	String 	issuer;
-	
 	@Value("${maxkey.auth.jwt.expires:86400}")
 	int 	expires;
 	
@@ -35,10 +32,13 @@ public class AuthJwkConfig {
 	String 	secret;
 	
 	@Value("${maxkey.session.timeout}")
-	String 	refreshExpire;
+	int 	refreshExpires;
 	
 	@Value("${maxkey.auth.jwt.refresh.secret}")
 	String 	refreshSecret;
+	
+	@Value("${maxkey.auth.jwt.issuer:https://sso.maxkey.top/}")
+	String 	issuer;
 
 	public AuthJwkConfig() {
 		super();
@@ -52,7 +52,6 @@ public class AuthJwkConfig {
 		this.issuer = issuer;
 	}
 
-	
 
 	public int getExpires() {
 		return expires;
@@ -68,6 +67,22 @@ public class AuthJwkConfig {
 
 	public void setSecret(String secret) {
 		this.secret = secret;
+	}
+	
+	public int getRefreshExpires() {
+		return refreshExpires;
+	}
+
+	public void setRefreshExpires(int refreshExpires) {
+		this.refreshExpires = refreshExpires;
+	}
+
+	public String getRefreshSecret() {
+		return refreshSecret;
+	}
+
+	public void setRefreshSecret(String refreshSecret) {
+		this.refreshSecret = refreshSecret;
 	}
 
 	@Override

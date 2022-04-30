@@ -22,7 +22,7 @@ import java.util.HashMap;
 import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.jwt.AuthJwt;
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
 import org.maxkey.entity.Message;
@@ -50,13 +50,12 @@ public class LoginEntryPoint {
 	private static Logger _logger = LoggerFactory.getLogger(LoginEntryPoint.class);
 	
 	@Autowired
-	AuthJwtService authJwtService;
+	AuthTokenService authTokenService;
 	
 	@Autowired
   	protected ApplicationConfig applicationConfig;
  	
 	@Autowired
-	@Qualifier("authenticationProvider")
 	AbstractAuthenticationProvider authenticationProvider ;
 	
 	/**
@@ -77,15 +76,15 @@ public class LoginEntryPoint {
 			model.put("captcha", inst.getCaptchaSupport());
 			model.put("captchaType", inst.getCaptchaType());
 		}
-		model.put("state", authJwtService.genJwt());
+		model.put("state", authTokenService.genRandomJwt());
 		return new Message<HashMap<String , Object>>(model).buildResponse();
 	}
  	
  	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
- 		if(authJwtService.validateJwtToken(loginCredential.getState())){
+ 		if(authTokenService.validateJwtToken(loginCredential.getState())){
 	 		Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
-	 		AuthJwt authJwt = authJwtService.genAuthJwt(authentication);
+	 		AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
 	 		return new Message<AuthJwt>(authJwt).buildResponse();
  		}
  		return new Message<AuthJwt>(Message.FAIL).buildResponse();

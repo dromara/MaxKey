@@ -49,8 +49,8 @@ public class IndexEndpoint {
 	NoticesService noticesService;
 	
 	@Autowired
-  	@Qualifier("applicationConfig")
   	ApplicationConfig applicationConfig;
+	
 	@RequestMapping(value={"/forwardindex"})
 	public ModelAndView forwardindex(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {

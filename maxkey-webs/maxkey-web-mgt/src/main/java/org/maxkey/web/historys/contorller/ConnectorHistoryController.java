@@ -52,7 +52,6 @@ public class ConnectorHistoryController {
 final static Logger _logger = LoggerFactory.getLogger(ConnectorHistoryController.class);
 
 	@Autowired
-    @Qualifier("historyConnectorService")
 	HistoryConnectorService historyConnectorService;
 	
 	/**

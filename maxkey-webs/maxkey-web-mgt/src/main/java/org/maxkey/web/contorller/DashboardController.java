@@ -26,7 +26,6 @@ import org.maxkey.persistence.service.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -41,7 +40,6 @@ public class DashboardController {
 	
 	private static Logger _logger = LoggerFactory.getLogger(DashboardController.class);
 	@Autowired
-	@Qualifier("reportService")
 	ReportService reportService;
 
 	@RequestMapping(value={"/dashboard"}, produces = {MediaType.APPLICATION_JSON_VALUE})

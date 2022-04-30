@@ -77,7 +77,7 @@ public class MaxKeyConfig  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyConfig.class);
     
 
-    @Bean(name = "otpKeyUriFormat")
+    @Bean
     public OtpKeyUriFormat otpKeyUriFormat(
                 @Value("${maxkey.otp.policy.type:totp}")
                 String type,
@@ -96,7 +96,7 @@ public class MaxKeyConfig  implements InitializingBean {
     }
     
     //可以在此实现其他的登陆认证方式，请实现AbstractAuthenticationRealm
-    @Bean(name = "authenticationRealm")
+    @Bean
     public JdbcAuthenticationRealm authenticationRealm(
     			PasswordEncoder passwordEncoder,
 	    		PasswordPolicyValidator passwordPolicyValidator,
@@ -120,7 +120,7 @@ public class MaxKeyConfig  implements InitializingBean {
         return authenticationRealm;
     }
     
-	@Bean(name = "timeBasedOtpAuthn")
+	@Bean
     public TimeBasedOtpAuthn timeBasedOtpAuthn(
                 @Value("${maxkey.otp.policy.digits:6}")
                 int digits,
@@ -131,8 +131,8 @@ public class MaxKeyConfig  implements InitializingBean {
         return tfaOtpAuthn;
     }
     
-    @Bean(name = "tfaOtpAuthn")
-    public AbstractOtpAuthn tfaOptAuthn(
+    @Bean
+    public AbstractOtpAuthn tfaOtpAuthn(
                 @Value("${maxkey.login.mfa.type}")String mfaType,
                 @Value("${maxkey.otp.policy.digits:6}")
                 int digits,
@@ -152,7 +152,7 @@ public class MaxKeyConfig  implements InitializingBean {
         return tfaOtpAuthn;
     }
     
-    @Bean(name = "mailOtpAuthn")
+    @Bean
     public MailOtpAuthn mailOtpAuthn(
             EmailConfig emailConfig,
             @Value("${spring.mail.properties.mailotp.message.subject}")
@@ -185,7 +185,7 @@ public class MaxKeyConfig  implements InitializingBean {
     }
     
     
-    @Bean(name = "kerberosService")
+    @Bean
     public RemoteKerberosService kerberosService(
             @Value("${maxkey.login.kerberos.default.userdomain}")
             String userDomain,

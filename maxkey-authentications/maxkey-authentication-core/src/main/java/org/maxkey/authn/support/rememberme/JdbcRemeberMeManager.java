@@ -22,15 +22,15 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.configuration.ApplicationConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-public class JdbcRemeberMeService extends AbstractRemeberMeService {
-    private static final Logger _logger = LoggerFactory.getLogger(JdbcRemeberMeService.class);
+public class JdbcRemeberMeManager extends AbstractRemeberMeManager {
+    private static final Logger _logger = LoggerFactory.getLogger(JdbcRemeberMeManager.class);
 
     private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = 
             "insert into  mxk_remember_me(id, userid,username,lastlogintime,expirationtime)values( ? , ? , ? , ? , ?)";
@@ -47,14 +47,14 @@ public class JdbcRemeberMeService extends AbstractRemeberMeService {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public JdbcRemeberMeService(
+    public JdbcRemeberMeManager(
     			JdbcTemplate jdbcTemplate,
     			ApplicationConfig applicationConfig,
-    			AuthJwtService authJwtService,
+    			AuthTokenService authTokenService,
     			int validity) {
         this.jdbcTemplate = jdbcTemplate;
         this.applicationConfig = applicationConfig;
-        this.authJwtService = authJwtService;
+        this.authTokenService = authTokenService;
         if(validity != 0) {
         	this.validity = validity;
         }

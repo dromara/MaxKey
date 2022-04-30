@@ -59,7 +59,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 									) {
 		_logger.trace("SocialSignOn provider : " + provider);
 		String instId = WebContext.getInst().getId();
-    	String authorizationUrl = buildAuthRequest(instId,provider).authorize(authJwtService.genJwt());
+    	String authorizationUrl = buildAuthRequest(instId,provider).authorize(authTokenService.genRandomJwt());
 		_logger.trace("authorize SocialSignOn : " + authorizationUrl);
 		return new Message<Object>((Object)authorizationUrl).buildResponse();
 	}
@@ -75,7 +75,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	    if(authRequest == null ) {
 	        _logger.error("build authRequest fail .");
 	    }
-	    String state = authJwtService.genJwt();
+	    String state = authTokenService.genRandomJwt();
 	    authRequest.authorize(state);
 	    
 		SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(instId,provider);
@@ -139,7 +139,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	    	//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
 		
 	    	this.socialsAssociateService.update(socialsAssociate);
-	    	return new Message<AuthJwt>(authJwtService.genAuthJwt(authentication)).buildResponse();
+	    	return new Message<AuthJwt>(authTokenService.genAuthJwt(authentication)).buildResponse();
 	    }catch(Exception e) {
 	    	 _logger.error("callback Exception  ",e);
 	    	 return new Message<AuthJwt>(Message.ERROR).buildResponse();

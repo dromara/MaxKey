@@ -37,16 +37,7 @@ import org.springframework.stereotype.Component;
 @Configuration
 public class ApplicationConfig {
     
-    @Autowired
-    EmailConfig emailConfig;
-    
-    @Autowired
-    CharacterEncodingConfig characterEncodingConfig;
-    
-    @Autowired
-    LoginConfig loginConfig;
-
-    @Value("${maxkey.server.basedomain}")
+	@Value("${maxkey.server.basedomain}")
     String baseDomainName;
 
     @Value("${maxkey.server.domain}")
@@ -83,6 +74,17 @@ public class ApplicationConfig {
     private boolean noticesVisible;
     
     public static String  databaseProduct = "MySQL";
+	    
+	@Autowired
+    EmailConfig emailConfig;
+    
+    @Autowired
+    CharacterEncodingConfig characterEncodingConfig;
+    
+    @Autowired
+    LoginConfig loginConfig;
+
+   
     
     
     public int getPort() {

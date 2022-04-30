@@ -23,7 +23,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.authn.SignPrincipal;
-import org.maxkey.authn.jwt.AuthJwtService;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.authn.session.Session;
 import org.maxkey.authn.session.SessionManager;
 import org.maxkey.entity.UserInfo;
@@ -41,43 +41,46 @@ public class AuthorizationUtils {
 	
 	public static  void authenticateWithCookie(
 			HttpServletRequest request,
-			AuthJwtService authJwtService,
+			AuthTokenService authTokenService,
 			SessionManager sessionManager
 			) throws ParseException{
-		 if(getAuthentication() == null) {
-			Cookie authCookie = WebContext.getCookie(request, Authorization_Cookie);
-			if(authCookie != null ) {
-		    	String  authorization =  authCookie.getValue();
-		    	doJwtAuthenticate(authorization,authJwtService,sessionManager);
-		    	_logger.debug("congress automatic authenticated .");
-			}
-		 }
+		Cookie authCookie = WebContext.getCookie(request, Authorization_Cookie);
+		if(authCookie != null ) {
+	    	String  authorization =  authCookie.getValue();
+	    	doJwtAuthenticate(authorization,authTokenService,sessionManager);
+	    	_logger.debug("congress automatic authenticated .");
+		}
 	}
 	
 	public static  void authenticate(
 			HttpServletRequest request,
-			AuthJwtService authJwtService,
+			AuthTokenService authTokenService,
 			SessionManager sessionManager
 			) throws ParseException{
-		 if(getAuthentication() == null) {
-			 String  authorization = AuthorizationHeaderUtils.resolveBearer(request);
-			if(authorization != null ) {
-				doJwtAuthenticate(authorization,authJwtService,sessionManager);
-				_logger.debug("Authorization automatic authenticated .");
-			}
-		 }
+		String  authorization = AuthorizationHeaderUtils.resolveBearer(request);
+		if(authorization != null ) {
+			doJwtAuthenticate(authorization,authTokenService,sessionManager);
+			_logger.debug("Authorization automatic authenticated .");
+		}
+		 
 	}
 	
 	public static void doJwtAuthenticate(
 			String  authorization,
-			AuthJwtService authJwtService,
+			AuthTokenService authTokenService,
 			SessionManager sessionManager) throws ParseException {
-		if(authJwtService.validateJwtToken(authorization)) {
-			String sessionId = authJwtService.resolveJWTID(authorization);
-			Session session = sessionManager.get(sessionId);
-			if(session != null) {
-				setAuthentication(session.getAuthentication());
+		if(authTokenService.validateJwtToken(authorization)) {
+			if(isNotAuthenticated()) {
+				String sessionId = authTokenService.resolveJWTID(authorization);
+				Session session = sessionManager.get(sessionId);
+				if(session != null) {
+					setAuthentication(session.getAuthentication());
+				}else {
+					setAuthentication(null);
+				}
 			}
+		}else {
+			setAuthentication(null);
 		}
 	}
 
