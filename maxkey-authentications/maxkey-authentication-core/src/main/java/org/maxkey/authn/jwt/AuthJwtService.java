@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.maxkey.authn.SignPrincipal;
 import org.maxkey.crypto.jwt.HMAC512Service;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class AuthJwtService {
 		DateTime currentDateTime = DateTime.now();
 		String subject = principal.getUsername();
 		Date expirationTime = currentDateTime.plusSeconds(expires).toDate();
-		_logger.debug("jwt subject : {} , expiration Time : {}" , subject,expirationTime);
+		_logger.trace("jwt subject : {} , expiration Time : {}" , subject,expirationTime);
 		
 		 JWTClaimsSet jwtClaims =new  JWTClaimsSet.Builder()
 				.issuer(issuer)
@@ -102,12 +103,14 @@ public class AuthJwtService {
 	 */
 	public boolean validateJwtToken(String authToken) {
 		try {
-			JWTClaimsSet claims = resolve(authToken);
-			boolean isExpiration = claims.getExpirationTime().after(DateTime.now().toDate());
-			boolean isVerify = hmac512Service.verify(authToken);
-			_logger.debug("JWT Verify {} , now {} , ExpirationTime {} , isExpiration : {}" , 
-							isVerify,DateTime.now().toDate(),claims.getExpirationTime(),isExpiration);
-			return isVerify && isExpiration;
+			if(StringUtils.isNotBlank(authToken)) {
+				JWTClaimsSet claims = resolve(authToken);
+				boolean isExpiration = claims.getExpirationTime().after(DateTime.now().toDate());
+				boolean isVerify = hmac512Service.verify(authToken);
+				_logger.trace("JWT Verify {} , now {} , ExpirationTime {} , isExpiration : {}" , 
+								isVerify,DateTime.now().toDate(),claims.getExpirationTime(),isExpiration);
+				return isVerify && isExpiration;
+			}
 		} catch (ParseException e) {
 			_logger.error("authToken {}",authToken);
 			_logger.error("ParseException ",e);

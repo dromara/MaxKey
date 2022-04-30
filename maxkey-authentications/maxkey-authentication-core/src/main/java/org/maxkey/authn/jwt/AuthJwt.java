@@ -25,14 +25,30 @@ import org.maxkey.authn.SignPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AuthJwt implements Serializable {
 	
 	private static final long serialVersionUID = -914373258878811144L;
 	
+	public static final String ACCESS_TOKEN 	= "access_token";
+	
+	public static final String REFRESH_TOKEN 	= "refresh_token";
+	
+	public static final String EXPIRES_IN 		= "expired";
+	
 	private String ticket;
-	private String token;
-	private String refreshToken;
+	
 	private String type = "Bearer";
+	
+	private String token;
+	
+	@JsonProperty(REFRESH_TOKEN)
+	private String refreshToken;
+	
+	@JsonProperty(EXPIRES_IN)
+	private int expiresIn;
+
 	private String remeberMe;
 	private String id;
 	private String name;
@@ -44,27 +60,36 @@ public class AuthJwt implements Serializable {
 	private int    passwordSetType;
 	private List<String> authorities;
 	  
-	  
-	public AuthJwt(String token, String id, String username, String displayName, String email, String instId,
-			String instName, List<String> authorities) {
+	public AuthJwt(String ticket, String type, String token, String refreshToken, int expiresIn, String remeberMe,
+			String id, String name, String username, String displayName, String email, String instId, String instName,
+			int passwordSetType, List<String> authorities) {
+		super();
+		this.ticket = ticket;
+		this.type = type;
 		this.token = token;
+		this.refreshToken = refreshToken;
+		this.expiresIn = expiresIn;
+		this.remeberMe = remeberMe;
 		this.id = id;
-		this.name = username;
+		this.name = name;
 		this.username = username;
 		this.displayName = displayName;
 		this.email = email;
 		this.instId = instId;
 		this.instName = instName;
+		this.passwordSetType = passwordSetType;
 		this.authorities = authorities;
 	}
-	
-	public AuthJwt(String token,String refreshToken, Authentication  authentication) {
+
+
+	public AuthJwt(String token, Authentication  authentication,int expiresIn,String refreshToken) {
 		SignPrincipal principal = ((SignPrincipal)authentication.getPrincipal());
 		
 		this.token = token;
+		this.expiresIn = expiresIn;
 		this.refreshToken = refreshToken;
-		this.ticket = principal.getSession().getId();
 		
+		this.ticket = principal.getSession().getId();
 		this.id = principal.getUserInfo().getId();
 		this.username = principal.getUserInfo().getUsername();
 		this.name = this.username;
@@ -175,6 +200,16 @@ public class AuthJwt implements Serializable {
 	public void setRefreshToken(String refreshToken) {
 		this.refreshToken = refreshToken;
 	}
+	
+	public int getExpiresIn() {
+		return expiresIn;
+	}
+
+
+	public void setExpiresIn(int expiresIn) {
+		this.expiresIn = expiresIn;
+	}
+
 
 	@Override
 	public String toString() {

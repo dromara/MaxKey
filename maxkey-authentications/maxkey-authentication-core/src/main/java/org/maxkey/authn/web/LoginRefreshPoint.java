@@ -33,6 +33,7 @@ public class LoginRefreshPoint {
  	@RequestMapping(value={"/token/refresh"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> refresh(
 					@RequestHeader(name = "refresh_token", required = true) String refreshToken) {
+ 		_logger.debug("try to refresh token " );
  		_logger.trace("refresh token {} " , refreshToken);
  		try {
 	 		if(refreshTokenService.validateJwtToken(refreshToken)) {
@@ -47,7 +48,7 @@ public class LoginRefreshPoint {
 		 			_logger.debug("Session is timeout , sessionId [{}]" , sessionId);
 		 		}
 	 		}else {
-	 			_logger.trace("refresh token is not validate .");
+	 			_logger.debug("refresh token is not validate .");
 	 		}
  		}catch(Exception e) {
  			_logger.error("Refresh Exception !",e);

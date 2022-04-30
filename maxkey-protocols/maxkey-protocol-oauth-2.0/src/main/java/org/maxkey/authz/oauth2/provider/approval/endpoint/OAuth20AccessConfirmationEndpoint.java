@@ -22,6 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
@@ -81,6 +82,9 @@ public class OAuth20AccessConfirmationEndpoint {
     @Autowired 
     protected ApplicationConfig applicationConfig;
     
+    @Autowired
+	AuthTokenService authTokenService;
+    
     /**
      * getAccessConfirmation.
      * @param model  Map
@@ -95,7 +99,7 @@ public class OAuth20AccessConfirmationEndpoint {
 	        AuthorizationRequest clientAuth = 
 	        		(AuthorizationRequest) momentaryService.get(currentUser.getSessionId(), "authorizationRequest");
 	        ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId(),true);
-	        model.put("oauth_approval", WebContext.genId());
+	        model.put("oauth_approval", authTokenService.genRandomJwt());
 	        model.put("auth_request", clientAuth);
 	        model.put("client", client);
 	        model.put("oauth_version", "oauth 2.0");
@@ -136,7 +140,7 @@ public class OAuth20AccessConfirmationEndpoint {
     			@PathVariable("oauth_approval") String oauth_approval,
     			@CurrentUser UserInfo currentUser) {
     	Map<String, Object> model = new HashMap<String, Object>();
-    	if(StringUtils.isNotBlank(oauth_approval)) {
+    	if(authTokenService.validateJwtToken(oauth_approval)) {
 	    	try {
 		        AuthorizationRequest clientAuth = 
 		        		(AuthorizationRequest) momentaryService.get(currentUser.getSessionId(), "authorizationRequest");

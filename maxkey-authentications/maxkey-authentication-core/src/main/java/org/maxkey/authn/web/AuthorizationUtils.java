@@ -37,18 +37,23 @@ import org.springframework.security.core.Authentication;
 public class AuthorizationUtils {
 	private static final Logger _logger = LoggerFactory.getLogger(AuthorizationUtils.class);
 	
-	public static final String Authorization_Cookie = "congress";
+	public static final class BEARERTYPE{
+		
+		public static final String CONGRESS 		= "congress";
+		
+		public static final String AUTHORIZATION 	= "Authorization";
+	}
 	
 	public static  void authenticateWithCookie(
 			HttpServletRequest request,
 			AuthTokenService authTokenService,
 			SessionManager sessionManager
 			) throws ParseException{
-		Cookie authCookie = WebContext.getCookie(request, Authorization_Cookie);
+		Cookie authCookie = WebContext.getCookie(request, BEARERTYPE.CONGRESS);
 		if(authCookie != null ) {
 	    	String  authorization =  authCookie.getValue();
-	    	doJwtAuthenticate(authorization,authTokenService,sessionManager);
-	    	_logger.debug("congress automatic authenticated .");
+	    	_logger.trace("Try congress authenticate .");
+	    	doJwtAuthenticate(BEARERTYPE.CONGRESS,authorization,authTokenService,sessionManager);
 		}
 	}
 	
@@ -59,13 +64,14 @@ public class AuthorizationUtils {
 			) throws ParseException{
 		String  authorization = AuthorizationHeaderUtils.resolveBearer(request);
 		if(authorization != null ) {
-			doJwtAuthenticate(authorization,authTokenService,sessionManager);
-			_logger.debug("Authorization automatic authenticated .");
+			_logger.trace("Try Authorization authenticate .");
+			doJwtAuthenticate(BEARERTYPE.AUTHORIZATION,authorization,authTokenService,sessionManager);
 		}
 		 
 	}
 	
 	public static void doJwtAuthenticate(
+			String  bearerType,
 			String  authorization,
 			AuthTokenService authTokenService,
 			SessionManager sessionManager) throws ParseException {
@@ -75,12 +81,17 @@ public class AuthorizationUtils {
 				Session session = sessionManager.get(sessionId);
 				if(session != null) {
 					setAuthentication(session.getAuthentication());
+					_logger.debug("{} Automatic authenticated .",bearerType);
 				}else {
-					setAuthentication(null);
+					//time out
+					_logger.debug("Session timeout .");
+					clearAuthentication();
 				}
 			}
 		}else {
-			setAuthentication(null);
+			//token invalidate
+			_logger.debug("Token invalidate .");
+			clearAuthentication();
 		}
 	}
 
@@ -100,6 +111,10 @@ public class AuthorizationUtils {
     	WebContext.setAttribute(WebConstants.AUTHENTICATION, authentication);
     }
 
+    public static void clearAuthentication() {
+    	WebContext.removeAttribute(WebConstants.AUTHENTICATION);
+    }
+    
     public static  boolean isAuthenticated() {
     	return getAuthentication() != null;
     }

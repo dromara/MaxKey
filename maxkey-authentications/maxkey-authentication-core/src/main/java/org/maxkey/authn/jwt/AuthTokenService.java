@@ -66,13 +66,22 @@ public class AuthTokenService  extends AuthJwtService{
 	public AuthJwt genAuthJwt(Authentication authentication) {
 		if(authentication != null) {
 			String refreshToken = refreshTokenService.genRefreshToken(authentication);
-			return new AuthJwt(genJwt(authentication),refreshToken, authentication);
+			String accessToken = genJwt(authentication);
+			AuthJwt authJwt = new AuthJwt(
+						accessToken,
+						authentication,
+						authJwkConfig.getExpires(),
+						refreshToken);
+			return authJwt;
 		}
 		return null;
 	}
 	
 	public String genJwt(Authentication authentication) {
-		return genJwt( authentication,authJwkConfig.getIssuer(),authJwkConfig.getExpires());
+		return genJwt(
+					authentication,
+					authJwkConfig.getIssuer(),
+					authJwkConfig.getExpires());
 	}
 
 	
@@ -100,8 +109,9 @@ public class AuthTokenService  extends AuthJwtService{
 				congress, 
 				new AuthJwt(
 						genJwt(authentication), 
-						refreshToken,
-						authentication)
+						authentication,
+						authJwkConfig.getExpires(),
+						refreshToken)
 			);
 		return congress;
 	}

@@ -45,6 +45,7 @@ export class DefaultInterceptor implements HttpInterceptor {
   private refreshTokenEnabled = environment.api.refreshTokenEnabled;
   private refreshTokenType: 're-request' | 'auth-refresh' = environment.api.refreshTokenType;
   private refreshToking = false;
+  private notified = false;
   private refreshToken$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor(private injector: Injector) {
@@ -70,7 +71,10 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
 
   private goTo(url: string): void {
-    setTimeout(() => this.injector.get(Router).navigateByUrl(url));
+    setTimeout(() => {
+      this.injector.get(Router).navigateByUrl(url);
+      this.notified = false;
+    });
   }
 
   private checkStatus(ev: HttpResponseBase): void {
@@ -87,7 +91,7 @@ export class DefaultInterceptor implements HttpInterceptor {
    */
   private refreshTokenRequest(): Observable<any> {
     const model = this.tokenSrv.get();
-    return this.http.post(`/auth/token/refresh`, null, null, { headers: { refresh_token: model?.['refreshToken'] || '' } });
+    return this.http.post(`/auth/token/refresh`, null, null, { headers: { refresh_token: model?.['refresh_token'] || '' } });
   }
 
   // #region 刷新Token方式一：使用 401 重新刷新 Token
@@ -117,7 +121,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         console.log(res.data);
         // 通知后续请求继续执行
         this.refreshToking = false;
-        this.refreshToken$.next(res.data.refreshToken);
+        this.refreshToken$.next(res.data.refresh_token);
         this.cookieService.set(CONSTS.CONGRESS, res.data.token);
         // 重新保存新 token
         this.tokenSrv.set(res.data);
@@ -181,8 +185,11 @@ export class DefaultInterceptor implements HttpInterceptor {
   // #endregion
 
   private toLogin(): void {
-    this.notification.error(`未登录或登录已过期，请重新登录。`, ``);
-    this.goTo(this.tokenSrv.login_url!);
+    if (!this.notified) {
+      this.notified = true;
+      this.notification.error(`未登录或登录已过期，请重新登录。`, ``);
+      this.goTo(this.tokenSrv.login_url!);
+    }
   }
 
   private handleData(ev: HttpResponseBase, req: HttpRequest<any>, next: HttpHandler): Observable<any> {
@@ -227,10 +234,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         break;
       default:
         if (ev instanceof HttpErrorResponse) {
-          console.warn(
-            '未可知错误，大部分是由于后端不支持跨域CORS或无效配置引起，请参考 https://ng-alain.com/docs/server 解决跨域问题',
-            ev
-          );
+          console.warn('未可知错误，大部分是由于后端不支持跨域CORS或无效配置引起.', ev);
         }
         break;
     }

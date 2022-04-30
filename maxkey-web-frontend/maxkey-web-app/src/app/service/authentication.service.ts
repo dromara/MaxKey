@@ -73,7 +73,7 @@ export class AuthenticationService {
     }
 
     this.cookieService.set(CONSTS.CONGRESS, authJwt.token);
-    this.cookieService.set(CONSTS.CONGRESS, authJwt.ticket, { domain: subHostName });
+    this.cookieService.set(CONSTS.ONLINE_TICKET, authJwt.ticket, { domain: subHostName });
     if (authJwt.remeberMe) {
       localStorage.setItem(CONSTS.REMEMBER, authJwt.remeberMe);
     }
