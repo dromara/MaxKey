@@ -1,7 +1,7 @@
 {
-  "app.title": "单点登录系统",
+  "app.title": "单点登录认证系统",
   "mxk":{
-    "title": "单点登录系统",
+    "title": "单点登录认证系统",
     "login":{
       "title": "MaxKey",
       "title.sub": "业界领先的IAM身份管理和认证产品",

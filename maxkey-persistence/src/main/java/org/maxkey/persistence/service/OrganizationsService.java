@@ -24,8 +24,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.maxkey.entity.Organizations;
 import org.maxkey.persistence.mapper.OrganizationsMapper;
-import org.maxkey.persistence.mq.MqIdentityAction;
-import org.maxkey.persistence.mq.MqIdentityTopic;
+import org.maxkey.persistence.mq.MqProvisionAction;
+import org.maxkey.persistence.mq.MqProvisionTopic;
 import org.maxkey.persistence.mq.MessageQueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -52,7 +52,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	 public boolean insert(Organizations organization) {
 	     if(super.insert(organization)){
 	    	 messageQueueService.send(
-                     MqIdentityTopic.ORG_TOPIC, organization, MqIdentityAction.CREATE_ACTION);
+                     MqProvisionTopic.ORG_TOPIC, organization, MqProvisionAction.CREATE_ACTION);
              return true;
          }
          return false;
@@ -61,7 +61,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	 public boolean update(Organizations organization) {
 	     if(super.update(organization)){
 	    	 messageQueueService.send(
-                     MqIdentityTopic.ORG_TOPIC, organization, MqIdentityAction.UPDATE_ACTION);
+                     MqProvisionTopic.ORG_TOPIC, organization, MqProvisionAction.UPDATE_ACTION);
              return true;
          }
          return false;
@@ -85,7 +85,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	 public boolean delete(Organizations organization) {
 	     if(super.delete(organization)){
 	    	 messageQueueService.send(
-                     MqIdentityTopic.ORG_TOPIC, organization, MqIdentityAction.DELETE_ACTION);
+                     MqProvisionTopic.ORG_TOPIC, organization, MqProvisionAction.DELETE_ACTION);
              return true;
          }
          return false;

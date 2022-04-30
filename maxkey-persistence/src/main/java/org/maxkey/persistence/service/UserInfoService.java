@@ -27,8 +27,8 @@ import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.mapper.UserInfoMapper;
-import org.maxkey.persistence.mq.MqIdentityAction;
-import org.maxkey.persistence.mq.MqIdentityTopic;
+import org.maxkey.persistence.mq.MqProvisionAction;
+import org.maxkey.persistence.mq.MqProvisionTopic;
 import org.maxkey.persistence.mq.MessageQueueService;
 import org.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.maxkey.util.DateUtils;
@@ -78,9 +78,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
         	if(messageQueueService.getApplicationConfig().isMessageQueueSupport()) {
                 UserInfo loadUserInfo = findUserRelated(userInfo.getId());
                 messageQueueService.send(
-                        MqIdentityTopic.USERINFO_TOPIC, 
+                        MqProvisionTopic.USERINFO_TOPIC, 
                         loadUserInfo,
-                        MqIdentityAction.CREATE_ACTION);
+                        MqProvisionAction.CREATE_ACTION);
             }
             
             return true;
@@ -96,9 +96,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
                 UserInfo loadUserInfo = findUserRelated(userInfo.getId());
                 accountUpdate(loadUserInfo);
                 messageQueueService.send(
-                        MqIdentityTopic.USERINFO_TOPIC, 
+                        MqProvisionTopic.USERINFO_TOPIC, 
                         loadUserInfo,
-                        MqIdentityAction.UPDATE_ACTION);
+                        MqProvisionAction.UPDATE_ACTION);
             }
             
             changePasswordProvisioning(changePassword);
@@ -115,9 +115,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	    
 		if( super.delete(userInfo)){
 			messageQueueService.send(
-		            MqIdentityTopic.USERINFO_TOPIC, 
+		            MqProvisionTopic.USERINFO_TOPIC, 
 		            loadUserInfo, 
-		            MqIdentityAction.DELETE_ACTION);
+		            MqProvisionAction.DELETE_ACTION);
 			accountUpdate(loadUserInfo);
 			 return true;
 		}
@@ -310,9 +310,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	    	UserInfo loadUserInfo = findByUsername(changePassworded.getUsername());
     	    ChangePassword changePassword = new ChangePassword(loadUserInfo);
     	    messageQueueService.send(
-                    MqIdentityTopic.PASSWORD_TOPIC, 
+                    MqProvisionTopic.PASSWORD_TOPIC, 
                     changePassword, 
-                    MqIdentityAction.PASSWORD_ACTION);
+                    MqProvisionAction.PASSWORD_ACTION);
 	    }
 	}
 	

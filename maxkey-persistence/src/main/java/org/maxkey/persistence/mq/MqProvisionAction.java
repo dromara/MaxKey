@@ -17,7 +17,7 @@
 
 package org.maxkey.persistence.mq;
 
-public class MqIdentityAction {
+public class MqProvisionAction {
     
     public static String  CREATE_ACTION     = "CREATE_ACTION";
     

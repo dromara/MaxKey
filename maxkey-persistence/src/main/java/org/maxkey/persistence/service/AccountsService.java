@@ -27,8 +27,8 @@ import org.maxkey.entity.AccountsStrategy;
 import org.maxkey.entity.OrganizationsCast;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.mapper.AccountsMapper;
-import org.maxkey.persistence.mq.MqIdentityAction;
-import org.maxkey.persistence.mq.MqIdentityTopic;
+import org.maxkey.persistence.mq.MqProvisionAction;
+import org.maxkey.persistence.mq.MqProvisionTopic;
 import org.maxkey.persistence.mq.MessageQueueService;
 import org.maxkey.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,9 +79,9 @@ public class AccountsService  extends JpaBaseService<Accounts>{
                     cast.setOrgId(loadUserInfo.getDepartmentId());
                     account.setOrgCast(organizationsCastService.query(cast));
                     mqPersistService.send(
-	                        MqIdentityTopic.ACCOUNT_TOPIC, 
+	                        MqProvisionTopic.ACCOUNT_TOPIC, 
 	                        account,
-	                        MqIdentityAction.CREATE_ACTION);
+	                        MqProvisionAction.CREATE_ACTION);
 	            }
 	            
 	            return true;
@@ -99,9 +99,9 @@ public class AccountsService  extends JpaBaseService<Accounts>{
                     cast.setOrgId(loadUserInfo.getDepartmentId());
                     account.setOrgCast(organizationsCastService.query(cast));
                     mqPersistService.send(
-                            MqIdentityTopic.ACCOUNT_TOPIC, 
+                            MqProvisionTopic.ACCOUNT_TOPIC, 
                             account,
-                            MqIdentityAction.UPDATE_ACTION);
+                            MqProvisionAction.UPDATE_ACTION);
                 }
                 
                 return true;
@@ -117,9 +117,9 @@ public class AccountsService  extends JpaBaseService<Accounts>{
                   loadUserInfo = userInfoService.findUserRelated(account.getUserId());
                   account.setUserInfo(loadUserInfo);
                   mqPersistService.send(
-                          MqIdentityTopic.ACCOUNT_TOPIC, 
+                          MqProvisionTopic.ACCOUNT_TOPIC, 
                           account,
-                          MqIdentityAction.DELETE_ACTION);
+                          MqProvisionAction.DELETE_ACTION);
               }
               
               return true;

@@ -17,7 +17,7 @@
 
 package org.maxkey.persistence.mq;
 
-public class MqIdentityTopic {
+public class MqProvisionTopic {
     
     public final static String   USERINFO_TOPIC                     = "MXK_IDENTITY_USERINFO_TOPIC";
     
