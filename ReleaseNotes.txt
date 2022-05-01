@@ -1,4 +1,4 @@
-﻿MaxKey v 3.5.0 GA 2022/05/01 
+﻿MaxKey v 3.5.0 RC 2022/05/01 
     *(MAXKEY-220501) 前后端分离改造，Angular和TypeScript支持
     *(MAXKEY-220502) Ant Design of Angular前端
     *(MAXKEY-220503) remeber me功能优化
