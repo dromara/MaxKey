@@ -69,6 +69,7 @@ export class AuthenticationService {
     this.cookieService.set(CONSTS.CONGRESS, authJwt.ticket, { domain: subHostName });
 
     this.settingsService.setUser(user);
+    //console.log(authJwt);
     this.tokenService.set(authJwt);
     this.tokenService.get()?.expired;
   }

@@ -64,7 +64,7 @@ public class LoginEntryPoint {
 	 */
  	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> get() {
-		_logger.debug("LoginController /login.");
+		_logger.debug("/login.");
 		
 		HashMap<String , Object> model = new HashMap<String , Object>();
 		model.put("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());

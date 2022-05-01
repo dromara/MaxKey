@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { CONSTS } from 'src/app/shared/consts';
 
 @Component({
   selector: 'layout-passport',
@@ -7,6 +8,7 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
   styleUrls: ['./passport.component.less']
 })
 export class LayoutPassportComponent implements OnInit {
+  version = CONSTS.VERSION;
   links = [
     {
       title: '帮助',

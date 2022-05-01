@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService, User } from '@delon/theme';
 import { environment } from '@env/environment';
+import { CONSTS } from 'src/app/shared/consts';
 
 import { LayoutDefaultOptions } from '../../theme/layout-default';
 
@@ -80,7 +81,7 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
     </layout-default>
     <global-footer style="border-top: 1px solid #e5e5e5; min-height: 120px; text-shadow: 0 1px 0 #fff;margin:0;">
       <div style="margin-top: 30px">
-        MaxKey v3.5.0 GA<br />
+        MaxKey {{ version }}<br />
         Copyright
         <i nz-icon nzType="copyright"></i> 2022 <a href="//www.maxkey.top" target="_blank">http://www.maxkey.top</a><br />
         Licensed under the Apache License, Version 2.0
@@ -91,6 +92,7 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
   `
 })
 export class LayoutBasicComponent {
+  version = CONSTS.VERSION;
   options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
     logoCollapsed: `./assets/logo.svg`,
