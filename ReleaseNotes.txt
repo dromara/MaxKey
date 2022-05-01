@@ -1,4 +1,20 @@
-﻿MaxKey v 3.3.3 GA 2022/03/03 
+﻿MaxKey v 3.5.0 GA 2022/05/01 
+    *(MAXKEY-220501) 前后端分离改造，Angular和TypeScript支持
+    *(MAXKEY-220502) Ant Design of Angular前端
+    *(MAXKEY-220503) remeber me功能优化
+    *(MAXKEY-220504) 图片显示功能优化
+    *(MAXKEY-220505) token和refresh_token前端优化支持
+    *(MAXKEY-220506) 日志打印优化
+    *(MAXKEY-220507) 验证码功能优化
+    *(MAXKEY-220508) 单点登录功能优化
+    *(MAXKEY-220509) 元数据提供优化
+    *(MAXKEY-220510) 会话功能调整优化
+    *(MAXKEY-220511) 依赖项引用、更新和升级
+        spring                   5.3.19
+        springBoot               2.6.6
+        springbootadmin          2.6.6
+
+MaxKey v 3.3.3 GA 2022/03/03 
     *(MAXKEY-220401) 网易企业邮箱单点登录支持
     *(MAXKEY-220402) Active Directory域控组织、账号同步优化
     *(MAXKEY-220403) OAuth及OIDC兼容 Authorization/authorization的bearer #I4VFYD(无双的英雄peerless_hero)
