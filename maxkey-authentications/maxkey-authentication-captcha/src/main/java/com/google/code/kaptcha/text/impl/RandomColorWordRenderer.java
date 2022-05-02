@@ -125,21 +125,30 @@ public class RandomColorWordRenderer extends Configurable implements WordRendere
 	}
 	
 	static String [] COLOR_LIST = {
-			//"255, 255, 255",//white
-			//"192, 192, 192",//silver
-			//"128, 128, 128",//gray
-			"0, 0, 0",//black
-			"255, 0, 0",//red
-			"128, 0, 0",//maroon
-			"255, 255, 0",//yellow
-			"128, 128, 0",//olive
-			"0, 255, 0",//lime
-			"0, 128, 0",//green
-			"0, 255, 255",//aqua
-			"0, 128, 128",//teal
-			"0, 0, 255",//blue
-			"0, 0, 128",//navy
-			"255, 0, 255",//fuchsia
-			"128, 0, 128"//purple
+			//"255, 255, 255",	//white
+			//"192, 192, 192",	//silver
+			//"128, 128, 128",	//gray
+			"0, 0, 0",			//black
+			"0, 0, 128",		//navy
+			"0, 0, 255",		//blue
+			"0, 128, 0",		//green
+			"0, 128, 128",		//teal
+			"0, 255, 0",		//lime
+			"0, 255, 255",		//aqua
+			"75, 0, 130",		//Indigo
+			"128, 0, 0",		//maroon
+			"128, 0, 128",		//purple
+			"128, 128, 0",		//olive
+			"135, 206, 235",	//SkyBlue`````
+			"165, 42, 42",		//Brown
+			"210, 105, 30",		//Chocolate
+			"255, 0, 0",		//red
+			"255, 0, 255",		//fuchsia
+			"255, 69, 0",		//OrangeRed
+			"255, 127, 80",		//Coral
+			"255, 165, 0",		//Orange
+			"255, 192, 203",	//Pink
+			"255, 215, 0",		//Gold
+			"255, 255, 0",		//yellow
 	};
 }
