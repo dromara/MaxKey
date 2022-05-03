@@ -64,11 +64,7 @@
     <ng-template [ngTemplateOutlet]="tree" [ngTemplateOutletContext]="{ $implicit: group.children }"></ng-template>
   </ng-container>
   <li>
-    <div
-      class="alain-default__nav-item alain-default__nav-item--collapse"
-      (click)="toggleCollapsed()"
-      style="background-color: aliceblue; color: #000"
-    >
+    <div class="alain-default__nav-item alain-default__nav-item--collapse alain-default__nav-item_collapsed" (click)="toggleCollapsed()">
       <i nz-icon [nzType]="collapsedIcon"></i>
     </div>
   </li>

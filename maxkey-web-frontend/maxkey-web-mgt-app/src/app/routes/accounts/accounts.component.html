@@ -3,7 +3,7 @@
 <nz-card [nzBordered]="false">
   <form nz-form [nzLayout]="'inline'" (ngSubmit)="onSearch()" class="search__form">
     <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
-      <div nz-col nzMd="10" nzSm="24">
+      <div nz-col nzMd="8" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="name">{{ 'mxk.accounts.username' | i18n }}</nz-form-label>
           <nz-form-control>
@@ -11,24 +11,30 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col nzMd="10" nzSm="24">
+      <div nz-col nzMd="8" nzSm="24">
         <nz-form-item>
           <nz-form-label nzFor="appName">{{ 'mxk.accounts.appName' | i18n }}</nz-form-label>
           <nz-form-control>
-            <input
-              nz-input
-              [(ngModel)]="query.params.appName"
-              [ngModelOptions]="{ standalone: true }"
-              name="appName"
-              placeholder=""
-              id="appName"
-            />
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
+              <input
+                nz-input
+                [(ngModel)]="query.params.appName"
+                [ngModelOptions]="{ standalone: true }"
+                name="appName"
+                readonly
+                placeholder=""
+                id="appName"
+              />
+            </nz-input-group>
+            <ng-template #suffixButton>
+              <button nz-button nzType="primary" (click)="onSelect($event)" nzSearch>{{ 'mxk.text.select' | i18n }}</button>
+            </ng-template>
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="query.expandForm ? 24 : 4" [class.text-right]="query.expandForm">
+      <div nz-col [nzSpan]="query.expandForm ? 24 : 8" [class.text-right]="query.expandForm">
         <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
-        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n }}</button>
+        <button nz-button type="reset" (click)="onReset()" class="mx-sm">{{ 'mxk.text.reset' | i18n }}</button>
         <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
           {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
         >
