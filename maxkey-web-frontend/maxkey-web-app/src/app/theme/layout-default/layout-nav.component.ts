@@ -1,19 +1,18 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { DOCUMENT } from '@angular/common';
@@ -34,6 +33,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
+import { ACLService } from '@delon/acl';
 import { Menu, MenuIcon, MenuInner, MenuService, SettingsService } from '@delon/theme';
 import { BooleanInput, InputBoolean, InputNumber, NumberInput, ZoneOutside } from '@delon/util/decorator';
 import { WINDOW } from '@delon/util/token';
@@ -41,6 +41,7 @@ import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
+import { AuthnService } from '../../service/authn.service';
 import { LayoutDefaultOptions } from './types';
 
 export interface Nav extends MenuInner {
@@ -89,6 +90,8 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
 
   constructor(
     private menuSrv: MenuService,
+    private authnService: AuthnService,
+    private aclService: ACLService,
     private settings: SettingsService,
     private router: Router,
     private render: Renderer2,
@@ -280,6 +283,8 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.aclService.setFull(false);
+    this.authnService.setRoles(this.aclService);
     const { doc, router, destroy$, menuSrv, settings, cdr } = this;
     this.bodyEl = doc.querySelector('body');
     this.openedByUrl(router.url);
@@ -295,6 +300,11 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
             i._hidden = true;
           }
         }
+
+        if (i.acl && !this.authnService.hasRole(`${i.acl}`)) {
+          i.disabled = true;
+        }
+
         if (this.openStrictly) {
           i._open = i.open != null ? i.open : false;
         }

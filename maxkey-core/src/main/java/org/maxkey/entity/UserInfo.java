@@ -18,7 +18,6 @@
 package org.maxkey.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,6 +28,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.maxkey.crypto.Base64Utils;
 import org.maxkey.util.StringUtils;
 
 /**
@@ -421,8 +421,7 @@ public class UserInfo extends JpaBaseEntity {
 
 	public void transPictureBase64() {
 		if(picture != null) {
-			this.pictureBase64 = "data:image/png;base64," + 
-					Base64.getEncoder().encodeToString(picture);
+			this.pictureBase64 = Base64Utils.encodeImage(picture);
 		}
 	}
 	

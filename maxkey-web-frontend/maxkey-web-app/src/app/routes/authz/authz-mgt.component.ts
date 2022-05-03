@@ -18,6 +18,7 @@ import { Inject, Optional, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { SettingsService } from '@delon/theme';
+import { environment } from '@env/environment';
 
 import { AuthnService } from '../../service/authn.service';
 import { SocialsProviderService } from '../../service/socials-provider.service';
@@ -26,38 +27,16 @@ import { SocialsProviderService } from '../../service/socials-provider.service';
   selector: 'app-callback',
   template: ``
 })
-export class CallbackComponent implements OnInit {
-  provider = '';
-
-  constructor(
-    private router: Router,
-    private socialsProviderService: SocialsProviderService,
-    private settingsService: SettingsService,
-    private authnService: AuthnService,
-    @Optional()
-    @Inject(ReuseTabService)
-    private reuseTabService: ReuseTabService,
-    private route: ActivatedRoute
-  ) { }
+export class AuthzMgtComponent implements OnInit {
+  constructor() { }
 
   ngOnInit(): void {
-    this.provider = this.route.snapshot.params['provider'];
-    if (!this.settingsService.user.name) {
-      this.socialsProviderService.callback(this.provider, this.route.snapshot.queryParams).subscribe(res => {
-        if (res.code === 0) {
-          // 清空路由复用信息
-          this.reuseTabService.clear();
-          // 设置用户Token信息
-          this.authnService.auth(res.data);
-        }
-        this.authnService.navigate({});
-      });
+    let baseUrl = '';
+    if (environment.api.baseUrl.endsWith('/')) {
+      baseUrl = environment.api.baseUrl.substring(0, environment.api.baseUrl.length - 1);
     } else {
-      this.socialsProviderService.bind(this.provider, this.route.snapshot.queryParams).subscribe(res => {
-        if (res.code === 0) {
-        }
-        this.router.navigateByUrl('/config/socialsassociate');
-      });
+      baseUrl = environment.api.baseUrl;
     }
+    window.location.href = `${baseUrl}/authz/jwt/maxkey_mgt`;
   }
 }

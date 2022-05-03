@@ -1,19 +1,18 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, OnDestroy, AfterViewInit, Optional } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -27,7 +26,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTabChangeEvent } from 'ng-zorro-antd/tabs';
 import { finalize } from 'rxjs/operators';
 
-import { AuthenticationService } from '../../../service/authentication.service';
+import { AuthnService } from '../../../service/authn.service';
 import { ImageCaptchaService } from '../../../service/image-captcha.service';
 import { SocialsProviderService } from '../../../service/socials-provider.service';
 import { CONSTS } from '../../../shared/consts';
@@ -65,7 +64,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
     fb: FormBuilder,
     private router: Router,
     private settingsService: SettingsService,
-    private authenticationService: AuthenticationService,
+    private authnService: AuthnService,
     private socialsProviderService: SocialsProviderService,
     private imageCaptchaService: ImageCaptchaService,
     @Optional()
@@ -88,7 +87,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     //set redirect_uri , is BASE64URL
     if (this.route.snapshot.queryParams[CONSTS.REDIRECT_URI]) {
-      this.authenticationService.setRedirectUri(this.route.snapshot.queryParams[CONSTS.REDIRECT_URI]);
+      this.authnService.setRedirectUri(this.route.snapshot.queryParams[CONSTS.REDIRECT_URI]);
     }
 
     //congress login
@@ -97,8 +96,8 @@ export class UserLoginComponent implements OnInit, OnDestroy {
     }
 
     //init socials,state
-    this.authenticationService.clear();
-    this.authenticationService
+    this.authnService.clear();
+    this.authnService
       .get({ remember_me: localStorage.getItem(CONSTS.REMEMBER) })
       .pipe(
         finalize(() => {
@@ -118,8 +117,8 @@ export class UserLoginComponent implements OnInit, OnDestroy {
             // 清空路由复用信息
             this.reuseTabService.clear();
             // 设置用户Token信息
-            this.authenticationService.auth(res.data);
-            this.authenticationService.navigate({});
+            this.authnService.auth(res.data);
+            this.authnService.navigate({});
           } else {
             this.socials = res.data.socials;
             this.state = res.data.state;
@@ -136,7 +135,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   }
 
   congressLogin(congress: string) {
-    this.authenticationService
+    this.authnService
       .congress({
         congress: congress
       })
@@ -154,8 +153,8 @@ export class UserLoginComponent implements OnInit, OnDestroy {
           // 清空路由复用信息
           this.reuseTabService.clear();
           // 设置用户Token信息
-          this.authenticationService.auth(res.data);
-          this.authenticationService.navigate({});
+          this.authnService.auth(res.data);
+          this.authnService.navigate({});
         }
       });
   }
@@ -199,7 +198,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
       this.mobile.updateValueAndValidity({ onlySelf: true });
       return;
     }
-    this.authenticationService.produceOtp({ mobile: this.mobile.value }).subscribe(res => {
+    this.authnService.produceOtp({ mobile: this.mobile.value }).subscribe(res => {
       if (res.code !== 0) {
         this.msg.success(`发送失败`);
       }
@@ -242,7 +241,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
 
     this.loading = true;
     this.cdr.detectChanges();
-    this.authenticationService
+    this.authnService
       .login({
         authType: this.loginType,
         state: this.state,
@@ -271,8 +270,8 @@ export class UserLoginComponent implements OnInit, OnDestroy {
           // 清空路由复用信息
           this.reuseTabService.clear();
           // 设置用户Token信息
-          this.authenticationService.auth(res.data);
-          this.authenticationService.navigate({});
+          this.authnService.auth(res.data);
+          this.authnService.navigate({});
         }
         this.cdr.detectChanges();
       });
@@ -287,7 +286,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   }
 
   getQrCode(): void {
-    this.authenticationService.clearUser();
+    this.authnService.clearUser();
     this.socialsProviderService.scanqrcode(this.socials.qrScan).subscribe(res => {
       if (res.code === 0) {
         if (this.socials.qrScan === 'workweixin') {

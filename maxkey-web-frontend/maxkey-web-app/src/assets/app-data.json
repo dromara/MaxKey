@@ -16,6 +16,7 @@
           "icon": "anticon-home",
           "link": "/dashboard/home",
           "open":false,
+          "acl": "ROLE_USER",
           "children": []
         },
         {
@@ -24,6 +25,7 @@
           "link": "/access/sessions",
           "icon": "anticon-cluster",
           "open":false,
+          "acl": "ROLE_USER",
           "children": []
         },
         {
@@ -32,12 +34,14 @@
           "link": "/config/setting",
           "icon": "anticon-setting",
           "open":false,
+          "acl": "ROLE_USER",
           "children": [
             {
               "text": "我的资料",
               "i18n": "mxk.menu.config.profile",
               "link": "/config/profile",
               "icon": "anticon-appstore",
+              "acl": "ROLE_USER",
               "children": []
             },
             {
@@ -45,6 +49,7 @@
               "i18n": "mxk.menu.config.password",
               "link": "/config/password",
               "icon": "anticon-control",
+              "acl": "ROLE_USER",
               "children": []
             },
             {
@@ -52,6 +57,7 @@
               "i18n": "mxk.menu.config.socialsassociate",
               "link": "/config/socialsassociate",
               "icon": "anticon-comment",
+              "acl": "ROLE_USER",
               "children": []
             },
             {
@@ -59,6 +65,7 @@
               "i18n": "mxk.menu.config.timebased",
               "link": "/config/timebased",
               "icon": "anticon-send",
+              "acl": "ROLE_USER",
               "children": []
             }
           ]
@@ -69,12 +76,14 @@
           "link": "/audit/audit-logins",
           "icon": "anticon-history",
           "open":true,
+          "acl": "ROLE_USER",
           "children": [
             {
               "text": "登录日志",
               "i18n": "mxk.menu.audit.logins",
               "link": "/audit/audit-logins",
               "icon": "anticon-audit",
+              "acl": "ROLE_USER",
               "children": []
             },
             {
@@ -82,6 +91,7 @@
               "i18n": "mxk.menu.audit.loginapps",
               "link": "/audit/audit-login-apps",
               "icon": "anticon-audit",
+              "acl": "ROLE_USER",
               "children": []
             }
           ]
@@ -90,8 +100,10 @@
         {
           "text": "后台",
           "i18n": "mxk.menu.mgt",
-          "link": "/mgt",
+          "link": "/authz/mgt",
+          "externalLink": "/authz/mgt",
           "icon": "anticon-cluster",
+          "acl": "ROLE_ADMINISTRATORS",
           "open":false,
           "children": []
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 package org.maxkey.entity.apps;
 
 import java.io.Serializable;
-import java.util.Base64;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +28,7 @@ import javax.persistence.Table;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.maxkey.constants.ConstsBoolean;
+import org.maxkey.crypto.Base64Utils;
 
 @Entity
 @Table(name = "MXK_APPS")
@@ -292,8 +292,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
 	
 	public void transIconBase64() {
 		if(icon !=null) {
-			this.iconBase64 = "data:image/png;base64," + 
-					Base64.getEncoder().encodeToString(icon);
+			this.iconBase64 = Base64Utils.encodeImage(icon);
 		}
 	}
 

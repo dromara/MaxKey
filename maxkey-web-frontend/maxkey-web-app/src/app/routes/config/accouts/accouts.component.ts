@@ -1,33 +1,20 @@
-/*
- * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Inject, OnDestroy, Optional } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '@env/environment';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 import { Accounts } from '../../../entity/Accounts';
 import { AccountsService } from '../../../service/accounts.service';
 @Component({
-  selector: 'app-credential',
-  templateUrl: './credential.component.html',
-  styleUrls: ['./credential.component.less']
+  selector: 'app-accouts',
+  templateUrl: './accouts.component.html',
+  styleUrls: ['./accouts.component.less']
 })
-export class CredentialComponent implements OnInit {
+export class AccoutsComponent implements OnInit {
+  @Input() appId?: String;
+
   form: {
     submitting: boolean;
     model: Accounts;
@@ -46,19 +33,25 @@ export class CredentialComponent implements OnInit {
     fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
+    private modalRef: NzModalRef,
     private accountsService: AccountsService,
     private msg: NzMessageService,
     private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    this.accountsService.get(this.route.snapshot.queryParams['appId']).subscribe(res => {
-      console.log(res.data);
-      this.form.model.init(res.data);
-      this.cdr.detectChanges();
-    });
+    if (this.appId) {
+      this.accountsService.get(this.appId).subscribe(res => {
+        console.log(res.data);
+        this.form.model.init(res.data);
+        this.cdr.detectChanges();
+      });
+    }
+  }
 
-    this.redirect_uri = this.route.snapshot.queryParams['redirect_uri'];
+  onClose(e: MouseEvent): void {
+    e.preventDefault();
+    this.modalRef.destroy({ refresh: false });
   }
 
   onSubmit(): void {

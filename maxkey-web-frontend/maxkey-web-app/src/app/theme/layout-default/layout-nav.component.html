@@ -2,21 +2,23 @@
   <ul nz-menu nzMode="horizontal" nzTheme="dark" style="text-align: center">
     <!--一级菜单-->
     <ng-container *ngFor="let mnav of ls">
-      <li nz-menu-item *ngIf="mnav.children.length == 0" style="min-width: 80px">
-        <a href="#{{ mnav.link }}">{{ mnav.text }}</a>
+      <li nz-menu-item *ngIf="mnav.children.length == 0 && mnav.disabled == false" style="min-width: 80px">
+        <a *ngIf="mnav.externalLink == ''" href="#{{ mnav.link }}">{{ mnav.text }}</a>
+
+        <a *ngIf="mnav.externalLink != ''" href="#{{ mnav.externalLink }}" target="_blank">{{ mnav.text }}</a>
       </li>
       <li nz-submenu nzTitle="{{ mnav.text }}" *ngIf="mnav.children.length > 0">
         <ul>
           <!--二级菜单-->
           <ng-container *ngFor="let snav of mnav.children">
-            <li nz-menu-item *ngIf="snav.children.length == 0">
+            <li nz-menu-item *ngIf="snav.children.length == 0 && mnav.disabled == false">
               <a href="#{{ snav.link }}">{{ snav.text }}</a>
             </li>
             <li nz-submenu nzTitle="{{ snav.text }}" *ngIf="snav.children.length > 0">
               <ul>
                 <!--三级菜单-->
                 <ng-container *ngFor="let tnav of snav.children">
-                  <li nz-menu-item *ngIf="tnav.children.length == 0">
+                  <li nz-menu-item *ngIf="tnav.children.length == 0 && mnav.disabled == false">
                     <a href="#{{ tnav.link }}">{{ tnav.text }}</a>
                   </li>
                 </ng-container>

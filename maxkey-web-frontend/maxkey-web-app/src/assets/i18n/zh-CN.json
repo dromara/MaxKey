@@ -204,7 +204,7 @@
     },
     "accounts":{
       "userId":"用户编号",
-      "username":"登录账号",
+      "username":"登录名",
       "displayName":"用户名",
       "appName":"应用名称",
       "appId":"应用编号",

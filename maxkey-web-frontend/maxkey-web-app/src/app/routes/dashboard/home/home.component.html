@@ -34,7 +34,7 @@
         </ng-template>-->
             <nz-card-meta [nzTitle]="item.title" [nzAvatar]="nzAvatar" *ngIf="item.protocol == 'Form_Based'">
               <ng-template #nzAvatar>
-                <i nz-icon nzType="setting" nzTheme="outline"></i>
+                <i nz-icon nzType="user-add" nzTheme="outline" (click)="setAccount(item.id)"> </i>
                 <!--<nz-avatar nzSize="small" [nzSrc]="item.iconBase64"></nz-avatar>-->
               </ng-template>
             </nz-card-meta>

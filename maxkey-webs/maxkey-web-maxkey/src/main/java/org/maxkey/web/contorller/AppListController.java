@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ package org.maxkey.web.contorller;
 import java.util.List;
 
 import org.maxkey.authn.annotation.CurrentUser;
-import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.constants.ConstsStatus;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
@@ -115,7 +114,6 @@ public class AppListController {
     		@ModelAttribute Accounts account,
             @CurrentUser UserInfo currentUser) {
         Accounts appUsers = new Accounts();
-
         if (credential == Apps.CREDENTIALS.USER_DEFINED) {
             appUsers = accountsService.load(new Accounts(currentUser.getId(), account.getAppId()));
             if (appUsers == null) {

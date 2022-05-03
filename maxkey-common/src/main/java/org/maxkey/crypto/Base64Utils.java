@@ -17,9 +17,14 @@
 
 package org.maxkey.crypto;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+
+import javax.imageio.ImageIO;
+
 import org.apache.commons.codec.binary.Base64;
 
 /**
@@ -56,6 +61,25 @@ public final class Base64Utils {
         return decoderBase64(cipher);
     }
 
+    public static String encodeImage(BufferedImage bufferedImage) {
+    	try {
+    		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImage, "png", stream);
+			String b64Image = "data:image/png;base64," + 
+					java.util.Base64.getEncoder().encodeToString(stream.toByteArray());
+			stream.close();
+	        return b64Image;
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return "";
+    }
+    
+    public static String encodeImage(byte[] byteImage) {
+    	return "data:image/png;base64," + 
+    			java.util.Base64.getEncoder().encodeToString(byteImage);
+    }
+    
     /**
      * encode file to base64 Code String.
      * 

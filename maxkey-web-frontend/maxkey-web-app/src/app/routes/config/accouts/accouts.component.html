@@ -1,0 +1,106 @@
+<form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit()" se-container="1">
+  <nz-form-item style="display: none">
+    <nz-form-label [nzMd]="6" nzFor="id">id</nz-form-label>
+    <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+      <input [(ngModel)]="form.model.id" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" value="id" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item style="width: 100%">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="displayName">{{ 'mxk.password.displayName' | i18n }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not displayName!">
+      <input
+        nz-input
+        disabled="true"
+        [(ngModel)]="form.model.displayName"
+        [ngModelOptions]="{ standalone: true }"
+        name="displayName"
+        id="displayName"
+        value="0"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item style="width: 100%">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="username">{{ 'mxk.accounts.username' | i18n }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid username!">
+      <input
+        nz-input
+        disabled="true"
+        [(ngModel)]="form.model.username"
+        [ngModelOptions]="{ standalone: true }"
+        name="username"
+        id="username"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item style="width: 100%">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="appName">{{ 'mxk.accounts.appName' | i18n }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid appName!">
+      <input
+        nz-input
+        disabled="true"
+        [(ngModel)]="form.model.appName"
+        [ngModelOptions]="{ standalone: true }"
+        name="appName"
+        id="appName"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item style="width: 100%">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="relatedUsername">{{ 'mxk.accounts.relatedUsername' | i18n }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid relatedUsername!">
+      <input
+        nz-input
+        [(ngModel)]="form.model.relatedUsername"
+        [ngModelOptions]="{ standalone: true }"
+        name="relatedUsername"
+        id="relatedUsername"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item style="width: 100%">
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24" nzFor="relatedPassword">{{ 'mxk.accounts.relatedPassword' | i18n }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid relatedPassword!">
+      <nz-input-group [nzSuffix]="suffixPasswordTemplate" style="width: 100%">
+        <input
+          [type]="passwordVisible ? 'text' : 'password'"
+          nz-input
+          placeholder="new password"
+          [(ngModel)]="form.model.relatedPassword"
+          [ngModelOptions]="{ standalone: true }"
+          name="relatedPassword"
+          id="relatedPassword"
+        />
+      </nz-input-group>
+      <ng-template #suffixPasswordTemplate>
+        <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></i>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item style="width: 100%">
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24" nzFor="confirmPassword">{{ 'mxk.password.confirmPassword' | i18n }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid confirmPassword!">
+      <nz-input-group [nzSuffix]="suffixConfirmPasswordTemplate" style="width: 100%">
+        <input
+          [type]="confirmPasswordVisible ? 'text' : 'password'"
+          nz-input
+          placeholder="confirm password"
+          [(ngModel)]="form.model.confirmPassword"
+          [ngModelOptions]="{ standalone: true }"
+          name="confirmPassword"
+          id="confirmPassword"
+        />
+      </nz-input-group>
+      <ng-template #suffixConfirmPasswordTemplate>
+        <i
+          nz-icon
+          [nzType]="confirmPasswordVisible ? 'eye-invisible' : 'eye'"
+          (click)="confirmPasswordVisible = !confirmPasswordVisible"
+        ></i>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit()">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

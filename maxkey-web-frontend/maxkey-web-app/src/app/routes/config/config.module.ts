@@ -33,6 +33,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SocialsAssociateComponent } from './socials-associate/socials-associate.component';
 import { SocialsProviderComponent } from './socials-provider/socials-provider.component';
 import { TimebasedComponent } from './timebased/timebased.component';
+import { AccoutsComponent } from './accouts/accouts.component';
 
 const routes: Routes = [
   {
@@ -62,7 +63,8 @@ const COMPONENTS = [ProfileComponent];
     TimebasedComponent,
     SocialsAssociateComponent,
     PasswordComponent,
-    ProfileComponent
+    ProfileComponent,
+    AccoutsComponent
   ],
   imports: [SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]

@@ -19,13 +19,9 @@ package org.maxkey.web.contorller;
 
 import com.google.code.kaptcha.Producer;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.util.Base64;
-
-import javax.imageio.ImageIO;
-
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.jwt.AuthTokenService;
+import org.maxkey.crypto.Base64Utils;
 import org.maxkey.entity.Message;
 import org.maxkey.persistence.MomentaryService;
 import org.slf4j.Logger;
@@ -94,16 +90,10 @@ public class ImageCaptchaEndpoint {
             momentaryService.put("", kaptchaKey, kaptchaValue);
             // create the image with the text
             BufferedImage bufferedImage = captchaProducer.createImage(kaptchaText);
-            // write the data out
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			ImageIO.write(bufferedImage, "png", stream);
-			
-			String b64Image = "data:image/png;base64," + 
-					Base64.getEncoder().encodeToString(stream.toByteArray());
+			String b64Image = Base64Utils.encodeImage(bufferedImage);
            
             _logger.trace("b64Image {}" , b64Image);
             
-            stream.close();
             return new Message<ImageCaptcha>(
             			new ImageCaptcha(state,b64Image)
             		).buildResponse();
