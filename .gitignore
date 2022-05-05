@@ -45,7 +45,9 @@ setEnvVars.bat
 maxkey-web-frontend/maxkey-web-mgt-app/node_modules/
 maxkey-web-frontend/maxkey-web-mgt-app/.angular
 maxkey-web-frontend/maxkey-web-mgt-app/yarn.lock
+maxkey-web-frontend/maxkey-web-mgt-app/dist
 
 maxkey-web-frontend/maxkey-web-app/node_modules/
 maxkey-web-frontend/maxkey-web-app/.angular/
 maxkey-web-frontend/maxkey-web-app/yarn.lock
+maxkey-web-frontend/maxkey-web-app/dist

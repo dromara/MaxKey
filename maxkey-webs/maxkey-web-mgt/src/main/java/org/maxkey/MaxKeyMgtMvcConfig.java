@@ -20,8 +20,6 @@ package org.maxkey;
 import java.util.List;
 
 import org.maxkey.authn.AbstractAuthenticationProvider;
-import org.maxkey.authn.support.jwt.HttpJwtEntryPoint;
-import org.maxkey.authn.support.jwt.JwtLoginService;
 import org.maxkey.authn.web.CurrentUserMethodArgumentResolver;
 import org.maxkey.authn.web.interceptor.PermissionInterceptor;
 import org.maxkey.configuration.ApplicationConfig;
@@ -48,9 +46,6 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
     
     @Autowired
     AbstractAuthenticationProvider authenticationProvider ;
-    
-    @Autowired
-    JwtLoginService jwtLoginService;
     
     @Autowired
     PermissionInterceptor permissionInterceptor;
@@ -90,10 +85,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
         //addPathPatterns 用于添加拦截规则 ， 先把所有路径都加入拦截， 再一个个排除
         //excludePathPatterns 表示改路径不用拦截
         _logger.debug("add HttpJwtEntryPoint");
-        registry.addInterceptor(new HttpJwtEntryPoint(
-        		authenticationProvider,jwtLoginService,applicationConfig,true))
-        	.addPathPatterns("/login");
-        
+
         permissionInterceptor.setMgmt(true);
         
         registry.addInterceptor(permissionInterceptor)

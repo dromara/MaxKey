@@ -54,8 +54,18 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
     public boolean preHandle(HttpServletRequest request, 
             HttpServletResponse response, Object handler)
             throws Exception {
-        _logger.debug("preHandle");
-        final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
+        _logger.debug("preHandle {}",request.getRequestURI());
+        Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
+        if(app == null) {
+        	String appId ="";
+        	//JWT
+        	if(request.getRequestURI().contains("/authz/jwt/")) {
+        		String [] requestURI = request.getRequestURI().split("/");
+        		appId = requestURI[requestURI.length -1];
+        	}
+        	_logger.debug("appId {}",appId);
+        	app = appsService.get(appId,true);
+        }
         SignPrincipal principal = AuthorizationUtils.getPrincipal();
         if(principal != null && app !=null) {
             if(principal.getGrantedAuthorityApps().contains(new SimpleGrantedAuthority(app.getId()))) {

@@ -83,7 +83,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			@CurrentUser UserInfo currentUser){
 		ModelAndView modelAndView=new ModelAndView();
 		Apps  application = getApp(id);
-		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(id , true);
+		AppsJwtDetails jwtDetails = jwtDetailsService.getAppDetails(application.getId() , true);
 		_logger.debug(""+jwtDetails);
 		jwtDetails.setAdapter(application.getAdapter());
 		jwtDetails.setIsAdapter(application.getIsAdapter());
@@ -110,34 +110,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 		//encrypt
 		adapter.encrypt(null, jwtDetails.getAlgorithmKey(), jwtDetails.getAlgorithm());
 		
-		if(jwtDetails.getTokenType().equalsIgnoreCase("POST")) {
-			return adapter.authorize(modelAndView);
-		}else {
-			_logger.debug("Cookie Name : {}" , jwtDetails.getJwtName());
-			
-			Cookie cookie= new Cookie(jwtDetails.getJwtName(),adapter.serialize());
-			
-			Integer maxAge = jwtDetails.getExpires();
-			_logger.debug("Cookie Max Age : {} seconds." , maxAge);
-			cookie.setMaxAge(maxAge);
-			
-			cookie.setPath("/");
-			//
-			//cookie.setDomain("."+applicationConfig.getBaseDomainName());
-			//tomcat 8.5
-			cookie.setDomain(applicationConfig.getBaseDomainName());
-			
-			_logger.debug("Sub Domain Name : .{}",applicationConfig.getBaseDomainName());
-			response.addCookie(cookie);
-			
-			if(jwtDetails.getRedirectUri().indexOf(applicationConfig.getBaseDomainName())>-1){
-				return WebContext.redirect(jwtDetails.getRedirectUri());
-			}else{
-				_logger.error(jwtDetails.getRedirectUri()+" not in domain "+applicationConfig.getBaseDomainName());
-				return null;
-			}
-		}
-		
+		return adapter.authorize(modelAndView);
 	}
 
 	@Operation(summary = "JWT JWK元数据接口", description = "参数mxk_metadata_APPID",method="GET")

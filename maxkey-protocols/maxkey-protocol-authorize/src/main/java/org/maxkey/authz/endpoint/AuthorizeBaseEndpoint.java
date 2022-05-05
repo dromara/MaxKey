@@ -34,7 +34,6 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -61,8 +60,8 @@ public class AuthorizeBaseEndpoint {
 			//session中为空或者id不一致重新加载
 			if(app == null || !app.getId().equalsIgnoreCase(id)) {
 				app = appsService.get(id,true);
-				WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
 			}
+			WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP, app);
 		}
 		if(app	==	null){
 			_logger.error("Applications id " + id + "  is not exist.");

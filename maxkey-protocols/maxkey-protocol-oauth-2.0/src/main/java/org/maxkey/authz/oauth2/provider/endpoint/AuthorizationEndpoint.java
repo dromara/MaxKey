@@ -102,7 +102,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class AuthorizationEndpoint extends AbstractEndpoint {
 	final static Logger _logger = LoggerFactory.getLogger(AuthorizationEndpoint.class);
 	
-	private static final String OAUTH_V20_AUTHORIZATION_URL = "%s" + OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE + "?client_id=%s&response_type=code&redirect_uri=%s&approval_prompt=auto";
+	private static final String OAUTH_V20_AUTHORIZATION_URL = "" + OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE + "?client_id=%s&response_type=code&redirect_uri=%s&approval_prompt=auto";
 	
 	private RedirectResolver redirectResolver = new DefaultRedirectResolver();
 
@@ -132,7 +132,6 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
         String authorizationUrl = "";
         try {
             authorizationUrl = String.format(OAUTH_V20_AUTHORIZATION_URL, 
-                            applicationConfig.getServerPrefix(),
                             clientDetails.getClientId(), 
                             HttpEncoder.encode(clientDetails.getRegisteredRedirectUri().toArray()[0].toString())
                     );

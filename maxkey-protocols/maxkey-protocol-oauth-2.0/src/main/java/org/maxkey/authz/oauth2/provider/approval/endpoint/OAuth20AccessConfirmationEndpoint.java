@@ -129,6 +129,7 @@ public class OAuth20AccessConfirmationEndpoint {
         for (Object key : model.keySet()) {
             _logger.trace("key " + key +"=" + model.get(key));
         }
+        
         model.put("authorizeApproveUri", applicationConfig.getFrontendUri()+"/#/authz/oauth2approve");
         
         modelAndView.addObject("model", model);

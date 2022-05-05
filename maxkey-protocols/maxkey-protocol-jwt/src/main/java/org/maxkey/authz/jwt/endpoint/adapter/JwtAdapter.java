@@ -169,6 +169,8 @@ public class JwtAdapter extends AbstractAuthorizeAdapter {
 		modelAndView.addObject("token",serialize());
 		modelAndView.addObject("jwtName",jwtDetails.getJwtName());
 		
+		modelAndView.addObject("tokenType",jwtDetails.getTokenType().toLowerCase());
+		
 		return modelAndView;
 	}
 
