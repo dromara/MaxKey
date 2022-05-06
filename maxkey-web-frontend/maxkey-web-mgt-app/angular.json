@@ -20,6 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "baseHref": "/maxkey-mgt/",
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",

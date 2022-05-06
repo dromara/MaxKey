@@ -23,7 +23,7 @@
   "scripts": {
     "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
     "ng": "ng",
-    "start": "ng s -o",
+    "start": "ng s -o  --serve-path=/maxkey/ --port=8527",
     "hmr": "ng s -o --hmr",
     "build": "npm run ng-high-memory build",
     "analyze": "npm run ng-high-memory build -- --source-map",

@@ -30,8 +30,8 @@ jib {
 	}
 	container {
 		mainClass 	= "org.maxkey.MaxKeyApplication"
-		jvmFlags 	= ['-Dfile.encoding=utf-8', '-Dserver.port=443','-Duser.timezone=Asia/Shanghai']
-		ports 		= ['443']
+		jvmFlags 	= ['-Dfile.encoding=utf-8', '-Dserver.port=9527','-Duser.timezone=Asia/Shanghai']
+		ports 		= ['9527']
 	}
 }
 
@@ -56,7 +56,5 @@ dependencies {
    	implementation project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
    	implementation project(":maxkey-protocols:maxkey-protocol-saml-2.0")
 	implementation project(":maxkey-protocols:maxkey-protocol-jwt")
-	
-	implementation project(":maxkey-webs:maxkey-web-resources")
 	
 }

@@ -1,4 +1,4 @@
-#MaxKey Mgt Frontend Docker Build
+#MaxKey Frontend Docker Build
 
 FROM node:16.14.2
 
@@ -14,7 +14,7 @@ RUN npm config set registry https://registry.npm.taobao.org \
 COPY ./src  ./src
 RUN npm install -g @angular/cli
 
-RUN ng build --prod --base-href /maxkey-mgt/
+RUN ng build --prod --base-href /maxkey/
 
 FROM nginx
 
@@ -22,7 +22,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 #RUN rm -rf /usr/share/nginx/html/*
 
-COPY  dist /usr/share/nginx/html/maxkey-mgt
+COPY  dist /usr/share/nginx/html/maxkey
 
 #CMD ["nginx", "-g", "daemon off;"]
 
