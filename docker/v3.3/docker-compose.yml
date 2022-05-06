@@ -16,13 +16,6 @@ services:
     restart: always
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     
-  maxkey-frontend:
-    image: maxkey:maxkey-frontend
-    container_name: maxkey-frontend
-    build: ./docker-maxkey-frontend
-    ports:
-      - "8527:8527"
-
   maxkey:
     image: maxkey:maxkey
     container_name: maxkey
@@ -34,7 +27,7 @@ services:
       - DATABASE_USER:root
       - DATABASE_PWD:maxkey
     ports:
-      - "9527:9527"
+      - "443:443"
 
   maxkey-mgt:
     image: maxkey:maxkey-mgt
@@ -47,18 +40,4 @@ services:
       - DATABASE_USER:root
       - DATABASE_PWD:maxkey
     ports:
-      - "9526:9526"
-      
-  maxkey-mgt-frontend:
-    image: maxkey:maxkey-mgt-frontend
-    container_name: maxkey-mgt-frontend
-    build: ./docker-maxkey-mgt-frontend
-    ports:
-      - "8526:8526"
-      
- maxkey-nginx:
-    image: maxkey:maxkey-nginx
-    container_name: nginx
-    build: ./docker-nginx
-    ports:
-      - "80:80"
+      - "9527:9527"
