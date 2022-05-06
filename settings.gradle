@@ -56,7 +56,7 @@ include (
 	//management(mgt)
 	'maxkey-webs:maxkey-web-mgt',
 	//monitor
-	'maxkey-monitor',
+	'maxkey-webs:maxkey-monitor',
 	//gataway
-	'maxkey-gataway'
+	'maxkey-webs:maxkey-gataway'
 )

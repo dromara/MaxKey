@@ -510,7 +510,7 @@ project('maxkey-common')  {
 }
 
 //copy Dep Jars to /build/maxkey-depjars,only maxkey-boot-monitor deps
-project('maxkey-monitor')  {
+project('maxkey-webs:maxkey-monitor')  {
     task copyDepJars(type:Copy) {
         dependsOn   assemble
         //项目名 项目所在的group version 版本号
