@@ -56,7 +56,7 @@ services:
     ports:
       - "8526:8526"
       
- maxkey-nginx:
+  maxkey-nginx:
     image: maxkey:maxkey-nginx
     container_name: nginx
     build: ./docker-nginx
