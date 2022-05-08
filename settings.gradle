@@ -60,5 +60,5 @@ include (
 	//monitor
 	'maxkey-webs:maxkey-boot-monitor',
 	//gataway
-	'maxkey-gataway'
+	'maxkey-webs:maxkey-gataway'
 )
