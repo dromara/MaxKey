@@ -30,17 +30,17 @@ public class JdbcRemeberMeService extends AbstractRemeberMeService {
     private static final Logger _logger = LoggerFactory.getLogger(JdbcRemeberMeService.class);
 
     private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = 
-            "INSERT INTO  REMEMBER_ME(ID, USERNAME,AUTHKEY,LASTLOGIN)VALUES( ? , ? , ? , ?)";
+            "insert into  mxk_remember_me(id, username,authkey,lastlogin)values( ? , ? , ? , ?)";
 
     private static final String DEFAULT_DEFAULT_SELECT_STATEMENT = 
-            "SELECT ID, USERNAME,AUTHKEY,LASTLOGIN  FROM REMEMBER_ME " 
-                    + " WHERE ID = ?  AND USERNAME = ? AND AUTHKEY = ?";
+            "select id, username,authkey,lastlogin  from mxk_remember_me " 
+                    + " where id = ?  and username = ? and authkey = ?";
 
     private static final String DEFAULT_DEFAULT_DELETE_STATEMENT = 
-            "DELETE FROM  REMEMBER_ME WHERE  USERNAME = ?";
+            "delete from  mxk_remember_me where  username = ?";
 
     private static final String DEFAULT_DEFAULT_UPDATE_STATEMENT = 
-            "UPDATE REMEMBER_ME  SET AUTHKEY  = ? , LASTLOGIN = ?  WHERE ID = ?";
+            "update mxk_remember_me  set authkey  = ? , lastlogin = ?  where id = ?";
 
     private final JdbcTemplate jdbcTemplate;
 

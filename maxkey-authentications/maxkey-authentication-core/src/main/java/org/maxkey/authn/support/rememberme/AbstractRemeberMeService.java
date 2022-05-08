@@ -17,6 +17,7 @@
 
 package org.maxkey.authn.support.rememberme;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.regex.Pattern;
 import javax.servlet.http.Cookie;
@@ -26,6 +27,7 @@ import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.crypto.Base64Utils;
 import org.maxkey.crypto.password.PasswordReciprocal;
+import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -63,7 +65,7 @@ public abstract class AbstractRemeberMeService {
             remeberMe.setAuthKey(WebContext.genId());
             remeberMe.setId(WebContext.genId());
             remeberMe.setUsername(WebContext.getUserInfo().getUsername());
-            remeberMe.setLastLogin(new Date());
+            remeberMe.setLastLogin(DateUtils.getCurrentDate());
             save(remeberMe);
             _logger.debug("Remeber Me " + remeberMe);
             _logger.debug("Cookie Name : " + WebConstants.REMEBER_ME_COOKIE);

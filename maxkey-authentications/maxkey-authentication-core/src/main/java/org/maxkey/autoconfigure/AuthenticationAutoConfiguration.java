@@ -24,6 +24,7 @@ import org.maxkey.authn.online.OnlineTicketServices;
 import org.maxkey.authn.online.OnlineTicketServicesFactory;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeService;
+import org.maxkey.authn.support.rememberme.JdbcRemeberMeService;
 import org.maxkey.authn.support.rememberme.RemeberMeServiceFactory;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsPersistence;
@@ -124,7 +125,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
             @Value("${maxkey.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
-        return new RemeberMeServiceFactory().getService(persistence, jdbcTemplate, redisConnFactory);
+        return new  JdbcRemeberMeService(jdbcTemplate);
     }
     
     @Bean(name = "onlineTicketServices")
