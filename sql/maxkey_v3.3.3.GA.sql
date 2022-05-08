@@ -760,6 +760,22 @@ CREATE TABLE `mxk_register` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `mxk_remember_me`
+--
+
+DROP TABLE IF EXISTS `mxk_remember_me`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mxk_remember_me` (
+  `id` varchar(45) NOT NULL,
+  `username` varchar(45) DEFAULT NULL,
+  `authkey` varchar(45) DEFAULT NULL,
+  `lastlogin` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `mxk_resources`
 --
 
@@ -1137,4 +1153,4 @@ CREATE TABLE `mxk_userinfo_adjunct` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-02 20:59:56
+-- Dump completed on 2022-05-08 12:04:35
