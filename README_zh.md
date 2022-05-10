@@ -30,7 +30,7 @@
 
 官方QQ：<b>1054466084</b> 
 
-邮箱email: <b>maxkeysupport@163.com</b>
+邮箱email: <b>support@maxsso.net</b>
 
 代码托管 <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a> | <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitHub</b></a>
 

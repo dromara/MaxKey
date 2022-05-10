@@ -30,7 +30,7 @@ Official Website <a href="https://www.maxkey.top" target="_blank"><b>Official</b
 
 QQ : <b> 1054466084 </b> 
 
-email: <b> maxkeysupport@163.com </b>
+email: <b> support@maxsso.net </b>
 
 Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a>
 
