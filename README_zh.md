@@ -28,7 +28,7 @@
 
 官方网站  <a href="https://www.maxkey.top" target="_blank"><b>官网</b></a> |  <a href="https://maxkeytop.gitee.io" target="_blank"><b>官网二线</b></a>
 
-QQ交流群：<b>434469201</b> 
+官方QQ：<b>1054466084</b> 
 
 邮箱email: <b>maxkeysupport@163.com</b>
 
