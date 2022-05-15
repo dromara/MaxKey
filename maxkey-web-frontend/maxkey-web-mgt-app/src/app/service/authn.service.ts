@@ -28,7 +28,7 @@ import { hostname } from 'os';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthnService {
   redirect_uri: string = '';
 
   constructor(
@@ -92,6 +92,14 @@ export class AuthenticationService {
     //console.log(authJwt);
     this.tokenService.set(authJwt);
     this.tokenService.get()?.expired;
+  }
+
+  setInst(inst: any) {
+    localStorage.setItem(CONSTS.INST, JSON.stringify({ id: inst.id, name: inst.name, title: inst.consoleTitle, logo: inst.logo }));
+  }
+
+  getInst() {
+    return JSON.parse(`${localStorage.getItem(CONSTS.INST)}`);
   }
 
   navigate(authJwt: any) {

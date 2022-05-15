@@ -25,7 +25,7 @@ import { environment } from '@env/environment';
 import { NzTabChangeEvent } from 'ng-zorro-antd/tabs';
 import { finalize } from 'rxjs/operators';
 
-import { AuthenticationService } from '../../../service/authentication.service';
+import { AuthnService } from '../../../service/authn.service';
 import { ImageCaptchaService } from '../../../service/image-captcha.service';
 
 @Component({
@@ -37,16 +37,11 @@ import { ImageCaptchaService } from '../../../service/image-captcha.service';
 export class UserLoginComponent implements OnInit, OnDestroy {
   constructor(
     fb: FormBuilder,
-    private router: Router,
-    private settingsService: SettingsService,
     @Optional()
     @Inject(ReuseTabService)
     private reuseTabService: ReuseTabService,
-    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-    private startupSrv: StartupService,
-    private authenticationService: AuthenticationService,
+    private authnService: AuthnService,
     private imageCaptchaService: ImageCaptchaService,
-    private http: _HttpClient,
     private cdr: ChangeDetectorRef
   ) {
     this.form = fb.group({
@@ -84,8 +79,8 @@ export class UserLoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     //init socials,state
-    this.authenticationService.clear();
-    this.authenticationService
+    this.authnService.clear();
+    this.authnService
       .get({})
       .pipe(
         finalize(() => {
@@ -100,6 +95,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
         } else {
           // 清空路由复用信息
           console.log(res.data);
+          this.authnService.setInst(res.data.inst);
           this.state = res.data.state;
           //init image captcha
           this.imageCaptchaService.captcha({ state: this.state }).subscribe(res => {
@@ -149,7 +145,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
     this.loading = true;
     this.cdr.detectChanges();
-    this.authenticationService
+    this.authnService
       .login({
         authType: 'normal',
         state: this.state,
@@ -174,8 +170,8 @@ export class UserLoginComponent implements OnInit, OnDestroy {
           // 清空路由复用信息
           this.reuseTabService.clear();
           // 设置用户Token信息
-          this.authenticationService.auth(res.data);
-          this.authenticationService.navigate({});
+          this.authnService.auth(res.data);
+          this.authnService.navigate({});
         }
         this.cdr.detectChanges();
       });

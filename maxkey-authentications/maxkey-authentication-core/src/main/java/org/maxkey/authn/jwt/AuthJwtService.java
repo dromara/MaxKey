@@ -124,8 +124,9 @@ public class AuthJwtService {
 				JWTClaimsSet claims = resolve(authToken);
 				boolean isExpiration = claims.getExpirationTime().after(DateTime.now().toDate());
 				boolean isVerify = hmac512Service.verify(authToken);
-				_logger.trace("JWT Verify {} , now {} , ExpirationTime {} , isExpiration : {}" , 
-								isVerify,DateTime.now().toDate(),claims.getExpirationTime(),isExpiration);
+				_logger.debug("JWT Validate {} , Verify {} , now {} , ExpirationTime {} , isExpiration : {}" , 
+						isVerify && isExpiration,isVerify,DateTime.now().toDate(),claims.getExpirationTime(),isExpiration);
+
 				return isVerify && isExpiration;
 			}
 		} catch (ParseException e) {

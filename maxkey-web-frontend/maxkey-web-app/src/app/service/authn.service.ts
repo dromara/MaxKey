@@ -100,6 +100,18 @@ export class AuthnService {
     this.tokenService.get()?.expired;
   }
 
+  jwtAuth(authParam: any) {
+    return this.http.get(`/login/jwt/trust?_allow_anonymous=true`, authParam);
+  }
+
+  setInst(inst: any) {
+    localStorage.setItem(CONSTS.INST, JSON.stringify({ id: inst.id, name: inst.name, title: inst.frontTitle, logo: inst.logo }));
+  }
+
+  getInst() {
+    return JSON.parse(`${localStorage.getItem(CONSTS.INST)}`);
+  }
+
   setRoles(aclService: ACLService | null): string[] {
     let authorities: string[] = JSON.parse(localStorage.getItem(CONSTS.TOKEN) || '')?.authorities || [];
     if (aclService) {

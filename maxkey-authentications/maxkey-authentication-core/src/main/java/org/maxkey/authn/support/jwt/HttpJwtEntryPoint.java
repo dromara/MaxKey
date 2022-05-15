@@ -54,7 +54,7 @@ public class HttpJwtEntryPoint {
 	JwtLoginService jwtLoginService;
 	
 	@RequestMapping(value={"/jwt"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> jwt(@RequestParam(value = WebConstants.JWT_TOKEN_PARAMETER, required = false) String jwt) {
+	public ResponseEntity<?> jwt(@RequestParam(value = WebConstants.JWT_TOKEN_PARAMETER, required = true) String jwt) {
 		try {
 			//for jwt Login
 			 _logger.debug("jwt : " + jwt);
@@ -63,6 +63,32 @@ public class HttpJwtEntryPoint {
 			 
 			 if(signedJWT != null) {
 				 String username =signedJWT.getJWTClaimsSet().getSubject();
+				 LoginCredential loginCredential =new LoginCredential(username,"",ConstsLoginType.JWT);
+				 Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
+				 _logger.debug("JWT Logined in , username " + username);
+				 AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
+		 		 return new Message<AuthJwt>(authJwt).buildResponse();
+			 }
+		}catch(Exception e) {
+			_logger.error("Exception ",e);
+		}
+		
+		 return new Message<AuthJwt>(Message.FAIL).buildResponse();
+	}
+	
+	/**
+	 * trust same HS512
+	 * @param jwt
+	 * @return
+	 */
+	@RequestMapping(value={"/jwt/trust"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> jwtTrust(@RequestParam(value = WebConstants.JWT_TOKEN_PARAMETER, required = true) String jwt) {
+		try {
+			//for jwt Login
+			 _logger.debug("jwt : " + jwt);
+
+			 if(authTokenService.validateJwtToken(jwt)) {
+				 String username =authTokenService.resolve(jwt).getSubject();
 				 LoginCredential loginCredential =new LoginCredential(username,"",ConstsLoginType.JWT);
 				 Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
 				 _logger.debug("JWT Logined in , username " + username);

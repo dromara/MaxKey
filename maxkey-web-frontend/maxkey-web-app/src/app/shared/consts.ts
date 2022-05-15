@@ -15,6 +15,7 @@
  */
 
 export const CONSTS = {
+    INST: 'inst',
     CONGRESS: 'congress',
     ONLINE_TICKET: 'online_ticket',
     REDIRECT_URI: 'redirect_uri',
