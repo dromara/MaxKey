@@ -50,13 +50,13 @@ export class UserLoginComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   error = '';
+  switchTab = true;
   loginType = 'normal';
   loading = false;
   passwordVisible = false;
   imageCaptcha = '';
   captchaType = '';
   state = '';
-
   count = 0;
   interval$: any;
 
@@ -279,6 +279,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
 
   // #region social
   socialauth(provider: string): void {
+    this.authnService.clearUser();
     this.socialsProviderService.authorize(provider).subscribe(res => {
       //console.log(res.data);
       window.location.href = res.data;

@@ -64,13 +64,13 @@ public class AbstractSocialSignOnEndpoint {
 	@Autowired
 	ApplicationConfig applicationConfig;
  	
-  	protected AuthRequest buildAuthRequest(String instId,String provider){
+  	protected AuthRequest buildAuthRequest(String instId,String provider,String baseUrl){
   		try {
 			SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(instId,provider);
 			_logger.debug("socialSignOn Provider : "+socialSignOnProvider);
 			
 			if(socialSignOnProvider != null){
-				authRequest = socialSignOnProviderService.getAuthRequest(instId,provider,WebContext.getBaseUri());
+				authRequest = socialSignOnProviderService.getAuthRequest(instId,provider,baseUrl);
 				return authRequest;
 			}
   		}catch(Exception e) {
@@ -79,7 +79,7 @@ public class AbstractSocialSignOnEndpoint {
 		return null;
 	}
     	
-	protected SocialsAssociate  authCallback(String instId,String provider)  throws Exception {
+	protected SocialsAssociate  authCallback(String instId,String provider,String baseUrl)  throws Exception {
 		SocialsAssociate socialsAssociate = null;
 	    AuthCallback authCallback=new AuthCallback();
         authCallback.setCode(WebContext.getRequest().getParameter("code"));
@@ -97,7 +97,7 @@ public class AbstractSocialSignOnEndpoint {
                 authCallback.getState());
         
   		if(authRequest == null) {//if authRequest is null renew one
-  		    authRequest=socialSignOnProviderService.getAuthRequest(instId,provider,WebContext.getBaseUri());  		    
+  		    authRequest=socialSignOnProviderService.getAuthRequest(instId,provider,baseUrl);  		    
   		    _logger.debug("session authRequest is null , renew one");
   		}
   		

@@ -1,24 +1,21 @@
 <form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
-  <nz-radio-group
-    nzButtonStyle="solid"
-    [(ngModel)]="loginType"
-    [ngModelOptions]="{ standalone: true }"
-    style="margin-bottom: 8px; width: 100%"
-    nzSize="large"
-  >
-    <label nz-radio-button nzValue="normal" style="width: 33.3%; text-align: center">
+  <nz-radio-group [(ngModel)]="loginType" [ngModelOptions]="{ standalone: true }" nzSize="large" *ngIf="switchTab"
+    style="margin-bottom: 8px; width: 100%">
+    <label nz-radio-button nzValue="normal" style="width: 50%; text-align: center">
       <i nz-icon nzType="user" nzTheme="outline"></i>
-      {{ 'mxk.login.tab-credentials' | i18n }}</label
-    >
-    <label nz-radio-button nzValue="mobile" style="width: 33.3%; text-align: center"
-      ><i nz-icon nzType="mobile" nzTheme="outline"></i>{{ 'mxk.login.tab-mobile' | i18n }}</label
-    >
-    <label nz-radio-button nzValue="qrscan" style="width: 33.3%; text-align: center" (click)="getQrCode()">
-      <i nz-icon nzType="qrcode" nzTheme="outline"></i>{{ 'mxk.login.tab-qrscan' | i18n }}</label
-    >
+      {{ 'mxk.login.tab-credentials' | i18n }}
+    </label>
+    <label nz-radio-button nzValue="mobile" style="width: 50%; text-align: center" class="d-none">
+      <i nz-icon nzType="mobile" nzTheme="outline"></i>
+      {{ 'mxk.login.tab-mobile' | i18n }}
+    </label>
+    <label nz-radio-button nzValue="qrscan" style="width: 50%; text-align: center" (click)="getQrCode()">
+      <i nz-icon nzType="qrcode" nzTheme="outline"></i>{{ 'mxk.login.tab-qrscan' | i18n }}
+    </label>
   </nz-radio-group>
   <div nz-row *ngIf="loginType == 'normal'">
-    <nz-alert style="width: 100%" *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
+    <nz-alert style="width: 100%" *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true"
+      class="mb-lg"></nz-alert>
     <nz-form-item style="width: 100%">
       <nz-form-control nzErrorTip="">
         <nz-input-group nzSize="large" nzPrefixIcon="user">
@@ -29,15 +26,12 @@
     <nz-form-item style="width: 100%">
       <nz-form-control nzErrorTip="">
         <nz-input-group [nzSuffix]="suffixTemplate" nzSize="large" nzPrefixIcon="key">
-          <input
-            [type]="passwordVisible ? 'text' : 'password'"
-            nz-input
-            placeholder="{{ 'mxk.login.text.password' | i18n }}"
-            formControlName="password"
-          />
+          <input [type]="passwordVisible ? 'text' : 'password'" nz-input
+            placeholder="{{ 'mxk.login.text.password' | i18n }}" formControlName="password" />
         </nz-input-group>
         <ng-template #suffixTemplate>
-          <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></i>
+          <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+            (click)="passwordVisible = !passwordVisible"></i>
         </ng-template>
       </nz-form-control>
     </nz-form-item>
@@ -74,7 +68,8 @@
           <input nz-input formControlName="otpCaptcha" placeholder="{{ 'mxk.login.text.captcha' | i18n }}" />
         </nz-input-group>
         <ng-template #suffixSendOtpCodeButton>
-          <button type="button" nz-button nzSize="large" (click)="sendOtpCode()" [disabled]="count > 0" nzBlock [nzLoading]="loading">
+          <button type="button" nz-button nzSize="large" (click)="sendOtpCode()" [disabled]="count > 0" nzBlock
+            [nzLoading]="loading">
             {{ count ? count + 's' : ('app.register.get-verification-code' | i18n) }}
           </button>
         </ng-template>
@@ -89,8 +84,8 @@
       <label nz-checkbox formControlName="remember">{{ 'mxk.login.remember-me' | i18n }}</label>
     </nz-col>
     <nz-col [nzSpan]="12" class="text-right">
-      <a class="forgot" routerLink="/passport/forgot">{{ 'mxk.login.forgot-password' | i18n }}</a></nz-col
-    >
+      <a class="forgot" routerLink="/passport/forgot">{{ 'mxk.login.forgot-password' | i18n }}</a>
+    </nz-col>
   </nz-form-item>
   <nz-form-item *ngIf="loginType == 'normal' || loginType == 'mobile'">
     <button nz-button type="submit" nzType="primary" nzSize="large" [nzLoading]="loading" nzBlock>
@@ -98,13 +93,12 @@
     </button>
   </nz-form-item>
 </form>
-<div class="other">
+<div class="other" *ngIf="loginType == 'normal'">
   {{ 'app.login.sign-in-with' | i18n }}
-
   <ng-container *ngFor="let provd of socials.providers">
     <i nz-tooltip nzTooltipTitle="{{ provd.providerName }}" (click)="socialauth(provd.provider)" nz-icon class="icon">
       <img src="{{ provd.icon }}" style="width: 32px" />
     </i>
   </ng-container>
-  <a class="register" routerLink="/passport/register">{{ 'mxk.login.signup' | i18n }}</a>
+  <a class="register d-none" routerLink="/passport/register">{{ 'mxk.login.signup' | i18n }}</a>
 </div>
