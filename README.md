@@ -63,7 +63,7 @@ Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitH
 | 2.1     | Captcha         | letter / number / arithmetic  | 
 | 2.2     | Two Factor Authentication  | SMS / TOPT/ Mail     |
 | 2.3     | SMS             | Tencent SMS / Alibaba SMS / NetEaseYunXin     |
-| 2.4     | TOTP            | Denglu1/Google/Microsoft Authenticator/FreeOTP/Support TOTP or HOTP |
+| 2.4     | TOTP            | Google/Microsoft Authenticator/FreeOTP/Support TOTP or HOTP |
 | 2.5     | Domain          | Kerberos/SPNEGO/AD domain|
 | 2.6     | LDAP            | OpenLDAP/ActiveDirectory/Standard LDAP Server |
 | 2.7     | Social Account  | WeChat/QQ/ Weibo/DingTalk/Google/Facebook/other  | 
