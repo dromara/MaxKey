@@ -51,6 +51,7 @@ export class LayoutPassportComponent implements OnInit {
   ngOnInit(): void {
     this.inst = this.authnService.getInst();
     if (this.inst == null) {
+      this.inst = { custom: false };
       this.authnService.initInst().subscribe(res => {
         this.authnService.setInst(res.data, !knowHost());
         this.inst = this.authnService.getInst();

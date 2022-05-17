@@ -37,10 +37,17 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
   ],
   template: `
     <layout-default [options]="options" [asideUser]="asideUserTpl" [content]="contentTpl" [customError]="null">
-      <layout-default-header-item direction="left">
+      <layout-default-header-item direction="left" *ngIf="!inst.custom">
         <a href="#">
           <img src="./assets/logo.jpg" alt="logo" style="height: 50px;height: 50px;float: left;" />
           <div class="alain-default__header-title"> Max<span style="color: #FFD700;">Key</span>{{ 'mxk.title' | i18n }} </div>
+        </a>
+      </layout-default-header-item>
+
+      <layout-default-header-item direction="left" *ngIf="inst.custom">
+        <a href="#">
+          <img src="{{ inst.logo }}" alt="logo" style="height: 50px;height: 50px;float: left;" />
+          <div class="alain-default__header-title"> {{ inst.title }} </div>
         </a>
       </layout-default-header-item>
 
@@ -135,6 +142,7 @@ export class LayoutBasicComponent implements OnInit {
   ngOnInit(): void {
     this.inst = this.authnService.getInst();
     if (this.inst == null) {
+      this.inst = { custom: false };
       this.authnService.initInst().subscribe(res => {
         this.authnService.setInst(res.data, !knowHost());
         this.inst = this.authnService.getInst();

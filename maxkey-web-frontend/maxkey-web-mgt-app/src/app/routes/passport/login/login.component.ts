@@ -94,8 +94,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
           this.error = res.msg;
         } else {
           // 清空路由复用信息
-          console.log(res.data);
-          this.authnService.setInst(res.data.inst);
+          //console.log(res.data);
           this.state = res.data.state;
           //init image captcha
           this.imageCaptchaService.captcha({ state: this.state }).subscribe(res => {

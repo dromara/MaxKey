@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SettingsService, User } from '@delon/theme';
 import { environment } from '@env/environment';
+import { AuthnService } from 'src/app/service/authn.service';
 import { CONSTS } from 'src/app/shared/consts';
 
+import { knowHost } from '../../shared/utils/knowhost';
 import { LayoutDefaultOptions } from '../../theme/layout-default';
 
 @Component({
@@ -33,7 +35,7 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
   ],
   template: `
     <layout-default [options]="options" [asideUser]="asideUserTpl" [content]="contentTpl" [customError]="null">
-      <layout-default-header-item direction="left">
+      <layout-default-header-item direction="left" *ngIf="!inst.custom">
         <a href="#">
           <img src="./assets/logo.jpg" alt="logo" style="height: 50px;height: 50px;float: left;" />
           <div
@@ -45,6 +47,21 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
               margin-top: 12px;"
           >
             Max<span style="color: #FFD700;">Key</span>{{ 'mxk.title' | i18n }}
+          </div>
+        </a>
+      </layout-default-header-item>
+      <layout-default-header-item direction="left" *ngIf="inst.custom">
+        <a href="#">
+          <img src="{{ inst.logo }}" alt="logo" style="height: 50px;height: 50px;float: left;" />
+          <div
+            class="alain-default__nav-item_title"
+            style="letter-spacing: 2px;
+              font-size: 20px;
+              font-weight: bolder;
+              width: 450px;
+              margin-top: 12px;"
+          >
+            {{ inst.title }}
           </div>
         </a>
       </layout-default-header-item>
@@ -110,8 +127,9 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
     <theme-btn></theme-btn>
   `
 })
-export class LayoutBasicComponent {
+export class LayoutBasicComponent implements OnInit {
   version = CONSTS.VERSION;
+  inst: any;
   options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
     logoCollapsed: `./assets/logo.svg`,
@@ -123,5 +141,16 @@ export class LayoutBasicComponent {
     return this.settingsService.user;
   }
 
-  constructor(private settingsService: SettingsService) { }
+  ngOnInit(): void {
+    this.inst = this.authnService.getInst();
+    if (this.inst == null) {
+      this.inst = { custom: false };
+      this.authnService.initInst().subscribe(res => {
+        this.authnService.setInst(res.data, !knowHost());
+        this.inst = this.authnService.getInst();
+      });
+    }
+  }
+
+  constructor(private settingsService: SettingsService, private authnService: AuthnService) { }
 }

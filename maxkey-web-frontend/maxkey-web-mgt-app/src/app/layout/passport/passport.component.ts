@@ -19,6 +19,8 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { AuthnService } from 'src/app/service/authn.service';
 import { CONSTS } from 'src/app/shared/consts';
 
+import { knowHost } from '../../shared/utils/knowhost';
+
 @Component({
   selector: 'layout-passport',
   templateUrl: './passport.component.html',
@@ -26,7 +28,6 @@ import { CONSTS } from 'src/app/shared/consts';
 })
 export class LayoutPassportComponent implements OnInit {
   version = CONSTS.VERSION;
-  isTitle: boolean = false;
   inst: any;
   links = [
     {
@@ -42,15 +43,13 @@ export class LayoutPassportComponent implements OnInit {
   constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService, private authnService: AuthnService) { }
 
   ngOnInit(): void {
-    if (
-      window.location.hostname != 'localhost' &&
-      window.location.hostname != 'sso.maxkey.top' &&
-      window.location.hostname != 'mgt.maxkey.top'
-    ) {
-      this.inst = this.authnService.getInst();
-      if (this.inst != null) {
-        this.isTitle = true;
-      }
+    this.inst = this.authnService.getInst();
+    if (this.inst == null) {
+      this.inst = { custom: false };
+      this.authnService.initInst().subscribe(res => {
+        this.authnService.setInst(res.data, !knowHost());
+        this.inst = this.authnService.getInst();
+      });
     }
     this.tokenService.clear();
   }

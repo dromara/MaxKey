@@ -94,12 +94,24 @@ export class AuthnService {
     this.tokenService.get()?.expired;
   }
 
-  setInst(inst: any) {
-    localStorage.setItem(CONSTS.INST, JSON.stringify({ id: inst.id, name: inst.name, title: inst.consoleTitle, logo: inst.logo }));
+  setInst(inst: any, custom: boolean) {
+    localStorage.setItem(
+      CONSTS.INST,
+      JSON.stringify({ custom: custom, id: inst.id, name: inst.name, title: inst.consoleTitle, logo: inst.logo })
+    );
   }
 
   getInst() {
-    return JSON.parse(`${localStorage.getItem(CONSTS.INST)}`);
+    let strInst = `${localStorage.getItem(CONSTS.INST)}`;
+    if (strInst == null || strInst === '') {
+      return null;
+    } else {
+      return JSON.parse(strInst);
+    }
+  }
+
+  initInst() {
+    return this.http.get(`/inst/get?_allow_anonymous=true`);
   }
 
   navigate(authJwt: any) {
