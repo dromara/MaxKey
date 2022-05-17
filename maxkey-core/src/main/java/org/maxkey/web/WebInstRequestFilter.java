@@ -37,7 +37,9 @@ public class WebInstRequestFilter  extends GenericFilterBean {
 	final static Logger _logger = LoggerFactory.getLogger(GenericFilterBean.class);	
 	
 	public final static String  HEADER_HOST 		= "host";
+	
 	public final static String  HEADER_HOSTNAME 	= "hostname";
+	
 	public final static String  HEADER_ORIGIN		= "Origin";	
 	
 	InstitutionsRepository institutionsRepository;
@@ -74,7 +76,6 @@ public class WebInstRequestFilter  extends GenericFilterBean {
 			if(StringUtils.isEmpty(origin)) {
 				origin = applicationConfig.getFrontendUri();
 			}
-			request.getSession().setAttribute(WebConstants.FRONTEND_BASE_URI, origin);
 		}
         chain.doFilter(servletRequest, servletResponse);
 	}

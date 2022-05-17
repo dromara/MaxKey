@@ -307,12 +307,7 @@ public final class WebContext {
     
     public static Institutions getInst() {
         return (Institutions)getAttribute(WebConstants.CURRENT_INST);
-    }
-    
-    public static String getBaseUri() {
-        return (String)getAttribute(WebConstants.FRONTEND_BASE_URI);
-    }
-    
+    }    
 
     /**
      * encoding encodingString by ApplicationConfig.

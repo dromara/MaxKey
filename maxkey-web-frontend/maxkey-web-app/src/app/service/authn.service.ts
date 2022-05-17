@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { StartupService } from '@core';
@@ -37,6 +38,7 @@ export class AuthnService {
     private settingsService: SettingsService,
     private cookieService: CookieService,
     private startupService: StartupService,
+    private client: HttpClient,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private http: _HttpClient
   ) { }
@@ -103,13 +105,24 @@ export class AuthnService {
   jwtAuth(authParam: any) {
     return this.http.get(`/login/jwt/trust?_allow_anonymous=true`, authParam);
   }
-
-  setInst(inst: any) {
-    localStorage.setItem(CONSTS.INST, JSON.stringify({ id: inst.id, name: inst.name, title: inst.frontTitle, logo: inst.logo }));
+  setInst(inst: any, custom: boolean) {
+    localStorage.setItem(
+      CONSTS.INST,
+      JSON.stringify({ custom: custom, id: inst.id, name: inst.name, title: inst.frontTitle, logo: inst.logo })
+    );
   }
 
   getInst() {
-    return JSON.parse(`${localStorage.getItem(CONSTS.INST)}`);
+    let strInst = `${localStorage.getItem(CONSTS.INST)}`;
+    if (strInst == null || strInst === '') {
+      return null;
+    } else {
+      return JSON.parse(strInst);
+    }
+  }
+
+  initInst() {
+    return this.http.get(`/inst/get?_allow_anonymous=true`);
   }
 
   setRoles(aclService: ACLService | null): string[] {

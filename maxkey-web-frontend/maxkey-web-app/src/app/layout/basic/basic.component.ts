@@ -22,6 +22,7 @@ import { environment } from '@env/environment';
 import { CONSTS } from 'src/app/shared/consts';
 
 import { AuthnService } from '../../service/authn.service';
+import { knowHost } from '../../shared/utils/knowhost';
 import { LayoutDefaultOptions } from '../../theme/layout-default';
 
 @Component({
@@ -109,8 +110,9 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
     <theme-btn></theme-btn>
   `
 })
-export class LayoutBasicComponent {
+export class LayoutBasicComponent implements OnInit {
   version = CONSTS.VERSION;
+  inst: any;
   options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
     logoCollapsed: `./assets/logo.svg`,
@@ -129,5 +131,15 @@ export class LayoutBasicComponent {
   changePassword(): void {
     this.router.navigateByUrl('/config/password');
   }
-  constructor(private settingsService: SettingsService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.inst = this.authnService.getInst();
+    if (this.inst == null) {
+      this.authnService.initInst().subscribe(res => {
+        this.authnService.setInst(res.data, !knowHost());
+        this.inst = this.authnService.getInst();
+      });
+    }
+  }
+  constructor(private authnService: AuthnService, private settingsService: SettingsService, private router: Router) { }
 }

@@ -19,6 +19,9 @@ import { ActivatedRoute } from '@angular/router';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { CONSTS } from 'src/app/shared/consts';
 
+import { AuthnService } from '../../service/authn.service';
+import { knowHost } from '../../shared/utils/knowhost';
+
 @Component({
   selector: 'layout-passport',
   templateUrl: './passport.component.html',
@@ -26,6 +29,8 @@ import { CONSTS } from 'src/app/shared/consts';
 })
 export class LayoutPassportComponent implements OnInit {
   version = CONSTS.VERSION;
+  inst: any;
+
   links = [
     {
       title: '帮助',
@@ -37,7 +42,19 @@ export class LayoutPassportComponent implements OnInit {
     }
   ];
 
-  constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService, private route: ActivatedRoute) { }
+  constructor(
+    private authnService: AuthnService,
+    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private route: ActivatedRoute
+  ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.inst = this.authnService.getInst();
+    if (this.inst == null) {
+      this.authnService.initInst().subscribe(res => {
+        this.authnService.setInst(res.data, !knowHost());
+        this.inst = this.authnService.getInst();
+      });
+    }
+  }
 }
