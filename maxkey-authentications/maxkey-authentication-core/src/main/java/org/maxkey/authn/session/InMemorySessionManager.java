@@ -19,28 +19,30 @@ package org.maxkey.authn.session;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.maxkey.entity.HistoryLogin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 
-public class InMemorySessionManager extends AbstractSessionManager{
+public class InMemorySessionManager implements SessionManager{
     private static final Logger _logger = LoggerFactory.getLogger(InMemorySessionManager.class);
 
+    protected int validitySeconds = 60 * 30; //default 30 minutes.
+    
 	protected  static  Cache<String, Session> sessionStore = 
         	        Caffeine.newBuilder()
         	            .expireAfterWrite(10, TimeUnit.MINUTES)
         	            .maximumSize(2000000)
         	            .build();
 	
-	public InMemorySessionManager(JdbcTemplate jdbcTemplate,int validitySeconds) {
+	public InMemorySessionManager(int validitySeconds) {
         super();
-        this.jdbcTemplate = jdbcTemplate;
         sessionStore = 
                 Caffeine.newBuilder()
                     .expireAfterWrite(validitySeconds, TimeUnit.SECONDS)
@@ -68,16 +70,6 @@ public class InMemorySessionManager extends AbstractSessionManager{
     }
 
     @Override
-    public void setValiditySeconds(int validitySeconds) {
-    	sessionStore = 
-                Caffeine.newBuilder()
-                    .expireAfterWrite(validitySeconds, TimeUnit.SECONDS)
-                    .maximumSize(200000)
-                    .build();
-        
-    }
-
-    @Override
     public Session refresh(String sessionId,LocalTime refreshTime) {
         Session session = get(sessionId);
         session.setLastAccessTime(refreshTime);
@@ -100,5 +92,17 @@ public class InMemorySessionManager extends AbstractSessionManager{
         }
         return session;
     }
+
+	@Override
+	public List<HistoryLogin> querySessions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void terminate(String sessionId, String userId, String username) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -33,8 +33,6 @@ public interface SessionManager {
     public Session refresh(String sessionId ,LocalTime refreshTime);
     
     public Session refresh(String sessionId);
-
-    public void setValiditySeconds(int validitySeconds);
     
     public List<HistoryLogin> querySessions();
     

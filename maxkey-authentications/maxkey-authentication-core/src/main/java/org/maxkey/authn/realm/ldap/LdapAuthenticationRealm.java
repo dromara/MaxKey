@@ -66,7 +66,11 @@ public class LdapAuthenticationRealm  extends AbstractAuthenticationRealm{
 				 username = userInfo.getWindowsAccount();
 			 }
             _logger.debug("Attempting to authenticate {} at {}", username, ldapServer);
-            isAuthenticated= ldapServer.authenticate(username, password);
+            try {
+            	isAuthenticated = ldapServer.authenticate(username, password);
+            }catch(Exception e) {
+            	_logger.debug("Attempting Authenticated fail .");
+            }
             if (isAuthenticated ) {
             	return true;
             }

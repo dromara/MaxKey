@@ -21,6 +21,7 @@ import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealm;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
 import org.maxkey.constants.ConstsLoginType;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.PasswordPolicy;
 import org.maxkey.entity.UserInfo;
@@ -100,15 +101,21 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
         if(ldapAuthenticationRealmService != null) {
         	//passwordMatches == false and ldapSupport ==true
         	//validate password with LDAP
-	        LdapAuthenticationRealm ldapRealm = ldapAuthenticationRealmService.getByInstId(userInfo.getInstId());
-	        if(!passwordMatches && ldapRealm != null && ldapRealm.isLdapSupport()) {
-	            passwordMatches = ldapRealm.passwordMatches(userInfo, password);
-	            if(passwordMatches) {
-	                //write password to database Realm
-	            	ChangePassword changePassword = new ChangePassword(userInfo);
-	                changePassword.setPassword(password);
-	                userInfoService.changePassword(changePassword, false);
-	            }
+	        try {
+	        	LdapAuthenticationRealm ldapRealm = ldapAuthenticationRealmService.getByInstId(userInfo.getInstId());
+	        	if(!passwordMatches && ldapRealm != null 
+		        		&& ldapRealm.isLdapSupport() 
+		        		&& userInfo.getIsLocked() == ConstsStatus.ACTIVE) {
+		            passwordMatches = ldapRealm.passwordMatches(userInfo, password);
+		            if(passwordMatches) {
+		                //write password to database Realm
+		            	ChangePassword changePassword = new ChangePassword(userInfo);
+		                changePassword.setPassword(password);
+		                userInfoService.changePassword(changePassword, false);
+		            }
+		        }
+	        }catch(Exception e) {
+	        	_logger.debug("passwordvalid Exception : {}" , e);
 	        }
         }
         _logger.debug("passwordvalid : {}" , passwordMatches);

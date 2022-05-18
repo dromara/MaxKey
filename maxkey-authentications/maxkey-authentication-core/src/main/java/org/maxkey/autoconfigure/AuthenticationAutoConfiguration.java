@@ -204,7 +204,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
             ) {
     	_logger.trace("session timeout " + timeout);
         SessionManager  sessionManager  = 
-                new SessionManagerFactory().getManager(
+                new SessionManagerFactory(
                 		persistence, jdbcTemplate, redisConnFactory,timeout);
         return sessionManager;
     }

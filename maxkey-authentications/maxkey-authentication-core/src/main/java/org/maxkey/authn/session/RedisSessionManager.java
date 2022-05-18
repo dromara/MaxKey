@@ -19,17 +19,20 @@ package org.maxkey.authn.session;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.List;
 
+import org.maxkey.entity.HistoryLogin;
 import org.maxkey.persistence.redis.RedisConnection;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 
-public class RedisSessionManager extends AbstractSessionManager {
+public class RedisSessionManager implements SessionManager {
     private static final Logger _logger = LoggerFactory.getLogger(RedisSessionManager.class);
 	
+    protected int validitySeconds = 60 * 30; //default 30 minutes.
+    
 	RedisConnectionFactory connectionFactory;
 	
 	public static String PREFIX="REDIS_SESSION_";
@@ -43,10 +46,9 @@ public class RedisSessionManager extends AbstractSessionManager {
 	 */
 	public RedisSessionManager(
 			RedisConnectionFactory connectionFactory,
-			JdbcTemplate jdbcTemplate,int validitySeconds) {
+			int validitySeconds) {
 		super();
 		this.connectionFactory = connectionFactory;
-		this.jdbcTemplate = jdbcTemplate;
 		this.validitySeconds = validitySeconds;
 	}
 	
@@ -117,6 +119,18 @@ public class RedisSessionManager extends AbstractSessionManager {
         }
         return session;
     }
+
+	@Override
+	public List<HistoryLogin> querySessions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void terminate(String sessionId, String userId, String username) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 }

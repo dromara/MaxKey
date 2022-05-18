@@ -222,10 +222,12 @@ public class PasswordPolicyValidator {
    public void lockUser(UserInfo userInfo) {
        try {
            if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-               jdbcTemplate.update(LOCK_USER_UPDATE_STATEMENT,
-                       new Object[] { ConstsStatus.LOCK, new Date(), userInfo.getId() },
-                       new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
-               userInfo.setIsLocked(ConstsStatus.LOCK);
+        	   if(userInfo.getIsLocked() == ConstsStatus.ACTIVE) {
+	               jdbcTemplate.update(LOCK_USER_UPDATE_STATEMENT,
+	                       new Object[] { ConstsStatus.LOCK, new Date(), userInfo.getId() },
+	                       new int[] { Types.VARCHAR, Types.TIMESTAMP, Types.VARCHAR });
+	               userInfo.setIsLocked(ConstsStatus.LOCK);
+        	   }
            }
        } catch (Exception e) {
            _logger.error("lockUser Exception",e);
@@ -263,6 +265,7 @@ public class PasswordPolicyValidator {
                        new Object[] { 0, ConstsStatus.ACTIVE, new Date(), userInfo.getId() },
                        new int[] { Types.INTEGER, Types.INTEGER, Types.TIMESTAMP, Types.VARCHAR });
                userInfo.setIsLocked(ConstsStatus.ACTIVE);
+               userInfo.setBadPasswordCount(0);
            }
        } catch (Exception e) {
            _logger.error("resetAttempts Exception",e);
@@ -288,7 +291,12 @@ public class PasswordPolicyValidator {
        if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
            userInfo.setBadPasswordCount(userInfo.getBadPasswordCount() + 1);
            setBadPasswordCount(userInfo.getId(),userInfo.getBadPasswordCount());
-           
+           PasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
+           if(userInfo.getBadPasswordCount() + 1 >= passwordPolicy.getAttempts()) {
+        	   _logger.debug("Bad Password Count {} , Max Attempts {}",
+        			   userInfo.getBadPasswordCount() + 1,passwordPolicy.getAttempts());
+        	   this.lockUser(userInfo);
+           }
        }
    }
    

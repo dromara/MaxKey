@@ -124,7 +124,8 @@ public abstract class AbstractAuthenticationRealm {
         historyLogin.setSessionId(WebContext.genId());
         historyLogin.setSessionStatus(7);
         Authentication  authentication  = (Authentication ) WebContext.getAttribute(WebConstants.AUTHENTICATION);
-        if(authentication.getPrincipal() instanceof SignPrincipal) {
+        if(authentication != null 
+        		&& authentication.getPrincipal() instanceof SignPrincipal) {
         	  historyLogin.setSessionStatus(1);
               historyLogin.setSessionId(userInfo.getSessionId());
         }
