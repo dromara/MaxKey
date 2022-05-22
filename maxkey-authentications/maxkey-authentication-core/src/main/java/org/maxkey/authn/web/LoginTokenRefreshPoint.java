@@ -35,8 +35,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(value = "/auth")
-public class LoginRefreshPoint {
-	private static final  Logger _logger = LoggerFactory.getLogger(LoginRefreshPoint.class);
+public class LoginTokenRefreshPoint {
+	private static final  Logger _logger = LoggerFactory.getLogger(LoginTokenRefreshPoint.class);
 	
 	@Autowired
 	AuthTokenService authTokenService;

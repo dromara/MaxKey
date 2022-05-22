@@ -6,37 +6,28 @@
         <nz-form-item>
           <nz-form-label nzFor="name">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
           <nz-form-control>
-            <input nz-input [(ngModel)]="query.params.name" [ngModelOptions]="{ standalone: true }" name="name" placeholder="" id="name" />
+            <input nz-input [(ngModel)]="query.params.name" [ngModelOptions]="{ standalone: true }" name="name"
+              placeholder="" id="name" />
           </nz-form-control>
         </nz-form-item>
       </div>
 
       <div nz-col [nzSpan]="query.expandForm ? 24 : 10" [class.text-right]="query.expandForm">
-        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
-        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n }}</button>
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' |
+          i18n }}</button>
+        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' |
+          i18n }}</button>
         <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
-          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
-        >
+          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button>
         <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.confirm' | i18n }}</button>
       </div>
     </div>
   </form>
 
-  <nz-table
-    #dynamicTable
-    nzTableLayout="auto"
-    nzBordered
-    nzShowSizeChanger
-    [nzData]="query.results.rows"
-    [nzFrontPagination]="false"
-    [nzTotal]="query.results.records"
-    [nzPageSizeOptions]="query.params.pageSizeOptions"
-    [nzPageSize]="query.params.pageSize"
-    [nzPageIndex]="query.params.pageNumber"
-    [nzLoading]="this.query.tableLoading"
-    (nzQueryParams)="onQueryParamsChange($event)"
-    nzWidth="100%"
-  >
+  <nz-table #dynamicTable nzTableLayout="auto" nzBordered nzShowSizeChanger [nzData]="query.results.rows"
+    [nzFrontPagination]="false" [nzTotal]="query.results.records" [nzPageSizeOptions]="query.params.pageSizeOptions"
+    [nzPageSize]="query.params.pageSize" [nzPageIndex]="query.params.pageNumber" [nzLoading]="this.query.tableLoading"
+    (nzQueryParams)="onQueryParamsChange($event)" nzWidth="100%">
     <thead>
       <tr>
         <th></th>
@@ -49,19 +40,45 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of query.results.rows">
-        <td
-          [nzChecked]="query.tableCheckedId.has(data.id)"
-          [nzDisabled]="data.disabled"
-          (nzCheckedChange)="onTableItemChecked(data.id, $event)"
-        ></td>
+        <td [nzChecked]="query.tableCheckedId.has(data.id)" [nzDisabled]="data.disabled"
+          (nzCheckedChange)="onTableItemChecked(data.id, $event)"></td>
         <td nzAlign="left" style="display: none">
           <span>{{ data.id }}</span>
         </td>
 
-        <td nzAlign="center"><img height="30" border="0px" src="{{ data.iconBase64 }}" /></td>
-        <td nzAlign="center"> {{ data.name }}</td>
-        <td nzAlign="center"> {{ data.protocol }}</td>
-        <td nzAlign="left">{{ data.category }}</td>
+        <td nzAlign="left"><img height="30" border="0px" src="{{ data.iconBase64 }}" /></td>
+        <td nzAlign="left"> {{ data.name }}</td>
+        <td nzAlign="left"> {{ data.protocol }}</td>
+        <td nzAlign="left">
+          <div *ngIf="data.category == 'none'">{{ 'mxk.apps.category.none' | i18n }}</div>
+          <div *ngIf="data.category == '1011'">{{ 'mxk.apps.category.1011' | i18n }}</div>
+          <div *ngIf="data.category == '1012'">{{ 'mxk.apps.category.1012' | i18n }}</div>
+          <div *ngIf="data.category == '1013'">{{ 'mxk.apps.category.1013' | i18n }}</div>
+          <div *ngIf="data.category == '1014'">{{ 'mxk.apps.category.1014' | i18n }}</div>
+          <div *ngIf="data.category == '1015'">{{ 'mxk.apps.category.1015' | i18n }}</div>
+          <div *ngIf="data.category == '1016'">{{ 'mxk.apps.category.1016' | i18n }}</div>
+          <div *ngIf="data.category == '1017'">{{ 'mxk.apps.category.1017' | i18n }}</div>
+          <div *ngIf="data.category == '1111'">{{ 'mxk.apps.category.1111' | i18n }}</div>
+          <div *ngIf="data.category == '1112'">{{ 'mxk.apps.category.1112' | i18n }}</div>
+          <div *ngIf="data.category == '1113'">{{ 'mxk.apps.category.1113' | i18n }}</div>
+          <div *ngIf="data.category == '1114'">{{ 'mxk.apps.category.1114' | i18n }}</div>
+          <div *ngIf="data.category == '1211'">{{ 'mxk.apps.category.1211' | i18n }}</div>
+          <div *ngIf="data.category == '1212'">{{ 'mxk.apps.category.1212' | i18n }}</div>
+          <div *ngIf="data.category == '1213'">{{ 'mxk.apps.category.1213' | i18n }}</div>
+          <div *ngIf="data.category == '1214'">{{ 'mxk.apps.category.1214' | i18n }}</div>
+          <div *ngIf="data.category == '1215'">{{ 'mxk.apps.category.1215' | i18n }}</div>
+          <div *ngIf="data.category == '1311'">{{ 'mxk.apps.category.1311' | i18n }}</div>
+          <div *ngIf="data.category == '1411'">{{ 'mxk.apps.category.1411' | i18n }}</div>
+          <div *ngIf="data.category == '1511'">{{ 'mxk.apps.category.1511' | i18n }}</div>
+          <div *ngIf="data.category == '1512'">{{ 'mxk.apps.category.1512' | i18n }}</div>
+          <div *ngIf="data.category == '1611'">{{ 'mxk.apps.category.1611' | i18n }}</div>
+          <div *ngIf="data.category == '1711'">{{ 'mxk.apps.category.1711' | i18n }}</div>
+          <div *ngIf="data.category == '1712'">{{ 'mxk.apps.category.1712' | i18n }}</div>
+          <div *ngIf="data.category == '1811'">{{ 'mxk.apps.category.1811' | i18n }}</div>
+          <div *ngIf="data.category == '1812'">{{ 'mxk.apps.category.1812' | i18n }}</div>
+          <div *ngIf="data.category == '1911'">{{ 'mxk.apps.category.1911' | i18n }}</div>
+          <div *ngIf="data.category == '1912'">{{ 'mxk.apps.category.1912' | i18n }}</div>
+        </td>
       </tr>
     </tbody>
   </nz-table>

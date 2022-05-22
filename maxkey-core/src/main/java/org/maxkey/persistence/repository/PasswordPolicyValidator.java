@@ -128,7 +128,7 @@ public class PasswordPolicyValidator {
             DateTime badPasswordTime = DateTime.parse(badPasswordTimeString,
                     DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
             Duration duration = new Duration(badPasswordTime, currentdateTime);
-            int intDuration = Integer.parseInt(duration.getStandardHours() + "");
+            int intDuration = Integer.parseInt(duration.getStandardMinutes() + "");
             _logger.debug("bad Password duration {} , " + 
                           "password policy Duration {} , "+
                           "validate result {}" ,

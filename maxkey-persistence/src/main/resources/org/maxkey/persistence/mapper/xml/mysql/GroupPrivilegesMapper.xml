@@ -22,8 +22,10 @@
 		select
 			gp.id,
 			gp.groupid,
+			g.name groupname,
 			gp.appid,
 			apps.name,
+			apps.name appname,
             apps.icon,
             apps.loginurl,
             apps.protocol,
@@ -33,12 +35,18 @@
             apps.vendorurl
 		from
 			mxk_apps apps,
-			mxk_group_privileges    gp
+			mxk_group_privileges    gp,
+			mxk_groups  g
 		where
 		    apps.instid     =   #{instId} 
 		    and gp.instid   =   #{instId} 
-			and gp.appid    =    apps.id
-			and gp.groupid	=	#{groupId}
+		    and g.instid    =   #{instId} 
+			and gp.appid    =   apps.id
+			and gp.groupid  =   g.id
+			<if test="groupId != null and groupId != ''">
+                and gp.groupid    =   #{groupId}
+                and g.id          =   #{groupId}
+            </if>
 		<include refid="where_statement"/>
 	</select>
 	

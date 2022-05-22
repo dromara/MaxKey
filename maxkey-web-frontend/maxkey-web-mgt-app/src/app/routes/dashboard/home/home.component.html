@@ -17,16 +17,8 @@
         <p class="text-nowrap mb0">{{ 'mxk.home.onlineUsers' | i18n }}</p>
       </div>
       <div nz-col nzSpan="12">
-        <g2-mini-bar
-          *ngIf="simulateData"
-          height="35"
-          color="#fff"
-          borderWidth="3"
-          [padding]="[5, 30]"
-          [data]="simulateData"
-          tooltipType="mini"
-          (ready)="fixDark($event)"
-        ></g2-mini-bar>
+        <g2-mini-bar *ngIf="simulateData" height="35" color="#fff" borderWidth="3" [padding]="[5, 30]"
+          [data]="simulateData" tooltipType="mini" (ready)="fixDark($event)"></g2-mini-bar>
       </div>
     </div>
   </div>
@@ -37,16 +29,8 @@
         <p class="text-nowrap mb0">{{ 'mxk.home.dayCount' | i18n }}</p>
       </div>
       <div nz-col nzSpan="12">
-        <g2-mini-bar
-          *ngIf="simulateData"
-          height="35"
-          color="#fff"
-          borderWidth="3"
-          [padding]="[5, 30]"
-          [data]="simulateData"
-          tooltipType="mini"
-          (ready)="fixDark($event)"
-        ></g2-mini-bar>
+        <g2-mini-bar *ngIf="simulateData" height="35" color="#fff" borderWidth="3" [padding]="[5, 30]"
+          [data]="simulateData" tooltipType="mini" (ready)="fixDark($event)"></g2-mini-bar>
       </div>
     </div>
   </div>
@@ -57,16 +41,8 @@
         <p class="text-nowrap mb0">{{ 'mxk.home.newUsers' | i18n }}</p>
       </div>
       <div nz-col nzSpan="12">
-        <g2-mini-bar
-          *ngIf="simulateData"
-          height="35"
-          color="#fff"
-          borderWidth="3"
-          [padding]="[5, 30]"
-          [data]="simulateData"
-          tooltipType="mini"
-          (ready)="fixDark($event)"
-        ></g2-mini-bar>
+        <g2-mini-bar *ngIf="simulateData" height="35" color="#fff" borderWidth="3" [padding]="[5, 30]"
+          [data]="simulateData" tooltipType="mini" (ready)="fixDark($event)"></g2-mini-bar>
       </div>
     </div>
   </div>
@@ -77,16 +53,8 @@
         <p class="text-nowrap mb0">{{ 'mxk.home.activeUsers' | i18n }}</p>
       </div>
       <div nz-col nzSpan="12">
-        <g2-mini-bar
-          *ngIf="simulateData"
-          height="35"
-          color="#fff"
-          borderWidth="3"
-          [padding]="[5, 30]"
-          [data]="simulateData"
-          tooltipType="mini"
-          (ready)="fixDark($event)"
-        ></g2-mini-bar>
+        <g2-mini-bar *ngIf="simulateData" height="35" color="#fff" borderWidth="3" [padding]="[5, 30]"
+          [data]="simulateData" tooltipType="mini" (ready)="fixDark($event)"></g2-mini-bar>
       </div>
     </div>
   </div>
@@ -97,7 +65,8 @@
       <ng-template #dayAccessTitle>
         {{ 'mxk.home.dayAccessCount' | i18n }}
       </ng-template>
-      <g2-bar *ngIf="dayData" height="275" [data]="dayData" color="#fa8c16"></g2-bar>
+      <!--<g2-bar *ngIf="dayData" height="275" [data]="dayData" color="#fa8c16"></g2-bar>-->
+      <g2-bar *ngIf="dayData" height="275" [data]="dayData"></g2-bar>
     </nz-card>
   </div>
   <div nz-col nzXs="24" nzMd="24">

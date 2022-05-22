@@ -202,7 +202,7 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
             RedisConnectionFactory redisConnFactory,
             @Value("${maxkey.session.timeout:1800}") int timeout
             ) {
-    	_logger.trace("session timeout " + timeout);
+    	_logger.debug("session timeout " + timeout);
         SessionManager  sessionManager  = 
                 new SessionManagerFactory(
                 		persistence, jdbcTemplate, redisConnFactory,timeout);

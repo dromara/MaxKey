@@ -57,11 +57,11 @@
       },
       "audit" : {
         "": "日志审计",
-        "logins": "登录日志",
+        "logins": "系统登录日志",
         "loginapps": "应用登录日志",
         "synchronizer": "同步器日志",
         "connector": "连接器日志",
-        "operate": "管理日志"
+        "operate": "系统管理日志"
       }
     },
     "home":{
@@ -211,7 +211,7 @@
     "accounts":{
       "userId":"用户编号",
       "username":"登录账号",
-      "displayName":"用户名",
+      "displayName":"姓名",
       "appName":"应用名称",
       "appId":"应用编号",
       "relatedUsername":"应用账号",
@@ -253,7 +253,7 @@
       "sslSwitch": "SSL",
       "filters": "过滤器",
       "basedn": "基本DN",
-      "msadDomain": "Active Directory域",
+      "msadDomain": "AD域名",
       "accountMapping": "账号映射",
       "trustStore": "证书",
       "trustStorePassword": "证书密钥"
@@ -269,7 +269,7 @@
     },
     "accountsstrategy" :{
       "id":"策略编码",
-      "name":"策略",
+      "name":"策略名称",
       "appIcon":"应用图标",
       "appId":"应用编码",
       "appName":"应用名称",
@@ -568,7 +568,7 @@
       "login.id":"编号",
       "login.sessionId":"会话",
       "login.username":"登录名",
-      "login.displayName":"用户名称",
+      "login.displayName":"姓名",
       "login.provider":"提供商",
       "login.message":"状态",
       "login.loginType":"登录方式",
@@ -586,7 +586,7 @@
       "loginapps.sessionId":"会话",
       "loginapps.userId":"用户编号",
       "loginapps.username":"登录名",
-      "loginapps.displayName":"用户名",
+      "loginapps.displayName":"姓名",
       "loginapps.appId":"应用编号",
       "loginapps.appName":"应用名称",
       "loginapps.loginTime":"登录时间",

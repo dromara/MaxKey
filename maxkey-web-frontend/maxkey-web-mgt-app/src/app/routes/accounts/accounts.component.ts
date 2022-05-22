@@ -36,7 +36,7 @@ import { AccountEditerComponent } from './account-editer/account-editer.componen
 export class AccountsComponent implements OnInit {
   query: {
     params: {
-      name: String;
+      username: String;
       displayName: String;
       employeeNumber: String;
       appName: String;
@@ -60,7 +60,7 @@ export class AccountsComponent implements OnInit {
     checked: boolean;
   } = {
       params: {
-        name: '',
+        username: '',
         displayName: '',
         employeeNumber: '',
         appName: '',

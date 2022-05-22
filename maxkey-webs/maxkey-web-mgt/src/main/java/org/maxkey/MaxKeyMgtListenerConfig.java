@@ -46,7 +46,7 @@ public class MaxKeyMgtListenerConfig  implements InitializingBean {
     			SessionListenerAdapter.class,
     			scheduler,
     			new ListenerParameter().add("sessionManager",sessionManager).build(),
-    			"0 0/10 * * * ?",//10 minutes
+    			"0 0/1 * * * ?",//10 minutes
     			SessionListenerAdapter.class.getSimpleName()
     		);
         _logger.debug("Session ListenerAdapter inited .");

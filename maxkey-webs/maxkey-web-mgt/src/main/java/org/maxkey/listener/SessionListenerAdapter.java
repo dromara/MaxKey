@@ -16,9 +16,12 @@
 package org.maxkey.listener;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import org.maxkey.authn.session.Session;
 import org.maxkey.authn.session.SessionManager;
 import org.maxkey.entity.HistoryLogin;
+import org.maxkey.util.DateUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -41,14 +44,32 @@ public class SessionListenerAdapter extends ListenerAdapter   implements Job , S
         jobStatus = JOBSTATUS.RUNNING;
         try {
             if(sessionManager != null) { 
-            	for (HistoryLogin onlineSession : sessionManager.querySessions()) {
-            		if(sessionManager.get(onlineSession.getSessionId()) == null) {
+            	int sessionCount = 0;
+            	for (HistoryLogin login : sessionManager.querySessions()) {
+            		Session session = sessionManager.get(login.getSessionId());
+            		if(session == null) {
+            			_logger.debug("user {} session {}  Login at {} and TimeOut at {} ." ,
+            					login.getUsername(), 
+            					login.getId(),
+            					login.getLoginTime(),
+            					DateUtils.formatDateTime(new Date())
+            			);
             			sessionManager.terminate(
-            					onlineSession.getSessionId(), 
-            					onlineSession.getUserId(), 
-            					onlineSession.getUsername());
+            					login.getSessionId(), 
+            					login.getUserId(), 
+            					login.getUsername());
+            		}else {
+            			_logger.debug("user {} session {} Login at {} , Last Access at {} will Expired at {}." ,
+            					login.getUsername(), 
+            					login.getId(),
+            					session.getStartTimestamp(),
+            					session.getLastAccessTime(),
+            					session.getExpiredTime()
+            			);
+            			sessionCount ++ ;
             		}
             	}
+            	_logger.debug("current session count {} ." ,sessionCount);
             }
             _logger.debug("finished  " );
             jobStatus = JOBSTATUS.FINISHED;

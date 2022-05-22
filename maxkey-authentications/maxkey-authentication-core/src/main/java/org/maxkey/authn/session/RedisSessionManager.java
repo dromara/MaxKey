@@ -17,8 +17,7 @@
 
 package org.maxkey.authn.session;
 
-import java.time.Duration;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.maxkey.entity.HistoryLogin;
@@ -65,6 +64,7 @@ public class RedisSessionManager implements SessionManager {
 
 	@Override
 	public void create(String sessionId, Session session) {
+		session.setExpiredTime(session.getLastAccessTime().plusSeconds(validitySeconds));
 		RedisConnection conn = connectionFactory.getConnection();
 		conn.setexObject( getKey(sessionId), validitySeconds, session);
 		conn.close();
@@ -97,25 +97,24 @@ public class RedisSessionManager implements SessionManager {
 	}
 
 	@Override
-    public Session refresh(String sessionId,LocalTime refreshTime) {
+    public Session refresh(String sessionId,LocalDateTime refreshTime) {
         Session session = get(sessionId);
-        session.setLastAccessTime(refreshTime);
-        create(sessionId , session);
+        if(session != null) {
+        	_logger.debug("refresh session Id {} at {}",sessionId,refreshTime);
+	        session.setLastAccessTime(refreshTime);
+	        create(sessionId , session);
+        }
         return session;
     }
     
     @Override
     public Session refresh(String sessionId) {
         Session session = get(sessionId);
-        
-        LocalTime currentTime = LocalTime.now();
-        Duration duration = Duration.between(currentTime, session.getLastAccessTime());
-        
-        _logger.trace("Session duration " + duration.getSeconds());
-        
-        if(duration.getSeconds() > Session.MAX_EXPIRY_DURATION) {
+        if(session != null) {
+        	LocalDateTime currentTime = LocalDateTime.now();
+        	_logger.debug("refresh session Id {} at time {}",sessionId,currentTime);
         	session.setLastAccessTime(currentTime);
-           return  refresh(sessionId,currentTime);
+        	create(sessionId , session);
         }
         return session;
     }

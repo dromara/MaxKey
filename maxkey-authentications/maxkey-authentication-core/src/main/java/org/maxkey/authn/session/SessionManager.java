@@ -17,7 +17,7 @@
 
 package org.maxkey.authn.session;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.maxkey.entity.HistoryLogin;
@@ -30,11 +30,13 @@ public interface SessionManager {
     
     public  Session get(String sessionId);
     
-    public Session refresh(String sessionId ,LocalTime refreshTime);
+    public Session refresh(String sessionId ,LocalDateTime refreshTime);
     
     public Session refresh(String sessionId);
     
     public List<HistoryLogin> querySessions();
+    
+    public int getValiditySeconds();
     
     public void terminate(String sessionId,String userId,String username);
 }

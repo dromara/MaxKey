@@ -37,15 +37,40 @@
     
     <!-- DAY HOUR COUNT 当天每小时 -->
 	<select id="analysisDayHour" parameterType="java.util.HashMap" resultType="Map">
-    	select 
-    		count(id) reportcount, 
-			hour(logintime) reportstring 
-    	from mxk_history_login 
-    	where   instid   =   #{instId} 
-    		and date(logintime) =curdate()
-    	group by reportstring
-    	order by reportstring
+        select h.reportstring reportstring, ifnull(c.reportcount, 0) reportcount from (
+            select 0  reportstring union all 
+            select 1  reportstring union all 
+            select 2  reportstring union all 
+            select 3  reportstring union all 
+            select 4  reportstring union all 
+            select 5  reportstring union all 
+            select 6  reportstring union all 
+            select 7  reportstring union all 
+            select 8  reportstring union all 
+            select 9  reportstring union all 
+            select 10 reportstring union all 
+            select 11 reportstring union all 
+            select 12 reportstring union all 
+            select 13 reportstring union all 
+            select 14 reportstring union all 
+            select 15 reportstring union all 
+            select 16 reportstring union all 
+            select 17 reportstring union all 
+            select 18 reportstring union all 
+            select 19 reportstring union all 
+            select 20 reportstring union all 
+            select 21 reportstring union all 
+            select 22 reportstring union all 
+            select 23 reportstring
+        ) h left join(
+            select count(id) reportcount, hour(logintime) reportstring 
+            from mxk_history_login 
+            where instid = #{instId} and date(logintime) =curdate() 
+            group by reportstring
+        )c  on h.reportstring=c.reportstring
+    	order by h.reportstring
     </select>
+    
     <!-- 30 DAY COUNT 最近30天每天访问量-->   
     <select id="analysisMonth" parameterType="java.util.HashMap" resultType="Map">
     	select 

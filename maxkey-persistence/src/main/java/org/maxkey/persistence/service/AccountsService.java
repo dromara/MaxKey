@@ -143,6 +143,7 @@ public class AccountsService  extends JpaBaseService<Accounts>{
            account.setRelatedUsername(generateAccount(user,strategy));
            account.setRelatedPassword(PasswordReciprocal.getInstance().encode(userInfoService.randomPassword()));
            
+           account.setInstId(strategy.getInstId());
            account.setCreateType("automatic");
            account.setStatus(ConstsStatus.ACTIVE);
            account.setStrategyId(strategy.getId());

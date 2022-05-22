@@ -17,8 +17,7 @@
 
 package org.maxkey.authn.session;
 
-import java.time.Duration;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +42,7 @@ public class InMemorySessionManager implements SessionManager{
 	
 	public InMemorySessionManager(int validitySeconds) {
         super();
+        this.validitySeconds = validitySeconds;
         sessionStore = 
                 Caffeine.newBuilder()
                     .expireAfterWrite(validitySeconds, TimeUnit.SECONDS)
@@ -53,6 +53,7 @@ public class InMemorySessionManager implements SessionManager{
 
     @Override
 	public void create(String sessionId, Session session) {
+    	session.setExpiredTime(session.getLastAccessTime().plusSeconds(validitySeconds));
     	sessionStore.put(sessionId, session);
 	}
 
@@ -70,10 +71,15 @@ public class InMemorySessionManager implements SessionManager{
     }
 
     @Override
-    public Session refresh(String sessionId,LocalTime refreshTime) {
+    public Session refresh(String sessionId,LocalDateTime refreshTime) {
         Session session = get(sessionId);
-        session.setLastAccessTime(refreshTime);
-        create(sessionId , session);
+        if(session != null) {
+        	_logger.debug("refresh session Id {} at refreshTime {}",sessionId,refreshTime);
+	        session.setLastAccessTime(refreshTime);
+	        //invalidate sessionId then renew one
+	        sessionStore.invalidate(sessionId);
+	        create(sessionId , session);
+        }
         return session;
     }
 
@@ -81,17 +87,20 @@ public class InMemorySessionManager implements SessionManager{
     public Session refresh(String sessionId) {
         Session session = get(sessionId);
         
-        LocalTime currentTime = LocalTime.now();
-        Duration duration = Duration.between(currentTime, session.getLastAccessTime());
-        
-        _logger.trace("Session duration " + duration.getSeconds());
-        
-        if(duration.getSeconds() > Session.MAX_EXPIRY_DURATION) {
+        if(session != null) {
+        	LocalDateTime currentTime = LocalDateTime.now();
+        	_logger.debug("refresh session Id {} at time {}",sessionId,currentTime);
         	session.setLastAccessTime(currentTime);
-            return refresh(sessionId,currentTime);
+        	//invalidate sessionId then renew one
+	        sessionStore.invalidate(sessionId);
+	        create(sessionId , session);
         }
         return session;
     }
+
+	public int getValiditySeconds() {
+		return validitySeconds;
+	}
 
 	@Override
 	public List<HistoryLogin> querySessions() {

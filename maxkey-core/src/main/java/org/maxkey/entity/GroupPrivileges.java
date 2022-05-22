@@ -49,8 +49,13 @@ public class GroupPrivileges extends Apps implements Serializable{
 	String id;
 	@Column
 	private String groupId;
+	
+	private String groupName;
+	
 	@Column
 	private String appId;
+	
+	private String appName;
 	
 	@Column
 	private String instId;
@@ -127,6 +132,26 @@ public class GroupPrivileges extends Apps implements Serializable{
 
 	public void setInstName(String instName) {
 		this.instName = instName;
+	}
+
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+
+	public String getAppName() {
+		return appName;
+	}
+
+
+	public void setAppName(String appName) {
+		this.appName = appName;
 	}
 
 

@@ -275,10 +275,7 @@ subprojects {
          implementation group: 'org.springframework.data', name: 'spring-data-commons', version: "${springDataVersion}"
          implementation group: 'org.springframework.data', name: 'spring-data-keyvalue', version: "${springDataVersion}"
          implementation group: 'org.springframework.data', name: 'spring-data-redis', version: "${springDataVersion}"
-         //spring-session
-         implementation group: 'org.springframework.session', name: 'spring-session-core', version: "${springSessionVersion}"
-         implementation group: 'org.springframework.session', name: 'spring-session-data-redis', version: "${springSessionVersion}"
-         
+ 
          //implementation group: 'org.springframework.plugin', name: 'spring-plugin-core', version: "${springplugincoreVersion}"
          //implementation group: 'org.springframework.plugin', name: 'spring-plugin-metadata', version: "${springpluginmetadataVersion}"
          //spring cloud

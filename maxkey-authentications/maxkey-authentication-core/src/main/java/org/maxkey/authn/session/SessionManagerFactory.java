@@ -20,7 +20,7 @@ package org.maxkey.authn.session;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +34,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+/**
+ * SessionManager
+ * Level 1 in memory,store in Caffeine
+ * Level 2 in Redis 
+ * user session status in database
+ * @author shimh
+ *
+ */
 public class SessionManagerFactory implements SessionManager{
 	private static final  Logger _logger = 
             LoggerFactory.getLogger(SessionManagerFactory.class);
@@ -53,12 +61,15 @@ public class SessionManagerFactory implements SessionManager{
 	
 	private RedisSessionManager 	redisSessionManager;
 	
-	private boolean isRedis = false;					
+	private boolean isRedis = false;	
+	
+	private int validitySeconds ;
 	
 	public SessionManagerFactory(int persistence,
 			 	JdbcTemplate jdbcTemplate,
 	            RedisConnectionFactory redisConnFactory,
 	            int validitySeconds) {
+		this.validitySeconds = validitySeconds;
 		 this.jdbcTemplate = jdbcTemplate;
 		 this.inMemorySessionManager = 
 				new InMemorySessionManager(validitySeconds);
@@ -94,11 +105,12 @@ public class SessionManagerFactory implements SessionManager{
 		return session;
 	}
 
-	public Session refresh(String sessionId, LocalTime refreshTime) {
+	public Session refresh(String sessionId, LocalDateTime refreshTime) {
 		Session session = null;
 		if(isRedis) {
 			session = redisSessionManager.refresh(sessionId,refreshTime);
 			//renew one
+			inMemorySessionManager.remove(sessionId);
 			inMemorySessionManager.create(sessionId, session);
 		}else {
 			session = inMemorySessionManager.refresh(sessionId,refreshTime);
@@ -111,6 +123,7 @@ public class SessionManagerFactory implements SessionManager{
 		if(isRedis) {
 			session = redisSessionManager.refresh(sessionId);
 			//renew one
+			inMemorySessionManager.remove(sessionId);
 			inMemorySessionManager.create(sessionId, session);
 		}else {
 			session = inMemorySessionManager.refresh(sessionId);
@@ -142,10 +155,14 @@ public class SessionManagerFactory implements SessionManager{
     
 	public void terminate(String sessionId, String userId, String username) {
 		String lastLogoffTime = DateUtils.formatDateTime(new Date());
-	   	 _logger.trace("{} user {} terminate Ticket {} ." ,lastLogoffTime,username, sessionId);
+	   	 _logger.trace("{} user {} terminate session {} ." ,lastLogoffTime,username, sessionId);
 	   	this.profileLastLogoffTime(userId, lastLogoffTime);
 	   	this.sessionLogoff(sessionId, lastLogoffTime);
 	   	this.remove(sessionId);
+	}
+	
+	public int getValiditySeconds() {
+		return validitySeconds;
 	}
 	
 	private final class OnlineTicketRowMapper  implements RowMapper<HistoryLogin> {

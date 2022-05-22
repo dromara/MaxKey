@@ -252,7 +252,7 @@
       "sslSwitch": "SSL",
       "filters": "Filters",
       "basedn": "Base DN",
-      "msadDomain": "Active Directory Domain",
+      "msadDomain": "MSAD Domain",
       "accountMapping": "Account Mapping",
       "trustStore": "TrustStore",
       "trustStorePassword": "TrustStore Password"
@@ -267,7 +267,7 @@
       "isdefault":"Is Default"
     },
     "accountsstrategy" :{
-      "name":"Strategy",
+      "name":"Strategy Name",
       "appIcon":"App Icon",
       "appId":"App Id",
       "appName":"App Name",

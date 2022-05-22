@@ -18,7 +18,7 @@
 package org.maxkey.authn.session;
 
 import java.io.Serializable;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import org.maxkey.entity.apps.Apps;
@@ -34,9 +34,11 @@ public class Session implements Serializable{
     
     public String id;
     
-    public LocalTime startTimestamp;
+    public LocalDateTime startTimestamp;
     
-    public LocalTime lastAccessTime;
+    public LocalDateTime lastAccessTime;
+    
+    public LocalDateTime expiredTime;
     
     public Authentication authentication;
     
@@ -45,23 +47,23 @@ public class Session implements Serializable{
     public Session() {
         super();
         this.id = WebContext.genId();;
-        this.startTimestamp = LocalTime.now();
-        this.lastAccessTime = LocalTime.now();
+        this.startTimestamp = LocalDateTime.now();
+        this.lastAccessTime = LocalDateTime.now();
     }
 
     public Session(String sessionId) {
         super();
         this.id = sessionId;
-        this.startTimestamp = LocalTime.now();
-        this.lastAccessTime = LocalTime.now();
+        this.startTimestamp = LocalDateTime.now();
+        this.lastAccessTime = LocalDateTime.now();
     }
     
     public Session(String sessionId,Authentication authentication) {
         super();
         this.id = sessionId;
         this.authentication = authentication;
-        this.startTimestamp = LocalTime.now();
-        this.lastAccessTime = LocalTime.now();
+        this.startTimestamp = LocalDateTime.now();
+        this.lastAccessTime = LocalDateTime.now();
     }
     
     public String getId() {
@@ -77,20 +79,28 @@ public class Session implements Serializable{
     }
     
 
-    public LocalTime getStartTimestamp() {
+    public LocalDateTime getStartTimestamp() {
 		return startTimestamp;
 	}
 
-	public void setStartTimestamp(LocalTime startTimestamp) {
+	public void setStartTimestamp(LocalDateTime startTimestamp) {
 		this.startTimestamp = startTimestamp;
 	}
 
-	public LocalTime getLastAccessTime() {
+	public LocalDateTime getLastAccessTime() {
 		return lastAccessTime;
 	}
 
-	public void setLastAccessTime(LocalTime lastAccessTime) {
+	public void setLastAccessTime(LocalDateTime lastAccessTime) {
 		this.lastAccessTime = lastAccessTime;
+	}
+
+	public LocalDateTime getExpiredTime() {
+		return expiredTime;
+	}
+
+	public void setExpiredTime(LocalDateTime expiredTime) {
+		this.expiredTime = expiredTime;
 	}
 
 	public Authentication getAuthentication() {
