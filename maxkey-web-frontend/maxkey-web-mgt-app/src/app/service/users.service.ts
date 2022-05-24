@@ -37,6 +37,12 @@ export class UsersService extends BaseService<Users> {
     });
   }
 
+  getByUsername(params: NzSafeAny): Observable<Message<Users>> {
+    return this.http.get<Message<Users>>(`${this.server.urls.base}/getByUsername/${params}`, {
+      params: this.parseParams(params)
+    });
+  }
+
   updateStatus(params: NzSafeAny): Observable<Message<Users>> {
     return this.http.get<Message<Users>>(`${this.server.urls.base}/updateStatus`, {
       params: this.parseParams(params)

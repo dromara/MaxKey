@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,15 +20,17 @@ package org.maxkey.web.access.contorller;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.GroupMember;
+import org.maxkey.entity.Groups;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.GroupMemberService;
 import org.maxkey.persistence.service.GroupsService;
+import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -45,12 +47,13 @@ public class GroupMemberController {
 	final static Logger _logger = LoggerFactory.getLogger(GroupMemberController.class);
 	
 	@Autowired
-	@Qualifier("groupMemberService")
 	GroupMemberService groupMemberService;
 
 	@Autowired
-	@Qualifier("groupsService")
 	GroupsService groupsService;
+	
+	@Autowired
+	UserInfoService userInfoService;
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
@@ -82,6 +85,13 @@ public class GroupMemberController {
 				groupMemberService.queryPageResults("memberNotInGroup",groupMember)).buildResponse();
 	}
 	
+	@RequestMapping(value = { "/groupsNoMember" })
+	@ResponseBody
+	public ResponseEntity<?> groupsNoMember(@ModelAttribute  GroupMember groupMember,@CurrentUser UserInfo currentUser) {
+		groupMember.setInstId(currentUser.getInstId());
+		return new Message<JpaPageResults<Groups>>(
+				groupMemberService.groupsNoMember(groupMember)).buildResponse();
+	}
 	
 	@RequestMapping(value = {"/add"})
 	@ResponseBody
@@ -106,6 +116,41 @@ public class GroupMemberController {
 							groupMember.getGroupName(), 
 							arrMemberIds[i], 
 							arrMemberNames[i],
+							"USER",
+							currentUser.getInstId());
+				newGroupMember.setId(WebContext.genId());
+				result = groupMemberService.insert(newGroupMember);
+			}
+			if(result) {
+				return new Message<GroupMember>(Message.SUCCESS).buildResponse();
+			}
+		}
+		return new Message<GroupMember>(Message.FAIL).buildResponse();
+	}
+	
+	
+	@RequestMapping(value = {"/addMember2Groups"})
+	@ResponseBody
+	public ResponseEntity<?> addMember2Groups(@RequestBody GroupMember groupMember,@CurrentUser UserInfo currentUser) {
+		if (groupMember == null || StringUtils.isBlank(groupMember.getUsername())) {
+			return new Message<GroupMember>(Message.FAIL).buildResponse();
+		}
+		UserInfo userInfo = userInfoService.findByUsername(groupMember.getUsername());
+		
+		boolean result = true;
+		String groupIds = groupMember.getGroupId();
+		String groupNames = groupMember.getGroupName();
+		if (groupIds != null && userInfo != null) {
+			String[] arrGroupIds = groupIds.split(",");
+			String[] arrGroupNames = groupNames.split(",");
+			
+			for (int i = 0; i < arrGroupIds.length; i++) {
+				GroupMember newGroupMember = 
+						new GroupMember(
+							arrGroupIds[i],
+							arrGroupNames[i], 
+							userInfo.getId(), 
+							userInfo.getDisplayName(),
 							"USER",
 							currentUser.getInstId());
 				newGroupMember.setId(WebContext.genId());

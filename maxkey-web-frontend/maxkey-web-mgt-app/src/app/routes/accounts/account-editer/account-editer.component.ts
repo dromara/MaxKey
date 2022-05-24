@@ -1,19 +1,18 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 import { Component, ChangeDetectorRef, ViewContainerRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -42,6 +41,7 @@ import { SelectUserComponent } from '../../users/select-user/select-user.compone
 })
 export class AccountEditerComponent implements OnInit {
   @Input() id?: String;
+  @Input() username?: String;
   @Input() isEdit?: boolean;
 
   passwordVisible = false;
@@ -71,6 +71,15 @@ export class AccountEditerComponent implements OnInit {
     if (this.isEdit) {
       this.accountsService.get(`${this.id}`).subscribe(res => {
         this.form.model.init(res.data);
+        this.cdr.detectChanges();
+      });
+    }
+
+    if (this.username) {
+      this.usersService.getByUsername(`${this.username}`).subscribe(res => {
+        this.form.model.userId = res.data.id;
+        this.form.model.username = res.data.username;
+        this.form.model.displayName = res.data.displayName;
         this.cdr.detectChanges();
       });
     }

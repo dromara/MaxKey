@@ -142,6 +142,29 @@
 	</select>
 	
 	
+	<select id="rolesNoMember" parameterType="RoleMember" resultType="Roles">
+        select  distinct
+            r.*
+        from
+            mxk_roles r
+        where
+            r.id not in(
+                select 
+                    rm.roleid 
+                from mxk_role_member rm,mxk_userinfo u
+                where rm.memberid = u.id
+                <if test="username != null and username != ''">
+                   and u.username = #{username}
+                </if>
+                <if test="memberId != null and memberId != ''">
+                   and rm.memberid = #{memberid}
+                </if>
+            )
+        <if test="roleName != null and roleName != ''">
+            and r.name = #{roleName}
+        </if>
+    </select>
+    
 	<!-- ROLE_MEMBER  Roles Member-->
 	<select id="roleMemberInRole" parameterType="RoleMember" resultType="Roles">
 		select	distinct

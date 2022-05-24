@@ -107,6 +107,13 @@ public class UserInfoController {
 		return new Message<UserInfo>(userInfo).buildResponse();
 	}
 	
+	@RequestMapping(value = { "/getByUsername/{username}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> getByUsername(@PathVariable("username") String username) {
+		UserInfo userInfo=userInfoService.findByUsername(username);
+		userInfo.trans();
+		return new Message<UserInfo>(userInfo).buildResponse();
+	}
+	
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> insert(@RequestBody UserInfo userInfo,@CurrentUser UserInfo currentUser) {

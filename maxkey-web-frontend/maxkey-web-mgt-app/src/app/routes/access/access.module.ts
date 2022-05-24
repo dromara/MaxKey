@@ -29,6 +29,7 @@ import { SessionsComponent } from './sessions/sessions.component';
 import { SelectGroupsComponent } from './groups/select-groups/select-groups.component';
 import { GroupMembersEditerComponent } from './group-members/group-members-editer/group-members-editer.component';
 import { PrivilegesEditerComponent } from './privileges/privileges-editer/privileges-editer.component';
+import { MemberGroupsEditerComponent } from './group-members/member-groups-editer/member-groups-editer.component';
 
 const routes: Routes = [
   {
@@ -52,7 +53,7 @@ const routes: Routes = [
 const COMPONENTS = [SessionsComponent, GroupsComponent, GroupMembersComponent, PrivilegesComponent, GroupEditerComponent];
 
 @NgModule({
-  declarations: [...COMPONENTS, PrivilegesComponent, SelectGroupsComponent, GroupMembersEditerComponent, PrivilegesEditerComponent],
+  declarations: [...COMPONENTS, PrivilegesComponent, SelectGroupsComponent, GroupMembersEditerComponent, PrivilegesEditerComponent, MemberGroupsEditerComponent],
   imports: [NzIconModule, SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

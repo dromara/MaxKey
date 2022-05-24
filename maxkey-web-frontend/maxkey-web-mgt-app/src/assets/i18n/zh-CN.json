@@ -551,7 +551,7 @@
     "password":{
       "id": "用户编码",
       "displayName": "姓名",
-      "username": "账号",
+      "username": "登录账号",
       "oldPassword": "当前密码",
       "password": "新密码",
       "confirmPassword": "确认密码",
@@ -651,6 +651,9 @@
       "disable":"禁用",
       "lock":"锁定",
       "unlock":"解锁",
+      "accounts":"账号",
+      "roles":"角色",
+      "groups":"用户组",
       "submit":"提交",
       "moreaction":"更多",
       "generate":"生成",

@@ -139,6 +139,28 @@
 		</if>
 	</select>
 	
+	<select id="groupsNoMember" parameterType="GroupMember" resultType="Groups">
+        select  distinct
+            g.*
+        from
+            mxk_groups g
+        where
+            g.id not in(
+                select 
+                    gm.groupid 
+                from mxk_group_member gm,mxk_userinfo u
+                where gm.memberid = u.id
+                <if test="username != null and username != ''">
+		           and u.username = #{username}
+		        </if>
+		        <if test="memberId != null and memberId != ''">
+                   and gm.memberid = #{memberid}
+                </if>
+            )
+        <if test="groupName != null and groupName != ''">
+            and g.name = #{groupName}
+        </if>
+    </select>
 	
 	<!-- GROUP_MEMBER  Group Member-->
 	<select id="groupMemberInGroup" parameterType="GroupMember" resultType="Groups">

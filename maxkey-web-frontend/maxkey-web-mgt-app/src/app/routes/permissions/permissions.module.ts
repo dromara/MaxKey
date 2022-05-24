@@ -29,6 +29,7 @@ import { RolesComponent } from './roles/roles.component';
 import { ResourceEditerComponent } from './resources/resource-editer/resource-editer.component';
 import { SelectRolesComponent } from './roles/select-roles/select-roles.component';
 import { RoleMembersEditerComponent } from './role-members/role-members-editer/role-members-editer.component';
+import { MemberRolesEditerComponent } from './role-members/member-roles-editer/member-roles-editer.component';
 const routes: Routes = [
   {
     path: 'roles',
@@ -51,7 +52,7 @@ const routes: Routes = [
 const COMPONENTS = [RolesComponent];
 
 @NgModule({
-  declarations: [...COMPONENTS, RoleEditerComponent, RoleMembersComponent, ResourcesComponent, PrivilegesComponent, ResourceEditerComponent, SelectRolesComponent, RoleMembersEditerComponent],
+  declarations: [...COMPONENTS, RoleEditerComponent, RoleMembersComponent, ResourcesComponent, PrivilegesComponent, ResourceEditerComponent, SelectRolesComponent, RoleMembersEditerComponent, MemberRolesEditerComponent],
   imports: [NzIconModule, SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

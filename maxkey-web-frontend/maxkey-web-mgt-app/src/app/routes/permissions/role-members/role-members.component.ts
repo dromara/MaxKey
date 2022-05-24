@@ -1,22 +1,22 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 import { ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import { format, addDays } from 'date-fns';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -29,6 +29,7 @@ import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/
 import { RoleMembersService } from '../../../service/role-members.service';
 import { set2String } from '../../../shared/index';
 import { SelectRolesComponent } from '../roles/select-roles/select-roles.component';
+import { MemberRolesEditerComponent } from './member-roles-editer/member-roles-editer.component';
 import { RoleMembersEditerComponent } from './role-members-editer/role-members-editer.component';
 
 @Component({
@@ -101,10 +102,14 @@ export class RoleMembersComponent implements OnInit {
     private viewContainerRef: ViewContainerRef,
     private fb: FormBuilder,
     private msg: NzMessageService,
+    private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    if (this.route.snapshot.queryParams['username']) {
+      this.query.params.username = this.route.snapshot.queryParams['username'];
+    }
     this.query.tableInitialize = false;
   }
 
@@ -120,7 +125,13 @@ export class RoleMembersComponent implements OnInit {
     this.fetch();
   }
 
-  onReset(): void { }
+  onReset(): void {
+    this.query.params.username = '';
+    this.query.params.name = '';
+    this.query.params.roleId = '';
+    this.query.params.roleName = '';
+    this.fetch();
+  }
 
   onBatchDelete(e: MouseEvent): void {
     e.preventDefault();
@@ -137,22 +148,40 @@ export class RoleMembersComponent implements OnInit {
 
   onAdd(e: MouseEvent): void {
     e.preventDefault();
-    const modal = this.modalService.create({
-      nzContent: RoleMembersEditerComponent,
-      nzViewContainerRef: this.viewContainerRef,
-      nzComponentParams: {
-        isEdit: false,
-        roleId: this.query.params.roleId
-      },
-      nzWidth: 700,
-      nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
-    });
-    // Return a result when closed
-    modal.afterClose.subscribe(result => {
-      if (result.refresh) {
-        this.fetch();
-      }
-    });
+    if (this.query.params.username != '') {
+      const modal = this.modalService.create({
+        nzContent: MemberRolesEditerComponent,
+        nzViewContainerRef: this.viewContainerRef,
+        nzComponentParams: {
+          username: this.query.params.username
+        },
+        nzWidth: 700,
+        nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
+      });
+      // Return a result when closed
+      modal.afterClose.subscribe(result => {
+        if (result.refresh) {
+          this.fetch();
+        }
+      });
+    } else if (this.query.params.roleId != '') {
+      const modal = this.modalService.create({
+        nzContent: RoleMembersEditerComponent,
+        nzViewContainerRef: this.viewContainerRef,
+        nzComponentParams: {
+          isEdit: false,
+          roleId: this.query.params.roleId
+        },
+        nzWidth: 700,
+        nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
+      });
+      // Return a result when closed
+      modal.afterClose.subscribe(result => {
+        if (result.refresh) {
+          this.fetch();
+        }
+      });
+    }
   }
 
   onSelect(e: MouseEvent): void {

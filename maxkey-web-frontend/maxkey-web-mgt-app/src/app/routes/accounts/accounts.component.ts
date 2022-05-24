@@ -16,6 +16,7 @@
 
 import { ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import { format, addDays } from 'date-fns';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -34,6 +35,7 @@ import { AccountEditerComponent } from './account-editer/account-editer.componen
   styleUrls: ['./accounts.component.less']
 })
 export class AccountsComponent implements OnInit {
+  userId: String = '';
   query: {
     params: {
       username: String;
@@ -90,10 +92,18 @@ export class AccountsComponent implements OnInit {
     private accountsService: AccountsService,
     private fb: FormBuilder,
     private msg: NzMessageService,
+    private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    if (this.route.snapshot.queryParams['username']) {
+      this.query.params.username = this.route.snapshot.queryParams['username'];
+    }
+    if (this.route.snapshot.queryParams['userId']) {
+      this.userId = this.route.snapshot.queryParams['userId'];
+    }
+
     this.fetch();
   }
 
@@ -149,6 +159,7 @@ export class AccountsComponent implements OnInit {
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: {
         isEdit: false,
+        username: this.query.params.username,
         id: ''
       },
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))

@@ -20,14 +20,18 @@ package org.maxkey.persistence.service;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
+import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.entity.GroupMember;
 import org.maxkey.entity.Groups;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.mapper.GroupMemberMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class GroupMemberService  extends JpaBaseService<GroupMember>{
+	final static Logger _logger = LoggerFactory.getLogger(GroupMemberService.class);
 	
 	public GroupMemberService() {
 		super(GroupMemberMapper.class);
@@ -55,6 +59,31 @@ public class GroupMemberService  extends JpaBaseService<GroupMember>{
 	
 	public List<UserInfo> queryMemberByGroupId(String groupId){
 		return getMapper().queryMemberByGroupId(groupId);
+	}
+	
+	
+	public JpaPageResults<Groups> groupsNoMember(GroupMember entity) {
+		entity.setPageResultSelectUUID(entity.generateId());
+		entity.setStartRow(calculateStartRow(entity.getPageNumber() ,entity.getPageSize()));
+		
+		entity.setPageable(true);
+		List<Groups> resultslist = null;
+		try {
+			resultslist = getMapper().groupsNoMember(entity);
+		} catch (Exception e) {
+			_logger.error("queryPageResults Exception " , e);
+		}
+		entity.setPageable(false);
+		Integer totalPage = resultslist.size();
+		
+		Integer totalCount = 0;
+		if(entity.getPageNumber() == 1 && totalPage < entity.getPageSize()) {
+			totalCount = totalPage;
+		}else {
+			totalCount = parseCount(getMapper().queryPageResultsCount(entity));
+		}
+		
+		return new JpaPageResults<Groups>(entity.getPageNumber(),entity.getPageSize(),totalPage,totalCount,resultslist);
 	}
 	
 }

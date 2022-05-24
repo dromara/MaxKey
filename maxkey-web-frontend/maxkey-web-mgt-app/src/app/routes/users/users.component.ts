@@ -16,6 +16,7 @@
 
 import { ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import { format, addDays } from 'date-fns';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -94,6 +95,7 @@ export class UsersComponent implements OnInit {
     private orgsService: OrganizationsService,
     private fb: FormBuilder,
     private msg: NzMessageService,
+    private router: Router,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -211,6 +213,17 @@ export class UsersComponent implements OnInit {
         this.fetch();
       }
     });
+  }
+
+  onNavToUrl(e: MouseEvent, userId: String, username: String, navType: String) {
+    e.preventDefault();
+    if (navType === 'accounts') {
+      this.router.navigateByUrl(`/accounts?username=${username}&userId=${userId}`);
+    } else if (navType === 'groups') {
+      this.router.navigateByUrl(`/access/groupmembers?username=${username}&userId=${userId}`);
+    } else if (navType === 'roles') {
+      this.router.navigateByUrl(`/permissions/rolemembers?username=${username}&userId=${userId}`);
+    }
   }
 
   onUpdateStatus(e: MouseEvent, userId: String, status: number): void {

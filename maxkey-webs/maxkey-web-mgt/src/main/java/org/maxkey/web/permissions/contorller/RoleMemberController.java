@@ -21,9 +21,12 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.RoleMember;
+import org.maxkey.entity.Roles;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.RoleMemberService;
 import org.maxkey.persistence.service.RolesService;
+import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +51,9 @@ public class RoleMemberController {
 
 	@Autowired
 	RolesService rolesService;
+	
+	@Autowired
+	UserInfoService userInfoService;
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
@@ -85,7 +91,7 @@ public class RoleMemberController {
 		if (roleMember == null || roleMember.getRoleId() == null) {
 			return new Message<RoleMember>(Message.FAIL).buildResponse();
 		}
-		String groupId = roleMember.getRoleId();
+		String roleId = roleMember.getRoleId();
 		
 		boolean result = true;
 		String memberIds = roleMember.getMemberId();
@@ -97,10 +103,52 @@ public class RoleMemberController {
 			for (int i = 0; i < arrMemberIds.length; i++) {
 				RoleMember newRoleMember = 
 						new RoleMember(
-								groupId,
+								roleId,
 								roleMember.getRoleName(), 
 								arrMemberIds[i], 
 								arrMemberNames[i],
+								"USER",
+								currentUser.getInstId());
+				newRoleMember.setId(WebContext.genId());
+				result = roleMemberService.insert(newRoleMember);
+			}
+			if(result) {
+				return new Message<RoleMember>(Message.SUCCESS).buildResponse();
+			}
+		}
+		return new Message<RoleMember>(Message.FAIL).buildResponse();
+	}
+	
+	@RequestMapping(value = { "/rolesNoMember" })
+	@ResponseBody
+	public ResponseEntity<?> rolesNoMember(@ModelAttribute  RoleMember roleMember,@CurrentUser UserInfo currentUser) {
+		roleMember.setInstId(currentUser.getInstId());
+		return new Message<JpaPageResults<Roles>>(
+				roleMemberService.rolesNoMember(roleMember)).buildResponse();
+	}
+	
+	@RequestMapping(value = {"/addMember2Roles"})
+	@ResponseBody
+	public ResponseEntity<?> addMember2Roles(@RequestBody RoleMember roleMember,@CurrentUser UserInfo currentUser) {
+		if (roleMember == null || StringUtils.isBlank(roleMember.getUsername())) {
+			return new Message<RoleMember>(Message.FAIL).buildResponse();
+		}
+		UserInfo userInfo = userInfoService.findByUsername(roleMember.getUsername());
+		
+		boolean result = true;
+		String roleIds = roleMember.getRoleId();
+		String roleNames = roleMember.getRoleName();
+		if (roleIds != null) {
+			String[] arrRoleIds = roleIds.split(",");
+			String[] arrRoleNames = roleNames.split(",");
+			
+			for (int i = 0; i < arrRoleIds.length; i++) {
+				RoleMember newRoleMember = 
+						new RoleMember(
+								arrRoleIds[i],
+								arrRoleNames[i], 
+								userInfo.getId(), 
+								userInfo.getDisplayName(),
 								"USER",
 								currentUser.getInstId());
 				newRoleMember.setId(WebContext.genId());

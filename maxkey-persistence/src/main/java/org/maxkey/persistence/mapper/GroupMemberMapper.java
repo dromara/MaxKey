@@ -38,6 +38,8 @@ public  interface GroupMemberMapper extends IJpaBaseMapper<GroupMember> {
 	public List<GroupMember> memberNotInGroup(GroupMember entity);
 	public List<GroupMember> groupMemberInGroup(GroupMember entity);
 	
+	public List<Groups> groupsNoMember(GroupMember entity);
+	
 	public int addDynamicGroupMember(Groups dynamicGroup);
 	
 	public int deleteDynamicGroupMember(Groups dynamicGroup);

@@ -37,6 +37,8 @@ public  interface RoleMemberMapper extends IJpaBaseMapper<RoleMember> {
 	public List<RoleMember> memberNotInRole(RoleMember entity);
 	public List<RoleMember> roleMemberInRole(RoleMember entity);
 	
+	public List<Roles> rolesNoMember(RoleMember entity);
+	
     public int addDynamicRoleMember(Roles dynamicRole);
 
     public int deleteDynamicRoleMember(Roles dynamicRole);
