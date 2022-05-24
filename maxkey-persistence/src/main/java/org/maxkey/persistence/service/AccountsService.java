@@ -109,6 +109,9 @@ public class AccountsService  extends JpaBaseService<Accounts>{
          return false;
      }
    
+   public boolean updateStatus(Accounts accounts) {
+	   return this.getMapper().updateStatus(accounts) > 0;
+   }
    public boolean remove(String id) {
        Accounts account = this.get(id);
        if (super.remove(id)) {

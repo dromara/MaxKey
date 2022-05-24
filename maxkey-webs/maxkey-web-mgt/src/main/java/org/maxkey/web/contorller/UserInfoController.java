@@ -185,13 +185,25 @@ public class UserInfoController {
 	@ResponseBody
 	@RequestMapping(value="/changePassword", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> changePassword(
-			@ModelAttribute ChangePassword changePassword,
+			@RequestBody ChangePassword changePassword,
 			@CurrentUser UserInfo currentUser) {
 		_logger.debug("UserId {}",changePassword.getUserId());
 		changePassword.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
 		if(userInfoService.changePassword(changePassword,true)) {
 			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 			
+		} else {
+			return new Message<UserInfo>(Message.FAIL).buildResponse();
+		}
+	}
+	
+	@RequestMapping(value = { "/updateStatus" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public ResponseEntity<?> updateStatus(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
+		_logger.debug(""+userInfo);
+		userInfo.setInstId(currentUser.getInstId());
+		if(userInfoService.updateStatus(userInfo)) {
+			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<UserInfo>(Message.FAIL).buildResponse();
 		}

@@ -73,16 +73,23 @@
         <td nzAlign="left" nzBreakWord="false">{{ data.displayName }}</td>
         <td nzAlign="left" nzBreakWord="false">{{ data.appName }}</td>
         <td nzAlign="left" nzBreakWord="false">{{ data.relatedUsername }}</td>
-        <td nzAlign="center"> <i *ngIf="data.status == 1" nz-icon nzType="check-circle" nzTheme="fill"
-            style="color: green"></i></td>
+        <td nzAlign="center">
+          <i *ngIf="data.status == 1" nz-icon nzType="check-circle" nzTheme="fill" style="color: green"></i>
+          <i *ngIf="data.status == 2" nz-icon nzType="stop" nzTheme="fill" style="color: gray"></i>
+        </td>
         <td nzAlign="left" nzBreakWord="false">
           <div nz-col>
-            <button nz-button type="button" (click)="onEdit($event, data.id)" [nzType]="'primary'"
+            <button *ngIf="data.status == 2" nz-button type="button" (click)="onUpdateStatus($event, data.id, 1)"
               style="float: left">{{
-              'mxk.text.edit' | i18n
+              'mxk.text.enable' | i18n
               }}</button>
-            <button nz-button type="button" (click)="onDelete($event, data.id)" [nzType]="'primary'" nzDanger>{{
-              'mxk.text.delete' | i18n
+            <button *ngIf="data.status == 1" nz-button type="button" (click)="onUpdateStatus($event, data.id, 2)"
+              style="float: left">{{
+              'mxk.text.disable' | i18n
+              }}</button>
+            <button nz-button type="button" (click)="onEdit($event, data.id)" style="float: left">{{ 'mxk.text.edit' |
+              i18n }}</button>
+            <button nz-button type="button" (click)="onDelete($event, data.id)" nzDanger>{{ 'mxk.text.delete' | i18n
               }}</button>
           </div>
         </td>

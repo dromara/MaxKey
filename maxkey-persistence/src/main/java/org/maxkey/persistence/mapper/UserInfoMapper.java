@@ -74,4 +74,7 @@ public interface UserInfoMapper  extends IJpaBaseMapper<UserInfo>{
 	
     @Update("update mxk_userinfo set gridlist =  #{gridList} where id = #{id}")
 	public int 	updateGridList(UserInfo userInfo) ;
+    
+    @Update("update mxk_userinfo set status =  #{status} where id = #{id}")
+   	public int 	updateStatus(UserInfo userInfo) ;
 }

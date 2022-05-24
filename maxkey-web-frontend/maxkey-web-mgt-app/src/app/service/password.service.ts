@@ -14,30 +14,24 @@
  * limitations under the License.
  */
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable } from 'rxjs';
 
-import { Accounts } from '../entity/Accounts';
+import { ChangePassword } from '../entity/ChangePassword';
 import { Message } from '../entity/Message';
 import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountsService extends BaseService<Accounts> {
+export class PasswordService extends BaseService<ChangePassword> {
   constructor(private _httpClient: HttpClient) {
-    super(_httpClient, '/accounts');
+    super(_httpClient, '/config');
   }
 
-  generate(params: NzSafeAny): Observable<Message<Accounts>> {
-    return this.getByParams(params, `${this.server.urls.base}/generate`);
-  }
-
-  updateStatus(params: NzSafeAny): Observable<Message<Accounts>> {
-    return this.http.get<Message<Accounts>>(`${this.server.urls.base}/updateStatus`, {
-      params: this.parseParams(params)
-    });
+  public changePassword(body: NzSafeAny): Observable<Message<ChangePassword>> {
+    return this.http.put<Message<ChangePassword>>('/users/changePassword', body);
   }
 }

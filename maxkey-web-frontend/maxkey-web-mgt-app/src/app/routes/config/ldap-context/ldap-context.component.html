@@ -66,7 +66,7 @@
           name="credentials" id="credentials" />
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item *ngIf="form.model.product == 'ActiveDirectory'">
+    <nz-form-item *ngIf="form.model.product !== 'ActiveDirectory'">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="basedn">{{ 'mxk.ldapcontext.basedn' | i18n }}
       </nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid basedn!">
@@ -74,7 +74,7 @@
           id="basedn" />
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item *ngIf="form.model.product == 'ActiveDirectory'">
+    <nz-form-item *ngIf="form.model.product !== 'ActiveDirectory'">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="filters">
         {{ 'mxk.ldapcontext.filters' | i18n }}
       </nz-form-label>

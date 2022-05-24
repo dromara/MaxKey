@@ -36,6 +36,7 @@ import { RouteRoutingModule } from './routes-routing.module';
 import { SelectUserComponent } from './users/select-user/select-user.component';
 import { UserEditerComponent } from './users/user-editer/user-editer.component';
 import { UsersComponent } from './users/users.component';
+import { PasswordComponent } from './users/password/password.component';
 
 const COMPONENTS: Array<Type<null>> = [];
 
@@ -59,7 +60,8 @@ const COMPONENTS: Array<Type<null>> = [];
     AppSaml20DetailsEditerComponent,
     AppTokenBasedDetailsEditerComponent,
     AppExtendApiDetailsEditerComponent,
-    AppBasicDetailsEditerComponent
+    AppBasicDetailsEditerComponent,
+    PasswordComponent
   ]
 })
 export class RoutesModule { }

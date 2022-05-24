@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.AccountsStrategy;
@@ -44,4 +45,7 @@ public  interface AccountsMapper extends IJpaBaseMapper<Accounts> {
     
     @Select("select * from mxk_accounts where appid=#{appId} and	relatedusername=#{relatedUsername}")
     public List<Accounts> queryByAppIdAndAccount(@Param ("appId") String appId,@Param ("relatedUsername") String relatedUsername);
+    
+    @Update("update mxk_accounts set status = #{status}  where id= #{id}")
+    public int updateStatus(Accounts accounts);
 }

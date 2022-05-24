@@ -81,7 +81,9 @@
             <td nzAlign="left" nzBreakWord="false">
               <div nz-col>
                 <button *ngIf="data.dynamic == '0'" nz-button type="button" (click)="onDelete($event, data.id)"
-                  [nzType]="'primary'" nzDanger>{{ 'mxk.text.delete' | i18n }}</button>
+                  nzDanger>{{
+                  'mxk.text.delete' | i18n
+                  }}</button>
               </div>
             </td>
           </tr>

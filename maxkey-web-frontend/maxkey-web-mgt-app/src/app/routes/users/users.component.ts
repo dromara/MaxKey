@@ -1,19 +1,18 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 import { ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -32,6 +31,7 @@ import { TreeNodes } from '../../entity/TreeNodes';
 import { OrganizationsService } from '../../service/organizations.service';
 import { UsersService } from '../../service/users.service';
 import { set2String } from '../../shared/index';
+import { PasswordComponent } from './password/password.component';
 import { UserEditerComponent } from './user-editer/user-editer.component';
 
 @Component({
@@ -127,6 +127,50 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  changePassword(e: MouseEvent): void {
+    e.preventDefault();
+    let lastCheckedId: String = '';
+    this.query.tableCheckedId.forEach(value => {
+      lastCheckedId = value;
+    });
+    for (var i = 0; i < this.query.results.rows.length; i++) {
+      let user = this.query.results.rows[i];
+      if (lastCheckedId == user.id) {
+        const modal = this.modal.create({
+          nzContent: PasswordComponent,
+          nzViewContainerRef: this.viewContainerRef,
+          nzComponentParams: {
+            id: user.id,
+            username: user.username,
+            displayName: user.displayName
+          },
+          nzWidth: 450,
+          nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
+        });
+      }
+    }
+  }
+
+  changePasswordById(e: MouseEvent, userId: String): void {
+    e.preventDefault();
+    for (var i = 0; i < this.query.results.rows.length; i++) {
+      let user = this.query.results.rows[i];
+      if (userId == user.id) {
+        const modal = this.modal.create({
+          nzContent: PasswordComponent,
+          nzViewContainerRef: this.viewContainerRef,
+          nzComponentParams: {
+            id: user.id,
+            username: user.username,
+            displayName: user.displayName
+          },
+          nzWidth: 450,
+          nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
+        });
+      }
+    }
+  }
+
   onAdd(e: MouseEvent): void {
     e.preventDefault();
     const modal = this.modal.create({
@@ -166,6 +210,19 @@ export class UsersComponent implements OnInit {
       if (result.refresh) {
         this.fetch();
       }
+    });
+  }
+
+  onUpdateStatus(e: MouseEvent, userId: String, status: number): void {
+    e.preventDefault();
+    this.usersService.updateStatus({ id: userId, status: status }).subscribe(res => {
+      if (res.code == 0) {
+        this.msg.success(`提交成功`);
+        this.fetch();
+      } else {
+        this.msg.success(`提交失败`);
+      }
+      this.cdr.detectChanges();
     });
   }
 

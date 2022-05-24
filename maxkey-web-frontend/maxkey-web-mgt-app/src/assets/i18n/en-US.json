@@ -549,6 +549,15 @@
       "resumeTime":"Join Time",
       "suspendTime":"Suspend Time"
     },
+    "password":{
+      "id": "Id",
+      "displayName": "DisplayName",
+      "username": "Username",
+      "oldPassword": "Old Password",
+      "password": "New Password",
+      "confirmPassword": "Confirm Password",
+      "captcha": "Captcha"
+    },
     "smsprovider" :{
       "provider": "provider",
       "name":{
@@ -631,6 +640,7 @@
       "manual":"Manual",
       "automatic":"Automatic",
       "terminate":"Terminate",
+      "changepassword": "ChangePassword",
       "add": "Add",
       "edit": "Edit",
       "delete": "Delete",
@@ -638,6 +648,11 @@
       "confirm":"Confirm",
       "synchr":"Synchr",
       "close":"Close",
+      "enable":"Enable",
+      "disable":"Disable",
+      "lock":"Lock",
+      "unlock":"UnLock",
+      "moreaction":"More",
       "submit":"Submit",
       "generate":"Generate",
       "upload":"Upload",

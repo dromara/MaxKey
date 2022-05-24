@@ -334,7 +334,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	public void updateLocked(UserInfo userInfo) {
 		try {
 			if(userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
-				userInfo.setIsLocked(ConstsStatus.STOP);
+				userInfo.setIsLocked(ConstsStatus.LOCK);
 				getMapper().updateLocked(userInfo);
 			}
 		} catch(Exception e) {
@@ -396,6 +396,10 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     
     public int updateProfile(UserInfo userInfo){
         return getMapper().updateProfile(userInfo);
+    }
+    
+    public boolean 	updateStatus(UserInfo userInfo) {
+    	return getMapper().updateStatus(userInfo) > 0;
     }
 
     public void setPasswordPolicyValidator(PasswordPolicyValidator passwordPolicyValidator) {

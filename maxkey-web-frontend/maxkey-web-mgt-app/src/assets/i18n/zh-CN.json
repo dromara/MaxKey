@@ -88,7 +88,7 @@
       "displayName":"姓名",
       "username":"登录账号",
       "password":"密码",
-      "email":"邮箱",
+      "email":"电子邮箱",
       "mobile":"手机号码",
       "userType":"用户类型",
       "userType.employee":"内部员工",
@@ -548,6 +548,15 @@
       "resumeTime":"执行时间",
       "suspendTime":"挂起时间"
     },
+    "password":{
+      "id": "用户编码",
+      "displayName": "姓名",
+      "username": "账号",
+      "oldPassword": "当前密码",
+      "password": "新密码",
+      "confirmPassword": "确认密码",
+      "captcha": "验证码"
+    },
     "smsprovider" :{
       "provider": "提供商",
       "name":{
@@ -630,6 +639,7 @@
       "manual":"人工",
       "automatic":"自动",
       "terminate":"终止",
+      "changepassword": "密码修改",
       "add": "新增",
       "edit": "编辑",
       "delete": "删除",
@@ -637,7 +647,12 @@
       "confirm":"确定",
       "synchr":"同步",
       "close":"关闭",
+      "enable":"启用",
+      "disable":"禁用",
+      "lock":"锁定",
+      "unlock":"解锁",
       "submit":"提交",
+      "moreaction":"更多",
       "generate":"生成",
       "upload":"上传",
       "save":"保存",

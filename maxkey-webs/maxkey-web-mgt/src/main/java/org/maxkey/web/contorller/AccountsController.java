@@ -113,6 +113,19 @@ public class AccountsController {
 		}
 	}
 	
+	
+	@RequestMapping(value = { "/updateStatus" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public ResponseEntity<?> updateStatus(@ModelAttribute Accounts accounts,@CurrentUser UserInfo currentUser) {
+		_logger.debug(""+accounts);
+		accounts.setInstId(currentUser.getInstId());
+		if (accountsService.updateStatus(accounts)) {
+		    return new Message<Accounts>(Message.SUCCESS).buildResponse();
+		} else {
+			return new Message<Accounts>(Message.FAIL).buildResponse();
+		}
+	}
+	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {

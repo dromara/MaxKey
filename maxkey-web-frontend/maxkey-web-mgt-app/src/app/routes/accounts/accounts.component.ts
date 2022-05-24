@@ -194,6 +194,19 @@ export class AccountsComponent implements OnInit {
     });
   }
 
+  onUpdateStatus(e: MouseEvent, accountId: String, status: number): void {
+    e.preventDefault();
+    this.accountsService.updateStatus({ id: accountId, status: status }).subscribe(res => {
+      if (res.code == 0) {
+        this.msg.success(`提交成功`);
+        this.fetch();
+      } else {
+        this.msg.success(`提交失败`);
+      }
+      this.cdr.detectChanges();
+    });
+  }
+
   fetch(): void {
     this.query.submitLoading = true;
     this.query.tableLoading = true;
