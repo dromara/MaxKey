@@ -18,10 +18,14 @@
 package org.maxkey.web.contorller;
 
 import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.constants.ConstsEntryType;
+import org.maxkey.constants.ConstsOperateAction;
+import org.maxkey.constants.ConstsOperateResult;
 import org.maxkey.constants.ConstsPasswordSetType;
 import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +45,9 @@ public class ChangePasswodController {
 	@Autowired
 	private UserInfoService userInfoService;
 	
+	@Autowired
+	HistorySystemLogsService systemLog;
+	
 	@ResponseBody
 	@RequestMapping(value = { "/changePassword" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> changePasswod(
@@ -52,6 +59,12 @@ public class ChangePasswodController {
 			changePassword.setInstId(currentUser.getInstId());
 			changePassword.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
 			if(userInfoService.changePassword(changePassword)) {
+				systemLog.insert(
+						ConstsEntryType.USERINFO, 
+						changePassword, 
+						ConstsOperateAction.CHANGE_PASSWORD, 
+						ConstsOperateResult.SUCCESS, 
+						currentUser);
 				return new Message<ChangePassword>().buildResponse();
 			}else {
 				return new Message<ChangePassword>(Message.ERROR).buildResponse();

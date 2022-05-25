@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.annotation.CurrentUser;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.constants.ConstsOperateResult;
 import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
@@ -79,7 +79,7 @@ public class SafeController {
 		userInfoService.updateEmail(currentUser);
 		
 		
-		return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+		return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
 		
 	}
 	

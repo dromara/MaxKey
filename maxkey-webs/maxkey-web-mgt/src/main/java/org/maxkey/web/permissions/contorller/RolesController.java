@@ -19,9 +19,13 @@ package org.maxkey.web.permissions.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.constants.ConstsEntryType;
+import org.maxkey.constants.ConstsOperateAction;
+import org.maxkey.constants.ConstsOperateResult;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.Roles;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.persistence.service.RolesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +49,9 @@ public class RolesController {
 	@Autowired
 	RolesService rolesService;
 
+	@Autowired
+	HistorySystemLogsService systemLog;
+	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> fetch(@ModelAttribute Roles roles,@CurrentUser UserInfo currentUser) {
@@ -80,6 +87,12 @@ public class RolesController {
 		role.setInstId(currentUser.getInstId());
 		if (rolesService.insert(role)) {
 		    rolesService.refreshDynamicRoles(role);
+		    systemLog.insert(
+					ConstsEntryType.ROLE, 
+					role, 
+					ConstsOperateAction.CREATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 		    return new Message<Roles>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Roles>(Message.FAIL).buildResponse();
@@ -93,6 +106,12 @@ public class RolesController {
 		role.setInstId(currentUser.getInstId());
 		if (rolesService.update(role)) {
 		    rolesService.refreshDynamicRoles(role);
+		    systemLog.insert(
+					ConstsEntryType.ROLE, 
+					role, 
+					ConstsOperateAction.UPDATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 		    return new Message<Roles>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Roles>(Message.FAIL).buildResponse();
@@ -105,6 +124,12 @@ public class RolesController {
 		_logger.debug("-delete ids : {} " , ids);
 		
 		if (rolesService.deleteBatch(ids)) {
+			systemLog.insert(
+					ConstsEntryType.ROLE, 
+					ids, 
+					ConstsOperateAction.DELETE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 			 return new Message<Roles>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Roles>(Message.FAIL).buildResponse();

@@ -44,7 +44,7 @@ public class HistorySystemLogs extends JpaBaseEntity implements Serializable {
     @Column
     String message;
     @Column
-    String messageType;
+    String messageAction;
     @Column
     String messageResult;
     @Column
@@ -58,6 +58,8 @@ public class HistorySystemLogs extends JpaBaseEntity implements Serializable {
 	@Column
 	private String instId;
 
+	String jsonCotent;
+	
 	private String instName;
     String startDate;
     String endDate;
@@ -90,14 +92,12 @@ public class HistorySystemLogs extends JpaBaseEntity implements Serializable {
 		this.message = message;
 	}
 
-
-
-	public String getMessageType() {
-		return messageType;
+	public String getMessageAction() {
+		return messageAction;
 	}
 
-	public void setMessageType(String messageType) {
-		this.messageType = messageType;
+	public void setMessageAction(String messageAction) {
+		this.messageAction = messageAction;
 	}
 
 	public String getMessageResult() {
@@ -172,17 +172,25 @@ public class HistorySystemLogs extends JpaBaseEntity implements Serializable {
 		this.endDate = endDate;
 	}
 
+	public String getJsonCotent() {
+		return jsonCotent;
+	}
+
+	public void setJsonCotent(String jsonCotent) {
+		this.jsonCotent = jsonCotent;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("HistoryLogs [id=");
+		builder.append("HistorySystemLogs [id=");
 		builder.append(id);
 		builder.append(", topic=");
 		builder.append(topic);
 		builder.append(", message=");
 		builder.append(message);
-		builder.append(", messageType=");
-		builder.append(messageType);
+		builder.append(", messageAction=");
+		builder.append(messageAction);
 		builder.append(", messageResult=");
 		builder.append(messageResult);
 		builder.append(", userId=");
@@ -193,14 +201,8 @@ public class HistorySystemLogs extends JpaBaseEntity implements Serializable {
 		builder.append(displayName);
 		builder.append(", executeTime=");
 		builder.append(executeTime);
-		builder.append(", instId=");
-		builder.append(instId);
-		builder.append(", instName=");
-		builder.append(instName);
-		builder.append(", startDate=");
-		builder.append(startDate);
-		builder.append(", endDate=");
-		builder.append(endDate);
+		builder.append(", jsonCotent=");
+		builder.append(jsonCotent);
 		builder.append("]");
 		return builder.toString();
 	}

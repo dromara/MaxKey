@@ -100,8 +100,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
                         loadUserInfo,
                         MqProvisionAction.UPDATE_ACTION);
             }
-            
-            changePasswordProvisioning(changePassword);
+            if(userInfo.getPassword() != null) {
+            	changePasswordProvisioning(changePassword);
+            }
             return true;
         }
         return false;
@@ -211,6 +212,9 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     		userInfo.setPassword(changePassword.getPassword());
     		userInfo.setDecipherable(changePassword.getDecipherable());
     		userInfo.setPasswordLastSetTime(changePassword.getPasswordLastSetTime());
+    	}else {
+    		userInfo.setPassword(null);
+    		userInfo.setDecipherable(null);
     	}
 		return changePassword;
 	}

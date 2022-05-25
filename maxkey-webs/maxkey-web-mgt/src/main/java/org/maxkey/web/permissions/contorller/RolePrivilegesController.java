@@ -25,6 +25,7 @@ import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.RolePrivileges;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.persistence.service.RolesService;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
@@ -46,6 +47,9 @@ public class RolePrivilegesController {
 	
 	@Autowired
     RolesService rolesService;
+	
+	@Autowired
+	HistorySystemLogsService systemLog;
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})

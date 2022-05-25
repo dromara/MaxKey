@@ -21,11 +21,11 @@
 		<if test="displayName != null and displayName != ''">
             and  lower(displayName) like lower(concat('%',#{displayName},'%'))
         </if>
-		<if test="messageType != null and messageType != ''">
-			and	messageType	=	#{messageType}
+		<if test="messageAction != null and messageAction != ''">
+			and	messageaction	=	#{messageAction}
 		</if>
 		<if test="messageResult != null and messageResult != ''">
-			and	messageResult	=	#{messageResult}
+			and	messageresult	=	#{messageResult}
 		</if>
     </sql>
 	

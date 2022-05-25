@@ -34,12 +34,16 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.constants.ConstsEntryType;
+import org.maxkey.constants.ConstsOperateAction;
+import org.maxkey.constants.ConstsOperateResult;
 import org.maxkey.constants.ConstsPasswordSetType;
 import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.ExcelImport;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.FileUploadService;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.ExcelUtils;
@@ -79,6 +83,8 @@ public class UserInfoController {
 	@Autowired
 	FileUploadService fileUploadService;
 
+	@Autowired
+	HistorySystemLogsService systemLog;
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
@@ -125,6 +131,12 @@ public class UserInfoController {
 			fileUploadService.remove(userInfo.getPictureId());
 		}
 		if (userInfoService.insert(userInfo)) {
+			systemLog.insert(
+					ConstsEntryType.USERINFO, 
+					userInfo, 
+					ConstsOperateAction.CREATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<UserInfo>(Message.FAIL).buildResponse();
@@ -147,6 +159,12 @@ public class UserInfoController {
 			fileUploadService.remove(userInfo.getPictureId());
 		}
 		if (userInfoService.update(userInfo)) {
+			systemLog.insert(
+					ConstsEntryType.USERINFO, 
+					userInfo, 
+					ConstsOperateAction.UPDATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 		    return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<UserInfo>(Message.FAIL).buildResponse();
@@ -157,7 +175,14 @@ public class UserInfoController {
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-delete  ids : {} " , ids);
+		
 		if (userInfoService.deleteBatch(ids)) {
+			systemLog.insert(
+					ConstsEntryType.USERINFO, 
+					ids, 
+					ConstsOperateAction.DELETE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 			 return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<UserInfo>(Message.FAIL).buildResponse();
@@ -197,8 +222,13 @@ public class UserInfoController {
 		_logger.debug("UserId {}",changePassword.getUserId());
 		changePassword.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
 		if(userInfoService.changePassword(changePassword,true)) {
+			systemLog.insert(
+					ConstsEntryType.USERINFO, 
+					changePassword, 
+					ConstsOperateAction.CHANGE_PASSWORD, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
-			
 		} else {
 			return new Message<UserInfo>(Message.FAIL).buildResponse();
 		}
@@ -210,6 +240,12 @@ public class UserInfoController {
 		_logger.debug(""+userInfo);
 		userInfo.setInstId(currentUser.getInstId());
 		if(userInfoService.updateStatus(userInfo)) {
+			systemLog.insert(
+					ConstsEntryType.USERINFO, 
+					userInfo, 
+					ConstsOperateAction.statusActon.get(userInfo.getStatus()), 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<UserInfo>(Message.FAIL).buildResponse();

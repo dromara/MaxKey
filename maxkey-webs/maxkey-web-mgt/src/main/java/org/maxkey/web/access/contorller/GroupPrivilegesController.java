@@ -23,6 +23,7 @@ import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.GroupPrivilegesService;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,9 @@ public class GroupPrivilegesController {
 	@Autowired
 	GroupPrivilegesService groupPrivilegesService;
 
+	@Autowired
+	HistorySystemLogsService systemLog;
+	
 	@RequestMapping(value = { "/appsInGroup" })
 	@ResponseBody
 	public ResponseEntity<?> appsInGroup(

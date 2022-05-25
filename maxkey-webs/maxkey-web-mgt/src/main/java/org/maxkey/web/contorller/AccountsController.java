@@ -19,6 +19,9 @@ package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.constants.ConstsEntryType;
+import org.maxkey.constants.ConstsOperateAction;
+import org.maxkey.constants.ConstsOperateResult;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.AccountsStrategy;
@@ -27,6 +30,7 @@ import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.AccountsService;
 import org.maxkey.persistence.service.AccountsStrategyService;
 import org.maxkey.persistence.service.AppsService;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +62,9 @@ public class AccountsController {
 	
 	@Autowired
 	UserInfoService userInfoService;
+	
+	@Autowired
+	HistorySystemLogsService systemLog;
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
@@ -94,6 +101,12 @@ public class AccountsController {
 		account.setInstId(currentUser.getInstId());
 		account.setRelatedPassword(PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
 		if (accountsService.insert(account)) {
+			systemLog.insert(
+					ConstsEntryType.ACCOUNT, 
+					account, 
+					ConstsOperateAction.CREATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 		    return new Message<Accounts>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Accounts>(Message.FAIL).buildResponse();
@@ -107,6 +120,12 @@ public class AccountsController {
 		account.setInstId(currentUser.getInstId());
 		account.setRelatedPassword(PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
 		if (accountsService.update(account)) {
+			systemLog.insert(
+					ConstsEntryType.ACCOUNT, 
+					account, 
+					ConstsOperateAction.UPDATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 		    return new Message<Accounts>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Accounts>(Message.FAIL).buildResponse();
@@ -120,6 +139,12 @@ public class AccountsController {
 		_logger.debug(""+accounts);
 		accounts.setInstId(currentUser.getInstId());
 		if (accountsService.updateStatus(accounts)) {
+			systemLog.insert(
+					ConstsEntryType.ACCOUNT, 
+					accounts, 
+					ConstsOperateAction.statusActon.get(accounts.getStatus()), 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 		    return new Message<Accounts>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Accounts>(Message.FAIL).buildResponse();
@@ -132,6 +157,12 @@ public class AccountsController {
 		_logger.debug("-delete ids : {} " , ids);
 		
 		if (accountsService.deleteBatch(ids)) {
+			systemLog.insert(
+					ConstsEntryType.ACCOUNT, 
+					ids, 
+					ConstsOperateAction.DELETE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 			 return new Message<Accounts>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Accounts>(Message.FAIL).buildResponse();

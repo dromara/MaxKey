@@ -604,7 +604,7 @@
       "systemlogs.id":"Id",
       "systemlogs.topic":"Topic",
       "systemlogs.message":"Message",
-      "systemlogs.messageType":"Type",
+      "systemlogs.messageAction":"Action",
       "systemlogs.messageResult":"Result",
       "systemlogs.userId":"userId",
       "systemlogs.username":"username",

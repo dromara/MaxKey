@@ -23,6 +23,7 @@ import org.maxkey.entity.Message;
 import org.maxkey.entity.RoleMember;
 import org.maxkey.entity.Roles;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.persistence.service.RoleMemberService;
 import org.maxkey.persistence.service.RolesService;
 import org.maxkey.persistence.service.UserInfoService;
@@ -54,6 +55,9 @@ public class RoleMemberController {
 	
 	@Autowired
 	UserInfoService userInfoService;
+	
+	@Autowired
+	HistorySystemLogsService systemLog;
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody

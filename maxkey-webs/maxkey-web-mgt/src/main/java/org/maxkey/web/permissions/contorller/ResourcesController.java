@@ -21,9 +21,13 @@ import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.constants.ConstsEntryType;
+import org.maxkey.constants.ConstsOperateAction;
+import org.maxkey.constants.ConstsOperateResult;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.Resources;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.persistence.service.ResourcesService;
 import org.maxkey.web.component.TreeAttributes;
 import org.maxkey.web.component.TreeNode;
@@ -48,6 +52,9 @@ public class ResourcesController {
 	
 	@Autowired
 	ResourcesService resourcesService;
+	
+	@Autowired
+	HistorySystemLogsService systemLog;
 
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
@@ -83,6 +90,12 @@ public class ResourcesController {
 		_logger.debug("-Add  :" + resource);
 		resource.setInstId(currentUser.getInstId());
 		if (resourcesService.insert(resource)) {
+			systemLog.insert(
+					ConstsEntryType.RESOURCE, 
+					resource, 
+					ConstsOperateAction.CREATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 			return new Message<Resources>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Resources>(Message.FAIL).buildResponse();
@@ -95,6 +108,12 @@ public class ResourcesController {
 		_logger.debug("-update  :" + resource);
 		resource.setInstId(currentUser.getInstId());
 		if (resourcesService.update(resource)) {
+			systemLog.insert(
+					ConstsEntryType.RESOURCE, 
+					resource, 
+					ConstsOperateAction.UPDATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 		    return new Message<Resources>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Resources>(Message.FAIL).buildResponse();
@@ -106,6 +125,12 @@ public class ResourcesController {
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-delete  ids : {} " , ids);
 		if (resourcesService.deleteBatch(ids)) {
+			systemLog.insert(
+					ConstsEntryType.RESOURCE, 
+					ids, 
+					ConstsOperateAction.DELETE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 			 return new Message<Resources>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Resources>(Message.FAIL).buildResponse();

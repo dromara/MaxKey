@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,16 +19,24 @@ package org.maxkey.constants;
 
 public class ConstsEntryType {
 
-    public static int USERINFO_TYPE 	= 1;
+    public static String USERINFO 			= "user";
     
-    public static int ORGANIZATION_TYPE = 2;
+    public static String ORGANIZATION 		= "organization";
     
-    public static int GROUP_TYPE 		= 3;
+    public static String APPLICATION	 	= "application";
     
-    public static int PASSWORD_TYPE 	= 4;
+    public static String GROUP	 			= "group";
     
-    public static int RESOURCES_TYPE 	= 5;
+    public static String ACCOUNT 			= "account";
     
-    public static int PERMISSIONS_TYPE 	= 6;
+    public static String ROLE 				= "role";
+    
+    public static String PASSWORD 			= "password";
+    
+    public static String RESOURCE 			= "resource";
+    
+    public static String PERMISSION 		= "permission";
+    
+    
 
 }

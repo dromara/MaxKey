@@ -25,6 +25,7 @@ import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.GroupMemberService;
 import org.maxkey.persistence.service.GroupsService;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
@@ -54,6 +55,9 @@ public class GroupMemberController {
 	
 	@Autowired
 	UserInfoService userInfoService;
+	
+	@Autowired
+	HistorySystemLogsService systemLog;
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody

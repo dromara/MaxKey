@@ -603,7 +603,7 @@
       "systemlogs.id":"编号",
       "systemlogs.topic":"主题",
       "systemlogs.message":"内容",
-      "systemlogs.messageType":"类型",
+      "systemlogs.messageAction":"操作",
       "systemlogs.messageResult":"结果",
       "systemlogs.userId":"操作人编号",
       "systemlogs.username":"操作人登录名",

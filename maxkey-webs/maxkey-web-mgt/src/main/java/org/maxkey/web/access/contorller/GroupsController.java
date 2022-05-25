@@ -19,10 +19,14 @@ package org.maxkey.web.access.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.constants.ConstsEntryType;
+import org.maxkey.constants.ConstsOperateAction;
+import org.maxkey.constants.ConstsOperateResult;
 import org.maxkey.entity.Groups;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.GroupsService;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +48,9 @@ public class GroupsController {
 	
 	@Autowired
 	GroupsService groupsService;
+	
+	@Autowired
+	HistorySystemLogsService systemLog;
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
@@ -82,6 +89,12 @@ public class GroupsController {
 		group.setInstId(currentUser.getInstId());
 		if (groupsService.insert(group)) {
 		    groupsService.refreshDynamicGroups(group);
+		    systemLog.insert(
+					ConstsEntryType.GROUP, 
+					group, 
+					ConstsOperateAction.CREATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 		    return new Message<Groups>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Groups>(Message.FAIL).buildResponse();
@@ -98,6 +111,12 @@ public class GroupsController {
 		group.setInstId(currentUser.getInstId());
 		if (groupsService.update(group)) {
 		    groupsService.refreshDynamicGroups(group);
+		    systemLog.insert(
+					ConstsEntryType.GROUP, 
+					group, 
+					ConstsOperateAction.UPDATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 		    return new Message<Groups>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Groups>(Message.FAIL).buildResponse();
@@ -110,6 +129,12 @@ public class GroupsController {
 		_logger.debug("-delete ids : {}" , ids);
 		ids = ids.replaceAll("ROLE_ALL_USER", "-1").replaceAll("ROLE_ADMINISTRATORS", "-1");
 		if (groupsService.deleteBatch(ids)) {
+			systemLog.insert(
+					ConstsEntryType.GROUP, 
+					ids, 
+					ConstsOperateAction.DELETE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 			 return new Message<Groups>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Groups>(Message.FAIL).buildResponse();

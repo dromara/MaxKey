@@ -19,7 +19,7 @@ package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
-import org.maxkey.constants.ConstsOperateMessage;
+import org.maxkey.constants.ConstsOperateResult;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.UserInfoAdjoint;
 import org.maxkey.persistence.service.UserInfoAdjointService;
@@ -88,10 +88,10 @@ public class UserAdjointController {
 		_logger.debug("-Add  :" + userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.insert(userInfoAdjoint)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.error);
 		}
 		
 	}
@@ -109,10 +109,10 @@ public class UserAdjointController {
 		_logger.debug("-query  :" + userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.load(userInfoAdjoint)!=null) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.INSERT_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.error);
 		}
 		
 	}
@@ -130,10 +130,10 @@ public class UserAdjointController {
 		_logger.debug("-update  userInfoAdjoint :" + userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.update(userInfoAdjoint)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.UPDATE_ERROR),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateResult.ERROR),MessageType.error);
 		}
 		
 	}
@@ -145,9 +145,9 @@ public class UserAdjointController {
 		_logger.debug("-delete  group :" + userInfoAdjoint);
 		
 		if (userInfoAdjointService.deleteBatch(userInfoAdjoint.getId())) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.success);
+			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateMessage.DELETE_SUCCESS),MessageType.error);
+			return  new Message(WebContext.getI18nValue(ConstsOperateResult.ERROR),MessageType.error);
 		}
 		
 	}

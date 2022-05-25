@@ -25,6 +25,7 @@ import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.persistence.service.FileUploadService;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,9 @@ public class BaseAppContorller {
 	
 	@Autowired
 	protected FileUploadService fileUploadService;
+	
+	@Autowired
+	HistorySystemLogsService systemLog;
 	
 	public void setAppsService(AppsService appsService) {
 		this.appsService = appsService;

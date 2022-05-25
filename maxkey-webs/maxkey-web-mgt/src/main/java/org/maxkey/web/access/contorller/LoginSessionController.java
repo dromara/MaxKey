@@ -26,6 +26,7 @@ import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistoryLoginService;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
@@ -59,6 +60,9 @@ public class LoginSessionController {
     @Autowired
     SessionManager sessionManager;
 
+    @Autowired
+	HistorySystemLogsService systemLog;
+    
     /**
      * 查询登录日志.
      * 

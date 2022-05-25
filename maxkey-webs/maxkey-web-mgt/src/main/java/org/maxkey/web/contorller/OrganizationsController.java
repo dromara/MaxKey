@@ -29,10 +29,14 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.maxkey.authn.annotation.CurrentUser;
+import org.maxkey.constants.ConstsEntryType;
+import org.maxkey.constants.ConstsOperateAction;
+import org.maxkey.constants.ConstsOperateResult;
 import org.maxkey.entity.ExcelImport;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.Organizations;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.maxkey.persistence.service.OrganizationsService;
 import org.maxkey.util.ExcelUtils;
 import org.maxkey.web.component.TreeAttributes;
@@ -60,6 +64,9 @@ public class OrganizationsController {
 
 	@Autowired
 	OrganizationsService organizationsService;
+	
+	@Autowired
+	HistorySystemLogsService systemLog;
 
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
@@ -95,6 +102,12 @@ public class OrganizationsController {
 		_logger.debug("-Add  :" + org);
 		org.setInstId(currentUser.getInstId());
 		if (organizationsService.insert(org)) {
+			systemLog.insert(
+					ConstsEntryType.ORGANIZATION, 
+					org, 
+					ConstsOperateAction.CREATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 			return new Message<Organizations>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Organizations>(Message.FAIL).buildResponse();
@@ -107,6 +120,12 @@ public class OrganizationsController {
 		_logger.debug("-update  :" + org);
 		org.setInstId(currentUser.getInstId());
 		if (organizationsService.update(org)) {
+			systemLog.insert(
+					ConstsEntryType.ORGANIZATION, 
+					org, 
+					ConstsOperateAction.UPDATE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 		    return new Message<Organizations>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Organizations>(Message.FAIL).buildResponse();
@@ -118,6 +137,12 @@ public class OrganizationsController {
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-delete  ids : {} " , ids);
 		if (organizationsService.deleteBatch(ids)) {
+			systemLog.insert(
+					ConstsEntryType.ORGANIZATION, 
+					ids, 
+					ConstsOperateAction.DELETE, 
+					ConstsOperateResult.SUCCESS, 
+					currentUser);
 			 return new Message<Organizations>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Organizations>(Message.FAIL).buildResponse();
