@@ -44,8 +44,9 @@ export class AuthnService {
   ) { }
 
   setRedirectUri(redirect_uri: string) {
-    this.redirect_uri = CryptoJS.enc.Base64url.parse(redirect_uri).toString();
-    localStorage.setItem('redirect_uri', this.redirect_uri);
+    this.redirect_uri = CryptoJS.enc.Base64url.parse(redirect_uri).toString(CryptoJS.enc.Utf8);
+    console.log(`redirect_uri ${this.redirect_uri}`);
+    localStorage.setItem(CONSTS.REDIRECT_URI, this.redirect_uri);
   }
 
   get(authParam: any) {
@@ -91,8 +92,8 @@ export class AuthnService {
       subHostName = `${hostnames[hostnames.length - 2]}.${hostnames[hostnames.length - 1]}`;
     }
 
-    this.cookieService.set(CONSTS.CONGRESS, authJwt.token);
-    this.cookieService.set(CONSTS.ONLINE_TICKET, authJwt.ticket, { domain: subHostName });
+    this.cookieService.set(CONSTS.CONGRESS, authJwt.token, { path: '/' });
+    this.cookieService.set(CONSTS.ONLINE_TICKET, authJwt.ticket, { domain: subHostName, path: '/' });
 
     if (authJwt.remeberMe) {
       localStorage.setItem(CONSTS.REMEMBER, authJwt.remeberMe);
@@ -152,10 +153,17 @@ export class AuthnService {
       if (url.includes('/passport')) {
         url = '/';
       }
-      if (this.redirect_uri != '') {
-        url = this.redirect_uri;
-        this.redirect_uri = '';
+
+      if (localStorage.getItem(CONSTS.REDIRECT_URI) != null) {
+        this.redirect_uri = `${localStorage.getItem(CONSTS.REDIRECT_URI)}`;
+        localStorage.removeItem(CONSTS.REDIRECT_URI);
       }
+
+      if (this.redirect_uri != '') {
+        console.log(`redirect_uri ${this.redirect_uri}`);
+        location.href = this.redirect_uri;
+      }
+
       this.router.navigateByUrl(url);
     });
   }

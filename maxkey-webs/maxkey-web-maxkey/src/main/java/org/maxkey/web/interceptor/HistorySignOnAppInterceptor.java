@@ -32,7 +32,6 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,38 +45,7 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
 
     @Autowired
     protected AppsService appsService;
-    
-    /**
-             *          判断应用访问权限
-     */
-    @Override
-    public boolean preHandle(HttpServletRequest request, 
-            HttpServletResponse response, Object handler)
-            throws Exception {
-        _logger.debug("preHandle {}",request.getRequestURI());
-        Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
-        if(app == null) {
-        	String appId ="";
-        	//JWT
-        	if(request.getRequestURI().contains("/authz/jwt/")) {
-        		String [] requestURI = request.getRequestURI().split("/");
-        		appId = requestURI[requestURI.length -1];
-        	}
-        	_logger.debug("appId {}",appId);
-        	app = appsService.get(appId,true);
-        }
-        SignPrincipal principal = AuthorizationUtils.getPrincipal();
-        if(principal != null && app !=null) {
-            if(principal.getGrantedAuthorityApps().contains(new SimpleGrantedAuthority(app.getId()))) {
-                _logger.trace("preHandle have authority access " + app);
-                return true;
-            }
-        }
-        _logger.debug("preHandle not have authority access " + app);
-        return false;
-    }
-    
-    
+
     /**
      * postHandle .
      * @see org.springframework.web.servlet.handler.HandlerInterceptorAdapter#preHandle(

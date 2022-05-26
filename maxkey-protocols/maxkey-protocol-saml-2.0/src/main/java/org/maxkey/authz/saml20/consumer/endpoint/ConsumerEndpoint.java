@@ -130,7 +130,7 @@ public class ConsumerEndpoint {
 	
 	SAML2ValidatorSuite validatorSuite = new SAML2ValidatorSuite();
 
-	@RequestMapping(value = "/consumer/saml/v20/{id}")
+	@RequestMapping(value = "/authz/saml20/consumer/{id}")
 	public ModelAndView consumer(HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("id") String appId)
 			throws Exception {
