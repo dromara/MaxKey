@@ -50,8 +50,8 @@
       },
       "audit" : {
         "": "审计",
-        "logins": "登录日志",
-        "loginapps": "应用登录日志",
+        "logins": "系统登录日志",
+        "loginapps": "应用访问日志",
         "synchronizer": "同步器日志",
         "connector": "连接器日志",
         "operate": "管理日志"
@@ -157,6 +157,7 @@
       "status.lock":"锁定",
       "status.inactive":"不活动",
       "status.delete":"已删除",
+      "status.forbidden":"禁用",
       "userstate":"用户状态",
       "userstate.resident":"在职",
       "userstate.withdrawn":"离职",

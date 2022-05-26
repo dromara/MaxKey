@@ -33,6 +33,7 @@ import {
   CloudOutline,
   CopyrightOutline,
   CustomerServiceOutline,
+  ClockCircleFill,
   DashboardOutline,
   DatabaseOutline,
   DingdingOutline,
@@ -103,6 +104,7 @@ import {
   SendOutline,
   SmallDashOutline,
   DashOutline,
+  WarningFill,
   FileProtectOutline,
   HistoryOutline,
   AuditOutline
@@ -118,6 +120,8 @@ export const ICONS_AUTO = [
   BorderRightOutline,
   CloudOutline,
   CopyrightOutline,
+  ClockCircleFill,
+
   CustomerServiceOutline,
   DashboardOutline,
   DatabaseOutline,
@@ -194,5 +198,6 @@ export const ICONS_AUTO = [
   DashOutline,
   FileProtectOutline,
   HistoryOutline,
+  WarningFill,
   AuditOutline
 ];

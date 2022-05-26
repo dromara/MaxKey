@@ -37,6 +37,8 @@ public final class ConstsOperateAction {
     
     public static final String DISABLE 			= "disable";
     
+    public static final String INACTIVE 		= "inactive";
+    
     public static final String LOCK 			= "lock";
     
     public static final String UNLOCK 			= "unlock";
@@ -49,6 +51,7 @@ public final class ConstsOperateAction {
     	statusActon= new ConcurrentHashMap<Integer,String>();
     	statusActon.put(ConstsStatus.ACTIVE, ENABLE);
     	statusActon.put(ConstsStatus.DISABLED, DISABLE);
+    	statusActon.put(ConstsStatus.INACTIVE, INACTIVE);
     	statusActon.put(ConstsStatus.LOCK, LOCK);
     	statusActon.put(ConstsStatus.UNLOCK, UNLOCK);
     	statusActon.put(ConstsStatus.DELETE, DELETE);

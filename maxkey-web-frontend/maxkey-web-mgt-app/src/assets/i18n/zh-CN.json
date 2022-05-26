@@ -162,6 +162,7 @@
       "status.active":"活动",
       "status.lock":"锁定",
       "status.inactive":"不活动",
+      "status.forbidden":"禁用",
       "status.delete":"已删除",
       "userstate":"用户状态",
       "userstate.resident":"在职",

@@ -137,7 +137,14 @@ public class AccountsController {
 	@ResponseBody
 	public ResponseEntity<?> updateStatus(@ModelAttribute Accounts accounts,@CurrentUser UserInfo currentUser) {
 		_logger.debug(""+accounts);
+		Accounts loadAccount = accountsService.get(accounts.getId());
 		accounts.setInstId(currentUser.getInstId());
+		accounts.setAppId(loadAccount.getAppId());
+		accounts.setAppName(loadAccount.getAppName());
+		accounts.setUserId(loadAccount.getUserId());
+		accounts.setUsername(loadAccount.getUsername());
+		accounts.setDisplayName(loadAccount.getDisplayName());
+		accounts.setRelatedUsername(loadAccount.getRelatedUsername());
 		if (accountsService.updateStatus(accounts)) {
 			systemLog.insert(
 					ConstsEntryType.ACCOUNT, 

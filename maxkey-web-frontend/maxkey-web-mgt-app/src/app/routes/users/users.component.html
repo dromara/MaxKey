@@ -95,7 +95,8 @@
               i18n) }}</td>
             <td nzAlign="center">
               <i *ngIf="data.status == 1" nz-icon nzType="check-circle" nzTheme="fill" style="color: green"> </i>
-              <i *ngIf="data.status == 2" nz-icon nzType="stop" nzTheme="fill" style="color: gray"></i>
+              <i *ngIf="data.status == 2" nz-icon nzType="warning" nzTheme="fill" style="color: gray"></i>
+              <i *ngIf="data.status == 4" nz-icon nzType="stop" nzTheme="fill" style="color: gray"></i>
               <i *ngIf="data.status == 5" nz-icon nzType="lock" nzTheme="fill" style="color: orange"></i>
               <i *ngIf="data.status == 9" nz-icon nzType="close-circle" nzTheme="fill" style="color: red"></i>
             </td>
@@ -127,10 +128,13 @@
                       }}</li>
                     <li nz-menu-item *ngIf="data.status == 1" (click)="onUpdateStatus($event, data.id, 5)">{{
                       'mxk.text.lock' | i18n }}</li>
-                    <li nz-menu-item *ngIf="data.status == 1" (click)="onUpdateStatus($event, data.id, 2)">{{
+                    <li nz-menu-item *ngIf="data.status == 1" (click)="onUpdateStatus($event, data.id, 4)">{{
                       'mxk.text.disable' | i18n
                       }}</li>
                     <li nz-menu-item *ngIf="data.status == 2" (click)="onUpdateStatus($event, data.id, 1)">{{
+                      'mxk.text.enable' | i18n
+                      }}</li>
+                    <li nz-menu-item *ngIf="data.status == 4" (click)="onUpdateStatus($event, data.id, 1)">{{
                       'mxk.text.enable' | i18n
                       }}</li>
                     <li nz-menu-item *ngIf="data.status == 5" (click)="onUpdateStatus($event, data.id, 1)">{{

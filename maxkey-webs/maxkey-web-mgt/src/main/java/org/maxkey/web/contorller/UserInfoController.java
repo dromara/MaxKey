@@ -238,7 +238,10 @@ public class UserInfoController {
 	@ResponseBody
 	public ResponseEntity<?> updateStatus(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
 		_logger.debug(""+userInfo);
+		UserInfo loadUserInfo = userInfoService.get(userInfo.getId());
 		userInfo.setInstId(currentUser.getInstId());
+		userInfo.setUsername(loadUserInfo.getUsername());
+		userInfo.setDisplayName(loadUserInfo.getDisplayName());
 		if(userInfoService.updateStatus(userInfo)) {
 			systemLog.insert(
 					ConstsEntryType.USERINFO, 

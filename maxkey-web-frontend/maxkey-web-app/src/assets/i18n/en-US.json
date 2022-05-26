@@ -153,6 +153,7 @@
       "status.lock":"Locked",
       "status.inactive":"Inactive",
       "status.delete":"Deleted",
+      "status.forbidden":"Forbidden",
       "userstate":"UserState",
       "userstate.resident":"Resident",
       "userstate.withdrawn":"Withdrawn",

@@ -75,7 +75,8 @@
         <td nzAlign="left" nzBreakWord="false">{{ data.relatedUsername }}</td>
         <td nzAlign="center">
           <i *ngIf="data.status == 1" nz-icon nzType="check-circle" nzTheme="fill" style="color: green"></i>
-          <i *ngIf="data.status == 2" nz-icon nzType="stop" nzTheme="fill" style="color: gray"></i>
+          <i *ngIf="data.status == 2" nz-icon nzType="warning" nzTheme="fill" style="color: gray"></i>
+          <i *ngIf="data.status == 4" nz-icon nzType="stop" nzTheme="fill" style="color: gray"></i>
         </td>
         <td nzAlign="left" nzBreakWord="false">
           <div nz-col>
@@ -83,7 +84,11 @@
               style="float: left">{{
               'mxk.text.enable' | i18n
               }}</button>
-            <button *ngIf="data.status == 1" nz-button type="button" (click)="onUpdateStatus($event, data.id, 2)"
+            <button *ngIf="data.status == 4" nz-button type="button" (click)="onUpdateStatus($event, data.id, 1)"
+              style="float: left">{{
+              'mxk.text.enable' | i18n
+              }}</button>
+            <button *ngIf="data.status == 1" nz-button type="button" (click)="onUpdateStatus($event, data.id, 4)"
               style="float: left">{{
               'mxk.text.disable' | i18n
               }}</button>
