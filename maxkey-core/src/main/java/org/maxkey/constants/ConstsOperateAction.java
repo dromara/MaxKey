@@ -50,8 +50,8 @@ public final class ConstsOperateAction {
     static {
     	statusActon= new ConcurrentHashMap<Integer,String>();
     	statusActon.put(ConstsStatus.ACTIVE, ENABLE);
-    	statusActon.put(ConstsStatus.DISABLED, DISABLE);
     	statusActon.put(ConstsStatus.INACTIVE, INACTIVE);
+    	statusActon.put(ConstsStatus.DISABLED, DISABLE);
     	statusActon.put(ConstsStatus.LOCK, LOCK);
     	statusActon.put(ConstsStatus.UNLOCK, UNLOCK);
     	statusActon.put(ConstsStatus.DELETE, DELETE);

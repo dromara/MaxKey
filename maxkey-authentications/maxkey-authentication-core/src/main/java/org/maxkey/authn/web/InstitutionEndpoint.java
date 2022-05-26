@@ -51,9 +51,9 @@ public class InstitutionEndpoint {
  	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> get(
 			HttpServletRequest request,
-			@RequestHeader("Origin") String originURL,
-			@RequestHeader(HEADER_HOSTNAME) String headerHostName,
-			@RequestHeader(HEADER_HOST) String headerHost) {
+			@RequestHeader(value = "Origin",required=false) String originURL,
+			@RequestHeader(value = HEADER_HOSTNAME,required=false) String headerHostName,
+			@RequestHeader(value = HEADER_HOST,required=false) String headerHost) {
  		_logger.debug("get Institution" );
  		
 		String host = headerHostName;
