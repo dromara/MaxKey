@@ -33,7 +33,6 @@ import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
-import org.maxkey.web.ipregion.IpRegionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -139,9 +138,6 @@ public abstract class AbstractAuthenticationRealm {
         historyLogin.setBrowser(browser.getName());
         historyLogin.setPlatform(browser.getPlatform());
         historyLogin.setSourceIp(userInfo.getLastLoginIp());
-        //TODO: 
-        //historyLogin.setIpRegion(IpRegionFactory.getFactory().region(userInfo.getLastLoginIp()));
-        //historyLogin.setIpLocation(IpRegionFactory.getFactory().getLocation(historyLogin.getIpRegion()));
         historyLogin.setProvider(provider);
         historyLogin.setCode(code);
         historyLogin.setLoginType(type);
