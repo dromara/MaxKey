@@ -1,4 +1,43 @@
-﻿MaxKey v 3.5.0 GA 2022/05/10 
+﻿MaxKey v 3.5.1 GA 2022/06/**
+    *(MAXKEY-220601) session会话增加二级缓存
+    *(MAXKEY-220602) session会话超时及token刷新的问题
+    *(MAXKEY-220603) 认证界面优化，支持账号登录和扫码登录
+    *(MAXKEY-220604) 用户管理增加启用、禁用、锁定等功能
+    *(MAXKEY-220605) 用户管理增加角色、用户组、账号管理和密码修改功能
+    *(MAXKEY-220606) 繁体中文支持
+    *(MAXKEY-220607) 认证端菜单靠左对齐
+    *(MAXKEY-220608) 单点登录应用跳转错误问题(woshiwangjijun@qq.com)
+    *(MAXKEY-220609) 管理端界面问题调整
+    *(MAXKEY-220610) 前端界面多租户knowHost及自定义
+    *(MAXKEY-220611) 社交账号登录问题
+    *(MAXKEY-220612) 第三方JWT登录支持
+    *(MAXKEY-220613) 管理端选择框映射值问题
+    *(MAXKEY-220614) 鉴于监管问题，QQ群禁言，未来以信息发布为主
+    *(MAXKEY-220615) 变更支持邮箱support@maxsso.net
+    *(MAXKEY-220616) 管理日志记录
+    *(MAXKEY-220617) ZyXEL网络设备Portal登录支持
+    *(MAXKEY-220618) 动态组和动态角色优化，删除固定配置
+    *(MAXKEY-220619) 动态组和动态角色的成员管理显示所属组或者角色
+    *(MAXKEY-220620) 管理端列表按钮样式整体调整，删除primary
+    *(MAXKEY-220621) 零信任标准工作组连接
+    *(MAXKEY-220622) 依赖项引用、更新和升级
+        spring                   5.3.20
+        springBoot               2.6.8
+        springSecurity           5.6.5
+        tomcat                   9.0.63
+        gson                     2.9.0
+        guava                    31.1-jre
+        zxingcore                3.5.0
+        mysqlconnectorjava       8.0.29
+        druid                    1.2.10
+        caffeine                 2.9.3
+        mybatis                  3.5.10
+        jackson                  2.13.3
+        fastjson                 1.2.83
+        jodatime                 2.10.14
+        passay                   1.6.1
+    
+MaxKey v 3.5.0 GA 2022/05/10 
     *(MAXKEY-220501) 前后端分离改造，Angular和TypeScript支持
     *(MAXKEY-220502) Ant Design of Angular前端
     *(MAXKEY-220503) remeber me功能优化
