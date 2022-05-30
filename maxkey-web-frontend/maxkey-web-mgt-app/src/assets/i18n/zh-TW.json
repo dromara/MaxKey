@@ -1,7 +1,7 @@
 {
-	"app.title": "單點登錄認證系統",
+	"app.title": "身份安全管理系統",
 	"mxk": {
-		"title": "單點登錄認證系統",
+		"title": " 身份安全管理系統",
 		"login": {
 			"title": "MaxKey",
 			"title.sub": "業界領先的IAM身份管理和認證產品",
@@ -16,47 +16,53 @@
 			"signup": "用戶註冊",
 			"login": "登錄",
 			"text.username": "用戶名",
-			"text.mobile": "手機號碼",
+			"text.mobile": "手機號",
 			"text.password": "密碼",
 			"text.captcha": "驗證碼",
 			"text.smscode": "驗證碼"
 		},
-		"forgot": {
-			"forgot": "忘記密碼",
-			"step1": "驗證身份",
-			"step2": "設置新密碼",
-			"type.mobile": "手機找回",
-			"type.email": "郵箱找回",
-			"mobile": "手機號碼",
-			"email": "郵箱",
-			"captcha": "圖形驗證碼",
-			"sendCaptcha": "發送驗證碼",
-			"password": "新密碼",
-			"confirmPassword": "確認新密碼",
-			"login": "返回登錄",
-			"next": "下一步",
-			"submit": "提交"
-		},
 		"menu": {
-			"applist": "應用",
-			"sessions": "會話",
+			"home": "儀錶盤",
+			"organizations": "組織管理",
+			"users": "用戶管理",
+			"posts":"崗位管理",
+			"accounts": "賬號管理",
+			"apps": "應用管理",
+			"access": {
+				"": "訪問控制",
+				"sessions": "會話管理",
+				"groups": "組管理",
+				"groupmembers": "組成員管理",
+				"privileges": "訪問權限管理"
+			},
+			"permissions": {
+				"": "權限管理",
+				"roles": "角色管理",
+				"rolemembers": "角色成員管理",
+				"resources": "資源管理",
+				"privileges": "權限管理"
+			},
 			"config": {
-				"": "配置",
-				"setting": "基本設置",
-				"profile": "我的資料",
-				"socialsassociate": "社交關聯",
-				"password": "密碼修改",
-				"timebased": "時間令牌"
+				"": "配置管理",
+				"institutions": "機構管理",
+				"accountsstrategys": "賬號策略",
+				"socialsproviders": "社交服務",
+				"synchronizers": "同步器管理",
+				"adapters": "適配器註冊",
+				"notices": "通知公告",
+				"ldapcontext": "LDAP配置",
+				"emailsenders": "電子郵箱",
+				"smsproviders": "短信服務",
+				"passwordpolicy": "密碼策略"
 			},
 			"audit": {
-				"": "審計",
+				"": "日誌審計",
 				"logins": "系統登錄日誌",
-				"loginapps": "應用訪問日誌",
+				"loginapps": "應用登錄日誌",
 				"synchronizer": "同步器日誌",
 				"connector": "連接器日誌",
-				"operate": "管理日誌"
-			},
-			"mgt": "後台"
+				"operate": "系統管理日誌"
+			}
 		},
 		"home": {
 			"onlineUsers": "當前在線用戶",
@@ -82,7 +88,7 @@
 			"displayName": "姓名",
 			"username": "登錄賬號",
 			"password": "密碼",
-			"email": "郵箱",
+			"email": "電子郵箱",
 			"mobile": "手機號碼",
 			"userType": "用戶類型",
 			"userType.employee": "內部員工",
@@ -156,8 +162,8 @@
 			"status.active": "活動",
 			"status.lock": "鎖定",
 			"status.inactive": "不活動",
-			"status.delete": "已刪除",
 			"status.forbidden": "禁用",
+			"status.delete": "已刪除",
 			"userstate": "用戶狀態",
 			"userstate.resident": "在職",
 			"userstate.withdrawn": "離職",
@@ -746,7 +752,7 @@
 	"menu.extras.settings": "設置",
 	"menu.extras.poi": "門店",
 	"menu.extras.pois": "門店1",
-	"app.analysis.test": "工專路 {{no}} 號店",
+	"app.analysis.test": "工專路{{no}} 號店",
 	"app.analysis.introduce": "指標說明",
 	"app.analysis.total-sales": "總銷售額",
 	"app.analysis.day-sales": "日銷售額",
@@ -821,7 +827,7 @@
 	"validation.email.wrong-format": "郵箱地址格式錯誤！",
 	"validation.password.required": "請輸入密碼！",
 	"validation.password.twice": "兩次輸入的密碼不匹配!",
-	"validation.password.strength.msg": "請至少輸入 6 個字符。請不要使用容易被猜到的密碼。",
+	"validation.password.strength.msg": "請至少輸入6 個字符。請不要使用容易被猜到的密碼。",
 	"validation.password.strength.strong": "強度：強",
 	"validation.password.strength.medium": "強度：中",
 	"validation.password.strength.short": "強度：太短",
