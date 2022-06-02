@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-import { ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { _HttpClient } from '@delon/theme';
+import { I18NService } from '@core';
+import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import { format, addDays } from 'date-fns';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
@@ -95,6 +96,7 @@ export class UsersComponent implements OnInit {
     private orgsService: OrganizationsService,
     private fb: FormBuilder,
     private msg: NzMessageService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) { }
@@ -120,10 +122,10 @@ export class UsersComponent implements OnInit {
     e.preventDefault();
     this.usersService.get(set2String(this.query.tableCheckedId)).subscribe(res => {
       if (res.code == 0) {
-        this.msg.success(`提交成功`);
+        this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
         this.fetch();
       } else {
-        this.msg.success(`提交失败`);
+        this.msg.error(this.i18n.fanyi('mxk.alert.delete.error'));
       }
       this.cdr.detectChanges();
     });
@@ -230,10 +232,10 @@ export class UsersComponent implements OnInit {
     e.preventDefault();
     this.usersService.updateStatus({ id: userId, status: status }).subscribe(res => {
       if (res.code == 0) {
-        this.msg.success(`提交成功`);
+        this.msg.success(this.i18n.fanyi('mxk.alert.operate.success'));
         this.fetch();
       } else {
-        this.msg.success(`提交失败`);
+        this.msg.error(this.i18n.fanyi('mxk.alert.operate.error'));
       }
       this.cdr.detectChanges();
     });
@@ -243,10 +245,10 @@ export class UsersComponent implements OnInit {
     e.preventDefault();
     this.usersService.delete(deleteId).subscribe(res => {
       if (res.code == 0) {
-        this.msg.success(`提交成功`);
+        this.msg.success(this.i18n.fanyi('mxk.alert.operate.success'));
         this.fetch();
       } else {
-        this.msg.success(`提交失败`);
+        this.msg.error(this.i18n.fanyi('mxk.alert.operate.error'));
       }
       this.cdr.detectChanges();
     });

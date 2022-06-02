@@ -1,22 +1,23 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { I18NService } from '@core';
+import { ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { Institutions } from '../../../entity/Institutions';
@@ -53,6 +54,7 @@ export class InstitutionsComponent implements OnInit {
     private fb: FormBuilder,
     private institutionsService: InstitutionsService,
     private msg: NzMessageService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -68,9 +70,9 @@ export class InstitutionsComponent implements OnInit {
     this.form.model.trans();
     this.institutionsService.update(this.form.model).subscribe(res => {
       if (res.code == 0) {
-        this.msg.success(`提交成功`);
+        this.msg.success(this.i18n.fanyi('mxk.alert.operate.success'));
       } else {
-        this.msg.success(`提交失败`);
+        this.msg.error(this.i18n.fanyi('mxk.alert.operate.error'));
       }
       this.form.submitting = false;
       this.cdr.detectChanges();

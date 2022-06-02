@@ -1,24 +1,26 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-
-import { Component, ChangeDetectorRef, Input, OnInit } from '@angular/core';
+import { I18nPluralPipe } from '@angular/common';
+import { LocalizedString } from '@angular/compiler';
+import { Component, ChangeDetectorRef, Input, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { _HttpClient } from '@delon/theme';
+import { I18NService } from '@core';
+import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import format from 'date-fns/format';
+import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
@@ -59,6 +61,7 @@ export class OrganizationEditerComponent implements OnInit {
     private orgsService: OrganizationsService,
     private fb: FormBuilder,
     private msg: NzMessageService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -70,8 +73,9 @@ export class OrganizationEditerComponent implements OnInit {
       });
     } else {
       if (this.parentNode) {
-        this.form.model.parentCode = this.parentNode?.key;
+        this.form.model.parentId = this.parentNode?.key;
         this.form.model.parentName = this.parentNode?.title;
+        this.cdr.detectChanges();
       }
     }
   }
@@ -88,9 +92,9 @@ export class OrganizationEditerComponent implements OnInit {
 
     (this.isEdit ? this.orgsService.update(this.form.model) : this.orgsService.add(this.form.model)).subscribe(res => {
       if (res.code == 0) {
-        this.msg.success(`提交成功`);
+        this.msg.success(this.i18n.fanyi(this.isEdit ? 'mxk.alert.update.success' : 'mxk.alert.add.success'));
       } else {
-        this.msg.success(`提交失败`);
+        this.msg.error(this.i18n.fanyi(this.isEdit ? 'mxk.alert.update.error' : 'mxk.alert.add.error'));
       }
       this.form.submitting = false;
       this.modalRef.destroy({ refresh: true });

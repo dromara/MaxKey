@@ -647,6 +647,24 @@
 			"connector.syncTime": "时间",
 			"connector.result": "结果"
 		},
+		"alert": {
+			"add":{
+				"success":"新增成功!",
+				"error":"新增失败!"
+			},
+			"update":{
+				"success":"更新成功!",
+				"error":"更新失败!"
+			},
+			"delete":{
+				"success":"删除成功!",
+				"error":"删除失败!"
+			},
+			"operate":{
+				"success":"操作成功!",
+				"error":"操作失败!"
+			}
+		},
 		"text": {
 			"action": "操作",
 			"query": "查询",

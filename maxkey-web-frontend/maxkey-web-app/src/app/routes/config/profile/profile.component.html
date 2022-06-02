@@ -31,7 +31,7 @@
                     </nz-form-label>
                     <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                       nzErrorTip="The input is not valid username!">
-                      <input [(ngModel)]="form.model.username" [ngModelOptions]="{ standalone: true }" nz-input
+                      <input [(ngModel)]="form.model.username" disabled [ngModelOptions]="{ standalone: true }" nz-input
                         name="username" id="username" />
                     </nz-form-control>
                   </div>
@@ -74,7 +74,7 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid employeeNumber!">
-                    <input [(ngModel)]="form.model.employeeNumber" readonly [ngModelOptions]="{ standalone: true }"
+                    <input [(ngModel)]="form.model.employeeNumber" disabled [ngModelOptions]="{ standalone: true }"
                       nz-input name="employeeNumber" id="employeeNumber" />
                   </nz-form-control>
                 </nz-form-item>
@@ -82,8 +82,8 @@
                   <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="windowsAccount">{{ 'mxk.users.windowsAccount' | i18n }}
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzXs]="24" nzErrorTip="The input is not valid status!">
-                    <input [(ngModel)]="form.model.windowsAccount" [ngModelOptions]="{ standalone: true }" nz-input
-                      name="windowsAccount" id="windowsAccount" />
+                    <input disabled [(ngModel)]="form.model.windowsAccount" [ngModelOptions]="{ standalone: true }"
+                      nz-input name="windowsAccount" id="windowsAccount" />
                   </nz-form-control>
                 </nz-form-item>
               </div>
@@ -92,16 +92,16 @@
                   <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="mobile">{{ 'mxk.users.mobile' | i18n }}</nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid mobile!">
-                    <input [(ngModel)]="form.model.mobile" readonly [ngModelOptions]="{ standalone: true }" nz-input
-                      name="mobile" id="mobile" />
+                    <input disabled [(ngModel)]="form.model.mobile" readonly [ngModelOptions]="{ standalone: true }"
+                      nz-input name="mobile" id="mobile" />
                   </nz-form-control>
                 </nz-form-item>
                 <nz-form-item>
                   <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email">{{ 'mxk.users.email' | i18n }}</nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid email!">
-                    <input [(ngModel)]="form.model.email" [ngModelOptions]="{ standalone: true }" nz-input name="email"
-                      id="email" />
+                    <input disabled [(ngModel)]="form.model.email" [ngModelOptions]="{ standalone: true }" nz-input
+                      name="email" id="email" />
                   </nz-form-control>
                 </nz-form-item>
               </div>
@@ -112,8 +112,8 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid userType!">
-                    <nz-select [(ngModel)]="form.model.userType" [ngModelOptions]="{ standalone: true }" name="userType"
-                      id="userType">
+                    <nz-select disabled [(ngModel)]="form.model.userType" [ngModelOptions]="{ standalone: true }"
+                      name="userType" id="userType">
                       <nz-option nzValue="EMPLOYEE" nzLabel="{{ 'mxk.users.userType.employee' | i18n }}"> </nz-option>
                       <nz-option nzValue="SUPPLIER" nzLabel="{{ 'mxk.users.userType.supplier' | i18n }}"> </nz-option>
                       <nz-option nzValue="CUSTOMER" nzLabel="{{ 'mxk.users.userType.customer' | i18n }}"> </nz-option>
@@ -132,7 +132,7 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid userState!">
-                    <nz-select [(ngModel)]="form.model.userState" [ngModelOptions]="{ standalone: true }"
+                    <nz-select disabled [(ngModel)]="form.model.userState" [ngModelOptions]="{ standalone: true }"
                       name="userState" id="userState">
                       <nz-option nzValue="RESIDENT" nzLabel="{{ 'mxk.users.userstate.resident' | i18n }}"> </nz-option>
                       <nz-option nzValue="WITHDRAWN" nzLabel="{{ 'mxk.users.userstate.withdrawn' | i18n }}">
@@ -150,7 +150,7 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid sortIndex!">
-                    <nz-input-number [(ngModel)]="form.model.sortIndex" [ngModelOptions]="{ standalone: true }"
+                    <nz-input-number disabled [(ngModel)]="form.model.sortIndex" [ngModelOptions]="{ standalone: true }"
                       [nzMin]="1" [nzMax]="100000" [nzStep]="1"></nz-input-number>
                   </nz-form-control>
                 </nz-form-item>
@@ -159,8 +159,8 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid status!">
-                    <nz-select [(ngModel)]="form.model.str_status" [ngModelOptions]="{ standalone: true }" name="status"
-                      id="status">
+                    <nz-select disabled [(ngModel)]="form.model.str_status" [ngModelOptions]="{ standalone: true }"
+                      name="status" id="status">
                       <nz-option nzValue="1" nzLabel="{{ 'mxk.users.status.active' | i18n }}"></nz-option>
                       <nz-option nzValue="2" nzLabel="{{ 'mxk.users.status.inactive' | i18n }}"></nz-option>
                       <nz-option nzValue="4" nzLabel="{{ 'mxk.users.status.forbidden' | i18n }}"></nz-option>
@@ -297,8 +297,8 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid organization!">
-                    <input [(ngModel)]="form.model.organization" [ngModelOptions]="{ standalone: true }" nz-input
-                      name="organization" id="organization" />
+                    <input disabled [(ngModel)]="form.model.organization" [ngModelOptions]="{ standalone: true }"
+                      nz-input name="organization" id="organization" />
                   </nz-form-control>
                 </nz-form-item>
                 <nz-form-item>
@@ -306,7 +306,7 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid division!">
-                    <input [(ngModel)]="form.model.division" [ngModelOptions]="{ standalone: true }" nz-input
+                    <input disabled [(ngModel)]="form.model.division" [ngModelOptions]="{ standalone: true }" nz-input
                       name="division" id="division" />
                   </nz-form-control>
                 </nz-form-item>
@@ -317,8 +317,8 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid departmentId!">
-                    <input [(ngModel)]="form.model.departmentId" [ngModelOptions]="{ standalone: true }" nz-input
-                      name="departmentId" id="departmentId" />
+                    <input disabled [(ngModel)]="form.model.departmentId" [ngModelOptions]="{ standalone: true }"
+                      nz-input name="departmentId" id="departmentId" />
                   </nz-form-control>
                 </nz-form-item>
                 <nz-form-item>
@@ -326,7 +326,7 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid department!">
-                    <input [(ngModel)]="form.model.department" [ngModelOptions]="{ standalone: true }" nz-input
+                    <input disabled [(ngModel)]="form.model.department" [ngModelOptions]="{ standalone: true }" nz-input
                       name="department" id="department" />
                   </nz-form-control>
                 </nz-form-item>
@@ -337,7 +337,7 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid departmentId!">
-                    <input [(ngModel)]="form.model.costCenter" [ngModelOptions]="{ standalone: true }" nz-input
+                    <input disabled [(ngModel)]="form.model.costCenter" [ngModelOptions]="{ standalone: true }" nz-input
                       name="costCenter" id="costCenter" />
                   </nz-form-control>
                 </nz-form-item>
@@ -346,7 +346,7 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid jobLevel!">
-                    <input [(ngModel)]="form.model.jobLevel" [ngModelOptions]="{ standalone: true }" nz-input
+                    <input disabled [(ngModel)]="form.model.jobLevel" [ngModelOptions]="{ standalone: true }" nz-input
                       name="jobLevel" id="jobLevel" />
                   </nz-form-control>
                 </nz-form-item>
@@ -357,7 +357,7 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid jobTitle!">
-                    <input [(ngModel)]="form.model.jobTitle" [ngModelOptions]="{ standalone: true }" nz-input
+                    <input disabled [(ngModel)]="form.model.jobTitle" [ngModelOptions]="{ standalone: true }" nz-input
                       name="jobTitle" id="jobTitle" />
                   </nz-form-control>
                 </nz-form-item>
@@ -365,7 +365,7 @@
                   <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="manager">{{ 'mxk.users.manager' | i18n }}</nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid manager!">
-                    <input [(ngModel)]="form.model.manager" [ngModelOptions]="{ standalone: true }" nz-input
+                    <input disabled [(ngModel)]="form.model.manager" [ngModelOptions]="{ standalone: true }" nz-input
                       name="manager" id="manager" />
                   </nz-form-control>
                 </nz-form-item>
@@ -376,7 +376,7 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid assistant!">
-                    <input [(ngModel)]="form.model.assistant" [ngModelOptions]="{ standalone: true }" nz-input
+                    <input disabled [(ngModel)]="form.model.assistant" [ngModelOptions]="{ standalone: true }" nz-input
                       name="assistant" id="assistant" />
                   </nz-form-control>
                 </nz-form-item>
@@ -385,8 +385,8 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid workOfficeName!">
-                    <input [(ngModel)]="form.model.workOfficeName" [ngModelOptions]="{ standalone: true }" nz-input
-                      name="workOfficeName" id="workOfficeName" />
+                    <input disabled [(ngModel)]="form.model.workOfficeName" [ngModelOptions]="{ standalone: true }"
+                      nz-input name="workOfficeName" id="workOfficeName" />
                   </nz-form-control>
                 </nz-form-item>
               </div>
@@ -396,7 +396,7 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid entryDate!">
-                    <input [(ngModel)]="form.model.entryDate" [ngModelOptions]="{ standalone: true }" nz-input
+                    <input disabled [(ngModel)]="form.model.entryDate" [ngModelOptions]="{ standalone: true }" nz-input
                       name="entryDate" id="entryDate" />
                   </nz-form-control>
                 </nz-form-item>
@@ -405,7 +405,7 @@
                   </nz-form-label>
                   <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
                     nzErrorTip="The input is not valid quitDate!">
-                    <input [(ngModel)]="form.model.quitDate" [ngModelOptions]="{ standalone: true }" nz-input
+                    <input disabled [(ngModel)]="form.model.quitDate" [ngModelOptions]="{ standalone: true }" nz-input
                       name="quitDate" id="quitDate" />
                   </nz-form-control>
                 </nz-form-item>

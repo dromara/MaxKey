@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectorRef, ViewContainerRef, Input, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewContainerRef, Input, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { _HttpClient } from '@delon/theme';
+import { I18NService } from '@core';
+import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import format from 'date-fns/format';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
@@ -78,6 +79,7 @@ export class AppJwtDetailsEditerComponent implements OnInit {
     private viewContainerRef: ViewContainerRef,
     private fb: FormBuilder,
     private msg: NzMessageService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -172,9 +174,9 @@ export class AppJwtDetailsEditerComponent implements OnInit {
     this.form.model.trans();
     (this.isEdit ? this.appsJwtDetailsService.update(this.form.model) : this.appsJwtDetailsService.add(this.form.model)).subscribe(res => {
       if (res.code == 0) {
-        this.msg.success(`提交成功`);
+        this.msg.success(this.i18n.fanyi(this.isEdit ? 'mxk.alert.update.success' : 'mxk.alert.add.success'));
       } else {
-        this.msg.success(`提交失败`);
+        this.msg.error(this.i18n.fanyi(this.isEdit ? 'mxk.alert.update.error' : 'mxk.alert.add.error'));
       }
       this.form.submitting = false;
       this.modalRef.destroy({ refresh: true });

@@ -631,6 +631,25 @@
 			"connector.syncTime": "SyncTime",
 			"connector.result": "Result"
 		},
+		"alert": {
+			"add":{
+				"success":"Add Success!",
+				"error":"Add Error!"
+			},
+			"update":{
+				"success":"Update Success!",
+				"error":"Update Error!"
+			},
+			"delete":{
+				"success":"Delete Success!",
+				"error":"Delete Error!"
+			},
+			"operate":{
+				"success":"Operate Success!",
+				"error":"Operate Error!"
+			}
+			
+		},
 		"text": {
 			"action": "Action",
 			"query": "Query",

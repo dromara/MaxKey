@@ -631,6 +631,24 @@
 			"connector.syncTime": "時間",
 			"connector.result": "結果"
 		},
+		"alert": {
+			"add":{
+				"success":"新增成功!",
+				"error":"新增失敗!"
+			},
+			"update":{
+				"success":"更新成功!",
+				"error":"更新失敗!"
+			},
+			"delete":{
+				"success":"删除成功!",
+				"error":"删除失敗!"
+			},
+			"operate":{
+				"success":"操作成功!",
+				"error":"操作失敗!"
+			}
+		},
 		"text": {
 			"action": "操作",
 			"query": "查詢",

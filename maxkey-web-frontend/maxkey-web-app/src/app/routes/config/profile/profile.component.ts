@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectorRef, Input, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, Input, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { _HttpClient } from '@delon/theme';
+import { I18NService } from '@core';
+import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import { environment } from '@env/environment';
 import format from 'date-fns/format';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -95,7 +96,13 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  constructor(private usersService: UsersService, private fb: FormBuilder, private msg: NzMessageService, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private usersService: UsersService,
+    private fb: FormBuilder,
+    private msg: NzMessageService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.usersService.getProfile().subscribe(res => {
@@ -123,9 +130,9 @@ export class ProfileComponent implements OnInit {
     this.form.model.trans();
     this.usersService.updateProfile(this.form.model).subscribe(res => {
       if (res.code == 0) {
-        this.msg.success(`提交成功`);
+        this.msg.success(this.i18n.fanyi('mxk.alert.operate.success'));
       } else {
-        this.msg.success(`提交失败`);
+        this.msg.error(this.i18n.fanyi('mxk.alert.operate.error'));
       }
       this.form.submitting = false;
       this.cdr.detectChanges();

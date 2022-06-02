@@ -26,6 +26,8 @@ export class BaseEntity {
 
     constructor() {
         this.status = 1;
+        this.sortIndex = 1;
+        this.switch_status = true;
     }
     init(data: any): void {
         Object.assign(this, data);
