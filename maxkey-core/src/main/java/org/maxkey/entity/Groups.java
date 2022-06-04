@@ -50,7 +50,6 @@ public class Groups extends JpaBaseEntity implements Serializable {
     String orgIdsList;
     @Column
     String resumeTime; 
-    
     @Column
     String suspendTime;
     

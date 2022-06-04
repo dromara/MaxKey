@@ -4,7 +4,8 @@
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzFor="id">{{ 'mxk.resources.id' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
-        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input
+          name="id" id="id" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -14,9 +15,12 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="resourceType">{{ 'mxk.resources.resourceType' | i18n }}</nz-form-label>
-      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid resourceType!">
-        <nz-select [(ngModel)]="form.model.resourceType" [ngModelOptions]="{ standalone: true }" name="resourceType" id="resourceType">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="resourceType">{{ 'mxk.resources.resourceType' | i18n }}
+      </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48"
+        nzErrorTip="The input is not valid resourceType!">
+        <nz-select [(ngModel)]="form.model.resourceType" [ngModelOptions]="{ standalone: true }" name="resourceType"
+          id="resourceType">
           <nz-option nzValue="MENU" nzLabel="{{ 'mxk.resources.resourceType.MENU' | i18n }}"></nz-option>
           <nz-option nzValue="PAGE" nzLabel="{{ 'mxk.resources.resourceType.PAGE' | i18n }}"></nz-option>
           <nz-option nzValue="MODULE" nzLabel="{{ 'mxk.resources.resourceType.MODULE' | i18n }}"></nz-option>
@@ -29,83 +33,74 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="parentId">{{ 'mxk.resources.parentId' | i18n }}</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="parentId">{{ 'mxk.resources.parentId' | i18n }}
+      </nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid parentId!">
-        <input [(ngModel)]="form.model.parentId" [ngModelOptions]="{ standalone: true }" nz-input name="parentId" id="parentId" />
+        <input [(ngModel)]="form.model.parentId" [ngModelOptions]="{ standalone: true }" nz-input name="parentId"
+          id="parentId" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="parentName">{{ 'mxk.resources.parentName' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid parentName!">
-        <input
-          [(ngModel)]="form.model.parentName"
-          readonly
-          [ngModelOptions]="{ standalone: true }"
-          nz-input
-          name="parentName"
-          id="parentName"
-        />
+        <input [(ngModel)]="form.model.parentName" readonly [ngModelOptions]="{ standalone: true }" nz-input
+          name="parentName" id="parentName" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resourceUrl">{{ 'mxk.resources.resourceUrl' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid resourceUrl!">
-        <input [(ngModel)]="form.model.resourceUrl" [ngModelOptions]="{ standalone: true }" nz-input name="resourceUrl" id="resourceUrl" />
+        <input [(ngModel)]="form.model.resourceUrl" [ngModelOptions]="{ standalone: true }" nz-input name="resourceUrl"
+          id="resourceUrl" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resourceAction">{{ 'mxk.resources.resourceAction' | i18n }}</nz-form-label>
-      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid resourceAction!">
-        <input
-          [(ngModel)]="form.model.resourceAction"
-          [ngModelOptions]="{ standalone: true }"
-          nz-input
-          name="resourceAction"
-          id="resourceAction"
-        />
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="permission">{{ 'mxk.resources.permission' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid permission!">
+        <input [(ngModel)]="form.model.permission" [ngModelOptions]="{ standalone: true }" nz-input name="permission"
+          id="permission" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resourceStyle">{{ 'mxk.resources.resourceStyle' | i18n }}</nz-form-label>
-      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid resourceStyle!">
-        <input
-          [(ngModel)]="form.model.resourceStyle"
-          [ngModelOptions]="{ standalone: true }"
-          nz-input
-          name="resourceStyle"
-          id="resourceStyle"
-        />
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resourceAction">{{ 'mxk.resources.resourceAction' | i18n }}
+      </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48"
+        nzErrorTip="The input is not valid resourceAction!">
+        <input [(ngModel)]="form.model.resourceAction" [ngModelOptions]="{ standalone: true }" nz-input
+          name="resourceAction" id="resourceAction" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resourceIcon">{{ 'mxk.resources.resourceIcon' | i18n }}</nz-form-label>
-      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid resourceIcon!">
-        <input
-          [(ngModel)]="form.model.resourceIcon"
-          [ngModelOptions]="{ standalone: true }"
-          nz-input
-          name="resourceIcon"
-          id="resourceIcon"
-        />
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resourceStyle">{{ 'mxk.resources.resourceStyle' | i18n }}
+      </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48"
+        nzErrorTip="The input is not valid resourceStyle!">
+        <input [(ngModel)]="form.model.resourceStyle" [ngModelOptions]="{ standalone: true }" nz-input
+          name="resourceStyle" id="resourceStyle" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resourceIcon">{{ 'mxk.resources.resourceIcon' | i18n }}
+      </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48"
+        nzErrorTip="The input is not valid resourceIcon!">
+        <input [(ngModel)]="form.model.resourceIcon" [ngModelOptions]="{ standalone: true }" nz-input
+          name="resourceIcon" id="resourceIcon" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sortIndex">{{ 'mxk.text.sortIndex' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid sortIndex!">
-        <input [(ngModel)]="form.model.sortIndex" [ngModelOptions]="{ standalone: true }" nz-input name="sortIndex" id="sortIndex" />
+        <input [(ngModel)]="form.model.sortIndex" [ngModelOptions]="{ standalone: true }" nz-input name="sortIndex"
+          id="sortIndex" />
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="status">{{ 'mxk.text.status' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
-        <nz-switch
-          [(ngModel)]="form.model.switch_status"
-          [ngModelOptions]="{ standalone: true }"
-          name="status"
-          [nzCheckedChildren]="checkedTemplate"
-          [nzUnCheckedChildren]="unCheckedTemplate"
-        ></nz-switch>
+        <nz-switch [(ngModel)]="form.model.switch_status" [ngModelOptions]="{ standalone: true }" name="status"
+          [nzCheckedChildren]="checkedTemplate" [nzUnCheckedChildren]="unCheckedTemplate"></nz-switch>
         <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
         <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
       </nz-form-control>

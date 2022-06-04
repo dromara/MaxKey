@@ -23,7 +23,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 import { AccountsStrategy } from '../../../../entity/AccountsStrategy';
+import { TreeNodes } from '../../../../entity/TreeNodes';
 import { AccountsStrategyService } from '../../../../service/accounts-strategy.service';
+import { OrganizationsService } from '../../../../service/organizations.service';
 import { SelectAppsComponent } from '../../../apps/select-apps/select-apps.component';
 
 @Component({
@@ -51,10 +53,15 @@ export class AccountsStrategyEditerComponent implements OnInit {
     };
 
   formGroup: FormGroup = new FormGroup({});
+  // TreeNodes
+  treeNodes = new TreeNodes(false);
+
+  selectValues: string[] = [];
 
   constructor(
     private modal: NzModalRef,
     private accountsStrategyService: AccountsStrategyService,
+    private orgsService: OrganizationsService,
     private fb: FormBuilder,
     private modalService: NzModalService,
     private viewContainerRef: ViewContainerRef,
@@ -64,12 +71,22 @@ export class AccountsStrategyEditerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.tree();
     if (this.isEdit) {
       this.accountsStrategyService.get(`${this.id}`).subscribe(res => {
         this.form.model.init(res.data);
+        this.selectValues = this.form.model.orgIdsList.split(',');
         this.cdr.detectChanges();
       });
     }
+  }
+
+  tree(): void {
+    this.orgsService.tree({}).subscribe(res => {
+      this.treeNodes.init(res.data);
+      this.treeNodes.nodes = this.treeNodes.build();
+      this.cdr.detectChanges();
+    });
   }
 
   onSelect(e: MouseEvent): void {
@@ -100,6 +117,11 @@ export class AccountsStrategyEditerComponent implements OnInit {
     e.preventDefault();
     this.form.submitting = true;
     this.form.model.trans();
+    this.form.model.orgIdsList = '';
+    this.selectValues.forEach(value => {
+      this.form.model.orgIdsList = `${this.form.model.orgIdsList + value},`;
+    });
+
     (this.isEdit ? this.accountsStrategyService.update(this.form.model) : this.accountsStrategyService.add(this.form.model)).subscribe(
       res => {
         if (res.code == 0) {

@@ -46,6 +46,10 @@ public class Roles extends JpaBaseEntity implements Serializable {
     @Column
     String orgIdsList;
     @Column
+    String resumeTime; 
+    @Column
+    String suspendTime;
+    @Column
     String status;
     @Column
     String description;
@@ -154,7 +158,23 @@ public class Roles extends JpaBaseEntity implements Serializable {
         this.orgIdsList = orgIdsList;
     }
 
-    public String getInstId() {
+    public String getResumeTime() {
+		return resumeTime;
+	}
+
+	public void setResumeTime(String resumeTime) {
+		this.resumeTime = resumeTime;
+	}
+
+	public String getSuspendTime() {
+		return suspendTime;
+	}
+
+	public void setSuspendTime(String suspendTime) {
+		this.suspendTime = suspendTime;
+	}
+
+	public String getInstId() {
 		return instId;
 	}
 

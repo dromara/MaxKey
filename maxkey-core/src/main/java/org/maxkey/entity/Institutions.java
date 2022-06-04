@@ -69,11 +69,14 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 	@Column
 	private String logo;
 	@Column
+	private String domain;
+	@Column
 	private String frontTitle;
 	@Column
-	private String consoleTitle;
+	private String consoleDomain;
 	@Column
-	private String domain;
+	private String consoleTitle;
+	
 	@Column
 	private String captchaType;
 	@Column
@@ -133,6 +136,14 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 
 	public void setCaptchaType(String captchaType) {
 		this.captchaType = captchaType;
+	}
+
+	public String getConsoleDomain() {
+		return consoleDomain;
+	}
+
+	public void setConsoleDomain(String consoleDomain) {
+		this.consoleDomain = consoleDomain;
 	}
 
 	public String getConsoleTitle() {

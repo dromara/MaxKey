@@ -101,14 +101,14 @@
         <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
+    <nz-form-item *ngIf="form.model.switch_sslSwitch">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="trustStore">{{ 'mxk.ldapcontext.trustStore' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid trustStore!">
         <input [(ngModel)]="form.model.trustStore" [ngModelOptions]="{ standalone: true }" nz-input name="trustStore"
           id="trustStore" />
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
+    <nz-form-item *ngIf="form.model.switch_sslSwitch">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="trustStorePassword">{{ 'mxk.ldapcontext.trustStorePassword' | i18n }}
       </nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid trustStorePassword!">

@@ -130,6 +130,7 @@ export class AdaptersComponent implements OnInit {
         isEdit: false,
         id: ''
       },
+      nzWidth: 600,
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
     });
     // Return a result when closed
@@ -150,6 +151,7 @@ export class AdaptersComponent implements OnInit {
         isEdit: true,
         id: editiId
       },
+      nzWidth: 600,
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
     });
     // Return a result when closed

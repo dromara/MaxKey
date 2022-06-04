@@ -23,7 +23,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 import { Groups } from '../../../../entity/Groups';
+import { TreeNodes } from '../../../../entity/TreeNodes';
 import { GroupsService } from '../../../../service/groups.service';
+import { OrganizationsService } from '../../../../service/organizations.service';
 
 @Component({
   selector: 'app-group-editer',
@@ -49,11 +51,17 @@ export class GroupEditerComponent implements OnInit {
       model: new Groups()
     };
 
+  // TreeNodes
+  treeNodes = new TreeNodes(false);
+
+  selectValues: string[] = [];
+
   formGroup: FormGroup = new FormGroup({});
 
   constructor(
     private modalRef: NzModalRef,
     private groupsService: GroupsService,
+    private orgsService: OrganizationsService,
     private fb: FormBuilder,
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
@@ -61,12 +69,22 @@ export class GroupEditerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.tree();
     if (this.isEdit) {
       this.groupsService.get(`${this.id}`).subscribe(res => {
         this.form.model.init(res.data);
+        this.selectValues = this.form.model.orgIdsList.split(',');
         this.cdr.detectChanges();
       });
     }
+  }
+
+  tree(): void {
+    this.orgsService.tree({}).subscribe(res => {
+      this.treeNodes.init(res.data);
+      this.treeNodes.nodes = this.treeNodes.build();
+      this.cdr.detectChanges();
+    });
   }
 
   onClose(e: MouseEvent): void {
@@ -78,6 +96,11 @@ export class GroupEditerComponent implements OnInit {
     e.preventDefault();
     this.form.submitting = true;
     this.form.model.trans();
+    this.form.model.orgIdsList = '';
+    this.selectValues.forEach(value => {
+      this.form.model.orgIdsList = `${this.form.model.orgIdsList + value},`;
+    });
+
     (this.isEdit ? this.groupsService.update(this.form.model) : this.groupsService.add(this.form.model)).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi(this.isEdit ? 'mxk.alert.update.success' : 'mxk.alert.add.success'));

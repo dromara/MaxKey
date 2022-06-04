@@ -37,6 +37,8 @@ public class Resources  extends JpaBaseEntity implements Serializable {
     @Column
     String name;
     @Column
+    String permission;
+    @Column
     int sortIndex;
     @Column
     String appId;
@@ -108,7 +110,15 @@ public class Resources  extends JpaBaseEntity implements Serializable {
         this.appName = appName;
     }
 
-    public String getParentId() {
+    public String getPermission() {
+		return permission;
+	}
+
+	public void setPermission(String permission) {
+		this.permission = permission;
+	}
+
+	public String getParentId() {
         return parentId;
     }
 

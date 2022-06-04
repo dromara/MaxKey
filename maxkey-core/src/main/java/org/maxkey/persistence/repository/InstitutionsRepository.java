@@ -36,7 +36,7 @@ public class InstitutionsRepository {
     private static Logger _logger = LoggerFactory.getLogger(InstitutionsRepository.class);
     
     private static final String SELECT_STATEMENT = 
-    						"select * from  mxk_institutions where id = ? or domain = ? " ;
+    						"select * from  mxk_institutions where id = ? or domain = ? or consoledomain = ?" ;
     
     private static final String DEFAULT_INSTID = "1";
 
@@ -69,13 +69,14 @@ public class InstitutionsRepository {
         Institutions inst = institutionsStore.getIfPresent(mapper.get(instIdOrDomain)==null ? DEFAULT_INSTID : mapper.get(instIdOrDomain) );
         if(inst == null) {
 	        List<Institutions> institutions = 
-	        		jdbcTemplate.query(SELECT_STATEMENT,new InstitutionsRowMapper(),instIdOrDomain,instIdOrDomain);
+	        		jdbcTemplate.query(SELECT_STATEMENT,new InstitutionsRowMapper(),instIdOrDomain,instIdOrDomain,instIdOrDomain);
 	        
 	        if (institutions != null && institutions.size() > 0) {
 	        	inst = institutions.get(0);
 	        }
 	        if(inst != null ) {
 		        institutionsStore.put(inst.getDomain(), inst);
+		        institutionsStore.put(inst.getConsoleDomain(), inst);
 		        mapper.put(inst.getId(), inst.getDomain());
 	        }
         }
@@ -93,6 +94,7 @@ public class InstitutionsRepository {
         	institution.setLogo(rs.getString("logo"));
         	institution.setDomain(rs.getString("domain"));
         	institution.setFrontTitle(rs.getString("fronttitle"));
+        	institution.setConsoleDomain(rs.getString("consoledomain"));
         	institution.setConsoleTitle(rs.getString("consoletitle"));
         	institution.setCaptchaType(rs.getString("captchatype"));
         	institution.setCaptchaSupport(rs.getString("captchasupport"));

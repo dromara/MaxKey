@@ -33,7 +33,7 @@
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="scheduler">{{ 'mxk.synchronizers.scheduler' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid icon!">
         <input [(ngModel)]="form.model.scheduler" [ngModelOptions]="{ standalone: true }" nz-input name="scheduler"
-          id="scheduler" />
+          placeholder="0 0 12 * * ?" id="scheduler" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item *ngIf="
@@ -99,7 +99,8 @@
         <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item *ngIf="form.model.sourceType == 'LDAP' || form.model.sourceType == 'MSAD'">
+    <nz-form-item
+      *ngIf="(form.model.sourceType == 'LDAP' || form.model.sourceType == 'MSAD') && form.model.switch_sslSwitch">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="trustStore">{{ 'mxk.synchronizers.trustStore' | i18n }}
       </nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid trustStore!">
@@ -107,7 +108,8 @@
           id="trustStore" />
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item *ngIf="form.model.sourceType == 'LDAP' || form.model.sourceType == 'MSAD'">
+    <nz-form-item
+      *ngIf="(form.model.sourceType == 'LDAP' || form.model.sourceType == 'MSAD') && form.model.switch_sslSwitch">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="trustStorePassword">{{ 'mxk.synchronizers.trustStorePassword' | i18n
         }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid sortIndex!">

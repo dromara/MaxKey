@@ -23,7 +23,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { Roles } from 'src/app/entity/Roles';
 
+import { TreeNodes } from '../../../../entity/TreeNodes';
+import { OrganizationsService } from '../../../../service/organizations.service';
 import { RolesService } from '../../../../service/roles.service';
+
 @Component({
   selector: 'app-role-editer',
   templateUrl: './role-editer.component.html',
@@ -47,12 +50,17 @@ export class RoleEditerComponent implements OnInit {
       submitting: false,
       model: new Roles()
     };
+  // TreeNodes
+  treeNodes = new TreeNodes(false);
+
+  selectValues: string[] = [];
 
   formGroup: FormGroup = new FormGroup({});
 
   constructor(
     private modalRef: NzModalRef,
     private rolesService: RolesService,
+    private orgsService: OrganizationsService,
     private fb: FormBuilder,
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
@@ -60,12 +68,22 @@ export class RoleEditerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.tree();
     if (this.isEdit) {
       this.rolesService.get(`${this.id}`).subscribe(res => {
         this.form.model.init(res.data);
+        this.selectValues = this.form.model.orgIdsList.split(',');
         this.cdr.detectChanges();
       });
     }
+  }
+
+  tree(): void {
+    this.orgsService.tree({}).subscribe(res => {
+      this.treeNodes.init(res.data);
+      this.treeNodes.nodes = this.treeNodes.build();
+      this.cdr.detectChanges();
+    });
   }
 
   onClose(e: MouseEvent): void {
@@ -77,6 +95,10 @@ export class RoleEditerComponent implements OnInit {
     e.preventDefault();
     this.form.submitting = true;
     this.form.model.trans();
+    this.form.model.orgIdsList = '';
+    this.selectValues.forEach(value => {
+      this.form.model.orgIdsList = `${this.form.model.orgIdsList + value},`;
+    });
     (this.isEdit ? this.rolesService.update(this.form.model) : this.rolesService.add(this.form.model)).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi(this.isEdit ? 'mxk.alert.update.success' : 'mxk.alert.add.success'));
