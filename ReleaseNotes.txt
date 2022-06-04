@@ -20,7 +20,13 @@
     *(MAXKEY-220619) 动态组和动态角色的成员管理显示所属组或者角色
     *(MAXKEY-220620) 管理端列表按钮样式整体调整，删除primary
     *(MAXKEY-220621) 零信任标准工作组连接
-    *(MAXKEY-220622) 依赖项引用、更新和升级
+	*(MAXKEY-220622) 角色、用户组、账号策略部门选择改用TreeSelect组件
+	*(MAXKEY-220623) 增加控制台域名配置
+	*(MAXKEY-220624) 资源表增加权限标识字段
+    *(MAXKEY-220625) 开关控件控制的优化
+	*(MAXKEY-220626) 提示信息国际化优化
+	*(MAXKEY-220627) NGINX转发头添加proxy_set_header host
+	*(MAXKEY-220628) 依赖项引用、更新和升级
         spring                   5.3.20
         springBoot               2.6.8
         springSecurity           5.6.5
