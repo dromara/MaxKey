@@ -30,18 +30,16 @@
 			"apps": "應用管理",
 			"access": {
 				"": "訪問控制",
-				"sessions": "會話管理",
-				"groups": "組管理",
-				"groupmembers": "組成員管理",
+				"groups": "角色管理",
+				"groupmembers": "角色成員管理",
 				"privileges": "訪問權限管理"
 			},
 			"permissions": {
 				"": "權限管理",
-				"roles": "角色管理",
-				"rolemembers": "角色成員管理",
 				"resources": "資源管理",
 				"privileges": "權限管理"
 			},
+			"sessions": "會話管理",
 			"config": {
 				"": "配置管理",
 				"institutions": "機構管理",
@@ -187,9 +185,9 @@
 			"tab.address": "地址",
 			"tab.contact": "聯繫方式",
 			"id": "編碼",
-			"code": "機構編碼",
-			"name": "機構名稱",
-			"fullName": "機構全稱",
+			"code": "組織編碼",
+			"name": "組織名稱",
+			"fullName": "組織全稱",
 			"parentId": "父級ID",
 			"parentCode": "父級編碼",
 			"parentName": "父級名稱",

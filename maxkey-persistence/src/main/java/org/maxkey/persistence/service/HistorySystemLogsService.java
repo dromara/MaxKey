@@ -20,15 +20,13 @@ package org.maxkey.persistence.service;
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.entity.Accounts;
 import org.maxkey.entity.ChangePassword;
-import org.maxkey.entity.GroupMember;
-import org.maxkey.entity.GroupPrivileges;
-import org.maxkey.entity.Groups;
+import org.maxkey.entity.RoleMember;
+import org.maxkey.entity.RolePermissions;
+import org.maxkey.entity.Roles;
 import org.maxkey.entity.HistorySystemLogs;
 import org.maxkey.entity.Organizations;
 import org.maxkey.entity.Resources;
-import org.maxkey.entity.RoleMember;
 import org.maxkey.entity.RolePrivileges;
-import org.maxkey.entity.Roles;
 import org.maxkey.entity.SocialsProvider;
 import org.maxkey.entity.Synchronizers;
 import org.maxkey.entity.UserInfo;
@@ -66,16 +64,12 @@ public class HistorySystemLogsService  extends JpaBaseService<HistorySystemLogs>
 				message = buildMsg((ChangePassword)entity);
 			}else if(entity instanceof Accounts) {
 				message = buildMsg((Accounts)entity);
-			}else if(entity instanceof Groups) {
-				message = buildMsg((Groups)entity);
 			}else if(entity instanceof Roles) {
 				message = buildMsg((Roles)entity);
-			}else if(entity instanceof GroupMember) {
-				message = buildMsg((GroupMember)entity);
 			}else if(entity instanceof RoleMember) {
 				message = buildMsg((RoleMember)entity);
-			}else if(entity instanceof GroupPrivileges) {
-				message = buildMsg((GroupPrivileges)entity);
+			}else if(entity instanceof RolePermissions) {
+				message = buildMsg((RolePermissions)entity);
 			}else if(entity instanceof Resources) {
 				message = buildMsg((Resources)entity);
 			}else if(entity instanceof Synchronizers) {
@@ -147,15 +141,9 @@ public class HistorySystemLogsService  extends JpaBaseService<HistorySystemLogs>
 				.toString();
 	}
 	
-	public String buildMsg(Groups g) {
+	public String buildMsg(Roles g) {
 		return new StringBuilder()
 				.append(g.getName())
-				.toString();
-	}
-	
-	public String buildMsg(Roles r) {
-		return new StringBuilder()
-				.append(r.getName())
 				.toString();
 	}
 	
@@ -169,21 +157,11 @@ public class HistorySystemLogsService  extends JpaBaseService<HistorySystemLogs>
 				.toString();
 	}
 	
-	public String buildMsg(GroupMember gm) {
+	public String buildMsg(RolePermissions permission) {
 		return new StringBuilder()
-				.append(gm.getGroupName())
+				.append(permission.getRoleName())
 				.append("[")
-				.append(gm.getUsername()).append(",")
-				.append(gm.getDisplayName())
-				.append("]")
-				.toString();
-	}
-	
-	public String buildMsg(GroupPrivileges privilege) {
-		return new StringBuilder()
-				.append(privilege.getGroupName())
-				.append("[")
-				.append(privilege.getAppName())
+				.append(permission.getAppName())
 				.append("]")
 				.toString();
 	}

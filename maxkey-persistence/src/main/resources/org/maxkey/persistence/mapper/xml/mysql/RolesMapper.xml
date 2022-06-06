@@ -11,23 +11,24 @@
 		</if>
     </sql>
     
-	<select id="queryDynamicRoles" parameterType="Roles" resultType="Roles">
-		select
-			*
-		from
-			mxk_roles
-		where instid   =   #{instId} 
-			 and dynamic = '1'
-		<include refid="where_statement"/>
-	</select>
+	
 	
 	<select id="queryPageResults" parameterType="Roles" resultType="Roles">
 		select
 			*
 		from
 			mxk_roles
-		where
-			 instid   =   #{instId} 
+		where instid   =   #{instId} 
+		<include refid="where_statement"/>
+	</select>
+	
+	<select id="queryDynamicRoles" parameterType="Roles" resultType="Roles">
+		select
+			*
+		from
+			mxk_roles
+		where instid   =   #{instId} 
+            and dynamic = '1'
 		<include refid="where_statement"/>
 	</select>
 	
@@ -46,9 +47,9 @@
     
     
     <update id="logisticBatchDelete" parameterType="java.util.List">
-    	update mxk_roles 
+    	update mxk_roles
     	set status='2' 
-    	where instid   =   #{instId}  
+    	where instid   =   #{instId} 
     	   and id in
     		<foreach item="item" collection="list" open="(" separator="," close=")">
 				#{item}
@@ -56,42 +57,22 @@
     </update>
     
     
-    <select id="queryRolePrivileges" parameterType="RolePrivileges" resultType="RolePrivileges">
-        select
-            *
-        from
-            mxk_role_privileges
-        where   instid   =   #{instId} 
-            and status   = 1
-       <if test="id != null and id != ''">
-            and id  =   #{id}
-        </if> 
-        <if test="roleId != null and roleId != ''">
-            and roleid  =   #{roleId}
-        </if> 
-        <if test="appId != null and appId != ''">
-            and appid  =   #{appId}
-        </if> 
-        
+    <select id="queryRolesByUserId" parameterType="string"  resultType="Roles">
+            select  distinct
+                r.*
+            from
+                mxk_userinfo u,
+                mxk_roles   r,
+                mxk_role_member rm
+            where   u.instid    =   #{instId} 
+                and r.instid    =   #{instId} 
+                and rm.instid   =   #{instId} 
+                and rm.memberid = #{value}
+                and u.id        = #{value}
+                and rm.type     in( 'USER','USER-DYNAMIC')
+                and rm.groupid  =   r.id    
+                and rm.memberid =   u.id
     </select>
     
-    <update id="deleteRolePrivileges" parameterType="java.util.List">
-        update mxk_role_privileges 
-        set status = 9 
-        where 1 = 1 and 
-            <foreach item="item" collection="list" open="(" separator="or" close=")">
-                ( id = #{item.id} and instid  =   #{item.instId} )
-            </foreach>
-    </update>
-    
-    <insert id="insertRolePrivileges"  parameterType="java.util.List">
-	    insert into mxk_role_privileges ( id,appid,roleid,resourceid,status,instid) 
-	    values 
-	    <foreach collection="list" item="item" index="index" separator=",">
-	        (#{item.id},#{item.appId},#{item.roleId},#{item.resourceId},#{item.status},#{item.instId})
-	    </foreach>
-	</insert>
-	
-	
    
 </mapper>

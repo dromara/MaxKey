@@ -174,26 +174,6 @@ export class AccountsComponent implements OnInit {
     });
   }
 
-  onEdit(e: MouseEvent, editiId: String): void {
-    e.preventDefault();
-
-    const modal = this.modalService.create({
-      nzContent: AccountEditerComponent,
-      nzViewContainerRef: this.viewContainerRef,
-      nzComponentParams: {
-        isEdit: true,
-        id: editiId
-      },
-      nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
-    });
-    // Return a result when closed
-    modal.afterClose.subscribe(result => {
-      if (result.refresh) {
-        this.fetch();
-      }
-    });
-  }
-
   onDelete(e: MouseEvent, deleteId: String): void {
     e.preventDefault();
     this.accountsService.delete(deleteId).subscribe(res => {

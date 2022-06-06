@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
-import org.maxkey.entity.Groups;
+import org.maxkey.entity.Roles;
 import org.maxkey.entity.HistoryLogin;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
@@ -85,8 +85,8 @@ public abstract class AbstractAuthenticationRealm {
 
     public abstract boolean passwordMatches(UserInfo userInfo, String password);
     
-    public List<Groups> queryGroups(UserInfo userInfo) {
-       return loginRepository.queryGroups(userInfo);
+    public List<Roles> queryGroups(UserInfo userInfo) {
+       return loginRepository.queryRoles(userInfo);
     }
 
     /**

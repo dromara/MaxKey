@@ -1,5 +1,6 @@
+package org.maxkey.web.permissions.contorller;
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-
-package org.maxkey.web.permissions.contorller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +24,7 @@ import org.maxkey.entity.Message;
 import org.maxkey.entity.RolePrivileges;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.HistorySystemLogsService;
-import org.maxkey.persistence.service.RolesService;
+import org.maxkey.persistence.service.RolePrivilegesService;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +44,7 @@ public class RolePrivilegesController {
 	final static Logger _logger = LoggerFactory.getLogger(RolePrivilegesController.class);
 	
 	@Autowired
-    RolesService rolesService;
+	RolePrivilegesService rolePrivilegesService;
 	
 	@Autowired
 	HistorySystemLogsService systemLog;
@@ -63,7 +61,7 @@ public class RolePrivilegesController {
 						rolePrivileges.getAppId(),
 						rolePrivileges.getRoleId(),
 						currentUser.getInstId());
-		List<RolePrivileges> roleRolePrivilegesList = rolesService.queryRolePrivileges(queryRolePrivileges);
+		List<RolePrivileges> roleRolePrivilegesList = rolePrivilegesService.queryRolePrivileges(queryRolePrivileges);
 		
 		HashMap<String,String >privilegeMap =new HashMap<String,String >();
 		for(RolePrivileges rolePrivilege : roleRolePrivilegesList) {
@@ -98,10 +96,10 @@ public class RolePrivilegesController {
         }
 		if (!deleteRolePrivilegesList.isEmpty()) {
 			_logger.debug("-remove  : " + deleteRolePrivilegesList);
-		    rolesService.deleteRolePrivileges(deleteRolePrivilegesList);
+			rolePrivilegesService.deleteRolePrivileges(deleteRolePrivilegesList);
 		}
 		
-		if (!newRolePrivilegesList.isEmpty() && rolesService.insertRolePrivileges(newRolePrivilegesList)) {
+		if (!newRolePrivilegesList.isEmpty() && rolePrivilegesService.insertRolePrivileges(newRolePrivilegesList)) {
 			_logger.debug("-insert  : " + newRolePrivilegesList);
 			return new Message<RolePrivileges>(Message.SUCCESS).buildResponse();
 			
@@ -123,7 +121,7 @@ public class RolePrivilegesController {
         				rolePrivileges.getAppId(),
         				rolePrivileges.getRoleId(),
         				currentUser.getInstId());
-        List<RolePrivileges> rolePrivilegeList = rolesService.queryRolePrivileges(queryRolePrivilege);
+        List<RolePrivileges> rolePrivilegeList = rolePrivilegesService.queryRolePrivileges(queryRolePrivilege);
         
         return new Message<List<RolePrivileges>>(
         		rolePrivilegeList).buildResponse();

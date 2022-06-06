@@ -30,11 +30,9 @@ import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.maxkey.persistence.service.NoticesService;
 
 /**
  * Index
@@ -44,9 +42,6 @@ import org.maxkey.persistence.service.NoticesService;
 @Controller
 public class IndexEndpoint {
 	private static Logger _logger = LoggerFactory.getLogger(IndexEndpoint.class);
-	
-	@Autowired
-	NoticesService noticesService;
 	
 	@Autowired
   	ApplicationConfig applicationConfig;
@@ -79,12 +74,4 @@ public class IndexEndpoint {
 		
 	}
 	
-	@RequestMapping(value={"/lastedNotices"})
-	public ModelAndView lastedNotices() {
-		_logger.debug("notices /notices.");
-		ModelAndView modelAndView = new ModelAndView("notices");
-		modelAndView.addObject("notice", noticesService.queryLastedNotices());
-		return  modelAndView;
-		
-	}
 }

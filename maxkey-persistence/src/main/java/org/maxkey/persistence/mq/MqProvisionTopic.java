@@ -25,19 +25,15 @@ public class MqProvisionTopic {
     
     public final  static String  ORG_TOPIC                          = "MXK_IDENTITY_ORG_TOPIC";
     
-    public final  static String  GROUP_TOPIC                        = "MXK_IDENTITY_GROUP_TOPIC";
-    
-    public final  static String  GROUP_MEMBER_TOPIC                 = "MXK_IDENTITY_GROUP_MEMBER_TOPIC";
-    
     public final  static String  ACCOUNT_TOPIC                      = "MXK_IDENTITY_ACCOUNT_TOPIC";
     
-    public final  static String  AUTHORITY_ROLE_TOPIC               = "MXK_AUTHORITY_ROLE_TOPIC";
+    public final  static String  ROLE_TOPIC               			= "MXK_ROLE_TOPIC";
     
-    public final  static String  AUTHORITY_ROLE_MEMBER_TOPIC        = "MXK_AUTHORITY_ROLE_MEMBER_TOPIC";
+    public final  static String  ROLE_MEMBER_TOPIC        			= "MXK_ROLE_MEMBER_TOPIC";
     
-    public final  static String  AUTHORITY_RESOURCE_TOPIC           = "MXK_AUTHORITY_RESOURCE_TOPIC";
+    public final  static String  ROLE_PRIVILEGES_TOPIC    			= "MXK_ROLE_PRIVILEGES_TOPIC";
     
-    public final  static String  AUTHORITY_ROLE_PERMISSION_TOPIC    = "MXK_AUTHORITY_ROLE_PERMISSION_TOPIC";
+    public final  static String  RESOURCE_TOPIC           			= "MXK_RESOURCE_TOPIC";
     
     public final  static String  CONNECTOR_HISTORY_TOPIC            = "MXK_CONNECTOR_HISTORY_TOPIC";
      

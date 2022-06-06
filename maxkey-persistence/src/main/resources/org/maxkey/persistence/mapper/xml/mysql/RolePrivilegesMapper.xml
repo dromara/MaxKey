@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.RolePrivilegesMapper">
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	id	=	#{id}
+		</if> 
+		<if test="name != null and name != ''">
+			and name like '%${name}%'
+		</if>
+    </sql>
+    
+    <select id="queryRolePrivileges" parameterType="RolePrivileges" resultType="RolePrivileges">
+        select
+            *
+        from
+            mxk_role_privileges
+        where   instid   =   #{instId} 
+            and status   = 1
+       <if test="id != null and id != ''">
+            and id  =   #{id}
+        </if> 
+        <if test="roleId != null and roleId != ''">
+            and roleid  =   #{roleId}
+        </if> 
+        <if test="appId != null and appId != ''">
+            and appid  =   #{appId}
+        </if> 
+        
+    </select>
+    
+    <update id="deleteRolePrivileges" parameterType="java.util.List">
+        update mxk_role_privileges 
+        set status = 9 
+        where 1 = 1 and 
+            <foreach item="item" collection="list" open="(" separator="or" close=")">
+                ( id = #{item.id} and instid  =   #{item.instId} )
+            </foreach>
+    </update>
+    
+    <insert id="insertRolePrivileges"  parameterType="java.util.List">
+	    insert into mxk_role_privileges ( id,appid,roleid,resourceid,status,instid) 
+	    values 
+	    <foreach collection="list" item="item" index="index" separator=",">
+	        (#{item.id},#{item.appId},#{item.roleId},#{item.resourceId},#{item.status},#{item.instId})
+	    </foreach>
+	</insert>
+	
+	
+   
+</mapper>

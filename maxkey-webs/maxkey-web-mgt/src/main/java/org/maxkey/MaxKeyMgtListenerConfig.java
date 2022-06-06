@@ -18,13 +18,11 @@
 package org.maxkey;
 
 import org.maxkey.authn.session.SessionManager;
-import org.maxkey.listener.AccountsStrategyListenerAdapter;
-import org.maxkey.listener.DynamicGroupsListenerAdapter;
+import org.maxkey.listener.DynamicRolesListenerAdapter;
 import org.maxkey.listener.ListenerAdapter;
 import org.maxkey.listener.ListenerParameter;
 import org.maxkey.listener.SessionListenerAdapter;
-import org.maxkey.persistence.service.AccountsService;
-import org.maxkey.persistence.service.GroupsService;
+import org.maxkey.persistence.service.RolesService;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
@@ -54,38 +52,21 @@ public class MaxKeyMgtListenerConfig  implements InitializingBean {
     }
     
     @Bean
-    public String  dynamicGroupsListenerAdapter(
+    public String  dynamicRolesListenerAdapter(
     		Scheduler scheduler,
-            GroupsService groupsService,
+            RolesService rolesService,
             @Value("${maxkey.job.cron.schedule}") String cronSchedule
             ) throws SchedulerException {
         
         ListenerAdapter.addListener(
-    			DynamicGroupsListenerAdapter.class,
+    			DynamicRolesListenerAdapter.class,
     			scheduler,
-    			new ListenerParameter().add("groupsService",groupsService).build(),
+    			new ListenerParameter().add("rolesService",rolesService).build(),
     			cronSchedule,
-    			DynamicGroupsListenerAdapter.class.getSimpleName()
+    			DynamicRolesListenerAdapter.class.getSimpleName()
     		);
-        _logger.debug("DynamicGroups ListenerAdapter inited .");
-        return "dynamicGroupsListenerAdapter";
-    }
-    
-    @Bean
-    public String  accountsStrategyListenerAdapter(
-    		Scheduler scheduler,
-            AccountsService accountsService,
-            @Value("${maxkey.job.cron.schedule}") String cronSchedule
-            ) throws SchedulerException {    	
-        ListenerAdapter.addListener(
-        		AccountsStrategyListenerAdapter.class,
-        		scheduler,
-        		new ListenerParameter().add("accountsService",accountsService).build(),
-    			cronSchedule,
-    			AccountsStrategyListenerAdapter.class.getSimpleName()
-    		);
-        _logger.debug("AccountsStrategy ListenerAdapter inited .");
-        return "accountsStrategyListenerAdapter";
+        _logger.debug("DynamicRoles ListenerAdapter inited .");
+        return "dynamicRolesListenerAdapter";
     }
     
     @Override

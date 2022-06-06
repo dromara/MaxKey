@@ -25,6 +25,7 @@ import java.util.List;
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.entity.RoleMember;
 import org.maxkey.entity.Roles;
+import org.maxkey.entity.UserInfo;
 
 /**
  * @author Crystal.sea
@@ -35,13 +36,17 @@ public  interface RoleMemberMapper extends IJpaBaseMapper<RoleMember> {
 	
 	public List<RoleMember> memberInRole(RoleMember entity);
 	public List<RoleMember> memberNotInRole(RoleMember entity);
-	public List<RoleMember> roleMemberInRole(RoleMember entity);
 	
 	public List<Roles> rolesNoMember(RoleMember entity);
 	
-    public int addDynamicRoleMember(Roles dynamicRole);
-
-    public int deleteDynamicRoleMember(Roles dynamicRole);
-
-    public int deleteByRoleId(String roleId);
+	public int addDynamicRoleMember(Roles dynamicRole);
+	
+	public int deleteDynamicRoleMember(Roles dynamicRole);
+	
+	public int deleteByRoleId(String roleId);
+	
+	public List<UserInfo> queryMemberByRoleId(String roleId);
+	
+	
+	
 }

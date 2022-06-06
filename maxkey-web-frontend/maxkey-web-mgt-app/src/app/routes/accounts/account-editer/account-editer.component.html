@@ -50,40 +50,30 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item style="display: none">
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="strategyId">{{ 'mxk.accountsstrategy.id' | i18n }}
-      </nz-form-label>
-      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid strategyId!">
-        <input [(ngModel)]="form.model.strategyId" readonly [ngModelOptions]="{ standalone: true }" nz-input
-          name="strategyId" id="strategyId" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="strategyName">{{ 'mxk.accountsstrategy.name' | i18n }}
-      </nz-form-label>
-      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48"
-        nzErrorTip="The input is not valid strategyName!">
-        <nz-input-group nzSearch [nzAddOnAfter]="suffixStrategyButton">
-          <input [(ngModel)]="form.model.strategyName" [ngModelOptions]="{ standalone: true }" nz-input readonly
-            name="strategyName" id="strategyName" />
-        </nz-input-group>
-        <ng-template #suffixStrategyButton>
-          <button nz-button nzType="primary" nzSearch (click)="onSelectStrategy($event)">{{ 'mxk.text.select' | i18n
-            }}</button>
-        </ng-template>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item style="display: none">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="appId">{{ 'mxk.apps.id' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid appId!">
         <input [(ngModel)]="form.model.appId" readonly [ngModelOptions]="{ standalone: true }" nz-input name="appId"
           id="appId" />
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="appName">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
+    <nz-form-item *ngIf="isEdit">
+      <nz-form-label nzRequired [nzSm]="6" [nzXs]="24" nzFor="appName">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid appName!">
         <input [(ngModel)]="form.model.appName" disabled="true" [ngModelOptions]="{ standalone: true }" nz-input
           name="appName" id="appName" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="!isEdit && username == ''">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="appName">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid appName!">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixStrategyButton">
+          <input [(ngModel)]="form.model.appName" [ngModelOptions]="{ standalone: true }" nz-input name="appName"
+            id="appName" />
+        </nz-input-group>
+        <ng-template #suffixStrategyButton>
+          <button nz-button nzType="primary" nzSearch (click)="onSelectApp($event)">{{ 'mxk.text.select' | i18n
+            }}</button>
+        </ng-template>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -91,14 +81,10 @@
         }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48"
         nzErrorTip="The input is not valid relatedUsername!">
-        <nz-input-group nzSearch [nzAddOnAfter]="suffixUserButton">
+        <nz-input-group nzSearch>
           <input [(ngModel)]="form.model.relatedUsername" [ngModelOptions]="{ standalone: true }" nz-input
             disabled="{{ isEdit }}" name="relatedUsername" id="relatedUsername" />
         </nz-input-group>
-        <ng-template #suffixUserButton>
-          <button nz-button nzType="primary" style="{{ isEdit ? 'display:none' : 'display:block' }}" nzSearch
-            (click)="onGenerate($event)">{{ 'mxk.text.generate' | i18n }}</button>
-        </ng-template>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>

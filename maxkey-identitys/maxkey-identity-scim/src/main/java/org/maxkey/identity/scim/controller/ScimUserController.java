@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.constants.ConstsStatus;
-import org.maxkey.entity.Groups;
+import org.maxkey.entity.Roles;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.identity.scim.resources.ScimEnterprise;
 import org.maxkey.identity.scim.resources.ScimGroupRef;
@@ -36,7 +36,7 @@ import org.maxkey.identity.scim.resources.ScimUser;
 import org.maxkey.identity.scim.resources.ScimUserEmail;
 import org.maxkey.identity.scim.resources.ScimFormattedName;
 import org.maxkey.identity.scim.resources.ScimUserPhoneNumber;
-import org.maxkey.persistence.service.GroupsService;
+import org.maxkey.persistence.service.RolesService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.StringUtils;
@@ -72,7 +72,7 @@ public class ScimUserController {
 	private UserInfoService userInfoService;
 	
 	@Autowired
-	GroupsService groupsService;
+	RolesService rolesService;
 	
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public MappingJacksonValue get(@PathVariable String id,
@@ -168,9 +168,9 @@ public class ScimUserController {
     	
     	List<String> groupsList=new  ArrayList<String>(); 
     	List<ScimGroupRef> groups = new  ArrayList<ScimGroupRef>(); 
-    	for(Groups group : groupsService.queryGroupByUserId(userInfo.getId())){
-    		groupsList.add(group.getId());
-    		groups.add(new ScimGroupRef(group.getId(),group.getName()));
+    	for(Roles role : rolesService.queryRolesByUserId(userInfo.getId())){
+    		groupsList.add(role.getId());
+    		groups.add(new ScimGroupRef(role.getId(),role.getName()));
     		
     	}
     	scimUser.setGroup(groupsList);

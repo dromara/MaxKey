@@ -23,12 +23,13 @@ import { Message } from '../entity/Message';
 import { PageResults } from '../entity/PageResults';
 import { RoleMembers } from '../entity/RoleMembers';
 import { BaseService } from './base.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class RoleMembersService extends BaseService<RoleMembers> {
   constructor(private _httpClient: HttpClient) {
-    super(_httpClient, '/permissions/rolemembers');
+    super(_httpClient, '/access/rolemembers');
     this.server.urls.member = '/memberInRole';
     this.server.urls.memberOut = '/memberNotInRole';
   }

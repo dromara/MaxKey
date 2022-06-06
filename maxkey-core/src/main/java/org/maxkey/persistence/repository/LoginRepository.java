@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.maxkey.constants.ConstsStatus;
-import org.maxkey.entity.Groups;
+import org.maxkey.entity.Roles;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
@@ -51,7 +51,7 @@ public class LoginRepository {
 
 
 
-    private static final String GROUPS_SELECT_STATEMENT = "select distinct g.id,g.name from mxk_userinfo u,mxk_groups g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
+    private static final String ROLES_SELECT_STATEMENT = "select distinct r.id,r.name from mxk_userinfo u,mxk_roles r,mxk_role_member rm where u.id = ?  and u.id=rm.memberid and rm.roleid=r.id ";
 
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "select * from  mxk_userinfo where username = ? ";
     
@@ -59,7 +59,7 @@ public class LoginRepository {
     
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL = "select * from  mxk_userinfo where (username = ? or mobile = ? or email = ?) ";
     
-    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.name from mxk_apps app,mxk_group_privileges gp,mxk_groups g  where app.id=gp.appid and gp.groupid=g.id and g.id in(%s)";
+    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.name from mxk_apps app,mxk_role_permissions pm,mxk_roles r  where app.id=pm.appid and pm.roleid=r.id and r.id in(%s)";
     
     protected JdbcTemplate jdbcTemplate;
     
@@ -211,17 +211,17 @@ public class LoginRepository {
         return listAuthorizedApps;
     }
     
-    public List<Groups> queryGroups(UserInfo userInfo) {
-        List<Groups> listGroups = jdbcTemplate.query(GROUPS_SELECT_STATEMENT, new RowMapper<Groups>() {
-            public Groups mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Groups group = new Groups(rs.getString("id"), rs.getString("name"), 0);
+    public List<Roles> queryRoles(UserInfo userInfo) {
+        List<Roles> listRoles = jdbcTemplate.query(ROLES_SELECT_STATEMENT, new RowMapper<Roles>() {
+            public Roles mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Roles role = new Roles(rs.getString("id"), rs.getString("name"), 0);
 
-                return group;
+                return role;
             }
         }, userInfo.getId());
 
-        _logger.debug("list Groups  " + listGroups);
-        return listGroups;
+        _logger.debug("list Roles  " + listRoles);
+        return listRoles;
     }
 
     /**
@@ -232,14 +232,14 @@ public class LoginRepository {
      */
     public ArrayList<GrantedAuthority> grantAuthority(UserInfo userInfo) {
         // query roles for user
-        List<Groups> listGroups = queryGroups(userInfo);
+        List<Roles> listGroups = queryRoles(userInfo);
 
         //set default roles
         ArrayList<GrantedAuthority> grantedAuthority = new ArrayList<GrantedAuthority>();
         grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
         grantedAuthority.add(new SimpleGrantedAuthority("ROLE_ORDINARY_USER"));
         grantedAuthority.add(new SimpleGrantedAuthority("ROLE_ALL_USER"));
-        for (Groups group : listGroups) {
+        for (Roles group : listGroups) {
             grantedAuthority.add(new SimpleGrantedAuthority(group.getId()));
         }
         _logger.debug("Authority : " + grantedAuthority);

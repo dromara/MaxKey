@@ -18,12 +18,14 @@
 package org.maxkey.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 
 /*
    ID                   varchar(40)                    not null,
@@ -32,56 +34,133 @@ import javax.persistence.Table;
    constraint PK_ROLES primary key clustered (ID)
  */
 @Entity
-@Table(name = "MXK_ROLE_MEMBER")
-public class RoleMember extends UserInfo implements Serializable {
-    private static final long serialVersionUID = -8059639972590554760L;
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
-    String id;
-    @Column
-    private String roleId;
-    private String roleName;
-    private String dynamic;
-    @Column
-    private String memberId;
-    private String memberName;
-    @Column
-    private String type;// User or Roles
+@Table(name = "MXK_ROLE_MEMBER")  
+public class RoleMember extends UserInfo implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8059639972590554760L;
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO,generator="snowflakeid")
+	String id;
+	@Column
+	private String roleId;
+	private String roleName;
+	private String dynamic;
+	@Column
+	private String memberId;
+	private String memberName;
+	@Column
+	private String type;//User or Group
+
 	@Column
 	private String instId;
 
 	private String instName;
 	
-    public RoleMember() {
-        super();
-    }
+	public RoleMember(){
+		super();
+	}
 
-    public String getId() {
-        return id;
-    }
+	
+	/**
+	 * @param groupId
+	 * @param memberId
+	 * @param type
+	 */
+	public RoleMember(String roleId, String memberId, String type , String instId) {
+		super();
+		this.roleId = roleId;
+		this.memberId = memberId;
+		this.type = type;
+		this.instId = instId;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
-    public String getRoleId() {
-        return roleId;
-    }
+	public RoleMember(String roleId, String roleName, String memberId,
+			String memberName, String type , String instId) {
+		super();
+		this.roleId = roleId;
+		this.roleName = roleName;
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.type = type;
+		this.instId = instId;
+	}
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
 
-    public String getRoleName() {
-        return roleName;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
 
-    public String getDynamic() {
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+
+	public String getRoleId() {
+		return roleId;
+	}
+
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+
+	/**
+	 * @return the memberId
+	 */
+	public String getMemberId() {
+		return memberId;
+	}
+
+	/**
+	 * @param memberId the memberId to set
+	 */
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	public String getDynamic() {
 		return dynamic;
 	}
 
@@ -89,82 +168,50 @@ public class RoleMember extends UserInfo implements Serializable {
 		this.dynamic = dynamic;
 	}
 
-	public String getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
-    }
-
-    public String getMemberName() {
-        return memberName;
-    }
-
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getInstId() {
+	public String getInstId() {
 		return instId;
 	}
+
 
 	public void setInstId(String instId) {
 		this.instId = instId;
 	}
 
+
 	public String getInstName() {
 		return instName;
 	}
+
 
 	public void setInstName(String instName) {
 		this.instName = instName;
 	}
 
-	public RoleMember(String roleId, String memberId, String type , String instId) {
-        super();
-        this.roleId = roleId;
-        this.memberId = memberId;
-        this.type = type;
-        this.instId = instId;
-    }
 
-    
-    public RoleMember(String roleId, String roleName, String memberId, String memberName, String type ,String instId) {
-        super();
-        this.roleId = roleId;
-        this.roleName = roleName;
-        this.memberId = memberId;
-        this.memberName = memberName;
-        this.type = type;
-        this.instId = instId;
-    }
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RoleMember [id=");
+		builder.append(id);
+		builder.append(", roleId=");
+		builder.append(roleId);
+		builder.append(", roleName=");
+		builder.append(roleName);
+		builder.append(", dynamic=");
+		builder.append(dynamic);
+		builder.append(", memberId=");
+		builder.append(memberId);
+		builder.append(", memberName=");
+		builder.append(memberName);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", instId=");
+		builder.append(instId);
+		builder.append(", instName=");
+		builder.append(instName);
+		builder.append("]");
+		return builder.toString();
+	}
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("RoleMember [id=");
-        builder.append(id);
-        builder.append(", roleId=");
-        builder.append(roleId);
-        builder.append(", roleName=");
-        builder.append(roleName);
-        builder.append(", memberId=");
-        builder.append(memberId);
-        builder.append(", memberName=");
-        builder.append(memberName);
-        builder.append(", type=");
-        builder.append(type);
-        builder.append("]");
-        return builder.toString();
-    }
 
 }

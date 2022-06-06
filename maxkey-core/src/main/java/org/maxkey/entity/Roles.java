@@ -25,18 +25,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
-
+import org.hibernate.validator.constraints.Length;
 @Entity
 @Table(name = "MXK_ROLES")
 public class Roles extends JpaBaseEntity implements Serializable {
-    private static final long serialVersionUID = -7515832728504943821L;
-    
+
+    private static final long serialVersionUID = 4660258495864814777L;
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "snowflakeid")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+    String id;
+
+    @Length(max = 60)
     @Column
-    private String name;
+    String name;
+    
     @Column
     String dynamic;
 
@@ -49,8 +52,9 @@ public class Roles extends JpaBaseEntity implements Serializable {
     String resumeTime; 
     @Column
     String suspendTime;
+    
     @Column
-    String status;
+    int isdefault;
     @Column
     String description;
     @Column
@@ -61,21 +65,32 @@ public class Roles extends JpaBaseEntity implements Serializable {
     String modifiedBy;
     @Column
     String modifiedDate;
+    @Column
+    int status;
+    
 	@Column
 	private String instId;
 
 	private String instName;
-	
+
     public Roles() {
-        super();
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+    public Roles(String id) {
         this.id = id;
+    }
+
+    /**
+     * Groups.
+     * @param id String
+     * @param name String
+     * @param isdefault int
+     */
+    public Roles(String id, String name, int isdefault) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.isdefault = isdefault;
     }
 
     public String getName() {
@@ -86,12 +101,20 @@ public class Roles extends JpaBaseEntity implements Serializable {
         this.name = name;
     }
 
-    public String getStatus() {
-        return status;
+    public String getId() {
+        return id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getIsdefault() {
+        return isdefault;
+    }
+
+    public void setIsdefault(int isdefault) {
+        this.isdefault = isdefault;
     }
 
     public String getDescription() {
@@ -134,6 +157,26 @@ public class Roles extends JpaBaseEntity implements Serializable {
         this.modifiedDate = modifiedDate;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    /**
+     * ROLE_ALL_USER must be 
+     * 		1, dynamic 
+     * 		2, all orgIdsList 
+	 *		3, not filters
+     */
+    public void setDefaultAllUser() {
+    	this.dynamic = "1";
+    	this.orgIdsList ="";
+		this.filters ="";
+    }
+    
     public String getDynamic() {
         return dynamic;
     }
@@ -159,22 +202,22 @@ public class Roles extends JpaBaseEntity implements Serializable {
     }
 
     public String getResumeTime() {
-		return resumeTime;
-	}
+        return resumeTime;
+    }
 
-	public void setResumeTime(String resumeTime) {
-		this.resumeTime = resumeTime;
-	}
+    public void setResumeTime(String resumeTime) {
+        this.resumeTime = resumeTime;
+    }
 
-	public String getSuspendTime() {
-		return suspendTime;
-	}
+    public String getSuspendTime() {
+        return suspendTime;
+    }
 
-	public void setSuspendTime(String suspendTime) {
-		this.suspendTime = suspendTime;
-	}
+    public void setSuspendTime(String suspendTime) {
+        this.suspendTime = suspendTime;
+    }
 
-	public String getInstId() {
+    public String getInstId() {
 		return instId;
 	}
 
@@ -193,7 +236,7 @@ public class Roles extends JpaBaseEntity implements Serializable {
 	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Roles [id=");
+        builder.append("Groups [id=");
         builder.append(id);
         builder.append(", name=");
         builder.append(name);
@@ -203,8 +246,12 @@ public class Roles extends JpaBaseEntity implements Serializable {
         builder.append(filters);
         builder.append(", orgIdsList=");
         builder.append(orgIdsList);
-        builder.append(", status=");
-        builder.append(status);
+        builder.append(", resumeTime=");
+        builder.append(resumeTime);
+        builder.append(", suspendTime=");
+        builder.append(suspendTime);
+        builder.append(", isdefault=");
+        builder.append(isdefault);
         builder.append(", description=");
         builder.append(description);
         builder.append(", createdBy=");
@@ -215,10 +262,10 @@ public class Roles extends JpaBaseEntity implements Serializable {
         builder.append(modifiedBy);
         builder.append(", modifiedDate=");
         builder.append(modifiedDate);
+        builder.append(", status=");
+        builder.append(status);
         builder.append("]");
         return builder.toString();
     }
-   
-    
 
 }

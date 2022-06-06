@@ -1,5 +1,5 @@
 /*
- * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.entity.RoleMember;
 import org.maxkey.entity.Roles;
+import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.mapper.RoleMemberMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class RoleMemberService  extends JpaBaseService<RoleMember>{
-	
 	final static Logger _logger = LoggerFactory.getLogger(RoleMemberService.class);
 	
 	public RoleMemberService() {
@@ -45,19 +45,23 @@ public class RoleMemberService  extends JpaBaseService<RoleMember>{
 		return (RoleMemberMapper)super.getMapper();
 	}
 	
+	public int addDynamicRoleMember(Roles dynamicGroup) {
+	    return getMapper().addDynamicRoleMember(dynamicGroup);
+	}
 	
-    public int addDynamicRoleMember(Roles dynamicRole) {
-        return getMapper().addDynamicRoleMember(dynamicRole);
+	public int deleteDynamicRoleMember(Roles dynamicGroup) {
+	    return getMapper().deleteDynamicRoleMember(dynamicGroup);
+	}
+	
+	public int deleteByRoleId(String groupId) {
+        return getMapper().deleteByRoleId(groupId);
     }
-
-    public int deleteDynamicRoleMember(Roles dynamicRole) {
-        return getMapper().deleteDynamicRoleMember(dynamicRole);
-    }
-
-    public int deleteByRoleId(String roleId) {
-        return getMapper().deleteByRoleId(roleId);
-    }
-    
+	
+	public List<UserInfo> queryMemberByRoleId(String groupId){
+		return getMapper().queryMemberByRoleId(groupId);
+	}
+	
+	
 	public JpaPageResults<Roles> rolesNoMember(RoleMember entity) {
 		entity.setPageResultSelectUUID(entity.generateId());
 		entity.setStartRow(calculateStartRow(entity.getPageNumber() ,entity.getPageSize()));
@@ -81,4 +85,5 @@ public class RoleMemberService  extends JpaBaseService<RoleMember>{
 		
 		return new JpaPageResults<Roles>(entity.getPageNumber(),entity.getPageSize(),totalPage,totalCount,resultslist);
 	}
+	
 }

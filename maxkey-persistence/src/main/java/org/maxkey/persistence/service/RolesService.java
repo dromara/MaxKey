@@ -17,25 +17,33 @@
 
 package org.maxkey.persistence.service;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.maxkey.entity.RolePrivileges;
+import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.Roles;
 import org.maxkey.persistence.mapper.RolesMapper;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Repository
-public class RolesService  extends JpaBaseService<Roles>{
-    final static Logger _logger = LoggerFactory.getLogger(RolesService.class);
+public class RolesService  extends JpaBaseService<Roles> implements Serializable {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4156671926199393550L;
     
+    final static Logger _logger = LoggerFactory.getLogger(RolesService.class);
+    @JsonIgnore
     @Autowired
-    @Qualifier("roleMemberService")
     RoleMemberService roleMemberService;
     
 	public RolesService() {
@@ -50,47 +58,78 @@ public class RolesService  extends JpaBaseService<Roles>{
 		return (RolesMapper)super.getMapper();
 	}
 	
-	public boolean insertRolePrivileges(List<RolePrivileges> rolePermissionsList) {
-	    return getMapper().insertRolePrivileges(rolePermissionsList)>0;
-	};
-    
-	public boolean deleteRolePrivileges(List<RolePrivileges> rolePermissionsList) {
-	     return getMapper().deleteRolePrivileges(rolePermissionsList)>=0;
-	 }
 	
-    public List<RolePrivileges> queryRolePrivileges(RolePrivileges rolePermissions){
-        return getMapper().queryRolePrivileges(rolePermissions);
-    }
-    
-    public List<Roles> queryDynamicRoles(Roles dynamicRole){
-        return this.getMapper().queryDynamicRoles(dynamicRole);
-    }
-    
-    public boolean deleteById(String roleId) {
-        this.remove(roleId);
-        roleMemberService.deleteByRoleId(roleId);
-        return true;
-    }
-    
-    public void refreshDynamicRoles(Roles dynamicRole){
-        if(dynamicRole.getDynamic().equals("1")) {
-            if(dynamicRole.getOrgIdsList()!=null && !dynamicRole.getOrgIdsList().equals("")) {
-                dynamicRole.setOrgIdsList("'"+dynamicRole.getOrgIdsList().replace(",", "','")+"'");
+	public List<Roles> queryDynamicRoles(Roles groups){
+	    return this.getMapper().queryDynamicRoles(groups);
+	}
+	
+	public boolean deleteById(String groupId) {
+	    this.remove(groupId);
+	    roleMemberService.deleteByRoleId(groupId);
+	    return true;
+	}
+	
+	public List<Roles> queryRolesByUserId(String userId){
+		return this.getMapper().queryRolesByUserId(userId);
+	}
+	
+	public void refreshDynamicRoles(Roles dynamicRole){
+	    if(dynamicRole.getDynamic().equals(ConstsStatus.ACTIVE+"")) {
+	        boolean isDynamicTimeSupport = false;
+	        boolean isBetweenEffectiveTime = false;
+	        if(StringUtils.isNotBlank(dynamicRole.getResumeTime())
+	                &&StringUtils.isNotBlank(dynamicRole.getSuspendTime())
+	                &&!dynamicRole.getSuspendTime().equals("00:00")) {
+	            LocalTime currentTime = LocalDateTime.now().toLocalTime();
+	            LocalTime resumeTime = LocalTime.parse(dynamicRole.getResumeTime());
+	            LocalTime suspendTime = LocalTime.parse(dynamicRole.getSuspendTime());
+	            
+	            _logger.info("currentTime: " + currentTime 
+                        + " , resumeTime : " + resumeTime 
+                        + " , suspendTime: " + suspendTime);
+	            isDynamicTimeSupport = true;
+	            
+	            if(resumeTime.isBefore(currentTime) && currentTime.isBefore(suspendTime)) {
+	                isBetweenEffectiveTime = true;
+	            }
+	            
+	        }
+	        
+    	    if(StringUtils.isNotBlank(dynamicRole.getOrgIdsList())) {
+    	    	dynamicRole.setOrgIdsList("'"+dynamicRole.getOrgIdsList().replace(",", "','")+"'");
+    	    }
+    	    String filters = dynamicRole.getFilters();
+    	    if(StringUtils.isNotBlank(filters)) {
+	    		if(StringUtils.filtersSQLInjection(filters.toLowerCase())) {  
+	    			_logger.info("filters include SQL Injection Attack Risk.");
+	    			return;
+	    		}
+	    		filters = filters.replace("&", " AND ");
+	    	    filters = filters.replace("|", " OR ");
+	    	    
+	    	    dynamicRole.setFilters(filters);
+    	    }
+    	    
+    	    if(isDynamicTimeSupport) {
+    	        if(isBetweenEffectiveTime) {
+    	        	roleMemberService.deleteDynamicRoleMember(dynamicRole);
+    	        	roleMemberService.addDynamicRoleMember(dynamicRole);
+    	        }else {
+    	        	roleMemberService.deleteDynamicRoleMember(dynamicRole);
+    	        }
+    	    }else{
+    	    	roleMemberService.deleteDynamicRoleMember(dynamicRole);
+    	    	roleMemberService.addDynamicRoleMember(dynamicRole);
             }
-            
-            String filters = dynamicRole.getFilters();
-            if(StringUtils.filtersSQLInjection(filters.toLowerCase())) {  
-                _logger.info("filters include SQL Injection Attack Risk.");
-                return;
-            }
-            
-            filters = filters.replace("&", " AND ");
-            filters = filters.replace("|", " OR ");
-            
-            dynamicRole.setFilters(filters);
-            
-            roleMemberService.deleteDynamicRoleMember(dynamicRole);
-            roleMemberService.addDynamicRoleMember(dynamicRole);
+	    }
+    }
+	
+	public void refreshAllDynamicRoles(){
+	    List<Roles>  groupsList = queryDynamicRoles(null);
+        for(Roles group : groupsList) {
+            _logger.debug("group " + group);
+            refreshDynamicRoles(group);
         }
-    }
+	}
+
 }

@@ -122,15 +122,6 @@
                 <nz-dropdown-menu #menuMoreAction="nzDropdownMenu">
                   <ul nz-menu>
                     <li nz-menu-item *ngIf="data.status == 1"
-                      (click)="onNavToUrl($event, data.id, data.username, 'accounts')">{{
-                      'mxk.text.accounts' | i18n
-                      }}</li>
-
-                    <li nz-menu-item *ngIf="data.status == 1"
-                      (click)="onNavToUrl($event, data.id, data.username, 'groups')">{{
-                      'mxk.text.groups' | i18n
-                      }}</li>
-                    <li nz-menu-item *ngIf="data.status == 1"
                       (click)="onNavToUrl($event, data.id, data.username, 'roles')">{{
                       'mxk.text.roles' | i18n
                       }}</li>

@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.entity.AccountsStrategy;
-import org.maxkey.entity.Groups;
+import org.maxkey.entity.Roles;
 import org.maxkey.persistence.mapper.AccountsStrategyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +55,7 @@ public class AccountsStrategyService  extends JpaBaseService<AccountsStrategy> i
 	}
 	
 	
-	public List<Groups> queryDynamicGroups(Groups groups){
+	public List<Roles> queryDynamicGroups(Roles groups){
 	    return this.getMapper().queryDynamicGroups(groups);
 	}
 	

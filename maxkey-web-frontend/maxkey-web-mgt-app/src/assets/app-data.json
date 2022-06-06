@@ -30,13 +30,6 @@
           "link": "/users",
           "icon": "anticon-user",
           "children": []
-        },
-        {
-          "text": "账号管理",
-          "i18n": "mxk.menu.accounts",
-          "link": "/accounts",
-          "icon": "anticon-idcard",
-          "children": []
         }
         ,
         {
@@ -54,29 +47,29 @@
           "children": [
             {
               "text": "会话管理",
-              "i18n": "mxk.menu.access.sessions",
+              "i18n": "mxk.menu.sessions",
               "link": "/access/sessions",
               "icon": "anticon-eye",
               "children": []
             },
             {
-              "text": "组管理",
-              "i18n": "mxk.menu.access.groups",
-              "link": "/access/groups",
+              "text": "角色管理",
+              "i18n": "mxk.menu.access.roles",
+              "link": "/access/roles",
               "icon": "anticon-contacts",
               "children": []
             },
             {
-              "text": "组成员管理",
-              "i18n": "mxk.menu.access.groupmembers",
-              "link": "/access/groupmembers",
+              "text": "角色成员管理",
+              "i18n": "mxk.menu.access.rolemembers",
+              "link": "/access/rolemembers",
               "icon": "anticon-team",
               "children": []
             },
             {
-              "text": "访问权限管理",
-              "i18n": "mxk.menu.access.privileges",
-              "link": "/access/privileges",
+              "text": "访问控制管理",
+              "i18n": "mxk.menu.access.permissions",
+              "link": "/access/permissions",
               "icon": "anticon-check-square",
               "children": []
             }
@@ -88,20 +81,6 @@
           "link": "/permissions",
           "icon": "anticon-radar-chart",
           "children": [
-            {
-              "text": "角色管理",
-              "i18n": "mxk.menu.permissions.roles",
-              "link": "/permissions/roles",
-              "icon": "anticon-solution",
-              "children": []
-            },
-            {
-              "text": "角色成员管理",
-              "i18n": "mxk.menu.permissions.rolemembers",
-              "link": "/permissions/rolemembers",
-              "icon": "anticon-usergroup-add",
-              "children": []
-            },
             {
               "text": "资源管理",
               "i18n": "mxk.menu.permissions.resources",
@@ -132,10 +111,10 @@
               "children": []
             },
             {
-              "text": "账号策略",
-              "i18n": "mxk.menu.config.accountsstrategys",
-              "link": "/config/accountsstrategys",
-              "icon": "anticon-control",
+              "text": "账号管理",
+              "i18n": "mxk.menu.accounts",
+              "link": "/accounts",
+              "icon": "anticon-idcard",
               "children": []
             },
             {
@@ -150,13 +129,6 @@
               "i18n": "mxk.menu.config.synchronizers",
               "link": "/config/synchronizers",
               "icon": "anticon-partition",
-              "children": []
-            },
-            {
-              "text": "适配器注册",
-              "i18n": "mxk.menu.config.adapters",
-              "link": "/config/adapters",
-              "icon": "anticon-wallet",
               "children": []
             },
             {
@@ -213,13 +185,6 @@
               "text": "同步器日志",
               "i18n": "mxk.menu.audit.synchronizer",
               "link": "/audit/audit-synchronizer",
-              "icon": "anticon-audit",
-              "children": []
-            },
-            {
-              "text": "连接器日志",
-              "i18n": "mxk.menu.audit.connector",
-              "link": "/audit/audit-connector",
               "icon": "anticon-audit",
               "children": []
             },

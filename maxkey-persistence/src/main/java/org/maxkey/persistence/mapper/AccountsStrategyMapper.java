@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.maxkey.entity.AccountsStrategy;
-import org.maxkey.entity.Groups;
+import org.maxkey.entity.Roles;
 
 /**
  * @author Crystal.sea
@@ -33,5 +33,5 @@ import org.maxkey.entity.Groups;
 
 public  interface AccountsStrategyMapper extends IJpaBaseMapper<AccountsStrategy> {
 
-    public List<Groups> queryDynamicGroups(Groups groups);
+    public List<Roles> queryDynamicGroups(Roles groups);
 }

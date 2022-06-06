@@ -1,19 +1,18 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -21,15 +20,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '@shared';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
-import { GroupMembersComponent } from './group-members/group-members.component';
-import { GroupEditerComponent } from './groups/group-editer/group-editer.component';
-import { GroupsComponent } from './groups/groups.component';
-import { PrivilegesComponent } from './privileges/privileges.component';
+import { PermissionsEditerComponent } from './permissions/permissions-editer/permissions-editer.component';
+import { PermissionsComponent } from './permissions/permissions.component';
+import { MemberRolesEditerComponent } from './role-members/member-roles-editer/member-roles-editer.component';
+import { RoleMembersEditerComponent } from './role-members/role-members-editer/role-members-editer.component';
+import { RoleMembersComponent } from './role-members/role-members.component';
+import { RoleEditerComponent } from './roles/role-editer/role-editer.component';
+import { RolesComponent } from './roles/roles.component';
+import { SelectRolesComponent } from './roles/select-roles/select-roles.component';
 import { SessionsComponent } from './sessions/sessions.component';
-import { SelectGroupsComponent } from './groups/select-groups/select-groups.component';
-import { GroupMembersEditerComponent } from './group-members/group-members-editer/group-members-editer.component';
-import { PrivilegesEditerComponent } from './privileges/privileges-editer/privileges-editer.component';
-import { MemberGroupsEditerComponent } from './group-members/member-groups-editer/member-groups-editer.component';
 
 const routes: Routes = [
   {
@@ -37,23 +36,33 @@ const routes: Routes = [
     component: SessionsComponent
   },
   {
-    path: 'groups',
-    component: GroupsComponent
+    path: 'roles',
+    component: RolesComponent
   },
   {
-    path: 'groupmembers',
-    component: GroupMembersComponent
+    path: 'rolemembers',
+    component: RoleMembersComponent
   },
   {
-    path: 'privileges',
-    component: PrivilegesComponent
+    path: 'permissions',
+    component: PermissionsComponent
   }
 ];
 
-const COMPONENTS = [SessionsComponent, GroupsComponent, GroupMembersComponent, PrivilegesComponent, GroupEditerComponent];
+const COMPONENTS = [
+  RolesComponent,
+  RoleMembersComponent,
+  PermissionsComponent,
+  RoleEditerComponent,
+  SessionsComponent,
+  SelectRolesComponent,
+  RoleMembersEditerComponent,
+  PermissionsEditerComponent,
+  MemberRolesEditerComponent
+];
 
 @NgModule({
-  declarations: [...COMPONENTS, PrivilegesComponent, SelectGroupsComponent, GroupMembersEditerComponent, PrivilegesEditerComponent, MemberGroupsEditerComponent],
+  declarations: [...COMPONENTS],
   imports: [NzIconModule, SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

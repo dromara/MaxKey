@@ -46,34 +46,6 @@ CREATE TABLE `mxk_accounts` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `mxk_accounts_strategy`
---
-
-DROP TABLE IF EXISTS `mxk_accounts_strategy`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_accounts_strategy` (
-  `ID` varchar(45) NOT NULL COMMENT 'ID',
-  `NAME` varchar(100) DEFAULT NULL COMMENT 'strategy NAME',
-  `APPID` varchar(45) NOT NULL COMMENT 'APPID',
-  `APPNAME` varchar(45) NOT NULL COMMENT 'APPNAME',
-  `MAPPING` varchar(45) NOT NULL COMMENT 'ACCOUNT MAPPING',
-  `FILTERS` text,
-  `ORGIDSLIST` text,
-  `SUFFIXES` varchar(200) DEFAULT NULL,
-  `CREATETYPE` varchar(100) DEFAULT NULL,
-  `STATUS` tinyint unsigned DEFAULT NULL COMMENT 'STATUS',
-  `CREATEDBY` varchar(45) DEFAULT NULL COMMENT 'CREATEDBY',
-  `CREATEDDATE` datetime DEFAULT NULL COMMENT 'CREATEDDATE',
-  `MODIFIEDBY` varchar(45) DEFAULT NULL COMMENT 'MODIFIEDBY',
-  `MODIFIEDDATE` datetime DEFAULT NULL COMMENT 'MODIFIEDDATE',
-  `DESCRIPTION` varchar(500) DEFAULT NULL COMMENT 'DESCRIPTION',
-  `INSTID` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='accounts_strategy';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `mxk_apps`
 --
 
@@ -341,71 +313,6 @@ CREATE TABLE `mxk_file_upload` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `mxk_group_member`
---
-
-DROP TABLE IF EXISTS `mxk_group_member`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_group_member` (
-  `ID` varchar(100) NOT NULL DEFAULT '' COMMENT 'ID',
-  `GROUPID` varchar(100) NOT NULL COMMENT 'GROUPID',
-  `MEMBERID` varchar(100) NOT NULL COMMENT 'MEMBERID USERID OR GROUP ID',
-  `TYPE` varchar(45) NOT NULL COMMENT 'TYPE  USER OR GROUP',
-  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
-  `INSTID` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `FK_APPROLEU_REFERENCE_APPROLES` (`GROUPID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='group member,USERS OR GROUPS';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mxk_group_privileges`
---
-
-DROP TABLE IF EXISTS `mxk_group_privileges`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_group_privileges` (
-  `ID` varchar(45) NOT NULL COMMENT 'ID',
-  `GROUPID` varchar(45) NOT NULL COMMENT 'GROUPID',
-  `APPID` varchar(45) NOT NULL COMMENT 'APPID',
-  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
-  `INSTID` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `FK_APPROLEA_REFERENCE_APPLICAT` (`APPID`),
-  KEY `FK_APPROLEA_REFERENCE_APPROLES` (`GROUPID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='group privileges';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mxk_groups`
---
-
-DROP TABLE IF EXISTS `mxk_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_groups` (
-  `ID` varchar(45) NOT NULL COMMENT 'ID',
-  `NAME` varchar(100) DEFAULT NULL COMMENT 'GROUP NAME',
-  `DYNAMIC` varchar(2) DEFAULT NULL COMMENT '动态用户组，0否 1是',
-  `FILTERS` text COMMENT '过滤条件SQL',
-  `ORGIDSLIST` text COMMENT '机构列表',
-  `RESUMETIME` varchar(45) DEFAULT NULL COMMENT 'RESUMETIME',
-  `SUSPENDTIME` varchar(45) DEFAULT NULL COMMENT 'SUSPENDTIME',
-  `STATUS` tinyint unsigned DEFAULT NULL COMMENT 'STATUS',
-  `CREATEDBY` varchar(45) DEFAULT NULL COMMENT 'CREATEDBY',
-  `ISDEFAULT` tinyint unsigned DEFAULT NULL COMMENT 'ISDEFAULT',
-  `CREATEDDATE` datetime DEFAULT NULL COMMENT 'CREATEDDATE',
-  `MODIFIEDBY` varchar(45) DEFAULT NULL COMMENT 'MODIFIEDBY',
-  `MODIFIEDDATE` datetime DEFAULT NULL COMMENT 'MODIFIEDDATE',
-  `DESCRIPTION` varchar(500) DEFAULT NULL COMMENT 'DESCRIPTION',
-  `INSTID` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='groups';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `mxk_history_connector`
 --
 
@@ -634,28 +541,6 @@ CREATE TABLE `mxk_localization` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `mxk_notices`
---
-
-DROP TABLE IF EXISTS `mxk_notices`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_notices` (
-  `ID` varchar(50) NOT NULL,
-  `TITLE` varchar(400) DEFAULT NULL,
-  `CONTENT` text,
-  `STATUS` varchar(45) DEFAULT NULL,
-  `CREATEDBY` varchar(45) DEFAULT NULL,
-  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
-  `MODIFIEDBY` varchar(45) DEFAULT NULL,
-  `MODIFIEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
-  `description` varchar(500) DEFAULT NULL,
-  `INSTID` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='通知';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `mxk_organizations`
 --
 
@@ -834,13 +719,33 @@ DROP TABLE IF EXISTS `mxk_role_member`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mxk_role_member` (
   `ID` varchar(100) NOT NULL DEFAULT '' COMMENT 'ID',
-  `ROLEID` varchar(45) NOT NULL COMMENT 'ROLEID',
-  `MEMBERID` varchar(45) NOT NULL COMMENT 'USERID OR ROLEID',
-  `TYPE` varchar(45) NOT NULL COMMENT 'TYPE USER OR ROLE',
+  `ROLEID` varchar(100) NOT NULL COMMENT 'GROUPID',
+  `MEMBERID` varchar(100) NOT NULL COMMENT 'MEMBERID USERID OR GROUP ID',
+  `TYPE` varchar(45) NOT NULL COMMENT 'TYPE  USER OR GROUP',
   `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
   `INSTID` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='role members';
+  PRIMARY KEY (`ID`),
+  KEY `FK_APPROLEU_REFERENCE_APPROLES` (`ROLEID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='group member,USERS OR GROUPS';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `mxk_role_permissions`
+--
+
+DROP TABLE IF EXISTS `mxk_role_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mxk_role_permissions` (
+  `ID` varchar(45) NOT NULL COMMENT 'ID',
+  `ROLEID` varchar(45) NOT NULL COMMENT 'GROUPID',
+  `APPID` varchar(45) NOT NULL COMMENT 'APPID',
+  `CREATEDDATE` datetime DEFAULT CURRENT_TIMESTAMP,
+  `INSTID` varchar(45) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_APPROLEA_REFERENCE_APPLICAT` (`APPID`),
+  KEY `FK_APPROLEA_REFERENCE_APPROLES` (`ROLEID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='group privileges';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -872,22 +777,22 @@ DROP TABLE IF EXISTS `mxk_roles`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mxk_roles` (
   `ID` varchar(45) NOT NULL COMMENT 'ID',
-  `NAME` varchar(100) DEFAULT NULL COMMENT 'ROLE NAME',
-  `DYNAMIC` varchar(45) DEFAULT NULL,
-  `FILTERS` text,
-  `ORGIDSLIST` text,
-  `RESUMETIME` varchar(45) DEFAULT '00:00',
-  `SUSPENDTIME` varchar(45) DEFAULT '00:00',
+  `NAME` varchar(100) DEFAULT NULL COMMENT 'GROUP NAME',
+  `DYNAMIC` varchar(2) DEFAULT NULL COMMENT '动态用户组，0否 1是',
+  `FILTERS` text COMMENT '过滤条件SQL',
+  `ORGIDSLIST` text COMMENT '机构列表',
+  `RESUMETIME` varchar(45) DEFAULT NULL COMMENT 'RESUMETIME',
+  `SUSPENDTIME` varchar(45) DEFAULT NULL COMMENT 'SUSPENDTIME',
   `STATUS` tinyint unsigned DEFAULT NULL COMMENT 'STATUS',
   `CREATEDBY` varchar(45) DEFAULT NULL COMMENT 'CREATEDBY',
   `ISDEFAULT` tinyint unsigned DEFAULT NULL COMMENT 'ISDEFAULT',
-  `CREATEDDATE` date DEFAULT NULL COMMENT 'CREATEDDATE',
+  `CREATEDDATE` datetime DEFAULT NULL COMMENT 'CREATEDDATE',
   `MODIFIEDBY` varchar(45) DEFAULT NULL COMMENT 'MODIFIEDBY',
-  `MODIFIEDDATE` date DEFAULT NULL COMMENT 'MODIFIEDDATE',
+  `MODIFIEDDATE` datetime DEFAULT NULL COMMENT 'MODIFIEDDATE',
   `DESCRIPTION` varchar(500) DEFAULT NULL COMMENT 'DESCRIPTION',
   `INSTID` varchar(45) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='roles';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='groups';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1200,4 +1105,4 @@ CREATE TABLE `mxk_userinfo_adjunct` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-04 18:48:26
+-- Dump completed on 2022-06-06 20:10:30

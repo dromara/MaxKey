@@ -29,18 +29,16 @@
 			"apps": "Apps",
 			"access": {
 				"": "Access",
-				"sessions": "Sessions",
-				"groups": "Groups",
-				"groupmembers": "GroupMembers",
-				"privileges": "Privileges"
+				"roles": "Role",
+				"rolemembers": "RoleMembers",
+				"permissions" :"Permissions"
 			},
 			"permissions": {
 				"": "Permissions",
-				"roles": "Roles",
-				"rolemembers": "RoleMembers",
 				"resources": "Resources",
-				"privileges": "Permissions"
+				"privileges": "Privileges"
 			},
+			"sessions": "Sessions",
 			"config": {
 				"": "Configuration",
 				"institutions": "Institutions",

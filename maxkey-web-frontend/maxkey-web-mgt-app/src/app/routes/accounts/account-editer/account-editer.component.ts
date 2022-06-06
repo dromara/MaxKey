@@ -25,7 +25,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { Accounts } from '../../../entity/Accounts';
 import { AccountsService } from '../../../service/accounts.service';
 import { UsersService } from '../../../service/users.service';
-import { SelectAccountsStrategyComponent } from '../../config/accounts-strategy/select-accounts-strategy/select-accounts-strategy.component';
+import { SelectAppsComponent } from '../../apps/select-apps/select-apps.component';
 import { SelectUserComponent } from '../../users/select-user/select-user.component';
 
 @Component({
@@ -107,10 +107,10 @@ export class AccountEditerComponent implements OnInit {
     });
   }
 
-  onSelectStrategy(e: MouseEvent): void {
+  onSelectApp(e: MouseEvent): void {
     e.preventDefault();
     const modal = this.modalService.create({
-      nzContent: SelectAccountsStrategyComponent,
+      nzContent: SelectAppsComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: {},
       nzWidth: 600,
@@ -119,10 +119,8 @@ export class AccountEditerComponent implements OnInit {
     // Return a result when closed
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
-        this.form.model.appId = result.data.appId;
-        this.form.model.appName = result.data.appName;
-        this.form.model.strategyName = result.data.name;
-        this.form.model.strategyId = result.data.id;
+        this.form.model.appId = result.data.id;
+        this.form.model.appName = result.data.name;
         this.cdr.detectChanges();
       }
     });
