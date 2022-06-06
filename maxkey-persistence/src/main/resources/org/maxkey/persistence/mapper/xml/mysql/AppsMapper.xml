@@ -176,22 +176,22 @@
         select distinct
             app.*
         from
-            mxk_apps app,mxk_group_privileges gp,mxk_groups g
+            mxk_apps app,mxk_role_permissions p,mxk_roles r
         where
-            app.id=gp.appid
-            and gp.groupid=g.id
+            app.id  =   p.appid
+            and p.roleid = r.id
             and app.instid = #{instId}
-            and gp.instid = #{instId}
-            and g.instid = #{instId}
+            and p.instid = #{instId}
+            and r.instid = #{instId}
             and app.visible != 0
             and (
-            	 g.id='ROLE_ALL_USER'
-                 or g.id in(
+            	 r.id='ROLE_ALL_USER'
+                 or r.id in(
                       select 
-                        gm.groupid 
+                        rm.roleid 
                       from 
-                        mxk_group_member gm,mxk_userinfo u 
-                      where gm.memberid    =   u.id 
+                        mxk_role_member rm,mxk_userinfo u 
+                      where rm.memberid    =   u.id 
                         <if test="userId != null and userId != ''">
                             and u.id        =   #{userId}
                         </if>
