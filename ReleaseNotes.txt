@@ -1,4 +1,4 @@
-﻿MaxKey v 3.5.1 GA 2022/06/**
+﻿MaxKey v 3.5.1 GA 2022/06/07
     *(MAXKEY-220601) session会话增加二级缓存
     *(MAXKEY-220602) session会话超时及token刷新的问题
     *(MAXKEY-220603) 认证界面优化，支持账号登录和扫码登录
@@ -26,7 +26,10 @@
     *(MAXKEY-220625) 开关控件控制的优化
     *(MAXKEY-220626) 提示信息国际化优化
     *(MAXKEY-220627) NGINX转发头添加proxy_set_header host
-    *(MAXKEY-220628) 依赖项引用、更新和升级
+    *(MAXKEY-220628) 简化权限控制，合并角色+用户组-->角色
+    *(MAXKEY-220629) 简化账号管理功能
+    *(MAXKEY-220630) 优化管理端UI功能
+    *(MAXKEY-220631) 依赖项引用、更新和升级
         spring                   5.3.20
         springBoot               2.6.8
         springSecurity           5.6.5
