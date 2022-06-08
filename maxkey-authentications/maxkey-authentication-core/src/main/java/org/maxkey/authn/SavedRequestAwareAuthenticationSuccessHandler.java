@@ -102,7 +102,7 @@ public class SavedRequestAwareAuthenticationSuccessHandler
         logger.trace("CAS " + request.getParameter(WebConstants.CAS_SERVICE_PARAMETER));
         if (request.getParameter(WebConstants.CAS_SERVICE_PARAMETER) != null
                 && request.getParameter(WebConstants.CAS_SERVICE_PARAMETER).startsWith("http")) {
-            targetUrl = WebContext.getHttpContextPath() + "/authz/cas/login?service="
+            targetUrl = WebContext.getHttpContextPath(true) + "/authz/cas/login?service="
                     + request.getParameter(WebConstants.CAS_SERVICE_PARAMETER);
         }
         targetUrl = targetUrl == null ? "/forwardindex" : targetUrl;

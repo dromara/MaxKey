@@ -130,28 +130,28 @@
 <script src="http://wwcdn.weixin.qq.com/node/wework/wwopen/js/wwLogin-1.2.7.js"></script>
 -->
 <!--钉钉-->
-<!--
+<!---->
 <script src="http://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
-<script > 
-  var ddredirect_uri="";
+<script>
+  var ddredirect_uri = "";
   var handleMessage = function (event) {
-  var origin = event.origin;
-  if( origin == "https://login.dingtalk.com" ) { //判断是否来自ddLogin扫码事件。
-      var loginTmpCode = event.data; 
-      ddredirect_uri = ddredirect_uri+'&loginTmpCode='+loginTmpCode;
+    var origin = event.origin;
+    if (origin == "https://login.dingtalk.com") { //判断是否来自ddLogin扫码事件。
+      var loginTmpCode = event.data;
+      ddredirect_uri = ddredirect_uri + '&loginTmpCode=' + loginTmpCode;
       //获取到loginTmpCode后就可以在这里构造跳转链接进行跳转了
       window.top.location.href = ddredirect_uri;
     }
   };
   if (typeof window.addEventListener != 'undefined') {
-      window.addEventListener('message', handleMessage, false);
+    window.addEventListener('message', handleMessage, false);
   } else if (typeof window.attachEvent != 'undefined') {
-      window.attachEvent('onmessage', handleMessage);
+    window.attachEvent('onmessage', handleMessage);
   }
 </script>
--->
+
 <!--飞书-->
-<!---->
+<!--
 <script src="http://sf3-cn.feishucdn.com/obj/static/lark/passport/qrcode/LarkSSOSDKWebQRCode-1.0.1.js"></script>
 <script type="text/javascript">
   var fsredirectUri = "";
@@ -173,5 +173,6 @@
     window.attachEvent('onmessage', handleMessage);
   }
 </script>
+-->
 
 </html>

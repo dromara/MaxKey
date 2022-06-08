@@ -249,7 +249,7 @@
 			"filters": "過濾器",
 			"basedn": "基本DN",
 			"msadDomain": "Active Directory域",
-			"accountMapping": "賬號映射",
+			"accountMapping": "域賬號認證",
 			"trustStore": "證書",
 			"trustStorePassword": "證書密鑰"
 		},

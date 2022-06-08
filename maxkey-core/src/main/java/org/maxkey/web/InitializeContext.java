@@ -231,8 +231,8 @@ public class InitializeContext extends HttpServlet {
      */
     public void showLicense() {
         _logger.info("-----------------------------------------------------------");
-        _logger.info("+                                MaxKey ");
-        _logger.info("+                      Single   Sign   On ( SSO ) ");
+        _logger.info("+                      MaxKey Community  Edition ");
+        _logger.info("+                      Single   Sign  On ( SSO ) ");
         _logger.info("+                           Version {}", 
                         WebContext.properties.getProperty("application.formatted-version"));
         _logger.info("+");

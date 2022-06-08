@@ -20,7 +20,9 @@ package org.maxkey.web.contorller;
 import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.service.FileUploadService;
 import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class ProfileController {
 
     @Autowired
     private UserInfoService userInfoService;
+    
+    @Autowired
+	FileUploadService fileUploadService;
 
     @RequestMapping(value = { "/get" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> get(@CurrentUser UserInfo currentUser) {
@@ -72,7 +77,11 @@ public class ProfileController {
 //			String extraAttribute=JsonUtils.object2Json(extraAttributeMap);
 //			userInfo.setExtraAttribute(extraAttribute);
 //		}
-
+        if(StringUtils.isNotBlank(userInfo.getPictureId())) {
+			userInfo.setPicture(fileUploadService.get(userInfo.getPictureId()).getUploaded());
+			fileUploadService.remove(userInfo.getPictureId());
+		}
+        
         if (userInfoService.updateProfile(userInfo) > 0) {
         	return new Message<UserInfo>(Message.SUCCESS).buildResponse();
         } 

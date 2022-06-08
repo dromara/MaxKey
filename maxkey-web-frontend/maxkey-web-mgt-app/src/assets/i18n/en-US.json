@@ -251,29 +251,9 @@
 			"filters": "Filters",
 			"basedn": "Base DN",
 			"msadDomain": "MSAD Domain",
-			"accountMapping": "Account Mapping",
+			"accountMapping": "Domain Account",
 			"trustStore": "TrustStore",
 			"trustStorePassword": "TrustStore Password"
-		},
-		"groups": {
-			"name": "Group Name",
-			"dynamic": "Dynamic",
-			"filters": "Attributes Filter",
-			"orgIdsList": "Dept List",
-			"resumeTime": "Join Time",
-			"suspendTime": "Suspend Time",
-			"isdefault": "Is Default"
-		},
-		"accountsstrategy": {
-			"name": "Strategy Name",
-			"appIcon": "App Icon",
-			"appId": "App Id",
-			"appName": "App Name",
-			"filters": "Attributes Filter",
-			"orgIdsList": "Dept List",
-			"createType": "createType",
-			"mapping": "Mapping",
-			"suffixes": "Suffixes"
 		},
 		"apps": {
 			"tab.basic": "Basic",

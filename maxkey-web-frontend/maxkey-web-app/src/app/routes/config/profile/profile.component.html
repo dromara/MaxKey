@@ -51,7 +51,7 @@
                   <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="uploadFile">{{ 'mxk.users.picture' | i18n }}
                   </nz-form-label>
                   <div nz-col class="clearfix" nzSm="16" nzXs="24">
-                    <nz-upload nzAction="file/upload/" nzListType="picture-card" [(nzFileList)]="fileList"
+                    <nz-upload nzAction="/file/upload/" nzListType="picture-card" [(nzFileList)]="fileList"
                       nzName="uploadFile" [nzShowButton]="fileList.length < 1" [nzPreview]="handlePreview"
                       (nzChange)="uploadImageChange($event)">
                       <div>

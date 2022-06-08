@@ -20,7 +20,7 @@ export const environment = {
   production: true,
   useHash: true,
   api: {
-    baseUrl: '/sign',
+    baseUrl: '/sign/',
     refreshTokenEnabled: true,
     refreshTokenType: 're-request'
   }

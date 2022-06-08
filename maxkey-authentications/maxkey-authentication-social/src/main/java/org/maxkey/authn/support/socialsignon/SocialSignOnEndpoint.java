@@ -37,7 +37,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,11 +54,11 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	@RequestMapping(value={"/authorize/{provider}"}, method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> authorize( HttpServletRequest request,
-										@PathVariable String provider,
-										@RequestHeader("Origin") String originURL
+										@PathVariable String provider
 									) {
 		_logger.trace("SocialSignOn provider : " + provider);
 		String instId = WebContext.getInst().getId();
+		String originURL =WebContext.getHttpContextPath(request,false);
     	String authorizationUrl = 
 				buildAuthRequest(
 						instId,
@@ -74,9 +73,9 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	@RequestMapping(value={"/scanqrcode/{provider}"}, method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> scanQRCode(HttpServletRequest request,
-										@PathVariable("provider") String provider,
-										@RequestHeader("Origin") String originURL) {
+										@PathVariable("provider") String provider) {
 		String instId = WebContext.getInst().getId();
+		String originURL =WebContext.getHttpContextPath(request,false);
 	    AuthRequest authRequest = 
 	    		buildAuthRequest(
 						instId,
@@ -102,10 +101,11 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	
 	@RequestMapping(value={"/bind/{provider}"}, method = RequestMethod.GET)
 	public ResponseEntity<?> bind(@PathVariable String provider,
-								  @RequestHeader("Origin") String originURL,
-								  @CurrentUser UserInfo userInfo) {
+								  @CurrentUser UserInfo userInfo,
+								  HttpServletRequest request) {
 		 //auth call back may exception 
 	    try {
+	    	String originURL =WebContext.getHttpContextPath(request,false);
 	    	SocialsAssociate socialsAssociate = 
 	    			this.authCallback(userInfo.getInstId(),provider,originURL + applicationConfig.getFrontendUri());
 		    socialsAssociate.setSocialUserInfo(accountJsonString);
@@ -127,9 +127,10 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 
 	@RequestMapping(value={"/callback/{provider}"}, method = RequestMethod.GET)
 	public ResponseEntity<?> callback(@PathVariable String provider,
-									  @RequestHeader("Origin") String originURL) {
+									  HttpServletRequest request) {
 		 //auth call back may exception 
 	    try {
+	    	String originURL =WebContext.getHttpContextPath(request,false);
 	    	String instId = WebContext.getInst().getId();
 	    	SocialsAssociate socialsAssociate = 
 	    			this.authCallback(instId,provider,originURL + applicationConfig.getFrontendUri());

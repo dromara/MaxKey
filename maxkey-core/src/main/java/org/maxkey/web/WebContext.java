@@ -179,9 +179,9 @@ public final class WebContext {
      * 
      * @return String HttpContextPath
      */
-    public static String getHttpContextPath() {
+    public static String getHttpContextPath(boolean isContextPath) {
         HttpServletRequest httpServletRequest = WebContext.getRequest();
-        return getHttpContextPath(httpServletRequest);
+        return getHttpContextPath(httpServletRequest,isContextPath);
     }
     
     /**
@@ -190,32 +190,44 @@ public final class WebContext {
      * @return String eg:http://192.168.1.20:9080/webcontext or
      *         http://www.website.com/webcontext
      */
-    public static String getHttpContextPath(HttpServletRequest httpServletRequest) {
+    public static String getHttpContextPath(HttpServletRequest request,boolean isContextPath) {
         ApplicationConfig applicationConfig = 
         		WebContext.getBean("applicationConfig",ApplicationConfig.class);
         
         _logger.trace("Config ServerPrefix " + applicationConfig.getServerPrefix());
         _logger.trace("Config DomainName " + applicationConfig.getDomainName());
-        _logger.trace("ServerName " + httpServletRequest.getServerName());
+        _logger.trace("ServerName " + request.getServerName());
         
-        String httpContextPath ="";
-        if (httpServletRequest.getServerName().matches(ipAddressRegex)
-        		||httpServletRequest.getServerName().equalsIgnoreCase("localhost")) {
-            httpContextPath = httpServletRequest.getScheme().toLowerCase() 
-            					+ "://"+httpServletRequest.getServerName();
+        StringBuilder url = new StringBuilder();
+        if (request.getServerName().matches(ipAddressRegex)
+        		||request.getServerName().equalsIgnoreCase("localhost")) {
+        	url.append(request.getScheme().toLowerCase())
+        	   .append("://").append(request.getServerName())
+        	   .append(request.getServerPort());
         }else {
-        	 httpContextPath = applicationConfig.getServerName() ;
+        	String scheme = request.getScheme().toLowerCase();
+        	String serverName = request.getServerName();
+        	int serverPort = request.getServerPort();
+    		
+    		url.append(scheme).append("://").append(serverName);
+    		// Only add port if not default
+    		if ("http".equals(scheme)) {
+    			if (serverPort != 80) {
+    				url.append(":").append(serverPort);
+    			}
+    		}
+    		else if ("https".equals(scheme)) {
+    			if (serverPort != 443) {
+    				url.append(":").append(serverPort);
+    			}
+    		}
         }
         
-        int port = httpServletRequest.getServerPort();
-        if(!(port==80 || port==443)){
-            httpContextPath    +=  ":"+port;
+        if(isContextPath) {
+        	url.append(request.getContextPath());
         }
-        
-        httpContextPath += httpServletRequest.getContextPath() + "";
-        
-        _logger.trace("httpContextPath " + httpContextPath);
-        return httpContextPath;
+        _logger.trace("httpContextPath {}" , url);
+        return url.toString();
 
     }
     

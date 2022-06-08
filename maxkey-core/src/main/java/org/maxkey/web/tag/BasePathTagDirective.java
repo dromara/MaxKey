@@ -49,7 +49,7 @@ public class BasePathTagDirective implements TemplateDirectiveModel {
 	public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
 			throws TemplateException, IOException {
 	    
-		env.getOut().append(WebContext.getHttpContextPath(request));
+		env.getOut().append(WebContext.getHttpContextPath(request,true));
 		
 	}
 

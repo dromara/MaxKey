@@ -262,7 +262,7 @@
 			"filters": "Filters",
 			"basedn": "Base DN",
 			"msadDomain": "Active Directory Domain",
-			"accountMapping": "Account Mapping",
+			"accountMapping": "Domain Account",
 			"trustStore": "TrustStore",
 			"trustStorePassword": "TrustStore Password"
 		},

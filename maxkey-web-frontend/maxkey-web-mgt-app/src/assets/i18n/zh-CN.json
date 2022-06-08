@@ -55,7 +55,7 @@
 			"audit": {
 				"": "日志审计",
 				"logins": "系统登录日志",
-				"loginapps": "应用登录日志",
+				"loginapps": "应用访问日志",
 				"synchronizer": "同步器日志",
 				"connector": "连接器日志",
 				"operate": "系统管理日志"
@@ -252,30 +252,9 @@
 			"filters": "过滤器",
 			"basedn": "基本DN",
 			"msadDomain": "AD域名",
-			"accountMapping": "账号映射",
+			"accountMapping": "域账号认证",
 			"trustStore": "证书",
 			"trustStorePassword": "证书密钥"
-		},
-		"groups": {
-			"name": "组名称",
-			"dynamic": "动态组",
-			"filters": "属性过滤器",
-			"orgIdsList": "部门列表",
-			"resumeTime": "加入时间",
-			"suspendTime": "挂起时间",
-			"isdefault": "是否默认组"
-		},
-		"accountsstrategy": {
-			"id": "策略编码",
-			"name": "策略名称",
-			"appIcon": "应用图标",
-			"appId": "应用编码",
-			"appName": "应用名称",
-			"filters": "属性过滤器",
-			"orgIdsList": "部门列表",
-			"createType": "创建方式",
-			"mapping": "账号映射",
-			"suffixes": "后缀"
 		},
 		"apps": {
 			"tab.basic": "基本信息",
@@ -510,7 +489,7 @@
 			"email": "邮箱",
 			"address": "地址",
 			"logo": "LOGO",
-			"domain": "域名",
+			"domain": "认证域名",
 			"frontTitle": "系統名称",
 			"consoleDomain": "控制台域名",
 			"consoleTitle": "控制台名称",

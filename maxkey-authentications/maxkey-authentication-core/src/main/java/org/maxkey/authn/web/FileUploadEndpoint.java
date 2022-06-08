@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.web.contorller;
+package org.maxkey.authn.web;
 
 import java.io.IOException;
 
