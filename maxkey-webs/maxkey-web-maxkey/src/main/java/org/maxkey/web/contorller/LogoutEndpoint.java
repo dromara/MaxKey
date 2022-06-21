@@ -28,10 +28,11 @@ import org.maxkey.authz.singlelogout.SamlSingleLogout;
 import org.maxkey.authz.singlelogout.DefaultSingleLogout;
 import org.maxkey.authz.singlelogout.LogoutType;
 import org.maxkey.authz.singlelogout.SingleLogout;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsProtocols;
-import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.servlet.ModelAndView;
 
 @Tag(name = "1-3-单点注销接口文档模块")
 @Controller
@@ -49,10 +51,12 @@ public class LogoutEndpoint {
 
 	@Autowired
     protected SessionManager sessionManager;
-	
+	@Autowired
+	ApplicationConfig applicationConfig;
+
 	@Operation(summary = "单点注销接口", description = "reLoginUrl跳转地址",method="GET")
 	@RequestMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
- 	public  ResponseEntity<?> logout(@CurrentUser UserInfo currentUser){
+ 	public ModelAndView logout(@CurrentUser UserInfo currentUser){
 		//if logined in have onlineTicket ,need remove or logout back
 		String sessionId = currentUser.getSessionId();
  		Session session = sessionManager.get(sessionId);
@@ -79,6 +83,8 @@ public class LogoutEndpoint {
 	        		currentUser.getId(),
 	        		currentUser.getUsername());
  		}
- 		return new Message<String>().buildResponse();
+		StringBuffer loginUrl = new StringBuffer(applicationConfig.getServerName()).append(applicationConfig.getFrontendUri()).append("/#/passport/login");
+		return WebContext.redirect(loginUrl.toString());
+// 		return new Message<String>().buildResponse();
  	}
 }
