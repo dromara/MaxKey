@@ -79,6 +79,8 @@ public class LogoutEndpoint {
 	        		currentUser.getId(),
 	        		currentUser.getUsername());
  		}
- 		return new Message<String>().buildResponse();
+		StringBuffer loginUrl = new StringBuffer(applicationConfig.getServerName()).append(applicationConfig.getFrontendUri()).append("/#/passport/login");
+		return WebContext.redirect(loginUrl.toString());
+// 		return new Message<String>().buildResponse();
  	}
 }
