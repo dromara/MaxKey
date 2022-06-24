@@ -30,10 +30,11 @@ export class TreeNodes {
     }
 
     init(treeAttrs: any) {
+        let nodeType = treeAttrs.rootNode.attrs && treeAttrs.rootNode.attrs.type ? treeAttrs.rootNode.attrs.type : '';
         this._rootNode = {
             title: treeAttrs.rootNode.title,
             key: treeAttrs.rootNode.key,
-            type: treeAttrs.rootNode.attrs.type,
+            type: nodeType,
             expanded: true,
             isLeaf: false
         };
@@ -48,10 +49,11 @@ export class TreeNodes {
         let treeNodes: any[] = [];
         for (let node of this.request) {
             if (node.key != rootNode.key && node.parentKey == rootNode.key) {
-                let treeNode = { title: node.title, key: node.key, type: node.attrs.type, expanded: false, isLeaf: true };
+                let nodeType = node.attrs && node.attrs.type ? node.attrs.type : '';
+                let treeNode = { title: node.title, key: node.key, type: nodeType, expanded: false, isLeaf: true };
                 this.buildTree(treeNode);
                 treeNodes.push(treeNode);
-                console.log(treeNode);
+                //console.log(treeNode);
                 rootNode.isLeaf = false;
             }
         }

@@ -86,6 +86,7 @@ export class AppCasDetailsEditerComponent implements OnInit {
     if (this.isEdit) {
       this.appsCasDetailsService.get(`${this.id}`).subscribe(res => {
         this.form.model.init(res.data);
+        //console.log(this.form.model);
         this.previewImage = this.form.model.iconBase64.toString();
         this.fileList = [
           {
