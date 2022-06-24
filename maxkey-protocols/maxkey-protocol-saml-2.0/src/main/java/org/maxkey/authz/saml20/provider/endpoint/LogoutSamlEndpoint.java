@@ -62,7 +62,7 @@ public class LogoutSamlEndpoint {
                 HttpServletResponse response)throws Exception {
              SAMLMessageContext messageContext;
              logger.debug("extract SAML Message .");
-             StringBuffer logoutUrl = new StringBuffer("force/logout");
+             StringBuffer logoutUrl = new StringBuffer("/force/logout");
              try {
                  messageContext = extractRedirectBindingAdapter.extractSAMLMessageContext(request);
                  logger.debug("validate SAML LogoutRequest .");

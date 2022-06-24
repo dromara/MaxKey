@@ -178,7 +178,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService){
-		StringBuffer logoutUrl = new StringBuffer("force/logout");
+		StringBuffer logoutUrl = new StringBuffer("/force/logout");
 		if(StringUtils.isNotBlank(casService)){
 			logoutUrl.append("?").append("redirect_uri=").append(casService);
 		}
