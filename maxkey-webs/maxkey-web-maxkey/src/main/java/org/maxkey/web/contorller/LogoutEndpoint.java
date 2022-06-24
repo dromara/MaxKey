@@ -21,15 +21,21 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.authn.session.Session;
 import org.maxkey.authn.session.SessionManager;
+import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.singlelogout.SamlSingleLogout;
 import org.maxkey.authz.singlelogout.DefaultSingleLogout;
 import org.maxkey.authz.singlelogout.LogoutType;
 import org.maxkey.authz.singlelogout.SingleLogout;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsProtocols;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.web.WebContext;
@@ -40,23 +46,31 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.servlet.ModelAndView;
 
 @Tag(name = "1-3-单点注销接口文档模块")
 @Controller
 public class LogoutEndpoint {
 	private static Logger _logger = LoggerFactory.getLogger(LogoutEndpoint.class);
 
+	@Autowired 
+    ApplicationConfig applicationConfig;
+	
 	@Autowired
-    protected SessionManager sessionManager;
-	@Autowired
-	ApplicationConfig applicationConfig;
-
-	@Operation(summary = "单点注销接口", description = "reLoginUrl跳转地址",method="GET")
+    SessionManager sessionManager;
+	
+	/**
+	 * for front end
+	 * @param currentUser
+	 * @return ResponseEntity
+	 */
+	@Operation(summary = "前端注销接口", description = "前端注销接口",method="GET")
 	@RequestMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
- 	public ModelAndView logout(@CurrentUser UserInfo currentUser){
+ 	public  ResponseEntity<?> logout(@CurrentUser UserInfo currentUser){
 		//if logined in have onlineTicket ,need remove or logout back
 		String sessionId = currentUser.getSessionId();
  		Session session = sessionManager.get(sessionId);
@@ -77,14 +91,31 @@ public class LogoutEndpoint {
 	                singleLogout.sendRequest(session.getAuthentication(), mapEntry.getValue());
 	            }
 	        }
-	        
+	        //terminate session
 	        sessionManager.terminate(
 	        		session.getId(), 
 	        		currentUser.getId(),
 	        		currentUser.getUsername());
  		}
-		StringBuffer loginUrl = new StringBuffer(applicationConfig.getServerName()).append(applicationConfig.getFrontendUri()).append("/#/passport/login");
-		return WebContext.redirect(loginUrl.toString());
-// 		return new Message<String>().buildResponse();
+ 		return new Message<String>().buildResponse();
+ 	}
+	
+	@Operation(summary = "单点注销接口", description = "redirect_uri跳转地址",method="GET")
+	@RequestMapping(value={"/force/logout"})
+ 	public ModelAndView forceLogout(
+ 				HttpServletRequest request,
+ 				@RequestParam(value = "redirect_uri",required = false) String redirect_uri
+ 				){
+		//invalidate http session
+		request.getSession().invalidate();
+		StringBuffer logoutUrl = new StringBuffer("");
+		logoutUrl.append(applicationConfig.getFrontendUri()).append("/#/passport/logout");
+		if(StringUtils.isNotBlank(redirect_uri)) {
+			logoutUrl.append("?")
+				.append("redirect_uri=").append(redirect_uri);
+		}
+		ModelAndView modelAndView=new ModelAndView("redirect");
+		modelAndView.addObject("redirect_uri", logoutUrl);
+		return modelAndView;
  	}
 }

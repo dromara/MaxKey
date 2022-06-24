@@ -23,6 +23,7 @@ import { ForgotComponent } from './forgot/forgot.component';
 import { JwtAuthComponent } from './jwt-auth.component';
 import { UserLockComponent } from './lock/lock.component';
 import { UserLoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout.component';
 import { UserRegisterResultComponent } from './register-result/register-result.component';
 import { UserRegisterComponent } from './register/register.component';
 
@@ -61,7 +62,8 @@ const routes: Routes = [
   },
   // 单页不包裹Layout
   { path: 'passport/callback/:provider', component: CallbackComponent },
-  { path: 'passport/jwt/auth', component: JwtAuthComponent }
+  { path: 'passport/jwt/auth', component: JwtAuthComponent },
+  { path: 'passport/logout', component: LogoutComponent }
 ];
 
 @NgModule({

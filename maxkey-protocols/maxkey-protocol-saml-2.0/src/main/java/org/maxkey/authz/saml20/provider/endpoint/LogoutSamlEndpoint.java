@@ -20,6 +20,7 @@ package org.maxkey.authz.saml20.provider.endpoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authz.saml20.binding.ExtractBindingAdapter;
 import org.maxkey.authz.saml20.xml.SAML2ValidatorSuite;
 import org.maxkey.web.WebContext;
@@ -61,8 +62,8 @@ public class LogoutSamlEndpoint {
                 HttpServletResponse response)throws Exception {
              SAMLMessageContext messageContext;
              logger.debug("extract SAML Message .");
+             StringBuffer logoutUrl = new StringBuffer("force/logout");
              try {
-                 
                  messageContext = extractRedirectBindingAdapter.extractSAMLMessageContext(request);
                  logger.debug("validate SAML LogoutRequest .");
                  LogoutRequest logoutRequest = (LogoutRequest) messageContext.getInboundSAMLMessage();
@@ -72,8 +73,10 @@ public class LogoutSamlEndpoint {
                  logger.debug("LogoutRequest IssueInstant "+logoutRequest.getIssueInstant());
                  logger.debug("LogoutRequest Destination "+logoutRequest.getDestination());
                  logger.debug("LogoutRequest NameID "+logoutRequest.getNameID().getValue());
-                 return WebContext.redirect("/logout");
-                 
+                 //add Destination
+                 if(StringUtils.isNotBlank(logoutRequest.getDestination())) {
+                	 logoutUrl.append("?").append("redirect_uri=").append(logoutRequest.getDestination());
+                 }
              } catch (MessageDecodingException e1) {
                  logger.error("Exception decoding SAML MessageDecodingException", e1);
              } catch (SecurityException e1) {
@@ -81,8 +84,7 @@ public class LogoutSamlEndpoint {
              }catch (ValidationException ve) {
                  logger.warn("logoutRequest Message failed Validation", ve);
              }
-             
-             return WebContext.redirect("/login");
+             return WebContext.forward(logoutUrl.toString());
         }
        
 }

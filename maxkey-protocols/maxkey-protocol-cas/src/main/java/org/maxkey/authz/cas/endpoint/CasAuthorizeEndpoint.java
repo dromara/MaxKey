@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.session.Session;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.cas.endpoint.ticket.CasConstants;
@@ -177,6 +178,10 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService){
-		return WebContext.redirect("/logout?reLoginUrl=" + casService);
+		StringBuffer logoutUrl = new StringBuffer("force/logout");
+		if(StringUtils.isNotBlank(casService)){
+			logoutUrl.append("?").append("redirect_uri=").append(casService);
+		}
+		return WebContext.forward(logoutUrl.toString());
 	}
 }

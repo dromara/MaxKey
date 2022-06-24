@@ -61,6 +61,12 @@ export class AuthnService {
     return this.http.post('/login/signin?_allow_anonymous=true', authParam);
   }
 
+  //退出
+  logout() {
+    this.cookieService.delete(CONSTS.CONGRESS);
+    return this.http.get('/login/logout');
+  }
+
   congress(authParam: any) {
     return this.http.post('/login/congress?_allow_anonymous=true', authParam);
   }
