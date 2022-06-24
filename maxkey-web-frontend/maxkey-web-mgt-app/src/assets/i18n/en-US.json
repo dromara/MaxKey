@@ -190,6 +190,8 @@
 			"parentCode": "Parent Code",
 			"parentName": "Parent Name",
 			"type": "Type",
+			"type.entity": "Entity",
+			"type.virtual": "Virtual",
 			"codePath": "Code Path",
 			"namePath": "NamePath",
 			"level": "Level",

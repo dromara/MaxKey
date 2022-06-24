@@ -38,11 +38,11 @@
         <span class="custom-node">
           <span *ngIf="!node.isLeaf" (contextmenu)="contextMenu($event, menu)">
             <i nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(node)"></i>
-            <span class="folder-name">{{ node.title }}</span>
+            <span class="folder-name">{{ node.title + (origin.type == 'virtual' ? '_v' : '') }}</span>
           </span>
           <span *ngIf="node.isLeaf" (contextmenu)="contextMenu($event, menu)">
             <i nz-icon nzType="file"></i>
-            <span class="file-name">{{ node.title }}</span>
+            <span class="file-name">{{ node.title + (origin.type == 'virtual' ? '_v' : '') }}</span>
           </span>
         </span>
       </ng-template>
@@ -64,6 +64,7 @@
               (nzCheckedChange)="onTableAllChecked($event)"></th>
             <th nzAlign="center">{{ 'mxk.organizations.code' | i18n }}</th>
             <th nzAlign="center">{{ 'mxk.organizations.name' | i18n }}</th>
+            <th nzAlign="center">{{ 'mxk.organizations.type' | i18n }}</th>
             <th nzAlign="center">{{ 'mxk.text.sortIndex' | i18n }}</th>
             <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
             <th nzAlign="center"><a>{{ 'mxk.text.action' | i18n }}</a></th>
@@ -77,6 +78,9 @@
               <span>{{ data.id }}</span>
             </td>
             <td nzAlign="left"> {{ data.name }}</td>
+            <td nzAlign="left">
+              {{ data.type == 'entity' ? ('mxk.organizations.type.entity' | i18n) : ('mxk.organizations.type.virtual' |
+              i18n) }}</td>
             <td nzAlign="center"> {{ data.sortIndex }}</td>
             <td nzAlign="center"> <i *ngIf="data.status == 1" nz-icon nzType="check-circle" nzTheme="fill"
                 style="color: green"></i></td>

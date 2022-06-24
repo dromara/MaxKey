@@ -191,6 +191,8 @@
 			"parentCode": "父级编码",
 			"parentName": "父级名称",
 			"type": "类型",
+			"type.entity": "实体",
+			"type.virtual": "虚拟",
 			"codePath": "编码路径",
 			"namePath": "名称路径",
 			"level": "级别",

@@ -72,6 +72,7 @@ export class OrganizationEditerComponent implements OnInit {
         this.cdr.detectChanges();
       });
     } else {
+      this.form.model.type = 'entity';
       if (this.parentNode) {
         this.form.model.parentId = this.parentNode?.key;
         this.form.model.parentName = this.parentNode?.title;

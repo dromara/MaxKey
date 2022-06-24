@@ -192,6 +192,8 @@
 			"parentCode": "父級編碼",
 			"parentName": "父級名稱",
 			"type": "類型",
+			"type.entity": "實體",
+			"type.virtual": "虛擬",
 			"codePath": "編碼路徑",
 			"namePath": "名稱路徑",
 			"level": "級別",

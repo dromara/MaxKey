@@ -49,6 +49,10 @@ public class Organizations extends JpaBaseEntity implements Serializable {
     private String parentCode;
     @Column
     private String parentName;
+    /**
+     * 1. entity
+     * 2. virtual
+     */
     @Column
     private String type;
     @Column
