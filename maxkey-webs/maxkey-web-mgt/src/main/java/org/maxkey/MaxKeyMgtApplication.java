@@ -45,11 +45,13 @@ import org.springframework.context.annotation.ComponentScan;
     "org.maxkey.persistence",
     "org.maxkey.synchronizer",
     "org.maxkey.web",
+    "org.maxkey.web.access.contorller",
     "org.maxkey.web.api.endpoint",
     "org.maxkey.web.apps.contorller",
     "org.maxkey.web.contorller",
     "org.maxkey.web.endpoint",
     "org.maxkey.web.interceptor",
+    "org.maxkey.web.permissions.contorller",
     "org.maxkey.web.tag"
 })
 @MapperScan("org.maxkey.persistence.mapper,")
