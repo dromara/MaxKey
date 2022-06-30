@@ -88,7 +88,7 @@ public class RoleMemberController {
 		return new Message<JpaPageResults<RoleMember>>(
 				roleMemberService.queryPageResults("memberNotInRole",roleMember)).buildResponse();
 	}
-	
+
 	@RequestMapping(value = { "/rolesNoMember" })
 	@ResponseBody
 	public ResponseEntity<?> rolesNoMember(@ModelAttribute  RoleMember roleMember,@CurrentUser UserInfo currentUser) {
@@ -97,6 +97,12 @@ public class RoleMemberController {
 				roleMemberService.rolesNoMember(roleMember)).buildResponse();
 	}
 	
+	/**
+	 * Members add to the Role
+	 * @param roleMember
+	 * @param currentUser
+	 * @return
+	 */
 	@RequestMapping(value = {"/add"})
 	@ResponseBody
 	public ResponseEntity<?> addRoleMember(@RequestBody RoleMember roleMember,@CurrentUser UserInfo currentUser) {
@@ -120,7 +126,7 @@ public class RoleMemberController {
 							roleMember.getRoleName(), 
 							arrMemberIds[i], 
 							arrMemberNames[i],
-							"USER",
+							roleMember.getType(),
 							currentUser.getInstId());
 				newRoleMember.setId(WebContext.genId());
 				result = roleMemberService.insert(newRoleMember);
@@ -133,9 +139,15 @@ public class RoleMemberController {
 	}
 	
 	
-	@RequestMapping(value = {"/addMember2Groups"})
+	/**
+	 * Member add to Roles
+	 * @param roleMember
+	 * @param currentUser
+	 * @return
+	 */
+	@RequestMapping(value = {"/addMember2Roles"})
 	@ResponseBody
-	public ResponseEntity<?> addMember2Groups(@RequestBody RoleMember roleMember,@CurrentUser UserInfo currentUser) {
+	public ResponseEntity<?> addMember2Roles(@RequestBody RoleMember roleMember,@CurrentUser UserInfo currentUser) {
 		if (roleMember == null || StringUtils.isBlank(roleMember.getUsername())) {
 			return new Message<RoleMember>(Message.FAIL).buildResponse();
 		}
