@@ -79,7 +79,7 @@
             </nz-form-label>
             <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
               nzErrorTip="The input is not valid employeeNumber!">
-              <input [(ngModel)]="form.model.employeeNumber" readonly [ngModelOptions]="{ standalone: true }" nz-input
+              <input [(ngModel)]="form.model.employeeNumber" [ngModelOptions]="{ standalone: true }" nz-input
                 name="employeeNumber" id="employeeNumber" />
             </nz-form-control>
           </nz-form-item>
@@ -97,8 +97,8 @@
             <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="mobile">{{ 'mxk.users.mobile' | i18n }}</nz-form-label>
             <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
               nzErrorTip="The input is not valid mobile!">
-              <input [(ngModel)]="form.model.mobile" readonly [ngModelOptions]="{ standalone: true }" nz-input
-                name="mobile" id="mobile" />
+              <input [(ngModel)]="form.model.mobile" [ngModelOptions]="{ standalone: true }" nz-input name="mobile"
+                id="mobile" />
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
