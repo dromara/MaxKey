@@ -35,7 +35,7 @@ export class MemberRolesEditerComponent implements OnInit {
   @Input() username?: String;
   query: {
     params: {
-      groupName: String;
+      roleName: String;
       username: String;
       protocol: String;
       startDate: String;
@@ -58,7 +58,7 @@ export class MemberRolesEditerComponent implements OnInit {
     checked: boolean;
   } = {
       params: {
-        groupName: '',
+        roleName: '',
         username: '',
         protocol: '',
         startDate: '',

@@ -4,10 +4,10 @@
         <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
             <div nz-col nzMd="14" nzSm="24">
                 <nz-form-item>
-                    <nz-form-label nzFor="name">{{ 'mxk.groups.name' | i18n }}</nz-form-label>
+                    <nz-form-label nzFor="name">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
                     <nz-form-control>
-                        <input nz-input [(ngModel)]="query.params.groupName" [ngModelOptions]="{ standalone: true }"
-                            name="groupName" placeholder="" id="groupName" />
+                        <input nz-input [(ngModel)]="query.params.roleName" [ngModelOptions]="{ standalone: true }"
+                            name="roleName" placeholder="" id="roleName" />
                     </nz-form-control>
                 </nz-form-item>
             </div>
@@ -32,8 +32,8 @@
             <tr>
                 <th></th>
                 <th nzAlign="center" style="display: none">Id</th>
-                <th nzAlign="center">{{ 'mxk.groups.name' | i18n }}</th>
-                <th nzAlign="center">{{ 'mxk.groups.dynamic' | i18n }}</th>
+                <th nzAlign="center">{{ 'mxk.roles.name' | i18n }}</th>
+                <th nzAlign="center">{{ 'mxk.roles.dynamic' | i18n }}</th>
             </tr>
         </thead>
         <tbody>

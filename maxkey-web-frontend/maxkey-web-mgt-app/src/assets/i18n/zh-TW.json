@@ -42,7 +42,7 @@
 			"sessions": "會話管理",
 			"config": {
 				"": "配置管理",
-				"institutions": "機構管理",
+				"institutions": "機構配置",
 				"accountsstrategys": "賬號策略",
 				"socialsproviders": "社交服務",
 				"synchronizers": "同步器管理",

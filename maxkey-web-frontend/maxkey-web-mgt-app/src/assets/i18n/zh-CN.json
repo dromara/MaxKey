@@ -41,7 +41,7 @@
 			"sessions": "会话管理",
 			"config": {
 				"": "配置管理",
-				"institutions": "机构管理",
+				"institutions": "机构配置",
 				"accountsstrategys": "账号策略",
 				"socialsproviders": "社交服务",
 				"synchronizers": "同步器管理",

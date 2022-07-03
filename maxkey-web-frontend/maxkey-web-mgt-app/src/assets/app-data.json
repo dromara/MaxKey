@@ -104,7 +104,7 @@
           "icon": "anticon-setting",
           "children": [
             {
-              "text": "机构管理",
+              "text": "机构配置",
               "i18n": "mxk.menu.config.institutions",
               "link": "/config/institutions",
               "icon": "anticon-appstore",

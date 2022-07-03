@@ -34,7 +34,6 @@
         <th nzAlign="center" style="display: none">Id</th>
         <th nzAlign="center">{{ 'mxk.apps.icon' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.apps.name' | i18n }}</th>
-        <th nzAlign="center">{{ 'mxk.apps.protocol' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.apps.category' | i18n }}</th>
       </tr>
     </thead>
@@ -48,7 +47,6 @@
 
         <td nzAlign="left"><img height="30" border="0px" src="{{ data.iconBase64 }}" /></td>
         <td nzAlign="left"> {{ data.name }}</td>
-        <td nzAlign="left"> {{ data.protocol }}</td>
         <td nzAlign="left">
           <div *ngIf="data.category == 'none'">{{ 'mxk.apps.category.none' | i18n }}</div>
           <div *ngIf="data.category == '1011'">{{ 'mxk.apps.category.1011' | i18n }}</div>
