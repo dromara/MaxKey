@@ -109,8 +109,7 @@ public class SessionManagerFactory implements SessionManager{
 		Session session = null;
 		if(isRedis) {
 			session = redisSessionManager.refresh(sessionId,refreshTime);
-			//renew one
-			inMemorySessionManager.remove(sessionId);
+			//renew one in Memory
 			inMemorySessionManager.create(sessionId, session);
 		}else {
 			session = inMemorySessionManager.refresh(sessionId,refreshTime);

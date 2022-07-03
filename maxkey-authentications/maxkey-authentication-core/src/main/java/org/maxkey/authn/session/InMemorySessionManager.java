@@ -76,8 +76,7 @@ public class InMemorySessionManager implements SessionManager{
         if(session != null) {
         	_logger.debug("refresh session Id {} at refreshTime {}",sessionId,refreshTime);
 	        session.setLastAccessTime(refreshTime);
-	        //invalidate sessionId then renew one
-	        sessionStore.invalidate(sessionId);
+	        //put new session
 	        create(sessionId , session);
         }
         return session;
