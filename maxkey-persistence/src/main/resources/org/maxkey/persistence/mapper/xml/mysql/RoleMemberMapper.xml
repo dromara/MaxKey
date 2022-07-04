@@ -15,7 +15,7 @@
 			select	distinct
 				rm.id as id,
 				r.id as roleid,
-				r.name as rolename,
+				r.rolename,
 				r.dynamic dynamic,
 				u.username,
 				u.usertype,
@@ -61,7 +61,7 @@
 					and r.id = #{roleId}
 				</if>
 				<if test="roleName != null and roleName != ''">
-					and g.name = #{roleName}
+					and r.rolename = #{roleName}
 				</if>
 				<if test="username != null and username != ''">
 					and u.username = #{username}
@@ -126,7 +126,7 @@
 					and r.id = #{roleId}
 				</if>
 				<if test="roleName != null and roleName != ''">
-					and g.name = #{roleName}
+					and r.rolename = #{roleName}
 				</if>
 					and	rm.type		in(	'USER','USER-DYNAMIC')
 			     	and rm.roleid	=	r.id
@@ -158,7 +158,7 @@
                 </if>
             )
         <if test="roleName != null and roleName != ''">
-            and r.name = #{roleName}
+            and r.rolename = #{roleName}
         </if>
     </select>
 	
@@ -180,7 +180,7 @@
 			and r.id = #{roleId}
 		</if>
 		<if test="roleName != null and roleName != ''">
-			and r.name = #{roleName}
+			and r.rolename = #{roleName}
 		</if>
 	</select>
 

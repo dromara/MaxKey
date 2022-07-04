@@ -74,7 +74,7 @@ public class AuthorizeBaseEndpoint {
 		
 		Accounts account = new Accounts(userInfo.getId(),loadApp.getId());
 		account.setUsername(userInfo.getUsername());
-		account.setAppName(app.getName());
+		account.setAppName(app.getAppName());
 		
 		if(loadApp.getCredential() == Apps.CREDENTIALS.USER_DEFINED){
 			account = accountsService.load(new Accounts(userInfo.getId(),loadApp.getId()));

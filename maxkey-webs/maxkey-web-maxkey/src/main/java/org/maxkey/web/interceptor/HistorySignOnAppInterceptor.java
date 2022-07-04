@@ -67,7 +67,7 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
              HistoryLoginApps historyLoginApps = new HistoryLoginApps();
              historyLoginApps.setAppId(app.getId());
              historyLoginApps.setSessionId(sessionId);
-             historyLoginApps.setAppName(app.getName());
+             historyLoginApps.setAppName(app.getAppName());
              historyLoginApps.setUserId(userInfo.getId());
              historyLoginApps.setUsername(userInfo.getUsername());
              historyLoginApps.setDisplayName(userInfo.getDisplayName());

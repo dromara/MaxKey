@@ -170,7 +170,7 @@ public class ScimUserController {
     	List<ScimGroupRef> groups = new  ArrayList<ScimGroupRef>(); 
     	for(Roles role : rolesService.queryRolesByUserId(userInfo.getId())){
     		groupsList.add(role.getId());
-    		groups.add(new ScimGroupRef(role.getId(),role.getName()));
+    		groups.add(new ScimGroupRef(role.getId(),role.getRoleName()));
     		
     	}
     	scimUser.setGroup(groupsList);

@@ -70,7 +70,7 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 							parentOrg = rootOrganization;
 						}
 						organization.setParentId(parentOrg.getId());
-						organization.setParentName(parentOrg.getName());
+						organization.setParentName(parentOrg.getOrgName());
 						organization.setCodePath(parentOrg.getCodePath()+"/"+organization.getId());
 						_logger.info("parentNamePath " + parentNamePath+" , namePah " + organization.getNamePath());
 						
@@ -83,7 +83,7 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 							organizationsService.insert(organization);
 							_logger.debug("Organizations : " + organization);
 							
-							synchroRelated = buildSynchroRelated(organization,organization.getLdapDn(),organization.getName());
+							synchroRelated = buildSynchroRelated(organization,organization.getLdapDn(),organization.getOrgName());
 						}else {
 							organization.setId(synchroRelated.getObjectId());
 							organizationsService.update(organization);
@@ -100,7 +100,7 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 			            historySynchronizer.setSyncId(this.synchronizer.getId());
 			            historySynchronizer.setSyncName(this.synchronizer.getName());
 			            historySynchronizer.setObjectId(organization.getId());
-			            historySynchronizer.setObjectName(organization.getName());
+			            historySynchronizer.setObjectName(organization.getOrgName());
 			            historySynchronizer.setObjectType(Organizations.class.getSimpleName());
 			            historySynchronizer.setInstId(synchronizer.getInstId());
 			            historySynchronizer.setResult("success");
@@ -158,8 +158,8 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 	public SynchroRelated buildSynchroRelated(Organizations organization,String ldapDN,String name) {
 		return new SynchroRelated(
 					organization.getId(),
-					organization.getName(),
-					organization.getName(),
+					organization.getOrgName(),
+					organization.getOrgName(),
 					Organizations.CLASS_TYPE,
 					synchronizer.getId(),
 					synchronizer.getName(),
@@ -175,7 +175,7 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 			Organizations org = new Organizations();
 			org.setLdapDn(nameInNamespace);
 			String []namePaths = name.replaceAll(",OU=", "/").replaceAll("OU=", "/").split("/");
-			String namePah= "/"+rootOrganization.getName();
+			String namePah= "/"+rootOrganization.getOrgName();
 			for(int i = namePaths.length -1 ; i >= 0 ; i --) {
 				namePah = namePah + "/" + namePaths[i];
 			}
@@ -183,10 +183,10 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 			namePah = namePah.substring(0, namePah.length() - 1);
 
 	        org.setId(org.generateId());
-	        org.setCode(org.getId());
+	        org.setOrgCode(org.getId());
 	        org.setNamePath(namePah);
 	        org.setLevel(namePaths.length);
-			org.setName(LdapUtils.getAttributeStringValue(OrganizationalUnit.OU,attributeMap));
+			org.setOrgName(LdapUtils.getAttributeStringValue(OrganizationalUnit.OU,attributeMap));
 			//org.setCountry(LdapUtils.getAttributeStringValue(OrganizationalUnit.CO,attributeMap));
 			org.setRegion(LdapUtils.getAttributeStringValue(OrganizationalUnit.ST,attributeMap));
 			org.setLocality(LdapUtils.getAttributeStringValue(OrganizationalUnit.L,attributeMap));

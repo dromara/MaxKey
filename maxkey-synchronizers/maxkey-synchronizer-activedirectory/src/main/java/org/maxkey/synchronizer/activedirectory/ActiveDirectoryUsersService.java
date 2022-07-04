@@ -120,7 +120,7 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 	    UserInfo userInfo = new  UserInfo();
 		userInfo.setLdapDn(nameInNamespace);
 		String []namePaths = name.replaceAll(",OU=", "/").replaceAll("OU=", "/").split("/");
-		String namePah= "/"+rootOrganization.getName();
+		String namePah= "/"+rootOrganization.getOrgName();
 		for(int i = namePaths.length -1 ; i >= 0 ; i --) {
 			namePah = namePah + "/" + namePaths[i];
 		}
@@ -133,7 +133,7 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
         	deptOrg = rootOrganization;
 		}
         
-        userInfo.setDepartment(deptOrg.getName());
+        userInfo.setDepartment(deptOrg.getOrgName());
         userInfo.setDepartmentId(deptOrg.getId());
 		try {
 		    userInfo.setId(userInfo.generateId());

@@ -126,8 +126,8 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
 	public SynchroRelated buildSynchroRelated(Organizations org,FeishuDepts dept) {
 		return  new SynchroRelated(
 				org.getId(),
-				org.getName(),
-				org.getName(),
+				org.getOrgName(),
+				org.getOrgName(),
 				Organizations.CLASS_TYPE,
 				synchronizer.getId(),
 				synchronizer.getName(),
@@ -145,8 +145,8 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
 				this.synchronizer,dept.getParent_department_id(),Organizations.CLASS_TYPE);
 		
 		Organizations org = new Organizations();
-		org.setCode(dept.getDepartment_id()+"");
-		org.setName(dept.getName());
+		org.setOrgCode(dept.getDepartment_id()+"");
+		org.setOrgName(dept.getName());
 		org.setFullName(dept.getName());
 		org.setParentId(synchroRelatedParent.getObjectId());
 		org.setParentName(synchroRelatedParent.getObjectName());

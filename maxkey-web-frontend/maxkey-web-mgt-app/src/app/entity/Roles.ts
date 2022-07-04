@@ -19,7 +19,8 @@ import format from 'date-fns/format';
 import { BaseEntity } from './BaseEntity';
 
 export class Roles extends BaseEntity {
-    name!: String;
+    roleCode!: String;
+    roleName!: String;
     dynamic!: String;
     filters!: String;
     orgIdsList!: String;

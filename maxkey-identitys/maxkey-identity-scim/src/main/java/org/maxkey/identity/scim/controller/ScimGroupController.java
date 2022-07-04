@@ -133,7 +133,7 @@ public class ScimGroupController {
     	ScimGroup scimGroup = new ScimGroup();
     	scimGroup.setId(group.getId());
     	scimGroup.setExternalId(group.getId());
-    	scimGroup.setDisplayName(group.getName());
+    	scimGroup.setDisplayName(group.getRoleName());
     	
     	ScimMeta meta = new ScimMeta("Group");
         if(StringUtils.isNotBlank(group.getCreatedDate())){
@@ -152,7 +152,7 @@ public class ScimGroupController {
     public Roles scimGroup2Role(ScimGroup scimGroup) {
     	Roles role = new Roles();
     	role.setId(scimGroup.getId());
-    	role.setName(scimGroup.getDisplayName());
+    	role.setRoleName(scimGroup.getDisplayName());
     	return role;
     }
 }

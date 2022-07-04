@@ -262,6 +262,7 @@
 			"tab.basic": "基本信息",
 			"tab.extra": "扩展信息",
 			"extendapi.tab": "API配置",
+			"resources":"资源",
 			"id": "应用编码",
 			"name": "应用名称",
 			"icon": "图标",

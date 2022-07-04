@@ -91,7 +91,7 @@ public class AppsOAuth20Details extends Apps {
     public AppsOAuth20Details(Apps application, BaseClientDetails baseClientDetails) {
         super();
         this.id = application.getId();
-        this.setName(application.getName());
+        this.setAppName(application.getAppName());
         this.setLoginUrl(application.getLoginUrl());
         this.setLogoutUrl(application.getLogoutUrl());
         this.setCategory(application.getCategory());

@@ -261,6 +261,7 @@
 			"tab.basic": "Basic",
 			"tab.extra": "Extra",
 			"extendapi.tab": "API",
+			"resources":"Resources",
 			"id": "App Id",
 			"name": "App Name",
 			"icon": "Icon",

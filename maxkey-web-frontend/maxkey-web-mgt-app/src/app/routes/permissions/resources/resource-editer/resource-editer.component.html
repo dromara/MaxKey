@@ -9,9 +9,11 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.resources.name' | i18n }}</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="resourceName">{{ 'mxk.resources.name' | i18n }}
+      </nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid name!">
-        <input [(ngModel)]="form.model.name" [ngModelOptions]="{ standalone: true }" nz-input name="name" id="name" />
+        <input [(ngModel)]="form.model.resourceName" [ngModelOptions]="{ standalone: true }" nz-input
+          name="resourceName" id="resourceName" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>

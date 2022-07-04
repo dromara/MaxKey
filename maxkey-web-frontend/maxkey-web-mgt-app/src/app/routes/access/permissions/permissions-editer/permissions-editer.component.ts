@@ -36,7 +36,7 @@ export class PermissionsEditerComponent implements OnInit {
 
   query: {
     params: {
-      name: String;
+      appName: String;
       displayName: String;
       username: String;
       roleId: String;
@@ -60,7 +60,7 @@ export class PermissionsEditerComponent implements OnInit {
     checked: boolean;
   } = {
       params: {
-        name: '',
+        appName: '',
         displayName: '',
         username: '',
         roleId: '',

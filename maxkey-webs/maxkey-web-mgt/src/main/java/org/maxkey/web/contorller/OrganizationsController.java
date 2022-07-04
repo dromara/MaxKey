@@ -160,8 +160,8 @@ public class OrganizationsController {
 			TreeAttributes treeAttributes = new TreeAttributes();
 			int nodeCount = 0;
 			for (Organizations org : orgList) {
-				TreeNode treeNode = new TreeNode(org.getId(),org.getName());
-				treeNode.setCode(org.getCode());
+				TreeNode treeNode = new TreeNode(org.getId(),org.getOrgName());
+				treeNode.setCode(org.getOrgCode());
 				treeNode.setCodePath(org.getCodePath());
 				treeNode.setNamePath(org.getNamePath());
 				treeNode.setParentKey(org.getParentId());
@@ -235,7 +235,7 @@ public class OrganizationsController {
 		// 组织编码
 		organization.setId(ExcelUtils.getValue(row, 2));
 		// 组织名称
-		organization.setName(ExcelUtils.getValue(row, 3));
+		organization.setOrgName(ExcelUtils.getValue(row, 3));
 		// 组织全称
 		organization.setFullName(ExcelUtils.getValue(row, 4));
 		// 编码路径

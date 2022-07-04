@@ -6,8 +6,8 @@
     	<if test="id != null and id != ''">
 			and	id	=	#{id}
 		</if> 
-		<if test="name != null and name != ''">
-			and name like '%${name}%'
+		<if test="roleName != null and roleName != ''">
+			and rolename like '%${roleName}%'
 		</if>
     </sql>
     
@@ -40,8 +40,8 @@
     	<if test="id != null">
 			and	id	=	#{id}
 		</if>
-		<if test="name != name">
-			and	name	=	#{name}
+		<if test="roleName != roleName">
+			and	rolename	=	#{roleName}
 		</if>
     </update>
     

@@ -114,9 +114,9 @@ public class HistorySystemLogsService  extends JpaBaseService<HistorySystemLogs>
 	
 	public String buildMsg(Organizations org) {
 		return new StringBuilder()
-				.append(org.getName())
+				.append(org.getOrgName())
 				.append("[")
-				.append(org.getCode())
+				.append(org.getOrgCode())
 				.append("]")
 				.toString();
 	}
@@ -143,7 +143,7 @@ public class HistorySystemLogsService  extends JpaBaseService<HistorySystemLogs>
 	
 	public String buildMsg(Roles g) {
 		return new StringBuilder()
-				.append(g.getName())
+				.append(g.getRoleName())
 				.toString();
 	}
 	
@@ -178,7 +178,7 @@ public class HistorySystemLogsService  extends JpaBaseService<HistorySystemLogs>
 	
 	public String buildMsg(Resources r) {
 		return new StringBuilder()
-				.append(r.getName())
+				.append(r.getResourceName())
 				.append("[")
 				.append(r.getResourceType())
 				.append("]")

@@ -16,6 +16,7 @@
 
 import { ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { I18NService } from '@core';
 import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import { format, addDays } from 'date-fns';
@@ -40,7 +41,7 @@ import { ResourceEditerComponent } from './resource-editer/resource-editer.compo
 export class ResourcesComponent implements OnInit {
   query: {
     params: {
-      name: String;
+      resourceName: String;
       displayName: String;
       parentId: String;
       appName: String;
@@ -65,7 +66,7 @@ export class ResourcesComponent implements OnInit {
     checked: boolean;
   } = {
       params: {
-        name: '',
+        resourceName: '',
         displayName: '',
         parentId: '',
         appName: '',
@@ -100,10 +101,18 @@ export class ResourcesComponent implements OnInit {
     private fb: FormBuilder,
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    if (this.route.snapshot.queryParams['appId']) {
+      this.query.params.appId = this.route.snapshot.queryParams['appId'];
+      this.query.params.appName = this.route.snapshot.queryParams['appName'];
+      this.fetch();
+      this.tree();
+    }
+  }
 
   onQueryParamsChange(tableQueryParams: NzTableQueryParams): void {
     this.query.params.pageNumber = tableQueryParams.pageIndex;
@@ -185,7 +194,7 @@ export class ResourcesComponent implements OnInit {
     // Return a result when closed
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
-        this.query.params.appName = result.data.name;
+        this.query.params.appName = result.data.appName;
         this.query.params.appId = result.data.id;
         console.log(result);
         this.fetch();

@@ -36,7 +36,7 @@ import { RoleEditerComponent } from './role-editer/role-editer.component';
 export class RolesComponent implements OnInit {
   query: {
     params: {
-      name: String;
+      roleName: String;
       displayName: String;
       employeeNumber: String;
       startDate: String;
@@ -59,7 +59,7 @@ export class RolesComponent implements OnInit {
     checked: boolean;
   } = {
       params: {
-        name: '',
+        roleName: '',
         displayName: '',
         employeeNumber: '',
         startDate: '',

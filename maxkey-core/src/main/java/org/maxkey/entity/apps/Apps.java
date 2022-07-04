@@ -61,7 +61,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
      * 
      */
     @Column
-    private String name;
+    private String appName;
     /*
      * Login url
      */
@@ -173,19 +173,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
         credential = CREDENTIALS.NONE;
     }
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+  
 
     public String getId() {
         return id;
@@ -195,7 +183,19 @@ public class Apps extends JpaBaseEntity implements Serializable {
         this.id = id;
     }
 
-    /**
+    public String getAppName() {
+		return appName;
+	}
+
+
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
+
+
+
+	/**
      * @return the loginUrl
      */
     public String getLoginUrl() {
@@ -619,8 +619,8 @@ public class Apps extends JpaBaseEntity implements Serializable {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Apps [id=");
 		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
+		builder.append(", appName=");
+		builder.append(appName);
 		builder.append(", loginUrl=");
 		builder.append(loginUrl);
 		builder.append(", category=");

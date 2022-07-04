@@ -39,9 +39,9 @@ public class Organizations extends JpaBaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
     private String id;
     @Column
-    private String code;
+    private String orgCode;
     @Column
-    private String name;
+    private String orgName;
     @Column
     private String fullName;
     @Column
@@ -131,23 +131,23 @@ public class Organizations extends JpaBaseEntity implements Serializable {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
-    }
+    public String getOrgCode() {
+		return orgCode;
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public void setOrgCode(String orgCode) {
+		this.orgCode = orgCode;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getOrgName() {
+		return orgName;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
 
-    public String getFullName() {
+	public String getFullName() {
         return fullName;
     }
 
@@ -445,10 +445,10 @@ public class Organizations extends JpaBaseEntity implements Serializable {
         StringBuilder builder = new StringBuilder();
         builder.append("Organizations [id=");
         builder.append(id);
-        builder.append(", code=");
-        builder.append(code);
-        builder.append(", name=");
-        builder.append(name);
+        builder.append(", orgCode=");
+        builder.append(orgCode);
+        builder.append(", orgName=");
+        builder.append(orgName);
         builder.append(", fullName=");
         builder.append(fullName);
         builder.append(", parentId=");

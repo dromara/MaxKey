@@ -6,8 +6,8 @@
     	<if test="id != null and id != ''">
 			and	id	=	#{id} 	
 		</if> 
-		<if test="name != null and name != '' ">
-			and name like '%${name}%'
+		<if test="orgName != null and orgName != '' ">
+			and orgname like '%${orgName}%'
 		</if>
 		<if test="parentId != null and parentId != '' ">
 			and	parentid	=	#{parentId}
@@ -45,8 +45,8 @@
     	<if test="id != null and id != '' ">
 			and	id	=	#{id}
 		</if>
-		<if test="name != name">
-			and	name	=	#{name}
+		<if test="orgName != orgName">
+			and	orgname	=	#{orgName}
 		</if>
 		<if test="enable != null">
 			and	status	=	'1'

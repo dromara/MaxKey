@@ -33,7 +33,7 @@ import { RolesService } from '../../../../service/roles.service';
 export class SelectRolesComponent implements OnInit {
   query: {
     params: {
-      name: String;
+      roleName: String;
       displayName: String;
       protocol: String;
       startDate: String;
@@ -56,7 +56,7 @@ export class SelectRolesComponent implements OnInit {
     checked: boolean;
   } = {
       params: {
-        name: '',
+        roleName: '',
         displayName: '',
         protocol: '',
         startDate: '',

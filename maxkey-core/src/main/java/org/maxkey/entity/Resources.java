@@ -35,7 +35,17 @@ public class Resources  extends JpaBaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO,generator = "snowflakeid")
     String id;
     @Column
-    String name;
+    String resourceName;
+    @Column
+    String resourceType;
+    @Column
+    String resourceIcon;
+    @Column
+    String resourceStyle;
+    @Column
+    String resourceUrl;
+    @Column
+    String resourceAction;
     @Column
     String permission;
     @Column
@@ -47,16 +57,6 @@ public class Resources  extends JpaBaseEntity implements Serializable {
     String parentId;
     @Column
     String parentName;
-    @Column
-    String resourceType;
-    @Column
-    String resourceIcon;
-    @Column
-    String resourceStyle;
-    @Column
-    String resourceUrl;
-    @Column
-    String resourceAction;
     @Column
     String status;
     @Column
@@ -86,15 +86,15 @@ public class Resources  extends JpaBaseEntity implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getResourceName() {
+		return resourceName;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setResourceName(String resourceName) {
+		this.resourceName = resourceName;
+	}
 
-    public String getAppId() {
+	public String getAppId() {
         return appId;
     }
 
@@ -251,8 +251,8 @@ public class Resources  extends JpaBaseEntity implements Serializable {
         StringBuilder builder = new StringBuilder();
         builder.append("Resources [id=");
         builder.append(id);
-        builder.append(", name=");
-        builder.append(name);
+        builder.append(", resourceName=");
+        builder.append(resourceName);
         builder.append(", sortIndex=");
         builder.append(sortIndex);
         builder.append(", appId=");

@@ -65,7 +65,7 @@ public abstract class AbstractSynchronizerService {
         for(Organizations org : orgsList) {
            if(org.getId().equals(rootOrgId) && rootOrgId.equals("1")) {
                rootOrganization = org; 
-               rootOrganization.setNamePath("/"+rootOrganization.getName());
+               rootOrganization.setNamePath("/"+rootOrganization.getOrgName());
                rootOrganization.setCodePath("/1");
                rootOrganization.setParentId("-1");
                rootOrganization.setParentName("");
@@ -108,9 +108,9 @@ public abstract class AbstractSynchronizerService {
         for(Organizations org : orgsList) {
             if(org.getParentId().equals(parentOrg.getId())) {
                 if(org.getNamePath() == null 
-                        || !org.getNamePath().equals(parentOrg.getNamePath()+"/"+org.getName())) {
-                    org.setParentName(parentOrg.getName());
-                    org.setNamePath(parentOrg.getNamePath()+"/"+org.getName());
+                        || !org.getNamePath().equals(parentOrg.getNamePath()+"/"+org.getOrgName())) {
+                    org.setParentName(parentOrg.getOrgName());
+                    org.setNamePath(parentOrg.getNamePath()+"/"+org.getOrgName());
                     org.setCodePath(parentOrg.getCodePath()+"/"+org.getId());
                     organizationsService.update(org);
                 }

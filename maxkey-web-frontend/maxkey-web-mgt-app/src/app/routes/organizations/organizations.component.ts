@@ -71,7 +71,7 @@ import { OrganizationEditerComponent } from './organization-editer/organization-
 export class OrganizationsComponent implements OnInit {
   query: {
     params: {
-      name: String;
+      orgName: String;
       displayName: String;
       parentId: String;
       startDate: String;
@@ -91,7 +91,7 @@ export class OrganizationsComponent implements OnInit {
     checked: boolean;
   } = {
       params: {
-        name: '',
+        orgName: '',
         displayName: '',
         parentId: '',
         startDate: '',

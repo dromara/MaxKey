@@ -148,7 +148,7 @@ public class ResourcesController {
 			TreeAttributes treeAttributes = new TreeAttributes();
 			int nodeCount = 0;
 			for (Resources r : resourceList) {
-				TreeNode treeNode = new TreeNode(r.getId(),r.getName());
+				TreeNode treeNode = new TreeNode(r.getId(),r.getResourceName());
 				treeNode.setParentKey(r.getParentId());
 				treeNode.setParentTitle(r.getParentName());
 				treeNode.setAttrs(r);

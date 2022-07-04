@@ -9,8 +9,8 @@
         <if test="appId != null and appId != ''">
             and mas.appid   =   #{appId}
         </if> 
-        <if test="name != null and name != ''">
-            and mas.name    =   #{name}
+        <if test="appName != null and appName != ''">
+            and mas.appname    =   #{appName}
         </if>
     </sql>
     

@@ -90,7 +90,7 @@ export class AppSaml20DetailsEditerComponent implements OnInit {
         this.fileList = [
           {
             uid: this.form.model.id.toString(),
-            name: this.form.model.name.toString(),
+            name: this.form.model.appName.toString(),
             status: 'done',
             url: this.previewImage
           }

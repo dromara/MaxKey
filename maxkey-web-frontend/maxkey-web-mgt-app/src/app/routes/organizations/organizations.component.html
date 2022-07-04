@@ -5,10 +5,10 @@
     <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 24, lg: 24, xl: 48, xxl: 48 }">
       <div nz-col nzMd="16" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">{{ 'mxk.organizations.name' | i18n }}</nz-form-label>
+          <nz-form-label nzFor="orgName">{{ 'mxk.organizations.name' | i18n }}</nz-form-label>
           <nz-form-control>
-            <input nz-input [(ngModel)]="query.params.name" [ngModelOptions]="{ standalone: true }" name="name"
-              placeholder="" id="name" />
+            <input nz-input [(ngModel)]="query.params.orgName" [ngModelOptions]="{ standalone: true }" name="orgName"
+              placeholder="" id="orgName" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -77,7 +77,7 @@
             <td nzAlign="left">
               <span>{{ data.id }}</span>
             </td>
-            <td nzAlign="left"> {{ data.name }}</td>
+            <td nzAlign="left"> {{ data.orgName }}</td>
             <td nzAlign="left">
               {{ data.type == 'entity' ? ('mxk.organizations.type.entity' | i18n) : ('mxk.organizations.type.virtual' |
               i18n) }}</td>

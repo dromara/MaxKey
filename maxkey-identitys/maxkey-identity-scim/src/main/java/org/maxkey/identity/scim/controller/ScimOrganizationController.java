@@ -126,9 +126,9 @@ public class ScimOrganizationController {
     public ScimOrganization org2ScimOrg(Organizations org) {
     	ScimOrganization 	scimOrg = new ScimOrganization();
         scimOrg.setId(org.getId());
-        scimOrg.setCode(org.getCode());
-        scimOrg.setName(org.getName());
-        scimOrg.setDisplayName(org.getName());
+        scimOrg.setCode(org.getOrgCode());
+        scimOrg.setName(org.getOrgName());
+        scimOrg.setDisplayName(org.getOrgName());
         scimOrg.setFullName(org.getFullName());
         scimOrg.setType(org.getType());
         scimOrg.setLevel(org.getLevel());
@@ -168,9 +168,9 @@ public class ScimOrganizationController {
     public Organizations scimOrg2Org(ScimOrganization 	scimOrg) {
     	Organizations org = new Organizations();
     	org.setId(scimOrg.getId());
-    	org.setCode(scimOrg.getCode());
+    	org.setOrgCode(scimOrg.getCode());
     	org.setFullName(scimOrg.getFullName());
-    	org.setName(StringUtils.isNotBlank(scimOrg.getName()) ? scimOrg.getName():scimOrg.getDisplayName());
+    	org.setOrgName(StringUtils.isNotBlank(scimOrg.getName()) ? scimOrg.getName():scimOrg.getDisplayName());
     	org.setParentId(StringUtils.isNotBlank(scimOrg.getParentId())? scimOrg.getParentId():scimOrg.getParent());
     	org.setParentCode(scimOrg.getParentCode());
     	org.setParentName(scimOrg.getParentName());

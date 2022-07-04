@@ -74,7 +74,7 @@ public class ReorgDeptService extends AbstractSynchronizerService implements ISy
 			if(listOrg.get(i).getParentId().equals(rootParentOrgId)){
 				tempOrg = listOrg.get(i); 
 				tempOrg.setReorgNamePath(true);
-				tempOrg.setNamePath("/"+tempOrg.getName());
+				tempOrg.setNamePath("/"+tempOrg.getOrgName());
 				tempOrg.setCodePath("/"+tempOrg.getId());
 				tempOrg.setParentId("-1");
 				tempOrg.setParentName("");
@@ -89,9 +89,9 @@ public class ReorgDeptService extends AbstractSynchronizerService implements ISy
 	 	   			tempOrg = listOrg.get(i); 
 	 	   			if(!tempOrg.isReorgNamePath() && parentOrg != null){
 	 	   				tempOrg.setReorgNamePath(true);
-	 	   				tempOrg.setParentName(parentOrg.getName());
+	 	   				tempOrg.setParentName(parentOrg.getOrgName());
 	 	   				tempOrg.setCodePath(parentOrg.getCodePath()+"/"+tempOrg.getId());
-	 	   				tempOrg.setNamePath(parentOrg.getNamePath()+"/"+tempOrg.getName());
+	 	   				tempOrg.setNamePath(parentOrg.getNamePath()+"/"+tempOrg.getOrgName());
 	 	   				orgMap.put(tempOrg.getId(), tempOrg);
 						_logger.info("reorg : " + tempOrg);
 	 	   			}

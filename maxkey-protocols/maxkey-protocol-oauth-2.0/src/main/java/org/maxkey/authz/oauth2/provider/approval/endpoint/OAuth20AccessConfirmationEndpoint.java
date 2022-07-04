@@ -153,7 +153,7 @@ public class OAuth20AccessConfirmationEndpoint {
 		        model.put("auth_request", clientAuth);
 		        model.put("client", client);
 		        model.put("clientId", clientAuth.getClientId());
-		        model.put("appName", app.getName());
+		        model.put("appName", app.getAppName());
 		        model.put("iconBase64", app.getIconBase64());
 		        model.put("oauth_version", "oauth 2.0");
 		        Map<String, String> scopes = new LinkedHashMap<String, String>();

@@ -12,8 +12,8 @@
         <if test="parentId != null and parentId != ''">
             and res.parentid  =   #{parentId}
         </if> 
-		<if test="name != null and name != ''">
-			and res.name like '%${name}%'
+		<if test="resourceName != null and resourceName != ''">
+			and res.resourcename like '%${resourceName}%'
 		</if>
     </sql>
     
@@ -21,7 +21,7 @@
 	
 	<select id="queryPageResults" parameterType="Resources" resultType="Resources">
 		select
-			res.*,app.name appname
+			res.*,app.appname
 		from
 			mxk_resources res, mxk_apps app
 		where
@@ -40,8 +40,8 @@
     	<if test="id != null">
 			and	id	=	#{id}
 		</if>
-		<if test="name != name">
-			and	name	=	#{name}
+		<if test="resourceName != resourceName">
+			and	resourcename	=	#{resourceName}
 		</if>
     </update>
     

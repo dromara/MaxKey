@@ -70,7 +70,7 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 							parentOrg = rootOrganization;
 						}
 						organization.setParentId(parentOrg.getId());
-						organization.setParentName(parentOrg.getName());
+						organization.setParentName(parentOrg.getOrgName());
 						organization.setCodePath(parentOrg.getCodePath()+"/"+organization.getId());
 						_logger.info("parentNamePath " + parentNamePath+" , namePah " + organization.getNamePath());
 						
@@ -83,7 +83,7 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 							organizationsService.insert(organization);
 							_logger.debug("Organizations : " + organization);
 							
-							synchroRelated = buildSynchroRelated(organization,organization.getLdapDn(),organization.getName());
+							synchroRelated = buildSynchroRelated(organization,organization.getLdapDn(),organization.getOrgName());
 						}else {
 							organization.setId(synchroRelated.getObjectId());
 							organizationsService.update(organization);
@@ -99,7 +99,7 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 													this.synchronizer.getId(),
 													this.synchronizer.getName(),
 													organization.getId(),
-													organization.getName(),
+													organization.getOrgName(),
 													Organizations.class.getSimpleName(),
 													org.maxkey.util.DateUtils.getCurrentDateAsString(),
 													"success",
@@ -164,8 +164,8 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 	public SynchroRelated buildSynchroRelated(Organizations organization,String ldapDN,String name) {
 		return new SynchroRelated(
 					organization.getId(),
-					organization.getName(),
-					organization.getName(),
+					organization.getOrgName(),
+					organization.getOrgName(),
 					Organizations.CLASS_TYPE,
 					synchronizer.getId(),
 					synchronizer.getName(),
@@ -181,7 +181,7 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 		    Organizations org = new Organizations();
 			org.setLdapDn(nameInNamespace);
 			String []namePaths = name.replaceAll(",OU=", "/").replaceAll("OU=", "/").split("/");
-			String namePah= "/"+rootOrganization.getName();
+			String namePah= "/"+rootOrganization.getOrgName();
 			for(int i = namePaths.length -1 ; i >= 0 ; i --) {
 			    namePah = namePah + "/" + namePaths[i];
 			}
@@ -189,10 +189,10 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 			namePah = namePah.substring(0, namePah.length() - 1);
 			 
 			org.setId(org.generateId());
-			org.setCode(org.getId());
+			org.setOrgCode(org.getId());
 			org.setNamePath(namePah);
 			org.setLevel(namePaths.length);
-			org.setName(LdapUtils.getAttributeStringValue(OrganizationalUnit.OU,attributeMap));
+			org.setOrgName(LdapUtils.getAttributeStringValue(OrganizationalUnit.OU,attributeMap));
 			org.setCountry(LdapUtils.getAttributeStringValue(OrganizationalUnit.CO,attributeMap));
 			org.setRegion(LdapUtils.getAttributeStringValue(OrganizationalUnit.ST,attributeMap));
 			org.setLocality(LdapUtils.getAttributeStringValue(OrganizationalUnit.L,attributeMap));

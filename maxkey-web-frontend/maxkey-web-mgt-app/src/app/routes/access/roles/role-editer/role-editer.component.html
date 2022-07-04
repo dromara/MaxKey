@@ -1,17 +1,24 @@
 <div *nzModalTitle> {{ isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
 <div>
   <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
-    <nz-form-item>
+    <nz-form-item class="d-none">
       <nz-form-label [nzMd]="6" nzRequired nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
         <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input
-          name="id" id="id" />
+          name="id" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
-      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not validminLength!">
-        <input [(ngModel)]="form.model.name" [ngModelOptions]="{ standalone: true }" nz-input name="name" id="name" />
+      <nz-form-label [nzMd]="6" nzRequired nzFor="roleCode">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.roleCode" [ngModelOptions]="{ standalone: true }" nz-input name="roleCode" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="roleName">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid minLength!">
+        <input [(ngModel)]="form.model.roleName" [ngModelOptions]="{ standalone: true }" nz-input name="roleName"
+          id="roleName" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>

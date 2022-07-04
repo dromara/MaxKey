@@ -135,8 +135,8 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
 	public SynchroRelated buildSynchroRelated(Organizations organization,String deptId,String name,String parentId) {
 		return new SynchroRelated(
 				organization.getId(),
-				organization.getName(),
-				organization.getName(),
+				organization.getOrgName(),
+				organization.getOrgName(),
 				Organizations.CLASS_TYPE,
 				synchronizer.getId(),
 				synchronizer.getName(),
@@ -154,8 +154,8 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
 				this.synchronizer,dept.getParentId() + "",Organizations.CLASS_TYPE);
 		Organizations org = new Organizations();
 		org.setId(dept.getDeptId()+"");
-		org.setCode(dept.getDeptId()+"");
-		org.setName(dept.getName());
+		org.setOrgCode(dept.getDeptId()+"");
+		org.setOrgName(dept.getName());
 		org.setParentCode(dept.getParentId()+"");
 		if(synchroRelatedParent != null) {
 			org.setParentId(synchroRelatedParent.getObjectId());

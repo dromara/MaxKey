@@ -20,10 +20,10 @@
       </div>
       <div nz-col nzMd="8" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
+          <nz-form-label nzFor="roleName">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
           <nz-form-control>
-            <input nz-input [(ngModel)]="query.params.name" [ngModelOptions]="{ standalone: true }" name="name"
-              placeholder="" id="name" />
+            <input nz-input [(ngModel)]="query.params.roleName" [ngModelOptions]="{ standalone: true }" name="roleName"
+              placeholder="" id="roleName" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -83,7 +83,7 @@
             <td nzAlign="left" style="display: none">
               <span>{{ data.id }}</span>
             </td>
-            <td nzAlign="left" nzBreakWord="false">{{ data.name }}</td>
+            <td nzAlign="left" nzBreakWord="false">{{ data.roleName }}</td>
             <td nzAlign="center"> <i *ngIf="data.dynamic == 1" nz-icon nzType="check-circle" nzTheme="fill"
                 style="color: green"></i></td>
           </tr>

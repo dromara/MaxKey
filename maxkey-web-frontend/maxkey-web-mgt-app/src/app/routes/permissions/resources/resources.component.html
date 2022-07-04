@@ -20,10 +20,10 @@
       </div>
       <div nz-col nzMd="10" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">{{ 'mxk.resources.name' | i18n }}</nz-form-label>
+          <nz-form-label nzFor="resourceName">{{ 'mxk.resources.name' | i18n }}</nz-form-label>
           <nz-form-control>
-            <input nz-input [(ngModel)]="query.params.name" [ngModelOptions]="{ standalone: true }" name="name"
-              placeholder="" id="name" />
+            <input nz-input [(ngModel)]="query.params.resourceName" [ngModelOptions]="{ standalone: true }"
+              name="resourceName" placeholder="" id="resourceName" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -92,7 +92,7 @@
             <td nzAlign="left">
               <span>{{ data.appName }}</span>
             </td>
-            <td nzAlign="left"> {{ data.name }}</td>
+            <td nzAlign="left"> {{ data.resourceName }}</td>
             <td nzAlign="left"> {{ data.resourceType }}</td>
             <td nzAlign="center"> {{ data.sortIndex }}</td>
             <td nzAlign="center"> <i *ngIf="data.status == 1" nz-icon nzType="check-circle" nzTheme="fill"

@@ -6,8 +6,8 @@
 		<if test="id != null and id != ''">
 			and id 			= #{id}
 		</if>
-		<if test="name != null and name != ''">
-			and name  		like  	'%${name}%'
+		<if test="appName != null and appName != ''">
+			and appname  		like  	'%${appName}%'
 		</if>
 		<if test="protocol != null and protocol != ''">
 			and protocol 	= #{protocol}
@@ -39,7 +39,7 @@
 	<insert id="insertApp" parameterType="Apps">
 		insert into mxk_apps(
 			id,
-			name,
+			appname,
 			icon,
 			loginurl,
 			protocol,
@@ -82,7 +82,7 @@
 			instid
 		)values(
 			#{id},
-			#{name},
+			#{appName},
 			#{icon},
 			#{loginUrl},
 			#{protocol},
@@ -127,7 +127,7 @@
 	
 	<update id="updateApp" parameterType="Apps" >
     	update mxk_apps set
-    		name				=	#{name},
+    		appname				=	#{appName},
     		<if test="icon != null">
 			icon				=	#{icon},
 			</if>
@@ -200,8 +200,8 @@
                         </if>
                     )
             )
-        <if test="name != null and name != ''">
-            and name    =   #{name}
+        <if test="appName != null and appName != ''">
+            and appname    =   #{appName}
         </if>
         order by sortindex
     </select>

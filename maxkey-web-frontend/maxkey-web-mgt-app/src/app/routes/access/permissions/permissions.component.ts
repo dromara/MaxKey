@@ -169,7 +169,7 @@ export class PermissionsComponent implements OnInit {
     // Return a result when closed
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
-        this.query.params.roleName = result.data.name;
+        this.query.params.roleName = result.data.roleName;
         this.query.params.roleId = result.data.id;
         console.log(result);
         this.fetch();

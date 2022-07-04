@@ -51,7 +51,7 @@ export class PrivilegesComponent implements OnInit {
   @ViewChild('nzTreeComponent', { static: false }) nzTreeComponent!: NzTreeComponent;
   query: {
     params: {
-      name: String;
+      roleName: String;
       displayName: String;
       employeeNumber: String;
       appId: String;
@@ -76,7 +76,7 @@ export class PrivilegesComponent implements OnInit {
     checked: boolean;
   } = {
       params: {
-        name: '',
+        roleName: '',
         displayName: '',
         employeeNumber: '',
         appId: '',
@@ -210,7 +210,7 @@ export class PrivilegesComponent implements OnInit {
     // Return a result when closed
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
-        this.query.params.appName = result.data.name;
+        this.query.params.appName = result.data.appName;
         this.query.params.appId = result.data.id;
         this.fetch();
         this.tree();

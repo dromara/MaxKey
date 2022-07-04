@@ -85,8 +85,8 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 	public SynchroRelated buildSynchroRelated(Organizations organization,WorkWeixinDepts dept) {
 		return new SynchroRelated(
 					organization.getId(),
-					organization.getName(),
-					organization.getName(),
+					organization.getOrgName(),
+					organization.getOrgName(),
 					Organizations.CLASS_TYPE,
 					synchronizer.getId(),
 					synchronizer.getName(),
@@ -115,8 +115,8 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 				synchroRelatedService.findByOriginId(
 				this.synchronizer,dept.getParentid() + "",Organizations.CLASS_TYPE);
 		Organizations org = new Organizations();
-		org.setName(dept.getName());
-		org.setCode(dept.getId()+"");
+		org.setOrgName(dept.getName());
+		org.setOrgCode(dept.getId()+"");
 		org.setParentId(synchroRelatedParent.getObjectId());
 		org.setParentName(synchroRelatedParent.getObjectName());
 		org.setSortIndex(dept.getOrder());

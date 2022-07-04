@@ -59,7 +59,7 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 			account.setDisplayName(currentUser.getDisplayName());
 			
 			account.setAppId(appId);
-			account.setAppName(app.getName());
+			account.setAppName(app.getAppName());
 			account.setInstId(currentUser.getInstId());
 			account.setCreateType("manual");
 			account.setStatus(ConstsStatus.ACTIVE);

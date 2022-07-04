@@ -38,7 +38,11 @@ public class Roles extends JpaBaseEntity implements Serializable {
 
     @Length(max = 60)
     @Column
-    String name;
+    String roleCode;
+    
+    @Length(max = 60)
+    @Column
+    String roleName;
     
     @Column
     String dynamic;
@@ -86,22 +90,15 @@ public class Roles extends JpaBaseEntity implements Serializable {
      * @param name String
      * @param isdefault int
      */
-    public Roles(String id, String name, int isdefault) {
+    public Roles(String id,String roleCode, String roleName, int isdefault) {
         super();
         this.id = id;
-        this.name = name;
+        this.roleCode = roleCode;
+        this.roleName = roleName;
         this.isdefault = isdefault;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getId() {
+	public String getId() {
         return id;
     }
 
@@ -109,6 +106,22 @@ public class Roles extends JpaBaseEntity implements Serializable {
         this.id = id;
     }
 
+    public String getRoleCode() {
+		return roleCode;
+	}
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+	
     public int getIsdefault() {
         return isdefault;
     }
@@ -234,38 +247,44 @@ public class Roles extends JpaBaseEntity implements Serializable {
 	}
 
 	@Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Groups [id=");
-        builder.append(id);
-        builder.append(", name=");
-        builder.append(name);
-        builder.append(", dynamic=");
-        builder.append(dynamic);
-        builder.append(", filters=");
-        builder.append(filters);
-        builder.append(", orgIdsList=");
-        builder.append(orgIdsList);
-        builder.append(", resumeTime=");
-        builder.append(resumeTime);
-        builder.append(", suspendTime=");
-        builder.append(suspendTime);
-        builder.append(", isdefault=");
-        builder.append(isdefault);
-        builder.append(", description=");
-        builder.append(description);
-        builder.append(", createdBy=");
-        builder.append(createdBy);
-        builder.append(", createdDate=");
-        builder.append(createdDate);
-        builder.append(", modifiedBy=");
-        builder.append(modifiedBy);
-        builder.append(", modifiedDate=");
-        builder.append(modifiedDate);
-        builder.append(", status=");
-        builder.append(status);
-        builder.append("]");
-        return builder.toString();
-    }
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Roles [id=");
+		builder.append(id);
+		builder.append(", roleCode=");
+		builder.append(roleCode);
+		builder.append(", roleName=");
+		builder.append(roleName);
+		builder.append(", dynamic=");
+		builder.append(dynamic);
+		builder.append(", filters=");
+		builder.append(filters);
+		builder.append(", orgIdsList=");
+		builder.append(orgIdsList);
+		builder.append(", resumeTime=");
+		builder.append(resumeTime);
+		builder.append(", suspendTime=");
+		builder.append(suspendTime);
+		builder.append(", isdefault=");
+		builder.append(isdefault);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", createdBy=");
+		builder.append(createdBy);
+		builder.append(", createdDate=");
+		builder.append(createdDate);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
+		builder.append(", modifiedDate=");
+		builder.append(modifiedDate);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", instId=");
+		builder.append(instId);
+		builder.append(", instName=");
+		builder.append(instName);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

@@ -41,7 +41,7 @@ import { RoleMembersEditerComponent } from './role-members-editer/role-members-e
 export class RoleMembersComponent implements OnInit {
   query: {
     params: {
-      name: String;
+      roleName: String;
       displayName: String;
       username: String;
       roleId: String;
@@ -68,7 +68,7 @@ export class RoleMembersComponent implements OnInit {
     checked: boolean;
   } = {
       params: {
-        name: '',
+        roleName: '',
         displayName: '',
         username: '',
         roleId: '',
@@ -128,7 +128,7 @@ export class RoleMembersComponent implements OnInit {
   onReset(): void {
     this.query.params.username = '';
     this.query.params.roleId = '';
-    this.query.params.name = '';
+    this.query.params.roleName = '';
     this.fetch();
   }
 
@@ -196,7 +196,7 @@ export class RoleMembersComponent implements OnInit {
     // Return a result when closed
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
-        this.query.params.name = result.data.name;
+        this.query.params.roleName = result.data.roleName;
         this.query.params.roleId = result.data.id;
         console.log(result);
         this.fetch();

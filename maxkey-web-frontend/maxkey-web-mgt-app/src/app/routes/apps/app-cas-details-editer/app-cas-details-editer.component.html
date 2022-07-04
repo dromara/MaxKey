@@ -56,10 +56,11 @@
         </div>
         <div nz-row>
           <nz-form-item>
-            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="appName">{{ 'mxk.apps.name' | i18n }}
+            </nz-form-label>
             <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid name!">
-              <input [(ngModel)]="form.model.name" [ngModelOptions]="{ standalone: true }" nz-input name="name"
-                id="name" />
+              <input [(ngModel)]="form.model.appName" [ngModelOptions]="{ standalone: true }" nz-input name="appName"
+                id="appName" />
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>

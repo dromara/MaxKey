@@ -19,7 +19,7 @@ import format from 'date-fns/format';
 import { BaseEntity } from './BaseEntity';
 
 export class Apps extends BaseEntity {
-    name!: String;
+    appName!: String;
     loginUrl!: String;
     category!: String;
     protocol!: String;

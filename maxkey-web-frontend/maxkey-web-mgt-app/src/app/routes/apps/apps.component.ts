@@ -16,6 +16,7 @@
 
 import { ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { I18NService } from '@core';
 import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import { format, addDays } from 'date-fns';
@@ -43,7 +44,7 @@ import { AppTokenBasedDetailsEditerComponent } from './app-token-based-details-e
 export class AppsComponent implements OnInit {
   query: {
     params: {
-      name: String;
+      appName: String;
       displayName: String;
       protocol: String;
       startDate: String;
@@ -66,7 +67,7 @@ export class AppsComponent implements OnInit {
     checked: boolean;
   } = {
       params: {
-        name: '',
+        appName: '',
         displayName: '',
         protocol: '',
         startDate: '',
@@ -96,6 +97,7 @@ export class AppsComponent implements OnInit {
     private fb: FormBuilder,
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    private router: Router,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -177,6 +179,11 @@ export class AppsComponent implements OnInit {
     }
     return ProtocolComponent;
   }
+
+  onResourcesMgmt(e: MouseEvent, appId: String, appName: String): void {
+    this.router.navigateByUrl(`/permissions/resources?appId=${appId}&appName=${appName}`);
+  }
+
   onAdd(e: MouseEvent, protocol: String): void {
     e.preventDefault();
     const modal = this.modalService.create({

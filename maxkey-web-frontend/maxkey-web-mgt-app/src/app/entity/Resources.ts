@@ -17,7 +17,7 @@
 import { BaseEntity } from './BaseEntity';
 
 export class Resources extends BaseEntity {
-    name!: String;
+    resourceName!: String;
     permission!: String;
     appId!: String;
     appName!: String;

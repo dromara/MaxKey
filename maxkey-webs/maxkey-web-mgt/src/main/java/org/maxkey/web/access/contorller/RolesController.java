@@ -26,6 +26,7 @@ import org.maxkey.entity.Roles;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.RolesService;
+import org.maxkey.util.StringUtils;
 import org.maxkey.persistence.service.HistorySystemLogsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,6 +88,10 @@ public class RolesController {
 	public ResponseEntity<?> insert(@RequestBody Roles role,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-Add  :" + role);
 		role.setInstId(currentUser.getInstId());
+		role.setId(role.generateId());
+		if(StringUtils.isBlank(role.getRoleCode())) {
+			role.setRoleCode(role.getId());
+		}
 		if (rolesService.insert(role)) {
 			rolesService.refreshDynamicRoles(role);
 		    systemLog.insert(

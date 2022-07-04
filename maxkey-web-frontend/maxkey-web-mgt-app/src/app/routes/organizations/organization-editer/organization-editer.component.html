@@ -11,19 +11,19 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">{{ 'mxk.organizations.code' | i18n }}
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="orgCode">{{ 'mxk.organizations.code' | i18n }}
           </nz-form-label>
           <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid code!">
-            <input [(ngModel)]="form.model.code" [ngModelOptions]="{ standalone: true }" nz-input name="code"
-              id="code" />
+            <input [(ngModel)]="form.model.orgCode" [ngModelOptions]="{ standalone: true }" nz-input name="orgCode"
+              id="orgCode" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.organizations.name' | i18n }}
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="orgName">{{ 'mxk.organizations.name' | i18n }}
           </nz-form-label>
           <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid name!">
-            <input [(ngModel)]="form.model.name" [ngModelOptions]="{ standalone: true }" nz-input name="name"
-              id="name" />
+            <input [(ngModel)]="form.model.orgName" [ngModelOptions]="{ standalone: true }" nz-input name="orgName"
+              id="orgName" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>

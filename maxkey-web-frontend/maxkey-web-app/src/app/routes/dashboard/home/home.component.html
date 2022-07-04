@@ -1,12 +1,8 @@
 <div nz-row>
   <div nz-col nzMd="3"></div>
   <div nz-col nzMd="18">
-    <nz-list
-      [nzLoading]="loading"
-      [nzDataSource]="appList"
-      [nzRenderItem]="item"
-      [nzGrid]="{ gutter: 24, xl: 6, lg: 8, md: 8, sm: 12, xs: 24 }"
-    >
+    <nz-list [nzLoading]="loading" [nzDataSource]="appList" [nzRenderItem]="item"
+      [nzGrid]="{ gutter: 24, xl: 6, lg: 8, md: 8, sm: 12, xs: 24 }">
       <ng-template #item let-item>
         <nz-list-item>
           <nz-card nzHoverable style="">
@@ -43,7 +39,7 @@
                 <p style="text-align: center" (click)="onAuthz($event, item.id)">
                   <img class="appListimage" src="{{ item.iconBase64 }}" />
                 </p>
-                <p>{{ item.name }}</p>
+                <p>{{ item.appName }}</p>
               </div>
             </div>
           </nz-card>

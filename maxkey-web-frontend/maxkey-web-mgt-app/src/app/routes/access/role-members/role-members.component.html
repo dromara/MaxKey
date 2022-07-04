@@ -5,11 +5,11 @@
     <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 24, lg: 24, xl: 48, xxl: 48 }">
       <div nz-col nzMd="8" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
+          <nz-form-label nzFor="roleName">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
           <nz-form-control>
             <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
-              <input nz-input [(ngModel)]="query.params.name" [ngModelOptions]="{ standalone: true }" name="name"
-                readonly placeholder="" id="name" />
+              <input nz-input [(ngModel)]="query.params.roleName" [ngModelOptions]="{ standalone: true }"
+                name="roleName" readonly placeholder="" id="roleName" />
             </nz-input-group>
             <ng-template #suffixButton>
               <button nz-button nzType="primary" (click)="onSelect($event)" nzSearch>{{ 'mxk.text.select' | i18n
