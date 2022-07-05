@@ -81,12 +81,20 @@ public class LoginEntryPoint {
  	
  	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
+ 		Message<AuthJwt> authJwtMessage = new Message<AuthJwt>(Message.FAIL);
  		if(authTokenService.validateJwtToken(loginCredential.getState())){
 	 		Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
-	 		AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
-	 		return new Message<AuthJwt>(authJwt).buildResponse();
+	 		if(authentication != null) {
+	 			AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
+	 			authJwtMessage = new Message<AuthJwt>(authJwt);
+	 		}else {//fail
+ 				String errorMsg = WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE) == null ? 
+						  "" : WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE).toString();
+				authJwtMessage.setMessage(Message.FAIL,errorMsg);
+				_logger.debug("login fail , message {}",errorMsg);
+	 		}
  		}
- 		return new Message<AuthJwt>(Message.FAIL).buildResponse();
+ 		return authJwtMessage.buildResponse();
  	}
  	
 }

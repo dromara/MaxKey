@@ -76,6 +76,11 @@ public class Message<T> {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	public void setMessage(int code,String message) {
+		this.code = code;
+		this.message = message;
+	}
 
 	public T getData() {
 		return data;

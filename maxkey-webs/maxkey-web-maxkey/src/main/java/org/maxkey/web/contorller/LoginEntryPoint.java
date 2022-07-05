@@ -190,6 +190,11 @@ public class LoginEntryPoint {
 		 					(Integer)WebContext.getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE));
 		 			authJwtMessage = new Message<AuthJwt>(authJwt);
 		 			
+		 		}else {//fail
+	 				String errorMsg = WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE) == null ? 
+							  "" : WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE).toString();
+	 				authJwtMessage.setMessage(errorMsg);
+	 				_logger.debug("login fail , message {}",errorMsg);
 		 		}
  	        }else {
  	        	_logger.error("Login AuthN type must eq normal , tfa or mobile . ");
