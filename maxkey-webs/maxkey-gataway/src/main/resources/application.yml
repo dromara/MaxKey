@@ -6,19 +6,19 @@ server:
   port: 9000
 spring:
   application:
-    name: maxkey-gateway-server
+    name: maxkey-gateway
   cloud:
     gateway:
       routes:
 #nacos健康检查端口8080
         - id: maxkeys_route
-          uri: lb://sign
+          uri: lb://maxkey
           filters:
             - PrefixPath=/
           predicates:
             - Path=/sign/**
         - id: maxkey_mgts_route
-          uri: lb://maxkey-mgt-api
+          uri: lb://maxkey-mgt
           filters:
             - PrefixPath=/
           predicates:
