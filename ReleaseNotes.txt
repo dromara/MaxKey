@@ -1,4 +1,34 @@
-﻿MaxKey v 3.5.1 GA 2022/06/09
+﻿MaxKey v 3.5.2 GA 2022/07/15
+    *(MAXKEY-220701) 网站界面图片更新
+    *(MAXKEY-220702) 注销问题修复
+    *(MAXKEY-220703) 单点注销功能增强
+    *(MAXKEY-220704) JWT单点登录参数丢失的修复
+    *(MAXKEY-220705) 跳转功能优化
+    *(MAXKEY-220706) 组织类型虚拟和实体组织
+    *(MAXKEY-220707) 应用管理 第三个页签下适配选项保存后无法显示 #I5DWS3
+    *(MAXKEY-220708) 删除系统的keystore，系统在NGINX中配置
+    *(MAXKEY-220709) 角色地址无法访问#I5E717
+    *(MAXKEY-220710) 角色新增的问题修复
+    *(MAXKEY-220711) token刷新问题修复
+    *(MAXKEY-220712) remove select apps protocol,机构管理 ->机构配置,groupName->roleName
+    *(MAXKEY-220713) 新增用户无法输入手机号和工号 #68
+    *(MAXKEY-220714) 角色名称和应用名称字段修改
+    *(MAXKEY-220715) 登录错误提示信息
+    *(MAXKEY-220716) OAuth2自动提交认证
+    *(MAXKEY-220717) nacos bootstrap升级和优化
+    *(MAXKEY-220718) formbase用户初始化跳转问题修复
+    *(MAXKEY-220719) 返回前端message优化
+    *(MAXKEY-220720) 删除spring-data-redis依赖
+    *(MAXKEY-220721) 依赖项引用、更新和升级
+        springcloud             3.1.3
+        nacosclient             2.0.4
+        jedis                   4.2.3
+        spring                  5.3.21
+        springBoot              2.6.9
+        springSecurity          5.6.6
+        
+        
+MaxKey v 3.5.1 GA 2022/06/09
     *(MAXKEY-220601) session会话增加二级缓存
     *(MAXKEY-220602) session会话超时及token刷新的问题
     *(MAXKEY-220603) 认证界面优化，支持账号登录和扫码登录
