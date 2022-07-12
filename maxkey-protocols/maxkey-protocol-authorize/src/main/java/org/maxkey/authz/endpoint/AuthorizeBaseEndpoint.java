@@ -103,13 +103,15 @@ public class AuthorizeBaseEndpoint {
 	
 	public ModelAndView initCredentialView(String appId,String redirect_uri){
 		String initCredentialURL = 
-				"redirect:" + 
+				"" + 
 				applicationConfig.getFrontendUri() + 
 				"/#/authz/credential?appId=%s&redirect_uri=%s";
 		
 		initCredentialURL = String.format(initCredentialURL,appId, redirect_uri);
 		_logger.debug("redirect to {}.",initCredentialURL);
-		return new ModelAndView(initCredentialURL);
+		ModelAndView  modelAndView =new ModelAndView("redirect");
+		modelAndView.addObject("redirect_uri", initCredentialURL);
+		return modelAndView;
 	}
 	
 }
