@@ -54,13 +54,17 @@ public class HttpSessionListenerAdapter implements HttpSessionListener {
         HttpSession session = sessionEvent.getSession();
         Authentication  authentication  = (Authentication ) session.getAttribute(WebConstants.AUTHENTICATION);
         SignPrincipal principal = AuthorizationUtils.getPrincipal(authentication);
-        if(principal != null ) {
-        	_logger.trace("{} HttpSession Id  {} for userId  {} , username  {} @Ticket {} Destroyed" ,
+        if(principal != null && principal.getUserInfo() !=null) {
+        	_logger.debug("{} HttpSession Id  {} for userId  {} , username  {} @Ticket {} Destroyed" ,
         			DateUtils.formatDateTime(new Date()),
         			session.getId(), 
         			principal.getUserInfo().getId(),
         			principal.getUserInfo().getUsername(),
         			principal.getSession().getId());
+        }else {
+        	_logger.trace("{} HttpSession Id  {} Destroyed" ,
+        			DateUtils.formatDateTime(new Date()),
+        			session.getId());
         }
         
     }
