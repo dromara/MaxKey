@@ -78,9 +78,11 @@
               <span>{{ data.id }}</span>
             </td>
             <td nzAlign="left"> {{ data.orgName }}</td>
-            <td nzAlign="left">
-              {{ data.type == 'entity' ? ('mxk.organizations.type.entity' | i18n) : ('mxk.organizations.type.virtual' |
-              i18n) }}</td>
+            <td nzAlign="left" *ngIf="data.type == 'company'"> {{ 'mxk.organizations.type.company' | i18n }}</td>
+            <td nzAlign="left" *ngIf="data.type == 'division'"> {{ 'mxk.organizations.type.division' | i18n }}</td>
+            <td nzAlign="left" *ngIf="data.type == 'department'"> {{ 'mxk.organizations.type.department' | i18n }}</td>
+            <td nzAlign="left" *ngIf="data.type == 'entity'"> {{ 'mxk.organizations.type.entity' | i18n }}</td>
+            <td nzAlign="left" *ngIf="data.type == 'virtual'"> {{ 'mxk.organizations.type.virtual' | i18n }}</td>
             <td nzAlign="center"> {{ data.sortIndex }}</td>
             <td nzAlign="center"> <i *ngIf="data.status == 1" nz-icon nzType="check-circle" nzTheme="fill"
                 style="color: green"></i></td>
