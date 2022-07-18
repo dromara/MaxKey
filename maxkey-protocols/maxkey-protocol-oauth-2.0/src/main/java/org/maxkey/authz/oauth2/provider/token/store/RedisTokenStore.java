@@ -44,7 +44,7 @@ import java.util.Date;
 public class RedisTokenStore implements TokenStore {
 	static final Logger _logger = LoggerFactory.getLogger(RedisTokenStore.class);
 	
-	private static final String PREFIX                 = "REDIS_OAUTH_V20_";
+	private static final String PREFIX                 = "MXK_OAUTH_V20_";
 	
 	private static final String ACCESS                 = PREFIX + "ACCESS_";
 	private static final String AUTH_TO_ACCESS         = PREFIX + "AUTH_TO_ACCESS_";

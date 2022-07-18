@@ -30,7 +30,7 @@ public class RedisAuthorizationCodeServices extends RandomValueAuthorizationCode
 
 	RedisConnectionFactory connectionFactory;
 	
-	public static String PREFIX="MAXKEY_REDIS_OAUTH_V20_CODE_";
+	public static String PREFIX="MXK_OAUTH_V20_CODE_";
 	
 	protected int codeValiditySeconds = 60 * 10; //default 10 minutes.
 	 

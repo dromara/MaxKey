@@ -30,7 +30,7 @@ public class RedisMomentaryService implements MomentaryService {
 	
 	RedisConnectionFactory connectionFactory;
 	
-	public static String PREFIX="REDIS_MOMENTARY_";
+	public static String PREFIX="MXK_MOMENTARY_";
 	/**
 	 * @param connectionFactory
 	 */

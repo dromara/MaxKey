@@ -30,7 +30,7 @@ public class RedisTicketServices extends RandomServiceTicketServices {
 	
 	RedisConnectionFactory connectionFactory;
 	
-	public static String PREFIX="REDIS_CAS_TICKET_ST_";
+	public static String PREFIX="MXK_CAS_TICKET_ST_";
 	/**
 	 * @param connectionFactory
 	 */

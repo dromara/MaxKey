@@ -34,7 +34,7 @@ public class RedisSessionManager implements SessionManager {
     
 	RedisConnectionFactory connectionFactory;
 	
-	public static String PREFIX="REDIS_SESSION_";
+	public static String PREFIX="MXK_SESSION_";
 	
 	public String getKey(String sessionId) {
 		return PREFIX + sessionId;
