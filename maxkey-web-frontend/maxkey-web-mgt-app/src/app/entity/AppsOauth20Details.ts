@@ -76,7 +76,6 @@ export class AppsOauth20Details extends Apps {
     override init(data: any): void {
         Object.assign(this, data);
         super.init(data);
-        //console.log(data);
         if (this.status == 1) {
             this.switch_status = true;
         }
@@ -104,6 +103,28 @@ export class AppsOauth20Details extends Apps {
             this.status = 1;
         } else {
             this.status = 0;
+        }
+        this.scope = '';
+
+        for (let i = 0; i < this.select_scope.length; i++) {
+            if (this.select_scope[i] != '') {
+                if (this.scope === '') {
+                    this.scope = this.select_scope[i];
+                } else {
+                    this.scope = `${this.scope},${this.select_scope[i]}`;
+                }
+            }
+        }
+        this.authorizedGrantTypes = '';
+        let n = 0;
+        for (let i = 0; i < this.select_authorizedGrantTypes.length; i++) {
+            if (this.select_authorizedGrantTypes[i] != '') {
+                if (this.authorizedGrantTypes === '') {
+                    this.authorizedGrantTypes = this.select_authorizedGrantTypes[i];
+                } else {
+                    this.authorizedGrantTypes = `${this.authorizedGrantTypes},${this.select_authorizedGrantTypes[i]}`;
+                }
+            }
         }
     }
 }
