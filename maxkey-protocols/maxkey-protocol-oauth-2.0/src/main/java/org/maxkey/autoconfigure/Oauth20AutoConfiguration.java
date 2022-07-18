@@ -223,7 +223,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     @Bean(name = "oauth20JdbcClientDetailsService")
     public JdbcClientDetailsService jdbcClientDetailsService(DataSource dataSource,PasswordEncoder passwordReciprocal) {
         JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
-        clientDetailsService.setPasswordEncoder(passwordReciprocal);
+        //clientDetailsService.setPasswordEncoder(passwordReciprocal);
         _logger.debug("OAuth 2 Jdbc ClientDetails Service init.");
         return clientDetailsService;
     }    

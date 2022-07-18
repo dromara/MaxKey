@@ -107,13 +107,13 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
             oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
         }
+		
+		transform(oauth20Details);
 		oauth20Details.setClientSecret(oauth20Details.getSecret());
 		oauth20Details.setInstId(currentUser.getInstId());
         oauth20JdbcClientDetailsService.updateClientDetails(oauth20Details.clientDetailsRowMapper());
         oauth20JdbcClientDetailsService.updateClientSecret(oauth20Details.getClientId(), oauth20Details.getClientSecret());
         
-		transform(oauth20Details);
-		
 		if (appsService.updateApp(oauth20Details)) {
 		    return new Message<AppsOAuth20Details>(Message.SUCCESS).buildResponse();
 		} else {
