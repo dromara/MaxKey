@@ -23,6 +23,7 @@ import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.authn.session.Session;
 import org.maxkey.authn.session.SessionManager;
 import org.maxkey.entity.Message;
+import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +50,12 @@ public class LoginTokenRefreshPoint {
 	
  	@RequestMapping(value={"/token/refresh"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> refresh(
-					@RequestHeader(name = "refresh_token", required = true) String refreshToken) {
+					@RequestHeader(name = "refresh_token", required = false) String refreshToken) {
  		_logger.debug("try to refresh token " );
  		_logger.trace("refresh token {} " , refreshToken);
  		try {
-	 		if(refreshTokenService.validateJwtToken(refreshToken)) {
+	 		if(StringUtils.isNotBlank(refreshToken) 
+	 				&& refreshTokenService.validateJwtToken(refreshToken)) {
 	 			String sessionId = refreshTokenService.resolveJWTID(refreshToken);
 	 			_logger.trace("Try to  refresh sessionId [{}]" , sessionId);
 		 		Session session = sessionManager.refresh(sessionId);
