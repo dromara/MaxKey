@@ -1,4 +1,22 @@
-﻿MaxKey v 3.5.2 GA 2022/07/15
+﻿MaxKey v 3.5.3 GA 2022/07/23
+    *(MAXKEY-220801) formbase用户初始化跳转问题修复
+    *(MAXKEY-220802) OAuth2自动提交认证
+    *(MAXKEY-220803) OAuth2密码保存不一致修复
+    *(MAXKEY-220804) HttpSessionListenerAdapter中userinfo空指针异常
+    *(MAXKEY-220805) 增加LDAP登录认证的参数配置
+    *(MAXKEY-220806) 组织增加公司、分支机构、部门三种类型
+    *(MAXKEY-220807) REDIS的key统一MXK_开头
+    *(MAXKEY-220808) HttpRequestAdapter增加REST方法
+    *(MAXKEY-220809) 新增应用时增加初始化默认值
+    *(MAXKEY-220810) Ldap认证配置的判断
+    *(MAXKEY-220811) 前端refresh_token报错问题，Header可为空，在程序中进行判断
+    *(MAXKEY-220812) 依赖项引用、更新和升级
+        log4j                   2.18.0
+        tomcat                  9.0.64
+        druid                   1.2.11
+        druidspringboot         1.2.11
+        
+MaxKey v 3.5.2 GA 2022/07/15
     *(MAXKEY-220701) 网站界面图片更新
     *(MAXKEY-220702) 注销问题修复
     *(MAXKEY-220703) 单点注销功能增强

@@ -47,7 +47,7 @@ public class LdapAuthenticationRealmService {
 		LdapAuthenticationRealm authenticationRealm = ldapRealmStore.getIfPresent(instId);
 		if(authenticationRealm == null) {
 			List<LdapContext> ldapContexts = 
-					ldapContextService.find("where instid = ? ", new Object[]{instId}, new int[]{Types.VARCHAR});
+					ldapContextService.find("where instid = ? and status = 1 ", new Object[]{instId}, new int[]{Types.VARCHAR});
 			authenticationRealm = new LdapAuthenticationRealm(false);
 			if(ldapContexts != null && ldapContexts.size()>0) {
 				authenticationRealm.setLdapSupport(true);
