@@ -26,7 +26,8 @@ export class AppsCasDetails extends Apps {
 
     constructor() {
         super();
-        this.expires = 30;
+        this.expires = 300;
+        this.casUser = 'username';
     }
 
     override init(data: any): void {

@@ -35,6 +35,10 @@ export class AppsJwtDetails extends Apps {
 
     constructor() {
         super();
+        this.expires = 300;
+        this.jwtName = 'jwt';
+        this.subject = 'username';
+        this.tokenType = 'POST';
     }
 
     override init(data: any): void {

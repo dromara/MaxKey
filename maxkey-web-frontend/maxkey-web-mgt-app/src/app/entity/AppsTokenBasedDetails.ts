@@ -28,6 +28,10 @@ export class AppsTokenBasedDetails extends Apps {
 
     constructor() {
         super();
+        this.expires = 300;
+        this.tokenType = 'POST';
+        this.cookieName = 'ltpa_token';
+        this.algorithm = 'AES';
     }
 
     override init(data: any): void {

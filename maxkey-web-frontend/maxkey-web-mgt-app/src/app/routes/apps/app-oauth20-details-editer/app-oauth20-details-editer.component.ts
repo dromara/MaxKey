@@ -86,6 +86,7 @@ export class AppOauth20DetailsEditerComponent implements OnInit {
     if (this.isEdit) {
       this.appsOauth20DetailsService.get(`${this.id}`).subscribe(res => {
         this.form.model.init(res.data);
+        //console.log(this.form.model);
         this.previewImage = this.form.model.iconBase64.toString();
         this.fileList = [
           {
@@ -178,6 +179,7 @@ export class AppOauth20DetailsEditerComponent implements OnInit {
     e.preventDefault();
     this.form.submitting = true;
     this.form.model.trans();
+    //console.log(this.form.model);
     (this.isEdit ? this.appsOauth20DetailsService.update(this.form.model) : this.appsOauth20DetailsService.add(this.form.model)).subscribe(
       res => {
         if (res.code == 0) {

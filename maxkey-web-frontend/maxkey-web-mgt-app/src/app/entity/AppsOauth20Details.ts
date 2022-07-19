@@ -71,6 +71,9 @@ export class AppsOauth20Details extends Apps {
         this.select_scope = ['read'];
         this.pkce = 'no';
         this.approvalPrompt = 'auto';
+        this.accessTokenValiditySeconds = '300';
+        this.refreshTokenValiditySeconds = '300';
+        this.subject = 'username';
     }
 
     override init(data: any): void {

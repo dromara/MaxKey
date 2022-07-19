@@ -27,6 +27,9 @@ export class AppsFormBasedDetails extends Apps {
 
     constructor() {
         super();
+        this.usernameMapping = 'username';
+        this.passwordMapping = 'password';
+        this.passwordAlgorithm = 'NONE';
     }
 
     override init(data: any): void {

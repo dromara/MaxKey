@@ -48,10 +48,10 @@ export class AppsSamlDetails extends Apps {
     binding!: String;
 
     /**
-     * 0 false 1 true
+     * yes or no
      */
 
-    encrypted!: Number;
+    encrypted!: String;
     /**
      * metadata_file metadata_url or certificate
      */
@@ -62,16 +62,23 @@ export class AppsSamlDetails extends Apps {
     metaFileId!: String;
 
     /**
-     * 0 original 1 uppercase 2 lowercase
+     * original , uppercase  or lowercase
      */
 
-    nameIdConvert!: Number;
+    nameIdConvert!: String;
 
     nameIdSuffix!: String;
 
     constructor() {
         super();
         this.fileType = 'certificate';
+        this.validityInterval = '300';
+        this.nameidFormat = 'persistent';
+        this.nameIdConvert = 'original';
+        this.signature = 'RSAwithSHA1';
+        this.digestMethod = 'SHA1';
+        this.encrypted = 'no';
+        this.binding = 'Redirect-Post';
     }
 
     override init(data: any): void {

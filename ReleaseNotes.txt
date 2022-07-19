@@ -1,6 +1,6 @@
 ﻿MaxKey v 3.5.3 GA 2022/07/23
     *(MAXKEY-220801) formbase用户初始化跳转问题修复
-    *(MAXKEY-220802) OAuth2自动提交认证
+    *(MAXKEY-220802) OAuth2 select多选保存问题
     *(MAXKEY-220803) OAuth2密码保存不一致修复
     *(MAXKEY-220804) HttpSessionListenerAdapter中userinfo空指针异常
     *(MAXKEY-220805) 增加LDAP登录认证的参数配置
