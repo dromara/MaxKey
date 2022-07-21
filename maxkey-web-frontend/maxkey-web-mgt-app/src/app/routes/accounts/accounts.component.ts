@@ -42,6 +42,7 @@ export class AccountsComponent implements OnInit {
       username: String;
       displayName: String;
       employeeNumber: String;
+      appId: String;
       appName: String;
       startDate: String;
       endDate: String;
@@ -66,6 +67,7 @@ export class AccountsComponent implements OnInit {
         username: '',
         displayName: '',
         employeeNumber: '',
+        appId: '',
         appName: '',
         startDate: '',
         endDate: '',
@@ -119,7 +121,11 @@ export class AccountsComponent implements OnInit {
     this.fetch();
   }
 
-  onReset(): void { }
+  onReset(): void {
+    this.query.params.appId = '';
+    this.query.params.appName = '';
+    this.query.params.username = '';
+  }
 
   onSelect(e: MouseEvent): void {
     e.preventDefault();
@@ -134,8 +140,8 @@ export class AccountsComponent implements OnInit {
     // Return a result when closed
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
-        this.query.params.appName = result.data.name;
-        //this.query.params.appId = result.data.id;
+        this.query.params.appName = result.data.appName;
+        this.query.params.appId = result.data.id;
         console.log(result);
         this.fetch();
       }

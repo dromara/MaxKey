@@ -120,7 +120,7 @@ export class AccountEditerComponent implements OnInit {
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
         this.form.model.appId = result.data.id;
-        this.form.model.appName = result.data.name;
+        this.form.model.appName = result.data.appName;
         this.cdr.detectChanges();
       }
     });
