@@ -114,7 +114,7 @@
 
 | 版本    | 日期    |  Docker      |  网盘      |  网盘提取码  |
 | --------| :-----  | :----        | :----      | :----        |
-| v 3.5.2 GA | 2022/07/14   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1144fUn7WcF0stnzpva3IvQ" target="_blank">下载</a>  |  **mxk9**  |
+| v 3.5.3 GA | 2022/07/23   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1lrSsARpyLlmkXeCbgrCy2g" target="_blank">下载</a>  |  **mxk9**  |
 
 
 # Roadmap
@@ -156,6 +156,8 @@
 | 汽车    | 路特斯中国                                  |
 | 企业    | 北京银泰置业有限公司                        |
 | 企业    | 中创智维科技有限公司                        |
+| 企业    | 西藏阜康医院                                |
+| 企业    | 上海逸广信息科技有限公司                    |
 | 企业    | 遂宁市经济大数据平台                        |
 | 企业    | 同方节能工程技术有限公司                    |
 | 企业    | 云南航天工程物探检测股份有限公司            |
@@ -180,6 +182,7 @@
 | 企业    | 广州携旅信息科技有限公司                    |
 | 科技    | 广州思迈特软件有限公司                      |
 | 科技    | 尚企云链                                    |
+| 科技    | 福建引迈信息技术有限公司                    |
 | 科技    | 北京博亚思科技有限公司                      |
 | 科技    | 武汉英特沃科技有限公司                      |
 | 科技    | 江苏创致信息科技有限公司                    |
