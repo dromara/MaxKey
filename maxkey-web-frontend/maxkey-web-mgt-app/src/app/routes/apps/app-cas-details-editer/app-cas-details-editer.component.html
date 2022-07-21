@@ -32,8 +32,9 @@
           <nz-form-item>
             <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="icon">{{ 'mxk.apps.icon' | i18n }}</nz-form-label>
             <div nz-col class="clearfix" nzSm="16" nzXs="24">
-              <nz-upload nzAction="file/upload/" nzListType="picture-card" [(nzFileList)]="fileList" nzName="uploadFile"
-                [nzShowButton]="fileList.length < 1" [nzPreview]="handlePreview" (nzChange)="uploadImageChange($event)">
+              <nz-upload nzAction="/file/upload/" nzListType="picture-card" [(nzFileList)]="fileList"
+                nzName="uploadFile" [nzShowButton]="fileList.length < 1" [nzPreview]="handlePreview"
+                (nzChange)="uploadImageChange($event)">
                 <div>
                   <i nz-icon nzType="plus"></i>
                   <div style="margin-top: 8px">Upload</div>
