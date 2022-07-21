@@ -78,9 +78,8 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 	private String consoleTitle;
 	
 	@Column
-	private String captchaType;
-	@Column
-	private String captchaSupport;
+	private String captcha;
+	
 	@Column
 	private String defaultUri;
 
@@ -128,14 +127,6 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 
 	public void setFrontTitle(String frontTitle) {
 		this.frontTitle = frontTitle;
-	}
-
-	public String getCaptchaType() {
-		return captchaType;
-	}
-
-	public void setCaptchaType(String captchaType) {
-		this.captchaType = captchaType;
 	}
 
 	public String getConsoleDomain() {
@@ -259,12 +250,12 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 	}
 
 
-	public String getCaptchaSupport() {
-		return captchaSupport;
+	public String getCaptcha() {
+		return captcha;
 	}
 
-	public void setCaptchaSupport(String captchaSupport) {
-		this.captchaSupport = captchaSupport;
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
 	}
 
 	public String getDefaultUri() {
@@ -310,16 +301,16 @@ public class Institutions extends JpaBaseEntity implements Serializable {
 		builder.append(description);
 		builder.append(", logo=");
 		builder.append(logo);
-		builder.append(", frontTitle=");
-		builder.append(frontTitle);
-		builder.append(", consoleTitle=");
-		builder.append(consoleTitle);
 		builder.append(", domain=");
 		builder.append(domain);
-		builder.append(", captchaType=");
-		builder.append(captchaType);
-		builder.append(", captchaSupport=");
-		builder.append(captchaSupport);
+		builder.append(", frontTitle=");
+		builder.append(frontTitle);
+		builder.append(", consoleDomain=");
+		builder.append(consoleDomain);
+		builder.append(", consoleTitle=");
+		builder.append(consoleTitle);
+		builder.append(", captcha=");
+		builder.append(captcha);
 		builder.append(", defaultUri=");
 		builder.append(defaultUri);
 		builder.append("]");

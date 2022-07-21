@@ -78,8 +78,9 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
 	        
 	        if(this.applicationConfig.getLoginConfig().isCaptcha()) {
 	        	captchaValid(loginCredential.getState(),loginCredential.getCaptcha());
-	        }
-	        else if(inst.getCaptchaSupport().equalsIgnoreCase("YES")) {
+	        	
+	        }else if(!inst.getCaptcha().equalsIgnoreCase("NONE")) {
+	        	
 	        	captchaValid(loginCredential.getState(),loginCredential.getCaptcha());
 	        }
 	

@@ -65,25 +65,15 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzMd]="6" nzFor="captchaSupport">{{ 'mxk.institutions.captchaSupport' | i18n }}</nz-form-label>
-      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid captchaSupport!">
-        <nz-radio-group [(ngModel)]="form.model.captchaSupport" [ngModelOptions]="{ standalone: true }"
-          nzButtonStyle="solid">
-          <label nz-radio-button nzValue="YES">{{ 'mxk.text.yes' | i18n }}</label>
-          <label nz-radio-button nzValue="NO">{{ 'mxk.text.no' | i18n }}</label>
-        </nz-radio-group>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
       <nz-form-label [nzMd]="6" nzFor="captchaType">{{ 'mxk.institutions.captchaType' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid captchaType!">
-        <nz-select [(ngModel)]="form.model.captchaType" [ngModelOptions]="{ standalone: true }">
+        <nz-select [(ngModel)]="form.model.captcha" [ngModelOptions]="{ standalone: true }">
+          <nz-option nzValue="NONE" nzLabel="{{ 'mxk.institutions.captchaType.none' | i18n }}"></nz-option>
           <nz-option nzValue="TEXT" nzLabel="{{ 'mxk.institutions.captchaType.text' | i18n }}"></nz-option>
           <nz-option nzValue="ARITHMETIC" nzLabel="{{ 'mxk.institutions.captchaType.arithmetic' | i18n }}"></nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>
-
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzFor="contact">{{ 'mxk.institutions.contact' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid contact!">

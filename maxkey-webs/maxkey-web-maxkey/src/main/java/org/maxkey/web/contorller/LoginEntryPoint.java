@@ -142,8 +142,7 @@ public class LoginEntryPoint {
 		if(applicationConfig.getLoginConfig().isCaptcha()) {
 			model.put("captcha", "true");
 		}else {
-			model.put("captcha", inst.getCaptchaSupport());
-			model.put("captchaType", inst.getCaptchaType());
+			model.put("captcha", inst.getCaptcha());
 		}
 		model.put("state", authTokenService.genRandomJwt());
 		//load Social Sign On Providers

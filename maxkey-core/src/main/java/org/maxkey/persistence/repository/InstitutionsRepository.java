@@ -96,8 +96,7 @@ public class InstitutionsRepository {
         	institution.setFrontTitle(rs.getString("fronttitle"));
         	institution.setConsoleDomain(rs.getString("consoledomain"));
         	institution.setConsoleTitle(rs.getString("consoletitle"));
-        	institution.setCaptchaType(rs.getString("captchatype"));
-        	institution.setCaptchaSupport(rs.getString("captchasupport"));
+        	institution.setCaptcha(rs.getString("captcha"));
         	institution.setDefaultUri(rs.getString("defaultUri"));
             return institution;
         }
