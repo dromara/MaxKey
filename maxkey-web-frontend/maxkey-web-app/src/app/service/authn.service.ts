@@ -63,12 +63,22 @@ export class AuthnService {
 
   //退出
   logout() {
-    this.cookieService.delete(CONSTS.CONGRESS);
-    return this.http.get('/login/logout');
+    this.cookieService.delete(CONSTS.CONGRESS, '/');
+    this.cookieService.delete(CONSTS.ONLINE_TICKET, '/', this.getSubHostName());
+    return this.http.get('/logout');
   }
 
   congress(authParam: any) {
     return this.http.post('/login/congress?_allow_anonymous=true', authParam);
+  }
+
+  getSubHostName(): string {
+    let hostnames = window.location.hostname.split('.');
+    let subHostName = window.location.hostname;
+    if (hostnames.length >= 2 && !CONSTS.IP_V4_REGEXEXP.test(subHostName)) {
+      subHostName = `${hostnames[hostnames.length - 2]}.${hostnames[hostnames.length - 1]}`;
+    }
+    return subHostName;
   }
 
   clear() {
@@ -92,14 +102,8 @@ export class AuthnService {
       passwordSetType: authJwt.passwordSetType
     };
 
-    let hostnames = window.location.hostname.split('.');
-    let subHostName = window.location.hostname;
-    if (hostnames.length >= 2) {
-      subHostName = `${hostnames[hostnames.length - 2]}.${hostnames[hostnames.length - 1]}`;
-    }
-
     this.cookieService.set(CONSTS.CONGRESS, authJwt.token, { path: '/' });
-    this.cookieService.set(CONSTS.ONLINE_TICKET, authJwt.ticket, { domain: subHostName, path: '/' });
+    this.cookieService.set(CONSTS.ONLINE_TICKET, authJwt.ticket, { domain: this.getSubHostName(), path: '/' });
 
     if (authJwt.remeberMe) {
       localStorage.setItem(CONSTS.REMEMBER, authJwt.remeberMe);

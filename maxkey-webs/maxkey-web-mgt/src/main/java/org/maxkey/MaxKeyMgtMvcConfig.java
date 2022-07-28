@@ -114,6 +114,8 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 
                 .addPathPatterns("/file/upload/")
                 
+                .addPathPatterns("/logout")
+                .addPathPatterns("/logout/**")
                 ;
         
         _logger.debug("add PermissionAdapter");

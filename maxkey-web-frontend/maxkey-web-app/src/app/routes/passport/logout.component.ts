@@ -19,6 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { SettingsService } from '@delon/theme';
+import { finalize } from 'rxjs/operators';
 
 import { AuthnService } from '../../service/authn.service';
 import { SocialsProviderService } from '../../service/socials-provider.service';
@@ -44,12 +45,20 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.redirect_uri = this.route.snapshot.params[CONSTS.REDIRECT_URI];
-    this.authnService.logout();
-    this.tokenService.clear();
-    if (this.redirect_uri == null || this.redirect_uri == '') {
-      this.router.navigateByUrl(this.tokenService.login_url!);
-    } else {
-      this.router.navigateByUrl(this.redirect_uri);
-    }
+    this.authnService
+      .logout()
+      .pipe(
+        finalize(() => {
+          this.tokenService.clear();
+          if (this.redirect_uri == null || this.redirect_uri == '') {
+            this.router.navigateByUrl(this.tokenService.login_url!);
+          } else {
+            this.router.navigateByUrl(this.redirect_uri);
+          }
+        })
+      )
+      .subscribe(res => {
+        console.log(`Logout Response ${res.data}`);
+      });
   }
 }
