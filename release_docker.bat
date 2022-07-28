@@ -1,3 +1,5 @@
+echo off
+
 call setEnvVars.bat
 
 set START_TIME="%date:~0,10% %time:~0,2%:%time:~3,5%"
