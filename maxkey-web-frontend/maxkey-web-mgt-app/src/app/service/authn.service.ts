@@ -65,6 +65,10 @@ export class AuthnService {
     return this.http.get(`/login/jwt?_allow_anonymous=true`, authParam);
   }
 
+  logout() {
+    return this.http.get('/logout');
+  }
+
   clear() {
     this.tokenService.clear();
   }
