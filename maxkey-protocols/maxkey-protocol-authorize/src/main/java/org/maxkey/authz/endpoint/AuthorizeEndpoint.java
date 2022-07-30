@@ -88,4 +88,13 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 		return modelAndView;
 	}
 	
+	@RequestMapping("/authz/refused")
+	public ModelAndView refused(){
+		ModelAndView modelAndView = new ModelAndView("authorize/authorize_refused");
+		Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
+		app.transIconBase64();
+		modelAndView.addObject("model", app);
+		return modelAndView;
+	}
+	
 }

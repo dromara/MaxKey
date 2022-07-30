@@ -139,6 +139,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         		.addPathPatterns("/logon/oauth20/bind/**")
         		.addPathPatterns("/logout")
                 .addPathPatterns("/logout/**")
+                .addPathPatterns("/authz/refused")
                 ;
         
         _logger.debug("add Permission Interceptor");
