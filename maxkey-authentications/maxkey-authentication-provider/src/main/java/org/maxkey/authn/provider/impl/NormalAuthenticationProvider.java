@@ -15,12 +15,13 @@
  */
  
 
-package org.maxkey.authn.provider;
+package org.maxkey.authn.provider.impl;
 
 import java.text.ParseException;
-import org.maxkey.authn.AbstractAuthenticationProvider;
+
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.jwt.AuthTokenService;
+import org.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.session.SessionManager;
 import org.maxkey.configuration.ApplicationConfig;

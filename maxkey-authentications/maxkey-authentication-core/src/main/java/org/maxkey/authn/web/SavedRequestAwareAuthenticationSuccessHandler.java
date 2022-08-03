@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.authn;
+package org.maxkey.authn.web;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

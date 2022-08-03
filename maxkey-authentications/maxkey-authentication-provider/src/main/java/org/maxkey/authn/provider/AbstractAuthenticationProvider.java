@@ -15,10 +15,12 @@
  */
  
 
-package org.maxkey.authn;
+package org.maxkey.authn.provider;
 
 import java.util.ArrayList;
 
+import org.maxkey.authn.LoginCredential;
+import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.session.Session;

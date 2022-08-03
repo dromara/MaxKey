@@ -14,8 +14,8 @@ package org.maxkey.authz.oauth2.provider;
 
 import java.util.ArrayList;
 
-import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.SignPrincipal;
+import org.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.maxkey.authn.session.Session;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.repository.LoginRepository;

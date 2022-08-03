@@ -19,10 +19,10 @@ package org.maxkey.web.contorller;
 
 import java.util.HashMap;
 
-import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.jwt.AuthJwt;
 import org.maxkey.authn.jwt.AuthTokenService;
+import org.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
 import org.maxkey.entity.Message;

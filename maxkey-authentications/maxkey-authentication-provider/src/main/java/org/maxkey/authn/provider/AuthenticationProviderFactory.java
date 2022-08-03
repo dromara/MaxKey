@@ -17,7 +17,6 @@ package org.maxkey.authn.provider;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.springframework.security.core.Authentication;
 

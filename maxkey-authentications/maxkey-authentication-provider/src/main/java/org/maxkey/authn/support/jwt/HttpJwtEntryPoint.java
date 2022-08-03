@@ -16,10 +16,10 @@
  
 package org.maxkey.authn.support.jwt;
 
-import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.jwt.AuthJwt;
 import org.maxkey.authn.jwt.AuthTokenService;
+import org.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.Message;

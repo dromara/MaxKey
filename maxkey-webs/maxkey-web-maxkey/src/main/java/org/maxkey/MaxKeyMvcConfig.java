@@ -19,7 +19,7 @@ package org.maxkey;
 
 import java.util.List;
 
-import org.maxkey.authn.AbstractAuthenticationProvider;
+import org.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.basic.BasicEntryPoint;
 import org.maxkey.authn.support.httpheader.HttpHeaderEntryPoint;
 import org.maxkey.authn.support.kerberos.HttpKerberosEntryPoint;

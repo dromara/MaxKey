@@ -5,7 +5,10 @@ org.maxkey.autoconfigure.KaptchaAutoConfiguration,\
 org.maxkey.autoconfigure.MvcAutoConfiguration,\
 org.maxkey.autoconfigure.JwtAuthnAutoConfiguration,\
 org.maxkey.autoconfigure.RedisAutoConfiguration,\
-org.maxkey.autoconfigure.AuthenticationAutoConfiguration,\
+org.maxkey.autoconfigure.AuthnProviderAutoConfiguration,\
+org.maxkey.autoconfigure.OneTimePasswordAutoConfiguration,\
+org.maxkey.autoconfigure.SessionAutoConfiguration,\
+org.maxkey.autoconfigure.TokenAutoConfiguration,\
 org.maxkey.synchronizer.autoconfigure.SynchronizerAutoConfiguration,\
 org.maxkey.autoconfigure.SwaggerConfig,\
 org.maxkey.Oauth20ClientAutoConfiguration,\

@@ -18,5 +18,6 @@ dependencies {
 	implementation project(":maxkey-persistence")
    	implementation project(":maxkey-protocols:maxkey-protocol-authorize")
    	implementation project(":maxkey-authentications:maxkey-authentication-core")
+   	implementation project(":maxkey-authentications:maxkey-authentication-provider")
    
 }

@@ -19,7 +19,7 @@ package org.maxkey;
 
 import java.util.List;
 
-import org.maxkey.authn.AbstractAuthenticationProvider;
+import org.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.maxkey.authn.web.CurrentUserMethodArgumentResolver;
 import org.maxkey.authn.web.interceptor.PermissionInterceptor;
 import org.maxkey.configuration.ApplicationConfig;

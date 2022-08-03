@@ -17,30 +17,20 @@
 
 package org.maxkey.autoconfigure;
 
-import org.maxkey.authn.AbstractAuthenticationProvider;
-import org.maxkey.authn.SavedRequestAwareAuthenticationSuccessHandler;
-import org.maxkey.authn.jwt.AuthRefreshTokenService;
 import org.maxkey.authn.jwt.AuthTokenService;
-import org.maxkey.authn.jwt.CongressService;
-import org.maxkey.authn.jwt.InMemoryCongressService;
-import org.maxkey.authn.jwt.RedisCongressService;
+import org.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.maxkey.authn.provider.AuthenticationProviderFactory;
-import org.maxkey.authn.provider.MobileAuthenticationProvider;
-import org.maxkey.authn.provider.NormalAuthenticationProvider;
-import org.maxkey.authn.provider.TrustedAuthenticationProvider;
+import org.maxkey.authn.provider.impl.MobileAuthenticationProvider;
+import org.maxkey.authn.provider.impl.NormalAuthenticationProvider;
+import org.maxkey.authn.provider.impl.TrustedAuthenticationProvider;
 import org.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.maxkey.authn.session.SessionManager;
-import org.maxkey.authn.session.SessionManagerFactory;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeManager;
 import org.maxkey.authn.support.rememberme.JdbcRemeberMeManager;
-import org.maxkey.authn.web.HttpSessionListenerAdapter;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.configuration.AuthJwkConfig;
 import org.maxkey.constants.ConstsPersistence;
-import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.OtpAuthnService;
 import org.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
-import org.maxkey.persistence.cache.MomentaryService;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
 import org.maxkey.persistence.repository.LoginRepository;
@@ -56,20 +46,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.nimbusds.jose.JOSEException;
-
 
 @Configuration
-public class AuthenticationAutoConfiguration  implements InitializingBean {
+public class AuthnProviderAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = 
-            LoggerFactory.getLogger(AuthenticationAutoConfiguration.class);
-    
-    
-    @Bean(name = "savedRequestSuccessHandler")
-    public SavedRequestAwareAuthenticationSuccessHandler 
-            savedRequestAwareAuthenticationSuccessHandler() {
-        return new SavedRequestAwareAuthenticationSuccessHandler();
-    }
+            LoggerFactory.getLogger(AuthnProviderAutoConfiguration.class);
     
     @Bean
     public AbstractAuthenticationProvider authenticationProvider(
@@ -132,55 +113,6 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     }
     
     @Bean
-    public AuthTokenService authTokenService(
-    		AuthJwkConfig authJwkConfig,
-    		RedisConnectionFactory redisConnFactory,
-    		MomentaryService  momentaryService,
-    		AuthRefreshTokenService refreshTokenService,
-    		@Value("${maxkey.server.persistence}") int persistence) throws JOSEException {
-    	CongressService congressService;
-    	if (persistence == ConstsPersistence.REDIS) {
-    		congressService = new RedisCongressService(redisConnFactory);
-    	}else {
-    		congressService = new InMemoryCongressService();
-    	}
-    	
-    	AuthTokenService authTokenService = 
-    				new AuthTokenService(
-    							authJwkConfig,
-    							congressService,
-    							momentaryService,
-    							refreshTokenService
-    						);
-    	
-    	return authTokenService;
-    }
-    
-    @Bean
-    public AuthRefreshTokenService refreshTokenService(AuthJwkConfig authJwkConfig) throws JOSEException {
-    	return new AuthRefreshTokenService(authJwkConfig);
-    }
-    
-    @Bean(name = "otpAuthnService")
-    public OtpAuthnService otpAuthnService(
-            @Value("${maxkey.server.persistence}") int persistence,
-            SmsProviderService smsProviderService,
-            EmailSendersService emailSendersService,
-            RedisConnectionFactory redisConnFactory) {
-        OtpAuthnService otpAuthnService = 
-        							new OtpAuthnService(smsProviderService,emailSendersService);
-        
-        if (persistence == ConstsPersistence.REDIS) {
-            RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);
-            otpAuthnService.setRedisOptTokenStore(redisOptTokenStore);
-        }
-        
-        _logger.debug("OneTimePasswordService {} inited." , 
-        				persistence == ConstsPersistence.REDIS ? "Redis" : "InMemory");
-        return otpAuthnService;
-    }
-    
-    @Bean
     public PasswordPolicyValidator passwordPolicyValidator(JdbcTemplate jdbcTemplate,MessageSource messageSource) {
         return new PasswordPolicyValidator(jdbcTemplate,messageSource);
     }
@@ -193,20 +125,6 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     @Bean
     public LoginHistoryRepository loginHistoryRepository(JdbcTemplate jdbcTemplate) {
         return new LoginHistoryRepository(jdbcTemplate);
-    }
-    
-    @Bean
-    public SessionManager sessionManager(
-            @Value("${maxkey.server.persistence}") int persistence,
-            JdbcTemplate jdbcTemplate,
-            RedisConnectionFactory redisConnFactory,
-            @Value("${maxkey.session.timeout:1800}") int timeout
-            ) {
-    	_logger.debug("session timeout " + timeout);
-        SessionManager  sessionManager  = 
-                new SessionManagerFactory(
-                		persistence, jdbcTemplate, redisConnFactory,timeout);
-        return sessionManager;
     }
     
     /**
@@ -223,11 +141,6 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     	_logger.trace("init RemeberMeManager , validity {}." , validity);
         return new  JdbcRemeberMeManager(
         		jdbcTemplate,applicationConfig,authTokenService,validity);
-    }
-    
-    @Bean
-    public HttpSessionListenerAdapter httpSessionListenerAdapter() {
-        return new HttpSessionListenerAdapter();
     }
     
     @Override

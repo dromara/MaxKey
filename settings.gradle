@@ -30,6 +30,7 @@ include (
 	'maxkey-authentications:maxkey-authentication-captcha',
 	'maxkey-authentications:maxkey-authentication-social',
 	'maxkey-authentications:maxkey-authentication-otp',
+	'maxkey-authentications:maxkey-authentication-provider',
 	//identity
 	'maxkey-identitys:maxkey-identity-scim',
 	'maxkey-identitys:maxkey-identity-rest',

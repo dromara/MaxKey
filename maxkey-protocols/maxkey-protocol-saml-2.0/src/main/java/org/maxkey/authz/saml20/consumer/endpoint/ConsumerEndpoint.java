@@ -30,10 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.maxkey.authn.AbstractAuthenticationProvider;
 import org.maxkey.authn.LoginCredential;
 import org.maxkey.authn.jwt.AuthJwt;
 import org.maxkey.authn.jwt.AuthTokenService;
+import org.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.maxkey.authz.saml.common.EndpointGenerator;
 import org.maxkey.authz.saml.common.TrustResolver;
 import org.maxkey.authz.saml.service.IDService;

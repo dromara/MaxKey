@@ -22,7 +22,7 @@ import java.security.cert.X509Certificate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.maxkey.authn.AbstractAuthenticationProvider;
+import org.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.maxkey.authn.support.httpheader.HttpHeaderEntryPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
