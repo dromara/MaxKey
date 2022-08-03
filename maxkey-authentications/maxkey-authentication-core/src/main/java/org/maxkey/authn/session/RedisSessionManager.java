@@ -121,14 +121,13 @@ public class RedisSessionManager implements SessionManager {
 
 	@Override
 	public List<HistoryLogin> querySessions() {
-		// TODO Auto-generated method stub
+		// not need implement
 		return null;
 	}
 
 	@Override
 	public void terminate(String sessionId, String userId, String username) {
-		// TODO Auto-generated method stub
-		
+		// not need implement
 	}
 
 	

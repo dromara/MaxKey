@@ -40,7 +40,7 @@ import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.OtpAuthnService;
 import org.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
-import org.maxkey.persistence.MomentaryService;
+import org.maxkey.persistence.cache.MomentaryService;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
 import org.maxkey.persistence.repository.LoginRepository;
@@ -189,11 +189,11 @@ public class AuthenticationAutoConfiguration  implements InitializingBean {
     public LoginRepository loginRepository(JdbcTemplate jdbcTemplate) {
         return new LoginRepository(jdbcTemplate);
     }
+    
     @Bean
     public LoginHistoryRepository loginHistoryRepository(JdbcTemplate jdbcTemplate) {
         return new LoginHistoryRepository(jdbcTemplate);
     }
-    
     
     @Bean
     public SessionManager sessionManager(

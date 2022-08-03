@@ -35,7 +35,7 @@ import org.maxkey.authz.oauth2.provider.refresh.RefreshTokenGranter;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.maxkey.authz.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.persistence.MomentaryService;
+import org.maxkey.persistence.cache.MomentaryService;
 import org.maxkey.persistence.service.AppsService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

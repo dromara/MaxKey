@@ -32,12 +32,13 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 public class InMemorySessionManager implements SessionManager{
     private static final Logger _logger = LoggerFactory.getLogger(InMemorySessionManager.class);
 
-    protected int validitySeconds = 60 * 30; //default 30 minutes.
+    static final 	long 	CACHE_MAXIMUM_SIZE 	= 2000000;
+    protected 		int 	validitySeconds 	= 60 * 30; //default 30 minutes.
     
 	protected  static  Cache<String, Session> sessionStore = 
         	        Caffeine.newBuilder()
         	            .expireAfterWrite(10, TimeUnit.MINUTES)
-        	            .maximumSize(2000000)
+        	            .maximumSize(CACHE_MAXIMUM_SIZE)
         	            .build();
 	
 	public InMemorySessionManager(int validitySeconds) {
@@ -46,7 +47,7 @@ public class InMemorySessionManager implements SessionManager{
         sessionStore = 
                 Caffeine.newBuilder()
                     .expireAfterWrite(validitySeconds, TimeUnit.SECONDS)
-                    .maximumSize(2000000)
+                    .maximumSize(CACHE_MAXIMUM_SIZE)
                     .build();
         
     }
@@ -90,8 +91,7 @@ public class InMemorySessionManager implements SessionManager{
         	LocalDateTime currentTime = LocalDateTime.now();
         	_logger.debug("refresh session Id {} at time {}",sessionId,currentTime);
         	session.setLastAccessTime(currentTime);
-        	//invalidate sessionId then renew one
-	        sessionStore.invalidate(sessionId);
+        	//sessionId then renew one
 	        create(sessionId , session);
         }
         return session;
@@ -103,14 +103,13 @@ public class InMemorySessionManager implements SessionManager{
 
 	@Override
 	public List<HistoryLogin> querySessions() {
-		// TODO Auto-generated method stub
+		// not need implement
 		return null;
 	}
 
 	@Override
 	public void terminate(String sessionId, String userId, String username) {
-		// TODO Auto-generated method stub
-		
+		// not need implement
 	}
 
 }

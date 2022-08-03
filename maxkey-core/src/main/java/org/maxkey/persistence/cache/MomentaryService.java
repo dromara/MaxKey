@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.persistence;
+package org.maxkey.persistence.cache;
 
 public interface MomentaryService {
 

@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.crypto.Base64Utils;
 import org.maxkey.entity.Message;
-import org.maxkey.persistence.MomentaryService;
+import org.maxkey.persistence.cache.MomentaryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

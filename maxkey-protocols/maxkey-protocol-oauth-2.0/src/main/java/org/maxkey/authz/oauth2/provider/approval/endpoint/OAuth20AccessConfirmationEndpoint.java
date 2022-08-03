@@ -35,7 +35,7 @@ import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.authz.oauth2.provider.approval.ApprovalStore;
-import org.maxkey.persistence.MomentaryService;
+import org.maxkey.persistence.cache.MomentaryService;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;

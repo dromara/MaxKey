@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.persistence;
+package org.maxkey.persistence.cache;
 
 import org.maxkey.persistence.redis.RedisConnection;
 import org.maxkey.persistence.redis.RedisConnectionFactory;

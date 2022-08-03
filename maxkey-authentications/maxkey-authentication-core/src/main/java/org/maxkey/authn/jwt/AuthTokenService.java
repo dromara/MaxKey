@@ -21,7 +21,7 @@ import java.text.ParseException;
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.configuration.AuthJwkConfig;
 import org.maxkey.crypto.jwt.HMAC512Service;
-import org.maxkey.persistence.MomentaryService;
+import org.maxkey.persistence.cache.MomentaryService;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

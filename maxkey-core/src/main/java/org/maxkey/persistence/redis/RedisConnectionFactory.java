@@ -157,6 +157,4 @@ public class RedisConnectionFactory {
         return poolConfig;
     }
     
-    
-
 }
