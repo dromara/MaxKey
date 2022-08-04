@@ -83,7 +83,7 @@
 
 8. 基于Java EE平台，微服务架构，采用Spring、MySQL、Tomcat、Redis、MQ等开源技术，扩展性强。  
 
-9. 开源、安全、自主可控，许可证 Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey版权声明</a>。 
+9. 开源、安全、自主可控。 
 
 
 # 界面
@@ -114,7 +114,7 @@
 
 | 版本    | 日期    |  Docker      |  网盘      |  网盘提取码  |
 | --------| :-----  | :----        | :----      | :----        |
-| v 3.5.3 GA | 2022/07/23   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1lrSsARpyLlmkXeCbgrCy2g" target="_blank">下载</a>  |  **mxk9**  |
+| v 3.5.4 GA | 2022/08/05   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1shlhQI-0vRGxyVik8Q9DPg" target="_blank">下载</a>  |  **mxk9**  |
 
 
 # Roadmap
@@ -204,3 +204,7 @@
  # 零信任标准工作组
  
  <a href="https://gitee.com/zero-trust/ZeroTrust" target="_blank">国内最权威的零信任产业组织</a>
+ 
+ # License
+ 
+<a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey版权声明</a>

@@ -82,7 +82,7 @@ Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitH
 
 8. Based on Java EE platform , microservice architecture, Use Spring, MySQL, Tomcat, Redis , MQ and other open source technologies, and has strong scalability.
 
-9. Open Source, Secure,  Independent and Controllable , License Under Apache 2.0 License & <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright</a>. 
+9. Open Source, Secure,  Independent and Controllable . 
 
 
 # Interface
@@ -113,7 +113,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 
 | Version    | Date   |  Docker  |  Pan URL  |  Pan Code  |
 | --------   | :----- | :----    | :----     | :----      |
-| v 3.5.3 GA | 2022/07/23   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |  <a href="https://pan.baidu.com/s/1lrSsARpyLlmkXeCbgrCy2g" target="_blank">Download</a>  |  **mxk9**  |
+| v 3.5.4 GA | 2022/08/05   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |  <a href="https://pan.baidu.com/s/1shlhQI-0vRGxyVik8Q9DPg" target="_blank">Download</a>  |  **mxk9**  |
 
 
 # Roadmap
@@ -198,3 +198,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
  - **愿景** 让每一位开源爱好者，体会到开源的快乐
  
  - **口号** 为往圣继绝学，一个人或许能走的更快，但一群人会走的更远
+ 
+# License
+ 
+<a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright NOTICE</a>
