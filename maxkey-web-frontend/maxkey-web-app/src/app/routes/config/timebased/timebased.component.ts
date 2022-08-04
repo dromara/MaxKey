@@ -1,19 +1,18 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -22,6 +21,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { TimeBased } from '../../../entity/TimeBased';
 import { TimeBasedService } from '../../../service/time-based.service';
+import { splitString, concatArrayString } from '../../../shared/utils/set2stringstil';
+
+import { Console } from 'console';
 
 @Component({
   selector: 'app-timebased',
@@ -60,8 +62,14 @@ export class TimebasedComponent implements OnInit {
 });*/
     this.timeBasedService.get('').subscribe(res => {
       this.form.model.init(res.data);
+      this.formatSecret();
       this.cdr.detectChanges();
     });
+  }
+
+  formatSecret(): void {
+    this.form.model.sharedSecret = concatArrayString(splitString(this.form.model.sharedSecret, 4), ' ');
+    this.form.model.hexSharedSecret = concatArrayString(splitString(this.form.model.hexSharedSecret, 4), ' ');
   }
 
   onSubmit(): void {
@@ -70,6 +78,7 @@ export class TimebasedComponent implements OnInit {
     this.timeBasedService.update(this.form.model).subscribe(res => {
       if (res.code == 0) {
         this.form.model.init(res.data);
+        this.formatSecret();
         this.msg.success(`提交成功`);
       } else {
         this.msg.success(`提交失败`);
