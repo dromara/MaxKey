@@ -264,8 +264,6 @@ subprojects {
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version:  "${springBootVersion}"
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: "${springBootVersion}"
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: "${springBootVersion}"
-         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: "${springBootVersion}"
-         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive', version: "${springBootVersion}"
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: "${springBootVersion}"
          
          testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:  "${springBootVersion}"
@@ -275,7 +273,6 @@ subprojects {
          //spring-data
          implementation group: 'org.springframework.data', name: 'spring-data-commons', version: "${springDataVersion}"
          implementation group: 'org.springframework.data', name: 'spring-data-keyvalue', version: "${springDataVersion}"
-        // implementation group: 'org.springframework.data', name: 'spring-data-redis', version: "${springDataVersion}"
  
          //implementation group: 'org.springframework.plugin', name: 'spring-plugin-core', version: "${springplugincoreVersion}"
          //implementation group: 'org.springframework.plugin', name: 'spring-plugin-metadata', version: "${springpluginmetadataVersion}"
