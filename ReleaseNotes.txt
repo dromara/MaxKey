@@ -1,4 +1,47 @@
-﻿MaxKey v 3.5.3 GA 2022/07/23
+﻿MaxKey v 3.5.4 GA 2022/08/05
+    *(MAXKEY-220901) 分离出maxkey-authentication-provider，进行代码优化调整
+    *(MAXKEY-220902) 认证端退出登录时，清除相应的cookie，清除服务端会话的调用
+    *(MAXKEY-220903) 认证端支持ip地址和域名两种访问方式
+    *(MAXKEY-220904) 单点登录时，未授权访问界面提示，消除歧义
+    *(MAXKEY-220905) 调整cache的package路径
+    *(MAXKEY-220906) 前端打docker包及上传dockerhub
+    *(MAXKEY-220907) 时间令牌共享密钥4位分组编码显示
+    *(MAXKEY-220908) 移除spring redis相关的依赖
+    *(MAXKEY-220909) 管理端退出服务端会话
+    *(MAXKEY-220910) 依赖项引用、更新和升级
+        httpcore                 4.4.15
+        httpasyncclient          4.1.5
+        rocketmqclient           4.9.4
+        poi                      5.2.2
+        tomcat                   9.0.65
+        spring                   5.3.22
+        springBoot               2.6.10
+        springData               2.6.6
+        springkafka              2.8.8
+        springretry              1.3.3
+        tink                     1.6.1
+        jbosslogging             3.5.0.Final
+        hibernate                7.0.4.Final
+        swaggerV3                2.2.1
+        springdoc                1.6.9
+        postgresql               42.4.0
+        mybatisspring            2.0.7
+        thymeleaf                3.0.15.RELEASE
+        springbootadmin          2.7.3
+        netty                    4.1.65.Final
+        slf4j                    1.7.36
+        reactivestreams          1.0.4
+        reactorcore              3.4.21
+        reactornetty             1.0.21
+        reactorextra             3.4.8
+        snakeyaml                1.30
+        ognl                     3.3.3
+        asm                      9.3
+        lettuce                  6.1.9.RELEASE
+        jsoup                    1.15.2
+        reflections              0.10.2
+        
+MaxKey v 3.5.3 GA 2022/07/23
     *(MAXKEY-220801) formbase用户初始化跳转问题修复
     *(MAXKEY-220802) OAuth2 select多选保存问题
     *(MAXKEY-220803) OAuth2密码保存不一致修复
