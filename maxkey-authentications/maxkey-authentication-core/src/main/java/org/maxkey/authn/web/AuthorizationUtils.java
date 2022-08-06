@@ -54,6 +54,9 @@ public class AuthorizationUtils {
 	    	String  authorization =  authCookie.getValue();
 	    	_logger.trace("Try congress authenticate .");
 	    	doJwtAuthenticate(BEARERTYPE.CONGRESS,authorization,authTokenService,sessionManager);
+		}else {			
+			_logger.debug("cookie is null , clear authentication .");
+			clearAuthentication();
 		}
 	}
 	
