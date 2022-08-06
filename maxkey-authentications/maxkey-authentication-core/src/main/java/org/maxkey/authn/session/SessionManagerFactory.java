@@ -55,6 +55,9 @@ public class SessionManagerFactory implements SessionManager{
     private static final String HISTORY_LOGOUT_UPDATE_STATEMENT = 
     		"update mxk_history_login set logouttime = ? ,sessionstatus = 7 where  sessionid = ?";
     
+    private static final String NO_SESSION_UPDATE_STATEMENT = 
+    		"update mxk_history_login set sessionstatus = 7 where sessionstatus = 1 and (sessionid is null or sessionid = '')";
+
     private JdbcTemplate jdbcTemplate;
     
 	private InMemorySessionManager 	inMemorySessionManager;
@@ -132,6 +135,9 @@ public class SessionManagerFactory implements SessionManager{
 	}
 
 	public List<HistoryLogin> querySessions() {
+		//clear session id is null
+		jdbcTemplate.execute(NO_SESSION_UPDATE_STATEMENT);
+		//query on line session
 		List<HistoryLogin> listSessions = jdbcTemplate.query(
 				DEFAULT_DEFAULT_SELECT_STATEMENT, 
 				new OnlineTicketRowMapper());
