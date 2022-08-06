@@ -24,11 +24,9 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.authn.session.Session;
 import org.maxkey.authn.session.SessionManager;
-import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.singlelogout.SamlSingleLogout;
 import org.maxkey.authz.singlelogout.DefaultSingleLogout;
 import org.maxkey.authz.singlelogout.LogoutType;
@@ -38,7 +36,6 @@ import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +72,7 @@ public class LogoutEndpoint {
 		String sessionId = currentUser.getSessionId();
  		Session session = sessionManager.get(sessionId);
  		if(session != null) {
+ 			_logger.debug("/logout frontend clean Session id {}",session.getId());
 	 		Set<Entry<String, Apps>> entrySet = session.getAuthorizedApps().entrySet();
 	 
 	        Iterator<Entry<String, Apps>> iterator = entrySet.iterator();
@@ -107,6 +105,7 @@ public class LogoutEndpoint {
  				@RequestParam(value = "redirect_uri",required = false) String redirect_uri
  				){
 		//invalidate http session
+		_logger.debug("/force/logout http Session id {}",request.getSession().getId());
 		request.getSession().invalidate();
 		StringBuffer logoutUrl = new StringBuffer("");
 		logoutUrl.append(applicationConfig.getFrontendUri()).append("/#/passport/logout");
