@@ -17,6 +17,8 @@
 
 package org.maxkey.authn.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.maxkey.authn.jwt.AuthJwt;
 import org.maxkey.authn.jwt.AuthRefreshTokenService;
 import org.maxkey.authn.jwt.AuthTokenService;
@@ -24,6 +26,7 @@ import org.maxkey.authn.session.Session;
 import org.maxkey.authn.session.SessionManager;
 import org.maxkey.entity.Message;
 import org.maxkey.util.StringUtils;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +34,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "/auth")
-public class LoginTokenRefreshPoint {
-	private static final  Logger _logger = LoggerFactory.getLogger(LoginTokenRefreshPoint.class);
+public class AuthTokenRefreshPoint {
+	private static final  Logger _logger = LoggerFactory.getLogger(AuthTokenRefreshPoint.class);
 	
 	@Autowired
 	AuthTokenService authTokenService;
@@ -49,10 +52,11 @@ public class LoginTokenRefreshPoint {
 	SessionManager sessionManager;
 	
  	@RequestMapping(value={"/token/refresh"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> refresh(
-					@RequestHeader(name = "refresh_token", required = false) String refreshToken) {
+	public ResponseEntity<?> refresh(HttpServletRequest request,
+			@RequestParam(name = "refresh_token", required = false) String refreshToken) {
  		_logger.debug("try to refresh token " );
  		_logger.trace("refresh token {} " , refreshToken);
+ 		if(_logger.isTraceEnabled()) {WebContext.printRequest(request);}
  		try {
 	 		if(StringUtils.isNotBlank(refreshToken) 
 	 				&& refreshTokenService.validateJwtToken(refreshToken)) {

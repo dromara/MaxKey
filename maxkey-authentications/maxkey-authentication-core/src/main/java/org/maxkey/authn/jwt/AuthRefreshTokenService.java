@@ -42,7 +42,7 @@ public class AuthRefreshTokenService extends AuthJwtService{
 	 * @return
 	 */
 	public String genRefreshToken(Authentication authentication) {
-		_logger.trace("gen Refresh Token");
+		_logger.trace("generate Refresh JWT Token");
 		return genJwt( 
 				 authentication,
 				 authJwkConfig.getIssuer(),

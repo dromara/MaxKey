@@ -72,7 +72,7 @@ public class WebXssRequestFilter  extends GenericFilterBean {
 		_logger.trace("WebXssRequestFilter");
 		boolean isWebXss = false;
 		HttpServletRequest request= ((HttpServletRequest)servletRequest);
-		
+		if(_logger.isTraceEnabled()) {WebContext.printRequest(request);}
 		if(skipUrlMap.containsKey(request.getRequestURI().substring(request.getContextPath().length()))) {
 			isWebXss = false;
 		}else {

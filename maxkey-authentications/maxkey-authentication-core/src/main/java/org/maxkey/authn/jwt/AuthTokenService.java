@@ -66,6 +66,7 @@ public class AuthTokenService  extends AuthJwtService{
 	public AuthJwt genAuthJwt(Authentication authentication) {
 		if(authentication != null) {
 			String refreshToken = refreshTokenService.genRefreshToken(authentication);
+			_logger.trace("generate JWT Token");
 			String accessToken = genJwt(authentication);
 			AuthJwt authJwt = new AuthJwt(
 						accessToken,

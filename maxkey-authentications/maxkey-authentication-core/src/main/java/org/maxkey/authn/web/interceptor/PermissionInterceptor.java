@@ -63,7 +63,7 @@ public class PermissionInterceptor  implements AsyncHandlerInterceptor  {
 		 SignPrincipal principal = AuthorizationUtils.getPrincipal();
 		//判断用户是否登录,判断用户是否登录用户
 		if(principal == null){
-			_logger.trace("No Authentication ... forward to /auth/entrypoint");
+			_logger.trace("No Authentication ... forward to /auth/entrypoint , request URI " + request.getRequestURI());
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/auth/entrypoint");
 		    dispatcher.forward(request, response);
 		    return false;

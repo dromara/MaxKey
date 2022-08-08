@@ -237,26 +237,24 @@ public final class WebContext {
      * @param request
      */
     public static void printRequest(final HttpServletRequest request) {
-    	if(_logger.isTraceEnabled()) {
-    		_logger.trace("getContextPath : {}"  , request.getContextPath());
-	    	_logger.trace("getRequestURL : {} " , request.getRequestURL());
-			_logger.trace("URL : {}" , request.getRequestURI().substring(request.getContextPath().length()));
-	    	_logger.trace("getMethod : {} " , request.getMethod());
-	    	
-	        Enumeration<String> headerNames = request.getHeaderNames();
-	        while (headerNames.hasMoreElements()) {
-	          String key = (String) headerNames.nextElement();
-	          String value = request.getHeader(key);
-	          _logger.trace("Header key {} , value {}" , key, value);
-	        }
-	        
-	        Enumeration<String> parameterNames = request.getParameterNames();
-	        while (parameterNames.hasMoreElements()) {
-	          String key = (String) parameterNames.nextElement();
-	          String value = request.getParameter(key);
-	          _logger.trace("Parameter {} , value {}",key , value);
-	        }
-    	}
+		_logger.info("getContextPath : {}"  , request.getContextPath());
+    	_logger.info("getRequestURL : {} " , request.getRequestURL());
+		_logger.info("URL : {}" , request.getRequestURI().substring(request.getContextPath().length()));
+    	_logger.info("getMethod : {} " , request.getMethod());
+    	
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+          String key = (String) headerNames.nextElement();
+          String value = request.getHeader(key);
+          _logger.info("Header key {} , value {}" , key, value);
+        }
+        
+        Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+          String key = (String) parameterNames.nextElement();
+          String value = request.getParameter(key);
+          _logger.info("Parameter {} , value {}",key , value);
+        }
     }
 
     /**

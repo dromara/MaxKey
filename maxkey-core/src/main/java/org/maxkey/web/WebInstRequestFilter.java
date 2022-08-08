@@ -53,7 +53,7 @@ public class WebInstRequestFilter  extends GenericFilterBean {
 		HttpServletRequest request= ((HttpServletRequest)servletRequest);
 		
 		if(request.getSession().getAttribute(WebConstants.CURRENT_INST) == null) {
-			WebContext.printRequest(request);
+			if(_logger.isTraceEnabled()) {WebContext.printRequest(request);}
 			String host = request.getHeader(HEADER_HOSTNAME);
 			_logger.trace("hostname {}",host);
 			if(StringUtils.isEmpty(host)) {
