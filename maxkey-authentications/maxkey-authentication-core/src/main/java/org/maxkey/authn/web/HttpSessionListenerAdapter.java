@@ -55,9 +55,9 @@ public class HttpSessionListenerAdapter implements HttpSessionListener {
         HttpSession session = sessionEvent.getSession();
         Authentication  authentication  = (Authentication ) session.getAttribute(WebConstants.AUTHENTICATION);
         Object principal  = authentication == null ? null : authentication.getPrincipal();
-        
+        _logger.trace("principal {}",principal);
         if(principal != null ) {
-        	if(principal instanceof SignPrincipal) {
+        	if(principal instanceof SignPrincipal && ((SignPrincipal)principal).getUserInfo()!=null) {
         		SignPrincipal signPrincipal = (SignPrincipal)principal;
         		_logger.trace("{} HttpSession Id  {} for userId  {} , username {} @Ticket {} Destroyed" ,
         			DateUtils.formatDateTime(new Date()),

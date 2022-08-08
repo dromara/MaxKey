@@ -184,21 +184,35 @@ public class SignPrincipal implements  UserDetails {
     }
 
     @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("SigninPrincipal [userInfo=");
-        builder.append(userInfo);
-        builder.append(", onlineTicket=");
-        builder.append(session);
-        builder.append(", grantedAuthority=");
-        builder.append(grantedAuthority);
-        builder.append(", authenticated=");
-        builder.append(authenticated);
-        builder.append(", roleAdministrators=");
-        builder.append(roleAdministrators);
-        builder.append("]");
-        return builder.toString();
-    }
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Principal [username=");
+		builder.append(getUsername());
+		builder.append(", userInfo=");
+		builder.append(userInfo);
+		builder.append(", userDetails=");
+		builder.append(userDetails);
+		builder.append(", session=");
+		builder.append(session);
+		builder.append(", grantedAuthority=");
+		builder.append(grantedAuthority);
+		builder.append(", grantedAuthorityApps=");
+		builder.append(grantedAuthorityApps);
+		builder.append(", authenticated=");
+		builder.append(authenticated);
+		builder.append(", roleAdministrators=");
+		builder.append(roleAdministrators);
+		builder.append(", accountNonExpired=");
+		builder.append(accountNonExpired);
+		builder.append(", accountNonLocked=");
+		builder.append(accountNonLocked);
+		builder.append(", credentialsNonExpired=");
+		builder.append(credentialsNonExpired);
+		builder.append(", enabled=");
+		builder.append(enabled);
+		builder.append("]");
+		return builder.toString();
+	}
 
 
 
