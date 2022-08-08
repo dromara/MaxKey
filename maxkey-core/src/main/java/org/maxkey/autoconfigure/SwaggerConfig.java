@@ -66,7 +66,7 @@ public class SwaggerConfig {
 				).
 				externalDocs(
 						new ExternalDocumentation()
-						.description("MaxKey.top contact maxkeysupport@163.com")
+						.description("MaxKey.top contact support@maxsso.net")
 						.url("https://www.maxkey.top/")
 				);
 	}

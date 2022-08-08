@@ -26,7 +26,7 @@ import org.springframework.security.core.Authentication;
 
 /**
  * SamlSingleLogout
- * https://apereo.github.io/cas/6.2.x/installation/Logout-Single-Signout.html
+ * https://apereo.github.io/cas/6.5.x/installation/Logout-Single-Signout.html
  * @author Crystal.Sea
  *
  */
