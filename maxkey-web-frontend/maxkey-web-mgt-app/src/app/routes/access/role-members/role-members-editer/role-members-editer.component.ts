@@ -172,7 +172,7 @@ export class RoleMembersEditerComponent implements OnInit {
       memberIds = `${memberIds},${selectedData[i].id}`;
       memberNames = `${memberNames},${selectedData[i].username}`;
     }
-    this.roleMembersService.add({ roleId: this.roleId, memberId: memberIds, memberName: memberNames }).subscribe(res => {
+    this.roleMembersService.add({ type: 'USER', roleId: this.roleId, memberId: memberIds, memberName: memberNames }).subscribe(res => {
       this.query.results = res.data;
       this.query.submitLoading = false;
       this.query.tableLoading = false;

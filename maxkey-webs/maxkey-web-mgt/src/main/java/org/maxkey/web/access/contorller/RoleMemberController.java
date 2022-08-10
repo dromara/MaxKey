@@ -118,7 +118,10 @@ public class RoleMemberController {
 		if (memberIds != null) {
 			String[] arrMemberIds = memberIds.split(",");
 			String[] arrMemberNames = memberNames.split(",");
-			
+			//set default as USER
+			if(StringUtils.isBlank(roleMember.getType())) {
+				roleMember.setType("USER");
+			}
 			for (int i = 0; i < arrMemberIds.length; i++) {
 				RoleMember newRoleMember = 
 						new RoleMember(
