@@ -25,6 +25,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+
+/**
+ * root organization node,<br> id = instId or id = parentId or parentId = -1 or parentId = 0
+ * @author crystal.sea
+ *
+ */
+
 @Entity
 @Table(name = "MXK_ORGANIZATIONS")
 public class Organizations extends JpaBaseEntity implements Serializable {
