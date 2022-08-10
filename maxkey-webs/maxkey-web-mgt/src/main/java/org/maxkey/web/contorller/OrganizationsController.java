@@ -171,11 +171,13 @@ public class OrganizationsController {
 				treeNode.setLeaf(true);
 				treeAttributes.addNode(treeNode);
 				nodeCount ++;
-				//root organization node, id = instId or id = parentId or parentId = -1 or parentId = 0
-				if(org.getId().equalsIgnoreCase(currentUser.getInstId())
-						||org.getId().equalsIgnoreCase(org.getParentId())
+				//root organization node,parentId is null or parentId = -1 or parentId = 0 or  id = instId or id = parentId 
+				if(org.getParentId() == null 
 						||org.getParentId().equalsIgnoreCase("0")
-						||org.getParentId().equalsIgnoreCase("-1")) {
+						||org.getParentId().equalsIgnoreCase("-1")
+						||org.getId().equalsIgnoreCase(currentUser.getInstId())
+						||org.getId().equalsIgnoreCase(org.getParentId())
+						) {
 					treeNode.setExpanded(true);
 					treeNode.setLeaf(false);
 					treeAttributes.setRootNode(treeNode);
