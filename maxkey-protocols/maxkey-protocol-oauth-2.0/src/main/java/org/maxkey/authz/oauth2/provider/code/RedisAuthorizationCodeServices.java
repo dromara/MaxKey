@@ -58,6 +58,7 @@ public class RedisAuthorizationCodeServices extends RandomValueAuthorizationCode
 		RedisConnection  conn=connectionFactory.getConnection();
 		OAuth2Authentication auth = conn.getObject(PREFIX+code);
 		conn.delete(PREFIX+code);
+        conn.close();
 		return auth;
 	}
 
