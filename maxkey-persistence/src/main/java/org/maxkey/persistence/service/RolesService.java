@@ -147,7 +147,7 @@ public class RolesService  extends JpaBaseService<Roles> implements Serializable
 				institutionsService.find("where status = ? ", new Object[]{ConstsStatus.ACTIVE}, new int[]{Types.INTEGER});
 		for(Institutions inst : instList) {
 			Roles role = new Roles();
-			role.setId(inst.getId());
+			role.setInstId(inst.getId());
 		    List<Roles>  rolesList = queryDynamicRoles(role);
 	        for(Roles r : rolesList) {
 	            _logger.debug("role " + rolesList);
