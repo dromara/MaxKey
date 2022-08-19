@@ -18,12 +18,14 @@
 package org.maxkey.persistence.service;
 
 import java.io.Serializable;
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
 import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.maxkey.constants.ConstsStatus;
+import org.maxkey.entity.Institutions;
 import org.maxkey.entity.Roles;
 import org.maxkey.persistence.mapper.RolesMapper;
 import org.maxkey.util.StringUtils;
@@ -45,6 +47,9 @@ public class RolesService  extends JpaBaseService<Roles> implements Serializable
     @JsonIgnore
     @Autowired
     RoleMemberService roleMemberService;
+    
+    @Autowired
+    InstitutionsService institutionsService;
     
 	public RolesService() {
 		super(RolesMapper.class);
@@ -95,9 +100,22 @@ public class RolesService  extends JpaBaseService<Roles> implements Serializable
 	            
 	        }
 	        
-    	    if(StringUtils.isNotBlank(dynamicRole.getOrgIdsList())) {
-    	    	dynamicRole.setOrgIdsList("'"+dynamicRole.getOrgIdsList().replace(",", "','")+"'");
+	        if(StringUtils.isNotBlank(dynamicRole.getOrgIdsList())) {
+    	    	String []orgIds = dynamicRole.getOrgIdsList().split(",");
+    	    	StringBuffer orgIdFilters = new StringBuffer();
+    	    	for(String orgId : orgIds) {
+    	    		if(StringUtils.isNotBlank(orgId)) {
+	    	    		if(orgIdFilters.length() > 0) {
+	    	    			orgIdFilters.append(",");
+	    	    		}
+	    	    		orgIdFilters.append("'").append(orgId).append("'");
+    	    		}
+    	    	}
+    	    	if(orgIdFilters.length() > 0) {
+    	    		dynamicRole.setOrgIdsList(orgIdFilters.toString());
+    	    	}
     	    }
+	        
     	    String filters = dynamicRole.getFilters();
     	    if(StringUtils.isNotBlank(filters)) {
 	    		if(StringUtils.filtersSQLInjection(filters.toLowerCase())) {  
@@ -125,11 +143,17 @@ public class RolesService  extends JpaBaseService<Roles> implements Serializable
     }
 	
 	public void refreshAllDynamicRoles(){
-	    List<Roles>  groupsList = queryDynamicRoles(null);
-        for(Roles group : groupsList) {
-            _logger.debug("group " + group);
-            refreshDynamicRoles(group);
-        }
+		List<Institutions> instList = 
+				institutionsService.find("where status = ? ", new Object[]{ConstsStatus.ACTIVE}, new int[]{Types.INTEGER});
+		for(Institutions inst : instList) {
+			Roles role = new Roles();
+			role.setId(inst.getId());
+		    List<Roles>  rolesList = queryDynamicRoles(role);
+	        for(Roles r : rolesList) {
+	            _logger.debug("role " + rolesList);
+	            refreshDynamicRoles(r);
+	        }
+		}
 	}
 
 }
