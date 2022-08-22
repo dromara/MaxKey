@@ -8,7 +8,7 @@
     *(MAXKEY-221007) Swagger描述更新 
     *(MAXKEY-221008) 动态角色定时刷新问题修复，按照有效租户和有效动态角色刷新 
     *(MAXKEY-221009) 新增角色成员失败修复
-    *(MAXKEY-221001) OAuth2 code修正redis连接不释放 程序运行时间长会出现redis连接超过最大值错误(when <w_zhi_yuan@163.com>)
+    *(MAXKEY-221010) OAuth2 code修正redis连接不释放 程序运行时间长会出现redis连接超过最大值错误(when <w_zhi_yuan@163.com>)
     *(MAXKEY-221011) 日志打印信息优化
     *(MAXKEY-221012) 依赖项引用、更新和升级
         springBoot               2.6.11
