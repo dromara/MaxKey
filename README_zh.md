@@ -114,7 +114,7 @@
 
 | 版本    | 日期    |  Docker      |  网盘      |  网盘提取码  |
 | --------| :-----  | :----        | :----      | :----        |
-| v 3.5.4 GA | 2022/08/05   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/14wT5OE8ntWn-DcmYDiXdkg" target="_blank">下载</a>  |  **mxk9**  |
+| v 3.5.5 GA | 2022/08/23   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/14wT5OE8ntWn-DcmYDiXdkg" target="_blank">下载</a>  |  **mxk9**  |
 
 
 # Roadmap
