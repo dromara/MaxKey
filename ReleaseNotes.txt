@@ -1,4 +1,22 @@
-﻿MaxKey v 3.5.4 GA 2022/08/05
+﻿MaxKey v 3.5.5 GA 2022/08/23
+    *(MAXKEY-221001) 前端token刷新问题修复
+    *(MAXKEY-221002) CAS单点注销问题，在登录时存储ticket
+    *(MAXKEY-221003) cookie为空时，清空认证信息
+    *(MAXKEY-221004) session监听的日志打印空指针异常修复
+    *(MAXKEY-221005) 登录异常会话清除，值为正常完成状态
+    *(MAXKEY-221006) 组织根节点定义,根节点id=租户id、根节点id=0、根节点id=-1或者根节点id=父节点id
+    *(MAXKEY-221007) Swagger描述更新 
+    *(MAXKEY-221008) 动态角色定时刷新问题修复，按照有效租户和有效动态角色刷新 
+    *(MAXKEY-221009) 新增角色成员失败修复
+    *(MAXKEY-221001) OAuth2 code修正redis连接不释放 程序运行时间长会出现redis连接超过最大值错误(when <w_zhi_yuan@163.com>)
+    *(MAXKEY-221011) 日志打印信息优化
+    *(MAXKEY-221012) 依赖项引用、更新和升级
+        springBoot               2.6.11
+        springSecurity           5.6.7
+        springkafka              2.8.8
+        mybatis-jpa-extra        2.8
+
+MaxKey v 3.5.4 GA 2022/08/05
     *(MAXKEY-220901) 分离出maxkey-authentication-provider，进行代码优化调整
     *(MAXKEY-220902) 认证端退出登录时，清除相应的cookie，清除服务端会话的调用
     *(MAXKEY-220903) 认证端支持ip地址和域名两种访问方式
