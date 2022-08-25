@@ -259,15 +259,7 @@ subprojects {
          implementation group: 'org.apache.kafka', name: 'kafka-clients', version: "${kafkaclientsVersion}"
          // https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
          implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: "${springkafkaVersion}"
-         //rocketmq
-         implementation group: 'org.apache.rocketmq', name: 'rocketmq-common', version: "${rocketmqclientVersion}"
-         implementation group: 'org.apache.rocketmq', name: 'rocketmq-remoting', version: "${rocketmqclientVersion}"
-         implementation group: 'org.apache.rocketmq', name: 'rocketmq-logging', version: "${rocketmqclientVersion}"
-         implementation group: 'org.apache.rocketmq', name: 'rocketmq-client', version: "${rocketmqclientVersion}"
-         // https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-spring-boot
-         implementation group: 'org.apache.rocketmq', name: 'rocketmq-spring-boot', version: "${rocketmqspringbootVersion}"
-         implementation group: 'org.apache.rocketmq', name: 'rocketmq-spring-boot-starter', version: "${rocketmqspringbootVersion}"
-         
+
          //saml see maxkey-lib
          //implementation group: 'org.opensaml', name: 'opensaml', version: "${opensamlVersion}"
          //implementation group: 'org.opensaml', name: 'openws', version: "${openwsVersion}"

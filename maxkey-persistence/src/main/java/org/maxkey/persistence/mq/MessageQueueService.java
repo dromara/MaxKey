@@ -19,10 +19,8 @@ package org.maxkey.persistence.mq;
 
 import java.util.UUID;
 
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.persistence.mq.thread.KafkaProvisioningThread;
-import org.maxkey.persistence.mq.thread.RocketMQProvisioningThread;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
@@ -40,9 +38,6 @@ public class MessageQueueService {
     
     @Autowired
     protected KafkaTemplate<String, String> kafkaTemplate;
-    
-    @Autowired
-    private RocketMQTemplate rocketMQTemplate;
 
     public void setApplicationConfig(ApplicationConfig applicationConfig) {
         this.applicationConfig = applicationConfig;
@@ -63,7 +58,7 @@ public class MessageQueueService {
      * @param actionType CREATE UPDATE DELETE
      */
     public void send(String topic,Object content,String actionType) {
-        //maxkey.server.message.queue , if not none , Kafka , RocketMQ
+        //maxkey.server.message.queue , if not none , Kafka
         if(applicationConfig.isMessageQueueSupport()) {
             MqMessage message = 
             		new MqMessage(
@@ -79,9 +74,8 @@ public class MessageQueueService {
             if(applicationConfig.getMessageQueue().equalsIgnoreCase("Kafka")) {
             	_logger.trace("Kafka message...");
             	thread = new  KafkaProvisioningThread(kafkaTemplate,topic,msg);
-            }else if(applicationConfig.getMessageQueue().equalsIgnoreCase("RocketMQ")) {
-            	_logger.trace("RocketMQ message...");
-            	thread = new  RocketMQProvisioningThread(rocketMQTemplate,topic,msg);
+            }else{
+            	_logger.trace("no send message...");
             }
             thread.start();
         }
