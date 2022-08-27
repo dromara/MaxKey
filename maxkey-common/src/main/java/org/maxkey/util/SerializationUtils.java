@@ -39,7 +39,7 @@ public class SerializationUtils {
 					oos.close();
 				}
 				catch (IOException e) {
-					// eat it
+					
 				}
 			}
 		}
@@ -65,7 +65,7 @@ public class SerializationUtils {
 					oip.close();
 				}
 				catch (IOException e) {
-					// eat it
+					
 				}
 			}
 		}
