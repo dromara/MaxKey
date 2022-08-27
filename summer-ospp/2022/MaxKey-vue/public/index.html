@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>MaxKey单点登录认证系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title id="maxkey_title" name="description">MaxKey-业界领先的IAM身份管理和认证产品</title>
+    <meta http-equiv="description" content="MaxKey Single Sign-On">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <style type="text/css">
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #49a9ee;
+        transition: opacity .65s
+      }
+  
+      .cs-loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%
+      }
+  
+      .cs-loader-inner {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        color: #fff;
+        text-align: center;
+        transform: translateY(-50%)
+      }
+  
+      .cs-loader-inner label {
+        display: inline-block;
+        font-size: 20px;
+        opacity: 0
+      }
+  
+      @keyframes lol {
+        0% {
+          transform: translateX(-300px);
+          opacity: 0
+        }
+  
+        33% {
+          transform: translateX(0);
+          opacity: 1
+        }
+  
+        66% {
+          transform: translateX(0);
+          opacity: 1
+        }
+  
+        100% {
+          transform: translateX(300px);
+          opacity: 0
+        }
+      }
+  
+      .cs-loader-inner label:nth-child(6) {
+        animation: lol 3s infinite ease-in-out
+      }
+  
+      .cs-loader-inner label:nth-child(5) {
+        animation: lol 3s .1s infinite ease-in-out
+      }
+  
+      .cs-loader-inner label:nth-child(4) {
+        animation: lol 3s .2s infinite ease-in-out
+      }
+  
+      .cs-loader-inner label:nth-child(3) {
+        animation: lol 3s .3s infinite ease-in-out
+      }
+  
+      .cs-loader-inner label:nth-child(2) {
+        animation: lol 3s .4s infinite ease-in-out
+      }
+  
+      .cs-loader-inner label:nth-child(1) {
+        animation: lol 3s .5s infinite ease-in-out
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <div id="preloader">
+      <div class="cs-loader">
+        <div class="cs-loader-inner">
+          <label> ●</label>
+          <label> ●</label>
+          <label> ●</label>
+          <label> ●</label>
+          <label> ●</label>
+          <label> ●</label>
+        </div>
+      </div>
+    </div>
+    <!-- built files will be auto injected -->
+    <script>
+      const e=document.getElementById("preloader")
+       setTimeout(()=>{
+         e.style.display="none"
+       },3000)
+    
+   </script>
+  </body>
+</html>
