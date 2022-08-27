@@ -1,0 +1,19 @@
+header {
+  height: 64px;
+  border-bottom: 1px solid #e5e5e5;
+  padding-left: 198px;
+}
+header .title {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  font-size: 28px;
+  font-weight: 650;
+}
+header .title img {
+  width: 44px;
+  height: 44px;
+}
+header .title span {
+  color: #ffd700;
+}

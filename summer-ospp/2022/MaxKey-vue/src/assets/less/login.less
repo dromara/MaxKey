@@ -1,0 +1,158 @@
+@blue :#1890ff;
+@width: 370px;
+html,
+body {
+  height: 100%;
+  background-color: #fff;
+}
+
+div {
+  .form-signin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: @width; 
+    padding: 40px;
+    margin: auto;
+    h3 {
+      padding-bottom: 40px;
+      font-weight: 600;
+    } 
+    .login-type {
+      width: @width;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      span {
+          border: 1px solid #e5e5e5;
+          padding: 10px 0;
+          padding-left: 44.57px;
+          padding-right: 44px;
+          i {
+              padding: 5px;
+          } 
+          &:hover{
+              color: @blue;
+              cursor: pointer;
+              .user,.erweima {
+                fill: @blue
+              }
+          }
+      }  
+    }
+    .activeOne {
+      &>span:nth-child(1) {
+        border: 1px solid @blue;
+        color: @blue;
+        .user {
+          fill: @blue
+        }
+      }
+    }
+    .activeTwo {
+      &>span:nth-child(2) {
+        border: 1px solid @blue;
+        color: @blue;
+        .erweima {
+          fill:@blue
+        }
+      }
+    }
+    .form-control {
+      width: @width;
+      min-height: 40px;
+      text-shadow: 0 1px 0 #fff;
+      border: 1px solid #e5e5e5;
+      position: relative;
+      box-sizing: border-box;
+      height: auto;
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      padding-left: 25px;
+      &::placeholder {
+          color:  rgb(191, 191, 191);
+          font-weight: 550;
+  
+      }
+      &:focus {
+        outline: none;
+      }
+      &:hover{
+        border-color: #40a9ff;
+        border-right-width: 1px !important;
+      }
+    }
+    .label {
+      position: absolute;
+      top: 20px;
+      z-index: 1;
+      left: 15px;
+    }
+    .username {
+      position:relative;
+    }
+    .password {
+      position: relative;
+      .eyes-img {
+          position: absolute;
+          right: 15px;
+          top: 20px;
+        }
+    }
+    .btn {
+      width: @width;
+      height: 40px;
+      background: #2E9AFE;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      font-size: 16px;
+    }
+    .check {
+      position: relative;
+      .code {
+        position: absolute;
+        top: 10px;
+        right: 7px;
+        img {
+          width: 100px;
+          height: 40px;
+
+        }
+      }
+    }
+    .remember {
+      width: @width;
+      font-size: 14px;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 0;
+      label {
+          padding-left: 4px;
+          padding-right: 221px;
+      } 
+      a {
+        color: @blue;
+        text-decoration: none;
+      }
+    }
+    .otherLogin {
+      width: @width;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+}
+
