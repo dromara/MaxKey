@@ -207,3 +207,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 # License
  
 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright NOTICE</a>
+
+# 知识星球
+ 
+<img src="images/zsxq.png?raw=true"/>

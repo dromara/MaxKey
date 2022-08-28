@@ -206,10 +206,14 @@
  
  - **口号** 为往圣继绝学，一个人或许能走的更快，但一群人会走的更远
  
- # 零信任标准工作组
+# 零信任标准工作组
  
  <a href="https://gitee.com/zero-trust/ZeroTrust" target="_blank">国内最权威的零信任产业组织</a>
  
- # License
+# License
  
 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey版权声明</a>
+
+# 知识星球
+ 
+ <img src="images/zsxq.png?raw=true"/>
