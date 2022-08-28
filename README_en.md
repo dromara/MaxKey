@@ -134,6 +134,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 
 | 行业    | 单位    |
 | --------| :-----  |
+| 院校    | 中国人民警察大学                            |
 | 院校    | 兰州现代职业学院                            |
 | 院校    | 长春职业技术学院                            |
 | 院校    | 云南师范大学                                |
@@ -168,6 +169,8 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 企业    | 河南新辰环保科技有限公司                    |
 | 企业    | 三一华兴                                    |
 | 企业    | unicon.net                                  |
+| 企业    | TISSON & COMPANY                            |
+| 企业    | 中航金网（北京）电子商务有限公司            |
 | 企业    | 深圳市东阳光实业发展有限公司                |
 | 企业    | 飞天诚信科技股份有限公司                    |
 | 企业    | 浙江领湾网络有限公司                        |
