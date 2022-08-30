@@ -57,7 +57,7 @@ public class HMAC512Service {
 	public String sign(Payload payload) {
 		try {
 			// Prepare JWS object with payload
-			JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm.HS256), payload);
+			JWSObject jwsObject = new JWSObject(new JWSHeader(JWSAlgorithm.HS512), payload);
 			// Apply the HMAC
 			jwsObject.sign(signer);
 			String jwt = jwsObject.serialize();
