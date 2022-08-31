@@ -19,5 +19,5 @@ export const CONSTS = {
     INST: 'inst',
     REDIRECT_URI: 'redirect_uri',
     REMEMBER: 'remember',
-    VERSION: 'v3.5.4 GA'
+    VERSION: 'v3.5.5 GA'
 };
