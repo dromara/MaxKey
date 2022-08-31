@@ -61,7 +61,9 @@
           <div nz-col>
             <button nz-button type="button" (click)="onEdit($event, data.id)" style="float: left">{{ 'mxk.text.edit' |
               i18n }}</button>
-            <button nz-button type="button" (click)="onDelete($event, data.id)" nzDanger>{{ 'mxk.text.delete' | i18n
+            <button
+              *ngIf="data.roleCode != 'ROLE_ADMINISTRATORS' && data.roleCode != 'ROLE_ALL_USER' && data.roleCode != 'ROLE_MANAGERS'"
+              nz-button type="button" (click)="onDelete($event, data.id)" nzDanger>{{ 'mxk.text.delete' | i18n
               }}</button>
           </div>
         </td>
