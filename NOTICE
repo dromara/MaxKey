@@ -14,6 +14,9 @@ It can be used directly without authorization. All copyrights, patents, trademar
 页脚中归属声明及版权声明不可忽略，否则视为侵权
 The attribution statement and copyright notice in the footer cannot be ignored, otherwise it will be deemed as infringement.
 
+仅使用java程序情况，必须在软件前端页脚中添加此声明
+If only Java programs are used, this declaration must be added in the footer of the software front end
+
 Copyright  http://www.maxkey.top  All Rights Reserved.
 
 License http://www.maxkey.top/zh/about/licenses.html

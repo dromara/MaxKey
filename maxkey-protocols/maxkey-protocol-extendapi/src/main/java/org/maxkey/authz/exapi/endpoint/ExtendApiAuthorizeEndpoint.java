@@ -57,10 +57,14 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			@PathVariable("id") String id,
 			@CurrentUser UserInfo currentUser){
 	    
-	    ModelAndView modelAndView=new ModelAndView("authorize/redirect_sso_submit");
+	    ModelAndView modelAndView = new ModelAndView("authorize/redirect_sso_submit");
+	    modelAndView.addObject("errorCode", 0);
+	    modelAndView.addObject("errorMessage", "");
+	    
 		Apps apps = getApp(id);
 		_logger.debug(""+apps);
 		if(ConstsBoolean.isTrue(apps.getIsAdapter())){
+			_logger.debug("Adapter {}",apps.getAdapter());
 			AbstractAuthorizeAdapter adapter = (AbstractAuthorizeAdapter)Instance.newInstance(apps.getAdapter());
 			Accounts account = getAccounts(apps,currentUser);
 			if(apps.getCredential()==Apps.CREDENTIALS.USER_DEFINED && account == null) {
@@ -73,6 +77,7 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			
 			return adapter.authorize(modelAndView);
 		}else{
+			_logger.debug("redirect_uri {}",apps.getLoginUrl());
 	        modelAndView.addObject("redirect_uri", apps.getLoginUrl());
 	        return modelAndView;
 		}
