@@ -37,8 +37,8 @@ import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,36 +58,41 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	final static Logger _logger = LoggerFactory.getLogger(CasAuthorizeEndpoint.class);
 	
 	@Operation(summary = "CAS页面跳转service认证接口", description = "传递参数service",method="GET")
-	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_LOGIN)
-	public ModelAndView casLogin(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService){
+	@GetMapping(CasConstants.ENDPOINT.ENDPOINT_LOGIN)
+	public ModelAndView casLogin(@RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService,
+								 HttpServletRequest request,
+								 HttpServletResponse response
+			){
 	    
-		AppsCasDetails  casDetails=casDetailsService.getAppDetails(casService , true);
+		AppsCasDetails  casDetails = casDetailsService.getAppDetails(casService , true);
 		
 		return buildCasModelAndView(request,response,casDetails,casService);
 	}
 	
 	@Operation(summary = "CAS页面跳转应用ID认证接口", description = "传递参数应用ID",method="GET")
-	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_BASE + "/{id}")
-	public ModelAndView authorize(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@PathVariable("id") String id){
+	@GetMapping(CasConstants.ENDPOINT.ENDPOINT_BASE + "/{id}")
+	public ModelAndView authorize(  @PathVariable("id") String id,
+									HttpServletRequest request,
+									HttpServletResponse response
+			){
 		
-		AppsCasDetails casDetails=casDetailsService.getAppDetails(id , true);
+		AppsCasDetails casDetails = casDetailsService.getAppDetails(id , true);
 		
-		return buildCasModelAndView(request,response,casDetails,casDetails.getCallbackUrl());
+		return buildCasModelAndView(request,response,casDetails,casDetails == null ? id : casDetails.getCallbackUrl());
 	}
 	
-	private  ModelAndView buildCasModelAndView(
-	                HttpServletRequest request,
-	                HttpServletResponse response,
-	                AppsCasDetails casDetails,
-	                String casService){
+	private  ModelAndView buildCasModelAndView( HttpServletRequest request,
+	                							HttpServletResponse response,
+	                							AppsCasDetails casDetails,
+	                							String casService){
+		if(casDetails == null) {
+			_logger.debug("service {} not registered  " , casService);
+			ModelAndView modelAndView = new ModelAndView("authorize/cas_sso_submint");
+			modelAndView.addObject("errorMessage", casService);
+			return modelAndView;
+		}
 		
-		_logger.debug(""+casDetails);
+		_logger.debug("Detail {}" , casDetails);
 		Map<String, String> parameterMap = WebContext.getRequestParameterMap(request);
 		String service = casService;
 		_logger.debug("CAS Parameter service = {}" , service);
@@ -101,23 +106,21 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		    }
 		    _logger.debug("CAS service with Parameter : {}" , parameterMap);
 		}
-		WebContext.setAttribute(
-    		        CasConstants.PARAMETER.PARAMETER_MAP, 
-    		        parameterMap
-		        );
-
+		WebContext.setAttribute(CasConstants.PARAMETER.PARAMETER_MAP, parameterMap);
 		WebContext.setAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS, casDetails);
 		WebContext.setAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID, casDetails.getId());
 		WebContext.setAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP,casDetails);
 		return WebContext.redirect(CasConstants.ENDPOINT.ENDPOINT_SERVICE_TICKET_GRANTING);
+		
 	}
 	
 	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_SERVICE_TICKET_GRANTING)
-	public ModelAndView grantingTicket(Principal principal,
-	        @AuthenticationPrincipal Object user,
-			HttpServletRequest request,
-			HttpServletResponse response){
+	public ModelAndView grantingTicket( Principal principal,
+										HttpServletRequest request,
+										HttpServletResponse response){
+		ModelAndView modelAndView = new ModelAndView("authorize/cas_sso_submint");
 		AppsCasDetails casDetails = (AppsCasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
+		
 		ServiceTicketImpl serviceTicket = new ServiceTicketImpl(AuthorizationUtils.getAuthentication(),casDetails);
 
 		String ticket = ticketServices.createTicket(serviceTicket,casDetails.getExpires());
@@ -150,7 +153,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		}
 		
 		if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
-		    String sessionId = AuthorizationUtils.getPrincipal().getSession().getId();
+			String sessionId = AuthorizationUtils.getPrincipal().getSession().getId();
 		    Session session  = sessionManager.get(sessionId);
 		    //set cas ticket as OnlineTicketId
 		    casDetails.setOnlineTicket(ticket);
@@ -159,8 +162,6 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		}
 		
 		_logger.debug("redirect to CAS Client URL {}" , callbackUrl);
-		
-		ModelAndView modelAndView=new ModelAndView("authorize/cas_sso_submint");
 		modelAndView.addObject("callbackUrl", callbackUrl.toString());
 		return modelAndView;
 	}
@@ -174,11 +175,9 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 	 */
 	@Operation(summary = "CAS注销接口", description = "CAS注销接口",method="GET")
 	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_LOGOUT)
-	public ModelAndView logout(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService){
-		StringBuffer logoutUrl = new StringBuffer("/force/logout");
+	public ModelAndView logout(HttpServletRequest request , HttpServletResponse response,
+			@RequestParam(value = CasConstants.PARAMETER.SERVICE , required = false) String casService){
+		StringBuffer logoutUrl = new StringBuffer("force/logout");
 		if(StringUtils.isNotBlank(casService)){
 			logoutUrl.append("?").append("redirect_uri=").append(casService);
 		}

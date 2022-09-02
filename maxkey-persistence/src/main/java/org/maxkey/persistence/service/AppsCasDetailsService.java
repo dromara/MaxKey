@@ -54,7 +54,9 @@ public class AppsCasDetailsService  extends JpaBaseService<AppsCasDetails>{
 			details = detailsCache.getIfPresent(id);
 			if(details == null) {
 				details = getMapper().getAppDetails(id);
-				detailsCache.put(id, details);
+				if(details != null) {
+					detailsCache.put(id, details);
+				}
 			}
 		}else {
 			details = getMapper().getAppDetails(id);

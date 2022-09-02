@@ -106,6 +106,12 @@ public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
 		        			request.getParameter(OAuth2Constants.PARAMETER.CLIENT_ID),true);
 	        	}
 	        }
+	        
+	        if(app == null) {
+	        	_logger.debug("preHandle app is not exist . ");
+	        	return true;
+	        }
+	        
 	        SignPrincipal principal = AuthorizationUtils.getPrincipal();
 	        if(principal != null && app !=null) {
 	            if(principal.getGrantedAuthorityApps().contains(new SimpleGrantedAuthority(app.getId()))) {
