@@ -15,9 +15,9 @@
  */
  
 
-package org.maxkey.persistence.mq;
+package org.maxkey.provision;
 
-public class MqMessage {
+public class ProvisionMessage {
 
 	String id;
     String topic;
@@ -65,10 +65,10 @@ public class MqMessage {
         this.content = content;
     }
 
-    public MqMessage() {
+    public ProvisionMessage() {
     }
 
-	public MqMessage(String id,String topic, String actionType, String sendTime,  Object content) {
+	public ProvisionMessage(String id,String topic, String actionType, String sendTime,  Object content) {
 		super();
 		this.id = id;
 		this.topic = topic;

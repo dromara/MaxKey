@@ -15,53 +15,47 @@
  */
  
 
-package org.maxkey.persistence.mq;
+package org.maxkey.provision;
 
 import java.util.UUID;
 
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.persistence.mq.thread.KafkaProvisioningThread;
+import org.maxkey.provision.thread.ProvisioningThread;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MessageQueueService {
-    private static final Logger _logger = LoggerFactory.getLogger(MessageQueueService.class);
+public class ProvisionService {
+    private static final Logger _logger = LoggerFactory.getLogger(ProvisionService.class);
     
     @Autowired
     protected ApplicationConfig applicationConfig;
     
-    @Autowired
-    protected KafkaTemplate<String, String> kafkaTemplate;
 
     public void setApplicationConfig(ApplicationConfig applicationConfig) {
         this.applicationConfig = applicationConfig;
     }
 
-    public void setKafkaTemplate(KafkaTemplate<String, String> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
-    
+
     public ApplicationConfig getApplicationConfig() {
         return applicationConfig;
     }
 
     /**
-     * send  msg to kafka
-     * @param topic kafka TOPIC
+     * send  msg to jdbc
+     * @param topic TOPIC
      * @param content msg Object
      * @param actionType CREATE UPDATE DELETE
      */
     public void send(String topic,Object content,String actionType) {
-        //maxkey.server.message.queue , if not none , Kafka
+        //maxkey.server.message.queue , if not none
         if(applicationConfig.isMessageQueueSupport()) {
-            MqMessage message = 
-            		new MqMessage(
+            ProvisionMessage message = 
+            		new ProvisionMessage(
             				UUID.randomUUID().toString(),	//message id as uuid
             				topic,	//TOPIC
             				actionType,	//action of content
@@ -69,11 +63,11 @@ public class MessageQueueService {
             				content 	//content Object to json message content
             				);
             String msg = JsonUtils.gson2Json(message);
-            //sand msg to MQ topic
+            //sand msg to provision topic
             Thread thread = null;
-            if(applicationConfig.getMessageQueue().equalsIgnoreCase("Kafka")) {
-            	_logger.trace("Kafka message...");
-            	thread = new  KafkaProvisioningThread(kafkaTemplate,topic,msg);
+            if(applicationConfig.getMessageQueue().equalsIgnoreCase("provision")) {
+            	_logger.trace("message...");
+            	thread = new  ProvisioningThread(topic,msg);
             }else{
             	_logger.trace("no send message...");
             }

@@ -27,9 +27,9 @@ import org.maxkey.entity.AccountsStrategy;
 import org.maxkey.entity.OrganizationsCast;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.mapper.AccountsMapper;
-import org.maxkey.persistence.mq.MqProvisionAction;
-import org.maxkey.persistence.mq.MqProvisionTopic;
-import org.maxkey.persistence.mq.MessageQueueService;
+import org.maxkey.provision.ProvisionService;
+import org.maxkey.provision.ProvisionAction;
+import org.maxkey.provision.ProvisionTopic;
 import org.maxkey.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,7 +45,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 public class AccountsService  extends JpaBaseService<Accounts>{
 
     @Autowired
-    MessageQueueService mqPersistService;
+    ProvisionService mqPersistService;
     
     @Autowired
     UserInfoService  userInfoService;
@@ -79,9 +79,9 @@ public class AccountsService  extends JpaBaseService<Accounts>{
                     cast.setOrgId(loadUserInfo.getDepartmentId());
                     account.setOrgCast(organizationsCastService.query(cast));
                     mqPersistService.send(
-	                        MqProvisionTopic.ACCOUNT_TOPIC, 
+	                        ProvisionTopic.ACCOUNT_TOPIC, 
 	                        account,
-	                        MqProvisionAction.CREATE_ACTION);
+	                        ProvisionAction.CREATE_ACTION);
 	            }
 	            
 	            return true;
@@ -99,9 +99,9 @@ public class AccountsService  extends JpaBaseService<Accounts>{
                     cast.setOrgId(loadUserInfo.getDepartmentId());
                     account.setOrgCast(organizationsCastService.query(cast));
                     mqPersistService.send(
-                            MqProvisionTopic.ACCOUNT_TOPIC, 
+                            ProvisionTopic.ACCOUNT_TOPIC, 
                             account,
-                            MqProvisionAction.UPDATE_ACTION);
+                            ProvisionAction.UPDATE_ACTION);
                 }
                 
                 return true;
@@ -120,9 +120,9 @@ public class AccountsService  extends JpaBaseService<Accounts>{
                   loadUserInfo = userInfoService.findUserRelated(account.getUserId());
                   account.setUserInfo(loadUserInfo);
                   mqPersistService.send(
-                          MqProvisionTopic.ACCOUNT_TOPIC, 
+                          ProvisionTopic.ACCOUNT_TOPIC, 
                           account,
-                          MqProvisionAction.DELETE_ACTION);
+                          ProvisionAction.DELETE_ACTION);
               }
               
               return true;

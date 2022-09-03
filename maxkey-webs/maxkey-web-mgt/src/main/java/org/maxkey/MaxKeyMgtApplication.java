@@ -43,6 +43,7 @@ import org.springframework.context.annotation.ComponentScan;
     "org.maxkey.identity.rest",
     "org.maxkey.identity.scim.controller",
     "org.maxkey.persistence",
+    "org.maxkey.provision",
     "org.maxkey.synchronizer",
     "org.maxkey.web",
     "org.maxkey.web.access.contorller", 

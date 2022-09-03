@@ -292,13 +292,8 @@ subprojects {
          implementation group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-discovery', version: "${springcloudalibabaVersion}"
          implementation group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-config', version: "${springcloudalibabaVersion}"
          
-         //Message Queue
-         //kafka support
-         // https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
-         implementation group: 'org.apache.kafka', name: 'kafka-clients', version: "${kafkaclientsVersion}"
-         // https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
-         implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: "${springkafkaVersion}"
-
+         //Message Queue Removed
+         
          //saml see maxkey-lib
          //implementation group: 'org.opensaml', name: 'opensaml', version: "${opensamlVersion}"
          //implementation group: 'org.opensaml', name: 'openws', version: "${openwsVersion}"

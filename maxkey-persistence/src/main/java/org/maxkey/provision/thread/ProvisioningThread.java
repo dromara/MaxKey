@@ -14,31 +14,26 @@
  * limitations under the License.
  */
 
-package org.maxkey.persistence.mq.thread;
+package org.maxkey.provision.thread;
 
 import org.maxkey.pretty.PrettyFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
 
 /**
- * Kafka Provisioning Thread for send message
+ * Provisioning Thread for send message
  *
  */
-public class KafkaProvisioningThread extends Thread{
-	private static final Logger _logger = LoggerFactory.getLogger(KafkaProvisioningThread.class);
-	
-    KafkaTemplate<String, String> kafkaTemplate;
+public class ProvisioningThread extends Thread{
+	private static final Logger _logger = LoggerFactory.getLogger(ProvisioningThread.class);
     
     String topic ;
     
     String msg;
     
-    public KafkaProvisioningThread(
-                            KafkaTemplate<String, String> kafkaTemplate, 
+    public ProvisioningThread(
                             String topic, 
                             String msg) {
-        this.kafkaTemplate = kafkaTemplate;
         this.topic = topic;
         this.msg = msg;
     }
@@ -46,7 +41,7 @@ public class KafkaProvisioningThread extends Thread{
     @Override
     public void run() {
     	_logger.debug("send message \n{}" , PrettyFactory.getJsonPretty().format(msg));
-        kafkaTemplate.send(topic, msg);
+        //kafkaTemplate.send(topic, msg);
         _logger.debug("send to Message Queue finished .");
     }
 }
