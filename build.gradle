@@ -53,8 +53,7 @@ def libjarsmapper=[
     'maxkey-synchronizer-ldap'              :'maxkey_mgt',
     'maxkey-synchronizer-dingtalk'          :'maxkey_mgt',
     'maxkey-synchronizer-workweixin'        :'maxkey_mgt',
-	'maxkey-synchronizer-reorgdept'         :'maxkey_mgt',
-    'maxkey-monitor'                        :'maxkey_monitor'
+	'maxkey-synchronizer-reorgdept'         :'maxkey_mgt'
 ]
 
 configurations.all {
@@ -489,20 +488,6 @@ project('maxkey-common')  {
         //copy runtime
         from configurations.runtimeClasspath
         into "$rootDir/build/MaxKey-v${project.version}GA/lib";
-    }
-    
-    build.configure { finalizedBy copyDepJars }
-}
-
-//copy Dep Jars to /build/maxkey-depjars,only maxkey-boot-monitor deps
-project('maxkey-webs:maxkey-monitor')  {
-    task copyDepJars(type:Copy) {
-        dependsOn   assemble
-        //项目名 项目所在的group version 版本号
-        println  "subproject " + project.name + ", group " + project.group +" , version " + project.version
-        //copy runtime
-        from configurations.runtimeClasspath
-        into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor";
     }
     
     build.configure { finalizedBy copyDepJars }
