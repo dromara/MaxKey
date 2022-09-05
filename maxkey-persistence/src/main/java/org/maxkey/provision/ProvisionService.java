@@ -22,10 +22,10 @@ import java.util.UUID;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.provision.thread.ProvisioningThread;
 import org.maxkey.util.DateUtils;
-import org.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -33,17 +33,10 @@ public class ProvisionService {
     private static final Logger _logger = LoggerFactory.getLogger(ProvisionService.class);
     
     @Autowired
-    protected ApplicationConfig applicationConfig;
+    ApplicationConfig applicationConfig;
     
-
-    public void setApplicationConfig(ApplicationConfig applicationConfig) {
-        this.applicationConfig = applicationConfig;
-    }
-
-
-    public ApplicationConfig getApplicationConfig() {
-        return applicationConfig;
-    }
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     /**
      * send  msg to jdbc
@@ -60,18 +53,31 @@ public class ProvisionService {
             				topic,	//TOPIC
             				actionType,	//action of content
             				DateUtils.getCurrentDateTimeAsString(),	//send time
-            				content 	//content Object to json message content
+            				null, 	//content Object to json message content
+            				content
             				);
-            String msg = JsonUtils.gson2Json(message);
             //sand msg to provision topic
             Thread thread = null;
             if(applicationConfig.getMessageQueue().equalsIgnoreCase("provision")) {
             	_logger.trace("message...");
-            	thread = new  ProvisioningThread(topic,msg);
+            	thread = new  ProvisioningThread(jdbcTemplate,message);
+            	thread.start();
             }else{
             	_logger.trace("no send message...");
             }
-            thread.start();
         }
     }
+
+	public void setApplicationConfig(ApplicationConfig applicationConfig) {
+		this.applicationConfig = applicationConfig;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	public ApplicationConfig getApplicationConfig() {
+		return applicationConfig;
+	}
+	
 }

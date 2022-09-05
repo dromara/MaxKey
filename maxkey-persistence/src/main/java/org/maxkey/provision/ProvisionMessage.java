@@ -19,11 +19,14 @@ package org.maxkey.provision;
 
 public class ProvisionMessage {
 
-	String id;
-    String topic;
-    String actionType;
-    String sendTime;
-    Object content;
+	String 	id;
+    String 	topic;
+    String 	actionType;
+    String 	sendTime;
+    String  content;
+    int     connected;
+    
+    Object  sourceObject;
 
     public String getTopic() {
         return topic;
@@ -61,20 +64,37 @@ public class ProvisionMessage {
         return content;
     }
 
-    public void setContent(Object content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
-    public ProvisionMessage() {
+    public int getConnected() {
+		return connected;
+	}
+
+	public void setConnected(int connected) {
+		this.connected = connected;
+	}
+
+	public Object getSourceObject() {
+		return sourceObject;
+	}
+
+	public void setSourceObject(Object sourceObject) {
+		this.sourceObject = sourceObject;
+	}
+
+	public ProvisionMessage() {
     }
 
-	public ProvisionMessage(String id,String topic, String actionType, String sendTime,  Object content) {
+	public ProvisionMessage(String id,String topic, String actionType, String sendTime,  String content,Object sourceObject) {
 		super();
 		this.id = id;
 		this.topic = topic;
 		this.actionType = actionType;
 		this.sendTime = sendTime;
 		this.content = content;
+		this.sourceObject = sourceObject;
 	}
     
     
