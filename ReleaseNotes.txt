@@ -1,4 +1,25 @@
-﻿MaxKey v 3.5.5 GA 2022/08/23
+﻿MaxKey v 3.5.6 GA 2022/09/07
+    *(MAXKEY-221101) 解决springcloud JAR包冲突问题
+    *(MAXKEY-221102) CAS 未注册URL登录错误提示优化CAS service ${errorMessage!} not registered .
+    *(MAXKEY-221103) 同步代码优化org.maxkey.persistence -->org.maxkey.provision
+    *(MAXKEY-221104) 优化对象转换类ObjectTransformer
+    *(MAXKEY-221105) 数据同步的对象经过序列化后存储到数据库,下一版本在后台系统定义同步线程实现数据同步
+    *(MAXKEY-221106) 优化HMAC512签名的代码
+    *(MAXKEY-221107) 腾讯企业邮箱登录优化
+    *(MAXKEY-221108) 开源之夏SDK的提交
+    *(MAXKEY-221109) 压缩images包下面的图片尺寸
+    *(MAXKEY-221110) 添加知识星球扫码连接
+    *(MAXKEY-221111) 默认组织根节点不可删除，隐藏删除按钮
+    *(MAXKEY-221112) 默认角色组不可删除，隐藏删除按钮
+    *(MAXKEY-221113) 移除KAFKA支持
+    *(MAXKEY-221114) 移除RocketMQ支持
+    *(MAXKEY-221115) 移除非必须的监控模块maxkey-monitor，该模块建议开发者自行部署
+    *(MAXKEY-221016) 依赖项引用、更新和升级
+        springcloudalibabacspl  1.8.5
+        jbosslogging            3.4.3.Final
+        hibernateVersion        6.2.4.Final
+    
+MaxKey v 3.5.5 GA 2022/08/23
     *(MAXKEY-221001) 前端token刷新问题修复
     *(MAXKEY-221002) CAS单点注销问题，在登录时存储ticket
     *(MAXKEY-221003) cookie为空时，清空认证信息
