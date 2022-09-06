@@ -51,3 +51,4 @@ maxkey-web-frontend/maxkey-web-app/node_modules/
 maxkey-web-frontend/maxkey-web-app/.angular/
 maxkey-web-frontend/maxkey-web-app/yarn.lock
 maxkey-web-frontend/maxkey-web-app/dist
+release_frontend.bat

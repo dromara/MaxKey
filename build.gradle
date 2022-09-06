@@ -470,7 +470,6 @@ project('maxkey-common')  {
         def paths = ["$rootDir/build/MaxKey-v${project.version}GA",
                      "$rootDir/build/MaxKey-v${project.version}GA/maxkey",
                      "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt",
-                     "$rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor",
                      "$rootDir/build/MaxKey-v${project.version}GA/lib"];
         //遍历数组，调用createDir闭包，创建目录
         paths.forEach(){path->
