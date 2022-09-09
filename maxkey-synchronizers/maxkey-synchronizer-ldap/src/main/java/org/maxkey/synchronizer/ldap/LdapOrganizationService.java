@@ -174,7 +174,12 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 		try {
 			Organizations org = new Organizations();
 			org.setLdapDn(nameInNamespace);
-			String []namePaths = name.replaceAll(",OU=", "/").replaceAll("OU=", "/").split("/");
+			String []namePaths = name.replaceAll(",OU=" , "/")
+									 .replaceAll("OU="  , "/")
+									 .replaceAll(",ou=" , "/")
+									 .replaceAll("ou="  , "/")
+									 .split("/");
+		
 			String namePah= "/"+rootOrganization.getOrgName();
 			for(int i = namePaths.length -1 ; i >= 0 ; i --) {
 				namePah = namePah + "/" + namePaths[i];

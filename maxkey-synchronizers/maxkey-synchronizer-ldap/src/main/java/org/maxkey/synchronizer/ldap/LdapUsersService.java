@@ -52,6 +52,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 			constraints.setSearchScope(ldapUtils.getSearchScope());
 			String filter = StringUtils.isNotBlank(this.getSynchronizer().getFilters()) ? 
 								getSynchronizer().getFilters() : "(&(objectClass=inetOrgPerson))";
+			_logger.debug(" User filter {} ",filter);
 			NamingEnumeration<SearchResult> results = 
 					ldapUtils.getConnection().search(ldapUtils.getBaseDN(), filter, constraints);
 			
@@ -110,7 +111,11 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 	public UserInfo buildUserInfo(HashMap<String,Attribute> attributeMap,String name,String nameInNamespace) {
 		UserInfo userInfo = new  UserInfo();
 		userInfo.setLdapDn(nameInNamespace);
-		String []namePaths = name.replaceAll(",OU=", "/").replaceAll("OU=", "/").split("/");
+		String []namePaths = name.replaceAll(",OU=" , "/")
+								 .replaceAll("OU="  , "/")
+								 .replaceAll(",ou=" , "/")
+								 .replaceAll("ou="  , "/")
+								 .split("/");
 		String namePah= "/"+rootOrganization.getOrgName();
 		for(int i = namePaths.length -1 ; i >= 0 ; i --) {
 			namePah = namePah + "/" + namePaths[i];
