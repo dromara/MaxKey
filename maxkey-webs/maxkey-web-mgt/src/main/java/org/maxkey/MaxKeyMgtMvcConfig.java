@@ -84,7 +84,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //addPathPatterns 用于添加拦截规则 ， 先把所有路径都加入拦截， 再一个个排除
         //excludePathPatterns 表示改路径不用拦截
-        _logger.debug("add HttpJwtEntryPoint");
+        _logger.debug("add Interceptors");
 
         permissionInterceptor.setMgmt(true);
         
@@ -118,7 +118,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/logout/**")
                 ;
         
-        _logger.debug("add PermissionAdapter");
+        _logger.debug("add Permission Adapter");
         
         registry.addInterceptor(historyLogsAdapter)
                 .addPathPatterns("/userinfo/**")
@@ -131,7 +131,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/apps/**")
                 .addPathPatterns("/approles/**")
                 ;
-        _logger.debug("add HistoryLogsAdapter");
+        _logger.debug("add History Logs Adapter");
         
         /*
          * api
@@ -144,7 +144,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/idm/scim/**")
                 ;
 		
-        _logger.debug("add RestApiPermissionAdapter");
+        _logger.debug("add Rest Api Permission Adapter");
         
     }
     

@@ -21,6 +21,7 @@ import java.sql.Types;
 
 import org.maxkey.pretty.impl.JsonPretty;
 import org.maxkey.provision.ProvisionMessage;
+import org.maxkey.util.JsonUtils;
 import org.maxkey.util.ObjectTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class ProvisioningThread extends Thread{
 	private static final Logger _logger = LoggerFactory.getLogger(ProvisioningThread.class);
     
-	static final String PROVISION_INSERT_STATEMENT = "insert into mxk_history_provisions(`id`,`topic`,`actiontype`,`content`,`sendtime`,`connected`) values (? , ? , ? , ? , ? , ? )";
+	static final String PROVISION_INSERT_STATEMENT = "insert into mxk_history_provisions(id,topic,actiontype,content,sendtime,connected,instid) values (? , ? , ? , ? , ? , ?  , ? )";
 	
 	JdbcTemplate jdbcTemplate;
     
@@ -49,15 +50,31 @@ public class ProvisioningThread extends Thread{
     public void run() {
     	_logger.debug("send message \n{}" ,new JsonPretty().jacksonFormat(msg.getSourceObject()));
     	msg.setContent(ObjectTransformer.serialize((Serializable)msg.getSourceObject()));
+    	Inst inst = JsonUtils.gson2Object(JsonUtils.gson2Json(msg.getSourceObject()), Inst.class);
     	jdbcTemplate.update(PROVISION_INSERT_STATEMENT,
                 new Object[] { 
                 		msg.getId(), msg.getTopic(), msg.getActionType(), msg.getContent(),
-                		msg.getSendTime(),msg.getConnected()
+                		msg.getSendTime(),msg.getConnected(),inst.getInstId()
                         },
                 new int[] { 
                         Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, 
-                        Types.TINYINT
+                        Types.TINYINT,Types.TINYINT
                         });
         _logger.debug("send to Message Queue finished .");
+    }
+    
+    class Inst{
+    	
+    	int instId;
+
+		public int getInstId() {
+			return instId;
+		}
+
+		public void setInstId(int instId) {
+			this.instId = instId;
+		}
+
+		public Inst() {}
     }
 }

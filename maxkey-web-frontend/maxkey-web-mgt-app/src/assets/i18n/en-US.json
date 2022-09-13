@@ -45,6 +45,7 @@
 				"accountsstrategys": "Strategys",
 				"socialsproviders": "Socials",
 				"synchronizers": "Synchronizers",
+				"connectors":"Connectors",
 				"adapters": "Adapters",
 				"notices": "Notices",
 				"ldapcontext": "LDAP",
@@ -537,6 +538,15 @@
 			"resumeTime": "Join Time",
 			"suspendTime": "Suspend Time"
 		},
+		"connectors": {
+			"connName": "Name",
+			"scheduler": "Scheduler",
+			"justInTime":"JustInTime",
+			"providerUrl": "ProviderUrl",
+			"principal": "Principal",
+			"credentials": "Credentials",
+			"filters": "Filters"
+		},
 		"password": {
 			"id": "Id",
 			"displayName": "DisplayName",
@@ -610,7 +620,8 @@
 
 			"connector.id": "Id",
 			"connector.conName": "Connector",
-			"connector.conType": "Type",
+			"connector.topic": "Topic",
+			"connector.actionType": "ActionType",
 			"connector.sourceId": "SourceId",
 			"connector.sourceName": "SourceName",
 			"connector.objectId": "ObjectId",

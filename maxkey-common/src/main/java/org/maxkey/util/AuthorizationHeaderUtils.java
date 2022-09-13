@@ -17,6 +17,8 @@
 
 package org.maxkey.util;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.crypto.Base64Utils;
@@ -88,6 +90,12 @@ public class AuthorizationHeaderUtils {
     		return resolveBearer(authorization);
     	}
     	return null;
+    }
+    
+    public static HashMap<String,String> authorization(String authorization) {
+    	HashMap<String,String> authorizationMap = new HashMap<String,String>();
+    	authorizationMap.put(HEADER_Authorization, authorization);
+    	return authorizationMap;
     }
 
 }

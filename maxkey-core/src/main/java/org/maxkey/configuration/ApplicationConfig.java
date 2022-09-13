@@ -67,8 +67,8 @@ public class ApplicationConfig {
     @Value("${server.servlet.session.timeout:1800}")
     private int sessionTimeout;
 
-    @Value("${maxkey.server.message.queue:none}")
-    private String messageQueue;
+    @Value("${maxkey.server.provision:false}")
+    private boolean provision;
     
     @Value("${maxkey.notices.visible:false}")
     private boolean noticesVisible;
@@ -192,21 +192,21 @@ public class ApplicationConfig {
         this.defaultUri = defaultUri;
     }
 
-    public String getMessageQueue() {
-		return messageQueue;
-	}
-    
-    public boolean isMessageQueueSupport() {
-    	if(StringUtils.isBlank(messageQueue)||messageQueue.equalsIgnoreCase("none")) {
-    		return false;
-    	}
-		return true;
-	}
-    
-	public void setMessageQueue(String messageQueue) {
-		this.messageQueue = messageQueue;
+    public boolean isProvision() {
+		return provision;
 	}
 
+	public void setProvision(boolean provision) {
+		this.provision = provision;
+	}
+
+	public boolean isProvisionSupport() {
+    	if(provision) {
+    		return true;
+    	}
+		return false;
+	}
+    
 	public String getMgtUri() {
 		return mgtUri;
 	}
@@ -262,8 +262,8 @@ public class ApplicationConfig {
         builder.append(mgtUri);
         builder.append(", port=");
         builder.append(port);
-        builder.append(", kafkaSupport=");
-        builder.append(messageQueue);
+        builder.append(", provision=");
+        builder.append(provision);
         builder.append(", maxKeyUri=");
         builder.append(authzUri);
         builder.append("]");

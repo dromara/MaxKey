@@ -45,6 +45,7 @@
 				"accountsstrategys": "账号策略",
 				"socialsproviders": "社交服务",
 				"synchronizers": "同步器管理",
+				"connectors":"连接器管理",
 				"adapters": "适配器注册",
 				"notices": "通知公告",
 				"ldapcontext": "LDAP配置",
@@ -535,6 +536,15 @@
 			"resumeTime": "执行时间",
 			"suspendTime": "挂起时间"
 		},
+		"connectors": {
+			"connName": "名称",
+			"scheduler": "定时任务",
+			"justInTime":"实时同步",
+			"providerUrl": "地址",
+			"principal": "账号",
+			"credentials": "凭证",
+			"filters": "过滤条件"
+		},
 		"password": {
 			"id": "用户编码",
 			"displayName": "姓名",
@@ -608,7 +618,8 @@
 
 			"connector.id": "编号",
 			"connector.conName": "连接器",
-			"connector.conType": "类型",
+			"connector.topic": "主题",
+			"connector.actionType": "操作",
 			"connector.sourceId": "源编码",
 			"connector.sourceName": "源名称",
 			"connector.objectId": "对象编号",

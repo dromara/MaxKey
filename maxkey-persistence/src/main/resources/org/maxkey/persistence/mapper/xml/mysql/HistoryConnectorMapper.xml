@@ -11,10 +11,6 @@
             and conName  =   #{conName}
         </if> 
         
-		<if test="conType != null and conType != ''">
-            and conType  =   #{conType}
-        </if> 
-        
 		<if test="sourceId != null and sourceId != ''">
             and sourceId  =   #{sourceId}
         </if> 

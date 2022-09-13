@@ -75,7 +75,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean insert(UserInfo userInfo) {
     	this.passwordEncoder(userInfo);
         if (super.insert(userInfo)) {
-        	if(messageQueueService.getApplicationConfig().isMessageQueueSupport()) {
+        	if(messageQueueService.getApplicationConfig().isProvisionSupport()) {
                 UserInfo loadUserInfo = findUserRelated(userInfo.getId());
                 messageQueueService.send(
                         ProvisionTopic.USERINFO_TOPIC, 
@@ -92,7 +92,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
     public boolean update(UserInfo userInfo) {
     	ChangePassword changePassword = this.passwordEncoder(userInfo);
         if (super.update(userInfo)) {
-        	if(messageQueueService.getApplicationConfig().isMessageQueueSupport()) {
+        	if(messageQueueService.getApplicationConfig().isProvisionSupport()) {
                 UserInfo loadUserInfo = findUserRelated(userInfo.getId());
                 accountUpdate(loadUserInfo);
                 messageQueueService.send(
@@ -110,7 +110,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 	
 	public boolean delete(UserInfo userInfo) {
 	    UserInfo loadUserInfo = null;
-	    if(messageQueueService.getApplicationConfig().isMessageQueueSupport()) {
+	    if(messageQueueService.getApplicationConfig().isProvisionSupport()) {
 	        loadUserInfo = findUserRelated(userInfo.getId());
 	    }
 	    

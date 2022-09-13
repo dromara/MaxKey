@@ -156,7 +156,70 @@ public class HttpRequestAdapter {
         }
         return null;
     }
-    
+ 
+    public String postJson(String url,String jsonString,HashMap<String,String> headers) {
+        // 创建httpClient实例
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse httpResponse = null;
+        // 创建httpPost远程连接实例
+        HttpPost httpPost = new HttpPost(url);
+        // 配置请求参数实例
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(35000)// 设置连接主机服务超时时间
+                .setConnectionRequestTimeout(35000)// 设置连接请求超时时间
+                .setSocketTimeout(60000)// 设置读取数据连接超时时间
+                .build();
+        // 为httpPost实例设置配置
+        httpPost.setConfig(requestConfig);
+        // 设置请求头
+        if (null != headers && headers.size() > 0) {
+        	  Set<Entry<String, String>> entrySet = headers.entrySet();
+              // 循环遍历，获取迭代器
+              Iterator<Entry<String, String>> iterator = entrySet.iterator();
+              while (iterator.hasNext()) {
+                  Entry<String, String> mapEntry = iterator.next();
+                  _logger.trace("Name " + mapEntry.getKey() + " , Value " +mapEntry.getValue());
+                  httpPost.addHeader(mapEntry.getKey(), mapEntry.getValue());
+              }
+        }
+        
+        // 封装post请求参数
+        StringEntity stringEntity =new StringEntity(jsonString, "UTF-8");
+        stringEntity.setContentType("application/json");
+        httpPost.setEntity(stringEntity);
+        
+        
+        try {
+            // httpClient对象执行post请求,并返回响应参数对象
+            httpResponse = httpClient.execute(httpPost);
+            // 从响应对象中获取响应内容
+            HttpEntity entity = httpResponse.getEntity();
+            String content = EntityUtils.toString(entity);
+            _logger.debug("Http Response StatusCode {} , Content {}",
+                    httpResponse.getStatusLine().getStatusCode(),
+                    content
+            );
+            return content;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭资源
+            if (null != httpResponse) {
+                try {
+                    httpResponse.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != httpClient) {
+                try {
+                    httpClient.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
     
 	public String get(String url) {
 		HashMap<String,String> headers = new HashMap<String,String>();

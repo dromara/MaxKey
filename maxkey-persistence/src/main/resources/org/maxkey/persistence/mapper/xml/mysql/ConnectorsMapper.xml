@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.maxkey.persistence.mapper.ConnectorsMapper">
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	id	=	#{id}
+		</if> 
+		<if test="connName != null and connName != ''">
+			and connname like '%${connName}%'
+		</if>
+    </sql>
+    	
+	<select id="queryPageResults" parameterType="Connectors" resultType="Connectors">
+		select
+			*
+		from
+			mxk_connectors
+		where
+			 instid   =   #{instId} 
+		<include refid="where_statement"/>
+	</select>	
+    
+   
+</mapper>

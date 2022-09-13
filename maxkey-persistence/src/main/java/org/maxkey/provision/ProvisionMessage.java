@@ -25,6 +25,7 @@ public class ProvisionMessage {
     String 	sendTime;
     String  content;
     int     connected;
+    int     instId;
     
     Object  sourceObject;
 
@@ -60,7 +61,7 @@ public class ProvisionMessage {
 		this.id = id;
 	}
 
-	public Object getContent() {
+	public String getContent() {
         return content;
     }
 
@@ -82,6 +83,14 @@ public class ProvisionMessage {
 
 	public void setSourceObject(Object sourceObject) {
 		this.sourceObject = sourceObject;
+	}
+
+	public int getInstId() {
+		return instId;
+	}
+
+	public void setInstId(int instId) {
+		this.instId = instId;
 	}
 
 	public ProvisionMessage() {

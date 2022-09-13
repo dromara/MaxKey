@@ -118,17 +118,24 @@
               "children": []
             },
             {
-              "text": "社交服务",
-              "i18n": "mxk.menu.config.socialsproviders",
-              "link": "/config/socialsproviders",
-              "icon": "anticon-comment",
-              "children": []
-            },
-            {
               "text": "同步器管理",
               "i18n": "mxk.menu.config.synchronizers",
               "link": "/config/synchronizers",
               "icon": "anticon-partition",
+              "children": []
+            },
+            {
+              "text": "连接器管理",
+              "i18n": "mxk.menu.config.connectors",
+              "link": "/config/connectors",
+              "icon": "anticon-api",
+              "children": []
+            },
+            {
+              "text": "社交服务",
+              "i18n": "mxk.menu.config.socialsproviders",
+              "link": "/config/socialsproviders",
+              "icon": "anticon-comment",
               "children": []
             },
             {
@@ -185,6 +192,13 @@
               "text": "同步器日志",
               "i18n": "mxk.menu.audit.synchronizer",
               "link": "/audit/audit-synchronizer",
+              "icon": "anticon-audit",
+              "children": []
+            },
+            {
+              "text": "连接器日志",
+              "i18n": "mxk.menu.audit.connector",
+              "link": "/audit/audit-connector",
               "icon": "anticon-audit",
               "children": []
             },

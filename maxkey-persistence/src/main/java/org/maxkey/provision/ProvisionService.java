@@ -46,7 +46,7 @@ public class ProvisionService {
      */
     public void send(String topic,Object content,String actionType) {
         //maxkey.server.message.queue , if not none
-        if(applicationConfig.isMessageQueueSupport()) {
+        if(applicationConfig.isProvisionSupport()) {
             ProvisionMessage message = 
             		new ProvisionMessage(
             				UUID.randomUUID().toString(),	//message id as uuid
@@ -58,7 +58,7 @@ public class ProvisionService {
             				);
             //sand msg to provision topic
             Thread thread = null;
-            if(applicationConfig.getMessageQueue().equalsIgnoreCase("provision")) {
+            if(applicationConfig.isProvisionSupport()) {
             	_logger.trace("message...");
             	thread = new  ProvisioningThread(jdbcTemplate,message);
             	thread.start();

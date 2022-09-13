@@ -18,11 +18,15 @@
 package org.maxkey;
 
 import org.maxkey.authn.session.SessionManager;
+import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.listener.DynamicRolesListenerAdapter;
 import org.maxkey.listener.ListenerAdapter;
 import org.maxkey.listener.ListenerParameter;
 import org.maxkey.listener.SessionListenerAdapter;
+import org.maxkey.persistence.service.ConnectorsService;
 import org.maxkey.persistence.service.RolesService;
+import org.maxkey.provision.thread.ProvisioningRunner;
+import org.maxkey.provision.thread.ProvisioningRunnerThread;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
@@ -31,6 +35,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 public class MaxKeyMgtListenerConfig  implements InitializingBean {
@@ -67,6 +72,23 @@ public class MaxKeyMgtListenerConfig  implements InitializingBean {
     		);
         _logger.debug("DynamicRoles ListenerAdapter inited .");
         return "dynamicRolesListenerAdapter";
+    }
+    
+    @Bean
+    public String  provisioningRunnerThread(
+    		ConnectorsService connectorsService,
+    		JdbcTemplate jdbcTemplate,
+    		ApplicationConfig applicationConfig
+            ) throws SchedulerException {
+        if(applicationConfig.isProvisionSupport()) {
+	    	ProvisioningRunner runner = new ProvisioningRunner(connectorsService,jdbcTemplate);
+	    	ProvisioningRunnerThread runnerThread = new ProvisioningRunnerThread(runner);
+	    	runnerThread.start();
+	        _logger.debug("provisioning Runner Thread .");
+        }else {
+        	_logger.debug("not need init provisioning Runner Thread .");
+        }
+        return "provisioningRunnerThread";
     }
     
     @Override

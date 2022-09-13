@@ -71,7 +71,7 @@ public class AccountsService  extends JpaBaseService<Accounts>{
 	
 	 public boolean insert(Accounts account) {
 	     if (super.insert(account)) {
-	            if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
+	            if(mqPersistService.getApplicationConfig().isProvisionSupport()) {
 	                UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
 	                account.setUserInfo(loadUserInfo);
 	                OrganizationsCast cast = new OrganizationsCast();
@@ -91,7 +91,7 @@ public class AccountsService  extends JpaBaseService<Accounts>{
 	 
    public boolean update(Accounts account) {
          if (super.update(account)) {
-        	 if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
+        	 if(mqPersistService.getApplicationConfig().isProvisionSupport()) {
                     UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
                     account.setUserInfo(loadUserInfo);
                     OrganizationsCast cast = new OrganizationsCast();
@@ -116,7 +116,7 @@ public class AccountsService  extends JpaBaseService<Accounts>{
        Accounts account = this.get(id);
        if (super.remove(id)) {
               UserInfo loadUserInfo = null;
-              if(mqPersistService.getApplicationConfig().isMessageQueueSupport()) {
+              if(mqPersistService.getApplicationConfig().isProvisionSupport()) {
                   loadUserInfo = userInfoService.findUserRelated(account.getUserId());
                   account.setUserInfo(loadUserInfo);
                   mqPersistService.send(

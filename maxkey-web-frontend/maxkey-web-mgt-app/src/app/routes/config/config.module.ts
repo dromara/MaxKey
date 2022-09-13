@@ -1,19 +1,18 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -34,6 +33,8 @@ import { SelectAccountsStrategyComponent } from './accounts-strategy/select-acco
 import { AdapterEditerComponent } from './adapters/adapter-editer/adapter-editer.component';
 import { AdaptersComponent } from './adapters/adapters.component';
 import { SelectAdaptersComponent } from './adapters/select-adapters/select-adapters.component';
+import { ConnectorEditerComponent } from './connectors/connector-editer/connector-editer.component';
+import { ConnectorsComponent } from './connectors/connectors.component';
 import { EmailSendersComponent } from './email-senders/email-senders.component';
 import { InstitutionsComponent } from './institutions/institutions.component';
 import { LdapContextComponent } from './ldap-context/ldap-context.component';
@@ -75,6 +76,10 @@ const routes: Routes = [
     component: SynchronizersComponent
   },
   {
+    path: 'connectors',
+    component: ConnectorsComponent
+  },
+  {
     path: 'accountsstrategys',
     component: AccountsStrategyComponent
   },
@@ -108,7 +113,9 @@ const COMPONENTS = [PasswordPolicyComponent, EmailSendersComponent, LdapContextC
     InstitutionsComponent,
     NoticesComponent,
     SelectAccountsStrategyComponent,
-    SelectAdaptersComponent
+    SelectAdaptersComponent,
+    ConnectorsComponent,
+    ConnectorEditerComponent
   ],
   imports: [SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]

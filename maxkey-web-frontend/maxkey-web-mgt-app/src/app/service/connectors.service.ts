@@ -19,19 +19,15 @@ import { Injectable } from '@angular/core';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable } from 'rxjs';
 
+import { Connectors } from '../entity/Connectors';
 import { Message } from '../entity/Message';
-import { Synchronizers } from '../entity/Synchronizers';
 import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SynchronizersService extends BaseService<Synchronizers> {
+export class ConnectorsService extends BaseService<Connectors> {
   constructor(private _httpClient: HttpClient) {
-    super(_httpClient, '/config/synchronizers');
-  }
-
-  synchr(synchrId: String): Observable<Message<Synchronizers>> {
-    return this.http.get<Message<Synchronizers>>(`${`${this.server.urls.base}/synchr`}?id=${synchrId}`);
+    super(_httpClient, '/config/connectors');
   }
 }

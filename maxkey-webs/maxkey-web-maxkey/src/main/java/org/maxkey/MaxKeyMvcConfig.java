@@ -106,7 +106,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         //addPathPatterns 用于添加拦截规则 ， 先把所有路径都加入拦截， 再一个个排除
         //excludePathPatterns 表示改路径不用拦截
         
-        _logger.debug("add HttpKerberosEntryPoint");
+        _logger.debug("add Http Kerberos Entry Point");
         registry.addInterceptor(new HttpKerberosEntryPoint(
     			authenticationProvider,kerberosService,applicationConfig,true))
     		.addPathPatterns("/login");
@@ -115,13 +115,13 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         if(httpHeaderEnable) {
             registry.addInterceptor(new HttpHeaderEntryPoint(httpHeaderName,httpHeaderEnable))
                     .addPathPatterns("/*");
-            _logger.debug("add HttpHeaderEntryPoint");
+            _logger.debug("add Http Header Entry Point");
         }
         
         if(basicEnable) {
             registry.addInterceptor(new BasicEntryPoint(basicEnable))
                     .addPathPatterns("/*");
-            _logger.debug("add BasicEntryPoint");
+            _logger.debug("add Basic Entry Point");
         }
         
         //for frontend
