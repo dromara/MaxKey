@@ -84,8 +84,9 @@
       </nz-form-control>
     </nz-form-item>
 
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="msadDomain">{{ 'mxk.ldapcontext.msadDomain' | i18n }}</nz-form-label>
+    <nz-form-item *ngIf="form.model.product === 'ActiveDirectory'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="msadDomain">{{ 'mxk.ldapcontext.msadDomain' | i18n }}
+      </nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid msadDomain!">
         <input [(ngModel)]="form.model.msadDomain" [ngModelOptions]="{ standalone: true }" nz-input name="msadDomain"
           id="msadDomain" />
