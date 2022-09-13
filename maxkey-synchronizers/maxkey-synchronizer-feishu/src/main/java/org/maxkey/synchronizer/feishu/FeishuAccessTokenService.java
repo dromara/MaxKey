@@ -20,10 +20,10 @@ package org.maxkey.synchronizer.feishu;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.maxkey.constants.ContentType;
 import org.maxkey.synchronizer.entity.AccessToken;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.web.HttpRequestAdapter;
-import org.maxkey.web.HttpRequestAdapter.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +48,7 @@ public class FeishuAccessTokenService {
 
 
 	public String requestToken() {
-		HttpRequestAdapter request =new HttpRequestAdapter(MediaType.JSON);
+		HttpRequestAdapter request =new HttpRequestAdapter(ContentType.APPLICATION_JSON);
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		parameterMap.put("app_id", appId);
 		parameterMap.put("app_secret", appSecret);

@@ -39,6 +39,8 @@ public class ContentType {
     
     public static final String APPLICATION_XML_UTF8 	= "application/xml;charset=UTF-8";
     
+    public static final String APPLICATION_FORM 		= "application/x-www-form-urlencoded";
+    
     public static final String IMAGE_GIF 				= "image/gif";
     
     public static final String IMAGE_JPEG 				= "image/jpeg";

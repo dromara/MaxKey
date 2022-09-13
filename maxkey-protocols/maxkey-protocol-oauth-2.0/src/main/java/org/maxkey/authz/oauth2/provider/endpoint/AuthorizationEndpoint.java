@@ -53,7 +53,6 @@ import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
-import org.maxkey.web.HttpRequestAdapter;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -324,7 +323,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
 			
 			if(StringUtils.hasText(mediaType) 
-					&& mediaType.equalsIgnoreCase(HttpRequestAdapter.MediaType.XML)) {
+					&& mediaType.equalsIgnoreCase("xml")) {
 				response.setContentType(ContentType.APPLICATION_XML_UTF8);
 			}else {
 				response.setContentType(ContentType.APPLICATION_JSON_UTF8);

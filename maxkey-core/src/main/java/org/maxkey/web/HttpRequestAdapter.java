@@ -1,5 +1,5 @@
 /*
- * Copyright [2021] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,13 +31,18 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.maxkey.constants.ContentType;
+import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,13 +52,9 @@ import org.springframework.stereotype.Component;
 public class HttpRequestAdapter {
 	private static final Logger _logger = LoggerFactory.getLogger(HttpRequestAdapter.class);
 	 
-    private String mediaType = MediaType.FORM;
+    private String mediaType = ContentType.APPLICATION_FORM;
     
-    public static class MediaType{
-        public static String JSON   =   "JSON";
-        public static String XML    =   "XML";
-        public static String FORM   =   "FORM";
-    }
+    HashMap<String,String> headers = new HashMap<String,String>();
     
     public HttpRequestAdapter(){}
     
@@ -62,9 +63,28 @@ public class HttpRequestAdapter {
     }
     
 	public String post(String url,Map<String, Object> parameterMap) {
-		HashMap<String,String> headers = new HashMap<String,String>();
-		headers.put("Content-Type", "application/x-www-form-urlencoded");
+		setContentType(ContentType.APPLICATION_FORM);
 		return post(url , parameterMap , headers);
+	}
+	
+	public HttpRequestAdapter addHeaderAuthorizationBearer(String token ) {
+		headers.put("Authorization", AuthorizationHeaderUtils.createBearer(token));
+		return this;
+	}
+	
+	public HttpRequestAdapter addHeaderAuthorizationBasic(String username, String password) {
+		headers.put("Authorization", AuthorizationHeaderUtils.createBasic(username,password));
+		return this;
+	}
+	
+	public HttpRequestAdapter setContentType(String contentType) {
+		headers.put("Content-Type", contentType);
+		return this;
+	}
+	
+	public HttpRequestAdapter addHeader(String name , String value ) {
+		headers.put(name, value);
+		return this;
 	}
 	
     public String post(String url,Map<String, Object> parameterMap,HashMap<String,String> headers) {
@@ -72,61 +92,33 @@ public class HttpRequestAdapter {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse httpResponse = null;
         // 创建httpPost远程连接实例
-        HttpPost httpPost = new HttpPost(url);
+        HttpPost httpMethod = new HttpPost(url);
         // 配置请求参数实例
-        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(35000)// 设置连接主机服务超时时间
-                .setConnectionRequestTimeout(35000)// 设置连接请求超时时间
-                .setSocketTimeout(60000)// 设置读取数据连接超时时间
-                .build();
-        // 为httpPost实例设置配置
-        httpPost.setConfig(requestConfig);
+        setRequestConfig(httpMethod);
         // 设置请求头
-        if (null != headers && headers.size() > 0) {
-        	  Set<Entry<String, String>> entrySet = headers.entrySet();
-              // 循环遍历，获取迭代器
-              Iterator<Entry<String, String>> iterator = entrySet.iterator();
-              while (iterator.hasNext()) {
-                  Entry<String, String> mapEntry = iterator.next();
-                  _logger.trace("Name " + mapEntry.getKey() + " , Value " +mapEntry.getValue());
-                  httpPost.addHeader(mapEntry.getKey(), mapEntry.getValue());
-              }
-        }
+        buildHeader(httpMethod,headers);  
         
         // 封装post请求参数
         if (null != parameterMap && parameterMap.size() > 0) {
-            if(mediaType.equals(MediaType.FORM)) {
-                List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-                // 通过map集成entrySet方法获取entity
-                Set<Entry<String, Object>> entrySet = parameterMap.entrySet();
-                // 循环遍历，获取迭代器
-                Iterator<Entry<String, Object>> iterator = entrySet.iterator();
-                while (iterator.hasNext()) {
-                    Entry<String, Object> mapEntry = iterator.next();
-                    _logger.debug("Name " + mapEntry.getKey() + " , Value " +mapEntry.getValue());
-                    nvps.add(new BasicNameValuePair(mapEntry.getKey(), mapEntry.getValue().toString()));
-                }
-    
+            if(mediaType.equals(ContentType.APPLICATION_FORM)) {
                 // 为httpPost设置封装好的请求参数
                 try {
-                    httpPost.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
+                	httpMethod.setEntity(buildFormEntity(parameterMap));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-            }else if(mediaType.equals(MediaType.JSON)) {
+            }else if(mediaType.equals(ContentType.APPLICATION_JSON)) {
                 String jsonString = JsonUtils.gson2Json(parameterMap);
                 StringEntity stringEntity =new StringEntity(jsonString, "UTF-8");
-                stringEntity.setContentType("text/json");
-                httpPost.setEntity(stringEntity);
-
-                
+                stringEntity.setContentType(ContentType.APPLICATION_JSON);
+                httpMethod.setEntity(stringEntity);
             }
-            _logger.debug("Post Message \n{} ", httpPost.getEntity().toString());
+            _logger.debug("Post Message \n{} ", httpMethod.getEntity().toString());
         }
-        
         
         try {
             // httpClient对象执行post请求,并返回响应参数对象
-            httpResponse = httpClient.execute(httpPost);
+            httpResponse = httpClient.execute(httpMethod);
             // 从响应对象中获取响应内容
             HttpEntity entity = httpResponse.getEntity();
             String content = EntityUtils.toString(entity);
@@ -138,59 +130,33 @@ public class HttpRequestAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // 关闭资源
-            if (null != httpResponse) {
-                try {
-                    httpResponse.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (null != httpClient) {
-                try {
-                    httpClient.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        	close(httpClient,httpResponse);// 关闭资源
         }
         return null;
     }
- 
-    public String postJson(String url,String jsonString,HashMap<String,String> headers) {
+    
+    
+    public String post(String url,Object data) {
         // 创建httpClient实例
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse httpResponse = null;
         // 创建httpPost远程连接实例
-        HttpPost httpPost = new HttpPost(url);
+        HttpPost httpMethod = new HttpPost(url);
         // 配置请求参数实例
-        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(35000)// 设置连接主机服务超时时间
-                .setConnectionRequestTimeout(35000)// 设置连接请求超时时间
-                .setSocketTimeout(60000)// 设置读取数据连接超时时间
-                .build();
-        // 为httpPost实例设置配置
-        httpPost.setConfig(requestConfig);
+        setRequestConfig(httpMethod);
         // 设置请求头
-        if (null != headers && headers.size() > 0) {
-        	  Set<Entry<String, String>> entrySet = headers.entrySet();
-              // 循环遍历，获取迭代器
-              Iterator<Entry<String, String>> iterator = entrySet.iterator();
-              while (iterator.hasNext()) {
-                  Entry<String, String> mapEntry = iterator.next();
-                  _logger.trace("Name " + mapEntry.getKey() + " , Value " +mapEntry.getValue());
-                  httpPost.addHeader(mapEntry.getKey(), mapEntry.getValue());
-              }
-        }
+        buildHeader(httpMethod,headers);  
         
-        // 封装post请求参数
+        // 封装put请求参数
+        String jsonString = JsonUtils.gson2Json(data);
         StringEntity stringEntity =new StringEntity(jsonString, "UTF-8");
-        stringEntity.setContentType("application/json");
-        httpPost.setEntity(stringEntity);
-        
+        stringEntity.setContentType(ContentType.APPLICATION_JSON);
+        httpMethod.setEntity(stringEntity);
+        _logger.debug("Post Message \n{} ", httpMethod.getEntity().toString());
         
         try {
-            // httpClient对象执行post请求,并返回响应参数对象
-            httpResponse = httpClient.execute(httpPost);
+            // httpClient对象执行put请求,并返回响应参数对象
+            httpResponse = httpClient.execute(httpMethod);
             // 从响应对象中获取响应内容
             HttpEntity entity = httpResponse.getEntity();
             String content = EntityUtils.toString(entity);
@@ -202,28 +168,51 @@ public class HttpRequestAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // 关闭资源
-            if (null != httpResponse) {
-                try {
-                    httpResponse.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (null != httpClient) {
-                try {
-                    httpClient.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        	close(httpClient,httpResponse);// 关闭资源
         }
         return null;
     }
     
+    public String put(String url,Object data) {
+        // 创建httpClient实例
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse httpResponse = null;
+        // 创建httpPost远程连接实例
+        HttpPut httpMethod = new HttpPut(url);
+        // 配置请求参数实例
+        setRequestConfig(httpMethod);
+        // 设置请求头
+        buildHeader(httpMethod,headers);  
+        
+        // 封装put请求参数
+        String jsonString = JsonUtils.gson2Json(data);
+        StringEntity stringEntity =new StringEntity(jsonString, "UTF-8");
+        stringEntity.setContentType(ContentType.APPLICATION_JSON);
+        httpMethod.setEntity(stringEntity);
+        _logger.debug("Post Message \n{} ", httpMethod.getEntity().toString());
+        
+        try {
+            // httpClient对象执行put请求,并返回响应参数对象
+            httpResponse = httpClient.execute(httpMethod);
+            // 从响应对象中获取响应内容
+            HttpEntity entity = httpResponse.getEntity();
+            String content = EntityUtils.toString(entity);
+            _logger.debug("Http Response StatusCode {} , Content {}",
+                    httpResponse.getStatusLine().getStatusCode(),
+                    content
+            );
+            return content;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        	close(httpClient,httpResponse);// 关闭资源
+        }
+        return null;
+    }
+    
+    
 	public String get(String url) {
-		HashMap<String,String> headers = new HashMap<String,String>();
-		headers.put("Content-Type", "application/x-www-form-urlencoded");
+		headers.put("Content-Type", ContentType.APPLICATION_FORM);
 		return get(url ,  headers);
 	}
 	
@@ -232,29 +221,15 @@ public class HttpRequestAdapter {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse httpResponse = null;
         // 创建httpPost远程连接实例
-        HttpGet httpGet = new HttpGet(url);
+        HttpGet httpMethod = new HttpGet(url);
         // 配置请求参数实例
-        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(35000)// 设置连接主机服务超时时间
-                .setConnectionRequestTimeout(35000)// 设置连接请求超时时间
-                .setSocketTimeout(60000)// 设置读取数据连接超时时间
-                .build();
-        // 为httpGet实例设置配置
-        httpGet.setConfig(requestConfig);
+        setRequestConfig(httpMethod);
         // 设置请求头
-        if (null != headers && headers.size() > 0) {
-        	  Set<Entry<String, String>> entrySet = headers.entrySet();
-              // 循环遍历，获取迭代器
-              Iterator<Entry<String, String>> iterator = entrySet.iterator();
-              while (iterator.hasNext()) {
-                  Entry<String, String> mapEntry = iterator.next();
-                  _logger.trace("Name " + mapEntry.getKey() + " , Value " +mapEntry.getValue());
-                  httpGet.addHeader(mapEntry.getKey(), mapEntry.getValue());
-              }
-        }        
+        buildHeader(httpMethod,headers);     
         
         try {
-            // httpClient对象执行post请求,并返回响应参数对象
-            httpResponse = httpClient.execute(httpGet);
+            // httpClient对象执行get请求,并返回响应参数对象
+            httpResponse = httpClient.execute(httpMethod);
             // 从响应对象中获取响应内容
             HttpEntity entity = httpResponse.getEntity();
             String content = EntityUtils.toString(entity);
@@ -266,23 +241,105 @@ public class HttpRequestAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // 关闭资源
-            if (null != httpResponse) {
-                try {
-                    httpResponse.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (null != httpClient) {
-                try {
-                    httpClient.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        	close(httpClient,httpResponse);// 关闭资源
         }
         return null;
+    }
+    
+    public String delete(String url) {
+    	 // 创建httpClient实例
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse httpResponse = null;
+        // 创建HttpDelete远程连接实例
+        HttpDelete httpMethod = new HttpDelete(url);
+        // 配置请求参数实例
+        setRequestConfig(httpMethod);
+        // 设置请求头
+        buildHeader(httpMethod,headers);  
+        
+        try {
+            // httpClient对象执行post请求,并返回响应参数对象
+            httpResponse = httpClient.execute(httpMethod);
+            // 从响应对象中获取响应内容
+            HttpEntity entity = httpResponse.getEntity();
+            String content = EntityUtils.toString(entity);
+            _logger.debug("Http Response StatusCode {} , Content {}",
+                    httpResponse.getStatusLine().getStatusCode(),
+                    content
+            );
+            return content;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        	close(httpClient,httpResponse);// 关闭资源
+        }
+        return null;
+	}
+    
+    /**
+     * @param HttpRequest
+     * @param headers
+     */
+    void buildHeader(HttpRequestBase  httpRequest,HashMap<String,String> headers) {
+    	// 设置请求头
+        if (null != headers && headers.size() > 0) {
+        	  Set<Entry<String, String>> entrySet = headers.entrySet();
+              // 循环遍历，获取迭代器
+              Iterator<Entry<String, String>> iterator = entrySet.iterator();
+              while (iterator.hasNext()) {
+                  Entry<String, String> mapEntry = iterator.next();
+                  _logger.trace("Name " + mapEntry.getKey() + " , Value " +mapEntry.getValue());
+                  httpRequest.addHeader(mapEntry.getKey(), mapEntry.getValue());
+              }
+        }   
+    }
+    
+    UrlEncodedFormEntity buildFormEntity(Map<String, Object> parameterMap) 
+    		throws UnsupportedEncodingException {
+    	 List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+         // 通过map集成entrySet方法获取entity
+         Set<Entry<String, Object>> entrySet = parameterMap.entrySet();
+         // 循环遍历，获取迭代器
+         Iterator<Entry<String, Object>> iterator = entrySet.iterator();
+         while (iterator.hasNext()) {
+             Entry<String, Object> mapEntry = iterator.next();
+             _logger.debug("Name " + mapEntry.getKey() + " , Value " +mapEntry.getValue());
+             nvps.add(new BasicNameValuePair(mapEntry.getKey(), mapEntry.getValue().toString()));
+         }
+
+         // 为httpPost设置封装好的请求参数
+         return new UrlEncodedFormEntity(nvps, "UTF-8");
+    }
+    
+    void setRequestConfig(HttpRequestBase  httpMethod){
+    	RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(35000)// 设置连接主机服务超时时间
+                .setConnectionRequestTimeout(35000)// 设置连接请求超时时间
+                .setSocketTimeout(60000)// 设置读取数据连接超时时间
+                .build();
+        // 为httpMethod实例设置配置
+        httpMethod.setConfig(requestConfig);
+    }
+    
+    /**
+     * 关闭资源
+     * @param httpClient
+     * @param httpResponse
+     */
+    void close(CloseableHttpClient httpClient,CloseableHttpResponse httpResponse) {
+        if (null != httpResponse) {
+            try {
+                httpResponse.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (null != httpClient) {
+            try {
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
     
 }

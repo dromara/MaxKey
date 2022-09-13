@@ -2,7 +2,6 @@ package org.maxkey.provision.thread;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.mybatis.jpa.query.Query;
@@ -16,7 +15,6 @@ import org.maxkey.persistence.service.ConnectorsService;
 import org.maxkey.provision.ProvisionAction;
 import org.maxkey.provision.ProvisionMessage;
 import org.maxkey.provision.ProvisionTopic;
-import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.ObjectTransformer;
@@ -147,46 +145,31 @@ public class ProvisioningRunner {
 	String provisionUser(UserInfo user,String baseUrl,String actionType,Connectors connector){
 		baseUrl = baseUrl + "Users/" + getActionType(actionType);
 		_logger.debug("URL {} ", baseUrl);
-		HashMap<String,String> authorizationMap = AuthorizationHeaderUtils.authorization(
-				AuthorizationHeaderUtils.createBasic(
-						connector.getPrincipal(), 
+		return new HttpRequestAdapter()
+				.addHeaderAuthorizationBasic(
+						connector.getPrincipal(),
 						PasswordReciprocal.getInstance().decoder(connector.getCredentials()))
-			);
-		
-		return new HttpRequestAdapter().postJson(	baseUrl, 
-											JsonUtils.gson2Json(user),
-											authorizationMap
-											);
+				.post(baseUrl, user);
 	}
 	
-	String provisionOrganization(Organizations organizations,String baseUrl,String actionType,Connectors connector){
+	String provisionOrganization(Organizations organization,String baseUrl,String actionType,Connectors connector){
 		baseUrl = baseUrl + "Organizations/"+ getActionType(actionType);
 		_logger.debug("URL {} ", baseUrl);
-		HashMap<String,String> authorizationMap = AuthorizationHeaderUtils.authorization(
-				AuthorizationHeaderUtils.createBasic(
-						connector.getPrincipal(), 
+		return new HttpRequestAdapter()
+				.addHeaderAuthorizationBasic(
+						connector.getPrincipal(),
 						PasswordReciprocal.getInstance().decoder(connector.getCredentials()))
-			);
-		
-		return new HttpRequestAdapter().postJson(	baseUrl, 
-											JsonUtils.gson2Json(organizations),
-											authorizationMap
-											);
+				.post(baseUrl, organization);
 	}
 	
 	String provisionChangePassword(ChangePassword changePassword,String baseUrl,String actionType,Connectors connector){
 		baseUrl = baseUrl + "Users/changePassword";
 		_logger.debug("URL {} ", baseUrl);
-		HashMap<String,String> authorizationMap = AuthorizationHeaderUtils.authorization(
-				AuthorizationHeaderUtils.createBasic(
-						connector.getPrincipal(), 
+		return new HttpRequestAdapter()
+				.addHeaderAuthorizationBasic(
+						connector.getPrincipal(),
 						PasswordReciprocal.getInstance().decoder(connector.getCredentials()))
-			);
-		
-		return new HttpRequestAdapter().postJson(	baseUrl, 
-											JsonUtils.gson2Json(changePassword),
-											authorizationMap
-											);
+				.post(baseUrl, changePassword);
 	}
 	
     public class ProvisionMessageRowMapper implements RowMapper<ProvisionMessage> {

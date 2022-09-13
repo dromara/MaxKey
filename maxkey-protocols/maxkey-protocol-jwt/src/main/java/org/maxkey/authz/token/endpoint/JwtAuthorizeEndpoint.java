@@ -21,7 +21,6 @@
 package org.maxkey.authz.token.endpoint;
 
 import java.lang.reflect.InvocationTargetException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,9 +41,7 @@ import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.AppsJwtDetails;
 import org.maxkey.persistence.service.AppsJwtDetailsService;
 import org.maxkey.util.Instance;
-import org.maxkey.web.HttpRequestAdapter;
 import org.maxkey.web.WebConstants;
-import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,7 +135,7 @@ public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 			 
 			JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
 			if(StringUtils.isNotBlank(mediaType) 
-					&& mediaType.equalsIgnoreCase(HttpRequestAdapter.MediaType.XML)) {
+					&& mediaType.equalsIgnoreCase("xml")) {
 				response.setContentType(ContentType.APPLICATION_XML_UTF8);
 			}else {
 				response.setContentType(ContentType.APPLICATION_JSON_UTF8);
