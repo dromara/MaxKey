@@ -115,6 +115,9 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | --------   | :----- | :----    | :----     | :----      |
 | v 3.5.6 GA | 2022/09/07   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |  <a href="https://pan.baidu.com/s/1J-A3GehHiS4SyMZMzi_Dig" target="_blank">Download</a>  |  **mxk9**  |
 
+# License
+ 
+<a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright NOTICE</a>
 
 # User Registration
 
@@ -199,10 +202,6 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
  
  - **口号** 为往圣继绝学，一个人或许能走的更快，但一群人会走的更远
  
-# License
- 
-<a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright NOTICE</a>
-
 # 知识星球
  
 <img src="images/zsxq.png?raw=true"/>

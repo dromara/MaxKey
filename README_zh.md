@@ -116,6 +116,9 @@
 | --------| :-----  | :----        | :----      | :----        |
 | v 3.5.6 GA | 2022/09/07   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1J-A3GehHiS4SyMZMzi_Dig" target="_blank">下载</a>  |  **mxk9**  |
 
+# 零信任标准工作组
+ 
+ <a href="https://gitee.com/zero-trust/ZeroTrust" target="_blank">国内最权威的零信任产业组织</a>
 
 # 接入登记
 
@@ -200,10 +203,6 @@
  - **愿景** 让每一位开源爱好者，体会到开源的快乐
  
  - **口号** 为往圣继绝学，一个人或许能走的更快，但一群人会走的更远
- 
-# 零信任标准工作组
- 
- <a href="https://gitee.com/zero-trust/ZeroTrust" target="_blank">国内最权威的零信任产业组织</a>
  
 # License
  
