@@ -23,10 +23,10 @@ import org.maxkey.util.JsonUtils;
 public class ScimGroupJsonString2ObjectTest {
     public static void main(String[] args) {
         String userJsonString = ReadJson2String.read("ScimGroupJsonString.json");
-        ScimGroup g  = JsonUtils.json2Object(userJsonString, ScimGroup.class);
+        ScimGroup g  = JsonUtils.stringToObject(userJsonString, ScimGroup.class);
 
         
         System.out.println(
-                (new JsonPretty()).format(JsonUtils.object2Json(g)));
+                (new JsonPretty()).format(JsonUtils.toString(g)));
     }
 }

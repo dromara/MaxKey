@@ -70,7 +70,7 @@ public class ScimUserJsonTest {
         u.setEmails(ueList);
         
         System.out.println(
-                (new JsonPretty()).format(JsonUtils.object2Json(u)));
+                (new JsonPretty()).format(JsonUtils.toString(u)));
     }
 
 }

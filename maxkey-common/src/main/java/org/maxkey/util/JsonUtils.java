@@ -27,13 +27,13 @@ import java.io.IOException;
 public class JsonUtils {
 
     /**
-     * Transform json string to java bean object.
+     * jackson Transform json string to java bean object.
      * 
      * @param json String
      * @param bean Object 
      * @return Object 
      */
-    public static Object json2Object(String json, Object bean) {
+    public static Object stringToObject(String json, Object bean) {
         try {
             bean = (new ObjectMapper()).readValue(json, bean.getClass());
         } catch (JsonParseException e) {
@@ -47,13 +47,13 @@ public class JsonUtils {
     }
 
     /**
-     * Transform json string to java bean object.
+     * jackson Transform json string to java bean object.
      * 
      * @param json String
      * @param cls Class
      * @return Object
      */
-    public static <T> T json2Object(String json, Class<T> cls) {
+    public static <T> T stringToObject(String json, Class<T> cls) {
         T bean = null;
         try {
             bean = (new ObjectMapper()).readValue(json, cls);
@@ -68,12 +68,12 @@ public class JsonUtils {
     }
 
     /**
-     * Transform java bean object to json string.
+     * jackson Transform java bean object to json string.
      * 
      * @param bean Object
      * @return string
      */
-    public static String object2Json(Object bean) {
+    public static String toString(Object bean) {
         String json = "";
         try {
             json = (new ObjectMapper()).writeValueAsString(bean);
@@ -88,25 +88,25 @@ public class JsonUtils {
     }
 
     /**
-     * Transform json string to java bean object use Gson.
+     * Gson Transform json string to java bean object.
      * 
      * @param <T> Class
      * @param json String
      * @return Object
      */
 
-    public static <T> T gson2Object(String json, Class<T> cls) {
+    public static <T> T gsonStringToObject(String json, Class<T> cls) {
         T newBean = (new Gson()).fromJson(json, cls);
         return newBean;
     }
 
     /**
-     * Transform java bean object to json string use Gson.
+     * Gson Transform java bean object to json string .
      * 
      * @param bean Object
      * @return string
      */
-    public static String gson2Json(Object bean) {
+    public static String gsonToString(Object bean) {
         String json = "";
         // convert java object to JSON format,
         // and returned as JSON formatted string

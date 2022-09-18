@@ -44,7 +44,7 @@ public class ExtraAttrs {
 	public ExtraAttrs(String arrayJsonString) {
 		String extraAttrsJsonString= "{\"extraAttrs\":"+arrayJsonString+"}";
 		_logger.debug("Extra Attrs Json String " +extraAttrsJsonString);
-		ExtraAttrs extraAttrs=JsonUtils.gson2Object(extraAttrsJsonString, ExtraAttrs.class);
+		ExtraAttrs extraAttrs=JsonUtils.gsonStringToObject(extraAttrsJsonString, ExtraAttrs.class);
 		this.extraAttrs=extraAttrs.getExtraAttrs();
 	}
 	
@@ -77,7 +77,7 @@ public class ExtraAttrs {
 	}
 	
 	public String toJsonString(){
-		String jsonString =JsonUtils.gson2Json(extraAttrs);
+		String jsonString =JsonUtils.gsonToString(extraAttrs);
 		_logger.debug("jsonString " +jsonString);
 		return jsonString;
 	}

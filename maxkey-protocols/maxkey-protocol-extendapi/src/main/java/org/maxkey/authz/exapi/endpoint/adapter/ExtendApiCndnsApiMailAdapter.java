@@ -98,7 +98,7 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
 			String responseBody = new HttpRequestAdapter().post(
 					String.format(ADMIN_AUTHKEY_URI,details.getPrincipal(),sign,timestamp),requestParamenter);
 			
-			HashMap<String, String> authKey=JsonUtils.gson2Object(responseBody, HashMap.class);
+			HashMap<String, String> authKey=JsonUtils.gsonStringToObject(responseBody, HashMap.class);
 			redirect_uri = authKey.get("adminUrl");
 			
 		}else {
@@ -110,7 +110,7 @@ public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
 			String responseBody = new HttpRequestAdapter().post(
 					String.format(AUTHKEY_URI,details.getPrincipal(),sign,timestamp),requestParamenter);
 			
-			HashMap<String, String> authKey=JsonUtils.gson2Object(responseBody, HashMap.class);
+			HashMap<String, String> authKey=JsonUtils.gsonStringToObject(responseBody, HashMap.class);
 			redirect_uri=authKey.get("webmailUrl");
 		}
 		

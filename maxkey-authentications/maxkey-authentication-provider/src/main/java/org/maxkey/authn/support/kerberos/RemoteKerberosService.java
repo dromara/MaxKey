@@ -46,7 +46,7 @@ public class RemoteKerberosService  implements KerberosService{
 			userDomainUrlList.add(userDomainUrl);
 		}
 		_logger.debug(""+userDomainUrlList);
-		String userDomainUrlJson=JsonUtils.object2Json(userDomainUrlList);
+		String userDomainUrlJson=JsonUtils.toString(userDomainUrlList);
 		_logger.debug("userDomain Url Json "+userDomainUrlJson);
 		return userDomainUrlJson;
 	}

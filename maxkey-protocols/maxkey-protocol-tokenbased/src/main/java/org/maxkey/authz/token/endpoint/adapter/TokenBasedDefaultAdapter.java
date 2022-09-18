@@ -90,7 +90,7 @@ public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
 		
 		beanMap.put("expires", expiresString);
 		
-		token = JsonUtils.object2Json(beanMap);
+		token = JsonUtils.toString(beanMap);
 		_logger.debug("Token : {}",token);
 		
 		return token;

@@ -53,7 +53,7 @@ public class FeishuUsersService extends AbstractSynchronizerService implements I
 				HashMap<String,String> headers =new HashMap<String,String>();
 				headers.put("Authorization", AuthorizationHeaderUtils.createBearer(access_token));
 				String responseBody = request.get(String.format(USERS_URL,relatedOrg.getOriginId()),headers);
-				FeishuUsersResponse usersResponse  =JsonUtils.gson2Object(responseBody, FeishuUsersResponse.class);
+				FeishuUsersResponse usersResponse  =JsonUtils.gsonStringToObject(responseBody, FeishuUsersResponse.class);
 				_logger.trace("response : " + responseBody);
 				if(usersResponse.getCode() == 0 && usersResponse.getData().getItems() != null) {
 					for(FeishuUsers feiShuUser : usersResponse.getData().getItems()) {

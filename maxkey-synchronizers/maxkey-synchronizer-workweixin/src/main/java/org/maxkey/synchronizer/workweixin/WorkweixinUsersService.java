@@ -49,7 +49,7 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 			for(SynchroRelated relatedOrg : synchroRelateds) {
 				HttpRequestAdapter request =new HttpRequestAdapter();
 				String responseBody = request.get(String.format(USERS_URL, access_token,relatedOrg.getOriginId()));
-				WorkWeixinUsersResponse usersResponse  =JsonUtils.gson2Object(responseBody, WorkWeixinUsersResponse.class);
+				WorkWeixinUsersResponse usersResponse  =JsonUtils.gsonStringToObject(responseBody, WorkWeixinUsersResponse.class);
 				_logger.trace("response : " + responseBody);
 				
 				for(WorkWeixinUsers user : usersResponse.getUserlist()) {

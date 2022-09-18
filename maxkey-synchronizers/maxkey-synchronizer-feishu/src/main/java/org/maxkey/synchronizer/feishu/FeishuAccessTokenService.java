@@ -54,7 +54,7 @@ public class FeishuAccessTokenService {
 		parameterMap.put("app_secret", appSecret);
 		String responseBody = request.post(TOKEN_URL, parameterMap,null);
 		
-		AccessToken accessToken = JsonUtils.gson2Object(responseBody, AccessToken.class);
+		AccessToken accessToken = JsonUtils.gsonStringToObject(responseBody, AccessToken.class);
 		_logger.debug("accessToken " + accessToken);
 		if(accessToken.getErrcode()== 0){
 			return accessToken.getTenant_access_token();

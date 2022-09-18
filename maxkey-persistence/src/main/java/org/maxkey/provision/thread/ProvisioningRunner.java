@@ -112,7 +112,7 @@ public class ProvisioningRunner {
 	}
 	
 	public void provisionLog(String conName,String topic,String actionType,String sourceId,String sourceName,String resultMessage,int instid) {
-		Message<?> resultMsg = JsonUtils.json2Object(resultMessage, Message.class);
+		Message<?> resultMsg = JsonUtils.stringToObject(resultMessage, Message.class);
 		String result = "success";
 		if(resultMsg == null || resultMsg.getCode() != 0) {
 			result = "fail";

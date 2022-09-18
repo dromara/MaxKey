@@ -96,7 +96,7 @@ public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
     	String accessToken = tokenCache.getIfPresent(corpid);
     	if(accessToken ==  null) {
 	    	String responseBody = new HttpRequestAdapter().get(String.format(TOKEN_URI,corpid,corpsecret),null);
-			Token token =JsonUtils.gson2Object(responseBody,Token.class);
+			Token token =JsonUtils.gsonStringToObject(responseBody,Token.class);
 			_logger.debug("access_token {}" , token);
 			accessToken = token.getAccess_token();
 			tokenCache.put(corpid, accessToken);
@@ -108,7 +108,7 @@ public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
     	_logger.debug("userId {}" , userId);
 		String authKeyBody = new HttpRequestAdapter().get(String.format(AUTHKEY_URI,accessToken,userId),null);
 		
-		ExMailLoginUrl exMailLoginUrl = JsonUtils.gson2Object(authKeyBody, ExMailLoginUrl.class);
+		ExMailLoginUrl exMailLoginUrl = JsonUtils.gsonStringToObject(authKeyBody, ExMailLoginUrl.class);
 		_logger.debug("LoginUrl {} " , exMailLoginUrl);
 		return exMailLoginUrl;
     }

@@ -63,7 +63,7 @@ public class KerberosPrincipal {
 		System.out.println(DateUtils.toUtc(datetime));
 		String json="{\"fullPrincipal\":\"Administrator@CONNSEC.COM\",\"principal\":\"Administrator\",\"userDomain\":\"CONNSEC\",\"notOnOrAfter\":\"2014-01-18T07:10:16.624Z\"}";
 		KerberosToken kerberosToken=new KerberosToken();
-		kerberosToken=(KerberosToken)JsonUtils.json2Object(json, kerberosToken);
+		kerberosToken=(KerberosToken)JsonUtils.stringToObject(json, kerberosToken);
 		
 		System.out.println(kerberosToken);
 		

@@ -88,7 +88,7 @@ public class HttpKerberosEntryPoint implements AsyncHandlerInterceptor {
 		}
 		_logger.debug("decoder Kerberos Token "+decoderKerberosToken);
 		KerberosToken  kerberosToken=new KerberosToken();
-		kerberosToken=(KerberosToken)JsonUtils.json2Object(decoderKerberosToken, kerberosToken);
+		kerberosToken=(KerberosToken)JsonUtils.stringToObject(decoderKerberosToken, kerberosToken);
 		_logger.debug("Kerberos Token "+kerberosToken);
 		
 		DateTime notOnOrAfter=DateUtils.toUtcDate(kerberosToken.getNotOnOrAfter());

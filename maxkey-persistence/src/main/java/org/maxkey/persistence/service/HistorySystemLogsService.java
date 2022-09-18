@@ -98,7 +98,7 @@ public class HistorySystemLogsService  extends JpaBaseService<HistorySystemLogs>
 		systemLog.setUsername(operator.getUsername());
 		systemLog.setDisplayName(operator.getDisplayName());
 		systemLog.setInstId(operator.getInstId());
-		systemLog.setJsonCotent(JsonUtils.gson2Json(entity));
+		systemLog.setJsonCotent(JsonUtils.gsonToString(entity));
 		_logger.trace("System Log {}" ,systemLog);
 		getMapper().insert(systemLog);
 	}

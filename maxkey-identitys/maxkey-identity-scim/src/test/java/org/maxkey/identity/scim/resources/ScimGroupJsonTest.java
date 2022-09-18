@@ -58,6 +58,6 @@ public class ScimGroupJsonTest {
         g.setMembers(mrSet);
         
         System.out.println(
-                (new JsonPretty()).format(JsonUtils.object2Json(g)));
+                (new JsonPretty()).format(JsonUtils.toString(g)));
     }
 }

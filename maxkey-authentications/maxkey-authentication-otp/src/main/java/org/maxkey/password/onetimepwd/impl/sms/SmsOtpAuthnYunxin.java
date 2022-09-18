@@ -124,7 +124,7 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
                 //String responseString = "{\"code\":200,\"msg\":\"1\",\"obj\":\"740673\"}";
                 logger.debug("responseString " + responseString);
                 YunxinSms  yunxinSms = 
-                        JsonUtils.gson2Object(responseString,YunxinSms.class);
+                        JsonUtils.gsonStringToObject(responseString,YunxinSms.class);
                 logger.debug("responseEntity code " + yunxinSms.getObj());
                 nonce = yunxinSms.getObj() == null ?nonce:yunxinSms.getObj();
                 logger.debug("nonce " + nonce);
@@ -226,7 +226,7 @@ public class SmsOtpAuthnYunxin extends SmsOtpAuthn {
             ).randomGenerate();
         System.out.println(nonce);
         String mapJson = "{\"code\":200,\"msg\":\"1\",\"obj\":\"740673\"}";
-        YunxinSms  yunxinSms = JsonUtils.gson2Object(mapJson,YunxinSms.class);  
+        YunxinSms  yunxinSms = JsonUtils.gsonStringToObject(mapJson,YunxinSms.class);  
         System.out.println("code " + yunxinSms.getObj());
     }
     

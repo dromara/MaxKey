@@ -77,7 +77,7 @@ public class ScimEnterpriseUserJsonTest {
         u.setEnterprise(ent);
         
         System.out.println(
-                (new JsonPretty()).format(JsonUtils.object2Json(u)));
+                (new JsonPretty()).format(JsonUtils.toString(u)));
     }
 
 }

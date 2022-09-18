@@ -100,7 +100,7 @@ public class WorkweixinOrganizationService extends AbstractSynchronizerService i
 	public WorkWeixinDeptsResponse requestDepartmentList(String access_token) {
 		HttpRequestAdapter request =new HttpRequestAdapter();
 		String responseBody = request.get(String.format(DEPTS_URL, access_token));
-		WorkWeixinDeptsResponse deptsResponse  =JsonUtils.gson2Object(responseBody, WorkWeixinDeptsResponse.class);
+		WorkWeixinDeptsResponse deptsResponse  =JsonUtils.gsonStringToObject(responseBody, WorkWeixinDeptsResponse.class);
 		
 		_logger.trace("response : " + responseBody);
 		for(WorkWeixinDepts dept : deptsResponse.getDepartment()) {

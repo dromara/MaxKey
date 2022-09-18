@@ -90,7 +90,7 @@ public class UserInfoEndpoint {
 	        }
 	        
 			if (!StringGenerator.uuidMatches(access_token)) {
-				httpResponseAdapter.write(response,JsonUtils.gson2Json(accessTokenFormatError(access_token)),"json"); 
+				httpResponseAdapter.write(response,JsonUtils.gsonToString(accessTokenFormatError(access_token)),"json"); 
 			}
 			
 			OAuth2Authentication oAuth2Authentication =null;
@@ -123,7 +123,7 @@ public class UserInfoEndpoint {
 				HashMap<String,Object>authzException=new HashMap<String,Object>();
 				authzException.put(OAuth2Exception.ERROR, e.getOAuth2ErrorCode());
 				authzException.put(OAuth2Exception.DESCRIPTION,e.getMessage());
-				httpResponseAdapter.write(response,JsonUtils.gson2Json(authzException),"json"); 
+				httpResponseAdapter.write(response,JsonUtils.gsonToString(authzException),"json"); 
 			}
 	}
 	

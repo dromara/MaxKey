@@ -47,7 +47,7 @@ public class WorkweixinAccessTokenService {
 		HttpRequestAdapter request =new HttpRequestAdapter();
 		String responseBody = request.get(String.format(TOKEN_URL, corpid,corpsecret));
 		
-		AccessToken accessToken = JsonUtils.gson2Object(responseBody, AccessToken.class);
+		AccessToken accessToken = JsonUtils.gsonStringToObject(responseBody, AccessToken.class);
 		_logger.debug("accessToken " + accessToken);
 		if(accessToken.getErrcode()== 0){
 			return accessToken.getAccess_token();

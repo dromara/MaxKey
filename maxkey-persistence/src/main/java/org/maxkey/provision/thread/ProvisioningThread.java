@@ -50,7 +50,7 @@ public class ProvisioningThread extends Thread{
     public void run() {
     	_logger.debug("send message \n{}" ,new JsonPretty().jacksonFormat(msg.getSourceObject()));
     	msg.setContent(ObjectTransformer.serialize((Serializable)msg.getSourceObject()));
-    	Inst inst = JsonUtils.gson2Object(JsonUtils.gson2Json(msg.getSourceObject()), Inst.class);
+    	Inst inst = JsonUtils.gsonStringToObject(JsonUtils.gsonToString(msg.getSourceObject()), Inst.class);
     	jdbcTemplate.update(PROVISION_INSERT_STATEMENT,
                 new Object[] { 
                 		msg.getId(), msg.getTopic(), msg.getActionType(), msg.getContent(),

@@ -105,7 +105,7 @@ public class UserInfoOIDCEndpoint {
     	String access_token = AuthorizationHeaderUtils.resolveBearer(request);
 		
 		if (!StringGenerator.uuidMatches(access_token)) {
-			return JsonUtils.gson2Json(accessTokenFormatError(access_token));
+			return JsonUtils.gsonToString(accessTokenFormatError(access_token));
 		}
 		
 		String principal="";
@@ -275,7 +275,7 @@ public class UserInfoOIDCEndpoint {
 			HashMap<String,Object>authzException=new HashMap<String,Object>();
 			authzException.put(OAuth2Exception.ERROR, e.getOAuth2ErrorCode());
 			authzException.put(OAuth2Exception.DESCRIPTION,e.getMessage());
-			return JsonUtils.object2Json(authzException);
+			return JsonUtils.toString(authzException);
 		}
 	}
 	

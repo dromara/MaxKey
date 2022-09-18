@@ -208,7 +208,7 @@ public class UserInfoController {
 			for(int i=0;i<extraAttributeLabel.length;i++){
 				extraAttributeMap.put(extraAttributeLabel[i], extraAttributeValue[i]);
 			}
-			String extraAttribute=JsonUtils.object2Json(extraAttributeMap);
+			String extraAttribute=JsonUtils.toString(extraAttributeMap);
 			userInfo.setExtraAttribute(extraAttribute);
 		}
 	}
