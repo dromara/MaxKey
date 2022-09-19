@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey;
+package org.maxkey.autoconfigure;
 
 import javax.sql.DataSource;
 
@@ -30,8 +30,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -42,7 +42,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author Crystal.Sea
  *
  */
-@Configuration
+@AutoConfiguration
 public class Oauth20ClientAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(Oauth20ClientAutoConfiguration.class);
     

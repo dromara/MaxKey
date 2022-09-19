@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey;
+package org.maxkey.autoconfigure;
 
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
@@ -27,12 +27,12 @@ import org.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Configuration
+@AutoConfiguration
 public class MaxKeyMgtConfig  implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMgtConfig.class);
     
