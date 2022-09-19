@@ -1,4 +1,29 @@
-﻿MaxKey v 3.5.6 GA 2022/09/07
+﻿MaxKey v 3.5.7 GA 2022/09/23
+    *(MAXKEY-221201) springboot升级至2.7.3，修改相关程序及配置
+    *(MAXKEY-221202) 访问根上下文访问返回，消除报错
+    *(MAXKEY-221203) 同步器同步组织和用户OU为大写的问题修复
+    *(MAXKEY-221204) Eclipse设置工程字符集错误修复
+    *(MAXKEY-221205) HttpRequestAdapter 请求的优化
+    *(MAXKEY-221206) JsonUtils 方法重命名
+    *(MAXKEY-221207) Copyright版权声明的添加
+    *(MAXKEY-221208) 连接器配置管理
+    *(MAXKEY-221209) 重新实现实时连接下游数据同步功能
+    *(MAXKEY-221210) gradle升级及构建的优化
+    *(MAXKEY-221211) 同步器配置的优化
+    *(MAXKEY-221212) 所有的自动配置类统一存放到org.maxkey.autoconfigure包下
+    *(MAXKEY-221213) 连接器日志查询优化
+    *(MAXKEY-221214) 加强产品的对外合作和推广
+    *(MAXKEY-221215) 解决3.5.6 docker初始化数据库数据的问题(#I5ROWK)
+    *(MAXKEY-221216) 删除springboot的spring.factories配置文件
+    *(MAXKEY-221217) 统一http请求内容类型配置到org.maxkey.constants.ContentType
+    *(MAXKEY-221218) 依赖项引用、更新和升级
+        spring                  5.3.23
+        springBoot              2.7.3
+        springcloud             3.1.4
+        micrometercore          1.9.4
+        prometheus              0.16.0
+    
+MaxKey v 3.5.6 GA 2022/09/07
     *(MAXKEY-221101) 解决springcloud JAR包冲突问题
     *(MAXKEY-221102) CAS 未注册URL登录错误提示优化CAS service ${errorMessage!} not registered .
     *(MAXKEY-221103) 同步代码优化org.maxkey.persistence -->org.maxkey.provision
@@ -14,7 +39,7 @@
     *(MAXKEY-221113) 移除KAFKA支持
     *(MAXKEY-221114) 移除RocketMQ支持
     *(MAXKEY-221115) 移除非必须的监控模块maxkey-monitor，该模块建议开发者自行部署
-    *(MAXKEY-221016) 依赖项引用、更新和升级
+    *(MAXKEY-221116) 依赖项引用、更新和升级
         springcloudalibabacspl  1.8.5
         jbosslogging            3.4.3.Final
         hibernateVersion        6.2.4.Final
