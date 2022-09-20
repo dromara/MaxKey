@@ -319,16 +319,15 @@
             </nz-form-label>
             <nz-form-control [nzSm]="20" [nzMd]="16" [nzXs]="36" [nzXl]="48"
               nzErrorTip="The input is not valid nameIdConvert!">
-              <nz-upload style="{{ form.model.fileType == 'metadata_url' ? 'display: none;' : '' }}"
-                nzAction="file/upload/" nzName="uploadFile" (nzChange)="uploadMetaChange($event)">
-                <button nz-button>
+              <nz-upload *ngIf="form.model.fileType == 'certificate' || form.model.fileType == 'metadata_file'"
+                nzAction="/file/upload/" nzName="uploadFile" (nzChange)="uploadMetaChange($event)">
+                <div class="ant-btn">
                   <i nz-icon nzType="upload"></i>
                   {{ 'mxk.text.upload' | i18n }}
-                </button>
+                </div>
               </nz-upload>
-              <input style="{{ form.model.fileType == 'metadata_url' ? '' : 'display: none;' }}"
-                [(ngModel)]="form.model.metaUrl" [ngModelOptions]="{ standalone: true }" nz-input name="metaUrl"
-                id="metaUrl" />
+              <input *ngIf="form.model.fileType == 'metadata_url'" [(ngModel)]="form.model.metaUrl"
+                [ngModelOptions]="{ standalone: true }" nz-input name="metaUrl" id="metaUrl" />
             </nz-form-control>
           </nz-form-item>
         </div>
