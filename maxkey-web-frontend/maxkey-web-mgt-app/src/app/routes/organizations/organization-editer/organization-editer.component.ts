@@ -15,7 +15,7 @@
  */
 import { I18nPluralPipe } from '@angular/common';
 import { LocalizedString } from '@angular/compiler';
-import { Component, ChangeDetectorRef, Input, OnInit, Inject } from '@angular/core';
+import {Component, ChangeDetectorRef, Input, OnInit, Inject, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { I18NService } from '@core';
 import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
@@ -27,6 +27,7 @@ import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/
 
 import { Organizations } from '../../../entity/Organizations';
 import { OrganizationsService } from '../../../service/organizations.service';
+import {NzTreeSelectComponent} from "ng-zorro-antd/tree-select";
 
 @Component({
   selector: 'app-organization-editer',
@@ -45,7 +46,8 @@ export class OrganizationEditerComponent implements OnInit {
   @Input() id?: String;
   @Input() parentNode?: NzTreeNode;
   @Input() isEdit?: boolean;
-
+  @Input() orgNodes!: any[];
+  @ViewChild("orgTree") orgTree!: NzTreeSelectComponent;
   form: {
     submitting: boolean;
     model: Organizations;
@@ -80,7 +82,12 @@ export class OrganizationEditerComponent implements OnInit {
       }
     }
   }
-
+  onDeptChange(key: string): void {
+    let node = this.orgTree.getTreeNodeByKey(key);
+    if (node){
+      this.form.model.parentName = node.title
+    }
+  }
   onClose(e: MouseEvent): void {
     e.preventDefault();
     this.modalRef.destroy({ refresh: false });

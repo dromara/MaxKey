@@ -162,6 +162,7 @@ export class OrganizationsComponent implements OnInit {
       nzComponentParams: {
         isEdit: false,
         parentNode: this.treeNodes.activated,
+        orgNodes: this.treeNodes.nodes,
         id: ''
       },
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
@@ -170,6 +171,7 @@ export class OrganizationsComponent implements OnInit {
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
         this.fetch();
+        this.tree()
       }
     });
   }
@@ -182,6 +184,7 @@ export class OrganizationsComponent implements OnInit {
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: {
         isEdit: true,
+        orgNodes: this.treeNodes.nodes,
         id: editId
       },
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
@@ -190,6 +193,7 @@ export class OrganizationsComponent implements OnInit {
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
         this.fetch();
+        this.tree()
       }
     });
   }
@@ -200,6 +204,7 @@ export class OrganizationsComponent implements OnInit {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
         this.fetch();
+        this.tree()
       } else {
         this.msg.error(this.i18n.fanyi('mxk.alert.delete.error'));
       }

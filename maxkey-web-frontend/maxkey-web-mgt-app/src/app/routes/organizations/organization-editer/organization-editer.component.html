@@ -72,9 +72,22 @@
           </nz-form-label>
           <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48"
             nzErrorTip="The input is not valid parentName!">
-            <input [(ngModel)]="form.model.parentName" readonly [ngModelOptions]="{ standalone: true }" nz-input
-              name="parentName" id="parentName" />
+            <!--<input [(ngModel)]="form.model.parentName" readonly [ngModelOptions]="{ standalone: true }" nz-input
+              name="parentName" id="parentName" />-->
+            <nz-tree-select
+              #orgTree
+              [nzNodes]="orgNodes"
+              nzShowSearch
+              nzPlaceHolder="Please select"
+              [(ngModel)]="form.model.parentId"
+              [ngModelOptions]="{ standalone: true }"
+              (ngModelChange)="onDeptChange($event)"
+              nzVirtualHeight="300px"
+            ></nz-tree-select>
           </nz-form-control>
+
+
+
         </nz-form-item>
 
         <nz-form-item>
