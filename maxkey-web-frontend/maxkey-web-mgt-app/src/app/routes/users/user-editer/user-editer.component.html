@@ -307,20 +307,28 @@
         </div>
         <div nz-row>
           <nz-form-item>
-            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="departmentId">{{ 'mxk.users.departmentId' | i18n }}
-            </nz-form-label>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="departmentId">{{ 'mxk.users.departmentId' | i18n }}</nz-form-label>
             <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
-              nzErrorTip="The input is not valid departmentId!">
-              <input [(ngModel)]="form.model.departmentId" [ngModelOptions]="{ standalone: true }" nz-input
-                name="departmentId" id="departmentId" />
+                             nzErrorTip="The input is not valid departmentId!">
+              <input [(ngModel)]="form.model.departmentId" [ngModelOptions]="{ standalone: true }" [disabled]="true" nz-input name="departmentId" id="departmentId" />
             </nz-form-control>
           </nz-form-item>
+
           <nz-form-item>
-            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="department">{{ 'mxk.users.department' | i18n }}</nz-form-label>
-            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
-              nzErrorTip="The input is not valid department!">
-              <input [(ngModel)]="form.model.department" [ngModelOptions]="{ standalone: true }" nz-input
-                name="department" id="department" />
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="departmentId">{{ 'mxk.users.department' | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid departmentId!">
+              <!-- <input [(ngModel)]="form.model.departmentId" [ngModelOptions]="{ standalone: true }" nz-input name="departmentId" id="departmentId" />-->
+              <nz-tree-select
+                #orgTree
+                [nzNodes]="orgNodes"
+                nzShowSearch
+                nzPlaceHolder="Please select"
+                [(ngModel)]="form.model.departmentId"
+                [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="onDeptChange($event)"
+                nzVirtualHeight="300px"
+              ></nz-tree-select>
             </nz-form-control>
           </nz-form-item>
         </div>

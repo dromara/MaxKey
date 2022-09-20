@@ -183,6 +183,7 @@ export class UsersComponent implements OnInit {
       nzComponentParams: {
         isEdit: false,
         parentNode: this.treeNodes.activated,
+        orgNodes: this.treeNodes.nodes,
         id: ''
       },
       nzWidth: 750,
@@ -204,6 +205,7 @@ export class UsersComponent implements OnInit {
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: {
         isEdit: true,
+        orgNodes: this.treeNodes.nodes,
         id: editId
       },
       nzWidth: 750,

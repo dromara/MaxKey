@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectorRef, Input, OnInit, Inject } from '@angular/core';
+import { Component, ChangeDetectorRef, Input, OnInit, Inject, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { I18NService } from '@core';
 import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
@@ -27,6 +27,7 @@ import { NzUploadFile, NzUploadChangeParam } from 'ng-zorro-antd/upload';
 
 import { Users } from '../../../entity/Users';
 import { UsersService } from '../../../service/users.service';
+import { NzTreeSelectComponent } from "ng-zorro-antd/tree-select";
 
 const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
   new Promise((resolve, reject) => {
@@ -66,7 +67,8 @@ export class UserEditerComponent implements OnInit {
   @Input() id?: String;
   @Input() parentNode?: NzTreeNode;
   @Input() isEdit?: boolean;
-
+  @Input() orgNodes!: any[];
+  @ViewChild("orgTree") orgTree!: NzTreeSelectComponent;
   form: {
     submitting: boolean;
     model: Users;
@@ -128,7 +130,12 @@ export class UserEditerComponent implements OnInit {
       }
     }
   }
-
+  onDeptChange(key: string): void {
+    let node = this.orgTree.getTreeNodeByKey(key);
+    if (node){
+      this.form.model.department = node.title
+    }
+  }
   onClose(e: MouseEvent): void {
     e.preventDefault();
     this.modalRef.destroy({ refresh: false });
