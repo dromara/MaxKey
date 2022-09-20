@@ -22,6 +22,17 @@
         springcloud             3.1.4
         micrometercore          1.9.4
         prometheus              0.16.0
+        log4j                   2.19.0
+        gson                    2.9.1
+        tink                    1.7.0
+        druid                   1.2.12
+        druidspringbootstarter  1.2.12
+        mybatis                 3.5.11
+        nimbusjosejwt           9.25
+        jodatime                2.11.1
+        jsoup                   1.15.3
+        passay                  1.6.2
+        ip2region               2.6.5
     
 MaxKey v 3.5.6 GA 2022/09/07
     *(MAXKEY-221101) 解决springcloud JAR包冲突问题
