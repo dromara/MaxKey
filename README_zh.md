@@ -77,7 +77,7 @@
 
 5. 简化微软Active Directory域控、标准LDAP服务器机构和账号管理，密码自助服务重置密码。
 
-6. 认证多租户功能，支持集团下多企业独立管理或企业下不同部门数据隔离的，降低运维成本。
+6. IDaas多租户功能，支持集团下多企业独立管理或企业下不同部门数据隔离的，降低运维成本。
 
 7. 认证中心具有平台无关性、环境多样性，支持Web、手机、移动设备等, 如Apple iOS，Andriod等，将认证能力从B/S到移动应用全面覆盖。
 
@@ -114,7 +114,7 @@
 
 | 版本    | 日期    |  Docker      |  网盘      |  网盘提取码  |
 | --------| :-----  | :----        | :----      | :----        |
-| v 3.5.6 GA | 2022/09/07   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1J-A3GehHiS4SyMZMzi_Dig" target="_blank">下载</a>  |  **mxk9**  |
+| v 3.5.7 GA | 2022/09/23   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1XN-m1lVg9IyCVMH2UHcseQ" target="_blank">下载</a>  |  **mxk9**  |
 
 # License
  

@@ -76,7 +76,7 @@ Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitH
 
 5. Simplify Microsoft Active Directory , standard LDAP server organization and account management, and reset password through password self-service.
 
-6. The Multi-Tenancy authentication platform , supports the independent management of multiple enterprises under the group company or the data isolation of different departments under the enterprise, so as to reduce the operation and maintenance cost.
+6. The IDaas Multi-Tenancy authentication platform , supports the independent management of multiple enterprises under the group company or the data isolation of different departments under the enterprise, so as to reduce the operation and maintenance cost.
 
 7. The platform independence and diversity of environment. It supports web, mobile phone, mobile devices, such as apple IOS, Android, etc., and covers the certification ability from B/S to mobile applications.
 
@@ -113,7 +113,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 
 | Version    | Date   |  Docker  |  Pan URL  |  Pan Code  |
 | --------   | :----- | :----    | :----     | :----      |
-| v 3.5.6 GA | 2022/09/07   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |  <a href="https://pan.baidu.com/s/1J-A3GehHiS4SyMZMzi_Dig" target="_blank">Download</a>  |  **mxk9**  |
+| v 3.5.7 GA | 2022/09/23   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |  <a href="https://pan.baidu.com/s/1XN-m1lVg9IyCVMH2UHcseQ" target="_blank">Download</a>  |  **mxk9**  |
 
 # License
  
