@@ -121,6 +121,7 @@ public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
 	        }
 	        _logger.debug("preHandle not have authority access " + app);
 	        response.sendRedirect(request.getContextPath()+"/authz/refused");
+	        return false;
     	}
         return true;
     }
