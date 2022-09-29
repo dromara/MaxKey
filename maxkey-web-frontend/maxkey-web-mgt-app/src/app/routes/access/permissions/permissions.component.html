@@ -22,8 +22,8 @@
         <nz-form-item>
           <nz-form-label nzFor="name">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
           <nz-form-control>
-            <input nz-input [(ngModel)]="query.params.name" [ngModelOptions]="{ standalone: true }" name="name"
-              placeholder="" id="name" />
+            <input nz-input [(ngModel)]="query.params.appName" [ngModelOptions]="{ standalone: true }" name="appName"
+              placeholder="" id="appName" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -70,7 +70,7 @@
               (nzCheckedChange)="onTableItemChecked(data.id, $event)"></td>
             <td nzAlign="left"> {{ data.roleName }}</td>
             <td nzAlign="center"><img height="30" border="0px" src="{{ data.iconBase64 }}" /></td>
-            <td nzAlign="left"> {{ data.name }}</td>
+            <td nzAlign="left"> {{ data.appName }}</td>
             <td nzAlign="left">
               <div *ngIf="data.category == 'none'">{{ 'mxk.apps.category.none' | i18n }}</div>
               <div *ngIf="data.category == '1011'">{{ 'mxk.apps.category.1011' | i18n }}</div>

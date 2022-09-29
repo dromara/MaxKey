@@ -39,7 +39,6 @@ import { PermissionsEditerComponent } from './permissions-editer/permissions-edi
 export class PermissionsComponent implements OnInit {
   query: {
     params: {
-      name: String;
       displayName: String;
       username: String;
       roleId: String;
@@ -67,7 +66,6 @@ export class PermissionsComponent implements OnInit {
     checked: boolean;
   } = {
       params: {
-        name: '',
         displayName: '',
         username: '',
         roleId: '',
