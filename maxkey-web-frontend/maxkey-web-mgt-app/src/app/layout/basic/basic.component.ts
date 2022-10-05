@@ -37,7 +37,7 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
     <layout-default [options]="options" [asideUser]="asideUserTpl" [content]="contentTpl" [customError]="null">
       <layout-default-header-item direction="left" *ngIf="!inst.custom">
         <a href="#">
-          <img src="./assets/logo.jpg" alt="logo" style="height: 50px;height: 50px;float: left;" />
+          <img src="./assets/logo.png" alt="logo" style="height: 50px;height: 50px;float: left;" />
           <div
             class="alain-default__nav-item_title"
             style="letter-spacing: 2px;
@@ -46,7 +46,9 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
               width: 450px;
               margin-top: 12px;"
           >
-            Max<span style="color: #FFD700;">Key</span>{{ 'mxk.title' | i18n }}
+            <span style="color: #000099;">Max</span>
+            <span style="color: #FFD700;">Key</span>
+            {{ 'mxk.title' | i18n }}
           </div>
         </a>
       </layout-default-header-item>
