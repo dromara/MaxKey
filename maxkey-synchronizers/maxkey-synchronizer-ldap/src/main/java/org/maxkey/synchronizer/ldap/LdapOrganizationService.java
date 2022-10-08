@@ -192,6 +192,8 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 	        org.setNamePath(namePah);
 	        org.setLevel(namePaths.length);
 			org.setOrgName(LdapUtils.getAttributeStringValue(OrganizationalUnit.OU,attributeMap));
+			org.setFullName(org.getOrgName());
+			org.setType("department");
 			//org.setCountry(LdapUtils.getAttributeStringValue(OrganizationalUnit.CO,attributeMap));
 			org.setRegion(LdapUtils.getAttributeStringValue(OrganizationalUnit.ST,attributeMap));
 			org.setLocality(LdapUtils.getAttributeStringValue(OrganizationalUnit.L,attributeMap));
