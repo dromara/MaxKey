@@ -1,7 +1,7 @@
 #端口号
 application:
   name: maxkey-gateway-server
-  formatted-version: v3.5.7 GA
+  formatted-version: v3.5.8 GA
 server:
   port: 9000
 spring:

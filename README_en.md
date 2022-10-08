@@ -151,6 +151,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 企业    | 上海逸广信息科技有限公司                    |
 | 企业    | 跳羚科技(厦门)有限公司                      |
 | 企业    | 飞天诚信科技股份有限公司                    |
+| 企业    | 浪潮工业互联网股份有限公司                  |
 | 企业    | 深圳能源集团股份有限公司                    |
 | 企业    | 唐颐控股有限公司                            |
 | 企业    | 吕梁市医改监测平台                          |
@@ -184,6 +185,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 科技    | 南凌科技股份有限公司                        |
 | 科技    | 尚企云链                                    |
 | 科技    | 福建引迈信息技术有限公司                    |
+| 科技    | 联鹏应用软件（上海）有限公司                |
 | 科技    | 北京博亚思科技有限公司                      |
 | 科技    | 武汉英特沃科技有限公司                      |
 | 科技    | 江苏创致信息科技有限公司                    |
