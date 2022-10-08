@@ -23,6 +23,8 @@ import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.LdapContext;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.persistence.ldap.ActiveDirectoryUtils;
+import org.maxkey.persistence.ldap.LdapUtils;
 import org.maxkey.persistence.service.LdapContextService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +70,44 @@ public class LdapContextController {
 		if(updateResult) {
 			return new Message<LdapContext>(Message.SUCCESS).buildResponse();
 		} else {
+			return new Message<LdapContext>(Message.FAIL).buildResponse();
+		}
+	}
+	
+	
+	@RequestMapping(value={"/test"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> test(@CurrentUser UserInfo currentUser){
+		LdapContext ldapContext = ldapContextService.get(currentUser.getInstId());
+		if(ldapContext != null && StringUtils.isNoneBlank(ldapContext.getCredentials())) {
+			ldapContext.setCredentials(PasswordReciprocal.getInstance().decoder(ldapContext.getCredentials()));
+		}
+		
+		LdapUtils ldapUtils = null;
+		if(ldapContext.getProduct().equalsIgnoreCase(LdapUtils.Product.ActiveDirectory)) {
+			ldapUtils = new ActiveDirectoryUtils(
+					ldapContext.getProviderUrl(),
+					ldapContext.getPrincipal(),
+					ldapContext.getCredentials(),
+					ldapContext.getBasedn(),
+					ldapContext.getMsadDomain());
+		}else if(ldapContext.getProduct().equalsIgnoreCase(LdapUtils.Product.OpenLDAP)) {
+			ldapUtils = new LdapUtils(
+					ldapContext.getProviderUrl(),
+					ldapContext.getPrincipal(),
+			        ldapContext.getCredentials(),
+			        ldapContext.getBasedn());
+		}else if(ldapContext.getProduct().equalsIgnoreCase(LdapUtils.Product.StandardLDAP)) {
+			ldapUtils = new LdapUtils(
+					ldapContext.getProviderUrl(),
+					ldapContext.getPrincipal(),
+			        ldapContext.getCredentials(),
+			        ldapContext.getBasedn());
+		}
+				
+		if(ldapUtils.openConnection() != null) {
+			ldapUtils.close();
+			return new Message<LdapContext>(Message.SUCCESS).buildResponse();
+		}else {
 			return new Message<LdapContext>(Message.FAIL).buildResponse();
 		}
 	}

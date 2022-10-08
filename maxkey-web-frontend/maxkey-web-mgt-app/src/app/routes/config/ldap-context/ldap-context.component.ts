@@ -78,4 +78,18 @@ export class LdapContextComponent implements OnInit {
       this.cdr.detectChanges();
     });
   }
+
+  onTest(e: MouseEvent): void {
+    e.preventDefault();
+    this.form.submitting = true;
+    this.ldapContextService.test(this.form.model).subscribe(res => {
+      if (res.code == 0) {
+        this.msg.success(this.i18n.fanyi('mxk.alert.test.success'));
+      } else {
+        this.msg.error(this.i18n.fanyi('mxk.alert.test.error'));
+      }
+      this.form.submitting = false;
+      this.cdr.detectChanges();
+    });
+  }
 }

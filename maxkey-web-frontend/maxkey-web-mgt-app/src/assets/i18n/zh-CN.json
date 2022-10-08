@@ -453,7 +453,20 @@
 		},
 		"roles": {
 			"name": "角色名称",
-			"dynamic": "动态角色",
+			"type": {
+				"":"成员类型",
+				"user":"用户",
+				"user-dynamic":"用户-动态",
+				"post":"岗位"
+			},
+			"member": "成员",
+			"permissions": "访问权限",
+			"category": {
+				"":"类型",
+				"dynamic":"动态",
+				"static":"静态",
+				"app":"应用"
+			},
 			"filters": "属性过滤器",
 			"orgIdsList": "部门列表",
 			"resumeTime": "加入时间",
@@ -637,6 +650,10 @@
 				"success":"更新成功!",
 				"error":"更新失败!"
 			},
+			"test":{
+				"success":"测试成功!",
+				"error":"测试失败!"
+			},
 			"delete":{
 				"success":"删除成功!",
 				"error":"删除失败!"
@@ -659,6 +676,7 @@
 			"add": "新增",
 			"edit": "编辑",
 			"delete": "删除",
+			"test": "测试",
 			"select": "选择",
 			"confirm": "确定",
 			"synchr": "同步",

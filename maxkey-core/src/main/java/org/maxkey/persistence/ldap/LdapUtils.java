@@ -38,6 +38,13 @@ import org.slf4j.LoggerFactory;
 public class LdapUtils {
     private static  final Logger _logger = LoggerFactory.getLogger(LdapUtils.class);
 
+    public class Product{
+    	public static final  String ActiveDirectory		= "ActiveDirectory";
+    	public static final  String OpenLDAP			= "OpenLDAP";
+    	public static final  String StandardLDAP		= "StandardLDAP";
+    }
+    
+    
     public static final  String propertyBaseDN = "baseDN";
     public static final  String propertyDomain = "domain";
     public static final  String propertyTrustStore = "trustStore";

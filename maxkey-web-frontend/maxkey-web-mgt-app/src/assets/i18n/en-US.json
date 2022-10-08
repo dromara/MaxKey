@@ -455,7 +455,20 @@
 		},
 		"roles": {
 			"name": "Role Name",
-			"dynamic": "Dynamic",
+			"type": {
+				"":"Member Type",
+				"user":"User",
+				"user-dynamic":"User-Dynamic",
+				"post":"Post"
+			},
+			"member": "Member",
+			"permissions": "Permissions",
+			"category": {
+				"":"Category",
+				"dynamic":"Dynamic",
+				"static":"Static",
+				"app":"App"
+			},
 			"filters": "Attributes Filter",
 			"orgIdsList": "Dept List",
 			"resumeTime": "Join Time",
@@ -643,6 +656,10 @@
 				"success":"Delete Success!",
 				"error":"Delete Error!"
 			},
+			"test":{
+				"success":"Test Success!",
+				"error":"Test Error!"
+			},
 			"operate":{
 				"success":"Operate Success!",
 				"error":"Operate Error!"
@@ -662,6 +679,7 @@
 			"add": "Add",
 			"edit": "Edit",
 			"delete": "Delete",
+			"test": "Test",
 			"select": "Select",
 			"confirm": "Confirm",
 			"synchr": "Synchr",

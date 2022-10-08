@@ -1,19 +1,18 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -36,6 +35,7 @@ export class BaseService<T> {
       add: string;
       update: string;
       delete: string;
+      test: string;
       tree: string;
       member: string;
       memberOut: string;
@@ -49,6 +49,7 @@ export class BaseService<T> {
         load: '/load',
         update: '/update',
         delete: '/delete',
+        test: '/test',
         tree: '/tree',
         member: '/member',
         memberOut: '/memberOut'
@@ -106,6 +107,16 @@ export class BaseService<T> {
 
   delete(ids: String): Observable<Message<T>> {
     return this.http.delete<Message<T>>(`${this.server.urls.base + this.server.urls.delete}?ids=${ids}`);
+  }
+
+  test(params: NzSafeAny, testURL?: string): Observable<Message<T>> {
+    let _testURL = '';
+    if (testURL) {
+      _testURL = testURL;
+    } else {
+      _testURL = `${this.server.urls.base + this.server.urls.test}`;
+    }
+    return this.http.get<Message<T>>(_testURL, { params: this.parseParams(params) });
   }
 
   tree(params: NzSafeAny): Observable<Message<any>> {

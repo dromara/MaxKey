@@ -454,7 +454,20 @@
 		},
 		"roles": {
 			"name": "角色名稱",
-			"dynamic": "動態角色",
+			"type": {
+				"":"成員類型",
+				"user":"用戶",
+				"user-dynamic":"用戶-動態",
+				"post":"崗位"
+			},
+			"member": "成員",
+			"permissions": "存取控制",
+			"category": {
+				"":"類型",
+				"dynamic":"動態",
+				"static":"靜態",
+				"app":"應用"
+			},
 			"filters": "屬性過濾器",
 			"orgIdsList": "部門列表",
 			"resumeTime": "加入時間",
@@ -642,6 +655,10 @@
 				"success":"删除成功!",
 				"error":"删除失敗!"
 			},
+			"test":{
+				"success":"測試成功!",
+				"error":"測試失敗!"
+			},
 			"operate":{
 				"success":"操作成功!",
 				"error":"操作失敗!"
@@ -660,6 +677,7 @@
 			"add": "新增",
 			"edit": "編輯",
 			"delete": "刪除",
+			"test": "測試",
 			"select": "選擇",
 			"confirm": "確定",
 			"synchr": "同步",
