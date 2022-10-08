@@ -16,7 +16,7 @@
 				rm.id as id,
 				r.id as roleid,
 				r.rolename,
-				r.dynamic dynamic,
+				r.category category,
 				u.username,
 				u.usertype,
 				u.windowsaccount,

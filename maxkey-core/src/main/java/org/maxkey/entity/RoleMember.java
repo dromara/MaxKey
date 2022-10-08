@@ -48,7 +48,7 @@ public class RoleMember extends UserInfo implements Serializable{
 	@Column
 	private String roleId;
 	private String roleName;
-	private String dynamic;
+	private String category;
 	@Column
 	private String memberId;
 	private String memberName;
@@ -160,13 +160,16 @@ public class RoleMember extends UserInfo implements Serializable{
 		this.memberName = memberName;
 	}
 
-	public String getDynamic() {
-		return dynamic;
+
+	public String getCategory() {
+		return category;
 	}
 
-	public void setDynamic(String dynamic) {
-		this.dynamic = dynamic;
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
+
 
 	public String getInstId() {
 		return instId;
@@ -197,8 +200,8 @@ public class RoleMember extends UserInfo implements Serializable{
 		builder.append(roleId);
 		builder.append(", roleName=");
 		builder.append(roleName);
-		builder.append(", dynamic=");
-		builder.append(dynamic);
+		builder.append(", category=");
+		builder.append(category);
 		builder.append(", memberId=");
 		builder.append(memberId);
 		builder.append(", memberName=");

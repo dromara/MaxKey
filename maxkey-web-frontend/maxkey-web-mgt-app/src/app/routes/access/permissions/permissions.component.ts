@@ -16,6 +16,7 @@
 
 import { ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { I18NService } from '@core';
 import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import { format, addDays } from 'date-fns';
@@ -100,11 +101,16 @@ export class PermissionsComponent implements OnInit {
     private fb: FormBuilder,
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private http: _HttpClient
   ) { }
 
   ngOnInit(): void {
+    if (this.route.snapshot.queryParams['roleId']) {
+      this.query.params.roleId = this.route.snapshot.queryParams['roleId'];
+      this.query.params.roleName = this.route.snapshot.queryParams['roleName'];
+    }
     this.query.tableInitialize = false;
   }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,16 @@ import org.hibernate.validator.constraints.Length;
 public class Roles extends JpaBaseEntity implements Serializable {
 
     private static final long serialVersionUID = 4660258495864814777L;
+    
+    public class Category{
+    	public static final String DYNAMIC = "dynamic";
+    	
+    	public static final String STATIC  = "static";
+    	
+    	public static final String APP     = "app";
+    }
+    
+    
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
@@ -45,7 +55,7 @@ public class Roles extends JpaBaseEntity implements Serializable {
     String roleName;
     
     @Column
-    String dynamic;
+    String category;
 
     @Column
     String filters ;
@@ -185,20 +195,20 @@ public class Roles extends JpaBaseEntity implements Serializable {
 	 *		3, not filters
      */
     public void setDefaultAllUser() {
-    	this.dynamic = "1";
+    	this.category = "dynamic";
     	this.orgIdsList ="";
 		this.filters ="";
     }
-    
-    public String getDynamic() {
-        return dynamic;
-    }
 
-    public void setDynamic(String dynamic) {
-        this.dynamic = dynamic;
-    }
+    public String getCategory() {
+		return category;
+	}
 
-    public String getFilters() {
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getFilters() {
         return filters;
     }
 
@@ -255,8 +265,8 @@ public class Roles extends JpaBaseEntity implements Serializable {
 		builder.append(roleCode);
 		builder.append(", roleName=");
 		builder.append(roleName);
-		builder.append(", dynamic=");
-		builder.append(dynamic);
+		builder.append(", category=");
+		builder.append(category);
 		builder.append(", filters=");
 		builder.append(filters);
 		builder.append(", orgIdsList=");

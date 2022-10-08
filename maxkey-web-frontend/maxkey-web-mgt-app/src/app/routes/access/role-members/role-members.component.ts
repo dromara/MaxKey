@@ -110,6 +110,10 @@ export class RoleMembersComponent implements OnInit {
     if (this.route.snapshot.queryParams['username']) {
       this.query.params.username = this.route.snapshot.queryParams['username'];
     }
+    if (this.route.snapshot.queryParams['roleId']) {
+      this.query.params.roleId = this.route.snapshot.queryParams['roleId'];
+      this.query.params.roleName = this.route.snapshot.queryParams['roleName'];
+    }
     this.query.tableInitialize = false;
   }
 

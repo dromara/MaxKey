@@ -160,7 +160,7 @@ export class PrivilegesComponent implements OnInit {
       this.query.tableLoading = false;
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.operate.success'));
-        this.fetch();
+        //this.fetch();
       } else {
         this.msg.error(this.i18n.fanyi('mxk.alert.operate.error'));
       }

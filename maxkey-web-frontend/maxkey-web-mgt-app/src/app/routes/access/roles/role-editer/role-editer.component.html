@@ -22,29 +22,29 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dynamic">{{ 'mxk.roles.dynamic' | i18n }}</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dynamic">{{ 'mxk.roles.category' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
-        <nz-switch [(ngModel)]="form.model.switch_dynamic" [ngModelOptions]="{ standalone: true }" name="dynamic"
-          [nzCheckedChildren]="checkedTemplate" [nzUnCheckedChildren]="unCheckedTemplate"></nz-switch>
-        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
-        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+        <nz-radio-group [(ngModel)]="form.model.category" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
+          <label nz-radio-button nzValue="static">{{ 'mxk.roles.category.static' | i18n }}</label>
+          <label nz-radio-button nzValue="dynamic">{{ 'mxk.roles.category.dynamic' | i18n }}</label>
+        </nz-radio-group>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item *ngIf="form.model.switch_dynamic">
+    <nz-form-item *ngIf="form.model.category == 'dynamic'">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resumeTime">{{ 'mxk.roles.resumeTime' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid port!">
         <nz-time-picker [(ngModel)]="form.model.picker_resumeTime" [ngModelOptions]="{ standalone: true }"
           nzFormat="HH:mm" name="picker_resumeTime" id="picker_resumeTime"></nz-time-picker>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item *ngIf="form.model.switch_dynamic">
+    <nz-form-item *ngIf="form.model.category == 'dynamic'">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="suspendTime">{{ 'mxk.roles.suspendTime' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid suspendTime!">
         <nz-time-picker [(ngModel)]="form.model.picker_suspendTime" [ngModelOptions]="{ standalone: true }"
           nzFormat="HH:mm" name="picker_suspendTime" id="picker_suspendTime"></nz-time-picker>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item *ngIf="form.model.switch_dynamic">
+    <nz-form-item *ngIf="form.model.category == 'dynamic'">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="orgIdsList">{{ 'mxk.roles.orgIdsList' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid upperCase!">
         <input type="hidden" [(ngModel)]="form.model.orgIdsList" [ngModelOptions]="{ standalone: true }" nz-input
@@ -55,7 +55,7 @@
         </nz-tree-select>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item *ngIf="form.model.switch_dynamic">
+    <nz-form-item *ngIf="form.model.category == 'dynamic'">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="filters">{{ 'mxk.roles.filters' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid filters!">
         <textarea rows="4" nz-input [(ngModel)]="form.model.filters" [ngModelOptions]="{ standalone: true }" nz-input

@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -79,7 +79,7 @@ public class RolesService  extends JpaBaseService<Roles> implements Serializable
 	}
 	
 	public void refreshDynamicRoles(Roles dynamicRole){
-	    if(dynamicRole.getDynamic().equals(ConstsStatus.ACTIVE+"")) {
+	    if(dynamicRole.getCategory().equals(Roles.Category.DYNAMIC)) {
 	        boolean isDynamicTimeSupport = false;
 	        boolean isBetweenEffectiveTime = false;
 	        if(StringUtils.isNotBlank(dynamicRole.getResumeTime())

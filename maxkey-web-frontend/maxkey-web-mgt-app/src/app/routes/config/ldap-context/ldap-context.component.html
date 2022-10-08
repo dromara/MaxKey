@@ -118,8 +118,11 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item style="width: 100%">
-      <nz-form-control [nzOffset]="7" [nzSpan]="12">
-        <button nz-button nzType="primary" type="submit" [nzLoading]="form.submitting">提交</button>
+      <nz-form-control [nzOffset]="10" [nzSpan]="8">
+        <button nz-button nzType="primary" type="submit" [nzLoading]="form.submitting"> {{ 'mxk.text.submit' | i18n
+          }}</button>
+        <button nz-button nzType="default" (click)="onTest($event)" [nzLoading]="form.submitting"> {{ 'mxk.text.test' |
+          i18n }}</button>
       </nz-form-control>
     </nz-form-item>
   </form>
