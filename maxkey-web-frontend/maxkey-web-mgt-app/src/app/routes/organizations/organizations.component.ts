@@ -171,7 +171,7 @@ export class OrganizationsComponent implements OnInit {
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
         this.fetch();
-        this.tree()
+        this.tree();
       }
     });
   }
@@ -193,7 +193,7 @@ export class OrganizationsComponent implements OnInit {
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
         this.fetch();
-        this.tree()
+        this.tree();
       }
     });
   }
@@ -204,7 +204,7 @@ export class OrganizationsComponent implements OnInit {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
         this.fetch();
-        this.tree()
+        this.tree();
       } else {
         this.msg.error(this.i18n.fanyi('mxk.alert.delete.error'));
       }

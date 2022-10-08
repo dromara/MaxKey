@@ -15,7 +15,7 @@
  */
 import { I18nPluralPipe } from '@angular/common';
 import { LocalizedString } from '@angular/compiler';
-import {Component, ChangeDetectorRef, Input, OnInit, Inject, ViewChild} from '@angular/core';
+import { Component, ChangeDetectorRef, Input, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { I18NService } from '@core';
 import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
@@ -24,10 +24,10 @@ import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { NzTreeSelectComponent } from 'ng-zorro-antd/tree-select';
 
 import { Organizations } from '../../../entity/Organizations';
 import { OrganizationsService } from '../../../service/organizations.service';
-import {NzTreeSelectComponent} from "ng-zorro-antd/tree-select";
 
 @Component({
   selector: 'app-organization-editer',
@@ -47,7 +47,7 @@ export class OrganizationEditerComponent implements OnInit {
   @Input() parentNode?: NzTreeNode;
   @Input() isEdit?: boolean;
   @Input() orgNodes!: any[];
-  @ViewChild("orgTree") orgTree!: NzTreeSelectComponent;
+  @ViewChild('orgTree') orgTree!: NzTreeSelectComponent;
   form: {
     submitting: boolean;
     model: Organizations;
@@ -74,7 +74,8 @@ export class OrganizationEditerComponent implements OnInit {
         this.cdr.detectChanges();
       });
     } else {
-      this.form.model.type = 'entity';
+      this.form.model.type = 'department';
+      this.form.model.sortIndex = 11;
       if (this.parentNode) {
         this.form.model.parentId = this.parentNode?.key;
         this.form.model.parentName = this.parentNode?.title;
@@ -84,8 +85,8 @@ export class OrganizationEditerComponent implements OnInit {
   }
   onDeptChange(key: string): void {
     let node = this.orgTree.getTreeNodeByKey(key);
-    if (node){
-      this.form.model.parentName = node.title
+    if (node) {
+      this.form.model.parentName = node.title;
     }
   }
   onClose(e: MouseEvent): void {
