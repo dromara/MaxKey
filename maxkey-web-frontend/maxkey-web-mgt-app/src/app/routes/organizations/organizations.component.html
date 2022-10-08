@@ -62,12 +62,12 @@
           <tr>
             <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate"
               (nzCheckedChange)="onTableAllChecked($event)"></th>
-            <th nzAlign="center" style="width: 20%;">{{ 'mxk.organizations.code' | i18n }}</th>
-            <th nzAlign="center" style="width: 30%;">{{ 'mxk.organizations.name' | i18n }}</th>
-            <th nzAlign="center" style="width: 10%;">{{ 'mxk.organizations.type' | i18n }}</th>
-            <th nzAlign="center" style="width: 10%;">{{ 'mxk.text.sortIndex' | i18n }}</th>
-            <th nzAlign="center" style="width: 10%;">{{ 'mxk.text.status' | i18n }}</th>
-            <th nzAlign="center" style="width: 20%;"><a>{{ 'mxk.text.action' | i18n }}</a></th>
+            <th nzAlign="center" style="width: 20%">{{ 'mxk.organizations.code' | i18n }}</th>
+            <th nzAlign="center" style="width: 30%">{{ 'mxk.organizations.name' | i18n }}</th>
+            <th nzAlign="center" style="width: 10%">{{ 'mxk.organizations.type' | i18n }}</th>
+            <th nzAlign="center" style="width: 10%">{{ 'mxk.text.sortIndex' | i18n }}</th>
+            <th nzAlign="center" style="width: 10%">{{ 'mxk.text.status' | i18n }}</th>
+            <th nzAlign="center" style="width: 20%"><a>{{ 'mxk.text.action' | i18n }}</a></th>
           </tr>
         </thead>
         <tbody>
@@ -80,13 +80,14 @@
             <td nzAlign="center"> {{ data.orgName }}</td>
             <td nzAlign="center" *ngIf="data.type == 'company'"> {{ 'mxk.organizations.type.company' | i18n }}</td>
             <td nzAlign="center" *ngIf="data.type == 'division'"> {{ 'mxk.organizations.type.division' | i18n }}</td>
-            <td nzAlign="center" *ngIf="data.type == 'department'"> {{ 'mxk.organizations.type.department' | i18n }}</td>
+            <td nzAlign="center" *ngIf="data.type == 'department'"> {{ 'mxk.organizations.type.department' | i18n }}
+            </td>
             <td nzAlign="center" *ngIf="data.type == 'entity'"> {{ 'mxk.organizations.type.entity' | i18n }}</td>
             <td nzAlign="center" *ngIf="data.type == 'virtual'"> {{ 'mxk.organizations.type.virtual' | i18n }}</td>
             <td nzAlign="center"> {{ data.sortIndex }}</td>
             <td nzAlign="center"> <i *ngIf="data.status == 1" nz-icon nzType="check-circle" nzTheme="fill"
                 style="color: green"></i></td>
-            <td nzAlign="center" nzBreakWord="false">
+            <td nzAlign="left" nzBreakWord="false">
               <div nz-col>
                 <button nz-button type="button" (click)="onEdit($event, data.id)">
                   {{ 'mxk.text.edit' | i18n }}
