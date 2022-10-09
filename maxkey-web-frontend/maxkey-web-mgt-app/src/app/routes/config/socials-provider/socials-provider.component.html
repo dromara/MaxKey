@@ -44,6 +44,9 @@
         <th nzAlign="center">{{ 'mxk.socialsproviders.provider' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.socialsproviders.providerName' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.text.sortIndex' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.socialsproviders.hidden' | i18n }}</th>
+        <th nzAlign="center">{{ 'mxk.socialsproviders.scanCode' | i18n }}</th>
+
         <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
         <th nzAlign="center"><a>{{ 'mxk.text.action' | i18n }}</a></th>
       </tr>
@@ -59,6 +62,11 @@
         <td nzAlign="left"> {{ data.provider }}</td>
         <td nzAlign="left"> {{ data.providerName }}</td>
         <td nzAlign="center"> {{ data.sortIndex }}</td>
+        <td nzAlign="center"> <i *ngIf="data.hidden == 'true'" nz-icon nzType="check-circle" nzTheme="fill"
+            style="color: green"></i></td>
+        <td nzAlign="center"> <i *ngIf="data.scanCode == 'true'" nz-icon nzType="check-circle" nzTheme="fill"
+            style="color: green"></i></td>
+
         <td nzAlign="center"> <i *ngIf="data.status == 1" nz-icon nzType="check-circle" nzTheme="fill"
             style="color: green"></i></td>
         <td nzAlign="left" nzBreakWord="false">
