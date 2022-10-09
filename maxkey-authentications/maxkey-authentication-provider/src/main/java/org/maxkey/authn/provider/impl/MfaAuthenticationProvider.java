@@ -46,7 +46,7 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
             LoggerFactory.getLogger(MfaAuthenticationProvider.class);
 
     public String getProviderName() {
-        return "normal" + PROVIDER_SUFFIX;
+        return "mfa" + PROVIDER_SUFFIX;
     }
     
 
