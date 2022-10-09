@@ -45,6 +45,9 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.redirect_uri = this.route.snapshot.params[CONSTS.REDIRECT_URI];
+    if (this.redirect_uri == null || this.redirect_uri == '') {
+      this.redirect_uri = this.route.snapshot.queryParams[CONSTS.REDIRECT_URI];
+    }
     this.authnService
       .logout()
       .pipe(
@@ -53,7 +56,11 @@ export class LogoutComponent implements OnInit {
           if (this.redirect_uri == null || this.redirect_uri == '') {
             this.router.navigateByUrl(this.tokenService.login_url!);
           } else {
-            this.router.navigateByUrl(this.redirect_uri);
+            if (this.redirect_uri.startsWith("http")){
+              location.href = this.redirect_uri;
+            } else {
+              this.router.navigateByUrl(this.redirect_uri);
+            }
           }
         })
       )
