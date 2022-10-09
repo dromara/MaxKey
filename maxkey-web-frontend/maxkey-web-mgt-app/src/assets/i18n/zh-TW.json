@@ -530,7 +530,7 @@
 			"clientSecret": "密鑰",
 			"agentId": "AgentId",
 			"scanCode": "掃碼登錄",
-			"hidden": "是否顯示"
+			"display": "是否顯示"
 		},
 		"synchronizers": {
 			"name": "名稱",

@@ -56,7 +56,7 @@ public class SocialsProvider extends JpaBaseEntity implements Serializable {
     @Column
     private String agentId;
     @Column
-    private String hidden;
+    private String display;
     @Column
     private long sortIndex;
     @Column
@@ -217,15 +217,15 @@ public class SocialsProvider extends JpaBaseEntity implements Serializable {
         this.id = id;
     }
 
-    public String getHidden() {
-        return hidden;
-    }
+    public String getDisplay() {
+		return display;
+	}
 
-    public void setHidden(String hidden) {
-        this.hidden = hidden;
-    }
+	public void setDisplay(String display) {
+		this.display = display;
+	}
 
-    public int getStatus() {
+	public int getStatus() {
         return status;
     }
 
@@ -306,8 +306,8 @@ public class SocialsProvider extends JpaBaseEntity implements Serializable {
 		builder.append(clientSecret);
 		builder.append(", agentId=");
 		builder.append(agentId);
-		builder.append(", hidden=");
-		builder.append(hidden);
+		builder.append(", display=");
+		builder.append(display);
 		builder.append(", sortIndex=");
 		builder.append(sortIndex);
 		builder.append(", scanCode=");

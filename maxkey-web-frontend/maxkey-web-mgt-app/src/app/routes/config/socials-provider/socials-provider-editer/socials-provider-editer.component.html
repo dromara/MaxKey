@@ -67,9 +67,9 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="hidden">{{ 'mxk.socialsproviders.hidden' | i18n }}</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid hidden!">
-        <nz-radio-group [(ngModel)]="form.model.hidden" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="display">{{ 'mxk.socialsproviders.display' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid display!">
+        <nz-radio-group [(ngModel)]="form.model.display" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
           <label nz-radio-button nzValue="false">{{ 'mxk.text.no' | i18n }}</label>
           <label nz-radio-button nzValue="true">{{ 'mxk.text.yes' | i18n }}</label>
         </nz-radio-group>

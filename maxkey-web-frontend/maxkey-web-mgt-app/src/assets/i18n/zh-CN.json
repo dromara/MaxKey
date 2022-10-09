@@ -529,7 +529,7 @@
 			"clientSecret": "密钥",
 			"agentId": "AgentId",
 			"scanCode": "扫码登录",
-			"hidden": "是否显示"
+			"display": "是否显示"
 		},
 		"synchronizers": {
 			"name": "名称",

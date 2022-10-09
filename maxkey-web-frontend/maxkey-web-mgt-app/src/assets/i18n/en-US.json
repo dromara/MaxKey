@@ -531,7 +531,7 @@
 			"clientSecret": "ClientSecret",
 			"agentId": "AgentId",
 			"scanCode": "ScanCode",
-			"hidden": "Is Show"
+			"display": "Is Show"
 		},
 		"synchronizers": {
 			"name": "Name",

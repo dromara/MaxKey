@@ -192,7 +192,7 @@ public class SocialSignOnProviderService{
 	            _logger.debug("Social Provider {} ({})" ,
 	            		socialsProvider.getProvider()  ,socialsProvider.getProviderName());
 	            
-	            if(!socialsProvider.getHidden().equals("true")) {
+	            if(socialsProvider.getDisplay().equals("true")) {
 	                socialSignOnProviders.add(new SocialsProvider(socialsProvider));
 	            }
 	            
@@ -226,7 +226,7 @@ public class SocialSignOnProviderService{
             clientSecret = PasswordReciprocal.getInstance().decoder(clientSecret);
             socialsProvider.setClientSecret(clientSecret);
             socialsProvider.setAgentId(rs.getString("agentId"));
-            socialsProvider.setHidden(rs.getString("hidden"));
+            socialsProvider.setDisplay(rs.getString("display"));
             socialsProvider.setSortIndex(rs.getInt("sortindex"));
             socialsProvider.setScanCode(rs.getString("scancode"));
             socialsProvider.setStatus(rs.getInt("status"));
