@@ -1,4 +1,35 @@
-﻿MaxKey v 3.5.7 GA 2022/09/23
+﻿MaxKey v 3.5.8 GA 2022/10/11
+    *(MAXKEY-221301) 新版LOGO更新
+    *(MAXKEY-221302) 角色属性dynamic - >category
+    *(MAXKEY-221303) 角色列表增加"成员"和"访问权限"按钮，方便管理员操作
+    *(MAXKEY-221304) 新增组织类型type=department，sortIndex=11
+    *(MAXKEY-221305) 组织列表编码和名称左对齐
+    *(MAXKEY-221306) 社交服务优化，socialsProvider  状态 hidden-->display, scanCode
+    *(MAXKEY-221307) 提交注销地址回调外部URL地址
+    *(MAXKEY-221308) LDAP配置的测试功能
+    *(MAXKEY-221309) ActiveDirectory组织同步默认类型department，fullName=orgName
+    *(MAXKEY-221310) LDAP组织同步默认类型department，fullName=orgName
+    *(MAXKEY-221311) 访问权限管理appName显示问题
+    *(MAXKEY-221312) 修复MFA的MfaAuthenticationProvider的getProviderName的BUG
+    *(MAXKEY-221313) Cannot call sendRedirect() after the response has been committed 无权限访问应用
+    *(MAXKEY-221314) 资源权限管理中的角色列表调整到左边，资源树列表调整到右边
+    *(MAXKEY-221315) 优化docker-compose部署方案，支持最新版v3.5.7快速启动部署 @xiaojian
+    *(MAXKEY-221316) 优化v3.3docker-compose部署方案，启动时不重新打包镜像，mysql服务名取代localhost @xiaojian
+    *(MAXKEY-221317) 依赖项引用、更新和升级
+        springBoot                2.7.4
+        kafkaclients              2.8.9
+        hibernate                 6.2.5.Final
+        jackson                   2.13.4
+        commonsbeanutils          1.9.4
+        commonsdbcp2              2.9.0
+        commonscompress           1.21
+        postgresql                42.4.1
+        minidevjsonsmart          2.4.5
+        snakeyaml                 1.32
+        xmlsec                    2.1.7
+        xstream                   1.4.19
+
+MaxKey v 3.5.7 GA 2022/09/23
     *(MAXKEY-221201) springboot升级至2.7.3，修改相关程序及配置
     *(MAXKEY-221202) 访问根上下文访问返回，消除报错
     *(MAXKEY-221203) 同步器同步组织和用户OU为大写的问题修复
@@ -16,9 +47,9 @@
     *(MAXKEY-221215) 解决3.5.6 docker初始化数据库数据的问题(#I5ROWK)
     *(MAXKEY-221216) 删除springboot的spring.factories配置文件
     *(MAXKEY-221217) 统一http请求内容类型配置到org.maxkey.constants.ContentType
-	*(MAXKEY-221218) 组织更改上级组织增加树形控件，用户可直接选择对应父级组织
-	*(MAXKEY-221219) SAML新增或者编辑时添加证书数据或者元数据文件时，编辑窗口关闭问题修复(#I5RRGX)
-	*(MAXKEY-221220) 新增或者编辑用户信息时，用户所属的机构增加树形控件
+    *(MAXKEY-221218) 组织更改上级组织增加树形控件，用户可直接选择对应父级组织
+    *(MAXKEY-221219) SAML新增或者编辑时添加证书数据或者元数据文件时，编辑窗口关闭问题修复(#I5RRGX)
+    *(MAXKEY-221220) 新增或者编辑用户信息时，用户所属的机构增加树形控件
     *(MAXKEY-221221) 依赖项引用、更新和升级
         spring                  5.3.23
         springBoot              2.7.3
