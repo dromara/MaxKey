@@ -74,10 +74,10 @@
           <tr *ngFor="let data of query.results.rows">
             <td [nzChecked]="query.tableCheckedId.has(data.id)" [nzDisabled]="data.disabled"
               (nzCheckedChange)="onTableItemChecked(data.id, $event)"></td>
-            <td nzAlign="center">
+            <td nzAlign="left">
               <span>{{ data.orgCode }}</span>
             </td>
-            <td nzAlign="center"> {{ data.orgName }}</td>
+            <td nzAlign="left"> {{ data.orgName }}</td>
             <td nzAlign="center" *ngIf="data.type == 'company'"> {{ 'mxk.organizations.type.company' | i18n }}</td>
             <td nzAlign="center" *ngIf="data.type == 'division'"> {{ 'mxk.organizations.type.division' | i18n }}</td>
             <td nzAlign="center" *ngIf="data.type == 'department'"> {{ 'mxk.organizations.type.department' | i18n }}
