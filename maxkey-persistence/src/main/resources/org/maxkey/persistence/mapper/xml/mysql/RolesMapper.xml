@@ -28,7 +28,7 @@
 		from
 			mxk_roles
 		where instid   =   #{instId} 
-            and dynamic = '1'
+            and category = 'dynamic'
 		<include refid="where_statement"/>
 	</select>
 	
