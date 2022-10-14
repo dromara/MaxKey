@@ -100,7 +100,7 @@
         {
           "text": "配置管理",
           "i18n": "mxk.menu.config",
-          "link": "/widgets",
+          "link": "/config",
           "icon": "anticon-setting",
           "children": [
             {
@@ -171,7 +171,7 @@
         {
           "text": "日志审计",
           "i18n": "mxk.menu.audit",
-          "link": "/widgets",
+          "link": "/audit",
           "icon": "anticon-history",
           "children": [
             {
