@@ -265,6 +265,7 @@
 		"apps": {
 			"tab.basic": "Basic",
 			"tab.extra": "Extra",
+			"tab.custom": "Custom",
 			"extendapi.tab": "API",
 			"resources":"Resources",
 			"id": "App Id",
@@ -452,6 +453,13 @@
 			"oauth.connect.issuer": "Issuer",
 			"oauth.connect.userInfoResponse": "UserInfoResponse"
 
+		},
+		"custom":{
+			"extraAttr":{
+				"attr":"Attribute",
+				"type":"Type",
+				"value":"Value"
+			}
 		},
 		"roles": {
 			"name": "Role Name",

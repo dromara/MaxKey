@@ -81,6 +81,8 @@ export class AppsOauth20Details extends Apps {
         super.init(data);
         if (this.status == 1) {
             this.switch_status = true;
+        } else {
+            this.switch_status = false;
         }
         if (this.approvalPrompt == '') {
         }

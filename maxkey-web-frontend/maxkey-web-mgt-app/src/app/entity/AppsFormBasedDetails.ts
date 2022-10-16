@@ -19,32 +19,34 @@ import format from 'date-fns/format';
 import { Apps } from './Apps';
 
 export class AppsFormBasedDetails extends Apps {
-    redirectUri!: String;
-    usernameMapping!: String;
-    passwordMapping!: String;
-    passwordAlgorithm!: String;
-    authorizeView!: String;
+  redirectUri!: String;
+  usernameMapping!: String;
+  passwordMapping!: String;
+  passwordAlgorithm!: String;
+  authorizeView!: String;
 
-    constructor() {
-        super();
-        this.usernameMapping = 'username';
-        this.passwordMapping = 'password';
-        this.passwordAlgorithm = 'NONE';
-    }
+  constructor() {
+    super();
+    this.usernameMapping = 'username';
+    this.passwordMapping = 'password';
+    this.passwordAlgorithm = 'NONE';
+  }
 
-    override init(data: any): void {
-        Object.assign(this, data);
-        super.init(data);
-        if (this.status == 1) {
-            this.switch_status = true;
-        }
+  override init(data: any): void {
+    Object.assign(this, data);
+    super.init(data);
+    if (this.status == 1) {
+      this.switch_status = true;
+    } else {
+      this.switch_status = false;
     }
+  }
 
-    override trans(): void {
-        if (this.switch_status) {
-            this.status = 1;
-        } else {
-            this.status = 0;
-        }
+  override trans(): void {
+    if (this.switch_status) {
+      this.status = 1;
+    } else {
+      this.status = 0;
     }
+  }
 }

@@ -24,6 +24,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadFile, NzUploadChangeParam } from 'ng-zorro-antd/upload';
 
 import { AppsCasDetails } from '../../../entity/AppsCasDetails';
+import { ExtraAttr } from '../../../entity/ExtraAttr';
 import { AppsCasDetailsService } from '../../../service/apps-cas-details.service';
 import { AppsService } from '../../../service/apps.service';
 import { SelectAdaptersComponent } from '../../config/adapters/select-adapters/select-adapters.component';
@@ -70,6 +71,9 @@ export class AppCasDetailsEditerComponent implements OnInit {
   previewImage: string | ArrayBuffer | undefined | null = '';
   previewVisible = false;
 
+  extraAttrIndex: number = 1;
+  extraAttrEditCache: { [key: string]: { edit: boolean; data: ExtraAttr } } = {};
+  extraAttrListOfData: ExtraAttr[] = [];
   constructor(
     private modal: NzModalRef,
     private modalService: NzModalService,
@@ -95,6 +99,7 @@ export class AppCasDetailsEditerComponent implements OnInit {
             url: this.previewImage
           }
         ];
+        this.initExtraAttr(res.data);
       });
     } else {
       this.appsCasDetailsService.init().subscribe(res => {
@@ -172,6 +177,88 @@ export class AppCasDetailsEditerComponent implements OnInit {
       this.form.submitting = false;
       this.modal.destroy({ refresh: true });
       this.cdr.detectChanges();
+    });
+  }
+
+  initExtraAttr(extraData: any): void {
+    if (extraData.extendAttr != null && extraData.extendAttr != '') {
+      let extraAttrDataArray = JSON.parse(extraData.extendAttr);
+      console.log(extraAttrDataArray);
+      const data = [];
+      while (this.extraAttrIndex <= extraAttrDataArray.length) {
+        let extraAttrData = extraAttrDataArray[this.extraAttrIndex - 1];
+        data.push({
+          id: `${this.extraAttrIndex}`,
+          attr: extraAttrData.attr,
+          type: extraAttrData.type,
+          value: extraAttrData.value
+        });
+        this.extraAttrIndex++;
+      }
+      this.extraAttrListOfData = data;
+      this.updateExtraAttrEditCache();
+    }
+  }
+
+  addExtraAttrRow(e: MouseEvent): void {
+    e.preventDefault();
+    this.extraAttrListOfData = [
+      ...this.extraAttrListOfData,
+      {
+        id: `${this.extraAttrIndex}`,
+        attr: `Attr ${this.extraAttrIndex}`,
+        type: 'string',
+        value: `value ${this.extraAttrIndex}`
+      }
+    ];
+    this.updateExtraAttrEditCache();
+    this.startExtraAttrEdit(`${this.extraAttrIndex}`);
+    this.extraAttrIndex++;
+  }
+
+  deleteExtraAttrRow(id: string): void {
+    this.extraAttrListOfData = this.extraAttrListOfData.filter(d => d.id !== id);
+    this.submitExtraAttr();
+  }
+
+  startExtraAttrEdit(id: string): void {
+    this.extraAttrEditCache[id].edit = true;
+  }
+
+  cancelExtraAttrEdit(id: string): void {
+    const index = this.extraAttrListOfData.findIndex(item => item.id === id);
+    console.log(index);
+    this.extraAttrEditCache[id] = {
+      data: { ...this.extraAttrListOfData[index] },
+      edit: false
+    };
+  }
+
+  saveExtraAttrEdit(id: string): void {
+    const index = this.extraAttrListOfData.findIndex(item => item.id === id);
+    Object.assign(this.extraAttrListOfData[index], this.extraAttrEditCache[id].data);
+    this.extraAttrEditCache[id].edit = false;
+    this.submitExtraAttr();
+  }
+
+  submitExtraAttr() {
+    let extraAttrString = JSON.stringify(this.extraAttrListOfData);
+    this.appsService.updateExtendAttr({ id: this.form.model.id, extendAttr: extraAttrString }).subscribe(res => {
+      if (res.code == 0) {
+        this.msg.success(this.i18n.fanyi('mxk.alert.update.success'));
+      } else {
+        this.msg.error(this.i18n.fanyi('mxk.alert.update.error'));
+      }
+      this.cdr.detectChanges();
+    });
+  }
+
+  updateExtraAttrEditCache(): void {
+    this.extraAttrListOfData.forEach(item => {
+      this.extraAttrEditCache[item.id] = {
+        edit: false,
+        data: { ...item }
+      };
     });
   }
 }

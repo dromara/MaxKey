@@ -30,6 +30,8 @@ import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.crypto.Base64Utils;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "MXK_APPS")
 public class Apps extends JpaBaseEntity implements Serializable {
@@ -118,6 +120,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
     /*
      * extendAttr
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private int isExtendAttr;
     private String extendAttr;
     

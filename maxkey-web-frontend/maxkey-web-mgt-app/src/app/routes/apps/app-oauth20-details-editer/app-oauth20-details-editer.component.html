@@ -138,6 +138,30 @@
             </nz-form-control>
           </nz-form-item>
         </div>
+        <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">{{ 'mxk.text.status' | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
+              <nz-switch [(ngModel)]="form.model.switch_status" [ngModelOptions]="{ standalone: true }" name="status"
+                [nzCheckedChildren]="statuscheckedTemplate" [nzUnCheckedChildren]="statusunCheckedTemplate"></nz-switch>
+              <ng-template #statuscheckedTemplate><i nz-icon nzType="check"></i></ng-template>
+              <ng-template #statusunCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="isExtendAttr">{{ 'mxk.apps.isExtendAttr' | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
+              nzErrorTip="The input is not valid isExtendAttr!">
+              <nz-radio-group [(ngModel)]="form.model.isExtendAttr" [ngModelOptions]="{ standalone: true }"
+                nzButtonStyle="solid">
+                <label nz-radio-button nzValue="0">{{ 'mxk.text.no' | i18n }}</label>
+                <label nz-radio-button nzValue="1">{{ 'mxk.text.yes' | i18n }}</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
       </nz-tab>
       <nz-tab nzTitle="{{ 'mxk.apps.oauth.v2.0.tab' | i18n }}">
         <div nz-row>
@@ -489,6 +513,48 @@
             </nz-form-control>
           </nz-form-item>
         </div>
+      </nz-tab>
+      <nz-tab nzTitle="{{ 'mxk.apps.tab.custom' | i18n }}" *ngIf="isEdit && form.model.isExtendAttr === '1'">
+        <button nz-button (click)="addExtraAttrRow($event)" nzType="primary">{{ 'mxk.text.add' | i18n }}</button>
+        <nz-table #editRowTable nzBordered [nzData]="extraAttrListOfData" nzTableLayout="fixed">
+          <thead>
+            <tr>
+              <th nzWidth="25%">{{ 'mxk.custom.extraAttr.attr' | i18n }}</th>
+              <th nzWidth="15%">{{ 'mxk.custom.extraAttr.type' | i18n }}</th>
+              <th nzWidth="40%">{{ 'mxk.custom.extraAttr.value' | i18n }}</th>
+              <th>{{ 'mxk.text.action' | i18n }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of editRowTable.data">
+              <ng-container *ngIf="!extraAttrEditCache[data.id].edit; else editTemplate">
+                <td>{{ data.attr }}</td>
+                <td>{{ data.type }}</td>
+                <td>{{ data.value }}</td>
+                <td>
+                  <button nz-button type="button" (click)="startExtraAttrEdit(data.id)" style="float: left">{{
+                    'mxk.text.edit' | i18n
+                    }}</button>
+                  <button nz-button type="button" (click)="deleteExtraAttrRow(data.id)" nzDanger>{{ 'mxk.text.delete' |
+                    i18n }}</button>
+                </td>
+              </ng-container>
+              <ng-template #editTemplate>
+                <td><input type="text" nz-input [(ngModel)]="extraAttrEditCache[data.id].data.attr"
+                    [ngModelOptions]="{ standalone: true }" /></td>
+                <td><input type="text" nz-input [(ngModel)]="extraAttrEditCache[data.id].data.type"
+                    [ngModelOptions]="{ standalone: true }" /></td>
+                <td><input type="text" nz-input [(ngModel)]="extraAttrEditCache[data.id].data.value"
+                    [ngModelOptions]="{ standalone: true }" /></td>
+                <td>
+                  <button nz-button type="button" (click)="saveExtraAttrEdit(data.id)" style="float: left">{{
+                    'mxk.text.submit' | i18n
+                    }}</button>
+                </td>
+              </ng-template>
+            </tr>
+          </tbody>
+        </nz-table>
       </nz-tab>
     </nz-tabset>
   </form>

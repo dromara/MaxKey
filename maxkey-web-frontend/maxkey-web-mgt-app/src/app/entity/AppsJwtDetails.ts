@@ -19,41 +19,43 @@ import format from 'date-fns/format';
 import { Apps } from './Apps';
 
 export class AppsJwtDetails extends Apps {
-    subject!: String;
-    issuer!: String;
-    audience!: String;
+  subject!: String;
+  issuer!: String;
+  audience!: String;
 
-    redirectUri!: String;
-    tokenType!: String;
-    jwtName!: String;
-    algorithm!: String;
-    algorithmKey!: String;
-    encryptionMethod!: String;
-    signature!: String;
-    signatureKey!: String;
-    expires!: Number;
+  redirectUri!: String;
+  tokenType!: String;
+  jwtName!: String;
+  algorithm!: String;
+  algorithmKey!: String;
+  encryptionMethod!: String;
+  signature!: String;
+  signatureKey!: String;
+  expires!: Number;
 
-    constructor() {
-        super();
-        this.expires = 300;
-        this.jwtName = 'jwt';
-        this.subject = 'username';
-        this.tokenType = 'POST';
+  constructor() {
+    super();
+    this.expires = 300;
+    this.jwtName = 'jwt';
+    this.subject = 'username';
+    this.tokenType = 'POST';
+  }
+
+  override init(data: any): void {
+    Object.assign(this, data);
+    super.init(data);
+    if (this.status == 1) {
+      this.switch_status = true;
+    } else {
+      this.switch_status = false;
     }
+  }
 
-    override init(data: any): void {
-        Object.assign(this, data);
-        super.init(data);
-        if (this.status == 1) {
-            this.switch_status = true;
-        }
+  override trans(): void {
+    if (this.switch_status) {
+      this.status = 1;
+    } else {
+      this.status = 0;
     }
-
-    override trans(): void {
-        if (this.switch_status) {
-            this.status = 1;
-        } else {
-            this.status = 0;
-        }
-    }
+  }
 }

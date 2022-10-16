@@ -143,8 +143,9 @@
 			sharedusername		=	#{sharedUsername},
 			sharedpassword		=	#{sharedPassword},
 			systemuserattr		=	#{systemUserAttr},
-			<!--
+			
 			isextendattr		=	#{isExtendAttr},
+			<!--
 			extendattr			=	#{extendAttr},
 			-->
 			userpropertys		=	#{userPropertys},
@@ -184,21 +185,26 @@
             and p.instid = #{instId}
             and r.instid = #{instId}
             and app.visible != 0
-            and (
-            	 r.id='ROLE_ALL_USER'
-                 or r.id in(
-                      select 
-                        rm.roleid 
-                      from 
-                        mxk_role_member rm,mxk_userinfo u 
-                      where rm.memberid    =   u.id 
-                        <if test="userId != null and userId != ''">
-                            and u.id        =   #{userId}
-                        </if>
-                        <if test="username != null and username != ''">
-                            and  u.username =   #{username}
-                        </if>
-                    )
+            and r.id in(
+                    <!-- ROLE_ALL_USER -->
+                    select id as roleid 
+                    from mxk_roles 
+                    where rolecode = 'ROLE_ALL_USER'
+                    
+                    union 
+                    
+                    <!-- role member -->
+                    select 
+                      rm.roleid 
+                    from 
+                      mxk_role_member rm,mxk_userinfo u 
+                    where rm.memberid    =   u.id 
+                      <if test="userId != null and userId != ''">
+                          and u.id        =   #{userId}
+                      </if>
+                      <if test="username != null and username != ''">
+                          and  u.username =   #{username}
+                      </if>
             )
         <if test="appName != null and appName != ''">
             and appname    =   #{appName}

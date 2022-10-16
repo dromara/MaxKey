@@ -19,86 +19,88 @@ import format from 'date-fns/format';
 import { Apps } from './Apps';
 
 export class AppsSamlDetails extends Apps {
-    certIssuer!: String;
+  certIssuer!: String;
 
-    certSubject!: String;
+  certSubject!: String;
 
-    certExpiration!: String;
+  certExpiration!: String;
 
-    signature!: String;
+  signature!: String;
 
-    digestMethod!: String;
+  digestMethod!: String;
 
-    entityId!: String;
+  entityId!: String;
 
-    spAcsUrl!: String;
+  spAcsUrl!: String;
 
-    issuer!: String;
+  issuer!: String;
 
-    audience!: String;
+  audience!: String;
 
-    nameidFormat!: String;
+  nameidFormat!: String;
 
-    validityInterval!: String;
-    /**
-     * Redirect-Post Post-Post IdpInit-Post Redirect-PostSimpleSign
-     * Post-PostSimpleSign IdpInit-PostSimpleSign
-     */
+  validityInterval!: String;
+  /**
+   * Redirect-Post Post-Post IdpInit-Post Redirect-PostSimpleSign
+   * Post-PostSimpleSign IdpInit-PostSimpleSign
+   */
 
-    binding!: String;
+  binding!: String;
 
-    /**
-     * yes or no
-     */
+  /**
+   * yes or no
+   */
 
-    encrypted!: String;
-    /**
-     * metadata_file metadata_url or certificate
-     */
-    fileType!: String;
+  encrypted!: String;
+  /**
+   * metadata_file metadata_url or certificate
+   */
+  fileType!: String;
 
-    metaUrl!: String;
+  metaUrl!: String;
 
-    metaFileId!: String;
+  metaFileId!: String;
 
-    /**
-     * original , uppercase  or lowercase
-     */
+  /**
+   * original , uppercase  or lowercase
+   */
 
-    nameIdConvert!: String;
+  nameIdConvert!: String;
 
-    nameIdSuffix!: String;
+  nameIdSuffix!: String;
 
-    constructor() {
-        super();
-        this.fileType = 'certificate';
-        this.validityInterval = '300';
-        this.nameidFormat = 'persistent';
-        this.nameIdConvert = 'original';
-        this.signature = 'RSAwithSHA1';
-        this.digestMethod = 'SHA1';
-        this.encrypted = 'no';
-        this.binding = 'Redirect-Post';
+  constructor() {
+    super();
+    this.fileType = 'certificate';
+    this.validityInterval = '300';
+    this.nameidFormat = 'persistent';
+    this.nameIdConvert = 'original';
+    this.signature = 'RSAwithSHA1';
+    this.digestMethod = 'SHA1';
+    this.encrypted = 'no';
+    this.binding = 'Redirect-Post';
+  }
+
+  override init(data: any): void {
+    Object.assign(this, data);
+    super.init(data);
+    this.fileType = 'certificate';
+    this.metaUrl = '';
+    if (this.category == null || this.category == '') {
+      this.category = 'NONE';
     }
-
-    override init(data: any): void {
-        Object.assign(this, data);
-        super.init(data);
-        this.fileType = 'certificate';
-        this.metaUrl = '';
-        if (this.category == null || this.category == '') {
-            this.category = 'NONE';
-        }
-        if (this.status == 1) {
-            this.switch_status = true;
-        }
+    if (this.status == 1) {
+      this.switch_status = true;
+    } else {
+      this.switch_status = false;
     }
+  }
 
-    override trans(): void {
-        if (this.switch_status) {
-            this.status = 1;
-        } else {
-            this.status = 0;
-        }
+  override trans(): void {
+    if (this.switch_status) {
+      this.status = 1;
+    } else {
+      this.status = 0;
     }
+  }
 }

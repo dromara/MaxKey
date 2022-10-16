@@ -12,6 +12,5 @@
     		and app.id	=	#{value}
     		and fbd.id	=	#{value}
     		and fbd.id	=	app.id
-    		and status	=	1
     </select>
 </mapper>

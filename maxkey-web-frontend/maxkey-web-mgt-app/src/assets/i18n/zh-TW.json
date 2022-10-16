@@ -267,6 +267,7 @@
 		"apps": {
 			"tab.basic": "基本信息",
 			"tab.extra": "擴展信息",
+			"tab.custom": "自訂屬性",
 			"extendapi.tab": "API配置",
 			"resources":"資源",
 			"id": "應用編碼",
@@ -451,6 +452,13 @@
 			"oauth.connect.audience": "受眾(Audience)",
 			"oauth.connect.issuer": "簽發人(Issuer)",
 			"oauth.connect.userInfoResponse": "用戶接口類型"
+		},
+		"custom":{
+			"extraAttr":{
+				"attr":"屬性",
+				"type":"類型",
+				"value":"值"
+			}
 		},
 		"roles": {
 			"name": "角色名稱",

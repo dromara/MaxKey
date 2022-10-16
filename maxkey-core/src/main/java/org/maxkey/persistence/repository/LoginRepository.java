@@ -60,7 +60,7 @@ public class LoginRepository {
     
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL = "select * from  mxk_userinfo where (username = ? or mobile = ? or email = ?) ";
     
-    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.appname from mxk_apps app,mxk_role_permissions pm,mxk_roles r  where app.id=pm.appid and pm.roleid=r.id and r.id in(%s)";
+    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.appname from mxk_apps app,mxk_role_permissions pm,mxk_roles r  where app.id=pm.appid and app.status =	1 and pm.roleid=r.id and r.id in(%s)";
     
     protected JdbcTemplate jdbcTemplate;
     

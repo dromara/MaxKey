@@ -64,6 +64,8 @@ export class Apps extends BaseEntity {
         Object.assign(this, data);
         if (this.status == 1) {
             this.switch_status = true;
+        } else {
+            this.switch_status = false;
         }
         this.isAdapter = `${data.isAdapter}`;
         this.isExtendAttr = `${data.isExtendAttr}`;

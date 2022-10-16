@@ -28,7 +28,6 @@
     		and app.id		=	#{value}
     		and svd.id		=	#{value}
     		and svd.id		=	app.id
-    		and app.status	=	1
     </select>
     
 </mapper>

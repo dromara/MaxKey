@@ -22,8 +22,6 @@ import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.ReciprocalUtils;
-import org.maxkey.entity.ExtraAttr;
-import org.maxkey.entity.ExtraAttrs;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.Apps;
@@ -134,28 +132,11 @@ public class ApplicationsController extends BaseAppContorller {
 		}
 	}
 	
-	
-	@RequestMapping(value = { "/forwardAppsExtendAttr/{id}" })
-	public ResponseEntity<?> forwardExtendAttr(@PathVariable("id") String id) {
-		Apps apps = appsService.get(id);
-		return new Message<Apps>(apps).buildResponse();
-	}
-	
 	@ResponseBody
 	@RequestMapping(value = { "/updateExtendAttr" })
-	public ResponseEntity<?> updateExtendAttr(@ModelAttribute("application") Apps application,@ModelAttribute("extraAttrs") ExtraAttr extraAttr) {
-		if(extraAttr.getAttr()!=null){
-			String []attributes=extraAttr.getAttr().split(",");
-			String []attributeType=extraAttr.getType().split(",");
-			String []attributeValue=extraAttr.getValue().split(",");
-			ExtraAttrs extraAttrs=new ExtraAttrs();
-			for(int i=0;i<attributes.length;i++){
-				extraAttrs.put(attributes[i],attributeType[i], attributeValue[i]);
-			}
-			application.setExtendAttr(extraAttrs.toJsonString());
-		}
-		
-		if (appsService.updateExtendAttr(application)) {
+	public ResponseEntity<?> updateExtendAttr(@RequestBody Apps app) {
+		_logger.debug("-updateExtendAttr  id : {} , ExtendAttr : {}" , app.getId(),app.getExtendAttr());
+		if (appsService.updateExtendAttr(app)) {
 			return new Message<Apps>(Message.SUCCESS).buildResponse();
 		} else {
 			return new Message<Apps>(Message.FAIL).buildResponse();
