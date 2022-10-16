@@ -45,7 +45,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 public class AccountsService  extends JpaBaseService<Accounts>{
 
     @Autowired
-    ProvisionService mqPersistService;
+    ProvisionService provisionService;
     
     @Autowired
     UserInfoService  userInfoService;
@@ -71,14 +71,14 @@ public class AccountsService  extends JpaBaseService<Accounts>{
 	
 	 public boolean insert(Accounts account) {
 	     if (super.insert(account)) {
-	            if(mqPersistService.getApplicationConfig().isProvisionSupport()) {
+	            if(provisionService.getApplicationConfig().isProvisionSupport()) {
 	                UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
 	                account.setUserInfo(loadUserInfo);
 	                OrganizationsCast cast = new OrganizationsCast();
                     cast.setProvider(account.getAppId());
                     cast.setOrgId(loadUserInfo.getDepartmentId());
                     account.setOrgCast(organizationsCastService.query(cast));
-                    mqPersistService.send(
+                    provisionService.send(
 	                        ProvisionTopic.ACCOUNT_TOPIC, 
 	                        account,
 	                        ProvisionAction.CREATE_ACTION);
@@ -91,14 +91,14 @@ public class AccountsService  extends JpaBaseService<Accounts>{
 	 
    public boolean update(Accounts account) {
          if (super.update(account)) {
-        	 if(mqPersistService.getApplicationConfig().isProvisionSupport()) {
+        	 if(provisionService.getApplicationConfig().isProvisionSupport()) {
                     UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
                     account.setUserInfo(loadUserInfo);
                     OrganizationsCast cast = new OrganizationsCast();
                     cast.setProvider(account.getAppId());
                     cast.setOrgId(loadUserInfo.getDepartmentId());
                     account.setOrgCast(organizationsCastService.query(cast));
-                    mqPersistService.send(
+                    provisionService.send(
                             ProvisionTopic.ACCOUNT_TOPIC, 
                             account,
                             ProvisionAction.UPDATE_ACTION);
@@ -116,10 +116,10 @@ public class AccountsService  extends JpaBaseService<Accounts>{
        Accounts account = this.get(id);
        if (super.remove(id)) {
               UserInfo loadUserInfo = null;
-              if(mqPersistService.getApplicationConfig().isProvisionSupport()) {
+              if(provisionService.getApplicationConfig().isProvisionSupport()) {
                   loadUserInfo = userInfoService.findUserRelated(account.getUserId());
                   account.setUserInfo(loadUserInfo);
-                  mqPersistService.send(
+                  provisionService.send(
                           ProvisionTopic.ACCOUNT_TOPIC, 
                           account,
                           ProvisionAction.DELETE_ACTION);

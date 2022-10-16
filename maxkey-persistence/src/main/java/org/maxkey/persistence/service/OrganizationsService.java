@@ -35,7 +35,7 @@ import org.springframework.stereotype.Repository;
 public class OrganizationsService  extends JpaBaseService<Organizations>{
 
     @Autowired
-    ProvisionService messageQueueService;
+    ProvisionService provisionService;
     
 	public OrganizationsService() {
 		super(OrganizationsMapper.class);
@@ -51,7 +51,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	
 	 public boolean insert(Organizations organization) {
 	     if(super.insert(organization)){
-	    	 messageQueueService.send(
+	    	 provisionService.send(
                      ProvisionTopic.ORG_TOPIC, organization, ProvisionAction.CREATE_ACTION);
              return true;
          }
@@ -60,7 +60,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	 
 	 public boolean update(Organizations organization) {
 	     if(super.update(organization)){
-	    	 messageQueueService.send(
+	    	 provisionService.send(
                      ProvisionTopic.ORG_TOPIC, organization, ProvisionAction.UPDATE_ACTION);
              return true;
          }
@@ -84,7 +84,7 @@ public class OrganizationsService  extends JpaBaseService<Organizations>{
 	 
 	 public boolean delete(Organizations organization) {
 	     if(super.delete(organization)){
-	    	 messageQueueService.send(
+	    	 provisionService.send(
                      ProvisionTopic.ORG_TOPIC, organization, ProvisionAction.DELETE_ACTION);
              return true;
          }
