@@ -76,6 +76,7 @@ public class OAuth2Constants {
 		public static final String GRANT_TYPE_IMPLICIT            = "implicit";
 		public static final String GRANT_TYPE_AUTHORIZATION_CODE  = "authorization_code";
 		public static final String GRANT_TYPE_CLIENT_CREDENTIALS  = "client_credentials";
+		public static final String GRANT_TYPE_REFRESH_TOKEN		  = "refresh_token";
 		
 		
 		public static final String ACCESS_TOKEN           = "access_token";

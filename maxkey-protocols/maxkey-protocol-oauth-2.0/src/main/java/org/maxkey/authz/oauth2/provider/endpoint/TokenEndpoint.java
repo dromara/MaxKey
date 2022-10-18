@@ -230,11 +230,13 @@ public class TokenEndpoint extends AbstractEndpoint {
 	}
 
 	private boolean isRefreshTokenRequest(Map<String, String> parameters) {
-		return "refresh_token".equals(parameters.get(OAuth2Constants.PARAMETER.GRANT_TYPE)) && parameters.get("refresh_token") != null;
+		return OAuth2Constants.PARAMETER.GRANT_TYPE_REFRESH_TOKEN.equals(parameters.get(OAuth2Constants.PARAMETER.GRANT_TYPE)) 
+				&& parameters.get(OAuth2Constants.PARAMETER.GRANT_TYPE_REFRESH_TOKEN) != null;
 	}
 
 	private boolean isAuthCodeRequest(Map<String, String> parameters) {
-		return "authorization_code".equals(parameters.get(OAuth2Constants.PARAMETER.GRANT_TYPE)) && parameters.get(OAuth2Constants.PARAMETER.CODE) != null;
+		return OAuth2Constants.PARAMETER.GRANT_TYPE_AUTHORIZATION_CODE.equals(parameters.get(OAuth2Constants.PARAMETER.GRANT_TYPE)) 
+				&& parameters.get(OAuth2Constants.PARAMETER.CODE) != null;
 	}
 
 	public void setOAuth2RequestValidator(OAuth2RequestValidator oAuth2RequestValidator) {
