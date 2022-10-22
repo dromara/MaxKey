@@ -1,4 +1,23 @@
-﻿MaxKey v 3.5.8 GA 2022/10/11
+﻿MaxKey v 3.5.9 GA 2022/10/25
+    *(MAXKEY-221401) docker和docker-compose部署的参数及文档优化
+    *(MAXKEY-221402) app合并SAML和元数据配置
+    *(MAXKEY-221403) 菜单配置的优化
+    *(MAXKEY-221404) 应用状态status的优化
+    *(MAXKEY-221405) 更新3.5.8的界面图片
+    *(MAXKEY-221406) SpringBootAdmin默认的enabled=false
+    *(MAXKEY-221407) properties 参数优化
+    *(MAXKEY-221408) 增加JDBC同步器
+    *(MAXKEY-221409) OAuth refresh_token改为静态变量
+    *(MAXKEY-221410) HttpRequestAdapter请求适配器优化
+    *(MAXKEY-221411) 单点通知日志改为debug
+    *(MAXKEY-221412) 移除docker 旧版本mysql sql
+    *(MAXKEY-221413) 官方网站优化，导航、依赖内容、图片等
+    *(MAXKEY-221414) 依赖项引用、更新和升级
+        springBoot                2.7.5
+        springSecurity            5.7.4
+        mysqlconnector            8.0.30
+    
+MaxKey v 3.5.8 GA 2022/10/11
     *(MAXKEY-221301) 新版LOGO更新
     *(MAXKEY-221302) 角色属性dynamic - >category
     *(MAXKEY-221303) 角色列表增加"成员"和"访问权限"按钮，方便管理员操作
