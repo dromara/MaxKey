@@ -28,6 +28,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -46,6 +47,7 @@ import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -113,20 +115,14 @@ public class HttpRequestAdapter {
                 stringEntity.setContentType(ContentType.APPLICATION_JSON);
                 httpMethod.setEntity(stringEntity);
             }
-            _logger.debug("Post Message \n{} ", httpMethod.getEntity().toString());
+            _logger.trace("Post Message \n{} ", httpMethod.getEntity().toString());
         }
         
         try {
             // httpClient对象执行post请求,并返回响应参数对象
             httpResponse = httpClient.execute(httpMethod);
             // 从响应对象中获取响应内容
-            HttpEntity entity = httpResponse.getEntity();
-            String content = EntityUtils.toString(entity);
-            _logger.debug("Http Response StatusCode {} , Content {}",
-                    httpResponse.getStatusLine().getStatusCode(),
-                    content
-            );
-            return content;
+            return resolveHttpResponse(httpResponse);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -158,13 +154,7 @@ public class HttpRequestAdapter {
             // httpClient对象执行put请求,并返回响应参数对象
             httpResponse = httpClient.execute(httpMethod);
             // 从响应对象中获取响应内容
-            HttpEntity entity = httpResponse.getEntity();
-            String content = EntityUtils.toString(entity);
-            _logger.debug("Http Response StatusCode {} , Content {}",
-                    httpResponse.getStatusLine().getStatusCode(),
-                    content
-            );
-            return content;
+            return resolveHttpResponse(httpResponse);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -189,19 +179,13 @@ public class HttpRequestAdapter {
         StringEntity stringEntity =new StringEntity(jsonString, "UTF-8");
         stringEntity.setContentType(ContentType.APPLICATION_JSON);
         httpMethod.setEntity(stringEntity);
-        _logger.debug("Post Message \n{} ", httpMethod.getEntity().toString());
+        _logger.debug("Put Message \n{} ", httpMethod.getEntity().toString());
         
         try {
             // httpClient对象执行put请求,并返回响应参数对象
             httpResponse = httpClient.execute(httpMethod);
             // 从响应对象中获取响应内容
-            HttpEntity entity = httpResponse.getEntity();
-            String content = EntityUtils.toString(entity);
-            _logger.debug("Http Response StatusCode {} , Content {}",
-                    httpResponse.getStatusLine().getStatusCode(),
-                    content
-            );
-            return content;
+            return resolveHttpResponse(httpResponse);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -231,13 +215,7 @@ public class HttpRequestAdapter {
             // httpClient对象执行get请求,并返回响应参数对象
             httpResponse = httpClient.execute(httpMethod);
             // 从响应对象中获取响应内容
-            HttpEntity entity = httpResponse.getEntity();
-            String content = EntityUtils.toString(entity);
-            _logger.debug("Http Response StatusCode {} , Content {}",
-                    httpResponse.getStatusLine().getStatusCode(),
-                    content
-            );
-            return content;
+            return resolveHttpResponse(httpResponse);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -261,13 +239,7 @@ public class HttpRequestAdapter {
             // httpClient对象执行post请求,并返回响应参数对象
             httpResponse = httpClient.execute(httpMethod);
             // 从响应对象中获取响应内容
-            HttpEntity entity = httpResponse.getEntity();
-            String content = EntityUtils.toString(entity);
-            _logger.debug("Http Response StatusCode {} , Content {}",
-                    httpResponse.getStatusLine().getStatusCode(),
-                    content
-            );
-            return content;
+            return resolveHttpResponse(httpResponse);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -275,6 +247,15 @@ public class HttpRequestAdapter {
         }
         return null;
 	}
+    
+    String resolveHttpResponse(CloseableHttpResponse httpResponse) throws ParseException, IOException {
+    	 HttpEntity entity = httpResponse.getEntity();
+         String content = EntityUtils.toString(entity);
+         HttpStatus  httpStatus  = HttpStatus.valueOf(httpResponse.getStatusLine().getStatusCode());
+         _logger.debug("Http Response HttpStatus {} " , httpStatus);
+         _logger.trace("Http Response Content {} " , content );
+         return content;
+    }
     
     /**
      * @param HttpRequest
