@@ -31,7 +31,7 @@ public abstract class SingleLogout {
     public abstract void sendRequest(Authentication authentication,Apps logoutApp) ;
     
     public void postMessage(String url,Map<String, Object> paramMap) {
-    	_logger.debug("post message to url {}" , url);
+    	_logger.debug("post logout message to url {}" , url);
     	(new HttpRequestAdapter()).post(url , paramMap);
     }
 }
