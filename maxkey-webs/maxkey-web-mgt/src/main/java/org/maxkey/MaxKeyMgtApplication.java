@@ -62,7 +62,7 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 	private static final Logger _logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
 
 	public static void main(String[] args) {
-	    _logger.info("Start MaxKeyMgtApplication ...");
+	    _logger.info("Start MaxKeyMgt Application ...");
 
 		ConfigurableApplicationContext  applicationContext = 
 							SpringApplication.run(MaxKeyMgtApplication.class, args);

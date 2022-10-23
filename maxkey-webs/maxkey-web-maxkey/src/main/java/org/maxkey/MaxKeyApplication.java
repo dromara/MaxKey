@@ -43,7 +43,7 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
      * @param args start parameter 
      */
     public static void main(String[] args) {
-        _logger.info("Start MaxKeyApplication ...");
+        _logger.info("Start MaxKey Application ...");
         
         VFS.addImplClass(SpringBootVFS.class);
         ConfigurableApplicationContext applicationContext = 
