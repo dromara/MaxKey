@@ -12,7 +12,9 @@
     *(MAXKEY-221411) 单点通知日志改为debug
     *(MAXKEY-221412) 移除docker 旧版本mysql sql
     *(MAXKEY-221413) 官方网站优化，导航、依赖内容、图片等
-    *(MAXKEY-221414) 依赖项引用、更新和升级
+    *(MAXKEY-221414) macOS执行启动脚本报空指针异常#I5X10K by tzk007
+    *(MAXKEY-221415) 修复maxkey docker的nginx配置转发问题
+    *(MAXKEY-221416) 依赖项引用、更新和升级
         springBoot                2.7.5
         springSecurity            5.7.4
         mysqlconnector            8.0.30
