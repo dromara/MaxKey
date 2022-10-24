@@ -266,6 +266,35 @@ CREATE TABLE `mxk_apps_token_based_details` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `mxk_connectors`
+--
+
+DROP TABLE IF EXISTS `mxk_connectors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mxk_connectors` (
+  `id` varchar(50) NOT NULL,
+  `connname` varchar(200) DEFAULT NULL,
+  `JUSTINTIME` tinyint DEFAULT NULL,
+  `scheduler` varchar(45) DEFAULT NULL,
+  `providerurl` varchar(400) DEFAULT NULL,
+  `principal` varchar(200) DEFAULT NULL,
+  `credentials` varchar(500) DEFAULT NULL,
+  `filters` varchar(400) DEFAULT NULL,
+  `STATUS` varchar(45) DEFAULT NULL,
+  `CREATEDBY` varchar(45) DEFAULT NULL,
+  `CREATEDDATE` varchar(45) DEFAULT NULL,
+  `MODIFIEDDATE` varchar(45) DEFAULT NULL,
+  `MODIFIEDBY` varchar(45) DEFAULT NULL,
+  `DESCRIPTION` varchar(45) DEFAULT NULL,
+  `INSTID` varchar(45) NOT NULL,
+  `APPID` varchar(45) DEFAULT NULL,
+  `APPNAME` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='连接器';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `mxk_email_senders`
 --
 
@@ -322,7 +351,6 @@ DROP TABLE IF EXISTS `mxk_history_connector`;
 CREATE TABLE `mxk_history_connector` (
   `ID` varchar(45) NOT NULL,
   `CONNAME` varchar(200) DEFAULT NULL,
-  `CONTYPE` varchar(45) DEFAULT NULL,
   `SOURCEID` varchar(45) DEFAULT NULL,
   `SOURCENAME` varchar(500) DEFAULT NULL,
   `OBJECTID` varchar(45) DEFAULT NULL,
@@ -331,6 +359,8 @@ CREATE TABLE `mxk_history_connector` (
   `SYNCTIME` varchar(45) DEFAULT NULL,
   `RESULT` varchar(45) DEFAULT NULL,
   `INSTID` varchar(45) NOT NULL,
+  `TOPIC` varchar(45) DEFAULT NULL,
+  `ACTIONTYPE` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -420,6 +450,7 @@ CREATE TABLE `mxk_history_provisions` (
   `content` longtext,
   `sendTime` varchar(45) DEFAULT NULL,
   `connected` tinyint DEFAULT NULL,
+  `instId` int DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -798,7 +829,7 @@ CREATE TABLE `mxk_roles` (
   `ID` varchar(45) NOT NULL COMMENT 'ID',
   `ROLECODE` varchar(45) DEFAULT NULL,
   `ROLENAME` varchar(100) DEFAULT NULL COMMENT 'GROUP NAME',
-  `DYNAMIC` varchar(2) DEFAULT NULL COMMENT '动态用户组，0否 1是',
+  `category` varchar(20) DEFAULT NULL COMMENT '动态用户组，dynamic动态组 static静态组app应用账号组',
   `FILTERS` text COMMENT '过滤条件SQL',
   `ORGIDSLIST` text COMMENT '机构列表',
   `RESUMETIME` varchar(45) DEFAULT NULL COMMENT 'RESUMETIME',
@@ -881,7 +912,7 @@ CREATE TABLE `mxk_socials_provider` (
   `clientid` varchar(100) DEFAULT NULL,
   `clientsecret` varchar(500) DEFAULT NULL,
   `agentId` varchar(45) DEFAULT NULL,
-  `hidden` varchar(45) DEFAULT 'false',
+  `display` varchar(45) DEFAULT 'false',
   `sortIndex` int DEFAULT '1',
   `scancode` varchar(45) DEFAULT 'none',
   `status` int DEFAULT '1',
@@ -1125,4 +1156,4 @@ CREATE TABLE `mxk_userinfo_adjunct` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-06 19:51:25
+-- Dump completed on 2022-10-24 17:58:16
