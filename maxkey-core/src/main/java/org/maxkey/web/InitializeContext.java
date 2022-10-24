@@ -17,19 +17,9 @@
 
 package org.maxkey.web;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang3.ArchUtils;
+import org.apache.commons.lang3.arch.Processor;
 import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.joda.time.DateTime;
 import org.maxkey.configuration.ApplicationConfig;
@@ -44,6 +34,18 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * InitApplicationContext .
@@ -199,10 +201,14 @@ public class InitializeContext extends HttpServlet {
             _logger.trace(key + "   =   {}" , map.get(key));
         }
         _logger.debug("APP_HOME" + "   =   {}" , PathUtils.getInstance().getAppPath());
+        Processor.Type type = ArchUtils.getProcessor().getType();
+        if (Objects.isNull(type)){
+            type = Processor.Type.UNKNOWN;
+        }
         _logger.debug("OS      : {}({} {}), version {}",
                     SystemUtils.OS_NAME,
                     SystemUtils.OS_ARCH,
-                    ArchUtils.getProcessor().getType(),
+                    type,
                     SystemUtils.OS_VERSION
                     
                 );
