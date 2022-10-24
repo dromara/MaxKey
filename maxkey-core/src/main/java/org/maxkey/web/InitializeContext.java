@@ -201,14 +201,15 @@ public class InitializeContext extends HttpServlet {
             _logger.trace(key + "   =   {}" , map.get(key));
         }
         _logger.debug("APP_HOME" + "   =   {}" , PathUtils.getInstance().getAppPath());
-        Processor.Type type = ArchUtils.getProcessor().getType();
-        if (Objects.isNull(type)){
-            type = Processor.Type.UNKNOWN;
+        
+        Processor.Type processorType = ArchUtils.getProcessor().getType();
+        if (Objects.isNull(processorType)){
+        	processorType = Processor.Type.UNKNOWN;
         }
         _logger.debug("OS      : {}({} {}), version {}",
                     SystemUtils.OS_NAME,
                     SystemUtils.OS_ARCH,
-                    type,
+                    processorType,
                     SystemUtils.OS_VERSION
                     
                 );
