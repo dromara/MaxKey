@@ -113,7 +113,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 
 | Version    | Date   |  Docker  |  Pan URL  |  Pan Code  |
 | --------   | :----- | :----    | :----     | :----      |
-| v 3.5.8    | 2022/10/10   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |  <a href="https://pan.baidu.com/s/17wqqyy0WGZHc-hnkMGGRsg" target="_blank">Download</a>  |  **mxk9**  |
+| v 3.5.9    | 2022/10/25   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |  <a href="https://pan.baidu.com/s/17wqqyy0WGZHc-hnkMGGRsg" target="_blank">Download</a>  |  **mxk9**  |
 
 # License
  
