@@ -111,15 +111,20 @@ public class SamlMetadataEndpoint {
 			
 	        IDPSSODescriptor descriptor = metadataGenerator.buildIDPSSODescriptor();
 	
-	        descriptor.getSingleSignOnServices().add(metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath(true)+"/authz/saml20/"+appId,null));
+	        descriptor.getSingleSignOnServices().add(
+	        		metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath(true) + "/authz/saml20/" + appId,null));
 	        
-	        descriptor.getSingleSignOnServices().add(metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath(true)+"/authz/saml20/"+appId,SAMLConstants.SAML2_REDIRECT_BINDING_URI));
+	        descriptor.getSingleSignOnServices().add(
+	        		metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath(true) + "/authz/saml20/" + appId,SAMLConstants.SAML2_REDIRECT_BINDING_URI));
 	        
-	        descriptor.getSingleSignOnServices().add(metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath(true)+"/authz/saml20/"+appId,SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI));
+	        descriptor.getSingleSignOnServices().add(
+	        		metadataGenerator.getSingleSignOnService(WebContext.getHttpContextPath(true) + "/authz/saml20/" + appId,SAMLConstants.SAML2_POST_SIMPLE_SIGN_BINDING_URI));
 	        
-	        descriptor.getSingleLogoutServices().add(metadataGenerator.getSingleLogoutService(WebContext.getHttpContextPath(true)+"/logout",null));
+	        descriptor.getSingleLogoutServices().add(
+	        		metadataGenerator.getSingleLogoutService(WebContext.getHttpContextPath(true) + "/force/logout" , null));
 	        
-	        descriptor.getManageNameIDServices().add(metadataGenerator.getManageNameIDService(WebContext.getHttpContextPath(true)+"/saml/metadata/" + WebConstants.MXK_METADATA_PREFIX + appId + ".xml"));
+	        descriptor.getManageNameIDServices().add(
+	        		metadataGenerator.getManageNameIDService(WebContext.getHttpContextPath(true) + "/metadata/saml20/" + WebConstants.MXK_METADATA_PREFIX + appId + ".xml"));
 	             
 	        descriptor.getKeyDescriptors().add(metadataGenerator.generateEncryptionKeyDescriptor(signingCredential));  
 	         
