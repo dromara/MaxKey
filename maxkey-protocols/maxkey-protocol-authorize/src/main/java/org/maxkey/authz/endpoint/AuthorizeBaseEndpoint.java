@@ -76,24 +76,24 @@ public class AuthorizeBaseEndpoint {
 		account.setUsername(userInfo.getUsername());
 		account.setAppName(app.getAppName());
 		
-		if(loadApp.getCredential() == Apps.CREDENTIALS.USER_DEFINED){
+		if(loadApp.getCredential().equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)){
 			account = accountsService.load(new Accounts(userInfo.getId(),loadApp.getId()));
 			if(account != null){
 				account.setRelatedPassword(
 						PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));
 			}
 			
-		}else if(loadApp.getCredential() == Apps.CREDENTIALS.SHARED){
+		}else if(loadApp.getCredential().equalsIgnoreCase(Apps.CREDENTIALS.SHARED)){
 			account.setRelatedUsername(loadApp.getSharedUsername());
 			account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(loadApp.getSharedPassword()));	
-		}else if(loadApp.getCredential() == Apps.CREDENTIALS.SYSTEM){
+		}else if(loadApp.getCredential().equalsIgnoreCase( Apps.CREDENTIALS.SYSTEM)){
 			account.setUsername(
 					AbstractAuthorizeAdapter.getValueByUserAttr(userInfo, loadApp.getSystemUserAttr())
 			);
 			//decoder database stored encode password
 			account.setRelatedPassword(
 					PasswordReciprocal.getInstance().decoder(userInfo.getDecipherable()));
-		}else if(loadApp.getCredential()==Apps.CREDENTIALS.NONE){
+		}else if(loadApp.getCredential().equalsIgnoreCase(Apps.CREDENTIALS.NONE)){
 			account.setUsername(userInfo.getUsername());
 			account.setRelatedPassword(userInfo.getUsername());
 			

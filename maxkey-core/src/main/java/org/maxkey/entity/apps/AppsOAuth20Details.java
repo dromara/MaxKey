@@ -94,6 +94,7 @@ public class AppsOAuth20Details extends Apps {
         this.setAppName(application.getAppName());
         this.setLoginUrl(application.getLoginUrl());
         this.setLogoutUrl(application.getLogoutUrl());
+        this.setLogoutType(application.getLogoutType());
         this.setCategory(application.getCategory());
         this.setProtocol(application.getProtocol());
         this.setIcon(application.getIcon());
@@ -103,6 +104,8 @@ public class AppsOAuth20Details extends Apps {
         this.setVendor(application.getVendor());
         this.setVendorUrl(application.getVendorUrl());
         this.setVisible(application.getVisible());
+        
+        this.setIsAdapter(application.getIsAdapter());
         this.setAdapter(application.getAdapter());
         this.setAdapterId(application.getAdapterId());
         this.setAdapterName(application.getAdapterName());

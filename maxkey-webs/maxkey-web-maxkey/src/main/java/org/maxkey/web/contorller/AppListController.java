@@ -86,12 +86,12 @@ public class AppListController {
     @RequestMapping(value = { "/account/get" })
     @ResponseBody
 	public ResponseEntity<?> getAccount(
-    		@RequestParam("credential") int credential,
+    		@RequestParam("credential") String credential,
     		@RequestParam("appId") String appId,
     		@CurrentUser UserInfo currentUser) {
         Accounts account = null ;
         
-        if (credential == Apps.CREDENTIALS.USER_DEFINED) {
+        if (credential.equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)) {
         	account = accountsService.load(new Accounts(currentUser.getId(), appId));
         	account.setRelatedPassword(
         			PasswordReciprocal.getInstance().decoder(
@@ -110,11 +110,11 @@ public class AppListController {
     @RequestMapping(value = { "/account/update" })
     @ResponseBody
 	public ResponseEntity<?> updateAccount(
-    		@RequestParam("credential") int credential,
+    		@RequestParam("credential") String credential,
     		@ModelAttribute Accounts account,
             @CurrentUser UserInfo currentUser) {
         Accounts appUsers = new Accounts();
-        if (credential == Apps.CREDENTIALS.USER_DEFINED) {
+        if (credential.equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)) {
             appUsers = accountsService.load(new Accounts(currentUser.getId(), account.getAppId()));
             if (appUsers == null) {
                 appUsers = new Accounts();

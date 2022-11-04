@@ -42,10 +42,10 @@ public class Apps extends JpaBaseEntity implements Serializable {
     private static final long serialVersionUID = -6264641546959620712L;
 
     public static final class CREDENTIALS {
-        public static final int USER_DEFINED = 3;
-        public static final int SHARED = 2;
-        public static final int SYSTEM = 1;
-        public static final int NONE = 0;
+        public static final String USER_DEFINED = "user_defined";
+        public static final String SHARED 		= "shared";
+        public static final String SYSTEM 		= "system";
+        public static final String NONE 		= "none";
     }
 
     public static final class VISIBLE {
@@ -100,7 +100,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
      * CREDENTIAL VALUES USER-DEFINED SYSTEM SHARED NONE
      */
     @Column
-    private int credential;
+    private String credential;
     @Column
     private String sharedUsername;
     @Column
@@ -116,6 +116,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
     @Column
     private String logoutUrl;
     @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private int logoutType;
     /*
      * extendAttr
@@ -173,7 +174,6 @@ public class Apps extends JpaBaseEntity implements Serializable {
     public Apps() {
         super();
         isSignature = ConstsBoolean.FALSE;
-        credential = CREDENTIALS.NONE;
     }
 
   
@@ -354,14 +354,14 @@ public class Apps extends JpaBaseEntity implements Serializable {
     /**
      * @return the credential
      */
-    public int getCredential() {
+    public String getCredential() {
         return credential;
     }
 
     /**
      * @param credential the credential to set
      */
-    public void setCredential(int credential) {
+    public void setCredential(String credential) {
         this.credential = credential;
     }
 
