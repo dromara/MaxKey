@@ -50,24 +50,27 @@ public class SubjectGenerator {
 							int validInSeconds,
 							UserInfo userInfo) {
 		String nameIdValue = userInfo.getUsername();
+		String nameIDType = NameIDType.UNSPECIFIED;
 		if(saml20Details.getNameidFormat().equalsIgnoreCase("persistent")) {
-		    
+			nameIDType = NameIDType.PERSISTENT;
 		}else if(saml20Details.getNameidFormat().equalsIgnoreCase("transient")) {
-            
+			nameIDType = NameIDType.TRANSIENT;
         }else if(saml20Details.getNameidFormat().equalsIgnoreCase("unspecified")) {
-            
+        	nameIDType = NameIDType.UNSPECIFIED;
         }else if(saml20Details.getNameidFormat().equalsIgnoreCase("emailAddress")) {
             if(userInfo.getEmail()!=null && !userInfo.getEmail().equals("")) {
                 nameIdValue = userInfo.getEmail();
             }
+            nameIDType = NameIDType.EMAIL;
         }else if(saml20Details.getNameidFormat().equalsIgnoreCase("X509SubjectName")) {
-            
+        	nameIDType = NameIDType.X509_SUBJECT;
         }else if(saml20Details.getNameidFormat().equalsIgnoreCase("WindowsDomainQualifiedName")) {
             if(userInfo.getWindowsAccount()!=null && !userInfo.getWindowsAccount().equals("")) {
                 nameIdValue = userInfo.getWindowsAccount();
             }
+            nameIDType = NameIDType.WIN_DOMAIN_QUALIFIED;
         }else if(saml20Details.getNameidFormat().equalsIgnoreCase("entity")) {
-            
+        	nameIDType = NameIDType.ENTITY;
         }else if(saml20Details.getNameidFormat().equalsIgnoreCase("custom")) {
             
         }else if(saml20Details.getNameidFormat().equalsIgnoreCase("Mobile")) {
@@ -92,7 +95,7 @@ public class SubjectGenerator {
         	//do nothing
         }
 		
-		NameID nameID =builderNameID(nameIdValue,assertionConsumerURL);
+		NameID nameID = builderNameID(nameIdValue,assertionConsumerURL,nameIDType);
 		Subject subject =builderSubject(nameID);
 		
 		String clientAddress=WebContext.getRequestIpAddress(WebContext.getRequest());
@@ -107,12 +110,12 @@ public class SubjectGenerator {
 		return subject;
 	}
 	
-	public NameID builderNameID(String value,String strSPNameQualifier){
+	public NameID builderNameID(String value,String strSPNameQualifier,String nameIDType){
 		//Response/Assertion/Subject/NameID	
 		NameID nameID = new NameIDBuilder().buildObject();
 		nameID.setValue(value);
 		//nameID.setFormat(NameIDType.PERSISTENT);
-		nameID.setFormat(NameIDType.UNSPECIFIED);
+		nameID.setFormat(nameIDType);
 		//nameID.setSPNameQualifier(strSPNameQualifier);
 		
 		return nameID;
