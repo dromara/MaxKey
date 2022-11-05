@@ -72,24 +72,16 @@ public class BaseAppContorller {
 	}
 	
 	protected void encodeSharedPassword(Apps application){
-		if(!application.getCredential().equalsIgnoreCase(Apps.CREDENTIALS.SHARED)){
-			if(application.getProtocol().equals(ConstsProtocols.FORMBASED)){
-				if(StringUtils.isNotBlank(application.getSharedPassword())){
-					application.setSharedPassword(
-							PasswordReciprocal.getInstance().encode(application.getSharedPassword()));
-				}
-			}
+		if(StringUtils.isNotBlank(application.getSharedPassword())){
+			application.setSharedPassword(
+					PasswordReciprocal.getInstance().encode(application.getSharedPassword()));
 		}
 	}
 	
 	protected void decoderSharedPassword(Apps application){
-		if(application.getCredential().equalsIgnoreCase(Apps.CREDENTIALS.SHARED)){
-			if(application.getProtocol().equals(ConstsProtocols.FORMBASED)){
-				if(StringUtils.isNotBlank(application.getSharedPassword())){
-					application.setSharedPassword(
-							PasswordReciprocal.getInstance().decoder(application.getSharedPassword()));
-				}
-			}
+		if(StringUtils.isNotBlank(application.getSharedPassword())){
+			application.setSharedPassword(
+					PasswordReciprocal.getInstance().decoder(application.getSharedPassword()));
 		}
 	}
 	
