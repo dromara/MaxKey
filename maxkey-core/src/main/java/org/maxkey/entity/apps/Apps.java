@@ -84,6 +84,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
     String iconId;
     
     @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private int visible;
     
     //引导方式 IDP OR SP,default is IDP
@@ -135,6 +136,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
     @Column
     private int isSignature;
     @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private int isAdapter;
     @Column
     private String adapterId;
