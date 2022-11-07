@@ -60,9 +60,9 @@ export class AppExtendApiDetailsEditerComponent implements OnInit {
     submitting: boolean;
     model: Apps;
   } = {
-      submitting: false,
-      model: new Apps()
-    };
+    submitting: false,
+    model: new Apps()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -85,12 +85,21 @@ export class AppExtendApiDetailsEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.isEdit) {
       this.appsExtendApiDetailsService.get(`${this.id}`).subscribe(res => {
         this.form.model.init(res.data);
+        this.previewImage = this.form.model.iconBase64.toString();
+        this.fileList = [
+          {
+            uid: this.form.model.id.toString(),
+            name: this.form.model.appName.toString(),
+            status: 'done',
+            url: this.previewImage
+          }
+        ];
         this.initExtraAttr(res.data);
       });
     } else {
