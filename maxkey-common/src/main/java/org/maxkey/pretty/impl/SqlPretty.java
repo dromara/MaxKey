@@ -27,6 +27,8 @@ import org.maxkey.pretty.Pretty;
 
 public class SqlPretty implements Pretty{
 	
+	static SqlPretty instance ;
+	
 	public static final String WHITESPACE 			= " \n\r\f\t";
 	private static final Set<String> BEGIN_CLAUSES 	= new HashSet<String>();
 	private static final Set<String> END_CLAUSES 	= new HashSet<String>();
@@ -80,9 +82,25 @@ public class SqlPretty implements Pretty{
 		
 	}
 	
+	public static SqlPretty getInstance() {
+		if (null == instance) {
+			synchronized (JsonPretty.class) {
+				if (instance == null) {
+					instance = new SqlPretty();
+				}
+			}
+		}
+		return instance;
+	}
+	
 	@Override
 	public String format(String source) {
 		return new FormatProcess( source ).perform();
+	}
+	
+	@Override
+	public String formatln(String source) {
+		return LINE_BREAK + format(source);
 	}
 
 	private static class FormatProcess {

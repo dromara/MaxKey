@@ -30,10 +30,23 @@ import com.google.gson.JsonParser;
 
 public class JsonPretty  implements Pretty{
 
+	static JsonPretty instance ;
+	
 	public JsonPretty() {
 
 	}
 
+	public static JsonPretty getInstance() {
+		if (null == instance) {
+			synchronized (JsonPretty.class) {
+				if (instance == null) {
+					instance = new JsonPretty();
+				}
+			}
+		}
+		return instance;
+	}
+	
 	/**
 	 * prettyJson use jackson
 	 * @param bean
@@ -70,11 +83,25 @@ public class JsonPretty  implements Pretty{
 	
 	/**
 	 * prettyJson use Gson
+	 * @param bean
+	 * @return String
+	 */
+	public  String formatln(Object bean){
+		return LINE_BREAK + format(bean);
+	}
+	
+	/**
+	 * prettyJson use Gson
 	 * @param JSON String
 	 * @return String
 	 */
 	public  String format(String  jsonString){
 		return format(JsonParser.parseString(jsonString));
+	}
+
+	@Override
+	public String formatln(String source) {
+		return LINE_BREAK + format(source);
 	}
 	
 }

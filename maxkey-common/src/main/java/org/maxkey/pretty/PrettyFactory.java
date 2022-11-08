@@ -18,27 +18,20 @@
 package org.maxkey.pretty;
 
 import org.maxkey.pretty.impl.JsonPretty;
-import org.maxkey.pretty.impl.SqlPretty;
 import org.maxkey.pretty.impl.XmlPretty;
 
 public class PrettyFactory {
-    
-    static final Pretty jsonPretty  = new JsonPretty();
-    
-    static final Pretty sqlPretty   = new SqlPretty();
-    
-    static final Pretty xmlPretty   = new XmlPretty();
-    
+	
     public static Pretty getJsonPretty() {
-        return jsonPretty;
+        return JsonPretty.getInstance();
     }
     
     public static Pretty getXmlPretty() {
-        return xmlPretty;
+        return XmlPretty.getInstance();
     }
     
     public static Pretty getSqlPretty() {
-        return sqlPretty;
+        return XmlPretty.getInstance();
     }
     
 }

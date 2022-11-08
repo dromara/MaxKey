@@ -18,7 +18,9 @@
 package org.maxkey.pretty;
 
 public interface Pretty {
-
+	public final static String LINE_BREAK 	= "\n";
+	
 	public String format(String source);
 
+	public  String formatln(String source);
 }

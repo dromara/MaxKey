@@ -29,10 +29,22 @@ import org.xml.sax.InputSource;
 
 public class XmlPretty implements Pretty{
 
+	static XmlPretty instance ;
+	
 	public XmlPretty() {
 
 	}
 	
+	public static XmlPretty getInstance() {
+		if (null == instance) {
+			synchronized (JsonPretty.class) {
+				if (instance == null) {
+					instance = new XmlPretty();
+				}
+			}
+		}
+		return instance;
+	}
 	
 	@Override
 	public  String format(String xmlString){
@@ -56,4 +68,8 @@ public class XmlPretty implements Pretty{
 		}
 	}
 
+	@Override
+	public String formatln(String source) {
+		return LINE_BREAK + format(source);
+	}
 }
