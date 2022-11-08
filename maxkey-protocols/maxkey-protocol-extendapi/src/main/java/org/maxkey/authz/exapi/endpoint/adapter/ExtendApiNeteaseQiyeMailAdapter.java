@@ -17,31 +17,32 @@
 
 package org.maxkey.authz.exapi.endpoint.adapter;
 
-import java.io.UnsupportedEncodingException;
-import java.security.interfaces.RSAPrivateKey;
-
+import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
-import org.maxkey.crypto.HexUtils;
-import org.maxkey.crypto.RSAUtils;
+import org.maxkey.authz.exapi.endpoint.adapter.netease.NeteaseRSATool;
 import org.maxkey.entity.Accounts;
+import org.maxkey.entity.ExtraAttr;
 import org.maxkey.entity.ExtraAttrs;
 import org.maxkey.entity.apps.Apps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
+
+
 /**
  * qiye.163.com
  * @author shimingxy
  *
  */
-public class ExtendApiQiye163ExmailAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(ExtendApiQiye163ExmailAdapter.class);
+public class ExtendApiNeteaseQiyeMailAdapter extends AbstractAuthorizeAdapter {
+	final static Logger _logger = LoggerFactory.getLogger(ExtendApiNeteaseQiyeMailAdapter.class);
 	//https://entryhz.qiye.163.com
-	static String REDIRECT_URI	
-			= "https://entryhz.qiye.163.com/domain/oa/Entry?domain=%s&account_name=%s&time=%s&enc=%s";
+	static String REDIRECT_PARAMETER	= "domain=%s&account_name=%s&time=%s&enc=%s&lang=%s";
+	
+	static String DEFAULT_REDIRECT_URI ="https://entryhz.qiye.163.com/domain/oa/Entry";
 
 	Accounts account;
-	
+
 	@Override
 	public Object generateInfo() {
 		return null;
@@ -51,38 +52,43 @@ public class ExtendApiQiye163ExmailAdapter extends AbstractAuthorizeAdapter {
 	public ModelAndView authorize(ModelAndView modelAndView) {
     	
 		Apps details=(Apps)app;
-		//extraAttrs from Applications
-		ExtraAttrs extraAttrs=null;
-		if(details.getIsExtendAttr()==1){
-			extraAttrs=new ExtraAttrs(details.getExtendAttr());
+		StringBuffer redirect_uri = new StringBuffer(details.getLoginUrl());
+		if(StringUtils.isNotBlank(redirect_uri)) {
+			if(redirect_uri.indexOf("?")>-1) {
+				redirect_uri.append("").append( REDIRECT_PARAMETER);
+			}else {
+				redirect_uri.append("?").append( REDIRECT_PARAMETER);
+			}
 		}
+		//extraAttrs from App
+		ExtraAttrs extraAttrs=null;
+		if(details.getIsExtendAttr() == 1){
+			extraAttrs = new ExtraAttrs(details.getExtendAttr());
+			for(ExtraAttr attr : extraAttrs.getExtraAttrs()) {
+				redirect_uri.append("&").append(attr.getAttr()).append("=").append(attr.getValue());
+			}
+		}
+		
 		String time = System.currentTimeMillis() + "";
 		//域名，请使用企业自己的域名
 		String domain = details.getPrincipal();
 		
-		String account_name = this.userInfo.getEmail();
+		String account_name = this.userInfo.getEmail().substring(0, this.userInfo.getEmail().indexOf("@"));
 		
-		//String lang = "0";
+		String lang = "0";
 		String src = account_name + domain + time;
 		
 		String privateKey = details.getCredentials();
-		String enc = null;
-		try {
-			enc = HexUtils.bytes2HexString(
-						RSAUtils.sign(
-								src.getBytes("UTF-8"), 
-								(RSAPrivateKey)RSAUtils.privateKey(HexUtils.hex2Bytes(privateKey)), 
-								null)
-					);
-			String loginUrl = String.format(REDIRECT_URI, domain,account_name,time,enc);
-			_logger.debug("LoginUrl {} " , loginUrl);
-			modelAndView.addObject("redirect_uri", loginUrl);
-		} catch (UnsupportedEncodingException e) {
-			_logger.error("UnsupportedEncodingException ", e);
-		} catch (Exception e) {
-			_logger.error("Exception ", e);
-		}
+		_logger.debug("Private Key {} " , privateKey);
+		
+		String enc = new NeteaseRSATool().generateSHA1withRSASigature(src, privateKey);
+		String loginUrl = String.format(redirect_uri.toString(), domain,account_name,time,enc,lang);
+		
+		_logger.debug("LoginUrl {} " , loginUrl);
+		modelAndView.addObject("redirect_uri", loginUrl);
         
         return modelAndView;
 	}
+    
+   
 }
