@@ -28,6 +28,7 @@ import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.util.DatatypeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.web.util.UrlUtils;
 
 public class OpenHTTPPostDecoder extends HTTPPostDecoder {
     private final Logger log = LoggerFactory.getLogger(OpenHTTPPostDecoder.class);
@@ -108,14 +109,15 @@ public class OpenHTTPPostDecoder extends HTTPPostDecoder {
         if (!(inTransport instanceof HttpServletRequestAdapter)) {
             throw new MessageDecodingException("Message context InTransport instance was an unsupported type");
         }
-        HttpServletRequest httpRequest = ((HttpServletRequestAdapter) inTransport).getWrappedRequest();
+		HttpServletRequest httpRequest = 
+				((HttpServletRequestAdapter) inTransport).getWrappedRequest();
 
-        StringBuffer urlBuilder = httpRequest.getRequestURL();
-
-        String tempUrl = urlBuilder.toString();
-        // 从http协议头开始，跳过前面两个斜杠
-        tempUrl = tempUrl.substring(tempUrl.indexOf("/", 8) + 1);
-        return receiverEndpoint + tempUrl;
+		String requestUrl = UrlUtils.buildFullRequestUrl(httpRequest);
+		if(requestUrl.indexOf("?") > -1) {
+			return requestUrl.substring(0, requestUrl.indexOf("?"));
+		}else {
+			return requestUrl;
+		}
     }
 
     /**

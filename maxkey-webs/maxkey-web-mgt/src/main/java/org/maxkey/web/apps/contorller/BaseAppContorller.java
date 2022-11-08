@@ -20,7 +20,6 @@
  */
 package org.maxkey.web.apps.contorller;
 
-import org.maxkey.constants.ConstsProtocols;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.apps.Apps;
 import org.maxkey.persistence.service.AppsService;

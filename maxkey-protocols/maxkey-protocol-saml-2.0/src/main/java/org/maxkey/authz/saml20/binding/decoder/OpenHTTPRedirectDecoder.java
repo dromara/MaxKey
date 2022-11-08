@@ -28,6 +28,7 @@ import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.util.DatatypeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.web.util.UrlUtils;
 
 public class OpenHTTPRedirectDecoder extends HTTPRedirectDeflateDecoder {
 	private final Logger log = LoggerFactory.getLogger(OpenHTTPRedirectDecoder.class);
@@ -121,15 +122,14 @@ public class OpenHTTPRedirectDecoder extends HTTPRedirectDeflateDecoder {
 			throw new MessageDecodingException(
 					"Message context InTransport instance was an unsupported type");
 		}
-		HttpServletRequest httpRequest = ((HttpServletRequestAdapter) inTransport)
-				.getWrappedRequest();
-
-		StringBuffer urlBuilder = httpRequest.getRequestURL();
-
-		String tempUrl = urlBuilder.toString();
-		// 从http协议头开始，跳过前面两个斜杠
-		tempUrl = tempUrl.substring(tempUrl.indexOf("/", 8) + 1);
-		return receiverEndpoint + tempUrl;
+		HttpServletRequest httpRequest = 
+				((HttpServletRequestAdapter) inTransport).getWrappedRequest();
+		String requestUrl = UrlUtils.buildFullRequestUrl(httpRequest);
+		if(requestUrl.indexOf("?") > -1) {
+			return requestUrl.substring(0, requestUrl.indexOf("?"));
+		}else {
+			return requestUrl;
+		}
 	}
 
 	/**
