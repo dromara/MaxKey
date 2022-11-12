@@ -88,8 +88,8 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
      * @return
      */
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        String idForEncode = "bcrypt";
+    public PasswordEncoder passwordEncoder(
+    		@Value("${maxkey.crypto.password.encoder:bcrypt}") String idForEncode) {
         Map<String ,PasswordEncoder > encoders = new HashMap<String ,PasswordEncoder>();
         encoders.put(idForEncode, new BCryptPasswordEncoder());
         encoders.put("plain", NoOpPasswordEncoder.getInstance());
