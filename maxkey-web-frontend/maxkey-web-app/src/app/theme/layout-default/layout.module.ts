@@ -54,4 +54,4 @@ const COMPONENTS = [
   declarations: COMPONENTS,
   exports: COMPONENTS
 })
-export class LayoutDefaultModule { }
+export class LayoutDefaultModule {}

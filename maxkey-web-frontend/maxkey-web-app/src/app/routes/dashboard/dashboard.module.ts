@@ -65,4 +65,4 @@ const COMPONENTS = [HomeComponent];
   ],
   declarations: [...COMPONENTS]
 })
-export class DashboardModule { }
+export class DashboardModule {}

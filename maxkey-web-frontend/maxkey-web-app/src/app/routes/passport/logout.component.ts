@@ -41,7 +41,7 @@ export class LogoutComponent implements OnInit {
     @Inject(ReuseTabService)
     private reuseTabService: ReuseTabService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.redirect_uri = this.route.snapshot.params[CONSTS.REDIRECT_URI];
@@ -56,7 +56,7 @@ export class LogoutComponent implements OnInit {
           if (this.redirect_uri == null || this.redirect_uri == '') {
             this.router.navigateByUrl(this.tokenService.login_url!);
           } else {
-            if (this.redirect_uri.startsWith("http")){
+            if (this.redirect_uri.startsWith('http')) {
               location.href = this.redirect_uri;
             } else {
               this.router.navigateByUrl(this.redirect_uri);

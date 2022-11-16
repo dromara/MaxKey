@@ -56,29 +56,29 @@ export class SessionsComponent implements OnInit {
     indeterminate: boolean;
     checked: boolean;
   } = {
-      params: {
-        username: '',
-        displayName: '',
-        employeeNumber: '',
-        startDate: '',
-        endDate: '',
-        startDatePicker: addDays(new Date(), -30),
-        endDatePicker: new Date(),
-        pageSize: 10,
-        pageNumber: 1,
-        pageSizeOptions: [10, 20, 50]
-      },
-      results: {
-        records: 0,
-        rows: []
-      },
-      expandForm: false,
-      submitLoading: false,
-      tableLoading: false,
-      tableCheckedId: new Set<String>(),
-      indeterminate: false,
-      checked: false
-    };
+    params: {
+      username: '',
+      displayName: '',
+      employeeNumber: '',
+      startDate: '',
+      endDate: '',
+      startDatePicker: addDays(new Date(), -30),
+      endDatePicker: new Date(),
+      pageSize: 10,
+      pageNumber: 1,
+      pageSizeOptions: [10, 20, 50]
+    },
+    results: {
+      records: 0,
+      rows: []
+    },
+    expandForm: false,
+    submitLoading: false,
+    tableLoading: false,
+    tableCheckedId: new Set<String>(),
+    indeterminate: false,
+    checked: false
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -86,7 +86,7 @@ export class SessionsComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.fetch();
@@ -102,7 +102,7 @@ export class SessionsComponent implements OnInit {
     this.fetch();
   }
 
-  onReset(): void { }
+  onReset(): void {}
 
   onTerminate(e: MouseEvent): void {
     e.preventDefault();

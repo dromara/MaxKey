@@ -101,7 +101,7 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private doc: NzSafeAny,
     @Inject(WINDOW) private win: NzSafeAny,
     @Optional() private directionality: Directionality
-  ) { }
+  ) {}
 
   private getLinkNode(node: HTMLElement): HTMLElement | null {
     node = node.nodeName === 'A' ? node : (node.parentNode as HTMLElement);

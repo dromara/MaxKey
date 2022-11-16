@@ -44,9 +44,9 @@ export class UserLoginComponent implements OnInit, OnDestroy {
     providers: NzSafeAny[];
     qrScan: string;
   } = {
-      providers: [],
-      qrScan: ''
-    };
+    providers: [],
+    qrScan: ''
+  };
 
   form: FormGroup;
   error = '';

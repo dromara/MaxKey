@@ -38,11 +38,11 @@ export class Oauth2ApproveComponent implements OnInit {
       approval_prompt?: string;
     };
   } = {
-      submitting: false,
-      model: {
-        approval_prompt: 'force'
-      }
-    };
+    submitting: false,
+    model: {
+      approval_prompt: 'force'
+    }
+  };
   redirect_uri: string = '';
   formGroup: FormGroup = new FormGroup({});
 
@@ -52,7 +52,7 @@ export class Oauth2ApproveComponent implements OnInit {
     private route: ActivatedRoute,
     private msg: NzMessageService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.oauth2ApproveService.get(this.route.snapshot.queryParams['oauth_approval']).subscribe(res => {

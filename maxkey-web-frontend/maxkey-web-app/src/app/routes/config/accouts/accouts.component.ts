@@ -38,9 +38,9 @@ export class AccoutsComponent implements OnInit {
     submitting: boolean;
     model: Accounts;
   } = {
-      submitting: false,
-      model: new Accounts()
-    };
+    submitting: false,
+    model: new Accounts()
+  };
   redirect_uri: string = '';
   formGroup: FormGroup = new FormGroup({});
 
@@ -57,7 +57,7 @@ export class AccoutsComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.appId) {

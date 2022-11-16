@@ -35,9 +35,9 @@ export class TimebasedComponent implements OnInit {
     submitting: boolean;
     model: TimeBased;
   } = {
-      submitting: false,
-      model: new TimeBased()
-    };
+    submitting: false,
+    model: new TimeBased()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -46,7 +46,7 @@ export class TimebasedComponent implements OnInit {
     private timeBasedService: TimeBasedService,
     private msg: NzMessageService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     /*this.form = this.fb.group({

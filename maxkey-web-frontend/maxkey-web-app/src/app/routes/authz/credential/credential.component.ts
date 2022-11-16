@@ -32,9 +32,9 @@ export class CredentialComponent implements OnInit {
     submitting: boolean;
     model: Accounts;
   } = {
-      submitting: false,
-      model: new Accounts()
-    };
+    submitting: false,
+    model: new Accounts()
+  };
   redirect_uri: string = '';
   formGroup: FormGroup = new FormGroup({});
 
@@ -49,7 +49,7 @@ export class CredentialComponent implements OnInit {
     private accountsService: AccountsService,
     private msg: NzMessageService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.accountsService.get(this.route.snapshot.queryParams['appId']).subscribe(res => {

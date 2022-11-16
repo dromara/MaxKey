@@ -79,4 +79,4 @@ const DIRECTIVES: Array<Type<any>> = [];
     ...DIRECTIVES
   ]
 })
-export class SharedModule { }
+export class SharedModule {}

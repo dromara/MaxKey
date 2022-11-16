@@ -22,7 +22,6 @@ import { GlobalFooterModule } from '@delon/abc/global-footer';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
 import { AlainThemeModule } from '@delon/theme';
 import { SettingDrawerModule } from '@delon/theme/setting-drawer';
-
 //import { ThemeBtnModule } from '@delon/theme/theme-btn';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
@@ -93,4 +92,4 @@ const PASSPORT = [LayoutPassportComponent];
   declarations: [...COMPONENTS, ...HEADERCOMPONENTS, ...PASSPORT],
   exports: [...COMPONENTS, ...PASSPORT]
 })
-export class LayoutModule { }
+export class LayoutModule {}

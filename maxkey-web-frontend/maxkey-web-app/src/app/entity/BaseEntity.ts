@@ -15,30 +15,30 @@
  */
 
 export class BaseEntity {
-    id!: String;
-    instId!: String;
-    instName!: String;
-    sortIndex!: Number;
-    status!: Number;
-    description!: String;
-    switch_status: boolean = false;
-    str_status!: String;
+  id!: String;
+  instId!: String;
+  instName!: String;
+  sortIndex!: Number;
+  status!: Number;
+  description!: String;
+  switch_status: boolean = false;
+  str_status!: String;
 
-    constructor() {
-        this.status = 1;
+  constructor() {
+    this.status = 1;
+  }
+  init(data: any): void {
+    Object.assign(this, data);
+    if (this.status == 1) {
+      this.switch_status = true;
+      this.str_status = `${this.status}`;
     }
-    init(data: any): void {
-        Object.assign(this, data);
-        if (this.status == 1) {
-            this.switch_status = true;
-            this.str_status = `${this.status}`;
-        }
+  }
+  trans(): void {
+    if (this.switch_status) {
+      this.status = 1;
+    } else {
+      this.status = 0;
     }
-    trans(): void {
-        if (this.switch_status) {
-            this.status = 1;
-        } else {
-            this.status = 0;
-        }
-    }
+  }
 }

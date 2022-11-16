@@ -38,7 +38,7 @@ export class CallbackComponent implements OnInit {
     @Inject(ReuseTabService)
     private reuseTabService: ReuseTabService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.provider = this.route.snapshot.params['provider'];

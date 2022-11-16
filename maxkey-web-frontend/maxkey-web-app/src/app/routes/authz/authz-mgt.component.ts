@@ -28,7 +28,7 @@ import { SocialsProviderService } from '../../service/socials-provider.service';
   template: ``
 })
 export class AuthzMgtComponent implements OnInit {
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     let baseUrl = '';

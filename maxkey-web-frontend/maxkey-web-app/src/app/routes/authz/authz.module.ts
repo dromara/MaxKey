@@ -60,4 +60,4 @@ const COMPONENTS = [CredentialComponent];
   imports: [SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AuthzModule { }
+export class AuthzModule {}

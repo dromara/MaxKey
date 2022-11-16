@@ -15,32 +15,32 @@
  */
 
 export function set2String(set: Set<String>): string {
-    let setValues = '';
-    set.forEach(value => {
-        setValues = `${setValues + value},`;
-    });
-    return setValues;
+  let setValues = '';
+  set.forEach(value => {
+    setValues = `${setValues + value},`;
+  });
+  return setValues;
 }
 
 export function splitString(str: String, length: number): string[] {
-    let arrayValues: string[] = [];
-    let tempStr = str;
-    let index = 0;
-    while (tempStr != '') {
-        arrayValues[index] = tempStr.substring(0, length);
-        tempStr = tempStr.substring(length, tempStr.length);
-        index++;
-    }
-    return arrayValues;
+  let arrayValues: string[] = [];
+  let tempStr = str;
+  let index = 0;
+  while (tempStr != '') {
+    arrayValues[index] = tempStr.substring(0, length);
+    tempStr = tempStr.substring(length, tempStr.length);
+    index++;
+  }
+  return arrayValues;
 }
 
 export function concatArrayString(arrayValues: String[], split: String): string {
-    let tempStr = '';
-    for (let index in arrayValues) {
-        if (tempStr !== '') {
-            tempStr = tempStr + split;
-        }
-        tempStr = tempStr + arrayValues[index];
+  let tempStr = '';
+  for (let index in arrayValues) {
+    if (tempStr !== '') {
+      tempStr = tempStr + split;
     }
-    return tempStr;
+    tempStr = tempStr + arrayValues[index];
+  }
+  return tempStr;
 }

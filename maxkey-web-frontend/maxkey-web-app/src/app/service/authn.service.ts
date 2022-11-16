@@ -41,7 +41,7 @@ export class AuthnService {
     private client: HttpClient,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private http: _HttpClient
-  ) { }
+  ) {}
 
   setRedirectUri(redirect_uri: string) {
     this.redirect_uri = CryptoJS.enc.Base64url.parse(redirect_uri).toString(CryptoJS.enc.Utf8);

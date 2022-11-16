@@ -20,7 +20,7 @@ import { _HttpClient, User } from '@delon/theme';
   providedIn: 'root'
 })
 export class ForgotPasswordService {
-  constructor(private http: _HttpClient) { }
+  constructor(private http: _HttpClient) {}
 
   produceOtp(param: any) {
     return this.http.get('/forgotpassword/produceOtp?_allow_anonymous=true', param);

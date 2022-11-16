@@ -70,9 +70,9 @@ export class ProfileComponent implements OnInit {
     submitting: boolean;
     model: Users;
   } = {
-      submitting: false,
-      model: new Users()
-    };
+    submitting: false,
+    model: new Users()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -102,7 +102,7 @@ export class ProfileComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.usersService.getProfile().subscribe(res => {
