@@ -15,9 +15,9 @@
  */
 
 export const CONSTS = {
-    CONGRESS: 'congress',
-    INST: 'inst',
-    REDIRECT_URI: 'redirect_uri',
-    REMEMBER: 'remember',
-    VERSION: 'v3.5.9 GA'
+  CONGRESS: 'congress',
+  INST: 'inst',
+  REDIRECT_URI: 'redirect_uri',
+  REMEMBER: 'remember',
+  VERSION: 'v3.5.9 GA'
 };

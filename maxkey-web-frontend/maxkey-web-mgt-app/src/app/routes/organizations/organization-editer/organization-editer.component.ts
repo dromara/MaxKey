@@ -52,9 +52,9 @@ export class OrganizationEditerComponent implements OnInit {
     submitting: boolean;
     model: Organizations;
   } = {
-      submitting: false,
-      model: new Organizations()
-    };
+    submitting: false,
+    model: new Organizations()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -65,7 +65,7 @@ export class OrganizationEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

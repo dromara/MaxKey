@@ -19,25 +19,25 @@ import format from 'date-fns/format';
 import { Apps } from './Apps';
 
 export class AppsExtendApiDetails extends Apps {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    override init(data: any): void {
-        Object.assign(this, data);
-        super.init(data);
-        if (this.status == 1) {
-            this.switch_status = true;
-        } else {
-            this.switch_status = false;
-        }
+  override init(data: any): void {
+    Object.assign(this, data);
+    super.init(data);
+    if (this.status == 1) {
+      this.switch_status = true;
+    } else {
+      this.switch_status = false;
     }
+  }
 
-    override trans(): void {
-        if (this.switch_status) {
-            this.status = 1;
-        } else {
-            this.status = 0;
-        }
+  override trans(): void {
+    if (this.switch_status) {
+      this.status = 1;
+    } else {
+      this.status = 0;
     }
+  }
 }

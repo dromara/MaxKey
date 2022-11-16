@@ -45,9 +45,9 @@ export class SynchronizerEditerComponent implements OnInit {
     submitting: boolean;
     model: Synchronizers;
   } = {
-      submitting: false,
-      model: new Synchronizers()
-    };
+    submitting: false,
+    model: new Synchronizers()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -58,7 +58,7 @@ export class SynchronizerEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

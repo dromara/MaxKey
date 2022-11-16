@@ -44,9 +44,9 @@ export class EmailSendersComponent implements OnInit {
     submitting: boolean;
     model: EmailSenders;
   } = {
-      submitting: false,
-      model: new EmailSenders()
-    };
+    submitting: false,
+    model: new EmailSenders()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -56,7 +56,7 @@ export class EmailSendersComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.emailSendersService.get('').subscribe(res => {

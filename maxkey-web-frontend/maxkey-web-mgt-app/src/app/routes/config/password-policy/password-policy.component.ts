@@ -45,9 +45,9 @@ export class PasswordPolicyComponent implements OnInit {
     submitting: boolean;
     model: PasswordPolicy;
   } = {
-      submitting: false,
-      model: new PasswordPolicy()
-    };
+    submitting: false,
+    model: new PasswordPolicy()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -57,7 +57,7 @@ export class PasswordPolicyComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     /*this.form = this.fb.group({

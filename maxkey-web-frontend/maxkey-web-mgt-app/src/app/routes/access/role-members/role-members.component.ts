@@ -67,33 +67,33 @@ export class RoleMembersComponent implements OnInit {
     indeterminate: boolean;
     checked: boolean;
   } = {
-      params: {
-        roleName: '',
-        displayName: '',
-        username: '',
-        roleId: '',
-        appName: '',
-        appId: '',
-        startDate: '',
-        endDate: '',
-        startDatePicker: addDays(new Date(), -30),
-        endDatePicker: new Date(),
-        pageSize: 10,
-        pageNumber: 1,
-        pageSizeOptions: [10, 20, 50]
-      },
-      results: {
-        records: 0,
-        rows: []
-      },
-      expandForm: false,
-      submitLoading: false,
-      tableLoading: false,
-      tableInitialize: true,
-      tableCheckedId: new Set<String>(),
-      indeterminate: false,
-      checked: false
-    };
+    params: {
+      roleName: '',
+      displayName: '',
+      username: '',
+      roleId: '',
+      appName: '',
+      appId: '',
+      startDate: '',
+      endDate: '',
+      startDatePicker: addDays(new Date(), -30),
+      endDatePicker: new Date(),
+      pageSize: 10,
+      pageNumber: 1,
+      pageSizeOptions: [10, 20, 50]
+    },
+    results: {
+      records: 0,
+      rows: []
+    },
+    expandForm: false,
+    submitLoading: false,
+    tableLoading: false,
+    tableInitialize: true,
+    tableCheckedId: new Set<String>(),
+    indeterminate: false,
+    checked: false
+  };
 
   constructor(
     private modalService: NzModalService,
@@ -104,7 +104,7 @@ export class RoleMembersComponent implements OnInit {
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.route.snapshot.queryParams['username']) {

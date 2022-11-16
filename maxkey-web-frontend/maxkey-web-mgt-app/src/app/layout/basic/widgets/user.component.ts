@@ -81,7 +81,7 @@ export class HeaderUserComponent {
     private router: Router,
     private authnService: AuthnService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService
-  ) { }
+  ) {}
 
   logout(): void {
     this.authnService

@@ -75,31 +75,31 @@ export class PrivilegesComponent implements OnInit {
     indeterminate: boolean;
     checked: boolean;
   } = {
-      params: {
-        roleName: '',
-        displayName: '',
-        employeeNumber: '',
-        appId: '',
-        appName: '',
-        startDate: '',
-        endDate: '',
-        startDatePicker: addDays(new Date(), -30),
-        endDatePicker: new Date(),
-        pageSize: 10,
-        pageNumber: 1,
-        pageSizeOptions: [10, 20, 50]
-      },
-      results: {
-        records: 0,
-        rows: []
-      },
-      expandForm: false,
-      submitLoading: false,
-      tableLoading: false,
-      tableCheckedId: new Set<String>(),
-      indeterminate: false,
-      checked: false
-    };
+    params: {
+      roleName: '',
+      displayName: '',
+      employeeNumber: '',
+      appId: '',
+      appName: '',
+      startDate: '',
+      endDate: '',
+      startDatePicker: addDays(new Date(), -30),
+      endDatePicker: new Date(),
+      pageSize: 10,
+      pageNumber: 1,
+      pageSizeOptions: [10, 20, 50]
+    },
+    results: {
+      records: 0,
+      rows: []
+    },
+    expandForm: false,
+    submitLoading: false,
+    tableLoading: false,
+    tableCheckedId: new Set<String>(),
+    indeterminate: false,
+    checked: false
+  };
 
   treeNodes = new TreeNodes(true);
 
@@ -114,7 +114,7 @@ export class PrivilegesComponent implements OnInit {
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef,
     private http: _HttpClient
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.fetch();
@@ -130,7 +130,7 @@ export class PrivilegesComponent implements OnInit {
     this.fetch();
   }
 
-  onReset(): void { }
+  onReset(): void {}
 
   onSave(e: MouseEvent): void {
     e.preventDefault();

@@ -48,9 +48,9 @@ export class ResourceEditerComponent implements OnInit {
     submitting: boolean;
     model: Resources;
   } = {
-      submitting: false,
-      model: new Resources()
-    };
+    submitting: false,
+    model: new Resources()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -61,7 +61,7 @@ export class ResourceEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

@@ -51,33 +51,33 @@ export class AuditSynchronizerComponent implements OnInit {
     submitLoading: boolean;
     tableLoading: boolean;
   } = {
-      params: {
-        syncName: '',
-        objectName: '',
-        employeeNumber: '',
-        startDate: '',
-        endDate: '',
-        startDatePicker: addDays(new Date(), -30),
-        endDatePicker: new Date(),
-        pageSize: 10,
-        pageNumber: 1,
-        pageSizeOptions: [10, 20, 50]
-      },
-      results: {
-        records: 0,
-        rows: []
-      },
-      expandForm: false,
-      submitLoading: false,
-      tableLoading: false
-    };
+    params: {
+      syncName: '',
+      objectName: '',
+      employeeNumber: '',
+      startDate: '',
+      endDate: '',
+      startDatePicker: addDays(new Date(), -30),
+      endDatePicker: new Date(),
+      pageSize: 10,
+      pageNumber: 1,
+      pageSizeOptions: [10, 20, 50]
+    },
+    results: {
+      records: 0,
+      rows: []
+    },
+    expandForm: false,
+    submitLoading: false,
+    tableLoading: false
+  };
 
   constructor(
     private fb: FormBuilder,
     private historyService: HistoryService,
     private msg: NzMessageService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.fetch();
@@ -93,7 +93,7 @@ export class AuditSynchronizerComponent implements OnInit {
     this.fetch();
   }
 
-  onReset(): void { }
+  onReset(): void {}
 
   fetch(): void {
     this.query.submitLoading = true;

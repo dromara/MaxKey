@@ -120,4 +120,4 @@ const COMPONENTS = [PasswordPolicyComponent, EmailSendersComponent, LdapContextC
   imports: [SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ConfigModule { }
+export class ConfigModule {}

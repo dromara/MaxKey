@@ -19,117 +19,117 @@ import format from 'date-fns/format';
 import { Apps } from './Apps';
 
 export class AppsOauth20Details extends Apps {
-    clientId!: String;
+  clientId!: String;
 
-    clientSecret!: String;
+  clientSecret!: String;
 
-    scope!: String;
+  scope!: String;
 
-    resourceIds!: String;
+  resourceIds!: String;
 
-    authorizedGrantTypes!: String;
+  authorizedGrantTypes!: String;
 
-    registeredRedirectUris!: String;
+  registeredRedirectUris!: String;
 
-    authorities!: String;
+  authorities!: String;
 
-    accessTokenValiditySeconds!: String;
+  accessTokenValiditySeconds!: String;
 
-    refreshTokenValiditySeconds!: String;
+  refreshTokenValiditySeconds!: String;
 
-    approvalPrompt!: String;
+  approvalPrompt!: String;
 
-    // for OpenID Connect
+  // for OpenID Connect
 
-    issuer!: String;
+  issuer!: String;
 
-    audience!: String;
+  audience!: String;
 
-    algorithm!: String;
+  algorithm!: String;
 
-    algorithmKey!: String;
+  algorithmKey!: String;
 
-    encryptionMethod!: String;
+  encryptionMethod!: String;
 
-    signature!: String;
+  signature!: String;
 
-    signatureKey!: String;
+  signatureKey!: String;
 
-    subject!: String;
+  subject!: String;
 
-    userInfoResponse!: String;
+  userInfoResponse!: String;
 
-    pkce!: String;
+  pkce!: String;
 
-    select_authorizedGrantTypes!: string[];
+  select_authorizedGrantTypes!: string[];
 
-    select_scope!: string[];
+  select_scope!: string[];
 
-    constructor() {
-        super();
-        this.select_authorizedGrantTypes = ['authorization_code'];
-        this.select_scope = ['read'];
-        this.pkce = 'no';
-        this.approvalPrompt = 'auto';
-        this.accessTokenValiditySeconds = '300';
-        this.refreshTokenValiditySeconds = '300';
-        this.subject = 'username';
+  constructor() {
+    super();
+    this.select_authorizedGrantTypes = ['authorization_code'];
+    this.select_scope = ['read'];
+    this.pkce = 'no';
+    this.approvalPrompt = 'auto';
+    this.accessTokenValiditySeconds = '300';
+    this.refreshTokenValiditySeconds = '300';
+    this.subject = 'username';
+  }
+
+  override init(data: any): void {
+    Object.assign(this, data);
+    super.init(data);
+    if (this.status == 1) {
+      this.switch_status = true;
+    } else {
+      this.switch_status = false;
+    }
+    if (this.approvalPrompt == '') {
+    }
+    this.select_scope = [''];
+    let scopeArray: String[] = `${this.scope},`.split(',');
+    for (let i = 0; i < scopeArray.length; i++) {
+      this.select_scope.push(`${scopeArray[i]}`);
     }
 
-    override init(data: any): void {
-        Object.assign(this, data);
-        super.init(data);
-        if (this.status == 1) {
-            this.switch_status = true;
+    this.select_authorizedGrantTypes = [''];
+    let authorizedGrantTypesArray = `${this.authorizedGrantTypes},`.split(',');
+    for (let i = 0; i < authorizedGrantTypesArray.length; i++) {
+      this.select_authorizedGrantTypes.push(authorizedGrantTypesArray[i]);
+    }
+    if (this.pkce == null || this.pkce == '') {
+      this.pkce = 'no';
+    }
+    this.pkce = this.pkce.toLowerCase();
+  }
+
+  override trans(): void {
+    if (this.switch_status) {
+      this.status = 1;
+    } else {
+      this.status = 0;
+    }
+    this.scope = '';
+
+    for (let i = 0; i < this.select_scope.length; i++) {
+      if (this.select_scope[i] != '') {
+        if (this.scope === '') {
+          this.scope = this.select_scope[i];
         } else {
-            this.switch_status = false;
+          this.scope = `${this.scope},${this.select_scope[i]}`;
         }
-        if (this.approvalPrompt == '') {
-        }
-        this.select_scope = [''];
-        let scopeArray: String[] = `${this.scope},`.split(',');
-        for (let i = 0; i < scopeArray.length; i++) {
-            this.select_scope.push(`${scopeArray[i]}`);
-        }
-
-        this.select_authorizedGrantTypes = [''];
-        let authorizedGrantTypesArray = `${this.authorizedGrantTypes},`.split(',');
-        for (let i = 0; i < authorizedGrantTypesArray.length; i++) {
-            this.select_authorizedGrantTypes.push(authorizedGrantTypesArray[i]);
-        }
-        if (this.pkce == null || this.pkce == '') {
-            this.pkce = 'no';
-        }
-        this.pkce = this.pkce.toLowerCase();
+      }
     }
-
-    override trans(): void {
-        if (this.switch_status) {
-            this.status = 1;
+    this.authorizedGrantTypes = '';
+    let n = 0;
+    for (let i = 0; i < this.select_authorizedGrantTypes.length; i++) {
+      if (this.select_authorizedGrantTypes[i] != '') {
+        if (this.authorizedGrantTypes === '') {
+          this.authorizedGrantTypes = this.select_authorizedGrantTypes[i];
         } else {
-            this.status = 0;
+          this.authorizedGrantTypes = `${this.authorizedGrantTypes},${this.select_authorizedGrantTypes[i]}`;
         }
-        this.scope = '';
-
-        for (let i = 0; i < this.select_scope.length; i++) {
-            if (this.select_scope[i] != '') {
-                if (this.scope === '') {
-                    this.scope = this.select_scope[i];
-                } else {
-                    this.scope = `${this.scope},${this.select_scope[i]}`;
-                }
-            }
-        }
-        this.authorizedGrantTypes = '';
-        let n = 0;
-        for (let i = 0; i < this.select_authorizedGrantTypes.length; i++) {
-            if (this.select_authorizedGrantTypes[i] != '') {
-                if (this.authorizedGrantTypes === '') {
-                    this.authorizedGrantTypes = this.select_authorizedGrantTypes[i];
-                } else {
-                    this.authorizedGrantTypes = `${this.authorizedGrantTypes},${this.select_authorizedGrantTypes[i]}`;
-                }
-            }
-        }
+      }
     }
+  }
 }

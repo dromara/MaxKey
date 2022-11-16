@@ -4,8 +4,7 @@
     <nz-form-item style="display: none">
       <nz-form-label [nzMd]="6" nzRequired nzFor="id">{{ 'mxk.institutions.id' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
-        <input [(ngModel)]="form.model.id" [disabled]="true" [ngModelOptions]="{ standalone: true }" nz-input name="id"
-          id="id" />
+        <input [(ngModel)]="form.model.id" [disabled]="true" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -17,8 +16,7 @@
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzRequired nzFor="fullName">{{ 'mxk.institutions.fullName' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid fullName!">
-        <input [(ngModel)]="form.model.fullName" [ngModelOptions]="{ standalone: true }" nz-input name="fullName"
-          id="fullName" />
+        <input [(ngModel)]="form.model.fullName" [ngModelOptions]="{ standalone: true }" nz-input name="fullName" id="fullName" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -30,38 +28,37 @@
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzFor="defaultUri">{{ 'mxk.institutions.defaultUri' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid defaultUri!">
-        <input [(ngModel)]="form.model.defaultUri" [ngModelOptions]="{ standalone: true }" nz-input name="defaultUri"
-          id="defaultUri" />
+        <input [(ngModel)]="form.model.defaultUri" [ngModelOptions]="{ standalone: true }" nz-input name="defaultUri" id="defaultUri" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzRequired nzFor="domain">{{ 'mxk.institutions.domain' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid domain!">
-        <input [(ngModel)]="form.model.domain" [ngModelOptions]="{ standalone: true }" nz-input name="domain"
-          id="domain" />
+        <input [(ngModel)]="form.model.domain" [ngModelOptions]="{ standalone: true }" nz-input name="domain" id="domain" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzRequired nzFor="frontTitle">{{ 'mxk.institutions.frontTitle' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid frontTitle!">
-        <input [(ngModel)]="form.model.frontTitle" [ngModelOptions]="{ standalone: true }" nz-input name="frontTitle"
-          id="frontTitle" />
+        <input [(ngModel)]="form.model.frontTitle" [ngModelOptions]="{ standalone: true }" nz-input name="frontTitle" id="frontTitle" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzMd]="6" nzRequired nzFor="consoleDomain">{{ 'mxk.institutions.consoleDomain' | i18n }}
-      </nz-form-label>
+      <nz-form-label [nzMd]="6" nzRequired nzFor="consoleDomain">{{ 'mxk.institutions.consoleDomain' | i18n }} </nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid consoleDomain!">
-        <input [(ngModel)]="form.model.consoleDomain" [ngModelOptions]="{ standalone: true }" nz-input
-          name="consoleDomain" />
+        <input [(ngModel)]="form.model.consoleDomain" [ngModelOptions]="{ standalone: true }" nz-input name="consoleDomain" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzMd]="6" nzRequired nzFor="consoleTitle">{{ 'mxk.institutions.consoleTitle' | i18n }}
-      </nz-form-label>
+      <nz-form-label [nzMd]="6" nzRequired nzFor="consoleTitle">{{ 'mxk.institutions.consoleTitle' | i18n }} </nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid consoleTitle!">
-        <input [(ngModel)]="form.model.consoleTitle" [ngModelOptions]="{ standalone: true }" nz-input
-          name="consoleTitle" id="consoleTitle" />
+        <input
+          [(ngModel)]="form.model.consoleTitle"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="consoleTitle"
+          id="consoleTitle"
+        />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -77,29 +74,25 @@
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzFor="contact">{{ 'mxk.institutions.contact' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid contact!">
-        <input [(ngModel)]="form.model.contact" [ngModelOptions]="{ standalone: true }" nz-input name="contact"
-          id="contact" />
+        <input [(ngModel)]="form.model.contact" [ngModelOptions]="{ standalone: true }" nz-input name="contact" id="contact" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzFor="phone">{{ 'mxk.institutions.phone' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid phone!">
-        <input [(ngModel)]="form.model.phone" [ngModelOptions]="{ standalone: true }" nz-input name="phone"
-          id="phone" />
+        <input [(ngModel)]="form.model.phone" [ngModelOptions]="{ standalone: true }" nz-input name="phone" id="phone" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzFor="email">{{ 'mxk.institutions.email' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid email!">
-        <input [(ngModel)]="form.model.email" [ngModelOptions]="{ standalone: true }" nz-input name="email"
-          id="email" />
+        <input [(ngModel)]="form.model.email" [ngModelOptions]="{ standalone: true }" nz-input name="email" id="email" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzFor="address">{{ 'mxk.institutions.address' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid address!">
-        <input [(ngModel)]="form.model.address" [ngModelOptions]="{ standalone: true }" nz-input name="address"
-          id="address" />
+        <input [(ngModel)]="form.model.address" [ngModelOptions]="{ standalone: true }" nz-input name="address" id="address" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item style="width: 100%">

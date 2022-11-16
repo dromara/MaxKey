@@ -45,9 +45,9 @@ export class SocialsProviderEditerComponent implements OnInit {
     submitting: boolean;
     model: SocialsProvider;
   } = {
-      submitting: false,
-      model: new SocialsProvider()
-    };
+    submitting: false,
+    model: new SocialsProvider()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -58,7 +58,7 @@ export class SocialsProviderEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

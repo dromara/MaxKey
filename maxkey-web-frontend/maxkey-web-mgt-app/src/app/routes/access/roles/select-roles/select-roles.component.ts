@@ -55,29 +55,29 @@ export class SelectRolesComponent implements OnInit {
     indeterminate: boolean;
     checked: boolean;
   } = {
-      params: {
-        roleName: '',
-        displayName: '',
-        protocol: '',
-        startDate: '',
-        endDate: '',
-        startDatePicker: addDays(new Date(), -30),
-        endDatePicker: new Date(),
-        pageSize: 5,
-        pageNumber: 1,
-        pageSizeOptions: [5, 15, 50]
-      },
-      results: {
-        records: 0,
-        rows: []
-      },
-      expandForm: false,
-      submitLoading: false,
-      tableLoading: false,
-      tableCheckedId: new Set<String>(),
-      indeterminate: false,
-      checked: false
-    };
+    params: {
+      roleName: '',
+      displayName: '',
+      protocol: '',
+      startDate: '',
+      endDate: '',
+      startDatePicker: addDays(new Date(), -30),
+      endDatePicker: new Date(),
+      pageSize: 5,
+      pageNumber: 1,
+      pageSizeOptions: [5, 15, 50]
+    },
+    results: {
+      records: 0,
+      rows: []
+    },
+    expandForm: false,
+    submitLoading: false,
+    tableLoading: false,
+    tableCheckedId: new Set<String>(),
+    indeterminate: false,
+    checked: false
+  };
 
   constructor(
     private modalRef: NzModalRef,
@@ -86,7 +86,7 @@ export class SelectRolesComponent implements OnInit {
     private fb: FormBuilder,
     private msg: NzMessageService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.fetch();
@@ -102,7 +102,7 @@ export class SelectRolesComponent implements OnInit {
     this.fetch();
   }
 
-  onReset(): void { }
+  onReset(): void {}
 
   fetch(): void {
     this.query.submitLoading = true;

@@ -48,9 +48,9 @@ export class AccountsStrategyEditerComponent implements OnInit {
     submitting: boolean;
     model: AccountsStrategy;
   } = {
-      submitting: false,
-      model: new AccountsStrategy()
-    };
+    submitting: false,
+    model: new AccountsStrategy()
+  };
 
   formGroup: FormGroup = new FormGroup({});
   // TreeNodes
@@ -68,7 +68,7 @@ export class AccountsStrategyEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.tree();

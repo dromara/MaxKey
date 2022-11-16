@@ -30,4 +30,4 @@ const COMPONENTS = [UserLoginComponent, UserRegisterResultComponent, UserRegiste
   imports: [SharedModule, PassportRoutingModule],
   declarations: [...COMPONENTS]
 })
-export class PassportModule { }
+export class PassportModule {}

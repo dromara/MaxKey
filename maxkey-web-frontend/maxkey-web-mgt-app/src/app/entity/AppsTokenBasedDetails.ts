@@ -19,36 +19,36 @@ import format from 'date-fns/format';
 import { Apps } from './Apps';
 
 export class AppsTokenBasedDetails extends Apps {
-    redirectUri!: String;
-    tokenType!: String;
-    cookieName!: String;
-    algorithm!: String;
-    algorithmKey!: String;
-    expires!: Number;
+  redirectUri!: String;
+  tokenType!: String;
+  cookieName!: String;
+  algorithm!: String;
+  algorithmKey!: String;
+  expires!: Number;
 
-    constructor() {
-        super();
-        this.expires = 300;
-        this.tokenType = 'POST';
-        this.cookieName = 'ltpa_token';
-        this.algorithm = 'AES';
-    }
+  constructor() {
+    super();
+    this.expires = 300;
+    this.tokenType = 'POST';
+    this.cookieName = 'ltpa_token';
+    this.algorithm = 'AES';
+  }
 
-    override init(data: any): void {
-        Object.assign(this, data);
-        super.init(data);
-        if (this.status == 1) {
-            this.switch_status = true;
-        } else {
-            this.switch_status = false;
-        }
+  override init(data: any): void {
+    Object.assign(this, data);
+    super.init(data);
+    if (this.status == 1) {
+      this.switch_status = true;
+    } else {
+      this.switch_status = false;
     }
+  }
 
-    override trans(): void {
-        if (this.switch_status) {
-            this.status = 1;
-        } else {
-            this.status = 0;
-        }
+  override trans(): void {
+    if (this.switch_status) {
+      this.status = 1;
+    } else {
+      this.status = 0;
     }
+  }
 }

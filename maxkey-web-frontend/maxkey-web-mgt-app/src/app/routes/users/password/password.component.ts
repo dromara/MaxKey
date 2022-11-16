@@ -39,9 +39,9 @@ export class PasswordComponent implements OnInit {
     submitting: boolean;
     model: ChangePassword;
   } = {
-      submitting: false,
-      model: new ChangePassword()
-    };
+    submitting: false,
+    model: new ChangePassword()
+  };
 
   passwordVisible: boolean = false;
 
@@ -55,7 +55,7 @@ export class PasswordComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.form.model.id = this.id || '';

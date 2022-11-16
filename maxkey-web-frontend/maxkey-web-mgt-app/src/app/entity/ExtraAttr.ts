@@ -19,9 +19,9 @@ import format from 'date-fns/format';
 import { BaseEntity } from './BaseEntity';
 
 export class ExtraAttr {
-    id!: string;
-    attr!: string;
-    type!: string;
-    value!: string;
-    constructor() { }
+  id!: string;
+  attr!: string;
+  type!: string;
+  value!: string;
+  constructor() {}
 }

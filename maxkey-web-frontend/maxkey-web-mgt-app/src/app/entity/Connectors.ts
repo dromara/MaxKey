@@ -19,48 +19,48 @@ import format from 'date-fns/format';
 import { BaseEntity } from './BaseEntity';
 
 export class Connectors extends BaseEntity {
-    connName!: String;
-    justInTime!: Number;
-    filters!: String;
-    scheduler!: String;
-    providerUrl!: String;
-    principal!: String;
-    credentials!: String;
+  connName!: String;
+  justInTime!: Number;
+  filters!: String;
+  scheduler!: String;
+  providerUrl!: String;
+  principal!: String;
+  credentials!: String;
 
-    switch_justInTime: boolean = true;
+  switch_justInTime: boolean = true;
 
-    constructor() {
-        super();
-        this.status = 1;
-        this.justInTime = 1;
+  constructor() {
+    super();
+    this.status = 1;
+    this.justInTime = 1;
+  }
+
+  override init(data: any): void {
+    Object.assign(this, data);
+    if (this.status == 1) {
+      this.switch_status = true;
+    } else {
+      this.switch_status = false;
     }
 
-    override init(data: any): void {
-        Object.assign(this, data);
-        if (this.status == 1) {
-            this.switch_status = true;
-        } else {
-            this.switch_status = false;
-        }
+    if (this.justInTime == 1) {
+      this.switch_justInTime = true;
+    } else {
+      this.switch_justInTime = false;
+    }
+  }
 
-        if (this.justInTime == 1) {
-            this.switch_justInTime = true;
-        } else {
-            this.switch_justInTime = false;
-        }
+  override trans(): void {
+    if (this.switch_status) {
+      this.status = 1;
+    } else {
+      this.status = 0;
     }
 
-    override trans(): void {
-        if (this.switch_status) {
-            this.status = 1;
-        } else {
-            this.status = 0;
-        }
-
-        if (this.switch_justInTime) {
-            this.justInTime = 1;
-        } else {
-            this.justInTime = 0;
-        }
+    if (this.switch_justInTime) {
+      this.justInTime = 1;
+    } else {
+      this.justInTime = 0;
     }
+  }
 }

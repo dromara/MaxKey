@@ -40,7 +40,7 @@ export class LayoutPassportComponent implements OnInit {
     }
   ];
 
-  constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService, private authnService: AuthnService) { }
+  constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService, private authnService: AuthnService) {}
 
   ngOnInit(): void {
     this.inst = this.authnService.getInst();

@@ -66,4 +66,4 @@ const COMPONENTS = [
   imports: [NzIconModule, SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AccessModule { }
+export class AccessModule {}

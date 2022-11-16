@@ -60,9 +60,9 @@ export class AppFormBasedDetailsEditerComponent implements OnInit {
     submitting: boolean;
     model: AppsFormBasedDetails;
   } = {
-      submitting: false,
-      model: new AppsFormBasedDetails()
-    };
+    submitting: false,
+    model: new AppsFormBasedDetails()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -85,7 +85,7 @@ export class AppFormBasedDetailsEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

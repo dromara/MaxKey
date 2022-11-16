@@ -47,9 +47,9 @@ export class RoleEditerComponent implements OnInit {
     submitting: boolean;
     model: Roles;
   } = {
-      submitting: false,
-      model: new Roles()
-    };
+    submitting: false,
+    model: new Roles()
+  };
 
   // TreeNodes
   treeNodes = new TreeNodes(false);
@@ -66,7 +66,7 @@ export class RoleEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.tree();

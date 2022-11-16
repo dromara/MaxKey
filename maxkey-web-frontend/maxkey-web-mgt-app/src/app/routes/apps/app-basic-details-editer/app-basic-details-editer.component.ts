@@ -60,9 +60,9 @@ export class AppBasicDetailsEditerComponent implements OnInit {
     submitting: boolean;
     model: Apps;
   } = {
-      submitting: false,
-      model: new Apps()
-    };
+    submitting: false,
+    model: new Apps()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -84,7 +84,7 @@ export class AppBasicDetailsEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

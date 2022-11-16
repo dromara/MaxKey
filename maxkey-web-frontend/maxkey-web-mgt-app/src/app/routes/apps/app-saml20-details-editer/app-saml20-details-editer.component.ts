@@ -60,9 +60,9 @@ export class AppSaml20DetailsEditerComponent implements OnInit {
     submitting: boolean;
     model: AppsSamlDetails;
   } = {
-      submitting: false,
-      model: new AppsSamlDetails()
-    };
+    submitting: false,
+    model: new AppsSamlDetails()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -85,7 +85,7 @@ export class AppSaml20DetailsEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

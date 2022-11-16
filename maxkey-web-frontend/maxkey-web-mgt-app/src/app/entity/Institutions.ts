@@ -17,17 +17,17 @@
 import { BaseEntity } from './BaseEntity';
 
 export class Institutions extends BaseEntity {
-    name!: String;
-    fullName!: String;
-    contact!: String;
-    email!: String;
-    phone!: String;
-    address!: String;
-    logo!: String;
-    frontTitle!: String;
-    consoleTitle!: String;
-    consoleDomain!: String;
-    domain!: String;
-    captcha!: String;
-    defaultUri!: String;
+  name!: String;
+  fullName!: String;
+  contact!: String;
+  email!: String;
+  phone!: String;
+  address!: String;
+  logo!: String;
+  frontTitle!: String;
+  consoleTitle!: String;
+  consoleDomain!: String;
+  domain!: String;
+  captcha!: String;
+  defaultUri!: String;
 }

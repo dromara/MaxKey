@@ -44,9 +44,9 @@ export class ConnectorEditerComponent implements OnInit {
     submitting: boolean;
     model: Connectors;
   } = {
-      submitting: false,
-      model: new Connectors()
-    };
+    submitting: false,
+    model: new Connectors()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -57,7 +57,7 @@ export class ConnectorEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

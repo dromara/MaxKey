@@ -63,4 +63,4 @@ const COMPONENTS: Array<Type<null>> = [];
     PasswordComponent
   ]
 })
-export class RoutesModule { }
+export class RoutesModule {}

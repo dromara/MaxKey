@@ -44,9 +44,9 @@ export class InstitutionsComponent implements OnInit {
     submitting: boolean;
     model: Institutions;
   } = {
-      submitting: false,
-      model: new Institutions()
-    };
+    submitting: false,
+    model: new Institutions()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -56,7 +56,7 @@ export class InstitutionsComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.institutionsService.get('').subscribe(res => {

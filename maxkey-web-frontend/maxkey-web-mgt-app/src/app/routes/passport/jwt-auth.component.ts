@@ -36,7 +36,7 @@ export class JwtAuthComponent implements OnInit {
     private router: Router,
     private settingsSrv: SettingsService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.jwt = this.route.snapshot.queryParams['jwt'];

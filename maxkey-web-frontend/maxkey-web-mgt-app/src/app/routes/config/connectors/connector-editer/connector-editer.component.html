@@ -1,81 +1,89 @@
 <div *nzModalTitle> {{ isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
 <div>
-    <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
-        <nz-form-item>
-            <nz-form-label [nzMd]="6" nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
-            <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
-                <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }"
-                    nz-input name="id" id="id" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzMd]="6" nzFor="id">{{ 'mxk.connectors.connName' | i18n }}</nz-form-label>
-            <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid connName!">
-                <input [(ngModel)]="form.model.connName" [ngModelOptions]="{ standalone: true }" nz-input
-                    name="connName" id="connName" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="justInTime">{{ 'mxk.connectors.justInTime' | i18n }}
-            </nz-form-label>
-            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid justInTime!">
-                <nz-switch [(ngModel)]="form.model.switch_justInTime" [ngModelOptions]="{ standalone: true }"
-                    name="justInTime" [nzCheckedChildren]="checkedTemplateJustInTime"
-                    [nzUnCheckedChildren]="unCheckedTemplateJustInTime">
-                </nz-switch>
-                <ng-template #checkedTemplateJustInTime><i nz-icon nzType="check"></i></ng-template>
-                <ng-template #unCheckedTemplateJustInTime><i nz-icon nzType="close"></i></ng-template>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item *ngIf="!form.model.switch_justInTime">
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="scheduler">{{ 'mxk.connectors.scheduler' | i18n }}
-            </nz-form-label>
-            <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid icon!">
-                <input [(ngModel)]="form.model.scheduler" [ngModelOptions]="{ standalone: true }" nz-input
-                    name="scheduler" placeholder="0 0 12 * * ?" id="scheduler" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="providerUrl">{{ 'mxk.connectors.providerUrl' | i18n
-                }} </nz-form-label>
-            <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48"
-                nzErrorTip="The input is not valid providerUrl!">
-                <input [(ngModel)]="form.model.providerUrl" [ngModelOptions]="{ standalone: true }" nz-input
-                    name="providerUrl" id="providerUrl" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="principal">{{ 'mxk.connectors.principal' | i18n }}
-            </nz-form-label>
-            <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48"
-                nzErrorTip="The input is not valid principal!">
-                <input [(ngModel)]="form.model.principal" [ngModelOptions]="{ standalone: true }" nz-input
-                    name="principal" id="principal" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="credentials">{{ 'mxk.connectors.credentials' | i18n
-                }} </nz-form-label>
-            <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48"
-                nzErrorTip="The input is not valid credentials!">
-                <input type="password" [(ngModel)]="form.model.credentials" [ngModelOptions]="{ standalone: true }"
-                    nz-input name="credentials" id="credentials" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">{{ 'mxk.text.status' | i18n }}
-            </nz-form-label>
-            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
-                <nz-switch [(ngModel)]="form.model.switch_status" [ngModelOptions]="{ standalone: true }" name="status"
-                    [nzCheckedChildren]="checkedTemplate" [nzUnCheckedChildren]="unCheckedTemplate"></nz-switch>
-                <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
-                <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
-            </nz-form-control>
-        </nz-form-item>
-    </form>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzFor="id">{{ 'mxk.connectors.connName' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid connName!">
+        <input [(ngModel)]="form.model.connName" [ngModelOptions]="{ standalone: true }" nz-input name="connName" id="connName" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="justInTime">{{ 'mxk.connectors.justInTime' | i18n }} </nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid justInTime!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_justInTime"
+          [ngModelOptions]="{ standalone: true }"
+          name="justInTime"
+          [nzCheckedChildren]="checkedTemplateJustInTime"
+          [nzUnCheckedChildren]="unCheckedTemplateJustInTime"
+        >
+        </nz-switch>
+        <ng-template #checkedTemplateJustInTime><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplateJustInTime><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="!form.model.switch_justInTime">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="scheduler">{{ 'mxk.connectors.scheduler' | i18n }} </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid icon!">
+        <input
+          [(ngModel)]="form.model.scheduler"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="scheduler"
+          placeholder="0 0 12 * * ?"
+          id="scheduler"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="providerUrl">{{ 'mxk.connectors.providerUrl' | i18n }} </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid providerUrl!">
+        <input [(ngModel)]="form.model.providerUrl" [ngModelOptions]="{ standalone: true }" nz-input name="providerUrl" id="providerUrl" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="principal">{{ 'mxk.connectors.principal' | i18n }} </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid principal!">
+        <input [(ngModel)]="form.model.principal" [ngModelOptions]="{ standalone: true }" nz-input name="principal" id="principal" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="credentials">{{ 'mxk.connectors.credentials' | i18n }} </nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid credentials!">
+        <input
+          type="password"
+          [(ngModel)]="form.model.credentials"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="credentials"
+          id="credentials"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">{{ 'mxk.text.status' | i18n }} </nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
+        <nz-switch
+          [(ngModel)]="form.model.switch_status"
+          [ngModelOptions]="{ standalone: true }"
+          name="status"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
+        <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+        <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
 </div>
 
 <div *nzModalFooter>
-    <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
-    <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
 </div>

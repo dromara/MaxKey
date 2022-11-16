@@ -154,5 +154,5 @@ export class LayoutBasicComponent implements OnInit {
     }
   }
 
-  constructor(private settingsService: SettingsService, private authnService: AuthnService) { }
+  constructor(private settingsService: SettingsService, private authnService: AuthnService) {}
 }

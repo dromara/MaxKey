@@ -6,32 +6,47 @@
         <nz-form-item>
           <nz-form-label nzFor="appName">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
           <nz-form-control>
-            <input nz-input [(ngModel)]="query.params.appName" [ngModelOptions]="{ standalone: true }" name="appName"
-              placeholder="" id="appName" />
+            <input
+              nz-input
+              [(ngModel)]="query.params.appName"
+              [ngModelOptions]="{ standalone: true }"
+              name="appName"
+              placeholder=""
+              id="appName"
+            />
           </nz-form-control>
         </nz-form-item>
       </div>
 
       <div nz-col [nzSpan]="query.expandForm ? 24 : 10" [class.text-right]="query.expandForm">
-        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' |
-          i18n }}</button>
-        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' |
-          i18n }}</button>
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
+        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n }}</button>
         <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
-          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button>
+          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
+        >
         <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.confirm' | i18n }}</button>
       </div>
     </div>
   </form>
 
-  <nz-table #dynamicTable nzTableLayout="auto" nzBordered nzShowSizeChanger [nzData]="query.results.rows"
-    [nzFrontPagination]="false" [nzTotal]="query.results.records" [nzPageSizeOptions]="query.params.pageSizeOptions"
-    [nzPageSize]="query.params.pageSize" [nzPageIndex]="query.params.pageNumber" [nzLoading]="this.query.tableLoading"
-    (nzQueryParams)="onQueryParamsChange($event)" nzWidth="100%">
+  <nz-table
+    #dynamicTable
+    nzTableLayout="auto"
+    nzBordered
+    nzShowSizeChanger
+    [nzData]="query.results.rows"
+    [nzFrontPagination]="false"
+    [nzTotal]="query.results.records"
+    [nzPageSizeOptions]="query.params.pageSizeOptions"
+    [nzPageSize]="query.params.pageSize"
+    [nzPageIndex]="query.params.pageNumber"
+    [nzLoading]="this.query.tableLoading"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    nzWidth="100%"
+  >
     <thead>
       <tr>
-        <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate"
-          (nzCheckedChange)="onTableAllChecked($event)"></th>
+        <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate" (nzCheckedChange)="onTableAllChecked($event)"></th>
         <th nzAlign="center" style="display: none">Id</th>
         <th nzAlign="center">{{ 'mxk.apps.icon' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.apps.name' | i18n }}</th>
@@ -40,8 +55,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of query.results.rows">
-        <td [nzChecked]="query.tableCheckedId.has(data.id)" [nzDisabled]="data.disabled"
-          (nzCheckedChange)="onTableItemChecked(data.id, $event)"></td>
+        <td
+          [nzChecked]="query.tableCheckedId.has(data.id)"
+          [nzDisabled]="data.disabled"
+          (nzCheckedChange)="onTableItemChecked(data.id, $event)"
+        ></td>
         <td nzAlign="center"><img height="30" border="0px" src="{{ data.iconBase64 }}" /></td>
         <td nzAlign="left"> {{ data.appName }}</td>
         <td nzAlign="left">

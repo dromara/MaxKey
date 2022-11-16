@@ -61,9 +61,9 @@ export class AppJwtDetailsEditerComponent implements OnInit {
     submitting: boolean;
     model: AppsJwtDetails;
   } = {
-      submitting: false,
-      model: new AppsJwtDetails()
-    };
+    submitting: false,
+    model: new AppsJwtDetails()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -86,7 +86,7 @@ export class AppJwtDetailsEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

@@ -60,9 +60,9 @@ export class AppOauth20DetailsEditerComponent implements OnInit {
     submitting: boolean;
     model: AppsOauth20Details;
   } = {
-      submitting: false,
-      model: new AppsOauth20Details()
-    };
+    submitting: false,
+    model: new AppsOauth20Details()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -85,7 +85,7 @@ export class AppOauth20DetailsEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.isEdit) {

@@ -41,20 +41,20 @@ export class BaseService<T> {
       memberOut: string;
     };
   } = {
-      urls: {
-        base: '',
-        fetch: '/fetch',
-        add: '/add',
-        get: '/get',
-        load: '/load',
-        update: '/update',
-        delete: '/delete',
-        test: '/test',
-        tree: '/tree',
-        member: '/member',
-        memberOut: '/memberOut'
-      }
-    };
+    urls: {
+      base: '',
+      fetch: '/fetch',
+      add: '/add',
+      get: '/get',
+      load: '/load',
+      update: '/update',
+      delete: '/delete',
+      test: '/test',
+      tree: '/tree',
+      member: '/member',
+      memberOut: '/memberOut'
+    }
+  };
 
   constructor(httpClient: HttpClient, baseURL: string) {
     this.server.urls.base = baseURL;

@@ -44,9 +44,9 @@ export class LdapContextComponent implements OnInit {
     submitting: boolean;
     model: LdapContext;
   } = {
-      submitting: false,
-      model: new LdapContext()
-    };
+    submitting: false,
+    model: new LdapContext()
+  };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -56,7 +56,7 @@ export class LdapContextComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.ldapContextService.get('').subscribe(res => {

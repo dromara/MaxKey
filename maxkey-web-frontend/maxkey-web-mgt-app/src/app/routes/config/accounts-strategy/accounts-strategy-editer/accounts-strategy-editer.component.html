@@ -4,35 +4,37 @@
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
-        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input
-          name="id" id="id" />
+        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.accountsstrategy.name' | i18n }}
-      </nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.accountsstrategy.name' | i18n }} </nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not validminLength!">
         <input [(ngModel)]="form.model.name" [ngModelOptions]="{ standalone: true }" nz-input name="name" id="name" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="appName">{{ 'mxk.accountsstrategy.appName' | i18n }}
-      </nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="appName">{{ 'mxk.accountsstrategy.appName' | i18n }} </nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid appName!">
         <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
-          <input [(ngModel)]="form.model.appName" [ngModelOptions]="{ standalone: true }" readonly type="text" nz-input
-            name="appName" id="appName" />
+          <input
+            [(ngModel)]="form.model.appName"
+            [ngModelOptions]="{ standalone: true }"
+            readonly
+            type="text"
+            nz-input
+            name="appName"
+            id="appName"
+          />
         </nz-input-group>
         <ng-template #suffixButton>
           <button nz-button nzType="primary" nzSearch (click)="onSelect($event)">{{ 'mxk.text.select' | i18n }}</button>
         </ng-template>
-        <input type="hidden" [(ngModel)]="form.model.appId" [ngModelOptions]="{ standalone: true }" nz-input
-          name="appId" id="appId" />
+        <input type="hidden" [(ngModel)]="form.model.appId" [ngModelOptions]="{ standalone: true }" nz-input name="appId" id="appId" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="mapping">{{ 'mxk.accountsstrategy.mapping' | i18n }}
-      </nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="mapping">{{ 'mxk.accountsstrategy.mapping' | i18n }} </nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid mapping!">
         <nz-select [(ngModel)]="form.model.mapping" [ngModelOptions]="{ standalone: true }">
           <nz-option nzValue="username" nzLabel="username"></nz-option>
@@ -45,39 +47,54 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="suffixes">{{ 'mxk.accountsstrategy.suffixes' | i18n }}
-      </nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="suffixes">{{ 'mxk.accountsstrategy.suffixes' | i18n }} </nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid suffixes!">
-        <input [(ngModel)]="form.model.suffixes" [ngModelOptions]="{ standalone: true }" nz-input name="suffixes"
-          id="suffixes" />
+        <input [(ngModel)]="form.model.suffixes" [ngModelOptions]="{ standalone: true }" nz-input name="suffixes" id="suffixes" />
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="orgIdsList">{{ 'mxk.accountsstrategy.orgIdsList' | i18n }}
-      </nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="orgIdsList">{{ 'mxk.accountsstrategy.orgIdsList' | i18n }} </nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid upperCase!">
-        <input type="hidden" [(ngModel)]="form.model.orgIdsList" [ngModelOptions]="{ standalone: true }" nz-input
-          name="orgIdsList" id="orgIdsList" />
-        <nz-tree-select nzVirtualHeight="300px" [nzMaxTagCount]="3" [(ngModel)]="selectValues"
-          [ngModelOptions]="{ standalone: true }" [nzNodes]="treeNodes.nodes" nzCheckable nzPlaceHolder="Please select"
-          [nzCheckStrictly]="true">
+        <input
+          type="hidden"
+          [(ngModel)]="form.model.orgIdsList"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="orgIdsList"
+          id="orgIdsList"
+        />
+        <nz-tree-select
+          nzVirtualHeight="300px"
+          [nzMaxTagCount]="3"
+          [(ngModel)]="selectValues"
+          [ngModelOptions]="{ standalone: true }"
+          [nzNodes]="treeNodes.nodes"
+          nzCheckable
+          nzPlaceHolder="Please select"
+          [nzCheckStrictly]="true"
+        >
         </nz-tree-select>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="filters">{{ 'mxk.accountsstrategy.filters' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid filters!">
-        <textarea rows="4" nz-input [(ngModel)]="form.model.filters" [ngModelOptions]="{ standalone: true }" nz-input
-          name="filters" id="filters"></textarea>
+        <textarea
+          rows="4"
+          nz-input
+          [(ngModel)]="form.model.filters"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="filters"
+          id="filters"
+        ></textarea>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="createType">{{ 'mxk.accountsstrategy.createType' | i18n }}
-      </nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="createType">{{ 'mxk.accountsstrategy.createType' | i18n }} </nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid createType!">
-        <nz-radio-group [(ngModel)]="form.model.createType" [ngModelOptions]="{ standalone: true }"
-          nzButtonStyle="solid">
+        <nz-radio-group [(ngModel)]="form.model.createType" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
           <label nz-radio-button nzValue="manual">{{ 'mxk.text.manual' | i18n }}</label>
           <label nz-radio-button nzValue="automatic">{{ 'mxk.text.automatic' | i18n }}</label>
         </nz-radio-group>
@@ -86,15 +103,27 @@
     <nz-form-item style="display: none">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">{{ 'mxk.text.description' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid encoding!">
-        <textarea rows="4" nz-input [(ngModel)]="form.model.description" [ngModelOptions]="{ standalone: true }"
-          nz-input name="description" id="description"></textarea>
+        <textarea
+          rows="4"
+          nz-input
+          [(ngModel)]="form.model.description"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="description"
+          id="description"
+        ></textarea>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">{{ 'mxk.text.status' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
-        <nz-switch [(ngModel)]="form.model.switch_status" [ngModelOptions]="{ standalone: true }" name="status"
-          [nzCheckedChildren]="checkedTemplate" [nzUnCheckedChildren]="unCheckedTemplate"></nz-switch>
+        <nz-switch
+          [(ngModel)]="form.model.switch_status"
+          [ngModelOptions]="{ standalone: true }"
+          name="status"
+          [nzCheckedChildren]="checkedTemplate"
+          [nzUnCheckedChildren]="unCheckedTemplate"
+        ></nz-switch>
         <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
         <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
       </nz-form-control>

@@ -43,4 +43,4 @@ const COMPONENTS = [ResourcesComponent, PrivilegesComponent, ResourceEditerCompo
   imports: [NzIconModule, SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PermissionsModule { }
+export class PermissionsModule {}
