@@ -1,19 +1,19 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 
 package org.maxkey.authn.provider.impl;
 
@@ -42,85 +42,90 @@ import org.springframework.security.core.AuthenticationException;
  *
  */
 public class MobileAuthenticationProvider extends AbstractAuthenticationProvider {
-	
+
     private static final Logger _logger =
             LoggerFactory.getLogger(MobileAuthenticationProvider.class);
 
     public String getProviderName() {
         return "mobile" + PROVIDER_SUFFIX;
     }
-    
+
 
     public MobileAuthenticationProvider() {
-		super();
-	}
+        super();
+    }
 
 
     public MobileAuthenticationProvider(
-    		AbstractAuthenticationRealm authenticationRealm,
-    		ApplicationConfig applicationConfig,
-    	    OtpAuthnService otpAuthnService,
-    	    SessionManager sessionManager) {
-		this.authenticationRealm = authenticationRealm;
-		this.applicationConfig = applicationConfig;
-		this.otpAuthnService = otpAuthnService;
-		this.sessionManager = sessionManager;
-	}
+            AbstractAuthenticationRealm authenticationRealm,
+            ApplicationConfig applicationConfig,
+            OtpAuthnService otpAuthnService,
+            SessionManager sessionManager) {
+        this.authenticationRealm = authenticationRealm;
+        this.applicationConfig = applicationConfig;
+        this.otpAuthnService = otpAuthnService;
+        this.sessionManager = sessionManager;
+    }
 
     @Override
-	public Authentication doAuthenticate(LoginCredential loginCredential) {
-		UsernamePasswordAuthenticationToken authenticationToken = null;
-		_logger.debug("Trying to authenticate user '{}' via {}", 
+    public Authentication doAuthenticate(LoginCredential loginCredential) {
+        UsernamePasswordAuthenticationToken authenticationToken = null;
+        _logger.debug("Trying to authenticate user '{}' via {}",
                 loginCredential.getPrincipal(), getProviderName());
         try {
-        	
-	        _logger.debug("authentication " + loginCredential);
 
-	        emptyPasswordValid(loginCredential.getPassword());
-	
-	        emptyUsernameValid(loginCredential.getUsername());
-	
-	        UserInfo userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
-	
-	        statusValid(loginCredential , userInfo);
+            //如果是验证码登录，设置mobile为username
+            loginCredential.setUsername(loginCredential.getMobile());
+            //设置密码为验证码
+            loginCredential.setPassword(loginCredential.getOtpCaptcha());
 
-	        //Validate PasswordPolicy
-	        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
-	        
-	        mobileCaptchaValid(loginCredential.getPassword(),userInfo);
+            _logger.debug("authentication " + loginCredential);
 
-	        //apply PasswordSetType and resetBadPasswordCount
-	        authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
-	        
-	        authenticationToken = createOnlineTicket(loginCredential,userInfo);
-	        // user authenticated
-	        _logger.debug("'{}' authenticated successfully by {}.", 
-	        		loginCredential.getPrincipal(), getProviderName());
-	        
-	        authenticationRealm.insertLoginHistory(userInfo, 
-							        				ConstsLoginType.LOCAL, 
-									                "", 
-									                "xe00000004", 
-									                WebConstants.LOGIN_RESULT.SUCCESS);
+            emptyPasswordValid(loginCredential.getPassword());
+
+            emptyUsernameValid(loginCredential.getUsername());
+
+            UserInfo userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
+
+            statusValid(loginCredential , userInfo);
+
+            //Validate PasswordPolicy 取消密码策略验证
+            //authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
+
+            mobileCaptchaValid(loginCredential.getPassword(),userInfo);
+
+            //apply PasswordSetType and resetBadPasswordCount
+            authenticationRealm.getPasswordPolicyValidator().applyPasswordPolicy(userInfo);
+
+            authenticationToken = createOnlineTicket(loginCredential,userInfo);
+            // user authenticated
+            _logger.debug("'{}' authenticated successfully by {}.",
+                    loginCredential.getPrincipal(), getProviderName());
+
+            authenticationRealm.insertLoginHistory(userInfo,
+                    ConstsLoginType.LOCAL,
+                    "",
+                    "xe00000004",
+                    WebConstants.LOGIN_RESULT.SUCCESS);
         } catch (AuthenticationException e) {
             _logger.error("Failed to authenticate user {} via {}: {}",
                     new Object[] {  loginCredential.getPrincipal(),
-                                    getProviderName(),
-                                    e.getMessage() });
+                            getProviderName(),
+                            e.getMessage() });
             WebContext.setAttribute(
                     WebConstants.LOGIN_ERROR_SESSION_MESSAGE, e.getMessage());
         } catch (Exception e) {
             _logger.error("Login error Unexpected exception in {} authentication:\n{}" ,
-                            getProviderName(), e.getMessage());
+                    getProviderName(), e.getMessage());
         }
-       
+
         return  authenticationToken;
     }
-    
-    
+
+
     /**
      * mobile validate.
-     * 
+     *
      * @param otpCaptcha String
      * @param authType   String
      * @param userInfo   UserInfo
@@ -139,5 +144,5 @@ public class MobileAuthenticationProvider extends AbstractAuthenticationProvider
             }
         }
     }
-  
+
 }

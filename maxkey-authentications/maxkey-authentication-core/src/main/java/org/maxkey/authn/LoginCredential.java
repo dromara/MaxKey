@@ -1,19 +1,19 @@
 /*
  * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 
 package org.maxkey.authn;
 
@@ -25,9 +25,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 public class LoginCredential  implements Authentication {
-    
+
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 3125709257481600320L;
     String congress;
@@ -44,12 +44,12 @@ public class LoginCredential  implements Authentication {
     String code;
     String message = WebConstants.LOGIN_RESULT.SUCCESS;
     String instId;
-    
-    
+
+
     ArrayList<GrantedAuthority> grantedAuthority;
     boolean authenticated;
     boolean roleAdministrators;
-
+    String mobile;
     /**
      * BasicAuthentication.
      */
@@ -64,16 +64,16 @@ public class LoginCredential  implements Authentication {
         this.password = password;
         this.authType = authType;
     }
-    
+
     public String getCongress() {
-		return congress;
-	}
+        return congress;
+    }
 
-	public void setCongress(String congress) {
-		this.congress = congress;
-	}
+    public void setCongress(String congress) {
+        this.congress = congress;
+    }
 
-	@Override
+    @Override
     public String getName() {
         return "Login Credential";
     }
@@ -127,14 +127,14 @@ public class LoginCredential  implements Authentication {
     }
 
     public String getState() {
-		return state;
-	}
+        return state;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public String getCaptcha() {
+    public String getCaptcha() {
         return captcha;
     }
 
@@ -223,51 +223,62 @@ public class LoginCredential  implements Authentication {
     }
 
     public String getInstId() {
-		return instId;
-	}
+        return instId;
+    }
 
-	public void setInstId(String instId) {
-		this.instId = instId;
-	}
+    public void setInstId(String instId) {
+        this.instId = instId;
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("LoginCredential [congress=");
-		builder.append(congress);
-		builder.append(", username=");
-		builder.append(username);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append(", state=");
-		builder.append(state);
-		builder.append(", captcha=");
-		builder.append(captcha);
-		builder.append(", otpCaptcha=");
-		builder.append(otpCaptcha);
-		builder.append(", remeberMe=");
-		builder.append(remeberMe);
-		builder.append(", authType=");
-		builder.append(authType);
-		builder.append(", jwtToken=");
-		builder.append(jwtToken);
-		builder.append(", onlineTicket=");
-		builder.append(onlineTicket);
-		builder.append(", provider=");
-		builder.append(provider);
-		builder.append(", code=");
-		builder.append(code);
-		builder.append(", message=");
-		builder.append(message);
-		builder.append(", instId=");
-		builder.append(instId);
-		builder.append(", grantedAuthority=");
-		builder.append(grantedAuthority);
-		builder.append(", authenticated=");
-		builder.append(authenticated);
-		builder.append(", roleAdministrators=");
-		builder.append(roleAdministrators);
-		builder.append("]");
-		return builder.toString();
-	}
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("LoginCredential [congress=");
+        builder.append(congress);
+        builder.append(", username=");
+        builder.append(username);
+        builder.append(", password=");
+        builder.append(password);
+        builder.append(", state=");
+        builder.append(state);
+        builder.append(", mobile=");
+        builder.append(mobile);
+        builder.append(", captcha=");
+        builder.append(captcha);
+        builder.append(", otpCaptcha=");
+        builder.append(otpCaptcha);
+        builder.append(", remeberMe=");
+        builder.append(remeberMe);
+        builder.append(", authType=");
+        builder.append(authType);
+        builder.append(", jwtToken=");
+        builder.append(jwtToken);
+        builder.append(", onlineTicket=");
+        builder.append(onlineTicket);
+        builder.append(", provider=");
+        builder.append(provider);
+        builder.append(", code=");
+        builder.append(code);
+        builder.append(", message=");
+        builder.append(message);
+        builder.append(", instId=");
+        builder.append(instId);
+        builder.append(", grantedAuthority=");
+        builder.append(grantedAuthority);
+        builder.append(", authenticated=");
+        builder.append(authenticated);
+        builder.append(", roleAdministrators=");
+        builder.append(roleAdministrators);
+        builder.append("]");
+        return builder.toString();
+    }
 }
