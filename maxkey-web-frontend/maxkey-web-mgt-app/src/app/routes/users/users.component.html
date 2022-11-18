@@ -7,29 +7,24 @@
         <nz-form-item>
           <nz-form-label nzFor="name">{{ 'mxk.users.username' | i18n }}</nz-form-label>
           <nz-form-control>
-            <input
-              nz-input
-              [(ngModel)]="query.params.username"
-              [ngModelOptions]="{ standalone: true }"
-              name="username"
-              placeholder=""
-              id="username"
-            />
+            <input nz-input [(ngModel)]="query.params.username" [ngModelOptions]="{ standalone: true }" name="username"
+                   placeholder="" id="username" />
           </nz-form-control>
         </nz-form-item>
       </div>
       <div nz-col [nzSpan]="query.expandForm ? 24 : 8" [class.text-right]="query.expandForm">
-        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
-        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n }}</button>
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' |
+          i18n }}</button>
+        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' |
+          i18n }}</button>
         <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
-          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
-        >
+          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button>
       </div>
     </div>
   </form>
 </nz-card>
 <nz-card [nzBordered]="false">
-  <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+  <div nz-row>
     <div nz-col [nzSpan]="24" class="table-list-toolbar">
       <button nz-button type="button" [nzType]="'primary'" (click)="onAdd($event)">
         {{ 'mxk.text.add' | i18n }}
@@ -41,16 +36,9 @@
         {{ 'mxk.text.delete' | i18n }}
       </button>
     </div>
-    <div nz-col nzMd="6" nzSm="24" class="grid-border">
-      <nz-tree
-        nzShowLine="false"
-        [nzCheckable]="treeNodes.checkable"
-        nzBlockNode
-        [nzData]="treeNodes.nodes"
-        (nzClick)="activeNode($event)"
-        (nzDblClick)="openFolder($event)"
-        [nzTreeTemplate]="nzTreeTemplate"
-      ></nz-tree>
+    <div nz-col [nzSpan]="6" class="grid-border">
+      <nz-tree nzShowLine="false" [nzCheckable]="treeNodes.checkable" nzBlockNode [nzData]="treeNodes.nodes"
+               (nzClick)="activeNode($event)" (nzDblClick)="openFolder($event)" [nzTreeTemplate]="nzTreeTemplate"></nz-tree>
       <ng-template #nzTreeTemplate let-node let-origin="origin">
         <span class="custom-node">
           <span *ngIf="!node.isLeaf" (contextmenu)="contextMenu($event, menu)">
@@ -71,108 +59,99 @@
       </nz-dropdown-menu>
     </div>
     <div nz-col nzMd="18" nzSm="24" class="grid-border">
-      <nz-table
-        #dynamicTable
-        nzTableLayout="auto"
-        nzSize="small"
-        nzBordered
-        sizeChanger="true"
-        nzShowSizeChanger
-        [nzData]="query.results.rows"
-        [nzFrontPagination]="false"
-        [nzTotal]="query.results.records"
-        [nzPageSizeOptions]="query.params.pageSizeOptions"
-        [nzPageSize]="query.params.pageSize"
-        [nzPageIndex]="query.params.pageNumber"
-        [nzLoading]="this.query.tableLoading"
-        (nzQueryParams)="onQueryParamsChange($event)"
-        nzWidth="100%"
-      >
+      <nz-table #dynamicTable nzTableLayout="auto" nzSize="small" nzBordered sizeChanger="true" nzShowSizeChanger
+                [nzData]="query.results.rows" [nzFrontPagination]="false" [nzTotal]="query.results.records"
+                [nzPageSizeOptions]="query.params.pageSizeOptions" [nzPageSize]="query.params.pageSize"
+                [nzPageIndex]="query.params.pageNumber" [nzLoading]="this.query.tableLoading"
+                (nzQueryParams)="onQueryParamsChange($event)" nzWidth="100%">
         <thead>
-          <tr>
-            <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate" (nzCheckedChange)="onTableAllChecked($event)"></th>
-            <th nzAlign="center" style="display: none">{{ 'mxk.text.id' | i18n }}</th>
-            <th nzAlign="center">{{ 'mxk.users.username' | i18n }}</th>
-            <th nzAlign="center">{{ 'mxk.users.displayName' | i18n }}</th>
-            <th nzAlign="center">{{ 'mxk.users.employeeNumber' | i18n }}</th>
-            <th nzAlign="center">{{ 'mxk.users.department' | i18n }}</th>
-            <th nzAlign="center">{{ 'mxk.users.jobTitle' | i18n }}</th>
-            <th nzAlign="center">{{ 'mxk.users.gender' | i18n }}</th>
-            <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
-            <th nzAlign="center"
-              ><a>{{ 'mxk.text.action' | i18n }}</a></th
-            >
-          </tr>
+        <tr>
+          <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate"
+              (nzCheckedChange)="onTableAllChecked($event)"></th>
+          <th nzAlign="center" style="display: none">{{ 'mxk.text.id' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.username' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.displayName' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.employeeNumber' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.department' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.jobTitle' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.gender' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
+          <th nzAlign="center" class="table_cell_action_2">{{ 'mxk.text.action' | i18n }}</th>
+        </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of query.results.rows">
-            <td
-              [nzChecked]="query.tableCheckedId.has(data.id)"
-              [nzDisabled]="data.disabled"
-              (nzCheckedChange)="onTableItemChecked(data.id, $event)"
-            ></td>
-            <td nzAlign="left" style="display: none">
-              <span>{{ data.id }}</span>
-            </td>
-            <td nzAlign="left"> {{ data.username }}</td>
-            <td nzAlign="left"> {{ data.displayName }}</td>
-            <td nzAlign="left"> {{ data.employeeNumber }}</td>
-            <td nzAlign="left"> {{ data.department }}</td>
-            <td nzAlign="left"> {{ data.jobTitle }}</td>
-            <td nzAlign="center"> {{ data.gender == 1 ? ('mxk.users.gender.female' | i18n) : ('mxk.users.gender.male' | i18n) }}</td>
-            <td nzAlign="center">
-              <a title="{{ 'mxk.users.status.active' | i18n }}" *ngIf="data.status == 1">
-                <i nz-icon nzType="check-circle" nzTheme="fill" style="color: green"> </i>
-              </a>
-              <a title="{{ 'mxk.users.status.inactive' | i18n }}" *ngIf="data.status == 2">
-                <i nz-icon nzType="warning" nzTheme="fill" style="color: gray"></i>
-              </a>
-              <a title="{{ 'mxk.users.status.forbidden' | i18n }}" *ngIf="data.status == 4">
-                <i nz-icon nzType="stop" nzTheme="fill" style="color: gray"></i>
-              </a>
-              <a title="{{ 'mxk.users.status.lock' | i18n }}" *ngIf="data.status == 5">
-                <i nz-icon nzType="lock" nzTheme="fill" style="color: orange"></i>
-              </a>
-              <a title="{{ 'mxk.users.status.delete' | i18n }}" *ngIf="data.status == 9">
-                <i nz-icon nzType="close-circle" nzTheme="fill" style="color: red"></i>
-              </a>
-            </td>
-            <td nzAlign="left" nzBreakWord="false">
-              <div nz-col>
-                <button nz-button type="button" (click)="onEdit($event, data.id)" style="float: left">
-                  {{ 'mxk.text.edit' | i18n }}
-                </button>
-                <button *ngIf="data.status !== 9" nz-button nz-dropdown [nzDropdownMenu]="menuMoreAction">
-                  {{ 'mxk.text.moreaction' | i18n }}
-                  <i nz-icon nzType="down"></i>
-                </button>
-                <nz-dropdown-menu #menuMoreAction="nzDropdownMenu">
-                  <ul nz-menu>
-                    <li nz-menu-item *ngIf="data.status == 1" (click)="onNavToUrl($event, data.id, data.username, 'roles')">{{
-                      'mxk.text.roles' | i18n
+        <tr *ngFor="let data of query.results.rows">
+          <td [nzChecked]="query.tableCheckedId.has(data.id)" [nzDisabled]="data.disabled"
+              (nzCheckedChange)="onTableItemChecked(data.id, $event)"></td>
+          <td nzAlign="left" style="display: none">
+            <span>{{ data.id }}</span>
+          </td>
+          <td nzAlign="left"> {{ data.username }}</td>
+          <td nzAlign="left"> {{ data.displayName }}</td>
+          <td nzAlign="left"> {{ data.employeeNumber }}</td>
+          <td nzAlign="left"> {{ data.department }}</td>
+          <td nzAlign="left"> {{ data.jobTitle }}</td>
+          <td nzAlign="center"> {{ data.gender == 1 ? ('mxk.users.gender.female' | i18n) : ('mxk.users.gender.male' |
+            i18n) }}</td>
+          <td nzAlign="center">
+            <a title="{{ 'mxk.users.status.active' | i18n }}" *ngIf="data.status == 1">
+              <i nz-icon nzType="check-circle" nzTheme="fill" style="color: green"> </i>
+            </a>
+            <a title="{{ 'mxk.users.status.inactive' | i18n }}" *ngIf="data.status == 2">
+              <i nz-icon nzType="warning" nzTheme="fill" style="color: gray"></i>
+            </a>
+            <a title="{{ 'mxk.users.status.forbidden' | i18n }}" *ngIf="data.status == 4">
+              <i nz-icon nzType="stop" nzTheme="fill" style="color: gray"></i>
+            </a>
+            <a title="{{ 'mxk.users.status.lock' | i18n }}" *ngIf="data.status == 5">
+              <i nz-icon nzType="lock" nzTheme="fill" style="color: orange"></i>
+            </a>
+            <a title="{{ 'mxk.users.status.delete' | i18n }}" *ngIf="data.status == 9">
+              <i nz-icon nzType="close-circle" nzTheme="fill" style="color: red"></i>
+            </a>
+          </td>
+          <td nzAlign="center" nzBreakWord="false">
+            <div nz-col>
+              <button nz-button type="button" (click)="onEdit($event, data.id)">
+                {{ 'mxk.text.edit' | i18n }}
+              </button>
+              <button *ngIf="data.status == 9" nz-button nz-dropdown>
+                {{ 'mxk.text.moreaction' | i18n }}
+                <i nz-icon nzType="down"></i>
+              </button>
+              <button *ngIf="data.status !== 9" nz-button nz-dropdown [nzDropdownMenu]="menuMoreAction">
+                {{ 'mxk.text.moreaction' | i18n }}
+                <i nz-icon nzType="down"></i>
+              </button>
+              <nz-dropdown-menu #menuMoreAction="nzDropdownMenu">
+                <ul nz-menu>
+                  <li nz-menu-item *ngIf="data.status == 1"
+                      (click)="onNavToUrl($event, data.id, data.username, 'roles')">{{
+                    'mxk.text.roles' | i18n
                     }}</li>
-                    <li nz-menu-item *ngIf="data.status == 1" (click)="changePasswordById($event, data.id)">{{
-                      'mxk.text.changepassword' | i18n
+                  <li nz-menu-item *ngIf="data.status == 1" (click)="changePasswordById($event, data.id)">{{
+                    'mxk.text.changepassword' | i18n
                     }}</li>
-                    <li nz-menu-item *ngIf="data.status == 1" (click)="onUpdateStatus($event, data.id, 5)">{{ 'mxk.text.lock' | i18n }}</li>
-                    <li nz-menu-item *ngIf="data.status == 1" (click)="onUpdateStatus($event, data.id, 4)">{{
-                      'mxk.text.disable' | i18n
+                  <li nz-menu-item *ngIf="data.status == 1" (click)="onUpdateStatus($event, data.id, 5)">{{
+                    'mxk.text.lock' | i18n }}</li>
+                  <li nz-menu-item *ngIf="data.status == 1" (click)="onUpdateStatus($event, data.id, 4)">{{
+                    'mxk.text.disable' | i18n
                     }}</li>
-                    <li nz-menu-item *ngIf="data.status == 2" (click)="onUpdateStatus($event, data.id, 1)">{{
-                      'mxk.text.enable' | i18n
+                  <li nz-menu-item *ngIf="data.status == 2" (click)="onUpdateStatus($event, data.id, 1)">{{
+                    'mxk.text.enable' | i18n
                     }}</li>
-                    <li nz-menu-item *ngIf="data.status == 4" (click)="onUpdateStatus($event, data.id, 1)">{{
-                      'mxk.text.enable' | i18n
+                  <li nz-menu-item *ngIf="data.status == 4" (click)="onUpdateStatus($event, data.id, 1)">{{
+                    'mxk.text.enable' | i18n
                     }}</li>
-                    <li nz-menu-item *ngIf="data.status == 5" (click)="onUpdateStatus($event, data.id, 1)">{{
-                      'mxk.text.unlock' | i18n
+                  <li nz-menu-item *ngIf="data.status == 5" (click)="onUpdateStatus($event, data.id, 1)">{{
+                    'mxk.text.unlock' | i18n
                     }}</li>
-                    <li nz-menu-item (click)="onDelete($event, data.id)" nzDanger>{{ 'mxk.text.delete' | i18n }}</li>
-                  </ul>
-                </nz-dropdown-menu>
-              </div>
-            </td>
-          </tr>
+                  <li nz-menu-item (click)="onDelete($event, data.id)" nzDanger>{{ 'mxk.text.delete' | i18n }}</li>
+                </ul>
+              </nz-dropdown-menu>
+            </div>
+          </td>
+        </tr>
         </tbody>
       </nz-table>
     </div>

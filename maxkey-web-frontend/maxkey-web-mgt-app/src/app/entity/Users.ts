@@ -154,6 +154,7 @@ export class Users extends BaseEntity {
     this.gender_select = '1';
     this.str_married = '0';
     this.str_idType = '0';
+    this.str_status='1';
   }
 
   override init(data: any): void {
