@@ -31,6 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,7 +141,7 @@ public final class NetUtil
 
 		try
 		{
-			tempFile = File.createTempFile("portecle", null);
+			tempFile = Files.createTempFile("portecle",null).toFile();
 			out = new BufferedOutputStream(new FileOutputStream(tempFile));
 			byte[] buf = new byte[2048];
 			int n;
