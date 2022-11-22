@@ -1,4 +1,4 @@
-﻿MaxKey v 3.5.10 GA 2022/11/21
+﻿MaxKey v 3.5.10 GA 2022/11/23
     *(MAXKEY-221501) SAML元数据接口地址修正
     *(MAXKEY-221502) SAML Subject增加类型persistent,transient,unspecified,emailAddress,WindowsDomainQualifiedName
     *(MAXKEY-221503) SAML receiverEndpoint判断优化
@@ -14,8 +14,15 @@
     *(MAXKEY-221513) 提交短信认证后端逻辑判断
     *(MAXKEY-221514) macOS执行启动脚本报空指针异常#I5X10K by tzk007
     *(MAXKEY-221515) 所有表格列宽、表格操作列按钮最多显示2两个，多的采用更多下拉方式呈现
-    *(MAXKEY-221516) 依赖项引用、更新和升级
+    *(MAXKEY-221516) vuln-fix: Temporary File Information Disclosure #94 by Jonathan.Leitschuh@gmail.com
+    *(MAXKEY-221517) 依赖项引用、更新和升级
         springSecurity            5.7.5
+        spring                    5.3.24
+        springdoc                 1.6.13
+        mysqlconnectorjava        8.0.31
+        druid                     1.2.15
+        druidspringboot           1.2.15
+        jodatime                  2.12.1
 
 MaxKey v 3.5.9 GA 2022/10/25
     *(MAXKEY-221401) docker和docker-compose部署的参数及文档优化
