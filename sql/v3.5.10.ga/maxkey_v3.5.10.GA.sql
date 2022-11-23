@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: maxkey
 -- ------------------------------------------------------
@@ -829,7 +829,7 @@ CREATE TABLE `mxk_roles` (
   `ID` varchar(45) NOT NULL COMMENT 'ID',
   `ROLECODE` varchar(45) DEFAULT NULL,
   `ROLENAME` varchar(100) DEFAULT NULL COMMENT 'GROUP NAME',
-  `DYNAMIC` varchar(2) DEFAULT NULL COMMENT '动态用户组，0否 1是',
+  `category` varchar(20) DEFAULT NULL COMMENT '动态用户组，dynamic动态组 static静态组app应用账号组',
   `FILTERS` text COMMENT '过滤条件SQL',
   `ORGIDSLIST` text COMMENT '机构列表',
   `RESUMETIME` varchar(45) DEFAULT NULL COMMENT 'RESUMETIME',
@@ -912,7 +912,7 @@ CREATE TABLE `mxk_socials_provider` (
   `clientid` varchar(100) DEFAULT NULL,
   `clientsecret` varchar(500) DEFAULT NULL,
   `agentId` varchar(45) DEFAULT NULL,
-  `hidden` varchar(45) DEFAULT 'false',
+  `display` varchar(45) DEFAULT 'false',
   `sortIndex` int DEFAULT '1',
   `scancode` varchar(45) DEFAULT 'none',
   `status` int DEFAULT '1',
@@ -1156,4 +1156,4 @@ CREATE TABLE `mxk_userinfo_adjunct` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-22 19:25:04
+-- Dump completed on 2022-11-23  8:47:21
