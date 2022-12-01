@@ -79,11 +79,13 @@ public class RedisConnection {
 	 * @param value
 	 */
 	public  void setex(String key,long seconds, String value){
+		_logger.trace("setex key {} ..." , key);
 		if(seconds==0){
 			conn.setex(key, RedisConnectionFactory.DEFAULT_CONFIG.DEFAULT_LIFETIME, value);
 		}else{
 			conn.setex(key, seconds, value);
 		}
+		_logger.trace("setex successful .");
 	}
 	
 	
@@ -92,6 +94,7 @@ public class RedisConnection {
 	 * @return String 
 	 */
 	public  String get(String key){
+		_logger.trace("get key {} ..." , key);
 		String value = null;
 		if(key != null){
 			value = conn.get(key);
@@ -115,16 +118,19 @@ public class RedisConnection {
 	}
 	
 	public void expire(String key,long seconds){
+		_logger.trace("expire key {} , {}" , key , seconds);
 		conn.expire(key, seconds);
 	}
 	
 	public void delete(String key){
+		_logger.trace("del key {}" , key);
 		conn.del(key);
 	}
 	
 	public  void rPush(String key, Serializable object){
 		conn.rpush(key, ObjectTransformer.serialize(object));
 	}
+	
 	public long  lRem(String key,int count,String value){
 		return conn.lrem(key, count, value);
 	}

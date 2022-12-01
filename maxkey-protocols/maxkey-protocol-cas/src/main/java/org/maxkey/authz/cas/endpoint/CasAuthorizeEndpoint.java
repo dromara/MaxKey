@@ -122,8 +122,10 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		AppsCasDetails casDetails = (AppsCasDetails)WebContext.getAttribute(CasConstants.PARAMETER.ENDPOINT_CAS_DETAILS);
 		
 		ServiceTicketImpl serviceTicket = new ServiceTicketImpl(AuthorizationUtils.getAuthentication(),casDetails);
-
+		
+		_logger.trace("CAS start create ticket ... ");
 		String ticket = ticketServices.createTicket(serviceTicket,casDetails.getExpires());
+		_logger.trace("CAS ticket {} created . " , ticket);
 		
 		StringBuffer callbackUrl = new StringBuffer(casDetails.getCallbackUrl());
 		if(casDetails.getCallbackUrl().indexOf("?")==-1) {
@@ -153,12 +155,17 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		}
 		
 		if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
+			_logger.debug("CAS LogoutType BACK_CHANNEL ... ");
 			String sessionId = AuthorizationUtils.getPrincipal().getSession().getId();
+			_logger.trace("get session by id {} . ",sessionId);
 		    Session session  = sessionManager.get(sessionId);
+		    _logger.trace("current session {}  ",session);
 		    //set cas ticket as OnlineTicketId
 		    casDetails.setOnlineTicket(ticket);
 		    session.setAuthorizedApp(casDetails);
+		    _logger.trace("session store ticket  {} .",ticket);
 		    sessionManager.create(sessionId, session);
+		    _logger.debug("CAS LogoutType session store ticket to AuthorizedApp .");
 		}
 		
 		_logger.debug("redirect to CAS Client URL {}" , callbackUrl);

@@ -64,10 +64,15 @@ public class RedisSessionManager implements SessionManager {
 
 	@Override
 	public void create(String sessionId, Session session) {
+		_logger.debug("store session key {} .",sessionId);
 		session.setExpiredTime(session.getLastAccessTime().plusSeconds(validitySeconds));
 		RedisConnection conn = connectionFactory.getConnection();
+		_logger.trace("store session {} ...",sessionId);
 		conn.setexObject( getKey(sessionId), validitySeconds, session);
+		_logger.debug("store session {} successful .",sessionId);
+		_logger.trace("close conn ...");
 		conn.close();
+		_logger.trace("close conn successful .");
 	}
 
 	@Override
