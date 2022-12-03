@@ -292,7 +292,7 @@ public class PasswordPolicyValidator {
            userInfo.setBadPasswordCount(userInfo.getBadPasswordCount() + 1);
            setBadPasswordCount(userInfo.getId(),userInfo.getBadPasswordCount());
            PasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
-           if(userInfo.getBadPasswordCount() + 1 >= passwordPolicy.getAttempts()) {
+           if(userInfo.getBadPasswordCount() >= passwordPolicy.getAttempts()) {
         	   _logger.debug("Bad Password Count {} , Max Attempts {}",
         			   userInfo.getBadPasswordCount() + 1,passwordPolicy.getAttempts());
         	   this.lockUser(userInfo);
