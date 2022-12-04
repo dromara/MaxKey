@@ -121,7 +121,7 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 		SearchControls constraints = new SearchControls();
 		constraints.setSearchScope(ldapUtils.getSearchScope());
 		String filter = "(&(objectClass=OrganizationalUnit))";
-		if(StringUtils.isNotBlank(this.getSynchronizer().getFilters())) {
+		if(StringUtils.isNotBlank(this.getSynchronizer().getOrgFilters())) {
 			//filter = this.getSynchronizer().getFilters();
 		}
 		

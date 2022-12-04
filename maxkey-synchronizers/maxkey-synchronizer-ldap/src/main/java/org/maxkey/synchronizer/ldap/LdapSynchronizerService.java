@@ -47,7 +47,7 @@ public class LdapSynchronizerService  implements ISynchronizerService{
 		        synchronizer.getProviderUrl(),
 		        synchronizer.getPrincipal(),
 		        synchronizer.getCredentials(),
-		        synchronizer.getBasedn());
+		        synchronizer.getUserBasedn());
 		ldapUtils.openConnection();
 		
 		ldapOrganizationService.setSynchronizer(synchronizer);

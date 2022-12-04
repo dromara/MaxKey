@@ -50,8 +50,8 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 		try {
 			SearchControls constraints = new SearchControls();
 			constraints.setSearchScope(ldapUtils.getSearchScope());
-			String filter = StringUtils.isNotBlank(this.getSynchronizer().getFilters()) ? 
-								getSynchronizer().getFilters() : "(&(objectClass=inetOrgPerson))";
+			String filter = StringUtils.isNotBlank(this.getSynchronizer().getUserFilters()) ? 
+								getSynchronizer().getUserFilters() : "(&(objectClass=inetOrgPerson))";
 			_logger.debug(" User filter {} ",filter);
 			NamingEnumeration<SearchResult> results = 
 					ldapUtils.getConnection().search(ldapUtils.getBaseDN(), filter, constraints);

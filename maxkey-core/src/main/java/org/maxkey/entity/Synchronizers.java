@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 package org.maxkey.entity;
 
@@ -26,80 +25,85 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.hibernate.validator.constraints.Length;
+
+
 @Entity
 @Table(name = "MXK_SYNCHRONIZERS")
 public class Synchronizers extends JpaBaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 4660258495864814777L;
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
-    String id;
+	private static final long serialVersionUID = 4660258495864814777L;
+	
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+	String id;
 
-    @Length(max = 60)
-    @Column
-    String name;
-    @Column
-    String filters;
-    @Column
-    String sourceType;
-    @Column
-    String resumeTime; 
-    @Column
-    String suspendTime;
-    @Column
-    String scheduler;
+	@Length(max = 60)
+	@Column
+	String name;
+	@Column
+	String sourceType;
+	@Column
+	String resumeTime;
+	@Column
+	String suspendTime;
+	@Column
+	String scheduler;
 
-    //同步时间范围（单位天）
+	// 同步时间范围（单位天）
 	@Column
 	Integer syncStartTime;
 
-    @Column
-    String providerUrl;
-    @Column
-    String driverClass;
-    @Column
-    String principal;
-    @Column
-    String credentials;
-    @Column
-    String basedn;
-    @Column
-    String msadDomain;
-    @Column
-    String sslSwitch;
-    @Column
-    String trustStore;
-    @Column
-    String trustStorePassword;
-    @Column
-    String description;
-    @Column
-    String createdBy;
-    @Column
-    String createdDate;
-    @Column
-    String modifiedBy;
-    @Column
-    String modifiedDate;
-    @Column
-    String status;
-    @Column
-    String service;
-    
+	@Column
+	String providerUrl;
+	@Column
+	String driverClass;
+	@Column
+	String principal;
+	@Column
+	String credentials;
+	@Column
+	String userBasedn;
+	@Column
+	String userFilters;
+	@Column
+	String orgBasedn;
+	@Column
+	String orgFilters;
+	@Column
+	String msadDomain;
+	@Column
+	String sslSwitch;
+	@Column
+	String trustStore;
+	@Column
+	String trustStorePassword;
+	@Column
+	String description;
+	@Column
+	String createdBy;
+	@Column
+	String createdDate;
+	@Column
+	String modifiedBy;
+	@Column
+	String modifiedDate;
+	@Column
+	String status;
+	@Column
+	String service;
+
 	@Column
 	private String instId;
 
 	private String instName;
 
-    public Synchronizers() {
-    }
+	public Synchronizers() {
+	}
 
-
-
-    public Synchronizers(String id) {
-        this.id = id;
-    }
+	public Synchronizers(String id) {
+		this.id = id;
+	}
 
 	public Integer getSyncStartTime() {
 		return syncStartTime;
@@ -123,14 +127,6 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getFilters() {
-		return filters;
-	}
-
-	public void setFilters(String filters) {
-		this.filters = filters;
 	}
 
 	public String getSourceType() {
@@ -197,12 +193,36 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 		this.credentials = credentials;
 	}
 
-	public String getBasedn() {
-		return basedn;
+	public String getUserBasedn() {
+		return userBasedn;
 	}
 
-	public void setBasedn(String basedn) {
-		this.basedn = basedn;
+	public void setUserBasedn(String userBasedn) {
+		this.userBasedn = userBasedn;
+	}
+
+	public String getUserFilters() {
+		return userFilters;
+	}
+
+	public void setUserFilters(String userFilters) {
+		this.userFilters = userFilters;
+	}
+
+	public String getOrgBasedn() {
+		return orgBasedn;
+	}
+
+	public void setOrgBasedn(String orgBasedn) {
+		this.orgBasedn = orgBasedn;
+	}
+
+	public String getOrgFilters() {
+		return orgFilters;
+	}
+
+	public void setOrgFilters(String orgFilters) {
+		this.orgFilters = orgFilters;
 	}
 
 	public String getMsadDomain() {
@@ -213,17 +233,15 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 		this.msadDomain = msadDomain;
 	}
 
-	
-
 	public String getSslSwitch() {
-        return sslSwitch;
-    }
+		return sslSwitch;
+	}
 
-    public void setSslSwitch(String sslSwitch) {
-        this.sslSwitch = sslSwitch;
-    }
+	public void setSslSwitch(String sslSwitch) {
+		this.sslSwitch = sslSwitch;
+	}
 
-    public String getTrustStore() {
+	public String getTrustStore() {
 		return trustStore;
 	}
 
@@ -291,37 +309,25 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 		return service;
 	}
 
-
-
 	public void setService(String service) {
 		this.service = service;
 	}
-
-
 
 	public String getInstId() {
 		return instId;
 	}
 
-
-
 	public void setInstId(String instId) {
 		this.instId = instId;
 	}
-
-
 
 	public String getInstName() {
 		return instName;
 	}
 
-
-
 	public void setInstName(String instName) {
 		this.instName = instName;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -330,8 +336,6 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 		builder.append(id);
 		builder.append(", name=");
 		builder.append(name);
-		builder.append(", filters=");
-		builder.append(filters);
 		builder.append(", sourceType=");
 		builder.append(sourceType);
 		builder.append(", resumeTime=");
@@ -340,6 +344,8 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 		builder.append(suspendTime);
 		builder.append(", scheduler=");
 		builder.append(scheduler);
+		builder.append(", syncStartTime=");
+		builder.append(syncStartTime);
 		builder.append(", providerUrl=");
 		builder.append(providerUrl);
 		builder.append(", driverClass=");
@@ -348,8 +354,14 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 		builder.append(principal);
 		builder.append(", credentials=");
 		builder.append(credentials);
-		builder.append(", basedn=");
-		builder.append(basedn);
+		builder.append(", userBasedn=");
+		builder.append(userBasedn);
+		builder.append(", userFilters=");
+		builder.append(userFilters);
+		builder.append(", orgBasedn=");
+		builder.append(orgBasedn);
+		builder.append(", orgFilters=");
+		builder.append(orgFilters);
 		builder.append(", msadDomain=");
 		builder.append(msadDomain);
 		builder.append(", sslSwitch=");
@@ -370,6 +382,12 @@ public class Synchronizers extends JpaBaseEntity implements Serializable {
 		builder.append(modifiedDate);
 		builder.append(", status=");
 		builder.append(status);
+		builder.append(", service=");
+		builder.append(service);
+		builder.append(", instId=");
+		builder.append(instId);
+		builder.append(", instName=");
+		builder.append(instName);
 		builder.append("]");
 		return builder.toString();
 	}

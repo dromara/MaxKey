@@ -20,7 +20,6 @@ import { BaseEntity } from './BaseEntity';
 
 export class Synchronizers extends BaseEntity {
   name!: String;
-  filters!: String;
   sourceType!: String;
   service!: String;
   resumeTime!: String;
@@ -32,7 +31,10 @@ export class Synchronizers extends BaseEntity {
   principal!: String;
   credentials!: String;
   sslSwitch!: Number;
-  basedn!: String;
+  userBasedn!: String;
+  userFilters!: String;
+  orgBasedn!: String;
+  orgFilters!: String;
   msadDomain!: String;
   trustStore!: String;
   trustStorePassword!: String;

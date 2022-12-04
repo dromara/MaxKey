@@ -20,8 +20,13 @@ package org.maxkey.util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import org.maxkey.entity.DbTableColumn;
+import org.maxkey.entity.DbTableMetaData;
+
 
 public class JdbcUtils {
 
@@ -106,6 +111,27 @@ public class JdbcUtils {
 			}
 		}
 	}
-
+	
+	public static DbTableMetaData getMetaData(ResultSet rs) {
+		try {
+			ResultSetMetaData metaData = rs.getMetaData();
+			DbTableMetaData meta = new DbTableMetaData(metaData.getTableName(1));
+			int count = metaData.getColumnCount();
+			for (int i = 1; i <= count; i++) {
+				DbTableColumn column = new DbTableColumn(
+						metaData.getColumnName(i).toLowerCase(),
+						metaData.getColumnTypeName(i),
+						metaData.getPrecision(i),
+						metaData.getScale(i)
+						);
+				meta.getColumns().add(column);
+				meta.getColumnsMap().put(column.getColumn(), column);
+			}
+			return meta;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }

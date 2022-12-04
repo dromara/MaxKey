@@ -47,7 +47,7 @@ public class ActiveDirectorySynchronizerService   implements ISynchronizerServic
 		        synchronizer.getProviderUrl(),
 		        synchronizer.getPrincipal(),
 		        synchronizer.getCredentials(),
-		        synchronizer.getBasedn(),
+		        synchronizer.getUserBasedn(),
 		        synchronizer.getMsadDomain());
 		ldapUtils.openConnection();
 		

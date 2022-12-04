@@ -110,8 +110,10 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 	        					 rs.getString("credentials")));
 	        	 synchronizer.setResumeTime( rs.getString("resumetime"));
 	        	 synchronizer.setSuspendTime(rs.getString("suspendtime"));
-	        	 synchronizer.setFilters(	 rs.getString("filters"));
-	        	 synchronizer.setBasedn(     rs.getString("basedn"));
+	        	 synchronizer.setUserFilters(	 rs.getString("userfilters"));
+	        	 synchronizer.setUserBasedn(     rs.getString("userbasedn"));
+	        	 synchronizer.setOrgFilters(	 rs.getString("orgfilters"));
+	        	 synchronizer.setOrgBasedn(     rs.getString("orgbasedn"));
 	        	 synchronizer.setMsadDomain( rs.getString("msaddomain"));
 	        	 synchronizer.setSslSwitch(  rs.getString("sslswitch"));
 	        	 synchronizer.setTrustStore( rs.getString("truststore"));

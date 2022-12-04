@@ -52,8 +52,8 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 		try {
 			SearchControls constraints = new SearchControls();
 			constraints.setSearchScope(ldapUtils.getSearchScope());
-			String filter = StringUtils.isNotBlank(this.getSynchronizer().getFilters())?
-								getSynchronizer().getFilters() : "(&(objectClass=User))";
+			String filter = StringUtils.isNotBlank(this.getSynchronizer().getUserFilters())?
+								getSynchronizer().getUserFilters() : "(&(objectClass=User))";
 			NamingEnumeration<SearchResult> results = 
 					ldapUtils.getConnection().search(ldapUtils.getBaseDN(), filter, constraints);
 			

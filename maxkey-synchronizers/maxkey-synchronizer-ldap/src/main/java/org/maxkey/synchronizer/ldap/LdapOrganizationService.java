@@ -119,8 +119,8 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 		SearchControls constraints = new SearchControls();
 		constraints.setSearchScope(ldapUtils.getSearchScope());
 		String filter = "(&(objectClass=OrganizationalUnit))";
-		if(StringUtils.isNotBlank(this.getSynchronizer().getFilters())) {
-			//filter = this.getSynchronizer().getFilters();
+		if(StringUtils.isNotBlank(this.getSynchronizer().getOrgFilters())) {
+			filter = this.getSynchronizer().getOrgFilters();
 		}
 		NamingEnumeration<SearchResult> results = 
 				ldapUtils.getConnection().search(ldapUtils.getBaseDN(), filter , constraints);
