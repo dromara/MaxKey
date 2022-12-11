@@ -114,6 +114,12 @@ public class UserInfo extends JpaBaseEntity {
     @Column
     protected String idCardNo;
     @Column
+    protected String education;
+    @Column
+    protected String graduateFrom;
+    @Column
+    protected String graduateDate;
+    @Column
     protected String webSite;
     @Column
     protected String startWorkDate;
@@ -528,9 +534,31 @@ public class UserInfo extends JpaBaseEntity {
         this.nickName = nickName;
     }
 
-   
+    public String getEducation() {
+		return education;
+	}
 
-    public String getNameZhSpell() {
+	public void setEducation(String education) {
+		this.education = education;
+	}
+
+	public String getGraduateFrom() {
+		return graduateFrom;
+	}
+
+	public void setGraduateFrom(String graduateFrom) {
+		this.graduateFrom = graduateFrom;
+	}
+
+	public String getGraduateDate() {
+		return graduateDate;
+	}
+
+	public void setGraduateDate(String graduateDate) {
+		this.graduateDate = graduateDate;
+	}
+
+	public String getNameZhSpell() {
         return nameZhSpell;
     }
 

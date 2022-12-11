@@ -51,6 +51,9 @@ export class Users extends BaseEntity {
   pictureBase64!: string;
   idType!: Number;
   idCardNo!: String;
+  education!: String;
+  graduateFrom!: String;
+  graduateDate!: String;
   webSite!: String;
   startWorkDate!: String;
 

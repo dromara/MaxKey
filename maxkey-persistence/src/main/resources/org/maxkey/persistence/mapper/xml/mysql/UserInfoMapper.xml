@@ -197,6 +197,9 @@
             </if>
             idtype          =   #{idType},
             idcardno        =   #{idCardNo},
+            education       =   #{education},
+            graduatefrom    =   #{graduateFrom},
+            graduatedate    =   #{graduateDate},
             website         =   #{webSite},
 
             locale          =   #{locale},
