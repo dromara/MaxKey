@@ -1,4 +1,17 @@
-﻿MaxKey v 3.5.10 GA 2022/11/23
+﻿MaxKey v 3.5.11 GA 2022/12/15
+    *(MAXKEY-221601) 官方网站优化及重构
+    *(MAXKEY-221602) BadPasswordCount 次数问题解决
+    *(MAXKEY-221603) 增加session的日志输出信息
+    *(MAXKEY-221604) MXK_APPS的字段CREDENTIAL改为varchar(45)
+    *(MAXKEY-221605) 同步器删除字段filters、basedn，新增字段userfilters、userbasedn、orgfilters、orgbasedn，界面的时间区间增加“天”单位
+    *(MAXKEY-221606) 优化Jdbc的同步器，可以配置SQL同步组织和用户数据
+    *(MAXKEY-221607) 优化LDAP和AD的同步器
+    *(MAXKEY-221608) 用户信息增加通用字段education-学历，graduateFrom-毕业院校，graduateDate-毕业时间
+    *(MAXKEY-221609) 完善基本信息的介绍
+    *(MAXKEY-221610) 依赖项引用、更新和升级
+        springBoot                2.7.6
+    
+MaxKey v 3.5.10 GA 2022/11/23
     *(MAXKEY-221501) SAML元数据接口地址修正
     *(MAXKEY-221502) SAML Subject增加类型persistent,transient,unspecified,emailAddress,WindowsDomainQualifiedName
     *(MAXKEY-221503) SAML receiverEndpoint判断优化
