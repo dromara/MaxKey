@@ -8,7 +8,8 @@
     *(MAXKEY-221607) 优化LDAP和AD的同步器
     *(MAXKEY-221608) 用户信息增加通用字段education-学历，graduateFrom-毕业院校，graduateDate-毕业时间
     *(MAXKEY-221609) 完善基本信息的介绍
-    *(MAXKEY-221610) 依赖项引用、更新和升级
+    *(MAXKEY-221610) 用户头像PICTURE改为LONGBLOB类型
+    *(MAXKEY-221611) 依赖项引用、更新和升级
         springBoot                2.7.6
     
 MaxKey v 3.5.10 GA 2022/11/23
