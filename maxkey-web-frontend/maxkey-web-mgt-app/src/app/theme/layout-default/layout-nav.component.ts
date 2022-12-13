@@ -110,9 +110,9 @@ export class LayoutDefaultNavComponent implements OnInit, OnDestroy {
     if (linkNode == null) {
       return false;
     }
-    const id = +(linkNode.dataset !== undefined) ? linkNode.dataset?.['id'] : '';
+    const id = +linkNode.dataset!['id']!;
     // Should be ingore children title trigger event
-    if (id == '') {
+    if (isNaN(id)) {
       return false;
     }
 
