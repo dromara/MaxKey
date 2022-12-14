@@ -9,7 +9,10 @@
     *(MAXKEY-221608) 用户信息增加通用字段education-学历，graduateFrom-毕业院校，graduateDate-毕业时间
     *(MAXKEY-221609) 完善基本信息的介绍
     *(MAXKEY-221610) 用户头像PICTURE改为LONGBLOB类型
-    *(MAXKEY-221611) 依赖项引用、更新和升级
+    *(MAXKEY-221611) 去除后端管理cookie的设置
+    *(MAXKEY-221612) 左侧导航菜单收缩时，二级菜单点击问题修复
+    *(MAXKEY-221613) 测试数据优化，包括用户、组织、应用等
+    *(MAXKEY-221614) 依赖项引用、更新和升级
         springBoot                2.7.6
     
 MaxKey v 3.5.10 GA 2022/11/23
