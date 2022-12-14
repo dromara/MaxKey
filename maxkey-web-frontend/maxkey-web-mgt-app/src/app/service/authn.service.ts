@@ -83,15 +83,6 @@ export class AuthnService {
       email: authJwt.email
     };
 
-    let hostnames = window.location.hostname.split('.');
-    let subHostName = window.location.hostname;
-    if (hostnames.length >= 2) {
-      subHostName = `${hostnames[hostnames.length - 2]}.${hostnames[hostnames.length - 1]}`;
-    }
-
-    this.cookieService.set(CONSTS.CONGRESS, authJwt.token);
-    this.cookieService.set(CONSTS.CONGRESS, authJwt.ticket, { domain: subHostName });
-
     this.settingsService.setUser(user);
     //console.log(authJwt);
     this.tokenService.set(authJwt);
