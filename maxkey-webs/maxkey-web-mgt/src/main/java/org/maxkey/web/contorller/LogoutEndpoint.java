@@ -17,10 +17,14 @@
 
 package org.maxkey.web.contorller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.authn.session.SessionManager;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,16 +33,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class LogoutEndpoint {
+	private static Logger _logger = LoggerFactory.getLogger(LogoutEndpoint.class);
 	
 	@Autowired
     protected SessionManager sessionManager;
 	
  	@RequestMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
- 	public  ResponseEntity<?> logout(@CurrentUser UserInfo currentUser){
+ 	public  ResponseEntity<?> logout(HttpServletRequest request,@CurrentUser UserInfo currentUser){
  		sessionManager.terminate(
  				currentUser.getSessionId(), 
  				currentUser.getId(),
  				currentUser.getUsername());
+ 		//invalidate http session
+		_logger.debug("/logout invalidate http Session id {}",request.getSession().getId());
+ 		request.getSession().invalidate();
  		return new Message<String>().buildResponse();
  	}
  	
