@@ -120,7 +120,7 @@ export class UsersComponent implements OnInit {
 
   onBatchDelete(e: MouseEvent): void {
     e.preventDefault();
-    this.usersService.get(set2String(this.query.tableCheckedId)).subscribe(res => {
+    this.usersService.delete(set2String(this.query.tableCheckedId)).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
         this.fetch();
