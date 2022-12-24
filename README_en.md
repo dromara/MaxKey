@@ -133,6 +133,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 云南师范大学                                |
 | 云南农业职业技术学院                        |
 | 宜昌市三峡中等专业学校                      |
+| 惠州卫生职业技术学院                        |
 | 重庆市北碚图书馆                            |
 | 德清智慧教育平台                            |
 | 余姚市教育局                                |
@@ -155,7 +156,6 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 浪潮工业互联网股份有限公司                  |
 | 深圳能源集团股份有限公司                    |
 | 唐颐控股有限公司                            |
-| 吕梁市医改监测平台                          |
 | 中国航空制造技术研究院                      |
 | 遂宁市经济大数据平台                        |
 | 同方节能工程技术有限公司                    |
@@ -164,11 +164,10 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 广州无线电集团                              |
 | 河南新辰环保科技有限公司                    |
 | 三一华兴                                    |
-| unicon.net                                  |
-| TISSON & COMPANY                            |
 | 中航金网（北京）电子商务有限公司            |
 | 深圳市东阳光实业发展有限公司                |
 | 北京银泰置业有限公司                        |
+| 北京和融通支付科技有限公司                  |
 | 浙江领湾网络有限公司                        |
 | TCL华星光电技术有限公司                     |
 | 深圳云天励飞技术股份有限公司                |
@@ -183,6 +182,8 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 广州蓝深科技有限公司                        |
 | 之江实验室                                  |
 | 凯盛工业互联网平台                          |
+| 吕梁市医改监测平台                          |
+| 湘潭智慧教育云统一认证平台                  |
 | 漳州信息产业集团有限公司                    |
 | 重庆两江协同创新区                          |
 | 浙江申跃信息科技有限公司                    |
