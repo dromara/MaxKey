@@ -144,7 +144,7 @@
               <ul nz-menu>
                 <li nz-menu-item (click)="onResourcesMgmt($event, data.id, data.appName)">{{ 'mxk.apps.resources' | i18n
                   }}</li>
-                <li nz-menu-item (click)="onDelete($event, data.id)">{{ 'mxk.text.delete' | i18n }}</li>
+                <li nz-menu-item (click)="onDelete($event, data.id)" nzDanger>{{ 'mxk.text.delete' | i18n }}</li>
               </ul>
             </nz-dropdown-menu>
           </div>
