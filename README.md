@@ -133,10 +133,9 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 长春职业技术学院                            |
 | 云南师范大学                                |
 | 云南农业职业技术学院                        |
-| 宜昌市三峡中等专业学校                      |
 | 惠州卫生职业技术学院                        |
+| 宜昌市三峡中等专业学校                      |
 | 重庆市北碚图书馆                            |
-| 德清智慧教育平台                            |
 | 余姚市教育局                                |
 | 中国金融认证中心                            |
 | 国元证券                                    |
@@ -158,7 +157,6 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 深圳能源集团股份有限公司                    |
 | 唐颐控股有限公司                            |
 | 中国航空制造技术研究院                      |
-| 遂宁市经济大数据平台                        |
 | 同方节能工程技术有限公司                    |
 | 云南航天工程物探检测股份有限公司            |
 | 山东港口陆海国际物流集团有限公司            |
@@ -174,6 +172,8 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 深圳云天励飞技术股份有限公司                |
 | 深圳市维玛科技有限公司                      |
 | 妙盈科技                                    |
+| 之江实验室                                  |
+| 尚企云链                                    |
 | 新疆天衡信息系统咨询管理有限公司            |
 | 黄河科技集团有限公司                        |
 | 新开普电子股份有限公司                      |
@@ -181,10 +181,6 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 百安居中国                                  |
 | 广州携旅信息科技有限公司                    |
 | 广州蓝深科技有限公司                        |
-| 之江实验室                                  |
-| 凯盛工业互联网平台                          |
-| 吕梁市医改监测平台                          |
-| 湘潭智慧教育云统一认证平台                  |
 | 漳州信息产业集团有限公司                    |
 | 重庆两江协同创新区                          |
 | 浙江申跃信息科技有限公司                    |
@@ -194,7 +190,6 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 广州广汽商贸物流有限公司                    |
 | 广州思迈特软件有限公司                      |
 | 南凌科技股份有限公司                        |
-| 尚企云链                                    |
 | 福建引迈信息技术有限公司                    |
 | 联鹏应用软件（上海）有限公司                |
 | 北京博亚思科技有限公司                      |
@@ -206,6 +201,11 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 无锡市陶都巨龙软件有限责任公司              |
 | 厦门茂商科技有限公司                        |
 | 杭州马上自动化科技有限公司                  |
+| 凯盛工业互联网平台                          |
+| 吕梁市医改监测平台                          |
+| 湘潭智慧教育云统一认证平台                  |
+| 德清智慧教育平台                            |
+| 遂宁市经济大数据平台                        |
 
 # Dromara社区
 <a href="https://dromara.org/zh/" target="_blank">**Dromara**</a>致力于微服务云原生解决方案的组织。

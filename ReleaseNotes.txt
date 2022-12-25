@@ -1,4 +1,17 @@
-﻿MaxKey v 3.5.11 GA 2022/12/15
+﻿MaxKey v 3.5.12 GA 2022/12/27
+    *(MAXKEY-221701) #I66S79 CAS退出跳转报错问题
+    *(MAXKEY-221702) 用户批量删除 onBatchDelete 调用的后端 delete
+    *(MAXKEY-221703) 管理端退出后，会话值为无效
+    *(MAXKEY-221704) 应用管理排序字段显示
+    *(MAXKEY-221705) 应用删除按钮增加nzDanger颜色标识
+    *(MAXKEY-221706) 依赖项引用、更新和升级
+        springBoot      2.7.7
+        httpcomponents  4.5.14
+        httpcore        4.4.16
+        tomcat          9.0.70
+        springSecurity  5.7.6
+        
+MaxKey v 3.5.11 GA 2022/12/15
     *(MAXKEY-221601) 官方网站优化及重构
     *(MAXKEY-221602) BadPasswordCount 次数问题解决
     *(MAXKEY-221603) 增加session的日志输出信息
