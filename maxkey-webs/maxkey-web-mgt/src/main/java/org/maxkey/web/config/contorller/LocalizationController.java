@@ -19,16 +19,15 @@ package org.maxkey.web.config.contorller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.annotation.CurrentUser;
-import org.maxkey.constants.ConstsOperateResult;
 import org.maxkey.entity.Localization;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
+import org.maxkey.entity.UserInfoAdjoint;
 import org.maxkey.persistence.repository.LocalizationRepository;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -67,21 +66,21 @@ public class LocalizationController {
 		 */
 		@RequestMapping(value={"/update"})
 		@ResponseBody
-		public Message updat(@ModelAttribute("localization") Localization localization,@CurrentUser UserInfo currentUser,BindingResult result) {
+		public ResponseEntity<?> update(@ModelAttribute("localization") Localization localization,@CurrentUser UserInfo currentUser,BindingResult result) {
 			_logger.debug("update  localization : "+localization);
 			localization.setInstId(currentUser.getInstId());
 			if(StringUtils.isBlank(localization.getId())){
 				localization.setId(localization.generateId());
 				if(localizationRepository.insert(localization)) {
-					return new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
+					return new Message<UserInfoAdjoint>(Message.SUCCESS).buildResponse();
 				} else {
-					return new Message(WebContext.getI18nValue(ConstsOperateResult.ERROR),MessageType.error);
+					return new Message<UserInfoAdjoint>(Message.FAIL).buildResponse();
 				}
 			}else {
 				if(localizationRepository.update(localization)) {
-					return new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
+					return new Message<UserInfoAdjoint>(Message.SUCCESS).buildResponse();
 				} else {
-					return new Message(WebContext.getI18nValue(ConstsOperateResult.ERROR),MessageType.error);
+					return new Message<UserInfoAdjoint>(Message.FAIL).buildResponse();
 				}
 			}
 		}

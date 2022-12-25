@@ -21,17 +21,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.maxkey.authn.annotation.CurrentUser;
-import org.maxkey.constants.ConstsOperateResult;
 import org.maxkey.constants.ConstsTimeInterval;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,7 +54,7 @@ public class SafeController {
 	
 	@ResponseBody
 	@RequestMapping(value="/setting") 
-	public Message setting(
+	public ResponseEntity<?> setting(
 	        HttpServletRequest request,
             HttpServletResponse response,
 			@RequestParam("authnType") String authnType,
@@ -79,7 +78,7 @@ public class SafeController {
 		userInfoService.updateEmail(currentUser);
 		
 		
-		return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
+		return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		
 	}
 	

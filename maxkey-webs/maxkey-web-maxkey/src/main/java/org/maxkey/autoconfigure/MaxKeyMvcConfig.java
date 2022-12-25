@@ -28,7 +28,6 @@ import org.maxkey.authn.web.CurrentUserMethodArgumentResolver;
 import org.maxkey.authn.web.interceptor.PermissionInterceptor;
 import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.web.interceptor.HistorySignOnAppInterceptor;
-import org.maxkey.web.interceptor.HistoryLogsInterceptor;
 import org.maxkey.web.interceptor.SingleSignOnInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,11 +65,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     KerberosService kerberosService;
     
     @Autowired
-    PermissionInterceptor permissionInterceptor;
-    
-    @Autowired
-    HistoryLogsInterceptor historyLogsInterceptor;
-    
+    PermissionInterceptor permissionInterceptor;    
     
     @Autowired
     SingleSignOnInterceptor singleSignOnInterceptor;
@@ -143,11 +138,6 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 ;
         
         _logger.debug("add Permission Interceptor");
-        
-        registry.addInterceptor(historyLogsInterceptor)
-                .addPathPatterns("/config/changePassword/**")
-                ;
-        _logger.debug("add historyLogs Interceptor");
 
         //for Single Sign On
         registry.addInterceptor(singleSignOnInterceptor)

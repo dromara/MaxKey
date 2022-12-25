@@ -23,7 +23,6 @@ import org.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.maxkey.authn.web.CurrentUserMethodArgumentResolver;
 import org.maxkey.authn.web.interceptor.PermissionInterceptor;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.web.interceptor.HistoryLogsAdapter;
 import org.maxkey.web.interceptor.RestApiPermissionAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,9 +48,6 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
     
     @Autowired
     PermissionInterceptor permissionInterceptor;
-    
-    @Autowired
-    HistoryLogsAdapter historyLogsAdapter;
     
     @Autowired
     RestApiPermissionAdapter restApiPermissionAdapter;
@@ -119,20 +115,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 ;
         
         _logger.debug("add Permission Adapter");
-        
-        registry.addInterceptor(historyLogsAdapter)
-                .addPathPatterns("/userinfo/**")
-                .addPathPatterns("/enterprises/**")
-                .addPathPatterns("/employees/**")
-                .addPathPatterns("/authInfo/**")
-                .addPathPatterns("/usercenter/**")
-                .addPathPatterns("/retrievePassword/**")
-                .addPathPatterns("/roles/**")
-                .addPathPatterns("/apps/**")
-                .addPathPatterns("/approles/**")
-                ;
-        _logger.debug("add History Logs Adapter");
-        
+
         /*
          * api
          * idm

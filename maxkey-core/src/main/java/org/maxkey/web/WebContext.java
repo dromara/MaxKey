@@ -34,7 +34,6 @@ import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.entity.Institutions;
 import org.maxkey.util.DateUtils;
 import org.maxkey.util.IdGenerator;
-import org.maxkey.web.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -96,26 +95,6 @@ public final class WebContext {
         
         logoutAttributeNameList.add(WebConstants.FIRST_SAVED_REQUEST_PARAMETER);
         
-    }
-
-    /**
-     * set Message to session,session id is Constants.MESSAGE
-     * 
-     * @see WebConstants.MESSAGE
-     * @param message Message
-     */
-    public static void setMessage(Message message) {
-        setAttribute(WebConstants.CURRENT_MESSAGE, message);
-    }
-
-    /**
-     * get message from session,session id is Constants.MESSAGE
-     * 
-     * @see WebConstants.MESSAGE
-     * @return Message
-     */
-    public static Message getMessage() {
-        return ((Message) getAttribute(WebConstants.CURRENT_MESSAGE));
     }
 
     /**

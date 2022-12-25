@@ -19,16 +19,14 @@ package org.maxkey.web.contorller;
 
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.authn.annotation.CurrentUser;
-import org.maxkey.constants.ConstsOperateResult;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.UserInfoAdjoint;
 import org.maxkey.persistence.service.UserInfoAdjointService;
-import org.maxkey.web.WebContext;
-import org.maxkey.web.message.Message;
-import org.maxkey.web.message.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,16 +80,16 @@ public class UserAdjointController {
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"})
-	public Message insert(
+	public ResponseEntity<?> insert(
 			@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint,
 			@CurrentUser UserInfo currentUser) {
 		_logger.debug("-Add  :" + userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.insert(userInfoAdjoint)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
+			return new Message<UserInfoAdjoint>(Message.SUCCESS).buildResponse();
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.error);
+			return new Message<UserInfoAdjoint>(Message.FAIL).buildResponse();
 		}
 		
 	}
@@ -103,16 +101,16 @@ public class UserAdjointController {
 	 */
 	@ResponseBody
 	@RequestMapping(value={"/query"}) 
-	public Message query(
+	public ResponseEntity<?> query(
 			@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint,
 			@CurrentUser UserInfo currentUser) {
 		_logger.debug("-query  :" + userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.load(userInfoAdjoint)!=null) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
+			return new Message<UserInfoAdjoint>(Message.SUCCESS).buildResponse();
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.error);
+			return new Message<UserInfoAdjoint>(Message.FAIL).buildResponse();
 		}
 		
 	}
@@ -124,16 +122,16 @@ public class UserAdjointController {
 	 */
 	@ResponseBody
 	@RequestMapping(value={"/update"})  
-	public Message update(
+	public ResponseEntity<?> update(
 			@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint,
 			@CurrentUser UserInfo currentUser) {
 		_logger.debug("-update  userInfoAdjoint :" + userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.update(userInfoAdjoint)) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
+			return new Message<UserInfoAdjoint>(Message.SUCCESS).buildResponse();
 			
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateResult.ERROR),MessageType.error);
+			return new Message<UserInfoAdjoint>(Message.FAIL).buildResponse();
 		}
 		
 	}
@@ -141,13 +139,13 @@ public class UserAdjointController {
 
 	@ResponseBody
 	@RequestMapping(value={"/delete"})
-	public Message delete(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
+	public ResponseEntity<?> delete(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
 		_logger.debug("-delete  group :" + userInfoAdjoint);
 		
 		if (userInfoAdjointService.deleteBatch(userInfoAdjoint.getId())) {
-			return  new Message(WebContext.getI18nValue(ConstsOperateResult.SUCCESS),MessageType.success);
+			return new Message<UserInfoAdjoint>(Message.SUCCESS).buildResponse();
 		} else {
-			return  new Message(WebContext.getI18nValue(ConstsOperateResult.ERROR),MessageType.error);
+			return new Message<UserInfoAdjoint>(Message.FAIL).buildResponse();
 		}
 		
 	}
