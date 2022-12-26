@@ -1,6 +1,6 @@
 echo off
 
-set MXK_VERSION=3.5.11
+set MXK_VERSION=3.5.12
 set MXK_REPOSITORY=maxkeytop
 
 set START_TIME="%date:~0,10% %time:~0,2%:%time:~3,5%"
