@@ -114,7 +114,7 @@
 
 | 版本       | 日期    |  Docker      |  网盘      |  网盘提取码  |
 | --------   | :-----  | :----        | :----      | :----        |
-| v 3.5.11   | 2022/12/15   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1LB2uR8hXuRcR0lklwoI_og" target="_blank">下载</a>  |  **mxk9**  |
+| v 3.5.12   | 2022/12/27   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1X3GpXint0WGeGr7A0LU7_g" target="_blank">下载</a>  |  **mxk9**  |
 
 # License
  
