@@ -112,7 +112,7 @@
 
 当前版本百度网盘下载,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> 历史版本</a>
 
-| 版本       | 日期    |  Docker      |  网盘      |  网盘提取码  |
+| 版本       | 日期    |  Docker      |  网盘      |  网盘码  |
 | --------   | :-----  | :----        | :----      | :----        |
 | v 3.5.12   | 2022/12/27   |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |  <a href="https://pan.baidu.com/s/1X3GpXint0WGeGr7A0LU7_g" target="_blank">下载</a>  |  **mxk9**  |
 
