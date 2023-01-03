@@ -26,12 +26,12 @@ import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
-import org.maxkey.password.onetimepwd.OtpAuthnService;
+import org.maxkey.password.onetimepwd.MailOtpAuthnService;
+import org.maxkey.password.sms.SmsOtpAuthnService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -74,8 +74,10 @@ public class ForgotPasswordContorller {
     UserInfoService userInfoService;
     
     @Autowired
-    @Qualifier("otpAuthnService")
-    OtpAuthnService otpAuthnService;
+    MailOtpAuthnService mailOtpAuthnService;
+    
+    @Autowired
+    SmsOtpAuthnService smsOtpAuthnService;
     
  
     
@@ -100,7 +102,7 @@ public class ForgotPasswordContorller {
     		if(userInfo != null) {
 	    		change = new ChangePassword(userInfo);
 	            change.clearPassword();
-	        	AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(userInfo.getInstId());
+	        	AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(userInfo.getInstId());
 	        	smsOtpAuthn.produce(userInfo);
 	        	return new Message<ChangePassword>(change).buildResponse();
     		}
@@ -127,7 +129,7 @@ public class ForgotPasswordContorller {
     		if(userInfo != null) {
 	    		change = new ChangePassword(userInfo);
 	            change.clearPassword();
-	            AbstractOtpAuthn mailOtpAuthn =  otpAuthnService.getMailOtpAuthn(userInfo.getInstId());
+	            AbstractOtpAuthn mailOtpAuthn =  mailOtpAuthnService.getMailOtpAuthn(userInfo.getInstId());
 	            mailOtpAuthn.produce(userInfo);
 	        	return new Message<ChangePassword>(change).buildResponse();
     		}
@@ -146,8 +148,8 @@ public class ForgotPasswordContorller {
         		&& changePassword.getPassword().equals(changePassword.getConfirmPassword())) {
             UserInfo loadedUserInfo = userInfoService.get(changePassword.getUserId());
             if(loadedUserInfo != null) {
-	            AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(loadedUserInfo.getInstId());
-	            AbstractOtpAuthn mailOtpAuthn =  otpAuthnService.getMailOtpAuthn(loadedUserInfo.getInstId());
+	            AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(loadedUserInfo.getInstId());
+	            AbstractOtpAuthn mailOtpAuthn =  mailOtpAuthnService.getMailOtpAuthn(loadedUserInfo.getInstId());
 	            if (
 	            		(forgotType.equalsIgnoreCase("email") 
 	            				&& mailOtpAuthn !=null 

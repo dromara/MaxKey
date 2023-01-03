@@ -5,6 +5,7 @@ org.maxkey.autoconfigure.JwtAuthnAutoConfiguration
 org.maxkey.autoconfigure.RedisAutoConfiguration
 org.maxkey.autoconfigure.AuthnProviderAutoConfiguration
 org.maxkey.autoconfigure.OneTimePasswordAutoConfiguration
+org.maxkey.autoconfigure.SmsAutoConfiguration
 org.maxkey.autoconfigure.SessionAutoConfiguration
 org.maxkey.autoconfigure.TokenAutoConfiguration
 org.maxkey.autoconfigure.SynchronizerAutoConfiguration

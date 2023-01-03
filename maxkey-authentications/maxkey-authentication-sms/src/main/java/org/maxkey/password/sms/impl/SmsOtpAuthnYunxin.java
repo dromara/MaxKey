@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.password.onetimepwd.impl.sms;
+package org.maxkey.password.sms.impl;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.maxkey.entity.UserInfo;
-import org.maxkey.password.onetimepwd.impl.SmsOtpAuthn;
+import org.maxkey.password.sms.SmsOtpAuthn;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.StringGenerator;
 import org.slf4j.Logger;

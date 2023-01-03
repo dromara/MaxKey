@@ -29,14 +29,13 @@ import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
-import org.maxkey.password.onetimepwd.OtpAuthnService;
+import org.maxkey.password.sms.SmsOtpAuthnService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.StringUtils;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -64,8 +63,7 @@ public class RegisterController {
 	private UserInfoService userInfoService;
 	
 	@Autowired
-    @Qualifier("otpAuthnService")
-    OtpAuthnService otpAuthnService;
+    SmsOtpAuthnService smsOtpAuthnService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -81,7 +79,7 @@ public class RegisterController {
     		UserInfo userInfo = new UserInfo();
     		userInfo.setUsername(mobile);
     		userInfo.setMobile(mobile);
-        	AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(WebContext.getInst().getId());
+        	AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(WebContext.getInst().getId());
         	smsOtpAuthn.produce(userInfo);
         	return new Message<UserInfo>(userInfo).buildResponse();
         }
@@ -98,7 +96,7 @@ public class RegisterController {
  		UserInfo validateUserInfo = new UserInfo();
  		validateUserInfo.setUsername(userInfo.getMobile());
  		validateUserInfo.setMobile(userInfo.getMobile());
- 		AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(WebContext.getInst().getId());
+ 		AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(WebContext.getInst().getId());
  		if (smsOtpAuthn !=null 
         				&& smsOtpAuthn.validate(validateUserInfo, captcha)){
 	 		UserInfo temp = userInfoService.findByEmailMobile(userInfo.getEmail());

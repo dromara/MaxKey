@@ -25,7 +25,7 @@ import org.maxkey.configuration.ApplicationConfig;
 import org.maxkey.constants.ConstsLoginType;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
-import org.maxkey.password.onetimepwd.OtpAuthnService;
+import org.maxkey.password.sms.SmsOtpAuthnService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -46,6 +46,8 @@ public class MobileAuthenticationProvider extends AbstractAuthenticationProvider
     private static final Logger _logger =
             LoggerFactory.getLogger(MobileAuthenticationProvider.class);
 
+    SmsOtpAuthnService smsOtpAuthnService;
+    
     public String getProviderName() {
         return "mobile" + PROVIDER_SUFFIX;
     }
@@ -59,11 +61,11 @@ public class MobileAuthenticationProvider extends AbstractAuthenticationProvider
     public MobileAuthenticationProvider(
             AbstractAuthenticationRealm authenticationRealm,
             ApplicationConfig applicationConfig,
-            OtpAuthnService otpAuthnService,
+            SmsOtpAuthnService smsOtpAuthnService,
             SessionManager sessionManager) {
         this.authenticationRealm = authenticationRealm;
         this.applicationConfig = applicationConfig;
-        this.otpAuthnService = otpAuthnService;
+        this.smsOtpAuthnService = smsOtpAuthnService;
         this.sessionManager = sessionManager;
     }
 
@@ -136,7 +138,7 @@ public class MobileAuthenticationProvider extends AbstractAuthenticationProvider
             UserInfo validUserInfo = new UserInfo();
             validUserInfo.setUsername(userInfo.getUsername());
             validUserInfo.setId(userInfo.getId());
-            AbstractOtpAuthn smsOtpAuthn = otpAuthnService.getByInstId(userInfo.getInstId());
+            AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(userInfo.getInstId());
             if (password == null || !smsOtpAuthn.validate(validUserInfo, password)) {
                 String message = WebContext.getI18nValue("login.error.captcha");
                 _logger.debug("login captcha valid error.");

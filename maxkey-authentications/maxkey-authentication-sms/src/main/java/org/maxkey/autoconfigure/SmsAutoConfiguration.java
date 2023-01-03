@@ -18,10 +18,11 @@
 package org.maxkey.autoconfigure;
 
 import org.maxkey.constants.ConstsPersistence;
-import org.maxkey.password.onetimepwd.MailOtpAuthnService;
 import org.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
+import org.maxkey.password.sms.SmsOtpAuthnService;
 import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.maxkey.persistence.service.EmailSendersService;
+import org.maxkey.persistence.service.SmsProviderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -31,27 +32,28 @@ import org.springframework.context.annotation.Bean;
 
 
 @AutoConfiguration
-public class OneTimePasswordAutoConfiguration  implements InitializingBean {
+public class SmsAutoConfiguration  implements InitializingBean {
     private static final  Logger _logger = 
-            LoggerFactory.getLogger(OneTimePasswordAutoConfiguration.class);
+            LoggerFactory.getLogger(SmsAutoConfiguration.class);
     
   
-    @Bean(name = "mailOtpAuthnService")
-    public MailOtpAuthnService mailOtpAuthnService(
+    @Bean(name = "smsOtpAuthnService")
+    public SmsOtpAuthnService smsOtpAuthnService(
             @Value("${maxkey.server.persistence}") int persistence,
+            SmsProviderService smsProviderService,
             EmailSendersService emailSendersService,
             RedisConnectionFactory redisConnFactory) {
-        MailOtpAuthnService otpAuthnService = 
-        							new MailOtpAuthnService(emailSendersService);
+    	SmsOtpAuthnService smsOtpAuthnService = 
+        							new SmsOtpAuthnService(smsProviderService,emailSendersService);
         
         if (persistence == ConstsPersistence.REDIS) {
             RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);
-            otpAuthnService.setRedisOptTokenStore(redisOptTokenStore);
+            smsOtpAuthnService.setRedisOptTokenStore(redisOptTokenStore);
         }
         
-        _logger.debug("MailOtpAuthnService {} inited." , 
+        _logger.debug("SmsOtpAuthnService {} inited." , 
         				persistence == ConstsPersistence.REDIS ? "Redis" : "InMemory");
-        return otpAuthnService;
+        return smsOtpAuthnService;
     }
    
     @Override

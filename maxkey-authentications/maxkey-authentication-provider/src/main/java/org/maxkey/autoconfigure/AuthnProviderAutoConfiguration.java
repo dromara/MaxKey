@@ -28,15 +28,10 @@ import org.maxkey.authn.session.SessionManager;
 import org.maxkey.authn.support.rememberme.AbstractRemeberMeManager;
 import org.maxkey.authn.support.rememberme.JdbcRemeberMeManager;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.constants.ConstsPersistence;
-import org.maxkey.password.onetimepwd.OtpAuthnService;
-import org.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
-import org.maxkey.persistence.redis.RedisConnectionFactory;
+import org.maxkey.password.sms.SmsOtpAuthnService;
 import org.maxkey.persistence.repository.LoginHistoryRepository;
 import org.maxkey.persistence.repository.LoginRepository;
 import org.maxkey.persistence.repository.PasswordPolicyValidator;
-import org.maxkey.persistence.service.EmailSendersService;
-import org.maxkey.persistence.service.SmsProviderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -86,14 +81,14 @@ public class AuthnProviderAutoConfiguration  implements InitializingBean {
     public AbstractAuthenticationProvider mobileAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
-    	    OtpAuthnService otpAuthnService,
+    	    SmsOtpAuthnService smsAuthnService,
     	    SessionManager sessionManager
     		) {
     	_logger.debug("init Mobile authentication Provider .");
     	return new MobileAuthenticationProvider(
         		authenticationRealm,
         		applicationConfig,
-        		otpAuthnService,
+        		smsAuthnService,
         		sessionManager
         	);
     }

@@ -31,6 +31,7 @@ include (
 	'maxkey-authentications:maxkey-authentication-social',
 	'maxkey-authentications:maxkey-authentication-otp',
 	'maxkey-authentications:maxkey-authentication-provider',
+	'maxkey-authentications:maxkey-authentication-sms',
 	//identity
 	'maxkey-identitys:maxkey-identity-scim',
 	'maxkey-identitys:maxkey-identity-rest',

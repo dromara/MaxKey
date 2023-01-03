@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.password.onetimepwd;
+package org.maxkey.password.sms;
 
 import java.sql.Types;
 import java.util.concurrent.TimeUnit;
@@ -25,20 +25,21 @@ import org.maxkey.constants.ConstsBoolean;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.EmailSenders;
 import org.maxkey.entity.SmsProvider;
+import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.impl.MailOtpAuthn;
-import org.maxkey.password.onetimepwd.impl.sms.SmsOtpAuthnAliyun;
-import org.maxkey.password.onetimepwd.impl.sms.SmsOtpAuthnTencentCloud;
-import org.maxkey.password.onetimepwd.impl.sms.SmsOtpAuthnYunxin;
 import org.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
+import org.maxkey.password.sms.impl.SmsOtpAuthnAliyun;
+import org.maxkey.password.sms.impl.SmsOtpAuthnTencentCloud;
+import org.maxkey.password.sms.impl.SmsOtpAuthnYunxin;
 import org.maxkey.persistence.service.EmailSendersService;
 import org.maxkey.persistence.service.SmsProviderService;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
-public class OtpAuthnService {
+public class SmsOtpAuthnService {
 
-    protected static final Cache<String, AbstractOtpAuthn> otpAuthnStore = 
+    protected static final Cache<String, AbstractOtpAuthn> smsAuthnStore = 
             Caffeine.newBuilder()
                 .expireAfterWrite(60, TimeUnit.MINUTES)
                 .build();
@@ -49,18 +50,19 @@ public class OtpAuthnService {
     
     RedisOtpTokenStore redisOptTokenStore;
     
-    public OtpAuthnService(SmsProviderService smsProviderService, EmailSendersService emailSendersService) {
+    public SmsOtpAuthnService(SmsProviderService smsProviderService, EmailSendersService emailSendersService) {
 		this.smsProviderService = smsProviderService;
 		this.emailSendersService = emailSendersService;
 	}
 
-	public OtpAuthnService(SmsProviderService smsProviderService,RedisOtpTokenStore redisOptTokenStore) {
+	public SmsOtpAuthnService(SmsProviderService smsProviderService,EmailSendersService emailSendersService,RedisOtpTokenStore redisOptTokenStore) {
 		this.smsProviderService = smsProviderService;
+		this.emailSendersService = emailSendersService;
 		this.redisOptTokenStore = redisOptTokenStore;
 	}
 
 	public AbstractOtpAuthn getByInstId(String instId) {
-    	AbstractOtpAuthn otpAuthn = otpAuthnStore.getIfPresent(instId);
+    	AbstractOtpAuthn otpAuthn = smsAuthnStore.getIfPresent(instId);
     	if(otpAuthn == null) {
     		SmsProvider smsProvider = 
     				smsProviderService.findOne("where instid = ? ", new Object[]{instId}, new int[]{Types.VARCHAR});
@@ -119,37 +121,11 @@ public class OtpAuthnService {
     				otpAuthn = mailOtpAuthn;
     			}
     			
-    			otpAuthnStore.put(instId, otpAuthn);	
+    			smsAuthnStore.put(instId, otpAuthn);	
     		}
     	}
     	return otpAuthn;
     }
-	
-	public AbstractOtpAuthn getMailOtpAuthn(String instId) {
-		AbstractOtpAuthn otpAuthn = otpAuthnStore.getIfPresent(instId);
-    	if(otpAuthn == null) {
-			EmailSenders emailSender = 
-					emailSendersService.findOne("where instid = ? ", new Object[]{instId}, new int[]{Types.VARCHAR});
-			
-			String credentials = PasswordReciprocal.getInstance().decoder(emailSender.getCredentials());
-			EmailConfig emailConfig = 
-							new EmailConfig(
-									emailSender.getAccount(),
-									credentials,
-									emailSender.getSmtpHost(),
-									emailSender.getPort(),
-									ConstsBoolean.isTrue(emailSender.getSslSwitch()),
-									emailSender.getSender());
-			MailOtpAuthn mailOtpAuthn = new MailOtpAuthn(emailConfig);
-			mailOtpAuthn.setInterval(60 * 5);//5 minute
-			if(redisOptTokenStore != null) {
-				mailOtpAuthn.setOptTokenStore(redisOptTokenStore);
-			}
-			otpAuthn = mailOtpAuthn;
-    	}
-		otpAuthnStore.put(instId, otpAuthn);	
-		return otpAuthn;
-	}
 
 	public void setRedisOptTokenStore(RedisOtpTokenStore redisOptTokenStore) {
 		this.redisOptTokenStore = redisOptTokenStore;

@@ -38,7 +38,8 @@ import org.maxkey.entity.Institutions;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
-import org.maxkey.password.onetimepwd.OtpAuthnService;
+import org.maxkey.password.onetimepwd.MailOtpAuthnService;
+import org.maxkey.password.sms.SmsOtpAuthnService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -91,7 +92,9 @@ public class LoginEntryPoint {
     AbstractOtpAuthn tfaOtpAuthn;
 	
 	@Autowired
-    OtpAuthnService otpAuthnService;
+    SmsOtpAuthnService smsAuthnService;
+	
+	
 	
 	@Autowired
 	AbstractRemeberMeManager remeberMeManager;
@@ -156,7 +159,7 @@ public class LoginEntryPoint {
     public ResponseEntity<?> produceOtp(@PathVariable("mobile") String mobile) {
         UserInfo userInfo=userInfoService.findByEmailMobile(mobile);
         if(userInfo != null) {
-        	otpAuthnService.getByInstId(WebContext.getInst().getId()).produce(userInfo);
+        	smsAuthnService.getByInstId(WebContext.getInst().getId()).produce(userInfo);
         	return new Message<AuthJwt>(Message.SUCCESS).buildResponse();
         }
         

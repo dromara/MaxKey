@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.password.onetimepwd.impl;
+package org.maxkey.password.sms;
 
 import java.io.IOException;
 
