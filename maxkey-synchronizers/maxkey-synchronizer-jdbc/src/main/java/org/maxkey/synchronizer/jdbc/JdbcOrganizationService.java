@@ -21,7 +21,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.DbTableMetaData;
@@ -36,6 +38,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class JdbcOrganizationService  extends AbstractSynchronizerService  implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(JdbcOrganizationService.class);
+	static ArrayList< ColumnFieldMapper> mapperList = new ArrayList< ColumnFieldMapper>();
 	
 	public void sync() {
 		Connection conn = null;
@@ -73,86 +76,26 @@ public class JdbcOrganizationService  extends AbstractSynchronizerService  imple
 	public Organizations buildOrganization(ResultSet  rs) throws SQLException {
 		DbTableMetaData meta = JdbcUtils.getMetaData(rs);
 	    Organizations org = new Organizations();
-	    if(meta.getColumnsMap().containsKey("id")) {
-	    	org.setId(org.generateId());
-	    }
-	    if(meta.getColumnsMap().containsKey("orgcode")) {
-	    	org.setOrgCode(rs.getString("orgcode"));
-	    }
-	    if(meta.getColumnsMap().containsKey("orgname")) {
-	    	org.setOrgName(rs.getString("orgname"));
-	    }
-	    if(meta.getColumnsMap().containsKey("fullname")) {
-	    	org.setFullName(rs.getString("fullname"));
-	    }
-		//parent
-	    if(meta.getColumnsMap().containsKey("parentid")) {
-	    	org.setParentId(rs.getString("parentid"));
-	    }
-	    if(meta.getColumnsMap().containsKey("parentcode")) {
-	    	org.setParentCode(rs.getString("parentcode"));
-	    }
-	    if(meta.getColumnsMap().containsKey("parentname")) {
-	    	org.setParentName(rs.getString("parentname"));
-	    }
-		//ex attr
-	    if(meta.getColumnsMap().containsKey("type")) {
-	    	org.setType(rs.getString("type"));
-	    }
-	    if(meta.getColumnsMap().containsKey("codepath")) {
-	    	org.setCodePath(rs.getString("codepath"));
-	    }
-	    if(meta.getColumnsMap().containsKey("namepath")) {
-	    	org.setNamePath(rs.getString("namepath"));
-	    }
-	    if(meta.getColumnsMap().containsKey("level")) {
-	    	org.setLevel(rs.getInt("level"));
-	    }
-	    if(meta.getColumnsMap().containsKey("haschild")) {
-	    	org.setHasChild(rs.getString("haschild"));
-	    }
-	    if(meta.getColumnsMap().containsKey("division")) {
-	    	org.setDivision(rs.getString("division"));
-	    }
-	    if(meta.getColumnsMap().containsKey("country")) {
-	    	org.setCountry(rs.getString("country"));
-	    }
-	    if(meta.getColumnsMap().containsKey("region")) {
-	    	org.setRegion(rs.getString("region"));
-	    }
-	    if(meta.getColumnsMap().containsKey("locality")) {
-	    	org.setLocality(rs.getString("locality"));
-	    }
-	    if(meta.getColumnsMap().containsKey("street")) {
-	    	org.setStreet(rs.getString("street"));
-	    }
-	    if(meta.getColumnsMap().containsKey("address")) {
-	    	org.setAddress(rs.getString("address"));
-	    }
-	    if(meta.getColumnsMap().containsKey("contact")) {
-	    	org.setContact(rs.getString("contact"));
-	    }
-	    if(meta.getColumnsMap().containsKey("postalcode")) {
-	    	org.setPostalCode(rs.getString("postalcode"));
-	    }
-	    if(meta.getColumnsMap().containsKey("phone")) {
-	    	org.setPhone(rs.getString("phone"));
-	    }
-	    if(meta.getColumnsMap().containsKey("fax")) {
-	    	org.setFax(rs.getString("fax"));
-	    }
-	    if(meta.getColumnsMap().containsKey("email")) {
-	    	org.setEmail(rs.getString("email"));
-	    }
-	    if(meta.getColumnsMap().containsKey("sortindex")) {
-	    	org.setSortIndex(rs.getInt("sortindex"));
-	    }
-	    if(meta.getColumnsMap().containsKey("ldapdn")) {
-	    	org.setLdapDn(rs.getString("ldapdn"));
-	    }
-	    if(meta.getColumnsMap().containsKey("description")) {
-	    	org.setDescription(rs.getString("description"));
-	    }
+		
+		for (ColumnFieldMapper mapper :mapperList ) {
+			if(meta.getColumnsMap().containsKey(mapper.getColumn())) {
+				Object value = null;
+				if(mapper.getType().equalsIgnoreCase("String")) {
+					value = rs.getString(mapper.getColumn());
+				}else {
+					value = rs.getInt(mapper.getColumn());
+				}
+				if(value != null ) {
+					try {
+						PropertyUtils.setSimpleProperty(org, mapper.getField(), value);
+					} catch (Exception e) {
+						_logger.error("setSimpleProperty {}" , e);
+					}
+				}
+			}
+		}
+		
+		org.setId(org.generateId());
 		org.setInstId(this.synchronizer.getInstId());
 		if(meta.getColumnsMap().containsKey("status")) {
 			org.setStatus(rs.getInt("status"));
@@ -162,5 +105,37 @@ public class JdbcOrganizationService  extends AbstractSynchronizerService  imple
 		
 		_logger.debug("Organization {}" , org);
 		return org;
+	}
+	
+
+	static {
+		mapperList.add(new  ColumnFieldMapper("id"			, "id","String"));
+		mapperList.add(new  ColumnFieldMapper("orgcode"		, "orgCode","String"));
+		mapperList.add(new  ColumnFieldMapper("orgname"		, "orgName","String"));
+		mapperList.add(new  ColumnFieldMapper("fullname"	, "fullName","String"));
+		mapperList.add(new  ColumnFieldMapper("parentid"	, "parentId","String"));
+		mapperList.add(new  ColumnFieldMapper("parentcode"	, "parentCode","String"));
+		mapperList.add(new  ColumnFieldMapper("parentname"	, "parentName","String"));
+		
+		mapperList.add(new  ColumnFieldMapper("type"		, "type","String"));
+		mapperList.add(new  ColumnFieldMapper("codepath"	, "codePath","String"));
+		mapperList.add(new  ColumnFieldMapper("namepath"	, "namePath","String"));
+		mapperList.add(new  ColumnFieldMapper("level"		, "level","Int"));
+		mapperList.add(new  ColumnFieldMapper("haschild"	, "hasChild","String"));
+		mapperList.add(new  ColumnFieldMapper("division"	, "division","String"));
+		mapperList.add(new  ColumnFieldMapper("country"		, "country","String"));
+		mapperList.add(new  ColumnFieldMapper("region"		, "region","String"));
+		mapperList.add(new  ColumnFieldMapper("locality"	, "locality","String"));
+		mapperList.add(new  ColumnFieldMapper("street"		, "street","String"));
+		mapperList.add(new  ColumnFieldMapper("address"		, "address","String"));
+		mapperList.add(new  ColumnFieldMapper("contact"		, "contact","String"));
+		mapperList.add(new  ColumnFieldMapper("postalcode"	, "postalCode","String"));
+		mapperList.add(new  ColumnFieldMapper("phone"		, "phone","String"));
+		mapperList.add(new  ColumnFieldMapper("fax"			, "fax","String"));
+		mapperList.add(new  ColumnFieldMapper("email"		, "email","String"));
+		mapperList.add(new  ColumnFieldMapper("sortindex"	, "sortIndex","Int"));
+		mapperList.add(new  ColumnFieldMapper("ldapdn"		, "ldapDn","String"));
+		mapperList.add(new  ColumnFieldMapper("description"	, "description","String"));
+		mapperList.add(new  ColumnFieldMapper("status"		, "status","int"));
 	}
 }

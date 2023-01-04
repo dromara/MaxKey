@@ -21,7 +21,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.maxkey.constants.ConstsStatus;
 import org.maxkey.entity.DbTableMetaData;
 import org.maxkey.entity.UserInfo;
@@ -37,6 +39,8 @@ import org.springframework.stereotype.Service;
 public class JdbcUsersService extends AbstractSynchronizerService    implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(JdbcUsersService.class);
 
+	static ArrayList< ColumnFieldMapper> mapperList = new ArrayList< ColumnFieldMapper>();
+	
 	public void sync() {
 		_logger.info("Sync Jdbc Users...");
 		Connection conn = null;
@@ -91,177 +95,31 @@ public class JdbcUsersService extends AbstractSynchronizerService    implements 
 		DbTableMetaData meta = JdbcUtils.getMetaData(rs);
 		UserInfo user = new UserInfo();
 		//basic
-		if(meta.getColumnsMap().containsKey("id")) {
-			user.setId(rs.getString("id"));
+		for (ColumnFieldMapper mapper :mapperList ) {
+			if(meta.getColumnsMap().containsKey(mapper.getColumn())) {
+				Object value = null;
+				if(mapper.getType().equalsIgnoreCase("String")) {
+					value = rs.getString(mapper.getColumn());
+				}else {
+					value = rs.getInt(mapper.getColumn());
+				}
+				if(value != null ) {
+					try {
+						PropertyUtils.setSimpleProperty(user, mapper.getField(), value);
+					} catch (Exception e) {
+						_logger.error("setSimpleProperty {}" , e);
+					}
+				}
+			}
 		}
-		if(meta.getColumnsMap().containsKey("username")) {
-			user.setUsername(rs.getString("username"));
-		}
-		if(meta.getColumnsMap().containsKey("picture")) {
-			user.setPicture(rs.getBytes("picture"));
-		}
-		if(meta.getColumnsMap().containsKey("displayname")) {
-			user.setDisplayName(rs.getString("displayname"));
-		}
-		if(meta.getColumnsMap().containsKey("nickname")) {
-			user.setNickName(rs.getString("nickname"));
-		}
-		if(meta.getColumnsMap().containsKey("mobile")) {
-			user.setMobile(rs.getString("mobile"));
-		}
-		if(meta.getColumnsMap().containsKey("email")) {
-			user.setEmail(rs.getString("email"));
-		}
-		if(meta.getColumnsMap().containsKey("birthdate")) {
-			user.setBirthDate(rs.getString("birthdate"));
-		}
-		if(meta.getColumnsMap().containsKey("usertype")) {
-			user.setUserType(rs.getString("usertype"));
-		}
-		if(meta.getColumnsMap().containsKey("userstate")) {
-			user.setUserState(rs.getString("userstate"));
-		}
-		if(meta.getColumnsMap().containsKey("windowsaccount")) {
-			user.setWindowsAccount(rs.getString("windowsaccount"));
-		}
-		if(meta.getColumnsMap().containsKey("givenname")) {
-			user.setGivenName(rs.getString("givenname"));
-		}
-		if(meta.getColumnsMap().containsKey("middlename")) {
-			user.setMiddleName(rs.getString("middlename"));
-		}
-		if(meta.getColumnsMap().containsKey("married")) {
-			user.setMarried(rs.getInt("married"));
-		}
-		if(meta.getColumnsMap().containsKey("gender")) {
-			user.setGender(rs.getInt("gender"));
-		}
-		if(meta.getColumnsMap().containsKey("idtype")) {
-			user.setIdType(rs.getInt("idtype"));
-		}
-		if(meta.getColumnsMap().containsKey("idcardno")) {
-			user.setIdCardNo(rs.getString("idcardno"));
-		}
-		if(meta.getColumnsMap().containsKey("website")) {
-			user.setWebSite(rs.getString("website"));
-		}
-		if(meta.getColumnsMap().containsKey("startworkdate")) {
-			user.setStartWorkDate(rs.getString("startworkdate"));
-		}
-		//work
-		if(meta.getColumnsMap().containsKey("workcountry")) {
-			user.setWorkCountry(rs.getString("workcountry"));
-		}
-		if(meta.getColumnsMap().containsKey("workregion")) {
-			user.setWorkRegion(rs.getString("workregion"));
-		}
-		if(meta.getColumnsMap().containsKey("worklocality")) {
-			user.setWorkLocality(rs.getString("worklocality"));
-		}
-		if(meta.getColumnsMap().containsKey("workstreetaddress")) {
-			user.setWorkStreetAddress(rs.getString("workstreetaddress"));
-		}
-		if(meta.getColumnsMap().containsKey("workaddressformatted")) {
-			user.setWorkAddressFormatted(rs.getString("workaddressformatted"));
-		}
-		if(meta.getColumnsMap().containsKey("workemail")) {
-			user.setWorkEmail(rs.getString("workemail"));
-		}
-		if(meta.getColumnsMap().containsKey("workphonenumber")) {
-			user.setWorkPhoneNumber(rs.getString("workphonenumber"));
-		}
-		if(meta.getColumnsMap().containsKey("workpostalcode")) {
-			user.setWorkPostalCode(rs.getString("workpostalcode"));
-		}
-		if(meta.getColumnsMap().containsKey("workfax")) {
-			user.setWorkFax(rs.getString("workfax"));
-		}
-		if(meta.getColumnsMap().containsKey("workofficename")) {
-			user.setWorkOfficeName(rs.getString("workofficename"));
-		}
-		//home
-		if(meta.getColumnsMap().containsKey("homecountry")) {
-			user.setHomeCountry(rs.getString("homecountry"));
-		}
-		if(meta.getColumnsMap().containsKey("homeregion")) {
-			user.setHomeRegion(rs.getString("homeregion"));
-		}
-		if(meta.getColumnsMap().containsKey("homelocality")) {
-			user.setHomeLocality(rs.getString("homelocality"));
-		}
-		if(meta.getColumnsMap().containsKey("homestreetaddress")) {
-			user.setHomeStreetAddress(rs.getString("homestreetaddress"));
-		}
-		if(meta.getColumnsMap().containsKey("homeaddressformatted")) {
-			user.setHomeAddressFormatted(rs.getString("homeaddressformatted"));
-		}
-		if(meta.getColumnsMap().containsKey("homeemail")) {
-			user.setHomeEmail(rs.getString("homeemail"));
-		}
-		if(meta.getColumnsMap().containsKey("homephonenumber")) {
-			user.setHomePhoneNumber(rs.getString("homephonenumber"));
-		}
-		if(meta.getColumnsMap().containsKey("homepostalcode")) {
-			user.setHomePostalCode(rs.getString("homepostalcode"));
-		}
-		if(meta.getColumnsMap().containsKey("homefax")) {
-			user.setHomeFax(rs.getString("homefax"));
-		}
-		//company
-		if(meta.getColumnsMap().containsKey("employeenumber")) {
-			user.setEmployeeNumber(rs.getString("employeenumber"));
-		}
-		if(meta.getColumnsMap().containsKey("costcenter")) {
-			user.setCostCenter(rs.getString("costcenter"));
-		}
-		if(meta.getColumnsMap().containsKey("organization")) {
-			user.setOrganization(rs.getString("organization"));
-		}
-		if(meta.getColumnsMap().containsKey("division")) {
-			user.setDivision(rs.getString("division"));
-		}
-		if(meta.getColumnsMap().containsKey("departmentid")) {
-			user.setDepartmentId(rs.getString("departmentid"));
-		}
-		if(meta.getColumnsMap().containsKey("department")) {
-			user.setDepartment(rs.getString("department"));
-		}
-		if(meta.getColumnsMap().containsKey("jobtitle")) {
-			user.setJobTitle(rs.getString("jobtitle"));
-		}
-		if(meta.getColumnsMap().containsKey("joblevel")) {
-			user.setJobLevel(rs.getString("joblevel"));
-		}
-		if(meta.getColumnsMap().containsKey("managerid")) {
-			user.setManagerId(rs.getString("managerid"));
-		}
-		if(meta.getColumnsMap().containsKey("manager")) {
-			user.setManager(rs.getString("manager"));
-		}
-		if(meta.getColumnsMap().containsKey("assistantid")) {
-			user.setAssistantId(rs.getString("assistantid"));
-		}
-		if(meta.getColumnsMap().containsKey("assistant")) {
-			user.setAssistant(rs.getString("assistant"));
-		}
-		if(meta.getColumnsMap().containsKey("entrydate")) {
-			user.setEntryDate(rs.getString("entrydate"));
-		}
-		if(meta.getColumnsMap().containsKey("quitdate")) {
-			user.setQuitDate(rs.getString("quitdate"));
-		}
-		//common
-		if(meta.getColumnsMap().containsKey("ldapdn")) {
-			user.setLdapDn(rs.getString("ldapdn"));
-		}
+		
 		if(meta.getColumnsMap().containsKey("status")) {
 			user.setStatus(rs.getInt("status"));
 		}else {
 			user.setStatus(ConstsStatus.ACTIVE);
 		}
-		if(meta.getColumnsMap().containsKey("description")) {
-			user.setDescription(rs.getString("description"));
-		}
+		user.setInstId(this.synchronizer.getInstId());
+		
 		//password
 		if(meta.getColumnsMap().containsKey("password")) {
 			user.setPassword(rs.getString("password"));
@@ -277,9 +135,70 @@ public class JdbcUsersService extends AbstractSynchronizerService    implements 
 			}
 			user.setPassword(user.getUsername()+"@M"+last4Char);
 		}
-		user.setInstId(this.synchronizer.getInstId());
+		
 		_logger.debug("User {} " , user);
 		return user;
 	}
-
+	
+	static {
+		mapperList.add(new  ColumnFieldMapper("id"						, "id","String"));
+		mapperList.add(new  ColumnFieldMapper("username"				, "userUame","String"));
+		mapperList.add(new  ColumnFieldMapper("picture"					, "picture","String"));
+		mapperList.add(new  ColumnFieldMapper("displayname"				, "displayName","String"));
+		mapperList.add(new  ColumnFieldMapper("nickname"				, "nickName","String"));
+		mapperList.add(new  ColumnFieldMapper("mobile"					, "mobile","String"));
+		mapperList.add(new  ColumnFieldMapper("email"					, "email","String"));
+		mapperList.add(new  ColumnFieldMapper("birthdate"				, "birthDate","String"));
+		mapperList.add(new  ColumnFieldMapper("usertype"				, "userType","String"));
+		mapperList.add(new  ColumnFieldMapper("userstate"				, "userState","String"));
+		mapperList.add(new  ColumnFieldMapper("windowsaccount"			, "windowsAccount","String"));
+		mapperList.add(new  ColumnFieldMapper("givenname"				, "givenName","String"));
+		mapperList.add(new  ColumnFieldMapper("middlename"				, "middleName","String"));
+		mapperList.add(new  ColumnFieldMapper("married"					, "married","Int"));
+		mapperList.add(new  ColumnFieldMapper("gender"					, "gender","Int"));
+		mapperList.add(new  ColumnFieldMapper("idtype"					, "idType","Int"));
+		mapperList.add(new  ColumnFieldMapper("idcardno"				, "idCardNo","String"));
+		mapperList.add(new  ColumnFieldMapper("website"					, "webSite","String"));
+		mapperList.add(new  ColumnFieldMapper("startworkdate"			, "startWorkDate","String"));
+		//work	
+		mapperList.add(new  ColumnFieldMapper("workcountry"				, "workCountry","String"));
+		mapperList.add(new  ColumnFieldMapper("workregion"				, "workRegion","String"));
+		mapperList.add(new  ColumnFieldMapper("worklocality"			, "workLocality","String"));
+		mapperList.add(new  ColumnFieldMapper("workstreetaddress"		, "workStreetAddress","String"));
+		mapperList.add(new  ColumnFieldMapper("workaddressformatted"	, "workAddressFormatted","String"));
+		mapperList.add(new  ColumnFieldMapper("workemail"				, "workEmail","String"));
+		mapperList.add(new  ColumnFieldMapper("workphonenumber"			, "workPhoneNumber","String"));
+		mapperList.add(new  ColumnFieldMapper("workpostalcode"			, "workPostalCode","String"));
+		mapperList.add(new  ColumnFieldMapper("workfax"					, "workFax","String"));
+		mapperList.add(new  ColumnFieldMapper("workofficename"			, "workOfficeName","String"));
+		//home	
+		mapperList.add(new  ColumnFieldMapper("homecountry"				, "homeCountry","String"));
+		mapperList.add(new  ColumnFieldMapper("homeregion"				, "homeRegion","String"));
+		mapperList.add(new  ColumnFieldMapper("homelocality"			, "homeLocality","String"));
+		mapperList.add(new  ColumnFieldMapper("homestreetaddress"		, "homeStreetAddress","String"));
+		mapperList.add(new  ColumnFieldMapper("homeaddressformatted"	, "homeAddressFormatted","String"));
+		mapperList.add(new  ColumnFieldMapper("homeemail"				, "homeEmail","String"));
+		mapperList.add(new  ColumnFieldMapper("homephonenumber"			, "homePhonenumber","String"));
+		mapperList.add(new  ColumnFieldMapper("homepostalcode"			, "homePostalCode","String"));
+		mapperList.add(new  ColumnFieldMapper("homefax"					, "homeFax","String"));
+		//company	
+		mapperList.add(new  ColumnFieldMapper("employeenumber"			, "employeeNumber","String"));
+		mapperList.add(new  ColumnFieldMapper("costcenter"				, "costCenter","String"));
+		mapperList.add(new  ColumnFieldMapper("organization"			, "organization","String"));
+		mapperList.add(new  ColumnFieldMapper("division"				, "division","String"));
+		mapperList.add(new  ColumnFieldMapper("departmentid"			, "departmentId","String"));
+		mapperList.add(new  ColumnFieldMapper("department"				, "department","String"));
+		mapperList.add(new  ColumnFieldMapper("jobtitle"				, "jobTitle","String"));
+		mapperList.add(new  ColumnFieldMapper("joblevel"				, "jobLevel","String"));
+		mapperList.add(new  ColumnFieldMapper("managerid"				, "managerId","String"));
+		mapperList.add(new  ColumnFieldMapper("manager"					, "manager","String"));
+		mapperList.add(new  ColumnFieldMapper("assistantid"				, "assistantId","String"));
+		mapperList.add(new  ColumnFieldMapper("assistant"				, "assistant","String"));
+		mapperList.add(new  ColumnFieldMapper("entrydate"				, "entrydate","String"));
+		mapperList.add(new  ColumnFieldMapper("quitdate"				, "quitdate","String"));
+		mapperList.add(new  ColumnFieldMapper("ldapdn"					, "ldapDn","String"));
+			
+		mapperList.add(new  ColumnFieldMapper("description"				, "description","String"));
+		mapperList.add(new  ColumnFieldMapper("status"					, "status","String"));
+	}
 }
