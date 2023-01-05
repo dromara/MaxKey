@@ -63,12 +63,16 @@ public class ProvisioningRunner {
     
 	
 	public void provisions() {
-		List<Connectors> listConnectors = connectorsService.query(new Query().eq("status", 1).eq("justintime", 1));
-		List<ProvisionMessage> listProvisionMessage = jdbcTemplate.query(PROVISION_SELECT_STATEMENT, new ProvisionMessageRowMapper());
-		for(ProvisionMessage msg : listProvisionMessage) {
-			for(Connectors connector: listConnectors) {
-				provision(msg,connector);
+		try {
+			List<Connectors> listConnectors = connectorsService.query(new Query().eq("status", 1).eq("justintime", 1));
+			List<ProvisionMessage> listProvisionMessage = jdbcTemplate.query(PROVISION_SELECT_STATEMENT, new ProvisionMessageRowMapper());
+			for(ProvisionMessage msg : listProvisionMessage) {
+				for(Connectors connector: listConnectors) {
+					provision(msg,connector);
+				}
 			}
+		}catch(Exception e) {
+			_logger.error("provisions Exception",e);
 		}
 	}
 	
@@ -129,7 +133,10 @@ public class ProvisioningRunner {
 	}
 	
 	public void provisionLog(String conName,String topic,String actionType,String sourceId,String sourceName,String resultMessage,int instid) {
-		Message<?> resultMsg = JsonUtils.stringToObject(resultMessage, Message.class);
+		Message<?> resultMsg = null;
+		if(resultMessage != null) {
+			JsonUtils.stringToObject(resultMessage, Message.class);
+		}
 		String result = "success";
 		if(resultMsg == null || resultMsg.getCode() != 0) {
 			result = "fail";

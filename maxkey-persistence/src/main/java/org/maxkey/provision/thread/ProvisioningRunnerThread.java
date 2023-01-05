@@ -17,8 +17,12 @@
 
 package org.maxkey.provision.thread;
 
-public class ProvisioningRunnerThread  extends Thread{
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+public class ProvisioningRunnerThread  extends Thread{
+	private static final Logger _logger = LoggerFactory.getLogger(ProvisioningRunnerThread.class);
+	
 	ProvisioningRunner runner;
 
 	public ProvisioningRunnerThread(ProvisioningRunner runner) {
@@ -31,9 +35,11 @@ public class ProvisioningRunnerThread  extends Thread{
 		while(true) {
 			try {
 				Thread.sleep(60 * 1000);
+				_logger.trace("Provisioning start ...");
 				runner.provisions();
+				_logger.trace("Provisioning end , wait for next .");
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				_logger.error("InterruptedException", e);
 			}
 		}
 	}
