@@ -67,7 +67,9 @@ public class ProvisioningRunner {
 			List<Connectors> listConnectors = connectorsService.query(new Query().eq("status", 1).eq("justintime", 1));
 			List<ProvisionMessage> listProvisionMessage = jdbcTemplate.query(PROVISION_SELECT_STATEMENT, new ProvisionMessageRowMapper());
 			for(ProvisionMessage msg : listProvisionMessage) {
+				_logger.debug("Provision message {}",msg);
 				for(Connectors connector: listConnectors) {
+					_logger.debug("Provision message to connector {}",connector);
 					provision(msg,connector);
 				}
 			}
@@ -134,10 +136,12 @@ public class ProvisioningRunner {
 	
 	public void provisionLog(String conName,String topic,String actionType,String sourceId,String sourceName,String resultMessage,int instid) {
 		Message<?> resultMsg = null;
-		if(resultMessage != null) {
-			JsonUtils.stringToObject(resultMessage, Message.class);
-		}
 		String result = "success";
+		
+		if(resultMessage != null) {
+			resultMsg = JsonUtils.stringToObject(resultMessage, Message.class);
+		}
+		
 		if(resultMsg == null || resultMsg.getCode() != 0) {
 			result = "fail";
 		}
