@@ -30,6 +30,7 @@ def libjarsmapper=[
     'maxkey-authentication-core'            :'lib',
     'maxkey-authentication-otp'             :'lib',
     'maxkey-authentication-provider'        :'lib',
+    'maxkey-authentication-sms'             :'lib',
     'maxkey-common'                         :'lib',
     'maxkey-core'                           :'lib',
     'maxkey-persistence'                    :'lib',
@@ -45,16 +46,16 @@ def libjarsmapper=[
     'maxkey-web-resources'                  :'lib',
     'maxkey-authentication-social'          :'maxkey',
     'maxkey-web-maxkey'                     :'maxkey',
-    'maxkey-identity-rest'                  :'maxkey_mgt',
-    'maxkey-identity-scim'                  :'maxkey_mgt',
+    'maxkey-mxapis-rest'                    :'maxkey_mgt',
+    'maxkey-mxapis-scim'                    :'maxkey_mgt',
     'maxkey-web-mgt'                        :'maxkey_mgt',
     'maxkey-synchronizer'                   :'maxkey_mgt',
     'maxkey-synchronizer-activedirectory'   :'maxkey_mgt',
     'maxkey-synchronizer-ldap'              :'maxkey_mgt',
     'maxkey-synchronizer-dingtalk'          :'maxkey_mgt',
+    'maxkey-synchronizer-jdbc'              :'maxkey_mgt',
     'maxkey-synchronizer-workweixin'        :'maxkey_mgt',
-	'maxkey-synchronizer-reorgdept'         :'maxkey_mgt',
-    'maxkey-boot-monitor'                   :'maxkey_monitor'
+	'maxkey-synchronizer-reorgdept'         :'maxkey_mgt'
 ]
 
 configurations.all {
