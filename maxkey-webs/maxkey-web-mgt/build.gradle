@@ -18,8 +18,8 @@ dependencies {
    	implementation project(":maxkey-protocols:maxkey-protocol-saml-2.0")   
    	
    	//rest apis
-   	implementation project(":maxkey-mxapis:maxkey-mxapi-scim")   
-   	implementation project(":maxkey-mxapis:maxkey-mxapi-rest")
+   	implementation project(":maxkey-webapis:maxkey-webapi-scim")   
+   	implementation project(":maxkey-webapis:maxkey-webapi-rest")
    		
    	//synchronizers
    	implementation project(":maxkey-synchronizers:maxkey-synchronizer")
