@@ -32,9 +32,9 @@ include (
 	'maxkey-authentications:maxkey-authentication-otp',
 	'maxkey-authentications:maxkey-authentication-provider',
 	'maxkey-authentications:maxkey-authentication-sms',
-	//identity
-	'maxkey-identitys:maxkey-identity-scim',
-	'maxkey-identitys:maxkey-identity-rest',
+	//rest apis
+	'maxkey-mxapis:maxkey-mxapi-scim',
+	'maxkey-mxapis:maxkey-mxapi-rest',
 	//synchronizers
 	'maxkey-synchronizers:maxkey-synchronizer',
 	'maxkey-synchronizers:maxkey-synchronizer-reorgdept',

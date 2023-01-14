@@ -1,0 +1,15 @@
+description = "maxkey-mxapi-rest"
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+
+
+dependencies {
+	//local jars
+	implementation fileTree(dir: '../maxkey-lib/*/', include: '*.jar')
+	
+	implementation project(":maxkey-common")
+	implementation project(":maxkey-core")
+	implementation project(":maxkey-persistence")
+   
+}
