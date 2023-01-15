@@ -15,19 +15,15 @@
  */
  
 
-package org.maxkey.identity.scim.resources;
+package org.maxkey.webapi.identity.scim.resources;
 
-import org.maxkey.pretty.impl.JsonPretty;
-import org.maxkey.util.JsonUtils;
-import org.maxkey.webapi.identity.scim.resources.ScimGroup;
+import java.io.Serializable;
 
-public class ScimGroupJsonString2ObjectTest {
-    public static void main(String[] args) {
-        String userJsonString = ReadJson2String.read("ScimGroupJsonString.json");
-        ScimGroup g  = JsonUtils.stringToObject(userJsonString, ScimGroup.class);
+public class ScimUserPhoto extends ScimMultiValuedAttribute implements Serializable {
 
-        
-        System.out.println(
-                (new JsonPretty()).format(JsonUtils.toString(g)));
-    }
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3796708555581889691L;
+
 }

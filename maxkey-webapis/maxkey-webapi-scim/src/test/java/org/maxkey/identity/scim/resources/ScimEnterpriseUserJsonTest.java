@@ -21,14 +21,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.maxkey.mxapis.identity.scim.resources.ScimEnterprise;
-import org.maxkey.mxapis.identity.scim.resources.ScimEnterpriseUser;
-import org.maxkey.mxapis.identity.scim.resources.ScimFormattedName;
-import org.maxkey.mxapis.identity.scim.resources.ScimMeta;
-import org.maxkey.mxapis.identity.scim.resources.ScimUserEmail;
-import org.maxkey.mxapis.identity.scim.resources.ScimUserPhoneNumber;
 import org.maxkey.pretty.impl.JsonPretty;
 import org.maxkey.util.JsonUtils;
+import org.maxkey.webapi.identity.scim.resources.ScimEnterprise;
+import org.maxkey.webapi.identity.scim.resources.ScimEnterpriseUser;
+import org.maxkey.webapi.identity.scim.resources.ScimFormattedName;
+import org.maxkey.webapi.identity.scim.resources.ScimMeta;
+import org.maxkey.webapi.identity.scim.resources.ScimUserEmail;
+import org.maxkey.webapi.identity.scim.resources.ScimUserPhoneNumber;
 
 public class ScimEnterpriseUserJsonTest {
 

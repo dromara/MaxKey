@@ -21,11 +21,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.maxkey.mxapis.identity.scim.resources.ScimGroup;
-import org.maxkey.mxapis.identity.scim.resources.ScimMemberRef;
-import org.maxkey.mxapis.identity.scim.resources.ScimMeta;
 import org.maxkey.pretty.impl.JsonPretty;
 import org.maxkey.util.JsonUtils;
+import org.maxkey.webapi.identity.scim.resources.ScimGroup;
+import org.maxkey.webapi.identity.scim.resources.ScimMemberRef;
+import org.maxkey.webapi.identity.scim.resources.ScimMeta;
 
 public class ScimGroupJsonTest {
     public static void main(String[] args) {

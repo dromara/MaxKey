@@ -17,9 +17,9 @@
 
 package org.maxkey.identity.scim.resources;
 
-import org.maxkey.mxapis.identity.scim.resources.ScimUser;
 import org.maxkey.pretty.impl.JsonPretty;
 import org.maxkey.util.JsonUtils;
+import org.maxkey.webapi.identity.scim.resources.ScimUser;
 
 public class ScimUserJsonString2ObjectTest {
 
