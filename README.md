@@ -111,9 +111,9 @@ App Management UI
 
 Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> history version</a>
 
-| Version    | Date   |  Pan URL  |  Pan Code  |  Docker  |
-| --------   | :----- | :----     | :----      | :----    |
-| v 3.5.12   | 2022/12/27   | <a href="https://pan.baidu.com/s/1X3GpXint0WGeGr7A0LU7_g" target="_blank">Download</a>  |  **mxk9**  | <a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |
+| Version    | Date   |  Pan URL (Code) |  Docker  |
+| --------   | :----- | :----           | :----    |
+| v 3.5.12   | 2022/12/27   | <a href="https://pan.baidu.com/s/1X3GpXint0WGeGr7A0LU7_g" target="_blank">Download</a> ( **mxk9** )  | <a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |
 
 # License
  
