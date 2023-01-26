@@ -1,4 +1,22 @@
-﻿MaxKey v 3.5.12 GA 2022/12/27
+﻿MaxKey v 3.5.13 GA 2023/01/27
+    *(MAXKEY-230101) application-http.properties重命名为application-maxkey-mgt.properties 
+    *(MAXKEY-230102) application-http.properties重命名为application-maxkey.properties 
+    *(MAXKEY-230103) 分离出maxkey-authentication-sms模块
+    *(MAXKEY-230104) JdbcSynchronizer 优化
+    *(MAXKEY-230105) NOTICE更新，源文件添加License
+    *(MAXKEY-230106) Provisioning 优化，增加日志记录
+    *(MAXKEY-230107) maxkey-identitys 重命名为maxkey-webapis
+    *(MAXKEY-230108) build.gradle构建优化
+    *(MAXKEY-230109) 基本信息更新和下载信息优化
+    *(MAXKEY-230110) 依赖项引用、更新和升级
+        spring          5.3.25
+        springBoot      2.7.8
+        jibGradlePlugin 3.2.0
+        gson            2.10.1
+        zxingcore       3.5.1
+        jackson         2.14.1
+        
+MaxKey v 3.5.12 GA 2022/12/27
     *(MAXKEY-221701) #I66S79 CAS退出跳转报错问题
     *(MAXKEY-221702) 用户批量删除 onBatchDelete 调用的后端 delete
     *(MAXKEY-221703) 管理端退出后，会话值为无效
