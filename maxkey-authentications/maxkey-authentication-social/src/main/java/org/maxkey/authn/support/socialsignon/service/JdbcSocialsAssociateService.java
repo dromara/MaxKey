@@ -36,9 +36,9 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT = "insert into  mxk_socials_associate(id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , instid)values( ? , ? , ? , ? , ?, ? , ? , ?, ?)";
 	
 	private static final String DEFAULT_DEFAULT_INSERT_STATEMENT_ORACLE = "insert into  mxk_socials_associate(id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , instid)values( ? , ? , ? , ? , ?, ? , ? , ?, ?)";
-	
-	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "select id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , createddate , updateddate , instid from mxk_socials_associate where provider = ?  and socialuserid = ?";
-	
+
+	private static final String DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT = "select id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , createddate , updateddate , instid from mxk_socials_associate where provider = ?  and socialuserid = ? and instId = ?";
+
 	private static final String DEFAULT_DEFAULT_BIND_SELECT_STATEMENT = "select id, userid , username , provider , socialuserid , accesstoken , socialuserinfo , exattribute , createddate , updateddate , instid from mxk_socials_associate where userid = ?" ;
 	
 	private static final String DEFAULT_DEFAULT_DELETE_STATEMENT = "delete from  mxk_socials_associate where  userid = ? and provider = ?";
@@ -90,10 +90,11 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 	@Override
 	public SocialsAssociate get(SocialsAssociate socialsAssociate) {
 		List<SocialsAssociate> listsocialsAssociate=jdbcTemplate.query(
-					DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT, 
-					new SocialsAssociateRowMapper(),
-					socialsAssociate.getProvider(),
-					socialsAssociate.getSocialUserId());
+				DEFAULT_DEFAULT_SIGNON_SELECT_STATEMENT,
+				new SocialsAssociateRowMapper(),
+				socialsAssociate.getProvider(),
+				socialsAssociate.getSocialUserId(),
+				socialsAssociate.getInstId());
 		_logger.debug("list socialsAssociate "+listsocialsAssociate);
 		return (listsocialsAssociate.size()>0)?listsocialsAssociate.get(0):null;
 	}
