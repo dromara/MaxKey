@@ -1,8 +1,6 @@
-description = "maxkey-webapi-rest"
+description = "maxkey-web-api-scim"
 
 apply plugin: 'java'
-apply plugin: 'eclipse-wtp'
-
 
 dependencies {
 	//local jars
