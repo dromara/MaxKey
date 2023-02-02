@@ -23,12 +23,12 @@ import java.util.List;
 
 import org.maxkey.pretty.impl.JsonPretty;
 import org.maxkey.util.JsonUtils;
-import org.maxkey.webapi.identity.scim.resources.ScimEnterprise;
-import org.maxkey.webapi.identity.scim.resources.ScimEnterpriseUser;
-import org.maxkey.webapi.identity.scim.resources.ScimFormattedName;
-import org.maxkey.webapi.identity.scim.resources.ScimMeta;
-import org.maxkey.webapi.identity.scim.resources.ScimUserEmail;
-import org.maxkey.webapi.identity.scim.resources.ScimUserPhoneNumber;
+import org.maxkey.web.apis.identity.scim.resources.ScimEnterprise;
+import org.maxkey.web.apis.identity.scim.resources.ScimEnterpriseUser;
+import org.maxkey.web.apis.identity.scim.resources.ScimFormattedName;
+import org.maxkey.web.apis.identity.scim.resources.ScimMeta;
+import org.maxkey.web.apis.identity.scim.resources.ScimUserEmail;
+import org.maxkey.web.apis.identity.scim.resources.ScimUserPhoneNumber;
 
 public class ScimEnterpriseUserJsonTest {
 

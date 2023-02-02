@@ -15,19 +15,22 @@
  */
  
 
-package org.maxkey.identity.scim.resources;
+package org.maxkey.web.apis.identity.scim.resources;
 
-import org.maxkey.pretty.impl.JsonPretty;
-import org.maxkey.util.JsonUtils;
-import org.maxkey.web.apis.identity.scim.resources.ScimGroup;
+public class ScimGroupRef extends ScimMultiValuedAttribute{
 
-public class ScimGroupJsonString2ObjectTest {
-    public static void main(String[] args) {
-        String userJsonString = ReadJson2String.read("ScimGroupJsonString.json");
-        ScimGroup g  = JsonUtils.stringToObject(userJsonString, ScimGroup.class);
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7069453283024141999L;
 
-        
-        System.out.println(
-                (new JsonPretty()).format(JsonUtils.toString(g)));
-    }
+	public ScimGroupRef() {
+		super();
+	}
+
+	public ScimGroupRef(String value,String display) {
+		super();
+		this.value = value;
+		this.display = display;
+	}
 }
