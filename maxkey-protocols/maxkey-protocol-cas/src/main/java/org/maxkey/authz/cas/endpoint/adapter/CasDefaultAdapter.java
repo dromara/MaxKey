@@ -60,6 +60,7 @@ public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
 		
 		//for user
 		serviceResponseBuilder.setAttribute("uid", userInfo.getId());
+		serviceResponseBuilder.setAttribute("username", userInfo.getUsername());
 		serviceResponseBuilder.setAttribute("displayName", base64Attr(userInfo.getDisplayName()));
 		serviceResponseBuilder.setAttribute("firstName", base64Attr(userInfo.getGivenName()));
 		serviceResponseBuilder.setAttribute("lastname", base64Attr(userInfo.getFamilyName()));
