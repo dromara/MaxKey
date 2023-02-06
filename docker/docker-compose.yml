@@ -77,8 +77,8 @@ services:
       
   maxkey-nginx:
     image: nginx:latest
-    container_name: nginx
-    hostname: nginx
+    container_name: maxkey-nginx
+    hostname: maxkey-nginx
     volumes:
       - ./docker-nginx:/etc/nginx/conf.d
     ports:
