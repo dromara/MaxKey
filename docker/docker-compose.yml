@@ -6,9 +6,9 @@ networks:
     
 services:
   mysql:
-    image: mysql:8.0.27
-    container_name: mysql
-    hostname: mysql
+    image: mysql:8.0.32
+    container_name: maxkey-mysql
+    hostname: maxkey-mysql
     volumes:
       - ./docker-mysql/data:/var/lib/mysql
       - ./docker-mysql/logs:/var/log/mysql
@@ -39,7 +39,7 @@ services:
     container_name: maxkey
     hostname: maxkey
     environment:
-      - DATABASE_HOST=mysql
+      - DATABASE_HOST=maxkey-mysql
       - DATABASE_PORT=3306
       - DATABASE_NAME=maxkey
       - DATABASE_USER=root
@@ -54,7 +54,7 @@ services:
     container_name: maxkey-mgt
     hostname: maxkey-mgt
     environment:
-      - DATABASE_HOST=mysql
+      - DATABASE_HOST=maxkey-mysql
       - DATABASE_PORT=3306
       - DATABASE_NAME=maxkey
       - DATABASE_USER=root
