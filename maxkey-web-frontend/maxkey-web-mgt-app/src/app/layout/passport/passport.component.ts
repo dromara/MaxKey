@@ -28,6 +28,7 @@ import { knowHost } from '../../shared/utils/knowhost';
 })
 export class LayoutPassportComponent implements OnInit {
   version = CONSTS.VERSION;
+  copyrightYear = new Date().getFullYear();
   inst: any;
   links = [
     {

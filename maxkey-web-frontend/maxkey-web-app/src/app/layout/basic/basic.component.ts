@@ -113,7 +113,7 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
       <div style="margin-top: 30px">
         MaxKey {{ version }}<br />
         Copyright
-        <i nz-icon nzType="copyright"></i> 2022 <a href="//www.maxkey.top" target="_blank">http://www.maxkey.top</a><br />
+        <i nz-icon nzType="copyright"></i> {{ copyrightYear }} <a href="//www.maxkey.top" target="_blank">http://www.maxkey.top</a><br />
         Licensed under the Apache License, Version 2.0
       </div>
     </global-footer>
@@ -123,6 +123,7 @@ import { LayoutDefaultOptions } from '../../theme/layout-default';
 })
 export class LayoutBasicComponent implements OnInit {
   version = CONSTS.VERSION;
+  copyrightYear = new Date().getFullYear();
   inst: any;
   options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
