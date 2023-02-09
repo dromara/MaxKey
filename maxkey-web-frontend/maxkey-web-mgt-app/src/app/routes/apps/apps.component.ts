@@ -35,6 +35,7 @@ import { AppJwtDetailsEditerComponent } from './app-jwt-details-editer/app-jwt-d
 import { AppOauth20DetailsEditerComponent } from './app-oauth20-details-editer/app-oauth20-details-editer.component';
 import { AppSaml20DetailsEditerComponent } from './app-saml20-details-editer/app-saml20-details-editer.component';
 import { AppTokenBasedDetailsEditerComponent } from './app-token-based-details-editer/app-token-based-details-editer.component';
+import { SelectProtocolComponent } from './select-protocol/select-protocol.component';
 
 @Component({
   selector: 'app-apps',
@@ -184,16 +185,34 @@ export class AppsComponent implements OnInit {
     this.router.navigateByUrl(`/permissions/resources?appId=${appId}&appName=${appName}`);
   }
 
-  onAdd(e: MouseEvent, protocol: String): void {
+  onAddSelectProtocol(e: MouseEvent): void {
     e.preventDefault();
+
+    const modal = this.modalService.create({
+      nzContent: SelectProtocolComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams: {},
+      nzWidth: 960,
+      nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
+    });
+    // Return a result when closed
+    modal.afterClose.subscribe(result => {
+      if (result.data) {
+        this.onAdd(`${result.data}`);
+      }
+    });
+  }
+
+  onAdd(protocol: String): void {
     const modal = this.modalService.create({
       nzContent: this.chooseComponent(protocol),
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: {
         isEdit: false,
+        protocol: protocol,
         id: ''
       },
-      nzWidth: 800,
+      nzWidth: 960,
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
     });
     // Return a result when closed

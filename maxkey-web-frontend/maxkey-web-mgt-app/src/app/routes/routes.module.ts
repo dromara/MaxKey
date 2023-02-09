@@ -29,6 +29,7 @@ import { AppSaml20DetailsEditerComponent } from './apps/app-saml20-details-edite
 import { AppTokenBasedDetailsEditerComponent } from './apps/app-token-based-details-editer/app-token-based-details-editer.component';
 import { AppsComponent } from './apps/apps.component';
 import { SelectAppsComponent } from './apps/select-apps/select-apps.component';
+import { SelectProtocolComponent } from './apps/select-protocol/select-protocol.component';
 import { OrganizationEditerComponent } from './organizations/organization-editer/organization-editer.component';
 import { OrganizationsComponent } from './organizations/organizations.component';
 import { RouteRoutingModule } from './routes-routing.module';
@@ -52,6 +53,7 @@ const COMPONENTS: Array<Type<null>> = [];
     UserEditerComponent,
     AccountEditerComponent,
     SelectUserComponent,
+    SelectProtocolComponent,
     AppCasDetailsEditerComponent,
     AppFormBasedDetailsEditerComponent,
     AppJwtDetailsEditerComponent,

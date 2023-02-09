@@ -1,0 +1,96 @@
+<div *nzModalTitle> {{ 'mxk.text.select' | i18n }} </div>
+<nz-table nzTableLayout="auto" nzSize="middle" [nzData]="[{}]" [nzShowPagination]="false" nzBordered nzWidth="100%">
+    <thead>
+        <tr>
+            <th nzAlign="center">{{ 'mxk.apps.icon' | i18n }}</th>
+            <th nzAlign="center">{{ 'mxk.apps.protocol' | i18n }}</th>
+            <th nzAlign="center">{{ 'mxk.text.description' | i18n }}</th>
+            <th nzAlign="center" class="table_cell_action_2" style="width: 120px">{{ 'mxk.text.action' | i18n }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td nzAlign="center"><img height="40px" border="0px" src="./assets/protocol/oauth2.png" /></td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.oauth2.0' | i18n }} </td>
+            <td nzAlign="left"> {{ 'mxk.apps.protocol.oauth2.0.discription' | i18n }}</td>
+            <td nzAlign="left"><button nz-button type="button" [nzType]="'primary'"
+                    (click)="onSelect($event, 'OAuth_v2.0')" class="mx-sm">{{
+                    'mxk.text.add' | i18n
+                    }}</button></td>
+        </tr>
+        <tr>
+            <td nzAlign="center"><img height="40" border="0px" src="./assets/protocol/oidc.png" /></td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.oidc' | i18n }}</td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.oidc.discription' | i18n }} </td>
+            <td nzAlign="left"><button nz-button type="button" [nzType]="'primary'"
+                    (click)="onSelect($event, 'OpenID_Connect_v1.0')" class="mx-sm">{{
+                    'mxk.text.add' | i18n
+                    }}</button></td>
+        </tr>
+        <tr>
+            <td nzAlign="center"><img height="40" border="0px" src="./assets/protocol/saml.jpg" /></td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.saml2.0' | i18n }} </td>
+            <td nzAlign="left"> {{ 'mxk.apps.protocol.saml2.0.discription' | i18n }} </td>
+            <td nzAlign="left"><button nz-button type="button" [nzType]="'primary'"
+                    (click)="onSelect($event, 'SAML_v2.0')" class="mx-sm">{{
+                    'mxk.text.add' | i18n
+                    }}</button></td>
+        </tr>
+        <tr>
+            <td nzAlign="center"><img height="40" border="0px" src="./assets/protocol/cas.png" /></td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.cas' | i18n }} </td>
+            <td nzAlign="left"> {{ 'mxk.apps.protocol.cas.discription' | i18n }}</td>
+            <td nzAlign="left"><button nz-button type="button" [nzType]="'primary'" (click)="onSelect($event, 'CAS')"
+                    class="mx-sm">{{
+                    'mxk.text.add' | i18n
+                    }}</button></td>
+        </tr>
+        <tr>
+            <td nzAlign="center"><img height="40" border="0px" src="./assets/protocol/jwt.jpg" /></td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.jwt' | i18n }} </td>
+            <td nzAlign="left"> {{ 'mxk.apps.protocol.jwt.discription' | i18n }}</td>
+            <td nzAlign="left"><button nz-button type="button" [nzType]="'primary'" (click)="onSelect($event, 'JWT')"
+                    class="mx-sm">{{
+                    'mxk.text.add' | i18n
+                    }}</button></td>
+        </tr>
+        <tr>
+            <td nzAlign="center"><img height="40" border="0px" src="./assets/protocol/token.png" /></td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.tokenbased' | i18n }} </td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.tokenbased.discription' | i18n }} </td>
+            <td nzAlign="left"><button nz-button type="button.discription" [nzType]="'primary'"
+                    (click)="onSelect($event, 'Token_Based')" class="mx-sm">{{
+                    'mxk.text.add' | i18n
+                    }}</button></td>
+        </tr>
+        <tr>
+            <td nzAlign="center"><img height="40" border="0px" src="./assets/protocol/form.png" /></td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.formbased' | i18n }} </td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.formbased.discription' | i18n }} </td>
+            <td nzAlign="left"><button nz-button type="button" [nzType]="'primary'"
+                    (click)="onSelect($event, 'Form_Based')" class="mx-sm">{{
+                    'mxk.text.add' | i18n
+                    }}</button></td>
+        </tr>
+        <tr>
+            <td nzAlign="center"><img height="40" border="0px" src="./assets/protocol/api.png" /></td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.extendapi' | i18n }} </td>
+            <td nzAlign="left"> {{ 'mxk.apps.protocol.extendapi.discription' | i18n }}</td>
+            <td nzAlign="left"><button nz-button type="button" [nzType]="'primary'"
+                    (click)="onSelect($event, 'Extend_API')" class="mx-sm">{{
+                    'mxk.text.add' | i18n
+                    }}</button></td>
+        </tr>
+        <tr>
+            <td nzAlign="center"><img height="40" border="0px" src="./assets/protocol/basic.png" /></td>
+            <td nzAlign="left">{{ 'mxk.apps.protocol.basic' | i18n }} </td>
+            <td nzAlign="left"> {{ 'mxk.apps.protocol.basic.discription' | i18n }}</td>
+            <td nzAlign="left"><button nz-button type="button" [nzType]="'primary'" (click)="onSelect($event, 'Basic')"
+                    class="mx-sm">{{
+                    'mxk.text.add' | i18n
+                    }}</button></td>
+        </tr>
+    </tbody>
+</nz-table>
+
+<div *nzModalFooter style="display: none"> </div>
