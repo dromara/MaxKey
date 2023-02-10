@@ -1,4 +1,23 @@
-﻿MaxKey v 3.5.13 GA 2023/01/27
+﻿MaxKey v 3.5.14 GA 2023/02/14
+    *(MAXKEY-230201) 社交登录查询关联账号查询新增租户标识查询
+    *(MAXKEY-230202) docker-compose 搭建 maxkey-mgt 启动报错 I6BR6D
+    *(MAXKEY-230203) JWKSetKeyStore优化
+    *(MAXKEY-230204) maxkey-webapis 重命名为 maxkey-web-apis
+    *(MAXKEY-230205) CasDefaultAdapter 增加 username字段
+    *(MAXKEY-230206) 增加docker部署和启动脚本maxkey_docker_install.sh,maxkey_docker_start.sh等
+    *(MAXKEY-230207) 前端页面版权年度自动按照当前年度修改
+    *(MAXKEY-230208) OAuth2不显示OpenID Connect的tab页
+    *(MAXKEY-230209) 应用新增修改，下拉菜单改为弹出框，增加协议的图标及描述
+    *(MAXKEY-230210) docker-compose部署配置优化
+    *(MAXKEY-230211) docker mysql 8.0.32升级
+    *(MAXKEY-230212) docker部署文档优化
+    *(MAXKEY-230213) JumpServer开源堡垒机单点登录适配文档
+    *(MAXKEY-230214) 依赖项引用、更新和升级
+        freemarker          2.3.32
+        tomcat              9.0.71
+        mysqlconnector      8.0.32
+    
+MaxKey v 3.5.13 GA 2023/01/27
     *(MAXKEY-230101) application-http.properties重命名为application-maxkey-mgt.properties 
     *(MAXKEY-230102) application-http.properties重命名为application-maxkey.properties 
     *(MAXKEY-230103) 分离出maxkey-authentication-sms模块
