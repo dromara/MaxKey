@@ -1,0 +1,30 @@
+<div *nzModalTitle>绑定</div>
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-form-item style="width: 100%">
+      <nz-form-control nzErrorTip="Please input your telephone!">
+        <nz-input-group nzSize="large" nzPrefixIcon="user">
+          <input nz-input formControlName="telephone" placeholder="{{ 'mxk.login.text.mobile' | i18n }}" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="width: 100%">
+      <nz-form-control nzErrorTip="Please input your verification code!">
+        <nz-input-group nzSize="large" nzPrefixIcon="mail" nzSearch [nzAddOnAfter]="suffixSendOtpCodeButton">
+          <input nz-input formControlName="verificationCode" placeholder="{{ 'mxk.login.text.captcha' | i18n }}" />
+        </nz-input-group>
+        <ng-template #suffixSendOtpCodeButton>
+          <button type="button" nz-button nzSize="large" (click)="sendOtpCode()" [disabled]="count > 0" nzBlock [nzLoading]="loading">
+            {{ count ? count + 's' : ('app.register.get-verification-code' | i18n) }}
+          </button>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

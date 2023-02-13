@@ -31,6 +31,7 @@ import { ImageCaptchaService } from '../../../service/image-captcha.service';
 import { SocialsProviderService } from '../../../service/socials-provider.service';
 import { CONSTS } from '../../../shared/consts';
 
+
 import { stringify } from 'querystring';
 
 @Component({
@@ -54,6 +55,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   loginType = 'normal';
   loading = false;
   passwordVisible = false;
+  qrexpire = false;
   imageCaptcha = '';
   captchaType = '';
   state = '';
@@ -287,6 +289,10 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   }
 
   getQrCode(): void {
+    this.qrexpire = false;
+    if (this.interval$) {
+      clearInterval(this.interval$);
+    }
     this.authnService.clearUser();
     this.socialsProviderService.scanqrcode(this.socials.qrScan).subscribe(res => {
       if (res.code === 0) {
@@ -294,11 +300,14 @@ export class UserLoginComponent implements OnInit, OnDestroy {
           this.qrScanWorkweixin(res.data);
         } else if (this.socials.qrScan === 'dingtalk') {
           this.qrScanDingtalk(res.data);
-        } else if (this.socials.qrScan === 'feishu') {
+        } else if (this.socials.qrScan === 'maxkey') {
+          this.qrScanMaxkey(res.data);
+        }else if (this.socials.qrScan === 'feishu') {
           this.qrScanFeishu(res.data);
         }
       }
     });
+
   }
 
   // #endregion
@@ -364,4 +373,46 @@ export class UserLoginComponent implements OnInit, OnDestroy {
     });
   }
   // #region QR Scan end
+
+  qrScanMaxkey(data: any) {
+    // @ts-ignore
+    document.getElementById("div_qrcodelogin").innerHTML='';
+    // @ts-ignore
+    var qrcode = new QRCode("div_qrcodelogin", {
+      width: 200,
+      height: 200,
+      colorDark : "#000000",
+      colorLight : "#ffffff"
+    }).makeCode(data.state);
+      //3分钟监听二维码
+    this.count = 90;
+    this.interval$ = setInterval(() => {
+      this.count -= 1;
+      if(this.loginType != 'qrscan') {
+        clearInterval(this.interval$);
+      }
+      if (this.count <= 0) {
+        clearInterval(this.interval$);
+      }
+      //轮询发送监听请求
+      this.socialsProviderService.qrcallback(this.socials.qrScan,data.state).subscribe(res => {
+        if (res.code === 0) {
+          // 清空路由复用信息
+          this.reuseTabService.clear();
+          // 设置用户Token信息
+          this.authnService.auth(res.data);
+          this.authnService.navigate({});
+          clearInterval(this.interval$);
+        } else if (res.code === 102) {
+          // 二维码过期
+          clearInterval(this.interval$);
+          this.qrexpire = true;
+          this.cdr.detectChanges();
+        } else if (res.code === 103) {
+          // 暂无用户扫码
+        }
+      });
+      this.cdr.detectChanges();
+    }, 2000);
+  }
 }
