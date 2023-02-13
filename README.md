@@ -136,6 +136,8 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 惠州卫生职业技术学院                        |
 | 宜昌市三峡中等专业学校                      |
 | 重庆市北碚图书馆                            |
+| 天津市劳动保障技师学院                      |
+| 泸州市教育和体育局                          |
 | 余姚市教育局                                |
 | 中国金融认证中心                            |
 | 国元证券                                    |
@@ -144,6 +146,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 国宝人寿保险股份有限公司                    |
 | 瀚华金控股份有限公司                        |
 | 路特斯中国                                  |
+| 宇通客车股份有限公司                        |
 | 国家能源局                                  |
 | 360公司                                     |
 | 深圳市金溢科技股份有限公司                  |
@@ -171,6 +174,7 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | TCL华星光电技术有限公司                     |
 | 深圳云天励飞技术股份有限公司                |
 | 深圳市维玛科技有限公司                      |
+| 万宝盛华集团                                |
 | 妙盈科技                                    |
 | 之江实验室                                  |
 | 尚企云链                                    |
@@ -200,6 +204,8 @@ Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about
 | 江西云车科技有限公司                        |
 | 无锡市陶都巨龙软件有限责任公司              |
 | 厦门茂商科技有限公司                        |
+| 浙江申跃信息科技有限公司                    |
+| 武汉博特睿达智能科技有限公司                |
 | 杭州马上自动化科技有限公司                  |
 | 凯盛工业互联网平台                          |
 | 吕梁市医改监测平台                          |
