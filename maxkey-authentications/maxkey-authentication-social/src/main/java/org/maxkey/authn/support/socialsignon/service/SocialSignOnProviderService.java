@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.maxkey.authn.support.socialsignon.token.RedisTokenStore;
 import org.maxkey.constants.ConstsTimeInterval;
 import org.maxkey.crypto.password.PasswordReciprocal;
 import org.maxkey.entity.SocialsProvider;
@@ -54,6 +55,9 @@ public class SocialSignOnProviderService{
 	HashMap<String ,SocialsProvider>socialSignOnProviderMaps = new HashMap<String ,SocialsProvider>();
 	
 	private final JdbcTemplate jdbcTemplate;
+
+
+	RedisTokenStore redisTokenStore;
 	
 	public SocialSignOnProviderService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate=jdbcTemplate; 
@@ -61,6 +65,17 @@ public class SocialSignOnProviderService{
 
 	public SocialsProvider get(String instId,String provider){
 		return socialSignOnProviderMaps.get(instId + "_" + provider);
+	}
+	public void setToken(String token){
+		this.redisTokenStore.store(token);
+	}
+
+	public boolean bindtoken(String token,String loginName){
+		return this.redisTokenStore.bindtoken(token,loginName);
+	}
+
+	public String getToken(String token){
+		return this.redisTokenStore.get(token);
 	}
 	
 	public String getRedirectUri(String baseUri,String provider) {
@@ -129,10 +144,10 @@ public class SocialSignOnProviderService{
             authRequest = new AuthWeChatEnterpriseWebRequest(authConfig);
         }else if(provider.equalsIgnoreCase("welink")) {
             authRequest = new AuthHuaweiWeLinkRequest(authConfig);
-        }
-		
-		
-		
+        }else if(provider.equalsIgnoreCase("maxkey")) {
+			authRequest = new AuthMaxkeyRequest(authConfig);
+		}
+
 		return authRequest;
 	}
 	
@@ -234,4 +249,9 @@ public class SocialSignOnProviderService{
             return socialsProvider;
         }
     }
+
+
+	public void setRedisTokenStore(RedisTokenStore redisTokenStore) {
+		this.redisTokenStore = redisTokenStore;
+	}
 }
