@@ -123,7 +123,7 @@ export class SocialsProviderComponent implements OnInit {
   onAdd(e: MouseEvent): void {
     e.preventDefault();
     const modal = this.modalService.create({
-      //nzContent: SocialsProviderEditerComponent,
+      //nzContent: SocialsProviderBindUserComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: {
         isEdit: false,
@@ -143,7 +143,7 @@ export class SocialsProviderComponent implements OnInit {
     e.preventDefault();
 
     const modal = this.modalService.create({
-      //nzContent: SocialsProviderEditerComponent,
+      //nzContent: SocialsProviderBindUserComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: {
         isEdit: true,

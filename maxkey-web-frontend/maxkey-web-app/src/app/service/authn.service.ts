@@ -61,6 +61,10 @@ export class AuthnService {
     return this.http.post('/login/signin?_allow_anonymous=true', authParam);
   }
 
+  bindSocialsUser(authParam: any) {
+    return this.http.post('/login/signin/bindusersocials?_allow_anonymous=true', authParam);
+  }
+
   //退出
   logout() {
     this.cookieService.delete(CONSTS.CONGRESS, '/');

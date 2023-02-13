@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-import { Inject, Optional, Component, OnInit } from '@angular/core';
+import { Inject, Optional, Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { SettingsService } from '@delon/theme';
-
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { AuthnService } from '../../service/authn.service';
 import { SocialsProviderService } from '../../service/socials-provider.service';
+import {SocialsProviderBindUserComponent} from "./socials-provider-bind-user/socials-provider-bind-user.component";
 
 @Component({
   selector: 'app-callback',
@@ -30,6 +31,8 @@ export class CallbackComponent implements OnInit {
   provider = '';
 
   constructor(
+    private viewContainerRef: ViewContainerRef,
+    private modalService: NzModalService,
     private router: Router,
     private socialsProviderService: SocialsProviderService,
     private settingsService: SettingsService,
@@ -50,6 +53,11 @@ export class CallbackComponent implements OnInit {
           // 设置用户Token信息
           this.authnService.auth(res.data);
         }
+        else if (res.code === 102) {
+          //绑定用户
+          this.openBindUser(res.message)
+          return;
+        }
         this.authnService.navigate({});
       });
     } else {
@@ -59,5 +67,26 @@ export class CallbackComponent implements OnInit {
         this.router.navigateByUrl('/config/socialsassociate');
       });
     }
+  }
+
+  openBindUser(socialUserId: String) {
+    console.log("bind user : ",this.provider,socialUserId);
+    const modal = this.modalService.create({
+      nzContent: SocialsProviderBindUserComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams: {
+        socialUserId: socialUserId,
+        provider: this.provider
+      },
+      nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
+    });
+    // Return a result when closed
+    modal.afterClose.subscribe(result => {
+      if (result.refresh) {
+
+      }
+    });
+
+
   }
 }

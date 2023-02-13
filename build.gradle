@@ -395,6 +395,13 @@ subprojects {
          implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
           //阿里云
          implementation group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: "${aliyunjavasdkcoreVersion}"
+         // https://mvnrepository.com/artifact/io.opentracing/opentracing-util
+         implementation 'io.opentracing:opentracing-util:0.33.0'
+         // https://mvnrepository.com/artifact/io.opentracing/opentracing-api
+         implementation 'io.opentracing:opentracing-api:0.33.0'
+         implementation 'io.opentracing:opentracing-noop:0.33.0'
+
+
          //腾讯云
          implementation group: 'com.tencentcloudapi', name: 'tencentcloud-sdk-java', version: "${tencentcloudsdkjavaVersion}"
          //json

@@ -71,7 +71,7 @@ public class SmsOtpAuthnService {
     			if(smsProvider.getProvider().equalsIgnoreCase("aliyun")) {
     				SmsOtpAuthnAliyun aliyun = new SmsOtpAuthnAliyun(
 													smsProvider.getAppKey(),
-													smsProvider.getAppSecret(),
+													PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
 													smsProvider.getTemplateId(),
 													smsProvider.getSignName()
 												);
@@ -82,7 +82,7 @@ public class SmsOtpAuthnService {
     			}else if(smsProvider.getProvider().equalsIgnoreCase("tencentcloud")) {
     				SmsOtpAuthnTencentCloud tencentCloud = new SmsOtpAuthnTencentCloud(
     												smsProvider.getAppKey(),
-    												smsProvider.getAppSecret(),
+													PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
     												smsProvider.getSmsSdkAppId(),
     												smsProvider.getTemplateId(),
     												smsProvider.getSignName()
@@ -94,7 +94,7 @@ public class SmsOtpAuthnService {
     			}else if(smsProvider.getProvider().equalsIgnoreCase("neteasesms")) {
     				SmsOtpAuthnYunxin yunxin = new SmsOtpAuthnYunxin(
     												smsProvider.getAppKey(),
-    												smsProvider.getAppSecret(),
+													PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()),
     												smsProvider.getTemplateId()
     											);
     				if(redisOptTokenStore != null) {

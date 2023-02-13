@@ -20,10 +20,14 @@ package org.maxkey.autoconfigure;
 import java.io.IOException;
 import org.maxkey.authn.support.socialsignon.service.JdbcSocialsAssociateService;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
+import org.maxkey.authn.support.socialsignon.token.RedisTokenStore;
+import org.maxkey.constants.ConstsPersistence;
 import org.maxkey.entity.SocialsProvider;
+import org.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
@@ -40,10 +44,17 @@ public class SocialSignOnAutoConfiguration implements InitializingBean {
     @Bean(name = "socialSignOnProviderService")
     @ConditionalOnClass(SocialsProvider.class)
     public SocialSignOnProviderService socialSignOnProviderService(
-                    JdbcTemplate jdbcTemplate) throws IOException {
+            @Value("${maxkey.server.persistence}") int persistence,
+            JdbcTemplate jdbcTemplate,
+            RedisConnectionFactory redisConnFactory
+                    ) throws IOException {
         SocialSignOnProviderService socialSignOnProviderService = new SocialSignOnProviderService(jdbcTemplate);
         //load default Social Providers from database
         socialSignOnProviderService.loadSocials("1");
+
+        RedisTokenStore redisTokenStore = new RedisTokenStore();
+        socialSignOnProviderService.setRedisTokenStore(redisTokenStore);
+
         _logger.debug("SocialSignOnProviderService inited.");
         return socialSignOnProviderService;
     }
