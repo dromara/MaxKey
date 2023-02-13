@@ -12,7 +12,8 @@
     *(MAXKEY-230211) docker mysql 8.0.32升级
     *(MAXKEY-230212) docker部署文档优化
     *(MAXKEY-230213) JumpServer开源堡垒机单点登录适配文档
-    *(MAXKEY-230214) 依赖项引用、更新和升级
+    *(MAXKEY-230214) Docker部署Mysql 脚本目录改为latest，文件名改为maxkey.sql(表结构)、maxkey_data.sql(数据记录)
+    *(MAXKEY-230215) 依赖项引用、更新和升级
         freemarker          2.3.32
         tomcat              9.0.71
         mysqlconnector      8.0.32
