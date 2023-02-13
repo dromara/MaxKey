@@ -34,12 +34,11 @@ import org.maxkey.authn.support.rememberme.AbstractRemeberMeManager;
 import org.maxkey.authn.support.rememberme.RemeberMe;
 import org.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.entity.Institutions;
-import org.maxkey.entity.Message;
-import org.maxkey.entity.UserInfo;
+import org.maxkey.constants.ConstsLoginType;
+import org.maxkey.entity.*;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
-import org.maxkey.password.onetimepwd.MailOtpAuthnService;
 import org.maxkey.password.sms.SmsOtpAuthnService;
+import org.maxkey.persistence.service.SocialsAssociatesService;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.web.WebConstants;
 import org.maxkey.web.WebContext;
@@ -81,6 +80,9 @@ public class LoginEntryPoint {
 
 	@Autowired
 	SocialSignOnProviderService socialSignOnProviderService;
+
+	@Autowired
+	SocialsAssociatesService socialsAssociatesService;
 	
 	@Autowired
 	KerberosService kerberosService;
@@ -165,6 +167,47 @@ public class LoginEntryPoint {
         
         return new Message<AuthJwt>(Message.FAIL).buildResponse();
     }
+
+	@RequestMapping(value={"/signin/bindusersocials"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> bindusersocials(@RequestBody LoginCredential credential) {
+		//短信验证码
+		String code = credential.getCode();
+		//映射社交服务的账号
+		String username = credential.getUsername();
+		//maxkey存储的手机号
+		String mobile = credential.getMobile();
+		//社交服务类型
+		String authType = credential.getAuthType();
+
+		UserInfo userInfo = userInfoService.findByEmailMobile(mobile);
+		//验证码验证是否合法
+		if (smsAuthnService.getByInstId(WebContext.getInst().getId()).validate(userInfo,code)) {
+			//合法进行用户绑定
+			SocialsAssociate socialsAssociate = new SocialsAssociate();
+			socialsAssociate.setUserId(userInfo.getId());
+			socialsAssociate.setUsername(userInfo.getUsername());
+			socialsAssociate.setProvider(authType);
+			socialsAssociate.setSocialUserId(username);
+			socialsAssociate.setInstId(userInfo.getInstId());
+			//插入Maxkey和社交服务的用户映射表
+			socialsAssociatesService.insert(socialsAssociate);
+
+			//设置完成后，进行登录认证
+			LoginCredential loginCredential =new LoginCredential(
+					socialsAssociate.getUsername(),"", ConstsLoginType.SOCIALSIGNON);
+
+			SocialsProvider socialSignOnProvider = socialSignOnProviderService.get(socialsAssociate.getInstId(),socialsAssociate.getProvider());
+
+			loginCredential.setProvider(socialSignOnProvider.getProviderName());
+
+			Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
+
+			return new Message<AuthJwt>(authTokenService.genAuthJwt(authentication)).buildResponse();
+
+		}
+		return new Message<AuthJwt>(Message.FAIL).buildResponse();
+	}
+
  	
  	/**
  	 * normal
