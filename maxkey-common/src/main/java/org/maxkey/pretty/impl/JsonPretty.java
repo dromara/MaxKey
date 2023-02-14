@@ -82,6 +82,24 @@ public class JsonPretty  implements Pretty{
 	}
 	
 	/**
+	 * prettyJson use Gson , htmlEscaping 
+	 * @param bean
+	 * @return String
+	 */
+	public  String format(Object bean,boolean htmlEscaping){
+		if(!htmlEscaping) {
+			return format(bean);
+		}
+		
+		Gson gson = new GsonBuilder()
+				.setPrettyPrinting()
+				.disableHtmlEscaping()
+				.create();
+		String json = gson.toJson(bean);
+		return json;
+	}
+	
+	/**
 	 * prettyJson use Gson
 	 * @param bean
 	 * @return String
