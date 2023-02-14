@@ -141,7 +141,7 @@ public class SocialSignOnProviderService{
         }else if(provider.equalsIgnoreCase("WeChatQyQrcode")) {
             authRequest = new AuthWeChatEnterpriseQrcodeRequest(authConfig);
         }else if(provider.equalsIgnoreCase("workweixin")) {
-            authRequest = new AuthWeChatEnterpriseWebRequest(authConfig);
+            authRequest = new AuthWeChatEnterpriseWebRequestCost(authConfig);
         }else if(provider.equalsIgnoreCase("welink")) {
             authRequest = new AuthHuaweiWeLinkRequest(authConfig);
         }else if(provider.equalsIgnoreCase("maxkey")) {
