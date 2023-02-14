@@ -60,7 +60,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 									) {
 		_logger.trace("SocialSignOn provider : " + provider);
 		String instId = WebContext.getInst().getId();
-		String originURL =WebContext.getHttpContextPath(request,false);
+		String originURL =WebContext.getContextPath(request,false);
     	String authorizationUrl =
 				buildAuthRequest(
 						instId,
@@ -77,7 +77,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	public ResponseEntity<?> scanQRCode(HttpServletRequest request,
 										@PathVariable("provider") String provider) {
 		String instId = WebContext.getInst().getId();
-		String originURL =WebContext.getHttpContextPath(request,false);
+		String originURL =WebContext.getContextPath(request,false);
 	    AuthRequest authRequest = 
 	    		buildAuthRequest(
 						instId,
@@ -112,7 +112,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 								  HttpServletRequest request) {
 		 //auth call back may exception 
 	    try {
-	    	String originURL = WebContext.getHttpContextPath(request,false);
+	    	String originURL = WebContext.getContextPath(request,false);
 	    	SocialsAssociate socialsAssociate = 
 	    			this.authCallback(userInfo.getInstId(),provider,originURL + applicationConfig.getFrontendUri());
 		    socialsAssociate.setSocialUserInfo(accountJsonString);
@@ -139,7 +139,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 									  HttpServletRequest request) {
 		 //auth call back may exception 
 	    try {
-	    	String originURL =WebContext.getHttpContextPath(request,false);
+	    	String originURL =WebContext.getContextPath(request,false);
 	    	String instId = WebContext.getInst().getId();
 	    	SocialsAssociate socialsAssociate = 
 	    			this.authCallback(instId,provider,originURL + applicationConfig.getFrontendUri());
