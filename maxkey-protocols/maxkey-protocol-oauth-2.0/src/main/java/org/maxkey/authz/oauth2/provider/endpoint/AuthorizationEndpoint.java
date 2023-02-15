@@ -23,7 +23,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.maxkey.authn.annotation.CurrentUser;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.oauth2.common.OAuth2AccessToken;
@@ -46,8 +45,6 @@ import org.maxkey.authz.oauth2.provider.approval.UserApprovalHandler;
 import org.maxkey.authz.oauth2.provider.code.AuthorizationCodeServices;
 import org.maxkey.authz.oauth2.provider.implicit.ImplicitTokenRequest;
 import org.maxkey.authz.oauth2.provider.request.DefaultOAuth2RequestValidator;
-import org.maxkey.constants.ContentType;
-import org.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.maxkey.util.HttpEncoder;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
@@ -67,11 +64,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriTemplate;
@@ -296,42 +290,6 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			sessionStatus.setComplete();
 		}
 
-	}
-	
-	@Operation(summary = "OAuth JWk 元数据接口", description = "参数mxk_metadata_APPID",method="GET")
-	@RequestMapping(
-			value = "/metadata/oauth/v20/" + WebConstants.MXK_METADATA_PREFIX + "{appid}.{mediaType}",
-			method={RequestMethod.POST, RequestMethod.GET})
-	@ResponseBody
-	public String  metadata(HttpServletRequest request,
-			HttpServletResponse response, 
-			@PathVariable("appid") String appId,
-			@PathVariable("mediaType") String mediaType) {
-		ClientDetails  clientDetails = getClientDetailsService().loadClientByClientId(appId,true);
-		if(clientDetails != null) {
-			String jwkSetString = "";
-			if(!clientDetails.getSignature().equalsIgnoreCase("none")) {
-				jwkSetString = clientDetails.getSignatureKey();
-			}
-			if(!clientDetails.getAlgorithm().equalsIgnoreCase("none")) {
-				if(!StringUtils.hasText(jwkSetString)) {
-					jwkSetString = clientDetails.getAlgorithmKey();
-				}else {
-					jwkSetString = jwkSetString + "," +clientDetails.getAlgorithmKey();
-				}
-			}
-			JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore("{\"keys\": [" + jwkSetString + "]}");
-			
-			if(StringUtils.hasText(mediaType) 
-					&& mediaType.equalsIgnoreCase("xml")) {
-				response.setContentType(ContentType.APPLICATION_XML_UTF8);
-			}else {
-				response.setContentType(ContentType.APPLICATION_JSON_UTF8);
-			}
-			return jwkSetKeyStore.toString(mediaType);
-		}
-		
-		return appId + " not exist . \n" + JpaWebContext.version();
 	}
 
 	// We need explicit approval from the user.

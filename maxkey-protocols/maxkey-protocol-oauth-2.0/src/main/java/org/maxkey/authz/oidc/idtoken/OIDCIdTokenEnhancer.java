@@ -129,7 +129,8 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 				builder.claim("auth_time",  loginDate.getMillis()/1000);
 			}
 			
-			String nonce = (String)request.getExtensions().get("nonce");
+			String nonce = request.getRequestParameters().get("nonce");
+			_logger.debug("getRequestParameters nonce {}",nonce);
 			if (!Strings.isNullOrEmpty(nonce)) {
 				builder.claim("nonce", nonce);
 			}

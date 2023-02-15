@@ -1,5 +1,5 @@
 /*
- * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,5 +46,9 @@ public class ContentType {
     public static final String IMAGE_JPEG 				= "image/jpeg";
 
     public static final String IMAGE_PNG 				= "image/png";
+    
+    public static final String JSON 					= "json";
+    
+    public static final String XML 						= "xml";
     
 }
