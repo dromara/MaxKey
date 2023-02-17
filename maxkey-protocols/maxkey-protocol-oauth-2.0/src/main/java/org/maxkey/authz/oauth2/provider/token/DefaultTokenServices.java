@@ -97,7 +97,7 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 			else {
 				// Re-store the access token in case the authentication has changed
 				tokenStore.storeAccessToken(existingAccessToken, authentication);
-				return existingAccessToken;
+				return enhancerToken(existingAccessToken, authentication);
 			}
 		}
 
@@ -299,6 +299,10 @@ public class DefaultTokenServices implements AuthorizationServerTokenServices, R
 		token.setRefreshToken(refreshToken);
 		token.setScope(authentication.getOAuth2Request().getScope());
 
+		return enhancerToken(token, authentication);
+	}
+	
+	private OAuth2AccessToken enhancerToken(OAuth2AccessToken token , OAuth2Authentication authentication) {
 		return accessTokenEnhancer != null ? accessTokenEnhancer.enhance(token, authentication) : token;
 	}
 
