@@ -1,38 +1,7 @@
-buildscript {
-	repositories {
-		maven { url 'https://maven.aliyun.com/nexus/content/groups/public/'}
-	}
-	dependencies {
-		//springboot jar
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
-}
-
-plugins {
-	id 'java'
-	id "io.spring.dependency-management" version "1.0.11.RELEASE"
-	id 'org.springframework.boot' version "${springBootVersion}"
-}
-
-apply plugin: 'io.spring.dependency-management'
-
 description = "maxkey-web-maxkey"
 
-bootJar {
-	dependsOn jar
-	baseName = 'maxkey-boot'
-    version = "${project.version}-ga"
-    mainClass = 'org.maxkey.MaxKeyApplication'
-	manifest {
-	        attributes(
-						"Implementation-Title": project.name,
-	                	"Implementation-Vendor": project.vendor,
-	                	"Created-By": project.author,
-	                	"Implementation-Date": java.time.ZonedDateTime.now(),
-	                	"Implementation-Version": project.version
-	           )
-	    }	
-}
+//add support for Java
+apply plugin: 'java'
 
 dependencies {
 	implementation project(":maxkey-common")
