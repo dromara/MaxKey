@@ -1,4 +1,25 @@
-﻿MaxKey v 3.5.14 GA 2023/02/14
+﻿MaxKey v 3.5.15 GA 2023/02/**
+    *(MAXKEY-230301) 提交短信密钥在加载时候进行解密。
+    *(MAXKEY-230302) 提交社交服务绑定账号+短信验证过程
+    *(MAXKEY-230303) 提交maxkey自定义扫码和社交服务绑定过程
+    *(MAXKEY-230304) 社交服务登录认证账号绑定接口
+    *(MAXKEY-230305) 提交阿里云SDK的其他依赖
+    *(MAXKEY-230306) 企业微信上下游处理用户id，不获取用户详情
+    *(MAXKEY-230307) 获取上下文路径问题WebContext.getContextPath()
+    *(MAXKEY-230308) Gson对象转字符串htmlEscaping
+    *(MAXKEY-230309) 新增OpenID Connect metadata
+    *(MAXKEY-230310) 新增/jwks的公钥访问地址
+    *(MAXKEY-230311) 新增Introspect令牌状态访问接口
+    *(MAXKEY-230312) Enhancer AccessToken，用户已经存在token的增强
+    *(MAXKEY-230313) build.gradle优化
+    *(MAXKEY-230314) 新增应用时选择协议优化，改为选项卡，标准协议和定制协议
+	*(MAXKEY-230315) 修复MaxKey-SpringBoot4CAS-demo地址配置问题
+	*(MAXKEY-230316) 网站帮助文档优化
+    *(MAXKEY-230317) 依赖项引用、更新和升级
+        springData          2.7.8
+        druid               1.2.16
+
+MaxKey v 3.5.14 GA 2023/02/14
     *(MAXKEY-230201) 社交登录查询关联账号查询新增租户标识查询
     *(MAXKEY-230202) docker-compose 搭建 maxkey-mgt 启动报错 I6BR6D
     *(MAXKEY-230203) JWKSetKeyStore优化
