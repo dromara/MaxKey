@@ -13,9 +13,10 @@
     *(MAXKEY-230312) Enhancer AccessToken，用户已经存在token的增强
     *(MAXKEY-230313) build.gradle优化
     *(MAXKEY-230314) 新增应用时选择协议优化，改为选项卡，标准协议和定制协议
-	*(MAXKEY-230315) 修复MaxKey-SpringBoot4CAS-demo地址配置问题
-	*(MAXKEY-230316) 网站帮助文档优化
-    *(MAXKEY-230317) 依赖项引用、更新和升级
+    *(MAXKEY-230315) 修复MaxKey-SpringBoot4CAS-demo地址配置问题
+    *(MAXKEY-230316) MaxKey和JeeSite单点登录集成指南
+    *(MAXKEY-230317) 网站帮助文档优化
+    *(MAXKEY-230318) 依赖项引用、更新和升级
         springData          2.7.8
         druid               1.2.16
 
