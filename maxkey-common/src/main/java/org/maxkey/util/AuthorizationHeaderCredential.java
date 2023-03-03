@@ -13,37 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 package org.maxkey.util;
 
 public class AuthorizationHeaderCredential {
-	
-	public static class Credential{
-		
-	    public static final String BASIC = "Basic ";
-	
-	    public static final String BEARER = "Bearer ";
+
+	public static class Credential {
+
+		public static final String BASIC = "Basic ";
+
+		public static final String BEARER = "Bearer ";
 	}
-    
+
 	String credentialType = Credential.BASIC;
 	String username;
 	String credential;
 	String authorization;
-	
+
 	public AuthorizationHeaderCredential(String bearer) {
 		super();
 		this.credential = bearer;
 		this.credentialType = Credential.BEARER;
 	}
-	
-	
+
 	public AuthorizationHeaderCredential(String username, String credential) {
 		super();
 		this.username = username;
 		this.credential = credential;
 	}
-	
+
 	public String getCredentialType() {
 		return credentialType;
 	}
@@ -63,24 +61,27 @@ public class AuthorizationHeaderCredential {
 	public String getCredential() {
 		return credential;
 	}
+
 	public void setCredential(String credential) {
 		this.credential = credential;
 	}
 
 	public String transform() {
-		if(credentialType.equalsIgnoreCase(Credential.BASIC)) {
+		if (credentialType.equalsIgnoreCase(Credential.BASIC)) {
 			return AuthorizationHeaderUtils.createBasic(username, credential);
-		}else {
+		} else {
 			return AuthorizationHeaderUtils.createBearer(credential);
 		}
 	}
-	
-	
-	
+
+	public boolean isBasic() {
+		return credentialType.equals(Credential.BASIC) ? true : false;
+	}
+
 	@Override
 	public String toString() {
 		return "AuthorizationHeaderCredential [credentialType=" + credentialType + ", username=" + username
 				+ ", credential=" + credential + "]";
 	}
-	
+
 }

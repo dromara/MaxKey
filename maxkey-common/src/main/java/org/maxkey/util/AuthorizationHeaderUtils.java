@@ -17,8 +17,6 @@
 
 package org.maxkey.util;
 
-import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.maxkey.crypto.Base64Utils;
@@ -43,6 +41,15 @@ public class AuthorizationHeaderUtils {
         String encodedAuthUserPass = Base64Utils.encode(authUserPass);
         return AuthorizationHeaderCredential.Credential.BASIC + encodedAuthUserPass;
     }
+    
+    public static String createBearer(String bearer) {
+        return AuthorizationHeaderCredential.Credential.BEARER + bearer;
+    }
+    
+    public  static AuthorizationHeaderCredential resolve(HttpServletRequest request) {
+    	String authorization = resolveBearer(request);
+    	return resolve(authorization);
+    }
 
     public static AuthorizationHeaderCredential resolve(String authorization) {
         if (StringUtils.isNotBlank(authorization) && isBasic(authorization)) {
@@ -54,34 +61,6 @@ public class AuthorizationHeaderUtils {
         }
     }
 
-    public static boolean isBasic(String basic) {
-        if (basic.startsWith(AuthorizationHeaderCredential.Credential.BASIC)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    public static String createBearer(String bearer) {
-        return AuthorizationHeaderCredential.Credential.BEARER + bearer;
-    }
-
-    public static String resolveBearer(String bearer) {
-        if (StringUtils.isNotBlank(bearer) && isBearer(bearer)) {
-            return bearer.split(" ")[1];
-        } else {
-            return bearer;
-        }
-    }
-    
-    public static boolean isBearer(String bearer) {
-        if (bearer.toLowerCase().startsWith(AuthorizationHeaderCredential.Credential.BEARER.toLowerCase())) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
     public  static String resolveBearer(HttpServletRequest request) {
     	String authorization = 
     			StringUtils.isNotBlank(request.getHeader(HEADER_Authorization)) ? 
@@ -92,10 +71,30 @@ public class AuthorizationHeaderUtils {
     	return null;
     }
     
-    public static HashMap<String,String> authorization(String authorization) {
-    	HashMap<String,String> authorizationMap = new HashMap<String,String>();
-    	authorizationMap.put(HEADER_Authorization, authorization);
-    	return authorizationMap;
+    public static boolean isBasic(String basic) {
+        if (basic.startsWith(AuthorizationHeaderCredential.Credential.BASIC)) {
+            return true;
+        } else {
+            return false;
+        }
     }
+    
+    static String resolveBearer(String bearer) {
+        if (StringUtils.isNotBlank(bearer) && isBearer(bearer)) {
+            return bearer.split(" ")[1];
+        } else {
+            return bearer;
+        }
+    }
+    
+    static boolean isBearer(String bearer) {
+        if (bearer.toLowerCase().startsWith(AuthorizationHeaderCredential.Credential.BEARER.toLowerCase())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+   
 
 }

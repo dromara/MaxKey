@@ -58,9 +58,8 @@ public class Oauth20ApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		 _logger.trace("Oauth20ApiPermissionAdapter preHandle");
-		String  authorization = request.getHeader(AuthorizationHeaderUtils.HEADER_Authorization);
+		 String accessToken = AuthorizationHeaderUtils.resolveBearer(request);
 		 
-		 String accessToken = AuthorizationHeaderUtils.resolveBearer(authorization);
 		 OAuth2Authentication authentication = oauth20TokenServices.loadAuthentication(accessToken);
 		 
 		//判断应用的accessToken信息
