@@ -42,8 +42,8 @@ import org.maxkey.entity.UserInfo;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.persistence.service.UserInfoService;
-import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.util.JsonUtils;
+import org.maxkey.util.RequestTokenUtils;
 import org.maxkey.util.StringGenerator;
 import org.maxkey.web.HttpResponseAdapter;
 import org.maxkey.web.WebConstants;
@@ -97,19 +97,19 @@ public class UserInfoOIDCEndpoint {
     @Autowired
     protected HttpResponseAdapter httpResponseAdapter;
 		
-    @Operation(summary = "OIDC 用户信息接口", description = "传递Authorization参数access_token",method="GET")
+    @Operation(summary = "OIDC 用户信息接口", description = "请求参数access_token , header Authorization , token ",method="GET")
 	@RequestMapping(value=OAuth2Constants.ENDPOINT.ENDPOINT_OPENID_CONNECT_USERINFO, method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
 	public String connect10aUserInfo(HttpServletRequest request, 
 									 HttpServletResponse response) {
-    	String access_token = AuthorizationHeaderUtils.resolveBearer(request);
-		
+    	String access_token =  RequestTokenUtils.resolveAccessToken(request);
+    	_logger.debug("access_token {}" , access_token);
 		if (!StringGenerator.uuidMatches(access_token)) {
 			return JsonUtils.gsonToString(accessTokenFormatError(access_token));
 		}
 		
-		String principal="";
-		OAuth2Authentication oAuth2Authentication =null;
+		String principal = "";
+		OAuth2Authentication oAuth2Authentication = null;
 		try{
 			 oAuth2Authentication = oauth20tokenServices.loadAuthentication(access_token);
 			 

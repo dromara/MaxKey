@@ -61,14 +61,13 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		 _logger.trace("RestApiPermissionAdapter preHandle");
-		String  authorization = request.getHeader(AuthorizationHeaderUtils.HEADER_Authorization);
-		AuthorizationHeaderCredential headerCredential = AuthorizationHeaderUtils.resolve(authorization);
+		_logger.trace("Rest API Permission Adapter pre handle");
+		 AuthorizationHeaderCredential headerCredential = AuthorizationHeaderUtils.resolve(request);
 		 
 		//判断应用的AppId和Secret
 		if(headerCredential != null){
 			UsernamePasswordAuthenticationToken authenticationToken = null;
-			if(headerCredential.getCredentialType().equals(AuthorizationHeaderCredential.Credential.BASIC)) {
+			if(headerCredential.isBasic()) {
 			    if(StringUtils.isNotBlank(headerCredential.getUsername())&&
 			    		StringUtils.isNotBlank(headerCredential.getCredential())
 			    		) {
@@ -79,12 +78,12 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 			    	authenticationToken= (UsernamePasswordAuthenticationToken)oauth20ClientAuthenticationManager.authenticate(authRequest);
 			    }
 			}else {
-				_logger.trace("Authentication bearer " + headerCredential.getCredential());
+				_logger.trace("Authentication bearer {}" , headerCredential.getCredential());
 				OAuth2Authentication oauth2Authentication = 
 						oauth20TokenServices.loadAuthentication(headerCredential.getCredential());
 				
 				if(oauth2Authentication != null) {
-					_logger.trace("Authentication token " + oauth2Authentication.getPrincipal().toString());
+					_logger.trace("Authentication token {}" , oauth2Authentication.getPrincipal().toString());
 					authenticationToken= new UsernamePasswordAuthenticationToken(
 			    			new User(
 			    					oauth2Authentication.getPrincipal().toString(), 

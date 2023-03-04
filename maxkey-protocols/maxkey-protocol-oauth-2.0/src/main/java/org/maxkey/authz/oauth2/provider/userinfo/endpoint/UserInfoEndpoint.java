@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.maxkey.authn.SignPrincipal;
 import org.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.maxkey.authz.oauth2.common.OAuth2Constants;
@@ -38,9 +37,9 @@ import org.maxkey.entity.apps.Apps;
 import org.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.maxkey.persistence.service.AppsService;
 import org.maxkey.persistence.service.UserInfoService;
-import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.util.Instance;
 import org.maxkey.util.JsonUtils;
+import org.maxkey.util.RequestTokenUtils;
 import org.maxkey.util.StringGenerator;
 import org.maxkey.web.HttpResponseAdapter;
 import org.slf4j.Logger;
@@ -50,8 +49,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -78,17 +75,11 @@ public class UserInfoEndpoint {
     @Autowired
     protected HttpResponseAdapter httpResponseAdapter;
 	
-    @Operation(summary = "OAuth 2.0 用户信息接口", description = "传递参数access_token",method="GET")
+    @Operation(summary = "OAuth 2.0 用户信息接口", description = "请求参数access_token , header Authorization , token ",method="GET")
 	@RequestMapping(value=OAuth2Constants.ENDPOINT.ENDPOINT_USERINFO, method={RequestMethod.POST, RequestMethod.GET}) 
-	public void apiV20UserInfo(
-			@RequestParam(value = "access_token", required = false) String access_token,
-            HttpServletRequest request, 
-            HttpServletResponse response) {	        
-	        if(StringUtils.isBlank(access_token)) {
-	        	//for header authorization bearer
-	        	access_token = AuthorizationHeaderUtils.resolveBearer(request);
-	        }
-	        
+	public void apiV20UserInfo(HttpServletRequest request, HttpServletResponse response) {	        
+    		String access_token =  RequestTokenUtils.resolveAccessToken(request);
+    		_logger.debug("access_token {}" , access_token);
 			if (!StringGenerator.uuidMatches(access_token)) {
 				httpResponseAdapter.write(response,JsonUtils.gsonToString(accessTokenFormatError(access_token)),"json"); 
 			}

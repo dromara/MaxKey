@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.maxkey.crypto.password.PasswordReciprocal;
-import org.maxkey.util.AuthorizationHeaderUtils;
+import org.maxkey.util.RequestTokenUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,16 +57,19 @@ public class Oauth20ApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		 _logger.trace("Oauth20ApiPermissionAdapter preHandle");
-		 String accessToken = AuthorizationHeaderUtils.resolveBearer(request);
-		 
-		 OAuth2Authentication authentication = oauth20TokenServices.loadAuthentication(accessToken);
-		 
-		//判断应用的accessToken信息
-		if(authentication != null ){
-		    _logger.trace("authentication "+ authentication);
-		    return true;
-		}
+		 _logger.trace("OAuth20 API Permission Adapter pre handle");
+		 String accessToken =  RequestTokenUtils.resolveAccessToken(request);
+		 _logger.trace("access_token {} " , accessToken);
+		 try {
+			 OAuth2Authentication authentication = oauth20TokenServices.loadAuthentication(accessToken);
+			//判断应用的accessToken信息
+			if(authentication != null ){
+			    _logger.trace("authentication "+ authentication);
+			    return true;
+			}
+		 }catch(Exception e) {
+			 _logger.error("load Authentication Exception ! ",e);
+		 }
 		
 		_logger.trace("No Authentication ... forward to /login");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/login");

@@ -28,8 +28,8 @@ import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.maxkey.util.AuthorizationHeaderCredential;
-import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.util.JsonUtils;
+import org.maxkey.util.RequestTokenUtils;
 import org.maxkey.web.HttpResponseAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,8 +40,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -63,35 +61,26 @@ public class IntrospectEndpoint {
     @Autowired
     protected HttpResponseAdapter httpResponseAdapter;
 	
-    @Operation(summary = "OAuth 2.0 令牌验证接口", description = "传递参数token or access_token",method="POST,GET")
+    @Operation(summary = "OAuth 2.0 令牌验证接口", description = "请求参数access_token , header Authorization , token ",method="POST,GET")
 	@RequestMapping(value=OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/introspect", method = {RequestMethod.POST, RequestMethod.GET}) 
-	public void introspect(
-			@RequestParam(value = "token", required = false) String token,
-			@RequestParam(value = "access_token", required = false) String access_token,
-            HttpServletRequest request, HttpServletResponse response) {	  
-    	String  authorization = request.getHeader(AuthorizationHeaderUtils.HEADER_Authorization);
-		AuthorizationHeaderCredential headerCredential = AuthorizationHeaderUtils.resolve(authorization);
-		_logger.debug("Credential {}" , headerCredential);
-		if(StringUtils.isNotBlank(token)) {
-			access_token = token;
-		}
-        if(StringUtils.isBlank(access_token)) {
-        	_logger.error("access_token is null .");
-        }
+	public void introspect(HttpServletRequest request, HttpServletResponse response) {	  
+    	String access_token =  RequestTokenUtils.resolveAccessToken(request);
         _logger.debug("access_token {}" , access_token);
 	    
 		OAuth2Authentication oAuth2Authentication =null;
 		Introspection introspection = new Introspection(access_token);
 		try{
 			 oAuth2Authentication = oauth20tokenServices.loadAuthentication(access_token);
-			 if(oAuth2Authentication != null && clientAuthenticate(headerCredential)) {   
-				 String client_id = oAuth2Authentication.getOAuth2Request().getClientId();
-				 if(headerCredential.getUsername().equals(client_id)) {
-					 String sub = client_id;
-					//if userAuthentication not null , is password or code , else client_credentials
-					 if(oAuth2Authentication.getUserAuthentication() != null) {
-						 sub = ((SignPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal()).getUsername();
-					 }
+			 if(oAuth2Authentication != null) {   
+				 String sub = "";
+				//userAuthentication not null , is password or code , 
+				 if(oAuth2Authentication.getUserAuthentication() != null) {
+					 sub = ((SignPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal()).getUsername();
+				 }else {
+					 //client_credentials
+					 sub = oAuth2Authentication.getOAuth2Request().getClientId();
+				 }
+				 if(StringUtils.isNotBlank(sub)) {
 					 introspection.setSub(sub,true);
 				 }
 			 }
@@ -105,7 +94,7 @@ public class IntrospectEndpoint {
     public boolean clientAuthenticate(AuthorizationHeaderCredential headerCredential) {
     	if(headerCredential != null){
 			UsernamePasswordAuthenticationToken authenticationToken = null;
-			if(headerCredential.getCredentialType().equals(AuthorizationHeaderCredential.Credential.BASIC)) {
+			if(headerCredential.isBasic()) {
 			    if(StringUtils.isNotBlank(headerCredential.getUsername())&&
 			    		StringUtils.isNotBlank(headerCredential.getCredential())
 			    		) {
