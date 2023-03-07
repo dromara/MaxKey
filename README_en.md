@@ -109,7 +109,7 @@ App Management UI
 
 # Download
 
-Download the current version from Baidu Pan,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> history version</a>
+Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/about/download.html" target="_blank"> history version</a>
 
 | Version    | Date   |  Pan URL (Code) |  Docker  |
 | --------   | :----- | :----           | :----    |

@@ -110,7 +110,7 @@
 
 # 下载
 
-当前版本百度网盘下载,<a href="https://maxkey.top/zh/about/download.html" target="_blank"> 历史版本</a>
+当前版本百度网盘下载,<a href="http://www.//maxkey.top/zh/about/download.html" target="_blank"> 历史版本</a>
 
 | 版本       | 日期    |  网盘(提取码)      |  Docker      |
 | --------   | :-----  | :----              |  :----       |
