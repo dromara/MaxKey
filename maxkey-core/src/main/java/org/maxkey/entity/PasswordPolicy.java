@@ -1,19 +1,19 @@
 /*
  * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 
 package org.maxkey.entity;
 
@@ -27,6 +27,10 @@ import javax.validation.constraints.NotNull;
 import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.maxkey.constants.ConstsServiceMessage;
 import org.maxkey.exception.PasswordPolicyException;
+import org.maxkey.web.WebContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Crystal.Sea
@@ -107,23 +111,87 @@ public class PasswordPolicy extends JpaBaseEntity implements java.io.Serializabl
      */
     @Column
     private int history;
-    
+
     @Column
     private int dictionary;
-    
+
     @Column
     private int alphabetical;
-    
+
     @Column
     private int numerical;
-    
+
     @Column
     private int qwerty;
-    
+
     @Column
     private int occurances;
-    
+
     private int randomPasswordLength;
+
+    List<String> policMessageList;
+
+    public void buildMessage(){
+        if(policMessageList==null){
+            policMessageList = new ArrayList<>();
+        }
+        String msg;
+        if (minLength != 0) {
+            // msg = "新密码长度为"+minLength+"-"+maxLength+"位";
+            msg =   WebContext.getI18nValue("PasswordPolicy.TOO_SHORT",
+                    new Object[]{minLength});
+            policMessageList.add(msg);
+        }
+        if (maxLength != 0) {
+            // msg = "新密码长度为"+minLength+"-"+maxLength+"位";
+            msg =   WebContext.getI18nValue("PasswordPolicy.TOO_LONG",
+                    new Object[]{maxLength});
+            policMessageList.add(msg);
+        }
+
+        if (lowerCase > 0) {
+            //msg = "新密码至少需要包含"+lowerCase+"位【a-z】小写字母";
+            msg =   WebContext.getI18nValue("PasswordPolicy.INSUFFICIENT_LOWERCASE",
+                    new Object[]{lowerCase});
+            policMessageList.add(msg);
+        }
+
+        if (upperCase > 0) {
+            //msg = "新密码至少需要包含"+upperCase+"位【A-Z】大写字母";
+            msg =   WebContext.getI18nValue("PasswordPolicy.INSUFFICIENT_UPPERCASE",
+                    new Object[]{upperCase});
+            policMessageList.add(msg);
+        }
+
+        if (digits > 0) {
+            //msg = "新密码至少需要包含"+digits+"位【0-9】阿拉伯数字";
+            msg =   WebContext.getI18nValue("PasswordPolicy.INSUFFICIENT_DIGIT",
+                    new Object[]{digits});
+            policMessageList.add(msg);
+        }
+
+        if (specialChar > 0) {
+            //msg = "新密码至少需要包含"+specialChar+"位特殊字符";
+            msg =   WebContext.getI18nValue("PasswordPolicy.INSUFFICIENT_SPECIAL",
+                    new Object[]{specialChar});
+            policMessageList.add(msg);
+        }
+
+        if (expiration > 0) {
+            //msg = "新密码有效期为"+expiration+"天";
+            msg =   WebContext.getI18nValue("PasswordPolicy.INSUFFICIENT_EXPIRES_DAY",
+                    new Object[]{expiration});
+            policMessageList.add(msg);
+        }
+    }
+
+    public List<String> getPolicMessageList() {
+        return policMessageList;
+    }
+
+    public void setPolicMessageList(List<String> policMessageList) {
+        this.policMessageList = policMessageList;
+    }
 
     /**
      * @return the minLength
@@ -331,7 +399,7 @@ public class PasswordPolicy extends JpaBaseEntity implements java.io.Serializabl
     public void setOccurances(int occurances) {
         this.occurances = occurances;
     }
-    
+
     public int getRandomPasswordLength() {
         return randomPasswordLength;
     }
@@ -428,5 +496,5 @@ public class PasswordPolicy extends JpaBaseEntity implements java.io.Serializabl
         return builder.toString();
     }
 
-  
+
 }
