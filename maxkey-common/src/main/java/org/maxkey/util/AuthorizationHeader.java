@@ -16,7 +16,7 @@
 
 package org.maxkey.util;
 
-public class AuthorizationHeaderCredential {
+public class AuthorizationHeader {
 
 	public static class Credential {
 
@@ -30,13 +30,13 @@ public class AuthorizationHeaderCredential {
 	String credential;
 	String authorization;
 
-	public AuthorizationHeaderCredential(String bearer) {
+	public AuthorizationHeader(String bearer) {
 		super();
 		this.credential = bearer;
 		this.credentialType = Credential.BEARER;
 	}
 
-	public AuthorizationHeaderCredential(String username, String credential) {
+	public AuthorizationHeader(String username, String credential) {
 		super();
 		this.username = username;
 		this.credential = credential;

@@ -39,25 +39,25 @@ public class AuthorizationHeaderUtils {
     public static String createBasic(String username, String password) {
         String authUserPass = username + ":" + password;
         String encodedAuthUserPass = Base64Utils.encode(authUserPass);
-        return AuthorizationHeaderCredential.Credential.BASIC + encodedAuthUserPass;
+        return AuthorizationHeader.Credential.BASIC + encodedAuthUserPass;
     }
     
     public static String createBearer(String bearer) {
-        return AuthorizationHeaderCredential.Credential.BEARER + bearer;
+        return AuthorizationHeader.Credential.BEARER + bearer;
     }
     
-    public  static AuthorizationHeaderCredential resolve(HttpServletRequest request) {
+    public  static AuthorizationHeader resolve(HttpServletRequest request) {
     	String authorization = resolveBearer(request);
     	return resolve(authorization);
     }
 
-    public static AuthorizationHeaderCredential resolve(String authorization) {
+    public static AuthorizationHeader resolve(String authorization) {
         if (StringUtils.isNotBlank(authorization) && isBasic(authorization)) {
             String decodeUserPass = Base64Utils.decode(authorization.split(" ")[1]);
             String []userPass =decodeUserPass.split(":");
-            return new AuthorizationHeaderCredential(userPass[0],userPass[1]);
+            return new AuthorizationHeader(userPass[0],userPass[1]);
         } else {
-            return new AuthorizationHeaderCredential(resolveBearer(authorization));
+            return new AuthorizationHeader(resolveBearer(authorization));
         }
     }
 
@@ -72,7 +72,7 @@ public class AuthorizationHeaderUtils {
     }
     
     public static boolean isBasic(String basic) {
-        if (basic.startsWith(AuthorizationHeaderCredential.Credential.BASIC)) {
+        if (basic.startsWith(AuthorizationHeader.Credential.BASIC)) {
             return true;
         } else {
             return false;
@@ -88,7 +88,7 @@ public class AuthorizationHeaderUtils {
     }
     
     static boolean isBearer(String bearer) {
-        if (bearer.toLowerCase().startsWith(AuthorizationHeaderCredential.Credential.BEARER.toLowerCase())) {
+        if (bearer.toLowerCase().startsWith(AuthorizationHeader.Credential.BEARER.toLowerCase())) {
             return true;
         } else {
             return false;

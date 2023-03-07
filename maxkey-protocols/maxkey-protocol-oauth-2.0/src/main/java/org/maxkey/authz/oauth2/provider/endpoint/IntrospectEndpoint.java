@@ -27,7 +27,7 @@ import org.maxkey.authz.oauth2.common.exceptions.OAuth2Exception;
 import org.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
-import org.maxkey.util.AuthorizationHeaderCredential;
+import org.maxkey.util.AuthorizationHeader;
 import org.maxkey.util.JsonUtils;
 import org.maxkey.util.RequestTokenUtils;
 import org.maxkey.web.HttpResponseAdapter;
@@ -91,7 +91,7 @@ public class IntrospectEndpoint {
 		httpResponseAdapter.write(response,JsonUtils.gsonToString(introspection),"json"); 
 	}
 	
-    public boolean clientAuthenticate(AuthorizationHeaderCredential headerCredential) {
+    public boolean clientAuthenticate(AuthorizationHeader headerCredential) {
     	if(headerCredential != null){
 			UsernamePasswordAuthenticationToken authenticationToken = null;
 			if(headerCredential.isBasic()) {

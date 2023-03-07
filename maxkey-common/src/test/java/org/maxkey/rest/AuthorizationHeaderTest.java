@@ -18,7 +18,7 @@
 package org.maxkey.rest;
 
 import org.junit.Test;
-import org.maxkey.util.AuthorizationHeaderCredential;
+import org.maxkey.util.AuthorizationHeader;
 import org.maxkey.util.AuthorizationHeaderUtils;
 
 public class AuthorizationHeaderTest {
@@ -32,7 +32,7 @@ public class AuthorizationHeaderTest {
 		String ahc_basic ="Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==";
 		System.out.println(AuthorizationHeaderUtils.resolve(ahc_basic));
 		
-		AuthorizationHeaderCredential ahc =new AuthorizationHeaderCredential("Aladdin");
+		AuthorizationHeader ahc =new AuthorizationHeader("Aladdin");
 		System.out.println(ahc.transform());
 		
 		System.out.println(AuthorizationHeaderUtils.resolve(ahc.transform()));

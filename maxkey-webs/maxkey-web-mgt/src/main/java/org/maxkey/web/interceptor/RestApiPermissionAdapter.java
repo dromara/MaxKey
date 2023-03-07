@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.maxkey.authn.web.AuthorizationUtils;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
-import org.maxkey.util.AuthorizationHeaderCredential;
+import org.maxkey.util.AuthorizationHeader;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.util.StringUtils;
 import org.slf4j.Logger;
@@ -62,7 +62,7 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		_logger.trace("Rest API Permission Adapter pre handle");
-		 AuthorizationHeaderCredential headerCredential = AuthorizationHeaderUtils.resolve(request);
+		 AuthorizationHeader headerCredential = AuthorizationHeaderUtils.resolve(request);
 		 
 		//判断应用的AppId和Secret
 		if(headerCredential != null){

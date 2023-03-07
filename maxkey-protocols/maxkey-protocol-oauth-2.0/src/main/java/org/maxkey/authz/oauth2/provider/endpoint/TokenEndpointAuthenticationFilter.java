@@ -39,7 +39,7 @@ import org.maxkey.authz.oauth2.provider.AuthorizationRequest;
 import org.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.maxkey.authz.oauth2.provider.OAuth2Request;
 import org.maxkey.authz.oauth2.provider.OAuth2RequestFactory;
-import org.maxkey.util.AuthorizationHeaderCredential;
+import org.maxkey.util.AuthorizationHeader;
 import org.maxkey.util.AuthorizationHeaderUtils;
 import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -238,7 +238,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 			if(clientId == null) {
 				//for header authorization basic
 				String authorization_bearer =request.getHeader("authorization");
-				AuthorizationHeaderCredential ahc=AuthorizationHeaderUtils.resolve(authorization_bearer);
+				AuthorizationHeader ahc=AuthorizationHeaderUtils.resolve(authorization_bearer);
 				clientId =ahc.getUsername();
 				clientSecret=ahc.getCredential();
 			}
