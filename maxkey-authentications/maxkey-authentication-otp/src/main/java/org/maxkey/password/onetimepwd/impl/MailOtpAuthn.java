@@ -72,7 +72,11 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
                             messageTemplate,userInfo.getUsername(),token,(interval / 60)));
             
             email.addTo(userInfo.getEmail());
-            email.send();
+            try {
+                email.send();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             _logger.debug(
                     "token " + token + " send to user " + userInfo.getUsername() 
                     + ", email " + userInfo.getEmail());
