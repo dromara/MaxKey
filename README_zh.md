@@ -118,7 +118,7 @@
 
 # License
  
-<a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="https://maxkey.top/zh/about/licenses.html" target="_blank">MaxKey版权声明</a>
+<a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="http://www.maxkey.top/zh/about/licenses.html" target="_blank">MaxKey版权声明</a>
 
 # 接入登记
 
@@ -154,6 +154,7 @@
 | 西藏阜康医院                                |
 | 上海逸广信息科技有限公司                    |
 | 联鹏应用软件（上海）有限公司                |
+| 上海万序健康科技有限公司                    |
 | 跳羚科技(厦门)有限公司                      |
 | 飞天诚信科技股份有限公司                    |
 | 浪潮工业互联网股份有限公司                  |
