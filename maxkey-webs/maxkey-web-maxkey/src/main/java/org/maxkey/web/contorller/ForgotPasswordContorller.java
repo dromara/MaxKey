@@ -24,11 +24,14 @@ import org.maxkey.authn.jwt.AuthTokenService;
 import org.maxkey.configuration.EmailConfig;
 import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.Message;
+import org.maxkey.entity.PasswordPolicy;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.maxkey.password.onetimepwd.MailOtpAuthnService;
 import org.maxkey.password.sms.SmsOtpAuthnService;
+import org.maxkey.persistence.service.PasswordPolicyService;
 import org.maxkey.persistence.service.UserInfoService;
+import org.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,11 +81,42 @@ public class ForgotPasswordContorller {
     
     @Autowired
     SmsOtpAuthnService smsOtpAuthnService;
-    
- 
-    
-    
-    @ResponseBody
+
+
+	@Autowired
+	private PasswordPolicyService passwordPolicyService;
+
+	@RequestMapping(value={"/passwordpolicy"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> passwordpolicy(){
+		PasswordPolicy passwordPolicy = passwordPolicyService.get(WebContext.getInst().getId());
+		//构建密码强度说明
+		passwordPolicy.buildMessage();
+		return new Message<PasswordPolicy>(passwordPolicy).buildResponse();
+	}
+
+
+	@ResponseBody
+	@RequestMapping(value = { "/validateCaptcha" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<?> validateCaptcha(
+			@RequestParam String userId,
+			@RequestParam String state,
+			@RequestParam String captcha,
+			@RequestParam String otpCaptcha) {
+		_logger.debug("forgotpassword  /forgotpassword/validateCaptcha.");
+		_logger.debug(" userId {}: " ,userId);
+		UserInfo userInfo = userInfoService.get(userId);
+		if(userInfo != null) {
+			AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(userInfo.getInstId());
+			if (otpCaptcha == null || !smsOtpAuthn.validate(userInfo, otpCaptcha)) {
+				return new Message<ChangePassword>(Message.FAIL).buildResponse();
+			}
+			return new Message<ChangePassword>(Message.SUCCESS).buildResponse();
+		}
+		return new Message<ChangePassword>(Message.FAIL).buildResponse();
+	}
+
+
+	@ResponseBody
 	@RequestMapping(value = { "/produceOtp" }, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> produceOtp(
     			@RequestParam String mobile,
