@@ -267,7 +267,7 @@ public class UserInfoService extends JpaBaseService<UserInfo> {
 		    WebContext.setAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT, "");
 		    UserInfo userInfo = this.findByUsername(changePassword.getUsername());
 	        if(changePassword.getPassword().equals(changePassword.getConfirmPassword())){
-	            if(StringUtils.isNotBlank(changePassword.getOldPassword()) || 
+	            if(StringUtils.isNotBlank(changePassword.getOldPassword()) &&
 	                    passwordEncoder.matches(changePassword.getOldPassword(), userInfo.getPassword())){
 	                if(changePassword(changePassword,true) ){
 	                    return true;
