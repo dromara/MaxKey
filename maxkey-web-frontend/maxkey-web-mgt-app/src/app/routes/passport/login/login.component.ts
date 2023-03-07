@@ -161,7 +161,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.loading = true;
         if (res.code !== 0) {
-          this.error = res.msg;
+          this.error = res.message;
           //this.msg.success(`登录失败，请重新登录！`);
           this.getImageCaptcha();
         } else {
