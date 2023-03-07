@@ -31,6 +31,8 @@ import { AuthnService } from '../../../service/authn.service';
 import { AccoutsComponent } from '../../config/accouts/accouts.component';
 
 import { Console } from 'console';
+import {ALAIN_I18N_TOKEN} from "@delon/theme";
+import {I18NService} from "@core";
 
 @Component({
   selector: 'app-home',
@@ -51,7 +53,9 @@ export class HomeComponent implements OnInit {
   loading: boolean = false;
   appList: any[] = [];
   baseUrl: String = '';
-
+  staticAppList: any[] = [];
+  appCategoryList: any[] = [];
+  appsCategory: String = '';
   constructor(
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,
@@ -59,6 +63,7 @@ export class HomeComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private obSrv: OnboardingService,
     private platform: Platform,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     @Inject(DOCUMENT) private doc: NzSafeAny
   ) {
     // TODO: Wait for the page to load
@@ -106,7 +111,136 @@ export class HomeComponent implements OnInit {
     this.appListService.appList().subscribe(res => {
       //console.log(res.data);
       this.appList = res.data;
+      this.staticAppList = this.appList;
       this.cdr.detectChanges();
     });
+    this.appCategoryList = [{
+        id:'none',
+        name:this.i18n.fanyi('mxk.apps.category.none')
+      },{
+        id:'1011',
+        name:this.i18n.fanyi('mxk.apps.category.1011')
+      },
+      {
+        id:'1012',
+        name:this.i18n.fanyi('mxk.apps.category.1012')
+      },
+      {
+        id:'1013',
+        name:this.i18n.fanyi('mxk.apps.category.1013')
+      },
+      {
+        id:'1014',
+        name:this.i18n.fanyi('mxk.apps.category.1014')
+      },
+      {
+        id:'1015',
+        name:this.i18n.fanyi('mxk.apps.category.1015')
+      },
+      {
+        id:'1016',
+        name:this.i18n.fanyi('mxk.apps.category.1016')
+      },
+      {
+        id:'1017',
+        name:this.i18n.fanyi('mxk.apps.category.1017')
+      },
+      {
+        id:'1111',
+        name:this.i18n.fanyi('mxk.apps.category.1111')
+      },
+      {
+        id:'1112',
+        name:this.i18n.fanyi('mxk.apps.category.1112')
+      },
+      {
+        id:'1113',
+        name:this.i18n.fanyi('mxk.apps.category.1113')
+      },
+      {
+        id:'1114',
+        name:this.i18n.fanyi('mxk.apps.category.1114')
+      },
+      {
+        id:'1211',
+        name:this.i18n.fanyi('mxk.apps.category.1211')
+      },
+      {
+        id:'1212',
+        name:this.i18n.fanyi('mxk.apps.category.1212')
+      },
+      {
+        id:'1213',
+        name:this.i18n.fanyi('mxk.apps.category.1213')
+      },
+      {
+        id:'1214',
+        name:this.i18n.fanyi('mxk.apps.category.1214')
+      },
+      {
+        id:'1215',
+        name:this.i18n.fanyi('mxk.apps.category.1215')
+      },
+      {
+        id:'1215',
+        name:this.i18n.fanyi('mxk.apps.category.1215')
+      },
+      {
+        id:'1311',
+        name:this.i18n.fanyi('mxk.apps.category.1311')
+      },
+      {
+        id:'1411',
+        name:this.i18n.fanyi('mxk.apps.category.1411')
+      },
+      {
+        id:'1511',
+        name:this.i18n.fanyi('mxk.apps.category.1511')
+      },
+      {
+        id:'1512',
+        name:this.i18n.fanyi('mxk.apps.category.1512')
+      },
+      {
+        id:'1611',
+        name:this.i18n.fanyi('mxk.apps.category.1611')
+      },
+      {
+        id:'1711',
+        name:this.i18n.fanyi('mxk.apps.category.1711')
+      },
+      {
+        id:'1712',
+        name:this.i18n.fanyi('mxk.apps.category.1712')
+      },
+      {
+        id:'1811',
+        name:this.i18n.fanyi('mxk.apps.category.1811')
+      },
+      {
+        id:'1812',
+        name:this.i18n.fanyi('mxk.apps.category.1812')
+      },{
+        id:'1911',
+        name:this.i18n.fanyi('mxk.apps.category.1911')
+      },
+      {
+        id:'1912',
+        name:this.i18n.fanyi('mxk.apps.category.1912')
+      }
+    ]
+  }
+  changeCategory (): void {
+    this.appList = [];
+    if (this.appsCategory === null || this.appsCategory === '') {
+      this.appList = this.staticAppList;
+    } else {
+      for(let i = 0;i<this.staticAppList.length;i++){
+        if(this.staticAppList[i].category === this.appsCategory) {
+          this.appList.push(this.staticAppList[i]);
+        }
+      }
+    }
+    this.cdr.detectChanges();
   }
 }

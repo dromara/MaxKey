@@ -867,5 +867,11 @@
 	"validation.title.required": "请输入标题",
 	"validation.date.required": "请选择起止日期",
 	"validation.goal.required": "请输入目标描述",
-	"validation.standard.required": "请输入衡量标准"
+	"validation.standard.required": "请输入衡量标准",
+  "validation.password.conformance-strength": "密码强度",
+  "validation.password.non-conformance-strength": "密码不符合强度！",
+  "validation.oldPassword.input": "请输入当前密码！",
+  "validation.password.input": "请输入新密码！",
+  "validation.confirmPassword.input": "请输入确认密码！",
+  "validation.forgot.captcha.error": "图形验证码错误"
 }

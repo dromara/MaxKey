@@ -33,4 +33,12 @@ export class ForgotPasswordService {
   setPassWord(param: any) {
     return this.http.get('/forgotpassword/setpassword?_allow_anonymous=true', param);
   }
+
+  validateCaptcha(param: any) {
+    return this.http.get(`/forgotpassword/validateCaptcha?_allow_anonymous=true`, param);
+  }
+
+  passwordpolicy() {
+    return this.http.get('/forgotpassword/passwordpolicy?_allow_anonymous=true',null);
+  }
 }

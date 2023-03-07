@@ -663,7 +663,7 @@
 				"success":"Operate Success!",
 				"error":"Operate Error!"
 			}
-			
+
 		},
 		"text": {
 			"action": "Action",
@@ -870,5 +870,11 @@
 	"validation.title.required": "Please enter a title",
 	"validation.date.required": "Please select the start and end date",
 	"validation.goal.required": "Please enter a description of the goal",
-	"validation.standard.required": "Please enter a metric"
+	"validation.standard.required": "Please enter a metric",
+  "validation.password.conformance-strength": "Password Strength",
+  "validation.password.non-conformance-strength": "The password does not meet the strength！",
+  "validation.oldPassword.input": "Please enter old password!",
+  "validation.password.input": "Please enter new password!",
+  "validation.confirmPassword.input": "Please enter confirm password!",
+  "validation.forgot.captcha.error": "Picture Captcha Fail"
 }

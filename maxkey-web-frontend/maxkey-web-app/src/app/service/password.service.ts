@@ -34,4 +34,7 @@ export class PasswordService extends BaseService<ChangePassword> {
   public changePassword(body: NzSafeAny): Observable<Message<ChangePassword>> {
     return this.http.put<Message<ChangePassword>>('/config/changePassword', body);
   }
+  public passwordpolicy(): Observable<Message<ChangePassword>> {
+    return this.http.put<Message<ChangePassword>>('/config/passwordpolicy',null);
+  }
 }
