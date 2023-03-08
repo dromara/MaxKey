@@ -1,10 +1,10 @@
-# cas-client-boot-demo使用
+# cas-springboot-demo使用
 
 源代码地址  https://gitee.com/dromara/MaxKey/tree/main/integrations/cas-springboot-demo
 
 感谢 xiazhenyou 提供Demo。
 
-# cas-client-boot-demo
+# cas-springboot-demo
 基于spring boot配置cas客户端
 demo分别写了三个请求:拦截请求 test1/index,test1/index1 以及不拦截请求test1/index2,
 ## 第一步，引入cas 客户端所需包
