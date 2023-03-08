@@ -38,6 +38,8 @@ setEnvVars.bat
 */META-INF/MANIFEST.MF
 **/.gitignore
 
+**/target/*
+
 /.gradle/
 /.gradle/*
 .vscode/settings.json
