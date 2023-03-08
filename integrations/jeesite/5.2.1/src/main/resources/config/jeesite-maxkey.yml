@@ -1,0 +1,59 @@
+# 温馨提示：不建议直接修改此文件，为了平台升级方便，建议将需要修改的参数值，复制到application.yml里进行覆盖该参数值。
+
+#maxkey:
+#  enabled: true
+
+
+
+oauth2:
+  # 码云
+  maxkey:
+    clientId: 821060415982141440
+    clientSecret: MrjGMDkwMjIwMjMxNTE0MzkxODAv5o
+    serverUrl: http://sso.maxkey.top
+    redirectUri: http://localhost:8981/js/oauth2/callback/maxkey
+    className: com.jeesite.modules.maxkey.oauth.realm.request.AuthMaxKeyJeeGitRequest
+  gitee:
+    clientId: xxxxxx
+    clientSecret: xxxxxx
+    redirectUri: http://127.0.0.1:8980/js/oauth2/callback/gitee
+  # 腾讯QQ
+  qq:
+    clientId: xxxxxx
+    clientSecret: xxxxxx
+    redirectUri: http://127.0.0.1:8980/js/oauth2/callback/qq
+    unionid: xxxxxx
+    
+  # 微信开放平台
+  weixin:
+    clientId: xxxxxx
+    clientSecret: xxxxxx
+    redirectUri: http://127.0.0.1:8980/js/oauth2/callback/weixin
+    
+  # 微信公众平台
+  weixin_mp:
+    clientId: xxxxxx
+    clientSecret: xxxxxx
+    redirectUri: http://127.0.0.1:8980/js/oauth2/callback/weixin_mp
+   
+  # 企业微信 
+  weixin_qy:
+    clientId: xxxxxx
+    clientSecret: xxxxxx
+    redirectUri: http://127.0.0.1:8980/js/oauth2/callback/weixin_qy
+    agentId: xxxxxx
+  # 钉钉
+  ding_talk:
+    clientId: xxxxxx
+    clientSecret: xxxxxx
+    redirectUri: http://127.0.0.1:8980/js/oauth2/callback/ding_talk
+  # Github
+  github:
+    clientId: xxxxxx
+    clientSecret: xxxxxx
+    redirectUri: http://127.0.0.1:8980/js/oauth2/callback/github
+  # 百度
+  baidu:
+    clientId: xxxxxx
+    clientSecret: xxxxxx
+    redirectUri: http://127.0.0.1:8980/js/oauth2/callback/baidu  
