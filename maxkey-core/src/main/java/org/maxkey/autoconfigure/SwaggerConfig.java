@@ -1,8 +1,12 @@
 package org.maxkey.autoconfigure;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.customizers.GlobalOpenApiCustomizer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +32,24 @@ public class SwaggerConfig {
     @Value("${maxkey.swagger.enable}")
     boolean enable;
 
+    @Bean
+    public GlobalOpenApiCustomizer orderGlobalOpenApiCustomizer() {
+        return openApi -> {
+            if (openApi.getTags()!=null){
+                openApi.getTags().forEach(tag -> {
+                    Map<String,Object> map=new HashMap<>();
+                    map.put("x-order",1);
+                    tag.setExtensions(map);
+                });
+            }
+            if(openApi.getPaths()!=null){
+                openApi.addExtension("x-test123","333");
+                openApi.getPaths().addExtension("x-abb",1);
+            }
+
+        };
+    }
+    
     @Bean
     public GroupedOpenApi userApi(){
         String[] paths = { 
@@ -57,7 +79,7 @@ public class SwaggerConfig {
 						.title(title)
 						.description(description)
 						.version(version)
-						.termsOfService("https://www.maxkey.top/")
+						.termsOfService("http://www.maxkey.top/")
 						.license(
 							new License()
 								.name("Apache License, Version 2.0")
@@ -67,7 +89,7 @@ public class SwaggerConfig {
 				externalDocs(
 						new ExternalDocumentation()
 						.description("MaxKey.top contact support@maxsso.net")
-						.url("https://www.maxkey.top/")
+						.url("http://www.maxkey.top/")
 				);
 	}
 }

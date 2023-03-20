@@ -79,6 +79,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         _logger.debug("add statics");
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
+        
         _logger.debug("add templates");
         registry.addResourceHandler("/templates/**")
                 .addResourceLocations("classpath:/templates/");
@@ -86,12 +87,13 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         _logger.debug("add swagger");
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
         
         _logger.debug("add knife4j");
-        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("doc.html")
+        		.addResourceLocations("classpath:/META-INF/resources/");
+        
+        registry.addResourceHandler("/webjars/**")
+        		.addResourceLocations("classpath:/META-INF/resources/webjars/");
         
         _logger.debug("add Resource Handler finished .");
     }
