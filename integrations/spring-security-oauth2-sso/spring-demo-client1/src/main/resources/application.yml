@@ -1,0 +1,22 @@
+server:
+  port: 8080
+security:
+  oauth2:
+   client:
+     clientId: 830447866781630464
+     clientSecret: QnGYMDcwMzIwMjMxMTQ0MjYwNDcFli
+     accessTokenUri: http://sso.maxkey.top/sign/authz/oauth/v20/token
+     userAuthorizationUri: http://sso.maxkey.top/sign/authz/oauth/v20/authorize
+     clientAuthenticationScheme: form
+   resource:
+     userInfoUri: http://sso.maxkey.top/sign/api/oauth/v20/me
+   sso:
+     login-path: /login
+logging:
+  level:
+    root: debug
+
+spring:
+  mvc:
+    favicon:
+      enabled: false
