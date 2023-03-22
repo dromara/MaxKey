@@ -218,7 +218,7 @@ subprojects {
          implementation group: 'org.apache.logging.log4j', name: 'log4j-jul', version: "${log4jVersion}"
          implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: "${log4jVersion}"
          implementation group: 'org.apache.logging.log4j', name: 'log4j-web', version: "${log4jVersion}"
-        //logs
+         //logs
          implementation group: 'org.slf4j', name: 'slf4j-api', version: "${slf4jVersion}"
          implementation group: 'org.jboss.logging', name: 'jboss-logging', version: "${jbossloggingVersion}"
          //spring
@@ -315,7 +315,7 @@ subprojects {
          // https://mvnrepository.com/artifact/org.eclipse.persistence/javax.persistence
          // for mybatis-jpa-extra
          implementation group: 'org.eclipse.persistence', name: 'javax.persistence', version: "${javaxpersistenceVersion}"
-         implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '3.0.0'
+         implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: "${jakartapersistenceapiVersion}"
          implementation group: 'jakarta.annotation', name: 'jakarta.annotation-api', version: "${jakartaannotationVersion}"
          implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: "${jakartavalidationapiVersion}"
          implementation group: 'javax.activation', name: 'activation', version: "${activationVersion}"
@@ -347,7 +347,7 @@ subprojects {
          implementation group: 'org.quartz-scheduler', name: 'quartz', version: "${quartzVersion}"
          //database
          implementation group: 'com.mysql', name: 'mysql-connector-j', version: "${mysqlconnectorjavaVersion}"
-         implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresqlVersion}"
+         //implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresqlVersion}"
          implementation group: 'com.alibaba', name: 'druid', version: "${druidVersion}"
          implementation group: 'com.alibaba', name: 'druid-spring-boot-starter', version: "${druidspringbootstarterVersion}"
          implementation group: 'redis.clients', name: 'jedis', version: "${jedisVersion}"
@@ -391,17 +391,14 @@ subprojects {
          implementation group: 'io.prometheus', name: 'simpleclient_common', version: "${prometheusVersion}"
          implementation group: 'com.belerweb', name: 'pinyin4j', version: "${pinyin4jVersion}"
          implementation group: 'org.jsoup', name: 'jsoup', version: "${jsoupVersion}"
-         
          implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
-          //阿里云
+         //阿里云
          implementation group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: "${aliyunjavasdkcoreVersion}"
          // https://mvnrepository.com/artifact/io.opentracing/opentracing-util
-         implementation 'io.opentracing:opentracing-util:0.33.0'
+         implementation "io.opentracing:opentracing-util:${opentracingVersion}"
          // https://mvnrepository.com/artifact/io.opentracing/opentracing-api
-         implementation 'io.opentracing:opentracing-api:0.33.0'
-         implementation 'io.opentracing:opentracing-noop:0.33.0'
-
-
+         implementation "io.opentracing:opentracing-api:${opentracingVersion}"
+         implementation "io.opentracing:opentracing-noop:${opentracingVersion}"
          //腾讯云
          implementation group: 'com.tencentcloudapi', name: 'tencentcloud-sdk-java', version: "${tencentcloudsdkjavaVersion}"
          //json
@@ -420,25 +417,22 @@ subprojects {
          implementation group: 'com.alibaba', name: 'fastjson', version: "${fastjsonVersion}"
          implementation group: 'org.mapstruct', name: 'mapstruct', version: "${mapstructVersion}"
          //docs
-         //implementation group: 'io.swagger', name: 'swagger-annotations', version: "${swaggerVersion}"
-         //implementation group: 'io.swagger', name: 'swagger-models', version: "${swaggerVersion}"
          implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: "${swaggerV3Version}"
          implementation group: 'io.swagger.core.v3', name: 'swagger-core', version: "${swaggerV3Version}"
          implementation group: 'io.swagger.core.v3', name: 'swagger-integration', version: "${swaggerV3Version}"
          implementation group: 'io.swagger.core.v3', name: 'swagger-models', version: "${swaggerV3Version}"
          //springdoc
-         implementation group: 'io.github.classgraph', name: 'classgraph', version: '4.8.137'
+         implementation group: 'io.github.classgraph', name: 'classgraph', version: "${classgraphVersion}"
          implementation group: 'org.springdoc', name: 'springdoc-openapi-common', version: "${springdocVersion}"
          implementation group: 'org.springdoc', name: 'springdoc-openapi-webmvc-core', version: "${springdocVersion}"
          implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: "${springdocVersion}"
-         implementation group: 'org.webjars', name: 'webjars-locator-core', version: '0.48'
-         implementation group: 'org.webjars', name: 'webjars-locator', version: '0.42'
-         implementation group: 'org.webjars', name: 'swagger-ui', version: '4.11.1'
+         implementation group: 'org.webjars', name: 'webjars-locator-core', version: "${webjarslocatorcoreVersion}"
+         implementation group: 'org.webjars', name: 'webjars-locator', version: "${webjarslocatorVersion}"
+         implementation group: 'org.webjars', name: 'swagger-ui', version: "${swaggeruiVersion}"
          //knife4j
          implementation group: 'com.github.xiaoymin', name: 'knife4j-core', version: "${knife4jVersion}"
          implementation group: 'com.github.xiaoymin', name: 'knife4j-openapi3-ui', version: "${knife4jVersion}"
          implementation group: 'com.github.xiaoymin', name: 'knife4j-openapi3-spring-boot-starter', version: "${knife4jVersion}"
-        
          //local jars
          implementation fileTree(dir: "${rootDir}/maxkey-lib/", include: '*.jar')
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright [2021] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2023] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -159,7 +159,7 @@ subprojects {
     //all dependencies
     dependencies {
         
-        //for Test and Compile
+                //for Test and Compile
          testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
          compileOnly group: 'junit', name: 'junit', version: "${junitVersion}"
          testImplementation group: 'org.mockito', name: 'mockito-all', version: "${mockitoallVersion}"
@@ -217,7 +217,7 @@ subprojects {
          implementation group: 'org.apache.logging.log4j', name: 'log4j-jul', version: "${log4jVersion}"
          implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: "${log4jVersion}"
          implementation group: 'org.apache.logging.log4j', name: 'log4j-web', version: "${log4jVersion}"
-        //logs
+         //logs
          implementation group: 'org.slf4j', name: 'slf4j-api', version: "${slf4jVersion}"
          implementation group: 'org.jboss.logging', name: 'jboss-logging', version: "${jbossloggingVersion}"
          //spring
@@ -243,7 +243,7 @@ subprojects {
          //implementation group: 'org.springframework', name: 'spring-websocket', version: "${springVersion}"
          // https://mvnrepository.com/artifact/org.springframework.retry/spring-retry
          implementation group: 'org.springframework.retry', name: 'spring-retry', version: "${springretryVersion}"
-         testImplementation  group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
+         testImplementation group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
          
          //spring-security
          implementation group: 'org.springframework.security', name: 'spring-security-core', version: "${springSecurityVersion}"
@@ -264,6 +264,8 @@ subprojects {
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version:  "${springBootVersion}"
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: "${springBootVersion}"
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: "${springBootVersion}"
+         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: "${springBootVersion}"
+         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive', version: "${springBootVersion}"
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: "${springBootVersion}"
          
          testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:  "${springBootVersion}"
@@ -273,7 +275,8 @@ subprojects {
          //spring-data
          implementation group: 'org.springframework.data', name: 'spring-data-commons', version: "${springDataVersion}"
          implementation group: 'org.springframework.data', name: 'spring-data-keyvalue', version: "${springDataVersion}"
- 
+         //implementation group: 'org.springframework.data', name: 'spring-data-redis', version: "${springDataVersion}"
+         
          //implementation group: 'org.springframework.plugin', name: 'spring-plugin-core', version: "${springplugincoreVersion}"
          //implementation group: 'org.springframework.plugin', name: 'spring-plugin-metadata', version: "${springpluginmetadataVersion}"
          //spring cloud
@@ -289,8 +292,8 @@ subprojects {
          implementation group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-discovery', version: "${springcloudalibabaVersion}"
          implementation group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-config', version: "${springcloudalibabaVersion}"
          
-         //Message Queue
-
+         //Message Queue Removed
+         
          //saml see maxkey-lib
          //implementation group: 'org.opensaml', name: 'opensaml', version: "${opensamlVersion}"
          //implementation group: 'org.opensaml', name: 'openws', version: "${openwsVersion}"
@@ -311,7 +314,7 @@ subprojects {
          // https://mvnrepository.com/artifact/org.eclipse.persistence/javax.persistence
          // for mybatis-jpa-extra
          implementation group: 'org.eclipse.persistence', name: 'javax.persistence', version: "${javaxpersistenceVersion}"
-         implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '3.0.0'
+         implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: "${jakartapersistenceapiVersion}"
          implementation group: 'jakarta.annotation', name: 'jakarta.annotation-api', version: "${jakartaannotationVersion}"
          implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: "${jakartavalidationapiVersion}"
          implementation group: 'javax.activation', name: 'activation', version: "${activationVersion}"
@@ -343,7 +346,7 @@ subprojects {
          implementation group: 'org.quartz-scheduler', name: 'quartz', version: "${quartzVersion}"
          //database
          implementation group: 'com.mysql', name: 'mysql-connector-j', version: "${mysqlconnectorjavaVersion}"
-         implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresqlVersion}"
+         //implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresqlVersion}"
          implementation group: 'com.alibaba', name: 'druid', version: "${druidVersion}"
          implementation group: 'com.alibaba', name: 'druid-spring-boot-starter', version: "${druidspringbootstarterVersion}"
          implementation group: 'redis.clients', name: 'jedis', version: "${jedisVersion}"
@@ -376,6 +379,7 @@ subprojects {
          implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: "${xstreamVersion}"
          implementation group: 'org.passay', name: 'passay', version: "${passayVersion}"
          implementation group: 'io.micrometer', name: 'micrometer-core', version: "${micrometercoreVersion}"
+         implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: "${micrometercoreVersion}"
          implementation group: 'org.latencyutils', name: 'LatencyUtils', version: "${LatencyUtilsVersion}"
          implementation group: 'org.codehaus.woodstox', name: 'stax2-api', version: "${stax2apiVersion}"
          implementation group: 'org.reflections', name: 'reflections', version: "${reflectionsVersion}"
@@ -386,10 +390,14 @@ subprojects {
          implementation group: 'io.prometheus', name: 'simpleclient_common', version: "${prometheusVersion}"
          implementation group: 'com.belerweb', name: 'pinyin4j', version: "${pinyin4jVersion}"
          implementation group: 'org.jsoup', name: 'jsoup', version: "${jsoupVersion}"
-         
          implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
-          //阿里云
+         //阿里云
          implementation group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: "${aliyunjavasdkcoreVersion}"
+         // https://mvnrepository.com/artifact/io.opentracing/opentracing-util
+         implementation "io.opentracing:opentracing-util:${opentracingVersion}"
+         // https://mvnrepository.com/artifact/io.opentracing/opentracing-api
+         implementation "io.opentracing:opentracing-api:${opentracingVersion}"
+         implementation "io.opentracing:opentracing-noop:${opentracingVersion}"
          //腾讯云
          implementation group: 'com.tencentcloudapi', name: 'tencentcloud-sdk-java', version: "${tencentcloudsdkjavaVersion}"
          //json
@@ -406,25 +414,24 @@ subprojects {
          implementation group: 'com.fasterxml', name: 'classmate', version: "${classmateVersion}"
          implementation group: 'com.fasterxml.woodstox', name: 'woodstox-core', version: "${woodstoxVersion}"
          implementation group: 'com.alibaba', name: 'fastjson', version: "${fastjsonVersion}"
-         //docs
          implementation group: 'org.mapstruct', name: 'mapstruct', version: "${mapstructVersion}"
-         //implementation group: 'io.swagger', name: 'swagger-annotations', version: "${swaggerVersion}"
-         //implementation group: 'io.swagger', name: 'swagger-models', version: "${swaggerVersion}"
+         //docs
          implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: "${swaggerV3Version}"
          implementation group: 'io.swagger.core.v3', name: 'swagger-core', version: "${swaggerV3Version}"
          implementation group: 'io.swagger.core.v3', name: 'swagger-integration', version: "${swaggerV3Version}"
          implementation group: 'io.swagger.core.v3', name: 'swagger-models', version: "${swaggerV3Version}"
          //springdoc
-         implementation group: 'io.github.classgraph', name: 'classgraph', version: '4.8.137'
+         implementation group: 'io.github.classgraph', name: 'classgraph', version: "${classgraphVersion}"
          implementation group: 'org.springdoc', name: 'springdoc-openapi-common', version: "${springdocVersion}"
          implementation group: 'org.springdoc', name: 'springdoc-openapi-webmvc-core', version: "${springdocVersion}"
          implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: "${springdocVersion}"
-         implementation group: 'org.webjars', name: 'webjars-locator-core', version: '0.48'
-         implementation group: 'org.webjars', name: 'webjars-locator', version: '0.42'
-         implementation group: 'org.webjars', name: 'swagger-ui', version: '4.1.3'
+         implementation group: 'org.webjars', name: 'webjars-locator-core', version: "${webjarslocatorcoreVersion}"
+         implementation group: 'org.webjars', name: 'webjars-locator', version: "${webjarslocatorVersion}"
+         implementation group: 'org.webjars', name: 'swagger-ui', version: "${swaggeruiVersion}"
          //knife4j
-         implementation group: 'com.github.xiaoymin', name: 'knife4j-springdoc-ui', version: "${knife4jVersion}"
-        
+         implementation group: 'com.github.xiaoymin', name: 'knife4j-core', version: "${knife4jVersion}"
+         implementation group: 'com.github.xiaoymin', name: 'knife4j-openapi3-ui', version: "${knife4jVersion}"
+         implementation group: 'com.github.xiaoymin', name: 'knife4j-openapi3-spring-boot-starter', version: "${knife4jVersion}"
          //local jars
          implementation fileTree(dir: "${rootDir}/maxkey-lib/", include: '*.jar')
     }
