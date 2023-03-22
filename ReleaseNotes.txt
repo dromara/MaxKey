@@ -1,4 +1,35 @@
-﻿MaxKey v 3.5.15 GA 2023/02/28
+﻿MaxKey v 3.5.16 GA 2023/03/23
+    *(MAXKEY-230401) 从请求中解析token令牌信息1) 参数 access_token 2) header 的Authorization 3) 参数 token 。
+    *(MAXKEY-230402) 企业微信文本注释
+    *(MAXKEY-230403) 1、应用列表新增分类 2、密码修改新增强度说明 3、忘记密码页新增强度说明 4、登录失败无提示的功能修复
+    *(MAXKEY-230404) 登录失败无提示的功能修复
+    *(MAXKEY-230405) 发送邮件失败异常拦截
+    *(MAXKEY-230406) 密码强度定义描述说明更新
+    *(MAXKEY-230407) 原密码错误都能修改密码的问题修复
+    *(MAXKEY-230408) 新增密码强度
+    *(MAXKEY-230409) 官方网站迁移到国内
+    *(MAXKEY-230410) 新增jeesite & maxkey 集成案例
+    *(MAXKEY-230411) cas springboot demo
+    *(MAXKEY-230412) 接口文档优化swagger with knife4j
+    *(MAXKEY-230413)【新增】integrations新增Spring Security OAuth MaxKey SSO
+    *(MAXKEY-230414) AuthorizationHeaderCredential rename to AuthorizationHeader
+    *(MAXKEY-230415) 接口优化，请求参数access_token , header Authorization , token
+    *(MAXKEY-230416) 网站帮助文档优化
+    *(MAXKEY-230417) 新建integrations目录，存放与maxkey集成的案例和Demo
+    *(MAXKEY-230418) 依赖项引用、更新和升级
+        spring              5.3.26
+        springBoot          2.7.9
+        springSecurity      5.7.7
+        mybatis             3.5.12
+        swaggerV3           2.2.8
+        classgraph          4.8.137
+        webjarslocatorcore  0.48
+        webjarslocator      0.42
+        swaggerui           4.11.1
+        springdoc           1.6.15
+        knife4j             4.0.0
+        
+MaxKey v 3.5.15 GA 2023/02/28
     *(MAXKEY-230301) 提交短信密钥在加载时候进行解密。
     *(MAXKEY-230302) 提交社交服务绑定账号+短信验证过程
     *(MAXKEY-230303) 提交maxkey自定义扫码和社交服务绑定过程
