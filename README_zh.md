@@ -52,10 +52,11 @@
 | 1.2     | SAML 2.0                        |  高  |
 | 1.3     | JWT                             |  高  |
 | 1.4     | CAS                             |  高  |
-| 1.5     | FormBased                       |  中  |
-| 1.6     | TokenBased(Post/Cookie)         |  中  |
-| 1.7     | ExtendApi                       |  低  |
-| 1.8     | EXT                             |  低  |
+| 1.5     | SCIM 2.0                        | 高   |
+| 1.6     | FormBased                       |  中  |
+| 1.7     | TokenBased(Post/Cookie)         |  中  |
+| 1.8     | ExtendApi                       |  低  |
+| 1.9     | EXT                             |  低  |
 
 2. 登录支持
 
