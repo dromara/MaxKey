@@ -28,6 +28,10 @@
 
 Official Website <a href="http://www.maxkey.top" target="_blank"><b>Official</b></a>
 
+WeChat: 
+
+<img src="images/wechat.jpg?raw=true" width="200px" alt="官方微信"/>
+
 QQ : <b> 1054466084 </b> 
 
 email: <b> support@maxsso.net </b>
@@ -229,7 +233,6 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 | 凯盛工业互联网平台                          |
 | 吕梁市医改监测平台                          |
 | 遂宁市经济大数据平台                        |
-
 
 # Dromara社区
 <a href="https://dromara.org/zh/" target="_blank">**Dromara**</a>致力于微服务云原生解决方案的组织。

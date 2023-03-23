@@ -28,6 +28,10 @@
 
 Official Website <a href="http://www.maxkey.top" target="_blank"><b>Official</b></a>
 
+WeChat: 
+
+<img src="images/wechat.jpg?raw=true" width="200px"  alt="官方微信"/>
+
 QQ: <b> 1054466084 </b> 
 
 email: <b> support@maxsso.net </b>

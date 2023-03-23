@@ -28,6 +28,10 @@
 
 官方网站  <a href="http://www.maxkey.top" target="_blank"><b>官网</b></a> 
 
+官方微信: 
+
+<img src="images/wechat.jpg?raw=true" width="200px"  alt="官方微信"/>
+
 官方QQ：<b>1054466084</b> 
 
 邮箱email: <b>support@maxsso.net</b>
