@@ -1,5 +1,10 @@
 # Spring Security OAuth SSO
 
+### 项目源地址
+
+https://gitee.com/hhw3KevinHou/spring-security-oauth2-sso.git 
+
+
 #### 介绍
 部署一个OAuth 2.0服务器，例如MaxKey。
 
