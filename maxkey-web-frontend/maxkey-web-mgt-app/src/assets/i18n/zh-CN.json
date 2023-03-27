@@ -362,6 +362,7 @@
 			"extendAttr.parameter": "参数",
 			"extendAttr.parameter.type": "类型",
 			"extendAttr.parameter.value": "值",
+			"inducer":"引导",
 			"principal": "凭证",
 			"credentials": "秘钥",
 			"adapter.name": "名称",

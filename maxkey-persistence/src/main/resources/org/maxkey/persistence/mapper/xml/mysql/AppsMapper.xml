@@ -157,6 +157,9 @@
 			adaptername			=	#{adapterName},
 			adapter				=	#{adapter},
 			</if>
+			<if test="inducer != null and inducer != ''">
+			inducer             =   #{inducer},
+			</if>
 			principal			=	#{principal},
 			credentials			=	#{credentials},
 			visible				=	#{visible},

@@ -503,6 +503,20 @@
           </nz-form-item>
         </div>
         <div nz-row>
+          <nz-form-item>
+            <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="inducer">{{ 'mxk.apps.inducer' | i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="16" [nzMd]="16" [nzXs]="36" [nzXl]="48"
+              nzErrorTip="The input is not valid inducer!">
+              <nz-select [(ngModel)]="form.model.inducer" [ngModelOptions]="{ standalone: true }" name="isAdapter"
+                id="inducer">
+                <nz-option nzValue="IDP" nzLabel="IDP"></nz-option>
+                <nz-option nzValue="SP" nzLabel="SP"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item> </nz-form-item>
+        </div>
+        <div nz-row>
           <nz-form-item style="width: 100%">
             <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="description">{{ 'mxk.text.description' | i18n }}
             </nz-form-label>

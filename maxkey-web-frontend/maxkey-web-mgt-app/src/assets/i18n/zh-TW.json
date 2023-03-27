@@ -363,6 +363,7 @@
 			"extendAttr.parameter": "參數",
 			"extendAttr.parameter.type": "類型",
 			"extendAttr.parameter.value": "值",
+			"inducer":"引導",
 			"principal": "憑證",
 			"credentials": "秘鑰",
 			"adapter.name": "名稱",

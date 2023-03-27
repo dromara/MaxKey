@@ -361,6 +361,7 @@
 			"extendAttr.parameter": "parameter",
 			"extendAttr.parameter.type": "type",
 			"extendAttr.parameter.value": "value",
+			"inducer":"Inducer",
 			"principal": "principal",
 			"credentials": "credentials",
 			"adapter.name": "name",
