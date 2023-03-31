@@ -26,7 +26,7 @@
 
 <b>Maxkey </b> Single Sign On System, which means the Maximum key, <b>Leading-Edge IAM/IDaas Identity and Access Management Product </b>, Support OAuth 2.x/OpenID Connect, SAML 2.0, JWT, CAS, SCIM and other standard protocols, and provide <b> Secure , Standard and Open </b> Identity management (IDM), Access management (AM), Single Sign On (SSO), RBAC permission management and Resource management.
 
-Official Website <a href="http://www.maxkey.top" target="_blank"><b>http://www.maxkey.top</b></a>
+Official Website <a href="http://maxkey.dromara.org" target="_blank"><b>http://maxkey.dromara.org</b></a>
 
 WeChat: 
 
