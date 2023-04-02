@@ -8,7 +8,7 @@
 <a href="README_en.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
 </p>     
 <p align="center">
-    <a target="_blank" href="https://maxkey.top/zh/about/download.html">
+    <a target="_blank" href="http://www.maxkey.top/zh/about/download.html">
         <img src="https://img.shields.io/github/v/release/dromara/MaxKey" />
     </a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/">
@@ -17,7 +17,7 @@
     <a target="_blank" href="https://www.mysql.com/">
         <img src="https://img.shields.io/badge/MySQL-8.0.12%2B-brightgreen" />
     </a>
-    <a target="_blank" href="https://maxkey.top/zh/about/licenses.html">
+    <a target="_blank" href="http://www.maxkey.top/zh/about/licenses.html">
         <img src="https://img.shields.io/github/license/dromara/MaxKey" />
     </a>
 </p>
@@ -26,7 +26,7 @@
 
 <b>Maxkey </b> Single Sign On System, which means the Maximum key, <b>Leading-Edge IAM/IDaas Identity and Access Management product </b>, Support OAuth 2.x/OpenID Connect, SAML 2.0, JWT, CAS, SCIM and other standard protocols, and provide <b> Secure, Standard and Open </b> Identity management (IDM), Access management (AM), Single Sign On (SSO), RBAC permission management and Resource management.
 
-Official Website <a href="http://maxkey.dromara.org" target="_blank"><b>http://maxkey.dromara.org</b></a>
+Official Website <a href="http://www.maxkey.top/" target="_blank"><b>http://www.maxkey.top/</b></a>
 
 WeChat: 
 

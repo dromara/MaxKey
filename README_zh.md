@@ -8,7 +8,7 @@
 <a href="README_en.md" target="_blank"><b>English</b></a>  |  <a href="README_zh.md" target="_blank"><b>中文</b></a>
 </p>
 <p align="center">
-    <a target="_blank" href="https://maxkey.top/zh/about/download.html">
+    <a target="_blank" href="http://www.maxkey.top/zh/about/download.html">
         <img src="https://img.shields.io/github/v/release/dromara/MaxKey" />
     </a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/">
@@ -17,7 +17,7 @@
     <a target="_blank" href="https://www.mysql.com/">
         <img src="https://img.shields.io/badge/MySQL-8.0.12%2B-brightgreen" />
     </a>
-    <a target="_blank" href="https://maxkey.top/zh/about/licenses.html">
+    <a target="_blank" href="http://www.maxkey.top/zh/about/licenses.html">
         <img src="https://img.shields.io/github/license/dromara/MaxKey" />
     </a>
 </p>
@@ -26,7 +26,7 @@
 
 <b>MaxKey</b>单点登录认证系统，谐音马克思的钥匙寓意是最大钥匙,是<b>业界领先的IAM-IDaas身份管理和认证产品</b>,支持OAuth 2.x/OpenID Connect、SAML 2.0、JWT、CAS、SCIM等标准协议，提供<b>安全、标准和开放</b>的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、RBAC权限管理和资源管理等。
 
-官方网站  <a href="http://maxkey.dromara.org" target="_blank"><b>http://maxkey.dromara.org</b></a> 
+官方网站  <a href="http://www.maxkey.top/" target="_blank"><b>http://www.maxkey.top/</b></a> 
 
 官方微信: 
 
