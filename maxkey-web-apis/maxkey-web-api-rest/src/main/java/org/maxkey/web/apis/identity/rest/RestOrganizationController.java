@@ -21,6 +21,8 @@ import java.io.IOException;
 
 import org.maxkey.entity.Organizations;
 import org.maxkey.persistence.service.OrganizationsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Controller
 @RequestMapping(value={"/api/idm/Organization"})
 public class RestOrganizationController {
-
+	final static Logger _logger = LoggerFactory.getLogger(RestOrganizationController.class);
+	
     @Autowired
     OrganizationsService organizationsService;
     
@@ -53,6 +56,7 @@ public class RestOrganizationController {
     public Organizations create(@RequestBody  Organizations org,
                                                       @RequestParam(required = false) String attributes,
                                                       UriComponentsBuilder builder) throws IOException {
+    	_logger.debug("Organizations content {} , attributes {}", org , attributes);
         Organizations loadOrg = organizationsService.get(org.getId());
         if(loadOrg == null) {
             organizationsService.insert(org);
@@ -68,6 +72,7 @@ public class RestOrganizationController {
                                                        @RequestBody Organizations org,
                                                        @RequestParam(required = false) String attributes)
             throws IOException {
+    	_logger.debug("Organizations id {} , content {} , attributes {}", id , org , attributes);
         Organizations loadOrg = organizationsService.get(id);
         if(loadOrg == null) {
             organizationsService.insert(org);
@@ -81,6 +86,7 @@ public class RestOrganizationController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
+    	_logger.debug("Organizations id {} ", id );
         organizationsService.remove(id);
        
     }

@@ -22,6 +22,8 @@ import java.io.IOException;
 import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -38,7 +40,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Controller
 @RequestMapping(value={"/api/idm/Users"})
 public class RestUserInfoController {
-
+	
+	final static Logger _logger = LoggerFactory.getLogger(RestUserInfoController.class);
+	
     @Autowired
     @Qualifier("userInfoService")
     private UserInfoService userInfoService;
@@ -59,6 +63,7 @@ public class RestUserInfoController {
     public UserInfo create(@RequestBody  UserInfo userInfo,
                                                       @RequestParam(required = false) String attributes,
                                                       UriComponentsBuilder builder) throws IOException {
+    	_logger.debug("UserInfo content {} , attributes {}", userInfo , attributes);
         UserInfo loadUserInfo = userInfoService.findByUsername(userInfo.getUsername());
         if(loadUserInfo != null) {
             userInfoService.update(userInfo);
@@ -74,7 +79,10 @@ public class RestUserInfoController {
                                                       @RequestParam(required = true) String username,
                                                       @RequestParam(required = true) String password,
                                                       UriComponentsBuilder builder) throws IOException {
-        UserInfo loadUserInfo = userInfoService.findByUsername(username);
+    	
+    	_logger.debug("UserInfo username {} , password {}", username , password);
+    	
+    	UserInfo loadUserInfo = userInfoService.findByUsername(username);
         if(loadUserInfo != null) {
         	ChangePassword changePassword  = new ChangePassword(loadUserInfo);
         	changePassword.setPassword(password);
@@ -90,6 +98,7 @@ public class RestUserInfoController {
                                                        @RequestBody UserInfo userInfo,
                                                        @RequestParam(required = false) String attributes)
             throws IOException {
+    	_logger.debug("UserInfo content {} , attributes {}", userInfo , attributes);
         UserInfo loadUserInfo = userInfoService.findByUsername(userInfo.getUsername());
         if(loadUserInfo != null) {
             userInfoService.update(userInfo);
@@ -102,6 +111,7 @@ public class RestUserInfoController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
+    	_logger.debug("UserInfo id {} ", id );
         userInfoService.logicDelete(id);
     }
 }
