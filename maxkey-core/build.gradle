@@ -3,10 +3,6 @@ description = "maxkey-core"
 dependencies {
 	implementation project(":maxkey-common")
 
-	// https://projectlombok.org
-	compileOnly 'org.projectlombok:lombok:1.18.4'
-	annotationProcessor 'org.projectlombok:lombok:1.18.4'
-	
 	//local jars
 	implementation fileTree(dir: '../maxkey-lib/', include: '*/*.jar')
 	
