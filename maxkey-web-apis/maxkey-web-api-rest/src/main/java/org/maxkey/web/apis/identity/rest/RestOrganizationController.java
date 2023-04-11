@@ -47,6 +47,7 @@ public class RestOrganizationController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Organizations getUser(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
+    	_logger.debug("Organizations id {} , attributes {}", id , attributes);
         Organizations org = organizationsService.get(id);
         return org;
     }

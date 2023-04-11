@@ -52,7 +52,7 @@ public class RestUserInfoController {
     public UserInfo getUser(
                                        @PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
-        
+    	_logger.debug("UserInfo id {} , attributes {}", id , attributes);
         UserInfo loadUserInfo = userInfoService.get(id);
         loadUserInfo.setDecipherable(null);
         return loadUserInfo;

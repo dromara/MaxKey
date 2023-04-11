@@ -77,6 +77,7 @@ public class ScimUserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public MappingJacksonValue get(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
+    	_logger.debug("ScimUser id {} , attributes {}", id , attributes);
         UserInfo userInfo = userInfoService.get(id);
         ScimUser scimUser = userInfo2ScimUser(userInfo);
         return new MappingJacksonValue(scimUser);
@@ -86,6 +87,7 @@ public class ScimUserController {
     public MappingJacksonValue create(@RequestBody  ScimUser user,
                                       @RequestParam(required = false) String attributes,
                                       UriComponentsBuilder builder) throws IOException {
+    	_logger.debug("ScimUser {} , attributes {}", user , attributes);
     	UserInfo userInfo = scimUser2UserInfo(user);
     	userInfoService.insert(userInfo);
         return get(userInfo.getId(),attributes);
@@ -96,6 +98,7 @@ public class ScimUserController {
                                        @RequestBody ScimUser user,
                                        @RequestParam(required = false) String attributes)
             throws IOException {
+    	_logger.debug("ScimUser {} , attributes {}", user , attributes);
     	UserInfo userInfo = scimUser2UserInfo(user);
     	userInfoService.update(userInfo);
         return get(id,attributes);
@@ -104,6 +107,7 @@ public class ScimUserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
+    	_logger.debug("ScimUser id {} ", id );
     	userInfoService.remove(id);
     }
 

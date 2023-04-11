@@ -64,6 +64,7 @@ public class ScimGroupController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public MappingJacksonValue get(@PathVariable String id,
                                    @RequestParam(required = false) String attributes) {
+    	_logger.debug("ScimGroup id {} , attributes {}", id , attributes);
     	Roles role    = rolesService.get(id);
     	ScimGroup  scimGroup = role2ScimGroup(role);
     	List<UserInfo>  userList = roleMemberService.queryMemberByRoleId(id);
@@ -81,6 +82,7 @@ public class ScimGroupController {
     public MappingJacksonValue create(@RequestBody  ScimGroup scimGroup,
                                       @RequestParam(required = false) String attributes,
                                       UriComponentsBuilder builder) throws IOException {
+    	_logger.debug("ScimGroup content {} , attributes {}", scimGroup , attributes);
     	Roles  role =scimGroup2Role(scimGroup);
     	rolesService.insert(role);
         return get(role.getId(),attributes);
@@ -91,6 +93,7 @@ public class ScimGroupController {
                                         @RequestBody ScimGroup scimGroup,
                                         @RequestParam(required = false) String attributes)
                                         		throws IOException {
+    	_logger.debug("ScimGroup content {} , attributes {}", scimGroup , attributes);
     	Roles  role =scimGroup2Role(scimGroup);
     	rolesService.update(role);
         return get(role.getId(),attributes);
@@ -99,6 +102,7 @@ public class ScimGroupController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
+    	_logger.debug("ScimGroup id {} " , id);
     	rolesService.remove(id);
     }
 

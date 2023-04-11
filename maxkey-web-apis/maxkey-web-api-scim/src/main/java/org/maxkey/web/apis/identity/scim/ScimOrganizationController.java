@@ -65,6 +65,7 @@ public class ScimOrganizationController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public MappingJacksonValue get(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
+    	_logger.debug("ScimOrganization id {} , attributes {}", id , attributes);
     	Organizations	org = organizationsService.get(id);
     	ScimOrganization 	scimOrg = org2ScimOrg(org);
         
@@ -75,6 +76,7 @@ public class ScimOrganizationController {
     public MappingJacksonValue create(@RequestBody  ScimOrganization scimOrg,
                                       @RequestParam(required = false) String attributes,
                                       UriComponentsBuilder builder) throws IOException {
+    	_logger.debug("ScimOrganization content {} , attributes {}", scimOrg , attributes);
         Organizations createOrg = scimOrg2Org(scimOrg);
         organizationsService.insert(createOrg);
         return get(createOrg.getId(), attributes);
@@ -84,6 +86,7 @@ public class ScimOrganizationController {
     public MappingJacksonValue replace(@PathVariable String id,
                                        @RequestBody ScimOrganization scimOrg,
                                        @RequestParam(required = false) String attributes)throws IOException {
+    	_logger.debug("ScimOrganization content {} , attributes {}", scimOrg , attributes);
     	Organizations updateOrg = scimOrg2Org(scimOrg);
     	organizationsService.update(updateOrg);
         return get(id, attributes);
@@ -92,6 +95,7 @@ public class ScimOrganizationController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
+    	_logger.debug("ScimOrganization id {}", id );
     	organizationsService.remove(id);
     }
 
