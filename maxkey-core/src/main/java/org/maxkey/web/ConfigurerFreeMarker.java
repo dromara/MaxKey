@@ -41,7 +41,8 @@ public class ConfigurerFreeMarker  implements ApplicationContextAware {
 	ApplicationContext applicationContext ;
 	
 	@Autowired 
-	Configuration configuration;
+	Configuration configuration; 
+
  
 	@PostConstruct // 在项目启动时执行方法
 	public void setSharedVariable() throws IOException, TemplateException {
@@ -51,11 +52,13 @@ public class ConfigurerFreeMarker  implements ApplicationContextAware {
 			configuration.setSharedVariable(key, map.get(key));
 			_logger.trace("FreeMarker Template "+key);
 		}
+
 	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = applicationContext;
+		
 	}
 
 }
