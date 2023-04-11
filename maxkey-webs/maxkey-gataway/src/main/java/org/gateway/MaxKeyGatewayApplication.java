@@ -33,9 +33,9 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
                 DataSourceAutoConfiguration.class
 })
 @EnableDiscoveryClient
-public class GatewayApplication {
+public class MaxKeyGatewayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GatewayApplication.class, args);
+		SpringApplication.run(MaxKeyGatewayApplication.class, args);
 	}
 }
