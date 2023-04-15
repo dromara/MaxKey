@@ -90,8 +90,12 @@ public class SynchronizersController {
 				synchronizer.setCredentials(PasswordReciprocal.getInstance().decoder(synchronizer.getCredentials()));
 				_logger.debug("synchronizer " + synchronizer);
 				ISynchronizerService synchronizerService = WebContext.getBean(synchronizer.getService(),ISynchronizerService.class);
-				synchronizerService.setSynchronizer(synchronizer);
-				synchronizerService.sync();
+				if(synchronizerService != null) {
+					synchronizerService.setSynchronizer(synchronizer);
+					synchronizerService.sync();
+				}else {
+					_logger.info("synchronizer {} not exist .",synchronizer.getService());
+				}
 			}
 		}catch(Exception e) {
 			_logger.error("synchronizer Exception " , e);
