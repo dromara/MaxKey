@@ -5,4 +5,6 @@ echo start time %START_TIME%
 
 call %GRADLE_HOME%/bin/gradle configStd  -b build_cnf.gradle
 
+
+#pause
 pause
