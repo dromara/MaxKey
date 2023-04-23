@@ -1,4 +1,28 @@
-﻿MaxKey v 3.5.16 GA 2023/03/23
+﻿MaxKey v 3.5.17 GA 2023/04/25
+    *(MAXKEY-230501) 4.0.0开发计划
+    *(MAXKEY-230502) 增加跳转引导配置inducer参数
+    *(MAXKEY-230503) 本地开发调试模式baseUrl改为本地地址 @tomsun28
+    *(MAXKEY-230504) 优化同步API REST和SCIM接口日志打印
+    *(MAXKEY-230505) GatewayApplication改为MaxKeyGatewayApplication
+    *(MAXKEY-230506) Gateway启动bug，netty 4.1.65.Final
+    *(MAXKEY-230507) lombok支持，目前是可选 @sudarshan-doiphode
+    *(MAXKEY-230508) 新增CAS明文适配器CasPlainAdapter
+    *(MAXKEY-230509) synchronizer 同步的空值处理
+    *(MAXKEY-230510) 增加官方微信支持，方便开发者咨询
+    *(MAXKEY-230511) Spring Security OAuth SSO demo地址调整
+    *(MAXKEY-230512) 用户自定义凭证类型前后端不统一修复
+    *(MAXKEY-230513) arm架构docker @tzk007
+    *(MAXKEY-230514) .gitignore优化 @tzk007
+	*(MAXKEY-230515) 社区版前端文件统一放在maxkey_frontend下maxkey_html、maxkey_mgt_html，配置文件参见conf下
+    *(MAXKEY-230516) 依赖项引用、更新和升级
+        spring              5.3.27
+        springBoot          2.7.11
+        netty               4.1.65.Final
+        springSecurity      5.7.8
+        tomcat              9.0.74
+        micrometercore      1.9.10
+
+MaxKey v 3.5.16 GA 2023/03/23
     *(MAXKEY-230401) 从请求中解析token令牌信息1) 参数 access_token 2) header 的Authorization 3) 参数 token 。
     *(MAXKEY-230402) 企业微信文本注释
     *(MAXKEY-230403) 1、应用列表新增分类 2、密码修改新增强度说明 3、忘记密码页新增强度说明 4、登录失败无提示的功能修复
