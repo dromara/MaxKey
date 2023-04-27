@@ -26,6 +26,8 @@
 
 <b>MaxKey</b>单点登录认证系统，谐音马克思的钥匙寓意是最大钥匙,是<b>业界领先的IAM-IDaas身份管理和认证产品</b>,支持OAuth 2.x/OpenID Connect、SAML 2.0、JWT、CAS、SCIM等标准协议，提供<b>安全、标准和开放</b>的用户身份管理(IDM)、身份认证(AM)、单点登录(SSO)、RBAC权限管理和资源管理等。
 
+MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于医疗、金融、政府和制造等行业。
+
 官方网站  <a href="http://www.maxkey.top/" target="_blank"><b>http://www.maxkey.top/</b></a> 
 
 官方微信: 
