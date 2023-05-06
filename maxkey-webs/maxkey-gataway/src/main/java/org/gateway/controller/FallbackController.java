@@ -29,7 +29,7 @@ public class FallbackController {
     public Map<String , Object> defaultFallback() {
         Map<String , Object> map = new HashMap<>();
         map.put("code", 1);
-        map.put("message", "服务异常");
+        map.put("message", "Successful");
         return map;
     }
 }
