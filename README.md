@@ -182,6 +182,7 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 | 河南新辰环保科技有限公司                    |
 | 黄河科技集团有限公司                        |
 | 豫信电子科技集团有限公司                    |
+| 双汇物流投资有限公司                        |
 | 广东漫云物联科技有限公司                    |
 | 深圳市金溢科技股份有限公司                  |
 | 深圳市中悦科技有限公司                      |
