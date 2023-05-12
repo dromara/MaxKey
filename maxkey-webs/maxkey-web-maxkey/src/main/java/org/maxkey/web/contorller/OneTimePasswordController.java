@@ -30,6 +30,7 @@ import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.password.onetimepwd.algorithm.OtpKeyUriFormat;
 import org.maxkey.password.onetimepwd.algorithm.OtpSecret;
+import org.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
 import org.maxkey.persistence.service.UserInfoService;
 import org.maxkey.util.RQCodeUtils;
 import org.slf4j.Logger;
@@ -57,6 +58,9 @@ public class OneTimePasswordController {
 
     @Autowired
     OtpKeyUriFormat otpKeyUriFormat;
+
+    @Autowired
+    private TimeBasedOtpAuthn timeBasedOtpAuthn;
 
     @RequestMapping(value = {"/timebased"})
     @ResponseBody
@@ -97,6 +101,19 @@ public class OneTimePasswordController {
             currentUser.setSharedSecret(sharedSecret);
             userInfoService.updateSharedSecret(currentUser);
             
+        }
+    }
+
+    @RequestMapping("/verify")
+    public ResponseEntity<?> verify(@RequestParam("otp") String otp, @CurrentUser UserInfo currentUser) {
+        // 从当前用户信息中获取共享密钥
+        String sharedSecret = PasswordReciprocal.getInstance().decoder(currentUser.getSharedSecret());
+        // 计算当前时间对应的动态密码
+        boolean validate = timeBasedOtpAuthn.validate(currentUser, otp);
+        if (validate) {
+            return new Message<>(0,"One-Time Password verification succeeded").buildResponse();
+        } else {
+            return new Message<>(2,"One-Time Password verification failed").buildResponse();
         }
     }
     

@@ -529,7 +529,8 @@
 			"period": "週期",
 			"sharedSecret": "共享密鑰(BASE32)",
 			"hexSharedSecret": "共享密鑰( HEX  )",
-			"rqCode": "二維碼"
+			"rqCode": "二維碼",
+      "one-timePassword": "一次性密碼"
 		},
 		"socialsassociate": {
 			"icon": "圖標",
@@ -686,6 +687,7 @@
 			"close": "關閉",
 			"submit": "提交",
 			"generate": "生成",
+      "verify": "驗證",
 			"upload": "上傳",
 			"save": "保存",
 			"year": "年",

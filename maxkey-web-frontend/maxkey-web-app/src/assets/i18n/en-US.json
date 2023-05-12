@@ -543,7 +543,8 @@
 			"period": "period",
 			"sharedSecret": "sharedSecret(BASE32)",
 			"hexSharedSecret": "sharedSecret( HEX  )",
-			"rqCode": "RQCode"
+			"rqCode": "RQCode",
+      "one-timePassword": "One-Time Password"
 		},
 		"socialsproviders": {
 			"icon": "Icon",
@@ -683,6 +684,7 @@
 			"close": "Close",
 			"submit": "Submit",
 			"generate": "Generate",
+      "verify": "Verify",
 			"upload": "Upload",
 			"save": "Save",
 			"year": "Year",

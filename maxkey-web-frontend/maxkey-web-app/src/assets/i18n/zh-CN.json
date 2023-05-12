@@ -529,7 +529,8 @@
 			"period": "周期",
 			"sharedSecret": "共享密钥(BASE32)",
 			"hexSharedSecret": "共享密钥( HEX  )",
-			"rqCode": "二维码"
+			"rqCode": "二维码",
+      "one-timePassword": "一次性密码"
 		},
 		"socialsassociate": {
 			"icon": "图标",
@@ -686,6 +687,7 @@
 			"close": "关闭",
 			"submit": "提交",
 			"generate": "生成",
+      "verify": "验证",
 			"upload": "上传",
 			"save": "保存",
 			"year": "年",

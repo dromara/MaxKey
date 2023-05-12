@@ -28,7 +28,7 @@ import { Console } from 'console';
 @Component({
   selector: 'app-timebased',
   templateUrl: './timebased.component.html',
-  styleUrls: ['./timebased.component.less']
+  styleUrls: ['./timebased.component.less'],
 })
 export class TimebasedComponent implements OnInit {
   form: {
@@ -38,6 +38,8 @@ export class TimebasedComponent implements OnInit {
     submitting: false,
     model: new TimeBased()
   };
+
+  isDisabled = true;
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -87,4 +89,18 @@ export class TimebasedComponent implements OnInit {
       this.cdr.detectChanges();
     });
   }
+
+  verify(e: MouseEvent, otp: string): void {
+    e.preventDefault();
+    this.timeBasedService.verify(otp).subscribe(res => {
+      if (res.code == 0) {
+        this.msg.success(`验证成功`);
+      } else {
+        this.msg.error('验证失败');
+      }
+    })
+    // this.timeBasedService.verify(otp)
+  }
+
+  protected readonly String = String;
 }

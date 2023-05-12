@@ -37,4 +37,8 @@ export class TimeBasedService extends BaseService<TimeBased> {
   override update(body: any): Observable<Message<TimeBased>> {
     return this.http.get<Message<TimeBased>>(`${this.server.urls.base}/timebased?generate=YES`);
   }
+
+  verify(otp: string): Observable<Message<TimeBased>>{
+    return this.http.get<Message<TimeBased>>(`${this.server.urls.base}/verify?otp=` + otp);
+  }
 }

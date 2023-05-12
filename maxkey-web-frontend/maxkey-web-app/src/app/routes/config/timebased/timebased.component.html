@@ -14,7 +14,7 @@
           <nz-form-control [nzSm]="14" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not displayName!">
             <input
               nz-input
-              readonly
+              [disabled]="isDisabled"
               [(ngModel)]="form.model.displayName"
               [ngModelOptions]="{ standalone: true }"
               name="displayName"
@@ -28,7 +28,7 @@
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid username!">
             <input
               nz-input
-              readonly
+              [disabled]="isDisabled"
               [(ngModel)]="form.model.username"
               [ngModelOptions]="{ standalone: true }"
               name="username"
@@ -39,13 +39,13 @@
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="digits">{{ 'mxk.timebased.digits' | i18n }}</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid digits!">
-            <input nz-input readonly [(ngModel)]="form.model.digits" [ngModelOptions]="{ standalone: true }" name="digits" id="digits" />
+            <input nz-input [disabled]="isDisabled" [(ngModel)]="form.model.digits" [ngModelOptions]="{ standalone: true }" name="digits" id="digits" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="period">{{ 'mxk.timebased.period' | i18n }}</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid period!">
-            <input nz-input readonly [(ngModel)]="form.model.period" [ngModelOptions]="{ standalone: true }" name="period" id="period" />
+            <input nz-input [disabled]="isDisabled" [(ngModel)]="form.model.period" [ngModelOptions]="{ standalone: true }" name="period" id="period" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -53,7 +53,7 @@
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid sharedSecret!">
             <input
               nz-input
-              readonly
+              [disabled]="isDisabled"
               [(ngModel)]="form.model.sharedSecret"
               [ngModelOptions]="{ standalone: true }"
               name="sharedSecret"
@@ -66,7 +66,7 @@
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid hexSharedSecret!">
             <input
               nz-input
-              readonly
+              [disabled]="isDisabled"
               [(ngModel)]="form.model.hexSharedSecret"
               [ngModelOptions]="{ standalone: true }"
               name="hexSharedSecret"
@@ -74,10 +74,24 @@
             />
           </nz-form-control>
         </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="one-timePassword">{{ 'mxk.timebased.one-timePassword' | i18n }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid One-Time Password!">
+            <input
+              nz-input
+              [(ngModel)]="form.model.otp"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="请在生成后输入一次性密码用于验证"
+              name="oneTimePassword"
+              id="oneTimePassword"
+            />
+          </nz-form-control>
+        </nz-form-item>
         <nz-form-item style="width: 100%">
-          <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <nz-form-control [nzOffset]="7" [nzSpan]="3">
             <button nz-button nzType="primary" type="submit" [nzLoading]="form.submitting">{{ 'mxk.text.generate' | i18n }}</button>
           </nz-form-control>
+            <button nz-button nzType="primary" (click)="verify($event,form.model.otp)">{{ 'mxk.text.verify' | i18n }}</button>
         </nz-form-item>
       </div>
     </div>
