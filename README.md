@@ -155,6 +155,7 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 | 路特斯中国                                  |
 | 宇通客车股份有限公司                        |
 | 国家能源局                                  |
+| 国务院港澳事务办公室                        |
 | 百度智能云身份管理服务                      |
 | 360公司                                     |
 | 三一华兴                                    |
@@ -163,6 +164,7 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 | 联鹏应用软件（上海）有限公司                |
 | 上海万序健康科技有限公司                    |
 | 上海中商网络股份有限公司                    |
+| 上海半天妖餐饮管理有限公司                  |
 | 跳羚科技(厦门)有限公司                      |
 | 飞天诚信科技股份有限公司                    |
 | 浪潮工业互联网股份有限公司                  |
@@ -170,6 +172,7 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 | 中创智维科技有限公司                        |
 | 中航金网（北京）电子商务有限公司            |
 | 中国航空制造技术研究院                      |
+| 中建国际投资集团有限公司                    |
 | 同方节能工程技术有限公司                    |
 | 云南航天工程物探检测股份有限公司            |
 | 山东港口陆海国际物流集团有限公司            |
