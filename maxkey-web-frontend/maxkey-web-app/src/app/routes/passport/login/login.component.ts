@@ -136,6 +136,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
             this.state = res.data.state;
             this.captchaType = res.data.captcha;
             if (this.captchaType === 'NONE') {
+              //清除校验规则
               this.form.get('captcha')?.clearValidators();
             } else {
               //init image captcha
