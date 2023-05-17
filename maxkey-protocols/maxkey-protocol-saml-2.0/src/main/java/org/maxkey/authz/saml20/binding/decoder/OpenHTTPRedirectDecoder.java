@@ -83,8 +83,7 @@ public class OpenHTTPRedirectDecoder extends HTTPRedirectDeflateDecoder {
 		String receiverEndpoint = DatatypeHelper
 				.safeTrimOrNullString(getActualReceiverEndpointURI(messageContext));
 
-		log.debug("Intended message destination endpoint: {}",
-				messageDestination);
+		log.debug("Intended message destination endpoint: {}",messageDestination);
 		log.debug("Actual message receiver endpoint: {}", receiverEndpoint);
 
 		// 协议头统一（http或https，需要和destination统一）
