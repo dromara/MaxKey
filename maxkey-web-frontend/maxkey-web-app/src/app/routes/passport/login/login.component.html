@@ -42,7 +42,7 @@
         </ng-template>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item style="width: 100%">
+    <nz-form-item style="width: 100%" *ngIf="captchaType != 'NONE'">
       <nz-form-control nzErrorTip="">
         <nz-input-group nzSearch nzSize="large" nzPrefixIcon="lock" nzSearch [nzAddOnAfter]="suffixImageCaptchaButton">
           <input type="text" formControlName="captcha" nz-input placeholder="{{ 'mxk.login.text.captcha' | i18n }}" />
