@@ -19,6 +19,7 @@ package org.maxkey.web.apis.identity.rest;
 
 import java.io.IOException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.entity.Message;
 import org.maxkey.entity.Organizations;
@@ -100,6 +101,9 @@ public class RestOrganizationController {
     @RequestMapping(value = { "/.search" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> search(@ModelAttribute Organizations org) {
+    	if(StringUtils.isBlank(org.getInstId())){
+    		org.setInstId("1");
+    	}
 		_logger.debug("Organizations {}" , org);
 		return new Message<JpaPageResults<Organizations>>(
 				organizationsService.queryPageResults(org)).buildResponse();

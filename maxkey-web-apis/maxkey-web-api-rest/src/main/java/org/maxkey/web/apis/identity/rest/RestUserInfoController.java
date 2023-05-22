@@ -19,6 +19,7 @@ package org.maxkey.web.apis.identity.rest;
 
 import java.io.IOException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.entity.ChangePassword;
 import org.maxkey.entity.Message;
@@ -123,7 +124,10 @@ public class RestUserInfoController {
     @RequestMapping(value = { "/.search" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> search(@ModelAttribute UserInfo userInfo) {
-		_logger.debug("UserInfo {}"+userInfo);
+		_logger.debug("UserInfo {}",userInfo);
+		if(StringUtils.isBlank(userInfo.getInstId())){
+			userInfo.setInstId("1");
+    	}
 		return new Message<JpaPageResults<UserInfo>>(
 				userInfoService.queryPageResults(userInfo)).buildResponse();
 	}
