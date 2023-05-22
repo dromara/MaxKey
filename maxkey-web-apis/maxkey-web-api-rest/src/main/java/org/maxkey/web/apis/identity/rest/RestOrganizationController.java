@@ -19,13 +19,18 @@ package org.maxkey.web.apis.identity.rest;
 
 import java.io.IOException;
 
+import org.apache.mybatis.jpa.persistence.JpaPageResults;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.Organizations;
 import org.maxkey.persistence.service.OrganizationsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,4 +96,12 @@ public class RestOrganizationController {
         organizationsService.remove(id);
        
     }
+    
+    @RequestMapping(value = { "/.search" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public ResponseEntity<?> search(@ModelAttribute Organizations org) {
+		_logger.debug("Organizations {}" , org);
+		return new Message<JpaPageResults<Organizations>>(
+				organizationsService.queryPageResults(org)).buildResponse();
+	}
 }

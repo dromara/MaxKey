@@ -19,7 +19,9 @@ package org.maxkey.web.apis.identity.rest;
 
 import java.io.IOException;
 
+import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.maxkey.entity.ChangePassword;
+import org.maxkey.entity.Message;
 import org.maxkey.entity.UserInfo;
 import org.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
@@ -27,7 +29,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -114,4 +119,13 @@ public class RestUserInfoController {
     	_logger.debug("UserInfo id {} ", id );
         userInfoService.logicDelete(id);
     }
+    
+    @RequestMapping(value = { "/.search" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public ResponseEntity<?> search(@ModelAttribute UserInfo userInfo) {
+		_logger.debug("UserInfo {}"+userInfo);
+		return new Message<JpaPageResults<UserInfo>>(
+				userInfoService.queryPageResults(userInfo)).buildResponse();
+	}
+
 }
