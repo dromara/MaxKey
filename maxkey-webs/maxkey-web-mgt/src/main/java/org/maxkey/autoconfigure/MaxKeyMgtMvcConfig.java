@@ -23,7 +23,6 @@ import org.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.maxkey.authn.web.CurrentUserMethodArgumentResolver;
 import org.maxkey.authn.web.interceptor.PermissionInterceptor;
 import org.maxkey.configuration.ApplicationConfig;
-import org.maxkey.web.interceptor.RestApiPermissionAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +47,6 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
     
     @Autowired
     PermissionInterceptor permissionInterceptor;
-    
-    @Autowired
-    RestApiPermissionAdapter restApiPermissionAdapter;
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -115,19 +111,6 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 ;
         
         _logger.debug("add Permission Adapter");
-
-        /*
-         * api
-         * idm
-         * scim
-         * */
-        registry.addInterceptor(restApiPermissionAdapter)
-                .addPathPatterns("/api/**")
-                .addPathPatterns("/api/idm/**")
-                .addPathPatterns("/api/idm/scim/**")
-                ;
-		
-        _logger.debug("add Rest Api Permission Adapter");
         
     }
     
