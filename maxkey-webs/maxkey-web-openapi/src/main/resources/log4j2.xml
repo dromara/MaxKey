@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<Configuration status="INFO"  monitorInterval="300">  
+    <Appenders>      	
+        <Console name="consolePrint" target="SYSTEM_OUT">  
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS} %-5level [%t] %logger{36}:%L - %msg%n" />  
+        </Console>
+        
+		<!-- 输出到文件，按天或者超过128MB分割 -->
+		<RollingFile name="RollingFile" fileName="logs/maxkey_openapi.log"    filePattern="logs/$${date:yyyyMMdd}/maxkey-openapi-%d{yyyy-MM-dd}-%i.log.gz">
+		    <!-- 需要记录的级别 -->
+		 	<!-- <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" /> -->
+		     <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5level [%t] (%logger{36}:%L) - %msg%n" />
+		     <Policies>
+		          <OnStartupTriggeringPolicy />
+		          <TimeBasedTriggeringPolicy />
+		          <SizeBasedTriggeringPolicy size="128 MB" />
+		     </Policies>
+		     <DefaultRolloverStrategy max="100"/>
+		</RollingFile>
+	 </Appenders>  
+	 
+    <Loggers>  
+    	<Logger level="INFO" 	name="org.springframework" ></Logger>
+    	<Logger level="INFO" 	name="org.apache.logging" ></Logger>
+    	<Logger level="DEBUG" 	name="org.maxkey" ></Logger>
+    	<Logger level="DEBUG"	name="org.apache.mybatis.jpa" ></Logger>
+    	<Logger level="ERROR"	name="org.reflections.Reflections" ></Logger>
+    	<Logger level="ERROR"   name="RocketmqRemoting" ></Logger>
+    	<Logger level="OFF"     name="org.hibernate.validator.internal.util.Version" ></Logger>
+    	
+        <Root level="INFO">  
+            <AppenderRef ref="consolePrint" />
+            <AppenderRef ref="RollingFile" /> 
+        </Root>  
+    </Loggers>  
+</Configuration>

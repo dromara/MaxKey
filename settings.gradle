@@ -54,10 +54,12 @@ include (
 	'maxkey-protocols:maxkey-protocol-tokenbased',
 	'maxkey-protocols:maxkey-protocol-extendapi',
 	//webs
-	//maxkey
+	//gataway
+    'maxkey-webs:maxkey-gataway',
+	//maxkey(sign)
 	'maxkey-webs:maxkey-web-maxkey',
 	//management(mgt)
 	'maxkey-webs:maxkey-web-mgt',
-	//gataway
-	'maxkey-webs:maxkey-gataway'
+	//openapi(open)
+    'maxkey-webs:maxkey-web-openapi',
 )
