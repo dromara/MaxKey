@@ -142,7 +142,7 @@ public class JdbcUsersService extends AbstractSynchronizerService    implements 
 	
 	static {
 		mapperList.add(new  ColumnFieldMapper("id"						, "id","String"));
-		mapperList.add(new  ColumnFieldMapper("username"				, "userUame","String"));
+		mapperList.add(new  ColumnFieldMapper("username"				, "userName","String"));
 		mapperList.add(new  ColumnFieldMapper("picture"					, "picture","String"));
 		mapperList.add(new  ColumnFieldMapper("displayname"				, "displayName","String"));
 		mapperList.add(new  ColumnFieldMapper("nickname"				, "nickName","String"));
