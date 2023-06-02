@@ -42,8 +42,8 @@
     "eslint-plugin-vue": "^7.0.0",
     "less-loader": "^5.0.0",
     "typescript": "~4.1.5",
-    "unplugin-auto-import": "^0.11.0",
-    "unplugin-vue-components": "^0.22.0"
+    "unplugin-auto-import": "^0.11.5",
+    "unplugin-vue-components": "^0.22.12"
   },
   "eslintConfig": {
     "root": true,
