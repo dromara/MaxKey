@@ -1,4 +1,20 @@
-﻿MaxKey v 3.5.17 GA 2023/04/25
+﻿MaxKey v 3.5.18 GA 2023/06/06
+    *(MAXKEY-230601) 组织机构和用户同步的REST和SCIM从maxkey-web-mgt中分离到新建maxkey-web-openapi
+    *(MAXKEY-230602) 腾讯企业邮件接口优化
+    *(MAXKEY-230603) 修改认证系统 是否需要验证码的配置
+    *(MAXKEY-230604) 同步组织机构和用户API REST新增/.search分页查询功能
+    *(MAXKEY-230605) #I76SV6 更正JdbcUsersService的username
+    *(MAXKEY-230606) 增加一次性动态口令验证功能
+    *(MAXKEY-230607) 修改项目介绍信息
+    *(MAXKEY-230608) 依赖项引用、更新和升级
+        spring              5.3.27
+        springBoot          2.7.12
+        commonsfileupload   1.5
+        poi                 5.2.3
+        log4j               2.20.0
+        tomcat              9.0.75
+        
+MaxKey v 3.5.17 GA 2023/04/25
     *(MAXKEY-230501) 4.0.0开发计划
     *(MAXKEY-230502) 增加跳转引导配置inducer参数
     *(MAXKEY-230503) 本地开发调试模式baseUrl改为本地地址 @tomsun28
@@ -13,7 +29,7 @@
     *(MAXKEY-230512) 用户自定义凭证类型前后端不统一修复
     *(MAXKEY-230513) arm架构docker @tzk007
     *(MAXKEY-230514) .gitignore优化 @tzk007
-	*(MAXKEY-230515) 社区版前端文件统一放在maxkey_frontend下maxkey_html、maxkey_mgt_html，配置文件参见conf下
+    *(MAXKEY-230515) 社区版前端文件统一放在maxkey_frontend下maxkey_html、maxkey_mgt_html，配置文件参见conf下
     *(MAXKEY-230516) 依赖项引用、更新和升级
         spring              5.3.27
         springBoot          2.7.11

@@ -46,8 +46,6 @@ def libjarsmapper=[
     'maxkey-web-resources'                  :'lib',
     'maxkey-authentication-social'          :'maxkey',
     'maxkey-web-maxkey'                     :'maxkey',
-    'maxkey-web-api-rest'                   :'maxkey_mgt',
-    'maxkey-web-api-scim'                   :'maxkey_mgt',
     'maxkey-web-mgt'                        :'maxkey_mgt',
     'maxkey-synchronizer'                   :'maxkey_mgt',
     'maxkey-synchronizer-activedirectory'   :'maxkey_mgt',
@@ -56,6 +54,9 @@ def libjarsmapper=[
     'maxkey-synchronizer-jdbc'              :'maxkey_mgt',
     'maxkey-synchronizer-workweixin'        :'maxkey_mgt',
 	'maxkey-synchronizer-reorgdept'         :'maxkey_mgt'
+	'maxkey-web-openapi'                    :'maxkey_openapi',
+	'maxkey-web-api-rest'                   :'maxkey_openapi',
+    'maxkey-web-api-scim'                   :'maxkey_openapi',
 ]
 
 configurations.all {
@@ -480,6 +481,7 @@ project('maxkey-common')  {
         def paths = ["$rootDir/build/MaxKey-v${project.version}GA",
                      "$rootDir/build/MaxKey-v${project.version}GA/maxkey",
                      "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt",
+                     "$rootDir/build/MaxKey-v${project.version}GA/maxkey_openapi",
                      "$rootDir/build/MaxKey-v${project.version}GA/lib"];
         //遍历数组，调用createDir闭包，创建目录
         paths.forEach(){path->
@@ -497,20 +499,6 @@ project('maxkey-common')  {
         //copy runtime
         from configurations.runtimeClasspath
         into "$rootDir/build/MaxKey-v${project.version}GA/lib";
-    }
-    
-    build.configure { finalizedBy copyDepJars }
-}
-
-//copy Dep Jars to /build/maxkey-depjars,only maxkey-boot-monitor deps
-project('maxkey-webs:maxkey-boot-monitor')  {
-    task copyDepJars(type:Copy) {
-        dependsOn   assemble
-        //项目名 项目所在的group version 版本号
-        println  "subproject " + project.name + ", group " + project.group +" , version " + project.version
-        //copy runtime
-        from configurations.runtimeClasspath
-        into "$rootDir/build/MaxKey-v${project.version}GA/maxkey_monitor";
     }
     
     build.configure { finalizedBy copyDepJars }
