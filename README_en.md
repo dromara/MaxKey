@@ -120,7 +120,7 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 
 | Version    | Date   |  Pan URL (Code) |  Docker  |
 | --------   | :----- | :----           | :----    |
-| v 3.5.17   | 2023/04/25   | <a href="https://pan.baidu.com/s/13mxHNYgcu8OnO4RMHXTq_g" target="_blank">Download</a> ( **mxk9** )  | <a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |
+| v 3.5.18   | 2023/06/05   | <a href="https://pan.baidu.com/s/1n-_cvb7nuLKOEmruSPVvDw"  target="_blank">Download</a> ( **mxk9** )  | <a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |
 
 # License
  
