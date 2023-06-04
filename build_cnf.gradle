@@ -30,10 +30,16 @@ task clearBuild(){
 	delete "$rootDir/build.gradle"
 	delete "$rootDir/maxkey-webs/maxkey-web-mgt/build.gradle"
 	delete "$rootDir/maxkey-webs/maxkey-web-maxkey/build.gradle"	
+	delete "$rootDir/maxkey-webs/maxkey-web-openapi/build.gradle"	
 }
 
 task configStd(dependsOn:['clearBuild']) {
 	doLast {
+		copy {
+			from "$rootDir/maxkey-webs/maxkey-web-openapi/config/build_standard.gradle"
+			into "$rootDir/maxkey-webs/maxkey-web-openapi/"
+			rename { String fileName -> 'build.gradle' }
+		}
 		copy {
 			from "$rootDir/maxkey-webs/maxkey-web-mgt/config/build_standard.gradle"
 			into "$rootDir/maxkey-webs/maxkey-web-mgt/"
