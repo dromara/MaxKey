@@ -64,6 +64,11 @@ task configStd(dependsOn:['clearBuild']) {
 task configDocker(dependsOn:['clearBuild']) {
 	doLast {
 		copy {
+			from "$rootDir/maxkey-webs/maxkey-web-openapi/config/build_docker.gradle"
+			into "$rootDir/maxkey-webs/maxkey-web-openapi/"
+			rename { String fileName -> 'build.gradle' }
+		}
+		copy {
 			from "$rootDir/maxkey-webs/maxkey-web-mgt/config/build_docker.gradle"
 			into "$rootDir/maxkey-webs/maxkey-web-mgt/"
 			rename { String fileName -> 'build.gradle' }
@@ -88,6 +93,11 @@ task configDocker(dependsOn:['clearBuild']) {
 
 task configJar(dependsOn:['clearBuild']) {
 	doLast {
+		copy {
+			from "$rootDir/maxkey-webs/maxkey-web-openapi/config/build_jar.gradle"
+			into "$rootDir/maxkey-webs/maxkey-web-openapi/"
+			rename { String fileName -> 'build.gradle' }
+		}
 		copy {
 			from "$rootDir/maxkey-webs/maxkey-web-mgt/config/build_jar.gradle"
 			into "$rootDir/maxkey-webs/maxkey-web-mgt/"
