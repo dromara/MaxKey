@@ -165,6 +165,7 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 | 上海万序健康科技有限公司                    |
 | 上海中商网络股份有限公司                    |
 | 上海半天妖餐饮管理有限公司                  |
+| GAP盖璞（上海）商业有限公司                 |
 | 跳羚科技(厦门)有限公司                      |
 | 飞天诚信科技股份有限公司                    |
 | 浪潮工业互联网股份有限公司                  |
@@ -177,6 +178,7 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 | 云南航天工程物探检测股份有限公司            |
 | 山东港口陆海国际物流集团有限公司            |
 | 山东埃德森石油工程技术有限公司              |
+| 山东第一医科大学第一附属医院                |
 | 广州无线电集团                              |
 | 广州携旅信息科技有限公司                    |
 | 广州蓝深科技有限公司                        |
