@@ -194,6 +194,7 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 | 深圳市东阳光实业发展有限公司                |
 | 深圳云天励飞技术股份有限公司                |
 | 深圳市维玛科技有限公司                      |
+| 深圳市观塘银河电讯科技有限公司              |
 | 北京博亚思科技有限公司                      |
 | 北京银泰置业有限公司                        |
 | 北京和融通支付科技有限公司                  |
