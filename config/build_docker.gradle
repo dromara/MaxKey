@@ -173,8 +173,6 @@ subprojects {
          implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: "${tomcatVersion}"
          implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-el', version: "${tomcatVersion}"
          implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: "${tomcatVersion}"
-         //JULI logging implementation for embedded Tomcat
-         //implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: "${tomcatembedloggingjuliVersion}"
          //apache logs
          implementation group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: "${log4jVersion}"
          implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: "${log4jVersion}"
