@@ -173,21 +173,4 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		return modelAndView;
 	}
 	
-	/**
-	 * for cas logout then redirect to logout
-	 * @param request
-	 * @param response
-	 * @param casService
-	 * @return
-	 */
-	@Operation(summary = "CAS注销接口", description = "CAS注销接口",method="GET")
-	@RequestMapping(CasConstants.ENDPOINT.ENDPOINT_LOGOUT)
-	public ModelAndView logout(HttpServletRequest request , HttpServletResponse response,
-			@RequestParam(value = CasConstants.PARAMETER.SERVICE , required = false) String casService){
-		StringBuffer logoutUrl = new StringBuffer("/force/logout");
-		if(StringUtils.isNotBlank(casService)){
-			logoutUrl.append("?").append("redirect_uri=").append(casService);
-		}
-		return WebContext.forward(logoutUrl.toString());
-	}
 }
