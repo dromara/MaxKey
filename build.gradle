@@ -524,4 +524,9 @@ tasks.register("copyWindowsShellScript",Copy) {
     into "$rootDir/build/MaxKey-v${project.version}GA/";
 }
 
-build.configure { finalizedBy buildRelease }
+build.configure { 
+	finalizedBy buildRelease 
+	
+	println ""
+	println "Gradle version is ${GradleVersion.current().version}"
+}
