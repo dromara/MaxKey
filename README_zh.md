@@ -121,7 +121,7 @@ MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于�
 
 | 版本       | 日期    |  网盘(提取码)      |  Docker      |
 | --------   | :-----  | :----              |  :----       |
-| v 3.5.18   | 2023/06/05   | <a href="https://pan.baidu.com/s/1n-_cvb7nuLKOEmruSPVvDw" target="_blank">下载</a>( **mxk9** )  |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |
+| v 3.5.18   | 2023/06/05   | <a href="https://pan.baidu.com/s/1-7xpL6KapBx6WU3cOffsmg" target="_blank">下载</a>( **mxk9** )  |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |
  
 # License
  
