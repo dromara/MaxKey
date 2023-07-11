@@ -41,6 +41,8 @@ import { ResourcesService } from '../../../../service/resources.service';
 })
 export class ResourceEditerComponent implements OnInit {
   @Input() id?: String;
+  @Input() appId?: String;
+  @Input() appName?: String;
   @Input() parentNode?: NzTreeNode;
   @Input() isEdit?: boolean;
 
@@ -71,6 +73,8 @@ export class ResourceEditerComponent implements OnInit {
       });
     } else {
       if (this.parentNode) {
+        this.form.model.appId = this.appId || '';
+        this.form.model.appName = this.appName || '';
         this.form.model.parentId = this.parentNode?.key;
         this.form.model.parentName = this.parentNode?.title;
       }

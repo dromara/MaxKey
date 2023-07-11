@@ -149,7 +149,9 @@ export class ResourcesComponent implements OnInit {
       nzComponentParams: {
         isEdit: false,
         parentNode: this.treeNodes.activated,
-        id: ''
+        id: '',
+        appId: this.query.params.appId,
+        appName: this.query.params.appName
       },
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
     });
