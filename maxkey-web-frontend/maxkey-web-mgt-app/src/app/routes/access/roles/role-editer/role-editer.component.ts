@@ -76,6 +76,8 @@ export class RoleEditerComponent implements OnInit {
         this.selectValues = this.form.model.orgIdsList.split(',');
         this.cdr.detectChanges();
       });
+    } else {
+      this.form.model.category = 'static';
     }
   }
 
