@@ -43,6 +43,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -81,10 +82,14 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
                 throw new BadCredentialsException("No credentials are provided or extracted to authenticate the REST request");
             }
     	    
-    	    LoginCredential loginCredential =new LoginCredential(username,password,"CASREST");
+    	    LoginCredential loginCredential =new LoginCredential(username,password,"normal");
     	    
-    	    authenticationProvider.authenticate(loginCredential,false);
-            
+    	    Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
+    	    if(authentication == null) {
+	    	    _logger.debug("Bad Credentials Exception");
+	            return new ResponseEntity<>("Bad Credentials", HttpStatus.BAD_REQUEST);
+    	    }
+    	    
             TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",AuthorizationUtils.getAuthentication(),null);
             
             String ticket=casTicketGrantingTicketServices.createTicket(ticketGrantingTicket);
