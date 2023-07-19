@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class LoginHistoryRepository {
-    private static Logger _logger = LoggerFactory.getLogger(LoginHistoryRepository.class);
+    private static Logger logger = LoggerFactory.getLogger(LoginHistoryRepository.class);
     
     private static final String HISTORY_LOGIN_INSERT_STATEMENT = "insert into mxk_history_login (id , sessionid , userid , username , displayname , logintype , message , code , provider , sourceip , ipregion , iplocation, browser , platform , application , loginurl , sessionstatus ,instid)values( ? , ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ?, ? , ? , ?, ? , ? , ?)";
 
@@ -38,21 +38,68 @@ public class LoginHistoryRepository {
     public void login(HistoryLogin historyLogin) {
         historyLogin.setId(WebContext.genId());
         historyLogin.setLoginUrl(WebContext.getRequest().getRequestURI());
-        _logger.debug(" historyLogin " + historyLogin);
-        jdbcTemplate.update(HISTORY_LOGIN_INSERT_STATEMENT,
-                new Object[] { 
-                        historyLogin.getId(), historyLogin.getSessionId(), historyLogin.getUserId(), historyLogin.getUsername(),
-                        historyLogin.getDisplayName(), historyLogin.getLoginType(), historyLogin.getMessage(), historyLogin.getCode(), 
-                        historyLogin.getProvider(), historyLogin.getSourceIp(),historyLogin.getIpRegion(),historyLogin.getIpLocation(),
-                        historyLogin.getBrowser(), historyLogin.getPlatform(),"Browser", historyLogin.getLoginUrl() , 
-                        historyLogin.getSessionStatus(),historyLogin.getInstId()
-                        },
-                new int[] { 
-                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, 
-                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, 
-                        Types.VARCHAR ,Types.INTEGER, Types.VARCHAR
-                        });
+        //Thread insert 
+        new Thread(new HistoryLoginRunnable(jdbcTemplate,historyLogin)).start();
     }
+    
+	public class HistoryLoginRunnable implements Runnable{
+		
+		JdbcTemplate jdbcTemplate;
+		
+		HistoryLogin historyLogin;
+		
+		public HistoryLoginRunnable(JdbcTemplate jdbcTemplate, HistoryLogin historyLogin) {
+			super();
+			this.jdbcTemplate = jdbcTemplate;
+			this.historyLogin = historyLogin;
+		}
+
+		@Override
+	    public void run() {
+			logger.debug("History Login {}" , historyLogin);
+			
+	        jdbcTemplate.update(HISTORY_LOGIN_INSERT_STATEMENT,
+	                new Object[] { 
+	                        historyLogin.getId(),
+	                        historyLogin.getSessionId(),
+	                        historyLogin.getUserId(),
+	                        historyLogin.getUsername(),
+	                        historyLogin.getDisplayName(),
+	                        historyLogin.getLoginType(),
+	                        historyLogin.getMessage(),
+	                        historyLogin.getCode(),
+	                        historyLogin.getProvider(),
+	                        historyLogin.getSourceIp(),
+	                        historyLogin.getIpRegion(),
+	                        historyLogin.getIpLocation(),
+	                        historyLogin.getBrowser(),
+	                        historyLogin.getPlatform(),
+	                        "Browser",
+	                        historyLogin.getLoginUrl(),
+	                        historyLogin.getSessionStatus(),
+	                        historyLogin.getInstId()
+	                        },
+	                new int[] { 
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
+	                        Types.INTEGER,
+	                        Types.VARCHAR
+	                        });
+		}
+	}
     
 }
