@@ -165,6 +165,7 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 | 上海中商网络股份有限公司                    |
 | 上海半天妖餐饮管理有限公司                  |
 | GAP盖璞（上海）商业有限公司                 |
+| 汤臣倍健股份有限公司                        |
 | 跳羚科技(厦门)有限公司                      |
 | 飞天诚信科技股份有限公司                    |
 | 浪潮工业互联网股份有限公司                  |
