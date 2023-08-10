@@ -123,6 +123,15 @@ MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于�
 | --------   | :-----  | :----              |  :----       |
 | v 3.5.18   | 2023/06/05   | <a href="https://pan.baidu.com/s/1-7xpL6KapBx6WU3cOffsmg" target="_blank">下载</a>( **mxk9** )  |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |
  
+ 
+# 安装部署
+
+| 操作系统       | 安装手册    | 
+| --------      | :-----  |
+| Windows  | <a href="http://maxkey.top/zh/conf/tutorial.html?#windows"  target="_blank">链接</a>  |
+| Linux    | <a href="http://maxkey.top/zh/conf/tutorial.html?#linux"  target="_blank">链接</a>  |
+| Docker   | <a href="http://maxkey.top/zh/conf/deploy_docker.html"  target="_blank">链接</a>  |
+ 
 # License
  
 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="http://www.maxkey.top/zh/about/licenses.html" target="_blank">MaxKey版权声明</a>

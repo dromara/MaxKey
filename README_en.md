@@ -122,6 +122,14 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 | --------   | :----- | :----           | :----    |
 | v 3.5.18   | 2023/06/05   | <a href="https://pan.baidu.com/s/1-7xpL6KapBx6WU3cOffsmg"  target="_blank">Download</a> ( **mxk9** )  | <a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |
 
+# Install
+
+|  OS       | Manual    | 
+| --------      | :-----  |
+| Windows  | <a href="http://maxkey.top/zh/conf/tutorial.html?#windows"  target="_blank">Document</a>  |
+| Linux    | <a href="http://maxkey.top/zh/conf/tutorial.html?#linux"  target="_blank">Document</a>  |
+| Docker   | <a href="http://maxkey.top/zh/conf/deploy_docker.html"  target="_blank">Document</a>  |
+
 # License
  
 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="http://www.maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright NOTICE</a>
