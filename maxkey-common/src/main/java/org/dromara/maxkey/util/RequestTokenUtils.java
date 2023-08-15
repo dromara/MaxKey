@@ -34,17 +34,18 @@ public class RequestTokenUtils {
 	 * @return access_token
 	 */
 	public static String resolveAccessToken(HttpServletRequest request) {
-		String access_token = request.getParameter(ACCESS_TOKEN);
+		String accessToken = request.getParameter(ACCESS_TOKEN);
 		
-		if(StringUtils.isBlank(access_token)) {
+		if(StringUtils.isBlank(accessToken)) {
+			accessToken = request.getParameter(TOKEN);
+		}
+		
+		if(StringUtils.isBlank(accessToken)) {
 	    	//for header authorization bearer
-	    	access_token = AuthorizationHeaderUtils.resolveBearer(request);
+			accessToken = AuthorizationHeaderUtils.resolveBearer(request);
 	    }
 		
-		if(StringUtils.isBlank(access_token)) {
-			access_token = request.getParameter(TOKEN);
-		}
-		return access_token;
+		return accessToken;
 	}
 
 }
