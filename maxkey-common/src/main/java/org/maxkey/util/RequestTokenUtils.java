@@ -25,8 +25,8 @@ public class RequestTokenUtils {
 	 * 从请求中获取token令牌信息,优先级顺序如下  
 	 * <p>
 	 *  1) 参数 access_token <br/>
-	 *  2) header 的Authorization或者authorization <br/>
-	 *  3) 参数 token <br/>
+	 *  2) 参数 token <br/>
+	 *  3) header 的Authorization或者authorization <br/>
 	 * </p>
 	 * 
 	 * @param request
@@ -36,13 +36,14 @@ public class RequestTokenUtils {
 		String access_token = request.getParameter(ACCESS_TOKEN);
 		
 		if(StringUtils.isBlank(access_token)) {
+			access_token = request.getParameter(TOKEN);
+		}
+		
+		if(StringUtils.isBlank(access_token)) {
 	    	//for header authorization bearer
 	    	access_token = AuthorizationHeaderUtils.resolveBearer(request);
 	    }
 		
-		if(StringUtils.isBlank(access_token)) {
-			access_token = request.getParameter(TOKEN);
-		}
 		return access_token;
 	}
 
