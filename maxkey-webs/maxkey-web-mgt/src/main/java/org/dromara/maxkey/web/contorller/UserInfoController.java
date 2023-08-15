@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -50,6 +49,7 @@ import org.dromara.maxkey.util.ExcelUtils;
 import org.dromara.maxkey.util.JsonUtils;
 import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.WebContext;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +92,7 @@ public class UserInfoController {
 		_logger.debug(""+userInfo);
 		userInfo.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<UserInfo>>(
-				userInfoService.queryPageResults(userInfo)).buildResponse();
+				userInfoService.fetchPageResults(userInfo)).buildResponse();
 	}
 
 	@ResponseBody

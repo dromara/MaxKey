@@ -22,17 +22,17 @@ package org.dromara.maxkey.persistence.mapper;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.RoleMember;
 import org.dromara.maxkey.entity.Roles;
 import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
 
-public  interface RoleMemberMapper extends IJpaBaseMapper<RoleMember> {
+public  interface RoleMemberMapper extends IJpaMapper<RoleMember> {
 	
 	public List<RoleMember> memberInRole(RoleMember entity);
 	public List<RoleMember> memberNotInRole(RoleMember entity);

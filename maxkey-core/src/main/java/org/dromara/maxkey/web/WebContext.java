@@ -24,10 +24,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.LogFactory;
 import org.dromara.maxkey.configuration.ApplicationConfig;
@@ -46,6 +42,11 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.support.RequestContextUtils;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Application is common class for Web Application Context.

@@ -18,24 +18,24 @@
 package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.web.WebContext;
 
 @Entity
 @Table(name = "MXK_ROLE_PRIVILEGES")
-public class RolePrivileges  extends JpaBaseEntity implements Serializable {
+public class RolePrivileges  extends JpaEntity implements Serializable {
     private static final long serialVersionUID = -8783585691243853899L;
     
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+    @GeneratedValue
     String id;
     @Column
     String appId;

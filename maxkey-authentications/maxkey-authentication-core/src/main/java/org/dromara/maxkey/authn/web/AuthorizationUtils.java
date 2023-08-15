@@ -19,8 +19,6 @@ package org.dromara.maxkey.authn.web;
 
 import java.text.ParseException;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
@@ -33,6 +31,9 @@ import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class AuthorizationUtils {
 	private static final Logger _logger = LoggerFactory.getLogger(AuthorizationUtils.class);

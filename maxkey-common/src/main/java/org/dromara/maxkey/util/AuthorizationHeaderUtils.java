@@ -17,9 +17,9 @@
 
 package org.dromara.maxkey.util;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.dromara.maxkey.crypto.Base64Utils;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Crystal.Sea

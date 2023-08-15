@@ -16,8 +16,6 @@
  
 
 package org.dromara.maxkey.web.interceptor;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
@@ -39,6 +37,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.util.UrlUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {

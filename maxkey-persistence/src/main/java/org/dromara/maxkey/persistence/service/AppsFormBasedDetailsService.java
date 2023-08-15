@@ -19,16 +19,16 @@ package org.dromara.maxkey.persistence.service;
 
 import java.util.concurrent.TimeUnit;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.apps.AppsFormBasedDetails;
 import org.dromara.maxkey.persistence.mapper.AppsFormBasedDetailsMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Repository
-public class AppsFormBasedDetailsService  extends JpaBaseService<AppsFormBasedDetails>{
+public class AppsFormBasedDetailsService  extends JpaService<AppsFormBasedDetails>{
 
 	protected final static  Cache<String, AppsFormBasedDetails> detailsCache = 
             Caffeine.newBuilder()

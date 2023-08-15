@@ -21,7 +21,8 @@ package org.dromara.maxkey.authn.support.wsfederation;
 import org.opensaml.xml.security.x509.BasicX509Credential;
 import org.springframework.core.io.Resource;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 

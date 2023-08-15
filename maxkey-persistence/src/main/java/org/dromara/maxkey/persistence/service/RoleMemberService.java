@@ -19,18 +19,18 @@ package org.dromara.maxkey.persistence.service;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.entity.RoleMember;
 import org.dromara.maxkey.entity.Roles;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.mapper.RoleMemberMapper;
+import org.dromara.mybatis.jpa.JpaService;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RoleMemberService  extends JpaBaseService<RoleMember>{
+public class RoleMemberService  extends JpaService<RoleMember>{
 	final static Logger _logger = LoggerFactory.getLogger(RoleMemberService.class);
 	
 	public RoleMemberService() {
@@ -80,7 +80,7 @@ public class RoleMemberService  extends JpaBaseService<RoleMember>{
 		if(entity.getPageNumber() == 1 && totalPage < entity.getPageSize()) {
 			totalCount = totalPage;
 		}else {
-			totalCount = parseCount(getMapper().queryPageResultsCount(entity));
+			totalCount = parseCount(getMapper().fetchPageResults(entity));
 		}
 		
 		return new JpaPageResults<Roles>(entity.getPageNumber(),entity.getPageSize(),totalPage,totalCount,resultslist);

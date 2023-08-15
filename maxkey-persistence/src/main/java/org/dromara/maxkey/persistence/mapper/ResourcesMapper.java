@@ -20,14 +20,14 @@
  */
 package org.dromara.maxkey.persistence.mapper;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.Resources;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
 
-public  interface ResourcesMapper extends IJpaBaseMapper<Resources> {
+public  interface ResourcesMapper extends IJpaMapper<Resources> {
 
 }

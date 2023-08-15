@@ -17,12 +17,13 @@
 
 package org.dromara.maxkey.entity.apps;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * @author Crystal.Sea
@@ -37,7 +38,7 @@ public class AppsFormBasedDetails  extends Apps {
 	private static final long serialVersionUID = 563313247706861431L;
 	@Id
 	@Column
-	@GeneratedValue(strategy=GenerationType.AUTO,generator="snowflakeid")
+	@GeneratedValue
 	protected String id;
 	
 	@Column

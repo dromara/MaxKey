@@ -17,15 +17,15 @@
 
 package org.dromara.maxkey.persistence.mapper;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.SocialsProvider;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 
 /**
  * @author Crystal.Sea
  *
  */
-public interface SocialsProviderMapper  extends IJpaBaseMapper<SocialsProvider>{
+public interface SocialsProviderMapper  extends IJpaMapper<SocialsProvider>{
 
 	
 }

@@ -20,14 +20,14 @@
  */
 package org.dromara.maxkey.persistence.mapper;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
-public  interface AppsSaml20DetailsMapper extends IJpaBaseMapper<AppsSAML20Details> {
+public  interface AppsSaml20DetailsMapper extends IJpaMapper<AppsSAML20Details> {
 	
 	public  AppsSAML20Details  getAppDetails(String id);
 }

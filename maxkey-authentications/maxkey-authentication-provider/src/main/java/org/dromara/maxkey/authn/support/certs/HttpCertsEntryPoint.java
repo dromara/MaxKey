@@ -19,9 +19,6 @@ package org.dromara.maxkey.authn.support.certs;
 
 import java.security.cert.X509Certificate;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.support.httpheader.HttpHeaderEntryPoint;
 import org.slf4j.Logger;
@@ -29,6 +26,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class HttpCertsEntryPoint  implements AsyncHandlerInterceptor {
 	private static final Logger _logger = LoggerFactory.getLogger(HttpHeaderEntryPoint.class);

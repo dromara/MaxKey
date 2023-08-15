@@ -90,11 +90,11 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     @Bean
     public PasswordEncoder passwordEncoder(
     		@Value("${maxkey.crypto.password.encoder:bcrypt}") String idForEncode) {
-        Map<String ,PasswordEncoder > encoders = new HashMap<String ,PasswordEncoder>();
+    	Map<String ,PasswordEncoder > encoders = new HashMap<String ,PasswordEncoder>();
         encoders.put("bcrypt", new BCryptPasswordEncoder());
         encoders.put("plain", NoOpPasswordEncoder.getInstance());
-        encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
-        encoders.put("scrypt", new SCryptPasswordEncoder());
+        encoders.put("pbkdf2", Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8());
+        encoders.put("scrypt", SCryptPasswordEncoder.defaultsForSpringSecurity_v5_8());
         //md
         encoders.put("md4", new Md4PasswordEncoder());
         encoders.put("md5", new MessageDigestPasswordEncoder("MD5"));

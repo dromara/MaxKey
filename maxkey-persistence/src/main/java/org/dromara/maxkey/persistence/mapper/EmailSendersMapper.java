@@ -16,9 +16,9 @@
  
 
 package org.dromara.maxkey.persistence.mapper;
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.EmailSenders;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
-public interface EmailSendersMapper extends IJpaBaseMapper<EmailSenders> {
+public interface EmailSendersMapper extends IJpaMapper<EmailSenders> {
 
 }

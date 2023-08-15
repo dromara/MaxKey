@@ -19,9 +19,9 @@ package org.apache.mybatis.jpa.test;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.persistence.service.AccountsService;
+import org.dromara.mybatis.jpa.spring.MybatisJpaContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class AccountsServiceTest {
 	public static AccountsService service;
 	
 	public AccountsService getservice() {
-		service=(AccountsService)JpaWebContext.getBean("accountsService");
+		service=(AccountsService)MybatisJpaContext.getBean("accountsService");
 		return service;
 	}
 	
@@ -56,7 +56,7 @@ public class AccountsServiceTest {
 	public void load() throws Exception{
 		_logger.info("get...");
 		Accounts queryAccounts=new Accounts("7BF5315CA1004CDB8E614B0361C4D46B","fe86db85-5475-4494-b5aa-dbd3b886ff64");
-		Accounts accounts=service.load(queryAccounts);
+		Accounts accounts=service.query(queryAccounts).get(0);
 		
 		 _logger.info("accounts "+accounts);
 
@@ -93,7 +93,7 @@ public class AccountsServiceTest {
 		
 		_logger.info("Application dir "+System.getProperty("user.dir"));
 		context = new ClassPathXmlApplicationContext(new String[] {"spring/applicationContext.xml"});
-		JpaWebContext.applicationContext=context;
+		MybatisJpaContext.init(context);
 		getservice();
 		System.out.println("init ...");
 		

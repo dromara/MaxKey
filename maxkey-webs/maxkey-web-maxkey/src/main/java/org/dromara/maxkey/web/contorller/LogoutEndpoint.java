@@ -21,8 +21,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authn.session.Session;
@@ -48,6 +46,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Tag(name = "1-3-单点注销接口文档模块")
 @Controller

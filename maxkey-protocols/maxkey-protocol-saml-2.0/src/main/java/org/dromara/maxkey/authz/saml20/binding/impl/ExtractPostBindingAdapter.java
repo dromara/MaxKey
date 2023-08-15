@@ -20,7 +20,6 @@ package org.dromara.maxkey.authz.saml20.binding.impl;
 
 import java.security.KeyStore;
 
-import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.dromara.maxkey.authz.saml.common.TrustResolver;
 import org.dromara.maxkey.authz.saml20.binding.ExtractBindingAdapter;
@@ -39,6 +38,8 @@ import org.opensaml.xml.security.credential.CredentialResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public class ExtractPostBindingAdapter implements ExtractBindingAdapter, InitializingBean{
 	private final static Logger _logger = LoggerFactory.getLogger(ExtractPostBindingAdapter.class);

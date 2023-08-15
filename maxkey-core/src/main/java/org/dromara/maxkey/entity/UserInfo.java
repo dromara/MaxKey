@@ -21,13 +21,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import org.dromara.maxkey.crypto.Base64Utils;
 import org.dromara.maxkey.util.StringUtils;
 
@@ -39,7 +39,7 @@ import org.dromara.maxkey.util.StringUtils;
 
 @Entity
 @Table(name = "MXK_USERINFO")
-public class UserInfo extends JpaBaseEntity {
+public class UserInfo extends JpaEntity {
     private static final long serialVersionUID = 6402443942083382236L;
     
     public static final String CLASS_TYPE = "UserInfo";
@@ -51,7 +51,7 @@ public class UserInfo extends JpaBaseEntity {
     //
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+    @GeneratedValue
     String id;
     @Column
     protected String username;

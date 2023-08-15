@@ -17,7 +17,6 @@
 
 package org.dromara.maxkey.web.contorller;
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsEntryType;
 import org.dromara.maxkey.constants.ConstsOperateAction;
@@ -32,6 +31,7 @@ import org.dromara.maxkey.persistence.service.AccountsStrategyService;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +72,7 @@ public class AccountsController {
 		_logger.debug(""+accounts);
 		accounts.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Accounts>>(
-				accountsService.queryPageResults(accounts)).buildResponse();
+				accountsService.fetchPageResults(accounts)).buildResponse();
 	}
 
 	@ResponseBody

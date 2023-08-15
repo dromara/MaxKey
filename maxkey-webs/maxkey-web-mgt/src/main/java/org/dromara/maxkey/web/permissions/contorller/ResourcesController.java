@@ -19,7 +19,6 @@ package org.dromara.maxkey.web.permissions.contorller;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsEntryType;
 import org.dromara.maxkey.constants.ConstsOperateAction;
@@ -31,6 +30,7 @@ import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.ResourcesService;
 import org.dromara.maxkey.web.component.TreeAttributes;
 import org.dromara.maxkey.web.component.TreeNode;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ public class ResourcesController {
 		_logger.debug("fetch {}" , resource);
 		resource.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Resources>>(
-				resourcesService.queryPageResults(resource)).buildResponse();
+				resourcesService.fetchPageResults(resource)).buildResponse();
 	}
 
 	@ResponseBody

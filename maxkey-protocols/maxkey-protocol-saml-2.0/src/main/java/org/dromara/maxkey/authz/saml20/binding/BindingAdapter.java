@@ -18,9 +18,6 @@
 
 package org.dromara.maxkey.authz.saml20.binding;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.dromara.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.common.SignableSAMLObject;
@@ -28,6 +25,9 @@ import org.opensaml.saml2.metadata.Endpoint;
 import org.opensaml.ws.message.encoder.MessageEncodingException;
 import org.opensaml.ws.security.SecurityPolicyResolver;
 import org.opensaml.xml.security.credential.Credential;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 

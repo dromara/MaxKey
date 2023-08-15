@@ -17,8 +17,6 @@
 
 package org.dromara.maxkey.authn.web;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.dromara.maxkey.authn.jwt.AuthJwt;
 import org.dromara.maxkey.authn.jwt.AuthRefreshTokenService;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
@@ -36,6 +34,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value = "/auth")

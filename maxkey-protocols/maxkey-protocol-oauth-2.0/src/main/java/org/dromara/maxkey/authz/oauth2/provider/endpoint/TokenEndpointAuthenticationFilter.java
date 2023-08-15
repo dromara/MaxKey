@@ -21,15 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
@@ -57,6 +48,16 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * <p>

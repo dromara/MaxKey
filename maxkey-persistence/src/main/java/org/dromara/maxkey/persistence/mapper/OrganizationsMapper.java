@@ -18,10 +18,11 @@
 package org.dromara.maxkey.persistence.mapper;
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.dromara.maxkey.entity.Organizations;
 
-public interface OrganizationsMapper extends IJpaBaseMapper<Organizations> {
+import org.dromara.maxkey.entity.Organizations;
+import org.dromara.mybatis.jpa.IJpaMapper;
+
+public interface OrganizationsMapper extends IJpaMapper<Organizations> {
 
 	public List<Organizations> queryOrgs(Organizations organization);
 }

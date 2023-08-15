@@ -18,13 +18,13 @@
 package org.dromara.maxkey.web.apps.contorller;
 
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsProtocols;
 import org.dromara.maxkey.crypto.ReciprocalUtils;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -66,7 +66,7 @@ public class ApplicationsController extends BaseAppContorller {
 	@ResponseBody
 	public ResponseEntity<?> fetch(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
 		apps.setInstId(currentUser.getInstId());
-		JpaPageResults<Apps> appsList =appsService.queryPageResults(apps);
+		JpaPageResults<Apps> appsList =appsService.fetchPageResults(apps);
 		for (Apps app : appsList.getRows()){
 			app.transIconBase64();
 			app.setSecret(null);

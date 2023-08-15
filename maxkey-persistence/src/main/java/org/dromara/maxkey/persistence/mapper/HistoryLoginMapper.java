@@ -20,14 +20,14 @@ package org.dromara.maxkey.persistence.mapper;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.HistoryLogin;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
-public interface HistoryLoginMapper extends IJpaBaseMapper<HistoryLogin> {
+public interface HistoryLoginMapper extends IJpaMapper<HistoryLogin> {
     
     public List<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin);
     

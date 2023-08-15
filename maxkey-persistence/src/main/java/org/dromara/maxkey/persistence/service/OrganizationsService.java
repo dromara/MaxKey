@@ -19,7 +19,6 @@ package org.dromara.maxkey.persistence.service;
 
 import java.sql.Types;
 import java.util.List;
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.dromara.maxkey.entity.Organizations;
@@ -27,12 +26,13 @@ import org.dromara.maxkey.persistence.mapper.OrganizationsMapper;
 import org.dromara.maxkey.provision.ProvisionAction;
 import org.dromara.maxkey.provision.ProvisionService;
 import org.dromara.maxkey.provision.ProvisionTopic;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class OrganizationsService  extends JpaBaseService<Organizations>{
+public class OrganizationsService  extends JpaService<Organizations>{
 
     @Autowired
     ProvisionService provisionService;

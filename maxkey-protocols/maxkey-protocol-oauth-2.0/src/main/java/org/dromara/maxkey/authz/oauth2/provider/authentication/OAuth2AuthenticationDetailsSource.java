@@ -14,9 +14,9 @@
 
 package org.dromara.maxkey.authz.oauth2.provider.authentication;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.security.authentication.AuthenticationDetailsSource;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * A source for authentication details in an OAuth2 protected Resource.

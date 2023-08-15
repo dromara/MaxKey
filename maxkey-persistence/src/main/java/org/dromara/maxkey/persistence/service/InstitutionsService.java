@@ -17,14 +17,14 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.Institutions;
 import org.dromara.maxkey.persistence.mapper.InstitutionsMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class InstitutionsService  extends JpaBaseService<Institutions>{
+public class InstitutionsService  extends JpaService<Institutions>{
 	
 	public InstitutionsService() {
 		super(InstitutionsMapper.class);

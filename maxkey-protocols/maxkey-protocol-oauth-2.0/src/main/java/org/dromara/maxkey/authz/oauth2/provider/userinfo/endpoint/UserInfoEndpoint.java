@@ -20,9 +20,6 @@ package org.dromara.maxkey.authz.oauth2.provider.userinfo.endpoint;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
@@ -51,6 +48,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller

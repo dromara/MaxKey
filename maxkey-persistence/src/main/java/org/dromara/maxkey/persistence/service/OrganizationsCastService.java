@@ -17,16 +17,16 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.OrganizationsCast;
 import org.dromara.maxkey.persistence.mapper.OrganizationsCastMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class OrganizationsCastService  extends JpaBaseService<OrganizationsCast>{
+public class OrganizationsCastService  extends JpaService<OrganizationsCast>{
 
 	final static Logger _logger = LoggerFactory.getLogger(OrganizationsCastService.class);
 

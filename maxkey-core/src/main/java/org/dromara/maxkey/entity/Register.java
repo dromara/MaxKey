@@ -17,18 +17,17 @@
 
 package org.dromara.maxkey.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "MXK_REGISTER")
-public class Register extends JpaBaseEntity{
+public class Register extends JpaEntity{
 	
 	/**
 	 * 
@@ -36,7 +35,7 @@ public class Register extends JpaBaseEntity{
 	private static final long serialVersionUID = -4021412077583763378L;
 	@Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+    @GeneratedValue
 	private String id;
 	@Column
 	private String displayName;

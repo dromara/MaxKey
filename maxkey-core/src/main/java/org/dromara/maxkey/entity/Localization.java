@@ -19,18 +19,17 @@ package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "MXK_LOCALIZATION")
-public class Localization  extends JpaBaseEntity implements Serializable {
+public class Localization  extends JpaEntity implements Serializable {
 
 	/**
 	 * 
@@ -38,7 +37,7 @@ public class Localization  extends JpaBaseEntity implements Serializable {
 	private static final long serialVersionUID = -142504964446659847L;
 	@Id
 	@Column
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+	@GeneratedValue
 	private String id;
 	
 	@Column

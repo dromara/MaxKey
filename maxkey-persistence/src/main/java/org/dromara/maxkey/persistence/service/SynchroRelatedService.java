@@ -21,16 +21,16 @@ import java.sql.Types;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.Synchronizers;
 import org.dromara.maxkey.persistence.mapper.SynchroRelatedMapper;
 import org.dromara.maxkey.util.DateUtils;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SynchroRelatedService  extends JpaBaseService<SynchroRelated>{
+public class SynchroRelatedService  extends JpaService<SynchroRelated>{
 
 	public SynchroRelatedService() {
 		super(SynchroRelatedMapper.class);

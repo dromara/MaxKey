@@ -17,7 +17,6 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.HistorySystemLogs;
@@ -32,12 +31,13 @@ import org.dromara.maxkey.entity.Synchronizers;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.mapper.HistorySystemLogsMapper;
 import org.dromara.maxkey.util.JsonUtils;
+import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistorySystemLogsService  extends JpaBaseService<HistorySystemLogs>{
+public class HistorySystemLogsService  extends JpaService<HistorySystemLogs>{
 	final static Logger _logger = LoggerFactory.getLogger(HistorySystemLogsService.class);
 	
 	public HistorySystemLogsService() {

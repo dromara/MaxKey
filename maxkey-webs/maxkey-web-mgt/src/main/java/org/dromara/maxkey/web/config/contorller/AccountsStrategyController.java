@@ -17,13 +17,13 @@
 
 package org.dromara.maxkey.web.config.contorller;
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.service.AccountsService;
 import org.dromara.maxkey.persistence.service.AccountsStrategyService;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class AccountsStrategyController {
 	@ResponseBody
 	public ResponseEntity<?> fetch(@ModelAttribute AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
 		accountsStrategy.setInstId(currentUser.getInstId());
-		JpaPageResults<AccountsStrategy> accountsStrategyList =accountsStrategyService.queryPageResults(accountsStrategy);
+		JpaPageResults<AccountsStrategy> accountsStrategyList =accountsStrategyService.fetchPageResults(accountsStrategy);
 		for (AccountsStrategy strategy : accountsStrategyList.getRows()){
 			strategy.transIconBase64();
 		}

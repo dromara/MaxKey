@@ -22,9 +22,10 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 
 import org.dromara.maxkey.persistence.repository.LocalizationRepository;
 import org.dromara.maxkey.web.WebContext;

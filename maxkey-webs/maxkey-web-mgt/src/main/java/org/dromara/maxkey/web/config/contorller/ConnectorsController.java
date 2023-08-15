@@ -18,13 +18,13 @@
 package org.dromara.maxkey.web.config.contorller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Connectors;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.service.ConnectorsService;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class ConnectorsController {
 		_logger.debug(""+connector);
 		connector.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Connectors>>(
-				connectorsService.queryPageResults(connector)).buildResponse();
+				connectorsService.fetchPageResults(connector)).buildResponse();
 	}
 	
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})

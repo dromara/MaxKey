@@ -17,9 +17,9 @@
 
 package org.dromara.maxkey.entity.xml;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * xml can not include array , MultipartFile
@@ -27,7 +27,7 @@ import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
  *
  */
 @XmlRootElement
-public class UserInfoXML extends JpaBaseEntity {
+public class UserInfoXML extends JpaEntity {
 
 	/**
 	 * 

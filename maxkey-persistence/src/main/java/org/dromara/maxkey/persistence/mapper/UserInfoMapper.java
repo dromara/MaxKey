@@ -21,19 +21,19 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.UserInfoAdjoint;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 
 /**
  * @author Crystal.Sea
  *
  */
-public interface UserInfoMapper  extends IJpaBaseMapper<UserInfo>{
+public interface UserInfoMapper  extends IJpaMapper<UserInfo>{
 	
 	//login query
 	public UserInfo findByAppIdAndUsername(UserInfo userInfo);

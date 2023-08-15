@@ -18,11 +18,11 @@
 package org.dromara.maxkey.web;
 
 import java.io.IOException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
 import org.dromara.maxkey.constants.ContentType;
 import org.springframework.stereotype.Component;
+
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class HttpResponseAdapter {

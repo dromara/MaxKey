@@ -17,9 +17,6 @@
 
 package org.dromara.maxkey.authz.saml20.provider.endpoint;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authz.saml20.binding.ExtractBindingAdapter;
 import org.dromara.maxkey.authz.saml20.xml.SAML2ValidatorSuite;
@@ -40,6 +37,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Tag(name = "2-2-SAML v2.0 API文档模块")
 @Controller

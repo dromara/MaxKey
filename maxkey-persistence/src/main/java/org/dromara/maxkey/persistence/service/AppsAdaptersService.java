@@ -17,13 +17,13 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.apps.AppsAdapters;
 import org.dromara.maxkey.persistence.mapper.AppsAdaptersMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AppsAdaptersService  extends JpaBaseService<AppsAdapters>{
+public class AppsAdaptersService  extends JpaService<AppsAdapters>{
 
 	public AppsAdaptersService() {
 		super(AppsAdaptersMapper.class);

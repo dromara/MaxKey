@@ -17,8 +17,6 @@
 
 package org.dromara.maxkey.web.contorller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.entity.Message;
@@ -30,6 +28,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class LogoutEndpoint {

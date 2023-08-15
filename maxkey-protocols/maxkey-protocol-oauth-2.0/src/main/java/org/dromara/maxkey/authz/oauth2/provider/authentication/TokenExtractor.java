@@ -13,9 +13,10 @@
 
 package org.dromara.maxkey.authz.oauth2.provider.authentication;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.core.Authentication;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Dave Syer

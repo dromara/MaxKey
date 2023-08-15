@@ -18,14 +18,20 @@
 package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * Saml20Metadata.
  * @author Crystal.Sea
  *
  */
-public class Saml20Metadata extends JpaBaseEntity implements Serializable {
+public class Saml20Metadata extends JpaEntity implements Serializable {
     private static final long serialVersionUID = -403743150268165622L;
     
     public static  final class ContactPersonType {

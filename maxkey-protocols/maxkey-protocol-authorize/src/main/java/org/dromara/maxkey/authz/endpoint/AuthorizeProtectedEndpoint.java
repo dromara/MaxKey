@@ -20,8 +20,6 @@
  */
 package org.dromara.maxkey.authz.endpoint;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.UserInfo;
@@ -31,6 +29,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Crystal.Sea

@@ -17,14 +17,13 @@
 
 package org.dromara.maxkey.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * @author Crystal.Sea
@@ -32,12 +31,12 @@ import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
  */
 @Entity
 @Table(name = "MXK_HISTORY_LOGIN_APPS")  
-public class HistoryLoginApps extends JpaBaseEntity {
+public class HistoryLoginApps extends JpaEntity {
 	
 	private static final long serialVersionUID = 5085201575292304749L;
 	@Id
 	@Column
-	@GeneratedValue(strategy=GenerationType.AUTO,generator="snowflakeid")
+	@GeneratedValue
 	String id;
 	@Column
 	private String sessionId;

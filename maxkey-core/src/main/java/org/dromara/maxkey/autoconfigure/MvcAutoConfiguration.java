@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.Filter;
 
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsTimeInterval;
@@ -53,13 +52,14 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import jakarta.servlet.Filter;
 
 
 @AutoConfiguration
@@ -102,6 +102,7 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
      * upload file support .
      * @return multipartResolver
      */
+    /*
     @Bean (name = "multipartResolver")
     public CommonsMultipartResolver commonsMultipartResolver(
             @Value("${spring.servlet.multipart.max-file-size:0}") int maxUploadSize)  {
@@ -110,7 +111,7 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
                 new CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(maxUploadSize);
         return multipartResolver;
-    }
+    }*/
     
     /**
      * handlerMapping .

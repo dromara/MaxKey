@@ -22,7 +22,8 @@ import org.dromara.maxkey.authz.cas.endpoint.ticket.pgt.ProxyGrantingTicket;
 import org.dromara.maxkey.entity.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
+
 
 /**
  * Domain object representing a Service Ticket. A service ticket grants specific

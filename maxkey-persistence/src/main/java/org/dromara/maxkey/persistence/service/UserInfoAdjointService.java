@@ -17,15 +17,15 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.UserInfoAdjoint;
 import org.dromara.maxkey.persistence.mapper.UserInfoAdjointMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserInfoAdjointService  extends JpaBaseService<UserInfoAdjoint>{
+public class UserInfoAdjointService  extends JpaService<UserInfoAdjoint>{
     final static Logger _logger = LoggerFactory.getLogger(UserInfoAdjointService.class);
     
     

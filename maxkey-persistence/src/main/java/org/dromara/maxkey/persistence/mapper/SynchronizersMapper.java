@@ -20,14 +20,14 @@
  */
 package org.dromara.maxkey.persistence.mapper;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.Synchronizers;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
 
-public  interface SynchronizersMapper extends IJpaBaseMapper<Synchronizers> {
+public  interface SynchronizersMapper extends IJpaMapper<Synchronizers> {
 	
 }

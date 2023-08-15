@@ -20,8 +20,6 @@
  */
 package org.dromara.maxkey.authz.cas.endpoint;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
@@ -53,6 +51,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * @author Crystal.Sea

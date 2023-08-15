@@ -23,12 +23,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.Institutions;
 import org.dromara.maxkey.entity.Roles;
 import org.dromara.maxkey.persistence.mapper.RolesMapper;
 import org.dromara.maxkey.util.StringUtils;
+import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ import org.springframework.stereotype.Repository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Repository
-public class RolesService  extends JpaBaseService<Roles> implements Serializable {
+public class RolesService  extends JpaService<Roles> implements Serializable {
     /**
      * 
      */

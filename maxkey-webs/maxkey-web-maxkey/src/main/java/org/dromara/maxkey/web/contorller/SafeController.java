@@ -17,9 +17,6 @@
 
 package org.dromara.maxkey.web.contorller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsTimeInterval;
 import org.dromara.maxkey.entity.Message;
@@ -36,6 +33,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value={"/safe"})

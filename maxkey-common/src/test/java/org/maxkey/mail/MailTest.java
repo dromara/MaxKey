@@ -17,9 +17,6 @@
 
 package org.maxkey.mail;
 
-import org.apache.commons.mail.DefaultAuthenticator;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.SimpleEmail;
 
 public class MailTest {
 	
@@ -31,7 +28,7 @@ public class MailTest {
 	int port=465;
 	boolean ssl=true;
 	String senderMail="test@connsec.com";
-	
+	/*
 	Email email = new SimpleEmail();
 	email.setHostName(smtpHost);
 	email.setSmtpPort(port);
@@ -42,5 +39,6 @@ public class MailTest {
 	email.setMsg("You Token is "+111+" , it validity in "+5 +" minutes");
 	email.addTo("shimingxy@qq.com");
 	email.send();
+	*/
 	}
 }

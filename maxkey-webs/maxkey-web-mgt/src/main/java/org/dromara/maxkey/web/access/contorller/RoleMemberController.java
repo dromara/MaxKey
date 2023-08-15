@@ -17,7 +17,6 @@
 
 package org.dromara.maxkey.web.access.contorller;
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.RoleMember;
@@ -29,6 +28,7 @@ import org.dromara.maxkey.persistence.service.RolesService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.WebContext;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ public class RoleMemberController {
 		_logger.debug("fetch "+roleMember);
 		roleMember.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<RoleMember>>(
-				roleMemberService.queryPageResults(roleMember)).buildResponse();
+				roleMemberService.fetchPageResults(roleMember)).buildResponse();
 	}
 
 	@RequestMapping(value = { "/memberInRole" })
@@ -76,7 +76,7 @@ public class RoleMemberController {
 		_logger.debug("roleMember : "+roleMember);
 		roleMember.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<RoleMember>>(
-				roleMemberService.queryPageResults("memberInRole",roleMember)).buildResponse();
+				roleMemberService.fetchPageResults("memberInRole",roleMember)).buildResponse();
 
 	}
 
@@ -86,7 +86,7 @@ public class RoleMemberController {
 	public ResponseEntity<?> memberNotInRole(@ModelAttribute  RoleMember roleMember,@CurrentUser UserInfo currentUser) {
 		roleMember.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<RoleMember>>(
-				roleMemberService.queryPageResults("memberNotInRole",roleMember)).buildResponse();
+				roleMemberService.fetchPageResults("memberNotInRole",roleMember)).buildResponse();
 	}
 
 	@RequestMapping(value = { "/rolesNoMember" })

@@ -18,9 +18,6 @@
 package org.dromara.maxkey.authn.web;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
@@ -32,6 +29,10 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.util.StringUtils;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * An authentication success strategy which can make use of the

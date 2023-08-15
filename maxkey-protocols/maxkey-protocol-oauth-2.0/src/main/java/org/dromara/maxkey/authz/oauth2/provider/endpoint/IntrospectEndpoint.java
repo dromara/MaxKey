@@ -17,9 +17,6 @@
 
 package org.dromara.maxkey.authz.oauth2.provider.endpoint;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authz.oauth2.common.OAuth2Constants;
@@ -42,6 +39,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller

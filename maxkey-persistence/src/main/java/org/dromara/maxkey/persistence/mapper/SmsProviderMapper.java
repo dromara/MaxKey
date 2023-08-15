@@ -16,9 +16,10 @@
  
 
 package org.dromara.maxkey.persistence.mapper;
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.dromara.maxkey.entity.SmsProvider;
 
-public interface SmsProviderMapper extends IJpaBaseMapper<SmsProvider> {
+import org.dromara.maxkey.entity.SmsProvider;
+import org.dromara.mybatis.jpa.IJpaMapper;
+
+public interface SmsProviderMapper extends IJpaMapper<SmsProvider> {
 
 }

@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.entity.Roles;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.service.RoleMemberService;
@@ -35,6 +34,7 @@ import org.dromara.maxkey.web.apis.identity.scim.resources.ScimMemberRef;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimMeta;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimParameters;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimSearchResult;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +119,7 @@ public class ScimGroupController {
     	queryModel.setPageSize(requestParameters.getCount());
     	queryModel.calculate(requestParameters.getStartIndex()); 
         
-        JpaPageResults<Roles> orgResults = rolesService.queryPageResults(queryModel);
+        JpaPageResults<Roles> orgResults = rolesService.fetchPageResults(queryModel);
         List<ScimGroup> resultList = new ArrayList<ScimGroup>();
         for(Roles group : orgResults.getRows()) {
         	resultList.add(role2ScimGroup(group));

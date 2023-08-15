@@ -21,14 +21,14 @@
 package org.dromara.maxkey.persistence.mapper;
 
 import org.apache.ibatis.annotations.Update;
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.SynchroRelated;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
-public  interface SynchroRelatedMapper extends IJpaBaseMapper<SynchroRelated> {
+public  interface SynchroRelatedMapper extends IJpaMapper<SynchroRelated> {
 	@Update("update mxk_synchro_related set synctime = #{syncTime} where id= #{id} ")
 	public int updateSyncTime(SynchroRelated synchroRelated);
 }

@@ -19,17 +19,17 @@ package org.dromara.maxkey.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -37,7 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Crystal.Sea
  * 
  */
-public class ExcelImport extends JpaBaseEntity {
+public class ExcelImport extends JpaEntity {
 
     /**
      * 
@@ -46,7 +46,7 @@ public class ExcelImport extends JpaBaseEntity {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+    @GeneratedValue
     String id;
  
     @JsonIgnore

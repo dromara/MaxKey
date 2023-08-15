@@ -19,15 +19,15 @@ package org.dromara.maxkey.persistence.service;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.SocialsAssociate;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.mapper.SocialsAssociateMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class SocialsAssociatesService  extends JpaBaseService<SocialsAssociate>{
+public class SocialsAssociatesService  extends JpaService<SocialsAssociate>{
 	
 	public SocialsAssociatesService() {
 		super(SocialsAssociateMapper.class);

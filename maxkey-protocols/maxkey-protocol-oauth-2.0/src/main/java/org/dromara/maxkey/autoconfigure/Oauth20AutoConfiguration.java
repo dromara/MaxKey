@@ -21,7 +21,6 @@ import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-import javax.servlet.Filter;
 import javax.sql.DataSource;
 
 import org.dromara.maxkey.authz.oauth2.common.OAuth2Constants;
@@ -62,6 +61,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWEAlgorithm;
+
+import jakarta.servlet.Filter;
 
 @AutoConfiguration
 @ComponentScan(basePackages = {

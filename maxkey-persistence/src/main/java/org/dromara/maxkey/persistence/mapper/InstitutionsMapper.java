@@ -17,11 +17,11 @@
 
 package org.dromara.maxkey.persistence.mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.Institutions;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
-public interface InstitutionsMapper extends IJpaBaseMapper<Institutions> {
+public interface InstitutionsMapper extends IJpaMapper<Institutions> {
 
 	@Select("select * from  mxk_institutions where domain = #{value} and status = " + ConstsStatus.ACTIVE)
 	public Institutions findByDomain(String domain);

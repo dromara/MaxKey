@@ -20,7 +20,6 @@ package org.dromara.maxkey.web.tag;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.dromara.maxkey.web.WebContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,7 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * <@basePath/>

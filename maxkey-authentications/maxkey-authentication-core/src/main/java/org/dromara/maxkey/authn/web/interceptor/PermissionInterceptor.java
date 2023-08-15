@@ -17,9 +17,6 @@
 
 package org.dromara.maxkey.authn.web.interceptor;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
@@ -31,6 +28,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 /**
  * 权限Interceptor处理
  * @author Crystal.Sea

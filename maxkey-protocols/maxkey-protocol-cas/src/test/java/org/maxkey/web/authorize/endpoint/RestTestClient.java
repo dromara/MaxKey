@@ -46,7 +46,7 @@ public class RestTestClient {
         final MockHttpServletRequest request = new MockHttpServletRequest();
         final MockHttpServletResponse response = new MockHttpServletResponse();
 
-        final WebContext webContext = new J2EContext(request, response);
+        final WebContext webContext = null;//new J2EContext(request, response);
         casConfiguration.init();
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials(username,password);
         CasRestAuthenticator restAuthenticator = new CasRestAuthenticator(casConfiguration);

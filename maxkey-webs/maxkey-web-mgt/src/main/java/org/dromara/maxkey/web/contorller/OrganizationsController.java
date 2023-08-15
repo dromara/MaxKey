@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -41,6 +40,7 @@ import org.dromara.maxkey.persistence.service.OrganizationsService;
 import org.dromara.maxkey.util.ExcelUtils;
 import org.dromara.maxkey.web.component.TreeAttributes;
 import org.dromara.maxkey.web.component.TreeNode;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +74,7 @@ public class OrganizationsController {
 		_logger.debug("fetch {}" , org);
 		org.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Organizations>>(
-				organizationsService.queryPageResults(org)).buildResponse();
+				organizationsService.fetchPageResults(org)).buildResponse();
 	}
 
 	@ResponseBody

@@ -19,9 +19,6 @@ package org.dromara.maxkey.authz.saml20.provider.endpoint;
 
 import java.security.KeyStore;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.dromara.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.dromara.maxkey.authz.saml20.binding.BindingAdapter;
 import org.dromara.maxkey.authz.saml20.binding.ExtractBindingAdapter;
@@ -43,6 +40,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * idp init  not need extract SAML request message

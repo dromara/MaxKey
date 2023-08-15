@@ -22,16 +22,16 @@ package org.dromara.maxkey.persistence.mapper;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.Roles;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
 
-public  interface AccountsStrategyMapper extends IJpaBaseMapper<AccountsStrategy> {
+public  interface AccountsStrategyMapper extends IJpaMapper<AccountsStrategy> {
 
     public List<Roles> queryDynamicGroups(Roles groups);
 }

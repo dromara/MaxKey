@@ -1,8 +1,9 @@
 package org.dromara.maxkey.util;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 从请求中解析token令牌信息,优先级顺序如下  

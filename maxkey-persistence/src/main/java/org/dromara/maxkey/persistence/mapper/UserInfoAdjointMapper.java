@@ -17,15 +17,15 @@
 
 package org.dromara.maxkey.persistence.mapper;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.UserInfoAdjoint;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 
 /**
  * @author Crystal.Sea
  *
  */
-public interface UserInfoAdjointMapper  extends IJpaBaseMapper<UserInfoAdjoint>{
+public interface UserInfoAdjointMapper  extends IJpaMapper<UserInfoAdjoint>{
 
 	
 }

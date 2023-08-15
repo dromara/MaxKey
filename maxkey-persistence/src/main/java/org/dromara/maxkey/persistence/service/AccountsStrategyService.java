@@ -20,16 +20,16 @@ package org.dromara.maxkey.persistence.service;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.Roles;
 import org.dromara.maxkey.persistence.mapper.AccountsStrategyMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AccountsStrategyService  extends JpaBaseService<AccountsStrategy> implements Serializable {
+public class AccountsStrategyService  extends JpaService<AccountsStrategy> implements Serializable {
     /**
      * 
      */

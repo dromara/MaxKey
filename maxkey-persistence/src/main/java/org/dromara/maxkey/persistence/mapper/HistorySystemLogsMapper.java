@@ -20,14 +20,14 @@
  */
 package org.dromara.maxkey.persistence.mapper;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.HistorySystemLogs;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
-public  interface HistorySystemLogsMapper extends IJpaBaseMapper<HistorySystemLogs> {
+public  interface HistorySystemLogsMapper extends IJpaMapper<HistorySystemLogs> {
 	
 
 }

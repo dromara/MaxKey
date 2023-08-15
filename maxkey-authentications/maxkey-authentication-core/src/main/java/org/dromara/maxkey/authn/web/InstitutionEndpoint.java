@@ -17,8 +17,6 @@
 
 package org.dromara.maxkey.authn.web;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.entity.Institutions;
@@ -32,6 +30,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value = "/inst")

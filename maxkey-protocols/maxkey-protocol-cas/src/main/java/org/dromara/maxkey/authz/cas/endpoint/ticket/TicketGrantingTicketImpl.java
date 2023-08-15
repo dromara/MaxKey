@@ -22,17 +22,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 import org.dromara.maxkey.entity.apps.AppsCasDetails;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;

@@ -20,10 +20,10 @@ package org.dromara.maxkey.web.apis.identity.rest;
 import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.persistence.service.OrganizationsService;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +106,6 @@ public class RestOrganizationController {
     	}
 		_logger.debug("Organizations {}" , org);
 		return new Message<JpaPageResults<Organizations>>(
-				organizationsService.queryPageResults(org)).buildResponse();
+				organizationsService.fetchPageResults(org)).buildResponse();
 	}
 }

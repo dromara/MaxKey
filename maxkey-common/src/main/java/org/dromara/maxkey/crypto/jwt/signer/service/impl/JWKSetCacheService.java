@@ -22,8 +22,6 @@ package org.dromara.maxkey.crypto.jwt.signer.service.impl;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.dromara.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.dromara.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionService;
 import org.dromara.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
@@ -105,8 +103,9 @@ public class JWKSetCacheService {
 	 *
 	 */
 	private class JWKSetVerifierFetcher extends CacheLoader<String, JwtSigningAndValidationService> {
-		private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
-		private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+		//private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
+		//private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+		private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory();
 		private RestTemplate restTemplate = new RestTemplate(httpFactory);
 
 		/**
@@ -133,8 +132,9 @@ public class JWKSetCacheService {
 	 *
 	 */
 	private class JWKSetEncryptorFetcher extends CacheLoader<String, JwtEncryptionAndDecryptionService> {
-		private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
-		private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+		//private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
+		//private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+		private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory();
 		private RestTemplate restTemplate = new RestTemplate(httpFactory);
 		/* (non-Javadoc)
 		 * @see com.google.common.cache.CacheLoader#load(java.lang.Object)

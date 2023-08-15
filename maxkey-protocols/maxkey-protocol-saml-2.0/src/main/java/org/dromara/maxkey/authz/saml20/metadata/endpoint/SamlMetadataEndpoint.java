@@ -17,11 +17,8 @@
 
 package org.dromara.maxkey.authz.saml20.metadata.endpoint;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.Validate;
-import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.dromara.maxkey.authz.saml.common.TrustResolver;
 import org.dromara.maxkey.authz.saml20.metadata.MetadataGenerator;
 import org.dromara.maxkey.constants.ContentType;
@@ -54,6 +51,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Tag(name = "2-2-SAML v2.0 API文档模块")
 @Controller

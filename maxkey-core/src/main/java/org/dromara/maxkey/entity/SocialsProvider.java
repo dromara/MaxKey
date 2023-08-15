@@ -19,14 +19,13 @@ package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * @author Crystal.Sea
@@ -34,14 +33,14 @@ import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
  */
 @Entity
 @Table(name = "MXK_SOCIALS_PROVIDER")
-public class SocialsProvider extends JpaBaseEntity implements Serializable {
+public class SocialsProvider extends JpaEntity implements Serializable {
     /**
      * 
      */
     private static final long serialVersionUID = 1636727203025187769L;
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "snowflakeid")
+    @GeneratedValue
     private String id;
     @Column
 	private String provider;

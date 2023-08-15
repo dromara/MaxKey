@@ -17,7 +17,6 @@
 
 package org.dromara.maxkey;
 
-import javax.servlet.ServletException;
 
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.web.InitializeContext;
@@ -32,6 +31,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+
+import jakarta.servlet.ServletException;
 
 @ComponentScan(basePackages = {
 	"org.maxkey.authn",

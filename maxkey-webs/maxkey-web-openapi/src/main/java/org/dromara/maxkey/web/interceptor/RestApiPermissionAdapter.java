@@ -18,9 +18,6 @@
 package org.dromara.maxkey.web.interceptor;
 
 import java.util.concurrent.ConcurrentHashMap;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authz.oauth2.provider.OAuth2Authentication;
@@ -36,6 +33,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * basic认证Interceptor处理.

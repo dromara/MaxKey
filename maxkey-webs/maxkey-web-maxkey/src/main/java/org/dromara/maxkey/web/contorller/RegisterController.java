@@ -20,7 +20,6 @@ package org.dromara.maxkey.web.contorller;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-import javax.servlet.ServletException;
 
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.configuration.ApplicationConfig;
@@ -44,6 +43,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import jakarta.servlet.ServletException;
 
 
 @Controller

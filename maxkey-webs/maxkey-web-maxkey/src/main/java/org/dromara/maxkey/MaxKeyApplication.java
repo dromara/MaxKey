@@ -17,11 +17,10 @@
 
 package org.dromara.maxkey;
 
-import javax.servlet.ServletException;
 import org.apache.ibatis.io.VFS;
-import org.apache.mybatis.jpa.SpringBootVFS;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.web.InitializeContext;
+import org.dromara.mybatis.jpa.starter.SpringBootVFS;
 import org.joda.time.DateTime;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -32,6 +31,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import jakarta.servlet.ServletException;
 
 @SpringBootApplication
 @EnableDiscoveryClient

@@ -22,15 +22,15 @@ package org.dromara.maxkey.persistence.mapper;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.RolePermissions;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
 
-public  interface RolePermissionsMapper extends IJpaBaseMapper<RolePermissions> {
+public  interface RolePermissionsMapper extends IJpaMapper<RolePermissions> {
 	
 	public List<RolePermissions>appsInRole(RolePermissions entity);
 	

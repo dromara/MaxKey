@@ -19,15 +19,15 @@ package org.dromara.maxkey.persistence.service;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.RolePrivileges;
 import org.dromara.maxkey.persistence.mapper.RolePrivilegesMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RolePrivilegesService  extends JpaBaseService<RolePrivileges>{
+public class RolePrivilegesService  extends JpaService<RolePrivileges>{
     final static Logger _logger = LoggerFactory.getLogger(RolePrivilegesService.class);
    
     

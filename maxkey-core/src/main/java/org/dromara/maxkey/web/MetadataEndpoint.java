@@ -17,15 +17,14 @@
 
 package org.dromara.maxkey.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.dromara.maxkey.constants.ContentType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class MetadataEndpoint {
@@ -33,6 +32,6 @@ public class MetadataEndpoint {
 	@RequestMapping(value = "/metadata/version",produces = ContentType.TEXT_PLAIN_UTF8, method={RequestMethod.GET})
 	@ResponseBody
 	public String  metadata(HttpServletRequest request,HttpServletResponse response) {
-		return JpaWebContext.version();
+		return "";//WebContext.version();
 	}
 }

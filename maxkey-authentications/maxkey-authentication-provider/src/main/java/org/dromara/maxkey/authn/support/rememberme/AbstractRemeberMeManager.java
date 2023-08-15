@@ -19,8 +19,6 @@ package org.dromara.maxkey.authn.support.rememberme;
 
 import java.text.ParseException;
 import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
@@ -35,6 +33,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 
 import com.nimbusds.jwt.JWTClaimsSet;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public abstract class AbstractRemeberMeManager {
     private static final Logger _logger = LoggerFactory.getLogger(AbstractRemeberMeManager.class);

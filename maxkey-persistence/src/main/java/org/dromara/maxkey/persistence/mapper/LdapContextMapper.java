@@ -16,9 +16,9 @@
  
 
 package org.dromara.maxkey.persistence.mapper;
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.LdapContext;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
-public interface LdapContextMapper extends IJpaBaseMapper<LdapContext> {
+public interface LdapContextMapper extends IJpaMapper<LdapContext> {
 
 }

@@ -19,13 +19,13 @@ package org.dromara.maxkey.web.historys.contorller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.HistorySystemLogs;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.util.DateUtils;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ final static Logger _logger = LoggerFactory.getLogger(SystemLogsController.class
 		_logger.debug("historys/historyLog/fetch {} ",historyLog);
 		historyLog.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<HistorySystemLogs>>(
-				 	historySystemLogsService.queryPageResults(historyLog)
+				 	historySystemLogsService.fetchPageResults(historyLog)
 				).buildResponse();
 	}
 	

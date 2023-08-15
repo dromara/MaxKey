@@ -19,11 +19,6 @@ package org.dromara.maxkey.web;
 
 import java.io.IOException;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.configuration.ApplicationConfig;
@@ -32,6 +27,12 @@ import org.dromara.maxkey.persistence.repository.InstitutionsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.GenericFilterBean;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class WebInstRequestFilter  extends GenericFilterBean {
 	final static Logger _logger = LoggerFactory.getLogger(GenericFilterBean.class);	

@@ -20,7 +20,6 @@
  */
 package org.dromara.maxkey.authz.endpoint;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.dromara.maxkey.constants.ConstsProtocols;
 import org.dromara.maxkey.entity.apps.Apps;
@@ -37,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Crystal.Sea

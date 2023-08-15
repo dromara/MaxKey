@@ -17,12 +17,12 @@
 
 package org.dromara.maxkey.web.contorller;
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.UserInfoAdjoint;
 import org.dromara.maxkey.persistence.service.UserInfoAdjointService;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class UserAdjointController {
 			@CurrentUser UserInfo currentUser){
 		_logger.debug(""+userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
-		return userInfoAdjointService.queryPageResults(userInfoAdjoint);
+		return userInfoAdjointService.fetchPageResults(userInfoAdjoint);
 	}
 
 	

@@ -17,26 +17,26 @@
 
 package org.dromara.maxkey.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 @Entity
 @Table(name = "MXK_FILE_UPLOAD")
-public class FileUpload extends JpaBaseEntity {
+public class FileUpload extends JpaEntity {
 	private static final long serialVersionUID = -4338400992411166457L;
 
 	@Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+    @GeneratedValue
     String id;
 	
 	@Column

@@ -17,8 +17,13 @@
 
 package org.dromara.maxkey.entity.apps;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import org.dromara.maxkey.entity.apps.oauth2.provider.client.BaseClientDetails;
 import org.springframework.util.StringUtils;

@@ -20,10 +20,10 @@ package org.dromara.maxkey.web;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang3.ArchUtils;
 import org.apache.commons.lang3.arch.Processor;
-import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.crypto.Md5Sum;
 import org.dromara.maxkey.util.PathUtils;
+import org.dromara.mybatis.jpa.spring.MybatisJpaContext;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +35,10 @@ import org.springframework.core.env.PropertySource;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -69,7 +70,7 @@ public class InitializeContext extends HttpServlet {
         
         WebContext.applicationContext = applicationContext;
         
-        JpaWebContext.applicationContext = applicationContext;
+        MybatisJpaContext.init(applicationContext);
         
         // List Environment Variables
         listEnvVars();
@@ -178,7 +179,6 @@ public class InitializeContext extends HttpServlet {
             	 _logger.debug("propertySource {}" , it.next());
             }
             
-            JpaWebContext.properties = WebContext.properties;
             _logger.trace("-----------------------------------------------------------");
         }
     }

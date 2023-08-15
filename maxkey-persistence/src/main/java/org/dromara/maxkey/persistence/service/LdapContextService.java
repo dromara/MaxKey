@@ -17,14 +17,14 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.LdapContext;
 import org.dromara.maxkey.persistence.mapper.LdapContextMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class LdapContextService  extends JpaBaseService<LdapContext>{
+public class LdapContextService  extends JpaService<LdapContext>{
 	
 	public LdapContextService() {
 		super(LdapContextMapper.class);

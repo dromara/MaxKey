@@ -20,8 +20,6 @@ package org.dromara.maxkey.authz.saml20.binding;
 
 import java.security.KeyStore;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.dromara.maxkey.crypto.keystore.KeyStoreLoader;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
 import org.opensaml.common.binding.SAMLMessageContext;
@@ -29,6 +27,8 @@ import org.opensaml.ws.message.decoder.MessageDecodingException;
 import org.opensaml.ws.security.SecurityPolicyResolver;
 import org.opensaml.xml.security.SecurityException;
 import org.opensaml.xml.security.credential.CredentialResolver;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 

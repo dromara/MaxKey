@@ -17,7 +17,6 @@
 
 package org.dromara.maxkey.web.config.contorller;
 
-import javax.validation.Valid;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
@@ -34,6 +33,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping(value={"/config/passwordpolicy"})

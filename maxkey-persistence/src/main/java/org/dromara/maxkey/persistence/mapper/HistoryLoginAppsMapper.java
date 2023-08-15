@@ -17,13 +17,13 @@
 
 package org.dromara.maxkey.persistence.mapper;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.HistoryLoginApps;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
-public interface HistoryLoginAppsMapper extends IJpaBaseMapper<HistoryLoginApps> {
+public interface HistoryLoginAppsMapper extends IJpaMapper<HistoryLoginApps> {
 
 }

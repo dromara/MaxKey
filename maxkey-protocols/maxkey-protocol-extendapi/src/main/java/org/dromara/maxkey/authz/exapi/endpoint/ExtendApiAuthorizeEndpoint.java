@@ -20,8 +20,6 @@
  */
 package org.dromara.maxkey.authz.exapi.endpoint;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
@@ -40,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Crystal.Sea

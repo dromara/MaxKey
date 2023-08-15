@@ -17,8 +17,6 @@
 
 package org.dromara.maxkey.authz.exapi.endpoint;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dromara.maxkey.authz.exapi.endpoint.adapter.netease.NeteaseRSATool;
 import org.dromara.maxkey.pretty.impl.JsonPretty;
@@ -31,6 +29,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Tag(name = "2-8-ExtendApi接口文档模块-元数据")
 @Controller

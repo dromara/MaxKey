@@ -20,7 +20,6 @@ package org.dromara.maxkey.web.apis.identity.scim;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.Roles;
 import org.dromara.maxkey.entity.UserInfo;
@@ -38,6 +37,7 @@ import org.dromara.maxkey.web.apis.identity.scim.resources.ScimSearchResult;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimUser;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimUserEmail;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimUserPhoneNumber;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimOrganizationEmail.UserEmailType;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimOrganizationPhoneNumber.UserPhoneNumberType;
 import org.slf4j.Logger;
@@ -124,7 +124,7 @@ public class ScimUserController {
     	queryModel.setPageSize(requestParameters.getCount());
     	queryModel.calculate(requestParameters.getStartIndex()); 
         
-        JpaPageResults<UserInfo> orgResults = userInfoService.queryPageResults(queryModel);
+        JpaPageResults<UserInfo> orgResults = userInfoService.fetchPageResults(queryModel);
         List<ScimUser> resultList = new ArrayList<ScimUser>();
         for(UserInfo user : orgResults.getRows()) {
         	resultList.add(userInfo2ScimUser(user));

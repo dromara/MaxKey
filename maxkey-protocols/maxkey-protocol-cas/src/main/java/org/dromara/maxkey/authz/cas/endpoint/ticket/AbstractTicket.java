@@ -22,8 +22,9 @@ import org.dromara.maxkey.entity.apps.AppsCasDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.Assert;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 

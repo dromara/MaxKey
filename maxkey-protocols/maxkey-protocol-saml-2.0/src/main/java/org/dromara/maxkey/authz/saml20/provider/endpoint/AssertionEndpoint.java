@@ -19,8 +19,6 @@ package org.dromara.maxkey.authz.saml20.provider.endpoint;
 
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
@@ -41,6 +39,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 @Controller

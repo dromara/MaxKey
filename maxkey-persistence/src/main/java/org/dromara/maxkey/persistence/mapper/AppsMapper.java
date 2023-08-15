@@ -23,15 +23,15 @@ package org.dromara.maxkey.persistence.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Update;
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.UserApps;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
-public  interface AppsMapper extends IJpaBaseMapper<Apps> {
+public  interface AppsMapper extends IJpaMapper<Apps> {
 	
 	public int insertApp(Apps app);
 	

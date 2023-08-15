@@ -25,16 +25,16 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
-public  interface AccountsMapper extends IJpaBaseMapper<Accounts> {
+public  interface AccountsMapper extends IJpaMapper<Accounts> {
 	
 
     public List<UserInfo> queryUserNotInStrategy(AccountsStrategy strategy);

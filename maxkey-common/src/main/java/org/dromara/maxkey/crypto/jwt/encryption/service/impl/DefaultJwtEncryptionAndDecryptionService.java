@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
 
 import org.dromara.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.dromara.maxkey.crypto.jwt.encryption.service.JwtEncryptionAndDecryptionService;
@@ -45,6 +44,8 @@ import com.nimbusds.jose.crypto.RSAEncrypter;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.OctetSequenceKey;
 import com.nimbusds.jose.jwk.RSAKey;
+
+import jakarta.annotation.PostConstruct;
 
 /**
  * @author wkim

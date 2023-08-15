@@ -19,7 +19,6 @@ package org.dromara.maxkey.web.config.contorller;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Message;
@@ -29,6 +28,7 @@ import org.dromara.maxkey.persistence.service.SynchronizersService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.WebContext;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class SynchronizersController {
 		_logger.debug(""+synchronizers);
 		synchronizers.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Synchronizers>>(
-				synchronizersService.queryPageResults(synchronizers)).buildResponse();
+				synchronizersService.fetchPageResults(synchronizers)).buildResponse();
 	}
 	
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})

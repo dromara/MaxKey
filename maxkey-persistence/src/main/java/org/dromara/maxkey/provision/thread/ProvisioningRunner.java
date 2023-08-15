@@ -21,7 +21,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.mybatis.jpa.query.Query;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.Connectors;
@@ -37,6 +36,7 @@ import org.dromara.maxkey.util.JsonUtils;
 import org.dromara.maxkey.util.ObjectTransformer;
 import org.dromara.maxkey.web.HttpRequestAdapter;
 import org.dromara.maxkey.web.WebContext;
+import org.dromara.mybatis.jpa.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;

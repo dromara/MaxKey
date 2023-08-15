@@ -17,13 +17,13 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.RolePermissions;
 import org.dromara.maxkey.persistence.mapper.RolePermissionsMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class RolePermissionssService  extends JpaBaseService<RolePermissions>{
+public class RolePermissionssService  extends JpaService<RolePermissions>{
 	
 	public RolePermissionssService() {
 		super(RolePermissionsMapper.class);

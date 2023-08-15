@@ -17,14 +17,14 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.SmsProvider;
 import org.dromara.maxkey.persistence.mapper.SmsProviderMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class SmsProviderService  extends JpaBaseService<SmsProvider>{
+public class SmsProviderService  extends JpaService<SmsProvider>{
 	
 	public SmsProviderService() {
 		super(SmsProviderMapper.class);

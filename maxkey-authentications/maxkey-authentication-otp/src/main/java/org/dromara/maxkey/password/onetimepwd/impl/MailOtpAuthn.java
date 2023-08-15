@@ -18,14 +18,16 @@
 package org.dromara.maxkey.password.onetimepwd.impl;
 
 import java.text.MessageFormat;
-import org.apache.commons.mail.DefaultAuthenticator;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.HtmlEmail;
+import java.util.Properties;
+
 import org.dromara.maxkey.configuration.EmailConfig;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
 
 public class MailOtpAuthn extends AbstractOtpAuthn {
     private static final Logger _logger = LoggerFactory.getLogger(MailOtpAuthn.class);
@@ -57,26 +59,28 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
     public boolean produce(UserInfo userInfo) {
         try {
             String token = this.genToken(userInfo);
-            Email email = new HtmlEmail();
-            email.setCharset(this.defaultEncoding);
-            email.setHostName(emailConfig.getSmtpHost());
-            email.setSmtpPort(emailConfig.getPort());
-            email.setSSLOnConnect(emailConfig.isSsl());
-            email.setAuthenticator(
-                    new DefaultAuthenticator(emailConfig.getUsername(), emailConfig.getPassword()));
             
-            email.setFrom(emailConfig.getSender());
-            email.setSubject(subject);
-            email.setMsg(
-                    MessageFormat.format(
-                            messageTemplate,userInfo.getUsername(),token,(interval / 60)));
+            //Sender
+            JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+            javaMailSender.setUsername(emailConfig.getUsername());
+            javaMailSender.setPassword(emailConfig.getPassword());
+            Properties properties = new Properties();
+            properties.put("mail.smtp.auth","true");
+            javaMailSender.setJavaMailProperties(properties);
+            javaMailSender.setHost(emailConfig.getSmtpHost());
+            javaMailSender.setPort(emailConfig.getPort());
             
-            email.addTo(userInfo.getEmail());
-            try {
-                email.send();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            //MailMessage
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setFrom(emailConfig.getSender());
+            mailMessage.setTo(userInfo.getEmail());
+            mailMessage.setSubject(subject);
+            mailMessage.setText(
+            		MessageFormat.format(
+                    messageTemplate,userInfo.getUsername(),token,(interval / 60)));
+            
+            javaMailSender.send(mailMessage);
+            
             _logger.debug(
                     "token " + token + " send to user " + userInfo.getUsername() 
                     + ", email " + userInfo.getEmail());
@@ -120,3 +124,4 @@ public class MailOtpAuthn extends AbstractOtpAuthn {
     
 
 }
+

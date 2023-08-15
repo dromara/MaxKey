@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
@@ -71,6 +69,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriTemplate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * <p>

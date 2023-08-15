@@ -17,14 +17,14 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.entity.HistoryLogin;
 import org.dromara.maxkey.persistence.mapper.HistoryLoginMapper;
+import org.dromara.mybatis.jpa.JpaService;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistoryLoginService  extends JpaBaseService<HistoryLogin>{
+public class HistoryLoginService  extends JpaService<HistoryLogin>{
 
 	public HistoryLoginService() {
 		super(HistoryLoginMapper.class);
@@ -39,6 +39,6 @@ public class HistoryLoginService  extends JpaBaseService<HistoryLogin>{
 	}
 	
 	public JpaPageResults<HistoryLogin> queryOnlineSession(HistoryLogin historyLogin) {
-	    return this.queryPageResults("queryOnlineSession",historyLogin);
+	    return this.fetchPageResults("queryOnlineSession",historyLogin);
 	}
 }

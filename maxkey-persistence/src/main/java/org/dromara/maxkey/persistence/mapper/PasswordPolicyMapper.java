@@ -20,14 +20,14 @@
  */
 package org.dromara.maxkey.persistence.mapper;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.PasswordPolicy;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
-public  interface PasswordPolicyMapper extends IJpaBaseMapper<PasswordPolicy> {
+public  interface PasswordPolicyMapper extends IJpaMapper<PasswordPolicy> {
 	
 
 }

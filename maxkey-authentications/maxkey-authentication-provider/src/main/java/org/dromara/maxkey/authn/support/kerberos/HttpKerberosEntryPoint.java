@@ -17,9 +17,6 @@
 
 package org.dromara.maxkey.authn.support.kerberos;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
@@ -33,6 +30,9 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 public class HttpKerberosEntryPoint implements AsyncHandlerInterceptor {

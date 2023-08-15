@@ -20,7 +20,6 @@ package org.dromara.maxkey.web;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 
 import org.dromara.maxkey.web.tag.FreemarkerTag;
 import org.slf4j.Logger;
@@ -33,6 +32,7 @@ import org.springframework.stereotype.Component;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
+import jakarta.annotation.PostConstruct;
 
 @Component
 public class ConfigurerFreeMarker  implements ApplicationContextAware {

@@ -18,11 +18,11 @@
 package org.dromara.maxkey.persistence.mapper;
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.SocialsAssociate;
 import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
-public interface SocialsAssociateMapper extends IJpaBaseMapper<SocialsAssociate> {
+public interface SocialsAssociateMapper extends IJpaMapper<SocialsAssociate> {
 
 	public List<SocialsAssociate> queryByUser(UserInfo user);
 }

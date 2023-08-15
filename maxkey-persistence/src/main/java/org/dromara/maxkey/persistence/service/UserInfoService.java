@@ -20,7 +20,6 @@ package org.dromara.maxkey.persistence.service;
 
 import java.sql.Types;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
@@ -34,6 +33,7 @@ import org.dromara.maxkey.provision.ProvisionTopic;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.WebContext;
+import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public class UserInfoService extends JpaBaseService<UserInfo> {
+public class UserInfoService extends JpaService<UserInfo> {
 	final static Logger _logger = LoggerFactory.getLogger(UserInfoService.class);
 	
 	@Autowired

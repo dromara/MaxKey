@@ -19,13 +19,13 @@ package org.dromara.maxkey.persistence.service;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.Resources;
 import org.dromara.maxkey.persistence.mapper.ResourcesMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ResourcesService  extends JpaBaseService<Resources>{
+public class ResourcesService  extends JpaService<Resources>{
 	
 	public ResourcesService() {
 		super(ResourcesMapper.class);
@@ -40,6 +40,6 @@ public class ResourcesService  extends JpaBaseService<Resources>{
 	}
 	
 	public List<Resources> queryResourcesTree(Resources resource){
-	   return  getMapper().queryPageResults(resource);
+	   return  getMapper().fetchPageResults(resource);
 	}
 }

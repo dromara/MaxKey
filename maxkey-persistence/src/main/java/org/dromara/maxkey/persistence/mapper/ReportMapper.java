@@ -24,15 +24,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.dromara.mybatis.jpa.IJpaMapper;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 
 /**
  * @author Crystal.sea
  *
  */
-public  interface ReportMapper extends IJpaBaseMapper<JpaBaseEntity> {
+public  interface ReportMapper extends IJpaMapper<JpaEntity> {
 	
 	public Integer analysisDay(HashMap<String,Object> reportParameter);
 	public Integer analysisNewUsers(HashMap<String,Object> reportParameter);

@@ -17,8 +17,6 @@
 
 package org.dromara.maxkey.authn.support.wsfederation;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
@@ -30,6 +28,9 @@ import org.opensaml.saml1.core.impl.AssertionImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 public class HttpWsFederationEntryPoint implements AsyncHandlerInterceptor {

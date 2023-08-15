@@ -19,7 +19,6 @@ package org.dromara.maxkey.persistence.service;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
@@ -31,6 +30,7 @@ import org.dromara.maxkey.provision.ProvisionAction;
 import org.dromara.maxkey.provision.ProvisionService;
 import org.dromara.maxkey.provision.ProvisionTopic;
 import org.dromara.maxkey.util.StringUtils;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -42,7 +42,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 @Repository
-public class AccountsService  extends JpaBaseService<Accounts>{
+public class AccountsService  extends JpaService<Accounts>{
 
     @Autowired
     ProvisionService provisionService;

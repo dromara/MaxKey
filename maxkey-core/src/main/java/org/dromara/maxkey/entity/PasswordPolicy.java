@@ -17,14 +17,15 @@
 
 package org.dromara.maxkey.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+
 import org.dromara.maxkey.constants.ConstsServiceMessage;
 import org.dromara.maxkey.exception.PasswordPolicyException;
 import org.dromara.maxkey.web.WebContext;
@@ -39,12 +40,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "MXK_PASSWORD_POLICY")
-public class PasswordPolicy extends JpaBaseEntity implements java.io.Serializable {
+public class PasswordPolicy extends JpaEntity implements java.io.Serializable {
 
     private static final long serialVersionUID = -4797776994287829182L;
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+    @GeneratedValue
     String id;
     /**
      * minimum password lengths

@@ -21,12 +21,9 @@
 package org.dromara.maxkey.authz.token.endpoint;
 
 import java.lang.reflect.InvocationTargetException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authz.endpoint.AuthorizeBaseEndpoint;
@@ -54,6 +51,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * @author Crystal.Sea

@@ -20,8 +20,6 @@
  */
 package org.dromara.maxkey.authn.support.socialsignon;
 
-import javax.servlet.http.HttpServletRequest;
-
 import me.zhyd.oauth.request.AuthMaxkeyRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.LoginCredential;
@@ -40,6 +38,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.servlet.http.HttpServletRequest;
 import me.zhyd.oauth.request.AuthRequest;
 
 import java.util.Map;

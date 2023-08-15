@@ -19,9 +19,9 @@ package org.apache.mybatis.jpa.test;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.persistence.service.AppsService;
+import org.dromara.mybatis.jpa.spring.MybatisJpaContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class AppsServiceTest {
 	public static AppsService service;
 	
 	public AppsService getservice() {
-		service=(AppsService)JpaWebContext.getBean("appsService");
+		service=(AppsService)MybatisJpaContext.getBean("appsService");
 		return service;
 	}
 	
@@ -50,7 +50,7 @@ public class AppsServiceTest {
 		a.setPageNumber(2);
 		a.setPageSize(10);
 		;
-		getservice().queryPageResults(a);
+		getservice().fetchPageResults(a);
 		// _logger.info("apps "+);
 
 	}
@@ -81,7 +81,7 @@ public class AppsServiceTest {
 		
 		_logger.info("Application dir "+System.getProperty("user.dir"));
 		context = new ClassPathXmlApplicationContext(new String[] {"spring/applicationContext.xml"});
-		JpaWebContext.applicationContext=context;
+		MybatisJpaContext.init(context);
 		getservice();
 		System.out.println("init ...");
 		

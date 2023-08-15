@@ -17,9 +17,6 @@
 
 package org.dromara.maxkey.web.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.entity.HistoryLoginApps;
@@ -35,6 +32,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {

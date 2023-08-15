@@ -19,8 +19,6 @@
 package org.dromara.maxkey.authz.saml20.binding.impl;
 
 import java.security.KeyStore;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.Validate;
 import org.apache.velocity.app.VelocityEngine;
@@ -51,6 +49,9 @@ import org.opensaml.xml.security.criteria.UsageCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 	private final static Logger logger = LoggerFactory.getLogger(PostBindingAdapter.class);

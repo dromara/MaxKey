@@ -17,13 +17,13 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.HistorySynchronizer;
 import org.dromara.maxkey.persistence.mapper.HistorySynchronizerMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistorySynchronizerService  extends JpaBaseService<HistorySynchronizer>{
+public class HistorySynchronizerService  extends JpaService<HistorySynchronizer>{
 
 	public HistorySynchronizerService() {
 		super(HistorySynchronizerMapper.class);

@@ -22,16 +22,16 @@ package org.dromara.maxkey.persistence.mapper;
 
 import java.util.List;
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.Register;
 import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
 
-public  interface RegisterMapper extends IJpaBaseMapper<Register> {
+public  interface RegisterMapper extends IJpaMapper<Register> {
 	
 
 	public List<UserInfo> findByEmail(String email);

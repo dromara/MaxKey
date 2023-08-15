@@ -18,13 +18,13 @@
 package org.dromara.maxkey.persistence.mapper;
 
 
-import org.apache.mybatis.jpa.persistence.IJpaBaseMapper;
 import org.dromara.maxkey.entity.HistoryConnector;
+import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**
  * @author Crystal.sea
  *
  */
-public interface HistoryConnectorMapper extends IJpaBaseMapper<HistoryConnector> {
+public interface HistoryConnectorMapper extends IJpaMapper<HistoryConnector> {
 
 }

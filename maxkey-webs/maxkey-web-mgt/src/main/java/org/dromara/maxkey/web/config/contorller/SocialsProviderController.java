@@ -17,13 +17,13 @@
 
 package org.dromara.maxkey.web.config.contorller;
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.SocialsProvider;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.service.SocialsProviderService;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class SocialsProviderController {
 		_logger.debug(""+socialsProvider);
 		socialsProvider.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<SocialsProvider>>(
-				socialsProviderService.queryPageResults(socialsProvider)).buildResponse();
+				socialsProviderService.fetchPageResults(socialsProvider)).buildResponse();
 	}
 
 	@ResponseBody

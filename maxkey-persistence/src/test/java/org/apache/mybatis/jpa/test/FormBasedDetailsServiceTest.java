@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.mybatis.jpa.util.JpaWebContext;
 import org.dromara.maxkey.entity.apps.AppsFormBasedDetails;
 import org.dromara.maxkey.persistence.service.AppsFormBasedDetailsService;
+import org.dromara.mybatis.jpa.spring.MybatisJpaContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class FormBasedDetailsServiceTest {
 	public static AppsFormBasedDetailsService service;
 	
 	public AppsFormBasedDetailsService getservice() {
-		service=(AppsFormBasedDetailsService)JpaWebContext.getBean("appsFormBasedDetailsService");
+		service=(AppsFormBasedDetailsService)MybatisJpaContext.getBean("appsFormBasedDetailsService");
 		return service;
 	}
 	
@@ -95,7 +95,7 @@ public class FormBasedDetailsServiceTest {
 		_logger.info("queryPageResults...");
 		AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
 		 formBasedDetails.setPageNumber(2);
-		 _logger.info("queryPageResults "+service.queryPageResults(formBasedDetails));
+		 _logger.info("queryPageResults "+service.fetchPageResults(formBasedDetails));
 	}
 	
 	@Test
@@ -106,7 +106,7 @@ public class FormBasedDetailsServiceTest {
 
 		 formBasedDetails.setPageNumber(2);
 		 
-		 _logger.info("queryPageResults by mapperId "+service.queryPageResults("queryPageResults1",formBasedDetails));
+		 _logger.info("queryPageResults by mapperId "+service.fetchPageResults("queryPageResults1",formBasedDetails));
 		 
 	}
 	
@@ -142,7 +142,7 @@ public class FormBasedDetailsServiceTest {
 		
 		_logger.info("Application dir "+System.getProperty("user.dir"));
 		context = new ClassPathXmlApplicationContext(new String[] {"spring/applicationContext.xml"});
-		JpaWebContext.applicationContext=context;
+		MybatisJpaContext.init(context);
 		getservice();
 		System.out.println("init ...");
 		

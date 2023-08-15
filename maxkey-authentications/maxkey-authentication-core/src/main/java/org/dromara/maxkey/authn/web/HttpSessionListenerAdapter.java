@@ -17,10 +17,6 @@ package org.dromara.maxkey.authn.web;
 
 import java.util.Date;
 
-import javax.servlet.annotation.WebListener;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.util.DateUtils;
@@ -29,6 +25,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+
+import jakarta.servlet.annotation.WebListener;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSessionEvent;
+import jakarta.servlet.http.HttpSessionListener;
 
 @WebListener
 public class HttpSessionListenerAdapter implements HttpSessionListener {

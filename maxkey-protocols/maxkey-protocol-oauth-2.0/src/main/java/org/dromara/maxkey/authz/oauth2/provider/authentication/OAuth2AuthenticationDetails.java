@@ -16,8 +16,8 @@ package org.dromara.maxkey.authz.oauth2.provider.authentication;
 
 import java.io.Serializable;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * A holder of selected HTTP details related to an OAuth2 authentication request.

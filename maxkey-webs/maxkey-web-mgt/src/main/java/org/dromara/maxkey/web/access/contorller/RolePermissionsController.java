@@ -16,7 +16,6 @@
  
 package org.dromara.maxkey.web.access.contorller;
 
-import org.apache.mybatis.jpa.persistence.JpaPageResults;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.RolePermissions;
@@ -25,6 +24,7 @@ import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.RolePermissionssService;
 import org.dromara.maxkey.web.WebContext;
+import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class RolePermissionsController {
 			@CurrentUser UserInfo currentUser) {
 		JpaPageResults<RolePermissions> rolePermissions;
 		rolePermission.setInstId(currentUser.getInstId());
-		rolePermissions= rolePermissionssService.queryPageResults("appsInRole",rolePermission);
+		rolePermissions= rolePermissionssService.fetchPageResults("appsInRole",rolePermission);
 
 		if(rolePermissions!=null&&rolePermissions.getRows()!=null){
 			for (Apps app : rolePermissions.getRows()){
@@ -72,7 +72,7 @@ public class RolePermissionsController {
 				@CurrentUser UserInfo currentUser) {
 		JpaPageResults<RolePermissions> rolePermissions;
 		rolePermission.setInstId(currentUser.getInstId());
-		rolePermissions= rolePermissionssService.queryPageResults("appsNotInRole",rolePermission);
+		rolePermissions= rolePermissionssService.fetchPageResults("appsNotInRole",rolePermission);
 
 		if(rolePermissions!=null&&rolePermissions.getRows()!=null){
 			for (Apps app : rolePermissions.getRows()){

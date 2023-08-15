@@ -17,15 +17,15 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.Connectors;
 import org.dromara.maxkey.persistence.mapper.ConnectorsMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ConnectorsService  extends JpaBaseService<Connectors>{
+public class ConnectorsService  extends JpaService<Connectors>{
     final static Logger _logger = LoggerFactory.getLogger(ConnectorsService.class);
     
 	public ConnectorsService() {

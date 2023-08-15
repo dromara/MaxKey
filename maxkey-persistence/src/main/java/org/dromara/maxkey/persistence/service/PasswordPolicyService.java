@@ -17,13 +17,13 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.PasswordPolicy;
 import org.dromara.maxkey.persistence.mapper.PasswordPolicyMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PasswordPolicyService  extends JpaBaseService<PasswordPolicy>{
+public class PasswordPolicyService  extends JpaService<PasswordPolicy>{
 
 	public PasswordPolicyService() {
 		super(PasswordPolicyMapper.class);

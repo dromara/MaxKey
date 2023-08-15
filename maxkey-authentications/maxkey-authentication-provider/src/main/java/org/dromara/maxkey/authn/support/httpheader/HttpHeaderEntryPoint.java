@@ -17,9 +17,6 @@
 
 package org.dromara.maxkey.authn.support.httpheader;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.constants.ConstsLoginType;
@@ -30,6 +27,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 public class HttpHeaderEntryPoint implements AsyncHandlerInterceptor {

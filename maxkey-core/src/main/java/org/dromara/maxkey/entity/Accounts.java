@@ -21,16 +21,16 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /*
    ID                   varchar(40)                    not null,
@@ -43,14 +43,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "MXK_ACCOUNTS")
-public class Accounts extends JpaBaseEntity implements Serializable {
+public class Accounts extends JpaEntity implements Serializable {
     private static final long serialVersionUID = 6829592256223630307L;
     
     public  static final String DEFAULT_PASSWORD_SUFFIX = UserInfo.DEFAULT_PASSWORD_SUFFIX;
     
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+    @GeneratedValue
     private String id;
     @Column
     private String userId;

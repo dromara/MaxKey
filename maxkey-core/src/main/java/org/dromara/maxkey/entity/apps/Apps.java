@@ -19,14 +19,13 @@ package org.dromara.maxkey.entity.apps;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import org.dromara.maxkey.constants.ConstsBoolean;
 import org.dromara.maxkey.crypto.Base64Utils;
 
@@ -34,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "MXK_APPS")
-public class Apps extends JpaBaseEntity implements Serializable {
+public class Apps extends JpaEntity implements Serializable {
 
     /**
      * 
@@ -57,7 +56,7 @@ public class Apps extends JpaBaseEntity implements Serializable {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+    @GeneratedValue
     protected String id;
     /**
      * 

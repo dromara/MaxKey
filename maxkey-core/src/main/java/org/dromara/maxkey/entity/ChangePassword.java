@@ -17,9 +17,9 @@
 
 package org.dromara.maxkey.entity;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
 
-public class ChangePassword extends JpaBaseEntity{
+public class ChangePassword extends JpaEntity{
 
 	/**
 	 * 

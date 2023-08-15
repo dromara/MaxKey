@@ -17,13 +17,13 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.HistoryLoginApps;
 import org.dromara.maxkey.persistence.mapper.HistoryLoginAppsMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HistoryLoginAppsService  extends JpaBaseService<HistoryLoginApps>{
+public class HistoryLoginAppsService  extends JpaService<HistoryLoginApps>{
 
 	public HistoryLoginAppsService() {
 		super(HistoryLoginAppsMapper.class);

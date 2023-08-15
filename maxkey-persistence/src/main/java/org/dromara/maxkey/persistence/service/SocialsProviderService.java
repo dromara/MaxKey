@@ -17,15 +17,15 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.apache.mybatis.jpa.persistence.JpaBaseService;
 import org.dromara.maxkey.entity.SocialsProvider;
 import org.dromara.maxkey.persistence.mapper.SocialsProviderMapper;
+import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SocialsProviderService  extends JpaBaseService<SocialsProvider>{
+public class SocialsProviderService  extends JpaService<SocialsProvider>{
     final static Logger _logger = LoggerFactory.getLogger(SocialsProviderService.class);
     
     

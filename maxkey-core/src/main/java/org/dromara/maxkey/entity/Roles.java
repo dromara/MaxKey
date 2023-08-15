@@ -18,17 +18,18 @@
 package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import org.apache.mybatis.jpa.persistence.JpaBaseEntity;
+import org.dromara.mybatis.jpa.entity.JpaEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import org.hibernate.validator.constraints.Length;
+
 @Entity
 @Table(name = "MXK_ROLES")
-public class Roles extends JpaBaseEntity implements Serializable {
+public class Roles extends JpaEntity implements Serializable {
 
     private static final long serialVersionUID = 4660258495864814777L;
     
@@ -43,7 +44,7 @@ public class Roles extends JpaBaseEntity implements Serializable {
     
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snowflakeid")
+    @GeneratedValue
     String id;
 
     @Length(max = 60)
