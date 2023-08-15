@@ -16,7 +16,7 @@
     
     
     
-    <select id="queryPageResults" parameterType="AccountsStrategy" resultType="AccountsStrategy">
+    <select id="fetchPageResults" parameterType="AccountsStrategy" resultType="AccountsStrategy">
         select
             mas.*,
             ma.icon appicon

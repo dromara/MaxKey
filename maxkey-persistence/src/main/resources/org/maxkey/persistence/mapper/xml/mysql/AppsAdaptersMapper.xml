@@ -16,7 +16,7 @@
     
 	
 	
-	<select id="queryPageResults" parameterType="AppsAdapters" resultType="AppsAdapters">
+	<select id="fetchPageResults" parameterType="AppsAdapters" resultType="AppsAdapters">
 		select
 			*
 		from

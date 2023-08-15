@@ -11,7 +11,7 @@
 		</if>
     </sql>
     	
-	<select id="queryPageResults" parameterType="Synchronizers" resultType="Synchronizers">
+	<select id="fetchPageResults" parameterType="Synchronizers" resultType="Synchronizers">
 		select
 			*
 		from

@@ -45,7 +45,7 @@
     </sql>
 	
     
-     <select id="queryPageResults" parameterType="HistoryConnector" resultType="HistoryConnector">
+     <select id="fetchPageResults" parameterType="HistoryConnector" resultType="HistoryConnector">
     	select 
 			*
     	from mxk_history_connector 

@@ -30,7 +30,7 @@
     </select>
     
     
-   <select id="queryPageResults" parameterType="Organizations" resultType="Organizations">
+   <select id="fetchPageResults" parameterType="Organizations" resultType="Organizations">
     	select 
 			*
     	from mxk_organizations 

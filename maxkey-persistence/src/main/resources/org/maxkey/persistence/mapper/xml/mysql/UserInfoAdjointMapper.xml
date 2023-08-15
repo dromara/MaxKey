@@ -13,7 +13,7 @@
     
 
 	
-	<select id="queryPageResults" parameterType="UserInfoAdjoint" resultType="UserInfoAdjoint">
+	<select id="fetchPageResults" parameterType="UserInfoAdjoint" resultType="UserInfoAdjoint">
 		select
 			*
 		from

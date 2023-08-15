@@ -13,7 +13,7 @@
     
 	
 	
-	<select id="queryPageResults" parameterType="SocialsProvider" resultType="SocialsProvider">
+	<select id="fetchPageResults" parameterType="SocialsProvider" resultType="SocialsProvider">
 		select
 			*
 		from

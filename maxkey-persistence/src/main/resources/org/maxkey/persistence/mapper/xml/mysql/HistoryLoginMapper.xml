@@ -38,7 +38,7 @@
 	
    
     
-     <select id="queryPageResults" parameterType="HistoryLogin" resultType="HistoryLogin">
+     <select id="fetchPageResults" parameterType="HistoryLogin" resultType="HistoryLogin">
     	select 
 			id,
 	   		sessionid,

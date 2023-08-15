@@ -13,7 +13,7 @@
     
 	
 	
-	<select id="queryPageResults" parameterType="Roles" resultType="Roles">
+	<select id="fetchPageResults" parameterType="Roles" resultType="Roles">
 		select
 			*
 		from

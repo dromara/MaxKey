@@ -33,7 +33,7 @@
 		
     </sql>
     
-     <select id="queryPageResults" parameterType="HistoryLoginApps" resultType="HistoryLoginApps">
+     <select id="fetchPageResults" parameterType="HistoryLoginApps" resultType="HistoryLoginApps">
     	select 
 			id,
 			sessionid,

@@ -24,7 +24,7 @@
     </sql>
 	
     
-     <select id="queryPageResults" parameterType="HistorySynchronizer" resultType="HistorySynchronizer">
+     <select id="fetchPageResults" parameterType="HistorySynchronizer" resultType="HistorySynchronizer">
     	select 
 			*
     	from mxk_history_synchronizer 

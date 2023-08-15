@@ -19,7 +19,7 @@
     
 	
 	
-	<select id="queryPageResults" parameterType="Resources" resultType="Resources">
+	<select id="fetchPageResults" parameterType="Resources" resultType="Resources">
 		select
 			res.*,app.appname
 		from

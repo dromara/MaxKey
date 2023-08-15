@@ -22,7 +22,7 @@
     
 	
 	
-	<select id="queryPageResults" parameterType="Accounts" resultType="Accounts">
+	<select id="fetchPageResults" parameterType="Accounts" resultType="Accounts">
 		select
 			*
 		from

@@ -30,7 +30,7 @@
     </sql>
 	
     
-     <select id="queryPageResults" parameterType="HistorySystemLogs" resultType="HistorySystemLogs">
+     <select id="fetchPageResults" parameterType="HistorySystemLogs" resultType="HistorySystemLogs">
     	select *
     	from mxk_history_system_logs 
     	where	instid   =   #{instId} 

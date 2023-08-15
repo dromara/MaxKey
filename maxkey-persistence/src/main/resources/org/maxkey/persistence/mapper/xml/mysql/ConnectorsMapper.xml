@@ -11,7 +11,7 @@
 		</if>
     </sql>
     	
-	<select id="queryPageResults" parameterType="Connectors" resultType="Connectors">
+	<select id="fetchPageResults" parameterType="Connectors" resultType="Connectors">
 		select
 			*
 		from
