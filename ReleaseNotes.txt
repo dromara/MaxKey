@@ -1,4 +1,21 @@
-﻿MaxKey v 3.5.18 GA 2023/06/06
+﻿MaxKey v 3.5.19 GA 2023/08/15
+    *(MAXKEY-230701) 增加配置:每次构建docker镜像时,可同时构建arm64镜像 * 增加配置:每次构建docker镜像时,可同时构建arm64镜像
+    *(MAXKEY-230702) 优化CAS注销 CasLogout
+    *(MAXKEY-230703) 修复资源管理无法添加资源 #I7EPYO
+    *(MAXKEY-230704) 新增角色失败，数据入库问题。 #I7KMSJ
+    *(MAXKEY-230705) 修复/sign/authz/cas/v1/tickets这个接口只要用户名正确，密码随便填都能通过 #I7LC07
+    *(MAXKEY-230706) 日志记录采用异步方式写入
+    *(MAXKEY-230707) 增加Dockerfile，方便镜像构建
+	*(MAXKEY-230708) gradle升级到 8.0.2
+	*(MAXKEY-230709) readme增加安装介绍链接
+	*(MAXKEY-230710) 代码优化和整合
+    *(MAXKEY-230711) 依赖项引用、更新和升级
+        spring              5.3.29
+		springBoot          2.7.14
+		springSecurity      5.7.10
+		tomcat              9.0.78
+		
+MaxKey v 3.5.18 GA 2023/06/06
     *(MAXKEY-230601) 组织机构和用户同步的REST和SCIM从maxkey-web-mgt中分离到新建maxkey-web-openapi
     *(MAXKEY-230602) 腾讯企业邮件接口优化
     *(MAXKEY-230603) 修改认证系统 是否需要验证码的配置
