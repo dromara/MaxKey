@@ -22,6 +22,7 @@ import org.dromara.maxkey.constants.ContentType;
 import org.dromara.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.dromara.maxkey.web.WebConstants;
+import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -89,7 +90,7 @@ public class OauthJwksEndpoint extends AbstractEndpoint {
 			return jwkSetKeyStore.toString(mediaType);
 		}
 		
-		return appId + " not exist . \n" + JpaWebContext.version();
+		return appId + " not exist . \n" + WebContext.version();
 	}
 
 }

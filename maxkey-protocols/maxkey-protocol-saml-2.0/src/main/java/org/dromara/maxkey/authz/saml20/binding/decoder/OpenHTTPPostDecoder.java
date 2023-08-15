@@ -17,7 +17,6 @@
 
 package org.dromara.maxkey.authz.saml20.binding.decoder;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.opensaml.common.binding.SAMLMessageContext;
 import org.opensaml.saml2.binding.decoding.HTTPPostDecoder;
@@ -29,6 +28,8 @@ import org.opensaml.xml.util.DatatypeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.web.util.UrlUtils;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public class OpenHTTPPostDecoder extends HTTPPostDecoder {
     private final Logger log = LoggerFactory.getLogger(OpenHTTPPostDecoder.class);

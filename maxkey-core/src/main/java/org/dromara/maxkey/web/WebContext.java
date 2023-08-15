@@ -30,6 +30,7 @@ import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.entity.Institutions;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.maxkey.util.IdGenerator;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -520,5 +521,21 @@ public final class WebContext {
 
     public static ModelAndView forward(String forwardUrl) {
         return new ModelAndView("forward:" + forwardUrl);
+    }
+    
+    public static String version() {
+		StringBuffer version = new StringBuffer();
+		version.append("-----------------------------------------------------------");
+		version.append("+                      MaxKey Community  Edition  ");
+		version.append("+                      Single   Sign   On ( SSO ) ");
+		version.append("+                           Version {}".formatted(
+                        WebContext.properties.getProperty("application.formatted-version")));
+		version.append("+");
+		version.append("+                 {}Copyright 2018 - {} https://www.maxkey.top/",
+        			    (char)0xA9 , new DateTime().getYear()
+        			);
+		version.append("+                 .         All rights reserved         . ");
+		version.append("-----------------------------------------------------------");
+		return version.toString();
     }
 }
