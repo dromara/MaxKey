@@ -21,9 +21,9 @@ package org.maxkey.otp.algorithm;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-import org.maxkey.crypto.Base32Utils;
-import org.maxkey.password.onetimepwd.algorithm.HOTP;
-import org.maxkey.password.onetimepwd.algorithm.HmacOTP;
+import org.dromara.maxkey.crypto.Base32Utils;
+import org.dromara.maxkey.password.onetimepwd.algorithm.HOTP;
+import org.dromara.maxkey.password.onetimepwd.algorithm.HmacOTP;
 
 
 public class HmacOTPTest {

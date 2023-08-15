@@ -24,9 +24,9 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.commons.codec.binary.Hex;
-import org.maxkey.crypto.Base32Utils;
-import org.maxkey.crypto.HexUtils;
-import org.maxkey.password.onetimepwd.algorithm.TimeBasedOTP;
+import org.dromara.maxkey.crypto.Base32Utils;
+import org.dromara.maxkey.crypto.HexUtils;
+import org.dromara.maxkey.password.onetimepwd.algorithm.TimeBasedOTP;
 /**
  * goole 
  * @author Crystal.Sea

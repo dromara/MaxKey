@@ -17,6 +17,8 @@
 
 package org.maxkey.crypto.password;
 
+import org.dromara.maxkey.crypto.password.Md4PasswordEncoder;
+
 public class SM4PasswordEncoderTest {
 
     public static void main(String[] args) {

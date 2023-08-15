@@ -19,7 +19,7 @@ package org.maxkey.crypto.signature;
 
 import java.security.SecureRandom;
 
-import org.maxkey.crypto.Base64Utils;
+import org.dromara.maxkey.crypto.Base64Utils;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;

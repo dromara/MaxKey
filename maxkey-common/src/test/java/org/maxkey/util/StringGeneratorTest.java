@@ -19,6 +19,7 @@ package org.maxkey.util;
 
 import java.util.UUID;
 
+import org.dromara.maxkey.util.StringGenerator;
 import org.junit.Test;
 
 public class StringGeneratorTest {

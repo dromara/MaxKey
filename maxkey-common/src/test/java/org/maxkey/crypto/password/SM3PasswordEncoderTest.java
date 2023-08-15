@@ -17,6 +17,8 @@
 
 package org.maxkey.crypto.password;
 
+import org.dromara.maxkey.crypto.password.SM3PasswordEncoder;
+
 public class SM3PasswordEncoderTest {
 
     public static void main(String[] args) {

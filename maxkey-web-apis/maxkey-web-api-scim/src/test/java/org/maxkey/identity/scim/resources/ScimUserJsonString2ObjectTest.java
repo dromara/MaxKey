@@ -17,9 +17,9 @@
 
 package org.maxkey.identity.scim.resources;
 
-import org.maxkey.pretty.impl.JsonPretty;
-import org.maxkey.util.JsonUtils;
-import org.maxkey.web.apis.identity.scim.resources.ScimUser;
+import org.dromara.maxkey.pretty.impl.JsonPretty;
+import org.dromara.maxkey.util.JsonUtils;
+import org.dromara.maxkey.web.apis.identity.scim.resources.ScimUser;
 
 public class ScimUserJsonString2ObjectTest {
 

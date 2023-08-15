@@ -17,6 +17,7 @@
 
 package org.maxkey.crypto.password;
 
+import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class PasswordReciprocalTest {

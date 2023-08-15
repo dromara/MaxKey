@@ -17,7 +17,7 @@
 
 package org.maxkey.crypto.signature;
 
-import org.maxkey.crypto.jwt.HMAC512Service;
+import org.dromara.maxkey.crypto.jwt.HMAC512Service;
 
 import com.nimbusds.jose.JOSEException;
 

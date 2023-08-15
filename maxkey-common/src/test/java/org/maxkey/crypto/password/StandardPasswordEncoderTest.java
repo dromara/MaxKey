@@ -17,6 +17,8 @@
 
 package org.maxkey.crypto.password;
 
+import org.dromara.maxkey.crypto.password.StandardPasswordEncoder;
+
 public class StandardPasswordEncoderTest {
 
     public static void main(String[] args) {

@@ -17,9 +17,9 @@
 
 package org.maxkey.rest;
 
+import org.dromara.maxkey.util.AuthorizationHeader;
+import org.dromara.maxkey.util.AuthorizationHeaderUtils;
 import org.junit.Test;
-import org.maxkey.util.AuthorizationHeader;
-import org.maxkey.util.AuthorizationHeaderUtils;
 
 public class AuthorizationHeaderTest {
 	

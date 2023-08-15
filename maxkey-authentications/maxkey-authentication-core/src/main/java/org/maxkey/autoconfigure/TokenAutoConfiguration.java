@@ -17,15 +17,15 @@
 
 package org.maxkey.autoconfigure;
 
-import org.maxkey.authn.jwt.AuthRefreshTokenService;
-import org.maxkey.authn.jwt.AuthTokenService;
-import org.maxkey.authn.jwt.CongressService;
-import org.maxkey.authn.jwt.InMemoryCongressService;
-import org.maxkey.authn.jwt.RedisCongressService;
-import org.maxkey.configuration.AuthJwkConfig;
-import org.maxkey.constants.ConstsPersistence;
-import org.maxkey.persistence.cache.MomentaryService;
-import org.maxkey.persistence.redis.RedisConnectionFactory;
+import org.dromara.maxkey.authn.jwt.AuthRefreshTokenService;
+import org.dromara.maxkey.authn.jwt.AuthTokenService;
+import org.dromara.maxkey.authn.jwt.CongressService;
+import org.dromara.maxkey.authn.jwt.InMemoryCongressService;
+import org.dromara.maxkey.authn.jwt.RedisCongressService;
+import org.dromara.maxkey.configuration.AuthJwkConfig;
+import org.dromara.maxkey.constants.ConstsPersistence;
+import org.dromara.maxkey.persistence.cache.MomentaryService;
+import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;

@@ -21,13 +21,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.maxkey.pretty.impl.JsonPretty;
-import org.maxkey.util.JsonUtils;
-import org.maxkey.web.apis.identity.scim.resources.ScimFormattedName;
-import org.maxkey.web.apis.identity.scim.resources.ScimMeta;
-import org.maxkey.web.apis.identity.scim.resources.ScimUser;
-import org.maxkey.web.apis.identity.scim.resources.ScimUserEmail;
-import org.maxkey.web.apis.identity.scim.resources.ScimUserPhoneNumber;
+import org.dromara.maxkey.pretty.impl.JsonPretty;
+import org.dromara.maxkey.util.JsonUtils;
+import org.dromara.maxkey.web.apis.identity.scim.resources.ScimFormattedName;
+import org.dromara.maxkey.web.apis.identity.scim.resources.ScimMeta;
+import org.dromara.maxkey.web.apis.identity.scim.resources.ScimUser;
+import org.dromara.maxkey.web.apis.identity.scim.resources.ScimUserEmail;
+import org.dromara.maxkey.web.apis.identity.scim.resources.ScimUserPhoneNumber;
 
 public class ScimUserJsonTest {
 

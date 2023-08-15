@@ -19,6 +19,8 @@ package org.maxkey.util;
 
 import java.util.HashMap;
 
+import org.dromara.maxkey.util.ObjectTransformer;
+
 public class ObjectTransformerTest {
 
 	/**

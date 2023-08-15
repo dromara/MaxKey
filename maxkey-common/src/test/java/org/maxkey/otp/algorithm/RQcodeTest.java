@@ -19,7 +19,7 @@ package org.maxkey.otp.algorithm;
 
 import java.io.File;
 
-import org.maxkey.util.QRCode;
+import org.dromara.maxkey.util.QRCode;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;

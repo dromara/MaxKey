@@ -18,6 +18,8 @@
 package org.maxkey.crypto;
 
 import java.time.Instant;
+
+import org.dromara.maxkey.crypto.DigestUtils;
 import org.junit.Test;
 
 public class DigestUtilsTest {

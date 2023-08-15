@@ -17,7 +17,7 @@
 
 package org.maxkey.crypto;
 
-import org.maxkey.crypto.password.PasswordGen;
+import org.dromara.maxkey.crypto.password.PasswordGen;
 
 public class PasswordGenTest {
 

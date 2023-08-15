@@ -17,6 +17,8 @@
 
 package org.maxkey.util;
 
+import org.dromara.maxkey.util.EthernetAddress;
+
 public class EthernetAddressTest {
 
 	public static void main(String[] args) {

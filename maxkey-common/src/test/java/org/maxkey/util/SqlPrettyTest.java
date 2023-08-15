@@ -17,8 +17,8 @@
 
 package org.maxkey.util;
 
+import org.dromara.maxkey.pretty.PrettyFactory;
 import org.junit.Test;
-import org.maxkey.pretty.PrettyFactory;
 
 public class SqlPrettyTest {
 

@@ -20,7 +20,8 @@ package org.maxkey.util;
 import java.util.Date;
 //import java.util.UUID;
 
-import org.maxkey.uuid.UUID;
+import org.dromara.maxkey.util.UUIDGenerator;
+import org.dromara.maxkey.uuid.UUID;
 import org.junit.Test;
 
 public class UUIDGeneratorTest {

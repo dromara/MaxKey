@@ -17,11 +17,11 @@
 
 package org.maxkey.autoconfigure;
 
-import org.maxkey.authn.session.SessionManager;
-import org.maxkey.authn.session.SessionManagerFactory;
-import org.maxkey.authn.web.HttpSessionListenerAdapter;
-import org.maxkey.authn.web.SavedRequestAwareAuthenticationSuccessHandler;
-import org.maxkey.persistence.redis.RedisConnectionFactory;
+import org.dromara.maxkey.authn.session.SessionManager;
+import org.dromara.maxkey.authn.session.SessionManagerFactory;
+import org.dromara.maxkey.authn.web.HttpSessionListenerAdapter;
+import org.dromara.maxkey.authn.web.SavedRequestAwareAuthenticationSuccessHandler;
+import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;

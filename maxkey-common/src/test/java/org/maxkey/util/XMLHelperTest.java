@@ -17,8 +17,8 @@
 
 package org.maxkey.util;
 
+import org.dromara.maxkey.pretty.impl.XMLHelper;
 import org.junit.Test;
-import org.maxkey.pretty.impl.XMLHelper;
 
 public class XMLHelperTest {
 

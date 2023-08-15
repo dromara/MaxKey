@@ -19,8 +19,8 @@ package org.maxkey.crypto;
 
 import java.io.UnsupportedEncodingException;
 
+import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.junit.Test;
-import org.maxkey.crypto.password.PasswordReciprocal;
 
 public class ReciprocalUtilsTest {
 	@Test

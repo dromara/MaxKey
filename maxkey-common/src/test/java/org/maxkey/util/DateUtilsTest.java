@@ -19,6 +19,8 @@ package org.maxkey.util;
 
 import java.util.Date;
 
+import org.dromara.maxkey.util.DateUtils;
+
 public class DateUtilsTest {
 	
 	/**

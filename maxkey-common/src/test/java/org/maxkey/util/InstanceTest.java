@@ -20,7 +20,8 @@ package org.maxkey.util;
 import java.security.Provider;
 import java.security.Security;
 
-import org.maxkey.crypto.password.PasswordReciprocal;
+import org.dromara.maxkey.crypto.password.PasswordReciprocal;
+import org.dromara.maxkey.util.Instance;
 
 
 public class InstanceTest {

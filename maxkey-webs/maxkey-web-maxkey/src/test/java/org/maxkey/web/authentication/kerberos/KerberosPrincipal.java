@@ -23,11 +23,11 @@ package org.maxkey.web.authentication.kerberos;
 import java.util.Date;
 import java.util.regex.Pattern;
 
+import org.dromara.maxkey.authn.support.kerberos.KerberosToken;
+import org.dromara.maxkey.util.DateUtils;
+import org.dromara.maxkey.util.JsonUtils;
 import org.joda.time.DateTime;
 import org.joda.time.chrono.ISOChronology;
-import org.maxkey.authn.support.kerberos.KerberosToken;
-import org.maxkey.util.DateUtils;
-import org.maxkey.util.JsonUtils;
 
 /**
  * @author Crystal.Sea

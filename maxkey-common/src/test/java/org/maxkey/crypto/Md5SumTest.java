@@ -20,6 +20,8 @@ package org.maxkey.crypto;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import org.dromara.maxkey.crypto.Md5Sum;
+
 public class Md5SumTest {
 
 	public Md5SumTest() {

@@ -19,8 +19,8 @@ package org.maxkey.otp.algorithm;
 
 import java.io.File;
 
-import org.maxkey.password.onetimepwd.algorithm.OtpKeyUriFormat;
-import org.maxkey.util.QRCode;
+import org.dromara.maxkey.password.onetimepwd.algorithm.OtpKeyUriFormat;
+import org.dromara.maxkey.util.QRCode;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;

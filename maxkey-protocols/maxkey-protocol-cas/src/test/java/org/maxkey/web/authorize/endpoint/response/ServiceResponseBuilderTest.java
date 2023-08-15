@@ -17,10 +17,10 @@
 
 package org.maxkey.web.authorize.endpoint.response;
 
-import org.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
-import org.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
-import org.maxkey.pretty.impl.JsonPretty;
-import org.maxkey.pretty.impl.XmlPretty;
+import org.dromara.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
+import org.dromara.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
+import org.dromara.maxkey.pretty.impl.JsonPretty;
+import org.dromara.maxkey.pretty.impl.XmlPretty;
 
 
 public class ServiceResponseBuilderTest {

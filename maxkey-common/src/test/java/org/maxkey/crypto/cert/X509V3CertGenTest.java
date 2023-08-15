@@ -24,6 +24,7 @@ import java.security.Security;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 
+import org.dromara.maxkey.crypto.cert.X509V3CertGen;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
