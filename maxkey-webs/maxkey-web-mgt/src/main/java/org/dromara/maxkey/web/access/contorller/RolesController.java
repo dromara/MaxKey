@@ -69,7 +69,7 @@ public class RolesController {
 	public ResponseEntity<?> query(@ModelAttribute Roles role,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-query  :" + role);
 		role.setInstId(currentUser.getInstId());
-		if (rolesService.load(role)!=null) {
+		if (rolesService.query(role)!=null) {
 			 return new Message<Roles>(Message.SUCCESS).buildResponse();
 		} else {
 			 return new Message<Roles>(Message.FAIL).buildResponse();

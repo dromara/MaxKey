@@ -99,7 +99,7 @@ public class UserInfoController {
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> query(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-query  :" + userInfo);
-		if (userInfoService.load(userInfo)!=null) {
+		if (userInfoService.query(userInfo)!=null) {
 			 return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
 			 return new Message<UserInfo>(Message.SUCCESS).buildResponse();

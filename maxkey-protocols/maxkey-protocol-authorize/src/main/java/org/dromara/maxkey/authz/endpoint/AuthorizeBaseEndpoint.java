@@ -31,6 +31,7 @@ import org.dromara.maxkey.persistence.service.AccountsService;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
+import org.dromara.mybatis.jpa.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,7 @@ public class AuthorizeBaseEndpoint {
 		account.setAppName(app.getAppName());
 		
 		if(loadApp.getCredential().equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)){
-			account = accountsService.load(new Accounts(userInfo.getId(),loadApp.getId()));
+			account = accountsService.load( Query.builder().eq("appId", loadApp.getId()).eq("userid", userInfo.getId()));
 			if(account != null){
 				account.setRelatedPassword(
 						PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));

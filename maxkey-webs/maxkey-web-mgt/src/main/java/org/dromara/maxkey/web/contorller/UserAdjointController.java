@@ -106,7 +106,7 @@ public class UserAdjointController {
 			@CurrentUser UserInfo currentUser) {
 		_logger.debug("-query  :" + userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
-		if (userInfoAdjointService.load(userInfoAdjoint)!=null) {
+		if (userInfoAdjointService.query(userInfoAdjoint)!=null) {
 			return new Message<UserInfoAdjoint>(Message.SUCCESS).buildResponse();
 			
 		} else {

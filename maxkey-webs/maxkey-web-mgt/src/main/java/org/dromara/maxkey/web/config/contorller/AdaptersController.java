@@ -57,7 +57,7 @@ public class AdaptersController {
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> query(@ModelAttribute AppsAdapters appsAdapter,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-query  :" + appsAdapter);
-		if (appsAdaptersService.load(appsAdapter)!=null) {
+		if (appsAdaptersService.query(appsAdapter)!=null) {
 			 return new Message<AppsAdapters>(Message.SUCCESS).buildResponse();
 		} else {
 			 return new Message<AppsAdapters>(Message.SUCCESS).buildResponse();

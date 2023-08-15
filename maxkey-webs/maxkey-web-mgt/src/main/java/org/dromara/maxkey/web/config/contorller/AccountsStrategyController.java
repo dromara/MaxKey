@@ -65,7 +65,7 @@ public class AccountsStrategyController {
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> query(@ModelAttribute AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-query  :" + accountsStrategy);
-		if (accountsStrategyService.load(accountsStrategy)!=null) {
+		if (accountsStrategyService.query(accountsStrategy)!=null) {
 			 return new Message<AccountsStrategy>(Message.SUCCESS).buildResponse();
 		} else {
 			 return new Message<AccountsStrategy>(Message.SUCCESS).buildResponse();

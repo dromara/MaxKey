@@ -80,7 +80,7 @@ public class ApplicationsController extends BaseAppContorller {
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> query(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-query  :" + apps);
-		if (appsService.load(apps)!=null) {
+		if (appsService.query(apps)!=null) {
 			 return new Message<Apps>(Message.SUCCESS).buildResponse();
 		} else {
 			 return new Message<Apps>(Message.SUCCESS).buildResponse();

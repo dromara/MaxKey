@@ -60,7 +60,7 @@ public class SocialsProviderController {
 	public ResponseEntity<?> query(@ModelAttribute SocialsProvider socialsProvider,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-query  :" + socialsProvider);
 		socialsProvider.setInstId(currentUser.getInstId());
-		if (socialsProviderService.load(socialsProvider)!=null) {
+		if (socialsProviderService.query(socialsProvider)!=null) {
 			 return new Message<SocialsProvider>(Message.SUCCESS).buildResponse();
 		} else {
 			 return new Message<SocialsProvider>(Message.SUCCESS).buildResponse();

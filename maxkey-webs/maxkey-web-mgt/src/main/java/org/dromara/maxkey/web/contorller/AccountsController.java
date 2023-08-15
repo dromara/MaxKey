@@ -80,7 +80,7 @@ public class AccountsController {
 	public ResponseEntity<?> query(@ModelAttribute Accounts account,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-query  :" + account);
 		account.setInstId(currentUser.getInstId());
-		if (accountsService.load(account)!=null) {
+		if (accountsService.query(account)!=null) {
 			 return new Message<Accounts>(Message.SUCCESS).buildResponse();
 		} else {
 			 return new Message<Accounts>(Message.SUCCESS).buildResponse();
