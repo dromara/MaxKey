@@ -48,6 +48,7 @@ def libjarsmapper=[
     'maxkey-authentication-social'          :'maxkey',
     'maxkey-web-maxkey'                     :'maxkey',
     'maxkey-web-mgt'                        :'maxkey_mgt',
+    'maxkey-synchronizer'                   :'maxkey_mgt',
     'maxkey-synchronizer-activedirectory'   :'maxkey_mgt',
     'maxkey-synchronizer-common'            :'maxkey_mgt',
     'maxkey-synchronizer-jdbc'              :'maxkey_mgt',
