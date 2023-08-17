@@ -35,23 +35,23 @@ import org.springframework.context.annotation.ComponentScan;
 import jakarta.servlet.ServletException;
 
 @ComponentScan(basePackages = {
-	"org.maxkey.authn",
-	"org.maxkey.configuration",
-	"org.maxkey.entity",
-    "org.maxkey.entity.apps",
-    "org.maxkey.entity.userinfo",
-    "org.maxkey.web.apis.identity.kafka",
-    "org.maxkey.web.apis.identity.rest",
-    "org.maxkey.web.apis.identity.scim",
-    "org.maxkey.persistence",
-    "org.maxkey.provision",
-    "org.maxkey.web",
-    "org.maxkey.web.api.endpoint",
-    "org.maxkey.web.contorller",
-    "org.maxkey.web.endpoint",
-    "org.maxkey.web.interceptor",
+	"org.dromara.maxkey.authn",
+	"org.dromara.maxkey.configuration",
+	"org.dromara.maxkey.entity",
+    "org.dromara.maxkey.entity.apps",
+    "org.dromara.maxkey.entity.userinfo",
+    "org.dromara.maxkey.web.apis.identity.kafka",
+    "org.dromara.maxkey.web.apis.identity.rest",
+    "org.dromara.maxkey.web.apis.identity.scim",
+    "org.dromara.maxkey.persistence",
+    "org.dromara.maxkey.provision",
+    "org.dromara.maxkey.web",
+    "org.dromara.maxkey.web.api.endpoint",
+    "org.dromara.maxkey.web.contorller",
+    "org.dromara.maxkey.web.endpoint",
+    "org.dromara.maxkey.web.interceptor",
 })
-@MapperScan("org.maxkey.persistence.mapper,")
+@MapperScan("org.dromara.maxkey.persistence.mapper,")
 @SpringBootApplication
 @EnableDiscoveryClient
 public class MaxKeyOpenApiApplication extends SpringBootServletInitializer {
