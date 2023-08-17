@@ -21,7 +21,6 @@ import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.lang3.ArchUtils;
 import org.apache.commons.lang3.arch.Processor;
 import org.dromara.maxkey.configuration.ApplicationConfig;
-import org.dromara.maxkey.crypto.Md5Sum;
 import org.dromara.maxkey.util.PathUtils;
 import org.dromara.mybatis.jpa.spring.MybatisJpaContext;
 import org.joda.time.DateTime;
@@ -66,7 +65,6 @@ public class InitializeContext extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init(config);
         
         WebContext.applicationContext = applicationContext;
         
@@ -148,9 +146,7 @@ public class InitializeContext extends HttpServlet {
                 _logger.debug("UserName              :   {}" ,
                          databaseMetaData.getUserName());
                 _logger.debug("-----------------------------------------------------------");
-                if(Md5Sum.checkVersion()) {
-                	_logger.trace("The Version dependent on is Reliable .");
-                }
+                
             } catch (SQLException e) {
                 e.printStackTrace();
                 _logger.error("DatabaseMetaData Variables Error .",e);

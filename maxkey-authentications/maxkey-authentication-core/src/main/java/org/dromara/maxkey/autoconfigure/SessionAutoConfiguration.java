@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.autoconfigure;
+package org.dromara.maxkey.autoconfigure;
 
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.authn.session.SessionManagerFactory;

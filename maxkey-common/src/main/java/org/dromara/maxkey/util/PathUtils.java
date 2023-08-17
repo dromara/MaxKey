@@ -72,7 +72,7 @@ public class PathUtils {
 
         _logger.trace("PathUtils  Class Path  : " + classPath);
         classPath = classPath.substring(0, 
-                classPath.indexOf("/org/maxkey/util/" + PATH_FILE_NAME));
+                classPath.indexOf("/org/dromara/maxkey/util/" + PATH_FILE_NAME));
         if (classPath.indexOf(WEB_INFO) == -1) {
             appPath = classPath.substring(0, classPath.lastIndexOf("/"));
         } else {

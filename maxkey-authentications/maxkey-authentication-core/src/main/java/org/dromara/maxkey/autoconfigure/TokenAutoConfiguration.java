@@ -15,7 +15,7 @@
  */
  
 
-package org.maxkey.autoconfigure;
+package org.dromara.maxkey.autoconfigure;
 
 import org.dromara.maxkey.authn.jwt.AuthRefreshTokenService;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
