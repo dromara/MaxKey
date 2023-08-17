@@ -36,7 +36,7 @@ import jakarta.servlet.ServletException;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("org.maxkey.persistence.mapper,")
+@MapperScan("org.dromara.maxkey.persistence.mapper,")
 public class MaxKeyApplication extends SpringBootServletInitializer {
     private static final Logger _logger = LoggerFactory.getLogger(MaxKeyApplication.class);
 
