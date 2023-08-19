@@ -26,28 +26,28 @@
             {
               "text": "组织",
               "i18n": "mxk.menu.identities.organizations",
-              "link": "/organizations",
+              "link": "/idm/organizations",
               "icon": "anticon-cluster",
               "children": []
             },
             {
               "text": "用户",
               "i18n": "mxk.menu.identities.users",
-              "link": "/users",
+              "link": "/idm/users",
               "icon": "anticon-user",
               "children": []
             },
             {
               "text": "用户组",
               "i18n": "mxk.menu.identities.groups",
-              "link": "/access/roles",
+              "link": "/idm/groups",
               "icon": "anticon-contacts",
               "children": []
             },
             {
               "text": "用户组成员",
               "i18n": "mxk.menu.identities.groupmembers",
-              "link": "/access/rolemembers",
+              "link": "/idm/rolemembers",
               "icon": "anticon-team",
               "children": []
             }
