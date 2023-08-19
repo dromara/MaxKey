@@ -26,7 +26,7 @@ import { Accounts } from '../../../entity/Accounts';
 import { AccountsService } from '../../../service/accounts.service';
 import { UsersService } from '../../../service/users.service';
 import { SelectAppsComponent } from '../../apps/select-apps/select-apps.component';
-import { SelectUserComponent } from '../../users/select-user/select-user.component';
+import { SelectUserComponent } from '../../idm/users/select-user/select-user.component';
 
 @Component({
   selector: 'app-account-editer',
