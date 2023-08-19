@@ -25,12 +25,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.io.Serializable;
+
 import org.dromara.maxkey.entity.apps.oauth2.provider.client.BaseClientDetails;
 import org.springframework.util.StringUtils;
 
 @Entity
 @Table(name = "MXK_APPS_OAUTH_CLIENT_DETAILS")
-public class AppsOAuth20Details extends Apps {
+public class AppsOAuth20Details extends Apps  implements Serializable {
 
     /**
      * 

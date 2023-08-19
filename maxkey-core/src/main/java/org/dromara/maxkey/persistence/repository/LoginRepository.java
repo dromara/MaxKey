@@ -52,7 +52,7 @@ public class LoginRepository {
 
 
 
-    private static final String ROLES_SELECT_STATEMENT = "select distinct r.id,r.rolecode,r.rolename from mxk_userinfo u,mxk_roles r,mxk_role_member rm where u.id = ?  and u.id=rm.memberid and rm.roleid=r.id ";
+    private static final String ROLES_SELECT_STATEMENT = "select distinct g.id,g.groupcode,g.groupname from mxk_userinfo u,mxk_groups g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
 
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "select * from  mxk_userinfo where username = ? ";
     
@@ -60,7 +60,7 @@ public class LoginRepository {
     
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL = "select * from  mxk_userinfo where (username = ? or mobile = ? or email = ?) ";
     
-    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.appname from mxk_apps app,mxk_role_permissions pm,mxk_roles r  where app.id=pm.appid and app.status =	1 and pm.roleid=r.id and r.id in(%s)";
+    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.appname from mxk_apps app,mxk_group_permissions gp,mxk_groups g  where app.id=gp.appid and app.status =	1 and gp.groupid=g.id and g.id in(%s)";
     
     protected JdbcTemplate jdbcTemplate;
     
@@ -215,7 +215,7 @@ public class LoginRepository {
     public List<Roles> queryRoles(UserInfo userInfo) {
         List<Roles> listRoles = jdbcTemplate.query(ROLES_SELECT_STATEMENT, new RowMapper<Roles>() {
             public Roles mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Roles role = new Roles(rs.getString("id"), rs.getString("rolecode"),rs.getString("rolename"), 0);
+                Roles role = new Roles(rs.getString("id"), rs.getString("groupcode"),rs.getString("groupname"), 0);
 
                 return role;
             }

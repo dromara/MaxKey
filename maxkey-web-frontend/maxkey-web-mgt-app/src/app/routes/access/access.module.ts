@@ -22,12 +22,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { PermissionsEditerComponent } from './permissions/permissions-editer/permissions-editer.component';
 import { PermissionsComponent } from './permissions/permissions.component';
-import { MemberRolesEditerComponent } from './role-members/member-roles-editer/member-roles-editer.component';
-import { RoleMembersEditerComponent } from './role-members/role-members-editer/role-members-editer.component';
-import { RoleMembersComponent } from './role-members/role-members.component';
-import { RoleEditerComponent } from './roles/role-editer/role-editer.component';
-import { RolesComponent } from './roles/roles.component';
-import { SelectRolesComponent } from './roles/select-roles/select-roles.component';
 import { SessionsComponent } from './sessions/sessions.component';
 
 const routes: Routes = [
@@ -36,30 +30,12 @@ const routes: Routes = [
     component: SessionsComponent
   },
   {
-    path: 'roles',
-    component: RolesComponent
-  },
-  {
-    path: 'rolemembers',
-    component: RoleMembersComponent
-  },
-  {
     path: 'permissions',
     component: PermissionsComponent
   }
 ];
 
-const COMPONENTS = [
-  RolesComponent,
-  RoleMembersComponent,
-  PermissionsComponent,
-  RoleEditerComponent,
-  SessionsComponent,
-  SelectRolesComponent,
-  RoleMembersEditerComponent,
-  PermissionsEditerComponent,
-  MemberRolesEditerComponent
-];
+const COMPONENTS = [PermissionsComponent, SessionsComponent, PermissionsEditerComponent];
 
 @NgModule({
   declarations: [...COMPONENTS],

@@ -27,13 +27,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
-/*
-   ID                   varchar(40)                    not null,
-   APPROLEID            varchar(40)                    null,
-   USERID	                varchar(40)	                   null
-   constraint PK_ROLES primary key clustered (ID)
- */
 @Entity
 @Table(name = "MXK_ROLE_MEMBER")  
 public class RoleMember extends UserInfo implements Serializable{

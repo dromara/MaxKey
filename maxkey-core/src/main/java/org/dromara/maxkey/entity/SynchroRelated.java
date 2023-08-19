@@ -17,6 +17,7 @@
 
 package org.dromara.maxkey.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.dromara.mybatis.jpa.entity.JpaEntity;
@@ -36,7 +37,7 @@ import org.dromara.maxkey.util.DateUtils;
 
 @Entity
 @Table(name = "MXK_SYNCHRO_RELATED")
-public class SynchroRelated extends JpaEntity {
+public class SynchroRelated extends JpaEntity  implements Serializable {
 	private static final long serialVersionUID = 6993697309055585706L;
 
 	@Id

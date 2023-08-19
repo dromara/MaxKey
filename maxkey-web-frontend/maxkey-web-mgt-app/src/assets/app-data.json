@@ -18,20 +18,42 @@
           "children": []
         },
         {
-          "text": "组织管理",
-          "i18n": "mxk.menu.organizations",
+          "text": "身份管理",
+          "i18n": "mxk.menu.identities",
           "link": "/organizations",
-          "icon": "anticon-cluster",
-          "children": []
-        },
-        {
-          "text": "用户管理",
-          "i18n": "mxk.menu.users",
-          "link": "/users",
           "icon": "anticon-user",
-          "children": []
-        }
-        ,
+          "children": [
+            {
+              "text": "组织",
+              "i18n": "mxk.menu.identities.organizations",
+              "link": "/organizations",
+              "icon": "anticon-cluster",
+              "children": []
+            },
+            {
+              "text": "用户",
+              "i18n": "mxk.menu.identities.users",
+              "link": "/users",
+              "icon": "anticon-user",
+              "children": []
+            },
+            {
+              "text": "用户组",
+              "i18n": "mxk.menu.identities.groups",
+              "link": "/access/roles",
+              "icon": "anticon-contacts",
+              "children": []
+            },
+            {
+              "text": "用户组成员",
+              "i18n": "mxk.menu.identities.groupmembers",
+              "link": "/access/rolemembers",
+              "icon": "anticon-team",
+              "children": []
+            }
+          ]
+        },
+        
         {
           "text": "应用管理",
           "i18n": "mxk.menu.apps",
@@ -46,31 +68,17 @@
           "icon": "anticon-safety",
           "children": [
             {
+              "text": "访问控制",
+              "i18n": "mxk.menu.access.permissions",
+              "link": "/access/permissions",
+              "icon": "anticon-check-square",
+              "children": []
+            },
+            {
               "text": "会话管理",
               "i18n": "mxk.menu.sessions",
               "link": "/access/sessions",
               "icon": "anticon-eye",
-              "children": []
-            },
-            {
-              "text": "角色管理",
-              "i18n": "mxk.menu.access.roles",
-              "link": "/access/roles",
-              "icon": "anticon-contacts",
-              "children": []
-            },
-            {
-              "text": "角色成员管理",
-              "i18n": "mxk.menu.access.rolemembers",
-              "link": "/access/rolemembers",
-              "icon": "anticon-team",
-              "children": []
-            },
-            {
-              "text": "访问控制管理",
-              "i18n": "mxk.menu.access.permissions",
-              "link": "/access/permissions",
-              "icon": "anticon-check-square",
               "children": []
             }
           ]

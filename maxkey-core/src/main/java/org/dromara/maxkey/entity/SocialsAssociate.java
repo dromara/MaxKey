@@ -17,6 +17,8 @@
 
 package org.dromara.maxkey.entity;
 
+import java.io.Serializable;
+
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 import jakarta.persistence.Column;
@@ -31,7 +33,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "MXK_SOCIALS_ASSOCIATE")
-public class SocialsAssociate extends JpaEntity {
+public class SocialsAssociate extends JpaEntity  implements Serializable {
 	
 	/**
 	 * 

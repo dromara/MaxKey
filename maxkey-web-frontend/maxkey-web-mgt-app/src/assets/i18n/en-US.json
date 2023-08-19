@@ -23,14 +23,17 @@
 		},
 		"menu": {
 			"home": "Dashboard",
-			"organizations": "Organizations",
-			"users": "Users",
+			"identities": {
+				"":"Identities",
+				"organizations": "Organizations",
+				"users": "Users",
+				"groups": "Groups",
+				"groupmembers": "GroupMembers"
+			},
 			"accounts": "Accounts",
-			"apps": "Apps",
+			"apps": "Applications",
 			"access": {
 				"": "Access",
-				"roles": "Role",
-				"rolemembers": "RoleMembers",
 				"permissions" :"Permissions"
 			},
 			"permissions": {
@@ -481,7 +484,7 @@
 			}
 		},
 		"roles": {
-			"name": "Role Name",
+			"name": "Group Name",
 			"type": {
 				"":"Member Type",
 				"user":"User",

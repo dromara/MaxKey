@@ -32,15 +32,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-/*
-   ID                   varchar(40)                    not null,
-   UID                  varchar(40)                    null,
-   APPID                varchar(40)	                   null,
-   USERNAME            	varchar(60)                    null,
-   PASSWORD             varchar(60)                    null,
-   STATUS	            char(1)                        null
-   constraint PK_ROLES primary key clustered (ID)
- */
 @Entity
 @Table(name = "MXK_ACCOUNTS")
 public class Accounts extends JpaEntity implements Serializable {

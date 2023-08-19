@@ -19,6 +19,8 @@ package org.dromara.maxkey.entity;
 
 
 
+import java.io.Serializable;
+
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 import jakarta.persistence.Column;
@@ -29,7 +31,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "MXK_EMAIL_SENDERS")
-public class EmailSenders  extends JpaEntity{
+public class EmailSenders  extends JpaEntity  implements Serializable {
 
 	/**
 	 * 

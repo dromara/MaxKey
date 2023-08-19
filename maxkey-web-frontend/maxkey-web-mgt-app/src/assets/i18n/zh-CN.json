@@ -23,15 +23,18 @@
 		},
 		"menu": {
 			"home": "仪表盘",
-			"organizations": "组织管理",
-			"users": "用户管理",
+			"identities": {
+				"":"身份管理",
+				"organizations": "组织",
+				"users": "用户",
+				"groups": "用户组",
+				"groupmembers": "用户组成员"
+			},
 			"accounts": "账号管理",
 			"apps": "应用管理",
 			"access": {
 				"": "访问控制",
-				"roles": "角色管理",
-				"rolemembers": "角色成员管理",
-				"permissions" :"访问控制管理"
+				"permissions" :"访问控制"
 			},
 			"permissions": {
 				"": "权限管理",
@@ -479,7 +482,7 @@
 			}
 		},
 		"roles": {
-			"name": "角色名称",
+			"name": "用户组名称",
 			"type": {
 				"":"成员类型",
 				"user":"用户",

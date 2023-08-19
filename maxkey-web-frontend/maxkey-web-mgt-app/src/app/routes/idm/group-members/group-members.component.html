@@ -1,0 +1,92 @@
+<page-header> </page-header>
+
+<nz-card [nzBordered]="false">
+  <form nz-form [nzLayout]="'inline'" (ngSubmit)="onSearch()" class="search__form">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 24, lg: 24, xl: 48, xxl: 48 }">
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="groupName">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
+              <input nz-input [(ngModel)]="query.params.groupName" [ngModelOptions]="{ standalone: true }"
+                name="groupName" readonly placeholder="" id="groupName" />
+            </nz-input-group>
+            <ng-template #suffixButton>
+              <button nz-button nzType="primary" (click)="onSelect($event)" nzSearch>{{ 'mxk.text.select' | i18n
+                }}</button>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item>
+          <nz-form-label nzFor="name">{{ 'mxk.users.username' | i18n }}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="query.params.username" [ngModelOptions]="{ standalone: true }" name="username"
+              placeholder="" id="username" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="query.expandForm ? 24 : 8" [class.text-right]="query.expandForm">
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' |
+          i18n }}</button>
+        <button nz-button type="reset" (click)="onReset()" class="mx-sm">{{ 'mxk.text.reset' | i18n }}</button>
+        <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
+          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button>
+      </div>
+    </div>
+  </form>
+</nz-card>
+<nz-card [nzBordered]="false">
+  <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+    <div nz-col [nzSpan]="24" class="table-list-toolbar">
+      <button nz-button type="button" [nzType]="'primary'" (click)="onAdd($event)">{{ 'mxk.text.add' | i18n }}</button>
+      <button nz-button type="button" (click)="onBatchDelete($event)" [nzType]="'primary'" nzDanger class="mx-sm">{{
+        'mxk.text.delete' | i18n
+        }}</button>
+    </div>
+
+    <div nz-col nzMd="24" nzSm="24">
+      <nz-table #dynamicTable nzTableLayout="auto" nzSize="small" nzBordered nzShowSizeChanger
+        [nzData]="query.results.rows" [nzFrontPagination]="false" [nzTotal]="query.results.records"
+        [nzPageSizeOptions]="query.params.pageSizeOptions" [nzPageSize]="query.params.pageSize"
+        [nzPageIndex]="query.params.pageNumber" [nzLoading]="this.query.tableLoading"
+        (nzQueryParams)="onQueryParamsChange($event)">
+        <thead>
+          <tr>
+            <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate"
+              (nzCheckedChange)="onTableAllChecked($event)"></th>
+            <th nzAlign="center">{{ 'mxk.roles.name' | i18n }}</th>
+            <th nzAlign="center">{{ 'mxk.users.username' | i18n }}</th>
+            <th nzAlign="center">{{ 'mxk.users.displayName' | i18n }}</th>
+            <th nzAlign="center">{{ 'mxk.users.department' | i18n }}</th>
+            <th nzAlign="center">{{ 'mxk.users.jobTitle' | i18n }}</th>
+            <th nzAlign="center">{{ 'mxk.users.gender' | i18n }}</th>
+            <th nzAlign="center" class="table_cell_action_1">{{ 'mxk.text.action' | i18n }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of query.results.rows">
+            <td [nzChecked]="query.tableCheckedId.has(data.id)" [nzDisabled]="data.disabled"
+              (nzCheckedChange)="onTableItemChecked(data.id, $event)"></td>
+            <td nzAlign="left"> {{ data.groupName }}</td>
+            <td nzAlign="left"> {{ data.username }}</td>
+            <td nzAlign="left"> {{ data.displayName }}</td>
+            <td nzAlign="left"> {{ data.department }}</td>
+            <td nzAlign="left"> {{ data.jobTitle }}</td>
+            <td nzAlign="center"> {{ data.gender == 1 ? ('mxk.users.gender.female' | i18n) : ('mxk.users.gender.male' |
+              i18n) }}</td>
+            <td nzAlign="center" nzBreakWord="false">
+              <div nz-col>
+                <button *ngIf="data.category == 'static'" nz-button type="button" (click)="onDelete($event, data.id)"
+                  nzDanger>{{
+                  'mxk.text.delete' | i18n
+                  }}</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>

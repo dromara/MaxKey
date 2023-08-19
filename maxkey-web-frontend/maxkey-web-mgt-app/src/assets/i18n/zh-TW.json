@@ -23,15 +23,18 @@
 		},
 		"menu": {
 			"home": "儀錶盤",
-			"organizations": "組織管理",
-			"users": "用戶管理",
+			"identities": {
+				"":"身份管理",
+				"organizations": "組織",
+				"users": "用戶",
+				"groups": "用户组",
+				"groupmembers": "用户组成员"
+			},
 			"posts":"崗位管理",
 			"accounts": "賬號管理",
 			"apps": "應用管理",
 			"access": {
 				"": "訪問控制",
-				"groups": "角色管理",
-				"groupmembers": "角色成員管理",
 				"privileges": "訪問權限管理"
 			},
 			"permissions": {
@@ -480,7 +483,7 @@
 			}
 		},
 		"roles": {
-			"name": "角色名稱",
+			"name": "用戶组名稱",
 			"type": {
 				"":"成員類型",
 				"user":"用戶",

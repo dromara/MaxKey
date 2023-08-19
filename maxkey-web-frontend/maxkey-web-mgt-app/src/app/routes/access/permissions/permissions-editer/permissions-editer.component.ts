@@ -24,14 +24,14 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 
-import { RolePermissionsService } from '../../../../service/role-permissions.service';
+import { GroupPermissionsService } from '../../../../service/group-permissions.service';
 @Component({
   selector: 'app-permissions-editer',
   templateUrl: './permissions-editer.component.html',
   styleUrls: ['./permissions-editer.component.less']
 })
 export class PermissionsEditerComponent implements OnInit {
-  @Input() roleId?: String;
+  @Input() groupId?: String;
   @Input() isEdit?: boolean;
 
   query: {
@@ -39,7 +39,7 @@ export class PermissionsEditerComponent implements OnInit {
       appName: String;
       displayName: String;
       username: String;
-      roleId: String;
+      groupId: String;
       startDate: String;
       endDate: String;
       startDatePicker: Date;
@@ -63,7 +63,7 @@ export class PermissionsEditerComponent implements OnInit {
       appName: '',
       displayName: '',
       username: '',
-      roleId: '',
+      groupId: '',
       startDate: '',
       endDate: '',
       startDatePicker: addDays(new Date(), -30),
@@ -86,7 +86,7 @@ export class PermissionsEditerComponent implements OnInit {
 
   constructor(
     private modalRef: NzModalRef,
-    private rolePermissionsService: RolePermissionsService,
+    private groupPermissionsService: GroupPermissionsService,
     private viewContainerRef: ViewContainerRef,
     private fb: FormBuilder,
     private msg: NzMessageService,
@@ -95,8 +95,8 @@ export class PermissionsEditerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.roleId) {
-      this.query.params.roleId = this.roleId;
+    if (this.groupId) {
+      this.query.params.groupId = this.groupId;
       this.fetch();
     }
   }
@@ -126,7 +126,7 @@ export class PermissionsEditerComponent implements OnInit {
       this.query.params.endDate = '';
       this.query.params.startDate = '';
     }
-    this.rolePermissionsService.memberOut(this.query.params).subscribe(res => {
+    this.groupPermissionsService.memberOut(this.query.params).subscribe(res => {
       this.query.results = res.data;
       this.query.submitLoading = false;
       this.query.tableLoading = false;
@@ -171,7 +171,7 @@ export class PermissionsEditerComponent implements OnInit {
       memberIds = `${memberIds},${selectedData[i].id}`;
       memberNames = `${memberNames},${selectedData[i].username}`;
     }
-    this.rolePermissionsService.add({ roleId: this.roleId, appId: memberIds, appName: memberNames }).subscribe(res => {
+    this.groupPermissionsService.add({ groupId: this.groupId, appId: memberIds, appName: memberNames }).subscribe(res => {
       this.query.results = res.data;
       this.query.submitLoading = false;
       this.query.tableLoading = false;

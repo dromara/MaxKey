@@ -20,6 +20,8 @@
  */
 package org.dromara.maxkey.entity.apps;
 
+import java.io.Serializable;
+
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 import jakarta.persistence.Column;
@@ -34,7 +36,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "MXK_APPS_TOKEN_BASED_DETAILS") 
-public class AppsTokenBasedDetails  extends Apps {
+public class AppsTokenBasedDetails  extends Apps  implements Serializable {
 
 	/**
 	 * 

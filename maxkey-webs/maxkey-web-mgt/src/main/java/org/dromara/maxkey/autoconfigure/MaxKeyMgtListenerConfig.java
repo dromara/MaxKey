@@ -24,7 +24,7 @@ import org.dromara.maxkey.listener.ListenerAdapter;
 import org.dromara.maxkey.listener.ListenerParameter;
 import org.dromara.maxkey.listener.SessionListenerAdapter;
 import org.dromara.maxkey.persistence.service.ConnectorsService;
-import org.dromara.maxkey.persistence.service.RolesService;
+import org.dromara.maxkey.persistence.service.GroupsService;
 import org.dromara.maxkey.provision.thread.ProvisioningRunner;
 import org.dromara.maxkey.provision.thread.ProvisioningRunnerThread;
 import org.quartz.Scheduler;
@@ -59,7 +59,7 @@ public class MaxKeyMgtListenerConfig  implements InitializingBean {
     @Bean
     public String  dynamicRolesListenerAdapter(
     		Scheduler scheduler,
-            RolesService rolesService,
+            GroupsService rolesService,
             @Value("${maxkey.job.cron.schedule}") String cronSchedule
             ) throws SchedulerException {
         

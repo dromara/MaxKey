@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.maxkey.persistence.mapper.GroupPermissionsMapper" >
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	apps.id	=	#{id}
+		</if> 
+		<if test="appName != null and appName != ''">
+			and apps.appname like  '%${appName}%'
+		</if>
+		<if test="protocol != null and protocol != ''">
+			and apps.protocol = #{protocol}
+		</if>
+		<if test="category != null and category != ''">
+			and apps.category = #{category}
+		</if>
+    </sql>
+	
+	<!-- AppGroup -->
+	<select id="appsInGroup" parameterType="GroupPermissions" resultType="GroupPermissions">
+		select
+			p.id,
+			p.groupid,
+			r.groupname,
+			apps.id appid,
+			apps.appname,
+            apps.icon,
+            apps.loginurl,
+            apps.protocol,
+            apps.category,
+            apps.description,
+            apps.vendor,
+            apps.vendorurl
+		from
+			mxk_apps apps,
+			mxk_group_permissions    p,
+			mxk_groups  r
+		where
+		    apps.instid    =   #{instId} 
+		    and p.instid   =   #{instId} 
+		    and r.instid   =   #{instId} 
+			and p.appid    =   apps.id
+			and p.groupid   =   r.id
+			<if test="groupId != null and groupId != ''">
+                and p.groupid    =   #{groupId}
+                and r.id        =   #{groupId}
+            </if>
+		<include refid="where_statement"/>
+	</select>
+	
+	<select id="appsNotInGroup" parameterType="GroupPermissions" resultType="GroupPermissions">
+		select
+			*
+		from
+			mxk_apps apps
+		where
+			 1	=	1
+			and  apps.id not in(
+				select 
+					appid
+				from
+					mxk_group_permissions
+				where 
+					groupid	=	#{groupId}
+			)
+		<include refid="where_statement"/>
+	</select>
+	
+</mapper>

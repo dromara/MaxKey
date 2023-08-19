@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.maxkey.persistence.mapper.GroupsMapper">
+
+	<sql id="where_statement">
+    	<if test="id != null and id != ''">
+			and	id	=	#{id}
+		</if> 
+		<if test="groupName != null and groupName != ''">
+			and groupname like '%${groupName}%'
+		</if>
+    </sql>
+    
+	
+	
+	<select id="fetchPageResults" parameterType="Groups" resultType="Groups">
+		select
+			*
+		from
+			mxk_groups
+		where instid   =   #{instId} 
+		<include refid="where_statement"/>
+	</select>
+	
+	<select id="queryDynamicRoles" parameterType="Groups" resultType="Groups">
+		select
+			*
+		from
+			mxk_groups
+		where instid   =   #{instId} 
+            and category = 'dynamic'
+		<include refid="where_statement"/>
+	</select>
+	
+	
+	<update id="logisticDelete" parameterType="Groups" >
+    	update mxk_groups set
+    		status	=	'2'  
+    	where	instid   =   #{instId} 
+    	<if test="id != null">
+			and	id	=	#{id}
+		</if>
+		<if test="groupName != groupName">
+			and	groupname	=	#{groupName}
+		</if>
+    </update>
+    
+    
+    <update id="logisticBatchDelete" parameterType="java.util.List">
+    	update mxk_groups
+    	set status='2' 
+    	where instid   =   #{instId} 
+    	   and id in
+    		<foreach item="item" collection="list" open="(" separator="," close=")">
+				#{item}
+    		</foreach>
+    </update>
+    
+    
+    <select id="queryRolesByUserId" parameterType="string"  resultType="Roles">
+            select  distinct
+                g.*
+            from
+                mxk_userinfo u,
+                mxk_groups   g,
+                mxk_group_member gm
+            where   u.instid    =   #{instId} 
+                and g.instid    =   #{instId} 
+                and gm.instid   =   #{instId} 
+                and gm.memberid = #{value}
+                and u.id        = #{value}
+                and gm.type     in( 'USER','USER-DYNAMIC')
+                and gm.groupid  =   g.id    
+                and gm.memberid =   u.id
+    </select>
+    
+   
+</mapper>

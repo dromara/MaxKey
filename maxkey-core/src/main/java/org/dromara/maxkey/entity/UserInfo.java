@@ -18,6 +18,8 @@
 package org.dromara.maxkey.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +41,7 @@ import org.dromara.maxkey.util.StringUtils;
 
 @Entity
 @Table(name = "MXK_USERINFO")
-public class UserInfo extends JpaEntity {
+public class UserInfo extends JpaEntity  implements Serializable {
     private static final long serialVersionUID = 6402443942083382236L;
     
     public static final String CLASS_TYPE = "UserInfo";

@@ -23,8 +23,8 @@ import org.dromara.maxkey.entity.HistorySystemLogs;
 import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.Resources;
 import org.dromara.maxkey.entity.RoleMember;
-import org.dromara.maxkey.entity.RolePermissions;
-import org.dromara.maxkey.entity.RolePrivileges;
+import org.dromara.maxkey.entity.GroupPermissions;
+import org.dromara.maxkey.entity.GroupPrivileges;
 import org.dromara.maxkey.entity.Roles;
 import org.dromara.maxkey.entity.SocialsProvider;
 import org.dromara.maxkey.entity.Synchronizers;
@@ -68,16 +68,16 @@ public class HistorySystemLogsService  extends JpaService<HistorySystemLogs>{
 				message = buildMsg((Roles)entity);
 			}else if(entity instanceof RoleMember) {
 				message = buildMsg((RoleMember)entity);
-			}else if(entity instanceof RolePermissions) {
-				message = buildMsg((RolePermissions)entity);
+			}else if(entity instanceof GroupPermissions) {
+				message = buildMsg((GroupPermissions)entity);
 			}else if(entity instanceof Resources) {
 				message = buildMsg((Resources)entity);
 			}else if(entity instanceof Synchronizers) {
 				message = buildMsg((Synchronizers)entity);
 			}else if(entity instanceof SocialsProvider) {
 				message = buildMsg((SocialsProvider)entity);
-			}else if(entity instanceof RolePrivileges) {
-				message = buildMsg((RolePrivileges)entity);
+			}else if(entity instanceof GroupPrivileges) {
+				message = buildMsg((GroupPrivileges)entity);
 			}else if(entity instanceof String) {
 				message = entity.toString();
 			}
@@ -157,18 +157,18 @@ public class HistorySystemLogsService  extends JpaService<HistorySystemLogs>{
 				.toString();
 	}
 	
-	public String buildMsg(RolePermissions permission) {
+	public String buildMsg(GroupPermissions permission) {
 		return new StringBuilder()
-				.append(permission.getRoleName())
+				.append(permission.getGroupName())
 				.append("[")
 				.append(permission.getAppName())
 				.append("]")
 				.toString();
 	}
 	
-	public String buildMsg(RolePrivileges privilege) {
+	public String buildMsg(GroupPrivileges privilege) {
 		return new StringBuilder()
-				.append(privilege.getRoleId())
+				.append(privilege.getGroupId())
 				.append("[")
 				.append(privilege.getResourceId())
 				.append("]")

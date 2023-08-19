@@ -30,13 +30,7 @@ import { AppTokenBasedDetailsEditerComponent } from './apps/app-token-based-deta
 import { AppsComponent } from './apps/apps.component';
 import { SelectAppsComponent } from './apps/select-apps/select-apps.component';
 import { SelectProtocolComponent } from './apps/select-protocol/select-protocol.component';
-import { OrganizationEditerComponent } from './organizations/organization-editer/organization-editer.component';
-import { OrganizationsComponent } from './organizations/organizations.component';
 import { RouteRoutingModule } from './routes-routing.module';
-import { PasswordComponent } from './users/password/password.component';
-import { SelectUserComponent } from './users/select-user/select-user.component';
-import { UserEditerComponent } from './users/user-editer/user-editer.component';
-import { UsersComponent } from './users/users.component';
 
 const COMPONENTS: Array<Type<null>> = [];
 
@@ -44,15 +38,10 @@ const COMPONENTS: Array<Type<null>> = [];
   imports: [SharedModule, RouteRoutingModule],
   declarations: [
     ...COMPONENTS,
-    UsersComponent,
     AppsComponent,
     AccountsComponent,
-    OrganizationsComponent,
     SelectAppsComponent,
-    OrganizationEditerComponent,
-    UserEditerComponent,
     AccountEditerComponent,
-    SelectUserComponent,
     SelectProtocolComponent,
     AppCasDetailsEditerComponent,
     AppFormBasedDetailsEditerComponent,
@@ -61,8 +50,7 @@ const COMPONENTS: Array<Type<null>> = [];
     AppSaml20DetailsEditerComponent,
     AppTokenBasedDetailsEditerComponent,
     AppExtendApiDetailsEditerComponent,
-    AppBasicDetailsEditerComponent,
-    PasswordComponent
+    AppBasicDetailsEditerComponent
   ]
 })
 export class RoutesModule {}

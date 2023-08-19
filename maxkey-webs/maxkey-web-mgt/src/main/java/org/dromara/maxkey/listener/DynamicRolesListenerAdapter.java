@@ -19,7 +19,7 @@ package org.dromara.maxkey.listener;
 
 import java.io.Serializable;
 
-import org.dromara.maxkey.persistence.service.RolesService;
+import org.dromara.maxkey.persistence.service.GroupsService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class DynamicRolesListenerAdapter extends ListenerAdapter  implements Job
     
     private static final long serialVersionUID = 8831626240807856084L;
 
-    private  RolesService rolesService = null;
+    private  GroupsService rolesService = null;
 
     @Override
     public void execute(JobExecutionContext context){
@@ -57,7 +57,7 @@ public class DynamicRolesListenerAdapter extends ListenerAdapter  implements Job
     void init(JobExecutionContext context){
     	super.init(context);
     	if(rolesService == null) {
-    		rolesService = getParameter("rolesService",RolesService.class);
+    		rolesService = getParameter("rolesService",GroupsService.class);
         }
     }
 

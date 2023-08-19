@@ -36,9 +36,9 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions, NzTreeComponent } from 'ng-zorro-antd/tree';
 
 import { TreeNodes } from '../../../entity/TreeNodes';
+import { GroupsService } from '../../../service/Groups.service';
+import { GroupPrivilegesService } from '../../../service/group-privileges.service';
 import { ResourcesService } from '../../../service/resources.service';
-import { RolePrivilegesService } from '../../../service/role-privileges.service';
-import { RolesService } from '../../../service/roles.service';
 import { set2String } from '../../../shared/index';
 import { SelectAppsComponent } from '../../apps/select-apps/select-apps.component';
 
@@ -51,7 +51,7 @@ export class PrivilegesComponent implements OnInit {
   @ViewChild('nzTreeComponent', { static: false }) nzTreeComponent!: NzTreeComponent;
   query: {
     params: {
-      roleName: String;
+      groupName: String;
       displayName: String;
       employeeNumber: String;
       appId: String;
@@ -76,7 +76,7 @@ export class PrivilegesComponent implements OnInit {
     checked: boolean;
   } = {
     params: {
-      roleName: '',
+      groupName: '',
       displayName: '',
       employeeNumber: '',
       appId: '',
@@ -105,9 +105,9 @@ export class PrivilegesComponent implements OnInit {
 
   constructor(
     private modalService: NzModalService,
-    private rolePrivilegesService: RolePrivilegesService,
+    private groupPrivilegesService: GroupPrivilegesService,
     private resourcesService: ResourcesService,
-    private rolesService: RolesService,
+    private groupsService: GroupsService,
     private viewContainerRef: ViewContainerRef,
     private fb: FormBuilder,
     private msg: NzMessageService,
@@ -155,7 +155,7 @@ export class PrivilegesComponent implements OnInit {
     if (this.query.params.appId == '' || _roleId == '' || _resourceId == '') {
       return;
     }
-    this.rolePrivilegesService.update({ appId: this.query.params.appId, roleId: _roleId, resourceId: _resourceId }).subscribe(res => {
+    this.groupPrivilegesService.update({ appId: this.query.params.appId, roleId: _roleId, resourceId: _resourceId }).subscribe(res => {
       this.query.submitLoading = false;
       this.query.tableLoading = false;
       if (res.code == 0) {
@@ -181,7 +181,7 @@ export class PrivilegesComponent implements OnInit {
       this.query.params.endDate = '';
       this.query.params.startDate = '';
     }
-    this.rolesService.fetch(this.query.params).subscribe(res => {
+    this.groupsService.fetch(this.query.params).subscribe(res => {
       this.query.results = res.data;
       this.query.submitLoading = false;
       this.query.tableLoading = false;
@@ -236,7 +236,7 @@ export class PrivilegesComponent implements OnInit {
     this.onTableAllChecked(false);
     this.updateTableCheckedSet(id, checked);
     this.refreshTableCheckedStatus();
-    this.rolePrivilegesService.getByParams({ appId: this.query.params.appId, roleId: id }).subscribe(res => {
+    this.groupPrivilegesService.getByParams({ appId: this.query.params.appId, roleId: id }).subscribe(res => {
       this.treeNodes.checkedKeys = [];
       for (let i = 0; i < res.data.length; i++) {
         this.treeNodes.checkedKeys.push(res.data[i].resourceId);

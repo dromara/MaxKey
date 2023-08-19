@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.Roles;
+import org.dromara.maxkey.entity.Groups;
 import org.dromara.maxkey.entity.UserInfo;
-import org.dromara.maxkey.persistence.service.RolesService;
+import org.dromara.maxkey.persistence.service.GroupsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.maxkey.util.StringUtils;
@@ -72,7 +72,7 @@ public class ScimUserController {
 	private UserInfoService userInfoService;
 	
 	@Autowired
-	RolesService rolesService;
+	GroupsService groupsService;
 	
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public MappingJacksonValue get(@PathVariable String id,
@@ -172,9 +172,9 @@ public class ScimUserController {
     	
     	List<String> groupsList=new  ArrayList<String>(); 
     	List<ScimGroupRef> groups = new  ArrayList<ScimGroupRef>(); 
-    	for(Roles role : rolesService.queryRolesByUserId(userInfo.getId())){
-    		groupsList.add(role.getId());
-    		groups.add(new ScimGroupRef(role.getId(),role.getRoleName()));
+    	for(Groups group : groupsService.queryByUserId(userInfo.getId())){
+    		groupsList.add(group.getId());
+    		groups.add(new ScimGroupRef(group.getId(),group.getGroupName()));
     		
     	}
     	scimUser.setGroup(groupsList);

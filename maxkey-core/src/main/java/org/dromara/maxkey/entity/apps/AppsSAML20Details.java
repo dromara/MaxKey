@@ -17,6 +17,7 @@
 
 package org.dromara.maxkey.entity.apps;
 
+import java.io.Serializable;
 import java.security.cert.X509Certificate;
 
 import org.dromara.mybatis.jpa.entity.JpaEntity;
@@ -33,7 +34,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "MXK_APPS_SAML_V20_DETAILS")
-public class AppsSAML20Details extends Apps {
+public class AppsSAML20Details extends Apps  implements Serializable {
 
     /**
      * 

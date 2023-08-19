@@ -20,8 +20,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '@shared';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
-import { RolesComponent } from '../access/roles/roles.component';
-import { SelectRolesComponent } from '../access/roles/select-roles/select-roles.component';
 import { PrivilegesComponent } from './privileges/privileges.component';
 import { ResourceEditerComponent } from './resources/resource-editer/resource-editer.component';
 import { ResourcesComponent } from './resources/resources.component';

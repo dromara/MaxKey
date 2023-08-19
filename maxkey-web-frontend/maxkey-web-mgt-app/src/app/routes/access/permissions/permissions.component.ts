@@ -27,9 +27,9 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 
-import { RolePermissionsService } from '../../../service/role-permissions.service';
+import { GroupPermissionsService } from '../../../service/group-permissions.service';
 import { set2String } from '../../../shared/index';
-import { SelectRolesComponent } from '../roles/select-roles/select-roles.component';
+import { SelectGroupsComponent } from '../../idm/groups/select-groups/select-groups.component';
 import { PermissionsEditerComponent } from './permissions-editer/permissions-editer.component';
 
 @Component({
@@ -42,8 +42,8 @@ export class PermissionsComponent implements OnInit {
     params: {
       displayName: String;
       username: String;
-      roleId: String;
-      roleName: String;
+      groupId: String;
+      groupName: String;
       appName: String;
       appId: String;
       startDate: String;
@@ -69,8 +69,8 @@ export class PermissionsComponent implements OnInit {
     params: {
       displayName: '',
       username: '',
-      roleId: '',
-      roleName: '',
+      groupId: '',
+      groupName: '',
       appName: '',
       appId: '',
       startDate: '',
@@ -96,7 +96,7 @@ export class PermissionsComponent implements OnInit {
 
   constructor(
     private modalService: NzModalService,
-    private rolePermissionsService: RolePermissionsService,
+    private groupPermissionsService: GroupPermissionsService,
     private viewContainerRef: ViewContainerRef,
     private fb: FormBuilder,
     private msg: NzMessageService,
@@ -107,9 +107,9 @@ export class PermissionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.route.snapshot.queryParams['roleId']) {
-      this.query.params.roleId = this.route.snapshot.queryParams['roleId'];
-      this.query.params.roleName = this.route.snapshot.queryParams['roleName'];
+    if (this.route.snapshot.queryParams['groupId']) {
+      this.query.params.groupId = this.route.snapshot.queryParams['groupId'];
+      this.query.params.groupName = this.route.snapshot.queryParams['groupName'];
     }
     this.query.tableInitialize = false;
   }
@@ -130,7 +130,7 @@ export class PermissionsComponent implements OnInit {
 
   onBatchDelete(e: MouseEvent): void {
     e.preventDefault();
-    this.rolePermissionsService.delete(set2String(this.query.tableCheckedId)).subscribe(res => {
+    this.groupPermissionsService.delete(set2String(this.query.tableCheckedId)).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
         this.fetch();
@@ -148,7 +148,7 @@ export class PermissionsComponent implements OnInit {
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: {
         isEdit: false,
-        roleId: this.query.params.roleId
+        groupId: this.query.params.groupId
       },
       nzWidth: 700,
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
@@ -164,7 +164,7 @@ export class PermissionsComponent implements OnInit {
   onSelect(e: MouseEvent): void {
     e.preventDefault();
     const modal = this.modalService.create({
-      nzContent: SelectRolesComponent,
+      nzContent: SelectGroupsComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: {},
       nzWidth: 700,
@@ -173,8 +173,8 @@ export class PermissionsComponent implements OnInit {
     // Return a result when closed
     modal.afterClose.subscribe(result => {
       if (result.refresh) {
-        this.query.params.roleName = result.data.roleName;
-        this.query.params.roleId = result.data.id;
+        this.query.params.groupName = result.data.groupName;
+        this.query.params.groupId = result.data.id;
         console.log(result);
         this.fetch();
       }
@@ -183,7 +183,7 @@ export class PermissionsComponent implements OnInit {
 
   onDelete(e: MouseEvent, deleteId: String): void {
     e.preventDefault();
-    this.rolePermissionsService.delete(deleteId).subscribe(res => {
+    this.groupPermissionsService.delete(deleteId).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
         this.fetch();
@@ -207,7 +207,7 @@ export class PermissionsComponent implements OnInit {
       this.query.params.endDate = '';
       this.query.params.startDate = '';
     }
-    this.rolePermissionsService.member(this.query.params).subscribe(res => {
+    this.groupPermissionsService.member(this.query.params).subscribe(res => {
       this.query.results = res.data;
       this.query.submitLoading = false;
       this.query.tableLoading = false;

@@ -17,6 +17,8 @@
 
 package org.dromara.maxkey.entity;
 
+import java.io.Serializable;
+
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 import jakarta.persistence.Column;
@@ -31,7 +33,7 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "MXK_HISTORY_LOGIN_APPS")  
-public class HistoryLoginApps extends JpaEntity {
+public class HistoryLoginApps extends JpaEntity  implements Serializable {
 	
 	private static final long serialVersionUID = 5085201575292304749L;
 	@Id

@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ExtraAttrs {
-	final static Logger _logger = LoggerFactory.getLogger(ExtraAttrs.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ExtraAttrs.class);
 	
 	ArrayList <ExtraAttr> extraAttrs ;
 
@@ -43,7 +43,7 @@ public class ExtraAttrs {
 	 */
 	public ExtraAttrs(String arrayJsonString) {
 		String extraAttrsJsonString= "{\"extraAttrs\":"+arrayJsonString+"}";
-		_logger.debug("Extra Attrs Json String " +extraAttrsJsonString);
+		_logger.debug("Extra Attrs Json String {}" ,extraAttrsJsonString);
 		ExtraAttrs extraAttrs=JsonUtils.gsonStringToObject(extraAttrsJsonString, ExtraAttrs.class);
 		this.extraAttrs=extraAttrs.getExtraAttrs();
 	}
@@ -52,21 +52,21 @@ public class ExtraAttrs {
 
 	public void put(String attr,String value) {
 		if(extraAttrs==null){
-			extraAttrs=new ArrayList<ExtraAttr>();
+			extraAttrs=new ArrayList<>();
 		}
 		this.extraAttrs.add(new ExtraAttr(attr,value));
 	}
 	
 	public void put(String attr,String type,String value) {
 		if(extraAttrs==null){
-			extraAttrs=new ArrayList<ExtraAttr>();
+			extraAttrs=new ArrayList<>();
 		}
 		this.extraAttrs.add(new ExtraAttr(attr,type,value));
 	}
 	
 	public String get(String attr) {
 		String value=null;
-		if(extraAttrs!=null&& extraAttrs.size()!=0){
+		if(extraAttrs!=null&& !extraAttrs.isEmpty()){
 			for(ExtraAttr extraAttr :extraAttrs){
 				if(extraAttr.getAttr().equals(attr)){
 					value=extraAttr.getValue();
@@ -78,7 +78,7 @@ public class ExtraAttrs {
 	
 	public String toJsonString(){
 		String jsonString =JsonUtils.gsonToString(extraAttrs);
-		_logger.debug("jsonString " +jsonString);
+		_logger.debug("jsonString {}" ,jsonString);
 		return jsonString;
 	}
 	
@@ -87,7 +87,7 @@ public class ExtraAttrs {
 		for(ExtraAttr extraAttr :extraAttrs){
 			extraAttrsHashMap.put(extraAttr.getAttr(), extraAttr.getValue());
 		}
-		_logger.debug("extraAttrs HashMap " +extraAttrsHashMap);
+		_logger.debug("extraAttrs HashMap {}" , extraAttrsHashMap);
 		return extraAttrsHashMap;
 	}
 	
@@ -96,7 +96,7 @@ public class ExtraAttrs {
 		for(ExtraAttr extraAttr :extraAttrs){
 			properties.put(extraAttr.getAttr(), extraAttr.getValue());
 		}
-		_logger.debug("extraAttrs HashMap " +properties);
+		_logger.debug("extraAttrs HashMap {}" , properties);
 		return properties;
 	}
 	

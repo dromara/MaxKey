@@ -25,8 +25,6 @@ import { LayoutBasicComponent } from '../layout/basic/basic.component';
 import { LayoutBlankComponent } from '../layout/blank/blank.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { AppsComponent } from './apps/apps.component';
-import { OrganizationsComponent } from './organizations/organizations.component';
-import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   {
@@ -43,8 +41,7 @@ const routes: Routes = [
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
         data: { preload: true }
       },
-      { path: 'organizations', component: OrganizationsComponent },
-      { path: 'users', component: UsersComponent },
+      { path: 'idm', loadChildren: () => import('./idm/idm.module').then(m => m.IdmModule) },
       { path: 'accounts', component: AccountsComponent },
       { path: 'apps', component: AppsComponent },
       { path: 'access', loadChildren: () => import('./access/access.module').then(m => m.AccessModule) },

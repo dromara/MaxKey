@@ -1,0 +1,83 @@
+<div *nzModalTitle> {{ 'mxk.text.select' | i18n }} </div>
+
+<form nz-form [nzLayout]="'inline'" (ngSubmit)="onSearch()" class="search__form" style="margin-bottom: 10px">
+  <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 24, lg: 24, xl: 48, xxl: 48 }">
+    <div nz-col nzMd="14" nzSm="24">
+      <nz-form-item>
+        <nz-form-label nzFor="name">{{ 'mxk.users.username' | i18n }}</nz-form-label>
+        <nz-form-control>
+          <input nz-input [(ngModel)]="query.params.username" [ngModelOptions]="{ standalone: true }" name="username"
+            placeholder="" id="username" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="query.expandForm ? 24 : 10" [class.text-right]="query.expandForm">
+      <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n
+        }}</button>
+      <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n
+        }}</button>
+      <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
+        {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button>
+      <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.confirm' | i18n }}</button>
+    </div>
+  </div>
+</form>
+<div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+  <div nz-col nzMd="6" nzSm="24">
+    <nz-tree nzShowLine="false" [nzCheckable]="treeNodes.checkable" nzBlockNode [nzData]="treeNodes.nodes"
+      (nzClick)="activeNode($event)" (nzDblClick)="openFolder($event)" [nzTreeTemplate]="nzTreeTemplate"></nz-tree>
+    <ng-template #nzTreeTemplate let-node let-origin="origin">
+      <span class="custom-node">
+        <span *ngIf="!node.isLeaf">
+          <i nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(node)"></i>
+          <span class="folder-name">{{ node.title }}</span>
+        </span>
+        <span *ngIf="node.isLeaf">
+          <i nz-icon nzType="file"></i>
+          <span class="file-name">{{ node.title }}</span>
+        </span>
+      </span>
+    </ng-template>
+  </div>
+  <div nz-col nzMd="18" nzSm="24">
+    <nz-table #dynamicTable nzTableLayout="auto" nzSize="small" nzBordered sizeChanger="true" nzShowSizeChanger
+      [nzData]="query.results.rows" [nzFrontPagination]="false" [nzTotal]="query.results.records"
+      [nzPageSizeOptions]="query.params.pageSizeOptions" [nzPageSize]="query.params.pageSize"
+      [nzPageIndex]="query.params.pageNumber" [nzLoading]="this.query.tableLoading"
+      (nzQueryParams)="onQueryParamsChange($event)" nzWidth="100%">
+      <thead>
+        <tr>
+          <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate"
+            (nzCheckedChange)="onTableAllChecked($event)"></th>
+          <th nzAlign="center" style="display: none">{{ 'mxk.text.id' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.username' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.displayName' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.employeeNumber' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.department' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.jobTitle' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.users.gender' | i18n }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of query.results.rows">
+          <td [nzChecked]="query.tableCheckedId.has(data.id)" [nzDisabled]="data.disabled"
+            (nzCheckedChange)="onTableItemChecked(data.id, $event)"></td>
+          <td nzAlign="left" style="display: none">
+            <span>{{ data.id }}</span>
+          </td>
+          <td nzAlign="left"> {{ data.username }}</td>
+          <td nzAlign="left"> {{ data.displayName }}</td>
+          <td nzAlign="left"> {{ data.employeeNumber }}</td>
+          <td nzAlign="left"> {{ data.department }}</td>
+          <td nzAlign="left"> {{ data.jobTitle }}</td>
+          <td nzAlign="center"> {{ data.gender == 1 ? ('mxk.users.gender.female' | i18n) : ('mxk.users.gender.male' |
+            i18n) }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <div *nzModalFooter style="display: none">
+    <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+    <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+  </div>
+</div>
