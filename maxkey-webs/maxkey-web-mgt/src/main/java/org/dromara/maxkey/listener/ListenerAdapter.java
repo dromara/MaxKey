@@ -33,7 +33,7 @@ public class ListenerAdapter {
 	
 	JobExecutionContext context;
 	
-    public final static class JOBSTATUS{
+    public static final  class JOBSTATUS{
         public static int STOP 		= 0;
         public static int RUNNING 	= 1;
         public static int ERROR 	= 2;

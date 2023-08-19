@@ -63,7 +63,7 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 		    	 if(synchronizer.getScheduler()!=null 
 		    	         && !synchronizer.getScheduler().equals("")
 		    	         && CronExpression.isValidExpression(synchronizer.getScheduler())) {
-		    		 _logger.debug("synchronizer details : " + synchronizer);
+		    		 _logger.debug("synchronizer details : {}" , synchronizer);
 		    		 buildJob(scheduler,synchronizer);
 		    	 }
 		     }
@@ -81,9 +81,9 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 		
 		JobDataMap jobDataMap = new JobDataMap();
 		jobDataMap.put("synchronizer", synchronizer);
-		_logger.debug("synchronizer : " + synchronizer.getName()+"("+synchronizer.getId()+"_"+synchronizer.getSourceType()+")");
-		_logger.debug("synchronizer service : " + synchronizer.getService());
-		_logger.debug("synchronizer Scheduler : " + synchronizer.getScheduler());
+		_logger.debug("synchronizer : {}" , synchronizer.getName()+"("+synchronizer.getId()+"_"+synchronizer.getSourceType()+")");
+		_logger.debug("synchronizer service : {}", synchronizer.getService());
+		_logger.debug("synchronizer Scheduler : {} " ,synchronizer.getScheduler());
 		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(synchronizer.getScheduler());
 		CronTrigger cronTrigger = 
 		        TriggerBuilder.newTrigger()
@@ -95,7 +95,7 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 	}
 
 	public List<Synchronizers> querySynchronizers(JdbcTemplate  jdbcTemplate) {
-		List<Synchronizers> synchronizerList = jdbcTemplate.query(SYNCHRONIZERS_SELECT_STATEMENT, new RowMapper<Synchronizers>() {
+		return  jdbcTemplate.query(SYNCHRONIZERS_SELECT_STATEMENT, new RowMapper<Synchronizers>() {
         	public Synchronizers mapRow(ResultSet rs, int rowNum) throws SQLException {
 	        	 Synchronizers synchronizer = new Synchronizers();
 	        	 synchronizer.setId(         rs.getString("id"));
@@ -125,8 +125,6 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 	             return synchronizer;
         	}
 		});
-	 
-		return synchronizerList;
 	}
 	
 	@Override

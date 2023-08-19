@@ -20,6 +20,7 @@ package org.dromara.maxkey.listener;
 import org.quartz.JobDataMap;
 
 public class ListenerParameter {
+	
 	JobDataMap parameters ;
 
 	public ListenerParameter() {

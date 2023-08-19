@@ -74,11 +74,11 @@ public abstract class AbstractSynchronizerService {
            }
         }
         
-        orgsNamePathMap =new HashMap<String,Organizations>();
+        orgsNamePathMap =new HashMap<>();
         orgsNamePathMap.put(rootOrganization.getNamePath(), rootOrganization);
         push(orgsNamePathMap,orgsList,rootOrganization);
         
-        _logger.trace("orgsNamePathMap " + orgsNamePathMap);
+        _logger.trace("orgsNamePathMap {}" , orgsNamePathMap);
         return orgsNamePathMap;
     }
     

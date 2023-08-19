@@ -30,7 +30,7 @@ public class DynamicRolesListenerAdapter extends ListenerAdapter  implements Job
     
     private static final long serialVersionUID = 8831626240807856084L;
 
-    private static  RolesService rolesService = null;
+    private  RolesService rolesService = null;
 
     @Override
     public void execute(JobExecutionContext context){
