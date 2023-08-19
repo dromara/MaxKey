@@ -31,6 +31,7 @@ import org.dromara.maxkey.persistence.service.ResourcesService;
 import org.dromara.maxkey.web.component.TreeAttributes;
 import org.dromara.maxkey.web.component.TreeNode;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
+import org.dromara.mybatis.jpa.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,9 +142,8 @@ public class ResourcesController {
 	@ResponseBody
 	@RequestMapping(value={"/tree"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> tree(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-query  {}" , resource);
-		resource.setInstId(currentUser.getInstId());
-		List<Resources>  resourceList = resourcesService.query(resource);
+		_logger.debug("-tree  {}" , resource);
+		List<Resources>  resourceList = resourcesService.query(Query.builder().eq("instid", currentUser.getInstId()));
 		if (resourceList != null) {
 			TreeAttributes treeAttributes = new TreeAttributes();
 			int nodeCount = 0;

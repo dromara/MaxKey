@@ -82,7 +82,11 @@ export class BaseService<T> {
   }
 
   get(id: String): Observable<Message<T>> {
-    return this.http.get<Message<T>>(`${this.server.urls.base + this.server.urls.get}/${id}`);
+    if (id === null || id === '') {
+      return this.http.get<Message<T>>(`${this.server.urls.base + this.server.urls.get}`);
+    } else {
+      return this.http.get<Message<T>>(`${this.server.urls.base + this.server.urls.get}/${id}`);
+    }
   }
 
   getByParams(params: NzSafeAny, getURL?: string): Observable<Message<T>> {

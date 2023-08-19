@@ -84,6 +84,9 @@ export class BaseService<T> {
   }
 
   get(id: String): Observable<Message<T>> {
+    if (id === null || id === '') {
+      return this.http.get<Message<T>>(`${this.server.urls.base + this.server.urls.get}`);
+    }
     return this.http.get<Message<T>>(`${this.server.urls.base + this.server.urls.get}/${id}`);
   }
 

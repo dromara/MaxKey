@@ -41,6 +41,7 @@ import org.dromara.maxkey.util.ExcelUtils;
 import org.dromara.maxkey.web.component.TreeAttributes;
 import org.dromara.maxkey.web.component.TreeNode;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
+import org.dromara.mybatis.jpa.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,9 +154,9 @@ public class OrganizationsController {
 	@ResponseBody
 	@RequestMapping(value={"/tree"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> tree(@ModelAttribute Organizations organization,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-query  {}" , organization);
-		organization.setInstId(currentUser.getInstId());
-		List<Organizations>  orgList = organizationsService.query(organization);
+		_logger.debug("-tree  {}" , organization);
+		List<Organizations>  orgList = organizationsService.query(
+				Query.builder().eq("instid", currentUser.getInstId()));
 		if (orgList != null) {
 			TreeAttributes treeAttributes = new TreeAttributes();
 			int nodeCount = 0;
