@@ -64,7 +64,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping(value = "/login")
 public class LoginEntryPoint {
-	private static Logger _logger = LoggerFactory.getLogger(LoginEntryPoint.class);
+	private static Logger logger = LoggerFactory.getLogger(LoginEntryPoint.class);
 	
 	Pattern mobileRegex = Pattern.compile("^(13[4,5,6,7,8,9]|15[0,8,9,1,7]|188|187)\\\\d{8}$");
 	
@@ -108,7 +108,7 @@ public class LoginEntryPoint {
 	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> get(
 				@RequestParam(value = "remember_me", required = false) String rememberMeJwt) {
-		_logger.debug("/get.");
+		logger.debug("/get.");
 		//Remember Me
 		if(StringUtils.isNotBlank(rememberMeJwt)
 				&& authTokenService.validateJwtToken(rememberMeJwt)) {
@@ -129,7 +129,7 @@ public class LoginEntryPoint {
 			}
 		}
 		//for normal login
-		HashMap<String , Object> model = new HashMap<String , Object>();
+		HashMap<String , Object> model = new HashMap<>();
 		model.put("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
 		model.put("isKerberos", applicationConfig.getLoginConfig().isKerberos());
 		if(applicationConfig.getLoginConfig().isMfa()) {
@@ -219,7 +219,7 @@ public class LoginEntryPoint {
  		Message<AuthJwt> authJwtMessage = new Message<AuthJwt>(Message.FAIL);
  		if(authTokenService.validateJwtToken(credential.getState())){
  			String authType =  credential.getAuthType();
- 			 _logger.debug("Login AuthN Type  " + authType);
+ 			 logger.debug("Login AuthN Type  {}" , authType);
  	        if (StringUtils.isNotBlank(authType)){
 		 		Authentication  authentication = authenticationProvider.authenticate(credential);	 				
 		 		if(authentication != null) {
@@ -238,10 +238,10 @@ public class LoginEntryPoint {
 	 				String errorMsg = WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE) == null ? 
 							  "" : WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE).toString();
 	 				authJwtMessage.setMessage(errorMsg);
-	 				_logger.debug("login fail , message {}",errorMsg);
+	 				logger.debug("login fail , message {}",errorMsg);
 		 		}
  	        }else {
- 	        	_logger.error("Login AuthN type must eq normal , tfa or mobile . ");
+ 	        	logger.error("Login AuthN type must eq normal , tfa or mobile . ");
  	        }
  		}
  		return authJwtMessage.buildResponse();

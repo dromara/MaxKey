@@ -39,7 +39,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @AutoConfiguration
 public class MaxKeyMgtListenerConfig  implements InitializingBean {
-    private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMgtListenerConfig.class);
+    private static final  Logger logger = LoggerFactory.getLogger(MaxKeyMgtListenerConfig.class);
  
     @Bean
     public String  sessionListenerAdapter(
@@ -52,7 +52,7 @@ public class MaxKeyMgtListenerConfig  implements InitializingBean {
     			"0 0/10 * * * ?",//10 minutes
     			SessionListenerAdapter.class.getSimpleName()
     		);
-        _logger.debug("Session ListenerAdapter inited .");
+        logger.debug("Session ListenerAdapter inited .");
     	return "sessionListenerAdapter";
     }
     
@@ -70,7 +70,7 @@ public class MaxKeyMgtListenerConfig  implements InitializingBean {
     			cronSchedule,
     			DynamicRolesListenerAdapter.class.getSimpleName()
     		);
-        _logger.debug("DynamicRoles ListenerAdapter inited .");
+        logger.debug("DynamicRoles ListenerAdapter inited .");
         return "dynamicRolesListenerAdapter";
     }
     
@@ -84,9 +84,9 @@ public class MaxKeyMgtListenerConfig  implements InitializingBean {
 	    	ProvisioningRunner runner = new ProvisioningRunner(connectorsService,jdbcTemplate);
 	    	ProvisioningRunnerThread runnerThread = new ProvisioningRunnerThread(runner);
 	    	runnerThread.start();
-	        _logger.debug("provisioning Runner Thread .");
+	        logger.debug("provisioning Runner Thread .");
         }else {
-        	_logger.debug("not need init provisioning Runner Thread .");
+        	logger.debug("not need init provisioning Runner Thread .");
         }
         return "provisioningRunnerThread";
     }

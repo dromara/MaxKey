@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web.access.contorller;
+package org.dromara.maxkey.web.idm.contorller;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsEntryType;
@@ -45,7 +45,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/access/roles"})
 public class RolesController {
-	final static Logger _logger = LoggerFactory.getLogger(RolesController.class);
+	final static Logger logger = LoggerFactory.getLogger(RolesController.class);
 	
 	@Autowired
 	RolesService rolesService;
@@ -58,7 +58,7 @@ public class RolesController {
 	public ResponseEntity<?> fetch(
 			@ModelAttribute Roles role,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug(""+role);
+		logger.debug("role {}" , role);
 		role.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Roles>>(
 				rolesService.fetchPageResults(role)).buildResponse();
@@ -67,7 +67,7 @@ public class RolesController {
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> query(@ModelAttribute Roles role,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-query  :" + role);
+		logger.debug("-query  : {}" , role);
 		role.setInstId(currentUser.getInstId());
 		if (rolesService.query(role)!=null) {
 			 return new Message<Roles>(Message.SUCCESS).buildResponse();
@@ -86,7 +86,7 @@ public class RolesController {
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> insert(@RequestBody Roles role,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + role);
+		logger.debug("-Add  : {}" , role);
 		role.setInstId(currentUser.getInstId());
 		role.setId(role.generateId());
 		if(StringUtils.isBlank(role.getRoleCode())) {
@@ -109,7 +109,7 @@ public class RolesController {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody Roles role,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  group :" + role);
+		logger.debug("-update  group : {}" , role);
 		if(role.getId().equalsIgnoreCase("ROLE_ALL_USER")) {
 			role.setDefaultAllUser();
 		}
@@ -131,7 +131,7 @@ public class RolesController {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete ids : {}" , ids);
+		logger.debug("-delete ids : {}" , ids);
 		ids = ids.replaceAll("ROLE_ALL_USER", "-1").replaceAll("ROLE_ADMINISTRATORS", "-1");
 		if (rolesService.deleteBatch(ids)) {
 			systemLog.insert(

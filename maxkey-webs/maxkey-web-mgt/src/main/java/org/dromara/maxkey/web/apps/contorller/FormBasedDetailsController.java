@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/apps/formbased"})
 public class FormBasedDetailsController  extends BaseAppContorller {
-	final static Logger _logger = LoggerFactory.getLogger(FormBasedDetailsController.class);
+	static final  Logger logger = LoggerFactory.getLogger(FormBasedDetailsController.class);
 	
 	@Autowired
 	AppsFormBasedDetailsService formBasedDetailsService;
@@ -68,7 +68,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> add(
 			@RequestBody AppsFormBasedDetails formBasedDetails,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + formBasedDetails);
+		logger.debug("-Add  : {}" , formBasedDetails);
 		
 		transform(formBasedDetails);
 		formBasedDetails.setInstId(currentUser.getInstId());
@@ -85,7 +85,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> update(
 			@RequestBody AppsFormBasedDetails formBasedDetails,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + formBasedDetails);
+		logger.debug("-update  : {}" , formBasedDetails);
 		transform(formBasedDetails);
 		formBasedDetails.setInstId(currentUser.getInstId());
 		if (formBasedDetailsService.update(formBasedDetails)
@@ -101,7 +101,7 @@ public class FormBasedDetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> delete(
 			@RequestParam("ids") String ids,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (formBasedDetailsService.deleteBatch(ids)
 				&& appsService.deleteBatch(ids)) {
 			 return new Message<AppsFormBasedDetails>(Message.SUCCESS).buildResponse();

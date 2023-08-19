@@ -48,7 +48,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/historys"})
 public class SystemLogsController {
-final static Logger _logger = LoggerFactory.getLogger(SystemLogsController.class);
+	static final Logger logger = LoggerFactory.getLogger(SystemLogsController.class);
 
 	@Autowired
 	HistorySystemLogsService historySystemLogsService;
@@ -62,7 +62,7 @@ final static Logger _logger = LoggerFactory.getLogger(SystemLogsController.class
 	@ResponseBody
 	public ResponseEntity<?> fetch(@ModelAttribute("historyLog") HistorySystemLogs historyLog,
 			@CurrentUser UserInfo currentUser){
-		_logger.debug("historys/historyLog/fetch {} ",historyLog);
+		logger.debug("historys/historyLog/fetch {} ",historyLog);
 		historyLog.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<HistorySystemLogs>>(
 				 	historySystemLogsService.fetchPageResults(historyLog)

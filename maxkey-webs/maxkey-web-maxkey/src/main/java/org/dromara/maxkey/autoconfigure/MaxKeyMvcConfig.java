@@ -44,7 +44,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 @AutoConfiguration
 public class MaxKeyMvcConfig implements WebMvcConfigurer {
-    private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMvcConfig.class);
+    private static final  Logger logger = LoggerFactory.getLogger(MaxKeyMvcConfig.class);
    
     @Value("${maxkey.login.basic.enable:false}")
     private boolean basicEnable;
@@ -75,27 +75,27 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    	_logger.debug("add Resource Handlers");
-        _logger.debug("add statics");
+    	logger.debug("add Resource Handlers");
+        logger.debug("add statics");
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
         
-        _logger.debug("add templates");
+        logger.debug("add templates");
         registry.addResourceHandler("/templates/**")
                 .addResourceLocations("classpath:/templates/");
         
-        _logger.debug("add swagger");
+        logger.debug("add swagger");
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
         
-        _logger.debug("add knife4j");
+        logger.debug("add knife4j");
         registry.addResourceHandler("doc.html")
         		.addResourceLocations("classpath:/META-INF/resources/");
         
         registry.addResourceHandler("/webjars/**")
         		.addResourceLocations("classpath:/META-INF/resources/webjars/");
         
-        _logger.debug("add Resource Handler finished .");
+        logger.debug("add Resource Handler finished .");
     }
 
     @Override
@@ -103,7 +103,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         //addPathPatterns 用于添加拦截规则 ， 先把所有路径都加入拦截， 再一个个排除
         //excludePathPatterns 表示改路径不用拦截
         
-        _logger.debug("add Http Kerberos Entry Point");
+        logger.debug("add Http Kerberos Entry Point");
         registry.addInterceptor(new HttpKerberosEntryPoint(
     			authenticationProvider,kerberosService,applicationConfig,true))
     		.addPathPatterns("/login");
@@ -112,13 +112,13 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         if(httpHeaderEnable) {
             registry.addInterceptor(new HttpHeaderEntryPoint(httpHeaderName,httpHeaderEnable))
                     .addPathPatterns("/*");
-            _logger.debug("add Http Header Entry Point");
+            logger.debug("add Http Header Entry Point");
         }
         
         if(basicEnable) {
             registry.addInterceptor(new BasicEntryPoint(basicEnable))
                     .addPathPatterns("/*");
-            _logger.debug("add Basic Entry Point");
+            logger.debug("add Basic Entry Point");
         }
         
         //for frontend
@@ -139,7 +139,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/authz/refused")
                 ;
         
-        _logger.debug("add Permission Interceptor");
+        logger.debug("add Permission Interceptor");
 
         //for Single Sign On
         registry.addInterceptor(singleSignOnInterceptor)
@@ -186,7 +186,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/onlineticket/ticketValidate")
                 .excludePathPatterns("/onlineticket/ticketValidate/*")
         ;
-        _logger.debug("add Single SignOn Interceptor");
+        logger.debug("add Single SignOn Interceptor");
         
         registry.addInterceptor(historySignOnAppInterceptor)
                 .addPathPatterns("/authz/basic/*")
@@ -207,7 +207,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 //OAuth
                 .addPathPatterns("/authz/oauth/v20/approval_confirm")
         ;
-        _logger.debug("add history SignOn App Interceptor");
+        logger.debug("add history SignOn App Interceptor");
         
 
     }

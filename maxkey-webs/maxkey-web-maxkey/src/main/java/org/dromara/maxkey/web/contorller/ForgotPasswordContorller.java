@@ -46,7 +46,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = { "/forgotpassword" })
 public class ForgotPasswordContorller {
-    private static Logger _logger = LoggerFactory.getLogger(ForgotPasswordContorller.class);
+    private static Logger logger = LoggerFactory.getLogger(ForgotPasswordContorller.class);
 
     Pattern emailRegex = Pattern.compile(
             "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$");
@@ -102,8 +102,8 @@ public class ForgotPasswordContorller {
 			@RequestParam String state,
 			@RequestParam String captcha,
 			@RequestParam String otpCaptcha) {
-		_logger.debug("forgotpassword  /forgotpassword/validateCaptcha.");
-		_logger.debug(" userId {}: " ,userId);
+		logger.debug("forgotpassword  /forgotpassword/validateCaptcha.");
+		logger.debug(" userId {}: " ,userId);
 		UserInfo userInfo = userInfoService.get(userId);
 		if(userInfo != null) {
 			AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(userInfo.getInstId());
@@ -122,15 +122,15 @@ public class ForgotPasswordContorller {
     			@RequestParam String mobile,
     			@RequestParam String state,
     			@RequestParam String captcha) {
-        _logger.debug("forgotpassword  /forgotpassword/produceOtp.");
-        _logger.debug(" Mobile {}: " ,mobile);
+        logger.debug("forgotpassword  /forgotpassword/produceOtp.");
+        logger.debug(" Mobile {}: " ,mobile);
         if (!authTokenService.validateCaptcha(state,captcha)) {    
-        	_logger.debug("login captcha valid error.");
+        	logger.debug("login captcha valid error.");
         	return new Message<ChangePassword>(Message.FAIL).buildResponse();
         }
         
     	ChangePassword change = null;
-    	_logger.debug("Mobile Regex matches {}",mobileRegex.matcher(mobile).matches());
+    	logger.debug("Mobile Regex matches {}",mobileRegex.matcher(mobile).matches());
     	if(StringUtils.isNotBlank(mobile) && mobileRegex.matcher(mobile).matches()) {
     		UserInfo userInfo = userInfoService.findByEmailMobile(mobile);
     		if(userInfo != null) {
@@ -151,9 +151,9 @@ public class ForgotPasswordContorller {
     			@RequestParam String email,
     			@RequestParam String state,
     			@RequestParam String captcha) {
-        _logger.debug("/forgotpassword/produceEmailOtp Email {} : " , email);
+        logger.debug("/forgotpassword/produceEmailOtp Email {} : " , email);
         if (!authTokenService.validateCaptcha(state,captcha)) {
-        	_logger.debug("captcha valid error.");
+        	logger.debug("captcha valid error.");
         	return new Message<ChangePassword>(Message.FAIL).buildResponse();
         }
         
@@ -177,7 +177,7 @@ public class ForgotPasswordContorller {
     					@RequestParam String forgotType,
                         @RequestParam String otpCaptcha,
                         @RequestParam String state) {
-        _logger.debug("forgotPassword  /forgotpassword/setpassword.");
+        logger.debug("forgotPassword  /forgotpassword/setpassword.");
         if (StringUtils.isNotBlank(changePassword.getPassword() )
         		&& changePassword.getPassword().equals(changePassword.getConfirmPassword())) {
             UserInfo loadedUserInfo = userInfoService.get(changePassword.getUserId());

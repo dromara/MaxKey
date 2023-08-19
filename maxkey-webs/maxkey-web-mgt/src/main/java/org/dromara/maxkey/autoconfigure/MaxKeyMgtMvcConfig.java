@@ -37,7 +37,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 @EnableWebMvc
 @AutoConfiguration
 public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
-    private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyMgtMvcConfig.class);
+    private static final  Logger logger = LoggerFactory.getLogger(MaxKeyMgtMvcConfig.class);
     
     @Autowired
   	ApplicationConfig applicationConfig;
@@ -50,33 +50,33 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    	_logger.debug("add Resource Handlers");
+    	logger.debug("add Resource Handlers");
     	 
-        _logger.debug("add statics");
+        logger.debug("add statics");
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
-        _logger.debug("add templates");
+        logger.debug("add templates");
         registry.addResourceHandler("/templates/**")
                 .addResourceLocations("classpath:/templates/");
         
-        _logger.debug("add swagger");
+        logger.debug("add swagger");
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
         
-        _logger.debug("add knife4j");
+        logger.debug("add knife4j");
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 
-        _logger.debug("add Resource Handler finished .");
+        logger.debug("add Resource Handler finished .");
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //addPathPatterns 用于添加拦截规则 ， 先把所有路径都加入拦截， 再一个个排除
         //excludePathPatterns 表示改路径不用拦截
-        _logger.debug("add Interceptors");
+        logger.debug("add Interceptors");
 
         permissionInterceptor.setMgmt(true);
         
@@ -110,7 +110,7 @@ public class MaxKeyMgtMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/logout/**")
                 ;
         
-        _logger.debug("add Permission Adapter");
+        logger.debug("add Permission Adapter");
         
     }
     

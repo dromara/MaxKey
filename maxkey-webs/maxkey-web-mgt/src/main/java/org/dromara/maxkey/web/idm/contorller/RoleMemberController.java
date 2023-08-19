@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web.access.contorller;
+package org.dromara.maxkey.web.idm.contorller;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
@@ -45,7 +45,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/access/rolemembers"})
 public class RoleMemberController {
-	final static Logger _logger = LoggerFactory.getLogger(RoleMemberController.class);
+	final static Logger logger = LoggerFactory.getLogger(RoleMemberController.class);
 	
 	@Autowired
 	RoleMemberService roleMemberService;
@@ -64,7 +64,7 @@ public class RoleMemberController {
 	public ResponseEntity<?> fetch(
 			@ModelAttribute RoleMember roleMember,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("fetch "+roleMember);
+		logger.debug("fetch {}" , roleMember);
 		roleMember.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<RoleMember>>(
 				roleMemberService.fetchPageResults(roleMember)).buildResponse();
@@ -73,7 +73,7 @@ public class RoleMemberController {
 	@RequestMapping(value = { "/memberInRole" })
 	@ResponseBody
 	public ResponseEntity<?> memberInRole(@ModelAttribute RoleMember roleMember,@CurrentUser UserInfo currentUser) {
-		_logger.debug("roleMember : "+roleMember);
+		logger.debug("roleMember : {}" , roleMember);
 		roleMember.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<RoleMember>>(
 				roleMemberService.fetchPageResults("memberInRole",roleMember)).buildResponse();
@@ -185,7 +185,7 @@ public class RoleMemberController {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete ids : {}" , ids);
+		logger.debug("-delete ids : {}" , ids);
 		if (roleMemberService.deleteBatch(ids)) {
 			 return new Message<RoleMember>(Message.SUCCESS).buildResponse();
 		} else {

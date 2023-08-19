@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/apps/jwt"})
 public class JwtDetailsController  extends BaseAppContorller {
-	final static Logger _logger = LoggerFactory.getLogger(JwtDetailsController.class);
+	static final  Logger logger = LoggerFactory.getLogger(JwtDetailsController.class);
 	
 	@Autowired
 	AppsJwtDetailsService jwtDetailsService;
@@ -66,7 +66,7 @@ public class JwtDetailsController  extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> insert(@RequestBody AppsJwtDetails jwtDetails,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + jwtDetails);
+		logger.debug("-Add  : {}" , jwtDetails);
 		
 		transform(jwtDetails);
 		
@@ -81,7 +81,7 @@ public class JwtDetailsController  extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody AppsJwtDetails jwtDetails,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + jwtDetails);
+		logger.debug("-update  : {}" , jwtDetails);
 		transform(jwtDetails);
 		jwtDetails.setInstId(currentUser.getInstId());
 		if (jwtDetailsService.update(jwtDetails)&&appsService.updateApp(jwtDetails)) {
@@ -94,7 +94,7 @@ public class JwtDetailsController  extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (jwtDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
 			 return new Message<AppsJwtDetails>(Message.SUCCESS).buildResponse();
 		} else {

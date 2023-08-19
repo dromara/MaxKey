@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ListenerAdapter {
-	private static final  Logger _logger = LoggerFactory.getLogger(ListenerAdapter.class);
+	private static final  Logger logger = LoggerFactory.getLogger(ListenerAdapter.class);
 	
 	JobExecutionContext context;
 	
@@ -59,7 +59,7 @@ public class ListenerAdapter {
 			String cronSchedule,
 			String identity
 		) throws SchedulerException {
-		_logger.debug("Cron {}  , Job schedule {}  ", cronSchedule , identity );
+		logger.debug("Cron {}  , Job schedule {}  ", cronSchedule , identity );
 		
 		JobDetail jobDetail = 
 				JobBuilder.newJob(jobClass) 

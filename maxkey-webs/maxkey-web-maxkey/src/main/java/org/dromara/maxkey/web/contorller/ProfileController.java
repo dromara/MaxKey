@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = { "/config/profile" })
 public class ProfileController {
-    static final Logger _logger = LoggerFactory.getLogger(ProfileController.class);
+    static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
 
     @Autowired
     private UserInfoService userInfoService;
@@ -65,7 +65,7 @@ public class ProfileController {
 				@RequestBody  UserInfo userInfo,
 				@CurrentUser UserInfo currentUser,
                 BindingResult result) {
-        _logger.debug(userInfo.toString());
+        logger.debug(userInfo.toString());
 
 //		if(userInfo.getExtraAttributeValue()!=null){
 //			String []extraAttributeLabel=userInfo.getExtraAttributeName().split(",");

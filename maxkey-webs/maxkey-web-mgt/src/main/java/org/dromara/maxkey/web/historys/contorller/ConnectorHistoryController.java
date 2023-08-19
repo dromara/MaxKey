@@ -49,7 +49,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/historys"})
 public class ConnectorHistoryController {
-final static Logger _logger = LoggerFactory.getLogger(ConnectorHistoryController.class);
+	static final  Logger logger = LoggerFactory.getLogger(ConnectorHistoryController.class);
 
 	@Autowired
 	HistoryConnectorService historyConnectorService;
@@ -63,7 +63,7 @@ final static Logger _logger = LoggerFactory.getLogger(ConnectorHistoryController
     public ResponseEntity<?> fetch(
     		@ModelAttribute("historyConnector") HistoryConnector historyConnector,
 			@CurrentUser UserInfo currentUser){
-        _logger.debug("historys/historyConnector/fetch/ {}",historyConnector);
+    	logger.debug("historys/historyConnector/fetch/ {}",historyConnector);
         historyConnector.setInstId(currentUser.getInstId());
         return new Message<JpaPageResults<HistoryConnector>>(
         			historyConnectorService.fetchPageResults(historyConnector)

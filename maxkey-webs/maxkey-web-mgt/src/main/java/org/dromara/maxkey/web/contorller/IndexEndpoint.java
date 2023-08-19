@@ -31,11 +31,11 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class IndexEndpoint {
-	private static Logger _logger = LoggerFactory.getLogger(IndexEndpoint.class);
+	private static Logger logger = LoggerFactory.getLogger(IndexEndpoint.class);
 
 	@RequestMapping(value={"/"})
 	public ModelAndView index() {
-		_logger.debug("IndexEndpoint /.");
+		logger.debug("IndexEndpoint /.");
 		return  new ModelAndView("index")
 				.addObject("appVersion", WebContext.properties.getProperty("application.formatted-version"));
 		

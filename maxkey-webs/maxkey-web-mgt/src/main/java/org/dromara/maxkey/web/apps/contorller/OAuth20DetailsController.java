@@ -44,7 +44,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/apps/oauth20"})
 public class OAuth20DetailsController  extends BaseAppContorller {
-	final static Logger _logger = LoggerFactory.getLogger(OAuth20DetailsController.class);
+	static final  Logger logger = LoggerFactory.getLogger(OAuth20DetailsController.class);
 	
 	@Autowired
 	JdbcClientDetailsService oauth20JdbcClientDetailsService;
@@ -68,7 +68,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 		AppsOAuth20Details oauth20Details=new AppsOAuth20Details(application,baseClientDetails);
 		oauth20Details.setSecret(application.getSecret());
 		oauth20Details.setClientSecret(application.getSecret());
-		_logger.debug("forwardUpdate "+oauth20Details);
+		logger.debug("forwardUpdate {}" , oauth20Details);
 		oauth20Details.transIconBase64();
 		return new Message<AppsOAuth20Details>(oauth20Details).buildResponse();
 	}
@@ -78,7 +78,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> add(
 			@RequestBody  AppsOAuth20Details oauth20Details,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + oauth20Details);
+		logger.debug("-Add  : {}", oauth20Details);
 		
 		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
 		    oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
@@ -101,9 +101,9 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> update(
 			@RequestBody  AppsOAuth20Details oauth20Details,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + oauth20Details);
-		_logger.debug("-update  application :" + oauth20Details);
-		_logger.debug("-update  oauth20Details use oauth20JdbcClientDetails" );
+		logger.debug("-update  : {}" , oauth20Details);
+		logger.debug("-update  application {}" , oauth20Details);
+		logger.debug("-update  oauth20Details use oauth20JdbcClientDetails" );
 		if(oauth20Details.getProtocol().equalsIgnoreCase(ConstsProtocols.OAUTH21)) {
             oauth20Details.setPkce(OAuth2Constants.PKCE_TYPE.PKCE_TYPE_YES);
         }
@@ -126,7 +126,7 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> delete(
 			@RequestParam("ids") String ids,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		for (String id : StringUtils.split(ids, ",")){
 			oauth20JdbcClientDetailsService.removeClientDetails(id);
 		}

@@ -44,14 +44,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @AutoConfiguration
 public class Oauth20ClientAutoConfiguration  implements InitializingBean {
-    private static final  Logger _logger = LoggerFactory.getLogger(Oauth20ClientAutoConfiguration.class);
+    private static final  Logger logger = LoggerFactory.getLogger(Oauth20ClientAutoConfiguration.class);
     
     @Bean
     public JdbcClientDetailsService oauth20JdbcClientDetailsService(
                 DataSource dataSource,PasswordEncoder passwordReciprocal) {
 	    JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
 	    //clientDetailsService.setPasswordEncoder(passwordReciprocal);
-	    _logger.debug("JdbcClientDetailsService inited.");
+	    logger.debug("JdbcClientDetailsService inited.");
         return clientDetailsService;
     }
 	
@@ -68,10 +68,10 @@ public class Oauth20ClientAutoConfiguration  implements InitializingBean {
         TokenStore tokenStore = null;
         if (persistence == 2) {
             tokenStore = new RedisTokenStore(jedisConnectionFactory);
-            _logger.debug("RedisTokenStore");
+            logger.debug("RedisTokenStore");
         }else {
             tokenStore = new InMemoryTokenStore();
-            _logger.debug("InMemoryTokenStore"); 
+            logger.debug("InMemoryTokenStore"); 
         }
         
         return tokenStore;
@@ -109,7 +109,7 @@ public class Oauth20ClientAutoConfiguration  implements InitializingBean {
         daoAuthenticationProvider.setPasswordEncoder(passwordReciprocal);
         daoAuthenticationProvider.setUserDetailsService(cientDetailsUserDetailsService);
         ProviderManager authenticationManager = new ProviderManager(daoAuthenticationProvider);
-        _logger.debug("OAuth 2 Client Authentication Manager init.");
+        logger.debug("OAuth 2 Client Authentication Manager init.");
         return authenticationManager;
     }
   

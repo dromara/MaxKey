@@ -44,7 +44,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/config"})
 public class ChangePasswodController {
-	final static Logger _logger = LoggerFactory.getLogger(ChangePasswodController.class);
+	static final Logger logger = LoggerFactory.getLogger(ChangePasswodController.class);
 
 	@Autowired
 	private UserInfoService userInfoService;
@@ -84,7 +84,7 @@ public class ChangePasswodController {
 			return new Message<ChangePassword>().buildResponse();
 		}else {
 			String message = (String) WebContext.getAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT);
-			_logger.info("-message:",message);
+			logger.info("-message:",message);
 			return new Message<ChangePassword>(Message.ERROR,message).buildResponse();
 		}
 	}

@@ -45,7 +45,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @Component
 public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
-	private static final Logger _logger = LoggerFactory.getLogger(RestApiPermissionAdapter.class);
+	private static final Logger logger = LoggerFactory.getLogger(RestApiPermissionAdapter.class);
 
 	@Autowired
 	DefaultTokenServices oauth20TokenServices;
@@ -62,7 +62,7 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		_logger.trace("Rest API Permission Adapter pre handle");
+		logger.trace("Rest API Permission Adapter pre handle");
 		 AuthorizationHeader headerCredential = AuthorizationHeaderUtils.resolve(request);
 		 
 		//判断应用的AppId和Secret
@@ -79,12 +79,12 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 			    	authenticationToken= (UsernamePasswordAuthenticationToken)oauth20ClientAuthenticationManager.authenticate(authRequest);
 			    }
 			}else {
-				_logger.trace("Authentication bearer {}" , headerCredential.getCredential());
+				logger.trace("Authentication bearer {}" , headerCredential.getCredential());
 				OAuth2Authentication oauth2Authentication = 
 						oauth20TokenServices.loadAuthentication(headerCredential.getCredential());
 				
 				if(oauth2Authentication != null) {
-					_logger.trace("Authentication token {}" , oauth2Authentication.getPrincipal().toString());
+					logger.trace("Authentication token {}" , oauth2Authentication.getPrincipal().toString());
 					authenticationToken= new UsernamePasswordAuthenticationToken(
 			    			new User(
 			    					oauth2Authentication.getPrincipal().toString(), 
@@ -94,7 +94,7 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	                        oauth2Authentication.getAuthorities()
 	                );
 				}else {
-					_logger.trace("Authentication token is null ");
+					logger.trace("Authentication token is null ");
 				}
 			}
 			
@@ -104,7 +104,7 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 			}
 		}
 		
-		_logger.trace("No Authentication ... forward to /login");
+		logger.trace("No Authentication ... forward to /login");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
         dispatcher.forward(request, response);
         

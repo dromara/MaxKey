@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web.contorller;
+package org.dromara.maxkey.web.idm.contorller;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
@@ -38,7 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value={"/useradjoint"})
 public class UserAdjointController {
-	final static Logger _logger = LoggerFactory.getLogger(UserAdjointController.class);
+	final static Logger logger = LoggerFactory.getLogger(UserAdjointController.class);
 	
 	@Autowired
 	UserInfoAdjointService userInfoAdjointService;
@@ -57,7 +57,7 @@ public class UserAdjointController {
 	public JpaPageResults<UserInfoAdjoint> queryDataGrid(
 			@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint,
 			@CurrentUser UserInfo currentUser){
-		_logger.debug(""+userInfoAdjoint);
+		logger.debug("userInfoAdjoint {}" , userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
 		return userInfoAdjointService.fetchPageResults(userInfoAdjoint);
 	}
@@ -83,7 +83,7 @@ public class UserAdjointController {
 	public ResponseEntity<?> insert(
 			@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + userInfoAdjoint);
+		logger.debug("-Add  : {}" , userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.insert(userInfoAdjoint)) {
 			return new Message<UserInfoAdjoint>(Message.SUCCESS).buildResponse();
@@ -104,7 +104,7 @@ public class UserAdjointController {
 	public ResponseEntity<?> query(
 			@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-query  :" + userInfoAdjoint);
+		logger.debug("-query  : {} " , userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.query(userInfoAdjoint)!=null) {
 			return new Message<UserInfoAdjoint>(Message.SUCCESS).buildResponse();
@@ -125,7 +125,7 @@ public class UserAdjointController {
 	public ResponseEntity<?> update(
 			@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  userInfoAdjoint :" + userInfoAdjoint);
+		logger.debug("-update  userInfoAdjoint : {}" , userInfoAdjoint);
 		userInfoAdjoint.setInstId(currentUser.getInstId());
 		if (userInfoAdjointService.update(userInfoAdjoint)) {
 			return new Message<UserInfoAdjoint>(Message.SUCCESS).buildResponse();
@@ -140,7 +140,7 @@ public class UserAdjointController {
 	@ResponseBody
 	@RequestMapping(value={"/delete"})
 	public ResponseEntity<?> delete(@ModelAttribute("userInfoAdjoint") UserInfoAdjoint userInfoAdjoint) {
-		_logger.debug("-delete  group :" + userInfoAdjoint);
+		logger.debug("-delete  group : {}" , userInfoAdjoint);
 		
 		if (userInfoAdjointService.deleteBatch(userInfoAdjoint.getId())) {
 			return new Message<UserInfoAdjoint>(Message.SUCCESS).buildResponse();

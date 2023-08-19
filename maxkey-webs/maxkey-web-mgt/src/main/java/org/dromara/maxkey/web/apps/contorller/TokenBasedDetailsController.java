@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/apps/tokenbased"})
 public class TokenBasedDetailsController  extends BaseAppContorller {
-	final static Logger _logger = LoggerFactory.getLogger(TokenBasedDetailsController.class);
+	static final  Logger logger = LoggerFactory.getLogger(TokenBasedDetailsController.class);
 	
 	@Autowired
 	AppsTokenBasedDetailsService tokenBasedDetailsService;
@@ -72,7 +72,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> add(
 			@RequestBody AppsTokenBasedDetails tokenBasedDetails,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + tokenBasedDetails);
+		logger.debug("-Add  : {}" , tokenBasedDetails);
 		
 		transform(tokenBasedDetails);
 		
@@ -91,7 +91,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> update(
 			@RequestBody AppsTokenBasedDetails tokenBasedDetails,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + tokenBasedDetails);
+		logger.debug("-update  : {}" , tokenBasedDetails);
 		transform(tokenBasedDetails);
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
 		tokenBasedDetails.setInstId(currentUser.getInstId());
@@ -108,7 +108,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> delete(
 			@RequestParam("ids") String ids,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (tokenBasedDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
 			 return new Message<AppsJwtDetails>(Message.SUCCESS).buildResponse();
 		} else {

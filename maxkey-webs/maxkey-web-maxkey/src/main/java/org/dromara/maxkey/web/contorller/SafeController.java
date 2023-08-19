@@ -40,7 +40,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping(value={"/safe"})
 public class SafeController {
-	final static Logger _logger = LoggerFactory.getLogger(SafeController.class);
+	static final Logger logger = LoggerFactory.getLogger(SafeController.class);
 	
 	@Autowired
 	private UserInfoService userInfoService;

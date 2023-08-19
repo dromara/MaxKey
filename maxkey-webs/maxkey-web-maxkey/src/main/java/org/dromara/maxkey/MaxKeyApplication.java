@@ -38,13 +38,13 @@ import jakarta.servlet.ServletException;
 @EnableDiscoveryClient
 @MapperScan("org.dromara.maxkey.persistence.mapper,")
 public class MaxKeyApplication extends SpringBootServletInitializer {
-    private static final Logger _logger = LoggerFactory.getLogger(MaxKeyApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(MaxKeyApplication.class);
 
     /**
      * @param args start parameter 
      */
     public static void main(String[] args) {
-        _logger.info("Start MaxKey Application ...");
+        logger.info("Start MaxKey Application ...");
         
         VFS.addImplClass(SpringBootVFS.class);
         ConfigurableApplicationContext applicationContext = 
@@ -53,12 +53,12 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
         try {
             initWebContext.init(null);
         } catch (ServletException e) {
-            _logger.error("ServletException", e);
+            logger.error("ServletException", e);
         }
-        _logger.info("MaxKey at {}" , new DateTime());
-        _logger.info("MaxKey Server Port {}"
+        logger.info("MaxKey at {}" , new DateTime());
+        logger.info("MaxKey Server Port {}"
         		,applicationContext.getBean(ApplicationConfig.class).getPort());
-        _logger.info("MaxKey started.");
+        logger.info("MaxKey started.");
     }
 
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

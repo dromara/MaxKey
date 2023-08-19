@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/config/smsprovider"})
 public class SmsProviderController {
-	final static Logger _logger = LoggerFactory.getLogger(SmsProviderController.class);
+	static final  Logger logger = LoggerFactory.getLogger(SmsProviderController.class);
 	
 	@Autowired
 	private SmsProviderService smsProviderService;
@@ -55,7 +55,7 @@ public class SmsProviderController {
 	@RequestMapping(value={"/update"})
 	@ResponseBody
 	public ResponseEntity<?> update( @RequestBody SmsProvider smsProvider,@CurrentUser UserInfo currentUser,BindingResult result) {
-		_logger.debug("update smsProvider : "+smsProvider);
+		logger.debug("update smsProvider : {}" ,smsProvider);
 		smsProvider.setAppSecret(PasswordReciprocal.getInstance().encode(smsProvider.getAppSecret()));
 		smsProvider.setInstId(currentUser.getInstId());
 		boolean updateResult = false;

@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/apps/cas"})
 public class CasDetailsController  extends BaseAppContorller {
-	final static Logger _logger = LoggerFactory.getLogger(CasDetailsController.class);
+	static final  Logger logger = LoggerFactory.getLogger(CasDetailsController.class);
 	
 	@Autowired
 	AppsCasDetailsService casDetailsService;
@@ -65,7 +65,7 @@ public class CasDetailsController  extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> insert(@RequestBody AppsCasDetails casDetails,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + casDetails);
+		logger.debug("-Add  : {}" , casDetails);
 		transform(casDetails);
 		casDetails.setInstId(currentUser.getInstId());
 		if (casDetailsService.insert(casDetails)&&appsService.insertApp(casDetails)) {
@@ -78,7 +78,7 @@ public class CasDetailsController  extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody AppsCasDetails casDetails,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + casDetails);
+		logger.debug("-update  : {}" , casDetails);
 		transform(casDetails);
 		casDetails.setInstId(currentUser.getInstId());
 		if (casDetailsService.update(casDetails)&&appsService.updateApp(casDetails)) {
@@ -91,7 +91,7 @@ public class CasDetailsController  extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (casDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
 			 return new Message<AppsCasDetails>(Message.SUCCESS).buildResponse();
 		} else {

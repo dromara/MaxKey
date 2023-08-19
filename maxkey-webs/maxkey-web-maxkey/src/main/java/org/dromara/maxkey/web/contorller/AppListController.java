@@ -50,7 +50,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class AppListController {
-    static final Logger _logger = LoggerFactory.getLogger(AppListController.class);
+    static final Logger logger = LoggerFactory.getLogger(AppListController.class);
     
     @Autowired
     private UserInfoService userInfoService;

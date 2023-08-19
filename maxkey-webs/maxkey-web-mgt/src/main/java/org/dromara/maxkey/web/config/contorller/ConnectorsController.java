@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/config/connectors"})
 public class ConnectorsController {
-	final static Logger _logger = LoggerFactory.getLogger(ConnectorsController.class);
+	static final  Logger logger = LoggerFactory.getLogger(ConnectorsController.class);
 	
 	@Autowired
 	ConnectorsService connectorsService;
@@ -48,7 +48,7 @@ public class ConnectorsController {
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> fetch(Connectors connector,@CurrentUser UserInfo currentUser) {
-		_logger.debug(""+connector);
+		logger.debug("fetch {}" , connector);
 		connector.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Connectors>>(
 				connectorsService.fetchPageResults(connector)).buildResponse();
@@ -66,7 +66,7 @@ public class ConnectorsController {
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> insert(@RequestBody  Connectors connector,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + connector);
+		logger.debug("-Add  : {}" , connector);
 		connector.setInstId(currentUser.getInstId());
 		if(StringUtils.isNotBlank(connector.getCredentials())) {
 			connector.setCredentials(PasswordReciprocal.getInstance().encode(connector.getCredentials()));
@@ -81,7 +81,7 @@ public class ConnectorsController {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody  Connectors connector,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + connector);
+		logger.debug("-update  : {}" , connector);
 		connector.setInstId(currentUser.getInstId());
 		connector.setCredentials(PasswordReciprocal.getInstance().encode(connector.getCredentials()));
 		if (connectorsService.update(connector)) {
@@ -94,7 +94,7 @@ public class ConnectorsController {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (connectorsService.deleteBatch(ids)) {
 			 return new Message<Connectors>(Message.SUCCESS).buildResponse();
 		} else {

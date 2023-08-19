@@ -46,7 +46,7 @@ import org.springframework.http.MediaType;
 @Controller
 @RequestMapping(value = "/login")
 public class LoginEntryPoint {
-	private static Logger _logger = LoggerFactory.getLogger(LoginEntryPoint.class);
+	private static Logger logger = LoggerFactory.getLogger(LoginEntryPoint.class);
 	
 	@Autowired
 	AuthTokenService authTokenService;
@@ -63,7 +63,7 @@ public class LoginEntryPoint {
 	 */
  	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> get() {
-		_logger.debug("/login.");
+		logger.debug("/login.");
 		
 		HashMap<String , Object> model = new HashMap<String , Object>();
 		model.put("isRemeberMe", applicationConfig.getLoginConfig().isRemeberMe());
@@ -90,7 +90,7 @@ public class LoginEntryPoint {
  				String errorMsg = WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE) == null ? 
 						  "" : WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE).toString();
 				authJwtMessage.setMessage(Message.FAIL,errorMsg);
-				_logger.debug("login fail , message {}",errorMsg);
+				logger.debug("login fail , message {}",errorMsg);
 	 		}
  		}
  		return authJwtMessage.buildResponse();

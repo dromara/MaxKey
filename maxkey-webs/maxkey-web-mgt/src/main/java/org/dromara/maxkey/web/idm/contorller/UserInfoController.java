@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web.contorller;
+package org.dromara.maxkey.web.idm.contorller;
 
 import java.beans.PropertyEditorSupport;
 import java.io.IOException;
@@ -75,7 +75,7 @@ import com.google.common.collect.Lists;
 @Controller
 @RequestMapping(value = { "/users" })
 public class UserInfoController {
-	final static Logger _logger = LoggerFactory.getLogger(UserInfoController.class);
+	final static Logger logger = LoggerFactory.getLogger(UserInfoController.class);
 	
 	@Autowired
 	private UserInfoService userInfoService;
@@ -89,7 +89,7 @@ public class UserInfoController {
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> fetch(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
-		_logger.debug(""+userInfo);
+		logger.debug(""+userInfo);
 		userInfo.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<UserInfo>>(
 				userInfoService.fetchPageResults(userInfo)).buildResponse();
@@ -98,7 +98,7 @@ public class UserInfoController {
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> query(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-query  :" + userInfo);
+		logger.debug("-query  :" + userInfo);
 		if (userInfoService.query(userInfo)!=null) {
 			 return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
@@ -123,7 +123,7 @@ public class UserInfoController {
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> insert(@RequestBody UserInfo userInfo,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + userInfo);
+		logger.debug("-Add  :" + userInfo);
 		userInfo.setId(WebContext.genId());
 		userInfo.setInstId(currentUser.getInstId());
 		if(StringUtils.isNotBlank(userInfo.getPictureId())) {
@@ -146,13 +146,13 @@ public class UserInfoController {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody  UserInfo userInfo,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + userInfo);
-		_logger.info(userInfo.getExtraAttributeName());
-		_logger.info(userInfo.getExtraAttributeValue());
+		logger.debug("-update  :" + userInfo);
+		logger.info(userInfo.getExtraAttributeName());
+		logger.info(userInfo.getExtraAttributeValue());
 		//userInfo.setNameZHShortSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), true));
 		//userInfo.setNameZHSpell(StringUtils.hanYu2Pinyin(userInfo.getDisplayName(), false));
 		convertExtraAttribute(userInfo) ;
-		_logger.info(userInfo.getExtraAttribute());
+		logger.info(userInfo.getExtraAttribute());
 		userInfo.setInstId(currentUser.getInstId());
 		if(StringUtils.isNotBlank(userInfo.getPictureId())) {
 			userInfo.setPicture(fileUploadService.get(userInfo.getPictureId()).getUploaded());
@@ -174,7 +174,7 @@ public class UserInfoController {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		
 		if (userInfoService.deleteBatch(ids)) {
 			systemLog.insert(
@@ -219,7 +219,7 @@ public class UserInfoController {
 	public ResponseEntity<?> changePassword(
 			@RequestBody ChangePassword changePassword,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("UserId {}",changePassword.getUserId());
+		logger.debug("UserId {}",changePassword.getUserId());
 		changePassword.setPasswordSetType(ConstsPasswordSetType.PASSWORD_NORMAL);
 		if(userInfoService.changePassword(changePassword,true)) {
 			systemLog.insert(
@@ -237,7 +237,7 @@ public class UserInfoController {
 	@RequestMapping(value = { "/updateStatus" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> updateStatus(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
-		_logger.debug(""+userInfo);
+		logger.debug(""+userInfo);
 		UserInfo loadUserInfo = userInfoService.get(userInfo.getId());
 		userInfo.setInstId(currentUser.getInstId());
 		userInfo.setUsername(loadUserInfo.getUsername());
@@ -276,7 +276,7 @@ public class UserInfoController {
                         	UserInfo userInfo = buildUserFromSheetRow(row,currentUser);
                             userInfoList.add(userInfo);
                             recordCount ++;
-                            _logger.debug("record {} user {} account {}",recordCount,userInfo.getDisplayName(),userInfo.getUsername());
+                            logger.debug("record {} user {} account {}",recordCount,userInfo.getDisplayName(),userInfo.getUsername());
                         }
                     }
                 }

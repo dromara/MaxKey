@@ -35,7 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  */
 public class BaseAppContorller {
-	final static Logger _logger = LoggerFactory.getLogger(BaseAppContorller.class);
+	static final Logger logger = LoggerFactory.getLogger(BaseAppContorller.class);
 	
 	@Autowired
 	protected AppsService appsService;

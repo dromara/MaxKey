@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/config/accountsstrategy"})
 public class AccountsStrategyController {
-	final static Logger _logger = LoggerFactory.getLogger(AccountsStrategyController.class);
+	static final  Logger logger = LoggerFactory.getLogger(AccountsStrategyController.class);
 	
 	@Autowired
 	AccountsStrategyService accountsStrategyService;
@@ -56,7 +56,7 @@ public class AccountsStrategyController {
 		for (AccountsStrategy strategy : accountsStrategyList.getRows()){
 			strategy.transIconBase64();
 		}
-		_logger.debug("Accounts Strategy "+accountsStrategyList);
+		logger.debug("Accounts Strategy {}" , accountsStrategyList);
 		return new Message<JpaPageResults<AccountsStrategy>>(
 				accountsStrategyList).buildResponse();
 	}
@@ -64,7 +64,7 @@ public class AccountsStrategyController {
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> query(@ModelAttribute AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-query  :" + accountsStrategy);
+		logger.debug("-query  : {}" , accountsStrategy);
 		if (accountsStrategyService.query(accountsStrategy)!=null) {
 			 return new Message<AccountsStrategy>(Message.SUCCESS).buildResponse();
 		} else {
@@ -81,7 +81,7 @@ public class AccountsStrategyController {
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> insert(@RequestBody AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + accountsStrategy);
+		logger.debug("-Add  : {}" , accountsStrategy);
 		
 		if (accountsStrategyService.insert(accountsStrategy)) {
 			accountsService.refreshByStrategy(accountsStrategy);
@@ -94,7 +94,7 @@ public class AccountsStrategyController {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody  AccountsStrategy accountsStrategy,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + accountsStrategy);
+		logger.debug("-update  : {}" , accountsStrategy);
 		if (accountsStrategyService.update(accountsStrategy)) {
 			accountsService.refreshByStrategy(accountsStrategy);
 		    return new Message<AccountsStrategy>(Message.SUCCESS).buildResponse();
@@ -106,7 +106,7 @@ public class AccountsStrategyController {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (accountsStrategyService.deleteBatch(ids)) {
 			 return new Message<AccountsStrategy>(Message.SUCCESS).buildResponse();
 		} else {

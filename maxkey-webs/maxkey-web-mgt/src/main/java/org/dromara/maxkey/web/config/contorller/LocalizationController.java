@@ -41,7 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LocalizationController {
 
 
-		final static Logger _logger = LoggerFactory.getLogger(LocalizationController.class);
+		static final  Logger logger = LoggerFactory.getLogger(LocalizationController.class);
 		
 		@Autowired
 		private LocalizationRepository localizationRepository;
@@ -67,7 +67,7 @@ public class LocalizationController {
 		@RequestMapping(value={"/update"})
 		@ResponseBody
 		public ResponseEntity<?> update(@ModelAttribute("localization") Localization localization,@CurrentUser UserInfo currentUser,BindingResult result) {
-			_logger.debug("update  localization : "+localization);
+			logger.debug("update  localization : {}" ,localization);
 			localization.setInstId(currentUser.getInstId());
 			if(StringUtils.isBlank(localization.getId())){
 				localization.setId(localization.generateId());

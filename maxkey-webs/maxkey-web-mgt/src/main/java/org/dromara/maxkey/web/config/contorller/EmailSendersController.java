@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/config/emailsenders"})
 public class EmailSendersController {
-	final static Logger _logger = LoggerFactory.getLogger(EmailSendersController.class);
+	static final  Logger logger = LoggerFactory.getLogger(EmailSendersController.class);
 	
 	@Autowired
 	private EmailSendersService emailSendersService;
@@ -58,7 +58,7 @@ public class EmailSendersController {
 	@RequestMapping(value={"/update"})
 	@ResponseBody
 	public ResponseEntity<?> update( @RequestBody  EmailSenders emailSenders,@CurrentUser UserInfo currentUser,BindingResult result) {
-		_logger.debug("update emailSenders : "+emailSenders);
+		logger.debug("update emailSenders : {}" , emailSenders);
 		emailSenders.setInstId(currentUser.getInstId());
 		emailSenders.setCredentials(PasswordReciprocal.getInstance().encode(emailSenders.getCredentials()));
 		if(StringUtils.isBlank(emailSenders.getId())) {

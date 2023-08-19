@@ -33,7 +33,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class LogoutEndpoint {
-	private static Logger _logger = LoggerFactory.getLogger(LogoutEndpoint.class);
+	private static Logger logger = LoggerFactory.getLogger(LogoutEndpoint.class);
 	
 	@Autowired
     protected SessionManager sessionManager;
@@ -45,7 +45,7 @@ public class LogoutEndpoint {
  				currentUser.getId(),
  				currentUser.getUsername());
  		//invalidate http session
-		_logger.debug("/logout invalidate http Session id {}",request.getSession().getId());
+		logger.debug("/logout invalidate http Session id {}",request.getSession().getId());
  		request.getSession().invalidate();
  		return new Message<String>().buildResponse();
  	}

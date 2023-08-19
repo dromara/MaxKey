@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.web.contorller;
+package org.dromara.maxkey.web.idm.contorller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ import com.google.common.collect.Lists;
 @Controller
 @RequestMapping({"/orgs"})
 public class OrganizationsController {
-  static final Logger _logger = LoggerFactory.getLogger(OrganizationsController.class);
+  static final Logger logger = LoggerFactory.getLogger(OrganizationsController.class);
 
 	@Autowired
 	OrganizationsService organizationsService;
@@ -72,7 +72,7 @@ public class OrganizationsController {
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> fetch(@ModelAttribute Organizations org,@CurrentUser UserInfo currentUser) {
-		_logger.debug("fetch {}" , org);
+		logger.debug("fetch {}" , org);
 		org.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Organizations>>(
 				organizationsService.fetchPageResults(org)).buildResponse();
@@ -81,7 +81,7 @@ public class OrganizationsController {
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> query(@ModelAttribute Organizations org,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-query  {}" , org);
+		logger.debug("-query  {}" , org);
 		org.setInstId(currentUser.getInstId());
 		List<Organizations>  orgList = organizationsService.query(org);
 		if (orgList != null) {
@@ -100,7 +100,7 @@ public class OrganizationsController {
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> insert(@RequestBody Organizations org,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + org);
+		logger.debug("-Add  : {}" , org);
 		org.setInstId(currentUser.getInstId());
 		if (organizationsService.insert(org)) {
 			systemLog.insert(
@@ -118,7 +118,7 @@ public class OrganizationsController {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody  Organizations org,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + org);
+		logger.debug("-update  :{}" , org);
 		org.setInstId(currentUser.getInstId());
 		if (organizationsService.update(org)) {
 			systemLog.insert(
@@ -136,7 +136,7 @@ public class OrganizationsController {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (organizationsService.deleteBatch(ids)) {
 			systemLog.insert(
 					ConstsEntryType.ORGANIZATION, 
@@ -154,7 +154,7 @@ public class OrganizationsController {
 	@ResponseBody
 	@RequestMapping(value={"/tree"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> tree(@ModelAttribute Organizations organization,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-tree  {}" , organization);
+		logger.debug("-tree  {}" , organization);
 		List<Organizations>  orgList = organizationsService.query(
 				Query.builder().eq("instid", currentUser.getInstId()));
 		if (orgList != null) {

@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/config/socialsignon"})
 public class SocialSignOnListController {
-	final static Logger _logger = LoggerFactory.getLogger(SocialSignOnListController.class);
+	static final Logger logger = LoggerFactory.getLogger(SocialSignOnListController.class);
 	
 	@Autowired
 	protected SocialsAssociatesService socialsAssociatesService;
@@ -57,7 +57,7 @@ public class SocialSignOnListController {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (socialsAssociatesService.deleteBatch(ids)) {
 			 return new Message<Apps>(Message.SUCCESS).buildResponse();
 		} else {

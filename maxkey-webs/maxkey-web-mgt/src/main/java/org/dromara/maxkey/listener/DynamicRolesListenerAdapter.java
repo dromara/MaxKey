@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DynamicRolesListenerAdapter extends ListenerAdapter  implements Job , Serializable {
-	final static Logger _logger = LoggerFactory.getLogger(DynamicRolesListenerAdapter.class);
+	static final  Logger logger = LoggerFactory.getLogger(DynamicRolesListenerAdapter.class);
     
     private static final long serialVersionUID = 8831626240807856084L;
 
@@ -38,18 +38,18 @@ public class DynamicRolesListenerAdapter extends ListenerAdapter  implements Job
         
         init(context);
         
-        _logger.debug("running ... " );
+        logger.debug("running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
             if(rolesService != null) {
             	rolesService.refreshAllDynamicRoles();
             	Thread.sleep(10 * 1000);//10 minutes
             }
-            _logger.debug("finished  " );
+            logger.debug("finished  " );
             jobStatus = JOBSTATUS.FINISHED;
         }catch(Exception e) {
             jobStatus = JOBSTATUS.ERROR;
-            _logger.error("Exception " ,e);
+            logger.error("Exception " ,e);
         }
     }
 

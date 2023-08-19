@@ -46,7 +46,6 @@ import org.opensaml.saml2.metadata.SPSSODescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -60,7 +59,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/apps/saml20"})
 public class SAML20DetailsController   extends BaseAppContorller {
-	final static Logger _logger = LoggerFactory.getLogger(SAML20DetailsController.class);
+	static final  Logger logger = LoggerFactory.getLogger(SAML20DetailsController.class);
 	
 	@Autowired
 	private KeyStoreLoader keyStoreLoader;
@@ -94,7 +93,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	public ResponseEntity<?> add(
 			@RequestBody AppsSAML20Details saml20Details,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + saml20Details);
+		logger.debug("-Add  : {}" , saml20Details);
 		
 		try {
 			transform(saml20Details);
@@ -115,7 +114,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	public ResponseEntity<?> update(
 			@RequestBody AppsSAML20Details saml20Details,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + saml20Details);
+		logger.debug("-update  : {}" , saml20Details);
 		try {
 			transform(saml20Details);
 		} catch (Exception e) {
@@ -135,7 +134,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	public ResponseEntity<?> delete(
 			@RequestParam("ids") String ids,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (saml20DetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
 			 return new Message<AppsSAML20Details>(Message.SUCCESS).buildResponse();
 		} else {
@@ -160,7 +159,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 								X509CertUtils.loadCertFromInputStream(bArrayInputStream));
 					}
 				} catch (IOException e) {
-					_logger.error("read certificate file error .", e);
+					logger.error("read certificate file error .", e);
 				}
 			}else if(samlDetails.getFileType().equals("metadata_file")){//metadata file
 				if(bArrayInputStream != null) {
@@ -206,7 +205,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
         try {
             entityDescriptor = MetadataDescriptorUtil.getInstance().getEntityDescriptor(inputStream);
         } catch (IOException e) {
-            _logger.error("metadata  file resolve error .", e);
+            logger.error("metadata  file resolve error .", e);
             throw new Exception("metadata  file resolve error", e);
         }
         SPSSODescriptor sPSSODescriptor = entityDescriptor.getSPSSODescriptor(SAMLConstants.SAML20P_NS);
@@ -226,7 +225,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
             samlDetails.setAudience(entityDescriptor.getEntityID());
         }
 
-        _logger.info("SPSSODescriptor EntityID "+ entityDescriptor.getEntityID());
+        logger.info("SPSSODescriptor EntityID {}", entityDescriptor.getEntityID());
         return samlDetails;
 	}
 	

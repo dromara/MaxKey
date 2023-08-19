@@ -50,7 +50,7 @@ import jakarta.servlet.ServletException;
 @Controller
 @RequestMapping(value={"/signup"})
 public class RegisterController {
-	private static Logger _logger = LoggerFactory.getLogger(RegisterController.class);
+	private static Logger logger = LoggerFactory.getLogger(RegisterController.class);
 	
 	Pattern mobileRegex = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$");
 	
@@ -73,9 +73,9 @@ public class RegisterController {
 	@RequestMapping(value = { "/produceOtp" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> produceOtp(
 	    			@RequestParam String mobile) {
-        _logger.debug("/signup/produceOtp Mobile {}: " ,mobile);
+        logger.debug("/signup/produceOtp Mobile {}: " ,mobile);
  
-    	_logger.debug("Mobile Regex matches {}",mobileRegex.matcher(mobile).matches());
+    	logger.debug("Mobile Regex matches {}",mobileRegex.matcher(mobile).matches());
     	if(StringUtils.isNotBlank(mobile) && mobileRegex.matcher(mobile).matches()) {
     		UserInfo userInfo = new UserInfo();
     		userInfo.setUsername(mobile);

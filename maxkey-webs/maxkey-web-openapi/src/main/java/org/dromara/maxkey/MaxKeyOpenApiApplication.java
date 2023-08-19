@@ -55,10 +55,10 @@ import jakarta.servlet.ServletException;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class MaxKeyOpenApiApplication extends SpringBootServletInitializer {
-	private static final Logger _logger = LoggerFactory.getLogger(MaxKeyOpenApiApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(MaxKeyOpenApiApplication.class);
 
 	public static void main(String[] args) {
-	    _logger.info("Start MaxKey OpenApi Application ...");
+	    logger.info("Start MaxKey OpenApi Application ...");
 
 		ConfigurableApplicationContext  applicationContext = 
 							SpringApplication.run(MaxKeyOpenApiApplication.class, args);
@@ -67,12 +67,12 @@ public class MaxKeyOpenApiApplication extends SpringBootServletInitializer {
 		try {
 			initWebContext.init(null);
 		} catch (ServletException e) {
-			_logger.error("Exception ",e);
+			logger.error("Exception ",e);
 		}
-		_logger.info("MaxKey OpenApi at {}" , new DateTime());
-		_logger.info("MaxKey OpenApi Server Port {}"
+		logger.info("MaxKey OpenApi at {}" , new DateTime());
+		logger.info("MaxKey OpenApi Server Port {}"
 				,applicationContext.getBean(ApplicationConfig.class).getPort());
-		_logger.info("MaxKey OpenApi started.");
+		logger.info("MaxKey OpenApi started.");
 		
 	}
 

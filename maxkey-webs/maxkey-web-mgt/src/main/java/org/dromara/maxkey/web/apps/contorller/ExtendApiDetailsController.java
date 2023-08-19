@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/apps/extendapi"})
 public class ExtendApiDetailsController  extends BaseAppContorller {
-	final static Logger _logger = LoggerFactory.getLogger(ExtendApiDetailsController.class);
+	static final Logger logger = LoggerFactory.getLogger(ExtendApiDetailsController.class);
 
 	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> init() {
@@ -66,7 +66,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> add(
 			@RequestBody AppsExtendApiDetails extendApiDetails,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + extendApiDetails);
+		logger.debug("-Add  :" + extendApiDetails);
 		
 		transform(extendApiDetails);
 		extendApiDetails.setInstId(currentUser.getInstId());
@@ -82,7 +82,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> update(
 			@RequestBody AppsExtendApiDetails extendApiDetails,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + extendApiDetails);
+		logger.debug("-update  :" + extendApiDetails);
 		transform(extendApiDetails);
 		extendApiDetails.setInstId(currentUser.getInstId());
 		if (appsService.updateApp(extendApiDetails)) {
@@ -97,7 +97,7 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 	public ResponseEntity<?> delete(
 			@RequestParam("ids") String ids,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (appsService.deleteBatch(ids)) {
 			 return new Message<AppsExtendApiDetails>(Message.SUCCESS).buildResponse();
 		} else {

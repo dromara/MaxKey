@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/access/permissions"})
 public class RolePermissionsController {
-	final static Logger _logger = LoggerFactory.getLogger(RolePermissionsController.class);
+	static final Logger logger = LoggerFactory.getLogger(RolePermissionsController.class);
 	
 	@Autowired
 	RolePermissionssService rolePermissionssService;
@@ -112,7 +112,7 @@ public class RolePermissionsController {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete ids : {}" , ids);
+		logger.debug("-delete ids : {}" , ids);
 		if (rolePermissionssService.deleteBatch(ids)) {
 			 return new Message<RolePermissions>(Message.SUCCESS).buildResponse();
 		} else {

@@ -51,7 +51,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Tag(name = "1-3-单点注销接口文档模块")
 @Controller
 public class LogoutEndpoint {
-	private static Logger _logger = LoggerFactory.getLogger(LogoutEndpoint.class);
+	private static Logger logger = LoggerFactory.getLogger(LogoutEndpoint.class);
 
 	@Autowired 
     ApplicationConfig applicationConfig;
@@ -71,13 +71,13 @@ public class LogoutEndpoint {
 		String sessionId = currentUser.getSessionId();
  		Session session = sessionManager.get(sessionId);
  		if(session != null) {
- 			_logger.debug("/logout frontend clean Session id {}",session.getId());
+ 			logger.debug("/logout frontend clean Session id {}",session.getId());
 	 		Set<Entry<String, Apps>> entrySet = session.getAuthorizedApps().entrySet();
 	 
 	        Iterator<Entry<String, Apps>> iterator = entrySet.iterator();
 	        while (iterator.hasNext()) {
 	            Entry<String, Apps> mapEntry = iterator.next();
-	            _logger.debug("App Id : "+ mapEntry.getKey()+ " , " +mapEntry.getValue());
+	            logger.debug("App Id : {} , {} " ,  mapEntry.getKey() ,mapEntry.getValue());
 	            if( mapEntry.getValue().getLogoutType() == LogoutType.BACK_CHANNEL){
 	                SingleLogout singleLogout;
 	                if(mapEntry.getValue().getProtocol().equalsIgnoreCase(ConstsProtocols.CAS)) {
@@ -104,7 +104,7 @@ public class LogoutEndpoint {
  				@RequestParam(value = "redirect_uri",required = false) String redirect_uri
  				){
 		//invalidate http session
-		_logger.debug("/force/logout http Session id {}",request.getSession().getId());
+		logger.debug("/force/logout http Session id {}",request.getSession().getId());
 		request.getSession().invalidate();
 		StringBuffer logoutUrl = new StringBuffer("");
 		logoutUrl.append(applicationConfig.getFrontendUri()).append("/#/passport/logout");

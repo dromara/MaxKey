@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/permissions/privileges"})
 public class RolePrivilegesController {
-	final static Logger _logger = LoggerFactory.getLogger(RolePrivilegesController.class);
+	static final Logger logger = LoggerFactory.getLogger(RolePrivilegesController.class);
 	
 	@Autowired
 	RolePrivilegesService rolePrivilegesService;
@@ -54,7 +54,7 @@ public class RolePrivilegesController {
 	public  ResponseEntity<?> update(
 			@RequestBody RolePrivileges rolePrivileges,
 			@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  : " + rolePrivileges);
+		logger.debug("-update  : {}" , rolePrivileges);
 		//have
 		RolePrivileges queryRolePrivileges = 
 				new RolePrivileges(
@@ -95,12 +95,12 @@ public class RolePrivilegesController {
            }
         }
 		if (!deleteRolePrivilegesList.isEmpty()) {
-			_logger.debug("-remove  : " + deleteRolePrivilegesList);
+			logger.debug("-remove  : {}" , deleteRolePrivilegesList);
 			rolePrivilegesService.deleteRolePrivileges(deleteRolePrivilegesList);
 		}
 		
 		if (!newRolePrivilegesList.isEmpty() && rolePrivilegesService.insertRolePrivileges(newRolePrivilegesList)) {
-			_logger.debug("-insert  : " + newRolePrivilegesList);
+			logger.debug("-insert  : {}" , newRolePrivilegesList);
 			return new Message<RolePrivileges>(Message.SUCCESS).buildResponse();
 			
 		} else {
@@ -114,7 +114,7 @@ public class RolePrivilegesController {
     public  ResponseEntity<?> get(
     		@ModelAttribute RolePrivileges rolePrivileges,
     		@CurrentUser UserInfo currentUser) {
-        _logger.debug("-get  :" + rolePrivileges);
+        logger.debug("-get  : {}"  , rolePrivileges);
         //have
         RolePrivileges queryRolePrivilege = 
         		new RolePrivileges(

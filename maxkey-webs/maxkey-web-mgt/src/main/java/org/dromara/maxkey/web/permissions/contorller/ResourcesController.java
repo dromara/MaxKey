@@ -49,7 +49,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/permissions/resources"})
 public class ResourcesController {
-	final static Logger _logger = LoggerFactory.getLogger(ResourcesController.class);
+	final static Logger logger = LoggerFactory.getLogger(ResourcesController.class);
 	
 	@Autowired
 	ResourcesService resourcesService;
@@ -60,7 +60,7 @@ public class ResourcesController {
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> fetch(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
-		_logger.debug("fetch {}" , resource);
+		logger.debug("fetch {}" , resource);
 		resource.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Resources>>(
 				resourcesService.fetchPageResults(resource)).buildResponse();
@@ -69,7 +69,7 @@ public class ResourcesController {
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> query(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-query  {}" , resource);
+		logger.debug("-query  {}" , resource);
 		resource.setInstId(currentUser.getInstId());
 		List<Resources>  resourceList = resourcesService.query(resource);
 		if (resourceList != null) {
@@ -88,7 +88,7 @@ public class ResourcesController {
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> insert(@RequestBody Resources resource,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + resource);
+		logger.debug("-Add  :" + resource);
 		resource.setInstId(currentUser.getInstId());
 		if (resourcesService.insert(resource)) {
 			systemLog.insert(
@@ -106,7 +106,7 @@ public class ResourcesController {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody  Resources resource,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + resource);
+		logger.debug("-update  :" + resource);
 		resource.setInstId(currentUser.getInstId());
 		if (resourcesService.update(resource)) {
 			systemLog.insert(
@@ -124,7 +124,7 @@ public class ResourcesController {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (resourcesService.deleteBatch(ids)) {
 			systemLog.insert(
 					ConstsEntryType.RESOURCE, 
@@ -142,7 +142,7 @@ public class ResourcesController {
 	@ResponseBody
 	@RequestMapping(value={"/tree"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> tree(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-tree  {}" , resource);
+		logger.debug("-tree  {}" , resource);
 		List<Resources>  resourceList = resourcesService.query(Query.builder().eq("instid", currentUser.getInstId()));
 		if (resourceList != null) {
 			TreeAttributes treeAttributes = new TreeAttributes();

@@ -74,7 +74,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
         "org.maxkey.authz.token.endpoint"
 })
 public class MaxKeyConfig  implements InitializingBean {
-    private static final  Logger _logger = LoggerFactory.getLogger(MaxKeyConfig.class);
+    private static final  Logger logger = LoggerFactory.getLogger(MaxKeyConfig.class);
     
 
     @Bean
@@ -91,7 +91,7 @@ public class MaxKeyConfig  implements InitializingBean {
                 int period) {
         
         OtpKeyUriFormat otpKeyUriFormat=new OtpKeyUriFormat(type,issuer,domain,digits,period);
-        _logger.debug("OTP KeyUri Format " + otpKeyUriFormat);
+        logger.debug("OTP KeyUri Format {}" , otpKeyUriFormat);
         return otpKeyUriFormat;
     }
     
@@ -107,7 +107,7 @@ public class MaxKeyConfig  implements InitializingBean {
                 MailOtpAuthnService otpAuthnService,
                 LdapContextService ldapContextService) {
     	LdapAuthenticationRealmService ldapRealmService = new LdapAuthenticationRealmService(ldapContextService);
-        JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
+        return new JdbcAuthenticationRealm(
         		passwordEncoder,
         		passwordPolicyValidator,
         		loginService,
@@ -116,8 +116,6 @@ public class MaxKeyConfig  implements InitializingBean {
         		jdbcTemplate,
         		ldapRealmService
         	);
-        
-        return authenticationRealm;
     }
     
 	@Bean
@@ -127,7 +125,7 @@ public class MaxKeyConfig  implements InitializingBean {
                 @Value("${maxkey.otp.policy.period:30}")
                 int period) {
 	    TimeBasedOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn(digits , period);
-	    _logger.debug("TimeBasedOtpAuthn inited.");
+	    logger.debug("TimeBasedOtpAuthn inited.");
         return tfaOtpAuthn;
     }
     
@@ -141,7 +139,7 @@ public class MaxKeyConfig  implements InitializingBean {
                 @Value("${maxkey.server.persistence}") int persistence,
                 RedisConnectionFactory redisConnFactory) {    
         AbstractOtpAuthn tfaOtpAuthn  = new TimeBasedOtpAuthn(digits , period);
-        _logger.debug("TimeBasedOtpAuthn inited.");
+        logger.debug("TimeBasedOtpAuthn inited.");
 
         if (persistence == ConstsPersistence.REDIS) {
             RedisOtpTokenStore redisOptTokenStore = new RedisOtpTokenStore(redisConnFactory);
@@ -171,16 +169,16 @@ public class MaxKeyConfig  implements InitializingBean {
                 messageTemplate = bufferedReader.lines().collect(Collectors.joining("\n"));
                 bufferedReader.close();
             } catch (IOException e) {
-                 _logger.error("mailOtpAuthn IOException ",e);
+                 logger.error("mailOtpAuthn IOException ",e);
             }
         }
-        _logger.trace("messageTemplate \n" +messageTemplate);
+        logger.trace("messageTemplate \n {}"  ,messageTemplate);
         MailOtpAuthn mailOtpAuthn = new MailOtpAuthn();
         mailOtpAuthn.setSubject(messageSubject);
         mailOtpAuthn.setMessageTemplate(messageTemplate);
         mailOtpAuthn.setEmailConfig(emailConfig);
         mailOtpAuthn.setInterval(messageValidity);
-        _logger.debug("MailOtpAuthn inited.");
+        logger.debug("MailOtpAuthn inited.");
         return mailOtpAuthn;
     }
     
@@ -204,11 +202,11 @@ public class MaxKeyConfig  implements InitializingBean {
         kerberosProxy.setUserdomain(userDomain);
         kerberosProxy.setRedirectUri(redirectUri);
         
-        List<KerberosProxy> kerberosProxysList = new ArrayList<KerberosProxy>();
+        List<KerberosProxy> kerberosProxysList = new ArrayList<>();
         kerberosProxysList.add(kerberosProxy);
         kerberosService.setKerberosProxys(kerberosProxysList);
         
-        _logger.debug("RemoteKerberosService inited.");
+        logger.debug("RemoteKerberosService inited.");
         return kerberosService;
     }
     

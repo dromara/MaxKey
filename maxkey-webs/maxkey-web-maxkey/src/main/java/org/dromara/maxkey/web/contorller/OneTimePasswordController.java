@@ -51,7 +51,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value  =  { "/config" })
 public class OneTimePasswordController {
-    static final  Logger _logger  =  LoggerFactory.getLogger(OneTimePasswordController.class);
+    static final  Logger logger  =  LoggerFactory.getLogger(OneTimePasswordController.class);
 
     @Autowired
     private UserInfoService userInfoService;

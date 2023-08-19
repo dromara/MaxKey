@@ -52,7 +52,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = { "/access/session" })
 public class SessionController {
-    static final Logger _logger = LoggerFactory.getLogger(SessionController.class);
+    static final Logger logger = LoggerFactory.getLogger(SessionController.class);
 
     @Autowired
     HistoryLoginService historyLoginService;
@@ -74,7 +74,7 @@ public class SessionController {
     public ResponseEntity<?> fetch(
     			@ModelAttribute("historyLogin") HistoryLogin historyLogin,
     			@CurrentUser UserInfo currentUser) {
-        _logger.debug("history/session/fetch {}" , historyLogin);
+        logger.debug("history/session/fetch {}" , historyLogin);
         historyLogin.setInstId(currentUser.getInstId());
         return new Message<JpaPageResults<HistoryLogin>>(
         			historyLoginService.queryOnlineSession(historyLogin)
@@ -86,11 +86,11 @@ public class SessionController {
     @ResponseBody
     @RequestMapping(value="/terminate")  
     public ResponseEntity<?> terminate(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-        _logger.debug(ids);
+        logger.debug(ids);
         boolean isTerminated = false;
         try {
             for(String sessionId : StringUtils.string2List(ids, ",")) {
-                _logger.trace("terminate session Id {} ",sessionId);
+                logger.trace("terminate session Id {} ",sessionId);
                 if(currentUser.getSessionId().contains(sessionId)) {
                     continue;//skip current session
                 }
@@ -98,7 +98,7 @@ public class SessionController {
             }
             isTerminated = true;
         }catch(Exception e) {
-            _logger.debug("terminate Exception .",e);
+            logger.debug("terminate Exception .",e);
         }
         
         if(isTerminated) {

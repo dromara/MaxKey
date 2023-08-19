@@ -48,7 +48,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/historys"})
 public class SynchronizerHistoryController {
-final static Logger _logger = LoggerFactory.getLogger(SynchronizerHistoryController.class);
+	static final Logger logger = LoggerFactory.getLogger(SynchronizerHistoryController.class);
 
 	@Autowired
 	HistorySynchronizerService historySynchronizerService;
@@ -62,7 +62,7 @@ final static Logger _logger = LoggerFactory.getLogger(SynchronizerHistoryControl
     public ResponseEntity<?> fetch(
     			@ModelAttribute("historySynchronizer") HistorySynchronizer historySynchronizer,
     			@CurrentUser UserInfo currentUser){
-        _logger.debug("historys/synchronizerHistory/fetch/ {}",historySynchronizer);
+    	logger.debug("historys/synchronizerHistory/fetch/ {}",historySynchronizer);
         historySynchronizer.setInstId(currentUser.getInstId());
         return new Message<JpaPageResults<HistorySynchronizer>>(
         		historySynchronizerService.fetchPageResults(historySynchronizer)

@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/config/ldapcontext"})
 public class LdapContextController {
-	final static Logger _logger = LoggerFactory.getLogger(LdapContextController.class);
+	static final  Logger logger = LoggerFactory.getLogger(LdapContextController.class);
 	
 	@Autowired
 	private LdapContextService ldapContextService;
@@ -57,7 +57,7 @@ public class LdapContextController {
 	@RequestMapping(value={"/update"})
 	@ResponseBody
 	public ResponseEntity<?> update( @RequestBody LdapContext ldapContext,@CurrentUser UserInfo currentUser,BindingResult result) {
-		_logger.debug("update ldapContext : "+ldapContext);
+		logger.debug("update ldapContext : {}" ,ldapContext);
 		ldapContext.setCredentials(PasswordReciprocal.getInstance().encode(ldapContext.getCredentials()));
 		ldapContext.setInstId(currentUser.getInstId());
 		boolean updateResult = false;

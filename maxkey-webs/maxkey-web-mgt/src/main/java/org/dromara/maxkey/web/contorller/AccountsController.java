@@ -69,7 +69,7 @@ public class AccountsController {
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> fetch(@ModelAttribute Accounts accounts,@CurrentUser UserInfo currentUser) {
-		_logger.debug(""+accounts);
+		_logger.debug("fetch {}" , accounts);
 		accounts.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Accounts>>(
 				accountsService.fetchPageResults(accounts)).buildResponse();
@@ -78,7 +78,7 @@ public class AccountsController {
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> query(@ModelAttribute Accounts account,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-query  :" + account);
+		_logger.debug("-query  : {}" , account);
 		account.setInstId(currentUser.getInstId());
 		if (accountsService.query(account)!=null) {
 			 return new Message<Accounts>(Message.SUCCESS).buildResponse();
@@ -97,7 +97,7 @@ public class AccountsController {
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> insert(@RequestBody  Accounts account,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + account);
+		_logger.debug("-Add  : {}" , account);
 		account.setInstId(currentUser.getInstId());
 		account.setRelatedPassword(PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
 		if (accountsService.insert(account)) {
@@ -116,7 +116,7 @@ public class AccountsController {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody  Accounts account,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + account);
+		_logger.debug("-update  : {}" , account);
 		account.setInstId(currentUser.getInstId());
 		account.setRelatedPassword(PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
 		if (accountsService.update(account)) {
@@ -136,7 +136,7 @@ public class AccountsController {
 	@RequestMapping(value = { "/updateStatus" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> updateStatus(@ModelAttribute Accounts accounts,@CurrentUser UserInfo currentUser) {
-		_logger.debug(""+accounts);
+		_logger.debug("accounts : {}" , accounts);
 		Accounts loadAccount = accountsService.get(accounts.getId());
 		accounts.setInstId(currentUser.getInstId());
 		accounts.setAppId(loadAccount.getAppId());

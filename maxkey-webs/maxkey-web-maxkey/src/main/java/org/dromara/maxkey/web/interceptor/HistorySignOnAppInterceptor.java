@@ -38,7 +38,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
-    private static final Logger _logger = LoggerFactory.getLogger(HistorySignOnAppInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(HistorySignOnAppInterceptor.class);
 
     @Autowired
     HistoryLoginAppsService historyLoginAppsService;
@@ -52,10 +52,11 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
      *          javax.servlet.http.HttpServletRequest, 
      *          javax.servlet.http.HttpServletResponse, java.lang.Object)
      */
+    @Override
     public void postHandle(HttpServletRequest request,
             HttpServletResponse response,
             Object handler,ModelAndView modelAndView) throws Exception {
-        _logger.debug("postHandle");
+        logger.debug("postHandle");
        
         final Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
         
@@ -63,7 +64,7 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
         if(principal != null && app !=null) {
         	final UserInfo userInfo = principal.getUserInfo();
         	String sessionId = principal.getSession().getId();
-        	 _logger.debug("sessionId : " + sessionId + " ,appId : " + app.getId());
+        	 logger.debug("sessionId : {} , appId {}" , sessionId , app.getId());
              HistoryLoginApps historyLoginApps = new HistoryLoginApps();
              historyLoginApps.setAppId(app.getId());
              historyLoginApps.setSessionId(sessionId);

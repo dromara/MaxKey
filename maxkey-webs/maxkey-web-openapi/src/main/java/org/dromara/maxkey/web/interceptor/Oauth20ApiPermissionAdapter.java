@@ -40,7 +40,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @Component
 public class Oauth20ApiPermissionAdapter  implements AsyncHandlerInterceptor  {
-	private static final Logger _logger = LoggerFactory.getLogger(Oauth20ApiPermissionAdapter.class);
+	private static final Logger logger = LoggerFactory.getLogger(Oauth20ApiPermissionAdapter.class);
 	
 	@Autowired
     protected PasswordReciprocal passwordReciprocal;
@@ -57,21 +57,21 @@ public class Oauth20ApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		 _logger.trace("OAuth20 API Permission Adapter pre handle");
+		 logger.trace("OAuth20 API Permission Adapter pre handle");
 		 String accessToken =  RequestTokenUtils.resolveAccessToken(request);
-		 _logger.trace("access_token {} " , accessToken);
+		 logger.trace("access_token {} " , accessToken);
 		 try {
 			 OAuth2Authentication authentication = oauth20TokenServices.loadAuthentication(accessToken);
 			//判断应用的accessToken信息
 			if(authentication != null ){
-			    _logger.trace("authentication "+ authentication);
+			    logger.trace("authentication {}" , authentication);
 			    return true;
 			}
 		 }catch(Exception e) {
-			 _logger.error("load Authentication Exception ! ",e);
+			 logger.error("load Authentication Exception ! ",e);
 		 }
 		
-		_logger.trace("No Authentication ... forward to /login");
+		logger.trace("No Authentication ... forward to /login");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
         dispatcher.forward(request, response);
         

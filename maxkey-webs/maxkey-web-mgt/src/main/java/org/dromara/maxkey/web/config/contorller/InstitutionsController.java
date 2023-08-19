@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value={"/config/institutions"})
 public class InstitutionsController {
-		final static Logger _logger = LoggerFactory.getLogger(InstitutionsController.class);
+		static final  Logger logger = LoggerFactory.getLogger(InstitutionsController.class);
 		
 		@Autowired
 		private InstitutionsService institutionsService;
@@ -51,7 +51,7 @@ public class InstitutionsController {
 				@RequestBody  Institutions institutions,
 				@CurrentUser UserInfo currentUser,
 				BindingResult result) {
-			_logger.debug("updateRole institutions : "+institutions);
+			logger.debug("updateRole institutions : {}" , institutions);
 			if(institutionsService.update(institutions)) {
 				return new Message<Institutions>(Message.SUCCESS).buildResponse();
 			} else {

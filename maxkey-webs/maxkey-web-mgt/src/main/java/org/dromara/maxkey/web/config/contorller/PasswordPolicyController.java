@@ -39,7 +39,7 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping(value={"/config/passwordpolicy"})
 public class PasswordPolicyController {
-	final static Logger _logger = LoggerFactory.getLogger(PasswordPolicyController.class);
+	static final  Logger logger = LoggerFactory.getLogger(PasswordPolicyController.class);
 		
 	@Autowired
 	private PasswordPolicyService passwordPolicyService;
@@ -52,7 +52,7 @@ public class PasswordPolicyController {
 
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@Valid @RequestBody PasswordPolicy passwordPolicy,@CurrentUser UserInfo currentUser,BindingResult result) {
-		_logger.debug("updateRole passwordPolicy : "+passwordPolicy);
+		logger.debug("updateRole passwordPolicy : {}" ,passwordPolicy);
 		//Message message = this.validate(result, passwordPolicy);
 		
 		if(passwordPolicyService.update(passwordPolicy)) {

@@ -38,13 +38,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class DashboardController {
 	
-	private static Logger _logger = LoggerFactory.getLogger(DashboardController.class);
+	private static Logger logger = LoggerFactory.getLogger(DashboardController.class);
 	@Autowired
 	ReportService reportService;
 
 	@RequestMapping(value={"/dashboard"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> dashboard(@CurrentUser UserInfo currentUser) {
-		_logger.debug("IndexController /dashboard.");
+		logger.debug("dashboard . ");
 		HashMap<String,Object> reportParameter = new HashMap<String,Object>();
 		reportParameter.put("instId", currentUser.getInstId());
 		

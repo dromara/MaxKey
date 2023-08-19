@@ -59,10 +59,10 @@ import jakarta.servlet.ServletException;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class MaxKeyMgtApplication extends SpringBootServletInitializer {
-	private static final Logger _logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(MaxKeyMgtApplication.class);
 
 	public static void main(String[] args) {
-	    _logger.info("Start MaxKeyMgt Application ...");
+	    logger.info("Start MaxKeyMgt Application ...");
 
 		ConfigurableApplicationContext  applicationContext = 
 							SpringApplication.run(MaxKeyMgtApplication.class, args);
@@ -71,12 +71,12 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 		try {
 			initWebContext.init(null);
 		} catch (ServletException e) {
-			_logger.error("Exception ",e);
+			logger.error("Exception ",e);
 		}
-		_logger.info("MaxKeyMgt at {}" , new DateTime());
-		_logger.info("MaxKeyMgt Server Port {}"
+		logger.info("MaxKeyMgt at {}" , new DateTime());
+		logger.info("MaxKeyMgt Server Port {}"
 				,applicationContext.getBean(ApplicationConfig.class).getPort());
-		_logger.info("MaxKeyMgt started.");
+		logger.info("MaxKeyMgt started.");
 		
 	}
 

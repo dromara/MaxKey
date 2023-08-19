@@ -44,7 +44,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value={"/config/synchronizers"})
 public class SynchronizersController {
-	final static Logger _logger = LoggerFactory.getLogger(SynchronizersController.class);
+	static final Logger logger = LoggerFactory.getLogger(SynchronizersController.class);
 	
 	@Autowired
 	SynchronizersService synchronizersService;
@@ -52,7 +52,7 @@ public class SynchronizersController {
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> fetch(Synchronizers synchronizers,@CurrentUser UserInfo currentUser) {
-		_logger.debug(""+synchronizers);
+		logger.debug("fetch {}" , synchronizers);
 		synchronizers.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Synchronizers>>(
 				synchronizersService.fetchPageResults(synchronizers)).buildResponse();
@@ -68,7 +68,7 @@ public class SynchronizersController {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody  Synchronizers synchronizers,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + synchronizers);
+		logger.debug("-update  : {}" , synchronizers);
 		synchronizers.setInstId(currentUser.getInstId());
 		synchronizers.setCredentials(PasswordReciprocal.getInstance().encode(synchronizers.getCredentials()));
 		if (synchronizersService.update(synchronizers)) {
@@ -81,24 +81,24 @@ public class SynchronizersController {
 	@ResponseBody
 	@RequestMapping(value={"/synchr"})  
 	public ResponseEntity<?> synchr(@RequestParam("id") String id) {
-		_logger.debug("-sync ids :" + id);
+		logger.debug("-sync ids : {}" , id);
 		
 		List<String> ids = StringUtils.string2List(id, ",");
 		try {
 			for(String sysId : ids) {
 				Synchronizers  synchronizer  = synchronizersService.get(sysId);
 				synchronizer.setCredentials(PasswordReciprocal.getInstance().decoder(synchronizer.getCredentials()));
-				_logger.debug("synchronizer " + synchronizer);
+				logger.debug("synchronizer {}" , synchronizer);
 				ISynchronizerService synchronizerService = WebContext.getBean(synchronizer.getService(),ISynchronizerService.class);
 				if(synchronizerService != null) {
 					synchronizerService.setSynchronizer(synchronizer);
 					synchronizerService.sync();
 				}else {
-					_logger.info("synchronizer {} not exist .",synchronizer.getService());
+					logger.info("synchronizer {} not exist .",synchronizer.getService());
 				}
 			}
 		}catch(Exception e) {
-			_logger.error("synchronizer Exception " , e);
+			logger.error("synchronizer Exception " , e);
 			return new Message<Synchronizers>(Message.FAIL).buildResponse();
 			
 		}

@@ -50,7 +50,7 @@ import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 @Controller
 @RequestMapping(value={"/apps"})
 public class ApplicationsController extends BaseAppContorller {
-	final static Logger _logger = LoggerFactory.getLogger(ApplicationsController.class);
+	static final Logger logger = LoggerFactory.getLogger(ApplicationsController.class);
 	
 	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> init() {
@@ -72,14 +72,14 @@ public class ApplicationsController extends BaseAppContorller {
 			app.setSecret(null);
 			app.setSharedPassword(null);
 		}
-		_logger.debug("List "+appsList);
+		logger.debug("List {}" , appsList);
 		return new Message<JpaPageResults<Apps>>(appsList).buildResponse();
 	}
 
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> query(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-query  :" + apps);
+		logger.debug("-query  : {}" , apps);
 		if (appsService.query(apps)!=null) {
 			 return new Message<Apps>(Message.SUCCESS).buildResponse();
 		} else {
@@ -98,7 +98,7 @@ public class ApplicationsController extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> insert(@RequestBody Apps apps,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-Add  :" + apps);
+		logger.debug("-Add  : {}" , apps);
 		transform(apps);
 		apps.setInstId(currentUser.getInstId());
 		if (appsService.insert(apps)) {
@@ -111,7 +111,7 @@ public class ApplicationsController extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> update(@RequestBody  Apps apps,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-update  :" + apps);
+		logger.debug("-update  : {}" , apps);
 		transform(apps);
 		apps.setInstId(currentUser.getInstId());
 		if (appsService.update(apps)) {
@@ -124,7 +124,7 @@ public class ApplicationsController extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
-		_logger.debug("-delete  ids : {} " , ids);
+		logger.debug("-delete  ids : {} " , ids);
 		if (appsService.deleteBatch(ids)) {
 			 return new Message<Apps>(Message.SUCCESS).buildResponse();
 		} else {
@@ -135,7 +135,7 @@ public class ApplicationsController extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value = { "/updateExtendAttr" })
 	public ResponseEntity<?> updateExtendAttr(@RequestBody Apps app) {
-		_logger.debug("-updateExtendAttr  id : {} , ExtendAttr : {}" , app.getId(),app.getExtendAttr());
+		logger.debug("-updateExtendAttr  id : {} , ExtendAttr : {}" , app.getId(),app.getExtendAttr());
 		if (appsService.updateExtendAttr(app)) {
 			return new Message<Apps>(Message.SUCCESS).buildResponse();
 		} else {
