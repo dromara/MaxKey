@@ -8,8 +8,8 @@
           <nz-form-label nzFor="roleName">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
           <nz-form-control>
             <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
-              <input nz-input [(ngModel)]="query.params.roleName" [ngModelOptions]="{ standalone: true }"
-                name="roleName" readonly placeholder="" id="roleName" />
+              <input nz-input [(ngModel)]="query.params.groupName" [ngModelOptions]="{ standalone: true }"
+                name="groupName" readonly placeholder="" id="groupName" />
             </nz-input-group>
             <ng-template #suffixButton>
               <button nz-button nzType="primary" (click)="onSelect($event)" nzSearch>{{ 'mxk.text.select' | i18n
