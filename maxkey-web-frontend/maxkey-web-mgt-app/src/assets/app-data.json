@@ -47,7 +47,7 @@
             {
               "text": "用户组成员",
               "i18n": "mxk.menu.identities.groupmembers",
-              "link": "/idm/rolemembers",
+              "link": "/idm/groupmembers",
               "icon": "anticon-team",
               "children": []
             }

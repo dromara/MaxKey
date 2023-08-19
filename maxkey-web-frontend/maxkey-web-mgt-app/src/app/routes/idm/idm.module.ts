@@ -27,7 +27,11 @@ import { MemberGroupsEditerComponent } from './group-members/member-groups-edite
 import { GroupEditerComponent } from './groups/group-editer/group-editer.component';
 import { GroupsComponent } from './groups/groups.component';
 import { SelectGroupsComponent } from './groups/select-groups/select-groups.component';
+import { OrganizationEditerComponent } from './organizations/organization-editer/organization-editer.component';
 import { OrganizationsComponent } from './organizations/organizations.component';
+import { PasswordComponent } from './users/password/password.component';
+import { SelectUserComponent } from './users/select-user/select-user.component';
+import { UserEditerComponent } from './users/user-editer/user-editer.component';
 import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
@@ -38,14 +42,18 @@ const routes: Routes = [
 ];
 
 const COMPONENTS = [
-  //UsersComponent,
-  OrganizationsComponent,
+  UsersComponent,
   GroupsComponent,
-  GroupMembersComponent,
   SelectGroupsComponent,
+  SelectUserComponent,
+  GroupEditerComponent,
+  PasswordComponent,
+  UserEditerComponent,
+  OrganizationsComponent,
+  OrganizationEditerComponent,
+  GroupMembersComponent,
   GroupMembersEditerComponent,
-  MemberGroupsEditerComponent,
-  GroupEditerComponent
+  MemberGroupsEditerComponent
 ];
 
 @NgModule({

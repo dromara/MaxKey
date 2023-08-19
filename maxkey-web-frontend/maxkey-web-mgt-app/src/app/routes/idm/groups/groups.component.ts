@@ -175,12 +175,12 @@ export class GroupsComponent implements OnInit {
     });
   }
 
-  onMembers(e: MouseEvent, roleId: String, roleName: String): void {
-    this.router.navigateByUrl(`/access/rolemembers?roleId=${roleId}&roleName=${roleName}`);
+  onMembers(e: MouseEvent, groupId: String, groupName: String): void {
+    this.router.navigateByUrl(`/idm/groupmembers?groupId=${groupId}&groupName=${groupName}`);
   }
 
-  onPermissions(e: MouseEvent, roleId: String, roleName: String): void {
-    this.router.navigateByUrl(`/access/permissions?roleId=${roleId}&roleName=${roleName}`);
+  onPermissions(e: MouseEvent, groupId: String, groupName: String): void {
+    this.router.navigateByUrl(`/access/permissions?groupId=${groupId}&groupName=${groupName}`);
   }
 
   fetch(): void {
