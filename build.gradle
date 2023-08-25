@@ -113,24 +113,19 @@ dependencies {
  
 }
 
-
 subprojects {
-
     processResources {
         from ('src/main/resources') {
             include 'src/main/resources/*.*'
         }
     }
-    
     sourceSets {
         main {
             java {
                 srcDir 'src/main/java' // 指定源码目录
             }
-           
          }
     }
-    
     repositories {  
         mavenLocal()
         maven { url "https://maven.aliyun.com/repository/central/"}
