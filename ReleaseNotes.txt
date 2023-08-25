@@ -9,21 +9,21 @@
     *(MAXKEY-230808) 调整获取accessToken次序
     *(MAXKEY-230809) 前端代码适配springboot3微调
     *(MAXKEY-230810) 日志打印优化
-	*(MAXKEY-230811) 新增身份管理一级菜单包含组织、用户、用户组、用户组成员
-	*(MAXKEY-230812) 角色调整为用户组，后续为应用级权限控制
-	*(MAXKEY-230813) Mybatis JPA Etra优化，类似JPA实体定义，开发更加简洁
+    *(MAXKEY-230811) 新增身份管理一级菜单包含组织、用户、用户组、用户组成员
+    *(MAXKEY-230812) 角色调整为用户组，后续为应用级权限控制
+    *(MAXKEY-230813) Mybatis JPA Etra优化，类似JPA实体定义，开发更加简洁
     *(MAXKEY-230814) 依赖项引用、更新和升级
-        JDK 				17
-        spring				6.0.11
-		springBoot			3.1.2
-		springSecurity		6.1.2
-		springData			3.0.3
-		springkafka			3.0.6
-		springcloud			4.0.4
-		springcloudalibaba	2022.0.0.0
-		httpcomponentscore5	5.2.1
-		tomcat				10.1.11
-		mybatisjpaextra		3.2.1
+        JDK                 17
+        spring              6.0.11
+        springBoot          3.1.2
+        springSecurity      6.1.2
+        springData          3.0.3
+        springkafka         3.0.6
+        springcloud         4.0.4
+        springcloudalibaba  2022.0.0.0
+        httpcomponentscore5 5.2.1
+        tomcat              10.1.11
+        mybatisjpaextra     3.2.1
 
 
 MaxKey v 3.5.19 GA 2023/08/15
