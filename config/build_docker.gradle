@@ -42,8 +42,8 @@ allprojects {
 		transitive = false// 为本依赖关闭依赖传递特性
 	}	
 	//java Version
-	sourceCompatibility = 1.8
-	targetCompatibility	= 1.8
+	sourceCompatibility = 17
+	targetCompatibility	= 17
 	compileJava.options.encoding = 'UTF-8'
 	
 	eclipse {
