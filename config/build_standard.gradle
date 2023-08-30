@@ -28,6 +28,7 @@ ext {
 def libjarsmapper=[
     'maxkey-authentication-captcha'         :'lib',
     'maxkey-authentication-core'            :'lib',
+    'maxkey-authentication-ip2region'       :'lib',
     'maxkey-authentication-otp'             :'lib',
     'maxkey-authentication-provider'        :'lib',
     'maxkey-authentication-sms'             :'lib',
@@ -49,13 +50,14 @@ def libjarsmapper=[
     'maxkey-web-mgt'                        :'maxkey_mgt',
     'maxkey-synchronizer'                   :'maxkey_mgt',
     'maxkey-synchronizer-activedirectory'   :'maxkey_mgt',
+    'maxkey-synchronizer-common'            :'maxkey_mgt',
+    'maxkey-synchronizer-jdbc'              :'maxkey_mgt',
     'maxkey-synchronizer-ldap'              :'maxkey_mgt',
     'maxkey-synchronizer-dingtalk'          :'maxkey_mgt',
-    'maxkey-synchronizer-jdbc'              :'maxkey_mgt',
     'maxkey-synchronizer-workweixin'        :'maxkey_mgt',
-	'maxkey-synchronizer-reorgdept'         :'maxkey_mgt'
-	'maxkey-web-openapi'                    :'maxkey_openapi',
-	'maxkey-web-api-rest'                   :'maxkey_openapi',
+    'maxkey-synchronizer-reorgdept'         :'maxkey_mgt',
+    'maxkey-web-openapi'                    :'maxkey_openapi',
+    'maxkey-web-api-rest'                   :'maxkey_openapi',
     'maxkey-web-api-scim'                   :'maxkey_openapi',
 ]
 
@@ -76,8 +78,8 @@ allprojects {
         transitive = false// 为本依赖关闭依赖传递特性
     }   
     //java Version
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 17
+    targetCompatibility = 17
     compileJava.options.encoding = 'UTF-8'
     
     eclipse {
@@ -89,7 +91,7 @@ allprojects {
                 prefs.append('encoding/<project>=UTF-8') //use UTF-8
             }
         }
-    }   
+    }  
 }
 
 buildscript {
@@ -111,33 +113,19 @@ dependencies {
  
 }
 
-
 subprojects {
-    /*
-    eclipse {
-        第一次时请注释这段eclipse设置，可能报错，设置工程字符集
-        jdt  {
-            File f = file('.settings/org.eclipse.core.resources.prefs')
-            f.write('eclipse.preferences.version=1\n')
-            f.append('encoding/<project>=UTF-8') //use UTF-8
-        }
-    }
-    */
     processResources {
         from ('src/main/resources') {
             include 'src/main/resources/*.*'
         }
     }
-    
     sourceSets {
         main {
             java {
                 srcDir 'src/main/java' // 指定源码目录
             }
-           
          }
     }
-    
     repositories {  
         mavenLocal()
         maven { url "https://maven.aliyun.com/repository/central/"}
@@ -159,16 +147,11 @@ subprojects {
 
     //all dependencies
     dependencies {
-        
-                //for Test and Compile
+         //for Test and Compile
          testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
          compileOnly group: 'junit', name: 'junit', version: "${junitVersion}"
          testImplementation group: 'org.mockito', name: 'mockito-all', version: "${mockitoallVersion}"
          testImplementation group: 'xmlunit', name: 'xmlunit', version: "${xmlunitVersion}"
-         // https://projectlombok.org
-         compileOnly 'org.projectlombok:lombok:1.18.4'
-         annotationProcessor 'org.projectlombok:lombok:1.18.4'
-         
          //apache
          implementation group: 'commons-beanutils', name: 'commons-beanutils', version: "${commonsbeanutilsVersion}"
          implementation group: 'commons-codec', name: 'commons-codec', version: "${commonscodecVersion}"
@@ -177,9 +160,9 @@ subprojects {
          //implementation group: 'org.apache.commons', name: 'commons-csv', version: "${commonscsvVersion}"
          implementation group: 'org.apache.commons', name: 'commons-text', version: "${commonstextVersion}"
          implementation group: 'org.apache.commons', name: 'commons-dbcp2', version: "${commonsdbcp2Version}"
-         implementation group: 'commons-dbutils', name: 'commons-dbutils', version: "${commonsdbutilsVersion}"
-         implementation group: 'org.apache.commons', name: 'commons-digester3', version: "${commonsdigester3Version}"
-         implementation group: 'commons-digester', name: 'commons-digester', version: "${commonsdigesterVersion}"
+         //implementation group: 'commons-dbutils', name: 'commons-dbutils', version: "${commonsdbutilsVersion}"
+         //implementation group: 'org.apache.commons', name: 'commons-digester3', version: "${commonsdigester3Version}"
+         //implementation group: 'commons-digester', name: 'commons-digester', version: "${commonsdigesterVersion}"
          implementation group: 'commons-io', name: 'commons-io', version: "${commonsioVersion}"
          implementation group: 'commons-lang', name: 'commons-lang', version: "${commonslangVersion}"
          implementation group: 'org.apache.commons', name: 'commons-lang3', version: "${commonslang3Version}"
@@ -187,15 +170,20 @@ subprojects {
          implementation group: 'org.apache.commons', name: 'commons-pool2', version: "${commonspool2Version}"
          implementation group: 'commons-httpclient', name: 'commons-httpclient', version: "${commonshttpclientVersion}"
          implementation group: 'commons-fileupload', name: 'commons-fileupload', version: "${commonsfileuploadVersion}"
-         implementation group: 'org.apache.commons', name: 'commons-email', version: "${commonsemailVersion}"
          implementation group: 'commons-validator', name: 'commons-validator', version: "${commonsvalidatorVersion}"
+         //httpcomponents v4
          implementation group: 'org.apache.httpcomponents', name: 'httpasyncclient', version: "${httpasyncclientVersion}"
-         implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: "${httpcomponentsVersion}"
          implementation group: 'org.apache.httpcomponents', name: 'fluent-hc', version: "${httpcomponentsVersion}"
          implementation group: 'org.apache.httpcomponents', name: 'httpclient-cache', version: "${httpcomponentsVersion}"
          implementation group: 'org.apache.httpcomponents', name: 'httpmime', version: "${httpcomponentsVersion}"
+         implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: "${httpcomponentsVersion}"
          implementation group: 'org.apache.httpcomponents', name: 'httpcore', version: "${httpcoreVersion}"
          implementation group: 'org.apache.httpcomponents', name: 'httpcore-nio', version: "${httpcoreVersion}"
+         //httpcomponents v5
+         implementation group: 'org.apache.httpcomponents.core5', name: 'httpcore5', version: "${httpcomponentscore5Version}"
+         implementation group: 'org.apache.httpcomponents.core5', name: 'httpcore5-h2', version: "${httpcomponentscore5Version}"
+         implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: "${httpcomponentscore5Version}"
+         implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5-fluent', version: "${httpcomponentscore5Version}"
          implementation group: 'org.apache.velocity', name: 'velocity', version: "${velocityVersion}"
          implementation group: 'velocity', name: 'velocity-dep', version: "${velocitydepVersion}"
          implementation group: 'org.freemarker', name: 'freemarker', version: "${freemarkerVersion}"
@@ -211,16 +199,17 @@ subprojects {
          implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: "${tomcatVersion}"
          implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-el', version: "${tomcatVersion}"
          implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: "${tomcatVersion}"
-         //apache logs
+         //apache log4j
          implementation group: 'org.apache.logging.log4j', name: 'log4j-1.2-api', version: "${log4jVersion}"
          implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: "${log4jVersion}"
          implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: "${log4jVersion}"
          implementation group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: "${log4jVersion}"
          implementation group: 'org.apache.logging.log4j', name: 'log4j-jul', version: "${log4jVersion}"
-         implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: "${log4jVersion}"
+         implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j2-impl', version: "${log4jVersion}"
          implementation group: 'org.apache.logging.log4j', name: 'log4j-web', version: "${log4jVersion}"
-         //logs
+         //slf4j
          implementation group: 'org.slf4j', name: 'slf4j-api', version: "${slf4jVersion}"
+         //jboss-logging
          implementation group: 'org.jboss.logging', name: 'jboss-logging', version: "${jbossloggingVersion}"
          //spring
          implementation group: 'org.springframework', name: 'spring-aop', version: "${springVersion}"
@@ -246,7 +235,6 @@ subprojects {
          // https://mvnrepository.com/artifact/org.springframework.retry/spring-retry
          implementation group: 'org.springframework.retry', name: 'spring-retry', version: "${springretryVersion}"
          testImplementation group: 'org.springframework', name: 'spring-test', version: "${springVersion}"
-         
          //spring-security
          implementation group: 'org.springframework.security', name: 'spring-security-core', version: "${springSecurityVersion}"
          implementation group: 'org.springframework.security', name: 'spring-security-web', version: "${springSecurityVersion}"
@@ -266,10 +254,9 @@ subprojects {
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version:  "${springBootVersion}"
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: "${springBootVersion}"
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: "${springBootVersion}"
-         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: "${springBootVersion}"
-         implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive', version: "${springBootVersion}"
+         //implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: "${springBootVersion}"
+         //implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis-reactive', version: "${springBootVersion}"
          implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: "${springBootVersion}"
-         
          testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:  "${springBootVersion}"
          //spring-boot-admin
          implementation group: 'de.codecentric', name: 'spring-boot-admin-client', version: "${springbootadminVersion}"
@@ -278,7 +265,6 @@ subprojects {
          implementation group: 'org.springframework.data', name: 'spring-data-commons', version: "${springDataVersion}"
          implementation group: 'org.springframework.data', name: 'spring-data-keyvalue', version: "${springDataVersion}"
          //implementation group: 'org.springframework.data', name: 'spring-data-redis', version: "${springDataVersion}"
-         
          //implementation group: 'org.springframework.plugin', name: 'spring-plugin-core', version: "${springplugincoreVersion}"
          //implementation group: 'org.springframework.plugin', name: 'spring-plugin-metadata', version: "${springpluginmetadataVersion}"
          //spring cloud
@@ -291,11 +277,24 @@ subprojects {
          implementation group: 'com.alibaba.cloud', name: 'spring-cloud-alibaba-commons', version: "${springcloudalibabaVersion}"
          //alibaba nacos
          implementation group: 'com.alibaba.nacos', name: 'nacos-client', version: "${alibabanacosclientVersion}"
+         implementation group: 'com.alibaba.nacos', name: 'nacos-auth-plugin', version: "${alibabanacosclientVersion}"
+         implementation group: 'com.alibaba.nacos', name: 'nacos-encryption-plugin', version: "${alibabanacosclientVersion}"
          implementation group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-discovery', version: "${springcloudalibabaVersion}"
          implementation group: 'com.alibaba.cloud', name: 'spring-cloud-starter-alibaba-nacos-config', version: "${springcloudalibabaVersion}"
-         
-         //Message Queue Removed
-         
+         //Message Queue
+         //kafka support
+         // https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
+         implementation group: 'org.apache.kafka', name: 'kafka-clients', version: "${kafkaclientsVersion}"
+         // https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
+         implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: "${springkafkaVersion}"
+         //rocketmq
+         implementation group: 'org.apache.rocketmq', name: 'rocketmq-common', version: "${rocketmqclientVersion}"
+         implementation group: 'org.apache.rocketmq', name: 'rocketmq-remoting', version: "${rocketmqclientVersion}"
+         implementation group: 'io.github.aliyunmq', name: 'rocketmq-slf4j-api', version: '1.0.1'
+         implementation group: 'org.apache.rocketmq', name: 'rocketmq-client', version: "${rocketmqclientVersion}"
+         // https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-spring-boot
+         implementation group: 'org.apache.rocketmq', name: 'rocketmq-spring-boot', version: "${rocketmqspringbootVersion}"
+         implementation group: 'org.apache.rocketmq', name: 'rocketmq-spring-boot-starter', version: "${rocketmqspringbootVersion}"
          //saml see maxkey-lib
          //implementation group: 'org.opensaml', name: 'opensaml', version: "${opensamlVersion}"
          //implementation group: 'org.opensaml', name: 'openws', version: "${openwsVersion}"
@@ -303,7 +302,7 @@ subprojects {
          implementation group: 'net.shibboleth.utilities', name: 'java-support', version: "${javasupportVersion}"
          //jose-jwt
          implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: "${nimbusjosejwtVersion}"
-         implementation group: 'net.jcip', name: 'jcip-annotations', version: "${jcipannotationsVersion}"
+         implementation group: 'com.github.stephenc.jcip', name: 'jcip-annotations', version: "${jcipannotationsVersion}"
          implementation group: 'net.minidev', name: 'json-smart', version: "${minidevjsonsmartVersion}"
          implementation group: 'net.minidev', name: 'asm', version: "${minidevasmVersion}"
          //oauth third party JustAuth
@@ -312,97 +311,32 @@ subprojects {
          //common
          implementation group: 'org.javassist', name: 'javassist', version: "${javassistVersion}"
          implementation group: 'org.owasp.esapi', name: 'esapi', version: "${esapiVersion}"
-         implementation group: 'com.sun.mail', name: 'javax.mail', version: "${javaxmailVersion}"
-         // https://mvnrepository.com/artifact/org.eclipse.persistence/javax.persistence
-         // for mybatis-jpa-extra
-         implementation group: 'org.eclipse.persistence', name: 'javax.persistence', version: "${javaxpersistenceVersion}"
-         implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: "${jakartapersistenceapiVersion}"
+         //jakarta
+         implementation group: 'jakarta.activation', name: 'jakarta.activation-api', version: "${jakartaactivationVersion}"
          implementation group: 'jakarta.annotation', name: 'jakarta.annotation-api', version: "${jakartaannotationVersion}"
+         implementation group: 'jakarta.mail', name: 'jakarta.mail-api', version: "${jakartamailapiVersion}"
+         implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: "${jakartapersistenceapiVersion}"
+         implementation group: 'jakarta.transaction', name: 'jakarta.transaction-api', version: "${jakartatransactionapiVersion}"
          implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: "${jakartavalidationapiVersion}"
-         implementation group: 'javax.activation', name: 'activation', version: "${activationVersion}"
-         implementation group: 'javax.annotation', name: 'javax.annotation-api', version: "${javaxannotationapiVersion}"
-         implementation group: 'javax.transaction', name: 'jta', version: "${jtaVersion}"
-         implementation group: 'javax.transaction', name: 'javax.transaction-api', version: "${javaxtransactionapiVersion}"
-         implementation group: 'javax.validation', name: 'validation-api', version: "${validationapiVersion}"
-         implementation group: 'javax.xml', name: 'jsr173', version: "${jsr173Version}"
-         implementation group: 'javax.xml.bind', name: 'jaxb-api', version: "${jaxbapiVersion}"
-         implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: "${jaxbcoreVersion}"
-         implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: "${jaxbimplVersion}"
-         implementation group: 'com.sun.xml.bind', name: 'jaxb-xjc',  version: "${jaxbxjcVersion}"
+         implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: "${jakartaxmlbindapiVersion}"
+         //mail
+         implementation group: 'org.eclipse.angus', name: 'jakarta.mail', version: "${angusjakartamailVersion}"
+         implementation group: 'org.eclipse.angus', name: 'angus-activation', version: "${angusactivationVersion}"
+         //sun.xml.bind
+         implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: "${xmlbindjaxbcoreVersion}"
+         implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: "${xmlbindjaxbimplVersion}"
+         implementation group: 'com.sun.xml.bind', name: 'jaxb-xjc',  version: "${xmlbindjaxbxjcVersion}"
          //crypto
-         implementation group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: "${bouncycastleVersion}"
-         implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: "${bouncycastleVersion}"
-         implementation group: 'org.bouncycastle', name: 'bcprov-ext-jdk15on', version: "${bouncycastleVersion}"
+         implementation group: 'org.bouncycastle', name: 'bcpkix-jdk18on', version: "${bouncycastleVersion}"
+         implementation group: 'org.bouncycastle', name: 'bcprov-ext-jdk18on', version: "${bouncycastleVersion}"
          //google
          implementation group: 'com.google.crypto.tink', name: 'tink', version: "${tinkVersion}"
          //kaptcha
          implementation group: 'com.jhlabs', name: 'filters', version: "${jhlabsfiltersVersion}"
          implementation group: 'com.github.penggle', name: 'kaptcha', version: "${kaptchaVersion}"
-         //json
+         //json-gson
          implementation group: 'com.google.code.gson', name: 'gson', version: "${gsonVersion}"
-         //reactive
-         implementation group: 'org.reactivestreams', name: 'reactive-streams', version: "${reactivestreamsVersion}"
-         implementation group: 'io.projectreactor', name: 'reactor-core', version: "${reactorcoreVersion}"
-         implementation group: 'eu.tekul', name: 'szxcvbn_2.9.2', version: "${szxcvbnVersion}"
-         //quartz
-         implementation group: 'org.quartz-scheduler', name: 'quartz', version: "${quartzVersion}"
-         //database
-         implementation group: 'com.mysql', name: 'mysql-connector-j', version: "${mysqlconnectorjavaVersion}"
-         //implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresqlVersion}"
-         implementation group: 'com.alibaba', name: 'druid', version: "${druidVersion}"
-         implementation group: 'com.alibaba', name: 'druid-spring-boot-starter', version: "${druidspringbootstarterVersion}"
-         implementation group: 'redis.clients', name: 'jedis', version: "${jedisVersion}"
-         //implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.3.5'
-         implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: "${caffeineVersion}"
-         //mybatis
-         implementation group: 'org.mybatis', name: 'mybatis', version: "${mybatisVersion}"
-         implementation group: 'org.mybatis', name: 'mybatis-spring', version: "${mybatisspringVersion}"
-         //hibernate
-         implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: "${hibernateVersion}"
-         implementation group: 'org.hibernate', name: 'hibernate-validator-cdi', version: "${hibernateVersion}"
-         implementation group: 'org.hibernate.validator', name: 'hibernate-validator-annotation-processor', version: "${hibernateVersion}"
-         //usefull
-         implementation group: 'joda-time', name: 'joda-time', version: "${jodatimeVersion}"
-         implementation group: 'org.yaml', name: 'snakeyaml', version: "${snakeyamlVersion}"
-         implementation group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: "${nekohtmlVersion}"
-         implementation group: 'org.jdom', name: 'jdom', version: "${jdomVersion}"
-         implementation group: 'com.google.zxing', name: 'core', version: "${zxingcoreVersion}"
-         implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
-         implementation group: 'ognl', name: 'ognl', version: "${ognlVersion}"
-         implementation group: 'cglib', name: 'cglib', version: "${cglibVersion}"
-         implementation group: 'org.ow2.asm', name: 'asm', version: "${asmVersion}"
-         implementation group: 'aopalliance', name: 'aopalliance', version: "${aopallianceVersion}"
-         implementation group: 'org.aspectj', name: 'aspectjtools', version: "${aspectjtoolsVersion}"
-         implementation group: 'dom4j', name: 'dom4j', version: "${dom4jVersion}"
-         implementation group: 'xalan', name: 'serializer', version: "${serializerVersion}"
-         implementation group: 'xml-resolver', name: 'xml-resolver', version: "${xmlresolverVersion}"
-         implementation group: 'org.apache.santuario', name: 'xmlsec', version: "${xmlsecVersion}"
-         implementation group: 'org.ogce', name: 'xpp3', version: "${xpp3Version}"
-         implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: "${xstreamVersion}"
-         implementation group: 'org.passay', name: 'passay', version: "${passayVersion}"
-         implementation group: 'io.micrometer', name: 'micrometer-core', version: "${micrometercoreVersion}"
-         implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: "${micrometercoreVersion}"
-         implementation group: 'org.latencyutils', name: 'LatencyUtils', version: "${LatencyUtilsVersion}"
-         implementation group: 'org.codehaus.woodstox', name: 'stax2-api', version: "${stax2apiVersion}"
-         implementation group: 'org.reflections', name: 'reflections', version: "${reflectionsVersion}"
-         implementation group: 'io.prometheus', name: 'simpleclient_tracer_common', version: "${prometheusVersion}"
-         implementation group: 'io.prometheus', name: 'simpleclient_tracer_otel', version: "${prometheusVersion}"
-         implementation group: 'io.prometheus', name: 'simpleclient_tracer_otel_agent', version: "${prometheusVersion}"
-         implementation group: 'io.prometheus', name: 'simpleclient', version: "${prometheusVersion}"
-         implementation group: 'io.prometheus', name: 'simpleclient_common', version: "${prometheusVersion}"
-         implementation group: 'com.belerweb', name: 'pinyin4j', version: "${pinyin4jVersion}"
-         implementation group: 'org.jsoup', name: 'jsoup', version: "${jsoupVersion}"
-         implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
-         //阿里云
-         implementation group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: "${aliyunjavasdkcoreVersion}"
-         // https://mvnrepository.com/artifact/io.opentracing/opentracing-util
-         implementation "io.opentracing:opentracing-util:${opentracingVersion}"
-         // https://mvnrepository.com/artifact/io.opentracing/opentracing-api
-         implementation "io.opentracing:opentracing-api:${opentracingVersion}"
-         implementation "io.opentracing:opentracing-noop:${opentracingVersion}"
-         //腾讯云
-         implementation group: 'com.tencentcloudapi', name: 'tencentcloud-sdk-java', version: "${tencentcloudsdkjavaVersion}"
-         //json
+         //json-jackson
          implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonVersion}"
          implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonVersion}"
          implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${jacksonVersion}"
@@ -415,25 +349,94 @@ subprojects {
          implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-jakarta-xmlbind-annotations', version: "${jacksonVersion}"
          implementation group: 'com.fasterxml', name: 'classmate', version: "${classmateVersion}"
          implementation group: 'com.fasterxml.woodstox', name: 'woodstox-core', version: "${woodstoxVersion}"
+         //json-fastjson
          implementation group: 'com.alibaba', name: 'fastjson', version: "${fastjsonVersion}"
-         implementation group: 'org.mapstruct', name: 'mapstruct', version: "${mapstructVersion}"
+         //reactive
+         implementation group: 'org.reactivestreams', name: 'reactive-streams', version: "${reactivestreamsVersion}"
+         implementation group: 'io.projectreactor', name: 'reactor-core', version: "${reactorcoreVersion}"
+         implementation group: 'eu.tekul', name: 'szxcvbn_2.9.2', version: "${szxcvbnVersion}"
+         //database
+         implementation group: 'com.mysql', name: 'mysql-connector-j', version: "${mysqlconnectorjavaVersion}"
+         //implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresqlVersion}"
+         //implementation group: 'com.dameng', name: 'DmJdbcDriver18', version:  "${dm8JdbcDriverVersion}"
+         //implementation group: 'com.highgo', name: 'HgdbJdbc', version: '6.2.3'
+         //implementation group: 'org.liquibase', name: 'liquibase-core', version: '4.3.5'
+         implementation group: 'com.alibaba', name: 'druid', version: "${druidVersion}"
+         implementation group: 'com.alibaba', name: 'druid-spring-boot-starter', version: "${druidspringbootstarterVersion}"
+         implementation group: 'redis.clients', name: 'jedis', version: "${jedisVersion}"
+         implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: "${caffeineVersion}"
+         //mybatis
+         implementation group: 'org.mybatis', name: 'mybatis', version: "${mybatisVersion}"
+         implementation group: 'org.mybatis', name: 'mybatis-spring', version: "${mybatisspringVersion}"
+         //implementation group: 'org.dromara.mybatis-jpa-extra', name: 'mybatis-jpa-extra', version: "${mybatisjpaextraVersion}"
+         //implementation group: 'org.dromara.mybatis-jpa-extra', name: 'mybatis-jpa-extra-spring-boot-starter', version: "${mybatisjpaextraVersion}"
+         //hibernate
+         implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: "${hibernateVersion}"
+         implementation group: 'org.hibernate', name: 'hibernate-validator-cdi', version: "${hibernateVersion}"
+         implementation group: 'org.hibernate.validator', name: 'hibernate-validator-annotation-processor', version: "${hibernateVersion}"
+         //usefull
+         implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
+         implementation group: 'com.belerweb', name: 'pinyin4j', version: "${pinyin4jVersion}"
+         implementation group: 'org.jsoup', name: 'jsoup', version: "${jsoupVersion}"
+         implementation group: 'joda-time', name: 'joda-time', version: "${jodatimeVersion}"
+         implementation group: 'org.yaml', name: 'snakeyaml', version: "${snakeyamlVersion}"
+         implementation group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: "${nekohtmlVersion}"
+         implementation group: 'org.dom4j', name: 'dom4j', version: "${dom4jVersion}"
+         implementation group: 'org.jdom', name: 'jdom2', version: "${jdom2Version}"
+         implementation group: 'com.google.zxing', name: 'core', version: "${zxingcoreVersion}"
+         implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
+         implementation group: 'ognl', name: 'ognl', version: "${ognlVersion}"
+         implementation group: 'cglib', name: 'cglib', version: "${cglibVersion}"
+         implementation group: 'org.ow2.asm', name: 'asm', version: "${asmVersion}"
+         implementation group: 'aopalliance', name: 'aopalliance', version: "${aopallianceVersion}"
+         implementation group: 'org.aspectj', name: 'aspectjtools', version: "${aspectjtoolsVersion}"
+         implementation group: 'xalan', name: 'serializer', version: "${serializerVersion}"
+         implementation group: 'xml-resolver', name: 'xml-resolver', version: "${xmlresolverVersion}"
+         implementation group: 'org.apache.santuario', name: 'xmlsec', version: "${xmlsecVersion}"
+         //implementation group: 'org.ogce', name: 'xpp3', version: "${xpp3Version}"
+         implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: "${xstreamVersion}"
+         implementation group: 'org.passay', name: 'passay', version: "${passayVersion}"
+         implementation group: 'org.quartz-scheduler', name: 'quartz', version: "${quartzVersion}"
+         //ip offline
+         implementation group: 'org.lionsoul', name: 'ip2region', version: "${ip2regionVersion}"
+         implementation group: 'com.maxmind.db', name: 'maxmind-db', version: "${maxminddbVersion}"
+         implementation group: 'com.maxmind.geoip2', name: 'geoip2', version: "${maxmindgeoip2Version}"
+         //micrometer
+         implementation group: 'io.micrometer', name: 'micrometer-commons', version: "${micrometercoreVersion}"
+         implementation group: 'io.micrometer', name: 'micrometer-core', version: "${micrometercoreVersion}"
+         implementation group: 'io.micrometer', name: 'micrometer-observation', version: "${micrometercoreVersion}"
+         implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: "${micrometercoreVersion}"
+         implementation group: 'org.latencyutils', name: 'LatencyUtils', version: "${LatencyUtilsVersion}"
+         implementation group: 'org.codehaus.woodstox', name: 'stax2-api', version: "${stax2apiVersion}"
+         implementation group: 'org.reflections', name: 'reflections', version: "${reflectionsVersion}"
+         //prometheus
+         implementation group: 'io.prometheus', name: 'simpleclient', version: "${prometheusVersion}"
+         implementation group: 'io.prometheus', name: 'simpleclient_tracer_common', version: "${prometheusVersion}"
+         implementation group: 'io.prometheus', name: 'simpleclient_tracer_otel', version: "${prometheusVersion}"
+         implementation group: 'io.prometheus', name: 'simpleclient_tracer_otel_agent', version: "${prometheusVersion}"
+         implementation group: 'io.prometheus', name: 'simpleclient_common', version: "${prometheusVersion}"
+         //阿里云
+         implementation group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: "${aliyunjavasdkcoreVersion}"
+         //腾讯云
+         implementation group: 'com.tencentcloudapi', name: 'tencentcloud-sdk-java', version: "${tencentcloudsdkjavaVersion}"
          //docs
-         implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: "${swaggerV3Version}"
-         implementation group: 'io.swagger.core.v3', name: 'swagger-core', version: "${swaggerV3Version}"
-         implementation group: 'io.swagger.core.v3', name: 'swagger-integration', version: "${swaggerV3Version}"
-         implementation group: 'io.swagger.core.v3', name: 'swagger-models', version: "${swaggerV3Version}"
+         implementation group: 'org.mapstruct', name: 'mapstruct', version: "${mapstructVersion}"
+         implementation group: 'io.swagger.core.v3', name: 'swagger-annotations-jakarta', version: "${swaggerV3Version}"
+         implementation group: 'io.swagger.core.v3', name: 'swagger-core-jakarta', version: "${swaggerV3Version}"
+         implementation group: 'io.swagger.core.v3', name: 'swagger-models-jakarta', version: "${swaggerV3Version}"
          //springdoc
          implementation group: 'io.github.classgraph', name: 'classgraph', version: "${classgraphVersion}"
-         implementation group: 'org.springdoc', name: 'springdoc-openapi-common', version: "${springdocVersion}"
-         implementation group: 'org.springdoc', name: 'springdoc-openapi-webmvc-core', version: "${springdocVersion}"
-         implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: "${springdocVersion}"
+         implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-common', version: "${springdocVersion}"
+         implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-api', version: "${springdocVersion}"
+         implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: "${springdocVersion}"
+         //webjars
          implementation group: 'org.webjars', name: 'webjars-locator-core', version: "${webjarslocatorcoreVersion}"
          implementation group: 'org.webjars', name: 'webjars-locator', version: "${webjarslocatorVersion}"
          implementation group: 'org.webjars', name: 'swagger-ui', version: "${swaggeruiVersion}"
          //knife4j
          implementation group: 'com.github.xiaoymin', name: 'knife4j-core', version: "${knife4jVersion}"
          implementation group: 'com.github.xiaoymin', name: 'knife4j-openapi3-ui', version: "${knife4jVersion}"
-         implementation group: 'com.github.xiaoymin', name: 'knife4j-openapi3-spring-boot-starter', version: "${knife4jVersion}"
+         implementation group: 'com.github.xiaoymin', name: 'knife4j-openapi3-jakarta-spring-boot-starter', version: "${knife4jVersion}"
          //local jars
          implementation fileTree(dir: "${rootDir}/maxkey-lib/", include: '*.jar')
     }
@@ -479,7 +482,6 @@ project('maxkey-common')  {
         def paths = ["$rootDir/build/MaxKey-v${project.version}GA",
                      "$rootDir/build/MaxKey-v${project.version}GA/maxkey",
                      "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt",
-                     "$rootDir/build/MaxKey-v${project.version}GA/maxkey_openapi",
                      "$rootDir/build/MaxKey-v${project.version}GA/lib"];
         //遍历数组，调用createDir闭包，创建目录
         paths.forEach(){path->
@@ -524,4 +526,9 @@ tasks.register("copyWindowsShellScript",Copy) {
     into "$rootDir/build/MaxKey-v${project.version}GA/";
 }
 
-build.configure { finalizedBy buildRelease }
+build.configure { 
+	finalizedBy buildRelease 
+	
+	println ""
+	println "Gradle version is ${GradleVersion.current().version}"
+}
