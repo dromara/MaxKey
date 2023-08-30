@@ -26,3 +26,4 @@ COPY  dist /usr/share/nginx/html/maxkey-mgt
 
 #CMD ["nginx", "-g", "daemon off;"]
 
+EXPOSE 8526
