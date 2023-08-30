@@ -25,7 +25,7 @@ apply plugin: 'java'
 
 bootJar {
 	dependsOn jar
-	baseName = 'maxkey-openapi-boot'
+	archiveBaseName = 'maxkey-openapi-boot'
     version = "${project.version}-ga"
     mainClass = 'org.maxkey.MaxKeyOpenApiApplication'
 	manifest {

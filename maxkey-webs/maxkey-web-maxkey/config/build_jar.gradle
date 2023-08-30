@@ -20,7 +20,7 @@ description = "maxkey-web-maxkey"
 
 bootJar {
 	dependsOn jar
-	baseName = 'maxkey-boot'
+	archiveBaseName = 'maxkey-boot'
     version = "${project.version}-ga"
     mainClass = 'org.maxkey.MaxKeyApplication'
 	manifest {

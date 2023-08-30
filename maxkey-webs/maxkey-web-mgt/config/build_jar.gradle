@@ -25,7 +25,7 @@ apply plugin: 'java'
 
 bootJar {
 	dependsOn jar
-	baseName = 'maxkey-mgt-boot'
+	archiveBaseName = 'maxkey-mgt-boot'
     version = "${project.version}-ga"
     mainClass = 'org.maxkey.MaxKeyMgtApplication'
 	manifest {
