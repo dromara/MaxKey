@@ -1,4 +1,4 @@
-﻿MaxKey v 4.0.0 RC1 2023/09/--
+﻿MaxKey v 4.0.0 GA 2023/09/01
     *(MAXKEY-230801) JDK 17 支持
     *(MAXKEY-230802) SpringBoot 3.0+ 支持
     *(MAXKEY-230803) Spring 6.0+ 支持
@@ -12,7 +12,9 @@
     *(MAXKEY-230811) 新增身份管理一级菜单包含组织、用户、用户组、用户组成员
     *(MAXKEY-230812) 角色调整为用户组，后续为应用级权限控制
     *(MAXKEY-230813) Mybatis JPA Etra优化，类似JPA实体定义，开发更加简洁
-    *(MAXKEY-230814) 依赖项引用、更新和升级
+    *(MAXKEY-230814) 增加前端打包镜像的dockerfile暴露8527、8526端口 @iwc_2011911
+    *(MAXKEY-230815) jar 打包baseName -> archiveBaseName
+    *(MAXKEY-230816) 依赖项引用、更新和升级
         JDK                 17
         spring              6.0.11
         springBoot          3.1.2
@@ -24,6 +26,7 @@
         httpcomponentscore5 5.2.1
         tomcat              10.1.11
         mybatisjpaextra     3.2.1
+        jibGradlePlugin     3.3.2
 
 
 MaxKey v 3.5.19 GA 2023/08/15
