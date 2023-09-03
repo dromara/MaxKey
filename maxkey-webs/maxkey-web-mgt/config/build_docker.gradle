@@ -40,7 +40,7 @@ jib {
 		
 	}
 	container {
-		mainClass 	= "org.maxkey.MaxKeyMgtApplication"
+		mainClass 	= "org.dromara.maxkey.MaxKeyMgtApplication"
 		jvmFlags 	= ['-Dfile.encoding=utf-8', '-Dserver.port=9526','-Duser.timezone=Asia/Shanghai']
 		ports	 	= ['9526']
 	}

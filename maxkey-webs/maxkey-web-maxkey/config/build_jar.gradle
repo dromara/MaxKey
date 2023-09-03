@@ -22,7 +22,7 @@ bootJar {
 	dependsOn jar
 	archiveBaseName = 'maxkey-boot'
     version = "${project.version}-ga"
-    mainClass = 'org.maxkey.MaxKeyApplication'
+    mainClass = 'org.dromara.maxkey.MaxKeyApplication'
 	manifest {
 	        attributes(
 						"Implementation-Title": project.name,
