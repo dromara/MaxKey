@@ -11,7 +11,7 @@ JAVA_CONF=./maxkey_mgt
 JAVA_LIBPATH=./lib
 JAVA_LIBMAXKEYPATH=./maxkey_mgt
 JAVA_CLASSPATH=./classes:./bin:$JAVA_CONF:
-JAVA_MAINCLASS=org.maxkey.MaxKeyMgtApplication
+JAVA_MAINCLASS=org.dromara.maxkey.MaxKeyMgtApplication
 JAVA_EXEC=$JAVA_HOME/bin/java
 
 export JAVA_CLASSPATH

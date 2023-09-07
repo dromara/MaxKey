@@ -13,7 +13,7 @@ SET JAVA_CONF=./maxkey
 SET JAVA_LIBPATH=./lib
 SET JAVA_LIBMAXKEYPATH=./maxkey
 SET JAVA_CLASSPATH=./classes;./bin;%JAVA_CONF%
-SET JAVA_MAINCLASS=org.maxkey.MaxKeyApplication
+SET JAVA_MAINCLASS=org.dromara.maxkey.MaxKeyApplication
 SET JAVA_EXEC=%JAVA_HOME%/bin/java
 
 rem mk logs dir
