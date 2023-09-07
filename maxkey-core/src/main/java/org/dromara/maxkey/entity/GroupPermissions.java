@@ -19,8 +19,6 @@ package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
 
-import org.dromara.mybatis.jpa.entity.JpaEntity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,7 +28,7 @@ import jakarta.persistence.Table;
 import org.dromara.maxkey.entity.apps.Apps;
 
 @Entity
-@Table(name = "MXK_ROLE_PERMISSIONS")  
+@Table(name = "mxk_group_permissions")  
 public class GroupPermissions extends Apps implements Serializable{
 
 	/**
