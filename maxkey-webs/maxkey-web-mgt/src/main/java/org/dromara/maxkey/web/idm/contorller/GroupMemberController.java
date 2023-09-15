@@ -123,16 +123,18 @@ public class GroupMemberController {
 				groupMember.setType("USER");
 			}
 			for (int i = 0; i < arrMemberIds.length; i++) {
-				GroupMember newGroupMember = 
-						new GroupMember(
-								groupId,
-							groupMember.getGroupName(), 
-							arrMemberIds[i], 
-							arrMemberNames[i],
-							groupMember.getType(),
-							currentUser.getInstId());
-				newGroupMember.setId(WebContext.genId());
-				result = service.insert(newGroupMember);
+				if(StringUtils.isNotBlank(arrMemberIds[i])) {
+					GroupMember newGroupMember = 
+							new GroupMember(
+									groupId,
+								groupMember.getGroupName(), 
+								arrMemberIds[i], 
+								arrMemberNames[i],
+								groupMember.getType(),
+								currentUser.getInstId());
+					newGroupMember.setId(WebContext.genId());
+					result = service.insert(newGroupMember);
+				}
 			}
 			if(result) {
 				return new Message<GroupMember>(Message.SUCCESS).buildResponse();
@@ -164,16 +166,18 @@ public class GroupMemberController {
 			String[] arrGroupNames = groupNames.split(",");
 			
 			for (int i = 0; i < arrGroupIds.length; i++) {
-				GroupMember newGroupMember = 
-						new GroupMember(
-								arrGroupIds[i],
-								arrGroupNames[i], 
-								userInfo.getId(), 
-								userInfo.getDisplayName(),
-								"USER",
-								currentUser.getInstId());
-				newGroupMember.setId(WebContext.genId());
-				result = service.insert(newGroupMember);
+				if(StringUtils.isNotBlank(arrGroupIds[i])) {
+					GroupMember newGroupMember = 
+							new GroupMember(
+									arrGroupIds[i],
+									arrGroupNames[i], 
+									userInfo.getId(), 
+									userInfo.getDisplayName(),
+									"USER",
+									currentUser.getInstId());
+					newGroupMember.setId(WebContext.genId());
+					result = service.insert(newGroupMember);
+				}
 			}
 			if(result) {
 				return new Message<GroupMember>(Message.SUCCESS).buildResponse();

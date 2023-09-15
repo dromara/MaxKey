@@ -162,13 +162,13 @@ export class MemberGroupsEditerComponent implements OnInit {
     let selectedData = listOfEnabledData.filter(({ id, name }) => {
       return this.query.tableCheckedId.has(id);
     });
-    let roleIds = '';
-    let roleNames = '';
+    let groupIds = '';
+    let groupNames = '';
     for (let i = 0; i < selectedData.length; i++) {
-      roleIds = `${roleIds},${selectedData[i].id}`;
-      roleNames = `${roleNames},${selectedData[i].name}`;
+      groupIds = `${groupIds},${selectedData[i].id}`;
+      groupNames = `${groupNames},${selectedData[i].name}`;
     }
-    this.groupMembersService.addMember2Roles({ username: this.username, roleId: roleIds, roleName: roleNames }).subscribe(res => {
+    this.groupMembersService.addMember2Groups({ username: this.username, groupId: groupIds, groupName: groupNames }).subscribe(res => {
       this.query.results = res.data;
       this.query.submitLoading = false;
       this.query.tableLoading = false;

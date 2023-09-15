@@ -80,7 +80,7 @@ public class GroupMemberService  extends JpaService<GroupMember>{
 		if(entity.getPageNumber() == 1 && totalPage < entity.getPageSize()) {
 			totalCount = totalPage;
 		}else {
-			totalCount = parseCount(getMapper().fetchPageResults(entity));
+			totalCount = parseCount(getMapper().fetchCount(entity));
 		}
 		
 		return new JpaPageResults<Groups>(entity.getPageNumber(),entity.getPageSize(),totalPage,totalCount,resultslist);

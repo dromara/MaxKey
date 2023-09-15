@@ -26,7 +26,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "MXK_ROLE_MEMBER")  
+@Table(name = "mxk_group_member")  
 public class GroupMember extends UserInfo implements Serializable{
 
 	/**

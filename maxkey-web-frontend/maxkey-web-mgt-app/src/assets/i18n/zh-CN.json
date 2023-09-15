@@ -503,6 +503,28 @@
 			"suspendTime": "挂起时间",
 			"isdefault": "是否默认角色"
 		},
+		"groups": {
+			"name": "用户组名称",
+			"type": {
+				"":"成员类型",
+				"user":"用户",
+				"user-dynamic":"用户-动态",
+				"post":"岗位"
+			},
+			"member": "成员",
+			"permissions": "访问权限",
+			"category": {
+				"":"类型",
+				"dynamic":"动态",
+				"static":"静态",
+				"app":"应用"
+			},
+			"filters": "属性过滤器",
+			"orgIdsList": "部门列表",
+			"resumeTime": "加入时间",
+			"suspendTime": "挂起时间",
+			"isdefault": "是否默认角色"
+		},
 		"resources": {
 			"id": "资源编码",
 			"name": "资源名称",

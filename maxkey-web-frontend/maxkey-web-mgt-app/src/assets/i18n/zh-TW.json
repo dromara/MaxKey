@@ -504,6 +504,28 @@
 			"suspendTime": "掛起時間",
 			"isdefault": "是否默認角色"
 		},
+		"groups": {
+			"name": "用戶组名稱",
+			"type": {
+				"":"成員類型",
+				"user":"用戶",
+				"user-dynamic":"用戶-動態",
+				"post":"崗位"
+			},
+			"member": "成員",
+			"permissions": "存取控制",
+			"category": {
+				"":"類型",
+				"dynamic":"動態",
+				"static":"靜態",
+				"app":"應用"
+			},
+			"filters": "屬性過濾器",
+			"orgIdsList": "部門列表",
+			"resumeTime": "加入時間",
+			"suspendTime": "掛起時間",
+			"isdefault": "是否默認角色"
+		},
 		"resources": {
 			"id": "資源編碼",
 			"name": "資源名稱",

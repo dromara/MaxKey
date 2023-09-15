@@ -40,7 +40,7 @@ export class GroupMembersService extends BaseService<GroupMembers> {
     });
   }
 
-  addMember2Roles(body: any): Observable<Message<PageResults>> {
+  addMember2Groups(body: any): Observable<Message<PageResults>> {
     return this.http.post<Message<PageResults>>(`${`${this.server.urls.base}/addMember2Groups`}`, body);
   }
 }

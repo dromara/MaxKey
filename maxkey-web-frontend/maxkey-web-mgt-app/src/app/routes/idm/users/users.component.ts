@@ -221,8 +221,8 @@ export class UsersComponent implements OnInit {
 
   onNavToUrl(e: MouseEvent, userId: String, username: String, navType: String) {
     e.preventDefault();
-    if (navType === 'roles') {
-      this.router.navigateByUrl(`/access/rolemembers?username=${username}&userId=${userId}`);
+    if (navType === 'groups') {
+      this.router.navigateByUrl(`/idm/groupmembers?username=${username}&userId=${userId}`);
     }
   }
 

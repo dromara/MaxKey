@@ -505,6 +505,28 @@
 			"suspendTime": "Suspend Time",
 			"isdefault": "Is Default"
 		},
+		"groups": {
+			"name": "Group Name",
+			"type": {
+				"":"Member Type",
+				"user":"User",
+				"user-dynamic":"User-Dynamic",
+				"post":"Post"
+			},
+			"member": "Member",
+			"permissions": "Permissions",
+			"category": {
+				"":"Category",
+				"dynamic":"Dynamic",
+				"static":"Static",
+				"app":"App"
+			},
+			"filters": "Attributes Filter",
+			"orgIdsList": "Dept List",
+			"resumeTime": "Join Time",
+			"suspendTime": "Suspend Time",
+			"isdefault": "Is Default"
+		},
 		"resources": {
 			"id": "ID",
 			"name": "Resource",
