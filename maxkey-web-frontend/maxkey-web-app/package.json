@@ -21,6 +21,7 @@
     "scaffold"
   ],
   "scripts": {
+    "npm:pre": "npm install --ignore-scripts --registry https://registry.npmmirror.com || npm install --ignore-scripts --registry https://registry.npmjs.org",
     "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
     "ng": "ng",
     "start": "ng s -o  --serve-path=/maxkey/ --port=8527",
