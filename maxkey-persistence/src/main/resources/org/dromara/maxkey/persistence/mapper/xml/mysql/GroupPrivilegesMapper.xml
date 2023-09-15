@@ -40,7 +40,7 @@
     </update>
     
     <insert id="insertGroupPrivileges"  parameterType="java.util.List">
-	    insert into mxk_role_privileges ( id,appid,groupid,resourceid,status,instid) 
+	    insert into mxk_group_privileges ( id,appid,groupid,resourceid,status,instid) 
 	    values 
 	    <foreach collection="list" item="item" index="index" separator=",">
 	        (#{item.id},#{item.appId},#{item.groupId},#{item.resourceId},#{item.status},#{item.instId})

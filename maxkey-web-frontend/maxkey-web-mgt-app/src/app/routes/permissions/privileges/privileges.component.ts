@@ -134,9 +134,9 @@ export class PrivilegesComponent implements OnInit {
 
   onSave(e: MouseEvent): void {
     e.preventDefault();
-    let _roleId: String = '';
+    let _groupId: String = '';
     this.query.tableCheckedId.forEach(value => {
-      _roleId = value;
+      _groupId = value;
     });
 
     let _resourceId = '';
@@ -152,10 +152,10 @@ export class PrivilegesComponent implements OnInit {
       _resourceId = `${node.key},${_resourceId}`;
     });
 
-    if (this.query.params.appId == '' || _roleId == '' || _resourceId == '') {
+    if (this.query.params.appId == '' || _groupId == '' || _resourceId == '') {
       return;
     }
-    this.groupPrivilegesService.update({ appId: this.query.params.appId, roleId: _roleId, resourceId: _resourceId }).subscribe(res => {
+    this.groupPrivilegesService.update({ appId: this.query.params.appId, groupId: _groupId, resourceId: _resourceId }).subscribe(res => {
       this.query.submitLoading = false;
       this.query.tableLoading = false;
       if (res.code == 0) {
@@ -236,7 +236,7 @@ export class PrivilegesComponent implements OnInit {
     this.onTableAllChecked(false);
     this.updateTableCheckedSet(id, checked);
     this.refreshTableCheckedStatus();
-    this.groupPrivilegesService.getByParams({ appId: this.query.params.appId, roleId: id }).subscribe(res => {
+    this.groupPrivilegesService.getByParams({ appId: this.query.params.appId, groupId: id }).subscribe(res => {
       this.treeNodes.checkedKeys = [];
       for (let i = 0; i < res.data.length; i++) {
         this.treeNodes.checkedKeys.push(res.data[i].resourceId);
