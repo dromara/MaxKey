@@ -17,8 +17,8 @@
 
 package org.dromara.maxkey;
 
-import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.web.InitializeContext;
+import org.dromara.maxkey.web.WebContext;
 import org.joda.time.DateTime;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -74,12 +74,12 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 			logger.error("Exception ",e);
 		}
 		logger.info("MaxKeyMgt at {}" , new DateTime());
-		logger.info("MaxKeyMgt Server Port {}"
-				,applicationContext.getBean(ApplicationConfig.class).getPort());
+		logger.info("MaxKeyMgt Server Port {}" , WebContext.properties.getProperty("server.port"));
 		logger.info("MaxKeyMgt started.");
 		
 	}
 
+	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(MaxKeyMgtApplication.class);
 	}
