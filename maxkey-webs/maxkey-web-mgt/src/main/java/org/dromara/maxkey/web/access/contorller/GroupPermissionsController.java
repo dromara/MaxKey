@@ -16,6 +16,7 @@
  
 package org.dromara.maxkey.web.access.contorller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.GroupPermissions;
 import org.dromara.maxkey.entity.Message;
@@ -97,10 +98,12 @@ public class GroupPermissionsController {
 		if (appIds != null) {
 			String[] arrAppIds = appIds.split(",");
 			for (int i = 0; i < arrAppIds.length; i++) {
-				GroupPermissions newgroupPermissions = 
-						new GroupPermissions(roleId, arrAppIds[i],currentUser.getInstId());
-				newgroupPermissions.setId(WebContext.genId());
-				result = groupPermissionssService.insert(newgroupPermissions);
+				if(StringUtils.isNotBlank(arrAppIds[i])) {
+					GroupPermissions newgroupPermissions = 
+							new GroupPermissions(roleId, arrAppIds[i],currentUser.getInstId());
+					newgroupPermissions.setId(WebContext.genId());
+					result = groupPermissionssService.insert(newgroupPermissions);
+				}
 			}
 			if(result) {
 				return new Message<GroupPermissions>(Message.SUCCESS).buildResponse();
