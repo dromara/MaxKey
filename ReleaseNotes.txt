@@ -1,4 +1,18 @@
-﻿MaxKey v 4.0.0 GA 2023/09/01
+﻿MaxKey v 4.0.1 GA 2023/09/019
+    *(MAXKEY-230901) !24 fix:shell启动脚本错误 * fix:启动脚本的JAVA_MAINCLASS有误 @tzk007
+    *(MAXKEY-230902) 组权限问题修复
+    *(MAXKEY-230903) !25修复错误的表别名使用
+    *(MAXKEY-230904) GroupMemberMapper.xml 下memberNotIn sql 错误 @OomiyaShinobu
+    *(MAXKEY-230905) 增加 scripts，用于处理安装依赖与镜像问题 @徐晓伟
+    *(MAXKEY-230906) 修改启动getProperty("server.port")
+    *(MAXKEY-230907) 修复用户组bug
+    *(MAXKEY-230908) 应用访问空值问题
+    *(MAXKEY-230909) 用户组-资源绑定关系
+    *(MAXKEY-230910) 删除历史sql文件
+    *(MAXKEY-230911) 依赖项引用、更新和升级
+    
+    
+MaxKey v 4.0.0 GA 2023/09/01
     *(MAXKEY-230801) JDK 17 支持
     *(MAXKEY-230802) SpringBoot 3.0+ 支持
     *(MAXKEY-230803) Spring 6.0+ 支持
