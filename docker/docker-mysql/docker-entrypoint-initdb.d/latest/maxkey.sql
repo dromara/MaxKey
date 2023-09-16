@@ -1240,4 +1240,4 @@ CREATE TABLE `mxk_userinfo_adjunct` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-01  6:46:42
+-- Dump completed on 2023-09-16 11:58:26
