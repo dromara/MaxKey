@@ -134,6 +134,31 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
  
 <a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="http://www.maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright NOTICE</a>
 
+# 中国信通院零信任实验室
+ 
+ <a href="https://mp.weixin.qq.com/s/2T9TCo3EP0o9bD8ArAjUkw" target="_blank">中国信通院零信任实验室</a>
+ 
+# 零信任标准工作组
+ 
+ <a href="https://gitee.com/zero-trust/ZeroTrust" target="_blank">国内最权威的零信任产业组织</a>
+ 
+# Gitee-最有价值开源项目GVP
+
+<a href="http://maxkey.top/zh/about/welcome.html" target="_blank">Gitee-最有价值开源项目GVP</a>
+
+# Dromara社区
+<a href="https://dromara.org/zh/" target="_blank">**Dromara**</a>致力于微服务云原生解决方案的组织。
+
+ - **开放** 技术栈全面开源共建、 保持社区中立、兼容社区 兼容开源生态
+ 
+ - **愿景** 让每一位开源爱好者，体会到开源的快乐
+ 
+ - **口号** 为往圣继绝学，一个人或许能走的更快，但一群人会走的更远
+ 
+# 知识星球
+ 
+ <img src="images/zsxq.png?raw=true"/>
+
 # User Registration
 
 <a href="https://github.com/dromara/MaxKey/issues/40" target="_blank"> Click to register </a> as MaxKey user and contribute to MaxKey!
@@ -251,15 +276,3 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
 | 吕梁市医改监测平台                          |
 | 遂宁市经济大数据平台                        |
 
-# Dromara社区
-<a href="https://dromara.org/zh/" target="_blank">**Dromara**</a>致力于微服务云原生解决方案的组织。
-
- - **开放** 技术栈全面开源共建、 保持社区中立、兼容社区 兼容开源生态
- 
- - **愿景** 让每一位开源爱好者，体会到开源的快乐
- 
- - **口号** 为往圣继绝学，一个人或许能走的更快，但一群人会走的更远
- 
-# 知识星球
- 
-<img src="images/zsxq.png?raw=true"/>
