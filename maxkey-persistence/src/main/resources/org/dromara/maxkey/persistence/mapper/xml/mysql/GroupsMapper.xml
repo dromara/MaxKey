@@ -22,7 +22,7 @@
 		<include refid="where_statement"/>
 	</select>
 	
-	<select id="queryDynamicRoles" parameterType="Groups" resultType="Groups">
+	<select id="queryDynamic" parameterType="Groups" resultType="Groups">
 		select
 			*
 		from
@@ -57,7 +57,7 @@
     </update>
     
     
-    <select id="queryRolesByUserId" parameterType="string"  resultType="Roles">
+    <select id="queryByUserId" parameterType="string"  resultType="Groups">
             select  distinct
                 g.*
             from
