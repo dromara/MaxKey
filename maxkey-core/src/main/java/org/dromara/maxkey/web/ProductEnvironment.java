@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 public class ProductEnvironment {
 	private static final Logger logger = LoggerFactory.getLogger(ProductEnvironment.class);
 
+	ProductEnvironment(){}
+	
     /**
      * List Environment Variables.
      */
