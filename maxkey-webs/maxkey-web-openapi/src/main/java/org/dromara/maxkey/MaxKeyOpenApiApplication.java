@@ -19,6 +19,7 @@ package org.dromara.maxkey;
 
 
 import org.dromara.maxkey.web.InitializeContext;
+import org.dromara.maxkey.web.ProductEnvironment;
 import org.dromara.maxkey.web.WebContext;
 import org.joda.time.DateTime;
 import org.mybatis.spring.annotation.MapperScan;
@@ -59,7 +60,8 @@ public class MaxKeyOpenApiApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 	    logger.info("Start MaxKey OpenApi Application ...");
-
+	    ProductEnvironment.listEnvVars();
+	    
 		ConfigurableApplicationContext  applicationContext = 
 							SpringApplication.run(MaxKeyOpenApiApplication.class, args);
 		InitializeContext initWebContext = new InitializeContext(applicationContext);

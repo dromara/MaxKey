@@ -19,6 +19,7 @@ package org.dromara.maxkey;
 
 import org.apache.ibatis.io.VFS;
 import org.dromara.maxkey.web.InitializeContext;
+import org.dromara.maxkey.web.ProductEnvironment;
 import org.dromara.maxkey.web.WebContext;
 import org.dromara.mybatis.jpa.starter.SpringBootVFS;
 import org.joda.time.DateTime;
@@ -45,6 +46,7 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
      */
     public static void main(String[] args) {
         logger.info("Start MaxKey Application ...");
+        ProductEnvironment.listEnvVars();
         
         VFS.addImplClass(SpringBootVFS.class);
         ConfigurableApplicationContext applicationContext = 

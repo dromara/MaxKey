@@ -17,11 +17,7 @@
 
 package org.dromara.maxkey.web;
 
-import org.apache.commons.lang.SystemUtils;
-import org.apache.commons.lang3.ArchUtils;
-import org.apache.commons.lang3.arch.Processor;
 import org.dromara.maxkey.configuration.ApplicationConfig;
-import org.dromara.maxkey.util.PathUtils;
 import org.dromara.mybatis.jpa.spring.MybatisJpaContext;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -42,10 +38,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Objects;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * InitApplicationContext .
@@ -56,12 +48,6 @@ public class InitializeContext extends HttpServlet {
     private static final Logger _logger = LoggerFactory.getLogger(InitializeContext.class);
     private static final long serialVersionUID = -797399138268601444L;
     ApplicationContext applicationContext;
-    
-
-    @Override
-    public String getServletInfo() {
-        return super.getServletInfo();
-    }
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -69,9 +55,6 @@ public class InitializeContext extends HttpServlet {
         WebContext.applicationContext = applicationContext;
         
         MybatisJpaContext.init(applicationContext);
-        
-        // List Environment Variables
-        listEnvVars();
 
         listProperties();
 
@@ -177,56 +160,6 @@ public class InitializeContext extends HttpServlet {
             
             _logger.trace("-----------------------------------------------------------");
         }
-    }
-
-    /**
-     * listEnvVars.
-     */
-    public void listEnvVars() {
-        _logger.debug("-----------------------------------------------------------");
-        _logger.debug("List Environment Variables ");
-        Map<String, String> map = System.getenv();
-        SortedSet<String> keyValueSet = new TreeSet<String>();
-        for (Iterator<String> itr = map.keySet().iterator(); itr.hasNext();) {
-            String key = itr.next();
-            keyValueSet.add(key);
-        }
-        // out
-        for (Iterator<String> it = keyValueSet.iterator(); it.hasNext();) {
-            String key = (String) it.next();
-            _logger.trace(key + "   =   {}" , map.get(key));
-        }
-        _logger.debug("APP_HOME" + "   =   {}" , PathUtils.getInstance().getAppPath());
-
-        Processor processor = ArchUtils.getProcessor();
-        if (Objects.isNull(processor)){
-        	processor = new Processor(Processor.Arch.UNKNOWN, Processor.Type.UNKNOWN);
-        }
-        _logger.debug("OS      : {}({} {}), version {}",
-                    SystemUtils.OS_NAME,
-                    SystemUtils.OS_ARCH,
-                    processor.getType(),
-                    SystemUtils.OS_VERSION
-                    
-                );
-        _logger.debug("COMPUTER: {}, USERNAME : {}",
-                        map.get("COMPUTERNAME") ,
-                        map.get("USERNAME")
-                );
-        _logger.debug("JAVA    :");
-        _logger.debug("{} java version {}, class {}",
-                        SystemUtils.JAVA_VENDOR,
-                        SystemUtils.JAVA_VERSION,
-                        SystemUtils.JAVA_CLASS_VERSION
-                    );
-        _logger.debug("{} (build {}, {})",
-                        SystemUtils.JAVA_VM_NAME,
-                        SystemUtils.JAVA_VM_VERSION,
-                        SystemUtils.JAVA_VM_INFO
-                    );
-    
-        _logger.debug("-----------------------------------------------------------");
-        
     }
 
     /**

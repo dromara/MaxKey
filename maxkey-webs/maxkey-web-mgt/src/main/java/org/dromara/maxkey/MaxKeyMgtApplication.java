@@ -18,6 +18,7 @@
 package org.dromara.maxkey;
 
 import org.dromara.maxkey.web.InitializeContext;
+import org.dromara.maxkey.web.ProductEnvironment;
 import org.dromara.maxkey.web.WebContext;
 import org.joda.time.DateTime;
 import org.mybatis.spring.annotation.MapperScan;
@@ -63,7 +64,8 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 	    logger.info("Start MaxKeyMgt Application ...");
-
+	    ProductEnvironment.listEnvVars();
+	    
 		ConfigurableApplicationContext  applicationContext = 
 							SpringApplication.run(MaxKeyMgtApplication.class, args);
 		InitializeContext initWebContext = new InitializeContext(applicationContext);
