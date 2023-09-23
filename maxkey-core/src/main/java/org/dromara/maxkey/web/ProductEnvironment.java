@@ -22,7 +22,7 @@ public class ProductEnvironment {
      * List Environment Variables.
      */
     public static void listEnvVars() {
-    	logger.info("-----------------------------------------------------------");
+    	logger.info(WebConstants.DELIMITER);
     	logger.info("List Environment Variables ");
         Map<String, String> map = System.getenv();
         SortedSet<String> keyValueSet = new TreeSet<>();
@@ -64,7 +64,7 @@ public class ProductEnvironment {
                         SystemUtils.JAVA_VM_INFO
                     );
     
-        logger.info("-----------------------------------------------------------");
+        logger.info(WebConstants.DELIMITER);
         
     }
 }

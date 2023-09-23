@@ -82,5 +82,7 @@ public class WebConstants {
     	public static final  String USER_LOCKED 	= "locked";
     	public static final  String USER_INACTIVE 	= "inactive";	
     }
+    
+    public static final String DELIMITER = "-----------------------------------------------------------";
 
 }

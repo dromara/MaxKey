@@ -100,6 +100,14 @@ public final class WebContext {
         
     }
 
+    public static void init(ApplicationContext context) {
+    	applicationContext = context;
+    }
+    
+    public static void initProperties(StandardEnvironment standardEnvironment) {
+    	properties = standardEnvironment;
+    }
+    
     /**
      * clear session Message ,session id is Constants.MESSAGE
      * 

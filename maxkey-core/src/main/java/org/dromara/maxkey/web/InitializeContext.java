@@ -45,14 +45,15 @@ import java.util.Iterator;
  *
  */
 public class InitializeContext extends HttpServlet {
-    private static final Logger _logger = LoggerFactory.getLogger(InitializeContext.class);
+    private static final Logger logger = LoggerFactory.getLogger(InitializeContext.class);
     private static final long serialVersionUID = -797399138268601444L;
+    
     ApplicationContext applicationContext;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         
-        WebContext.applicationContext = applicationContext;
+        WebContext.init(applicationContext);
         
         MybatisJpaContext.init(applicationContext);
 
@@ -80,7 +81,7 @@ public class InitializeContext extends HttpServlet {
             beanFactory.removeBeanDefinition("localeResolver");
             beanFactory.registerBeanDefinition("localeResolver", 
                     beanFactory.getBeanDefinition("cookieLocaleResolver"));
-            _logger.debug("cookieLocaleResolver replaced localeResolver.");
+            logger.debug("cookieLocaleResolver replaced localeResolver.");
         }
         this.applicationContext = applicationContext;
     }
@@ -89,51 +90,37 @@ public class InitializeContext extends HttpServlet {
      * listDataBaseVariables.
      */
     public void listDataBaseVariables() {
-        if (applicationContext.containsBean("dataSource")) {
-            try {
-                _logger.debug("-----------------------------------------------------------");
-                _logger.debug("List DatabaseMetaData Variables ");
-                Connection connection = 
-                        ((javax.sql.DataSource) applicationContext.getBean("dataSource"))
-                        .getConnection();
+        if (!applicationContext.containsBean("dataSource")) {return;}
+        try {
+            logger.debug(WebConstants.DELIMITER);
+            logger.debug("List DatabaseMetaData Variables ");
+            Connection connection = 
+                    ((javax.sql.DataSource) applicationContext.getBean("dataSource"))
+                    .getConnection();
 
-                DatabaseMetaData databaseMetaData = connection.getMetaData();
-                ApplicationConfig.databaseProduct = databaseMetaData.getDatabaseProductName();
-                
-                _logger.debug("DatabaseProductName   :   {}", 
-                         databaseMetaData.getDatabaseProductName());
-                _logger.debug("DatabaseProductVersion:   {}" ,
-                         databaseMetaData.getDatabaseProductVersion());
-                _logger.trace("DatabaseMajorVersion  :   {}" ,
-                         databaseMetaData.getDatabaseMajorVersion());
-                _logger.trace("DatabaseMinorVersion  :   {}" ,
-                         databaseMetaData.getDatabaseMinorVersion());
-                _logger.trace("supportsTransactions  :   {}" ,
-                         databaseMetaData.supportsTransactions());
-                _logger.trace("DefaultTransaction    :   {}" ,
-                         databaseMetaData.getDefaultTransactionIsolation());
-                _logger.trace("MaxConnections        :   {}" ,
-                         databaseMetaData.getMaxConnections());
-                _logger.trace("");
-                _logger.trace("JDBCMajorVersion      :   {}" ,
-                         databaseMetaData.getJDBCMajorVersion());
-                _logger.trace("JDBCMinorVersion      :   {}" ,
-                         databaseMetaData.getJDBCMinorVersion());
-                _logger.trace("DriverName            :   {}" ,
-                         databaseMetaData.getDriverName());
-                _logger.trace("DriverVersion         :   {}" ,
-                         databaseMetaData.getDriverVersion());
-                _logger.debug("");
-                _logger.debug("DBMS  URL             :   {}" ,
-                         databaseMetaData.getURL());
-                _logger.debug("UserName              :   {}" ,
-                         databaseMetaData.getUserName());
-                _logger.debug("-----------------------------------------------------------");
-                
-            } catch (SQLException e) {
-                e.printStackTrace();
-                _logger.error("DatabaseMetaData Variables Error .",e);
-            }
+            DatabaseMetaData databaseMetaData = connection.getMetaData();
+            ApplicationConfig.databaseProduct = databaseMetaData.getDatabaseProductName();
+            
+            logger.debug("DatabaseProductName   :   {}", databaseMetaData.getDatabaseProductName());
+            logger.debug("DatabaseProductVersion:   {}" ,databaseMetaData.getDatabaseProductVersion());
+            logger.trace("DatabaseMajorVersion  :   {}" , databaseMetaData.getDatabaseMajorVersion());
+            logger.trace("DatabaseMinorVersion  :   {}" ,databaseMetaData.getDatabaseMinorVersion());
+            logger.trace("supportsTransactions  :   {}" , databaseMetaData.supportsTransactions());
+            logger.trace("DefaultTransaction    :   {}" ,databaseMetaData.getDefaultTransactionIsolation());
+            logger.trace("MaxConnections        :   {}" ,databaseMetaData.getMaxConnections());
+            logger.trace("");
+            logger.trace("JDBCMajorVersion      :   {}" ,databaseMetaData.getJDBCMajorVersion());
+            logger.trace("JDBCMinorVersion      :   {}" ,databaseMetaData.getJDBCMinorVersion());
+            logger.trace("DriverName            :   {}" ,databaseMetaData.getDriverName());
+            logger.trace("DriverVersion         :   {}" ,databaseMetaData.getDriverVersion());
+            logger.debug("");
+            logger.debug("DBMS  URL             :   {}" ,databaseMetaData.getURL());
+            logger.debug("UserName              :   {}" ,databaseMetaData.getUserName());
+            logger.debug(WebConstants.DELIMITER);
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("DatabaseMetaData Variables Error .",e);
         }
     }
 
@@ -141,42 +128,41 @@ public class InitializeContext extends HttpServlet {
      * propertySourcesPlaceholderConfigurer.
      */
     public void listProperties() {
-        if (applicationContext.containsBean("propertySourcesPlaceholderConfigurer")) {
-            _logger.trace("-----------------------------------------------------------");
-            _logger.trace("List Properties Variables ");
-            PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = 
-                    ((PropertySourcesPlaceholderConfigurer) applicationContext
-                    .getBean("propertySourcesPlaceholderConfigurer"));
-            
-            WebContext.properties =  (StandardEnvironment) propertySourcesPlaceholderConfigurer
-                    .getAppliedPropertySources()
-                    .get(PropertySourcesPlaceholderConfigurer.ENVIRONMENT_PROPERTIES_PROPERTY_SOURCE_NAME)
-                    .getSource();
-            
-            Iterator<PropertySource<?>> it =WebContext.properties.getPropertySources().iterator();
-            while(it.hasNext()) {
-            	 _logger.debug("propertySource {}" , it.next());
-            }
-            
-            _logger.trace("-----------------------------------------------------------");
+        if (!applicationContext.containsBean("propertySourcesPlaceholderConfigurer")) {return ;}
+        logger.trace(WebConstants.DELIMITER);
+        logger.trace("List Properties Variables ");
+        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = 
+                ((PropertySourcesPlaceholderConfigurer) applicationContext
+                .getBean("propertySourcesPlaceholderConfigurer"));
+        
+        WebContext.initProperties((StandardEnvironment) propertySourcesPlaceholderConfigurer
+                .getAppliedPropertySources()
+                .get(PropertySourcesPlaceholderConfigurer.ENVIRONMENT_PROPERTIES_PROPERTY_SOURCE_NAME)
+                .getSource());
+        
+        Iterator<PropertySource<?>> it =WebContext.properties.getPropertySources().iterator();
+        while(it.hasNext()) {
+        	 logger.debug("propertySource {}" , it.next());
         }
+        
+        logger.trace(WebConstants.DELIMITER);
     }
 
     /**
      * showLicense.
      */
     public void showLicense() {
-        _logger.info("-----------------------------------------------------------");
-        _logger.info("+                      MaxKey Community  Edition ");
-        _logger.info("+                      Single   Sign  On ( SSO ) ");
-        _logger.info("+                           Version {}", 
+        logger.info(WebConstants.DELIMITER);
+        logger.info("+                      MaxKey Community  Edition ");
+        logger.info("+                      Single   Sign  On ( SSO ) ");
+        logger.info("+                           Version {}", 
                         WebContext.properties.getProperty("application.formatted-version"));
-        _logger.info("+");
-        _logger.info("+                 {}Copyright 2018 - {} https://www.maxkey.top/",
+        logger.info("+");
+        logger.info("+                 {}Copyright 2018 - {} https://www.maxkey.top/",
         			    (char)0xA9 , new DateTime().getYear()
         			);
-        _logger.info("+                 Licensed under the Apache License, Version 2.0 ");
-        _logger.info("-----------------------------------------------------------");
+        logger.info("+                 Licensed under the Apache License, Version 2.0 ");
+        logger.info(WebConstants.DELIMITER);
     }
 
 }
