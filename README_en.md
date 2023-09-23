@@ -142,7 +142,7 @@ Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/ab
  
  <a href="https://gitee.com/zero-trust/ZeroTrust" target="_blank">国内最权威的零信任产业组织</a>
  
-# Gitee-最有价值开源项目GVP
+# Gitee最有价值开源项目GVP
 
 <a href="http://maxkey.top/zh/about/welcome.html" target="_blank">Gitee-最有价值开源项目GVP</a>
 
