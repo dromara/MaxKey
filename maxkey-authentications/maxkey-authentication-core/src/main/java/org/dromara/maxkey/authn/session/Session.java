@@ -27,8 +27,6 @@ import org.springframework.security.core.Authentication;
 
 public class Session implements Serializable{
 	private static final long   serialVersionUID = 9008067569150338296L;
-	
-	public static final  String SESSION_PREFIX = "OT";
     
     public static final  int    MAX_EXPIRY_DURATION = 60 * 5; //default 5 minutes.
     
@@ -69,10 +67,6 @@ public class Session implements Serializable{
     public String getId() {
 		return id;
 	}
-
-	public String getFormattedId() {
-        return SESSION_PREFIX + id;
-    }
 
     public void setId(String sessionId) {
         this.id = sessionId;

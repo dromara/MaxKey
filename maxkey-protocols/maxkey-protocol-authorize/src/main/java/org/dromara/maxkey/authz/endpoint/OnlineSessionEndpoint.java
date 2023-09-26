@@ -42,6 +42,6 @@ public class OnlineSessionEndpoint {
     public String ticketValidate(
             @RequestParam(value ="ticket",required = true) String ticket) {
         Session session = sessionManager.get(ticket);
-        return session == null ? "" : session.getFormattedId();
+        return session == null ? "" : session.getId();
     }
 }
