@@ -262,7 +262,7 @@
             <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="credential">{{ 'mxk.apps.credential' | i18n }}</nz-form-label>
             <nz-form-control [nzSm]="20" [nzMd]="20" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid credential!">
               <nz-radio-group [(ngModel)]="form.model.credential" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
-                <label nz-radio-button nzValue="user-defined">{{ 'mxk.apps.credential.user-defined' | i18n }}</label>
+                <label nz-radio-button nzValue="user_defined">{{ 'mxk.apps.credential.user-defined' | i18n }}</label>
                 <label nz-radio-button nzValue="shared">{{ 'mxk.apps.credential.shared' | i18n }}</label>
                 <label nz-radio-button nzValue="system">{{ 'mxk.apps.credential.system' | i18n }}</label>
               </nz-radio-group>
