@@ -25,12 +25,12 @@ import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DynamicRolesListenerAdapter extends ListenerAdapter  implements Job , Serializable {
-	static final  Logger logger = LoggerFactory.getLogger(DynamicRolesListenerAdapter.class);
+public class DynamicGroupsListenerAdapter extends ListenerAdapter  implements Job , Serializable {
+	static final  Logger logger = LoggerFactory.getLogger(DynamicGroupsListenerAdapter.class);
     
     private static final long serialVersionUID = 8831626240807856084L;
 
-    private  GroupsService rolesService = null;
+    private  GroupsService groupsService = null;
 
     @Override
     public void execute(JobExecutionContext context){
@@ -41,8 +41,8 @@ public class DynamicRolesListenerAdapter extends ListenerAdapter  implements Job
         logger.debug("running ... " );
         jobStatus = JOBSTATUS.RUNNING;
         try {
-            if(rolesService != null) {
-            	rolesService.refreshAllDynamicRoles();
+            if(groupsService != null) {
+            	groupsService.refreshAllDynamicGroups();
             	Thread.sleep(10 * 1000);//10 minutes
             }
             logger.debug("finished  " );
@@ -56,8 +56,8 @@ public class DynamicRolesListenerAdapter extends ListenerAdapter  implements Job
     @Override
     void init(JobExecutionContext context){
     	super.init(context);
-    	if(rolesService == null) {
-    		rolesService = getParameter("rolesService",GroupsService.class);
+    	if(groupsService == null) {
+    		groupsService = getParameter("groupsService",GroupsService.class);
         }
     }
 

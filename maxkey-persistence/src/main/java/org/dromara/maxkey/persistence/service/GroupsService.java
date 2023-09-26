@@ -65,7 +65,7 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
 	}
 	
 	
-	public List<Groups> queryDynamicRoles(Groups groups){
+	public List<Groups> queryDynamicGroups(Groups groups){
 	    return this.getMapper().queryDynamic(groups);
 	}
 	
@@ -143,13 +143,13 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
 	    }
     }
 	
-	public void refreshAllDynamicRoles(){
+	public void refreshAllDynamicGroups(){
 		List<Institutions> instList = 
 				institutionsService.find("where status = ? ", new Object[]{ConstsStatus.ACTIVE}, new int[]{Types.INTEGER});
 		for(Institutions inst : instList) {
 			Groups group = new Groups();
 			group.setInstId(inst.getId());
-		    List<Groups>  groupsList = queryDynamicRoles(group);
+		    List<Groups>  groupsList = queryDynamicGroups(group);
 	        for(Groups g : groupsList) {
 	            _logger.debug("role {}" , g);
 	            refreshDynamicRoles(g);
