@@ -79,7 +79,7 @@ public class AssertionEndpoint {
 		logger.debug("AuthnRequestInfo: {}", authnRequestInfo);
 		HashMap <String,String>attributeMap=new HashMap<String,String>();
 		attributeMap.put(WebConstants.ONLINE_TICKET_NAME, 
-		        AuthorizationUtils.getPrincipal().getSession().getFormattedId());
+		        AuthorizationUtils.getPrincipal().getSessionId());
 		
 		//saml20Details
 		Response authResponse = authnResponseGenerator.generateAuthnResponse(

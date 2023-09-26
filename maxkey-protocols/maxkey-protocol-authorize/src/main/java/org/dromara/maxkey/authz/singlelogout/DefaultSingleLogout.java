@@ -34,7 +34,7 @@ public class DefaultSingleLogout extends SingleLogout{
         logoutParameters.put("principal", authentication.getName());
         logoutParameters.put("request",  "logoutRequest");
         logoutParameters.put("issueInstant", DateUtils.getCurrentDateAsString(DateUtils.FORMAT_DATE_ISO_TIMESTAMP));
-        logoutParameters.put("ticket",  ((SignPrincipal)authentication.getPrincipal()).getSession().getFormattedId());
+        logoutParameters.put("ticket",  ((SignPrincipal)authentication.getPrincipal()).getSessionId());
         postMessage(logoutApp.getLogoutUrl(),logoutParameters);
         
     }

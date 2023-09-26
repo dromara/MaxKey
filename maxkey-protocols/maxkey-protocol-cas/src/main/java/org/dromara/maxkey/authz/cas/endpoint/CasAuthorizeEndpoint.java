@@ -155,7 +155,7 @@ public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 		
 		if(casDetails.getLogoutType()==LogoutType.BACK_CHANNEL) {
 			_logger.debug("CAS LogoutType BACK_CHANNEL ... ");
-			String sessionId = AuthorizationUtils.getPrincipal().getSession().getId();
+			String sessionId = AuthorizationUtils.getPrincipal().getSessionId();
 			_logger.trace("get session by id {} . ",sessionId);
 		    Session session  = sessionManager.get(sessionId);
 		    _logger.trace("current session {}  ",session);

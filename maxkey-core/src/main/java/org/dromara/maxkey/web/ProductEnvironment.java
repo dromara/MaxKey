@@ -35,7 +35,7 @@ public class ProductEnvironment {
             String key = it.next();
             logger.trace("{}   =   {}" , key , map.get(key));
         }
-        logger.debug("APP_HOME" + "   =   {}" , PathUtils.getInstance().getAppPath());
+        logger.info("APP_HOME" + "   =   {}" , PathUtils.getInstance().getAppPath());
 
         Processor processor = ArchUtils.getProcessor();
         if (Objects.isNull(processor)){

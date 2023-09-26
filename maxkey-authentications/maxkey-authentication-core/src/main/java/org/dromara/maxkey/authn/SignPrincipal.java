@@ -32,7 +32,7 @@ public class SignPrincipal implements  UserDetails {
     
     UserDetails userDetails;
     
-    Session session;
+    String sessionId;
     ArrayList<GrantedAuthority> grantedAuthority;
     ArrayList<GrantedAuthority> grantedAuthorityApps;
     boolean authenticated;
@@ -71,7 +71,7 @@ public class SignPrincipal implements  UserDetails {
         this.accountNonLocked  = true;
         this.credentialsNonExpired =true;
         this.enabled = true;
-        this.session = session;
+        this.sessionId = session.getId();
         this.userInfo.setSessionId(session.getId());
     }
     
@@ -120,13 +120,6 @@ public class SignPrincipal implements  UserDetails {
         this.grantedAuthority = grantedAuthority;
     }
 
-    public Session getSession() {
-        return session;
-    }
-
-    public void setSession(Session session) {
-        this.session = session;
-    }
 
     public boolean isRoleAdministrators() {
         return roleAdministrators;
@@ -152,7 +145,16 @@ public class SignPrincipal implements  UserDetails {
         return this.credentialsNonExpired;
     }
 
-    @Override
+    
+    public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	@Override
     public boolean isEnabled() {
         return this.enabled;
     }
@@ -192,8 +194,6 @@ public class SignPrincipal implements  UserDetails {
 		builder.append(userInfo);
 		builder.append(", userDetails=");
 		builder.append(userDetails);
-		builder.append(", session=");
-		builder.append(session);
 		builder.append(", grantedAuthority=");
 		builder.append(grantedAuthority);
 		builder.append(", grantedAuthorityApps=");

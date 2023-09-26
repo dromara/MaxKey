@@ -50,7 +50,7 @@ public class OAuth2UserDetailsService implements UserDetailsService {
 		SignPrincipal principal = new SignPrincipal(userInfo);
 		Session onlineTicket = new Session(onlineTickitId);
 		//set OnlineTicket
-		principal.setSession(onlineTicket);
+		principal.setSessionId(onlineTicket.getId());
         
         ArrayList<GrantedAuthority> grantedAuthoritys = loginRepository.grantAuthority(userInfo);
         principal.setAuthenticated(true);

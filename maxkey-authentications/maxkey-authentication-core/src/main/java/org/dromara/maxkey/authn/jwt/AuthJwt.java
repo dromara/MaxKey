@@ -89,7 +89,7 @@ public class AuthJwt implements Serializable {
 		this.expiresIn = expiresIn;
 		this.refreshToken = refreshToken;
 		
-		this.ticket = principal.getSession().getId();
+		this.ticket = principal.getSessionId();
 		this.id = principal.getUserInfo().getId();
 		this.username = principal.getUserInfo().getUsername();
 		this.name = this.username;

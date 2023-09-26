@@ -65,7 +65,7 @@ public class HttpSessionListenerAdapter implements HttpSessionListener {
         			session.getId(), 
         			signPrincipal.getUserInfo().getId(),
         			signPrincipal.getUserInfo().getUsername(),
-        			signPrincipal.getSession().getId());
+        			signPrincipal.getSessionId());
         	}else if(principal instanceof User) {
         		User user = (User)principal;
         		_logger.trace("{} HttpSession Id  {} for username {} password {} Destroyed" ,

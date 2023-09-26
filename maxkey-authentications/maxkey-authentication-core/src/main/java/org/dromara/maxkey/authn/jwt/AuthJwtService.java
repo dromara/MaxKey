@@ -56,7 +56,7 @@ public class AuthJwtService {
 		 JWTClaimsSet jwtClaims =new  JWTClaimsSet.Builder()
 				.issuer(issuer)
 				.subject(subject)
-				.jwtID(principal.getSession().getId())
+				.jwtID(principal.getSessionId())
 				.issueTime(currentDateTime.toDate())
 				.expirationTime(expirationTime)
 				.claim("locale", userInfo.getLocale())

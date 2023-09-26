@@ -123,7 +123,7 @@ public class UserInfoOIDCEndpoint {
 			 String userJson = "";
 			 Builder jwtClaimsSetBuilder= new JWTClaimsSet.Builder();
 			 
-			 SignPrincipal authentication = (SignPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal();
+			 SignPrincipal oauthPrincipal = (SignPrincipal)oAuth2Authentication.getUserAuthentication().getPrincipal();
 			 
 			 String subject = AbstractAuthorizeAdapter.getValueByUserAttr(userInfo, clientDetails.getSubject());
 			 _logger.debug("userId : {} , username : {} , displayName : {} , subject : {}" , 
@@ -134,7 +134,7 @@ public class UserInfoOIDCEndpoint {
 			 
 			 jwtClaimsSetBuilder.claim("sub", subject);
 			 jwtClaimsSetBuilder.claim("institution", userInfo.getInstId());
-			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, authentication.getSession().getFormattedId());
+			 jwtClaimsSetBuilder.claim(WebConstants.ONLINE_TICKET_NAME, oauthPrincipal.getSessionId());
 			 
 		 	if(scopes.contains("profile")){
 		 		jwtClaimsSetBuilder.claim("userId", userInfo.getId());
