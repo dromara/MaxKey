@@ -1,0 +1,93 @@
+# 配置文件加密根密码
+jasypt:
+  encryptor:
+    password: pig
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    
+# Spring 相关
+spring:
+  cache:
+    type: redis
+  redis:
+    host: pig-redis
+  cloud:
+    sentinel:
+      eager: true
+      transport:
+        dashboard: pig-sentinel:5003
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+
+# feign 配置
+feign:
+  sentinel:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+
+# mybaits-plus配置
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  global-config:
+    banner: false
+    db-config:
+      id-type: auto
+      table-underline: true
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+
+# swagger 配置
+swagger:
+  enabled: true
+  title: Pig Swagger API
+  gateway: http://${GATEWAY_HOST:pig-gateway}:${GATEWAY-PORT:9999}
+  token-url: ${swagger.gateway}/auth/oauth2/token
+  scope: server
+  services:
+    pig-upms-biz: admin
+    pig-codegen: gen
+#cas配置
+cas:
+  #秘钥
+  key: n0c9MTcwMjIwMjMxNzE2NDMwOTAskV
+  server:
+    host:
+      grant_url: http://sso.maxkey.top/sign/authz/cas
+      #cas服务端地址 这是我的cas服务端地址 需要修改成你们的cas服务端地址
+      url: http://sso.maxkey.top/maxkey/authz/cas
+      #cas服务端登录地址
+      login_url: http://sso.maxkey.top/maxkey/#/passport/login?redirect_uri=aHR0cDovL3Nzby5tYXhrZXkudG9wL3NpZ24vYXV0aHovY2FzLzQxMDY1ZmUzLWFlNjctNDE3Mi1hNDYwLWZkMDA3OWU4ODI5NA
+      #cas服务端登出地址 service参数后面跟就是需要跳转的页面/接口 这里指定的是cas客户端登录接口
+      logout_url: ${cas.server.host.url}/logout?service=${cas.service.host.url}${cas.service.host.login_url}
+  service:
+    host:
+      #cas客户端地址
+      url: http://localhost:8080
+      #cas客户端地址登录地址
+      login_url: /login
+      #cas客户端地址登出地址
+      logout_url: /logout    
