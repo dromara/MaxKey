@@ -23,6 +23,8 @@ import org.dromara.maxkey.ip2location.Region;
 import org.dromara.maxkey.util.JsonUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Ip138查询ip地址
@@ -31,11 +33,12 @@ import org.jsoup.nodes.Document;
  *
  */
 public class Ip138 extends AbstractIpLocation implements IpLocation{
+	static final  Logger _logger = LoggerFactory.getLogger(Ip138.class);
 	
 	public static final String REGION_URL = "https://www.ip138.com/iplookup.asp?ip=%s&action=2";
 	
 	public static final String BEGIN 	= "\"ip_c_list\":[";
-	public static final String END 		= "], \"zg\":1};";
+	public static final String END 		= "], \"zg\":0};";
 	
 	@Override
 	public Region region(String ipAddress) {
@@ -50,11 +53,12 @@ public class Ip138 extends AbstractIpLocation implements IpLocation{
 					.header("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
 					.get();
 			String htmlData = doc.toString();
+			_logger.trace("html {}",htmlData);
 			String jsonData = htmlData.substring(htmlData.indexOf(BEGIN) + BEGIN.length() , htmlData.indexOf(END));
 			Ip138Response response = JsonUtils.stringToObject(jsonData, Ip138Response.class);
 			return response == null ? null : new Region(response.getCt(),response.getProv(),response.getCity(),getLocation(response.toString()));
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			_logger.error("Exception ",e);
 		}
 		return null;
 	}
