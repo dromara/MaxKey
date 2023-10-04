@@ -28,6 +28,7 @@ include (
 	//authentications
 	'maxkey-authentications:maxkey-authentication-core',
 	'maxkey-authentications:maxkey-authentication-captcha',
+	'maxkey-authentications:maxkey-authentication-ip2location',
 	'maxkey-authentications:maxkey-authentication-social',
 	'maxkey-authentications:maxkey-authentication-otp',
 	'maxkey-authentications:maxkey-authentication-provider',
