@@ -87,9 +87,11 @@ Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitH
 
 7. The platform independence and diversity of environment. It supports web, mobile phone, mobile devices, such as apple IOS, Android, etc., and covers the certification ability from B/S to mobile applications.
 
-8. Based on Java EE platform , microservice architecture, Use Spring, MySQL, Tomcat, Redis , MQ and other open source technologies, and has strong scalability.
+8. Configured password and access policies; Supports precise IP positioning in Ip2region or GeoLite2 geographic databases, powerful security auditing, full lifecycle audit of users, traceability audit of access behavior records, security compliance audit, and security risk warning.
 
-9. Open Source, Secure,  Independent and Controllable . 
+9. Based on Java EE platform , microservice architecture, Use Spring, MySQL, Tomcat, Redis , MQ and other open source technologies, and has strong scalability.
+
+10. Open Source, Secure,  Independent and Controllable . 
 
 
 # Interface
