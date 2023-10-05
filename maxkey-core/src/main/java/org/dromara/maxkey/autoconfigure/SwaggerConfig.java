@@ -18,7 +18,7 @@ import io.swagger.v3.oas.models.info.License;
 
 @AutoConfiguration
 public class SwaggerConfig {
-	final static Logger _logger = LoggerFactory.getLogger(SwaggerConfig.class);
+	static final  Logger _logger = LoggerFactory.getLogger(SwaggerConfig.class);
 	
     @Value("${maxkey.swagger.title}")
     String title;

@@ -116,16 +116,16 @@ public class IpLocationAutoConfiguration   implements InitializingBean {
 	/**
 	 * IP转换区域地址解析
 	 * @param isIplocation 是否转换
-	 * @param onlineProvider 在线转换实现提供商none/Ip138/Ipchaxun
+	 * @param onlineProvider 在线转换实现提供商none/Ip138
 	 * @param offlineProvider 离线转换实现提供商none/Ip2Region/GeoIp2
 	 * @return IpLocationParser
 	 * @throws Exception
 	 */
 	@Bean 
 	public IpLocationParser ipLocationParser(
-			@Value("${maxkey.login.iplocation:false}") boolean isIplocation,
+			@Value("${maxkey.login.iplocation:true}") boolean isIplocation,
 			@Value("${maxkey.login.iplocation.online.provider:none}") String onlineProvider,
-			@Value("${maxkey.login.iplocation.offline.provider:none}") String offlineProvider) throws Exception {
+			@Value("${maxkey.login.iplocation.offline.provider:Ip2Region}") String offlineProvider) throws Exception {
         return new IpLocationParser(
         		isIplocation,
 				builderOnlineProvider(onlineProvider),

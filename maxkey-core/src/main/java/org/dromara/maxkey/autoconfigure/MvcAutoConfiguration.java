@@ -64,7 +64,7 @@ import jakarta.servlet.Filter;
 
 @AutoConfiguration
 public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer {
-    private static final  Logger _logger = LoggerFactory.getLogger(MvcAutoConfiguration.class);
+    static final  Logger _logger = LoggerFactory.getLogger(MvcAutoConfiguration.class);
     
     /**
      * 消息处理，可以直接使用properties的key值，返回的是对应的value值

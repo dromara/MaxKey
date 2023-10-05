@@ -26,6 +26,8 @@ import org.dromara.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
 import org.dromara.maxkey.entity.HistoryLogin;
 import org.dromara.maxkey.entity.Roles;
 import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.ip2location.IpLocationParser;
+import org.dromara.maxkey.ip2location.Region;
 import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
@@ -45,7 +47,7 @@ import org.springframework.security.core.GrantedAuthority;
  *
  */
 public abstract class AbstractAuthenticationRealm {
-    private static Logger _logger = LoggerFactory.getLogger(AbstractAuthenticationRealm.class);
+    private static final Logger _logger = LoggerFactory.getLogger(AbstractAuthenticationRealm.class);
 
     protected JdbcTemplate jdbcTemplate;
     
@@ -58,6 +60,8 @@ public abstract class AbstractAuthenticationRealm {
     protected UserInfoService userInfoService;
     
     protected LdapAuthenticationRealmService ldapAuthenticationRealmService;
+    
+    protected IpLocationParser ipLocationParser;
    
 
     /**
@@ -147,6 +151,13 @@ public abstract class AbstractAuthenticationRealm {
         historyLogin.setDisplayName(userInfo.getDisplayName());
         historyLogin.setInstId(userInfo.getInstId());
         
+        Region ipRegion =ipLocationParser.region(userInfo.getLastLoginIp());
+        if(ipRegion != null) {
+        	historyLogin.setCountry(ipRegion.getCountry());
+        	historyLogin.setProvince(ipRegion.getProvince());
+        	historyLogin.setCity(ipRegion.getCity());
+        	historyLogin.setLocation(ipRegion.getAddr());
+        }
         loginHistoryRepository.login(historyLogin);
         
         loginRepository.updateLastLogin(userInfo);

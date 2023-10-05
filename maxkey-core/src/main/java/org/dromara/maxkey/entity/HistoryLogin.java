@@ -64,9 +64,13 @@ public class HistoryLogin  extends JpaEntity  implements Serializable{
 	@Column
 	String sourceIp;
 	@Column
-	String ipRegion;
+	String country;
 	@Column
-	String ipLocation;
+	String province;
+	@Column
+	String city;
+	@Column
+	String location;
 	@Column
 	String browser;
 	@Column
@@ -173,20 +177,36 @@ public class HistoryLogin  extends JpaEntity  implements Serializable{
 		this.sourceIp = sourceIp;
 	}
 
-	public String getIpRegion() {
-		return ipRegion;
+	public String getCountry() {
+		return country;
 	}
 
-	public void setIpRegion(String ipRegion) {
-		this.ipRegion = ipRegion;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
-	public String getIpLocation() {
-		return ipLocation;
+	public String getProvince() {
+		return province;
 	}
 
-	public void setIpLocation(String ipLocation) {
-		this.ipLocation = ipLocation;
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public String getBrowser() {
@@ -300,10 +320,14 @@ public class HistoryLogin  extends JpaEntity  implements Serializable{
 		builder.append(provider);
 		builder.append(", sourceIp=");
 		builder.append(sourceIp);
-		builder.append(", ipRegion=");
-		builder.append(ipRegion);
-		builder.append(", ipLocation=");
-		builder.append(ipLocation);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", city=");
+		builder.append(city);
+		builder.append(", location=");
+		builder.append(location);
 		builder.append(", browser=");
 		builder.append(browser);
 		builder.append(", platform=");

@@ -28,7 +28,7 @@ import redis.clients.jedis.JedisPoolConfig;
 
 @AutoConfiguration
 public class RedisAutoConfiguration implements InitializingBean {
-    private static final  Logger _logger = LoggerFactory.getLogger(RedisAutoConfiguration.class);
+    static final  Logger _logger = LoggerFactory.getLogger(RedisAutoConfiguration.class);
     
     /**
      * RedisConnectionFactory. 

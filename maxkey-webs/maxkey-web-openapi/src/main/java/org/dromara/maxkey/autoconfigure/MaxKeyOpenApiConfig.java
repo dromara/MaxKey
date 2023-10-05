@@ -18,6 +18,7 @@
 package org.dromara.maxkey.autoconfigure;
 
 import org.dromara.maxkey.authn.realm.jdbc.JdbcAuthenticationRealm;
+import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;
 import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
@@ -44,6 +45,7 @@ public class MaxKeyOpenApiConfig  implements InitializingBean {
 	    		LoginRepository loginRepository,
 	    		LoginHistoryRepository loginHistoryRepository,
 	    		UserInfoService userInfoService,
+	    		IpLocationParser  ipLocationParser,
              JdbcTemplate jdbcTemplate) {
 		
         JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
@@ -52,6 +54,7 @@ public class MaxKeyOpenApiConfig  implements InitializingBean {
         		loginRepository,
         		loginHistoryRepository,
         		userInfoService,
+        		ipLocationParser,
         		jdbcTemplate);
         
         logger.debug("JdbcAuthenticationRealm inited.");

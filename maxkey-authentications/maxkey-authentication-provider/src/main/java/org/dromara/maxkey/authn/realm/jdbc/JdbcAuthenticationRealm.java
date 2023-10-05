@@ -25,6 +25,7 @@ import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.PasswordPolicy;
 import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
@@ -43,7 +44,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  *
  */
 public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
-    private static Logger _logger = LoggerFactory.getLogger(JdbcAuthenticationRealm.class);
+    private static final Logger  _logger = LoggerFactory.getLogger(JdbcAuthenticationRealm.class);
 
     protected PasswordEncoder passwordEncoder;
     
@@ -61,6 +62,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     		LoginRepository loginRepository,
     		LoginHistoryRepository loginHistoryRepository,
     		UserInfoService userInfoService,
+    		IpLocationParser ipLocationParser,
     	    JdbcTemplate jdbcTemplate) {
     	
     	this.passwordEncoder =passwordEncoder;
@@ -68,6 +70,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     	this.loginRepository = loginRepository;
     	this.loginHistoryRepository = loginHistoryRepository;
     	this.userInfoService = userInfoService;
+    	this.ipLocationParser = ipLocationParser;
         this.jdbcTemplate = jdbcTemplate;
     }
   
@@ -77,6 +80,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     		LoginRepository loginRepository,
     		LoginHistoryRepository loginHistoryRepository,
     		UserInfoService userInfoService,
+    		IpLocationParser ipLocationParser,
     	    JdbcTemplate jdbcTemplate,
     	    LdapAuthenticationRealmService ldapAuthenticationRealmService) {
 		this.passwordEncoder = passwordEncoder;
@@ -84,6 +88,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
 		this.loginRepository = loginRepository;
 		this.loginHistoryRepository = loginHistoryRepository;
 		this.userInfoService = userInfoService;
+		this.ipLocationParser = ipLocationParser;
 		this.jdbcTemplate = jdbcTemplate;
 		this.ldapAuthenticationRealmService = ldapAuthenticationRealmService;
     }

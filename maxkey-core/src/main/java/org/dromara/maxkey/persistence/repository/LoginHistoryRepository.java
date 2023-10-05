@@ -28,7 +28,30 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class LoginHistoryRepository {
     private static Logger logger = LoggerFactory.getLogger(LoginHistoryRepository.class);
     
-    private static final String HISTORY_LOGIN_INSERT_STATEMENT = "insert into mxk_history_login (id , sessionid , userid , username , displayname , logintype , message , code , provider , sourceip , ipregion , iplocation, browser , platform , application , loginurl , sessionstatus ,instid)values( ? , ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ?, ? , ? , ?, ? , ? , ?)";
+    private static final String HISTORY_LOGIN_INSERT_STATEMENT = """
+            insert into mxk_history_login 
+                (   id , 
+                    sessionid , 
+                    userid ,
+                    username ,
+                    displayname , 
+                    logintype , 
+                    message , 
+                    code , 
+                    provider , 
+                    sourceip , 
+                    country , 
+                    province , 
+                    city , 
+                    location , 
+                    browser , 
+                    platform , 
+                    application , 
+                    loginurl , 
+                    sessionstatus ,
+                    instid)
+                values( ? , ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ? , ?, ?, ? , ? , ?, ? , ? , ?)
+    		""";
 
     protected JdbcTemplate jdbcTemplate;
     
@@ -71,8 +94,10 @@ public class LoginHistoryRepository {
 	                        historyLogin.getCode(),
 	                        historyLogin.getProvider(),
 	                        historyLogin.getSourceIp(),
-	                        historyLogin.getIpRegion(),
-	                        historyLogin.getIpLocation(),
+	                        historyLogin.getCountry(),
+	                        historyLogin.getProvince(),
+	                        historyLogin.getCity(),
+	                        historyLogin.getLocation(),
 	                        historyLogin.getBrowser(),
 	                        historyLogin.getPlatform(),
 	                        "Browser",
@@ -81,6 +106,8 @@ public class LoginHistoryRepository {
 	                        historyLogin.getInstId()
 	                        },
 	                new int[] { 
+	                        Types.VARCHAR,
+	                        Types.VARCHAR,
 	                        Types.VARCHAR,
 	                        Types.VARCHAR,
 	                        Types.VARCHAR,

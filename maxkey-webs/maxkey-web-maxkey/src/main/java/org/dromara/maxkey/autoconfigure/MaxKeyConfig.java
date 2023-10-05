@@ -30,6 +30,7 @@ import org.dromara.maxkey.authn.support.kerberos.KerberosProxy;
 import org.dromara.maxkey.authn.support.kerberos.RemoteKerberosService;
 import org.dromara.maxkey.configuration.EmailConfig;
 import org.dromara.maxkey.constants.ConstsPersistence;
+import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.MailOtpAuthnService;
 import org.dromara.maxkey.password.onetimepwd.algorithm.OtpKeyUriFormat;
@@ -103,6 +104,7 @@ public class MaxKeyConfig  implements InitializingBean {
 	    		LoginRepository loginService,
 	    		LoginHistoryRepository loginHistoryService,
 	    		UserInfoService userInfoService,
+	    		IpLocationParser  ipLocationParser,
                 JdbcTemplate jdbcTemplate,
                 MailOtpAuthnService otpAuthnService,
                 LdapContextService ldapContextService) {
@@ -113,6 +115,7 @@ public class MaxKeyConfig  implements InitializingBean {
         		loginService,
         		loginHistoryService,
         		userInfoService,
+        		ipLocationParser,
         		jdbcTemplate,
         		ldapRealmService
         	);

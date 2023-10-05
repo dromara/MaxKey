@@ -59,8 +59,7 @@ import com.nimbusds.jose.JOSEException;
 
 @AutoConfiguration
 public class ApplicationAutoConfiguration  implements InitializingBean {
-    private static final  Logger _logger = 
-            LoggerFactory.getLogger(ApplicationAutoConfiguration.class);
+    static final  Logger _logger = LoggerFactory.getLogger(ApplicationAutoConfiguration.class);
 
     @Bean
     public PasswordReciprocal passwordReciprocal() {
