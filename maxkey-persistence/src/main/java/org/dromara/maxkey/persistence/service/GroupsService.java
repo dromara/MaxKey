@@ -47,7 +47,7 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
     final static Logger _logger = LoggerFactory.getLogger(GroupsService.class);
     @JsonIgnore
     @Autowired
-    GroupMemberService service;
+    GroupMemberService groupMemberService;
     
     @Autowired
     InstitutionsService institutionsService;
@@ -71,7 +71,7 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
 	
 	public boolean deleteById(String groupId) {
 	    this.remove(groupId);
-	    service.deleteByGroupId(groupId);
+	    groupMemberService.deleteByGroupId(groupId);
 	    return true;
 	}
 	
@@ -131,14 +131,14 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
     	    
     	    if(isDynamicTimeSupport) {
     	        if(isBetweenEffectiveTime) {
-    	        	service.deleteDynamicMember(dynamicGroup);
-    	        	service.addDynamicMember(dynamicGroup);
+    	        	groupMemberService.deleteDynamicMember(dynamicGroup);
+    	        	groupMemberService.addDynamicMember(dynamicGroup);
     	        }else {
-    	        	service.deleteDynamicMember(dynamicGroup);
+    	        	groupMemberService.deleteDynamicMember(dynamicGroup);
     	        }
     	    }else{
-    	    	service.deleteDynamicMember(dynamicGroup);
-    	    	service.addDynamicMember(dynamicGroup);
+    	    	groupMemberService.deleteDynamicMember(dynamicGroup);
+    	    	groupMemberService.addDynamicMember(dynamicGroup);
             }
 	    }
     }

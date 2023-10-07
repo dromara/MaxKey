@@ -19,8 +19,8 @@ import format from 'date-fns/format';
 import { BaseEntity } from './BaseEntity';
 
 export class Groups extends BaseEntity {
-  roleCode!: String;
-  roleName!: String;
+  groupCode!: String;
+  groupName!: String;
   category!: String;
   filters!: String;
   orgIdsList!: String;

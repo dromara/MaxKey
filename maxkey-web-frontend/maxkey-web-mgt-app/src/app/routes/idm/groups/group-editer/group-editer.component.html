@@ -8,28 +8,28 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzMd]="6" nzRequired nzFor="roleCode">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-label [nzMd]="6" nzRequired nzFor="groupCode">{{ 'mxk.text.id' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
-        <input [(ngModel)]="form.model.roleCode" [ngModelOptions]="{ standalone: true }" nz-input name="roleCode" />
+        <input [(ngModel)]="form.model.groupCode" [ngModelOptions]="{ standalone: true }" nz-input name="groupCode" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="roleName">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="groupName">{{ 'mxk.groups.name' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid minLength!">
-        <input [(ngModel)]="form.model.roleName" [ngModelOptions]="{ standalone: true }" nz-input name="roleName" id="roleName" />
+        <input [(ngModel)]="form.model.groupName" [ngModelOptions]="{ standalone: true }" nz-input name="groupName" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dynamic">{{ 'mxk.roles.category' | i18n }}</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dynamic">{{ 'mxk.groups.category' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid status!">
         <nz-radio-group [(ngModel)]="form.model.category" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
-          <label nz-radio-button nzValue="static">{{ 'mxk.roles.category.static' | i18n }}</label>
-          <label nz-radio-button nzValue="dynamic">{{ 'mxk.roles.category.dynamic' | i18n }}</label>
+          <label nz-radio-button nzValue="static">{{ 'mxk.groups.category.static' | i18n }}</label>
+          <label nz-radio-button nzValue="dynamic">{{ 'mxk.groups.category.dynamic' | i18n }}</label>
         </nz-radio-group>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item *ngIf="form.model.category == 'dynamic'">
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resumeTime">{{ 'mxk.roles.resumeTime' | i18n }}</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resumeTime">{{ 'mxk.groups.resumeTime' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid port!">
         <nz-time-picker
           [(ngModel)]="form.model.picker_resumeTime"
@@ -41,7 +41,7 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item *ngIf="form.model.category == 'dynamic'">
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="suspendTime">{{ 'mxk.roles.suspendTime' | i18n }}</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="suspendTime">{{ 'mxk.groups.suspendTime' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid suspendTime!">
         <nz-time-picker
           [(ngModel)]="form.model.picker_suspendTime"
@@ -53,7 +53,7 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item *ngIf="form.model.category == 'dynamic'">
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="orgIdsList">{{ 'mxk.roles.orgIdsList' | i18n }}</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="orgIdsList">{{ 'mxk.groups.orgIdsList' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid upperCase!">
         <input
           type="hidden"
@@ -77,7 +77,7 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item *ngIf="form.model.category == 'dynamic'">
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="filters">{{ 'mxk.roles.filters' | i18n }}</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="filters">{{ 'mxk.groups.filters' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid filters!">
         <textarea
           rows="4"

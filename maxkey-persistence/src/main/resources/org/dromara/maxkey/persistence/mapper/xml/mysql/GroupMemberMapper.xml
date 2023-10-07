@@ -184,7 +184,7 @@
 		</if>
 	</select>
 
-	<update id="addDynamicGroupMember" parameterType="Groups" >
+	<update id="addDynamicMember" parameterType="Groups" >
     	insert into mxk_group_member(
     		id,
     		groupid,
@@ -213,7 +213,7 @@
 		</if>
     </update>
     
-    <delete id="deleteDynamicGroupMember" parameterType="Groups" >
+    <delete id="deleteDynamicMember" parameterType="Groups" >
     	delete from mxk_group_member gm
     	where type = 'user-dynamic'
     		and gm.groupid=#{id}
