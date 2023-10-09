@@ -201,10 +201,7 @@ public class ApplicationConfig {
 	}
 
 	public boolean isProvisionSupport() {
-    	if(provision) {
-    		return true;
-    	}
-		return false;
+    	return provision;
 	}
     
 	public String getMgtUri() {

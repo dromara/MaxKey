@@ -79,7 +79,7 @@ public class MaxKeyMgtListenerConfig  implements InitializingBean {
     		ConnectorsService connectorsService,
     		JdbcTemplate jdbcTemplate,
     		ApplicationConfig applicationConfig
-            ) throws SchedulerException {
+            ) {
         if(applicationConfig.isProvisionSupport()) {
 	    	ProvisioningRunner runner = new ProvisioningRunner(connectorsService,jdbcTemplate);
 	    	ProvisioningRunnerThread runnerThread = new ProvisioningRunnerThread(runner);

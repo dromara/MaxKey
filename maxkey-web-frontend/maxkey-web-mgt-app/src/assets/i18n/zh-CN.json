@@ -647,6 +647,7 @@
 			"login.message": "状态",
 			"login.loginType": "登录方式",
 			"login.sourceIp": "访问地址",
+			"login.location": "归属地",
 			"login.browser": "浏览器",
 			"login.loginTime": "登录时间",
 			"login.logoutTime": "退出时间",

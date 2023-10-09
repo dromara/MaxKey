@@ -649,6 +649,7 @@
 			"login.message": "message",
 			"login.loginType": "loginType",
 			"login.sourceIp": "sourceIp",
+			"login.location": "location",
 			"login.browser": "browser",
 			"login.loginTime": "loginTime",
 			"login.logoutTime": "logoutTime",

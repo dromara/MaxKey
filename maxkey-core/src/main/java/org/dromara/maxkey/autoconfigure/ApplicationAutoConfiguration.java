@@ -89,7 +89,7 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     @Bean
     public PasswordEncoder passwordEncoder(
     		@Value("${maxkey.crypto.password.encoder:bcrypt}") String idForEncode) {
-    	Map<String ,PasswordEncoder > encoders = new HashMap<String ,PasswordEncoder>();
+    	Map<String ,PasswordEncoder > encoders = new HashMap<>();
         encoders.put("bcrypt", new BCryptPasswordEncoder());
         encoders.put("plain", NoOpPasswordEncoder.getInstance());
         encoders.put("pbkdf2", Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8());
@@ -174,8 +174,8 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
             @Value("${maxkey.id.datacenterId:0}") int datacenterId,
             @Value("${maxkey.id.machineId:0}") int machineId) {
     	IdGenerator idGenerator = new IdGenerator(strategy);
-    	SnowFlakeId SnowFlakeId = new SnowFlakeId(datacenterId,machineId);
-    	idGenerator.setSnowFlakeId(SnowFlakeId);
+    	SnowFlakeId snowFlakeId = new SnowFlakeId(datacenterId,machineId);
+    	idGenerator.setSnowFlakeId(snowFlakeId);
     	WebContext.idGenerator = idGenerator;
         return idGenerator;
     }
@@ -184,14 +184,13 @@ public class ApplicationAutoConfiguration  implements InitializingBean {
     @Bean
     public MomentaryService momentaryService(
     		RedisConnectionFactory redisConnFactory,
-    		@Value("${maxkey.server.persistence}") int persistence) throws JOSEException {
+    		@Value("${maxkey.server.persistence}") int persistence) {
     	MomentaryService momentaryService;
     	if (persistence == ConstsPersistence.REDIS) {
     		momentaryService = new RedisMomentaryService(redisConnFactory);
     	}else {
     		momentaryService = new InMemoryMomentaryService();
     	}
-    	
     	return momentaryService;
     }
     

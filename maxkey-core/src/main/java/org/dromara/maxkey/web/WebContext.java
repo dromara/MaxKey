@@ -60,14 +60,13 @@ import jakarta.servlet.http.HttpSession;
  *
  */
 public final class WebContext {
-    
-    final static Logger _logger = LoggerFactory.getLogger(WebContext.class);
+	static final  Logger _logger = LoggerFactory.getLogger(WebContext.class);
     
     public static StandardEnvironment properties;
     
     public static ApplicationContext applicationContext;
     
-    public final static String  ipAddressRegex = "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}";
+    public static final String  ipAddressRegex = "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}";
     
     public static ArrayList<String> sessionAttributeNameList = new ArrayList<String>();
     
@@ -146,7 +145,11 @@ public final class WebContext {
         }else {
             return applicationContext.getBean(name,requiredType);
         }
-    };
+    }
+    
+    public static String getProperty(String key) {
+    	return properties.getProperty(key);
+    }
 
     // below method is common HttpServlet method
     /**
@@ -155,13 +158,11 @@ public final class WebContext {
      * @return HttpServletRequest
      */
     public static HttpServletRequest getRequest() {
-        return ((ServletRequestAttributes) 
-                    RequestContextHolder.getRequestAttributes()).getRequest();
+        return ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
     }
     
     public static HttpServletResponse getResponse() {
-        return ((ServletRequestAttributes) 
-                    RequestContextHolder.getRequestAttributes()).getResponse();
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
     }
 
     /**
@@ -205,14 +206,14 @@ public final class WebContext {
     	
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
-          String key = (String) headerNames.nextElement();
+          String key = headerNames.nextElement();
           String value = request.getHeader(key);
           _logger.info("Header key {} , value {}" , key, value);
         }
         
         Enumeration<String> parameterNames = request.getParameterNames();
         while (parameterNames.hasMoreElements()) {
-          String key = (String) parameterNames.nextElement();
+          String key = parameterNames.nextElement();
           String value = request.getParameter(key);
           _logger.info("Parameter {} , value {}",key , value);
         }
@@ -233,7 +234,7 @@ public final class WebContext {
      * @return HttpSession
      */
     public static HttpSession getSession(boolean create) {
-        System.out.println("new Session created");
+        _logger.info("new Session created");
         return getRequest().getSession(create);
     }
 
@@ -314,7 +315,7 @@ public final class WebContext {
     }
     
     public static Map<String, String> getRequestParameterMap(HttpServletRequest request) {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         Map<String, String[]> parameters = request.getParameterMap();
         for (String key : parameters.keySet()) {
             String[] values = parameters.get(key);
@@ -333,8 +334,7 @@ public final class WebContext {
     public static Cookie getCookie(HttpServletRequest request, String name) {
         Map<String, Cookie> cookieMap = getCookieAll(request);
         if (cookieMap.containsKey(name)) {
-            Cookie cookie = (Cookie) cookieMap.get(name);
-            return cookie;
+        	return cookieMap.get(name);
         } else {
             return null;
         }
@@ -347,7 +347,7 @@ public final class WebContext {
      * @return Map 
      */
     private static Map<String, Cookie> getCookieAll(HttpServletRequest request) {
-        Map<String, Cookie> cookieMap = new HashMap<String, Cookie>();
+        Map<String, Cookie> cookieMap = new HashMap<>();
         Cookie[] cookies = request.getCookies();
         if (null != cookies) {
             for (Cookie cookie : cookies) {
@@ -536,7 +536,7 @@ public final class WebContext {
 		version.append("-----------------------------------------------------------");
 		version.append("+                      MaxKey Community  Edition  ");
 		version.append("+                      Single   Sign   On ( SSO ) ");
-		version.append("+                           Version {}".formatted(
+		version.append("+                           Version %s".formatted(
                         WebContext.properties.getProperty("application.formatted-version")));
 		version.append("+");
 		version.append("+                 {}Copyright 2018 - {} https://www.maxkey.top/",

@@ -75,11 +75,10 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
     public ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource(
             @Value("${spring.messages.basename:classpath:messages/message}")
             String messagesBasename)  {
-        _logger.debug("Basename " + messagesBasename);
+        _logger.debug("Basename {}" , messagesBasename);
         String passwordPolicyMessagesBasename="classpath:messages/passwordpolicy_message";
         
-        ReloadableResourceBundleMessageSource messageSource = 
-                new ReloadableResourceBundleMessageSource();
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasenames(messagesBasename,passwordPolicyMessagesBasename);
         messageSource.setUseCodeAsDefaultMessage(false);
         return messageSource;
@@ -92,26 +91,10 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
     //@Primary
     @Bean (name = "localeChangeInterceptor")
     public LocaleChangeInterceptor localeChangeInterceptor()  {
-        LocaleChangeInterceptor localeChangeInterceptor = 
-                new LocaleChangeInterceptor();
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("language");
         return localeChangeInterceptor;
     }
-    
-    /**
-     * upload file support .
-     * @return multipartResolver
-     */
-    /*
-    @Bean (name = "multipartResolver")
-    public CommonsMultipartResolver commonsMultipartResolver(
-            @Value("${spring.servlet.multipart.max-file-size:0}") int maxUploadSize)  {
-        _logger.debug("maxUploadSize " + maxUploadSize);
-        CommonsMultipartResolver multipartResolver = 
-                new CommonsMultipartResolver();
-        multipartResolver.setMaxUploadSize(maxUploadSize);
-        return multipartResolver;
-    }*/
     
     /**
      * handlerMapping .
@@ -120,8 +103,7 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
     @Bean (name = "handlerMapping")
     public RequestMappingHandlerMapping requestMappingHandlerMapping(
                                     LocaleChangeInterceptor localeChangeInterceptor) {
-        RequestMappingHandlerMapping requestMappingHandlerMapping = 
-                new RequestMappingHandlerMapping();
+        RequestMappingHandlerMapping requestMappingHandlerMapping = new RequestMappingHandlerMapping();
         requestMappingHandlerMapping.setInterceptors(localeChangeInterceptor);
         return requestMappingHandlerMapping;
     }
@@ -144,15 +126,14 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
     @Bean (name = "marshallingHttpMessageConverter")
     public MarshallingHttpMessageConverter marshallingHttpMessageConverter(
                                                 Jaxb2Marshaller jaxb2Marshaller) {
-        MarshallingHttpMessageConverter marshallingHttpMessageConverter = 
-                new MarshallingHttpMessageConverter();
+        MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
         marshallingHttpMessageConverter.setMarshaller(jaxb2Marshaller);
         marshallingHttpMessageConverter.setUnmarshaller(jaxb2Marshaller);
-        ArrayList<MediaType> mediaTypesList = new ArrayList<MediaType>();
+        ArrayList<MediaType> mediaTypesList = new ArrayList<>();
         mediaTypesList.add(MediaType.APPLICATION_XML);
         mediaTypesList.add(MediaType.TEXT_XML);
         mediaTypesList.add(MediaType.TEXT_PLAIN);
-        _logger.debug("marshallingHttpMessageConverter MediaTypes " + mediaTypesList);
+        _logger.debug("marshallingHttpMessageConverter MediaTypes {}" , mediaTypesList);
         marshallingHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
         return marshallingHttpMessageConverter;
     }
@@ -163,14 +144,13 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
      */
     @Bean (name = "mappingJacksonHttpMessageConverter")
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-        MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter = 
-                new MappingJackson2HttpMessageConverter();
-        ArrayList<MediaType> mediaTypesList = new ArrayList<MediaType>();
+        MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter = new MappingJackson2HttpMessageConverter();
+        ArrayList<MediaType> mediaTypesList = new ArrayList<>();
         mediaTypesList.add(MediaType.APPLICATION_JSON);
         mediaTypesList.add(MediaType.valueOf(ApiVersion.V2.getProducedMimeType().toString()));
         mediaTypesList.add(MediaType.valueOf(ApiVersion.V3.getProducedMimeType().toString()));
         //mediaTypesList.add(MediaType.TEXT_PLAIN);
-        _logger.debug("mappingJacksonHttpMessageConverter MediaTypes " + mediaTypesList);
+        _logger.debug("mappingJacksonHttpMessageConverter MediaTypes {}" , mediaTypesList);
         mappingJacksonHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
         return mappingJacksonHttpMessageConverter;
     }
@@ -185,7 +165,7 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
             @Value("${maxkey.server.domain:maxkey.top}")
             String domainName
         ) {
-        _logger.debug("DomainName " + domainName);
+        _logger.debug("DomainName {}" , domainName);
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setCookieName("mxk_locale");
         cookieLocaleResolver.setCookieDomain(domainName);
@@ -204,8 +184,7 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
             MarshallingHttpMessageConverter marshallingHttpMessageConverter,
             StringHttpMessageConverter stringHttpMessageConverter,
             RequestMappingHandlerAdapter requestMappingHandlerAdapter) {
-        List<HttpMessageConverter<?>> httpMessageConverterList = 
-                new ArrayList<HttpMessageConverter<?>>();
+        List<HttpMessageConverter<?>> httpMessageConverterList = new ArrayList<>();
         httpMessageConverterList.add(mappingJacksonHttpMessageConverter);
         httpMessageConverterList.add(marshallingHttpMessageConverter);
         httpMessageConverterList.add(stringHttpMessageConverter);
@@ -224,8 +203,7 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
             MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter,
             MarshallingHttpMessageConverter marshallingHttpMessageConverter) {
         RestTemplate restTemplate = new RestTemplate();
-        List<HttpMessageConverter<?>> httpMessageConverterList = 
-                new ArrayList<HttpMessageConverter<?>>();
+        List<HttpMessageConverter<?>> httpMessageConverterList = new ArrayList<>();
         httpMessageConverterList.add(mappingJacksonHttpMessageConverter);
         httpMessageConverterList.add(marshallingHttpMessageConverter);
         restTemplate.setMessageConverters(httpMessageConverterList);
@@ -279,7 +257,7 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
     @Bean
     public FilterRegistrationBean<Filter> delegatingFilterProxy() {
         _logger.debug("delegatingFilterProxy init for /* ");
-        FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>();
+        FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new DelegatingFilterProxy("securityContextHolderAwareRequestFilter"));
         registrationBean.addUrlPatterns("/*");
         //registrationBean.
@@ -292,7 +270,7 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
     @Bean
     public FilterRegistrationBean<Filter> webXssRequestFilter() {
         _logger.debug("webXssRequestFilter init for /* ");
-        FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<Filter>(new WebXssRequestFilter());
+        FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>(new WebXssRequestFilter());
         registrationBean.addUrlPatterns("/*");
         registrationBean.setName("webXssRequestFilter");
         registrationBean.setOrder(3);
@@ -300,12 +278,12 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
     }
     
     @Bean
-    public FilterRegistrationBean<Filter> WebInstRequestFilter(
+    public FilterRegistrationBean<Filter> webInstRequestFilter(
     											InstitutionsRepository institutionsRepository,
     											ApplicationConfig applicationConfig) {
         _logger.debug("WebInstRequestFilter init for /* ");
         FilterRegistrationBean<Filter> registrationBean = 
-        		new FilterRegistrationBean<Filter>(new WebInstRequestFilter(institutionsRepository,applicationConfig));
+        		new FilterRegistrationBean<>(new WebInstRequestFilter(institutionsRepository,applicationConfig));
         registrationBean.addUrlPatterns("/*");
         registrationBean.setName("webInstRequestFilter");
         registrationBean.setOrder(4);

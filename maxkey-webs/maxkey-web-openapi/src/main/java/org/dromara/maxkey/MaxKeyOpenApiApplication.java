@@ -62,8 +62,7 @@ public class MaxKeyOpenApiApplication extends SpringBootServletInitializer {
 	    logger.info("Start MaxKey OpenApi Application ...");
 	    ProductEnvironment.listEnvVars();
 	    
-		ConfigurableApplicationContext  applicationContext = 
-							SpringApplication.run(MaxKeyOpenApiApplication.class, args);
+		ConfigurableApplicationContext  applicationContext = SpringApplication.run(MaxKeyOpenApiApplication.class, args);
 		InitializeContext initWebContext = new InitializeContext(applicationContext);
 		
 		try {
@@ -72,7 +71,7 @@ public class MaxKeyOpenApiApplication extends SpringBootServletInitializer {
 			logger.error("Exception ",e);
 		}
 		logger.info("MaxKey OpenApi at {}" , new DateTime());
-		logger.info("MaxKey OpenApi Server Port {}" , WebContext.properties.getProperty("server.port"));
+		logger.info("MaxKey OpenApi Server Port {}" , WebContext.getProperty("server.port"));
 		logger.info("MaxKey OpenApi started.");
 		
 	}

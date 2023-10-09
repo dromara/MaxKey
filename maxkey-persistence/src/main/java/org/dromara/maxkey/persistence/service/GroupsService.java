@@ -79,7 +79,7 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
 		return this.getMapper().queryByUserId(userId);
 	}
 	
-	public void refreshDynamicRoles(Groups dynamicGroup){
+	public void refreshDynamicGroups(Groups dynamicGroup){
 	    if(dynamicGroup.getCategory().equals(Roles.Category.DYNAMIC)) {
 	        boolean isDynamicTimeSupport = false;
 	        boolean isBetweenEffectiveTime = false;
@@ -90,9 +90,10 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
 	            LocalTime resumeTime = LocalTime.parse(dynamicGroup.getResumeTime());
 	            LocalTime suspendTime = LocalTime.parse(dynamicGroup.getSuspendTime());
 	            
-	            _logger.info("currentTime: " + currentTime 
-                        + " , resumeTime : " + resumeTime 
-                        + " , suspendTime: " + suspendTime);
+	            _logger.info("currentTime: {} , resumeTime : {} , suspendTime: {}" 
+	            		, currentTime 
+                        , resumeTime 
+                        , suspendTime);
 	            isDynamicTimeSupport = true;
 	            
 	            if(resumeTime.isBefore(currentTime) && currentTime.isBefore(suspendTime)) {
@@ -152,7 +153,7 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
 		    List<Groups>  groupsList = queryDynamicGroups(group);
 	        for(Groups g : groupsList) {
 	            _logger.debug("role {}" , g);
-	            refreshDynamicRoles(g);
+	            refreshDynamicGroups(g);
 	        }
 		}
 	}

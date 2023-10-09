@@ -66,8 +66,7 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 	    logger.info("Start MaxKeyMgt Application ...");
 	    ProductEnvironment.listEnvVars();
 	    
-		ConfigurableApplicationContext  applicationContext = 
-							SpringApplication.run(MaxKeyMgtApplication.class, args);
+		ConfigurableApplicationContext  applicationContext = SpringApplication.run(MaxKeyMgtApplication.class, args);
 		InitializeContext initWebContext = new InitializeContext(applicationContext);
 		
 		try {
@@ -76,7 +75,7 @@ public class MaxKeyMgtApplication extends SpringBootServletInitializer {
 			logger.error("Exception ",e);
 		}
 		logger.info("MaxKeyMgt at {}" , new DateTime());
-		logger.info("MaxKeyMgt Server Port {}" , WebContext.properties.getProperty("server.port"));
+		logger.info("MaxKeyMgt Server Port {}" , WebContext.getProperty("server.port"));
 		logger.info("MaxKeyMgt started.");
 		
 	}

@@ -28,7 +28,7 @@ ext {
 def libjarsmapper=[
     'maxkey-authentication-captcha'         :'lib',
     'maxkey-authentication-core'            :'lib',
-    'maxkey-authentication-ip2region'       :'lib',
+    'maxkey-authentication-ip2location'     :'lib',
     'maxkey-authentication-otp'             :'lib',
     'maxkey-authentication-provider'        :'lib',
     'maxkey-authentication-sms'             :'lib',

@@ -92,17 +92,14 @@ public class InitializeContext extends HttpServlet {
     public void listDataBaseVariables() {
         if (!applicationContext.containsBean("dataSource")) {return;}
         try {
-            logger.debug(WebConstants.DELIMITER);
-            logger.debug("List DatabaseMetaData Variables ");
-            Connection connection = 
-                    ((javax.sql.DataSource) applicationContext.getBean("dataSource"))
-                    .getConnection();
-
+            logger.info(WebConstants.DELIMITER);
+            logger.info("List DatabaseMetaData Variables ");
+            Connection connection = ((javax.sql.DataSource) applicationContext.getBean("dataSource")).getConnection();
             DatabaseMetaData databaseMetaData = connection.getMetaData();
             ApplicationConfig.databaseProduct = databaseMetaData.getDatabaseProductName();
             
-            logger.debug("DatabaseProductName   :   {}", databaseMetaData.getDatabaseProductName());
-            logger.debug("DatabaseProductVersion:   {}" ,databaseMetaData.getDatabaseProductVersion());
+            logger.info("DatabaseProductName   :   {}", databaseMetaData.getDatabaseProductName());
+            logger.info("DatabaseProductVersion:   {}" ,databaseMetaData.getDatabaseProductVersion());
             logger.trace("DatabaseMajorVersion  :   {}" , databaseMetaData.getDatabaseMajorVersion());
             logger.trace("DatabaseMinorVersion  :   {}" ,databaseMetaData.getDatabaseMinorVersion());
             logger.trace("supportsTransactions  :   {}" , databaseMetaData.supportsTransactions());
@@ -113,13 +110,12 @@ public class InitializeContext extends HttpServlet {
             logger.trace("JDBCMinorVersion      :   {}" ,databaseMetaData.getJDBCMinorVersion());
             logger.trace("DriverName            :   {}" ,databaseMetaData.getDriverName());
             logger.trace("DriverVersion         :   {}" ,databaseMetaData.getDriverVersion());
-            logger.debug("");
-            logger.debug("DBMS  URL             :   {}" ,databaseMetaData.getURL());
-            logger.debug("UserName              :   {}" ,databaseMetaData.getUserName());
-            logger.debug(WebConstants.DELIMITER);
+            logger.info("");
+            logger.info("DBMS  URL             :   {}" ,databaseMetaData.getURL());
+            logger.info("UserName              :   {}" ,databaseMetaData.getUserName());
+            logger.info(WebConstants.DELIMITER);
             
         } catch (SQLException e) {
-            e.printStackTrace();
             logger.error("DatabaseMetaData Variables Error .",e);
         }
     }

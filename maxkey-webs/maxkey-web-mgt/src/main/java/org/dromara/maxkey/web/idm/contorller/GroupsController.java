@@ -94,7 +94,7 @@ public class GroupsController {
 			group.setGroupCode(group.getId());
 		}
 		if (service.insert(group)) {
-			service.refreshDynamicRoles(group);
+			service.refreshDynamicGroups(group);
 		    systemLog.insert(
 					ConstsEntryType.ROLE, 
 					group, 
@@ -116,7 +116,7 @@ public class GroupsController {
 		}
 		group.setInstId(currentUser.getInstId());
 		if (service.update(group)) {
-			service.refreshDynamicRoles(group);
+			service.refreshDynamicGroups(group);
 		    systemLog.insert(
 					ConstsEntryType.ROLE, 
 					group, 
