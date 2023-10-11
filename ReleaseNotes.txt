@@ -1,4 +1,19 @@
-﻿MaxKey v 4.0.1 GA 2023/09/019
+﻿MaxKey v 4.0.2 GA 2023/10/12
+    *(MAXKEY-231001) shenyu网关插件 @Saiph 
+    *(MAXKEY-231002) ip2region & GeoLite2 ip地址转换，支持国家、省、市、地域
+    *(MAXKEY-231003) #I844NY消除Session与Authentication来回嵌套
+    *(MAXKEY-231004) #I83BUJ4.0.1版本 建应用，凭证类型选 user_defined用户自定义。值不一样
+    *(MAXKEY-231005) 删除 session getFormattedId
+    *(MAXKEY-231006) 用户组显示bug修复
+    *(MAXKEY-231007) pig整合MAXKEY方案 @RJ 
+    *(MAXKEY-231008) 日志打印优化!31fix:log4j2.xml
+    *(MAXKEY-231009) 新增ProductEnvironment的显示
+    *(MAXKEY-231010) #I8651R新建了应用，但在认证系统里面看不到
+    *(MAXKEY-231011) 修复动态用户组出现bug #I85U4I
+	*(MAXKEY-231012) 依赖项引用、更新和升级
+	
+	
+MaxKey v 4.0.1 GA 2023/09/19
     *(MAXKEY-230901) !24 fix:shell启动脚本错误 * fix:启动脚本的JAVA_MAINCLASS有误 @tzk007
     *(MAXKEY-230902) 组权限问题修复
     *(MAXKEY-230903) !25修复错误的表别名使用
