@@ -10,9 +10,10 @@
     *(MAXKEY-231009) 新增ProductEnvironment的显示
     *(MAXKEY-231010) #I8651R新建了应用，但在认证系统里面看不到
     *(MAXKEY-231011) 修复动态用户组出现bug #I85U4I
-	*(MAXKEY-231012) 依赖项引用、更新和升级
-	
-	
+    *(MAXKEY-231012) 依赖项引用、更新和升级
+        spring              6.0.12
+        springBoot          3.1.4   
+    
 MaxKey v 4.0.1 GA 2023/09/19
     *(MAXKEY-230901) !24 fix:shell启动脚本错误 * fix:启动脚本的JAVA_MAINCLASS有误 @tzk007
     *(MAXKEY-230902) 组权限问题修复
@@ -25,6 +26,7 @@ MaxKey v 4.0.1 GA 2023/09/19
     *(MAXKEY-230909) 用户组-资源绑定关系
     *(MAXKEY-230910) 删除历史sql文件
     *(MAXKEY-230911) 依赖项引用、更新和升级
+
     
     
 MaxKey v 4.0.0 GA 2023/09/01
