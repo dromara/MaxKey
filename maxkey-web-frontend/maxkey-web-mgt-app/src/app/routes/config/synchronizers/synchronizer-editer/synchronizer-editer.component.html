@@ -2,10 +2,10 @@
 <div>
   <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
     <nz-form-item>
-      <nz-form-label [nzMd]="6" nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-label [nzMd]="6" nzFor="name">{{ 'mxk.synchronizers.name' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
-        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input
-          name="id" id="id" />
+        <input [(ngModel)]="form.model.name" [ngModelOptions]="{ standalone: true }" nz-input
+          name="name" id="name" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
