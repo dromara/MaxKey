@@ -78,7 +78,7 @@ public class RestApiPermissionAdapter  implements AsyncHandlerInterceptor  {
 									headerCredential.getCredential());
 			    	authenticationToken= (UsernamePasswordAuthenticationToken)oauth20ClientAuthenticationManager.authenticate(authRequest);
 			    }
-			}else {
+			}else if(StringUtils.isNotBlank(headerCredential.getCredential())){
 				logger.trace("Authentication bearer {}" , headerCredential.getCredential());
 				OAuth2Authentication oauth2Authentication = 
 						oauth20TokenServices.loadAuthentication(headerCredential.getCredential());
