@@ -31,8 +31,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,13 +48,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Controller
 @RequestMapping(value={"/api/idm/Organization"})
 public class RestOrganizationController {
-	final static Logger _logger = LoggerFactory.getLogger(RestOrganizationController.class);
+	static final  Logger _logger = LoggerFactory.getLogger(RestOrganizationController.class);
 	
     @Autowired
     OrganizationsService organizationsService;
     
     @ResponseBody
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public Organizations getUser(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
     	_logger.debug("Organizations id {} , attributes {}", id , attributes);
@@ -59,7 +63,7 @@ public class RestOrganizationController {
     }
 
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public Organizations create(@RequestBody  Organizations org,
                                                       @RequestParam(required = false) String attributes,
                                                       UriComponentsBuilder builder) throws IOException {
@@ -74,7 +78,7 @@ public class RestOrganizationController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public Organizations replace(@PathVariable String id,
                                                        @RequestBody Organizations org,
                                                        @RequestParam(required = false) String attributes)
@@ -90,7 +94,7 @@ public class RestOrganizationController {
         return org;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
     	_logger.debug("Organizations id {} ", id );
@@ -98,7 +102,7 @@ public class RestOrganizationController {
        
     }
     
-    @RequestMapping(value = { "/.search" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = { "/.search" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> search(@ModelAttribute Organizations org) {
     	if(StringUtils.isBlank(org.getInstId())){

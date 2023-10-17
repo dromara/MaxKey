@@ -20,7 +20,6 @@ package org.dromara.maxkey.web.apis.identity.rest;
 import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.service.UserInfoService;
@@ -33,11 +32,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -47,13 +49,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping(value={"/api/idm/Users"})
 public class RestUserInfoController {
 	
-	final static Logger _logger = LoggerFactory.getLogger(RestUserInfoController.class);
+	static final Logger _logger = LoggerFactory.getLogger(RestUserInfoController.class);
 	
     @Autowired
     @Qualifier("userInfoService")
     private UserInfoService userInfoService;
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     @ResponseBody
     public UserInfo getUser(
                                        @PathVariable String id,
@@ -64,7 +66,7 @@ public class RestUserInfoController {
         return loadUserInfo;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @ResponseBody
     public UserInfo create(@RequestBody  UserInfo userInfo,
                                                       @RequestParam(required = false) String attributes,
@@ -79,26 +81,7 @@ public class RestUserInfoController {
         return userInfo;
     }
     
-    @RequestMapping(value = "/changePassword",method = RequestMethod.POST)
-    @ResponseBody
-    public String changePassword(
-                                                      @RequestParam(required = true) String username,
-                                                      @RequestParam(required = true) String password,
-                                                      UriComponentsBuilder builder) throws IOException {
-    	
-    	_logger.debug("UserInfo username {} , password {}", username , password);
-    	
-    	UserInfo loadUserInfo = userInfoService.findByUsername(username);
-        if(loadUserInfo != null) {
-        	ChangePassword changePassword  = new ChangePassword(loadUserInfo);
-        	changePassword.setPassword(password);
-        	changePassword.setDecipherable(loadUserInfo.getDecipherable());
-            userInfoService.changePassword(changePassword,true);
-        }
-        return "true";
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     @ResponseBody
     public UserInfo replace(@PathVariable String id,
                                                        @RequestBody UserInfo userInfo,
@@ -114,14 +97,14 @@ public class RestUserInfoController {
         return userInfo;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
     	_logger.debug("UserInfo id {} ", id );
         userInfoService.logicDelete(id);
     }
     
-    @RequestMapping(value = { "/.search" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = { "/.search" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public ResponseEntity<?> search(@ModelAttribute UserInfo userInfo) {
 		_logger.debug("UserInfo {}",userInfo);
