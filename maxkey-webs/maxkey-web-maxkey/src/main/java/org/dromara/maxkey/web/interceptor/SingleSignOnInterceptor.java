@@ -66,8 +66,7 @@ public class SingleSignOnInterceptor  implements AsyncHandlerInterceptor {
             throws Exception {
     	logger.trace("Single Sign On Interceptor");
        
-    	AuthorizationUtils.authenticateWithCookie(
-    				request,authTokenService,sessionManager);
+    	AuthorizationUtils.authenticateWithCookie(request,authTokenService,sessionManager);
 
         if(AuthorizationUtils.isNotAuthenticated()) {
         	String loginUrl = applicationConfig.getFrontendUri() + "/#/passport/login?redirect_uri=%s";

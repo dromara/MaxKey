@@ -24,14 +24,11 @@ package org.dromara.maxkey.authz.cas.endpoint;
 import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
-import org.dromara.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.TicketGrantingTicketImpl;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.AppsCasDetails;
 import org.dromara.maxkey.util.StringUtils;
-import org.dromara.maxkey.web.HttpResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +41,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,16 +59,15 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "2-4-CAS REST API文档模块")
 @Controller
 public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
-    final static Logger _logger = LoggerFactory.getLogger(CasRestV1Endpoint.class);
+	static final Logger _logger = LoggerFactory.getLogger(CasRestV1Endpoint.class);
 	
     @Autowired
     @Qualifier("authenticationProvider")
     AbstractAuthenticationProvider authenticationProvider ;
     
     @Operation(summary = "CAS REST认证接口", description = "通过用户名密码获取TGT",method="POST")
-	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1, 
-	        method=RequestMethod.POST, 
-	        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1, 
+    			 consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> casLoginRestTickets(
             HttpServletRequest request,
             HttpServletResponse response,
@@ -104,21 +101,19 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
 	        _logger.error("BadCredentialsException ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (final Exception e) {
-            
             _logger.error("Exception ", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 	}
 	
     @Operation(summary = "CAS REST认证接口", description = "通过TGT获取ST",method="POST")
-	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1+"/{ticketGrantingTicket}", 
-	            method=RequestMethod.POST, 
+    @PostMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1+"/{ticketGrantingTicket}", 
 	            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> requestServiceTicket(
 	            HttpServletRequest request,
 	            HttpServletResponse response,
 	            @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
-	            @RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService,
+	            @RequestParam(value=CasConstants.PARAMETER.SERVICE) String casService,
 	            @RequestParam(value=CasConstants.PARAMETER.RENEW,required=false) String renew,
 	            @RequestParam(value=CasConstants.PARAMETER.REST_USERNAME,required=false) String username,
 	            @RequestParam(value=CasConstants.PARAMETER.REST_PASSWORD,required=false) String password){
@@ -138,8 +133,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
 	       return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
 	   }
     @Operation(summary = "CAS REST认证接口", description = "检查TGT状态",method="GET")
-    @RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1 + "/{ticketGrantingTicket}", 
-	            method=RequestMethod.GET)
+    @GetMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1 + "/{ticketGrantingTicket}")
     public ResponseEntity<String> verifyTicketGrantingTicketStatus(
 	            @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
 	            HttpServletRequest request,
@@ -157,8 +151,7 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
 	}
     
     @Operation(summary = "CAS REST认证接口", description = "注销TGT状态",method="DELETE")
-    @RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1+"/{ticketGrantingTicket}", 
-            method=RequestMethod.DELETE)
+    @DeleteMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1+"/{ticketGrantingTicket}")
     public ResponseEntity<String> destroyTicketGrantingTicket(
             @PathVariable("ticketGrantingTicket") String ticketGrantingTicket,
             HttpServletRequest request,
@@ -173,63 +166,6 @@ public class CasRestV1Endpoint  extends CasBaseAuthorizeEndpoint{
             e.printStackTrace();
         }
        return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
-    }
-	   
-    @Operation(summary = "CAS REST认证接口", description = "用户名密码登录接口",method="POST")   
-	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_REST_USERS_V1, 
-            method=RequestMethod.POST, 
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<String> casLoginRestUsers(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            @RequestParam(value=CasConstants.PARAMETER.SERVICE,required=false) String casService,
-            @RequestParam(value=CasConstants.PARAMETER.REST_USERNAME,required=true) String username,
-            @RequestParam(value=CasConstants.PARAMETER.REST_PASSWORD,required=true) String password){
-	    try {
-            if (password == null || password.isEmpty()) {
-                throw new BadCredentialsException("No credentials are provided or extracted to authenticate the REST request");
-            }
-            
-            LoginCredential loginCredential =new LoginCredential(username,password,"CASREST");
-            
-            authenticationProvider.authenticate(loginCredential,false);
-            UserInfo userInfo = AuthorizationUtils.getUserInfo();
-            TicketGrantingTicketImpl ticketGrantingTicket=new TicketGrantingTicketImpl("Random",AuthorizationUtils.getAuthentication(),null);
-            
-            String ticket=casTicketGrantingTicketServices.createTicket(ticketGrantingTicket);
-            String location = applicationConfig.getServerPrefix() + CasConstants.ENDPOINT.ENDPOINT_REST_TICKET_V1 + ticket;
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("location", location);
-            ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
-            serviceResponseBuilder.setFormat(HttpResponseConstants.FORMAT_TYPE.JSON);
-            //for user
-            serviceResponseBuilder.setAttribute("userId", userInfo.getId());
-            serviceResponseBuilder.setAttribute("displayName",userInfo.getDisplayName());
-            serviceResponseBuilder.setAttribute("firstName", userInfo.getGivenName());
-            serviceResponseBuilder.setAttribute("lastname", userInfo.getFamilyName());
-            serviceResponseBuilder.setAttribute("mobile", userInfo.getMobile());
-            serviceResponseBuilder.setAttribute("birthday", userInfo.getBirthDate());
-            serviceResponseBuilder.setAttribute("gender", userInfo.getGender()+"");
-            
-            //for work
-            serviceResponseBuilder.setAttribute("employeeNumber", userInfo.getEmployeeNumber());
-            serviceResponseBuilder.setAttribute("title", userInfo.getJobTitle());
-            serviceResponseBuilder.setAttribute("email", userInfo.getWorkEmail());
-            serviceResponseBuilder.setAttribute("department", userInfo.getDepartment());
-            serviceResponseBuilder.setAttribute("departmentId", userInfo.getDepartmentId());
-            serviceResponseBuilder.setAttribute("workRegion",userInfo.getWorkRegion());
-            
-            serviceResponseBuilder.success().setUser(userInfo.getUsername());
-            
-            return new ResponseEntity<>(serviceResponseBuilder.serviceResponseBuilder(), headers ,HttpStatus.OK);
-        } catch (final AuthenticationException e) {
-            _logger.error("BadCredentialsException ", e);
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (final Exception e) {
-            
-            _logger.error("Exception ", e);
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 	
 }

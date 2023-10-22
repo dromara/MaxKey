@@ -173,6 +173,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
                 //rest
                 .excludePathPatterns("/authz/cas/v1/tickets")
                 .excludePathPatterns("/authz/cas/v1/tickets/*")
+                .excludePathPatterns("/authz/cas/v1/users")
                 
                 //OAuth
                 .addPathPatterns("/authz/oauth/v20/authorize")
