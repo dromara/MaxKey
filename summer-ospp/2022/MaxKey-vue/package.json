@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "crypto-js": "^4.1.1",
+    "crypto-js": "^4.2.0",
     "ejs-mate": "^4.0.0",
     "element-plus": "^2.2.9",
     "express": "^4.18.1",
