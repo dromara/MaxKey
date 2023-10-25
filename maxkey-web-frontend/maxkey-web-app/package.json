@@ -60,7 +60,7 @@
     "@delon/util": "^13.4.0",
     "ajv": "^8.10.0",
     "ajv-formats": "^2.1.1",
-    "crypto-js": "^4.1.1",
+    "crypto-js": "^4.2.0",
     "monaco-editor": "^0.33.0",
     "ng-zorro-antd": "^13.1.1",
     "ngx-cookie-service": "^13.2.0",
