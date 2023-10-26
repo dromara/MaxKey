@@ -214,7 +214,7 @@
     </update>
     
     <delete id="deleteDynamicMember" parameterType="Groups" >
-    	delete from mxk_group_member gm
+    	delete gm from mxk_group_member gm
     	where type = 'user-dynamic'
     		and gm.groupid=#{id}
     		and not exists(
