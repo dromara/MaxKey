@@ -29,16 +29,16 @@ import org.slf4j.LoggerFactory;
 
 public class SynchronizerJob  implements Job {
 	static final Logger logger = LoggerFactory.getLogger(SynchronizerJob.class);
-    
-	SynchronizersService synchronizersService;
-    
+
     public static class JOBSTATUS{
-        public static int STOP = 0;
-        public static int RUNNING = 1;
-        public static int FINISHED = 2;
+        public static final int STOP = 0;
+        public static final int RUNNING = 1;
+        public static final int FINISHED = 2;
     }
     
-    private static HashMap<String,Integer> jobStatus = new HashMap<String,Integer>();
+	SynchronizersService synchronizersService;
+	
+    private static HashMap<String,Integer> jobStatus = new HashMap<>();
 
     @Override
     public void execute(JobExecutionContext context){

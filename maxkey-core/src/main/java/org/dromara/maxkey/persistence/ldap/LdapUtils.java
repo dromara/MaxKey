@@ -108,9 +108,9 @@ public class LdapUtils {
     	DirContext ctx = null;
         try {
         	ctx = new InitialDirContext(properties);
-            _logger.info("connect to ldap " + providerUrl + " seccessful.");
+            _logger.info("connect to ldap {} seccessful.",providerUrl);
         } catch (NamingException e) {
-            _logger.error("connect to ldap " + providerUrl + " fail.");
+            _logger.error("connect to ldap {}  fail.",providerUrl);
             _logger.error(e.getMessage());
         }
         return ctx;

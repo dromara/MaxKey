@@ -45,8 +45,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 @AutoConfiguration
 public class SynchronizerAutoConfiguration   implements InitializingBean {
-	private static final  Logger _logger = 
-            LoggerFactory.getLogger(SynchronizerAutoConfiguration.class);
+	private static final  Logger _logger = LoggerFactory.getLogger(SynchronizerAutoConfiguration.class);
 	public static final String SYNCHRONIZERS_SELECT_STATEMENT = "select * from mxk_synchronizers where status ='1'";
 	
 	 @Bean(name = "schedulerSynchronizerJobs")
@@ -76,7 +75,7 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 	                      Synchronizers synchronizer) throws SchedulerException {
 		JobDetail jobDetail = 
 		        JobBuilder.newJob(SynchronizerJob.class) 
-		        .withIdentity(synchronizer.getService()+"Job", "SynchronizerGroups")
+		        .withIdentity(synchronizer.getService()+"_Job", "SynchronizerGroups")
 		        .build();
 		
 		JobDataMap jobDataMap = new JobDataMap();
@@ -87,7 +86,7 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(synchronizer.getScheduler());
 		CronTrigger cronTrigger = 
 		        TriggerBuilder.newTrigger()
-		        .withIdentity("trigger"+synchronizer.getService(), "SynchronizerGroups")
+		        .withIdentity("trigger_"+synchronizer.getService(), "SynchronizerGroups")
 		        .usingJobData(jobDataMap)
 		        .withSchedule(scheduleBuilder)
 		        .build();
@@ -106,8 +105,7 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 	        	 synchronizer.setDriverClass(rs.getString("driverclass"));
 	        	 synchronizer.setPrincipal(  rs.getString("principal"));
 	        	 synchronizer.setCredentials(
-	        			 PasswordReciprocal.getInstance().decoder(
-	        					 rs.getString("credentials")));
+	        			 PasswordReciprocal.getInstance().decoder(rs.getString("credentials")));
 	        	 synchronizer.setResumeTime( rs.getString("resumetime"));
 	        	 synchronizer.setSuspendTime(rs.getString("suspendtime"));
 	        	 synchronizer.setUserFilters(	 rs.getString("userfilters"));

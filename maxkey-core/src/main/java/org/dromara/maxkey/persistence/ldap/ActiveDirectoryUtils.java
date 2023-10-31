@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class ActiveDirectoryUtils extends LdapUtils {
-    private final static Logger _logger = LoggerFactory.getLogger(ActiveDirectoryUtils.class);
+    private static final Logger _logger = LoggerFactory.getLogger(ActiveDirectoryUtils.class);
 
     protected String domain;
     
@@ -87,9 +87,9 @@ public class ActiveDirectoryUtils extends LdapUtils {
  	        	activeDirectoryDomain = domain;
  	        }
  	        
- 	        _logger.info("PROVIDER_DOMAIN:" + activeDirectoryDomain + " for " + domain);
+ 	        _logger.info("PROVIDER_DOMAIN : {} for {}" ,activeDirectoryDomain, domain);
  	        String activeDirectoryPrincipal = activeDirectoryDomain + "\\" + principal;
- 	        _logger.debug("Active Directory SECURITY_PRINCIPAL : " + activeDirectoryPrincipal);
+ 	        _logger.debug("Active Directory SECURITY_PRINCIPAL : {}" , activeDirectoryPrincipal);
  	        props.setProperty(Context.SECURITY_PRINCIPAL, activeDirectoryPrincipal);
  	        props.setProperty(Context.SECURITY_CREDENTIALS, credentials);
  	
