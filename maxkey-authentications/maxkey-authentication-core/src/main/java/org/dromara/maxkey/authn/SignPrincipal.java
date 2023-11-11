@@ -17,8 +17,8 @@
 
 package org.dromara.maxkey.authn;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.entity.UserInfo;
@@ -33,9 +33,13 @@ public class SignPrincipal implements  UserDetails {
     UserDetails userDetails;
     
     String sessionId;
-    ArrayList<GrantedAuthority> grantedAuthority;
-    ArrayList<GrantedAuthority> grantedAuthorityApps;
+    
+    List<GrantedAuthority> grantedAuthority;
+    
+    List<GrantedAuthority> grantedAuthorityApps;
+    
     boolean authenticated;
+    
     boolean roleAdministrators;
     
 	private  boolean accountNonExpired;
@@ -104,7 +108,7 @@ public class SignPrincipal implements  UserDetails {
         return grantedAuthority;
     }
 
-    public ArrayList<GrantedAuthority> getGrantedAuthority() {
+    public List<GrantedAuthority> getGrantedAuthority() {
         return grantedAuthority;
     }
 
@@ -116,7 +120,7 @@ public class SignPrincipal implements  UserDetails {
         this.userDetails = userDetails;
     }
 
-    public void setGrantedAuthority(ArrayList<GrantedAuthority> grantedAuthority) {
+    public void setGrantedAuthority(List<GrantedAuthority> grantedAuthority) {
         this.grantedAuthority = grantedAuthority;
     }
 
@@ -159,11 +163,11 @@ public class SignPrincipal implements  UserDetails {
         return this.enabled;
     }
 
-    public ArrayList<GrantedAuthority> getGrantedAuthorityApps() {
+    public List<GrantedAuthority> getGrantedAuthorityApps() {
         return grantedAuthorityApps;
     }
 
-    public void setGrantedAuthorityApps(ArrayList<GrantedAuthority> grantedAuthorityApps) {
+    public void setGrantedAuthorityApps(List<GrantedAuthority> grantedAuthorityApps) {
         this.grantedAuthorityApps = grantedAuthorityApps;
     }
 

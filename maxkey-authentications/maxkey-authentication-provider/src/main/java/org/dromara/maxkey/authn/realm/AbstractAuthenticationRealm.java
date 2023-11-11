@@ -17,14 +17,13 @@
 
 package org.dromara.maxkey.authn.realm;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
+import org.dromara.maxkey.entity.Groups;
 import org.dromara.maxkey.entity.HistoryLogin;
-import org.dromara.maxkey.entity.Roles;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.ip2location.Region;
@@ -89,8 +88,8 @@ public abstract class AbstractAuthenticationRealm {
 
     public abstract boolean passwordMatches(UserInfo userInfo, String password);
     
-    public List<Roles> queryGroups(UserInfo userInfo) {
-       return loginRepository.queryRoles(userInfo);
+    public List<Groups> queryGroups(UserInfo userInfo) {
+       return loginRepository.queryGroups(userInfo);
     }
 
     /**
@@ -99,7 +98,7 @@ public abstract class AbstractAuthenticationRealm {
      * @param userInfo
      * @return ArrayList<GrantedAuthority>
      */
-    public ArrayList<GrantedAuthority> grantAuthority(UserInfo userInfo) {
+    public List<GrantedAuthority> grantAuthority(UserInfo userInfo) {
         return loginRepository.grantAuthority(userInfo);
     }
     
@@ -109,7 +108,7 @@ public abstract class AbstractAuthenticationRealm {
      * @param grantedAuthoritys
      * @return ArrayList<GrantedAuthority Apps>
      */
-    public ArrayList<GrantedAuthority> queryAuthorizedApps(ArrayList<GrantedAuthority> grantedAuthoritys) {
+    public List<GrantedAuthority> queryAuthorizedApps(List<GrantedAuthority> grantedAuthoritys) {
         return loginRepository.queryAuthorizedApps(grantedAuthoritys);
     }
 

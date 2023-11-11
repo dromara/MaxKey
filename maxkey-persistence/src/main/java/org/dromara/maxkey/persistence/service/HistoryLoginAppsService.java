@@ -29,16 +29,36 @@ public class HistoryLoginAppsService  extends JpaService<HistoryLoginApps>{
 		super(HistoryLoginAppsMapper.class);
 	}
 
-
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
+	
 	@Override
 	public HistoryLoginAppsMapper getMapper() {
 		return (HistoryLoginAppsMapper)super.getMapper();
 	}
 	
+	@Override
 	public boolean  insert(HistoryLoginApps loginAppsHistory){
-		return getMapper().insert(loginAppsHistory)> 0;
+		//new Thread insert login app history
+		new Thread(new HistoryLoginAppsRunnable(getMapper(),loginAppsHistory)).start();
+		return true;
+	}
+	
+	public class HistoryLoginAppsRunnable implements Runnable{
+
+		HistoryLoginAppsMapper historyLoginAppsMapper;
+		
+		HistoryLoginApps loginAppsHistory;
+		
+		public HistoryLoginAppsRunnable(HistoryLoginAppsMapper historyLoginAppsMapper,
+				HistoryLoginApps loginAppsHistory) {
+			super();
+			this.historyLoginAppsMapper = historyLoginAppsMapper;
+			this.loginAppsHistory = loginAppsHistory;
+		}
+
+		@Override
+		public void run() {
+			historyLoginAppsMapper.insert(loginAppsHistory);
+		}
+		
 	}
 }

@@ -24,9 +24,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.dromara.maxkey.constants.ConstsRoles;
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.Roles;
+import org.dromara.maxkey.entity.Groups;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.util.StringUtils;
 import org.slf4j.Logger;
@@ -37,7 +38,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class LoginRepository {
-    private static Logger _logger = LoggerFactory.getLogger(LoginRepository.class);
+    private static final Logger _logger = LoggerFactory.getLogger(LoginRepository.class);
 
     private static final String LOCK_USER_UPDATE_STATEMENT = "update mxk_userinfo set islocked = ?  , unlocktime = ? where id = ?";
 
@@ -52,7 +53,7 @@ public class LoginRepository {
 
 
 
-    private static final String ROLES_SELECT_STATEMENT = "select distinct g.id,g.groupcode,g.groupname from mxk_userinfo u,mxk_groups g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
+    private static final String GROUPS_SELECT_STATEMENT = "select distinct g.id,g.groupcode,g.groupname from mxk_userinfo u,mxk_groups g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
 
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "select * from  mxk_userinfo where username = ? ";
     
@@ -60,7 +61,7 @@ public class LoginRepository {
     
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL = "select * from  mxk_userinfo where (username = ? or mobile = ? or email = ?) ";
     
-    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.appname from mxk_apps app,mxk_group_permissions gp,mxk_groups g  where app.id=gp.appid and app.status =	1 and gp.groupid=g.id and g.id in(%s)";
+    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.appname from mxk_apps app,mxk_group_permissions gp,mxk_groups g  where app.id=gp.appid and app.status = 1 and gp.groupid=g.id and g.id in(%s)";
     
     protected JdbcTemplate jdbcTemplate;
     
@@ -86,13 +87,8 @@ public class LoginRepository {
         }else if( LOGIN_ATTRIBUTE_TYPE == 3) {
         	 listUserInfo = findByUsernameOrMobileOrEmail(username,password);
         }
-        
-        UserInfo userInfo = null;
-        if (listUserInfo != null && listUserInfo.size() > 0) {
-            userInfo = listUserInfo.get(0);
-        }
-        _logger.debug("load UserInfo : " + userInfo);
-        return userInfo;
+        _logger.debug("load UserInfo : {}" , listUserInfo);
+        return (CollectionUtils.isNotEmpty(listUserInfo))? listUserInfo.get(0) : null;
     }
     
     public List<UserInfo> findByUsername(String username, String password) {
@@ -194,7 +190,7 @@ public class LoginRepository {
         }
     }
     
-    public ArrayList<GrantedAuthority> queryAuthorizedApps(ArrayList<GrantedAuthority> grantedAuthoritys) {
+    public List<GrantedAuthority> queryAuthorizedApps(List<GrantedAuthority> grantedAuthoritys) {
         String grantedAuthorityString="'ROLE_ALL_USER'";
         for(GrantedAuthority grantedAuthority : grantedAuthoritys) {
             grantedAuthorityString += ",'"+ grantedAuthority.getAuthority()+"'";
@@ -208,20 +204,18 @@ public class LoginRepository {
             }
         });
 
-        _logger.debug("list Authorized Apps  " + listAuthorizedApps);
+        _logger.debug("list Authorized Apps  {}" , listAuthorizedApps);
         return listAuthorizedApps;
     }
     
-    public List<Roles> queryRoles(UserInfo userInfo) {
-        List<Roles> listRoles = jdbcTemplate.query(ROLES_SELECT_STATEMENT, new RowMapper<Roles>() {
-            public Roles mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Roles role = new Roles(rs.getString("id"), rs.getString("groupcode"),rs.getString("groupname"), 0);
-
-                return role;
+    public List<Groups> queryGroups(UserInfo userInfo) {
+        List<Groups> listRoles = jdbcTemplate.query(GROUPS_SELECT_STATEMENT, new RowMapper<Groups>() {
+            public Groups mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new Groups(rs.getString("id"), rs.getString("groupcode"),rs.getString("groupname"), 0);
             }
         }, userInfo.getId());
 
-        _logger.debug("list Roles  " + listRoles);
+        _logger.debug("list Roles  {}" , listRoles);
         return listRoles;
     }
 
@@ -231,23 +225,23 @@ public class LoginRepository {
      * @param userInfo
      * @return ArrayList<GrantedAuthority>
      */
-    public ArrayList<GrantedAuthority> grantAuthority(UserInfo userInfo) {
-        // query roles for user
-        List<Roles> listRoles = queryRoles(userInfo);
+    public List<GrantedAuthority> grantAuthority(UserInfo userInfo) {
+        // query Groups for user
+        List<Groups> listGroups = queryGroups(userInfo);
 
-        //set default roles
-        ArrayList<GrantedAuthority> grantedAuthority = new ArrayList<GrantedAuthority>();
+        //set default groups
+        ArrayList<GrantedAuthority> grantedAuthority = new ArrayList<>();
         grantedAuthority.add(ConstsRoles.ROLE_USER);
         grantedAuthority.add(ConstsRoles.ROLE_ALL_USER);
         grantedAuthority.add(ConstsRoles.ROLE_ORDINARY_USER);
-        for (Roles role : listRoles) {
-            grantedAuthority.add(new SimpleGrantedAuthority(role.getId()));
-            if(role.getRoleCode().startsWith("ROLE_") 
-            		&& !grantedAuthority.contains(new SimpleGrantedAuthority(role.getRoleCode()))) {
-            	grantedAuthority.add(new SimpleGrantedAuthority(role.getRoleCode()));
+        for (Groups group : listGroups) {
+            grantedAuthority.add(new SimpleGrantedAuthority(group.getId()));
+            if(group.getGroupCode().startsWith("ROLE_") 
+            		&& !grantedAuthority.contains(new SimpleGrantedAuthority(group.getGroupCode()))) {
+            	grantedAuthority.add(new SimpleGrantedAuthority(group.getGroupCode()));
             }
         }
-        _logger.debug("Authority : " + grantedAuthority);
+        _logger.debug("Authority : {}" , grantedAuthority);
 
         return grantedAuthority;
     }

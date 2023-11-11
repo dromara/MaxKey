@@ -58,16 +58,16 @@ public class ForgotPasswordContorller {
     EmailConfig emailConfig;
     
     public class ForgotType{
-        public final static int NOTFOUND = 1;
-        public final static int EMAIL = 2;
-        public final static int MOBILE = 3;
-        public final static int CAPTCHAERROR = 4;
+        public static final  int NOTFOUND 			= 1;
+        public static final  int EMAIL 				= 2;
+        public static final  int MOBILE 			= 3;
+        public static final  int CAPTCHAERROR 		= 4;
     }
     
     public class PasswordResetResult{
-        public final static int SUCCESS = 1;
-        public final static int CAPTCHAERROR = 2;
-        public final static int PASSWORDERROR = 3;
+        public static final  int SUCCESS 			= 1;
+        public static final  int CAPTCHAERROR 		= 2;
+        public static final  int PASSWORDERROR 		= 3;
     }
     
     @Autowired
