@@ -13,7 +13,7 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "antd": "^4.22.3",
-    "axios": "^0.27.2",
+    "axios": "^1.6.0",
     "crypto-js": "^4.1.1",
     "element-plus": "^2.2.12",
     "element-react": "^1.4.34",
