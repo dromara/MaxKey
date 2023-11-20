@@ -57,6 +57,7 @@ public class OrganizationsService  extends JpaService<Organizations>{
 		return (OrganizationsMapper)super.getMapper();
 	}
 	
+	 @Override
 	 public boolean insert(Organizations organization) {
 	     if(super.insert(organization)){
 	    	 provisionService.send(
@@ -66,6 +67,7 @@ public class OrganizationsService  extends JpaService<Organizations>{
          return false;
 	 }
 	 
+	 @Override
 	 public boolean update(Organizations organization) {
 	     if(super.update(organization)){
 	    	 provisionService.send(
@@ -77,7 +79,7 @@ public class OrganizationsService  extends JpaService<Organizations>{
  
 	 public void saveOrUpdate(Organizations organization) {
 		 Organizations loadOrg =findOne(" id = ? and instid = ?", 
-					new Object[] { organization.getId().toString(), organization.getInstId() },
+					new Object[] { organization.getId(), organization.getInstId() },
               new int[] { Types.VARCHAR, Types.VARCHAR });
 		 if( loadOrg == null) {
 				insert(organization);
@@ -90,6 +92,7 @@ public class OrganizationsService  extends JpaService<Organizations>{
 		 return getMapper().queryOrgs(organization);
 	 }
 	 
+	 @Override
 	 public boolean delete(Organizations organization) {
 	     if(super.delete(organization)){
 	    	 provisionService.send(
@@ -137,14 +140,13 @@ public class OrganizationsService  extends JpaService<Organizations>{
 	}
 	
 	public static boolean isRootOrg(Organizations rootOrg){
-		if(rootOrg.getParentId() == null 
+		return (
+				rootOrg.getParentId() == null 
 				|| rootOrg.getParentId().equalsIgnoreCase("-1")
 				|| rootOrg.getParentId().equalsIgnoreCase("0")
 				|| rootOrg.getParentId().equalsIgnoreCase(rootOrg.getId())
-				|| rootOrg.getParentId().equalsIgnoreCase(rootOrg.getInstId())) {
-			return true;
-		}
-		return false;
+				|| rootOrg.getParentId().equalsIgnoreCase(rootOrg.getInstId())
+				);
 	}
 
 	void reorg(HashMap<String, Organizations> orgMap, List<Organizations> orgList,Organizations rootOrg) {

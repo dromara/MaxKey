@@ -19,7 +19,7 @@ package org.dromara.maxkey.synchronizer.reorg;
 
 import org.dromara.maxkey.entity.Synchronizers;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.synchronizer.workweixin.service.ReorgDeptService;
+import org.dromara.maxkey.synchronizer.reorg.service.ReorgDeptService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReorgDeptSynchronizerService implements ISynchronizerService {
-    final static Logger _logger = LoggerFactory.getLogger(ReorgDeptSynchronizerService.class);
+	static final Logger _logger = LoggerFactory.getLogger(ReorgDeptSynchronizerService.class);
     Synchronizers synchronizer;
 
     @Autowired
