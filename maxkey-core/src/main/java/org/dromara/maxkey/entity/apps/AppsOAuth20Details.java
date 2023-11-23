@@ -17,12 +17,7 @@
 
 package org.dromara.maxkey.entity.apps;
 
-import org.dromara.mybatis.jpa.entity.JpaEntity;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.io.Serializable;
@@ -119,6 +114,8 @@ public class AppsOAuth20Details extends Apps  implements Serializable {
         this.setFrequently(application.getFrequently());
         this.setStatus(application.getStatus());
         this.setInducer(application.getInducer());
+        this.setExtendAttr(application.getExtendAttr());
+        this.setIsExtendAttr(application.getIsExtendAttr());
         
         this.clientSecret = baseClientDetails.getClientSecret();
         this.scope = StringUtils
