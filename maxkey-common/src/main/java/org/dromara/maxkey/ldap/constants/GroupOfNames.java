@@ -15,10 +15,11 @@
  */
  
 
-package org.dromara.maxkey.constants.ldap;
+package org.dromara.maxkey.ldap.constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * GroupOfNames objectclass attribute
@@ -27,9 +28,9 @@ import java.util.Arrays;
  *
  */
 public class GroupOfNames {
-	public static ArrayList<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "groupOfNames"));
+	public static final List<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "groupOfNames"));
 	
-	public static String	   objectClass				 	 = "groupOfNames";
+	public static final String objectClass				 	 = "groupOfNames";
 	public static final String DISTINGUISHEDNAME 			 = "distinguishedname";
 	public static final String CN                            = "cn";
 	public static final String MEMBER                  		 = "member";

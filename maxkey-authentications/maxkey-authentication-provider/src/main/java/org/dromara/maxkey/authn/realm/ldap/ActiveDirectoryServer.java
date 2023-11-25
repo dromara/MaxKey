@@ -21,7 +21,7 @@
 package org.dromara.maxkey.authn.realm.ldap;
 
 import org.dromara.maxkey.authn.realm.IAuthenticationServer;
-import org.dromara.maxkey.persistence.ldap.ActiveDirectoryUtils;
+import org.dromara.maxkey.ldap.ActiveDirectoryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

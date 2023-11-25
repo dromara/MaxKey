@@ -20,7 +20,7 @@ package org.dromara.maxkey.persistence.ldap;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 
-import org.dromara.maxkey.persistence.ldap.ActiveDirectoryUtils;
+import org.dromara.maxkey.ldap.ActiveDirectoryUtils;
 
 public class ActiveDirectoryUtilsTest {
 	public static void main(String[] args) throws Exception {

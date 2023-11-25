@@ -26,14 +26,14 @@ import javax.naming.directory.SearchResult;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.constants.ldap.ActiveDirectoryUser;
 import org.dromara.maxkey.crypto.DigestUtils;
 import org.dromara.maxkey.entity.HistorySynchronizer;
 import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.UserInfo;
-import org.dromara.maxkey.persistence.ldap.ActiveDirectoryUtils;
-import org.dromara.maxkey.persistence.ldap.LdapUtils;
+import org.dromara.maxkey.ldap.ActiveDirectoryUtils;
+import org.dromara.maxkey.ldap.LdapUtils;
+import org.dromara.maxkey.ldap.constants.ActiveDirectoryUser;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;

@@ -18,7 +18,7 @@
 package org.dromara.maxkey.synchronizer.ldap;
 
 import org.dromara.maxkey.entity.Synchronizers;
-import org.dromara.maxkey.persistence.ldap.LdapUtils;
+import org.dromara.maxkey.ldap.LdapUtils;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -15,7 +15,7 @@
  */
  
 
-package org.dromara.maxkey.persistence.ldap;
+package org.dromara.maxkey.ldap;
 
 import java.util.Properties;
 

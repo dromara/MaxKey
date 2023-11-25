@@ -19,22 +19,22 @@ package org.dromara.maxkey.provision;
 
 public class ProvisionTopic {
     
-    public final static String   USERINFO_TOPIC                     = "MXK_IDENTITY_USERINFO_TOPIC";
+    public static final String   USERINFO_TOPIC                     = "MXK_IDENTITY_USERINFO_TOPIC";
     
-    public final  static String  PASSWORD_TOPIC                     = "MXK_IDENTITY_USERINFO_PASSWORD_TOPIC";
+    public static final  String  PASSWORD_TOPIC                     = "MXK_IDENTITY_USERINFO_PASSWORD_TOPIC";
     
-    public final  static String  ORG_TOPIC                          = "MXK_IDENTITY_ORG_TOPIC";
+    public static final  String  ORG_TOPIC                          = "MXK_IDENTITY_ORG_TOPIC";
     
-    public final  static String  ACCOUNT_TOPIC                      = "MXK_IDENTITY_ACCOUNT_TOPIC";
+    public static final  String  ACCOUNT_TOPIC                      = "MXK_IDENTITY_ACCOUNT_TOPIC";
     
-    public final  static String  ROLE_TOPIC               			= "MXK_ROLE_TOPIC";
+    public static final  String  ROLE_TOPIC               			= "MXK_ROLE_TOPIC";
     
-    public final  static String  ROLE_MEMBER_TOPIC        			= "MXK_ROLE_MEMBER_TOPIC";
+    public static final  String  ROLE_MEMBER_TOPIC        			= "MXK_ROLE_MEMBER_TOPIC";
     
-    public final  static String  ROLE_PRIVILEGES_TOPIC    			= "MXK_ROLE_PRIVILEGES_TOPIC";
+    public static final  String  ROLE_PRIVILEGES_TOPIC    			= "MXK_ROLE_PRIVILEGES_TOPIC";
     
-    public final  static String  RESOURCE_TOPIC           			= "MXK_RESOURCE_TOPIC";
+    public static final  String  RESOURCE_TOPIC           			= "MXK_RESOURCE_TOPIC";
     
-    public final  static String  CONNECTOR_HISTORY_TOPIC            = "MXK_CONNECTOR_HISTORY_TOPIC";
+    public static final  String  CONNECTOR_HISTORY_TOPIC            = "MXK_CONNECTOR_HISTORY_TOPIC";
      
 }

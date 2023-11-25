@@ -55,8 +55,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
-import com.nimbusds.jose.JOSEException;
-
 @AutoConfiguration
 public class ApplicationAutoConfiguration  implements InitializingBean {
     static final  Logger _logger = LoggerFactory.getLogger(ApplicationAutoConfiguration.class);

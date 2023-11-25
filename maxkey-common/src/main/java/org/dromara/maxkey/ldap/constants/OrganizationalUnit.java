@@ -15,67 +15,71 @@
  */
  
 
-package org.dromara.maxkey.constants.ldap;
+package org.dromara.maxkey.ldap.constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
- * Organization objectclass attribute
+ * OrganizationalUnit objectclass attribute
  * top
  * @author shimingxy
  *
  */
-public class Organization {
-	public static ArrayList<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "organization"));
-	
-	public static String	   objectClass				 	 = "organization";
+public class OrganizationalUnit {
+	public static final List<String> OBJECTCLASS = new ArrayList<>(Arrays.asList("top", "OrganizationalUnit"));
+	public static final String objectClass				 	 = "OrganizationalUnit";
 	public static final String DISTINGUISHEDNAME 			 = "distinguishedname";
-	
-	/**Organization o*/
-	public static final String O                          	 = "o";
-	/**Organization userPassword*/
+	/**OrganizationalUnit ou*/
+	public static final String OU                         	 = "ou";
+	/**OrganizationalUnit userPassword*/
 	public static final String USERPASSWORD                  = "userPassword";
-	/**Organization searchGuide*/
+	/**OrganizationalUnit searchGuide*/
 	public static final String SEARCHGUIDE                   = "searchGuide";
-	/**Organization seeAlso*/
+	/**OrganizationalUnit seeAlso*/
 	public static final String SEEALSO                       = "seeAlso";
-	/**Organization description*/
+	/**OrganizationalUnit description*/
 	public static final String DESCRIPTION                   = "description";
-	/**Organization businessCategory*/
+	/**OrganizationalUnit businessCategory*/
 	public static final String BUSINESSCATEGORY              = "businessCategory";
-	/**Organization x121Address*/
+	/**OrganizationalUnit x121Address*/
 	public static final String X121ADDRESS                   = "x121Address";
-	/**Organization registeredAddress*/
+	/**OrganizationalUnit registeredAddress*/
 	public static final String REGISTEREDADDRESS             = "registeredAddress";
-	/**Organization destinationIndicator*/
+	/**OrganizationalUnit destinationIndicator*/
 	public static final String DESTINATIONINDICATOR          = "destinationIndicator";
-	/**Organization preferredDeliveryMethod*/
+	/**OrganizationalUnit preferredDeliveryMethod*/
 	public static final String PREFERREDDELIVERYMETHOD       = "preferredDeliveryMethod";
-	/**Organization telexNumber*/
+	/**OrganizationalUnit telexNumber*/
 	public static final String TELEXNUMBER                   = "telexNumber";
-	/**Organization teletexTerminalIdentifier*/
+	/**OrganizationalUnit teletexTerminalIdentifier*/
 	public static final String TELETEXTERMINALIDENTIFIER     = "teletexTerminalIdentifier";
-	/**Organization telephoneNumber*/
+	/**OrganizationalUnit telephoneNumber*/
 	public static final String TELEPHONENUMBER     		     = "telephoneNumber";
-	/**Organization internationaliSDNNumber*/
+	/**OrganizationalUnit internationaliSDNNumber*/
 	public static final String INTERNATIONALISDNNUMBER       = "internationaliSDNNumber";
-	/**Organization facsimileTelephoneNumber*/
+	/**OrganizationalUnit facsimileTelephoneNumber*/
 	public static final String FACSIMILETELEPHONENUMBER      = "facsimileTelephoneNumber";
-	/**Organization street*/
+	/**OrganizationalUnit street*/
 	public static final String STREET                        = "street";
-	/**Organization postOfficeBox*/
+	/**OrganizationalUnit postOfficeBox*/
 	public static final String POSTOFFICEBOX                 = "postOfficeBox";
-	/**Organization postalCode*/
+	/**OrganizationalUnit postalCode*/
 	public static final String POSTALCODE                    = "postalCode";
-	/**Organization postalAddress*/
+	/**OrganizationalUnit postalAddress*/
 	public static final String POSTALADDRESS                 = "postalAddress";
-	/**Organization physicalDeliveryOfficeName*/
+	/**OrganizationalUnit physicalDeliveryOfficeName*/
 	public static final String PHYSICALDELIVERYOFFICENAME    = "physicalDeliveryOfficeName";
-	/**Organization st*/
-	public static final String ST                            = "st";
-	/**Organization l*/
-	public static final String L                             = "l";
+	/**OrganizationalUnit st*/
+	public static final String ST                            = "st";//省/州
+	/**OrganizationalUnit l*/
+	public static final String L                             = "l";//县市
+
+	public static final String CO                            = "co"; //中国
+	public static final String C                             = "c"; //CN
+	public static final String COUNTRYCODE                   = "countryCode";//156
+	public static final String NAME                   		 = "name";
 	
 	//for id
 	public static final String CN                   		 = "cn";

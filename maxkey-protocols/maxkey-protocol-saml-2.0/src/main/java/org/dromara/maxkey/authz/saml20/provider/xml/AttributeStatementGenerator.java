@@ -25,11 +25,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.dromara.maxkey.constants.ConstsBoolean;
-import org.dromara.maxkey.constants.ldap.ActiveDirectoryUser;
 import org.dromara.maxkey.entity.ExtraAttr;
 import org.dromara.maxkey.entity.ExtraAttrs;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
+import org.dromara.maxkey.ldap.constants.ActiveDirectoryUser;
 import org.opensaml.Configuration;
 import org.opensaml.saml2.core.Attribute;
 import org.opensaml.saml2.core.AttributeStatement;

@@ -26,7 +26,7 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
 import org.dromara.maxkey.authn.realm.IAuthenticationServer;
-import org.dromara.maxkey.persistence.ldap.LdapUtils;
+import org.dromara.maxkey.ldap.LdapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
