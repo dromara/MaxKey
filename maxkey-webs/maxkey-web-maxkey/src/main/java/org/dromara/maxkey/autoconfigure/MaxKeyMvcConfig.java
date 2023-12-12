@@ -38,7 +38,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebMvc
@@ -72,31 +71,6 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
     
     @Autowired
     HistorySignOnAppInterceptor historySignOnAppInterceptor;
-    
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    	logger.debug("add Resource Handlers");
-        logger.debug("add statics");
-        registry.addResourceHandler("/static/**")
-                .addResourceLocations("classpath:/static/");
-        
-        logger.debug("add templates");
-        registry.addResourceHandler("/templates/**")
-                .addResourceLocations("classpath:/templates/");
-        
-        logger.debug("add swagger");
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-        
-        logger.debug("add knife4j");
-        registry.addResourceHandler("doc.html")
-        		.addResourceLocations("classpath:/META-INF/resources/");
-        
-        registry.addResourceHandler("/webjars/**")
-        		.addResourceLocations("classpath:/META-INF/resources/webjars/");
-        
-        logger.debug("add Resource Handler finished .");
-    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

@@ -10,6 +10,7 @@ org.dromara.maxkey.autoconfigure.SessionAutoConfiguration
 org.dromara.maxkey.autoconfigure.TokenAutoConfiguration
 org.dromara.maxkey.autoconfigure.CasAutoConfiguration
 org.dromara.maxkey.autoconfigure.Oauth20AutoConfiguration
+org.dromara.maxkey.autoconfigure.ResourceMvcConfig
 org.dromara.maxkey.autoconfigure.Saml20AutoConfiguration
 org.dromara.maxkey.autoconfigure.SocialSignOnAutoConfiguration
 org.dromara.maxkey.autoconfigure.SwaggerConfig
