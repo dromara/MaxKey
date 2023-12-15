@@ -17,10 +17,7 @@
 
 package org.dromara.maxkey.autoconfigure;
 
-import java.util.List;
-
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
-import org.dromara.maxkey.authn.web.CurrentUserMethodArgumentResolver;
 import org.dromara.maxkey.authn.web.interceptor.PermissionInterceptor;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.web.interceptor.RestApiPermissionAdapter;
@@ -28,11 +25,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 @EnableWebMvc
 @AutoConfiguration
@@ -104,16 +99,6 @@ public class MaxKeyOpenApiMvcConfig implements WebMvcConfigurer {
 		
         logger.debug("add Rest Api Permission Adapter");
         
-    }
-    
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(currentUserMethodArgumentResolver());
-    }
-    
-    @Bean
-    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
-        return new CurrentUserMethodArgumentResolver();
     }
 
 }

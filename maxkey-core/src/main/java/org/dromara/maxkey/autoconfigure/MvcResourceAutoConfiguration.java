@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebMvc
 @AutoConfiguration
-public class ResourceMvcConfig implements WebMvcConfigurer {
-    private static final  Logger logger = LoggerFactory.getLogger(ResourceMvcConfig.class);
+public class MvcResourceAutoConfiguration implements WebMvcConfigurer {
+    private static final  Logger logger = LoggerFactory.getLogger(MvcResourceAutoConfiguration.class);
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -5,11 +5,12 @@ org.dromara.maxkey.autoconfigure.JwtAuthnAutoConfiguration
 org.dromara.maxkey.autoconfigure.RedisAutoConfiguration
 org.dromara.maxkey.autoconfigure.AuthnProviderAutoConfiguration
 org.dromara.maxkey.autoconfigure.OneTimePasswordAutoConfiguration
-org.dromara.maxkey.autoconfigure.ResourceMvcConfig
+org.dromara.maxkey.autoconfigure.MvcCurrentUserAutoConfiguration
+org.dromara.maxkey.autoconfigure.MvcResourceAutoConfiguration
 org.dromara.maxkey.autoconfigure.SmsAutoConfiguration
 org.dromara.maxkey.autoconfigure.SessionAutoConfiguration
 org.dromara.maxkey.autoconfigure.TokenAutoConfiguration
-org.dromara.maxkey.autoconfigure.SwaggerConfig
+org.dromara.maxkey.autoconfigure.SwaggerAutoConfiguration
 org.dromara.maxkey.autoconfigure.Oauth20ClientAutoConfiguration
 org.dromara.maxkey.autoconfigure.MaxKeyOpenApiConfig
 org.dromara.maxkey.autoconfigure.MaxKeyOpenApiMvcConfig

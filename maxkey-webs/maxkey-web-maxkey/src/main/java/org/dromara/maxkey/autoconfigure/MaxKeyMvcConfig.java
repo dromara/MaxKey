@@ -187,14 +187,4 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
 
     }
     
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(currentUserMethodArgumentResolver());
-    }
-    
-    @Bean
-    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
-        return new CurrentUserMethodArgumentResolver();
-    }
-    
 }
