@@ -24,6 +24,10 @@ public class ProxyServiceResponseBuilder extends  ServiceResponseBuilder{
 	public ProxyServiceResponseBuilder() {
 		
 	}
+	
+	public ProxyServiceResponseBuilder(String format) {
+		this.format = format;
+	}
 
 	@Override
 	public String  serviceResponseBuilder() {

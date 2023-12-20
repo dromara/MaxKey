@@ -200,7 +200,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
 				e.printStackTrace();
 			}
 		}
-		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
+		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder(format);
 		
 		if(storedTicket!=null){
 		    SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
@@ -328,7 +328,7 @@ Response on ticket validation failure:
 				e.printStackTrace();
 			}
 		}
-		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
+		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder(format);
 		
 		if(storedTicket!=null){
 		    SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
@@ -420,7 +420,7 @@ For all error codes, it is RECOMMENDED that CAS provide a more detailed message 
                 +" , targetService " + targetService 
                 +" , format " + format
         );
-	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder();
+	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder(format);
 	    
 	    ProxyGrantingTicketImpl proxyGrantingTicketImpl = (ProxyGrantingTicketImpl)casProxyGrantingTicketServices.get(pgt);
 	    if(proxyGrantingTicketImpl != null) {

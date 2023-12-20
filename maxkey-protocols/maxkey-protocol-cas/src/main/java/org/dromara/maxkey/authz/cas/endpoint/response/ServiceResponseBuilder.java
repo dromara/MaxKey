@@ -27,6 +27,15 @@ import org.slf4j.LoggerFactory;
 public class ServiceResponseBuilder extends CasServiceResponse {
 	final static Logger _logger = LoggerFactory.getLogger(ServiceResponseBuilder.class);
 	
+	
+	public ServiceResponseBuilder(){
+		
+	}
+	
+	public ServiceResponseBuilder(String format){
+		this.format = format;
+	}
+
 	@Override
 	public String  serviceResponseBuilder() {
 		String responseString = "";

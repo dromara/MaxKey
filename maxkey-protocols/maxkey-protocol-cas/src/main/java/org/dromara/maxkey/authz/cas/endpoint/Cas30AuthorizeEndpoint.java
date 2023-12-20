@@ -82,7 +82,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 				e.printStackTrace();
 			}
 		}
-		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
+		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder(format);
 		
 		if(storedTicket!=null){
 		    SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
@@ -134,7 +134,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
                 +" , targetService " + targetService 
                 +" , format " + format
         );
-	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder();
+	    ProxyServiceResponseBuilder proxyServiceResponseBuilder=new ProxyServiceResponseBuilder(format);
 	    ProxyGrantingTicketImpl proxyGrantingTicketImpl = (ProxyGrantingTicketImpl)casProxyGrantingTicketServices.get(pgt);
 	    if(proxyGrantingTicketImpl != null) {
 	    	ProxyTicketImpl ProxyTicketImpl = new ProxyTicketImpl(proxyGrantingTicketImpl.getAuthentication(),proxyGrantingTicketImpl.getCasDetails());
@@ -173,7 +173,7 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 				e.printStackTrace();
 			}
 		}
-		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder();
+		ServiceResponseBuilder serviceResponseBuilder=new ServiceResponseBuilder(format);
 		
 		if(storedTicket!=null){
 		    SignPrincipal authentication = ((SignPrincipal)storedTicket.getAuthentication().getPrincipal());
