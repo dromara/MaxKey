@@ -49,8 +49,7 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
         ProductEnvironment.listEnvVars();
         
         VFS.addImplClass(SpringBootVFS.class);
-        ConfigurableApplicationContext applicationContext = 
-                SpringApplication.run(MaxKeyApplication.class, args);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(MaxKeyApplication.class, args);
         InitializeContext initWebContext = new InitializeContext(applicationContext);
         try {
             initWebContext.init(null);
