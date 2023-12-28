@@ -57,7 +57,7 @@ public class RedisOtpTokenStore  extends AbstractOtpTokenStore {
         RedisConnection conn = connectionFactory.getConnection();
         OneTimePassword otp = (OneTimePassword)conn.getObject(
                 PREFIX + userInfo.getUsername() + "_" + type + "_" + token);
-        conn.delete(PREFIX + userInfo.getUsername() + "_" + type + "_" + token);
+//        conn.delete(PREFIX + userInfo.getUsername() + "_" + type + "_" + token);
         conn.close();
         if (otp != null) { 
             return true;
