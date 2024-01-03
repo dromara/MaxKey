@@ -69,7 +69,9 @@ public class ChangePasswodController {
 	public ResponseEntity<?> changePasswod(
 			@RequestBody ChangePassword changePassword,
 			@CurrentUser UserInfo currentUser) {
-
+		if(!currentUser.getId().equals(changePassword.getId())){
+			return null;
+		}
 		changePassword.setUserId(currentUser.getId());
 		changePassword.setUsername(currentUser.getUsername());
 		changePassword.setInstId(currentUser.getInstId());

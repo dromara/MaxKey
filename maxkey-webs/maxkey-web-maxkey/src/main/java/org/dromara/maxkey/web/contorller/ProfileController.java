@@ -66,7 +66,9 @@ public class ProfileController {
 				@CurrentUser UserInfo currentUser,
                 BindingResult result) {
         logger.debug(userInfo.toString());
-
+        if(!currentUser.getId().equals(userInfo.getId())){
+            return null;
+        }
 //		if(userInfo.getExtraAttributeValue()!=null){
 //			String []extraAttributeLabel=userInfo.getExtraAttributeName().split(",");
 //			String []extraAttributeValue=userInfo.getExtraAttributeValue().split(",");
