@@ -390,6 +390,11 @@ subprojects {
          implementation group: 'io.prometheus', name: 'simpleclient_common', version: "${prometheusVersion}"
          //阿里云
          implementation group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: "${aliyunjavasdkcoreVersion}"
+         implementation group: 'io.opentracing', name: 'opentracing-api', version: "${opentracingVersion}"
+         implementation group: 'io.opentracing', name: 'opentracing-noop', version: "${opentracingVersion}"
+         implementation group: 'io.opentracing', name: 'opentracing-util', version: "${opentracingVersion}"
+         //阿里云aliyun-java-sdk-core依赖jakarta.xml.bind
+         implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
          //腾讯云
          implementation group: 'com.tencentcloudapi', name: 'tencentcloud-sdk-java', version: "${tencentcloudsdkjavaVersion}"
          //docs
