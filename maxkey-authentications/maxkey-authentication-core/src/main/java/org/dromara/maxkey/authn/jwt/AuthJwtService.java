@@ -119,8 +119,8 @@ public class AuthJwtService {
 	 * @return true or false
 	 */
 	public boolean validateJwtToken(String authToken) {
-		try {
-			if(StringUtils.isNotBlank(authToken)) {
+		if(StringUtils.isNotBlank(authToken)) {
+			try {
 				JWTClaimsSet claims = resolve(authToken);
 				boolean isExpiration = claims.getExpirationTime().after(DateTime.now().toDate());
 				boolean isVerify = hmac512Service.verify(authToken);
@@ -131,10 +131,10 @@ public class AuthJwtService {
 						isVerify,DateTime.now().toDate(),claims.getExpirationTime(),isExpiration);
 				}
 				return isVerify && isExpiration;
+			} catch (ParseException e) {
+				_logger.error("authToken {}",authToken);
+				_logger.error("ParseException ",e);
 			}
-		} catch (ParseException e) {
-			_logger.error("authToken {}",authToken);
-			_logger.error("ParseException ",e);
 		}
 		return false;
 	}
