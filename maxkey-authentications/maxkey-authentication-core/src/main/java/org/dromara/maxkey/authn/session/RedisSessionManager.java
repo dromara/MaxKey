@@ -92,7 +92,7 @@ public class RedisSessionManager implements SessionManager {
         return session;
     }
 
-   
+    @Override
     public int getValiditySeconds() {
 		return validitySeconds;
 	}

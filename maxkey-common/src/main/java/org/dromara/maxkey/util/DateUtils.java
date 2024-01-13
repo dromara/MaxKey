@@ -77,13 +77,13 @@ public class DateUtils {
 	public final static int compareDate(String stringValue1, String stringValue2)
 			throws ParseException {
 		Date date1 = tryParse(stringValue1);
-		if (date1 == null)
-			throw new ParseException("Can not parse " + stringValue1
-					+ " to Date.", 0);
+		if (date1 == null) {
+			throw new ParseException("Can not parse " + stringValue1+ " to Date.", 0);
+		}
 		Date date2 = tryParse(stringValue2);
-		if (date2 == null)
-			throw new ParseException("Can not parse " + stringValue1
-					+ " to Date.", 0);
+		if (date2 == null) {
+			throw new ParseException("Can not parse " + stringValue1+ " to Date.", 0);
+		}
 		return date1.compareTo(date2);
 	}
 
@@ -343,10 +343,12 @@ public class DateUtils {
 	 * @return
 	 */
 	public static int getDayOfWeek(int SUN_FST_DAY_OF_WEEK) {
-		if (SUN_FST_DAY_OF_WEEK > 7 || SUN_FST_DAY_OF_WEEK < 1)
+		if (SUN_FST_DAY_OF_WEEK > 7 || SUN_FST_DAY_OF_WEEK < 1) {
 			return 0;
-		if (SUN_FST_DAY_OF_WEEK == 1)
+		}
+		if (SUN_FST_DAY_OF_WEEK == 1) {
 			return 7;
+		}
 		return SUN_FST_DAY_OF_WEEK - 1;
 	}
 

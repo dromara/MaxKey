@@ -95,7 +95,8 @@ public class SynchronizerAutoConfiguration   implements InitializingBean {
 
 	public List<Synchronizers> querySynchronizers(JdbcTemplate  jdbcTemplate) {
 		return  jdbcTemplate.query(SYNCHRONIZERS_SELECT_STATEMENT, new RowMapper<Synchronizers>() {
-        	public Synchronizers mapRow(ResultSet rs, int rowNum) throws SQLException {
+			@Override
+			public Synchronizers mapRow(ResultSet rs, int rowNum) throws SQLException {
 	        	 Synchronizers synchronizer = new Synchronizers();
 	        	 synchronizer.setId(         rs.getString("id"));
 	        	 synchronizer.setName(       rs.getString("name"));

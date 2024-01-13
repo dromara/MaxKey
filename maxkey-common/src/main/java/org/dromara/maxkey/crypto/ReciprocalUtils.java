@@ -170,14 +170,12 @@ public final class ReciprocalUtils {
     }
 
     public static String decoderHex(String ciphers, String secretKey, String algorithm) {
-        if(StringUtils.isBlank(ciphers))return "";
-        
-        if (keyLengthCheck(secretKey, algorithm)) {
+        if(StringUtils.isNotBlank(ciphers) && keyLengthCheck(secretKey, algorithm)) {
             byte[] byteSimple = HexUtils.hex2Bytes(ciphers);
 
             return decoder(byteSimple, secretKey, algorithm);
         }
-        return null;
+        return "";
     }
     
     public static String encode2Hex(String simple, String secretKey) {

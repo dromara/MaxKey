@@ -27,15 +27,17 @@ public abstract class AbstractIpLocation implements IpLocation{
 
 	int failCount = 0;
 	
+	@Override
 	public int getFailCount() {
 		return failCount;
 	};
 	
+	@Override
 	public int plusFailCount() {
 		return failCount++;
 	};
 	
-	
+	@Override
 	public String getLocation(String region) {
 		if(region.endsWith("电信") || region.endsWith("移动") || region.endsWith("联通")) {
 			region.substring(0, region.length() - 2).trim();

@@ -47,6 +47,7 @@ public final class DsaSigner implements ISigner {
 	 * */
 	public static final String SIGNATURE_ALGORITHM = "SHA1withDSA";
 
+	@Override
 	public  byte[] sign(byte[] dataBytes, byte[] privateKeyByte) throws Exception {
 		// ȡ��˽Կ
 		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(privateKeyByte);
@@ -63,7 +64,7 @@ public final class DsaSigner implements ISigner {
 		return signature.sign();
 	}
 	
-	
+	@Override
 	public  String signB64(String data, String privateKey) throws Exception {
 		
 		byte[] privateKeyByte = Base64Utils.decoder(privateKey);
@@ -74,6 +75,7 @@ public final class DsaSigner implements ISigner {
 		return Base64Utils.encoder(signatureBytes);
 	}
 
+	@Override
 	public boolean verify(byte[] dataBytes, byte[] publicKeyBytes, byte[] signBytes)throws Exception {
 
 		KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM.name());
@@ -92,6 +94,7 @@ public final class DsaSigner implements ISigner {
 		return signature.verify(signBytes);
 	}
 	
+	@Override
 	public boolean verifyB64(String data, String publicKey, String sign)throws Exception {
 
 		byte[] privateKeyByte = Base64Utils.decoder(publicKey);

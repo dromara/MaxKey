@@ -56,6 +56,7 @@ public class PasswordReciprocal implements PasswordEncoder {
         return plain.substring(salt.substring(PREFFIX_LENGTH).length());
     }
 
+    @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
     	String salt = encodedPassword.subSequence(0, 29).toString();
     	String finalPassword = encode(rawPassword,salt);

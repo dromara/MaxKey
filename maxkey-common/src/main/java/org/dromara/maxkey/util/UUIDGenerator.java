@@ -100,18 +100,18 @@ public final class UUIDGenerator {
      * @param bytes UUID content
      */
     public UUIDGenerator(byte[] bytes) {
-        if (bytes.length != 16)
+        if (bytes.length != 16) {
             throw new RuntimeException("Attempted to parse malformed UUID: " + Arrays.toString(bytes));
-
+        }
         content = Arrays.copyOf(bytes, 16);
     }
 
     public UUIDGenerator(String id) {
         id = id.trim();
 
-        if (id.length() != 36)
+        if (id.length() != 36) {
             throw new RuntimeException("Attempted to parse malformed UUID: " + id);
-
+        }
         content = new byte[16];
         char[] chars = id.toCharArray();
 
@@ -180,12 +180,15 @@ public final class UUIDGenerator {
      * @return four bit number representing offset from '0'
      */
     private static int intValue(char x) {
-        if (x >= '0' && x <= '9')
+        if (x >= '0' && x <= '9') {
             return x - '0';
-        if (x >= 'a' && x <= 'f')
+        }
+        if (x >= 'a' && x <= 'f') {
             return x - 'a' + 10;
-        if (x >= 'A' && x <= 'F')
+        }
+        if (x >= 'A' && x <= 'F') {
             return x - 'A' + 10;
+        }
         throw new RuntimeException("Error parsing UUID at character: " + x);
     }
 
@@ -267,9 +270,9 @@ public final class UUIDGenerator {
      * @return id of process that generated the UUID, or -1 for unrecognized format
      */
     public int getProcessId() {
-        if (getVersion() != VERSION)
+        if (getVersion() != VERSION) {
             return -1;
-
+        }
         return ((content[4] & 0xFF) << 8) | (content[5] & 0xFF);
     }
 
@@ -278,9 +281,9 @@ public final class UUIDGenerator {
      * @return millisecond UTC timestamp from generation of the UUID, or null for unrecognized format
      */
     public Date getTimestamp() {
-        if (getVersion() != VERSION)
+        if (getVersion() != VERSION) {
             return null;
-
+        }
         long time;
         time  = ((long)content[10] & 0xFF) << 40;
         time |= ((long)content[11] & 0xFF) << 32;
@@ -298,9 +301,9 @@ public final class UUIDGenerator {
      * @return byte array of UUID fragment, or null for unrecognized format
      */
     public byte[] getMacFragment() {
-        if (getVersion() != 'b')
+        if (getVersion() != 'b') {
             return null;
-
+        }
         byte[] x = new byte[6];
 
         x[0] = 0;
@@ -315,18 +318,24 @@ public final class UUIDGenerator {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+        	return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+        	return false;
+        }
 
         UUIDGenerator that = (UUIDGenerator) o;
 
-        if (this.content.length != that.content.length)
+        if (this.content.length != that.content.length) {
             return false;
+        }
 
-        for (int i = 0; i < this.content.length; i++)
-            if (this.content[i] != that.content[i])
+        for (int i = 0; i < this.content.length; i++) {
+            if (this.content[i] != that.content[i]) {
                 return false;
-
+            }
+        }
         return true;
     }
 
@@ -341,9 +350,9 @@ public final class UUIDGenerator {
             //byte[] mac = NetworkInterface.getNetworkInterfaces().nextElement().getHardwareAddress();
             byte[] mac = EthernetAddress.fromInterface().toByteArray();
             // if the machine is not connected to a network it has no active MAC address
-            if (mac == null)
+            if (mac == null) {
                 mac = new byte[] {0, 0, 0, 0, 0, 0};
-
+            }
             return mac;
         } catch (Exception e) {
             throw new RuntimeException("Could not get MAC address");
@@ -357,9 +366,9 @@ public final class UUIDGenerator {
         final String jvmName = ManagementFactory.getRuntimeMXBean().getName();
         final int index = jvmName.indexOf('@');
 
-        if (index < 1)
+        if (index < 1) {
             throw new RuntimeException("Could not get PID");
-
+        }
         try {
             return Integer.parseInt(jvmName.substring(0, index)) % MAX_PID;
         } catch (NumberFormatException e) {

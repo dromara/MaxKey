@@ -113,6 +113,7 @@ public class JsonPretty  implements Pretty{
 	 * @param JSON String
 	 * @return String
 	 */
+	@Override
 	public  String format(String  jsonString){
 		return format(JsonParser.parseString(jsonString));
 	}

@@ -77,6 +77,7 @@ public final class ActiveDirectoryServer implements IAuthenticationServer {
 		this.filter = filter;
 	}
 
+	@Override
 	public boolean isMapping() {
 		return mapping;
 	}

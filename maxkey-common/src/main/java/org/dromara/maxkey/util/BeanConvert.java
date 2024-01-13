@@ -67,7 +67,9 @@ public class BeanConvert {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(beanFiledMap==null)return bean;
+		if(beanFiledMap==null) {
+			return bean;
+		}
 		Iterator<?> fieldit = beanFiledMap.entrySet().iterator(); 
 		LogFactory.getLog(BeanConvert.class).debug("map2Bean() *******************************************");
 		LogFactory.getLog(BeanConvert.class).debug("map2Bean() "+bean.getClass().getName());
@@ -78,7 +80,9 @@ public class BeanConvert {
             String fieldName = entry.getKey().toString();
             Object value = null;
             String fieldType=(String)beanFiledMap.get(fieldName);
-            if(valueMap.get(fieldName)==null)continue;
+            if(valueMap.get(fieldName)==null) {
+            	continue;
+            }
             String fillValue=valueMap.get(fieldName).toString();
             LogFactory.getLog(BeanConvert.class).debug("map2Bean() field "+(i++)+" : "+fieldName+" = "+fillValue+" type : "+fieldType);  
             if(fieldType.equals("java.lang.String")){

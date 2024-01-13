@@ -48,6 +48,7 @@ public class LightNoise extends Configurable implements NoiseProducer
 	 * @param factorThree
 	 * @param factorFour
 	 */
+	@Override
 	public void makeNoise(BufferedImage image, float factorOne,
 			float factorTwo, float factorThree, float factorFour)
 	{
@@ -100,8 +101,9 @@ public class LightNoise extends Configurable implements NoiseProducer
 		// for the maximum 3 point change the stroke and direction
 		for (i = 0; i < pts.length - 1; i++)
 		{
-			if (i < 3)
+			if (i < 3) {
 				graph.setStroke(new BasicStroke(0.7f * (2 - i)));
+			}
 			graph.drawLine((int) pts[i].getX(), (int) pts[i].getY(),
 					(int) pts[i + 1].getX(), (int) pts[i + 1].getY());
 		}

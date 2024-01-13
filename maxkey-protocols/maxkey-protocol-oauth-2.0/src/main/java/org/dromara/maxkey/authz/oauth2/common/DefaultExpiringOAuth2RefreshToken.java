@@ -41,6 +41,7 @@ public class DefaultExpiringOAuth2RefreshToken extends DefaultOAuth2RefreshToken
 	 * 
 	 * @return The instant the token expires.
 	 */
+	@Override
 	public Date getExpiration() {
 		return expiration;
 	}

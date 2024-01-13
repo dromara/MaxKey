@@ -30,6 +30,7 @@ public class RemoteKerberosService  implements KerberosService{
 	private static Logger _logger = LoggerFactory.getLogger(RemoteKerberosService.class);
 	List<KerberosProxy> kerberosProxys;
 
+	@Override
 	public List<KerberosProxy> getKerberosProxys() {
 		return kerberosProxys;
 	}
@@ -38,6 +39,7 @@ public class RemoteKerberosService  implements KerberosService{
 		this.kerberosProxys = kerberosProxys;
 	}
 	
+	@Override
 	public  String buildKerberosProxys(){
 		List<Map<String,String>>userDomainUrlList=new ArrayList<Map<String,String>>();
 		for (KerberosProxy kerberosProxy :kerberosProxys){

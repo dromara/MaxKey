@@ -62,6 +62,7 @@ public class TimestampUUIDGenerator
   *
   * @throws IllegalStateException if adjustmentOverflow() throws it
   */
+ @Override
  public UUID nextUUID()
  {
 	synchronized(this) {

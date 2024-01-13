@@ -49,6 +49,7 @@ public class RandomColorWordRenderer extends Configurable implements WordRendere
 	 *            The height of the image to be created.
 	 * @return The BufferedImage created from the word.
 	 */
+	@Override
 	public BufferedImage renderWord(String word, int width, int height)
 	{
 		int fontSize = getConfig().getTextProducerFontSize();

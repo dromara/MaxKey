@@ -92,6 +92,7 @@ public class JdbcRemeberMeManager extends AbstractRemeberMeManager {
     public RemeberMe read(RemeberMe remeberMe) {
         List<RemeberMe> listRemeberMe = jdbcTemplate.query(DEFAULT_DEFAULT_SELECT_STATEMENT,
                 new RowMapper<RemeberMe>() {
+        			@Override
                     public RemeberMe mapRow(ResultSet rs, int rowNum) throws SQLException {
                         RemeberMe remeberMe = new RemeberMe();
                         remeberMe.setId(rs.getString(1));

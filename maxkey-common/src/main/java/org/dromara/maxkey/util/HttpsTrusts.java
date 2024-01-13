@@ -39,6 +39,7 @@ public class HttpsTrusts {
 		try {
 			trustAllHttpsCertificates();
 			HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+				@Override
 				public boolean verify(String urlHostName, SSLSession session) {
 					System.out.println("Warning: URL Host: " + urlHostName + " vs. " + session.getPeerHost());
 					return true;
@@ -50,6 +51,7 @@ public class HttpsTrusts {
 	}
 	
 	static class HttpsTrustsTM implements javax.net.ssl.TrustManager,javax.net.ssl.X509TrustManager {
+		@Override
 		public java.security.cert.X509Certificate[] getAcceptedIssuers() {
 			return null;
 		}
@@ -62,11 +64,13 @@ public class HttpsTrusts {
 			return true;
 		}
 
+		@Override
 		public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType)
 				throws java.security.cert.CertificateException {
 			return;
 		}
 
+		@Override
 		public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType)
 				throws java.security.cert.CertificateException {
 			return;

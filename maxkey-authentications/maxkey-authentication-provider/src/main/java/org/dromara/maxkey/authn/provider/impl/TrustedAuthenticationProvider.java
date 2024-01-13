@@ -35,9 +35,9 @@ import org.springframework.security.core.Authentication;
  *
  */
 public class TrustedAuthenticationProvider extends AbstractAuthenticationProvider {
-    private static final Logger _logger =
-            LoggerFactory.getLogger(TrustedAuthenticationProvider.class);
+    private static final Logger _logger = LoggerFactory.getLogger(TrustedAuthenticationProvider.class);
 
+    @Override
     public String getProviderName() {
         return "trusted" + PROVIDER_SUFFIX;
     }

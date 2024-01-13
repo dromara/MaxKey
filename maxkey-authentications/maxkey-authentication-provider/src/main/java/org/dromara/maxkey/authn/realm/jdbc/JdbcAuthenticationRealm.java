@@ -96,6 +96,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
     /**
      * passwordMatches.
      */
+    @Override
     public boolean passwordMatches(UserInfo userInfo, String password) {
         boolean passwordMatches = false;
         //jdbc password check

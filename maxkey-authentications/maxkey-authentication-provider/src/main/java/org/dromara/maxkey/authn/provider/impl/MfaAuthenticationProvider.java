@@ -42,9 +42,9 @@ import org.springframework.security.core.AuthenticationException;
  *
  */
 public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
-    private static final Logger _logger =
-            LoggerFactory.getLogger(MfaAuthenticationProvider.class);
-
+    private static final Logger _logger = LoggerFactory.getLogger(MfaAuthenticationProvider.class);
+   
+    @Override
     public String getProviderName() {
         return "mfa" + PROVIDER_SUFFIX;
     }

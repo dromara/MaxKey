@@ -120,7 +120,9 @@ public class FormBasedDetailsServiceTest {
 	
 	@Before
 	public void initSpringContext(){
-		if(context!=null) return;
+		if(context!=null) {
+			return;
+		}
 		_logger.info("init Spring Context...");
 		SimpleDateFormat sdf_ymdhms =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String startTime=sdf_ymdhms.format(new Date());

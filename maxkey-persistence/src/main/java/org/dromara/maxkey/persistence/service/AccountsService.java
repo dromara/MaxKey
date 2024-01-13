@@ -68,7 +68,7 @@ public class AccountsService  extends JpaService<Accounts>{
 		return (AccountsMapper)super.getMapper();
 	}
 	
-	
+	@Override
 	 public boolean insert(Accounts account) {
 	     if (super.insert(account)) {
 	            if(provisionService.getApplicationConfig().isProvisionSupport()) {
@@ -89,7 +89,8 @@ public class AccountsService  extends JpaService<Accounts>{
 	     return false;
 	 }
 	 
-   public boolean update(Accounts account) {
+	@Override
+	public boolean update(Accounts account) {
          if (super.update(account)) {
         	 if(provisionService.getApplicationConfig().isProvisionSupport()) {
                     UserInfo loadUserInfo = userInfoService.findUserRelated(account.getUserId());
@@ -112,6 +113,8 @@ public class AccountsService  extends JpaService<Accounts>{
    public boolean updateStatus(Accounts accounts) {
 	   return this.getMapper().updateStatus(accounts) > 0;
    }
+   
+   @Override
    public boolean remove(String id) {
        Accounts account = this.get(id);
        if (super.remove(id)) {
@@ -196,7 +199,9 @@ public class AccountsService  extends JpaService<Accounts>{
 	    		for(int i =1 ;i < 100 ;i++) {
 	    			accountResult = account + i;
 	    			AccountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),accountResult + accountsStrategy.getSuffixes());
-	    			if(AccountsList.isEmpty())break;
+	    			if(AccountsList.isEmpty()) {
+	    				break;
+	    			}
 	    		}
    		}
    	}

@@ -56,20 +56,22 @@ public class JdbcUtils {
 	}
 
 	public static void release(Connection conn, Statement stmt, ResultSet rs) {
-		if (rs != null)
+		if (rs != null) {
 			try {
 				rs.close();
 				rs = null;
 			} catch (SQLException e) {
 				System.out.println("SQLException");
 			}
-		if (stmt != null)
+		}
+		if (stmt != null) {
 			try {
 				stmt.close();
 				stmt = null;
 			} catch (SQLException e) {
 				System.out.println("SQLException");
 			}
+		}
 		if (conn != null) {
 			try {
 				conn.close();
@@ -81,27 +83,30 @@ public class JdbcUtils {
 	}
 	
 	public static void release(Connection conn, Statement stmt, PreparedStatement pstmt, ResultSet rs) {
-		if (rs != null)
+		if (rs != null) {
 			try {
 				rs.close();
 				rs = null;
 			} catch (SQLException e) {
 				System.out.println("ResultSet Close Exception");
 			}
-		if (stmt != null)
+		}
+		if (stmt != null) {
 			try {
 				stmt.close();
 				stmt = null;
 			} catch (SQLException e) {
 				System.out.println("Statement Close Exception");
 			}
-		if (pstmt != null)
+		}
+		if (pstmt != null) {
 			try {
 				pstmt.close();
 				pstmt = null;
 			} catch (SQLException e) {
 				System.out.println("PreparedStatement Close Exception");
 			}
+		}
 		if (conn != null) {
 			try {
 				conn.close();

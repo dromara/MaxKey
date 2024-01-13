@@ -48,6 +48,7 @@ public class MobileAuthenticationProvider extends AbstractAuthenticationProvider
 
     SmsOtpAuthnService smsOtpAuthnService;
     
+    @Override
     public String getProviderName() {
         return "mobile" + PROVIDER_SUFFIX;
     }

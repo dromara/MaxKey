@@ -27,6 +27,7 @@ public abstract class RandomServiceTicketServices implements TicketServices {
 	
 	private DefaultUniqueTicketIdGenerator generator=new DefaultUniqueTicketIdGenerator();
 
+	@Override
 	public String createTicket(Ticket ticket) {
 		//String code = generator.generate();
 		/*
@@ -83,6 +84,7 @@ public abstract class RandomServiceTicketServices implements TicketServices {
 		return ticketId;
 	}
 
+	@Override
 	public Ticket consumeTicket(String ticketId) throws Exception{
 		Ticket  ticket = this.remove(ticketId);
 		if (ticket == null) {

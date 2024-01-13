@@ -55,6 +55,7 @@ public abstract class AbstractWebApplicationService  {
         this.artifactId = artifactId;
     }
 
+    @Override
     public final String toString() {
         return this.id;
     }
@@ -102,6 +103,7 @@ public abstract class AbstractWebApplicationService  {
         return this.originalUrl;
     }
 
+    @Override
     public boolean equals(final Object object) {
         if (object == null) {
             return false;
@@ -116,6 +118,7 @@ public abstract class AbstractWebApplicationService  {
         return false;
     }
 
+    @Override
     public int hashCode() {
         final int prime = 41;
         int result = 1;

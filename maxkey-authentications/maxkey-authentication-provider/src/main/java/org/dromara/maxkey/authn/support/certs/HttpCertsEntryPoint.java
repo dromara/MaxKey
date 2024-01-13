@@ -66,23 +66,23 @@ public class HttpCertsEntryPoint  implements AsyncHandlerInterceptor {
 		for (X509Certificate cert : certificates) {
 			cert.checkValidity();
 			_logger.debug("cert validated");
-			_logger.debug("cert infos " + cert.toString());
-			_logger.debug("Version " + cert.getVersion());
-			_logger.debug("SerialNumber " + cert.getSerialNumber().toString(16));
-			_logger.debug("SubjectDN " + cert.getSubjectDN());
-			_logger.debug("IssuerDN " + cert.getIssuerDN());
-			_logger.debug("NotBefore " + cert.getNotBefore());
-			_logger.debug("SigAlgName " + cert.getSigAlgName());
+			_logger.debug("cert infos {}" , cert.toString());
+			_logger.debug("Version {}" , cert.getVersion());
+			_logger.debug("SerialNumber {}" , cert.getSerialNumber().toString(16));
+			_logger.debug("SubjectDN {}" , cert.getSubjectDN());
+			_logger.debug("IssuerDN {}" , cert.getIssuerDN());
+			_logger.debug("NotBefore {}" , cert.getNotBefore());
+			_logger.debug("SigAlgName {}" , cert.getSigAlgName());
 		    byte[] sign = cert.getSignature();
 		    _logger.debug("Signature ");
 		    for (int j = 0; j < sign.length; j++){
-		    	_logger.debug(sign[j] + ",");
+		    	_logger.debug("{} , ",sign[j] );
 		    }
 		    java.security.PublicKey pk = cert.getPublicKey();
 		    byte[] pkenc = pk.getEncoded();
 		    _logger.debug("PublicKey ");
 		    for (int j = 0; j < pkenc.length; j++){
-		    	_logger.debug(pkenc[j] + ",");
+		    	_logger.debug("{} ,",pkenc[j]);
 		    }
 		}
 		 return true;

@@ -177,6 +177,7 @@ public class EthernetAddress
     /**
      * Default cloning behaviour (bitwise copy) is just fine...
      */
+    @Override
     public Object clone()
     {
         return new EthernetAddress(_address);
@@ -418,9 +419,15 @@ public class EthernetAddress
     @Override
     public boolean equals(Object o)
     {
-        if (o == this) return true;
-        if (o == null) return false;
-        if (o.getClass() != getClass()) return false;
+        if (o == this) {
+        	return true;
+        }
+        if (o == null) {
+        	return false;
+        }
+        if (o.getClass() != getClass()) {
+        	return false;
+        }
         return ((EthernetAddress) o)._address == _address;
     }
 
@@ -433,10 +440,13 @@ public class EthernetAddress
      *   parameter address if they are equal, os positive non-zero number if this address
      *  should be sorted after parameter
      */
+    @Override
     public int compareTo(EthernetAddress other)
     {
         long l = _address - other._address;
-        if (l < 0L) return -1;
+        if (l < 0L) {
+        	return -1;
+        }
         return (l == 0L) ? 0 : 1;
     }
     

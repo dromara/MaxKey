@@ -43,9 +43,9 @@ import org.springframework.security.core.AuthenticationException;
  *
  */
 public class NormalAuthenticationProvider extends AbstractAuthenticationProvider {
-    private static final Logger _logger =
-            LoggerFactory.getLogger(NormalAuthenticationProvider.class);
+    private static final Logger _logger = LoggerFactory.getLogger(NormalAuthenticationProvider.class);
 
+    @Override
     public String getProviderName() {
         return "normal" + PROVIDER_SUFFIX;
     }

@@ -53,7 +53,9 @@ public class LocalizationController {
 		@RequestMapping(value={"/forward/{property}"})
 		public ModelAndView forward(@PathVariable("property") String property,@CurrentUser UserInfo currentUser){
 			Localization localization = localizationRepository.get(property,currentUser.getInstId());
-			if(localization == null )localization = new Localization();
+			if(localization == null ) {
+				localization = new Localization();
+			}
 			localization.setProperty(property);
 			localization.setInstId(currentUser.getInstId());
 			return new ModelAndView("localization/updateLocalization","model",localization);

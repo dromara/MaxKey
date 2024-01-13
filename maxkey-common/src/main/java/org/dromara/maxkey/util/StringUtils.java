@@ -45,9 +45,9 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 
         try {
             byte[] utf8_bytes = strValue.getBytes("UTF-8");
-            if (utf8_bytes.length <= bytelen)
+            if (utf8_bytes.length <= bytelen) {
                 return strValue;
-
+            }
             byte[] cutoff_bytes = new byte[real_bytelen];
             System.arraycopy(utf8_bytes, 0, cutoff_bytes, 0, real_bytelen);
 
@@ -56,8 +56,9 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
             return strResult;
 
         } catch (Exception e) {
-            if (strValue.length() < strlen)
+            if (strValue.length() < strlen) {
                 return strValue;
+            }
             return strValue.substring(0, strlen);
         }
 
@@ -249,8 +250,9 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     public static String list2String(List<String> list, String split) {
         String string = "";
-        if (list == null)
+        if (list == null) {
             return string;
+        }
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) != null && !list.get(i).equals("")) {
                 string += list.get(i) + split;

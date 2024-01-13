@@ -22,8 +22,7 @@ import org.springframework.security.core.Authentication;
 
 public class AuthenticationProviderFactory extends AbstractAuthenticationProvider {
 
-    private  static ConcurrentHashMap<String,AbstractAuthenticationProvider> providers = 
-    									new ConcurrentHashMap<String,AbstractAuthenticationProvider>();
+    private  static ConcurrentHashMap<String,AbstractAuthenticationProvider> providers = new ConcurrentHashMap<>();
     
     @Override
     public Authentication authenticate(LoginCredential authentication){

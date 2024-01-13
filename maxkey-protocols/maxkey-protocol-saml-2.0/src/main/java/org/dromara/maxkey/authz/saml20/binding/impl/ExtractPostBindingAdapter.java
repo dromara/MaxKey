@@ -108,14 +108,15 @@ public class ExtractPostBindingAdapter implements ExtractBindingAdapter, Initial
 	@Override
 	public String extractSAMLMessage(HttpServletRequest request) {
 	    
-		if(StringUtils.isNotBlank(request.getParameter(SAML_REQUEST_POST_PARAM_NAME)))
+		if(StringUtils.isNotBlank(request.getParameter(SAML_REQUEST_POST_PARAM_NAME))) {
 			return request.getParameter(SAML_REQUEST_POST_PARAM_NAME);
-		else
+		}else {
 			return request.getParameter(SAML_RESPONSE_POST_PARAM_NAME);
+		}
 		
 	}
 	
-
+	@Override
 	public void buildSecurityPolicyResolver(KeyStore trustKeyStore) {
 	    _logger.debug("EntityName {}, KeystorePassword {}",
 	                    keyStoreLoader.getEntityName(),keyStoreLoader.getKeystorePassword());
@@ -133,6 +134,7 @@ public class ExtractPostBindingAdapter implements ExtractBindingAdapter, Initial
 	/**
 	 * @param securityPolicyResolver the securityPolicyResolver to set
 	 */
+	@Override
 	public void setSecurityPolicyResolver(
 			SecurityPolicyResolver securityPolicyResolver) {
 		this.securityPolicyResolver = securityPolicyResolver;
@@ -148,10 +150,12 @@ public class ExtractPostBindingAdapter implements ExtractBindingAdapter, Initial
 		this.saml20Detail=saml20Detail;
 	}
 
+	@Override
 	public AppsSAML20Details getSaml20Detail() {
 		return saml20Detail;
 	}
 
+	@Override
 	public KeyStoreLoader getKeyStoreLoader() {
 		return keyStoreLoader;
 	}

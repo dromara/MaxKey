@@ -69,7 +69,9 @@ public final class X509V3CertGen {
 		} catch (IOException e1) {  
 			e1.printStackTrace();  
 		} finally {
-		    if(publicKeyInputStream !=null)publicKeyInputStream.close();
+		    if(publicKeyInputStream !=null) {
+		    	publicKeyInputStream.close();
+		    }
 		}
 	        
 	        

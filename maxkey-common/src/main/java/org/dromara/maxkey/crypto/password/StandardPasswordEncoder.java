@@ -53,10 +53,12 @@ public final class StandardPasswordEncoder implements PasswordEncoder {
         this("SHA-256", secret);
     }
 
+    @Override
     public String encode(CharSequence rawPassword) {
         return encode(rawPassword, saltGenerator.generateKey());
     }
 
+    @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
         byte[] digested = decode(encodedPassword);
         byte[] salt = subArray(digested, 0, saltGenerator.getKeyLength());

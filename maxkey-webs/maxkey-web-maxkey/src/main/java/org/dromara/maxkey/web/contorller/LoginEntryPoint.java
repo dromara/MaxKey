@@ -229,9 +229,10 @@ public class LoginEntryPoint {
 		 				String remeberMe = remeberMeManager.createRemeberMe(authentication, request, response);
 		 				authJwt.setRemeberMe(remeberMe);
 			 		}
-		 			if(WebContext.getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE)!=null)
+		 			if(WebContext.getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE)!=null) {
 		 				authJwt.setPasswordSetType(
 		 					(Integer)WebContext.getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE));
+		 			}
 		 			authJwtMessage = new Message<AuthJwt>(authJwt);
 		 			
 		 		}else {//fail

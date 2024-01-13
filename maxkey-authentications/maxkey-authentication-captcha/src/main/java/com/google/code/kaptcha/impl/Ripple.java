@@ -37,6 +37,7 @@ public class Ripple extends Configurable implements GimpyEngine
 	 * @param baseImage the base image
 	 * @return the distorted image
 	 */
+	@Override
 	public BufferedImage getDistortedImage(BufferedImage baseImage)
 	{
 		NoiseProducer noiseProducer = getConfig().getNoiseImpl();

@@ -69,7 +69,9 @@ public final class UUIDRandomness
 	synchronized(random) {
 	    next = random.nextInt(16383);
 	}
-	if(next >= prev) next++;
+	if(next >= prev) {
+		next++;
+	}
 	return next;
     }
 }

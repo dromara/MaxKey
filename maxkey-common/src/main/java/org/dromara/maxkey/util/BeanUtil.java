@@ -30,7 +30,9 @@ import org.apache.commons.logging.LogFactory;
 public class BeanUtil {
 	
 	public static void copyBean(Object  origin,Object target) {
-		if( origin == null || target == null) return;
+		if( origin == null || target == null) {
+			return;
+		}
 		try {				
 			BeanUtils.copyProperties( origin, target);
 		} catch (Exception e) {
@@ -40,7 +42,9 @@ public class BeanUtil {
 		
 	public static Object cloneSupper(Object origin) {			
 		Object target = null;
-		if(origin == null) return target;
+		if(origin == null) {
+			return target;
+		}
 		try {				
 			target = origin.getClass().getSuperclass().newInstance();
 			BeanUtils.copyProperties(target,origin);
@@ -51,7 +55,9 @@ public class BeanUtil {
 	}
 		
 	public static String getValue(Object bean,String  field ) {
-		if(bean == null) return null;
+		if(bean == null) {
+			return null;
+		}
 		String retVal = "";
 		try {
 			retVal = BeanUtils.getProperty(bean, field);
@@ -216,8 +222,9 @@ public class BeanUtil {
 		Map<String, String> map = new HashMap<String, String>();
 		for (int i = 0; i < flds.length; i++) {
 			String fieldName = flds[i].getName();
-			if (isPublicProperty(cls, fieldName))
+			if (isPublicProperty(cls, fieldName)) {
 				map.put(flds[i].getName(), flds[i].getType().getName());
+			}
 		}
 		return map;
 	}
@@ -245,39 +252,61 @@ public class BeanUtil {
 			e1.printStackTrace();
 		} 
 		if(fieldType.equals("java.lang.String")){
-			if(String.valueOf(fillValue)==null)isFieldNotEmpty= false;
+			if(String.valueOf(fillValue)==null) {
+				isFieldNotEmpty= false;
+			}
         }else if(fieldType.equals("int")){
-        	if(Integer.parseInt(fillValue)==0)isFieldNotEmpty= false;
+        	if(Integer.parseInt(fillValue)==0) {
+        		isFieldNotEmpty= false;
+        	}
         }else if(fieldType.equals("long")){
-        	if(Long.parseLong(fillValue)==0)isFieldNotEmpty= false;
+        	if(Long.parseLong(fillValue)==0) {
+        		isFieldNotEmpty= false;
+        	}
         }else if(fieldType.equals("java.lang.Long")){
-        	if(Long.parseLong(fillValue)==0)isFieldNotEmpty= false;
+        	if(Long.parseLong(fillValue)==0) {
+        		isFieldNotEmpty= false;
+        	}
         }else if(fieldType.equals("double")){
-        	if(Double.valueOf(fillValue)==0.0d)isFieldNotEmpty= false;
+        	if(Double.valueOf(fillValue)==0.0d) {
+        		isFieldNotEmpty= false;
+        	}
         }else if(fieldType.equals("float")){
-        	if(Float.parseFloat(fillValue)==0.0f)isFieldNotEmpty= false;
+        	if(Float.parseFloat(fillValue)==0.0f) {
+        		isFieldNotEmpty= false;
+        	}
         }else if(fieldType.equals("java.util.Date")){ 
         	try {
         		value=BeanUtil.get(entity, field.getName());
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} 
-			if(value==null)isFieldNotEmpty= false;
+			if(value==null) {
+				isFieldNotEmpty= false;
+			}
         }else if(fieldType.equals("java.lang.Object")){
         	try {
 				value=BeanUtil.get(entity, field.getName());
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} 
-			if(value==null)isFieldNotEmpty= false;
+			if(value==null) {
+				isFieldNotEmpty= false;
+			}
         }else if(fieldType.equals("char")){
-        	if(Character.valueOf(fillValue.charAt(0))=='\u0000')isFieldNotEmpty= false;
+        	if(Character.valueOf(fillValue.charAt(0))=='\u0000') {
+        		isFieldNotEmpty= false;
+        	}
         }else if(fieldType.equals("boolean")){
         	value=Boolean.parseBoolean(fillValue);
         }else if(fieldType.equals("short")){
-        	if(Short.parseShort(fillValue)==0)isFieldNotEmpty= false;
+        	if(Short.parseShort(fillValue)==0) {
+        		isFieldNotEmpty= false;
+        	}
         }else if(fieldType.equals("byte")){
-        	if(Byte.parseByte(fillValue)==0)isFieldNotEmpty= false;
+        	if(Byte.parseByte(fillValue)==0) {
+        		isFieldNotEmpty= false;
+        	}
         }
 		
 		LogFactory.getLog(BeanUtil.class).debug("isFieldNotEmpty() fieldName : "+field.getName()+", fieldType : "+fieldType+", Value : "+fillValue+", isFieldNotEmpty : "+isFieldNotEmpty);

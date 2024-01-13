@@ -97,6 +97,7 @@ public final class StandardLdapServer implements IAuthenticationServer {
 		this.filterAttribute = filterAttribute;
 	}
 
+	@Override
 	public boolean isMapping() {
 		return mapping;
 	}

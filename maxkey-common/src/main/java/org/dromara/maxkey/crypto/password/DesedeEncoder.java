@@ -53,7 +53,9 @@ public class DesedeEncoder implements PasswordEncoder {
     }
 
     public String decoder(CharSequence encodedPassword) {
-    	if(encodedPassword == null) return null;
+    	if(encodedPassword == null) {
+    		return null;
+    	}
     	String encodedPasswordString  = encodedPassword.toString();
     	if(encodedPasswordString.startsWith(CRYPT)) {
     		return ReciprocalUtils.decoderHex(encodedPasswordString.substring(PREFFIX_LENGTH), DEFAULT_SALT);
@@ -64,6 +66,7 @@ public class DesedeEncoder implements PasswordEncoder {
     	}
     }
 
+    @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
     	if(encodedPassword.startsWith(PLAIN)) {
     		encodedPassword = encode(encodedPassword.substring(PREFFIX_LENGTH));
@@ -78,7 +81,9 @@ public class DesedeEncoder implements PasswordEncoder {
 	}
 
 	public String encode(CharSequence plain,boolean isEncode) {
-		if(plain == null) return null;
+		if(plain == null) {
+			return null;
+		}
 		if(isEncode) {
 			return CRYPT + ReciprocalUtils.encode2Hex(plain + "", DEFAULT_SALT);
 		}else {

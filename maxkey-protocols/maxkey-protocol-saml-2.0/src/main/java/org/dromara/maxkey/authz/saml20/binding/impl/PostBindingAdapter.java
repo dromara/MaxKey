@@ -171,6 +171,7 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 	/**
 	 * @param securityPolicyResolver the securityPolicyResolver to set
 	 */
+	@Override
 	public void setSecurityPolicyResolver(
 			SecurityPolicyResolver securityPolicyResolver) {
 		this.securityPolicyResolver = securityPolicyResolver;
@@ -186,6 +187,7 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 		return extractBindingAdapter.getKeyStoreLoader();
 	}
 
+	@Override
 	public Credential getSigningCredential() {
 		return signingCredential;
 	}
@@ -194,6 +196,7 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 		this.signingCredential = signingCredential;
 	}
 
+	@Override
 	public Credential getSpSigningCredential() {
 		return spSigningCredential;
 	}
@@ -202,14 +205,17 @@ public class PostBindingAdapter implements BindingAdapter, InitializingBean{
 		this.spSigningCredential = spSigningCredential;
 	}
 	
+	@Override
 	public AuthnRequestInfo getAuthnRequestInfo() {
 		return authnRequestInfo;
 	}
 
+	@Override
 	public void setAuthnRequestInfo(AuthnRequestInfo authnRequestInfo) {
 		this.authnRequestInfo = authnRequestInfo;
 	}
 
+	@Override
 	public void setRelayState(String relayState) {
 		this.relayState = relayState;
 	}

@@ -111,8 +111,12 @@ public final class UUID implements Serializable
              byte[] node)
      throws NullPointerException, IllegalArgumentException
  {
-     if(node == null) throw new NullPointerException();
-     if(node.length != 6) throw new IllegalArgumentException();
+     if(node == null) {
+    	 throw new NullPointerException();
+     }
+     if(node.length != 6) {
+    	 throw new IllegalArgumentException();
+     }
 
      this.time_low = time_low;
      this.time_mid = time_mid;
@@ -135,20 +139,33 @@ public final class UUID implements Serializable
             IllegalArgumentException,
             NumberFormatException
  {
-     if(s == null) throw new NullPointerException();
-     if(s.length() != 36) throw new IllegalArgumentException();
+     if(s == null) {
+    	 throw new NullPointerException();
+     }
+     if(s.length() != 36) {
+    	 throw new IllegalArgumentException();
+     }
      time_low = parseHex(s.substring(0, 8));
-     if(s.charAt(8) != '-') throw new IllegalArgumentException();
+     if(s.charAt(8) != '-') {
+    	 throw new IllegalArgumentException();
+     }
      time_mid = (short) parseHex(s.substring(9, 13));
-     if(s.charAt(13) != '-') throw new IllegalArgumentException();
+     if(s.charAt(13) != '-') {
+    	 throw new IllegalArgumentException();
+     }
      time_hi_and_version = (short) parseHex(s.substring(14, 18));
-     if(s.charAt(18) != '-') throw new IllegalArgumentException();
+     if(s.charAt(18) != '-') {
+    	 throw new IllegalArgumentException();
+     }
      clock_seq_hi_and_reserved = (byte) parseHex(s.substring(19, 21));
      clock_seq_low = (byte) parseHex(s.substring(21, 23));
-     if(s.charAt(23) != '-') throw new IllegalArgumentException();
+     if(s.charAt(23) != '-') {
+    	 throw new IllegalArgumentException();
+     }
      node = new byte[6];
-     for(int i = 0; i < 6; i++)
+     for(int i = 0; i < 6; i++) {
          node[i] = (byte) parseHex(s.substring(2 * i + 24, 2 * i + 26));
+     }
  }
 
  /**
@@ -160,7 +177,9 @@ public final class UUID implements Serializable
   */
  public UUID(DataInput in) throws IOException
  {
-     if(in == null) throw new NullPointerException();
+     if(in == null) {
+    	 throw new NullPointerException();
+     }
      readData(in);
  }
 
@@ -172,8 +191,12 @@ public final class UUID implements Serializable
   */
  public UUID(byte[] data)
  {
-     if(data == null) throw new NullPointerException();
-     if(data.length != 16) throw new IllegalArgumentException();
+     if(data == null) {
+    	 throw new NullPointerException();
+     }
+     if(data.length != 16) {
+    	 throw new IllegalArgumentException();
+     }
      try {
          readData(new DataInputStream(new ByteArrayInputStream(data)));
      } catch(IOException ex) {
@@ -221,19 +244,22 @@ public final class UUID implements Serializable
  /*
   * Returns true if two UUIDs are equal by value.
   */
- public boolean equals(Object obj)
- {
-     if(obj == null || !(obj instanceof UUID))
+ @Override
+ public boolean equals(Object obj){
+     if(obj == null || !(obj instanceof UUID)) {
          return false;
-
+     }
      UUID other = (UUID) obj;
 
-     if(this == other) return true;
+     if(this == other) {
+    	 return true;
+     }
 
      if(hash_code != 0 &&
         other.hash_code != 0 &&
-        hash_code != other.hash_code)
+        hash_code != other.hash_code) {
          return false;
+     }
 
      return
          time_low == other.time_low &&
@@ -247,14 +273,16 @@ public final class UUID implements Serializable
  /**
   * Returns a hash code for this UUID.
   */
+ @Override
  public int hashCode()
  {
      if(hash_code == 0) {
          synchronized(this) {
              if(hash_code == 0) {
                  hash_code = toString().hashCode();
-                 if(hash_code == 0)
+                 if(hash_code == 0) {
                      hash_code = -1;
+                 }
              }
          }
      }
@@ -266,9 +294,9 @@ public final class UUID implements Serializable
   */
  private static void appendHex(StringBuffer sb, long num, int digits)
  {
-     if(digits > 0 && digits < 16)
+     if(digits > 0 && digits < 16) {
          num = num & ((1L << (digits * 4)) - 1);
-
+     }
      String str = Long.toHexString(num);
      int len = str.length();
      while(len < digits) {
@@ -283,15 +311,16 @@ public final class UUID implements Serializable
   */
  private static int parseHex(String s) throws NumberFormatException
  {
-     if(s.charAt(0) == '-')
+     if(s.charAt(0) == '-') {
          throw new NumberFormatException();
-
+     }
      return Integer.parseInt(s, 16);
  }
 
  /**
   * Returns the string representation of this UUID.
   */
+ @Override
  public String toString()
  {
      if(string_rep == null) {
@@ -307,8 +336,9 @@ public final class UUID implements Serializable
                  appendHex(sb, clock_seq_hi_and_reserved, 2);
                  appendHex(sb, clock_seq_low, 2);
                  sb.append('-');
-                 for(int i = 0; i < 6; i++)
+                 for(int i = 0; i < 6; i++) {
                      appendHex(sb, node[i], 2);
+                 }
                  string_rep = sb.toString();
              }
          }
@@ -343,9 +373,9 @@ public final class UUID implements Serializable
   */
  public static UUID generate()
  {
-     if(default_generator == null)
+     if(default_generator == null) {
          default_generator = new TimestampUUIDGenerator(UUIDRandomness.randomClockSequence(), NodeIDGetter.getNodeID());
-     
+     }
      return default_generator.nextUUID();
  }
 

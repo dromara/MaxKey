@@ -97,6 +97,7 @@ public class InMemorySessionManager implements SessionManager{
         return session;
     }
 
+    @Override
 	public int getValiditySeconds() {
 		return validitySeconds;
 	}

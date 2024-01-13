@@ -31,6 +31,7 @@ public class WsFederationServiceImpl implements   WsFederationService{
 		this.wsFederationConfiguration = wsFederationConfiguration;
 	}
 
+	@Override
 	public WsFederationConfiguration getWsFederationConfiguration() {
 		return wsFederationConfiguration;
 	}

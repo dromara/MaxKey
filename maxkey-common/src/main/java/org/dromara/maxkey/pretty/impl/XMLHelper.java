@@ -193,10 +193,12 @@ public class XMLHelper {
         
         serializer.setFilter(new LSSerializerFilter() {
 
+        	@Override
             public short acceptNode(Node arg0) {
                 return FILTER_ACCEPT;
             }
 
+        	@Override
             public int getWhatToShow() {
                 return SHOW_ALL;
             }

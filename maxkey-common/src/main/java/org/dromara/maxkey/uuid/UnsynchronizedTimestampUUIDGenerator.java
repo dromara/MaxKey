@@ -69,13 +69,15 @@ public class UnsynchronizedTimestampUUIDGenerator implements UUIDGenerator
  public UnsynchronizedTimestampUUIDGenerator(int clock_sequence,
                                              byte[] node)
  {
-     if(clock_sequence < 0 || clock_sequence >= 16384)
+     if(clock_sequence < 0 || clock_sequence >= 16384) {
          throw new IllegalArgumentException();
-     if(node == null)
+     }
+     if(node == null) {
          throw new NullPointerException();
-     if(node.length != 6)
+     }
+     if(node.length != 6) {
          throw new IllegalArgumentException();
-
+     }
      this.clock_sequence = clock_sequence;
      this.node = (byte[]) node.clone();
      checkSystemTime();
@@ -89,8 +91,9 @@ public class UnsynchronizedTimestampUUIDGenerator implements UUIDGenerator
      long sys_time = System.currentTimeMillis();
 
      /* If monotonicity is lost, bump clock_sequence. */
-     if(sys_time < last_time)
+     if(sys_time < last_time) {
          clock_sequence = UUIDRandomness.nextRandomClockSequence(clock_sequence);
+     }
 
      /* If the clock ticked, clear the adjustment. */
      if(sys_time != last_time) {
@@ -106,8 +109,9 @@ public class UnsynchronizedTimestampUUIDGenerator implements UUIDGenerator
  protected void adjustmentOverflow() throws IllegalStateException
  {
      checkSystemTime();
-     if(clock_adj >= CLOCK_RES)
+     if(clock_adj >= CLOCK_RES) {
          throw new IllegalStateException();
+     }
  }
 
  /**
@@ -115,10 +119,13 @@ public class UnsynchronizedTimestampUUIDGenerator implements UUIDGenerator
   *
   * @throws IllegalStateException if adjustmentOverflow() throws it
   */
+ @Override
  public UUID nextUUID()
  {
      long unique_time = (last_time + EPOCH_OFFSET) * CLOCK_RES + clock_adj;
-     if(++clock_adj > CLOCK_RES) adjustmentOverflow();
+     if(++clock_adj > CLOCK_RES) {
+    	 adjustmentOverflow();
+     }
 
      return new UUID((int) (unique_time & 0xFFFFFFFF),
                      (short) ((unique_time >> 32) & 0xFFFF),

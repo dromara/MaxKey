@@ -161,8 +161,9 @@ public class OrganizationsService  extends JpaService<Organizations>{
 		rootOrg.setReorgNamePath(true);
 
 		for (Organizations org : orgList) {
-			if (org.isReorgNamePath())
+			if (org.isReorgNamePath()) {
 				continue;
+			}
 			if (org.getParentId().equalsIgnoreCase(rootOrg.getId())) {
 				reorg(orgMap, orgList, org);
 			}

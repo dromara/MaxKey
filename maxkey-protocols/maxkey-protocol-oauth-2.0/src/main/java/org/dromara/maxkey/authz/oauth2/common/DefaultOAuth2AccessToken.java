@@ -95,10 +95,12 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
      * 
      * @return The token value.
      */
+    @Override
     public String getValue() {
         return value;
     }
 
+    @Override
     public int getExpiresIn() {
         return expiration != null ? Long.valueOf((expiration.getTime() - System.currentTimeMillis()) / 1000L).intValue()
                 : 0;
@@ -113,6 +115,7 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
      * 
      * @return The instant the token expires.
      */
+    @Override
     public Date getExpiration() {
         return expiration;
     }
@@ -131,6 +134,7 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
      * 
      * @return true if the expiration is befor ethe current time
      */
+    @Override
     public boolean isExpired() {
         return expiration != null && expiration.before(new Date());
     }
@@ -142,6 +146,7 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
      * 
      * @return The token type, as introduced in draft 11 of the OAuth 2 spec.
      */
+    @Override
     public String getTokenType() {
         return tokenType;
     }
@@ -161,6 +166,7 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
      * 
      * @return The refresh token associated with the access token, if any.
      */
+    @Override
     public OAuth2RefreshToken getRefreshToken() {
         return refreshToken;
     }
@@ -180,6 +186,7 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
      * 
      * @return The scope of the token.
      */
+    @Override
     public Set<String> getScope() {
         return scope;
     }
@@ -249,6 +256,7 @@ public class DefaultOAuth2AccessToken implements Serializable, OAuth2AccessToken
      * 
      * @return the additional information (default empty)
      */
+    @Override
     public Map<String, Object> getAdditionalInformation() {
         return additionalInformation;
     }
