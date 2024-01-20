@@ -77,10 +77,7 @@ public class RandomColorWordRenderer extends Configurable implements WordRendere
 		Font[] chosenFonts = new Font[wordChars.length];
 		int [] charWidths = new int[wordChars.length];
 		int widthNeeded = 0;
-		for (int i = 0; i < wordChars.length; i++)
-		{
-			
-			//chosenFonts[i] = new Font("Arial", Font.BOLD, fontSize);
+		for (int i = 0; i < wordChars.length; i++){
 			//random
 			chosenFonts[i] = fonts[random.nextInt(fonts.length)];
 
@@ -96,14 +93,14 @@ public class RandomColorWordRenderer extends Configurable implements WordRendere
 			widthNeeded = widthNeeded + charWidths[i];
 		}
 		
-		HashMap<String,String> selectedColor =new HashMap<String,String>();
+		HashMap<String,String> selectedColor =new HashMap<>();
 		int startPosX = (width - widthNeeded) / 2;
 		
 		for (int i = 0; i < wordChars.length; i++)
 		{
 			String randomcolor="";
 			do {
-				randomcolor=COLOR_LIST[random.nextInt(COLOR_LIST.length)].replaceAll(" ", "");
+				randomcolor=COLOR_LIST[random.nextInt(COLOR_LIST.length)].replace(" ", "");
 			}while(selectedColor.containsKey(randomcolor));
 			
 			selectedColor.put(randomcolor, randomcolor);
@@ -117,7 +114,6 @@ public class RandomColorWordRenderer extends Configurable implements WordRendere
 				wordChars[i]
 			};
 			
-			//System.out.println(charToDraw[0] +" - "+chosenFonts[i]);
 			g2D.drawChars(charToDraw, 0, charToDraw.length, startPosX, startPosY);
 			startPosX = startPosX + (int) charWidths[i] + charSpace;
 		}
@@ -125,7 +121,7 @@ public class RandomColorWordRenderer extends Configurable implements WordRendere
 		return image;
 	}
 	
-	static String [] COLOR_LIST = {
+	static final String [] COLOR_LIST = {
 			//"255, 255, 255",	//white
 			//"192, 192, 192",	//silver
 			//"128, 128, 128",	//gray

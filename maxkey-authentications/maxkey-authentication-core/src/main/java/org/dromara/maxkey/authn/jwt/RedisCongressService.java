@@ -24,13 +24,13 @@ import org.slf4j.LoggerFactory;
 
 
 public class RedisCongressService implements CongressService {
-    private static final Logger _logger = LoggerFactory.getLogger(RedisCongressService.class);
+    private static final Logger logger = LoggerFactory.getLogger(RedisCongressService.class);
 	
 	protected int validitySeconds = 60 * 3; //default 3 minutes.
 	
 	RedisConnectionFactory connectionFactory;
 	
-	public static String PREFIX="REDIS_CONGRESS_";
+	public static final String PREFIX = "REDIS:CONGRESS:";
 	/**
 	 * @param connectionFactory
 	 */

@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
@@ -32,19 +31,20 @@ import org.springframework.core.io.Resource;
 
 
 @AutoConfiguration
-public class KaptchaAutoConfiguration  implements InitializingBean {
+public class KaptchaAutoConfiguration {
     private static final  Logger _logger = LoggerFactory.getLogger(KaptchaAutoConfiguration.class);
     
-    public static final String kaptchaPropertySource      = "/kaptcha.properties";
+    public static final String KAPTCHA_PROPERTY      = "/kaptcha.properties";
+
     /**
      * Captcha Producer  Config .
      * @return Producer
      * @throws IOException kaptcha.properties is null
      */
     @Bean
-    public Producer captchaProducer() throws IOException {
-        Resource resource = new ClassPathResource(kaptchaPropertySource);
-        _logger.debug("Kaptcha config file " + resource.getURL());
+    Producer captchaProducer() throws IOException {
+        Resource resource = new ClassPathResource(KAPTCHA_PROPERTY);
+        _logger.debug("Kaptcha config file {}" , resource.getURL());
         DefaultKaptcha  kaptcha = new DefaultKaptcha();
         Properties properties = new Properties();
         properties.load(resource.getInputStream());
@@ -53,8 +53,4 @@ public class KaptchaAutoConfiguration  implements InitializingBean {
         return kaptcha;
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
-    }
 }

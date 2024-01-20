@@ -68,12 +68,11 @@ public class AuthTokenService  extends AuthJwtService{
 			String refreshToken = refreshTokenService.genRefreshToken(authentication);
 			_logger.trace("generate JWT Token");
 			String accessToken = genJwt(authentication);
-			AuthJwt authJwt = new AuthJwt(
+			return new AuthJwt(
 						accessToken,
 						authentication,
 						authJwkConfig.getExpires(),
 						refreshToken);
-			return authJwt;
 		}
 		return null;
 	}
@@ -118,8 +117,7 @@ public class AuthTokenService  extends AuthJwtService{
 	}
 	
 	public AuthJwt consumeCongress(String congress) {
-		AuthJwt authJwt = congressService.consume(congress);
-		return authJwt;
+		return congressService.consume(congress);
 	}
 	
 	public boolean validateCaptcha(String state,String captcha) {

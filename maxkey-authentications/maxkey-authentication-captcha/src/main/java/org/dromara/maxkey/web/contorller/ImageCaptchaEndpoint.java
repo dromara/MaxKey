@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -58,7 +58,7 @@ public class ImageCaptchaEndpoint {
      * @param request HttpServletRequest
      * @param response HttpServletResponse
      */
-    @RequestMapping(value={"/captcha"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value={"/captcha"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public  ResponseEntity<?> captchaHandleRequest( 
     			@RequestParam(value="captcha",required=false,defaultValue="text") String captchaType,
     			@RequestParam(value="state",required=false,defaultValue="state") String state) {
@@ -98,7 +98,7 @@ public class ImageCaptchaEndpoint {
             			new ImageCaptcha(state,b64Image)
             		).buildResponse();
         } catch (Exception e) {
-            _logger.error("captcha Producer Error " + e.getMessage());
+            _logger.error("captcha Producer Error" , e);
         }
         return new Message< Object>(Message.FAIL).buildResponse();
     }

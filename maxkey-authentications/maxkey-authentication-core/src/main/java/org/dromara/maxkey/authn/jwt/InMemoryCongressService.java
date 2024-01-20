@@ -26,7 +26,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 
 public class InMemoryCongressService implements CongressService{
-    private static final Logger _logger = LoggerFactory.getLogger(InMemoryCongressService.class);
+    private static final Logger logger = LoggerFactory.getLogger(InMemoryCongressService.class);
 
 	protected  static  Cache<String, AuthJwt> congressStore = 
         	        Caffeine.newBuilder()
@@ -52,8 +52,7 @@ public class InMemoryCongressService implements CongressService{
 
     @Override
     public AuthJwt get(String congress) {
-    	AuthJwt authJwt = congressStore.getIfPresent(congress); 
-        return authJwt;
+    	return congressStore.getIfPresent(congress); 
     }
 
 	@Override

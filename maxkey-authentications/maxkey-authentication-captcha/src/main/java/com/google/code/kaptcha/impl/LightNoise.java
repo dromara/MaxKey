@@ -78,11 +78,10 @@ public class LightNoise extends Configurable implements NoiseProducer
 		while (!pi.isDone())
 		{
 			float[] coords = new float[6];
-			switch (pi.currentSegment(coords))
-			{
-				case PathIterator.SEG_MOVETO:
-				case PathIterator.SEG_LINETO:
+			switch (pi.currentSegment(coords)){
+				case PathIterator.SEG_MOVETO,PathIterator.SEG_LINETO:{
 					tmp[i] = new Point2D.Float(coords[0], coords[1]);
+				}
 			}
 			i++;
 			pi.next();
