@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import io.swagger.v3.oas.annotations.Operation;
@@ -174,7 +175,7 @@ INTERNAL_ERROR - an internal error occurred during ticket validation
 For all error codes, it is RECOMMENDED that CAS provide a more detailed message as the body of the \<cas:authenticationFailure\> block of the XML response.
 	 */
 	@Operation(summary = "CAS 2.0 ticket验证接口", description = "通过ticket获取当前登录用户信息",method="POST")
-	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE,produces =MediaType.APPLICATION_XML_VALUE)
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE,produces =MediaType.APPLICATION_XML_VALUE,method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public String serviceValidate(
 			HttpServletRequest request,

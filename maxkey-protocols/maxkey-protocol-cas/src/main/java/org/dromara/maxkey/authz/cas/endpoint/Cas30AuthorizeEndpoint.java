@@ -40,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -56,8 +57,8 @@ public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 
 	final static Logger _logger = LoggerFactory.getLogger(Cas30AuthorizeEndpoint.class);
 
-	@Operation(summary = "CAS 3.0 ticket验证接口", description = "通过ticket获取当前登录用户信息",method="POST")
-	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE_V3)
+	@Operation(summary = "CAS 3.0 ticket验证接口", description = "通过ticket获取当前登录用户信息")
+	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE_V3,method={RequestMethod.GET,RequestMethod.POST})
 	public void serviceValidate(
 			HttpServletRequest request,
 			HttpServletResponse response,
