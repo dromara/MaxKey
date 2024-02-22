@@ -128,20 +128,19 @@ subprojects {
     }
     repositories {  
         mavenLocal()
-        maven { url "https://maven.aliyun.com/repository/central/"}
-        maven { url "https://maven.aliyun.com/repository/public/"}
-        maven { url "https://maven.aliyun.com/repository/spring/"}
-        maven { url "https://repo.spring.io/plugins-release/" }
+        maven { url "https://maven.aliyun.com/repository/central"}
+        maven { url "https://maven.aliyun.com/repository/public"}
+        maven { url "https://repo.spring.io/plugins-release" }
         maven { url "https://repo.spring.io/milestone" }
-        maven { url "https://repo1.maven.org/maven2/" }
-        maven { url "https://build.shibboleth.net/nexus/content/repositories/releases/" }
-        maven { url "https://mvnrepository.com/repos/central/" }        
+        maven { url "https://repo1.maven.org/maven2" }
+        maven { url "https://build.shibboleth.net/nexus/content/repositories/releases" }
+        maven { url "https://mvnrepository.com/repos/central" }        
         maven { url "https://jcenter.bintray.com" }
         maven { url "https://mvn.gt.igexin.com/nexus/content/repositories/releases"}
-        maven { url "https://plugins.gradle.org/m2/" }        
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven { url "https://maven.repository.redhat.com/ga/" }
-        maven { url "https://repository.apache.org/content/repositories/releases/" }
+        maven { url "https://plugins.gradle.org/m2" }        
+        maven { url "https://oss.sonatype.org/content/repositories/releases" }
+        maven { url "https://maven.repository.redhat.com/ga" }
+        maven { url "https://repository.apache.org/content/repositories/releases" }
         mavenCentral()
     }  
 

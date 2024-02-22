@@ -128,9 +128,8 @@ subprojects {
     }
     repositories {  
         mavenLocal()
-        maven { url "https://maven.aliyun.com/repository/central/"}
-        maven { url "https://maven.aliyun.com/repository/public/"}
-        maven { url "https://maven.aliyun.com/repository/spring/"}
+        maven { url "https://maven.aliyun.com/repository/central"}
+        maven { url "https://maven.aliyun.com/repository/public"}
         maven { url "https://repo.spring.io/plugins-release/" }
         maven { url "https://repo.spring.io/milestone" }
         maven { url "https://repo1.maven.org/maven2/" }
