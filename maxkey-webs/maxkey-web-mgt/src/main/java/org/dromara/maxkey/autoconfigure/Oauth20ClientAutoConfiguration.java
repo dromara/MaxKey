@@ -28,7 +28,6 @@ import org.dromara.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +42,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  *
  */
 @AutoConfiguration
-public class Oauth20ClientAutoConfiguration  implements InitializingBean {
+public class Oauth20ClientAutoConfiguration {
     private static final  Logger logger = LoggerFactory.getLogger(Oauth20ClientAutoConfiguration.class);
     
     @Bean
@@ -113,9 +112,4 @@ public class Oauth20ClientAutoConfiguration  implements InitializingBean {
         return authenticationManager;
     }
   
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
-    }
-
 }

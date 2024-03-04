@@ -24,7 +24,6 @@ import org.dromara.maxkey.authn.web.SavedRequestAwareAuthenticationSuccessHandle
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +31,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 
 @AutoConfiguration
-public class SessionAutoConfiguration  implements InitializingBean {
+public class SessionAutoConfiguration  {
     private static final  Logger _logger = 
             LoggerFactory.getLogger(SessionAutoConfiguration.class);
     
@@ -50,11 +49,9 @@ public class SessionAutoConfiguration  implements InitializingBean {
             RedisConnectionFactory redisConnFactory,
             @Value("${maxkey.session.timeout:1800}") int timeout
             ) {
-    	_logger.debug("session timeout " + timeout);
-        SessionManager  sessionManager  = 
-                new SessionManagerFactory(
-                		persistence, jdbcTemplate, redisConnFactory,timeout);
-        return sessionManager;
+    	_logger.debug("session timeout {}" , timeout);
+        return new SessionManagerFactory(
+        		persistence, jdbcTemplate, redisConnFactory,timeout);
     }
 
     @Bean
@@ -62,8 +59,4 @@ public class SessionAutoConfiguration  implements InitializingBean {
         return new HttpSessionListenerAdapter();
     }
     
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
-    }
 }

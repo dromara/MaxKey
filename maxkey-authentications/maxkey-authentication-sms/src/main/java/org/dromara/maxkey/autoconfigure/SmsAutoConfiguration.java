@@ -25,16 +25,14 @@ import org.dromara.maxkey.persistence.service.EmailSendersService;
 import org.dromara.maxkey.persistence.service.SmsProviderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
 
 @AutoConfiguration
-public class SmsAutoConfiguration  implements InitializingBean {
-    private static final  Logger _logger = 
-            LoggerFactory.getLogger(SmsAutoConfiguration.class);
+public class SmsAutoConfiguration  {
+    private static final  Logger _logger = LoggerFactory.getLogger(SmsAutoConfiguration.class);
     
   
     @Bean(name = "smsOtpAuthnService")
@@ -56,8 +54,4 @@ public class SmsAutoConfiguration  implements InitializingBean {
         return smsOtpAuthnService;
     }
    
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
-    }
 }

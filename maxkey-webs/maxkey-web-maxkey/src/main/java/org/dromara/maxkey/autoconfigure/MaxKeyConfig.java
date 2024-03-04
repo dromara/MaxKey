@@ -45,7 +45,6 @@ import org.dromara.maxkey.persistence.service.LdapContextService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -74,7 +73,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
         "org.maxkey.authz.ltpa.endpoint",
         "org.maxkey.authz.token.endpoint"
 })
-public class MaxKeyConfig  implements InitializingBean {
+public class MaxKeyConfig  {
     private static final  Logger logger = LoggerFactory.getLogger(MaxKeyConfig.class);
     
 
@@ -212,14 +211,5 @@ public class MaxKeyConfig  implements InitializingBean {
         logger.debug("RemoteKerberosService inited.");
         return kerberosService;
     }
-    
-
-    
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
-    }
-
-
     
 }

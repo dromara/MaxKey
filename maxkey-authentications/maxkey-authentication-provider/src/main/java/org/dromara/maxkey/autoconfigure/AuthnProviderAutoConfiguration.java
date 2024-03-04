@@ -34,7 +34,6 @@ import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.MessageSource;
@@ -43,9 +42,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 
 @AutoConfiguration
-public class AuthnProviderAutoConfiguration  implements InitializingBean {
-    private static final  Logger _logger = 
-            LoggerFactory.getLogger(AuthnProviderAutoConfiguration.class);
+public class AuthnProviderAutoConfiguration {
+    static final  Logger _logger = LoggerFactory.getLogger(AuthnProviderAutoConfiguration.class);
     
     @Bean
     public AbstractAuthenticationProvider authenticationProvider(
@@ -138,8 +136,4 @@ public class AuthnProviderAutoConfiguration  implements InitializingBean {
         		jdbcTemplate,applicationConfig,authTokenService,validity);
     }
     
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
-    }
 }

@@ -27,14 +27,13 @@ import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @AutoConfiguration
-public class MaxKeyMgtConfig  implements InitializingBean {
+public class MaxKeyMgtConfig  {
     private static final  Logger logger = LoggerFactory.getLogger(MaxKeyMgtConfig.class);
     
 	//authenticationRealm for MaxKeyMgtApplication
@@ -66,11 +65,6 @@ public class MaxKeyMgtConfig  implements InitializingBean {
 		AbstractOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn();
 	    logger.debug("TimeBasedOtpAuthn inited.");
         return tfaOtpAuthn;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
     }
 
 }

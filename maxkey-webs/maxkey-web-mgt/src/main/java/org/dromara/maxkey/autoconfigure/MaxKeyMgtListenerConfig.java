@@ -31,14 +31,13 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @AutoConfiguration
-public class MaxKeyMgtListenerConfig  implements InitializingBean {
+public class MaxKeyMgtListenerConfig  {
     private static final  Logger logger = LoggerFactory.getLogger(MaxKeyMgtListenerConfig.class);
  
     @Bean
@@ -90,10 +89,4 @@ public class MaxKeyMgtListenerConfig  implements InitializingBean {
         }
         return "provisioningRunnerThread";
     }
-    
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
-    }
-
 }

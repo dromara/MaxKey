@@ -28,7 +28,6 @@ import org.dromara.maxkey.persistence.cache.MomentaryService;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +35,7 @@ import com.nimbusds.jose.JOSEException;
 
 
 @AutoConfiguration
-public class TokenAutoConfiguration  implements InitializingBean {
+public class TokenAutoConfiguration{
     private static final  Logger _logger = 
             LoggerFactory.getLogger(TokenAutoConfiguration.class);
     
@@ -55,15 +54,12 @@ public class TokenAutoConfiguration  implements InitializingBean {
     		congressService = new InMemoryCongressService();
     	}
     	
-    	AuthTokenService authTokenService = 
-    				new AuthTokenService(
-    							authJwkConfig,
-    							congressService,
-    							momentaryService,
-    							refreshTokenService
-    						);
-    	
-    	return authTokenService;
+    	return new AuthTokenService(
+				authJwkConfig,
+				congressService,
+				momentaryService,
+				refreshTokenService
+			);
     }
     
     @Bean
@@ -71,8 +67,4 @@ public class TokenAutoConfiguration  implements InitializingBean {
     	return new AuthRefreshTokenService(authJwkConfig);
     }
     
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
-    }
 }

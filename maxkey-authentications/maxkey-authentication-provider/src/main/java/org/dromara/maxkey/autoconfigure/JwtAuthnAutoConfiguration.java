@@ -26,7 +26,6 @@ import org.dromara.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.dromara.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +33,7 @@ import org.springframework.core.io.ClassPathResource;
 
 
 @AutoConfiguration
-public class JwtAuthnAutoConfiguration implements InitializingBean {
+public class JwtAuthnAutoConfiguration  {
     private static final  Logger _logger = LoggerFactory.getLogger(JwtAuthnAutoConfiguration.class);
 
     /**
@@ -84,11 +83,5 @@ public class JwtAuthnAutoConfiguration implements InitializingBean {
                 );
         _logger.debug("JWT Login Service init.");
         return jwtLoginService;
-    }
-    
- 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
     }
 }

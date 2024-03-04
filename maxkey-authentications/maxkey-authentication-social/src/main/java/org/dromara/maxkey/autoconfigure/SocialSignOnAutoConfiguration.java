@@ -22,12 +22,10 @@ import java.io.IOException;
 import org.dromara.maxkey.authn.support.socialsignon.service.JdbcSocialsAssociateService;
 import org.dromara.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
 import org.dromara.maxkey.authn.support.socialsignon.token.RedisTokenStore;
-import org.dromara.maxkey.constants.ConstsPersistence;
 import org.dromara.maxkey.entity.SocialsProvider;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -39,7 +37,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @ComponentScan(basePackages = {
         "org.maxkey.authn.support.socialsignon"
 })
-public class SocialSignOnAutoConfiguration implements InitializingBean {
+public class SocialSignOnAutoConfiguration{
     private static final  Logger _logger = LoggerFactory.getLogger(SocialSignOnAutoConfiguration.class);
     
     @Bean(name = "socialSignOnProviderService")
@@ -68,9 +66,4 @@ public class SocialSignOnAutoConfiguration implements InitializingBean {
         return socialsAssociateService;
     }
    
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
-    }
 }

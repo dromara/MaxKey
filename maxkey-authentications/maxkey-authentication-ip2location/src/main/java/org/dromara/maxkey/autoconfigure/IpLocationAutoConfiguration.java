@@ -25,7 +25,6 @@ import org.dromara.maxkey.ip2location.online.Ip138;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -41,7 +40,7 @@ import com.maxmind.geoip2.DatabaseReader;
  */
 
 @AutoConfiguration
-public class IpLocationAutoConfiguration   implements InitializingBean {
+public class IpLocationAutoConfiguration {
 	static final  Logger _logger = LoggerFactory.getLogger(IpLocationAutoConfiguration.class);
 	
 	/**
@@ -133,9 +132,5 @@ public class IpLocationAutoConfiguration   implements InitializingBean {
 		);
 	}
 	
-	@Override
-	public void afterPropertiesSet() throws Exception {
-
-	}
 
 }

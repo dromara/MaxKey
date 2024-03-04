@@ -29,7 +29,6 @@ import org.dromara.maxkey.web.WebInstRequestFilter;
 import org.dromara.maxkey.web.WebXssRequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.endpoint.ApiVersion;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -63,7 +62,7 @@ import jakarta.servlet.Filter;
 
 
 @AutoConfiguration
-public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer {
+public class MvcAutoConfiguration implements WebMvcConfigurer {
     static final  Logger _logger = LoggerFactory.getLogger(MvcAutoConfiguration.class);
     
     /**
@@ -289,11 +288,5 @@ public class MvcAutoConfiguration implements InitializingBean , WebMvcConfigurer
         registrationBean.setOrder(4);
         return registrationBean;
     }
-    
-    @Override
-    public void afterPropertiesSet() throws Exception {
         
-    }
-    
-    
 }

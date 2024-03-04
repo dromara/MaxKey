@@ -24,14 +24,13 @@ import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.dromara.maxkey.persistence.service.EmailSendersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
 
 @AutoConfiguration
-public class OneTimePasswordAutoConfiguration  implements InitializingBean {
+public class OneTimePasswordAutoConfiguration {
     private static final  Logger _logger = 
             LoggerFactory.getLogger(OneTimePasswordAutoConfiguration.class);
     
@@ -54,8 +53,4 @@ public class OneTimePasswordAutoConfiguration  implements InitializingBean {
         return otpAuthnService;
     }
    
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        
-    }
 }
