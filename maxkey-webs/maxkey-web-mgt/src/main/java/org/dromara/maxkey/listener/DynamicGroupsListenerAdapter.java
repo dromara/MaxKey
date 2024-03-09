@@ -30,7 +30,7 @@ public class DynamicGroupsListenerAdapter extends ListenerAdapter  implements Jo
     
     private static final long serialVersionUID = 8831626240807856084L;
 
-    private  GroupsService groupsService = null;
+    transient GroupsService groupsService;
 
     @Override
     public void execute(JobExecutionContext context){

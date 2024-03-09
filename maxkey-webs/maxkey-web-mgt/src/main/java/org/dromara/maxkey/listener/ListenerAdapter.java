@@ -34,10 +34,10 @@ public class ListenerAdapter {
 	JobExecutionContext context;
 	
     public static final  class JOBSTATUS{
-        public static int STOP 		= 0;
-        public static int RUNNING 	= 1;
-        public static int ERROR 	= 2;
-        public static int FINISHED 	= 3;
+        public static final int STOP 		= 0;
+        public static final int RUNNING 	= 1;
+        public static final int ERROR 		= 2;
+        public static final int FINISHED 	= 3;
     }
     
     protected int jobStatus = JOBSTATUS.STOP;
@@ -45,35 +45,33 @@ public class ListenerAdapter {
     
     void init(JobExecutionContext context){
     	this.context = context;
-    };
+    }
     
     @SuppressWarnings("unchecked")
 	public <T> T getParameter(String name, Class<T> requiredType) {
     	return (T) context.getMergedJobDataMap().get(name);
-    };
+    }
     
     public static void addListener(
-    		Class <? extends Job> jobClass,
     		Scheduler scheduler ,
-			JobDataMap jobDataMap,
-			String cronSchedule,
-			String identity
+    		Class <? extends Job> jobClass,
+    		String cronSchedule,
+			JobDataMap jobDataMap
 		) throws SchedulerException {
+    	String identity = jobClass.getSimpleName();
 		logger.debug("Cron {}  , Job schedule {}  ", cronSchedule , identity );
 		
-		JobDetail jobDetail = 
-				JobBuilder.newJob(jobClass) 
-				.withIdentity(identity, identity + "Group")
-				.build();
+		JobDetail jobDetail = JobBuilder.newJob(jobClass) 
+								.withIdentity(identity, identity + "Group")
+								.build();
 		
 		CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronSchedule);
 		
-		CronTrigger cronTrigger = 
-			TriggerBuilder.newTrigger()
-				.withIdentity("trigger" + identity, identity + "TriggerGroup")
-				.usingJobData(jobDataMap)
-				.withSchedule(scheduleBuilder)
-				.build();
+		CronTrigger cronTrigger = TriggerBuilder.newTrigger()
+									.withIdentity("trigger" + identity, identity + "TriggerGroup")
+									.usingJobData(jobDataMap)
+									.withSchedule(scheduleBuilder)
+									.build();
 		
 		scheduler.scheduleJob(jobDetail,cronTrigger);    
 	}

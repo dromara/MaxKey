@@ -33,7 +33,7 @@ public class SessionListenerAdapter extends ListenerAdapter   implements Job , S
 	
 	private static final long serialVersionUID = 4782358765969474833L;
 	
-	SessionManager sessionManager;
+	transient SessionManager sessionManager;
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {

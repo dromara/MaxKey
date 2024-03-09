@@ -45,11 +45,11 @@ public class MaxKeyMgtListenerConfig  {
     		Scheduler scheduler,
     		SessionManager sessionManager) throws SchedulerException {
         ListenerAdapter.addListener(
-    			SessionListenerAdapter.class,
     			scheduler,
-    			new ListenerParameter().add("sessionManager",sessionManager).build(),
+    			SessionListenerAdapter.class,
     			"0 0/10 * * * ?",//10 minutes
-    			SessionListenerAdapter.class.getSimpleName()
+    			new ListenerParameter().add("sessionManager",sessionManager).build()
+    			
     		);
         logger.debug("Session ListenerAdapter inited .");
     	return "sessionListenerAdapter";
@@ -63,11 +63,10 @@ public class MaxKeyMgtListenerConfig  {
             ) throws SchedulerException {
         
         ListenerAdapter.addListener(
+        		scheduler,
     			DynamicGroupsListenerAdapter.class,
-    			scheduler,
-    			new ListenerParameter().add("groupsService",groupsService).build(),
     			cronSchedule,
-    			DynamicGroupsListenerAdapter.class.getSimpleName()
+    			new ListenerParameter().add("groupsService",groupsService).build()
     		);
         logger.debug("DynamicGroups ListenerAdapter inited .");
         return "dynamicGroupsListenerAdapter";
