@@ -103,7 +103,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "lint-staged": "^12.3.7",
-    "ng-alain": "13.4.0",
+    "ng-alain": "17.2.0",
     "ng-alain-plugin-theme": "^13.0.3",
     "ng-alain-sts": "^0.0.2",
     "node-fetch": "^2.6.1",
