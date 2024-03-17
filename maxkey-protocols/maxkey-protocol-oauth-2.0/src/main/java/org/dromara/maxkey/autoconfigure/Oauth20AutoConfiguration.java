@@ -66,10 +66,10 @@ import jakarta.servlet.Filter;
 
 @AutoConfiguration
 @ComponentScan(basePackages = {
-        "org.maxkey.authz.oauth2.provider.endpoint",
-        "org.maxkey.authz.oauth2.provider.userinfo.endpoint",
-        "org.maxkey.authz.oauth2.provider.approval.controller",
-        "org.maxkey.authz.oauth2.provider.wellknown.endpoint"
+        "org.dromara.maxkey.authz.oauth2.provider.endpoint",
+        "org.dromara.maxkey.authz.oauth2.provider.userinfo.endpoint",
+        "org.dromara.maxkey.authz.oauth2.provider.approval.controller",
+        "org.dromara.maxkey.authz.oauth2.provider.wellknown.endpoint"
 })
 public class Oauth20AutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(Oauth20AutoConfiguration.class);
