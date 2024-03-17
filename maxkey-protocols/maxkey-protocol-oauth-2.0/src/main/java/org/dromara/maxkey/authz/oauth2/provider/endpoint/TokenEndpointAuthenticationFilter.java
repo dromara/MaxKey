@@ -17,6 +17,7 @@
 package org.dromara.maxkey.authz.oauth2.provider.endpoint;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -231,7 +232,7 @@ public class TokenEndpointAuthenticationFilter implements Filter {
 	public Authentication ClientCredentials(HttpServletRequest request, HttpServletResponse response)
 				throws AuthenticationException, IOException, ServletException {
 			if (allowOnlyPost && !"POST".equalsIgnoreCase(request.getMethod())) {
-				throw new HttpRequestMethodNotSupportedException(request.getMethod(), new String[] { "POST","G" });
+				throw new HttpRequestMethodNotSupportedException(request.getMethod(), Arrays.asList("POST","G"));
 			}
 
 			String clientId = request.getParameter(OAuth2Constants.PARAMETER.CLIENT_ID);
