@@ -17,30 +17,23 @@
 
 package org.dromara.maxkey.authz.oauth2.provider.wellknown.endpoint;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.dromara.maxkey.authz.oauth2.common.OAuth2Constants;
-import org.dromara.maxkey.authz.oauth2.provider.endpoint.AbstractEndpoint;
-import org.dromara.maxkey.authz.oauth2.provider.wellknown.OpenidConfiguration;
-import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
-import org.dromara.maxkey.pretty.impl.JsonPretty;
-import org.dromara.maxkey.web.WebContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.alibaba.cloud.commons.lang.StringUtils;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.dromara.maxkey.authz.oauth2.common.OAuth2Constants;
+import org.dromara.maxkey.authz.oauth2.provider.endpoint.AbstractEndpoint;
+import org.dromara.maxkey.authz.oauth2.provider.wellknown.OpenidConfiguration;
+import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
+import org.dromara.maxkey.web.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
@@ -55,7 +48,7 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
 			produces = "application/json",
 			method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public String  configuration(
+	public OpenidConfiguration  configuration(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = "client_id", required = false) String client_id) {
@@ -69,7 +62,7 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
 			produces = "application/json",
 			method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public String  configurationMetadata(
+	public OpenidConfiguration  configurationMetadata(
 			HttpServletRequest request,
 			HttpServletResponse response, 
 			@PathVariable("instId") String instId,
@@ -262,7 +255,8 @@ public class OpenidConfigurationEndpoint extends AbstractEndpoint {
 			
 			openidConfig.setClaims_supported(claims_supported);
 		}
-		
-		return JsonPretty.getInstance().format(openidConfig,true);
+
+
+		return openidConfig;
 	}
 }
