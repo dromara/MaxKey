@@ -1,4 +1,46 @@
-﻿MaxKey v 4.0.2 GA 2023/10/12
+﻿MaxKey v 4.0.3 GA 2024/03/28
+    *(MAXKEY-240101) JDBC 同步器 问题修改 @liuxiaogang1987
+    *(MAXKEY-240102) 显示应用编码
+    *(MAXKEY-240103) 优化OpenAPI接口Basic和OAuth认证
+    *(MAXKEY-240104) openapi 单独分离出密码修改接口
+    *(MAXKEY-240105) CasRestV1Users数据
+    *(MAXKEY-240106) #I8AT43编辑动态组调整部门后报错
+    *(MAXKEY-240107) 11.11 应用访问日志改为线程写入，登录的ROLE->GROUP
+    *(MAXKEY-240108) 日志打印优化
+    *(MAXKEY-240109) 组织机构构建路径
+    *(MAXKEY-240110) OAuth20Details详情的优化
+    *(MAXKEY-240111) 调整ldap到org.dromara.maxkey.ldap
+    *(MAXKEY-240112) 抽出公共配置ResourceMvcConfig、MvcCurrentUserAutoConfiguration
+    *(MAXKEY-240113) CAS返回的格式化
+    *(MAXKEY-240114) 缓存已设置过期时间，此处删除缓存后续操作无法获取，注释掉删除代码。https://gitee.com/ll-liang
+    *(MAXKEY-240115) DesedeEncoder的对称加密
+    *(MAXKEY-240116) 索引统一名称sortindex
+    *(MAXKEY-240117) 校验权限，避免权限提升 Lyon_Li@gap.com
+    *(MAXKEY-240118) CAS serviceValidate support GET POST
+    *(MAXKEY-240119) 修复OpenID Connect metadata 元数据接口接口返回json格式不正确  https://gitee.com/yyn_0210
+    *(MAXKEY-240120) 修复ComponentScan注解执行的包名不对  https://gitee.com/yyn_0210
+    *(MAXKEY-240121) 优化代码，去掉已过时代码  https://gitee.com/yyn_0210
+    *(MAXKEY-240122) fix: 修复判断字符串是否为YES始终为false https://gitee.com/rain-night
+    *(MAXKEY-240123) 增加isUserExist的判断
+    *(MAXKEY-240124) Listener 优化
+    *(MAXKEY-240125) 代码优化和日志优化调整
+    *(MAXKEY-240126) 依赖项引用、更新和升级
+        spring              6.0.18
+        springBoot          3.1.9
+        mybatis-jpa-extra   3.2.2
+        log4j               2.23.0
+        springSecurity      6.1.6
+        tomcat              10.1.18
+        log4j               2.22.1
+        slf4j               2.0.11
+        gson                2.10.1
+        jackson             2.16.1
+        mybatis             3.5.15
+        aliyunjavasdk       4.6.4
+        opentracing         0.33.0
+        springkafka         3.0.13
+
+MaxKey v 4.0.2 GA 2023/10/12
     *(MAXKEY-231001) shenyu网关插件 @Saiph 
     *(MAXKEY-231002) ip2region & GeoLite2 ip地址转换，支持国家、省、市、地域
     *(MAXKEY-231003) #I844NY消除Session与Authentication来回嵌套
