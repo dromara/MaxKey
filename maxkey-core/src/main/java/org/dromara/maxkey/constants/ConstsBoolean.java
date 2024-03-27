@@ -52,7 +52,7 @@ public class ConstsBoolean {
     }
     
     public static boolean isYes(String value) {
-        return "YES" == value.toUpperCase();
+        return "YES".equalsIgnoreCase(value);
     }
 
     public static boolean isFalse(int value) {
