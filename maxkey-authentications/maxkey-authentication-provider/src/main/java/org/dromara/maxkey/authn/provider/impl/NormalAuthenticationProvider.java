@@ -91,11 +91,13 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
 	
 	        UserInfo userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
 	
-	        statusValid(loginCredential , userInfo);
+	        isUserExist(loginCredential , userInfo);
 	        
 	        //Validate PasswordPolicy
 	        authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
-	             
+	        
+	        statusValid(loginCredential , userInfo);
+	        
 	        //Match password 
 	        authenticationRealm.passwordMatches(userInfo, loginCredential.getPassword());
 

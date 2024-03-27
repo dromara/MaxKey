@@ -209,10 +209,10 @@ public abstract class AbstractAuthenticationProvider {
         return true;
     }
 
-    protected boolean statusValid(LoginCredential loginCredential , UserInfo userInfo) {
+    protected boolean isUserExist(LoginCredential loginCredential , UserInfo userInfo) {
         if (null == userInfo) {
             String i18nMessage = WebContext.getI18nValue("login.error.username");
-            _logger.debug("login user  " + loginCredential.getUsername() + " not in this System ." + i18nMessage);
+            _logger.debug("login user  {} not in this System , message {} ." ,loginCredential.getUsername(), i18nMessage);
             UserInfo loginUser = new UserInfo(loginCredential.getUsername());
             loginUser.setId(loginUser.generateId());
             loginUser.setUsername(loginCredential.getUsername());
@@ -225,25 +225,28 @@ public abstract class AbstractAuthenticationProvider {
             			i18nMessage,
             			WebConstants.LOGIN_RESULT.USER_NOT_EXIST);
             throw new BadCredentialsException(i18nMessage);
-        }else {
-        	if(userInfo.getIsLocked()==ConstsStatus.LOCK) {
-        		authenticationRealm.insertLoginHistory( 
-        				userInfo, 
-                        loginCredential.getAuthType(), 
-                        loginCredential.getProvider(), 
-                        loginCredential.getCode(), 
-                        WebConstants.LOGIN_RESULT.USER_LOCKED
-                    );
-        	}else if(userInfo.getStatus()!=ConstsStatus.ACTIVE) {
-        		authenticationRealm.insertLoginHistory( 
-        				userInfo, 
-                        loginCredential.getAuthType(), 
-                        loginCredential.getProvider(), 
-                        loginCredential.getCode(), 
-                        WebConstants.LOGIN_RESULT.USER_INACTIVE
-                    );
-        	}
         }
+        return true;
+    }
+    
+    protected boolean statusValid(LoginCredential loginCredential , UserInfo userInfo) {
+    	if(userInfo.getIsLocked()==ConstsStatus.LOCK) {
+    		authenticationRealm.insertLoginHistory( 
+    				userInfo, 
+                    loginCredential.getAuthType(), 
+                    loginCredential.getProvider(), 
+                    loginCredential.getCode(), 
+                    WebConstants.LOGIN_RESULT.USER_LOCKED
+                );
+    	}else if(userInfo.getStatus()!=ConstsStatus.ACTIVE) {
+    		authenticationRealm.insertLoginHistory( 
+    				userInfo, 
+                    loginCredential.getAuthType(), 
+                    loginCredential.getProvider(), 
+                    loginCredential.getCode(), 
+                    WebConstants.LOGIN_RESULT.USER_INACTIVE
+                );
+    	}
         return true;
     }
 

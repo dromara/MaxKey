@@ -84,6 +84,8 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
 	
 	        userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
 	
+	        isUserExist(loginCredential , userInfo);
+	        
 	        statusValid(loginCredential , userInfo);
 	        //mfa 
 	        mfacaptchaValid(loginCredential.getOtpCaptcha(),userInfo);

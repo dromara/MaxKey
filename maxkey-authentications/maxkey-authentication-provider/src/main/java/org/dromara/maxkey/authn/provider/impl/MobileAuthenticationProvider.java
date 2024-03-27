@@ -90,10 +90,9 @@ public class MobileAuthenticationProvider extends AbstractAuthenticationProvider
 
             UserInfo userInfo =  loadUserInfo(loginCredential.getUsername(),loginCredential.getPassword());
 
+            isUserExist(loginCredential , userInfo);
+            
             statusValid(loginCredential , userInfo);
-
-            //Validate PasswordPolicy 取消密码策略验证
-            //authenticationRealm.getPasswordPolicyValidator().passwordPolicyValid(userInfo);
 
             mobileCaptchaValid(loginCredential.getPassword(),userInfo);
 
