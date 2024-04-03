@@ -91,7 +91,7 @@ Code Hosting <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitH
 
 9. Based on Java EE platform , microservice architecture, Use Spring, MySQL, Tomcat, Redis , MQ and other open source technologies, and has strong scalability.
 
-10. Open Source, Secure,  Independent and Controllable . 
+10. Open Source, Secure, Compliance, Independent and Controllable . 
 
 
 # Interface
