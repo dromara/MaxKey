@@ -1,7 +1,38 @@
+buildscript {
+	repositories {
+		maven { url 'https://maven.aliyun.com/nexus/content/groups/public/'}
+	}
+	dependencies {
+		//springboot jar
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+plugins {
+	id 'java'
+	id "io.spring.dependency-management" version "1.0.11.RELEASE"
+	id 'org.springframework.boot' version "${springBootVersion}"
+}
+
+apply plugin: 'io.spring.dependency-management'
+
 description = "maxkey-web-maxkey"
 
-//add support for Java
-apply plugin: 'java'
+bootJar {
+	dependsOn jar
+	archiveBaseName = 'maxkey-boot'
+    version = "${project.version}-ga"
+    mainClass = 'org.dromara.maxkey.MaxKeyApplication'
+	manifest {
+	        attributes(
+                        "Implementation-Title": project.name,
+	                	"Implementation-Vendor": project.vendor,
+	                	"Created-By": project.author,
+	                	"Implementation-Date": java.time.ZonedDateTime.now(),
+	                	"Implementation-Version": project.version
+	           )
+	    }	
+}
 
 dependencies {
 	implementation project(":maxkey-common")
@@ -9,12 +40,12 @@ dependencies {
 	implementation project(":maxkey-persistence")
    	
    	implementation project(":maxkey-authentications:maxkey-authentication-core")
+   	implementation project(":maxkey-authentications:maxkey-authentication-social")
    	implementation project(":maxkey-authentications:maxkey-authentication-captcha")
-   	implementation project(":maxkey-authentications:maxkey-authentication-ip2location")
+	implementation project(":maxkey-authentications:maxkey-authentication-ip2location")
    	implementation project(":maxkey-authentications:maxkey-authentication-otp")
 	implementation project(":maxkey-authentications:maxkey-authentication-provider")
 	implementation project(":maxkey-authentications:maxkey-authentication-sms")
-	implementation project(":maxkey-authentications:maxkey-authentication-social")
    	
    	implementation project(":maxkey-protocols:maxkey-protocol-authorize")
    	implementation project(":maxkey-protocols:maxkey-protocol-cas")

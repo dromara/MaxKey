@@ -1,7 +1,43 @@
+buildscript {
+	repositories {
+		maven { url 'https://maven.aliyun.com/nexus/content/groups/public/'}
+	}
+	dependencies {
+		//springboot jar
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version "${springBootVersion}"
+	id "io.spring.dependency-management" version "1.0.11.RELEASE"
+}
+
 description = "maxkey-web-openapi"
+
+//springboot jar
+apply plugin: 'io.spring.dependency-management'
 
 //add support for Java
 apply plugin: 'java'
+
+
+
+bootJar {
+	dependsOn jar
+	archiveBaseName = 'maxkey-openapi-boot'
+    version = "${project.version}-ga"
+    mainClass = 'org.dromara.maxkey.MaxKeyOpenApiApplication'
+	manifest {
+	        attributes(
+                        "Implementation-Title": project.name,
+	                	"Implementation-Vendor": project.vendor,
+	                	"Created-By": project.author,
+	                	"Implementation-Date": java.time.ZonedDateTime.now(),
+	                	"Implementation-Version": project.version
+	           )
+	    }	
+}
 
 dependencies {
 	implementation project(":maxkey-common")
@@ -18,8 +54,7 @@ dependencies {
    	implementation project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
    	implementation project(":maxkey-protocols:maxkey-protocol-saml-2.0")   
    	
-   	//rest apis
+   	//webapis
    	implementation project(":maxkey-web-apis:maxkey-web-api-scim")   
-   	implementation project(":maxkey-web-apis:maxkey-web-api-rest")
-   		   	
+   	implementation project(":maxkey-web-apis:maxkey-web-api-rest")	
 }

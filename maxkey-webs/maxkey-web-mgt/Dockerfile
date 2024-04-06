@@ -1,4 +1,4 @@
-FROM adoptopenjdk:8-jre
+FROM openjdk:17-jdk-alpine
 
 RUN mkdir -p /maxkey-mgt
 
@@ -10,6 +10,6 @@ COPY ${JAR_FILE} maxkey-mgt-boot.jar
 
 EXPOSE 9526
 
-ENV TZ=Asia/Shanghai JAVA_OPTS="-Xms128m -Xmx256m -Djava.security.egd=file:/dev/./urandom"
+ENV TZ=Asia/Shanghai JAVA_OPTS="-Xms256m -Xmx2048m -Djava.security.egd=file:/dev/./urandom"
 
 CMD sleep 60; java -jar maxkey-mgt-boot.jar $JAVA_OPTS
