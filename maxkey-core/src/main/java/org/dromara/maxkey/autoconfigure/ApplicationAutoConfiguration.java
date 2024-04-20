@@ -110,8 +110,8 @@ public class ApplicationAutoConfiguration {
        
         if(_logger.isTraceEnabled()) {
         	 _logger.trace("Password Encoders :");
-	        for (String key : encoders.keySet()) {
-	            _logger.trace("{}= {}" ,String.format("%-10s", key), encoders.get(key).getClass().getName());
+	        for (Map.Entry<String,PasswordEncoder> entry : encoders.entrySet()) {
+	            _logger.trace("{}= {}" ,String.format("%-10s", entry.getKey()), entry.getValue().getClass().getName());
 	        }
         }
         _logger.debug("{} is default encoder" , idForEncode);
@@ -140,7 +140,7 @@ public class ApplicationAutoConfiguration {
      * @return
      */
     @Bean
-    public KeyStoreLoader spKeyStoreLoader(
+    public KeyStoreLoader serviceProviderKeyStoreLoader(
             @Value("${maxkey.saml.v20.sp.issuing.entity.id}") String entityName,
             @Value("${maxkey.saml.v20.sp.keystore.password}") String keystorePassword,
             @Value("${maxkey.saml.v20.sp.keystore}") Resource keystoreFile) {
@@ -173,7 +173,7 @@ public class ApplicationAutoConfiguration {
     	IdGenerator idGenerator = new IdGenerator(strategy);
     	SnowFlakeId snowFlakeId = new SnowFlakeId(datacenterId,machineId);
     	idGenerator.setSnowFlakeId(snowFlakeId);
-    	WebContext.idGenerator = idGenerator;
+    	WebContext.setIdGenerator(idGenerator); 
         return idGenerator;
     }
 

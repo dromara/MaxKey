@@ -252,11 +252,4 @@
             and ua.userid=#{value}
     </select>
     
-    <select id="findAdjointsByUserId" parameterType="string" resultType="UserInfoAdjoint">
-        select
-            *
-        from    mxk_userinfo_adjunct
-        where   userid=#{value}
-    </select>
-    
 </mapper>

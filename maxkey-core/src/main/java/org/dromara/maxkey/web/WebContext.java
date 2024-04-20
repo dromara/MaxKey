@@ -523,7 +523,11 @@ public final class WebContext {
         return idGenerator.generate();
     }
 
-    public static ModelAndView redirect(String redirectUrl) {
+    public static void setIdGenerator(IdGenerator idGenerator) {
+		WebContext.idGenerator = idGenerator;
+	}
+
+	public static ModelAndView redirect(String redirectUrl) {
         return new ModelAndView("redirect:" + redirectUrl);
     }
 

@@ -25,7 +25,6 @@ import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.UserInfo;
-import org.dromara.maxkey.entity.UserInfoAdjoint;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 
@@ -45,8 +44,6 @@ public interface UserInfoMapper  extends IJpaMapper<UserInfo>{
 	public UserInfo findByEmailMobile(String emailMobile);
 	 
 	public List<Organizations> findDeptsByUserId(String userId);
-	
-	public List<UserInfoAdjoint> findAdjointsByUserId(String userId);
 	
 	public void updateLocked(UserInfo userInfo);
 

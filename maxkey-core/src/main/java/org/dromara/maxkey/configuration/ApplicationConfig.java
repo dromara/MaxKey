@@ -18,6 +18,7 @@
 package org.dromara.maxkey.configuration;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dromara.maxkey.constants.ConstsDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -73,7 +74,7 @@ public class ApplicationConfig {
     @Value("${maxkey.notices.visible:false}")
     private boolean noticesVisible;
     
-    public static String  databaseProduct = "MySQL";
+    static String  databaseProduct = ConstsDatabase.MYSQL;
 	    
 	@Autowired
     EmailConfig emailConfig;
@@ -234,6 +235,14 @@ public class ApplicationConfig {
 
 	public void setNoticesVisible(boolean noticesVisible) {
 		this.noticesVisible = noticesVisible;
+	}
+
+	public static String getDatabaseProduct() {
+		return databaseProduct;
+	}
+
+	public static void setDatabaseProduct(String databaseProduct) {
+		ApplicationConfig.databaseProduct = databaseProduct;
 	}
 
 	@Override

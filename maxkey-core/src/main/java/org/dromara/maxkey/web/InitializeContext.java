@@ -96,7 +96,7 @@ public class InitializeContext extends HttpServlet {
             logger.info("List DatabaseMetaData Variables ");
             Connection connection = ((javax.sql.DataSource) applicationContext.getBean("dataSource")).getConnection();
             DatabaseMetaData databaseMetaData = connection.getMetaData();
-            ApplicationConfig.databaseProduct = databaseMetaData.getDatabaseProductName();
+            ApplicationConfig.setDatabaseProduct(databaseMetaData.getDatabaseProductName());
             
             logger.info("DatabaseProductName   :   {}", databaseMetaData.getDatabaseProductName());
             logger.info("DatabaseProductVersion:   {}" ,databaseMetaData.getDatabaseProductVersion());

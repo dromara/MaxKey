@@ -290,8 +290,6 @@ public class UserInfo extends JpaEntity  implements Serializable {
 	
     List<Organizations> depts;
     
-    List<UserInfoAdjoint> adjoints;
-    
     public static class ONLINE {
         // 在线
         public static final int ONLINE 				= 1;
@@ -1316,14 +1314,6 @@ public class UserInfo extends JpaEntity  implements Serializable {
 
     public void setDepts(List<Organizations> depts) {
         this.depts = depts;
-    }
-
-    public List<UserInfoAdjoint> getAdjoints() {
-        return adjoints;
-    }
-
-    public void setAdjoints(List<UserInfoAdjoint> adjoints) {
-        this.adjoints = adjoints;
     }
 
     public String getInstId() {

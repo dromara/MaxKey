@@ -87,7 +87,7 @@ public class ConsumerEndpoint {
 	private BindingAdapter bindingAdapter;
 	
 	@Autowired
-	@Qualifier("spKeyStoreLoader")
+	@Qualifier("serviceProviderKeyStoreLoader")
 	private KeyStoreLoader keyStoreLoader;
 
 	@Autowired

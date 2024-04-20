@@ -166,7 +166,6 @@ public class UserInfoService extends JpaService<UserInfo> {
 	public UserInfo findUserRelated(String userId) {
 	    UserInfo loadUserInfo =this.get(userId);
 	    loadUserInfo.setDepts(getMapper().findDeptsByUserId(userId));
-	    loadUserInfo.setAdjoints(getMapper().findAdjointsByUserId(userId));
 	    return loadUserInfo;
 	}
 	
