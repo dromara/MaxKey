@@ -13,7 +13,10 @@
 
 package org.dromara.maxkey.authz.oauth2.provider.endpoint;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
@@ -126,8 +129,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
         try {
             authorizationUrl = String.format(OAUTH_V20_AUTHORIZATION_URL, 
                             clientDetails.getClientId(), 
-                            HttpEncoder.encode(clientDetails.getRegisteredRedirectUri().toArray()[0].toString())
-                    );
+                            URLEncoder.encode(clientDetails.getRegisteredRedirectUri().toArray()[0].toString(),"UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -177,6 +179,8 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			// The resolved redirect URI is either the redirect_uri from the parameters or the one from
 			// clientDetails. Either way we need to store it on the AuthorizationRequest.
 			String redirectUriParameter = authorizationRequest.getRequestParameters().get(OAuth2Constants.PARAMETER.REDIRECT_URI);
+			//URLDecoder for redirect_uri
+			redirectUriParameter = URLDecoder.decode(redirectUriParameter,"UTF-8");
 			String resolvedRedirect = redirectResolver.resolveRedirect(redirectUriParameter, client);
 			if (!StringUtils.hasText(resolvedRedirect)) {
 				logger.info("Client redirectUri "+resolvedRedirect);
@@ -223,8 +227,10 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
             
 			return getUserApprovalPageResponse(model, authorizationRequest, (Authentication) principal);
 
-		}
-		catch (RuntimeException e) {
+		}catch(UnsupportedEncodingException e) {
+			logger.info("URLDecoder Exception ",e);
+			throw new RuntimeException("URLDecoder UnsupportedEncodingException");
+		}catch (RuntimeException e) {
 			sessionStatus.setComplete();
 			throw e;
 		}
