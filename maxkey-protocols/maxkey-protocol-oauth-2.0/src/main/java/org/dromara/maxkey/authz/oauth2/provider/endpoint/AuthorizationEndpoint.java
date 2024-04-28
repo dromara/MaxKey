@@ -497,8 +497,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		}
 		template.scheme(redirectUri.getScheme()).port(redirectUri.getPort()).host(redirectUri.getHost())
 				.userInfo(redirectUri.getUserInfo()).path(redirectUri.getPath());
-
-		if (fragment) {
+		if (StringUtils.hasLength(redirectUri.getFragment())) {
 			StringBuilder values = new StringBuilder();
 			if (redirectUri.getFragment() != null) {
 				String append = redirectUri.getFragment();
@@ -506,7 +505,11 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 			}
 			for (String key : query.keySet()) {
 				if (values.length() > 0) {
-					values.append("&");
+					if(values.indexOf("?") == -1) {
+						values.append("?");
+					}else {
+						values.append("&");
+					}
 				}
 				String name = key;
 				if (keys != null && keys.containsKey(key)) {
