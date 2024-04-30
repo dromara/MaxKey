@@ -1134,7 +1134,7 @@ CREATE TABLE `mxk_userinfo` (
   `ENTRYDATE` varchar(45) DEFAULT NULL COMMENT '入司时间',
   `STARTWORKDATE` varchar(45) DEFAULT NULL COMMENT '开始工作时间',
   `QUITDATE` varchar(45) DEFAULT NULL COMMENT '离职日期',
-  `SORTORDER` tinyint unsigned DEFAULT '1' COMMENT '部门内排序',
+  `SORTINDEX` tinyint unsigned DEFAULT '1' COMMENT '部门内排序',
   `WORKEMAIL` varchar(45) DEFAULT NULL COMMENT '工作-邮件',
   `WORKPHONENUMBER` varchar(45) DEFAULT NULL COMMENT '工作-电话',
   `WORKCOUNTRY` varchar(45) DEFAULT 'CHN' COMMENT '工作-国家',
@@ -1188,50 +1188,6 @@ CREATE TABLE `mxk_userinfo` (
   KEY `EMPLOYEENUMBER_UNIQUE` (`EMPLOYEENUMBER`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='USER INFO DEFINE';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mxk_userinfo_adjunct`
---
-
-DROP TABLE IF EXISTS `mxk_userinfo_adjunct`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `mxk_userinfo_adjunct` (
-  `ID` varchar(45) NOT NULL COMMENT '编号',
-  `USERID` varchar(45) NOT NULL COMMENT '用户编号',
-  `ORGANIZATION` varchar(45) DEFAULT NULL COMMENT '机构',
-  `DEPARTMENTID` varchar(45) DEFAULT NULL COMMENT '部门编号',
-  `DEPARTMENT` varchar(45) DEFAULT NULL COMMENT '部门',
-  `JOBTITLE` varchar(45) DEFAULT NULL COMMENT '职务',
-  `JOBLEVEL` varchar(45) DEFAULT NULL COMMENT '工作职级',
-  `MANAGERID` varchar(45) DEFAULT NULL COMMENT '经理编号',
-  `MANAGER` varchar(45) DEFAULT NULL COMMENT '经理名字',
-  `ASSISTANTID` varchar(45) DEFAULT NULL COMMENT '助理编号',
-  `ASSISTANT` varchar(45) DEFAULT NULL COMMENT '助理名字',
-  `ENTRYDATE` varchar(45) DEFAULT NULL COMMENT '入司时间',
-  `STARTWORKDATE` varchar(45) DEFAULT NULL COMMENT '开始工作时间',
-  `QUITDATE` varchar(45) DEFAULT NULL COMMENT '离职日期',
-  `SORTORDER` tinyint unsigned DEFAULT '0' COMMENT '部门内排序',
-  `WORKEMAIL` varchar(45) DEFAULT NULL COMMENT '工作-邮件',
-  `WORKPHONENUMBER` varchar(45) DEFAULT NULL COMMENT '工作-电话',
-  `WORKCOUNTRY` varchar(45) DEFAULT NULL COMMENT '工作-国家',
-  `WORKREGION` varchar(45) DEFAULT NULL COMMENT '工作-省/市',
-  `WORKLOCALITY` varchar(45) DEFAULT NULL COMMENT '工作-城市',
-  `WORKSTREETADDRESS` varchar(45) DEFAULT NULL COMMENT '工作-街道',
-  `WORKADDRESSFORMATTED` varchar(45) DEFAULT NULL COMMENT '工作-地址全称',
-  `WORKPOSTALCODE` varchar(45) DEFAULT NULL COMMENT '工作-邮编',
-  `WORKFAX` varchar(45) DEFAULT NULL COMMENT '工作-传真',
-  `CREATEDBY` varchar(45) DEFAULT NULL COMMENT '创建人',
-  `CREATEDDATE` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `MODIFIEDBY` varchar(45) DEFAULT NULL COMMENT '修改人',
-  `MODIFIEDDATE` datetime DEFAULT NULL COMMENT '修改时间',
-  `DESCRIPTION` varchar(400) DEFAULT NULL COMMENT '描述',
-  `COSTCENTER` varchar(45) DEFAULT NULL,
-  `DIVISION` varchar(45) DEFAULT NULL,
-  `INSTID` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='USER INFO Adjunct';
-/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1242,4 +1198,4 @@ CREATE TABLE `mxk_userinfo_adjunct` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-15  9:31:45
+-- Dump completed on 2024-04-30 10:10:50
