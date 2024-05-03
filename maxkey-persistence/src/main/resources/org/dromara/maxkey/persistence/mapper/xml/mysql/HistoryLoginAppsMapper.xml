@@ -42,7 +42,7 @@
 			userId,
 			username,
 			displayname,
-			date_format(logintime, '%Y-%m-%d  %H:%i:%s') as logintime
+			logintime
 			 
     	from mxk_history_login_apps
     	where	instid   =   #{instId} 

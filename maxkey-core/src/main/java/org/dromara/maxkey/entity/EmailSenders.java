@@ -20,6 +20,7 @@ package org.dromara.maxkey.entity;
 
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
@@ -82,13 +83,13 @@ public class EmailSenders  extends JpaEntity  implements Serializable {
     private String createdBy;
     
     @Column
-    private String createdDate;
+    private Date createdDate;
     
     @Column
     private String modifiedBy;
     
     @Column
-    private String modifiedDate;
+    private Date modifiedDate;
 
 	public EmailSenders() {
 		super();
@@ -207,14 +208,6 @@ public class EmailSenders  extends JpaEntity  implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public String getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(String createdDate) {
-		this.createdDate = createdDate;
-	}
-
 	public String getModifiedBy() {
 		return modifiedBy;
 	}
@@ -223,11 +216,19 @@ public class EmailSenders  extends JpaEntity  implements Serializable {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public String getModifiedDate() {
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getModifiedDate() {
 		return modifiedDate;
 	}
 
-	public void setModifiedDate(String modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 

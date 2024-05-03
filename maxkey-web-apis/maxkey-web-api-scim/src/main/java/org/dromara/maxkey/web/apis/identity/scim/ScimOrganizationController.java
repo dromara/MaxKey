@@ -157,13 +157,11 @@ public class ScimOrganizationController {
         
         ScimMeta meta = new ScimMeta("Organization");
         
-        if(StringUtils.isNotBlank(org.getCreatedDate())){
-        	meta.setCreated(
-        			DateUtils.parse(org.getCreatedDate(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
+        if(org.getCreatedDate()!= null){
+        	meta.setCreated(org.getCreatedDate());
         }
-        if(StringUtils.isNotBlank(org.getModifiedDate())){
-        	meta.setLastModified(
-        			DateUtils.parse(org.getModifiedDate(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
+        if(org.getModifiedDate()!= null){
+        	meta.setLastModified(org.getModifiedDate());
         }
         scimOrg.setMeta(meta);
         return scimOrg;

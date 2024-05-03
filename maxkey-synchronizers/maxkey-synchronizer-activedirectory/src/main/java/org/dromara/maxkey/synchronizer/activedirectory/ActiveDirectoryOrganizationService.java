@@ -101,7 +101,6 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 													organization.getId(),
 													organization.getOrgName(),
 													Organizations.class.getSimpleName(),
-													org.dromara.maxkey.util.DateUtils.getCurrentDateAsString(),
 													"success",
 													synchronizer.getInstId());
 			           this.historySynchronizerService.insert(historySynchronizer);

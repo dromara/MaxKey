@@ -19,6 +19,7 @@ package org.dromara.maxkey.persistence.service;
 
 
 import java.sql.Types;
+import java.util.Date;
 
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
@@ -198,7 +199,7 @@ public class UserInfoService extends JpaService<UserInfo> {
 	
 	public boolean updateProtectedApps(UserInfo userinfo) {
 		try {
-			userinfo.setModifiedDate(DateUtils.getCurrentDateTimeAsString());
+			userinfo.setModifiedDate(new Date());
 			return getMapper().updateProtectedApps(userinfo) > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -247,7 +248,7 @@ public class UserInfoService extends JpaService<UserInfo> {
     	    changePassword.setDecipherable(PasswordReciprocal.getInstance().encode(changePassword.getPassword()));
             _logger.debug("decipherable : "+changePassword.getDecipherable());
             changePassword.setPassword(password);
-            changePassword.setPasswordLastSetTime(DateUtils.getCurrentDateTimeAsString());
+            changePassword.setPasswordLastSetTime(new Date());
             
 	    }else {
 	    	changePassword.setPassword(null);
@@ -343,7 +344,7 @@ public class UserInfoService extends JpaService<UserInfo> {
 	
 	public boolean updateAppLoginPassword(UserInfo userinfo) {
 		try {
-			userinfo.setModifiedDate(DateUtils.getCurrentDateTimeAsString());
+			userinfo.setModifiedDate(new Date());
 			return getMapper().updateAppLoginPassword(userinfo) > 0;
 		} catch (Exception e) {
 			e.printStackTrace();

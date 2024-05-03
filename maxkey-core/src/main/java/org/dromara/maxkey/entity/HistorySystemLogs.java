@@ -18,6 +18,7 @@
 package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
@@ -55,7 +56,7 @@ public class HistorySystemLogs extends JpaEntity implements Serializable {
     @Column
     String displayName;
     @Column
-    String executeTime;
+    Date executeTime;
 	@Column
 	private String instId;
 
@@ -133,11 +134,11 @@ public class HistorySystemLogs extends JpaEntity implements Serializable {
 		this.displayName = displayName;
 	}
 
-	public String getExecuteTime() {
+	public Date getExecuteTime() {
 		return executeTime;
 	}
 
-	public void setExecuteTime(String executeTime) {
+	public void setExecuteTime(Date executeTime) {
 		this.executeTime = executeTime;
 	}
 

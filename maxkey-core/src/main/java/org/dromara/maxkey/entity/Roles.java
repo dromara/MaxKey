@@ -18,6 +18,8 @@
 package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 import jakarta.persistence.Column;
@@ -75,11 +77,11 @@ public class Roles extends JpaEntity implements Serializable {
     @Column
     String createdBy;
     @Column
-    String createdDate;
+    Date createdDate;
     @Column
     String modifiedBy;
     @Column
-    String modifiedDate;
+    Date modifiedDate;
     @Column
     int status;
     
@@ -157,14 +159,6 @@ public class Roles extends JpaEntity implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public String getModifiedBy() {
         return modifiedBy;
     }
@@ -173,15 +167,23 @@ public class Roles extends JpaEntity implements Serializable {
         this.modifiedBy = modifiedBy;
     }
 
-    public String getModifiedDate() {
-        return modifiedDate;
-    }
+    public Date getCreatedDate() {
+		return createdDate;
+	}
 
-    public void setModifiedDate(String modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
-    public int getStatus() {
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public int getStatus() {
         return status;
     }
 

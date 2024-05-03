@@ -18,6 +18,7 @@
 package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
@@ -59,9 +60,9 @@ public class SocialsAssociate extends JpaEntity  implements Serializable {
 	private String accessToken;
 	private String exAttribute; 
 	@Column
-    private String createdDate;
+    private Date createdDate;
     @Column
-    private String updatedDate;
+    private Date updatedDate;
     @Column
     private String instId;
 	
@@ -137,23 +138,23 @@ public class SocialsAssociate extends JpaEntity  implements Serializable {
 		this.exAttribute = exAttribute;
 	}
 
-	public String getCreatedDate() {
-        return createdDate;
-    }
+    public Date getCreatedDate() {
+		return createdDate;
+	}
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
-    public String getUpdatedDate() {
-        return updatedDate;
-    }
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
 
-    public void setUpdatedDate(String updatedDate) {
-        this.updatedDate = updatedDate;
-    }
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
 
-    public String getInstId() {
+	public String getInstId() {
 		return instId;
 	}
 

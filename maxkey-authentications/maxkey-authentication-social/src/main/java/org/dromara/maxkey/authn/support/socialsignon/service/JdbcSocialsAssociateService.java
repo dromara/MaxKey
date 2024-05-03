@@ -138,8 +138,8 @@ public class JdbcSocialsAssociateService   implements SocialsAssociateService{
 			socialsAssociate.setAccessToken(rs.getString(6));
 			socialsAssociate.setSocialUserInfo(rs.getString(7));
 			socialsAssociate.setExAttribute(rs.getString(8));
-			socialsAssociate.setCreatedDate(rs.getString(9));
-			socialsAssociate.setUpdatedDate(rs.getString(10));
+			socialsAssociate.setCreatedDate(rs.getTimestamp(9));
+			socialsAssociate.setUpdatedDate(rs.getTimestamp(10));
 			socialsAssociate.setInstId(rs.getString(11));
 			return socialsAssociate;
 		}

@@ -17,6 +17,8 @@
 
 package org.dromara.maxkey.entity;
 
+import java.util.Date;
+
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 public class ChangePassword extends JpaEntity{
@@ -40,7 +42,7 @@ public class ChangePassword extends JpaEntity{
 	private String decipherable;
 	private String instId;
 	private int passwordSetType;
-	private String passwordLastSetTime;
+	private Date passwordLastSetTime;
 	
 	/**
 	 * 
@@ -243,15 +245,13 @@ public class ChangePassword extends JpaEntity{
 	}
 
 
-	public String getPasswordLastSetTime() {
+	public Date getPasswordLastSetTime() {
 		return passwordLastSetTime;
 	}
 
-
-	public void setPasswordLastSetTime(String passwordLastSetTime) {
+	public void setPasswordLastSetTime(Date passwordLastSetTime) {
 		this.passwordLastSetTime = passwordLastSetTime;
 	}
-
 
 	@Override
     public String toString() {

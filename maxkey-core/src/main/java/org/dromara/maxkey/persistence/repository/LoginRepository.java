@@ -303,15 +303,15 @@ public class LoginRepository {
             userInfo.setAppLoginPassword(rs.getString("apploginpassword"));
             userInfo.setProtectedApps(rs.getString("protectedapps"));
 
-            userInfo.setPasswordLastSetTime(rs.getString("passwordlastsettime"));
+            userInfo.setPasswordLastSetTime(rs.getTimestamp("passwordlastsettime"));
             userInfo.setPasswordSetType(rs.getInt("passwordsettype"));
             userInfo.setBadPasswordCount(rs.getInt("badpasswordcount"));
-            userInfo.setBadPasswordTime(rs.getString("badpasswordtime"));
-            userInfo.setUnLockTime(rs.getString("unlocktime"));
+            userInfo.setBadPasswordTime(rs.getTimestamp("badpasswordtime"));
+            userInfo.setUnLockTime(rs.getTimestamp("unlocktime"));
             userInfo.setIsLocked(rs.getInt("islocked"));
-            userInfo.setLastLoginTime(rs.getString("lastlogintime"));
+            userInfo.setLastLoginTime(rs.getTimestamp("lastlogintime"));
             userInfo.setLastLoginIp(rs.getString("lastloginip"));
-            userInfo.setLastLogoffTime(rs.getString("lastlogofftime"));
+            userInfo.setLastLogoffTime(rs.getTimestamp("lastlogofftime"));
             userInfo.setLoginCount(rs.getInt("logincount"));
             userInfo.setRegionHistory(rs.getString("regionhistory"));
             userInfo.setPasswordHistory(rs.getString("passwordhistory"));
@@ -359,9 +359,9 @@ public class LoginRepository {
             userInfo.setExtraAttribute(rs.getString("extraattribute"));
 
             userInfo.setCreatedBy(rs.getString("createdby"));
-            userInfo.setCreatedDate(rs.getString("createddate"));
+            userInfo.setCreatedDate(rs.getTimestamp("createddate"));
             userInfo.setModifiedBy(rs.getString("modifiedby"));
-            userInfo.setModifiedDate(rs.getString("modifieddate"));
+            userInfo.setModifiedDate(rs.getTimestamp("modifieddate"));
 
             userInfo.setStatus(rs.getInt("status"));
             userInfo.setGridList(rs.getInt("gridlist"));

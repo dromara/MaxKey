@@ -17,6 +17,7 @@
 package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
@@ -65,7 +66,7 @@ public class HistoryConnector extends JpaEntity implements Serializable {
 	@Column
 	String description;
 
-	String syncTime;
+	Date syncTime;
 
 	@Column
 	String result;
@@ -135,11 +136,11 @@ public class HistoryConnector extends JpaEntity implements Serializable {
 		this.description = description;
 	}
 
-	public String getSyncTime() {
+	public Date getSyncTime() {
 		return syncTime;
 	}
 
-	public void setSyncTime(String syncTime) {
+	public void setSyncTime(Date syncTime) {
 		this.syncTime = syncTime;
 	}
 

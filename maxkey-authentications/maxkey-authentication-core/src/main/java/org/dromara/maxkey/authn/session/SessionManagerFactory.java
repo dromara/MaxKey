@@ -188,7 +188,7 @@ public class SessionManagerFactory implements SessionManager{
 			history.setUserId(rs.getString(3));
 			history.setUsername(rs.getString(4));
 			history.setDisplayName(rs.getString(5));
-			history.setLoginTime(rs.getString(6));
+			history.setLoginTime(rs.getTimestamp(6));
 			return history;
 		}
 	}

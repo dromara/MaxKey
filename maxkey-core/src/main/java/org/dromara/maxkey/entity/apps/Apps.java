@@ -18,6 +18,7 @@
 package org.dromara.maxkey.entity.apps;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
@@ -156,11 +157,11 @@ public class Apps extends JpaEntity implements Serializable {
     @Column
     protected String createdBy;
     @Column
-    protected String createdDate;
+    protected Date createdDate;
     @Column
     protected String modifiedBy;
     @Column
-    protected String modifiedDate;
+    protected Date modifiedDate;
     @Column
     protected String description;
 	@Column
@@ -512,14 +513,6 @@ public class Apps extends JpaEntity implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public String getModifiedBy() {
         return modifiedBy;
     }
@@ -528,15 +521,44 @@ public class Apps extends JpaEntity implements Serializable {
         this.modifiedBy = modifiedBy;
     }
 
-    public String getModifiedDate() {
-        return modifiedDate;
-    }
 
-    public void setModifiedDate(String modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
+    /**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
 
-    public int getStatus() {
+
+
+	/**
+	 * @param createdDate the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+
+
+	/**
+	 * @return the modifiedDate
+	 */
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+
+
+	/**
+	 * @param modifiedDate the modifiedDate to set
+	 */
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+
+
+	public int getStatus() {
         return status;
     }
 

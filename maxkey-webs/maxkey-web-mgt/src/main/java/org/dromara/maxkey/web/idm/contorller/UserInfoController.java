@@ -319,7 +319,7 @@ public class UserInfoController {
 	
 	public UserInfo buildUserFromSheetRow(Row row,UserInfo currentUser) {
 		UserInfo userInfo = new UserInfo();
-        userInfo.setCreatedDate(DateUtils.formatDateTime(new Date()));
+        userInfo.setCreatedDate(new Date());
 		// 登录账号
 		userInfo.setUsername(ExcelUtils.getValue(row, 0));
 		// 密码

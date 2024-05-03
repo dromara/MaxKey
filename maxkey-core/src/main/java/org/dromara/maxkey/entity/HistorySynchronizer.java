@@ -18,6 +18,7 @@
 package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
@@ -54,7 +55,7 @@ public class HistorySynchronizer  extends JpaEntity  implements Serializable{
     String objectType;
     @Column
     String objectName;
-    String syncTime;
+    Date syncTime;
     @Column
     String result;
 	@Column
@@ -65,7 +66,7 @@ public class HistorySynchronizer  extends JpaEntity  implements Serializable{
     String endDate;
     
     public HistorySynchronizer(String id, String syncId,  String syncName, String objectId,
-			String objectType, String objectName, String syncTime, String result,String instId) {
+			String objectType, String objectName, String result,String instId) {
 		super();
 		this.id = id;
 		this.syncId = syncId;
@@ -73,14 +74,14 @@ public class HistorySynchronizer  extends JpaEntity  implements Serializable{
 		this.objectId = objectId;
 		this.objectType = objectType;
 		this.objectName = objectName;
-		this.syncTime = syncTime;
+		this.syncTime = new Date();
 		this.result = result;
 		this.instId = instId;
 	}
     
     
 	public HistorySynchronizer(String id, String syncId, String sessionId, String syncName, String objectId,
-			String objectType, String objectName, String syncTime, String result, String instId) {
+			String objectType, String objectName, String result, String instId) {
 		super();
 		this.id = id;
 		this.syncId = syncId;
@@ -89,7 +90,7 @@ public class HistorySynchronizer  extends JpaEntity  implements Serializable{
 		this.objectId = objectId;
 		this.objectType = objectType;
 		this.objectName = objectName;
-		this.syncTime = syncTime;
+		this.syncTime = new Date();
 		this.result = result;
 		this.instId = instId;
 	}
@@ -131,10 +132,10 @@ public class HistorySynchronizer  extends JpaEntity  implements Serializable{
     public void setObjectName(String objectName) {
         this.objectName = objectName;
     }
-    public String getSyncTime() {
+    public Date getSyncTime() {
         return syncTime;
     }
-    public void setSyncTime(String syncTime) {
+    public void setSyncTime(Date syncTime) {
         this.syncTime = syncTime;
     }
     public String getResult() {

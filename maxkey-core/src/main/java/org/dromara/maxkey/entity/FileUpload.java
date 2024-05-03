@@ -18,6 +18,8 @@
 package org.dromara.maxkey.entity;
 
 
+import java.util.Date;
+
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,7 +59,7 @@ public class FileUpload extends JpaEntity {
     @Column
     String createdBy;
     
-    String createdDate;
+    Date createdDate;
 
 	public String getId() {
 		return id;
@@ -115,11 +117,11 @@ public class FileUpload extends JpaEntity {
 		this.createdBy = createdBy;
 	}
 
-	public String getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(String createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 

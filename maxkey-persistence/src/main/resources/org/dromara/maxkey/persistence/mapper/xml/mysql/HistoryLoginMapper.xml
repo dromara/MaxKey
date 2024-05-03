@@ -54,8 +54,8 @@
 			platform,
 			application,
 			loginurl,
-			date_format(logintime, '%Y-%m-%d  %H:%i:%s') as logintime,
-			date_format(logouttime, '%Y-%m-%d  %H:%i:%s') as logouttime
+			logintime,
+			logouttime
     	from mxk_history_login
     	where	instid   =   #{instId} 
     	<include refid="dao_where_statement"/>
@@ -80,8 +80,8 @@
             platform,
             application,
             loginurl,
-            date_format(logintime, '%Y-%m-%d  %H:%i:%s') as logintime,
-            date_format(logouttime, '%Y-%m-%d  %H:%i:%s') as logouttime
+            logintime,
+            logouttime
         from mxk_history_login
         where   instid   =   #{instId}  
             and sessionstatus = 1

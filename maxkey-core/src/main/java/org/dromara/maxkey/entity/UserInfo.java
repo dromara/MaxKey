@@ -20,6 +20,7 @@ package org.dromara.maxkey.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -149,14 +150,14 @@ public class UserInfo extends JpaEntity  implements Serializable {
     @JsonIgnore
     protected HashMap<String, String> protectedAppsMap;
 
-    protected String passwordLastSetTime;
+    protected Date passwordLastSetTime;
     protected int badPasswordCount;
-    protected String badPasswordTime;
-    protected String unLockTime;
+    protected Date badPasswordTime;
+    protected Date unLockTime;
     protected int isLocked;
-    protected String lastLoginTime;
+    protected Date lastLoginTime;
     protected String lastLoginIp;
-    protected String lastLogoffTime;
+    protected Date lastLogoffTime;
     protected int passwordSetType;
     protected Integer loginCount;
     protected String regionHistory;
@@ -265,11 +266,11 @@ public class UserInfo extends JpaEntity  implements Serializable {
     @Column
     String createdBy;
     @Column
-    String createdDate;
+    Date createdDate;
     @Column
     String modifiedBy;
     @Column
-    String modifiedDate;
+    Date modifiedDate;
     @Column
     int status;
     @Column
@@ -766,13 +767,6 @@ public class UserInfo extends JpaEntity  implements Serializable {
         this.protectedApps = protectedApps;
     }
 
-    public String getPasswordLastSetTime() {
-        return passwordLastSetTime;
-    }
-
-    public void setPasswordLastSetTime(String passwordLastSetTime) {
-        this.passwordLastSetTime = passwordLastSetTime;
-    }
 
     public int getBadPasswordCount() {
         return badPasswordCount;
@@ -782,21 +776,6 @@ public class UserInfo extends JpaEntity  implements Serializable {
         this.badPasswordCount = badPasswordCount;
     }
 
-    public String getBadPasswordTime() {
-        return badPasswordTime;
-    }
-
-    public void setBadPasswordTime(String badPasswordTime) {
-        this.badPasswordTime = badPasswordTime;
-    }
-
-    public String getUnLockTime() {
-        return unLockTime;
-    }
-
-    public void setUnLockTime(String unLockTime) {
-        this.unLockTime = unLockTime;
-    }
 
     public int getIsLocked() {
         return isLocked;
@@ -806,21 +785,7 @@ public class UserInfo extends JpaEntity  implements Serializable {
         this.isLocked = isLocked;
     }
 
-    public String getLastLoginTime() {
-        return lastLoginTime;
-    }
 
-    public void setLastLoginTime(String lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
-    }
-
-    public String getLastLogoffTime() {
-        return lastLogoffTime;
-    }
-
-    public void setLastLogoffTime(String lastLogoffTime) {
-        this.lastLogoffTime = lastLogoffTime;
-    }
 
     public int getPasswordSetType() {
         return passwordSetType;
@@ -1249,19 +1214,6 @@ public class UserInfo extends JpaEntity  implements Serializable {
         this.createdBy = createdBy;
     }
 
-    /**
-     * @return the createdDate
-     */
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    /**
-     * @param createdDate the createdDate to set
-     */
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
 
     /**
      * @return the modifiedBy
@@ -1278,20 +1230,104 @@ public class UserInfo extends JpaEntity  implements Serializable {
     }
 
     /**
-     * @return the modifiedDate
-     */
-    public String getModifiedDate() {
-        return modifiedDate;
-    }
+	 * @return the passwordLastSetTime
+	 */
+	public Date getPasswordLastSetTime() {
+		return passwordLastSetTime;
+	}
 
-    /**
-     * @param modifiedDate the modifiedDate to set
-     */
-    public void setModifiedDate(String modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
+	/**
+	 * @param passwordLastSetTime the passwordLastSetTime to set
+	 */
+	public void setPasswordLastSetTime(Date passwordLastSetTime) {
+		this.passwordLastSetTime = passwordLastSetTime;
+	}
 
-    public String getTheme() {
+	/**
+	 * @return the badPasswordTime
+	 */
+	public Date getBadPasswordTime() {
+		return badPasswordTime;
+	}
+
+	/**
+	 * @param badPasswordTime the badPasswordTime to set
+	 */
+	public void setBadPasswordTime(Date badPasswordTime) {
+		this.badPasswordTime = badPasswordTime;
+	}
+
+	/**
+	 * @return the unLockTime
+	 */
+	public Date getUnLockTime() {
+		return unLockTime;
+	}
+
+	/**
+	 * @param unLockTime the unLockTime to set
+	 */
+	public void setUnLockTime(Date unLockTime) {
+		this.unLockTime = unLockTime;
+	}
+
+	/**
+	 * @return the lastLoginTime
+	 */
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
+
+	/**
+	 * @param lastLoginTime the lastLoginTime to set
+	 */
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+
+	/**
+	 * @return the lastLogoffTime
+	 */
+	public Date getLastLogoffTime() {
+		return lastLogoffTime;
+	}
+
+	/**
+	 * @param lastLogoffTime the lastLogoffTime to set
+	 */
+	public void setLastLogoffTime(Date lastLogoffTime) {
+		this.lastLogoffTime = lastLogoffTime;
+	}
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	/**
+	 * @return the modifiedDate
+	 */
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	/**
+	 * @param modifiedDate the modifiedDate to set
+	 */
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public String getTheme() {
         return theme;
     }
 

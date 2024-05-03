@@ -217,13 +217,11 @@ public class ScimUserController {
     	}
     	
         ScimMeta meta = new ScimMeta("User");
-        if(StringUtils.isNotBlank(userInfo.getCreatedDate())){
-        	meta.setCreated(
-        			DateUtils.parse(userInfo.getCreatedDate(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
+        if(userInfo.getCreatedDate()!= null){
+        	meta.setCreated(userInfo.getCreatedDate());
         }
-        if(StringUtils.isNotBlank(userInfo.getModifiedDate())){
-        	meta.setLastModified(
-        			DateUtils.parse(userInfo.getModifiedDate(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
+        if(userInfo.getModifiedDate()!= null){
+        	meta.setLastModified(userInfo.getModifiedDate());
         }
         scimUser.setMeta(meta);
     	return scimUser;

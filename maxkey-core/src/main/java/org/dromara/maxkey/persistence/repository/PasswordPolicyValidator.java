@@ -31,7 +31,6 @@ import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-import org.joda.time.format.DateTimeFormat;
 import org.passay.PasswordData;
 import org.passay.PasswordValidator;
 import org.passay.RuleResult;
@@ -120,15 +119,10 @@ public class PasswordPolicyValidator {
         /*
          * check login attempts fail times
          */
-        if (userInfo.getBadPasswordCount() >= passwordPolicy.getAttempts()) {
-            _logger.debug("login Attempts is " + userInfo.getBadPasswordCount());
-            //duration
-            String badPasswordTimeString = userInfo.getBadPasswordTime().substring(0, 19);
-            _logger.trace("bad Password Time " + badPasswordTimeString);
-            
-            DateTime badPasswordTime = DateTime.parse(badPasswordTimeString,
-                    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
-            Duration duration = new Duration(badPasswordTime, currentdateTime);
+        if (userInfo.getBadPasswordCount() >= passwordPolicy.getAttempts() && userInfo.getBadPasswordTime() != null) {
+            _logger.debug("login Attempts is {} , bad Password Time {}" , userInfo.getBadPasswordCount(),userInfo.getBadPasswordTime());
+           
+            Duration duration = new Duration(new DateTime(userInfo.getBadPasswordTime()), currentdateTime);
             int intDuration = Integer.parseInt(duration.getStandardMinutes() + "");
             _logger.debug("bad Password duration {} , " + 
                           "password policy Duration {} , "+
@@ -191,13 +185,9 @@ public class PasswordPolicyValidator {
         * check password is Expired,Expiration is Expired date ,if Expiration equals 0,not need check
         *
         */
-       if (passwordPolicy.getExpiration() > 0) {
-           String passwordLastSetTimeString = userInfo.getPasswordLastSetTime().substring(0, 19);
-           _logger.info("last password set date {}" , passwordLastSetTimeString);
-
-           DateTime changePwdDateTime = DateTime.parse(passwordLastSetTimeString,
-                   DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
-           Duration duration = new Duration(changePwdDateTime, currentdateTime);
+       if (passwordPolicy.getExpiration() > 0 && userInfo.getPasswordLastSetTime() != null) {
+           _logger.info("last password set date {}" , userInfo.getPasswordLastSetTime());
+           Duration duration = new Duration(new DateTime(userInfo.getPasswordLastSetTime()), currentdateTime);
            int intDuration = Integer.parseInt(duration.getStandardDays() + "");
            _logger.debug("password Last Set duration day {} , " +
                          "password policy Expiration {} , " +

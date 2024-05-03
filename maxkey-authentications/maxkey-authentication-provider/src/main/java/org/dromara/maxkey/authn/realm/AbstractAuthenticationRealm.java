@@ -134,7 +134,7 @@ public abstract class AbstractAuthenticationRealm {
         
         _logger.debug("user session id is {} . ",historyLogin.getSessionId());
         
-        userInfo.setLastLoginTime(DateUtils.formatDateTime(new Date()));
+        userInfo.setLastLoginTime(new Date());
         userInfo.setLastLoginIp(WebContext.getRequestIpAddress());
         
         Browser browser = resolveBrowser();

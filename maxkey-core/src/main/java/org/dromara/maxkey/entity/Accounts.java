@@ -76,7 +76,7 @@ public class Accounts extends JpaEntity implements Serializable {
     UserInfo userInfo;
     
     @JsonIgnore
-    private HashMap<String,OrganizationsCast> orgCast =new HashMap<String,OrganizationsCast>();
+    private HashMap<String,OrganizationsCast> orgCast =new HashMap<>();
 
     public Accounts() {
         super();

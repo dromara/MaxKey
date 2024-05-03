@@ -18,6 +18,7 @@
 package org.dromara.maxkey.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
@@ -53,7 +54,7 @@ public class HistoryLoginApps extends JpaEntity  implements Serializable {
 	@Column
 	private String displayName;
 	@Column
-	private String loginTime;
+	private Date loginTime;
 	@Column
 	private String instId;
 
@@ -135,13 +136,13 @@ public class HistoryLoginApps extends JpaEntity  implements Serializable {
 	/**
 	 * @return the loginTime
 	 */
-	public String getLoginTime() {
+	public Date getLoginTime() {
 		return loginTime;
 	}
 	/**
 	 * @param loginTime the loginTime to set
 	 */
-	public void setLoginTime(String loginTime) {
+	public void setLoginTime(Date loginTime) {
 		this.loginTime = loginTime;
 	}
 

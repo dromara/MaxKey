@@ -140,13 +140,11 @@ public class ScimGroupController {
     	scimGroup.setDisplayName(group.getGroupName());
     	
     	ScimMeta meta = new ScimMeta("Group");
-        if(StringUtils.isNotBlank(group.getCreatedDate())){
-        	meta.setCreated(
-        			DateUtils.parse(group.getCreatedDate(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
+        if(group.getCreatedDate()!= null){
+        	meta.setCreated(group.getCreatedDate());
         }
-        if(StringUtils.isNotBlank(group.getModifiedDate())){
-        	meta.setLastModified(
-        			DateUtils.parse(group.getModifiedDate(), DateUtils.FORMAT_DATE_YYYY_MM_DD_HH_MM_SS));
+        if(group.getModifiedDate()!= null){
+        	meta.setLastModified(group.getModifiedDate());
         }
         scimGroup.setMeta(meta);
         

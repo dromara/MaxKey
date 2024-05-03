@@ -125,7 +125,7 @@ public class OIDCIdTokenEnhancer implements TokenEnhancer {
 			if (request.getExtensions().containsKey("max_age")
 					|| (request.getExtensions().containsKey("idtoken")) // parse the ID Token claims (#473) -- for now assume it could be in there
 					) {
-				DateTime loginDate = DateTime.parse(AuthorizationUtils.getUserInfo().getLastLoginTime(), DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
+				DateTime loginDate =new  DateTime(AuthorizationUtils.getUserInfo().getLastLoginTime());
 				builder.claim("auth_time",  loginDate.getMillis()/1000);
 			}
 			
