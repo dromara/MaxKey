@@ -17,13 +17,14 @@
 
 package org.dromara.maxkey.autoconfigure;
 
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
 import org.dromara.maxkey.configuration.ApplicationConfig;
-import org.dromara.maxkey.constants.ConstsTimeInterval;
 import org.dromara.maxkey.persistence.repository.InstitutionsRepository;
 import org.dromara.maxkey.web.WebInstRequestFilter;
 import org.dromara.maxkey.web.WebXssRequestFilter;
@@ -58,12 +59,18 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.servlet.Filter;
 
 
 @AutoConfiguration
 public class MvcAutoConfiguration implements WebMvcConfigurer {
     static final  Logger _logger = LoggerFactory.getLogger(MvcAutoConfiguration.class);
+    
+    @Value("${spring.jackson.date-format:yyyy-MM-dd HH:mm:ss}")
+    private String pattern;
     
     /**
      * 消息处理，可以直接使用properties的key值，返回的是对应的value值
@@ -151,6 +158,13 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         //mediaTypesList.add(MediaType.TEXT_PLAIN);
         _logger.debug("mappingJacksonHttpMessageConverter MediaTypes {}" , mediaTypesList);
         mappingJacksonHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
+        ObjectMapper objectMapper = mappingJacksonHttpMessageConverter.getObjectMapper();
+        // 时间格式化
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        _logger.debug("DateFormat {}" , pattern);
+        objectMapper.setDateFormat(new SimpleDateFormat(pattern));
+        // 设置格式化内容
+        mappingJacksonHttpMessageConverter.setObjectMapper(objectMapper);
         return mappingJacksonHttpMessageConverter;
     }
     
@@ -165,10 +179,9 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
             String domainName
         ) {
         _logger.debug("DomainName {}" , domainName);
-        CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-        cookieLocaleResolver.setCookieName("mxk_locale");
+        CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver("mxk_locale");
         cookieLocaleResolver.setCookieDomain(domainName);
-        cookieLocaleResolver.setCookieMaxAge(ConstsTimeInterval.TWO_WEEK);
+        cookieLocaleResolver.setCookieMaxAge(Duration.ofDays(14));
         return cookieLocaleResolver;
     }
      
