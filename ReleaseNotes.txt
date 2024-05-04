@@ -17,7 +17,7 @@
         springBoot          3.1.11
         tomcat              10.1.23
         
-axKey v 4.0.3 GA 2024/03/28
+MaxKey v 4.0.3 GA 2024/03/28
     *(MAXKEY-240101) JDBC 同步器 问题修改 @liuxiaogang1987
     *(MAXKEY-240102) 显示应用编码
     *(MAXKEY-240103) 优化OpenAPI接口Basic和OAuth认证
