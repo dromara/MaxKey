@@ -25,13 +25,13 @@ import org.springframework.stereotype.Component;
 @Configuration
 public class AuthJwkConfig {
 
-	@Value("${maxkey.auth.jwt.expires:86400}")
+	@Value("${maxkey.auth.jwt.expires:28800}")
 	int 	expires;
 	
 	@Value("${maxkey.auth.jwt.secret}")
 	String 	secret;
 	
-	@Value("${maxkey.session.timeout}")
+	@Value("${maxkey.auth.session.timeout:86400}")
 	int 	refreshExpires;
 	
 	@Value("${maxkey.auth.jwt.refresh.secret}")
