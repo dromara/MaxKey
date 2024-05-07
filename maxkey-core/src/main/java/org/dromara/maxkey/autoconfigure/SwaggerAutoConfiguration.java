@@ -65,7 +65,7 @@ public class SwaggerAutoConfiguration {
         		"/api/oauth/v20/me"
         		
         	};
-        String[] packagedToMatch = { "org.maxkey.authz" };
+        String[] packagedToMatch = { "org.dromara.maxkey.authz" };
         return GroupedOpenApi.builder().group(title)
                 .pathsToMatch(paths)
                 .packagesToScan(packagedToMatch).build();
@@ -79,7 +79,7 @@ public class SwaggerAutoConfiguration {
 						.title(title)
 						.description(description)
 						.version(version)
-						.termsOfService("http://www.maxkey.top/")
+						.termsOfService("https://www.maxkey.top/")
 						.license(
 							new License()
 								.name("Apache License, Version 2.0")
@@ -89,7 +89,7 @@ public class SwaggerAutoConfiguration {
 				externalDocs(
 						new ExternalDocumentation()
 						.description("MaxKey.top contact support@maxsso.net")
-						.url("http://www.maxkey.top/")
+						.url("https://www.maxkey.top/")
 				);
 	}
 }

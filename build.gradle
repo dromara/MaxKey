@@ -398,8 +398,10 @@ subprojects {
          implementation group: 'com.tencentcloudapi', name: 'tencentcloud-sdk-java', version: "${tencentcloudsdkjavaVersion}"
          //docs
          implementation group: 'org.mapstruct', name: 'mapstruct', version: "${mapstructVersion}"
+         implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: "${swaggerV3Version}"
          implementation group: 'io.swagger.core.v3', name: 'swagger-annotations-jakarta', version: "${swaggerV3Version}"
          implementation group: 'io.swagger.core.v3', name: 'swagger-core-jakarta', version: "${swaggerV3Version}"
+         //implementation group: 'io.swagger.core.v3', name: 'swagger-models', version: "${swaggerV3Version}"
          implementation group: 'io.swagger.core.v3', name: 'swagger-models-jakarta', version: "${swaggerV3Version}"
          //springdoc
          implementation group: 'io.github.classgraph', name: 'classgraph', version: "${classgraphVersion}"

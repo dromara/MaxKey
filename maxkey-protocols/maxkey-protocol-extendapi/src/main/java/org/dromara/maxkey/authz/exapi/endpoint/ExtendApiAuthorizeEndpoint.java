@@ -32,8 +32,8 @@ import org.dromara.maxkey.util.Instance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,10 +47,10 @@ import jakarta.servlet.http.HttpServletRequest;
 @Tag(name = "2-8-ExtendApi接口文档模块")
 @Controller
 public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
-	final static Logger _logger = LoggerFactory.getLogger(ExtendApiAuthorizeEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ExtendApiAuthorizeEndpoint.class);
 
-	@Operation(summary = "ExtendApi认证地址接口", description = "参数应用ID",method="GET")
-	@RequestMapping("/authz/api/{id}")
+	@Operation(summary = "ExtendApi认证地址接口", description = "参数应用ID")
+	@GetMapping("/authz/api/{id}")
 	public ModelAndView authorize(
 			HttpServletRequest request,
 			@PathVariable("id") String id,
@@ -61,7 +61,7 @@ public class ExtendApiAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 	    modelAndView.addObject("errorMessage", "");
 	    
 		Apps apps = getApp(id);
-		_logger.debug(""+apps);
+		_logger.debug("{}" , apps);
 		if(ConstsBoolean.isTrue(apps.getIsAdapter())){
 			_logger.debug("Adapter {}",apps.getAdapter());
 			AbstractAuthorizeAdapter adapter = (AbstractAuthorizeAdapter)Instance.newInstance(apps.getAdapter());

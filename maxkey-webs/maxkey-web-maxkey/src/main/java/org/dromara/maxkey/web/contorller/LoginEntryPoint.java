@@ -47,9 +47,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -61,7 +63,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 @Tag(name = "1-1-登录接口文档模块")
-@Controller
+@RestController
 @RequestMapping(value = "/login")
 public class LoginEntryPoint {
 	private static Logger logger = LoggerFactory.getLogger(LoginEntryPoint.class);
@@ -213,7 +215,8 @@ public class LoginEntryPoint {
  	 * @param loginCredential
  	 * @return
  	 */
- 	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@Operation(summary = "登录接口", description = "登录接口",method="POST")
+ 	@PostMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> signin( HttpServletRequest request, HttpServletResponse response,
 					@RequestBody LoginCredential credential) {
  		Message<AuthJwt> authJwtMessage = new Message<AuthJwt>(Message.FAIL);

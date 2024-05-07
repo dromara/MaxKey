@@ -45,6 +45,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 import org.springframework.web.client.RestTemplate;
@@ -197,6 +198,10 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
             StringHttpMessageConverter stringHttpMessageConverter,
             RequestMappingHandlerAdapter requestMappingHandlerAdapter) {
         List<HttpMessageConverter<?>> httpMessageConverterList = new ArrayList<>();
+        //需要追加byte，否则springdoc-openapi接口会响应Base64编码内容，导致接口文档显示失败
+        // https://github.com/springdoc/springdoc-openapi/issues/2143
+        // 解决方案
+        httpMessageConverterList.add(new ByteArrayHttpMessageConverter());
         httpMessageConverterList.add(mappingJacksonHttpMessageConverter);
         httpMessageConverterList.add(marshallingHttpMessageConverter);
         httpMessageConverterList.add(stringHttpMessageConverter);
