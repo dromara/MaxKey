@@ -118,11 +118,9 @@ App Management UI
 
 # Download
 
-Download the current version from Baidu Pan,<a href="http://www.maxkey.top/zh/about/download.html" target="_blank"> history version</a>
-
-| Version    | Date   |  Pan URL (Code) |  Docker  |
-| --------   | :----- | :----           | :----    |
-| v 4.0.3   | 2024/03/28   | <a href="https://pan.baidu.com/s/1e6UnXkkskuz-4l-fvnHuEA"  target="_blank">Download</a> ( **mxk9** )  | <a href="https://hub.docker.com/u/maxkeytop" target="_blank">Home</a>  |
+| Version    | Date   |   Download URL  |
+| --------   | :----- | :----           | 
+| v 4.0.4   | 2024/05/17   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Download</a> |
 
 # Install
 

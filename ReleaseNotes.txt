@@ -1,4 +1,4 @@
-﻿MaxKey v 4.0.4 GA 2024/05/--
+﻿MaxKey v 4.0.4 GA 2024/05/17
     *(MAXKEY-240201) 开源协议的说明细化
     *(MAXKEY-240202) 更改标准打包方式为Fat Jar
     *(MAXKEY-240203) 优化OpenAPI接口Basic和OAuth认证

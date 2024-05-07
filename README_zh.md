@@ -119,11 +119,9 @@ MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于�
 
 # 下载
 
-当前版本百度网盘下载,<a href="http://www.//maxkey.top/zh/about/download.html" target="_blank"> 历史版本</a>
-
-| 版本       | 日期    |  网盘(提取码)      |  Docker      |
-| --------   | :-----  | :----              |  :----       |
-| v 4.0.3   | 2024/03/28   | <a href="https://pan.baidu.com/s/1e6UnXkkskuz-4l-fvnHuEA" target="_blank">下载</a>( **mxk9** )  |<a href="https://hub.docker.com/u/maxkeytop" target="_blank">链接</a>  |
+| 版本       | 日期    |  下载              | 
+| --------   | :-----  | :----              | 
+| v 4.0.4   | 2024/05/17   | <a href="https://www.maxkey.top/zh/about/download.html" target="_blank">下载</a>|
  
  
 # 安装部署
