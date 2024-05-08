@@ -9,13 +9,18 @@
 // @primary-color: #f50;
 @alain-default-header-hg: 52px;
 @alain-default-header-bg: #fff;
-@alain-default-aside-bg: @primary-color
+@alain-default-aside-bg: #fff;
 
-.alain-default__nav-item, .alain-default__nav nz-badge {
+.alain-default__nav-item,
+.alain-default__nav nz-badge {
   /*color: #212529;*/
 }
 
-.alain-default__nav-item_title{
+.alain-default__nav .alain-default__nav-item {
+  color: black;
+}
+
+.alain-default__nav-item_title {
   /*color: #212529;*/
 }
 
@@ -26,29 +31,30 @@
 
 //@alain-default-aside-bg: #212529;
 
-.alain-default__aside-user-info{
+.alain-default__aside-user-info {
   color: black;
 }
-@alain-default-aside-nav-text-color:black;
+
+@alain-default-aside-nav-text-color: black;
 @alain-default-aside-nav-text-hover-color: black;
 @alain-default-aside-nav-selected-text-color: white;
 
-.sidebar-nav .sidebar-nav__selected{
+.sidebar-nav .sidebar-nav__selected {
   color: black;
   background: @primary-color
 }
 
-.sidebar-nav__sub .sidebar-nav__item{
+.sidebar-nav__sub .sidebar-nav__item {
   color: #000000a6;
 }
 
-.sidebar-nav__open > .sidebar-nav__sub {
+.sidebar-nav__open>.sidebar-nav__sub {
   /*background-color: black;*/
   color: black;
   background-color: #fff;
 }
 
-.sidebar-nav__sub .sidebar-nav__item:hover{
+.sidebar-nav__sub .sidebar-nav__item:hover {
   background: rgb(214 26 26 / 4%);
 }
 
@@ -57,11 +63,11 @@
   background-color: @primary-color
 }
 
-.sidebar-nav__selected > .sidebar-nav__item-link{
+.sidebar-nav__selected>.sidebar-nav__item-link {
   background-color: @primary-color
 }
 
-.alain-default__nav-item_collapsed{
+.alain-default__nav-item_collapsed {
   color: black;
   position: absolute;
   left: 8px;
@@ -69,6 +75,6 @@
   /**  background-color: aliceblue */
 }
 
-.grid-border{
+.grid-border {
   border: 1px solid #f0f0f0;
 }
