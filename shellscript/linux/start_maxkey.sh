@@ -10,7 +10,7 @@ JAVA_OPTS="${JAVA_OPTS} -DjavaMark=${JAVA_MARK}"
 JAVA_CONF=./maxkey
 JAVA_LIBMAXKEYPATH=./maxkey
 JAVA_CLASSPATH=./classes:./bin:$JAVA_CONF:
-JAVA_MAINCLASS=org.maxkey.MaxKeyApplication
+JAVA_MAINCLASS=org.dromara.maxkey.MaxKeyApplication
 JAVA_EXEC=$JAVA_HOME/bin/java
 
 export JAVA_CLASSPATH
