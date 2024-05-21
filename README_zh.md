@@ -134,7 +134,7 @@ MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于�
  
 # License
  
-<a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="http://www.maxkey.top/zh/about/licenses.html" target="_blank">MaxKey版权声明</a>
+<a href="http://www.maxkey.top/zh/about/licenses.html" target="_blank">Apache License, Version 2.0</a>
 
  
 # 中国信通院零信任实验室

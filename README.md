@@ -132,7 +132,7 @@ App Management UI
 
 # License
  
-<a href="https://www.apache.org/licenses/LICENSE-2.0.html" target="_blank"> Apache License, Version 2.0 </a>& <a href="http://www.maxkey.top/zh/about/licenses.html" target="_blank">MaxKey copyright NOTICE</a>
+<a href="http://www.maxkey.top/zh/about/licenses.html" target="_blank">Apache License, Version 2.0</a>
 
 
 # 中国信通院零信任实验室
