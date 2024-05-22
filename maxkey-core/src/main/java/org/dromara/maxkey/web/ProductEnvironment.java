@@ -82,6 +82,7 @@ public class ProductEnvironment {
                     );
     
         logger.info(WebConstants.DELIMITER);
-        
+        //WARN No Root logger was configured, creating default ERROR-level Root logger with Console appender
+        System.setProperty("nacos.logging.default.config.enabled", "false");
     }
 }
