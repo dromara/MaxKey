@@ -27,6 +27,7 @@ import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -39,7 +40,8 @@ public class MaxKeyOpenApiConfig{
 	//authenticationRealm for MaxKeyMgtApplication
 	@Bean
 	public JdbcAuthenticationRealm authenticationRealm(
- 			PasswordEncoder passwordEncoder,
+				@Qualifier("passwordEncoder")
+				PasswordEncoder passwordEncoder,
 	    		PasswordPolicyValidator passwordPolicyValidator,
 	    		LoginRepository loginRepository,
 	    		LoginHistoryRepository loginHistoryRepository,

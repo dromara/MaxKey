@@ -47,9 +47,9 @@ public class AuthnProviderAutoConfiguration {
     
     @Bean
     public AbstractAuthenticationProvider authenticationProvider(
-    		AbstractAuthenticationProvider normalAuthenticationProvider,
-    		AbstractAuthenticationProvider mobileAuthenticationProvider,
-    		AbstractAuthenticationProvider trustedAuthenticationProvider
+    		NormalAuthenticationProvider normalAuthenticationProvider,
+    		MobileAuthenticationProvider mobileAuthenticationProvider,
+    		TrustedAuthenticationProvider trustedAuthenticationProvider
     		) {
     	AuthenticationProviderFactory authenticationProvider = new AuthenticationProviderFactory();
     	authenticationProvider.addAuthenticationProvider(normalAuthenticationProvider);
@@ -60,7 +60,7 @@ public class AuthnProviderAutoConfiguration {
     }
     		
     @Bean
-    public AbstractAuthenticationProvider normalAuthenticationProvider(
+    public NormalAuthenticationProvider normalAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    SessionManager sessionManager,
@@ -76,7 +76,7 @@ public class AuthnProviderAutoConfiguration {
     }
     
     @Bean
-    public AbstractAuthenticationProvider mobileAuthenticationProvider(
+    public MobileAuthenticationProvider mobileAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    SmsOtpAuthnService smsAuthnService,
@@ -92,7 +92,7 @@ public class AuthnProviderAutoConfiguration {
     }
 
     @Bean
-    public AbstractAuthenticationProvider trustedAuthenticationProvider(
+    public TrustedAuthenticationProvider trustedAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    SessionManager sessionManager

@@ -48,6 +48,7 @@ import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -75,9 +76,9 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(Oauth20AutoConfiguration.class);
     
     @Bean
-    public FilterRegistrationBean<Filter> TokenEndpointAuthenticationFilter() {
+    public FilterRegistrationBean<Filter> tokenEndpointAuthenticationFilter() {
         _logger.debug("TokenEndpointAuthenticationFilter init ");
-        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<Filter>();
+        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new TokenEndpointAuthenticationFilter());
         registration.addUrlPatterns(
         							OAuth2Constants.ENDPOINT.ENDPOINT_TOKEN + "/*",
@@ -93,7 +94,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      * http://openid.net/specs/openid-connect-core-1_0.html#SelfIssued 
      */
     @Bean(name = "oidcProviderMetadata")
-    public OIDCProviderMetadataDetails OIDCProviderMetadataDetails(
+    public OIDCProviderMetadataDetails oidcProviderMetadata(
             @Value("${maxkey.oidc.metadata.issuer}")
             String issuer,
             @Value("${maxkey.oidc.metadata.authorizationEndpoint}")
@@ -133,6 +134,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "jwtSignerValidationService")
     public DefaultJwtSigningAndValidationService jwtSignerValidationService(
+    		@Qualifier("jwkSetKeyStore")
             JWKSetKeyStore jwkSetKeyStore) 
                     throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
         DefaultJwtSigningAndValidationService jwtSignerValidationService = 
@@ -152,6 +154,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "jwtEncryptionService")
     public DefaultJwtEncryptionAndDecryptionService jwtEncryptionService(
+    		@Qualifier("jwkSetKeyStore")
             JWKSetKeyStore jwkSetKeyStore) 
                     throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
         DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
@@ -224,7 +227,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      * @return oauth20JdbcClientDetailsService
      */
     @Bean(name = "oauth20JdbcClientDetailsService")
-    public JdbcClientDetailsService jdbcClientDetailsService(DataSource dataSource,PasswordEncoder passwordReciprocal) {
+    public JdbcClientDetailsService jdbcClientDetailsService(DataSource dataSource,@Qualifier("passwordReciprocal") PasswordEncoder passwordReciprocal) {
         JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
         //clientDetailsService.setPasswordEncoder(passwordReciprocal);
         _logger.debug("OAuth 2 Jdbc ClientDetails Service init.");
@@ -301,6 +304,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "oauth20UserAuthenticationManager")
     public ProviderManager oauth20UserAuthenticationManager(
+    		@Qualifier("passwordEncoder") 
             PasswordEncoder passwordEncoder,
             LoginRepository loginRepository
             ) {
@@ -323,6 +327,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
     @Bean(name = "oauth20ClientAuthenticationManager")
     public ProviderManager oauth20ClientAuthenticationManager(
             JdbcClientDetailsService oauth20JdbcClientDetailsService,
+            @Qualifier("passwordReciprocal") 
             PasswordEncoder passwordReciprocal
             ) {
         

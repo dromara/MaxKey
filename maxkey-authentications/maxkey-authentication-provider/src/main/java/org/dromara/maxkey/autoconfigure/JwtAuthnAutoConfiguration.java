@@ -26,6 +26,7 @@ import org.dromara.maxkey.crypto.jose.keystore.JWKSetKeyStore;
 import org.dromara.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -58,7 +59,7 @@ public class JwtAuthnAutoConfiguration  {
      */
     @Bean
     public DefaultJwtSigningAndValidationService jwtLoginValidationService(
-            JWKSetKeyStore jwtLoginJwkSetKeyStore) 
+    		@Qualifier("jwtLoginJwkSetKeyStore") JWKSetKeyStore jwtLoginJwkSetKeyStore) 
                     throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
         DefaultJwtSigningAndValidationService jwtSignerValidationService = 
                 new DefaultJwtSigningAndValidationService(jwtLoginJwkSetKeyStore);
@@ -76,6 +77,7 @@ public class JwtAuthnAutoConfiguration  {
     public JwtLoginService jwtLoginService(
             @Value("${maxkey.login.jwt.issuer}")
             String issuer,
+            @Qualifier("jwtLoginValidationService")
             DefaultJwtSigningAndValidationService jwtLoginValidationService) {
         JwtLoginService jwtLoginService = new JwtLoginService(
                     jwtLoginValidationService,

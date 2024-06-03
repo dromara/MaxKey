@@ -30,6 +30,7 @@ import org.dromara.maxkey.web.WebInstRequestFilter;
 import org.dromara.maxkey.web.WebXssRequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.endpoint.ApiVersion;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -193,6 +194,7 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
      */
     @Bean (name = "addConverterRequestMappingHandlerAdapter")
     public RequestMappingHandlerAdapter requestMappingHandlerAdapter(
+    		@Qualifier("mappingJacksonHttpMessageConverter")
             MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter,
             MarshallingHttpMessageConverter marshallingHttpMessageConverter,
             StringHttpMessageConverter stringHttpMessageConverter,
@@ -217,6 +219,7 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
      */
     @Bean (name = "restTemplate")
     public RestTemplate restTemplate(
+    		@Qualifier("mappingJacksonHttpMessageConverter")
             MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter,
             MarshallingHttpMessageConverter marshallingHttpMessageConverter) {
         RestTemplate restTemplate = new RestTemplate();

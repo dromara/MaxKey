@@ -28,6 +28,7 @@ import org.dromara.maxkey.authz.oauth2.provider.token.store.RedisTokenStore;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -47,7 +48,7 @@ public class Oauth20ClientAutoConfiguration {
     
     @Bean
     public JdbcClientDetailsService oauth20JdbcClientDetailsService(
-                DataSource dataSource,PasswordEncoder passwordReciprocal) {
+                DataSource dataSource, @Qualifier("passwordReciprocal") PasswordEncoder passwordReciprocal) {
 	    JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
 	    //clientDetailsService.setPasswordEncoder(passwordReciprocal);
 	    logger.debug("JdbcClientDetailsService inited.");
@@ -98,6 +99,7 @@ public class Oauth20ClientAutoConfiguration {
     @Bean
     public ProviderManager oauth20ClientAuthenticationManager(
             JdbcClientDetailsService oauth20JdbcClientDetailsService,
+            @Qualifier("passwordReciprocal")
             PasswordEncoder passwordReciprocal
             ) {
         

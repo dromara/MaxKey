@@ -45,6 +45,7 @@ import org.dromara.maxkey.persistence.service.LdapContextService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -98,7 +99,7 @@ public class MaxKeyConfig  {
     //可以在此实现其他的登陆认证方式，请实现AbstractAuthenticationRealm
     @Bean
     public JdbcAuthenticationRealm authenticationRealm(
-    			PasswordEncoder passwordEncoder,
+    			@Qualifier("passwordEncoder") PasswordEncoder passwordEncoder,
 	    		PasswordPolicyValidator passwordPolicyValidator,
 	    		LoginRepository loginService,
 	    		LoginHistoryRepository loginHistoryService,

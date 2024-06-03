@@ -46,6 +46,7 @@ import org.opensaml.xml.parse.BasicParserPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -108,7 +109,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
     @Bean(name = "authnResponseGenerator")
     public AuthnResponseGenerator authnResponseGenerator(TimeService timeService,IDService idService,
             @Value("${maxkey.saml.v20.idp.issuer}") String issuerEntityName) {
-        _logger.debug("issuerEntityName " + issuerEntityName);
+        _logger.debug("issuerEntityName {}" , issuerEntityName);
         AuthnResponseGenerator generator = new AuthnResponseGenerator(issuerEntityName,timeService,idService);
         return generator;
     }
@@ -279,7 +280,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "extractPostBindingAdapter")
     public ExtractPostBindingAdapter extractPostBindingAdapter(OpenHTTPPostDecoder openHTTPPostDecoder,
-            KeyStoreLoader keyStoreLoader,IssueInstantRule issueInstantRule,MessageReplayRule messageReplayRule) {
+    		@Qualifier("keyStoreLoader") KeyStoreLoader keyStoreLoader,IssueInstantRule issueInstantRule,MessageReplayRule messageReplayRule) {
         ExtractPostBindingAdapter adapter = new ExtractPostBindingAdapter(openHTTPPostDecoder);
         adapter.setIssueInstantRule(issueInstantRule);
         adapter.setKeyStoreLoader(keyStoreLoader);
@@ -293,7 +294,7 @@ public class Saml20AutoConfiguration implements InitializingBean {
      */
     @Bean(name = "extractRedirectBindingAdapter")
     public ExtractRedirectBindingAdapter extractRedirectBindingAdapter(OpenHTTPRedirectDecoder openHTTPRedirectDecoder,
-            KeyStoreLoader keyStoreLoader,IssueInstantRule issueInstantRule,MessageReplayRule messageReplayRule) {
+    		@Qualifier("keyStoreLoader") KeyStoreLoader keyStoreLoader,IssueInstantRule issueInstantRule,MessageReplayRule messageReplayRule) {
         ExtractRedirectBindingAdapter adapter = new ExtractRedirectBindingAdapter(openHTTPRedirectDecoder);
         adapter.setIssueInstantRule(issueInstantRule);
         adapter.setKeyStoreLoader(keyStoreLoader);
