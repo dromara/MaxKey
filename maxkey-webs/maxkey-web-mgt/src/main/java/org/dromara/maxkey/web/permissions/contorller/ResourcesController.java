@@ -21,8 +21,8 @@ import java.util.List;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsEntryType;
-import org.dromara.maxkey.constants.ConstsOperateAction;
-import org.dromara.maxkey.constants.ConstsOperateResult;
+import org.dromara.maxkey.constants.ConstsAct;
+import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.Resources;
 import org.dromara.maxkey.entity.UserInfo;
@@ -94,8 +94,8 @@ public class ResourcesController {
 			systemLog.insert(
 					ConstsEntryType.RESOURCE, 
 					resource, 
-					ConstsOperateAction.CREATE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.CREATE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 			return new Message<Resources>(Message.SUCCESS).buildResponse();
 		} else {
@@ -112,8 +112,8 @@ public class ResourcesController {
 			systemLog.insert(
 					ConstsEntryType.RESOURCE, 
 					resource, 
-					ConstsOperateAction.UPDATE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.UPDATE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 		    return new Message<Resources>(Message.SUCCESS).buildResponse();
 		} else {
@@ -129,8 +129,8 @@ public class ResourcesController {
 			systemLog.insert(
 					ConstsEntryType.RESOURCE, 
 					ids, 
-					ConstsOperateAction.DELETE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.DELETE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 			 return new Message<Resources>(Message.SUCCESS).buildResponse();
 		} else {

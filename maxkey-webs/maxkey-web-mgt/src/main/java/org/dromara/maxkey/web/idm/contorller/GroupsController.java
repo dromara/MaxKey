@@ -19,8 +19,8 @@ package org.dromara.maxkey.web.idm.contorller;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsEntryType;
-import org.dromara.maxkey.constants.ConstsOperateAction;
-import org.dromara.maxkey.constants.ConstsOperateResult;
+import org.dromara.maxkey.constants.ConstsAct;
+import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.entity.Groups;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.Roles;
@@ -98,8 +98,8 @@ public class GroupsController {
 		    systemLog.insert(
 					ConstsEntryType.ROLE, 
 					group, 
-					ConstsOperateAction.CREATE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.CREATE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 		    return new Message<Groups>(Message.SUCCESS).buildResponse();
 		} else {
@@ -120,8 +120,8 @@ public class GroupsController {
 		    systemLog.insert(
 					ConstsEntryType.ROLE, 
 					group, 
-					ConstsOperateAction.UPDATE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.UPDATE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 		    return new Message<Roles>(Message.SUCCESS).buildResponse();
 		} else {
@@ -138,8 +138,8 @@ public class GroupsController {
 			systemLog.insert(
 					ConstsEntryType.ROLE, 
 					ids, 
-					ConstsOperateAction.DELETE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.DELETE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 			 return new Message<Roles>(Message.SUCCESS).buildResponse();
 		} else {

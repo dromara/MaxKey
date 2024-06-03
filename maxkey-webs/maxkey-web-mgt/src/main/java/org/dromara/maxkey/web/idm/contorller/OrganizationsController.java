@@ -29,8 +29,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsEntryType;
-import org.dromara.maxkey.constants.ConstsOperateAction;
-import org.dromara.maxkey.constants.ConstsOperateResult;
+import org.dromara.maxkey.constants.ConstsAct;
+import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.entity.ExcelImport;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.Organizations;
@@ -106,8 +106,8 @@ public class OrganizationsController {
 			systemLog.insert(
 					ConstsEntryType.ORGANIZATION, 
 					org, 
-					ConstsOperateAction.CREATE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.CREATE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 			return new Message<Organizations>(Message.SUCCESS).buildResponse();
 		} else {
@@ -124,8 +124,8 @@ public class OrganizationsController {
 			systemLog.insert(
 					ConstsEntryType.ORGANIZATION, 
 					org, 
-					ConstsOperateAction.UPDATE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.UPDATE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 		    return new Message<Organizations>(Message.SUCCESS).buildResponse();
 		} else {
@@ -141,8 +141,8 @@ public class OrganizationsController {
 			systemLog.insert(
 					ConstsEntryType.ORGANIZATION, 
 					ids, 
-					ConstsOperateAction.DELETE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.DELETE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 			 return new Message<Organizations>(Message.SUCCESS).buildResponse();
 		} else {

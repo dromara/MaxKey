@@ -34,8 +34,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsEntryType;
-import org.dromara.maxkey.constants.ConstsOperateAction;
-import org.dromara.maxkey.constants.ConstsOperateResult;
+import org.dromara.maxkey.constants.ConstsAct;
+import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.constants.ConstsPasswordSetType;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.ExcelImport;
@@ -134,8 +134,8 @@ public class UserInfoController {
 			systemLog.insert(
 					ConstsEntryType.USERINFO, 
 					userInfo, 
-					ConstsOperateAction.CREATE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.CREATE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
@@ -162,8 +162,8 @@ public class UserInfoController {
 			systemLog.insert(
 					ConstsEntryType.USERINFO, 
 					userInfo, 
-					ConstsOperateAction.UPDATE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.UPDATE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 		    return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
@@ -180,8 +180,8 @@ public class UserInfoController {
 			systemLog.insert(
 					ConstsEntryType.USERINFO, 
 					ids, 
-					ConstsOperateAction.DELETE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.DELETE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 			 return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
@@ -225,8 +225,8 @@ public class UserInfoController {
 			systemLog.insert(
 					ConstsEntryType.USERINFO, 
 					changePassword, 
-					ConstsOperateAction.CHANGE_PASSWORD, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.CHANGE_PASSWORD, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {
@@ -246,8 +246,8 @@ public class UserInfoController {
 			systemLog.insert(
 					ConstsEntryType.USERINFO, 
 					userInfo, 
-					ConstsOperateAction.statusActon.get(userInfo.getStatus()), 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.statusActon.get(userInfo.getStatus()), 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
 		} else {

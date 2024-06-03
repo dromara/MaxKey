@@ -18,8 +18,9 @@
 package org.dromara.maxkey.constants;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
-public final class ConstsOperateAction {
+public final class ConstsAct {
 
     public static final String CREATE 			= "create";
 
@@ -28,6 +29,8 @@ public final class ConstsOperateAction {
     public static final String UPDATE 			= "update";
 
     public static final String CHANGE_PASSWORD 	= "change_password";
+    
+    public static final String FORGOT_PASSWORD 	= "forgot_password";
 
     public static final String ADD_MEMBER 		= "add_member";
 
@@ -45,10 +48,10 @@ public final class ConstsOperateAction {
 
     public static final String VIEW 			= "view";
     
-    public static ConcurrentHashMap<Integer,String> statusActon ;
+    public static final ConcurrentMap<Integer,String> statusActon ;
     
     static {
-    	statusActon= new ConcurrentHashMap<Integer,String>();
+    	statusActon = new ConcurrentHashMap<>();
     	statusActon.put(ConstsStatus.ACTIVE, ENABLE);
     	statusActon.put(ConstsStatus.INACTIVE, INACTIVE);
     	statusActon.put(ConstsStatus.DISABLED, DISABLE);

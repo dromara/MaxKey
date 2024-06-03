@@ -19,8 +19,8 @@ package org.dromara.maxkey.web.contorller;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsEntryType;
-import org.dromara.maxkey.constants.ConstsOperateAction;
-import org.dromara.maxkey.constants.ConstsOperateResult;
+import org.dromara.maxkey.constants.ConstsAct;
+import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.AccountsStrategy;
@@ -104,8 +104,8 @@ public class AccountsController {
 			systemLog.insert(
 					ConstsEntryType.ACCOUNT, 
 					account, 
-					ConstsOperateAction.CREATE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.CREATE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 		    return new Message<Accounts>(Message.SUCCESS).buildResponse();
 		} else {
@@ -123,8 +123,8 @@ public class AccountsController {
 			systemLog.insert(
 					ConstsEntryType.ACCOUNT, 
 					account, 
-					ConstsOperateAction.UPDATE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.UPDATE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 		    return new Message<Accounts>(Message.SUCCESS).buildResponse();
 		} else {
@@ -149,8 +149,8 @@ public class AccountsController {
 			systemLog.insert(
 					ConstsEntryType.ACCOUNT, 
 					accounts, 
-					ConstsOperateAction.statusActon.get(accounts.getStatus()), 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.statusActon.get(accounts.getStatus()), 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 		    return new Message<Accounts>(Message.SUCCESS).buildResponse();
 		} else {
@@ -167,8 +167,8 @@ public class AccountsController {
 			systemLog.insert(
 					ConstsEntryType.ACCOUNT, 
 					ids, 
-					ConstsOperateAction.DELETE, 
-					ConstsOperateResult.SUCCESS, 
+					ConstsAct.DELETE, 
+					ConstsActResult.SUCCESS, 
 					currentUser);
 			 return new Message<Accounts>(Message.SUCCESS).buildResponse();
 		} else {
