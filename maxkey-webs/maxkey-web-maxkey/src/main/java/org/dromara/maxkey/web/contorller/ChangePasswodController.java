@@ -19,8 +19,8 @@ package org.dromara.maxkey.web.contorller;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsEntryType;
-import org.dromara.maxkey.constants.ConstsOperateAction;
-import org.dromara.maxkey.constants.ConstsOperateResult;
+import org.dromara.maxkey.constants.ConstsAct;
+import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.constants.ConstsPasswordSetType;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.Message;
@@ -80,13 +80,13 @@ public class ChangePasswodController {
 			systemLog.insert(
 					ConstsEntryType.USERINFO,
 					changePassword,
-					ConstsOperateAction.CHANGE_PASSWORD,
-					ConstsOperateResult.SUCCESS,
+					ConstsAct.CHANGE_PASSWORD,
+					ConstsActResult.SUCCESS,
 					currentUser);
 			return new Message<ChangePassword>().buildResponse();
 		}else {
 			String message = (String) WebContext.getAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT);
-			logger.info("-message:",message);
+			logger.info("-message: {}",message);
 			return new Message<ChangePassword>(Message.ERROR,message).buildResponse();
 		}
 	}

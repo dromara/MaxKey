@@ -22,6 +22,9 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.configuration.EmailConfig;
+import org.dromara.maxkey.constants.ConstsEntryType;
+import org.dromara.maxkey.constants.ConstsAct;
+import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.PasswordPolicy;
@@ -29,6 +32,7 @@ import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.MailOtpAuthnService;
 import org.dromara.maxkey.password.sms.SmsOtpAuthnService;
+import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.PasswordPolicyService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.web.WebContext;
@@ -82,6 +86,8 @@ public class ForgotPasswordContorller {
     @Autowired
     SmsOtpAuthnService smsOtpAuthnService;
 
+    @Autowired
+	HistorySystemLogsService historySystemLogsService;
 
 	@Autowired
 	private PasswordPolicyService passwordPolicyService;
@@ -195,6 +201,12 @@ public class ForgotPasswordContorller {
 	               ) {
 	            	
 	                if(userInfoService.changePassword(changePassword,true)) {
+	                	historySystemLogsService.insert(
+	        					ConstsEntryType.USERINFO,
+	        					changePassword,
+	        					ConstsAct.FORGOT_PASSWORD,
+	        					ConstsActResult.SUCCESS,
+	        					loadedUserInfo);
 	                	return new Message<ChangePassword>(Message.SUCCESS).buildResponse();
 	                }else {
 	                	return new Message<ChangePassword>(Message.FAIL).buildResponse();
