@@ -262,7 +262,8 @@ subprojects {
          //rocketmq
          implementation group: 'org.apache.rocketmq', name: 'rocketmq-common', version: "${rocketmqclientVersion}"
          implementation group: 'org.apache.rocketmq', name: 'rocketmq-remoting', version: "${rocketmqclientVersion}"
-         implementation group: 'io.github.aliyunmq', name: 'rocketmq-slf4j-api', version: '1.0.1'
+         //implementation group: 'io.github.aliyunmq', name: 'rocketmq-slf4j-api', version: '1.0.1'
+         implementation group: 'io.github.aliyunmq', name: 'rocketmq-logback-classic', version: '1.0.1'
          implementation group: 'org.apache.rocketmq', name: 'rocketmq-client', version: "${rocketmqclientVersion}"
          // https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-spring-boot
          implementation group: 'org.apache.rocketmq', name: 'rocketmq-spring-boot', version: "${rocketmqspringbootVersion}"
