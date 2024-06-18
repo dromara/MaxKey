@@ -7,7 +7,7 @@
 | --------| :-----  | 
 | cas-springboot-demo     | SpringBoot开发的CAS协议客户端集成的介绍                        |
 | jeesite/5.2.1           | jeesite集成插件及使用介绍        |
-| Spring-Security-Oauth2-SSO | Spring-Security-Oauth2-SSO|
+| spring-boot-security-oauth-client-sample | spring-boot-security-oauth-client-sample|
 |  *_*   |    *_*                          |
 
 
