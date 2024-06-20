@@ -52,11 +52,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ForgotPasswordContorller {
     private static Logger logger = LoggerFactory.getLogger(ForgotPasswordContorller.class);
 
-    Pattern emailRegex = Pattern.compile(
-            "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$");
+    static final Pattern emailRegex = Pattern.compile("^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$");
     
-    Pattern mobileRegex = Pattern.compile(
-            "^[1][3,4,5,7,8][0-9]{9}$");
+    static final Pattern mobileRegex = Pattern.compile("^[1][3,4,5,6,7,8,9][0-9]{9}$");
     
     @Autowired
     EmailConfig emailConfig;
