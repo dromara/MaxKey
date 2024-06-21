@@ -20,47 +20,50 @@
  
 rootProject.name = 'MaxKey'
 
-include (
-	//Common
-	'maxkey-common',
-	'maxkey-core',
-	'maxkey-persistence',
-	//authentications
-	'maxkey-authentications:maxkey-authentication-core',
-	'maxkey-authentications:maxkey-authentication-captcha',
-	'maxkey-authentications:maxkey-authentication-ip2location',
-	'maxkey-authentications:maxkey-authentication-social',
-	'maxkey-authentications:maxkey-authentication-otp',
-	'maxkey-authentications:maxkey-authentication-provider',
-	'maxkey-authentications:maxkey-authentication-sms',
-	//rest apis
-	'maxkey-web-apis:maxkey-web-api-scim',
-	'maxkey-web-apis:maxkey-web-api-rest',
-	//synchronizers
-	'maxkey-synchronizers:maxkey-synchronizer',
-	'maxkey-synchronizers:maxkey-synchronizer-reorgdept',
-	'maxkey-synchronizers:maxkey-synchronizer-activedirectory',
-	'maxkey-synchronizers:maxkey-synchronizer-feishu',
-	'maxkey-synchronizers:maxkey-synchronizer-jdbc',
-	'maxkey-synchronizers:maxkey-synchronizer-ldap',
-	'maxkey-synchronizers:maxkey-synchronizer-dingtalk',
-	'maxkey-synchronizers:maxkey-synchronizer-workweixin',
-	//Protocol
-	'maxkey-protocols:maxkey-protocol-authorize',
-	'maxkey-protocols:maxkey-protocol-oauth-2.0',
-	'maxkey-protocols:maxkey-protocol-saml-2.0',
-	'maxkey-protocols:maxkey-protocol-cas',
-	'maxkey-protocols:maxkey-protocol-jwt',
-	'maxkey-protocols:maxkey-protocol-formbased',
-	'maxkey-protocols:maxkey-protocol-tokenbased',
-	'maxkey-protocols:maxkey-protocol-extendapi',
-	//webs
-	//gataway
-    'maxkey-webs:maxkey-gataway',
-	//maxkey(sign)
-	'maxkey-webs:maxkey-web-maxkey',
-	//management(mgt)
-	'maxkey-webs:maxkey-web-mgt',
-	//openapi(open)
-    'maxkey-webs:maxkey-web-openapi',
-)
+//Common
+include ('maxkey-common')
+include ('maxkey-core')
+include ('maxkey-persistence')
+
+//authentications
+include ('maxkey-authentications:maxkey-authentication-captcha')
+include ('maxkey-authentications:maxkey-authentication-core')
+include ('maxkey-authentications:maxkey-authentication-ip2location')
+include ('maxkey-authentications:maxkey-authentication-otp')
+include ('maxkey-authentications:maxkey-authentication-provider')
+include ('maxkey-authentications:maxkey-authentication-sms')
+include ('maxkey-authentications:maxkey-authentication-social')
+
+//rest apis
+include ('maxkey-web-apis:maxkey-web-api-rest')
+include ('maxkey-web-apis:maxkey-web-api-scim')
+
+//synchronizers
+include ('maxkey-synchronizers:maxkey-synchronizer')
+include ('maxkey-synchronizers:maxkey-synchronizer-activedirectory')
+include ('maxkey-synchronizers:maxkey-synchronizer-dingtalk')
+include ('maxkey-synchronizers:maxkey-synchronizer-feishu')
+include ('maxkey-synchronizers:maxkey-synchronizer-jdbc')
+include ('maxkey-synchronizers:maxkey-synchronizer-ldap')
+include ('maxkey-synchronizers:maxkey-synchronizer-reorgdept')
+include ('maxkey-synchronizers:maxkey-synchronizer-workweixin')
+
+//Protocol
+include ('maxkey-protocols:maxkey-protocol-authorize')
+include ('maxkey-protocols:maxkey-protocol-cas')
+include ('maxkey-protocols:maxkey-protocol-extendapi')
+include ('maxkey-protocols:maxkey-protocol-formbased')
+include ('maxkey-protocols:maxkey-protocol-jwt')
+include ('maxkey-protocols:maxkey-protocol-oauth-2.0')
+include ('maxkey-protocols:maxkey-protocol-saml-2.0')
+include ('maxkey-protocols:maxkey-protocol-tokenbased')
+
+//webs
+//gataway
+include ('maxkey-webs:maxkey-gataway')
+//maxkey(sign)
+include ('maxkey-webs:maxkey-web-maxkey')
+//management(mgt)
+include ('maxkey-webs:maxkey-web-mgt')
+//openapi(open)
+include ('maxkey-webs:maxkey-web-openapi')
