@@ -48,7 +48,7 @@ public class SessionListenerAdapter extends ListenerAdapter   implements Job , S
             	for (HistoryLogin login : sessionManager.querySessions()) {
             		Session session = sessionManager.get(login.getSessionId());
             		if(session == null) {
-            			logger.debug("user {} session {}  Login at {} and TimeOut at {} ." ,
+            			logger.debug("TimeOut user {} session {}  Login at {} and  at {} ." ,
             					login.getUsername(), 
             					login.getId(),
             					login.getLoginTime(),

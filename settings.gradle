@@ -1,5 +1,5 @@
 /*
- * Copyright [2021] [MaxKey of copyright http://www.maxkey.top]
+ * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,6 @@ include ('maxkey-synchronizers:maxkey-synchronizer-dingtalk')
 include ('maxkey-synchronizers:maxkey-synchronizer-feishu')
 include ('maxkey-synchronizers:maxkey-synchronizer-jdbc')
 include ('maxkey-synchronizers:maxkey-synchronizer-ldap')
-include ('maxkey-synchronizers:maxkey-synchronizer-reorgdept')
 include ('maxkey-synchronizers:maxkey-synchronizer-workweixin')
 
 //Protocol

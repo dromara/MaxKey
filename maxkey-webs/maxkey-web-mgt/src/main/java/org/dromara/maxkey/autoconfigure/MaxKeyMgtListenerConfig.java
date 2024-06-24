@@ -22,9 +22,11 @@ import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.listener.DynamicGroupsListenerAdapter;
 import org.dromara.maxkey.listener.ListenerAdapter;
 import org.dromara.maxkey.listener.ListenerParameter;
+import org.dromara.maxkey.listener.ReorgDeptListenerAdapter;
 import org.dromara.maxkey.listener.SessionListenerAdapter;
 import org.dromara.maxkey.persistence.service.ConnectorsService;
 import org.dromara.maxkey.persistence.service.GroupsService;
+import org.dromara.maxkey.persistence.service.OrganizationsService;
 import org.dromara.maxkey.provision.thread.ProvisioningRunner;
 import org.dromara.maxkey.provision.thread.ProvisioningRunnerThread;
 import org.quartz.Scheduler;
@@ -53,6 +55,20 @@ public class MaxKeyMgtListenerConfig  {
     		);
         logger.debug("Session ListenerAdapter inited .");
     	return "sessionListenerAdapter";
+    }
+    
+    @Bean
+    public String  reorgDeptListenerAdapter(
+    		Scheduler scheduler,
+    		OrganizationsService organizationsService) throws SchedulerException {
+        ListenerAdapter.addListener(
+        		scheduler,
+        		ReorgDeptListenerAdapter.class,
+        		"0 0/30 * * * ?",//30 minutes
+    			new ListenerParameter().add("organizationsService",organizationsService).build()
+    		);
+        logger.debug("ReorgDept ListenerAdapter inited .");
+    	return "reorgDeptListenerAdapter";
     }
     
     @Bean

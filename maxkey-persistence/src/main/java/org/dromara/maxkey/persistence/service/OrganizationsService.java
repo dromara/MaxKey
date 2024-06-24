@@ -102,13 +102,14 @@ public class OrganizationsService  extends JpaService<Organizations>{
          return false;
 	 }
 
+
 	public void reorgNamePath(String instId) {
 		_logger.debug("instId {}", instId);
-		if(StringUtils.isBlank(instId)) {
+		if (StringUtils.isBlank(instId)) {
 			instId = "1";
 		}
-		 
-		HashMap<String, Organizations> reorgOrgMap  = new HashMap<>();
+
+		HashMap<String, Organizations> reorgOrgMap = new HashMap<>();
 		List<Organizations> orgList = find(" where instid ='" + instId + "'");
 		List<Organizations> originOrgList = new ArrayList<>();
 		Organizations rootOrg = null;
@@ -117,7 +118,7 @@ public class OrganizationsService  extends JpaService<Organizations>{
 			if (isRootOrg(org)) {
 				rootOrg = org;
 			}
-			Organizations cloneOrg =  new Organizations();
+			Organizations cloneOrg = new Organizations();
 			BeanUtils.copyProperties(org, cloneOrg);
 			originOrgList.add(cloneOrg);
 		}
@@ -126,10 +127,10 @@ public class OrganizationsService  extends JpaService<Organizations>{
 			_logger.debug("reorged .");
 			long reorgCount = 0;
 			for (Organizations originOrg : originOrgList) {
-				Organizations reorgOrg = reorgOrgMap.get( originOrg.getId());
-				_logger.trace("reorged Organization {}" ,reorgOrg);
-				if(originOrg.getNamePath()== null || !originOrg.getNamePath().equals(reorgOrg.getNamePath())) {
-					_logger.debug("update reorgCount {} , Organization {}" ,++reorgCount,reorgOrg);
+				Organizations reorgOrg = reorgOrgMap.get(originOrg.getId());
+				_logger.trace("reorged Organization {}", reorgOrg);
+				if (originOrg.getNamePath() == null || !originOrg.getNamePath().equals(reorgOrg.getNamePath())) {
+					_logger.debug("update reorgCount {} , Organization {}", ++reorgCount, reorgOrg);
 					getMapper().updateNamePath(reorgOrg);
 				}
 			}
@@ -138,32 +139,30 @@ public class OrganizationsService  extends JpaService<Organizations>{
 			_logger.error("reorgNamePath Exception ", e);
 		}
 	}
-	
-	public static boolean isRootOrg(Organizations rootOrg){
-		return (
-				rootOrg.getParentId() == null 
-				|| rootOrg.getParentId().equalsIgnoreCase("-1")
-				|| rootOrg.getParentId().equalsIgnoreCase("0")
+
+	boolean isRootOrg(Organizations rootOrg) {
+		if (rootOrg.getParentId() == null || rootOrg.getParentId().equalsIgnoreCase("-1")
 				|| rootOrg.getParentId().equalsIgnoreCase(rootOrg.getId())
-				|| rootOrg.getParentId().equalsIgnoreCase(rootOrg.getInstId())
-				);
+				|| rootOrg.getParentId().equalsIgnoreCase(rootOrg.getInstId())) {
+			return true;
+		}
+		return false;
 	}
 
-	void reorg(HashMap<String, Organizations> orgMap, List<Organizations> orgList,Organizations rootOrg) {
+	void reorg(HashMap<String, Organizations> orgMap, List<Organizations> orgList, Organizations rootOrg) {
 		if (isRootOrg(rootOrg)) {
-			rootOrg.setCodePath("/" + rootOrg.getId()+"/");
-			rootOrg.setNamePath("/" + rootOrg.getOrgName()+"/");
+			rootOrg.setCodePath("/" + rootOrg.getId() + "/");
+			rootOrg.setNamePath("/" + rootOrg.getOrgName() + "/");
 		} else {
 			Organizations parent = orgMap.get(rootOrg.getParentId());
-			rootOrg.setCodePath(parent.getCodePath() + rootOrg.getId()+ "/");
-			rootOrg.setNamePath(parent.getNamePath() + rootOrg.getOrgName()+ "/");
+			rootOrg.setCodePath(parent.getCodePath() + rootOrg.getId() + "/");
+			rootOrg.setNamePath(parent.getNamePath() + rootOrg.getOrgName() + "/");
 		}
 		rootOrg.setReorgNamePath(true);
 
 		for (Organizations org : orgList) {
-			if (org.isReorgNamePath()) {
+			if (org.isReorgNamePath())
 				continue;
-			}
 			if (org.getParentId().equalsIgnoreCase(rootOrg.getId())) {
 				reorg(orgMap, orgList, org);
 			}
