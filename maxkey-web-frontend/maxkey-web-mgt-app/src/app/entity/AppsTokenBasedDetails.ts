@@ -42,6 +42,12 @@ export class AppsTokenBasedDetails extends Apps {
     } else {
       this.switch_status = false;
     }
+
+    this.select_userPropertys = [''];
+    let userPropertysArray: String[] = `${this.userPropertys},`.split(',');
+    for (let i = 0; i < userPropertysArray.length; i++) {
+      this.select_userPropertys.push(`${userPropertysArray[i]}`);
+    }
   }
 
   override trans(): void {
@@ -49,6 +55,18 @@ export class AppsTokenBasedDetails extends Apps {
       this.status = 1;
     } else {
       this.status = 0;
+    }
+
+    this.userPropertys = '';
+
+    for (let i = 0; i < this.select_userPropertys.length; i++) {
+      if (this.select_userPropertys[i] != '') {
+        if (this.userPropertys === '') {
+          this.userPropertys = this.select_userPropertys[i];
+        } else {
+          this.userPropertys = `${this.userPropertys},${this.select_userPropertys[i]}`;
+        }
+      }
     }
   }
 }
