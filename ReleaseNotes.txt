@@ -1,4 +1,36 @@
-﻿MaxKey v 4.0.4 GA 2024/05/17
+﻿MaxKey v 4.0.5 GA 2024/06/27
+    *(MAXKEY-240301) ProductVersionEndpoint 显示产品版本信息
+    *(MAXKEY-240302) WARN No Root logger was configured, creating default ERROR-level Root logger with Console appender 优化配置
+    *(MAXKEY-240303) ConfigurerFreeMarker代码优化
+    *(MAXKEY-240304) ConstsOperateAction  改为 ConstsAct 
+    *(MAXKEY-240305) 增加ConstsAct.FORGOT_PASSWORD类型
+    *(MAXKEY-240306) Rocketmq日志输出警告日志优化
+    *(MAXKEY-240307) 增加spring-boot-security-oauth-client-sample
+    *(MAXKEY-240308) 手机号码规则优化
+    *(MAXKEY-240309) gradle.properties增加项目信息
+    *(MAXKEY-240310) delete maxkey-synchronizer-reorgdept & settings.gradle文件优化
+    *(MAXKEY-240311) TokenBased 令牌内容保存问题优化 @xujialiang
+    *(MAXKEY-240312) gradle-8.8
+    *(MAXKEY-240313) window发行版mysql-8.4.0&jdk 21
+    *(MAXKEY-240314) 依赖项引用、更新和升级
+        spring                   =6.1.8
+        springBoot               =3.3.0
+        springSecurity           =6.3.0
+        springData               =3.3.0
+        springkafka              =3.2.0
+        springcloud              =4.1.2
+        springcloudalibaba       =2023.0.1.0
+        springcloudalibabacspl   =1.8.7
+        commonsdbcp2             =2.12.0
+        commonsio                =2.16.1
+        mysqlconnectorjava       =8.4.0
+        druid                    =1.2.23
+        druidspringbootstarter   =1.2.23
+        mybatisspring            =3.0.3
+        slf4j                    =2.0.13
+        gradle 8.8
+
+MaxKey v 4.0.4 GA 2024/05/17
     *(MAXKEY-240201) 开源协议的说明细化
     *(MAXKEY-240202) 更改标准打包方式为Fat Jar
     *(MAXKEY-240203) 优化OpenAPI接口Basic和OAuth认证
@@ -458,7 +490,7 @@ MaxKey v 3.5.6 GA 2022/09/07
     *(MAXKEY-221116) 依赖项引用、更新和升级
         springcloudalibabacspl  1.8.5
         jbosslogging            3.4.3.Final
-        hibernateVersion        6.2.4.Final
+        hibernate        6.2.4.Final
     
 MaxKey v 3.5.5 GA 2022/08/23
     *(MAXKEY-221001) 前端token刷新问题修复
@@ -920,7 +952,7 @@ MaxKey v 3.0.0 GA 2021/09/29
         jedis               3.7.0
         ehcache             3.9.6
         nacos               2.0.3
-        jacksonVersion      2.12.5
+        jackson      2.12.5
         httpasyncclient     4.1.4
         bouncycastle        1.69
         JustAuth            1.16.4
@@ -1297,9 +1329,9 @@ MaxKey v 2.2.0 GA   2020/09/24
     *(MAXKEY-200836)  依赖jar升级
                         tomcat 9.0.38
                         passay 1.6.0
-                        springBootVersion  2.3.4.RELEASE
-                        springVersion   5.2.9.RELEASE
-                        springSecurityVersion   5.4.0
+                        springBoot  2.3.4.RELEASE
+                        spring   5.2.9.RELEASE
+                        springSecurity   5.4.0
                         guava  29.0-jre
                         joda-time 2.10.6
                         ehcache 3.9.0
