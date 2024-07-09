@@ -65,7 +65,7 @@ public class BaseAppContorller {
 		 */
 		if(StringUtils.isNotBlank(application.getIconId())){
 			application.setIcon(fileUploadService.get(application.getIconId()).getUploaded());
-			fileUploadService.remove(application.getIconId());
+			fileUploadService.delete(application.getIconId());
 		}
 		
 	}

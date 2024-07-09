@@ -98,7 +98,7 @@ public class RestOrganizationController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
     	_logger.debug("Organizations id {} ", id );
-        organizationsService.remove(id);
+        organizationsService.delete(id);
        
     }
     

@@ -101,7 +101,7 @@ public class RestUserInfoController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
     	_logger.debug("UserInfo id {} ", id );
-        userInfoService.logicDelete(id);
+        userInfoService.delete(id);
     }
     
     @GetMapping(value = { "/.search" }, produces = {MediaType.APPLICATION_JSON_VALUE})

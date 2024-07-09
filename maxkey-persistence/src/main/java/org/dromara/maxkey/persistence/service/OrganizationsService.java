@@ -92,9 +92,8 @@ public class OrganizationsService  extends JpaService<Organizations>{
 		 return getMapper().queryOrgs(organization);
 	 }
 	 
-	 @Override
 	 public boolean delete(Organizations organization) {
-	     if(super.delete(organization)){
+	     if(super.delete(organization.getId())){
 	    	 provisionService.send(
                      ProvisionTopic.ORG_TOPIC, organization, ProvisionAction.DELETE_ACTION);
              return true;

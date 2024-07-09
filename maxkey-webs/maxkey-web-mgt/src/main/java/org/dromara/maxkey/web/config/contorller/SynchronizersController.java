@@ -91,7 +91,7 @@ public class SynchronizersController {
 
     @ResponseBody
     @RequestMapping(value = {"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> delete(@RequestParam("ids") String ids) {
+    public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids) {
         logger.debug("-delete  ids : {} ", ids);
         if (synchronizersService.deleteBatch(ids)) {
             return new Message<Connectors>(Message.SUCCESS).buildResponse();

@@ -96,7 +96,7 @@ public class ScimOrganizationController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
     	_logger.debug("ScimOrganization id {}", id );
-    	organizationsService.remove(id);
+    	organizationsService.delete(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)

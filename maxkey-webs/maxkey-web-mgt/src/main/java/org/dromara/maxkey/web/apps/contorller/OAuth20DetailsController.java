@@ -17,6 +17,8 @@
 
 package org.dromara.maxkey.web.apps.contorller;
 
+import java.util.List;
+
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authz.oauth2.common.OAuth2Constants;
 import org.dromara.maxkey.authz.oauth2.provider.client.JdbcClientDetailsService;
@@ -124,10 +126,10 @@ public class OAuth20DetailsController  extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(
-			@RequestParam("ids") String ids,
+			@RequestParam("ids") List<String> ids,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
-		for (String id : StringUtils.split(ids, ",")){
+		for (String id : ids){
 			oauth20JdbcClientDetailsService.removeClientDetails(id);
 		}
 		if (appsService.deleteBatch(ids)) {

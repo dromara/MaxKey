@@ -78,7 +78,7 @@ public class AuthorizeBaseEndpoint {
 		account.setAppName(app.getAppName());
 		
 		if(loadApp.getCredential().equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)){
-			account = accountsService.load( Query.builder().eq("appId", loadApp.getId()).eq("userid", userInfo.getId()));
+			account = accountsService.get( Query.builder().eq("appId", loadApp.getId()).eq("userid", userInfo.getId()));
 			if(account != null){
 				account.setRelatedPassword(
 						PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));

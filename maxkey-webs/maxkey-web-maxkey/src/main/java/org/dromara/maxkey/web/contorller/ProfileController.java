@@ -81,7 +81,7 @@ public class ProfileController {
 //		}
         if(StringUtils.isNotBlank(userInfo.getPictureId())) {
 			userInfo.setPicture(fileUploadService.get(userInfo.getPictureId()).getUploaded());
-			fileUploadService.remove(userInfo.getPictureId());
+			fileUploadService.delete(userInfo.getPictureId());
 		}
         
         if (userInfoService.updateProfile(userInfo) > 0) {

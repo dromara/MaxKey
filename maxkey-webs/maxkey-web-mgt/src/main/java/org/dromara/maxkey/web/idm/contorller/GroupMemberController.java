@@ -17,6 +17,8 @@
 
 package org.dromara.maxkey.web.idm.contorller;
 
+import java.util.List;
+
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.GroupMember;
@@ -188,7 +190,7 @@ public class GroupMemberController {
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete ids : {}" , ids);
 		if (service.deleteBatch(ids)) {
 			 return new Message<GroupMember>(Message.SUCCESS).buildResponse();

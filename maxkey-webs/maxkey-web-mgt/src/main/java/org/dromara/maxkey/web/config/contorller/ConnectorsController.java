@@ -17,6 +17,8 @@
 
 package org.dromara.maxkey.web.config.contorller;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
@@ -93,7 +95,7 @@ public class ConnectorsController {
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (connectorsService.deleteBatch(ids)) {
 			 return new Message<Connectors>(Message.SUCCESS).buildResponse();

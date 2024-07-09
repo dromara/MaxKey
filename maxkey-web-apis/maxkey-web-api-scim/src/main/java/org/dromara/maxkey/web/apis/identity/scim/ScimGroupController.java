@@ -103,7 +103,7 @@ public class ScimGroupController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
     	_logger.debug("ScimGroup id {} " , id);
-    	groupsService.remove(id);
+    	groupsService.delete(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)

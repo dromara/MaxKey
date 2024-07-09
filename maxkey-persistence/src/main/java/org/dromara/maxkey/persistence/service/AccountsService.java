@@ -114,10 +114,9 @@ public class AccountsService  extends JpaService<Accounts>{
 	   return this.getMapper().updateStatus(accounts) > 0;
    }
    
-   @Override
    public boolean remove(String id) {
        Accounts account = this.get(id);
-       if (super.remove(id)) {
+       if (super.delete(id)) {
               UserInfo loadUserInfo = null;
               if(provisionService.getApplicationConfig().isProvisionSupport()) {
                   loadUserInfo = userInfoService.findUserRelated(account.getUserId());

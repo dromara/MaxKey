@@ -16,6 +16,8 @@
  
 package org.dromara.maxkey.web.access.contorller;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.GroupPermissions;
@@ -114,7 +116,7 @@ public class GroupPermissionsController {
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete ids : {}" , ids);
 		if (groupPermissionssService.deleteBatch(ids)) {
 			 return new Message<GroupPermissions>(Message.SUCCESS).buildResponse();

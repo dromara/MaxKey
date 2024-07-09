@@ -17,6 +17,8 @@
 
 package org.dromara.maxkey.web.apps.contorller;
 
+import java.util.List;
+
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsProtocols;
 import org.dromara.maxkey.crypto.ReciprocalUtils;
@@ -90,7 +92,7 @@ public class CasDetailsController  extends BaseAppContorller {
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (casDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
 			 return new Message<AppsCasDetails>(Message.SUCCESS).buildResponse();

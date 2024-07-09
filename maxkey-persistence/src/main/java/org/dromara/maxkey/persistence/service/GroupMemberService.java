@@ -63,7 +63,7 @@ public class GroupMemberService  extends JpaService<GroupMember>{
 	
 	
 	public JpaPageResults<Groups> noMember(GroupMember entity) {
-		entity.setPageResultSelectUUID(entity.generateId());
+		entity.setPageSelectId(entity.generateId());
 		entity.setStartRow(calculateStartRow(entity.getPageNumber() ,entity.getPageSize()));
 		
 		entity.setPageable(true);

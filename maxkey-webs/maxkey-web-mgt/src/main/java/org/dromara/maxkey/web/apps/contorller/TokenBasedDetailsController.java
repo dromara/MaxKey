@@ -17,6 +17,8 @@
 
 package org.dromara.maxkey.web.apps.contorller;
 
+import java.util.List;
+
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsProtocols;
 import org.dromara.maxkey.crypto.ReciprocalUtils;
@@ -106,7 +108,7 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(
-			@RequestParam("ids") String ids,
+			@RequestParam("ids") List<String> ids,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (tokenBasedDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {

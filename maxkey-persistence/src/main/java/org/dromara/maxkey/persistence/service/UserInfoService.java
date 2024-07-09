@@ -130,14 +130,13 @@ public class UserInfoService extends JpaService<UserInfo> {
         return false;
     }
 	
-    @Override
 	public boolean delete(UserInfo userInfo) {
 	    UserInfo loadUserInfo = null;
 	    if(provisionService.getApplicationConfig().isProvisionSupport()) {
 	        loadUserInfo = findUserRelated(userInfo.getId());
 	    }
 	    
-		if( super.delete(userInfo)){
+		if( super.delete(userInfo.getId())){
 			provisionService.send(
 		            ProvisionTopic.USERINFO_TOPIC, 
 		            loadUserInfo, 

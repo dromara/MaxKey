@@ -93,7 +93,7 @@ public class AppListController {
         Accounts account = null ;
         
         if (credential.equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)) {
-        	account = accountsService.load(Query.builder().eq("appId", appId).eq("userid", currentUser.getId()));
+        	account = accountsService.get(Query.builder().eq("appId", appId).eq("userid", currentUser.getId()));
         	account.setRelatedPassword(
         			PasswordReciprocal.getInstance().decoder(
         					account.getRelatedPassword()));
@@ -116,7 +116,7 @@ public class AppListController {
             @CurrentUser UserInfo currentUser) {
         Accounts appUsers = new Accounts();
         if (credential.equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)) {
-            appUsers = accountsService.load(Query.builder().eq("appId", account.getAppId()).eq("userid", currentUser.getId()));
+            appUsers = accountsService.get(Query.builder().eq("appId", account.getAppId()).eq("userid", currentUser.getId()));
             if (appUsers == null) {
                 appUsers = new Accounts();
                 appUsers.setId(appUsers.generateId());

@@ -108,7 +108,7 @@ public class ScimUserController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
     	_logger.debug("ScimUser id {} ", id );
-    	userInfoService.remove(id);
+    	userInfoService.delete(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)

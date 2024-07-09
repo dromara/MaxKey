@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.cert.X509Certificate;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -132,7 +133,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> delete(
-			@RequestParam("ids") String ids,
+			@RequestParam("ids") List<String> ids,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (saml20DetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
@@ -148,7 +149,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 		if(StringUtils.isNotBlank(samlDetails.getMetaFileId())) {
 			bArrayInputStream = new ByteArrayInputStream(
 					fileUploadService.get(samlDetails.getMetaFileId()).getUploaded());
-			fileUploadService.remove(samlDetails.getMetaFileId());
+			fileUploadService.delete(samlDetails.getMetaFileId());
 		}
 		
 		if(StringUtils.isNotBlank(samlDetails.getFileType())){

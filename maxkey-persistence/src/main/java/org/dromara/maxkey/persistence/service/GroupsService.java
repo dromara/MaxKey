@@ -70,7 +70,7 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
 	}
 	
 	public boolean deleteById(String groupId) {
-	    this.remove(groupId);
+	    this.delete(groupId);
 	    groupMemberService.deleteByGroupId(groupId);
 	    return true;
 	}

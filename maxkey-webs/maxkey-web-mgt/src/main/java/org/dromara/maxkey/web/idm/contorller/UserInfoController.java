@@ -128,7 +128,7 @@ public class UserInfoController {
 		userInfo.setInstId(currentUser.getInstId());
 		if(StringUtils.isNotBlank(userInfo.getPictureId())) {
 			userInfo.setPicture(fileUploadService.get(userInfo.getPictureId()).getUploaded());
-			fileUploadService.remove(userInfo.getPictureId());
+			fileUploadService.delete(userInfo.getPictureId());
 		}
 		if (userInfoService.insert(userInfo)) {
 			systemLog.insert(
@@ -156,7 +156,7 @@ public class UserInfoController {
 		userInfo.setInstId(currentUser.getInstId());
 		if(StringUtils.isNotBlank(userInfo.getPictureId())) {
 			userInfo.setPicture(fileUploadService.get(userInfo.getPictureId()).getUploaded());
-			fileUploadService.remove(userInfo.getPictureId());
+			fileUploadService.delete(userInfo.getPictureId());
 		}
 		if (userInfoService.update(userInfo)) {
 			systemLog.insert(
@@ -173,7 +173,7 @@ public class UserInfoController {
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		
 		if (userInfoService.deleteBatch(ids)) {
