@@ -1,0 +1,3 @@
+org.dromara.maxkey.autoconfigure.MvcCurrentUserAutoConfiguration
+org.dromara.maxkey.autoconfigure.SessionAutoConfiguration
+org.dromara.maxkey.autoconfigure.TokenAutoConfiguration

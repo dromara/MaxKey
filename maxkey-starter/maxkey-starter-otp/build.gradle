@@ -1,5 +1,5 @@
 
-description = "maxkey-authentication-core"
+description = "maxkey-starter-otp"
 
 
 dependencies {
@@ -9,6 +9,5 @@ dependencies {
 	implementation project(":maxkey-common")
 	implementation project(":maxkey-core")
 	implementation project(":maxkey-persistence")
-   	implementation project(":maxkey-starter:maxkey-starter-otp")
    
 }

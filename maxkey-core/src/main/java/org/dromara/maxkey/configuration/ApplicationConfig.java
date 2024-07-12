@@ -17,7 +17,6 @@
 
 package org.dromara.maxkey.configuration;
 
-import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

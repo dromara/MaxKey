@@ -25,13 +25,16 @@ include ('maxkey-common')
 include ('maxkey-core')
 include ('maxkey-persistence')
 
+//maxkey-starter
+include ('maxkey-starter:maxkey-starter-captcha')
+include ('maxkey-starter:maxkey-starter-ip2location')
+include ('maxkey-starter:maxkey-starter-otp')
+include ('maxkey-starter:maxkey-starter-sms')
+include ('maxkey-starter:maxkey-starter-web')
+
 //authentications
-include ('maxkey-authentications:maxkey-authentication-captcha')
 include ('maxkey-authentications:maxkey-authentication-core')
-include ('maxkey-authentications:maxkey-authentication-ip2location')
-include ('maxkey-authentications:maxkey-authentication-otp')
 include ('maxkey-authentications:maxkey-authentication-provider')
-include ('maxkey-authentications:maxkey-authentication-sms')
 include ('maxkey-authentications:maxkey-authentication-social')
 
 //rest apis

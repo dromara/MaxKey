@@ -1,0 +1,11 @@
+
+description = "maxkey-starter-captcha"
+
+
+dependencies {
+    implementation project(":maxkey-common")
+    implementation project(":maxkey-core")
+    implementation project(":maxkey-authentications:maxkey-authentication-core")
+	//local jars
+	implementation fileTree(dir: '../maxkey-lib/', include: '*/*.jar')   
+}
