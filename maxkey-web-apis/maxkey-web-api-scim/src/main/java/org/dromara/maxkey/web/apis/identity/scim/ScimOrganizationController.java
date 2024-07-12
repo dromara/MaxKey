@@ -21,10 +21,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.persistence.service.OrganizationsService;
-import org.dromara.maxkey.util.DateUtils;
-import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimMeta;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimOrganization;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimParameters;

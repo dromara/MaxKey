@@ -29,7 +29,6 @@ import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.AppsOAuth20Details;
 import org.dromara.maxkey.entity.apps.oauth2.provider.client.BaseClientDetails;
-import org.dromara.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

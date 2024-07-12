@@ -25,7 +25,7 @@ import org.dromara.maxkey.entity.GroupPrivileges;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.GroupPrivilegesService;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.util.StrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +69,7 @@ public class GroupPrivilegesController {
 		}
 		//Maybe insert
 		ArrayList<GroupPrivileges> newGroupPrivilegesList =new ArrayList<GroupPrivileges>();
-		List<String>resourceIds = StringUtils.string2List(groupPrivileges.getResourceId(), ",");
+		List<String>resourceIds = StrUtils.string2List(groupPrivileges.getResourceId(), ",");
 		HashMap<String,String >newPrivilegesMap =new HashMap<String,String >();
 		for(String resourceId : resourceIds) {
 		    GroupPrivileges newGroupPrivilege=new GroupPrivileges(

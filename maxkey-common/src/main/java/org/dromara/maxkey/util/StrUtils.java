@@ -27,7 +27,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class StringUtils extends org.apache.commons.lang3.StringUtils {
+import org.apache.commons.lang3.StringUtils;
+
+public final class StrUtils {
 
     /*
      * 获取指定UTF-8模式字节长度的字符串
@@ -165,7 +167,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @return
      */
     public static Boolean containsPartOrAll(String string, String string2) {
-        if (isNotEmpty(string) && isNotEmpty(string2)) {
+        if (StringUtils.isNotEmpty(string) && StringUtils.isNotEmpty(string2)) {
             return Pattern.compile("[" + string + "]").matcher(string2).find();
         }
         return false;
@@ -287,7 +289,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
         List<String> idList = new ArrayList<String>();
         List<String> nameList = new ArrayList<String>();
         if (StringUtils.isNotEmpty(proValue)) {
-            List<String> list = StringUtils.string2List(proValue, ",");
+            List<String> list = StrUtils.string2List(proValue, ",");
             for (String str : list) {
                 idList.add(str.split("\\,")[0]);
                 nameList.add(str.split("\\,")[1]);
@@ -410,7 +412,7 @@ public final class StringUtils extends org.apache.commons.lang3.StringUtils {
      * }else{ pinyin += nameChar[i]; } } return pinyin; }
      */
     public static Map<String, String> aduserName2Map(String activeDirectoryUserName) {
-        if (isEmpty(activeDirectoryUserName)) {
+        if (StringUtils.isEmpty(activeDirectoryUserName)) {
             return null;
         }
         Map<String, String> map = new HashMap<String, String>();

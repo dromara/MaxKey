@@ -21,6 +21,7 @@
 package org.dromara.maxkey.authz.cas.endpoint;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
@@ -28,7 +29,6 @@ import org.dromara.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.ServiceTicketImpl;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.TicketGrantingTicketImpl;
 import org.dromara.maxkey.entity.apps.AppsCasDetails;
-import org.dromara.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

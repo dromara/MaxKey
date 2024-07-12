@@ -20,13 +20,13 @@ package org.dromara.maxkey.persistence.repository;
 import java.sql.Types;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsPasswordSetType;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordGen;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.PasswordPolicy;
 import org.dromara.maxkey.entity.UserInfo;
-import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.joda.time.DateTime;

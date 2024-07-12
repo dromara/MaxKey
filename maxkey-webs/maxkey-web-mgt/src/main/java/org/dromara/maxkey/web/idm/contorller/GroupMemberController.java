@@ -19,6 +19,7 @@ package org.dromara.maxkey.web.idm.contorller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.GroupMember;
@@ -28,7 +29,6 @@ import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.GroupMemberService;
 import org.dromara.maxkey.persistence.service.GroupsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
-import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;

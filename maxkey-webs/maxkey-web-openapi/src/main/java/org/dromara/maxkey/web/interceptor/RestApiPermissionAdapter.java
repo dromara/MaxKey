@@ -19,12 +19,12 @@ package org.dromara.maxkey.web.interceptor;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.dromara.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.dromara.maxkey.util.AuthorizationHeader;
 import org.dromara.maxkey.util.AuthorizationHeaderUtils;
-import org.dromara.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -26,7 +26,7 @@ import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.service.HistoryLoginService;
 import org.dromara.maxkey.util.DateUtils;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.util.StrUtils;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +84,7 @@ public class LoginSessionController {
         logger.debug(ids);
         boolean isTerminated = false;
         try {
-            for(String sessionId : StringUtils.string2List(ids, ",")) {
+            for(String sessionId : StrUtils.string2List(ids, ",")) {
                 logger.trace("terminate session Id {} ",sessionId);
                 if(currentUser.getSessionId().contains(sessionId)) {
                     continue;//skip current session

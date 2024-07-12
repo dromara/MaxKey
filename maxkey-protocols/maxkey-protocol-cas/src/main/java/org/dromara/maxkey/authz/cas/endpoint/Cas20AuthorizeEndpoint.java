@@ -23,6 +23,7 @@ package org.dromara.maxkey.authz.cas.endpoint;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authz.cas.endpoint.response.ProxyServiceResponseBuilder;
 import org.dromara.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
@@ -34,7 +35,6 @@ import org.dromara.maxkey.authz.cas.endpoint.ticket.Ticket;
 import org.dromara.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.dromara.maxkey.constants.ConstsBoolean;
 import org.dromara.maxkey.util.Instance;
-import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.HttpResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

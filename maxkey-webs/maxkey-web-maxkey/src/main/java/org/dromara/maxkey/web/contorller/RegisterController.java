@@ -20,7 +20,7 @@ package org.dromara.maxkey.web.contorller;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsStatus;
@@ -30,7 +30,6 @@ import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.sms.SmsOtpAuthnService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
-import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

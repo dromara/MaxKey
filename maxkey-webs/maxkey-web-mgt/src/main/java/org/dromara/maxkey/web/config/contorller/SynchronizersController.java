@@ -17,6 +17,7 @@
 
 package org.dromara.maxkey.web.config.contorller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Connectors;
@@ -25,7 +26,7 @@ import org.dromara.maxkey.entity.Synchronizers;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.service.SynchronizersService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.util.StrUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,7 +106,7 @@ public class SynchronizersController {
     public ResponseEntity<?> synchr(@RequestParam("id") String id) {
         logger.debug("-sync ids : {}", id);
 
-        List<String> ids = StringUtils.string2List(id, ",");
+        List<String> ids = StrUtils.string2List(id, ",");
         try {
             for (String sysId : ids) {
                 Synchronizers synchronizer = synchronizersService.get(sysId);

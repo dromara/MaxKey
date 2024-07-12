@@ -37,7 +37,7 @@ import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.dromara.maxkey.persistence.cache.MomentaryService;
 import org.dromara.maxkey.persistence.service.AppsService;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.util.StrUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

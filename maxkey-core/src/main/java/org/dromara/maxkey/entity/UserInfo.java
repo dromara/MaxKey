@@ -31,8 +31,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.crypto.Base64Utils;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.util.StrUtils;
 
 /**
  * .

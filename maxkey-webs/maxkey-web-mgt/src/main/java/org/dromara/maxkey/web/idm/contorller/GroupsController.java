@@ -20,6 +20,7 @@ package org.dromara.maxkey.web.idm.contorller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsEntryType;
 import org.dromara.maxkey.constants.ConstsAct;
@@ -30,7 +31,6 @@ import org.dromara.maxkey.entity.Roles;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.GroupsService;
-import org.dromara.maxkey.util.StringUtils;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

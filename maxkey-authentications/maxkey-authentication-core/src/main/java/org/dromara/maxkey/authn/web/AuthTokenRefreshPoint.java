@@ -17,13 +17,14 @@
 
 package org.dromara.maxkey.authn.web;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.jwt.AuthJwt;
 import org.dromara.maxkey.authn.jwt.AuthRefreshTokenService;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.util.StrUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

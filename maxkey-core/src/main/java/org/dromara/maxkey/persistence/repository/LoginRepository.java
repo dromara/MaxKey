@@ -25,11 +25,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsRoles;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.Groups;
 import org.dromara.maxkey.entity.UserInfo;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.util.StrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;

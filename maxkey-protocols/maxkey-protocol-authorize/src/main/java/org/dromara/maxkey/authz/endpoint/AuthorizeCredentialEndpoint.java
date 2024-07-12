@@ -20,6 +20,7 @@
  */
 package org.dromara.maxkey.authz.endpoint;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
@@ -27,7 +28,6 @@ import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
-import org.dromara.maxkey.util.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;

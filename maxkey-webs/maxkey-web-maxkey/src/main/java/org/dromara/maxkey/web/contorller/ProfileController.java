@@ -17,12 +17,12 @@
 
 package org.dromara.maxkey.web.contorller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.persistence.service.FileUploadService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
-import org.dromara.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

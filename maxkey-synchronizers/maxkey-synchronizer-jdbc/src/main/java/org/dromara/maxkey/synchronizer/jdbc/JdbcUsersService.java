@@ -18,6 +18,7 @@
 package org.dromara.maxkey.synchronizer.jdbc;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.DbTableMetaData;
 import org.dromara.maxkey.entity.HistorySynchronizer;
@@ -25,7 +26,6 @@ import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.util.JdbcUtils;
-import org.dromara.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

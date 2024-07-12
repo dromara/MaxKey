@@ -23,12 +23,13 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.Groups;
 import org.dromara.maxkey.entity.Institutions;
 import org.dromara.maxkey.entity.Roles;
 import org.dromara.maxkey.persistence.mapper.GroupsMapper;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.util.StrUtils;
 import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,7 +121,7 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
 	        
     	    String filters = dynamicGroup.getFilters();
     	    if(StringUtils.isNotBlank(filters)) {
-	    		if(StringUtils.filtersSQLInjection(filters.toLowerCase())) {  
+	    		if(StrUtils.filtersSQLInjection(filters.toLowerCase())) {  
 	    			_logger.info("filters include SQL Injection Attack Risk.");
 	    			return;
 	    		}
