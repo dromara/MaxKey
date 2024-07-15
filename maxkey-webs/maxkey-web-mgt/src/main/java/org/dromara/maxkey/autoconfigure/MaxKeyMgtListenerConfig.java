@@ -20,8 +20,6 @@ package org.dromara.maxkey.autoconfigure;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.listener.DynamicGroupsListenerAdapter;
-import org.dromara.maxkey.listener.ListenerAdapter;
-import org.dromara.maxkey.listener.ListenerParameter;
 import org.dromara.maxkey.listener.ReorgDeptListenerAdapter;
 import org.dromara.maxkey.listener.SessionListenerAdapter;
 import org.dromara.maxkey.persistence.service.ConnectorsService;
@@ -29,6 +27,7 @@ import org.dromara.maxkey.persistence.service.GroupsService;
 import org.dromara.maxkey.persistence.service.OrganizationsService;
 import org.dromara.maxkey.provision.thread.ProvisioningRunner;
 import org.dromara.maxkey.provision.thread.ProvisioningRunnerThread;
+import org.dromara.maxkey.schedule.ScheduleAdapterBuilder;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
@@ -46,13 +45,12 @@ public class MaxKeyMgtListenerConfig  {
     public String  sessionListenerAdapter(
     		Scheduler scheduler,
     		SessionManager sessionManager) throws SchedulerException {
-        ListenerAdapter.addListener(
-    			scheduler,
-    			SessionListenerAdapter.class,
-    			"0 0/10 * * * ?",//10 minutes
-    			new ListenerParameter().add("sessionManager",sessionManager).build()
-    			
-    		);
+    	new ScheduleAdapterBuilder()
+    		.setScheduler(scheduler)
+    		.setCron("0 0/10 * * * ?")
+    		.setJobClass(SessionListenerAdapter.class)
+    		.setJobData("sessionManager",sessionManager)
+    		.build();
         logger.debug("Session ListenerAdapter inited .");
     	return "sessionListenerAdapter";
     }
@@ -61,12 +59,12 @@ public class MaxKeyMgtListenerConfig  {
     public String  reorgDeptListenerAdapter(
     		Scheduler scheduler,
     		OrganizationsService organizationsService) throws SchedulerException {
-        ListenerAdapter.addListener(
-        		scheduler,
-        		ReorgDeptListenerAdapter.class,
-        		"0 0/30 * * * ?",//30 minutes
-    			new ListenerParameter().add("organizationsService",organizationsService).build()
-    		);
+    	new ScheduleAdapterBuilder()
+			.setScheduler(scheduler)
+			.setCron("0 0/30 * * * ?")
+			.setJobClass(ReorgDeptListenerAdapter.class)
+			.setJobData("organizationsService",organizationsService)
+			.build();
         logger.debug("ReorgDept ListenerAdapter inited .");
     	return "reorgDeptListenerAdapter";
     }
@@ -77,13 +75,13 @@ public class MaxKeyMgtListenerConfig  {
             GroupsService groupsService,
             @Value("${maxkey.job.cron.schedule}") String cronSchedule
             ) throws SchedulerException {
-        
-        ListenerAdapter.addListener(
-        		scheduler,
-    			DynamicGroupsListenerAdapter.class,
-    			cronSchedule,
-    			new ListenerParameter().add("groupsService",groupsService).build()
-    		);
+    	new ScheduleAdapterBuilder()
+			.setScheduler(scheduler)
+			.setCron(cronSchedule)
+			.setJobClass(DynamicGroupsListenerAdapter.class)
+			.setJobData("groupsService",groupsService)
+			.build();
+
         logger.debug("DynamicGroups ListenerAdapter inited .");
         return "dynamicGroupsListenerAdapter";
     }
