@@ -14,34 +14,24 @@
  * limitations under the License.
  */
 
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  OnInit,
-  OnDestroy,
-  AfterViewInit,
-  Optional
-} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router, ActivatedRoute} from '@angular/router';
-import {throwIfAlreadyLoaded} from '@core';
-import {ReuseTabService} from '@delon/abc/reuse-tab';
-import {SettingsService, _HttpClient} from '@delon/theme';
-import {environment} from '@env/environment';
-import {NzSafeAny} from 'ng-zorro-antd/core/types';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzTabChangeEvent} from 'ng-zorro-antd/tabs';
-import {finalize} from 'rxjs/operators';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, OnDestroy, AfterViewInit, Optional } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { throwIfAlreadyLoaded } from '@core';
+import { ReuseTabService } from '@delon/abc/reuse-tab';
+import { SettingsService, _HttpClient } from '@delon/theme';
+import { environment } from '@env/environment';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzTabChangeEvent } from 'ng-zorro-antd/tabs';
+import { finalize } from 'rxjs/operators';
 
-import {AuthnService} from '../../../service/authn.service';
-import {ImageCaptchaService} from '../../../service/image-captcha.service';
-import {SocialsProviderService} from '../../../service/socials-provider.service';
-import {CONSTS} from '../../../shared/consts';
+import { AuthnService } from '../../../service/authn.service';
+import { ImageCaptchaService } from '../../../service/image-captcha.service';
+import { SocialsProviderService } from '../../../service/socials-provider.service';
+import { CONSTS } from '../../../shared/consts';
 
-
-import {stringify} from 'querystring';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'passport-login',
@@ -54,9 +44,9 @@ export class UserLoginComponent implements OnInit, OnDestroy {
     providers: NzSafeAny[];
     qrScan: string;
   } = {
-    providers: [],
-    qrScan: ''
-  };
+      providers: [],
+      qrScan: ''
+    };
 
   form: FormGroup;
   error = '';
@@ -95,7 +85,6 @@ export class UserLoginComponent implements OnInit, OnDestroy {
     });
   }
 
-
   ngOnInit(): void {
     //set redirect_uri , is BASE64URL
     if (this.route.snapshot.queryParams[CONSTS.REDIRECT_URI]) {
@@ -110,7 +99,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
     //init socials,state
     this.authnService.clear();
     this.authnService
-      .get({remember_me: localStorage.getItem(CONSTS.REMEMBER)})
+      .get({ remember_me: localStorage.getItem(CONSTS.REMEMBER) })
       .pipe(
         finalize(() => {
           this.loading = false;
@@ -140,7 +129,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
               this.form.get('captcha')?.clearValidators();
             } else {
               //init image captcha
-              this.imageCaptchaService.captcha({state: this.state, captcha: this.captchaType}).subscribe(res => {
+              this.imageCaptchaService.captcha({ state: this.state, captcha: this.captchaType }).subscribe(res => {
                 this.imageCaptcha = res.data.image;
                 this.cdr.detectChanges();
               });
@@ -206,7 +195,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
 
   // #region get captcha
   getImageCaptcha(): void {
-    this.imageCaptchaService.captcha({state: this.state, captcha: this.captchaType}).subscribe(res => {
+    this.imageCaptchaService.captcha({ state: this.state, captcha: this.captchaType }).subscribe(res => {
       this.imageCaptcha = res.data.image;
       this.cdr.detectChanges();
     });
@@ -215,11 +204,11 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   //send sms
   sendOtpCode(): void {
     if (this.mobile.invalid) {
-      this.mobile.markAsDirty({onlySelf: true});
-      this.mobile.updateValueAndValidity({onlySelf: true});
+      this.mobile.markAsDirty({ onlySelf: true });
+      this.mobile.updateValueAndValidity({ onlySelf: true });
       return;
     }
-    this.authnService.produceOtp({mobile: this.mobile.value}).subscribe(res => {
+    this.authnService.produceOtp({ mobile: this.mobile.value }).subscribe(res => {
       if (res.code !== 0) {
         this.msg.success(`发送失败`);
       }
@@ -326,7 +315,6 @@ export class UserLoginComponent implements OnInit, OnDestroy {
         }
       }
     });
-
   }
 
   // #endregion
@@ -396,13 +384,13 @@ export class UserLoginComponent implements OnInit, OnDestroy {
 
   qrScanMaxkey(data: any) {
     // @ts-ignore
-    document.getElementById("div_qrcodelogin").innerHTML = '';
+    document.getElementById('div_qrcodelogin').innerHTML = '';
     // @ts-ignore
-    var qrcode = new QRCode("div_qrcodelogin", {
+    var qrcode = new QRCode('div_qrcodelogin', {
       width: 200,
       height: 200,
-      colorDark: "#000000",
-      colorLight: "#ffffff"
+      colorDark: '#000000',
+      colorLight: '#ffffff'
     }).makeCode(data.state);
     //3分钟监听二维码
     this.count = 90;

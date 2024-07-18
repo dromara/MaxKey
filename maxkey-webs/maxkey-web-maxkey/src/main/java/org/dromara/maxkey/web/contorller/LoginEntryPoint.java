@@ -46,6 +46,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -107,7 +108,7 @@ public class LoginEntryPoint {
 	 * @return
 	 */
 	@Operation(summary  = "登录接口", description  = "用户登录地址",method="GET")
-	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> get(
 				@RequestParam(value = "remember_me", required = false) String rememberMeJwt) {
 		logger.debug("/get.");

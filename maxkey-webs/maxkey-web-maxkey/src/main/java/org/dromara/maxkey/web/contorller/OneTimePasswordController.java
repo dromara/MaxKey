@@ -65,8 +65,9 @@ public class OneTimePasswordController {
     @RequestMapping(value = {"/timebased"})
     @ResponseBody
     public ResponseEntity<?> timebased(
-    			@RequestParam String generate,@CurrentUser UserInfo currentUser) {
-        HashMap<String,Object >timebased =new HashMap<String,Object >();
+    			@RequestParam(name="generate") String generate,
+    			@CurrentUser UserInfo currentUser) {
+        HashMap<String,Object >timebased =new HashMap<>();
         
         generate(generate,currentUser);
         
