@@ -28,6 +28,7 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 
 import { GroupMembersService } from '../../../service/group-members.service';
+import { GroupsService } from '../../../service/groups.service';
 import { set2String } from '../../../shared/index';
 import { SelectGroupsComponent } from '../groups/select-groups/select-groups.component';
 import { GroupMembersEditerComponent } from './group-members-editer/group-members-editer.component';
@@ -67,44 +68,45 @@ export class GroupMembersComponent implements OnInit {
     indeterminate: boolean;
     checked: boolean;
   } = {
-    params: {
-      groupName: '',
-      displayName: '',
-      username: '',
-      groupId: '',
-      appName: '',
-      appId: '',
-      startDate: '',
-      endDate: '',
-      startDatePicker: addDays(new Date(), -30),
-      endDatePicker: new Date(),
-      pageSize: 10,
-      pageNumber: 1,
-      pageSizeOptions: [10, 20, 50]
-    },
-    results: {
-      records: 0,
-      rows: []
-    },
-    expandForm: false,
-    submitLoading: false,
-    tableLoading: false,
-    tableInitialize: true,
-    tableCheckedId: new Set<String>(),
-    indeterminate: false,
-    checked: false
-  };
+      params: {
+        groupName: '',
+        displayName: '',
+        username: '',
+        groupId: '',
+        appName: '',
+        appId: '',
+        startDate: '',
+        endDate: '',
+        startDatePicker: addDays(new Date(), -30),
+        endDatePicker: new Date(),
+        pageSize: 10,
+        pageNumber: 1,
+        pageSizeOptions: [10, 20, 50]
+      },
+      results: {
+        records: 0,
+        rows: []
+      },
+      expandForm: false,
+      submitLoading: false,
+      tableLoading: false,
+      tableInitialize: true,
+      tableCheckedId: new Set<String>(),
+      indeterminate: false,
+      checked: false
+    };
 
   constructor(
     private modalService: NzModalService,
     private groupMembersService: GroupMembersService,
+    private groupsService: GroupsService,
     private viewContainerRef: ViewContainerRef,
     private fb: FormBuilder,
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.route.snapshot.queryParams['username']) {
@@ -265,5 +267,95 @@ export class GroupMembersComponent implements OnInit {
   onTableAllChecked(checked: boolean): void {
     this.query.results.rows.filter(({ disabled }) => !disabled).forEach(({ id }) => this.updateTableCheckedSet(id, checked));
     this.refreshTableCheckedStatus();
+  }
+
+  //group list
+  groupQuery: {
+    params: {
+      groupName: String;
+      pageSize: number;
+      pageNumber: number;
+      pageSizeOptions: number[];
+    };
+    results: {
+      records: number;
+      rows: NzSafeAny[];
+    };
+    expandForm: Boolean;
+    submitLoading: boolean;
+    tableLoading: boolean;
+    tableCheckedId: Set<String>;
+    indeterminate: boolean;
+    checked: boolean;
+  } = {
+      params: {
+        groupName: '',
+        pageSize: 10,
+        pageNumber: 1,
+        pageSizeOptions: [10, 20, 50]
+      },
+      results: {
+        records: 0,
+        rows: []
+      },
+      expandForm: false,
+      submitLoading: false,
+      tableLoading: false,
+      tableCheckedId: new Set<String>(),
+      indeterminate: false,
+      checked: false
+    };
+
+  onGroupSearch(): void {
+    this.fetchGroup();
+  }
+
+  onGroupQueryParamsChange(tableQueryParams: NzTableQueryParams): void {
+    this.groupQuery.params.pageNumber = tableQueryParams.pageIndex;
+    this.groupQuery.params.pageSize = tableQueryParams.pageSize;
+    this.fetchGroup();
+  }
+
+  fetchGroup(): void {
+    this.groupQuery.submitLoading = true;
+    this.groupQuery.tableLoading = true;
+    this.groupQuery.indeterminate = false;
+    this.groupQuery.checked = false;
+    this.groupQuery.tableCheckedId.clear();
+    this.groupsService.fetch(this.groupQuery.params).subscribe(res => {
+      this.groupQuery.results = res.data;
+      this.groupQuery.submitLoading = false;
+      this.groupQuery.tableLoading = false;
+      this.cdr.detectChanges();
+    });
+  }
+
+  updateGroupTableCheckedSet(id: String, checked: boolean): void {
+    if (checked) {
+      this.groupQuery.tableCheckedId.add(id);
+    } else {
+      this.groupQuery.tableCheckedId.delete(id);
+    }
+  }
+
+  refreshGroupTableCheckedStatus(): void {
+    const listOfEnabledData = this.groupQuery.results.rows.filter(({ disabled }) => !disabled);
+    this.groupQuery.checked = listOfEnabledData.every(({ id }) => this.groupQuery.tableCheckedId.has(id));
+    this.groupQuery.indeterminate = listOfEnabledData.some(({ id }) => this.groupQuery.tableCheckedId.has(id)) && !this.groupQuery.checked;
+  }
+
+  onGroupTableItemChecked(groupId: String, groupName: String, checked: boolean): void {
+    console.log(`checked ${checked} , groupId ${groupId}  , groupName ${groupName}`);
+    this.onGroupTableAllChecked(false);
+    this.updateGroupTableCheckedSet(groupId, checked);
+    this.refreshGroupTableCheckedStatus();
+    this.query.params.groupId = groupId;
+    this.query.params.groupName = groupName;
+    this.fetch();
+  }
+
+  onGroupTableAllChecked(checked: boolean): void {
+    this.groupQuery.results.rows.filter(({ disabled }) => !disabled).forEach(({ id }) => this.updateGroupTableCheckedSet(id, checked));
+    this.refreshGroupTableCheckedStatus();
   }
 }
