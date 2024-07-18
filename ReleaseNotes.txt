@@ -1,4 +1,18 @@
-﻿MaxKey v 4.0.5 GA 2024/06/27
+﻿MaxKey v 4.1.0 GA 2024/07/19
+    *(MAXKEY-240401) 本地StringUtils 调整成 StrUtils ，取消org.apache.commons.lang3.StringUtils继承关系
+    *(MAXKEY-240402) 功能模块化，调整通用模块为starter,包括模块captcha、ip2location、otp、sms、web
+    *(MAXKEY-240403) 定时任务优化
+    *(MAXKEY-240404) 调整用户组成员管理的用户组为列表
+    *(MAXKEY-240405) 调整访问控制的用户组为列表
+    *(MAXKEY-240406) 增加权限管理的应用列表界面，通过应用列表中的按钮管理应用资源和权限授予
+    *(MAXKEY-240407) 单点登录日志记录时间为空问题修复
+    *(MAXKEY-240408) gradle-wrapper.properties地址优化 @杨坡 <yanghbu@163.com>
+    *(MAXKEY-240409) 数据访问层升级和优化
+	*(MAXKEY-240410) AutoConfiguration自动加载优化
+    *(MAXKEY-240411) 依赖项引用、更新和升级
+        mybatis-jpa-extra               3.3.0
+
+MaxKey v 4.0.5 GA 2024/06/27
     *(MAXKEY-240301) ProductVersionEndpoint 显示产品版本信息
     *(MAXKEY-240302) WARN No Root logger was configured, creating default ERROR-level Root logger with Console appender 优化配置
     *(MAXKEY-240303) ConfigurerFreeMarker代码优化
