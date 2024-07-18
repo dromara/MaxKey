@@ -120,7 +120,7 @@ App Management UI
 
 | Version    | Date   |   Download URL  |
 | --------   | :----- | :----           | 
-| v 4.0.5   | 2024/06/27   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Download</a> |
+| v 4.1.0   | 2024/07/19   | <a href="https://www.maxkey.top/zh/about/download.html"  target="_blank">Download</a> |
 
 # Install
 
