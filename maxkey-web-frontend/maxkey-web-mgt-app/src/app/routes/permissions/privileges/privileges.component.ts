@@ -25,6 +25,7 @@ import {
   Inject
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { I18NService } from '@core';
 import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import { format, addDays } from 'date-fns';
@@ -36,8 +37,8 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions, NzTreeComponent } from 'ng-zorro-antd/tree';
 
 import { TreeNodes } from '../../../entity/TreeNodes';
-import { GroupsService } from '../../../service/groups.service';
 import { GroupPrivilegesService } from '../../../service/group-privileges.service';
+import { GroupsService } from '../../../service/groups.service';
 import { ResourcesService } from '../../../service/resources.service';
 import { set2String } from '../../../shared/index';
 import { SelectAppsComponent } from '../../apps/select-apps/select-apps.component';
@@ -109,6 +110,7 @@ export class PrivilegesComponent implements OnInit {
     private resourcesService: ResourcesService,
     private groupsService: GroupsService,
     private viewContainerRef: ViewContainerRef,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
@@ -117,6 +119,12 @@ export class PrivilegesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (this.route.snapshot.queryParams['appId']) {
+      this.query.params.appId = this.route.snapshot.queryParams['appId'];
+      this.query.params.appName = this.route.snapshot.queryParams['appName'];
+      this.fetch();
+      this.tree();
+    }
     this.fetch();
   }
 

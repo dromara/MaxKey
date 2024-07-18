@@ -275,6 +275,7 @@
 			"tab.custom": "自定义属性",
 			"extendapi.tab": "API配置",
 			"resources":"资源",
+			"permission":"权限",
 			"id": "应用编码",
 			"name": "应用名称",
 			"icon": "图标",

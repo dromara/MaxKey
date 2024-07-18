@@ -5,46 +5,26 @@
     <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
       <div nz-col nzMd="10" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="groupName">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
-          <nz-form-control>
-            <input
-              nz-input
-              [(ngModel)]="query.params.groupName"
-              [ngModelOptions]="{ standalone: true }"
-              name="groupName"
-              placeholder=""
-              id="groupName"
-            />
-          </nz-form-control>
+          <nz-form-label nzFor="name">{{ 'mxk.resources.appName' | i18n }}</nz-form-label>
+          <input nz-input [(ngModel)]="query.params.appName" [ngModelOptions]="{ standalone: true }" disabled />
         </nz-form-item>
       </div>
       <div nz-col nzMd="10" nzSm="24">
         <nz-form-item>
-          <nz-form-label nzFor="name">{{ 'mxk.resources.appName' | i18n }}</nz-form-label>
+          <nz-form-label nzFor="groupName">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
           <nz-form-control>
-            <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
-              <input
-                nz-input
-                [(ngModel)]="query.params.appName"
-                [ngModelOptions]="{ standalone: true }"
-                name="appName"
-                readonly
-                placeholder=""
-                id="appName"
-              />
-            </nz-input-group>
-            <ng-template #suffixButton>
-              <button nz-button nzType="primary" (click)="onSelect($event)" nzSearch>{{ 'mxk.text.select' | i18n }}</button>
-            </ng-template>
+            <input nz-input [(ngModel)]="query.params.groupName" [ngModelOptions]="{ standalone: true }"
+              name="groupName" placeholder="" id="groupName" />
           </nz-form-control>
         </nz-form-item>
       </div>
       <div nz-col [nzSpan]="query.expandForm ? 24 : 4" [class.text-right]="query.expandForm">
-        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
-        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n }}</button>
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' |
+          i18n }}</button>
+        <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' |
+          i18n }}</button>
         <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
-          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
-        >
+          {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button>
       </div>
     </div>
   </form>
@@ -55,21 +35,11 @@
   </div>
   <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
     <div nz-col [nzSpan]="10" class="grid-border">
-      <nz-table
-        #dynamicTable
-        nzTableLayout="auto"
-        nzSize="small"
-        nzBordered
-        nzShowSizeChanger
-        [nzData]="query.results.rows"
-        [nzFrontPagination]="false"
-        [nzTotal]="query.results.records"
-        [nzPageSizeOptions]="query.params.pageSizeOptions"
-        [nzPageSize]="query.params.pageSize"
-        [nzPageIndex]="query.params.pageNumber"
-        [nzLoading]="this.query.tableLoading"
-        (nzQueryParams)="onQueryParamsChange($event)"
-      >
+      <nz-table #dynamicTable nzTableLayout="auto" nzSize="small" nzBordered nzShowSizeChanger
+        [nzData]="query.results.rows" [nzFrontPagination]="false" [nzTotal]="query.results.records"
+        [nzPageSizeOptions]="query.params.pageSizeOptions" [nzPageSize]="query.params.pageSize"
+        [nzPageIndex]="query.params.pageNumber" [nzLoading]="this.query.tableLoading"
+        (nzQueryParams)="onQueryParamsChange($event)">
         <thead>
           <tr>
             <!--<th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate" (nzCheckedChange)="onTableAllChecked($event)"></th>
@@ -82,11 +52,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let data of query.results.rows">
-            <td
-              [nzChecked]="query.tableCheckedId.has(data.id)"
-              [nzDisabled]="data.disabled"
-              (nzCheckedChange)="onTableItemChecked(data.id, $event)"
-            ></td>
+            <td [nzChecked]="query.tableCheckedId.has(data.id)" [nzDisabled]="data.disabled"
+              (nzCheckedChange)="onTableItemChecked(data.id, $event)"></td>
             <td nzAlign="left" style="display: none">
               <span>{{ data.id }}</span>
             </td>
@@ -98,16 +65,9 @@
       </nz-table>
     </div>
     <div nz-col [nzSpan]="14" class="grid-border">
-      <nz-tree
-        #nzTreeComponent
-        nzShowLine="false"
-        [nzCheckable]="treeNodes.checkable"
-        [nzCheckedKeys]="treeNodes.checkedKeys"
-        nzBlockNode
-        [nzData]="treeNodes.nodes"
-        (nzDblClick)="openFolder($event)"
-        [nzTreeTemplate]="nzTreeTemplate"
-      ></nz-tree>
+      <nz-tree #nzTreeComponent nzShowLine="false" [nzCheckable]="treeNodes.checkable"
+        [nzCheckedKeys]="treeNodes.checkedKeys" nzBlockNode [nzData]="treeNodes.nodes" (nzDblClick)="openFolder($event)"
+        [nzTreeTemplate]="nzTreeTemplate"></nz-tree>
       <ng-template #nzTreeTemplate let-node let-origin="origin">
         <span class="custom-node">
           <span *ngIf="!node.isLeaf">

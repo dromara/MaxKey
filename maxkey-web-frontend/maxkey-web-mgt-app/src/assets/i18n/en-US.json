@@ -274,6 +274,7 @@
 			"tab.custom": "Custom",
 			"extendapi.tab": "API",
 			"resources":"Resources",
+			"permission":"Permission",
 			"id": "App Id",
 			"name": "App Name",
 			"icon": "Icon",
