@@ -1,25 +1,62 @@
+buildscript {
+	repositories {
+		maven { url 'https://maven.aliyun.com/nexus/content/groups/public/'}
+	}
+	dependencies {
+		//springboot jar
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version "${springBootVersion}"
+	id "io.spring.dependency-management" version "1.0.11.RELEASE"
+}
+
 description = "maxkey-web-openapi"
+
+//springboot jar
+apply plugin: 'io.spring.dependency-management'
 
 //add support for Java
 apply plugin: 'java'
+
+
+
+bootJar {
+	dependsOn jar
+	archiveBaseName = 'maxkey-openapi-boot'
+    version = "${project.version}-ga"
+    mainClass = 'org.dromara.maxkey.MaxKeyOpenApiApplication'
+	manifest {
+	        attributes(
+						"Implementation-Title": project.name,
+	                	"Implementation-Vendor": project.vendor,
+	                	"Created-By": project.author,
+	                	"Implementation-Date": java.time.ZonedDateTime.now(),
+	                	"Implementation-Version": project.version
+	           )
+	    }	
+}
 
 dependencies {
 	implementation project(":maxkey-common")
 	implementation project(":maxkey-core")
 	implementation project(":maxkey-persistence")
 	
+	implementation project(":maxkey-starter:maxkey-starter-captcha")
+   	implementation project(":maxkey-starter:maxkey-starter-ip2location")
+	implementation project(":maxkey-starter:maxkey-starter-otp")
+	implementation project(":maxkey-starter:maxkey-starter-sms")
+	implementation project(":maxkey-starter:maxkey-starter-web")
+	
 	implementation project(":maxkey-authentications:maxkey-authentication-core")
-	implementation project(":maxkey-authentications:maxkey-authentication-captcha")
-	implementation project(":maxkey-authentications:maxkey-authentication-ip2location")
-	implementation project(":maxkey-authentications:maxkey-authentication-otp")
 	implementation project(":maxkey-authentications:maxkey-authentication-provider")
-	implementation project(":maxkey-authentications:maxkey-authentication-sms")
 	
    	implementation project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
    	implementation project(":maxkey-protocols:maxkey-protocol-saml-2.0")   
    	
    	//webapis
    	implementation project(":maxkey-web-apis:maxkey-web-api-scim")   
-   	implementation project(":maxkey-web-apis:maxkey-web-api-rest")	
-
+   	implementation project(":maxkey-web-apis:maxkey-web-api-rest")		
 }
