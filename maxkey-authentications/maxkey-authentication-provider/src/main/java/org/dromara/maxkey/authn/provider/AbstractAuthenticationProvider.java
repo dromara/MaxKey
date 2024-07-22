@@ -30,7 +30,7 @@ import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.MailOtpAuthnService;
 import org.dromara.maxkey.web.WebConstants;

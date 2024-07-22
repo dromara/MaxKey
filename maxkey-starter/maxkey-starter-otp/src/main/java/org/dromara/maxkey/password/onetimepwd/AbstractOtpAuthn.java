@@ -17,7 +17,7 @@
 
 package org.dromara.maxkey.password.onetimepwd;
 
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.token.AbstractOtpTokenStore;
 import org.dromara.maxkey.password.onetimepwd.token.InMemoryOtpTokenStore;
 import org.dromara.maxkey.util.StringGenerator;

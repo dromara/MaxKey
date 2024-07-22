@@ -276,6 +276,7 @@
 			"extendapi.tab": "API配置",
 			"resources":"资源",
 			"permission":"权限",
+			"role":"角色",
 			"id": "应用编码",
 			"name": "应用名称",
 			"icon": "图标",

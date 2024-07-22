@@ -1,0 +1,25 @@
+<div *nzModalTitle> {{ roleName }} </div>
+<nz-card>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+        <nz-tree #nzTreeComponent nzShowLine="false" [nzCheckable]="treeNodes.checkable"
+            [nzCheckedKeys]="treeNodes.checkedKeys" nzBlockNode [nzData]="treeNodes.nodes"
+            (nzDblClick)="openFolder($event)" [nzTreeTemplate]="nzTreeTemplate"></nz-tree>
+        <ng-template #nzTreeTemplate let-node let-origin="origin">
+            <span class="custom-node">
+                <span *ngIf="!node.isLeaf">
+                    <i nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(node)"></i>
+                    <span class="folder-name">{{ node.title }}</span>
+                </span>
+                <span *ngIf="node.isLeaf">
+                    <i nz-icon nzType="file"></i>
+                    <span class="file-name">{{ node.title }}</span>
+                </span>
+            </span>
+        </ng-template>
+    </div>
+</nz-card>
+
+<div *nzModalFooter>
+    <button nz-button type="button" [nzType]="'primary'" (click)="onSave($event)">{{ 'mxk.text.save' | i18n }}</button>
+    <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+</div>

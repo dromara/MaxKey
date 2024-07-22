@@ -24,7 +24,7 @@ import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Connectors;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.ConnectorsService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;

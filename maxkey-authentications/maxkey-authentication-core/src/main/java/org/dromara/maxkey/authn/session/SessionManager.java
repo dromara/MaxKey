@@ -20,7 +20,7 @@ package org.dromara.maxkey.authn.session;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.dromara.maxkey.entity.HistoryLogin;
+import org.dromara.maxkey.entity.history.HistoryLogin;
 
 public interface SessionManager {
 

@@ -21,8 +21,8 @@ package org.dromara.maxkey.authz.saml20.provider.xml;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authz.saml.service.TimeService;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebContext;
 import org.opensaml.saml2.core.NameID;
 import org.opensaml.saml2.core.NameIDType;

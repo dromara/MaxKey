@@ -41,7 +41,7 @@ import org.dromara.maxkey.constants.ConstsPasswordSetType;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.ExcelImport;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.FileUploadService;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
@@ -74,7 +74,7 @@ import com.google.common.collect.Lists;
 @Controller
 @RequestMapping(value = { "/users" })
 public class UserInfoController {
-	final static Logger logger = LoggerFactory.getLogger(UserInfoController.class);
+	static final Logger logger = LoggerFactory.getLogger(UserInfoController.class);
 	
 	@Autowired
 	private UserInfoService userInfoService;

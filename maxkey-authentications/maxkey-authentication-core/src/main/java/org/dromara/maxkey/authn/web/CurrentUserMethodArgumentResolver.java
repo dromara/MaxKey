@@ -18,7 +18,7 @@
 package org.dromara.maxkey.authn.web;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebConstants;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;

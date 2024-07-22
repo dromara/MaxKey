@@ -19,7 +19,7 @@ package org.dromara.maxkey.persistence.repository;
 
 import java.sql.Types;
 
-import org.dromara.maxkey.entity.HistoryLogin;
+import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

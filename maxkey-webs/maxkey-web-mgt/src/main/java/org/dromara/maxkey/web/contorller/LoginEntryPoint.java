@@ -71,8 +71,6 @@ public class LoginEntryPoint {
 		model.put("inst", inst);
 		if(applicationConfig.getLoginConfig().isCaptcha()) {
 			model.put("captcha", "true");
-		}else {
-			model.put("captcha", inst.getCaptcha());
 		}
 		model.put("state", authTokenService.genRandomJwt());
 		return new Message<HashMap<String , Object>>(model).buildResponse();

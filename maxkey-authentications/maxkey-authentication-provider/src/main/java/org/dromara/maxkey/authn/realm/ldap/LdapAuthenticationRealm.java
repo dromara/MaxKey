@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.dromara.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.dromara.maxkey.authn.realm.IAuthenticationServer;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;

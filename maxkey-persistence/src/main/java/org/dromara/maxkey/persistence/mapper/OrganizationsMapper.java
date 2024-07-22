@@ -19,7 +19,7 @@ package org.dromara.maxkey.persistence.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Update;
-import org.dromara.maxkey.entity.Organizations;
+import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 public interface OrganizationsMapper extends IJpaMapper<Organizations> {

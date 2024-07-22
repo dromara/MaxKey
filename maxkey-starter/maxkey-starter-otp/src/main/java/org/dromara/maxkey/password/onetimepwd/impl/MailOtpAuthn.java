@@ -21,7 +21,7 @@ import java.text.MessageFormat;
 import java.util.Properties;
 
 import org.dromara.maxkey.configuration.EmailConfig;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

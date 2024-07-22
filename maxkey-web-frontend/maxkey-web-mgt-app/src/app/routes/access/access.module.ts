@@ -20,8 +20,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '@shared';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
-import { PermissionsEditerComponent } from './permissions/permissions-editer/permissions-editer.component';
-import { PermissionsComponent } from './permissions/permissions.component';
+import { AccessEditerComponent } from './access/access-editer/access-editer.component';
+import { AccessComponent } from './access/access.component';
 import { SessionsComponent } from './sessions/sessions.component';
 
 const routes: Routes = [
@@ -31,15 +31,15 @@ const routes: Routes = [
   },
   {
     path: 'permissions',
-    component: PermissionsComponent
+    component: AccessComponent
   }
 ];
 
-const COMPONENTS = [PermissionsComponent, SessionsComponent, PermissionsEditerComponent];
+const COMPONENTS = [AccessComponent, SessionsComponent, AccessEditerComponent];
 
 @NgModule({
   declarations: [...COMPONENTS],
   imports: [NzIconModule, SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AccessModule {}
+export class AccessModule { }

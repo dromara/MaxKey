@@ -27,9 +27,9 @@ import javax.naming.directory.SearchResult;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.HistorySynchronizer;
-import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.SynchroRelated;
+import org.dromara.maxkey.entity.history.HistorySynchronizer;
+import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.ldap.ActiveDirectoryUtils;
 import org.dromara.maxkey.ldap.LdapUtils;
 import org.dromara.maxkey.ldap.constants.OrganizationalUnit;

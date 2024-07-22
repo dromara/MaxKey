@@ -22,7 +22,7 @@ import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.configuration.ApplicationConfig;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

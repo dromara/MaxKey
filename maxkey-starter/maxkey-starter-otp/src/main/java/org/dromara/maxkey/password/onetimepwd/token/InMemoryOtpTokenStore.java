@@ -19,7 +19,7 @@ package org.dromara.maxkey.password.onetimepwd.token;
 
 import java.util.concurrent.TimeUnit;
 
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.OneTimePassword;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -61,8 +61,8 @@ public class InMemoryOtpTokenStore  extends AbstractOtpTokenStore {
                     DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss"));
             Duration duration = new Duration(oneCreateTime, currentdateTime);
             int intDuration = Integer.parseInt(duration.getStandardSeconds() + "");
-            logger.debug("validate duration " + intDuration);
-            logger.debug("validate result " + (intDuration <= interval));
+            logger.debug("validate duration {}" , intDuration);
+            logger.debug("validate result {}" , (intDuration <= interval));
             if (intDuration <= interval) {
                 return true;
             }

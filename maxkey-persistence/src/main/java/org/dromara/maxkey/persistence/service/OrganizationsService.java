@@ -25,7 +25,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.dromara.maxkey.entity.Organizations;
+import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.persistence.mapper.OrganizationsMapper;
 import org.dromara.maxkey.provision.ProvisionAction;
 import org.dromara.maxkey.provision.ProvisionService;

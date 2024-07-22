@@ -41,7 +41,7 @@ import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
-import org.dromara.maxkey.persistence.service.LdapContextService;
+import org.dromara.maxkey.persistence.service.CnfLdapContextService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,7 +107,7 @@ public class MaxKeyConfig  {
 	    		IpLocationParser  ipLocationParser,
                 JdbcTemplate jdbcTemplate,
                 MailOtpAuthnService otpAuthnService,
-                LdapContextService ldapContextService) {
+                CnfLdapContextService ldapContextService) {
     	LdapAuthenticationRealmService ldapRealmService = new LdapAuthenticationRealmService(ldapContextService);
         return new JdbcAuthenticationRealm(
         		passwordEncoder,

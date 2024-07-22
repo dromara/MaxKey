@@ -18,8 +18,8 @@
 package org.dromara.maxkey.synchronizer.workweixin;
 
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.SynchroRelated;
+import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.synchronizer.workweixin.entity.WorkWeixinDepts;

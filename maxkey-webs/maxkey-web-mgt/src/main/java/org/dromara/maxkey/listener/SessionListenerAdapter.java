@@ -20,7 +20,7 @@ import java.util.Date;
 
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.authn.session.SessionManager;
-import org.dromara.maxkey.entity.HistoryLogin;
+import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.dromara.maxkey.schedule.ScheduleAdapter;
 import org.dromara.maxkey.util.DateUtils;
 import org.quartz.Job;

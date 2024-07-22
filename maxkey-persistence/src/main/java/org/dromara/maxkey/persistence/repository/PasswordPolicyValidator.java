@@ -25,8 +25,8 @@ import org.dromara.maxkey.constants.ConstsPasswordSetType;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordGen;
 import org.dromara.maxkey.entity.ChangePassword;
-import org.dromara.maxkey.entity.PasswordPolicy;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.joda.time.DateTime;
@@ -41,7 +41,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
 
 public class PasswordPolicyValidator {
-    private static Logger _logger = LoggerFactory.getLogger(PasswordPolicyValidator.class);
+    static final Logger _logger = LoggerFactory.getLogger(PasswordPolicyValidator.class);
     
     PasswordPolicyRepository passwordPolicyRepository;
     
@@ -80,7 +80,12 @@ public class PasswordPolicyValidator {
        String password = changePassword.getPassword();
        String username = changePassword.getUsername();
        
-       if(password.equals("") || password==null){
+       if(StringUtils.isBlank(username)){
+           _logger.debug("username  is Empty ");
+           return false;
+       }
+       
+       if(StringUtils.isBlank(password)){
            _logger.debug("password  is Empty ");
            return false;
        }
@@ -113,7 +118,7 @@ public class PasswordPolicyValidator {
     */
    public boolean passwordPolicyValid(UserInfo userInfo) {
        
-	   PasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
+	   CnfPasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
 	   
        DateTime currentdateTime = new DateTime();
         /*
@@ -163,7 +168,7 @@ public class PasswordPolicyValidator {
     }
    
    public void applyPasswordPolicy(UserInfo userInfo) {
-	   PasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
+	   CnfPasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
 	   
        DateTime currentdateTime = new DateTime();
        //initial password need change
@@ -282,7 +287,7 @@ public class PasswordPolicyValidator {
        if (userInfo != null && StringUtils.isNotEmpty(userInfo.getId())) {
            userInfo.setBadPasswordCount(userInfo.getBadPasswordCount() + 1);
            setBadPasswordCount(userInfo.getId(),userInfo.getBadPasswordCount());
-           PasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
+           CnfPasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
            if(userInfo.getBadPasswordCount() >= passwordPolicy.getAttempts()) {
         	   _logger.debug("Bad Password Count {} , Max Attempts {}",
         			   userInfo.getBadPasswordCount() + 1,passwordPolicy.getAttempts());
@@ -300,7 +305,7 @@ public class PasswordPolicyValidator {
    }
    
    public String generateRandomPassword() {
-       PasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
+       CnfPasswordPolicy passwordPolicy = passwordPolicyRepository.getPasswordPolicy();
        
        PasswordGen passwordGen = new PasswordGen(
                passwordPolicy.getRandomPasswordLength()

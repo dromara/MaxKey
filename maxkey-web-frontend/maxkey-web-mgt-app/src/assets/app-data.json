@@ -103,7 +103,7 @@
                 {
                   "text": "权限管理",
                   "i18n": "mxk.menu.permissions.privileges",
-                  "link": "/permissions/privileges",
+                  "link": "/permissions/permission",
                   "icon": "anticon-carry-out",
                   "hide":true,
                   "children": []

@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 import org.hibernate.validator.constraints.Length;
 

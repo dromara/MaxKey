@@ -21,28 +21,56 @@ import { SharedModule } from '@shared';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { AppsComponent } from './apps/apps.component';
-import { PrivilegesComponent } from './privileges/privileges.component';
+import { PermissionComponent } from './permission/permission.component';
 import { ResourceEditerComponent } from './resources/resource-editer/resource-editer.component';
 import { ResourcesComponent } from './resources/resources.component';
+import { MemberRolesEditerComponent } from './role-members/member-roles-editer/member-roles-editer.component';
+import { RoleMembersEditerComponent } from './role-members/role-members-editer/role-members-editer.component';
+import { RoleMembersComponent } from './role-members/role-members.component';
+import { PermissionRoleComponent } from './roles/permission-role/permission-role.component';
+import { RoleEditerComponent } from './roles/role-editer/role-editer.component';
+import { RolesComponent } from './roles/roles.component';
+import { SelectRolesComponent } from './roles/select-roles/select-roles.component';
 const routes: Routes = [
   {
     path: 'apps',
     component: AppsComponent
   },
   {
-    path: 'resources',
+    path: 'apps/resources',
     component: ResourcesComponent
   },
   {
-    path: 'privileges',
-    component: PrivilegesComponent
+    path: 'apps/permission',
+    component: PermissionComponent
+  },
+  {
+    path: 'apps/rolemembers',
+    component: RoleMembersComponent
+  },
+  {
+    path: 'apps/roles',
+    component: RolesComponent
   }
 ];
 
-const COMPONENTS = [ResourcesComponent, PrivilegesComponent, ResourceEditerComponent];
+const COMPONENTS = [
+  ResourcesComponent,
+  PermissionComponent,
+  AppsComponent,
+  ResourceEditerComponent,
+  ResourcesComponent,
+  RolesComponent,
+  SelectRolesComponent,
+  RoleMembersEditerComponent,
+  MemberRolesEditerComponent,
+  RoleMembersComponent,
+  RoleEditerComponent,
+  PermissionRoleComponent
+];
 
 @NgModule({
-  declarations: [...COMPONENTS, AppsComponent],
+  declarations: [...COMPONENTS],
   imports: [NzIconModule, SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

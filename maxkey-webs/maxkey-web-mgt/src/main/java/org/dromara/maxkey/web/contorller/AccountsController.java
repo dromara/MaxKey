@@ -27,7 +27,7 @@ import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AccountsService;
 import org.dromara.maxkey.persistence.service.AccountsStrategyService;
 import org.dromara.maxkey.persistence.service.AppsService;

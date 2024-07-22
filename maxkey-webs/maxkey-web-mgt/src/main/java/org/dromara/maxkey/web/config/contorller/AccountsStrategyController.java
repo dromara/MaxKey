@@ -22,7 +22,7 @@ import java.util.List;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AccountsService;
 import org.dromara.maxkey.persistence.service.AccountsStrategyService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;

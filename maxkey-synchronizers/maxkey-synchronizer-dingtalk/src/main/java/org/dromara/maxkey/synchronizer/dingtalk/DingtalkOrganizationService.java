@@ -21,8 +21,8 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.SynchroRelated;
+import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.slf4j.Logger;

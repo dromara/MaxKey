@@ -17,7 +17,7 @@
 
 package org.dromara.maxkey.web.api.endpoint;
 
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;

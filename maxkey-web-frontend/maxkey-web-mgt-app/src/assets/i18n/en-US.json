@@ -275,6 +275,7 @@
 			"extendapi.tab": "API",
 			"resources":"Resources",
 			"permission":"Permission",
+			"role":"Roles",
 			"id": "App Id",
 			"name": "App Name",
 			"icon": "Icon",

@@ -21,8 +21,8 @@ import org.dromara.maxkey.constants.ConstsPersistence;
 import org.dromara.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
 import org.dromara.maxkey.password.sms.SmsOtpAuthnService;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
-import org.dromara.maxkey.persistence.service.EmailSendersService;
-import org.dromara.maxkey.persistence.service.SmsProviderService;
+import org.dromara.maxkey.persistence.service.CnfEmailSendersService;
+import org.dromara.maxkey.persistence.service.CnfSmsProviderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,8 +38,8 @@ public class SmsAutoConfiguration  {
     @Bean(name = "smsOtpAuthnService")
     public SmsOtpAuthnService smsOtpAuthnService(
             @Value("${maxkey.server.persistence}") int persistence,
-            SmsProviderService smsProviderService,
-            EmailSendersService emailSendersService,
+            CnfSmsProviderService smsProviderService,
+            CnfEmailSendersService emailSendersService,
             RedisConnectionFactory redisConnFactory) {
     	SmsOtpAuthnService smsOtpAuthnService = 
         							new SmsOtpAuthnService(smsProviderService,emailSendersService);

@@ -23,7 +23,7 @@ import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Connectors;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.Synchronizers;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.SynchronizersService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.util.StrUtils;

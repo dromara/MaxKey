@@ -22,7 +22,7 @@ package org.dromara.maxkey.persistence.mapper;
 
 import java.util.List;
 
-import org.dromara.maxkey.entity.Groups;
+import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**

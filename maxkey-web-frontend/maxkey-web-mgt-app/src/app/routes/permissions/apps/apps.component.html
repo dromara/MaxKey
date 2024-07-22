@@ -65,7 +65,7 @@
                     <th nzAlign="center">{{ 'mxk.apps.category' | i18n }}</th>
                     <th nzAlign="center">{{ 'mxk.text.sortIndex' | i18n }}</th>
                     <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
-                    <th nzAlign="center" class="table_cell_action_2">{{ 'mxk.text.action' | i18n }}</th>
+                    <th nzAlign="center">{{ 'mxk.text.action' | i18n }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -114,6 +114,8 @@
                         <button nz-button type="button" (click)="onEditPermission($event, data.id, data.appName)">{{
                             'mxk.apps.permission' | i18n
                             }}</button>
+                        <button nz-button type="button" (click)="onEditRoles($event, data.id, data.appName)">{{
+                            'mxk.apps.role' | i18n }}</button>
                         <button nz-button type="button" (click)="onEditResource($event, data.id, data.appName)">{{
                             'mxk.apps.resources' | i18n
                             }}</button>

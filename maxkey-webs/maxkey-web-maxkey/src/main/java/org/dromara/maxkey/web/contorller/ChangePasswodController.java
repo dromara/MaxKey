@@ -24,11 +24,11 @@ import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.constants.ConstsPasswordSetType;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.PasswordPolicy;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
-import org.dromara.maxkey.persistence.service.PasswordPolicyService;
+import org.dromara.maxkey.persistence.service.CnfPasswordPolicyService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -53,14 +53,14 @@ public class ChangePasswodController {
 	HistorySystemLogsService systemLog;
 
 	@Autowired
-	private PasswordPolicyService passwordPolicyService;
+	private CnfPasswordPolicyService passwordPolicyService;
 
 	@RequestMapping(value={"/passwordpolicy"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<?> passwordpolicy(@CurrentUser UserInfo currentUser){
-		PasswordPolicy passwordPolicy = passwordPolicyService.get(currentUser.getInstId());
+		CnfPasswordPolicy passwordPolicy = passwordPolicyService.get(currentUser.getInstId());
 		//构建密码强度说明
 		passwordPolicy.buildMessage();
-		return new Message<PasswordPolicy>(passwordPolicy).buildResponse();
+		return new Message<CnfPasswordPolicy>(passwordPolicy).buildResponse();
 	}
 
 

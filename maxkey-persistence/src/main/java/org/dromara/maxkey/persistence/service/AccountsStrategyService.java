@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.dromara.maxkey.entity.AccountsStrategy;
-import org.dromara.maxkey.entity.Roles;
+import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.maxkey.persistence.mapper.AccountsStrategyMapper;
 import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;

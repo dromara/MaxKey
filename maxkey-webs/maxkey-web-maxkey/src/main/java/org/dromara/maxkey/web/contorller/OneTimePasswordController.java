@@ -27,7 +27,7 @@ import org.dromara.maxkey.crypto.Base32Utils;
 import org.dromara.maxkey.crypto.Base64Utils;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.algorithm.OtpKeyUriFormat;
 import org.dromara.maxkey.password.onetimepwd.algorithm.OtpSecret;
 import org.dromara.maxkey.password.onetimepwd.impl.TimeBasedOtpAuthn;

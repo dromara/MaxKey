@@ -21,9 +21,9 @@ import java.util.Date;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
-import org.dromara.maxkey.entity.HistoryLoginApps;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
+import org.dromara.maxkey.entity.history.HistoryLoginApps;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.persistence.service.HistoryLoginAppsService;
 import org.dromara.maxkey.web.WebConstants;

@@ -23,16 +23,16 @@ import java.util.concurrent.TimeUnit;
 import org.dromara.maxkey.configuration.EmailConfig;
 import org.dromara.maxkey.constants.ConstsBoolean;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
-import org.dromara.maxkey.entity.EmailSenders;
-import org.dromara.maxkey.entity.SmsProvider;
+import org.dromara.maxkey.entity.cnf.CnfEmailSenders;
+import org.dromara.maxkey.entity.cnf.CnfSmsProvider;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.impl.MailOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
 import org.dromara.maxkey.password.sms.impl.SmsOtpAuthnAliyun;
 import org.dromara.maxkey.password.sms.impl.SmsOtpAuthnTencentCloud;
 import org.dromara.maxkey.password.sms.impl.SmsOtpAuthnYunxin;
-import org.dromara.maxkey.persistence.service.EmailSendersService;
-import org.dromara.maxkey.persistence.service.SmsProviderService;
+import org.dromara.maxkey.persistence.service.CnfEmailSendersService;
+import org.dromara.maxkey.persistence.service.CnfSmsProviderService;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -44,18 +44,18 @@ public class SmsOtpAuthnService {
                 .expireAfterWrite(60, TimeUnit.MINUTES)
                 .build();
     
-    SmsProviderService smsProviderService;
+    CnfSmsProviderService smsProviderService;
     
-    EmailSendersService emailSendersService;
+    CnfEmailSendersService emailSendersService;
     
     RedisOtpTokenStore redisOptTokenStore;
     
-    public SmsOtpAuthnService(SmsProviderService smsProviderService, EmailSendersService emailSendersService) {
+    public SmsOtpAuthnService(CnfSmsProviderService smsProviderService, CnfEmailSendersService emailSendersService) {
 		this.smsProviderService = smsProviderService;
 		this.emailSendersService = emailSendersService;
 	}
 
-	public SmsOtpAuthnService(SmsProviderService smsProviderService,EmailSendersService emailSendersService,RedisOtpTokenStore redisOptTokenStore) {
+	public SmsOtpAuthnService(CnfSmsProviderService smsProviderService,CnfEmailSendersService emailSendersService,RedisOtpTokenStore redisOptTokenStore) {
 		this.smsProviderService = smsProviderService;
 		this.emailSendersService = emailSendersService;
 		this.redisOptTokenStore = redisOptTokenStore;
@@ -64,7 +64,7 @@ public class SmsOtpAuthnService {
 	public AbstractOtpAuthn getByInstId(String instId) {
     	AbstractOtpAuthn otpAuthn = smsAuthnStore.getIfPresent(instId);
     	if(otpAuthn == null) {
-    		SmsProvider smsProvider = 
+    		CnfSmsProvider smsProvider = 
     				smsProviderService.findOne("where instid = ? ", new Object[]{instId}, new int[]{Types.VARCHAR});
     		if(smsProvider != null ) {
     			
@@ -102,7 +102,7 @@ public class SmsOtpAuthnService {
     				}
     				otpAuthn = yunxin;
     			}else if(smsProvider.getProvider().equalsIgnoreCase("email")) {
-    				EmailSenders emailSender = 
+    				CnfEmailSenders emailSender = 
     						emailSendersService.findOne("where instid = ? ", new Object[]{instId}, new int[]{Types.VARCHAR});
     				
     				String credentials = PasswordReciprocal.getInstance().decoder(emailSender.getCredentials());

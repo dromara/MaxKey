@@ -17,7 +17,7 @@
 
 package org.dromara.maxkey.password.onetimepwd.token;
 
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 
 public abstract class AbstractOtpTokenStore {
     

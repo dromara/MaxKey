@@ -23,10 +23,10 @@ import java.util.concurrent.TimeUnit;
 import org.dromara.maxkey.configuration.EmailConfig;
 import org.dromara.maxkey.constants.ConstsBoolean;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
-import org.dromara.maxkey.entity.EmailSenders;
+import org.dromara.maxkey.entity.cnf.CnfEmailSenders;
 import org.dromara.maxkey.password.onetimepwd.impl.MailOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
-import org.dromara.maxkey.persistence.service.EmailSendersService;
+import org.dromara.maxkey.persistence.service.CnfEmailSendersService;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -38,11 +38,11 @@ public class MailOtpAuthnService {
                 .expireAfterWrite(60, TimeUnit.MINUTES)
                 .build();
 
-    EmailSendersService emailSendersService;
+    CnfEmailSendersService emailSendersService;
     
     RedisOtpTokenStore redisOptTokenStore;
     
-    public MailOtpAuthnService(EmailSendersService emailSendersService) {
+    public MailOtpAuthnService(CnfEmailSendersService emailSendersService) {
 		this.emailSendersService = emailSendersService;
 	}
 
@@ -54,7 +54,7 @@ public class MailOtpAuthnService {
 	public AbstractOtpAuthn getMailOtpAuthn(String instId) {
 		AbstractOtpAuthn otpAuthn = otpAuthnStore.getIfPresent(instId);
     	if(otpAuthn == null) {
-			EmailSenders emailSender = 
+			CnfEmailSenders emailSender = 
 					emailSendersService.findOne("where instid = ? ", new Object[]{instId}, new int[]{Types.VARCHAR});
 			
 			String credentials = PasswordReciprocal.getInstance().decoder(emailSender.getCredentials());

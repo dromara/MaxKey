@@ -18,7 +18,7 @@
 package org.dromara.maxkey.persistence.mapper;
 
 
-import org.dromara.maxkey.entity.HistoryConnector;
+import org.dromara.maxkey.entity.history.HistoryConnector;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**

@@ -20,7 +20,7 @@ package org.dromara.maxkey.web.apis.identity.rest;
 import java.io.IOException;
 
 import org.dromara.maxkey.entity.ChangePassword;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

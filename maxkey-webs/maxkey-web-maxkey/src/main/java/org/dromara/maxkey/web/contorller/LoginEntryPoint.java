@@ -33,6 +33,7 @@ import org.dromara.maxkey.authn.support.socialsignon.service.SocialSignOnProvide
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
 import org.dromara.maxkey.entity.*;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.sms.SmsOtpAuthnService;
 import org.dromara.maxkey.persistence.service.SocialsAssociatesService;
@@ -148,8 +149,6 @@ public class LoginEntryPoint {
 		model.put("inst", inst);
 		if(applicationConfig.getLoginConfig().isCaptcha()) {
 			model.put("captcha", "true");
-		}else {
-			model.put("captcha", inst.getCaptcha());
 		}
 		model.put("state", authTokenService.genRandomJwt());
 		//load Social Sign On Providers

@@ -28,8 +28,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsRoles;
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.Groups;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.Groups;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.util.StrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +62,7 @@ public class LoginRepository {
     
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL = "select * from  mxk_userinfo where (username = ? or mobile = ? or email = ?) ";
     
-    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.appname from mxk_apps app,mxk_group_permissions gp,mxk_groups g  where app.id=gp.appid and app.status = 1 and gp.groupid=g.id and g.id in(%s)";
+    private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.appname from mxk_apps app,mxk_access gp,mxk_groups g  where app.id=gp.appid and app.status = 1 and gp.groupid=g.id and g.id in(%s)";
     
     protected JdbcTemplate jdbcTemplate;
     

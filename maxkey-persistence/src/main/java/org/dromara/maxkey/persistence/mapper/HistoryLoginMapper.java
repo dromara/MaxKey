@@ -20,7 +20,7 @@ package org.dromara.maxkey.persistence.mapper;
 
 import java.util.List;
 
-import org.dromara.maxkey.entity.HistoryLogin;
+import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**

@@ -23,7 +23,7 @@ package org.dromara.maxkey.persistence.mapper;
 import java.util.List;
 
 import org.dromara.maxkey.entity.AccountsStrategy;
-import org.dromara.maxkey.entity.Roles;
+import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**

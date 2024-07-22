@@ -19,7 +19,7 @@ package org.dromara.maxkey.password.onetimepwd.impl;
 
 import org.apache.commons.codec.binary.Hex;
 import org.dromara.maxkey.crypto.Base32Utils;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.onetimepwd.algorithm.TimeBasedOTP;
 import org.slf4j.Logger;

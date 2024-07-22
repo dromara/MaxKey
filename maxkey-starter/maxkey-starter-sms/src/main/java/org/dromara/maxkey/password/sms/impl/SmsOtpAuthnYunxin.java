@@ -29,7 +29,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.sms.SmsOtpAuthn;
 import org.dromara.maxkey.util.JsonUtils;
 import org.dromara.maxkey.util.StringGenerator;

@@ -29,11 +29,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 
 public class InstitutionsRepository {
-    private static Logger _logger = LoggerFactory.getLogger(InstitutionsRepository.class);
+    static final Logger _logger = LoggerFactory.getLogger(InstitutionsRepository.class);
     
     private static final String SELECT_STATEMENT = 
     						"select * from  mxk_institutions where id = ? or domain = ? or consoledomain = ?" ;
@@ -46,7 +47,7 @@ public class InstitutionsRepository {
                 	.build();
     
     //id domain mapping
-    protected static final  ConcurrentHashMap<String,String> mapper = new ConcurrentHashMap<String,String>();
+    protected static final  ConcurrentHashMap<String,String> mapper = new ConcurrentHashMap<>();
     
     protected JdbcTemplate jdbcTemplate;
     
@@ -71,7 +72,7 @@ public class InstitutionsRepository {
 	        List<Institutions> institutions = 
 	        		jdbcTemplate.query(SELECT_STATEMENT,new InstitutionsRowMapper(),instIdOrDomain,instIdOrDomain,instIdOrDomain);
 	        
-	        if (institutions != null && institutions.size() > 0) {
+	        if (CollectionUtils.isNotEmpty(institutions)) {
 	        	inst = institutions.get(0);
 	        }
 	        if(inst != null ) {
@@ -96,7 +97,6 @@ public class InstitutionsRepository {
         	institution.setFrontTitle(rs.getString("fronttitle"));
         	institution.setConsoleDomain(rs.getString("consoledomain"));
         	institution.setConsoleTitle(rs.getString("consoletitle"));
-        	institution.setCaptcha(rs.getString("captcha"));
         	institution.setDefaultUri(rs.getString("defaultUri"));
             return institution;
         }

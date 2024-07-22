@@ -17,7 +17,7 @@
 
 package org.dromara.maxkey.persistence.mapper;
 
-import org.dromara.maxkey.entity.HistoryLoginApps;
+import org.dromara.maxkey.entity.history.HistoryLoginApps;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**

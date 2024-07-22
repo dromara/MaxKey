@@ -24,7 +24,7 @@ import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.authn.session.SessionManager;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.util.AuthorizationHeaderUtils;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;

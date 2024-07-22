@@ -34,8 +34,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "MXK_FILE_UPLOAD")
 public class FileUpload extends JpaEntity {
-	private static final long serialVersionUID = -4338400992411166457L;
-
+	
 	@Id
     @Column
     @GeneratedValue

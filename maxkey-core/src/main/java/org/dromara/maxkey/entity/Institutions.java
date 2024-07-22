@@ -78,9 +78,6 @@ public class Institutions extends JpaEntity implements Serializable {
 	private String consoleTitle;
 	
 	@Column
-	private String captcha;
-	
-	@Column
 	private String defaultUri;
 
 
@@ -249,15 +246,6 @@ public class Institutions extends JpaEntity implements Serializable {
 		this.description = description;
 	}
 
-
-	public String getCaptcha() {
-		return captcha;
-	}
-
-	public void setCaptcha(String captcha) {
-		this.captcha = captcha;
-	}
-
 	public String getDefaultUri() {
 		return defaultUri;
 	}
@@ -309,8 +297,6 @@ public class Institutions extends JpaEntity implements Serializable {
 		builder.append(consoleDomain);
 		builder.append(", consoleTitle=");
 		builder.append(consoleTitle);
-		builder.append(", captcha=");
-		builder.append(captcha);
 		builder.append(", defaultUri=");
 		builder.append(defaultUri);
 		builder.append("]");

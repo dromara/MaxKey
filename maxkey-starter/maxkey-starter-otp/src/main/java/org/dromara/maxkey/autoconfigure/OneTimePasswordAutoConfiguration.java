@@ -21,7 +21,7 @@ import org.dromara.maxkey.constants.ConstsPersistence;
 import org.dromara.maxkey.password.onetimepwd.MailOtpAuthnService;
 import org.dromara.maxkey.password.onetimepwd.token.RedisOtpTokenStore;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
-import org.dromara.maxkey.persistence.service.EmailSendersService;
+import org.dromara.maxkey.persistence.service.CnfEmailSendersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +38,7 @@ public class OneTimePasswordAutoConfiguration {
     @Bean(name = "mailOtpAuthnService")
     public MailOtpAuthnService mailOtpAuthnService(
             @Value("${maxkey.server.persistence}") int persistence,
-            EmailSendersService emailSendersService,
+            CnfEmailSendersService emailSendersService,
             RedisConnectionFactory redisConnFactory) {
         MailOtpAuthnService otpAuthnService = 
         							new MailOtpAuthnService(emailSendersService);

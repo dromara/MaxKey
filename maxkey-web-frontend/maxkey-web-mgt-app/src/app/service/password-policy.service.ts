@@ -17,7 +17,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { PasswordPolicy } from '../entity/PasswordPolicy';
+import { PasswordPolicy } from '../entity/CnfPasswordPolicy';
 import { BaseService } from './base.service';
 
 @Injectable({

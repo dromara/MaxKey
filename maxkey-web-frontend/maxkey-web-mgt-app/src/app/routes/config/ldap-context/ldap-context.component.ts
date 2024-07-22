@@ -20,7 +20,7 @@ import { I18NService } from '@core';
 import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { LdapContext } from '../../../entity/LdapContext';
+import { LdapContext } from '../../../entity/CnfLdapContext';
 import { LdapContextService } from '../../../service/ldap-context.service';
 
 @Component({
@@ -44,9 +44,9 @@ export class LdapContextComponent implements OnInit {
     submitting: boolean;
     model: LdapContext;
   } = {
-    submitting: false,
-    model: new LdapContext()
-  };
+      submitting: false,
+      model: new LdapContext()
+    };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -56,7 +56,7 @@ export class LdapContextComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.ldapContextService.get('').subscribe(res => {

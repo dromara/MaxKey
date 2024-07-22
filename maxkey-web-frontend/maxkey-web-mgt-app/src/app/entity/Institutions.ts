@@ -28,6 +28,5 @@ export class Institutions extends BaseEntity {
   consoleTitle!: String;
   consoleDomain!: String;
   domain!: String;
-  captcha!: String;
   defaultUri!: String;
 }

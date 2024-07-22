@@ -17,7 +17,7 @@
 
 package org.dromara.maxkey.password.onetimepwd.impl;
 
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 
 /**

@@ -17,7 +17,7 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.dromara.maxkey.entity.HistorySynchronizer;
+import org.dromara.maxkey.entity.history.HistorySynchronizer;
 import org.dromara.maxkey.persistence.mapper.HistorySynchronizerMapper;
 import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;

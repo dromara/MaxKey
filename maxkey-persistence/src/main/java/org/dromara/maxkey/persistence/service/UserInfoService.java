@@ -26,7 +26,7 @@ import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.ChangePassword;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.UserInfoMapper;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.provision.ProvisionAction;

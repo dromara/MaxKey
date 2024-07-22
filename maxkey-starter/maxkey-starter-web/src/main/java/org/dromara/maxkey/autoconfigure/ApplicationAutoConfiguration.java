@@ -35,7 +35,6 @@ import org.dromara.maxkey.persistence.cache.MomentaryService;
 import org.dromara.maxkey.persistence.cache.RedisMomentaryService;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.dromara.maxkey.persistence.repository.InstitutionsRepository;
-import org.dromara.maxkey.persistence.repository.LocalizationRepository;
 import org.dromara.maxkey.util.IdGenerator;
 import org.dromara.maxkey.util.SnowFlakeId;
 import org.dromara.maxkey.web.WebContext;
@@ -71,12 +70,6 @@ public class ApplicationAutoConfiguration {
     @Bean
     public InstitutionsRepository institutionsRepository(JdbcTemplate jdbcTemplate) {
         return new InstitutionsRepository(jdbcTemplate);
-    }
-    
-    @Bean
-    public LocalizationRepository localizationRepository(JdbcTemplate jdbcTemplate,
-    											InstitutionsRepository institutionsRepository) {
-        return new LocalizationRepository(jdbcTemplate,institutionsRepository);
     }
     
     /**

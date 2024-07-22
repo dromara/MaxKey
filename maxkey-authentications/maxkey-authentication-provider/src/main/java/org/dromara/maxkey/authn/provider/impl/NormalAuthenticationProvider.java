@@ -26,8 +26,7 @@ import org.dromara.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
-import org.dromara.maxkey.entity.Institutions;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -73,15 +72,9 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
                 loginCredential.getPrincipal(), getProviderName());
         try {
         	
-	        _logger.debug("authentication " + loginCredential);
-	        
-	        Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
+	        _logger.debug("authentication {}" , loginCredential);
 	        
 	        if(this.applicationConfig.getLoginConfig().isCaptcha()) {
-	        	captchaValid(loginCredential.getState(),loginCredential.getCaptcha());
-	        	
-	        }else if(!inst.getCaptcha().equalsIgnoreCase("NONE")) {
-	        	
 	        	captchaValid(loginCredential.getState(),loginCredential.getCaptcha());
 	        }
 	
@@ -116,9 +109,9 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
 									                WebConstants.LOGIN_RESULT.SUCCESS);
         } catch (AuthenticationException e) {
             _logger.error("Failed to authenticate user {} via {}: {}",
-                    new Object[] {  loginCredential.getPrincipal(),
+                    				loginCredential.getPrincipal(),
                                     getProviderName(),
-                                    e.getMessage() });
+                                    e.getMessage() );
             WebContext.setAttribute(
                     WebConstants.LOGIN_ERROR_SESSION_MESSAGE, e.getMessage());
         } catch (Exception e) {
@@ -136,7 +129,7 @@ public class NormalAuthenticationProvider extends AbstractAuthenticationProvider
      * @param captcha String
      * @throws ParseException 
      */
-    protected void captchaValid(String state ,String captcha) throws ParseException {
+    protected void captchaValid(String state ,String captcha) {
         // for basic
     	if(!authTokenService.validateCaptcha(state,captcha)) {
     		throw new BadCredentialsException(WebContext.getI18nValue("login.error.captcha"));

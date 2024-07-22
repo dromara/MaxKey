@@ -20,7 +20,7 @@ package org.dromara.maxkey.authn.session;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.dromara.maxkey.entity.HistoryLogin;
+import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.dromara.maxkey.persistence.redis.RedisConnection;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.slf4j.Logger;

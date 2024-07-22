@@ -22,9 +22,9 @@ import java.util.List;
 
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
-import org.dromara.maxkey.entity.Groups;
-import org.dromara.maxkey.entity.HistoryLogin;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.history.HistoryLogin;
+import org.dromara.maxkey.entity.idm.Groups;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.ip2location.Region;
 import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;

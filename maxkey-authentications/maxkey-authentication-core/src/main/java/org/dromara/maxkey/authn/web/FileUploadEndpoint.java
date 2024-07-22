@@ -22,7 +22,7 @@ import java.io.IOException;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.FileUpload;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.FileUploadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

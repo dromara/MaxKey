@@ -23,8 +23,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.Groups;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.Groups;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.GroupsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimEnterprise;

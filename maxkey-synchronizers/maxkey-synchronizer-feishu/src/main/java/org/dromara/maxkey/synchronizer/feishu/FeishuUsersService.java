@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.SynchroRelated;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.synchronizer.feishu.entity.FeishuUsers;

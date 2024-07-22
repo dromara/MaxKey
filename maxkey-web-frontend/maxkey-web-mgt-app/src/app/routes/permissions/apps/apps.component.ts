@@ -110,11 +110,15 @@ export class AppsComponent implements OnInit {
   onReset(): void { }
 
   onEditPermission(e: MouseEvent, appId: String, appName: String): void {
-    this.router.navigateByUrl(`/permissions/privileges?appId=${appId}&appName=${appName}`);
+    this.router.navigateByUrl(`/permissions/apps/permission?appId=${appId}&appName=${appName}`);
+  }
+
+  onEditRoles(e: MouseEvent, appId: String, appName: String): void {
+    this.router.navigateByUrl(`/permissions/apps/roles?appId=${appId}&appName=${appName}`);
   }
 
   onEditResource(e: MouseEvent, appId: String, appName: String): void {
-    this.router.navigateByUrl(`/permissions/resources?appId=${appId}&appName=${appName}`);
+    this.router.navigateByUrl(`/permissions/apps/resources?appId=${appId}&appName=${appName}`);
   }
 
   fetch(): void {

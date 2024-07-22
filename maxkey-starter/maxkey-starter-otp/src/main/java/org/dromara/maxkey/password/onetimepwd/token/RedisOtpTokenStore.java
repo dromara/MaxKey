@@ -18,7 +18,7 @@
 package org.dromara.maxkey.password.onetimepwd.token;
 
 import org.dromara.maxkey.constants.ConstsTimeInterval;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.OneTimePassword;
 import org.dromara.maxkey.persistence.redis.RedisConnection;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
@@ -35,7 +35,7 @@ public class RedisOtpTokenStore  extends AbstractOtpTokenStore {
         this.connectionFactory = connectionFactory;
     }
 
-    public static String PREFIX = "REDIS_OTP_SERVICE_";
+    public static final String PREFIX = "REDIS_OTP_SERVICE_";
     
     @Override
     public void store(UserInfo userInfo, String token, String receiver, String type) {
@@ -59,10 +59,7 @@ public class RedisOtpTokenStore  extends AbstractOtpTokenStore {
                 PREFIX + userInfo.getUsername() + "_" + type + "_" + token);
 //        conn.delete(PREFIX + userInfo.getUsername() + "_" + type + "_" + token);
         conn.close();
-        if (otp != null) { 
-            return true;
-        }
-        return false;
+        return (otp != null) ;
     }
 
 }
