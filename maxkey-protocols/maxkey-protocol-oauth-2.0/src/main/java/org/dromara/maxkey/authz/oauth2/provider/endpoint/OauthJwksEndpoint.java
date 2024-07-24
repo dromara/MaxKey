@@ -38,6 +38,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class OauthJwksEndpoint extends AbstractEndpoint {
@@ -48,9 +50,9 @@ public class OauthJwksEndpoint extends AbstractEndpoint {
 			value = OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/jwks",
 			method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public String  keysMetadata(HttpServletRequest request , HttpServletResponse response, 
-			@RequestParam(value = "client_id", required = false) String client_id) {
-		return metadata(request,response,client_id,null);
+	public void  keysMetadata(HttpServletRequest request , HttpServletResponse response,
+			@RequestParam(value = "client_id", required = false) String client_id) throws IOException {
+		metadata(request,response,client_id,null);
 	}
 	
 	@Operation(summary = "OAuth JWk 元数据接口", description = "参数mxk_metadata_APPID",method="GET")
@@ -58,9 +60,9 @@ public class OauthJwksEndpoint extends AbstractEndpoint {
 			value = "/metadata/oauth/v20/" + WebConstants.MXK_METADATA_PREFIX + "{appid}.{mediaType}",
 			method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public String  metadata(HttpServletRequest request , HttpServletResponse response, 
+	public void  metadata(HttpServletRequest request , HttpServletResponse response,
 			@PathVariable(value="appid", required = false) String appId,
-			@PathVariable(value="mediaType", required = false) String mediaType) {
+			@PathVariable(value="mediaType", required = false) String mediaType) throws IOException {
 		ClientDetails  clientDetails = null;
 		try {
 			clientDetails = getClientDetailsService().loadClientByClientId(appId,true);
@@ -87,10 +89,12 @@ public class OauthJwksEndpoint extends AbstractEndpoint {
 			}else {
 				response.setContentType(ContentType.APPLICATION_JSON_UTF8);
 			}
-			return jwkSetKeyStore.toString(mediaType);
+			response.getWriter().write(jwkSetKeyStore.toString(mediaType));
+		} else {
+			response.getWriter().write(appId + " not exist . \n" + WebContext.version());
 		}
-		
-		return appId + " not exist . \n" + WebContext.version();
+
+
 	}
 
 }
