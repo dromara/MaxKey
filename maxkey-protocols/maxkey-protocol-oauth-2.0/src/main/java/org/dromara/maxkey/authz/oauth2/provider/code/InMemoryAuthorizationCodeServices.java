@@ -31,7 +31,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
  * @author Dave Syer
  */
 public class InMemoryAuthorizationCodeServices extends RandomValueAuthorizationCodeServices {
-			protected final static  Cache<String, OAuth2Authentication> authorizationCodeStore = 
+			protected static final   Cache<String, OAuth2Authentication> authorizationCodeStore = 
 			        Caffeine.newBuilder()
                         .expireAfterWrite(3, TimeUnit.MINUTES)
                         .build();

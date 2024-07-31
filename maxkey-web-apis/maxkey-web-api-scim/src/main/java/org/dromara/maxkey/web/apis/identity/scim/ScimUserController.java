@@ -67,7 +67,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping(value = "/api/idm/SCIM/v2/Users")
 public class ScimUserController {
-	final static Logger _logger = LoggerFactory.getLogger(ScimUserController.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ScimUserController.class);
 	@Autowired
 	private UserInfoService userInfoService;
 	

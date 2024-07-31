@@ -42,7 +42,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 public class AuthorizeBaseEndpoint {
-	final static Logger _logger = LoggerFactory.getLogger(AuthorizeBaseEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(AuthorizeBaseEndpoint.class);
 	
 	@Autowired 
     protected ApplicationConfig applicationConfig;

@@ -47,7 +47,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UserInfoService extends JpaService<UserInfo> {
-	final static Logger _logger = LoggerFactory.getLogger(UserInfoService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(UserInfoService.class);
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;

@@ -54,7 +54,7 @@ public class SafeController {
 	
 	@ResponseBody
 	@RequestMapping(value="/setting") 
-	public ResponseEntity<?> setting(
+	public Message<?> setting(
 	        HttpServletRequest request,
             HttpServletResponse response,
 			@RequestParam("authnType") String authnType,
@@ -78,7 +78,7 @@ public class SafeController {
 		userInfoService.updateEmail(currentUser);
 		
 		
-		return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+		return new Message<UserInfo>(Message.SUCCESS);
 		
 	}
 	

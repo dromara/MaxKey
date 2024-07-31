@@ -21,12 +21,12 @@ package org.dromara.maxkey.authz.cas.endpoint.ticket;
 public class CasConstants {
 	/* CAS Protocol Parameters. **/
 	public static final class PARAMETER{
-		public final static String ENDPOINT_CAS_DETAILS			= "CAS_AUTHORIZE_ENDPOINT_CAS_DETAILS";
+		public static final  String ENDPOINT_CAS_DETAILS			= "CAS_AUTHORIZE_ENDPOINT_CAS_DETAILS";
 		
-		public final static String PARAMETER_MAP				= "CAS_AUTHORIZE_ENDPOINT_PARAMETER_MAP";
+		public static final  String PARAMETER_MAP				= "CAS_AUTHORIZE_ENDPOINT_PARAMETER_MAP";
 
 		/** Constant representing the ticket parameter in the request. */
-		public final static String TICKET						= "ticket";
+		public static final  String TICKET						= "ticket";
 		
 		/** Constant representing the service parameter in the request. */
 		public static final String SERVICE 						= "service";

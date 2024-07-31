@@ -46,8 +46,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,10 +53,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.google.common.collect.Lists;
 
 
-@Controller
+@RestController
 @RequestMapping({"/orgs"})
 public class OrganizationsController {
   static final Logger logger = LoggerFactory.getLogger(OrganizationsController.class);
@@ -71,35 +71,35 @@ public class OrganizationsController {
 
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> fetch(@ModelAttribute Organizations org,@CurrentUser UserInfo currentUser) {
+	public Message<?> fetch(@ModelAttribute Organizations org,@CurrentUser UserInfo currentUser) {
 		logger.debug("fetch {}" , org);
 		org.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Organizations>>(
-				organizationsService.fetchPageResults(org)).buildResponse();
+				organizationsService.fetchPageResults(org));
 	}
 
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> query(@ModelAttribute Organizations org,@CurrentUser UserInfo currentUser) {
+	public Message<?> query(@ModelAttribute Organizations org,@CurrentUser UserInfo currentUser) {
 		logger.debug("-query  {}" , org);
 		org.setInstId(currentUser.getInstId());
 		List<Organizations>  orgList = organizationsService.query(org);
 		if (orgList != null) {
-			 return new Message<List<Organizations>>(Message.SUCCESS,orgList).buildResponse();
+			 return new Message<List<Organizations>>(Message.SUCCESS,orgList);
 		} else {
-			 return new Message<List<Organizations>>(Message.FAIL).buildResponse();
+			 return new Message<List<Organizations>>(Message.FAIL);
 		}
 	}
 	
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@PathVariable("id") String id) {
+	public Message<?> get(@PathVariable("id") String id) {
 		Organizations org=organizationsService.get(id);
-		return new Message<Organizations>(org).buildResponse();
+		return new Message<Organizations>(org);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> insert(@RequestBody Organizations org,@CurrentUser UserInfo currentUser) {
+	public Message<?> insert(@RequestBody Organizations org,@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  : {}" , org);
 		org.setInstId(currentUser.getInstId());
 		if (organizationsService.insert(org)) {
@@ -109,15 +109,15 @@ public class OrganizationsController {
 					ConstsAct.CREATE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-			return new Message<Organizations>(Message.SUCCESS).buildResponse();
+			return new Message<Organizations>(Message.SUCCESS);
 		} else {
-			return new Message<Organizations>(Message.FAIL).buildResponse();
+			return new Message<Organizations>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(@RequestBody  Organizations org,@CurrentUser UserInfo currentUser) {
+	public Message<?> update(@RequestBody  Organizations org,@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  :{}" , org);
 		org.setInstId(currentUser.getInstId());
 		if (organizationsService.update(org)) {
@@ -127,15 +127,15 @@ public class OrganizationsController {
 					ConstsAct.UPDATE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-		    return new Message<Organizations>(Message.SUCCESS).buildResponse();
+		    return new Message<Organizations>(Message.SUCCESS);
 		} else {
-			return new Message<Organizations>(Message.FAIL).buildResponse();
+			return new Message<Organizations>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (organizationsService.deleteBatch(ids)) {
 			systemLog.insert(
@@ -144,16 +144,16 @@ public class OrganizationsController {
 					ConstsAct.DELETE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-			 return new Message<Organizations>(Message.SUCCESS).buildResponse();
+			 return new Message<Organizations>(Message.SUCCESS);
 		} else {
-			return new Message<Organizations>(Message.FAIL).buildResponse();
+			return new Message<Organizations>(Message.FAIL);
 		}
 	}
   
   
 	@ResponseBody
 	@RequestMapping(value={"/tree"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> tree(@ModelAttribute Organizations organization,@CurrentUser UserInfo currentUser) {
+	public Message<?> tree(@ModelAttribute Organizations organization,@CurrentUser UserInfo currentUser) {
 		logger.debug("-tree  {}" , organization);
 		List<Organizations>  orgList = organizationsService.query(
 				Query.builder().eq("instid", currentUser.getInstId()));
@@ -185,14 +185,14 @@ public class OrganizationsController {
 				}
 			}
 			treeAttributes.setNodeCount(nodeCount);
-			 return new Message<TreeAttributes>(Message.SUCCESS,treeAttributes).buildResponse();
+			 return new Message<TreeAttributes>(Message.SUCCESS,treeAttributes);
 		} else {
-			 return new Message<TreeAttributes>(Message.FAIL).buildResponse();
+			 return new Message<TreeAttributes>(Message.FAIL);
 		}
 	}
 
   @RequestMapping(value = "/import")
-  public ResponseEntity<?> importingOrganizations(
+  public Message<?> importingOrganizations(
 		  @ModelAttribute("excelImportFile")ExcelImport excelImportFile,
 		  @CurrentUser UserInfo currentUser)  {
       if (excelImportFile.isExcelNotEmpty() ) {
@@ -217,9 +217,9 @@ public class OrganizationsController {
             if(!CollectionUtils.isEmpty(orgsList)){
                 orgsList = orgsList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getId()))), ArrayList::new));
                 if(organizationsService.insertBatch(orgsList)) {
-                	return new Message<Organizations>(Message.SUCCESS).buildResponse();
+                	return new Message<Organizations>(Message.SUCCESS);
 		        }else {
-		        	return new Message<Organizations>(Message.FAIL).buildResponse();
+		        	return new Message<Organizations>(Message.FAIL);
 		        }
             }
         } catch (IOException e) {
@@ -229,7 +229,7 @@ public class OrganizationsController {
         }
 	}
       
-	return new Message<Organizations>(Message.FAIL).buildResponse();
+	return new Message<Organizations>(Message.FAIL);
       
   }
 

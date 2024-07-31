@@ -55,7 +55,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class Cas30AuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 
-	final static Logger _logger = LoggerFactory.getLogger(Cas30AuthorizeEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(Cas30AuthorizeEndpoint.class);
 
 	@Operation(summary = "CAS 3.0 ticket验证接口", description = "通过ticket获取当前登录用户信息")
 	@RequestMapping(value=CasConstants.ENDPOINT.ENDPOINT_SERVICE_VALIDATE_V3,method={RequestMethod.GET,RequestMethod.POST})

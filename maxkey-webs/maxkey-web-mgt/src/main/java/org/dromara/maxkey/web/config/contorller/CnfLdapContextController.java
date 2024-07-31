@@ -30,14 +30,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping(value={"/config/ldapcontext"})
 public class CnfLdapContextController {
 	static final  Logger logger = LoggerFactory.getLogger(CnfLdapContextController.class);
@@ -46,17 +45,17 @@ public class CnfLdapContextController {
 	private CnfLdapContextService ldapContextService;
 
 	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@CurrentUser UserInfo currentUser){
+	public Message<?> get(@CurrentUser UserInfo currentUser){
 		CnfLdapContext ldapContext = ldapContextService.get(currentUser.getInstId());
 		if(ldapContext != null && StringUtils.isNoneBlank(ldapContext.getCredentials())) {
 			ldapContext.setCredentials(PasswordReciprocal.getInstance().decoder(ldapContext.getCredentials()));
 		}
-		return new Message<CnfLdapContext>(ldapContext).buildResponse();
+		return new Message<CnfLdapContext>(ldapContext);
 	}
 
 	@RequestMapping(value={"/update"})
 	@ResponseBody
-	public ResponseEntity<?> update( @RequestBody CnfLdapContext ldapContext,@CurrentUser UserInfo currentUser,BindingResult result) {
+	public Message<?> update( @RequestBody CnfLdapContext ldapContext,@CurrentUser UserInfo currentUser,BindingResult result) {
 		logger.debug("update ldapContext : {}" ,ldapContext);
 		ldapContext.setCredentials(PasswordReciprocal.getInstance().encode(ldapContext.getCredentials()));
 		ldapContext.setInstId(currentUser.getInstId());
@@ -68,15 +67,15 @@ public class CnfLdapContextController {
 			updateResult = ldapContextService.update(ldapContext);
 		}
 		if(updateResult) {
-			return new Message<CnfLdapContext>(Message.SUCCESS).buildResponse();
+			return new Message<CnfLdapContext>(Message.SUCCESS);
 		} else {
-			return new Message<CnfLdapContext>(Message.FAIL).buildResponse();
+			return new Message<CnfLdapContext>(Message.FAIL);
 		}
 	}
 	
 	
 	@RequestMapping(value={"/test"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> test(@CurrentUser UserInfo currentUser){
+	public Message<?> test(@CurrentUser UserInfo currentUser){
 		CnfLdapContext ldapContext = ldapContextService.get(currentUser.getInstId());
 		if(ldapContext != null && StringUtils.isNoneBlank(ldapContext.getCredentials())) {
 			ldapContext.setCredentials(PasswordReciprocal.getInstance().decoder(ldapContext.getCredentials()));
@@ -106,9 +105,9 @@ public class CnfLdapContextController {
 				
 		if(ldapUtils.openConnection() != null) {
 			ldapUtils.close();
-			return new Message<CnfLdapContext>(Message.SUCCESS).buildResponse();
+			return new Message<CnfLdapContext>(Message.SUCCESS);
 		}else {
-			return new Message<CnfLdapContext>(Message.FAIL).buildResponse();
+			return new Message<CnfLdapContext>(Message.FAIL);
 		}
 	}
 }

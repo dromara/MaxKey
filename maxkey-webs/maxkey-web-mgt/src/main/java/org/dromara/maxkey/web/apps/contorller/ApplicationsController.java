@@ -30,14 +30,14 @@ import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -49,24 +49,24 @@ import com.nimbusds.jose.jwk.gen.OctetSequenceKeyGenerator;
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator;
 
 
-@Controller
+@RestController
 @RequestMapping(value={"/apps"})
 public class ApplicationsController extends BaseAppContorller {
 	static final Logger logger = LoggerFactory.getLogger(ApplicationsController.class);
 	
 	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> init() {
+	public Message<?> init() {
 		Apps app=new Apps();
 		app.setId(app.generateId());
 		app.setProtocol(ConstsProtocols.BASIC);
 		app.setSecret(ReciprocalUtils.generateKey(""));
-		return new Message<Apps>(app).buildResponse();
+		return new Message<Apps>(app);
 	}
 	
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> fetch(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
+	public Message<?> fetch(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
 		apps.setInstId(currentUser.getInstId());
 		JpaPageResults<Apps> appsList =appsService.fetchPageResults(apps);
 		for (Apps app : appsList.getRows()){
@@ -75,80 +75,80 @@ public class ApplicationsController extends BaseAppContorller {
 			app.setSharedPassword(null);
 		}
 		logger.debug("List {}" , appsList);
-		return new Message<JpaPageResults<Apps>>(appsList).buildResponse();
+		return new Message<JpaPageResults<Apps>>(appsList);
 	}
 
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> query(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
+	public Message<?> query(@ModelAttribute Apps apps,@CurrentUser UserInfo currentUser) {
 		logger.debug("-query  : {}" , apps);
 		if (appsService.query(apps)!=null) {
-			 return new Message<Apps>(Message.SUCCESS).buildResponse();
+			 return new Message<Apps>(Message.SUCCESS);
 		} else {
-			 return new Message<Apps>(Message.SUCCESS).buildResponse();
+			 return new Message<Apps>(Message.SUCCESS);
 		}
 	}
 	
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@PathVariable("id") String id) {
+	public Message<?> get(@PathVariable("id") String id) {
 		Apps apps = appsService.get(id);
 		decoderSecret(apps);
 		apps.transIconBase64();
-		return new Message<Apps>(apps).buildResponse();
+		return new Message<Apps>(apps);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> insert(@RequestBody Apps apps,@CurrentUser UserInfo currentUser) {
+	public Message<?> insert(@RequestBody Apps apps,@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  : {}" , apps);
 		transform(apps);
 		apps.setInstId(currentUser.getInstId());
 		if (appsService.insert(apps)) {
-			return new Message<Apps>(Message.SUCCESS).buildResponse();
+			return new Message<Apps>(Message.SUCCESS);
 		} else {
-			return new Message<Apps>(Message.FAIL).buildResponse();
+			return new Message<Apps>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(@RequestBody  Apps apps,@CurrentUser UserInfo currentUser) {
+	public Message<?> update(@RequestBody  Apps apps,@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  : {}" , apps);
 		transform(apps);
 		apps.setInstId(currentUser.getInstId());
 		if (appsService.update(apps)) {
-		    return new Message<Apps>(Message.SUCCESS).buildResponse();
+		    return new Message<Apps>(Message.SUCCESS);
 		} else {
-			return new Message<Apps>(Message.FAIL).buildResponse();
+			return new Message<Apps>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (appsService.deleteBatch(ids)) {
-			 return new Message<Apps>(Message.SUCCESS).buildResponse();
+			 return new Message<Apps>(Message.SUCCESS);
 		} else {
-			return new Message<Apps>(Message.FAIL).buildResponse();
+			return new Message<Apps>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = { "/updateExtendAttr" })
-	public ResponseEntity<?> updateExtendAttr(@RequestBody Apps app) {
+	public Message<?> updateExtendAttr(@RequestBody Apps app) {
 		logger.debug("-updateExtendAttr  id : {} , ExtendAttr : {}" , app.getId(),app.getExtendAttr());
 		if (appsService.updateExtendAttr(app)) {
-			return new Message<Apps>(Message.SUCCESS).buildResponse();
+			return new Message<Apps>(Message.SUCCESS);
 		} else {
-			return new Message<Apps>(Message.FAIL).buildResponse();
+			return new Message<Apps>(Message.FAIL);
 		}
 	}
 	
 	
 	@ResponseBody
 	@RequestMapping(value = { "/generate/secret/{type}" })
-	public ResponseEntity<?> generateSecret(@PathVariable("type") String type,@RequestParam(name="id",required=false) String id) throws JOSEException {
+	public Message<?> generateSecret(@PathVariable("type") String type,@RequestParam(name="id",required=false) String id) throws JOSEException {
 		String secret="";
 		type=type.toLowerCase();
 		if(type.equals("des")){
@@ -203,7 +203,7 @@ public class ApplicationsController extends BaseAppContorller {
 			secret=ReciprocalUtils.generateKey("");
 		}
 		
-		return new Message<Object>(Message.SUCCESS,(Object)secret).buildResponse();
+		return new Message<Object>(Message.SUCCESS,(Object)secret);
 	}
 	
 	

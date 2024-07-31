@@ -38,7 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 public class ExtendApiCndnsApiMailAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(ExtendApiCndnsApiMailAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ExtendApiCndnsApiMailAdapter.class);
 	//sign no  parameter
 	//sign=md5(action=getDomainInfo&appid=***&time=1579736456 + md5(token))
 	//sign with parameter

@@ -26,13 +26,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping(value={"/config/institutions"})
 public class InstitutionsController {
 		static final  Logger logger = LoggerFactory.getLogger(InstitutionsController.class);
@@ -41,21 +40,21 @@ public class InstitutionsController {
 		private InstitutionsService institutionsService;
 		
 		@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-		public ResponseEntity<?> get(@CurrentUser UserInfo currentUser){
+		public Message<?> get(@CurrentUser UserInfo currentUser){
 			Institutions institutions = institutionsService.get(currentUser.getInstId());
-			return new Message<Institutions>(Message.SUCCESS,institutions).buildResponse();
+			return new Message<Institutions>(Message.SUCCESS,institutions);
 		}
 		
 		@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-		public ResponseEntity<?> update(
+		public Message<?> update(
 				@RequestBody  Institutions institutions,
 				@CurrentUser UserInfo currentUser,
 				BindingResult result) {
 			logger.debug("updateRole institutions : {}" , institutions);
 			if(institutionsService.update(institutions)) {
-				return new Message<Institutions>(Message.SUCCESS).buildResponse();
+				return new Message<Institutions>(Message.SUCCESS);
 			} else {
-				return new Message<Institutions>(Message.FAIL).buildResponse();
+				return new Message<Institutions>(Message.FAIL);
 			}
 		}
 }

@@ -28,14 +28,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping(value={"/config/smsprovider"})
 public class CnfSmsProviderController {
 	static final  Logger logger = LoggerFactory.getLogger(CnfSmsProviderController.class);
@@ -44,17 +43,17 @@ public class CnfSmsProviderController {
 	private CnfSmsProviderService smsProviderService;
 
 	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@CurrentUser UserInfo currentUser){
+	public Message<?> get(@CurrentUser UserInfo currentUser){
 		CnfSmsProvider smsProvider = smsProviderService.get(currentUser.getInstId());
 		if(smsProvider != null && StringUtils.isNoneBlank(smsProvider.getId())) {
 			smsProvider.setAppSecret(PasswordReciprocal.getInstance().decoder(smsProvider.getAppSecret()));
 		}
-		return new Message<CnfSmsProvider>(smsProvider).buildResponse();
+		return new Message<CnfSmsProvider>(smsProvider);
 	}
 
 	@RequestMapping(value={"/update"})
 	@ResponseBody
-	public ResponseEntity<?> update( @RequestBody CnfSmsProvider smsProvider,@CurrentUser UserInfo currentUser,BindingResult result) {
+	public Message<?> update( @RequestBody CnfSmsProvider smsProvider,@CurrentUser UserInfo currentUser,BindingResult result) {
 		logger.debug("update smsProvider : {}" ,smsProvider);
 		smsProvider.setAppSecret(PasswordReciprocal.getInstance().encode(smsProvider.getAppSecret()));
 		smsProvider.setInstId(currentUser.getInstId());
@@ -66,9 +65,9 @@ public class CnfSmsProviderController {
 			updateResult = smsProviderService.update(smsProvider);
 		}
 		if(updateResult) {
-			return new Message<CnfSmsProvider>(Message.SUCCESS).buildResponse();
+			return new Message<CnfSmsProvider>(Message.SUCCESS);
 		} else {
-			return new Message<CnfSmsProvider>(Message.FAIL).buildResponse();
+			return new Message<CnfSmsProvider>(Message.FAIL);
 		}
 	}
 }

@@ -30,7 +30,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 @Repository
 public class AppsJwtDetailsService  extends JpaService<AppsJwtDetails>{
 
-	protected final static  Cache<String, AppsJwtDetails> detailsCache = 
+	protected static final   Cache<String, AppsJwtDetails> detailsCache = 
             Caffeine.newBuilder()
                 .expireAfterWrite(30, TimeUnit.MINUTES)
                 .maximumSize(200000)

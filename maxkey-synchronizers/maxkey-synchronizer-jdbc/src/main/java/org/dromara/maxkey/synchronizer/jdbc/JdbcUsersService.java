@@ -38,7 +38,7 @@ import java.util.ArrayList;
 
 @Service
 public class JdbcUsersService extends AbstractSynchronizerService implements ISynchronizerService {
-    final static Logger _logger = LoggerFactory.getLogger(JdbcUsersService.class);
+    static final  Logger _logger = LoggerFactory.getLogger(JdbcUsersService.class);
 
     static ArrayList<ColumnFieldMapper> mapperList = new ArrayList<>();
 

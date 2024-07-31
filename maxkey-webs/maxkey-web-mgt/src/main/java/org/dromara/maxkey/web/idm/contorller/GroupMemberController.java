@@ -35,19 +35,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequestMapping(value={"/access/groupmembers"})
 public class GroupMemberController {
-	final static Logger logger = LoggerFactory.getLogger(GroupMemberController.class);
+	static final  Logger logger = LoggerFactory.getLogger(GroupMemberController.class);
 	
 	@Autowired
 	GroupMemberService service;
@@ -63,40 +62,40 @@ public class GroupMemberController {
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> fetch(
+	public Message<?> fetch(
 			@ModelAttribute GroupMember groupMember,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("fetch {}" , groupMember);
 		groupMember.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<GroupMember>>(
-				service.fetchPageResults(groupMember)).buildResponse();
+				service.fetchPageResults(groupMember));
 	}
 
 	@RequestMapping(value = { "/memberIn" })
 	@ResponseBody
-	public ResponseEntity<?> memberInRole(@ModelAttribute GroupMember groupMember,@CurrentUser UserInfo currentUser) {
+	public Message<?> memberInRole(@ModelAttribute GroupMember groupMember,@CurrentUser UserInfo currentUser) {
 		logger.debug("groupMember : {}" , groupMember);
 		groupMember.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<GroupMember>>(
-				service.fetchPageResults("memberIn",groupMember)).buildResponse();
+				service.fetchPageResults("memberIn",groupMember));
 
 	}
 
 	
 	@RequestMapping(value = { "/memberNotIn" })
 	@ResponseBody
-	public ResponseEntity<?> memberNotIn(@ModelAttribute  GroupMember groupMember,@CurrentUser UserInfo currentUser) {
+	public Message<?> memberNotIn(@ModelAttribute  GroupMember groupMember,@CurrentUser UserInfo currentUser) {
 		groupMember.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<GroupMember>>(
-				service.fetchPageResults("memberNotIn",groupMember)).buildResponse();
+				service.fetchPageResults("memberNotIn",groupMember));
 	}
 
 	@RequestMapping(value = { "/noMember" })
 	@ResponseBody
-	public ResponseEntity<?> noMember(@ModelAttribute  GroupMember groupMember,@CurrentUser UserInfo currentUser) {
+	public Message<?> noMember(@ModelAttribute  GroupMember groupMember,@CurrentUser UserInfo currentUser) {
 		groupMember.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Groups>>(
-				service.noMember(groupMember)).buildResponse();
+				service.noMember(groupMember));
 	}
 	
 	/**
@@ -107,9 +106,9 @@ public class GroupMemberController {
 	 */
 	@RequestMapping(value = {"/add"})
 	@ResponseBody
-	public ResponseEntity<?> addGroupMember(@RequestBody GroupMember groupMember,@CurrentUser UserInfo currentUser) {
+	public Message<?> addGroupMember(@RequestBody GroupMember groupMember,@CurrentUser UserInfo currentUser) {
 		if (groupMember == null || groupMember.getGroupId() == null) {
-			return new Message<GroupMember>(Message.FAIL).buildResponse();
+			return new Message<GroupMember>(Message.FAIL);
 		}
 		String groupId = groupMember.getGroupId();
 		
@@ -139,10 +138,10 @@ public class GroupMemberController {
 				}
 			}
 			if(result) {
-				return new Message<GroupMember>(Message.SUCCESS).buildResponse();
+				return new Message<GroupMember>(Message.SUCCESS);
 			}
 		}
-		return new Message<GroupMember>(Message.FAIL).buildResponse();
+		return new Message<GroupMember>(Message.FAIL);
 	}
 	
 	
@@ -154,9 +153,9 @@ public class GroupMemberController {
 	 */
 	@RequestMapping(value = {"/addMember2Groups"})
 	@ResponseBody
-	public ResponseEntity<?> addMember2Groups(@RequestBody GroupMember groupMember,@CurrentUser UserInfo currentUser) {
+	public Message<?> addMember2Groups(@RequestBody GroupMember groupMember,@CurrentUser UserInfo currentUser) {
 		if (groupMember == null || StringUtils.isBlank(groupMember.getUsername())) {
-			return new Message<GroupMember>(Message.FAIL).buildResponse();
+			return new Message<GroupMember>(Message.FAIL);
 		}
 		UserInfo userInfo = userInfoService.findByUsername(groupMember.getUsername());
 		
@@ -182,20 +181,20 @@ public class GroupMemberController {
 				}
 			}
 			if(result) {
-				return new Message<GroupMember>(Message.SUCCESS).buildResponse();
+				return new Message<GroupMember>(Message.SUCCESS);
 			}
 		}
-		return new Message<GroupMember>(Message.FAIL).buildResponse();
+		return new Message<GroupMember>(Message.FAIL);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete ids : {}" , ids);
 		if (service.deleteBatch(ids)) {
-			 return new Message<GroupMember>(Message.SUCCESS).buildResponse();
+			 return new Message<GroupMember>(Message.SUCCESS);
 		} else {
-			return new Message<GroupMember>(Message.FAIL).buildResponse();
+			return new Message<GroupMember>(Message.FAIL);
 		}
 	}
 }

@@ -56,10 +56,10 @@ public abstract class AbstractAuthenticationProvider {
     public static String PROVIDER_SUFFIX = "AuthenticationProvider";
     
     public class AuthType{
-    	public final static String NORMAL 	= "normal";
-    	public final static String TFA 		= "tfa";
-    	public final static String MOBILE 	= "mobile";
-    	public final static String TRUSTED 	= "trusted";
+    	public static final  String NORMAL 	= "normal";
+    	public static final  String TFA 		= "tfa";
+    	public static final  String MOBILE 	= "mobile";
+    	public static final  String TRUSTED 	= "trusted";
     }
     
     protected ApplicationConfig applicationConfig;

@@ -107,26 +107,26 @@ public class OAuth2Constants {
 	
 	public static class ENDPOINT{
 		
-		public final static String ENDPOINT_BASE                      = "/authz/oauth/v20";
+		public static final  String ENDPOINT_BASE                      = "/authz/oauth/v20";
 		
-		public final static String ENDPOINT_AUTHORIZE                 = ENDPOINT_BASE + "/authorize";
+		public static final  String ENDPOINT_AUTHORIZE                 = ENDPOINT_BASE + "/authorize";
 		
-		public final static String ENDPOINT_TOKEN                     = ENDPOINT_BASE + "/token";
+		public static final  String ENDPOINT_TOKEN                     = ENDPOINT_BASE + "/token";
 		
-		public final static String ENDPOINT_CHECK_TOKEN               = ENDPOINT_BASE + "/check_token";
+		public static final  String ENDPOINT_CHECK_TOKEN               = ENDPOINT_BASE + "/check_token";
 		
-		public final static String ENDPOINT_TOKEN_KEY                 = ENDPOINT_BASE + "/token_key";
+		public static final  String ENDPOINT_TOKEN_KEY                 = ENDPOINT_BASE + "/token_key";
 		
-		public final static String ENDPOINT_APPROVAL_CONFIRM          = ENDPOINT_BASE + "/approval_confirm";
+		public static final  String ENDPOINT_APPROVAL_CONFIRM          = ENDPOINT_BASE + "/approval_confirm";
 		
-		public final static String ENDPOINT_ERROR                     = ENDPOINT_BASE + "/error";
+		public static final  String ENDPOINT_ERROR                     = ENDPOINT_BASE + "/error";
 		
-		public final static String ENDPOINT_USERINFO                  = "/api/oauth/v20/me";
+		public static final  String ENDPOINT_USERINFO                  = "/api/oauth/v20/me";
 		
-		public final static String ENDPOINT_OPENID_CONNECT_USERINFO   = "/api/connect/v10/userinfo";
+		public static final  String ENDPOINT_OPENID_CONNECT_USERINFO   = "/api/connect/v10/userinfo";
 		
-		public final static String ENDPOINT_TENCENT_IOA_AUTHORIZE	  =	"/oauth2/authorize";
-		public final static String ENDPOINT_TENCENT_IOA_TOKEN	  	  =	"/oauth2/token";
+		public static final  String ENDPOINT_TENCENT_IOA_AUTHORIZE	  =	"/oauth2/authorize";
+		public static final  String ENDPOINT_TENCENT_IOA_TOKEN	  	  =	"/oauth2/token";
 		
 	}
 }

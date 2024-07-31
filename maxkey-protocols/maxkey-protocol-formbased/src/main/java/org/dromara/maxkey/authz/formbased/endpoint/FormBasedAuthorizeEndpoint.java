@@ -51,7 +51,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Tag(name = "2-7-FormBased接口文档模块")
 @Controller
 public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
-	final static Logger _logger = LoggerFactory.getLogger(FormBasedAuthorizeEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(FormBasedAuthorizeEndpoint.class);
 	
 	@Autowired
 	AppsFormBasedDetailsService formBasedDetailsService;

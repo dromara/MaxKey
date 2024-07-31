@@ -40,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 public class ExtendApiZentaoAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(ExtendApiZentaoAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ExtendApiZentaoAdapter.class);
 	static String login_url_template="api.php?m=user&f=apilogin&account=%s&code=%s&time=%s&token=%s";
 	static String login_url_m_template="account=%s&code=%s&time=%s&token=%s";
 	

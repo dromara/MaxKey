@@ -46,7 +46,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class AssertionEndpoint {
-	private final static Logger logger = LoggerFactory.getLogger(AssertionEndpoint.class);
+	private static final  Logger logger = LoggerFactory.getLogger(AssertionEndpoint.class);
 	
 	private BindingAdapter bindingAdapter;
 

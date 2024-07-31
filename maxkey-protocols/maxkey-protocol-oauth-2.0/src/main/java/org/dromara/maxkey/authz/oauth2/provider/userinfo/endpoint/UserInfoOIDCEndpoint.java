@@ -74,7 +74,7 @@ import com.nimbusds.jwt.SignedJWT;
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class UserInfoOIDCEndpoint {
-	final static Logger _logger = LoggerFactory.getLogger(UserInfoOIDCEndpoint.class);	
+	static final  Logger _logger = LoggerFactory.getLogger(UserInfoOIDCEndpoint.class);	
 	@Autowired
 	@Qualifier("oauth20JdbcClientDetailsService")
 	private ClientDetailsService clientDetailsService;

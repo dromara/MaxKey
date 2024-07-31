@@ -30,13 +30,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 单点登录日志查询
@@ -45,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 
-@Controller
+@RestController
 @RequestMapping(value={"/historys"})
 public class LoginAppsHistoryController {
 	static final Logger logger = LoggerFactory.getLogger(LoginAppsHistoryController.class);
@@ -57,9 +52,9 @@ public class LoginAppsHistoryController {
 	 * @param loginAppsHistory
 	 * @return
 	 */
-	@RequestMapping(value={"/loginAppsHistory/fetch"})
+	@GetMapping({"/loginAppsHistory/fetch"})
 	@ResponseBody
-	public ResponseEntity<?> fetch(
+	public Message<?> fetch(
 				@ModelAttribute("historyLoginApp") HistoryLoginApps historyLoginApp,
 				@CurrentUser UserInfo currentUser){
 		logger.debug("historys/loginAppsHistory/fetch/  {}",historyLoginApp);
@@ -67,7 +62,7 @@ public class LoginAppsHistoryController {
 		historyLoginApp.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<HistoryLoginApps>>(
 					historyLoginAppsService.fetchPageResults(historyLoginApp)
-				).buildResponse();
+				);
 	}
 
 	@InitBinder

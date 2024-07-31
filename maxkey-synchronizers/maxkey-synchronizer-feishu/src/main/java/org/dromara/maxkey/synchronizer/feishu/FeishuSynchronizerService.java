@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FeishuSynchronizerService  implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(FeishuSynchronizerService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(FeishuSynchronizerService.class);
 	Synchronizers synchronizer;
 	
 	@Autowired

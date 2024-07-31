@@ -38,7 +38,7 @@ import com.dingtalk.api.response.OapiV2UserListResponse.ListUserResponse;
 
 @Service
 public class DingtalkUsersService  extends AbstractSynchronizerService implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(DingtalkUsersService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(DingtalkUsersService.class);
 	
 	String access_token;
 	

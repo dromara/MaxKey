@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 
 public class AttributeStatementGenerator {
-	private final static Logger logger = LoggerFactory.getLogger(AttributeStatementGenerator.class);
+	private static final  Logger logger = LoggerFactory.getLogger(AttributeStatementGenerator.class);
 	
 	private final XMLObjectBuilderFactory builderFactory = Configuration.getBuilderFactory();
 

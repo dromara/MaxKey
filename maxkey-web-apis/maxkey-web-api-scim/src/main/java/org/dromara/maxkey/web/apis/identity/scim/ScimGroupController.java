@@ -53,7 +53,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping(value = "/api/idm/SCIM/v2/Groups")
 public class ScimGroupController {
-	final static Logger _logger = LoggerFactory.getLogger(ScimGroupController.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ScimGroupController.class);
 	
 	@Autowired
 	GroupsService groupsService;

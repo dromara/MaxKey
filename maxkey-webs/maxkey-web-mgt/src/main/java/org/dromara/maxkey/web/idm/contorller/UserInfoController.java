@@ -54,8 +54,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -65,13 +63,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.google.common.collect.Lists;
 
 /**
  * @author Crystal.Sea
  *
  */
-@Controller
+@RestController
 @RequestMapping(value = { "/users" })
 public class UserInfoController {
 	static final Logger logger = LoggerFactory.getLogger(UserInfoController.class);
@@ -87,41 +87,41 @@ public class UserInfoController {
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> fetch(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
+	public Message<?> fetch(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
 		logger.debug(""+userInfo);
 		userInfo.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<UserInfo>>(
-				userInfoService.fetchPageResults(userInfo)).buildResponse();
+				userInfoService.fetchPageResults(userInfo));
 	}
 
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> query(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
+	public Message<?> query(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
 		logger.debug("-query  :" + userInfo);
 		if (userInfoService.query(userInfo)!=null) {
-			 return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+			 return new Message<UserInfo>(Message.SUCCESS);
 		} else {
-			 return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+			 return new Message<UserInfo>(Message.SUCCESS);
 		}
 	}
 	
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@PathVariable("id") String id) {
+	public Message<?> get(@PathVariable("id") String id) {
 		UserInfo userInfo=userInfoService.get(id);
 		userInfo.trans();
-		return new Message<UserInfo>(userInfo).buildResponse();
+		return new Message<UserInfo>(userInfo);
 	}
 	
 	@RequestMapping(value = { "/getByUsername/{username}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> getByUsername(@PathVariable("username") String username) {
+	public Message<?> getByUsername(@PathVariable("username") String username) {
 		UserInfo userInfo=userInfoService.findByUsername(username);
 		userInfo.trans();
-		return new Message<UserInfo>(userInfo).buildResponse();
+		return new Message<UserInfo>(userInfo);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> insert(@RequestBody UserInfo userInfo,@CurrentUser UserInfo currentUser) {
+	public Message<?> insert(@RequestBody UserInfo userInfo,@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  :" + userInfo);
 		userInfo.setId(WebContext.genId());
 		userInfo.setInstId(currentUser.getInstId());
@@ -136,15 +136,15 @@ public class UserInfoController {
 					ConstsAct.CREATE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+			return new Message<UserInfo>(Message.SUCCESS);
 		} else {
-			return new Message<UserInfo>(Message.FAIL).buildResponse();
+			return new Message<UserInfo>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(@RequestBody  UserInfo userInfo,@CurrentUser UserInfo currentUser) {
+	public Message<?> update(@RequestBody  UserInfo userInfo,@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  :" + userInfo);
 		logger.info(userInfo.getExtraAttributeName());
 		logger.info(userInfo.getExtraAttributeValue());
@@ -164,15 +164,15 @@ public class UserInfoController {
 					ConstsAct.UPDATE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-		    return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+		    return new Message<UserInfo>(Message.SUCCESS);
 		} else {
-			return new Message<UserInfo>(Message.FAIL).buildResponse();
+			return new Message<UserInfo>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		
 		if (userInfoService.deleteBatch(ids)) {
@@ -182,20 +182,20 @@ public class UserInfoController {
 					ConstsAct.DELETE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-			 return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+			 return new Message<UserInfo>(Message.SUCCESS);
 		} else {
-			return new Message<UserInfo>(Message.FAIL).buildResponse();
+			return new Message<UserInfo>(Message.FAIL);
 		}
 	}
 
 	
     @ResponseBody
     @RequestMapping(value = "/randomPassword", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> randomPassword() {
+    public Message<?> randomPassword() {
         return new Message<Object>(
         		Message.SUCCESS,
         		(Object)userInfoService.randomPassword()
-        	).buildResponse();
+        	);
     }
 	   
 	
@@ -215,7 +215,7 @@ public class UserInfoController {
 	
 	@ResponseBody
 	@RequestMapping(value="/changePassword", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> changePassword(
+	public Message<?> changePassword(
 			@RequestBody ChangePassword changePassword,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("UserId {}",changePassword.getUserId());
@@ -227,15 +227,15 @@ public class UserInfoController {
 					ConstsAct.CHANGE_PASSWORD, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+			return new Message<UserInfo>(Message.SUCCESS);
 		} else {
-			return new Message<UserInfo>(Message.FAIL).buildResponse();
+			return new Message<UserInfo>(Message.FAIL);
 		}
 	}
 	
 	@RequestMapping(value = { "/updateStatus" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> updateStatus(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
+	public Message<?> updateStatus(@ModelAttribute UserInfo userInfo,@CurrentUser UserInfo currentUser) {
 		logger.debug(""+userInfo);
 		UserInfo loadUserInfo = userInfoService.get(userInfo.getId());
 		userInfo.setInstId(currentUser.getInstId());
@@ -248,14 +248,14 @@ public class UserInfoController {
 					ConstsAct.statusActon.get(userInfo.getStatus()), 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-			return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+			return new Message<UserInfo>(Message.SUCCESS);
 		} else {
-			return new Message<UserInfo>(Message.FAIL).buildResponse();
+			return new Message<UserInfo>(Message.FAIL);
 		}
 	}
 	
     @RequestMapping(value = "/import")
-    public ResponseEntity<?> importingUsers(
+    public Message<?> importingUsers(
     		@ModelAttribute("excelImportFile")ExcelImport excelImportFile,
     		@CurrentUser UserInfo currentUser)  {
         if (excelImportFile.isExcelNotEmpty() ) {
@@ -283,7 +283,7 @@ public class UserInfoController {
                 if(!CollectionUtils.isEmpty(userInfoList)){
                     userInfoList = userInfoList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getUsername()))), ArrayList::new));
                     if( userInfoService.insertBatch(userInfoList)) {
-                    	return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+                    	return new Message<UserInfo>(Message.SUCCESS);
                     }
                 }
             } catch (IOException e) {
@@ -292,7 +292,7 @@ public class UserInfoController {
             	excelImportFile.closeWorkbook();
             }
         }
-        return new Message<UserInfo>(Message.FAIL).buildResponse();
+        return new Message<UserInfo>(Message.FAIL);
         
     }
     

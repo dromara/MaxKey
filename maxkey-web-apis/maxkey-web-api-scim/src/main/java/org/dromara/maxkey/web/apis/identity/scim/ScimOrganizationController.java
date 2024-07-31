@@ -56,7 +56,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping(value = "/api/idm/SCIM/v2/Organizations")
 public class ScimOrganizationController {
-	final static Logger _logger = LoggerFactory.getLogger(ScimOrganizationController.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ScimOrganizationController.class);
 	
 	@Autowired
 	OrganizationsService organizationsService;

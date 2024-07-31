@@ -41,13 +41,13 @@ import com.github.benmanes.caffeine.cache.Caffeine;
  *
  */
 public class ExtendApiQQExmailAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(ExtendApiQQExmailAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ExtendApiQQExmailAdapter.class);
 	//https://exmail.qq.com/qy_mng_logic/doc#10003
 	static String TOKEN_URI		= "https://api.exmail.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
 	//https://exmail.qq.com/qy_mng_logic/doc#10036
 	static String AUTHKEY_URI 	= "https://api.exmail.qq.com/cgi-bin/service/get_login_url?access_token=%s&userid=%s";
 	
-	final static  Cache<String, String> tokenCache = Caffeine.newBuilder()
+	static final   Cache<String, String> tokenCache = Caffeine.newBuilder()
                 										.expireAfterWrite(7200, TimeUnit.SECONDS)
                 										.build();
 	

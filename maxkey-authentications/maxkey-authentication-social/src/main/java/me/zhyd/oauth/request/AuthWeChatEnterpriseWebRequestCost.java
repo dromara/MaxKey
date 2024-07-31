@@ -40,7 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AuthWeChatEnterpriseWebRequestCost extends AbstractAuthWeChatEnterpriseRequest {
-    final static Logger _logger = LoggerFactory.getLogger(AuthWeChatEnterpriseWebRequestCost.class);
+    static final  Logger _logger = LoggerFactory.getLogger(AuthWeChatEnterpriseWebRequestCost.class);
     public AuthWeChatEnterpriseWebRequestCost(AuthConfig config) {
         super(config, AuthDefaultSource.WECHAT_ENTERPRISE_WEB);
     }

@@ -28,10 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 /**
@@ -39,7 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Crystal.Sea
  *
  */
-@Controller
+@RestController
 public class ImageCaptchaEndpoint {
     private static final Logger _logger = LoggerFactory.getLogger(ImageCaptchaEndpoint.class);
     
@@ -59,7 +58,7 @@ public class ImageCaptchaEndpoint {
      * @param response HttpServletResponse
      */
     @GetMapping(value={"/captcha"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public  ResponseEntity<?> captchaHandleRequest( 
+    public  Message<ImageCaptcha> captchaHandleRequest( 
     			@RequestParam(value="captcha",required=false,defaultValue="text") String captchaType,
     			@RequestParam(value="state",required=false,defaultValue="state") String state) {
         try {
@@ -94,13 +93,11 @@ public class ImageCaptchaEndpoint {
            
             _logger.trace("b64Image {}" , b64Image);
             
-            return new Message<ImageCaptcha>(
-            			new ImageCaptcha(state,b64Image)
-            		).buildResponse();
+            return new Message<>(new ImageCaptcha(state,b64Image));
         } catch (Exception e) {
             _logger.error("captcha Producer Error" , e);
         }
-        return new Message< Object>(Message.FAIL).buildResponse();
+        return new Message<>(Message.FAIL);
     }
 
 	public void setCaptchaProducer(Producer captchaProducer) {

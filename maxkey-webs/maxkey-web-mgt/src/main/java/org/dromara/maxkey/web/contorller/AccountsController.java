@@ -38,20 +38,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequestMapping(value={"/accounts"})
 public class AccountsController {
-	final static Logger _logger = LoggerFactory.getLogger(AccountsController.class);
+	static final  Logger _logger = LoggerFactory.getLogger(AccountsController.class);
 
 	@Autowired
 	AccountsService accountsService;
@@ -70,35 +69,35 @@ public class AccountsController {
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> fetch(@ModelAttribute Accounts accounts,@CurrentUser UserInfo currentUser) {
+	public Message<?> fetch(@ModelAttribute Accounts accounts,@CurrentUser UserInfo currentUser) {
 		_logger.debug("fetch {}" , accounts);
 		accounts.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Accounts>>(
-				accountsService.fetchPageResults(accounts)).buildResponse();
+				accountsService.fetchPageResults(accounts));
 	}
 
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> query(@ModelAttribute Accounts account,@CurrentUser UserInfo currentUser) {
+	public Message<?> query(@ModelAttribute Accounts account,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-query  : {}" , account);
 		account.setInstId(currentUser.getInstId());
 		if (accountsService.query(account)!=null) {
-			 return new Message<Accounts>(Message.SUCCESS).buildResponse();
+			 return new Message<Accounts>(Message.SUCCESS);
 		} else {
-			 return new Message<Accounts>(Message.SUCCESS).buildResponse();
+			 return new Message<Accounts>(Message.SUCCESS);
 		}
 	}
 
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@PathVariable("id") String id) {
+	public Message<?> get(@PathVariable("id") String id) {
 		Accounts account=accountsService.get(id);
 		account.setRelatedPassword(PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));
-		return new Message<Accounts>(account).buildResponse();
+		return new Message<Accounts>(account);
 	}
 
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> insert(@RequestBody  Accounts account,@CurrentUser UserInfo currentUser) {
+	public Message<?> insert(@RequestBody  Accounts account,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-Add  : {}" , account);
 		account.setInstId(currentUser.getInstId());
 		account.setRelatedPassword(PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
@@ -109,15 +108,15 @@ public class AccountsController {
 					ConstsAct.CREATE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-		    return new Message<Accounts>(Message.SUCCESS).buildResponse();
+		    return new Message<Accounts>(Message.SUCCESS);
 		} else {
-			return new Message<Accounts>(Message.FAIL).buildResponse();
+			return new Message<Accounts>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(@RequestBody  Accounts account,@CurrentUser UserInfo currentUser) {
+	public Message<?> update(@RequestBody  Accounts account,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-update  : {}" , account);
 		account.setInstId(currentUser.getInstId());
 		account.setRelatedPassword(PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
@@ -128,16 +127,16 @@ public class AccountsController {
 					ConstsAct.UPDATE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-		    return new Message<Accounts>(Message.SUCCESS).buildResponse();
+		    return new Message<Accounts>(Message.SUCCESS);
 		} else {
-			return new Message<Accounts>(Message.FAIL).buildResponse();
+			return new Message<Accounts>(Message.FAIL);
 		}
 	}
 	
 	
 	@RequestMapping(value = { "/updateStatus" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> updateStatus(@ModelAttribute Accounts accounts,@CurrentUser UserInfo currentUser) {
+	public Message<?> updateStatus(@ModelAttribute Accounts accounts,@CurrentUser UserInfo currentUser) {
 		_logger.debug("accounts : {}" , accounts);
 		Accounts loadAccount = accountsService.get(accounts.getId());
 		accounts.setInstId(currentUser.getInstId());
@@ -154,15 +153,15 @@ public class AccountsController {
 					ConstsAct.statusActon.get(accounts.getStatus()), 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-		    return new Message<Accounts>(Message.SUCCESS).buildResponse();
+		    return new Message<Accounts>(Message.SUCCESS);
 		} else {
-			return new Message<Accounts>(Message.FAIL).buildResponse();
+			return new Message<Accounts>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		_logger.debug("-delete ids : {} " , ids);
 		
 		if (accountsService.deleteBatch(ids)) {
@@ -172,22 +171,22 @@ public class AccountsController {
 					ConstsAct.DELETE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-			 return new Message<Accounts>(Message.SUCCESS).buildResponse();
+			 return new Message<Accounts>(Message.SUCCESS);
 		} else {
-			return new Message<Accounts>(Message.FAIL).buildResponse();
+			return new Message<Accounts>(Message.FAIL);
 		}
 		
 	}
 	
     @ResponseBody
     @RequestMapping(value = "/generate")
-    public ResponseEntity<?> generate(@ModelAttribute Accounts account) {
+    public Message<?> generate(@ModelAttribute Accounts account) {
     	AccountsStrategy accountsStrategy = accountsStrategyService.get(account.getStrategyId());
        	UserInfo  userInfo  = userInfoService.get(account.getUserId());
         return new Message<Object>(
         		Message.SUCCESS,
         		(Object)accountsService.generateAccount(userInfo,accountsStrategy)
-        	).buildResponse();
+        	);
     }
 
 }

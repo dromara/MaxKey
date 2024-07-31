@@ -34,7 +34,7 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public class BearerTokenExtractor implements TokenExtractor {
 
-	private final static Log logger = LogFactory.getLog(BearerTokenExtractor.class);
+	private static final  Log logger = LogFactory.getLog(BearerTokenExtractor.class);
 
 	@Override
 	public Authentication extract(HttpServletRequest request) {

@@ -62,7 +62,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
-	final static Logger _logger = LoggerFactory.getLogger(JwtAuthorizeEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(JwtAuthorizeEndpoint.class);
 	
 	@Autowired
 	AppsJwtDetailsService jwtDetailsService;

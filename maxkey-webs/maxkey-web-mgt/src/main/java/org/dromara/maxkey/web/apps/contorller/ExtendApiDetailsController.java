@@ -30,42 +30,41 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequestMapping(value={"/apps/extendapi"})
 public class ExtendApiDetailsController  extends BaseAppContorller {
 	static final Logger logger = LoggerFactory.getLogger(ExtendApiDetailsController.class);
 
 	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> init() {
+	public Message<?> init() {
 		AppsExtendApiDetails extendApiDetails=new AppsExtendApiDetails();
 		extendApiDetails.setId(extendApiDetails.generateId());
 		extendApiDetails.setProtocol(ConstsProtocols.EXTEND_API);
 		extendApiDetails.setSecret(ReciprocalUtils.generateKey(""));
-		return new Message<AppsExtendApiDetails>(extendApiDetails).buildResponse();
+		return new Message<AppsExtendApiDetails>(extendApiDetails);
 	}
 	
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@PathVariable("id") String id) {
+	public Message<?> get(@PathVariable("id") String id) {
 		Apps application= appsService.get(id);
 		super.decoderSecret(application);
 		AppsExtendApiDetails extendApiDetails=new AppsExtendApiDetails();
 		BeanUtils.copyProperties(application, extendApiDetails);
 		extendApiDetails.transIconBase64();
-		return new Message<AppsExtendApiDetails>(extendApiDetails).buildResponse();
+		return new Message<AppsExtendApiDetails>(extendApiDetails);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> add(
+	public Message<?> add(
 			@RequestBody AppsExtendApiDetails extendApiDetails,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  :" + extendApiDetails);
@@ -73,37 +72,37 @@ public class ExtendApiDetailsController  extends BaseAppContorller {
 		transform(extendApiDetails);
 		extendApiDetails.setInstId(currentUser.getInstId());
 		if (appsService.insertApp(extendApiDetails)) {
-			return new Message<AppsExtendApiDetails>(Message.SUCCESS).buildResponse();
+			return new Message<AppsExtendApiDetails>(Message.SUCCESS);
 		} else {
-			return new Message<AppsExtendApiDetails>(Message.FAIL).buildResponse();
+			return new Message<AppsExtendApiDetails>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(
+	public Message<?> update(
 			@RequestBody AppsExtendApiDetails extendApiDetails,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  :" + extendApiDetails);
 		transform(extendApiDetails);
 		extendApiDetails.setInstId(currentUser.getInstId());
 		if (appsService.updateApp(extendApiDetails)) {
-		    return new Message<AppsExtendApiDetails>(Message.SUCCESS).buildResponse();
+		    return new Message<AppsExtendApiDetails>(Message.SUCCESS);
 		} else {
-			return new Message<AppsExtendApiDetails>(Message.FAIL).buildResponse();
+			return new Message<AppsExtendApiDetails>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(
+	public Message<?> delete(
 			@RequestParam("ids") List<String> ids,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (appsService.deleteBatch(ids)) {
-			 return new Message<AppsExtendApiDetails>(Message.SUCCESS).buildResponse();
+			 return new Message<AppsExtendApiDetails>(Message.SUCCESS);
 		} else {
-			return new Message<AppsExtendApiDetails>(Message.FAIL).buildResponse();
+			return new Message<AppsExtendApiDetails>(Message.FAIL);
 		}
 	}
 

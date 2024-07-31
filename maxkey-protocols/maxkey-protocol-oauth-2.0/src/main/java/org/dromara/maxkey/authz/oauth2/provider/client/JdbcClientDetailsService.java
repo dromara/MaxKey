@@ -58,7 +58,7 @@ public class JdbcClientDetailsService implements ClientDetailsService, ClientReg
 
     private static final Log logger = LogFactory.getLog(JdbcClientDetailsService.class);
     
-    protected final static  Cache<String, ClientDetails> detailsCache = 
+    protected static final   Cache<String, ClientDetails> detailsCache = 
             Caffeine.newBuilder()
                 .expireAfterWrite(30, TimeUnit.MINUTES)
                 .maximumSize(200000)

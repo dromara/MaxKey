@@ -27,16 +27,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-@Controller
+@RestController
 @RequestMapping(value={"/config/passwordpolicy"})
 public class CnfPasswordPolicyController {
 	static final  Logger logger = LoggerFactory.getLogger(CnfPasswordPolicyController.class);
@@ -45,20 +44,20 @@ public class CnfPasswordPolicyController {
 	private CnfPasswordPolicyService passwordPolicyService;
 	
 	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@CurrentUser UserInfo currentUser){
+	public Message<?> get(@CurrentUser UserInfo currentUser){
 		CnfPasswordPolicy passwordPolicy = passwordPolicyService.get(currentUser.getInstId());
-		return new Message<CnfPasswordPolicy>(passwordPolicy).buildResponse();
+		return new Message<CnfPasswordPolicy>(passwordPolicy);
 	}
 
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(@Valid @RequestBody CnfPasswordPolicy passwordPolicy,@CurrentUser UserInfo currentUser,BindingResult result) {
+	public Message<?> update(@Valid @RequestBody CnfPasswordPolicy passwordPolicy,@CurrentUser UserInfo currentUser,BindingResult result) {
 		logger.debug("updateRole passwordPolicy : {}" ,passwordPolicy);
 		//Message message = this.validate(result, passwordPolicy);
 		
 		if(passwordPolicyService.update(passwordPolicy)) {
-			return new Message<CnfPasswordPolicy>(Message.SUCCESS).buildResponse();
+			return new Message<CnfPasswordPolicy>(Message.SUCCESS);
 		} else {
-			return new Message<CnfPasswordPolicy>(Message.ERROR).buildResponse();
+			return new Message<CnfPasswordPolicy>(Message.ERROR);
 		}
 	}
 	

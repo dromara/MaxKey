@@ -30,15 +30,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequestMapping(value={"/permissions/permission"})
 public class PermissionController {
 	static final Logger logger = LoggerFactory.getLogger(PermissionController.class);
@@ -51,7 +50,7 @@ public class PermissionController {
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public  ResponseEntity<?> update(
+	public  Message<?> update(
 			@RequestBody Permission groupPrivileges,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  : {}" , groupPrivileges);
@@ -101,17 +100,17 @@ public class PermissionController {
 		
 		if (!newGroupPrivilegesList.isEmpty() && permissionService.insertGroupPrivileges(newGroupPrivilegesList)) {
 			logger.debug("-insert  : {}" , newGroupPrivilegesList);
-			return new Message<Permission>(Message.SUCCESS).buildResponse();
+			return new Message<Permission>(Message.SUCCESS);
 			
 		} else {
-			return new Message<Permission>(Message.SUCCESS).buildResponse();
+			return new Message<Permission>(Message.SUCCESS);
 		}
 		
 	}
 	
 	@ResponseBody
     @RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public  ResponseEntity<?> get(
+    public  Message<?> get(
     		@ModelAttribute Permission groupPrivileges,
     		@CurrentUser UserInfo currentUser) {
         logger.debug("-get  : {}"  , groupPrivileges);
@@ -124,7 +123,7 @@ public class PermissionController {
         List<Permission> rolePrivilegeList = permissionService.queryGroupPrivileges(queryGroupPrivilege);
         
         return new Message<List<Permission>>(
-        		rolePrivilegeList).buildResponse();
+        		rolePrivilegeList);
 	}
 
 	

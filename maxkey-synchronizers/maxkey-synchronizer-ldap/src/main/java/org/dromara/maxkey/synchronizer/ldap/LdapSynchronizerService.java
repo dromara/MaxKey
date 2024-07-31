@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LdapSynchronizerService  implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(LdapSynchronizerService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(LdapSynchronizerService.class);
 	
 	Synchronizers synchronizer;
 	

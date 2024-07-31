@@ -19,8 +19,6 @@ package org.dromara.maxkey.web.contorller;
 
 import java.text.ParseException;
 import java.util.HashMap;
-import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.authn.jwt.AuthJwt;
@@ -44,9 +42,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,9 +65,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping(value = "/login")
 public class LoginEntryPoint {
 	private static Logger logger = LoggerFactory.getLogger(LoginEntryPoint.class);
-	
-	Pattern mobileRegex = Pattern.compile("^(13[4,5,6,7,8,9]|15[0,8,9,1,7]|188|187)\\\\d{8}$");
-	
+		
 	@Autowired
 	AuthTokenService authTokenService;
 	
@@ -109,9 +103,8 @@ public class LoginEntryPoint {
 	 * @return
 	 */
 	@Operation(summary  = "登录接口", description  = "用户登录地址",method="GET")
-	@GetMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(
-				@RequestParam(value = "remember_me", required = false) String rememberMeJwt) {
+	@GetMapping(value={"/get"})
+	public Message<?> get(@RequestParam(value = "remember_me", required = false) String rememberMeJwt) {
 		logger.debug("/get.");
 		//Remember Me
 		if(StringUtils.isNotBlank(rememberMeJwt)
@@ -126,7 +119,7 @@ public class LoginEntryPoint {
 					if(authentication != null) {
 			 			AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
 			 			authJwt.setRemeberMe(remeberMeJwt);
-			 			return new Message<AuthJwt>(authJwt).buildResponse();
+			 			return new Message<AuthJwt>(authJwt);
 					}
 				}
 			} catch (ParseException e) {
@@ -154,23 +147,23 @@ public class LoginEntryPoint {
 		//load Social Sign On Providers
 		model.put("socials", socialSignOnProviderService.loadSocials(inst.getId()));
 		
-		return new Message<HashMap<String , Object>>(model).buildResponse();
+		return new Message<HashMap<String , Object>>(model);
 	}
  	
 
  	@RequestMapping(value={"/sendotp/{mobile}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> produceOtp(@PathVariable("mobile") String mobile) {
+    public Message<AuthJwt> produceOtp(@PathVariable("mobile") String mobile) {
         UserInfo userInfo=userInfoService.findByEmailMobile(mobile);
         if(userInfo != null) {
         	smsAuthnService.getByInstId(WebContext.getInst().getId()).produce(userInfo);
-        	return new Message<AuthJwt>(Message.SUCCESS).buildResponse();
+        	return new Message<AuthJwt>(Message.SUCCESS);
         }
         
-        return new Message<AuthJwt>(Message.FAIL).buildResponse();
+        return new Message<AuthJwt>(Message.FAIL);
     }
 
-	@RequestMapping(value={"/signin/bindusersocials"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> bindusersocials(@RequestBody LoginCredential credential) {
+	@PostMapping(value={"/signin/bindusersocials"})
+	public Message<AuthJwt> bindusersocials(@RequestBody LoginCredential credential) {
 		//短信验证码
 		String code = credential.getCode();
 		//映射社交服务的账号
@@ -203,10 +196,10 @@ public class LoginEntryPoint {
 
 			Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
 
-			return new Message<AuthJwt>(authTokenService.genAuthJwt(authentication)).buildResponse();
+			return new Message<AuthJwt>(authTokenService.genAuthJwt(authentication));
 
 		}
-		return new Message<AuthJwt>(Message.FAIL).buildResponse();
+		return new Message<AuthJwt>(Message.FAIL);
 	}
 
  	
@@ -217,9 +210,8 @@ public class LoginEntryPoint {
  	 */
 	@Operation(summary = "登录接口", description = "登录接口",method="POST")
  	@PostMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> signin( HttpServletRequest request, HttpServletResponse response,
-					@RequestBody LoginCredential credential) {
- 		Message<AuthJwt> authJwtMessage = new Message<AuthJwt>(Message.FAIL);
+	public Message<AuthJwt> signin( HttpServletRequest request, HttpServletResponse response,@RequestBody LoginCredential credential) {
+ 		Message<AuthJwt> authJwtMessage = new Message<>(Message.FAIL);
  		if(authTokenService.validateJwtToken(credential.getState())){
  			String authType =  credential.getAuthType();
  			 logger.debug("Login AuthN Type  {}" , authType);
@@ -236,7 +228,7 @@ public class LoginEntryPoint {
 		 				authJwt.setPasswordSetType(
 		 					(Integer)WebContext.getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE));
 		 			}
-		 			authJwtMessage = new Message<AuthJwt>(authJwt);
+		 			authJwtMessage = new Message<>(authJwt);
 		 			
 		 		}else {//fail
 	 				String errorMsg = WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE) == null ? 
@@ -248,7 +240,7 @@ public class LoginEntryPoint {
  	        	logger.error("Login AuthN type must eq normal , tfa or mobile . ");
  	        }
  		}
- 		return authJwtMessage.buildResponse();
+ 		return authJwtMessage;
  	}
  	
  	/**
@@ -256,15 +248,15 @@ public class LoginEntryPoint {
  	 * @param loginCredential
  	 * @return
  	 */
- 	@RequestMapping(value={"/congress"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> congress( @RequestBody LoginCredential credential) {
+ 	@PostMapping(value={"/congress"})
+	public Message<AuthJwt> congress( @RequestBody LoginCredential credential) {
  		if(StringUtils.isNotBlank(credential.getCongress())){
  			AuthJwt authJwt = authTokenService.consumeCongress(credential.getCongress());
  			if(authJwt != null) {
- 				return new Message<AuthJwt>(authJwt).buildResponse();
+ 				return new Message<>(authJwt);
  			}
  		}
- 		return new Message<AuthJwt>(Message.FAIL).buildResponse();
+ 		return new Message<>(Message.FAIL);
  	}
 
 }

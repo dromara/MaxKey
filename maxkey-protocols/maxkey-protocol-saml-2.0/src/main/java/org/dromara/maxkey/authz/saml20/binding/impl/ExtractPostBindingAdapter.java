@@ -42,7 +42,7 @@ import org.springframework.beans.factory.InitializingBean;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class ExtractPostBindingAdapter implements ExtractBindingAdapter, InitializingBean{
-	private final static Logger _logger = LoggerFactory.getLogger(ExtractPostBindingAdapter.class);
+	private static final  Logger _logger = LoggerFactory.getLogger(ExtractPostBindingAdapter.class);
 	
 	static final String SAML_REQUEST_POST_PARAM_NAME = "SAMLRequest";
 	static final String SAML_RESPONSE_POST_PARAM_NAME = "SAMLResponse";

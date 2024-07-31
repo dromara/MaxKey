@@ -44,7 +44,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class CasLogoutEndpoint  extends CasBaseAuthorizeEndpoint{
 
-	final static Logger _logger = LoggerFactory.getLogger(CasLogoutEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(CasLogoutEndpoint.class);
 
 	/**
 	 * for cas logout then redirect to logout

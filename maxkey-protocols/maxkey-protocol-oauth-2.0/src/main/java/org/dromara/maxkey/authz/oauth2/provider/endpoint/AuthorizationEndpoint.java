@@ -61,7 +61,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -96,7 +98,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class AuthorizationEndpoint extends AbstractEndpoint {
-	final static Logger _logger = LoggerFactory.getLogger(AuthorizationEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(AuthorizationEndpoint.class);
 	
 	private static final String OAUTH_V20_AUTHORIZATION_URL = "" + OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE + "?client_id=%s&response_type=code&redirect_uri=%s&approval_prompt=auto";
 	
@@ -118,13 +120,13 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	}
 
 	@Operation(summary = "OAuth 2.0 认证接口", description = "传递参数应用ID，自动完成跳转认证拼接",method="GET")
-    @RequestMapping(value = {OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{id}"},method = RequestMethod.GET)
+    @GetMapping(value = {OAuth2Constants.ENDPOINT.ENDPOINT_BASE + "/{id}"})
     public ModelAndView authorize(
             HttpServletRequest request,
             HttpServletResponse response,
             @PathVariable("id") String id){
         ClientDetails  clientDetails =getClientDetailsService().loadClientByClientId(id,true);
-        _logger.debug(""+clientDetails);
+        _logger.debug("clientDetails {}",clientDetails);
         String authorizationUrl = "";
         try {
             authorizationUrl = String.format(OAUTH_V20_AUTHORIZATION_URL, 
@@ -140,11 +142,10 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
     }
 	   
 	@Operation(summary = "OAuth 2.0 认证接口", description = "传递参数client_id,response_type,redirect_uri等",method="GET")
-	@RequestMapping(value = {
+	@GetMapping(value = {
 								OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE,
 								OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_AUTHORIZE
-							}, 
-					method = RequestMethod.GET)
+							})
 	public ModelAndView authorize(
 	            Map<String, Object> model, 
 	            @RequestParam Map<String, String> parameters,
@@ -238,10 +239,9 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	}
 
 	//approval must post
-	@RequestMapping(value  = {OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE+"/approval"}, 
-					params = OAuth2Constants.PARAMETER.USER_OAUTH_APPROVAL,
-					method = RequestMethod.POST)
-	public ResponseEntity<?> authorizeApproveOrDeny(
+	@PostMapping(value  = {OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE+"/approval"}, 
+					params = OAuth2Constants.PARAMETER.USER_OAUTH_APPROVAL)
+	public Message< Object> authorizeApproveOrDeny(
 	                @RequestParam Map<String, String> approvalParameters,
 	                @CurrentUser UserInfo currentUser,
 	                SessionStatus sessionStatus) {
@@ -281,16 +281,16 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 					            new UserDeniedAuthorizationException("User denied access"), 
 					            responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)
 					        )
-						).buildResponse();
+						);
 			}
 
 			if (responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)) {
 				return new Message< Object>((Object)
-						getImplicitGrantResponse(authorizationRequest)).buildResponse();
+						getImplicitGrantResponse(authorizationRequest));
 			}
 
 			return new Message< Object>((Object)
-					getAuthorizationCodeResponse(authorizationRequest, (Authentication) principal)).buildResponse();
+					getAuthorizationCodeResponse(authorizationRequest, (Authentication) principal));
 		}
 		finally {
 			sessionStatus.setComplete();
@@ -341,7 +341,7 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 					authorizationRequest,
 					generateCode(authorizationRequest, authUser)
 			);
-			_logger.debug("successfulRedirect " + successfulRedirect);
+			_logger.debug("successfulRedirect {}" , successfulRedirect);
 			return successfulRedirect;
 		}
 		catch (OAuth2Exception e) {

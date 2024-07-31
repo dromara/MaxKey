@@ -64,7 +64,7 @@ public class OneTimePasswordController {
 
     @RequestMapping(value = {"/timebased"})
     @ResponseBody
-    public ResponseEntity<?> timebased(
+    public Message<?> timebased(
     			@RequestParam(name="generate") String generate,
     			@CurrentUser UserInfo currentUser) {
         HashMap<String,Object >timebased =new HashMap<>();
@@ -88,7 +88,7 @@ public class OneTimePasswordController {
         timebased.put("sharedSecret", sharedSecret);
         timebased.put("hexSharedSecret", hexSharedSecret);
         timebased.put("rqCode", rqCode);
-        return new Message<HashMap<String,Object >>(timebased).buildResponse();
+        return new Message<HashMap<String,Object >>(timebased);
     }
 
     public void generate(String generate,@CurrentUser UserInfo currentUser) {
@@ -106,15 +106,15 @@ public class OneTimePasswordController {
     }
 
     @RequestMapping("/verify")
-    public ResponseEntity<?> verify(@RequestParam("otp") String otp, @CurrentUser UserInfo currentUser) {
+    public Message<?> verify(@RequestParam("otp") String otp, @CurrentUser UserInfo currentUser) {
         // 从当前用户信息中获取共享密钥
         String sharedSecret = PasswordReciprocal.getInstance().decoder(currentUser.getSharedSecret());
         // 计算当前时间对应的动态密码
         boolean validate = timeBasedOtpAuthn.validate(currentUser, otp);
         if (validate) {
-            return new Message<>(0,"One-Time Password verification succeeded").buildResponse();
+            return new Message<>(0,"One-Time Password verification succeeded");
         } else {
-            return new Message<>(2,"One-Time Password verification failed").buildResponse();
+            return new Message<>(2,"One-Time Password verification failed");
         }
     }
     

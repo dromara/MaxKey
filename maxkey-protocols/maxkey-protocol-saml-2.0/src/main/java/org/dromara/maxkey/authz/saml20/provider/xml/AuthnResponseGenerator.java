@@ -44,7 +44,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AuthnResponseGenerator {
-	private final static Logger logger = LoggerFactory.getLogger(AuthnResponseGenerator.class);
+	private static final  Logger logger = LoggerFactory.getLogger(AuthnResponseGenerator.class);
 	private  String issuerName;
 	private  IDService idService;
 	private  TimeService timeService;

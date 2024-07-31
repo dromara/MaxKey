@@ -31,15 +31,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping(value={"/config/connectors"})
 public class ConnectorsController {
 	static final  Logger logger = LoggerFactory.getLogger(ConnectorsController.class);
@@ -49,58 +48,58 @@ public class ConnectorsController {
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> fetch(Connectors connector,@CurrentUser UserInfo currentUser) {
+	public Message<?> fetch(Connectors connector,@CurrentUser UserInfo currentUser) {
 		logger.debug("fetch {}" , connector);
 		connector.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Connectors>>(
-				connectorsService.fetchPageResults(connector)).buildResponse();
+				connectorsService.fetchPageResults(connector));
 	}
 	
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@PathVariable("id") String id) {
+	public Message<?> get(@PathVariable("id") String id) {
 		Connectors connector = connectorsService.get(id);
 		if(StringUtils.isNotBlank(connector.getCredentials())) {
 			connector.setCredentials(PasswordReciprocal.getInstance().decoder(connector.getCredentials()));
 		}
-		return new Message<Connectors>(connector).buildResponse();
+		return new Message<Connectors>(connector);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> insert(@RequestBody  Connectors connector,@CurrentUser UserInfo currentUser) {
+	public Message<?> insert(@RequestBody  Connectors connector,@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  : {}" , connector);
 		connector.setInstId(currentUser.getInstId());
 		if(StringUtils.isNotBlank(connector.getCredentials())) {
 			connector.setCredentials(PasswordReciprocal.getInstance().encode(connector.getCredentials()));
 		}
 		if (connectorsService.insert(connector)) {
-			return new Message<Connectors>(Message.SUCCESS).buildResponse();
+			return new Message<Connectors>(Message.SUCCESS);
 		} else {
-			return new Message<Connectors>(Message.FAIL).buildResponse();
+			return new Message<Connectors>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(@RequestBody  Connectors connector,@CurrentUser UserInfo currentUser) {
+	public Message<?> update(@RequestBody  Connectors connector,@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  : {}" , connector);
 		connector.setInstId(currentUser.getInstId());
 		connector.setCredentials(PasswordReciprocal.getInstance().encode(connector.getCredentials()));
 		if (connectorsService.update(connector)) {
-		    return new Message<Connectors>(Message.SUCCESS).buildResponse();
+		    return new Message<Connectors>(Message.SUCCESS);
 		} else {
-			return new Message<Connectors>(Message.FAIL).buildResponse();
+			return new Message<Connectors>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (connectorsService.deleteBatch(ids)) {
-			 return new Message<Connectors>(Message.SUCCESS).buildResponse();
+			 return new Message<Connectors>(Message.SUCCESS);
 		} else {
-			return new Message<Connectors>(Message.FAIL).buildResponse();
+			return new Message<Connectors>(Message.FAIL);
 		}
 	}
 

@@ -86,7 +86,7 @@ import jakarta.servlet.http.HttpServletResponse;
 							OAuth2Constants.ENDPOINT.ENDPOINT_TENCENT_IOA_TOKEN+"/*"})
 public class TokenEndpointAuthenticationFilter implements Filter {
 
-	final static Logger _logger = LoggerFactory.getLogger(TokenEndpointAuthenticationFilter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(TokenEndpointAuthenticationFilter.class);
 
 	private AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
 	boolean allowOnlyPost;

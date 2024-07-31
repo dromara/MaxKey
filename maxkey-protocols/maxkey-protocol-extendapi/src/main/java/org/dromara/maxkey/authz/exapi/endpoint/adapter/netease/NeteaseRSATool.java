@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 
 public class NeteaseRSATool {
 
-	final static Logger _logger = LoggerFactory.getLogger(NeteaseRSATool.class);
+	static final  Logger _logger = LoggerFactory.getLogger(NeteaseRSATool.class);
 			
 	private static final char[] bcdLookup = { '0', '1', '2', '3', '4', '5',
 			'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };

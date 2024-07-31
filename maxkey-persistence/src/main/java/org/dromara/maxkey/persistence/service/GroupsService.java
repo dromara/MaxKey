@@ -45,7 +45,7 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
      */
     private static final long serialVersionUID = -4156671926199393550L;
     
-    final static Logger _logger = LoggerFactory.getLogger(GroupsService.class);
+    static final  Logger _logger = LoggerFactory.getLogger(GroupsService.class);
     @JsonIgnore
     @Autowired
     GroupMemberService groupMemberService;

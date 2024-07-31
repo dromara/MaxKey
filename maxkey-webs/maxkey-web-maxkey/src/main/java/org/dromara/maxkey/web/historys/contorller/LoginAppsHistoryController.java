@@ -59,7 +59,7 @@ public class LoginAppsHistoryController {
 	 */
 	@RequestMapping(value={"/loginAppsHistory/fetch"})
 	@ResponseBody
-	public ResponseEntity<?> fetch(
+	public Message<?> fetch(
 				@ModelAttribute("historyLoginApp") HistoryLoginApps historyLoginApp,
 				@CurrentUser UserInfo currentUser){
 		logger.debug("historys/loginAppsHistory/fetch/  {}",historyLoginApp);
@@ -68,7 +68,7 @@ public class LoginAppsHistoryController {
 		historyLoginApp.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<HistoryLoginApps>>(
 					historyLoginAppsService.fetchPageResults(historyLoginApp)
-				).buildResponse();
+				);
 	}
 
 	@InitBinder

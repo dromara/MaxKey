@@ -44,7 +44,7 @@ import com.nimbusds.jwt.PlainJWT;
 import com.nimbusds.jwt.SignedJWT;
 
 public class JwtAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(JwtAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(JwtAdapter.class);
 
 	AppsJwtDetails jwtDetails;
 	

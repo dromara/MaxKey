@@ -55,7 +55,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
-	final static Logger _logger = LoggerFactory.getLogger(TokenBasedAuthorizeEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(TokenBasedAuthorizeEndpoint.class);
 	@Autowired
 	AppsTokenBasedDetailsService tokenBasedDetailsService;
 

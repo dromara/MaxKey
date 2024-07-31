@@ -37,17 +37,15 @@ import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.cache.MomentaryService;
 import org.dromara.maxkey.persistence.service.AppsService;
-import org.dromara.maxkey.util.StrUtils;
-import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -103,7 +101,7 @@ public class OAuth20AccessConfirmationEndpoint {
 	        model.put("auth_request", clientAuth);
 	        model.put("client", client);
 	        model.put("oauth_version", "oauth 2.0");
-	        Map<String, String> scopes = new LinkedHashMap<String, String>();
+	        Map<String, String> scopes = new LinkedHashMap<>();
 	        for (String scope : clientAuth.getScope()) {
 	            scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + scope, "false");
 	        }
@@ -127,7 +125,7 @@ public class OAuth20AccessConfirmationEndpoint {
         ModelAndView modelAndView = new ModelAndView("authorize/oauth_access_confirmation");
         _logger.trace("Confirmation details ");
         for (Object key : model.keySet()) {
-            _logger.trace("key " + key +"=" + model.get(key));
+            _logger.trace("key {} = {}" , key, model.get(key));
         }
         
         model.put("authorizeApproveUri", applicationConfig.getFrontendUri()+"/#/authz/oauth2approve");
@@ -137,11 +135,12 @@ public class OAuth20AccessConfirmationEndpoint {
     }
     
     @RequestMapping(OAuth2Constants.ENDPOINT.ENDPOINT_APPROVAL_CONFIRM+"/get/{oauth_approval}")
-    public ResponseEntity<?> getAccess(
-    			@PathVariable("oauth_approval") String oauth_approval,
+    @ResponseBody
+    public Message<Map<String, Object>> getAccess(
+    			@PathVariable("oauth_approval") String oauthApproval,
     			@CurrentUser UserInfo currentUser) {
-    	Map<String, Object> model = new HashMap<String, Object>();
-    	if(authTokenService.validateJwtToken(oauth_approval)) {
+    	Map<String, Object> model = new HashMap<>();
+    	if(authTokenService.validateJwtToken(oauthApproval)) {
 	    	try {
 		        AuthorizationRequest clientAuth = 
 		        		(AuthorizationRequest) momentaryService.get(currentUser.getSessionId(), "authorizationRequest");
@@ -156,7 +155,7 @@ public class OAuth20AccessConfirmationEndpoint {
 		        model.put("appName", app.getAppName());
 		        model.put("iconBase64", app.getIconBase64());
 		        model.put("oauth_version", "oauth 2.0");
-		        Map<String, String> scopes = new LinkedHashMap<String, String>();
+		        Map<String, String> scopes = new LinkedHashMap<>();
 		        for (String scope : clientAuth.getScope()) {
 		            scopes.put(OAuth2Constants.PARAMETER.SCOPE_PREFIX + scope, "false");
 		        }
@@ -179,10 +178,10 @@ public class OAuth20AccessConfirmationEndpoint {
 	    	
 	        _logger.trace("Confirmation details ");
 	        for (Object key : model.keySet()) {
-	            _logger.trace("key " + key +"=" + model.get(key));
+	            _logger.trace("key {} = {}" ,key,model.get(key));
 	        }
     	}
-        return new Message<Map<String, Object>>(model).buildResponse();
+        return new Message<>(model);
     }
 
     /**

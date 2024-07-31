@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 public abstract class AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(AbstractAuthorizeAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(AbstractAuthorizeAdapter.class);
 	
 	protected Apps app;
 	

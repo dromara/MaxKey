@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 public class TokenBasedSimpleAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(TokenBasedSimpleAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(TokenBasedSimpleAdapter.class);
 	String token = "";
 	
 	@Override

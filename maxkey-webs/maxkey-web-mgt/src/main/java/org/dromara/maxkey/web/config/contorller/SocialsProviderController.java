@@ -30,17 +30,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequestMapping(value={"/config/socialsprovider"})
 public class SocialsProviderController {
 	static final  Logger logger = LoggerFactory.getLogger(SocialsProviderController.class);
@@ -50,67 +49,67 @@ public class SocialsProviderController {
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> fetch(@ModelAttribute SocialsProvider socialsProvider,@CurrentUser UserInfo currentUser) {
+	public Message<?> fetch(@ModelAttribute SocialsProvider socialsProvider,@CurrentUser UserInfo currentUser) {
 		logger.debug("fetch {}" ,socialsProvider);
 		socialsProvider.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<SocialsProvider>>(
-				socialsProviderService.fetchPageResults(socialsProvider)).buildResponse();
+				socialsProviderService.fetchPageResults(socialsProvider));
 	}
 
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> query(@ModelAttribute SocialsProvider socialsProvider,@CurrentUser UserInfo currentUser) {
+	public Message<?> query(@ModelAttribute SocialsProvider socialsProvider,@CurrentUser UserInfo currentUser) {
 		logger.debug("-query  : {}" , socialsProvider);
 		socialsProvider.setInstId(currentUser.getInstId());
 		if (socialsProviderService.query(socialsProvider)!=null) {
-			 return new Message<SocialsProvider>(Message.SUCCESS).buildResponse();
+			 return new Message<SocialsProvider>(Message.SUCCESS);
 		} else {
-			 return new Message<SocialsProvider>(Message.SUCCESS).buildResponse();
+			 return new Message<SocialsProvider>(Message.SUCCESS);
 		}
 	}
 	
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@PathVariable("id") String id) {
+	public Message<?> get(@PathVariable("id") String id) {
 		SocialsProvider socialsProvider=socialsProviderService.get(id);
 		socialsProvider.setClientSecret(PasswordReciprocal.getInstance().decoder(socialsProvider.getClientSecret()));
-		return new Message<SocialsProvider>(socialsProvider).buildResponse();
+		return new Message<SocialsProvider>(socialsProvider);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> insert(@RequestBody  SocialsProvider socialsProvider,@CurrentUser UserInfo currentUser) {
+	public Message<?> insert(@RequestBody  SocialsProvider socialsProvider,@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  : {}" , socialsProvider);
 		socialsProvider.setInstId(currentUser.getInstId());
 		socialsProvider.setClientSecret(PasswordReciprocal.getInstance().encode(socialsProvider.getClientSecret()));
 		if (socialsProviderService.insert(socialsProvider)) {
-			return new Message<SocialsProvider>(Message.SUCCESS).buildResponse();
+			return new Message<SocialsProvider>(Message.SUCCESS);
 		} else {
-			return new Message<SocialsProvider>(Message.FAIL).buildResponse();
+			return new Message<SocialsProvider>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(@RequestBody  SocialsProvider socialsProvider,@CurrentUser UserInfo currentUser) {
+	public Message<?> update(@RequestBody  SocialsProvider socialsProvider,@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  : {}" , socialsProvider);
 		socialsProvider.setInstId(currentUser.getInstId());
 		socialsProvider.setClientSecret(PasswordReciprocal.getInstance().encode(socialsProvider.getClientSecret()));
 		if (socialsProviderService.update(socialsProvider)) {
-		    return new Message<SocialsProvider>(Message.SUCCESS).buildResponse();
+		    return new Message<SocialsProvider>(Message.SUCCESS);
 		} else {
-			return new Message<SocialsProvider>(Message.FAIL).buildResponse();
+			return new Message<SocialsProvider>(Message.FAIL);
 		}
 	}
 	
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (socialsProviderService.deleteBatch(ids)) {
-			 return new Message<SocialsProvider>(Message.SUCCESS).buildResponse();
+			 return new Message<SocialsProvider>(Message.SUCCESS);
 		} else {
-			return new Message<SocialsProvider>(Message.FAIL).buildResponse();
+			return new Message<SocialsProvider>(Message.FAIL);
 		}
 	}
 

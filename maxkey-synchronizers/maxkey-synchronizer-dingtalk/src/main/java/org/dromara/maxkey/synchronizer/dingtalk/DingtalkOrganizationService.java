@@ -39,7 +39,7 @@ import com.taobao.api.ApiException;
 
 @Service
 public class DingtalkOrganizationService  extends AbstractSynchronizerService implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(DingtalkOrganizationService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(DingtalkOrganizationService.class);
 	
 	static Long ROOT_DEPT_ID = 1L;
 	

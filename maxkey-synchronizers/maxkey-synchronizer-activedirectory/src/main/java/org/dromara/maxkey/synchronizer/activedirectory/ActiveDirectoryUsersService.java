@@ -42,7 +42,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ActiveDirectoryUsersService extends AbstractSynchronizerService    implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(ActiveDirectoryUsersService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ActiveDirectoryUsersService.class);
 
 	ActiveDirectoryUtils ldapUtils;
 	

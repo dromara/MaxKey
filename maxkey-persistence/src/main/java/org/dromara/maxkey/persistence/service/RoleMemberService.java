@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class RoleMemberService  extends JpaService<RoleMember>{
-	final static Logger _logger = LoggerFactory.getLogger(RoleMemberService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(RoleMemberService.class);
 	
 	public RoleMemberService() {
 		super(RoleMemberMapper.class);

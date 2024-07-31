@@ -30,33 +30,33 @@ import org.joda.time.chrono.ISOChronology;
 
 
 public class DateUtils {
-	public final static String FORMAT_DATE_DEFAULT = "yyyy-MM-dd";
+	public static final  String FORMAT_DATE_DEFAULT = "yyyy-MM-dd";
 
-	public final static String FORMAT_DATE_YYYYMMDD = "yyyyMMdd";
+	public static final  String FORMAT_DATE_YYYYMMDD = "yyyyMMdd";
 
-	public final static String FORMAT_DATE_YYYY_MM_DD = "yyyy-MM-dd";
+	public static final  String FORMAT_DATE_YYYY_MM_DD = "yyyy-MM-dd";
 	
-	public final static String FORMAT_DATE_PATTERN_1="yyyy/MM/dd";
-	public final static String FORMAT_DATE_PATTERN_2="yyyy/M/dd";
-	public final static String FORMAT_DATE_PATTERN_3="yyyy/MM/d";
-	public final static String FORMAT_DATE_PATTERN_4="yyyy/M/d";
-	public final static String FORMAT_DATE_YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+	public static final  String FORMAT_DATE_PATTERN_1="yyyy/MM/dd";
+	public static final  String FORMAT_DATE_PATTERN_2="yyyy/M/dd";
+	public static final  String FORMAT_DATE_PATTERN_3="yyyy/MM/d";
+	public static final  String FORMAT_DATE_PATTERN_4="yyyy/M/d";
+	public static final  String FORMAT_DATE_YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 	
-	public final static String FORMAT_DATE_ISO_TIMESTAMP="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+	public static final  String FORMAT_DATE_ISO_TIMESTAMP="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
-	public final static String FORMAT_DATE_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+	public static final  String FORMAT_DATE_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
-	public final static String FORMAT_DATE_YYYY_MM_DD_HHMM = "yyyy-MM-dd HHmm";
+	public static final  String FORMAT_DATE_YYYY_MM_DD_HHMM = "yyyy-MM-dd HHmm";
 
-	public final static String FORMAT_DATE_YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
+	public static final  String FORMAT_DATE_YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
 
-	public final static String FORMAT_DATE_HH_MM = "HH:mm";
+	public static final  String FORMAT_DATE_HH_MM = "HH:mm";
 
-	public final static String FORMAT_DATE_HH_MM_SS = "HH:mm:ss";
+	public static final  String FORMAT_DATE_HH_MM_SS = "HH:mm:ss";
 
-	public final static String FORMAT_DATE_HHMM = "HHmm";
+	public static final  String FORMAT_DATE_HHMM = "HHmm";
 
-	public final static String FORMAT_DATE_HHMMSS = "HHmmss";
+	public static final  String FORMAT_DATE_HHMMSS = "HHmmss";
 
 	public static final String FORMAT_WORK_TIME = "yyyy-MM-dd HHmmss";
 	/**
@@ -74,7 +74,7 @@ public class DateUtils {
 	 *         stringValue2.
 	 * @since 1.2
 	 */
-	public final static int compareDate(String stringValue1, String stringValue2)
+	public static final  int compareDate(String stringValue1, String stringValue2)
 			throws ParseException {
 		Date date1 = tryParse(stringValue1);
 		if (date1 == null) {
@@ -95,11 +95,11 @@ public class DateUtils {
 	 * 
 	 * @see #FORMAT_DATE_DEFAULT
 	 */
-	public final static String getCurrentDateAsString() {
+	public static final  String getCurrentDateAsString() {
 		return getCurrentDateAsString(FORMAT_DATE_DEFAULT);
 	}
 	
-	public final static String getCurrentDateTimeAsString() {
+	public static final  String getCurrentDateTimeAsString() {
 		return getCurrentDateAsString(FORMAT_DATE_YYYY_MM_DD_HH_MM_SS);
 	}
 
@@ -112,12 +112,12 @@ public class DateUtils {
 	 * @return current system date.
 	 * 
 	 */
-	public final static String getCurrentDateAsString(String formatPattern) {
+	public static final  String getCurrentDateAsString(String formatPattern) {
 		Date date = new Date();
 		return format(date, formatPattern);
 	}
 	
-	public final static String getFormtPattern1ToPattern2(String stringValue,String formatPattern1,String formatPattern2){
+	public static final  String getFormtPattern1ToPattern2(String stringValue,String formatPattern1,String formatPattern2){
 		Date date = parse(stringValue, formatPattern1);
 		return format(date, formatPattern2);
 	}
@@ -127,7 +127,7 @@ public class DateUtils {
 	 * 
 	 * @return current system date.
 	 */
-	public final static Date getCurrentDate() {
+	public static final  Date getCurrentDate() {
 		return new Date();
 	}
 
@@ -135,7 +135,7 @@ public class DateUtils {
 	 * 0������, 1����һ, 2���ڶ�, 3������, 4������, 5������,6������
 	 * @return
 	 */
-	public final static String getTodayOfWeek(){
+	public static final  String getTodayOfWeek(){
 		Calendar calendar = Calendar.getInstance();   
 		Date date = new Date();   
 		calendar.setTime(date);   
@@ -149,7 +149,7 @@ public class DateUtils {
 	 * @param endTime
 	 * @return
 	 */
-	public final static boolean compareTime(String startTime,String endTime) throws ParseException{
+	public static final  boolean compareTime(String startTime,String endTime) throws ParseException{
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
 			Date start = sdf.parse(startTime);
 			Date end = sdf.parse(endTime);
@@ -180,7 +180,7 @@ public class DateUtils {
 	 * 
 	 * @see #FORMAT_DATE_DEFAULT
 	 */
-	public final static String format(Date date) {
+	public static final  String format(Date date) {
 		if (date == null) {
 			return "";
 		}
@@ -196,7 +196,7 @@ public class DateUtils {
 	 * 
 	 * @see #FORMAT_DATE_DEFAULT
 	 */
-	public final static String formatDateTime(Date date) {
+	public static final  String formatDateTime(Date date) {
 		if (date == null) {
 			return "";
 		}
@@ -212,7 +212,7 @@ public class DateUtils {
 	 * 
 	 * @see #FORMAT_DATE_DEFAULT
 	 */
-	public final static String formatTimestamp(Date date) {
+	public static final  String formatTimestamp(Date date) {
 		if (date == null) {
 			return "";
 		}
@@ -228,7 +228,7 @@ public class DateUtils {
 	 * 
 	 * @see #FORMAT_DATE_DEFAULT
 	 */
-	public final static Date parseTimestamp(String date) {
+	public static final  Date parseTimestamp(String date) {
 		if (date == null) {
 			return null;
 		}
@@ -250,7 +250,7 @@ public class DateUtils {
 	 * @see #FORMAT_DATE_YYYY_MM_DD_HH_MM_SS
 	 * @see #FORMAT_DATE_YYYY_MM_DD_HHMMSS
 	 */
-	public final static String format(Date date, String formatPattern) {
+	public static final  String format(Date date, String formatPattern) {
 		if (date == null) {
 			return "";
 		}
@@ -265,7 +265,7 @@ public class DateUtils {
 	 * @return Date represents stringValue.
 	 * @see #FORMAT_DATE_DEFAULT
 	 */
-	public final static Date parse(String stringValue) {
+	public static final  Date parse(String stringValue) {
 		return parse(stringValue, FORMAT_DATE_DEFAULT);
 	}
 
@@ -279,7 +279,7 @@ public class DateUtils {
 	 * @return Date represents stringValue, null while parse exception occurred.
 	 * @see #FORMAT_DATE_DEFAULT
 	 */
-	public final static Date parse(String stringValue, String formatPattern) {
+	public static final  Date parse(String stringValue, String formatPattern) {
 		SimpleDateFormat format = new SimpleDateFormat(formatPattern);
 		try {
 			return format.parse(stringValue);
@@ -297,7 +297,7 @@ public class DateUtils {
 	 *            string value.
 	 * @return Date represents stringValue, null while parse exception occurred.
 	 */
-	public final static Date tryParse(String stringValue) {
+	public static final  Date tryParse(String stringValue) {
 		Date date = parse(stringValue, FORMAT_DATE_YYYY_MM_DD);
 		if (date != null) {
 			return date;

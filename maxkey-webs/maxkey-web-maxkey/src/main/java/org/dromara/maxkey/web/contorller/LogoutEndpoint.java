@@ -38,9 +38,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -65,8 +64,8 @@ public class LogoutEndpoint {
 	 * @return ResponseEntity
 	 */
 	@Operation(summary = "前端注销接口", description = "前端注销接口",method="GET")
-	@RequestMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
- 	public  ResponseEntity<?> logout(@CurrentUser UserInfo currentUser){
+	@GetMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+ 	public  Message<String> logout(@CurrentUser UserInfo currentUser){
 		//if logined in have onlineTicket ,need remove or logout back
 		String sessionId = currentUser.getSessionId();
  		Session session = sessionManager.get(sessionId);
@@ -94,15 +93,13 @@ public class LogoutEndpoint {
 	        		currentUser.getId(),
 	        		currentUser.getUsername());
  		}
- 		return new Message<String>().buildResponse();
+ 		return new Message<String>();
  	}
 	
 	@Operation(summary = "单点注销接口", description = "redirect_uri跳转地址",method="GET")
-	@RequestMapping(value={"/force/logout"})
- 	public ModelAndView forceLogout(
- 				HttpServletRequest request,
- 				@RequestParam(value = "redirect_uri",required = false) String redirect_uri
- 				){
+	@GetMapping({"/force/logout"})
+ 	public ModelAndView forceLogout(HttpServletRequest request,
+ 				@RequestParam(value = "redirect_uri",required = false) String redirect_uri){
 		//invalidate http session
 		logger.debug("/force/logout http Session id {}",request.getSession().getId());
 		request.getSession().invalidate();

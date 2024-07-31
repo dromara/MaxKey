@@ -35,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,7 +67,7 @@ public class AppListController {
      */
     @RequestMapping(value = { "/appList" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> appList(
+	public Message<List<UserApps>> appList(
             @RequestParam(value = "gridList", required = false) String gridList,
             @CurrentUser UserInfo currentUser) {
         userInfoService.updateGridList(gridList,currentUser);
@@ -80,13 +79,13 @@ public class AppListController {
         	app.transIconBase64();
         }
         //AuthorizationUtils.setAuthentication(null);
-        return new Message<List<UserApps>>(appList).buildResponse();
+        return new Message<List<UserApps>>(appList);
     }
  
     
     @RequestMapping(value = { "/account/get" })
     @ResponseBody
-	public ResponseEntity<?> getAccount(
+	public Message<Accounts> getAccount(
     		@RequestParam("credential") String credential,
     		@RequestParam("appId") String appId,
     		@CurrentUser UserInfo currentUser) {
@@ -104,13 +103,13 @@ public class AppListController {
         	account.setUsername(currentUser.getUsername());
         	account.setDisplayName(currentUser.getDisplayName());
         }
-        return new Message<Accounts>(account).buildResponse();
+        return new Message<>(account);
 
     }
 
     @RequestMapping(value = { "/account/update" })
     @ResponseBody
-	public ResponseEntity<?> updateAccount(
+	public Message<Accounts> updateAccount(
     		@RequestParam("credential") String credential,
     		@ModelAttribute Accounts account,
             @CurrentUser UserInfo currentUser) {
@@ -137,6 +136,6 @@ public class AppListController {
             }
         }
 
-        return new Message<Accounts>().buildResponse();
+        return new Message<>();
     }
 }

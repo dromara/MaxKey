@@ -35,7 +35,7 @@ public class AccountsStrategyService  extends JpaService<AccountsStrategy> imple
      */
     private static final long serialVersionUID = -921086134545225302L;
     
-    final static Logger _logger = LoggerFactory.getLogger(AccountsStrategyService.class);
+    static final  Logger _logger = LoggerFactory.getLogger(AccountsStrategyService.class);
    /*
     @JsonIgnore
     @Autowired

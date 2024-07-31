@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ConditionsGenerator {
-	private final static Logger logger = LoggerFactory.getLogger(ConditionsGenerator.class);
+	private static final  Logger logger = LoggerFactory.getLogger(ConditionsGenerator.class);
 	
 	public Conditions generateConditions(String audienceUrl,int validInSeconds) {
 		Conditions conditions = new ConditionsBuilder().buildObject();

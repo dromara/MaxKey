@@ -35,7 +35,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "2-8-ExtendApi接口文档模块-元数据")
 @Controller
 public class ExtendApiMetadata {
-	final static Logger _logger = LoggerFactory.getLogger(ExtendApiMetadata.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ExtendApiMetadata.class);
 	
 	@Operation(summary = "netease qiye mail RSA Key", description = "网易企业邮箱RSA Key生成器",method="GET")
 	@RequestMapping(

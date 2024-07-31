@@ -54,7 +54,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class CasAuthorizeEndpoint  extends CasBaseAuthorizeEndpoint{
 
-	final static Logger _logger = LoggerFactory.getLogger(CasAuthorizeEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(CasAuthorizeEndpoint.class);
 	
 	@Operation(summary = "CAS页面跳转service认证接口", description = "传递参数service",method="GET")
 	@GetMapping(CasConstants.ENDPOINT.ENDPOINT_LOGIN)

@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public final class StandardLdapServer implements IAuthenticationServer {
-	private final static Logger _logger = LoggerFactory.getLogger(StandardLdapServer.class);
+	private static final  Logger _logger = LoggerFactory.getLogger(StandardLdapServer.class);
 	
 	LdapUtils ldapUtils;
 	

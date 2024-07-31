@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WorkweixinUsersService extends AbstractSynchronizerService implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(WorkweixinUsersService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(WorkweixinUsersService.class);
 	
 	String access_token;
 	

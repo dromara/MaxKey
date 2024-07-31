@@ -33,7 +33,7 @@ import com.nimbusds.jose.util.Base64URL;
 
 public class HMAC512Service {
 
-	public final static String MXK_AUTH_JWK = "mxk_auth_jwk";
+	public static final  String MXK_AUTH_JWK = "mxk_auth_jwk";
 	
 	JWSSigner signer;
 	

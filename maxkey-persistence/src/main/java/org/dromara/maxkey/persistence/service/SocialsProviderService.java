@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class SocialsProviderService  extends JpaService<SocialsProvider>{
-    final static Logger _logger = LoggerFactory.getLogger(SocialsProviderService.class);
+    static final  Logger _logger = LoggerFactory.getLogger(SocialsProviderService.class);
     
     
 	public SocialsProviderService() {

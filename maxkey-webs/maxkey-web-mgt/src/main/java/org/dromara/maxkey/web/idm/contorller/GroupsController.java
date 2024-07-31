@@ -36,17 +36,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequestMapping(value={"/access/groups"})
 public class GroupsController {
 	static final Logger logger = LoggerFactory.getLogger(GroupsController.class);
@@ -59,37 +58,37 @@ public class GroupsController {
 	
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> fetch(
+	public Message<?> fetch(
 			@ModelAttribute Groups group,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("group {}" , group);
 		group.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Groups>>(
-				service.fetchPageResults(group)).buildResponse();
+				service.fetchPageResults(group));
 	}
 
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> query(@ModelAttribute Groups group,@CurrentUser UserInfo currentUser) {
+	public Message<?> query(@ModelAttribute Groups group,@CurrentUser UserInfo currentUser) {
 		logger.debug("-query  : {}" , group);
 		group.setInstId(currentUser.getInstId());
 		if (service.query(group)!=null) {
-			 return new Message<Groups>(Message.SUCCESS).buildResponse();
+			 return new Message<Groups>(Message.SUCCESS);
 		} else {
-			 return new Message<Groups>(Message.FAIL).buildResponse();
+			 return new Message<Groups>(Message.FAIL);
 		}
 		
 	}
 	
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@PathVariable("id") String id,@CurrentUser UserInfo currentUser) {
+	public Message<?> get(@PathVariable("id") String id,@CurrentUser UserInfo currentUser) {
 		Groups group =service.get(id);
-		return new Message<Groups>(group).buildResponse();
+		return new Message<Groups>(group);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> insert(@RequestBody Groups group,@CurrentUser UserInfo currentUser) {
+	public Message<?> insert(@RequestBody Groups group,@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  : {}" , group);
 		group.setInstId(currentUser.getInstId());
 		group.setId(group.generateId());
@@ -104,15 +103,15 @@ public class GroupsController {
 					ConstsAct.CREATE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-		    return new Message<Groups>(Message.SUCCESS).buildResponse();
+		    return new Message<Groups>(Message.SUCCESS);
 		} else {
-			return new Message<Groups>(Message.FAIL).buildResponse();
+			return new Message<Groups>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(@RequestBody Groups group,@CurrentUser UserInfo currentUser) {
+	public Message<?> update(@RequestBody Groups group,@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  group : {}" , group);
 		if(group.getId().equalsIgnoreCase("ROLE_ALL_USER")) {
 			group.setDefaultAllUser();
@@ -126,15 +125,15 @@ public class GroupsController {
 					ConstsAct.UPDATE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-		    return new Message<Roles>(Message.SUCCESS).buildResponse();
+		    return new Message<Roles>(Message.SUCCESS);
 		} else {
-			return new Message<Roles>(Message.FAIL).buildResponse();
+			return new Message<Roles>(Message.FAIL);
 		}
 	}
 
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete ids : {}" , ids);
 		ids.removeAll(Arrays.asList("ROLE_ALL_USER","ROLE_ADMINISTRATORS","-1"));
 		if (service.deleteBatch(ids)) {
@@ -144,9 +143,9 @@ public class GroupsController {
 					ConstsAct.DELETE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-			 return new Message<Roles>(Message.SUCCESS).buildResponse();
+			 return new Message<Roles>(Message.SUCCESS);
 		} else {
-			return new Message<Roles>(Message.FAIL).buildResponse();
+			return new Message<Roles>(Message.FAIL);
 		}
 	}
 }

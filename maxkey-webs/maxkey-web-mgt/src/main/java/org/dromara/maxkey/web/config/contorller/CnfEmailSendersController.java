@@ -27,14 +27,13 @@ import org.dromara.maxkey.persistence.service.CnfEmailSendersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping(value={"/config/emailsenders"})
 public class CnfEmailSendersController {
 	static final  Logger logger = LoggerFactory.getLogger(CnfEmailSendersController.class);
@@ -43,7 +42,7 @@ public class CnfEmailSendersController {
 	private CnfEmailSendersService emailSendersService;
 
 	@RequestMapping(value={"/get"})
-	public ResponseEntity<?> get(@CurrentUser UserInfo currentUser){
+	public Message<?> get(@CurrentUser UserInfo currentUser){
 		CnfEmailSenders emailSenders = emailSendersService.get(currentUser.getInstId());
 		if(emailSenders != null && StringUtils.isNotBlank(emailSenders.getCredentials())) {
 			emailSenders.setCredentials(PasswordReciprocal.getInstance().decoder(emailSenders.getCredentials()));
@@ -52,27 +51,27 @@ public class CnfEmailSendersController {
 			emailSenders.setProtocol("smtp");
 			emailSenders.setEncoding("utf-8");
 		}
-		return new Message<CnfEmailSenders>(emailSenders).buildResponse();	
+		return new Message<CnfEmailSenders>(emailSenders);	
 	}
 
 	@RequestMapping(value={"/update"})
 	@ResponseBody
-	public ResponseEntity<?> update( @RequestBody  CnfEmailSenders emailSenders,@CurrentUser UserInfo currentUser,BindingResult result) {
+	public Message<?> update( @RequestBody  CnfEmailSenders emailSenders,@CurrentUser UserInfo currentUser,BindingResult result) {
 		logger.debug("update emailSenders : {}" , emailSenders);
 		emailSenders.setInstId(currentUser.getInstId());
 		emailSenders.setCredentials(PasswordReciprocal.getInstance().encode(emailSenders.getCredentials()));
 		if(StringUtils.isBlank(emailSenders.getId())) {
 			emailSenders.setId(emailSenders.getInstId());
 			if(emailSendersService.insert(emailSenders)) {
-				return new Message<CnfEmailSenders>(Message.SUCCESS).buildResponse();
+				return new Message<CnfEmailSenders>(Message.SUCCESS);
 			}else {
-				return new Message<CnfEmailSenders>(Message.ERROR).buildResponse();
+				return new Message<CnfEmailSenders>(Message.ERROR);
 			}
 		}else {
 			if(emailSendersService.update(emailSenders)) {
-				return new Message<CnfEmailSenders>(Message.SUCCESS).buildResponse();
+				return new Message<CnfEmailSenders>(Message.SUCCESS);
 			}else {
-				return new Message<CnfEmailSenders>(Message.ERROR).buildResponse();
+				return new Message<CnfEmailSenders>(Message.ERROR);
 			}
 		}
 		

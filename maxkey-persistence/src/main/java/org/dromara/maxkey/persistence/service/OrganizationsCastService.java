@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class OrganizationsCastService  extends JpaService<OrganizationsCast>{
 
-	final static Logger _logger = LoggerFactory.getLogger(OrganizationsCastService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(OrganizationsCastService.class);
 
     
 	public OrganizationsCastService() {

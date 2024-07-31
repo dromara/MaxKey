@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 public class CasDefaultAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(CasDefaultAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(CasDefaultAdapter.class);
 	
 	static String Charset_UTF8="UTF-8";
 	

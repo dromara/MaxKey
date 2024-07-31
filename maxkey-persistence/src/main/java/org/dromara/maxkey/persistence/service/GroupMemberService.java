@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class GroupMemberService  extends JpaService<GroupMember>{
-	final static Logger _logger = LoggerFactory.getLogger(GroupMemberService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(GroupMemberService.class);
 	
 	public GroupMemberService() {
 		super(GroupMemberMapper.class);

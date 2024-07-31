@@ -43,7 +43,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "2-2-SAML v2.0 API文档模块")
 @Controller
 public class LogoutSamlEndpoint {
-    private final static Logger logger = LoggerFactory.getLogger(LogoutSamlEndpoint.class);
+    private static final  Logger logger = LoggerFactory.getLogger(LogoutSamlEndpoint.class);
     
     @Autowired
     @Qualifier("extractRedirectBindingAdapter")

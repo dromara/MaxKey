@@ -82,7 +82,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class ConsumerEndpoint {
 
-	private final static Logger logger = LoggerFactory.getLogger(ConsumerEndpoint.class);
+	private static final  Logger logger = LoggerFactory.getLogger(ConsumerEndpoint.class);
 
 	private BindingAdapter bindingAdapter;
 	

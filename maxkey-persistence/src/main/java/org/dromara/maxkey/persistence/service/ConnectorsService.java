@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ConnectorsService  extends JpaService<Connectors>{
-    final static Logger _logger = LoggerFactory.getLogger(ConnectorsService.class);
+    static final  Logger _logger = LoggerFactory.getLogger(ConnectorsService.class);
     
 	public ConnectorsService() {
 		super(ConnectorsMapper.class);

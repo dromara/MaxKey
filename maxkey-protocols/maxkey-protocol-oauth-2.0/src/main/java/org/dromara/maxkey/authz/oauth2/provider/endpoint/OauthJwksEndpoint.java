@@ -41,7 +41,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class OauthJwksEndpoint extends AbstractEndpoint {
-	final static Logger _logger = LoggerFactory.getLogger(OauthJwksEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(OauthJwksEndpoint.class);
 
 	@Operation(summary = "OAuth JWk 元数据接口", description = "参数mxk_metadata_APPID",method="GET")
 	@RequestMapping(

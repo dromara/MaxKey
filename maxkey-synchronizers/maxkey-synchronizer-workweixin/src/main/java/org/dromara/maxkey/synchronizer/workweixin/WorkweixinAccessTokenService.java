@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class WorkweixinAccessTokenService {
-	final static Logger _logger = LoggerFactory.getLogger(WorkweixinAccessTokenService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(WorkweixinAccessTokenService.class);
 	
 	String corpid;
 	

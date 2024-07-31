@@ -30,7 +30,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class LdapAuthenticationRealm  extends AbstractAuthenticationRealm{
-	private final static Logger _logger = LoggerFactory.getLogger(LdapAuthenticationRealm.class);
+	private static final  Logger _logger = LoggerFactory.getLogger(LdapAuthenticationRealm.class);
 	
 	@NotNull
     @Size(min=1)

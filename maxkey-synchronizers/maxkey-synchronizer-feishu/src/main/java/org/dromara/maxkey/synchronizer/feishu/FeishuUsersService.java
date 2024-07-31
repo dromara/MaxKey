@@ -36,7 +36,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FeishuUsersService extends AbstractSynchronizerService implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(FeishuUsersService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(FeishuUsersService.class);
 	
 	String access_token;
 	

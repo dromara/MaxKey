@@ -51,7 +51,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class AssertionGenerator {
-	private final static Logger logger = LoggerFactory.getLogger(AssertionGenerator.class);
+	private static final  Logger logger = LoggerFactory.getLogger(AssertionGenerator.class);
 
 	private final IssuerGenerator issuerGenerator;
 	private final SubjectGenerator subjectGenerator;

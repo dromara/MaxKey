@@ -46,22 +46,22 @@ public class SocialSignOnListController {
 	
 	@RequestMapping(value={"/fetch"})
 	@ResponseBody
-	public ResponseEntity<?> fetch(@CurrentUser UserInfo currentUser){
+	public Message<?> fetch(@CurrentUser UserInfo currentUser){
 		
 		List<SocialsAssociate>  listSocialsAssociate= 
 				socialsAssociatesService.queryByUser(currentUser);
 		
-		return new Message<List<SocialsAssociate>>(listSocialsAssociate).buildResponse();
+		return new Message<List<SocialsAssociate>>(listSocialsAssociate);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
+	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (socialsAssociatesService.deleteBatch(ids)) {
-			 return new Message<Apps>(Message.SUCCESS).buildResponse();
+			 return new Message<Apps>(Message.SUCCESS);
 		} else {
-			return new Message<Apps>(Message.FAIL).buildResponse();
+			return new Message<Apps>(Message.FAIL);
 		}
 	}
 	

@@ -54,7 +54,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class PostBindingAdapter implements BindingAdapter, InitializingBean{
-	private final static Logger logger = LoggerFactory.getLogger(PostBindingAdapter.class);
+	private static final  Logger logger = LoggerFactory.getLogger(PostBindingAdapter.class);
 
 	static final String SAML_REQUEST_POST_PARAM_NAME = "SAMLRequest";
 	static final String SAML_RESPONSE_POST_PARAM_NAME = "SAMLResponse";

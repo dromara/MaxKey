@@ -41,7 +41,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LdapOrganizationService extends AbstractSynchronizerService  implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(LdapOrganizationService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(LdapOrganizationService.class);
 
 	LdapUtils ldapUtils;
 	

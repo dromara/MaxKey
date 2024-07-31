@@ -28,7 +28,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 public class InMemoryTicketServices extends RandomServiceTicketServices {
 
-	protected final static  Cache<String, Ticket> casTicketStore = 
+	protected static final   Cache<String, Ticket> casTicketStore = 
 	        Caffeine.newBuilder()
                 .expireAfterWrite(60, TimeUnit.MINUTES)
                 .build();
