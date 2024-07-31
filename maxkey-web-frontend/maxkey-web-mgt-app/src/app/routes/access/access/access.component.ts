@@ -67,33 +67,33 @@ export class AccessComponent implements OnInit {
     indeterminate: boolean;
     checked: boolean;
   } = {
-      params: {
-        displayName: '',
-        username: '',
-        groupId: '',
-        groupName: '',
-        appName: '',
-        appId: '',
-        startDate: '',
-        endDate: '',
-        startDatePicker: addDays(new Date(), -30),
-        endDatePicker: new Date(),
-        pageSize: 10,
-        pageNumber: 1,
-        pageSizeOptions: [10, 20, 50]
-      },
-      results: {
-        records: 0,
-        rows: []
-      },
-      expandForm: false,
-      submitLoading: false,
-      tableLoading: false,
-      tableInitialize: true,
-      tableCheckedId: new Set<String>(),
-      indeterminate: false,
-      checked: false
-    };
+    params: {
+      displayName: '',
+      username: '',
+      groupId: '',
+      groupName: '',
+      appName: '',
+      appId: '',
+      startDate: '',
+      endDate: '',
+      startDatePicker: addDays(new Date(), -30),
+      endDatePicker: new Date(),
+      pageSize: 10,
+      pageNumber: 1,
+      pageSizeOptions: [10, 20, 50]
+    },
+    results: {
+      records: 0,
+      rows: []
+    },
+    expandForm: false,
+    submitLoading: false,
+    tableLoading: false,
+    tableInitialize: true,
+    tableCheckedId: new Set<String>(),
+    indeterminate: false,
+    checked: false
+  };
 
   constructor(
     private modalService: NzModalService,
@@ -106,7 +106,7 @@ export class AccessComponent implements OnInit {
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
     private http: _HttpClient
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.route.snapshot.queryParams['groupId']) {
@@ -128,10 +128,9 @@ export class AccessComponent implements OnInit {
     this.fetch();
   }
 
-  onReset(): void { }
+  onReset(): void {}
 
-  onBatchDelete(e: MouseEvent): void {
-    e.preventDefault();
+  onBatchDelete(): void {
     this.accessService.delete(set2String(this.query.tableCheckedId)).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
@@ -185,8 +184,7 @@ export class AccessComponent implements OnInit {
     });
   }
 
-  onDelete(e: MouseEvent, deleteId: String): void {
-    e.preventDefault();
+  onDelete(deleteId: String): void {
     this.accessService.delete(deleteId).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
@@ -263,23 +261,23 @@ export class AccessComponent implements OnInit {
     indeterminate: boolean;
     checked: boolean;
   } = {
-      params: {
-        groupName: '',
-        pageSize: 10,
-        pageNumber: 1,
-        pageSizeOptions: [10, 20, 50]
-      },
-      results: {
-        records: 0,
-        rows: []
-      },
-      expandForm: false,
-      submitLoading: false,
-      tableLoading: false,
-      tableCheckedId: new Set<String>(),
-      indeterminate: false,
-      checked: false
-    };
+    params: {
+      groupName: '',
+      pageSize: 10,
+      pageNumber: 1,
+      pageSizeOptions: [10, 20, 50]
+    },
+    results: {
+      records: 0,
+      rows: []
+    },
+    expandForm: false,
+    submitLoading: false,
+    tableLoading: false,
+    tableCheckedId: new Set<String>(),
+    indeterminate: false,
+    checked: false
+  };
 
   onGroupSearch(): void {
     this.fetchGroup();

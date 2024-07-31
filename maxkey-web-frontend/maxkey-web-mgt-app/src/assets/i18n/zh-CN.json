@@ -734,6 +734,11 @@
 			"add": "新增",
 			"edit": "编辑",
 			"delete": "删除",
+      "delete.popconfirm":{
+        "title":"请确定要删除吗？",
+        "cancelText":"取消",
+        "okText":"确定"
+      },
 			"test": "测试",
 			"select": "选择",
 			"confirm": "确定",

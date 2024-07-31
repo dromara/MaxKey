@@ -56,9 +56,20 @@
       'mxk.text.add' | i18n
     }}</button>
 
-    <button nz-button type="button" (click)="onBatchDelete($event)" [nzType]="'primary'" nzDanger class="mx-sm">{{
-      'mxk.text.delete' | i18n
-    }}</button>
+    <button
+      nz-button
+      type="button"
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
+      nzPopconfirmPlacement="left"
+      [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
+      [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n"
+      (nzOnConfirm)="onBatchDelete()"
+      [nzType]="'primary'"
+      nzDanger
+      class="mx-sm"
+      >{{ 'mxk.text.delete' | i18n }}</button
+    >
   </div>
   <nz-table
     #dynamicTable

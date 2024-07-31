@@ -722,7 +722,7 @@
 				"success":"Operate Success!",
 				"error":"Operate Error!"
 			}
-			
+
 		},
 		"text": {
 			"action": "Action",
@@ -737,6 +737,11 @@
 			"add": "Add",
 			"edit": "Edit",
 			"delete": "Delete",
+      "delete.popconfirm":{
+        "title":"Are you sure you want to delete it?",
+        "cancelText":"Cancel",
+        "okText":"Confirm"
+      },
 			"test": "Test",
 			"select": "Select",
 			"confirm": "Confirm",

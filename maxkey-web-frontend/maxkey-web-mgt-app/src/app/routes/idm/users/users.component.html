@@ -37,7 +37,19 @@
       <button nz-button type="button" [nzType]="'primary'" (click)="changePassword($event)">
         {{ 'mxk.text.changepassword' | i18n }}
       </button>
-      <button nz-button type="button" (click)="onBatchDelete($event)" [nzType]="'primary'" nzDanger class="mx-sm">
+      <button
+        nz-button
+        type="button"
+        nz-popconfirm
+        nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
+        nzPopconfirmPlacement="left"
+        [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
+        [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n"
+        (nzOnConfirm)="onBatchDelete()"
+        [nzType]="'primary'"
+        nzDanger
+        class="mx-sm"
+      >
         {{ 'mxk.text.delete' | i18n }}
       </button>
     </div>
@@ -169,7 +181,17 @@
                     <li nz-menu-item *ngIf="data.status == 5" (click)="onUpdateStatus($event, data.id, 1)">{{
                       'mxk.text.unlock' | i18n
                     }}</li>
-                    <li nz-menu-item (click)="onDelete($event, data.id)" nzDanger>{{ 'mxk.text.delete' | i18n }}</li>
+                    <li
+                      nz-menu-item
+                      nz-popconfirm
+                      nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
+                      nzPopconfirmPlacement="left"
+                      [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
+                      [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n"
+                      (nzOnConfirm)="onDelete(data.id)"
+                      nzDanger
+                      >{{ 'mxk.text.delete' | i18n }}</li
+                    >
                   </ul>
                 </nz-dropdown-menu>
               </div>

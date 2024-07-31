@@ -53,34 +53,34 @@ export class RoleMembersComponent implements OnInit {
     indeterminate: boolean;
     checked: boolean;
   } = {
-      params: {
-        roleName: '',
-        displayName: '',
-        memberName: '',
-        roleId: '',
-        appName: '',
-        appId: '',
-        selectRoleName: '',
-        startDate: '',
-        endDate: '',
-        startDatePicker: addDays(new Date(), -30),
-        endDatePicker: new Date(),
-        pageSize: 10,
-        pageNumber: 1,
-        pageSizeOptions: [10, 20, 50]
-      },
-      results: {
-        records: 0,
-        rows: []
-      },
-      expandForm: false,
-      submitLoading: false,
-      tableLoading: false,
-      tableInitialize: true,
-      tableCheckedId: new Set<String>(),
-      indeterminate: false,
-      checked: false
-    };
+    params: {
+      roleName: '',
+      displayName: '',
+      memberName: '',
+      roleId: '',
+      appName: '',
+      appId: '',
+      selectRoleName: '',
+      startDate: '',
+      endDate: '',
+      startDatePicker: addDays(new Date(), -30),
+      endDatePicker: new Date(),
+      pageSize: 10,
+      pageNumber: 1,
+      pageSizeOptions: [10, 20, 50]
+    },
+    results: {
+      records: 0,
+      rows: []
+    },
+    expandForm: false,
+    submitLoading: false,
+    tableLoading: false,
+    tableInitialize: true,
+    tableCheckedId: new Set<String>(),
+    indeterminate: false,
+    checked: false
+  };
 
   constructor(
     private modalService: NzModalService,
@@ -92,7 +92,7 @@ export class RoleMembersComponent implements OnInit {
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.route.snapshot.queryParams['username']) {
@@ -134,8 +134,7 @@ export class RoleMembersComponent implements OnInit {
     this.fetch();
   }
 
-  onBatchDelete(e: MouseEvent): void {
-    e.preventDefault();
+  onBatchDelete(): void {
     this.roleMembersService.delete(set2String(this.query.tableCheckedId)).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
@@ -206,8 +205,7 @@ export class RoleMembersComponent implements OnInit {
     });
   }
 
-  onDelete(e: MouseEvent, deleteId: String): void {
-    e.preventDefault();
+  onDelete(deleteId: String): void {
     this.roleMembersService.delete(deleteId).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
@@ -289,29 +287,29 @@ export class RoleMembersComponent implements OnInit {
     indeterminate: boolean;
     checked: boolean;
   } = {
-      params: {
-        id: '',
-        roleName: '',
-        appId: '',
-        startDate: '',
-        endDate: '',
-        startDatePicker: addDays(new Date(), -30),
-        endDatePicker: new Date(),
-        pageSize: 10,
-        pageNumber: 1,
-        pageSizeOptions: [10, 20, 50]
-      },
-      results: {
-        records: 0,
-        rows: []
-      },
-      expandForm: false,
-      submitLoading: false,
-      tableLoading: false,
-      tableCheckedId: new Set<String>(),
-      indeterminate: false,
-      checked: false
-    };
+    params: {
+      id: '',
+      roleName: '',
+      appId: '',
+      startDate: '',
+      endDate: '',
+      startDatePicker: addDays(new Date(), -30),
+      endDatePicker: new Date(),
+      pageSize: 10,
+      pageNumber: 1,
+      pageSizeOptions: [10, 20, 50]
+    },
+    results: {
+      records: 0,
+      rows: []
+    },
+    expandForm: false,
+    submitLoading: false,
+    tableLoading: false,
+    tableCheckedId: new Set<String>(),
+    indeterminate: false,
+    checked: false
+  };
 
   //LEFT TABLE
   onLeftSearch(): void {
