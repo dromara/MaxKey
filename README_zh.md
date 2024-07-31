@@ -38,7 +38,7 @@ MaxKey注重企业级场景下的性能、安全和易用性，广泛应用于�
 
 邮箱email: <b>support@maxsso.net</b>
 
-代码托管 <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a> | <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitHub</b></a>
+代码托管 <a href="https://gitee.com/dromara/MaxKey" target="_blank"><b>Gitee</b></a> | <a href="https://github.com/dromara/MaxKey" target="_blank"><b>GitHub</b></a> | <a href="https://gitcode.com/dromara/MaxKey/overview" target="_blank"><b>GitCode</b></a>
 
  
 ><b>单点登录(Single Sign On）</b>简称为<b>SSO</b>，用户只需要登录认证中心一次就可以访问所有相互信任的应用系统，无需再次登录。
