@@ -33,8 +33,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import jakarta.servlet.ServletException;
-
 @SpringBootApplication
 @EnableDiscoveryClient
 @MapperScan("org.dromara.maxkey.persistence.mapper,")
@@ -50,12 +48,8 @@ public class MaxKeyApplication extends SpringBootServletInitializer {
         
         VFS.addImplClass(SpringBootVFS.class);
         ConfigurableApplicationContext applicationContext = SpringApplication.run(MaxKeyApplication.class, args);
-        InitializeContext initWebContext = new InitializeContext(applicationContext);
-        try {
-            initWebContext.init(null);
-        } catch (ServletException e) {
-            logger.error("ServletException", e);
-        }
+        new InitializeContext(applicationContext).init();
+        
         logger.info("MaxKey at {}" , new DateTime());
         logger.info("MaxKey Server Port {}" , WebContext.getProperty("server.port"));
         logger.info("MaxKey started.");

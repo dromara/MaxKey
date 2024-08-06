@@ -33,8 +33,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
-import jakarta.servlet.ServletException;
-
 @ComponentScan(basePackages = {
 	"org.dromara.maxkey.authn",
 	"org.dromara.maxkey.configuration",
@@ -63,13 +61,8 @@ public class MaxKeyOpenApiApplication extends SpringBootServletInitializer {
 	    ProductEnvironment.listEnvVars();
 	    
 		ConfigurableApplicationContext  applicationContext = SpringApplication.run(MaxKeyOpenApiApplication.class, args);
-		InitializeContext initWebContext = new InitializeContext(applicationContext);
+		new InitializeContext(applicationContext).init();
 		
-		try {
-			initWebContext.init(null);
-		} catch (ServletException e) {
-			logger.error("Exception ",e);
-		}
 		logger.info("MaxKey OpenApi at {}" , new DateTime());
 		logger.info("MaxKey OpenApi Server Port {}" , WebContext.getProperty("server.port"));
 		logger.info("MaxKey OpenApi started.");
