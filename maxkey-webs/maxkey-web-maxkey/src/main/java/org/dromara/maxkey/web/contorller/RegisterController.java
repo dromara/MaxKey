@@ -57,16 +57,16 @@ public class RegisterController {
 	AuthTokenService authTokenService;
 	
 	@Autowired 
-  	protected ApplicationConfig applicationConfig;
+  	ApplicationConfig applicationConfig;
 	
 	@Autowired
-	private UserInfoService userInfoService;
+	UserInfoService userInfoService;
 	
 	@Autowired
     SmsOtpAuthnService smsOtpAuthnService;
 	
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder;
  	
 	@ResponseBody
 	@RequestMapping(value = { "/produceOtp" }, produces = {MediaType.APPLICATION_JSON_VALUE})

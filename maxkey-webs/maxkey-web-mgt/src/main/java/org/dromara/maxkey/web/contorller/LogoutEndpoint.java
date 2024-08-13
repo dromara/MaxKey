@@ -33,7 +33,7 @@ public class LogoutEndpoint {
 	private static Logger logger = LoggerFactory.getLogger(LogoutEndpoint.class);
 	
 	@Autowired
-    protected SessionManager sessionManager;
+    SessionManager sessionManager;
 	
  	@GetMapping(value={"/logout"})
  	public  Message<?> logout(HttpServletRequest request,@CurrentUser UserInfo currentUser){

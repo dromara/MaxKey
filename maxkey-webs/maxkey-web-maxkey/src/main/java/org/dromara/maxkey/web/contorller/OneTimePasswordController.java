@@ -54,13 +54,13 @@ public class OneTimePasswordController {
     static final  Logger logger  =  LoggerFactory.getLogger(OneTimePasswordController.class);
 
     @Autowired
-    private UserInfoService userInfoService;
+    UserInfoService userInfoService;
 
     @Autowired
     OtpKeyUriFormat otpKeyUriFormat;
 
     @Autowired
-    private TimeBasedOtpAuthn timeBasedOtpAuthn;
+    TimeBasedOtpAuthn timeBasedOtpAuthn;
 
     @RequestMapping(value = {"/timebased"})
     @ResponseBody

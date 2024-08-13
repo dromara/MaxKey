@@ -62,7 +62,7 @@ public class SAML20DetailsController   extends BaseAppContorller {
 	static final  Logger logger = LoggerFactory.getLogger(SAML20DetailsController.class);
 	
 	@Autowired
-	private KeyStoreLoader keyStoreLoader;
+	KeyStoreLoader keyStoreLoader;
 	
 	@Autowired
 	AppsSaml20DetailsService saml20DetailsService;

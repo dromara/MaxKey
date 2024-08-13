@@ -77,7 +77,7 @@ public class UserInfoController {
 	static final Logger logger = LoggerFactory.getLogger(UserInfoController.class);
 	
 	@Autowired
-	private UserInfoService userInfoService;
+	UserInfoService userInfoService;
 	
 	@Autowired
 	FileUploadService fileUploadService;

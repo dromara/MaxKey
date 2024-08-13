@@ -41,7 +41,7 @@ public class CnfPasswordPolicyController {
 	static final  Logger logger = LoggerFactory.getLogger(CnfPasswordPolicyController.class);
 		
 	@Autowired
-	private CnfPasswordPolicyService passwordPolicyService;
+	CnfPasswordPolicyService passwordPolicyService;
 	
 	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public Message<?> get(@CurrentUser UserInfo currentUser){

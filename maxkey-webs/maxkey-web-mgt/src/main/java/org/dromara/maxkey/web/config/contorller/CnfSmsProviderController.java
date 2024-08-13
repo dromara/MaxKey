@@ -40,7 +40,7 @@ public class CnfSmsProviderController {
 	static final  Logger logger = LoggerFactory.getLogger(CnfSmsProviderController.class);
 	
 	@Autowired
-	private CnfSmsProviderService smsProviderService;
+	CnfSmsProviderService smsProviderService;
 
 	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public Message<?> get(@CurrentUser UserInfo currentUser){

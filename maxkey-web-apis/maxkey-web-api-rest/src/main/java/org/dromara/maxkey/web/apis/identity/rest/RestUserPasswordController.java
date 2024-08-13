@@ -41,7 +41,7 @@ public class RestUserPasswordController {
 	
     @Autowired
     @Qualifier("userInfoService")
-    private UserInfoService userInfoService;
+    UserInfoService userInfoService;
     
   
     @PostMapping(value = "/changePassword")

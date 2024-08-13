@@ -43,7 +43,7 @@ public class SafeController {
 	static final Logger logger = LoggerFactory.getLogger(SafeController.class);
 	
 	@Autowired
-	private UserInfoService userInfoService;
+	UserInfoService userInfoService;
 	
 	@RequestMapping(value="/forward/setting") 
 	public ModelAndView fowardSetting(@CurrentUser UserInfo currentUser) {

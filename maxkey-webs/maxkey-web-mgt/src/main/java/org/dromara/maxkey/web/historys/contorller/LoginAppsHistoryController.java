@@ -46,7 +46,7 @@ public class LoginAppsHistoryController {
 	static final Logger logger = LoggerFactory.getLogger(LoginAppsHistoryController.class);
 	
 	@Autowired
-  	protected HistoryLoginAppsService historyLoginAppsService;
+  	HistoryLoginAppsService historyLoginAppsService;
 	
 	/**
 	 * @param loginAppsHistory

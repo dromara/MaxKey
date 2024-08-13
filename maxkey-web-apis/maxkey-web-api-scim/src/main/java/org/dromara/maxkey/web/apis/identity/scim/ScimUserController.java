@@ -69,7 +69,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class ScimUserController {
 	static final  Logger _logger = LoggerFactory.getLogger(ScimUserController.class);
 	@Autowired
-	private UserInfoService userInfoService;
+	UserInfoService userInfoService;
 	
 	@Autowired
 	GroupsService groupsService;

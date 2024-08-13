@@ -39,7 +39,7 @@ public class CnfEmailSendersController {
 	static final  Logger logger = LoggerFactory.getLogger(CnfEmailSendersController.class);
 	
 	@Autowired
-	private CnfEmailSendersService emailSendersService;
+	CnfEmailSendersService emailSendersService;
 
 	@RequestMapping(value={"/get"})
 	public Message<?> get(@CurrentUser UserInfo currentUser){

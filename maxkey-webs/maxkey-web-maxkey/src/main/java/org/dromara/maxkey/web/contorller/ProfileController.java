@@ -40,7 +40,7 @@ public class ProfileController {
     static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
 
     @Autowired
-    private UserInfoService userInfoService;
+    UserInfoService userInfoService;
     
     @Autowired
 	FileUploadService fileUploadService;

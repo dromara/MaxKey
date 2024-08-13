@@ -52,7 +52,7 @@ public class AppListController {
     static final Logger logger = LoggerFactory.getLogger(AppListController.class);
     
     @Autowired
-    private UserInfoService userInfoService;
+    UserInfoService userInfoService;
 
     @Autowired
     AccountsService accountsService;

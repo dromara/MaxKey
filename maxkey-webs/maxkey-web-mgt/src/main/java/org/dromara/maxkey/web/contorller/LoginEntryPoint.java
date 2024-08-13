@@ -51,7 +51,7 @@ public class LoginEntryPoint {
 	AuthTokenService authTokenService;
 	
 	@Autowired
-  	protected ApplicationConfig applicationConfig;
+  	ApplicationConfig applicationConfig;
  	
 	@Autowired
 	AbstractAuthenticationProvider authenticationProvider ;

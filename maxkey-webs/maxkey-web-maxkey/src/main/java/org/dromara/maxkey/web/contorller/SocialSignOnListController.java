@@ -42,7 +42,7 @@ public class SocialSignOnListController {
 	static final Logger logger = LoggerFactory.getLogger(SocialSignOnListController.class);
 	
 	@Autowired
-	protected SocialsAssociatesService socialsAssociatesService;
+	SocialsAssociatesService socialsAssociatesService;
 	
 	@RequestMapping(value={"/fetch"})
 	@ResponseBody

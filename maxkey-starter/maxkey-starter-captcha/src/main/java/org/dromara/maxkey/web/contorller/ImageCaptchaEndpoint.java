@@ -43,10 +43,10 @@ public class ImageCaptchaEndpoint {
     private static final Logger _logger = LoggerFactory.getLogger(ImageCaptchaEndpoint.class);
     
     @Autowired
-    private Producer captchaProducer;
+    Producer captchaProducer;
     
     @Autowired 
-	protected MomentaryService momentaryService;
+	MomentaryService momentaryService;
     
     @Autowired
 	AuthTokenService authTokenService;

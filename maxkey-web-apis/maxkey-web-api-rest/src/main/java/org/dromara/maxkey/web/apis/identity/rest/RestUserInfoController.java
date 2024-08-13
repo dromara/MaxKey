@@ -49,7 +49,7 @@ public class RestUserInfoController {
 	
     @Autowired
     @Qualifier("userInfoService")
-    private UserInfoService userInfoService;
+    UserInfoService userInfoService;
     
     @GetMapping(value = "/{id}")
     public UserInfo getUser(

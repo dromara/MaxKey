@@ -46,7 +46,7 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
     HistoryLoginAppsService historyLoginAppsService;
 
     @Autowired
-    protected AppsService appsService;
+    AppsService appsService;
 
     /**
      * postHandle .

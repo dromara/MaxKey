@@ -35,10 +35,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class RestTimeBasedOtpController {
 
 	@Autowired
-    protected AbstractOtpAuthn timeBasedOtpAuthn;
+    AbstractOtpAuthn timeBasedOtpAuthn;
     
     @Autowired
-    private UserInfoService userInfoService;
+    UserInfoService userInfoService;
     
     @Operation(summary = "基于时间令牌验证 API文档模块", description = "传递参数username和token",method="GET")
     @ResponseBody

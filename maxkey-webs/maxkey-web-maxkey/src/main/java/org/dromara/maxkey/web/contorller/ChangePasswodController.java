@@ -42,13 +42,13 @@ public class ChangePasswodController {
 	static final Logger logger = LoggerFactory.getLogger(ChangePasswodController.class);
 
 	@Autowired
-	private UserInfoService userInfoService;
+	UserInfoService userInfoService;
 
 	@Autowired
 	HistorySystemLogsService systemLog;
 
 	@Autowired
-	private CnfPasswordPolicyService passwordPolicyService;
+	CnfPasswordPolicyService passwordPolicyService;
 
 	@GetMapping(value={"/passwordpolicy"})
 	public Message<CnfPasswordPolicy> passwordpolicy(@CurrentUser UserInfo currentUser){

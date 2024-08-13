@@ -37,7 +37,7 @@ public class InstitutionsController {
 		static final  Logger logger = LoggerFactory.getLogger(InstitutionsController.class);
 		
 		@Autowired
-		private InstitutionsService institutionsService;
+		InstitutionsService institutionsService;
 		
 		@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 		public Message<?> get(@CurrentUser UserInfo currentUser){

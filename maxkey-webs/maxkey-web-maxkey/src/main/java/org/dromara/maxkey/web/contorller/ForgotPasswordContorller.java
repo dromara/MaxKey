@@ -87,7 +87,7 @@ public class ForgotPasswordContorller {
 	HistorySystemLogsService historySystemLogsService;
 
 	@Autowired
-	private CnfPasswordPolicyService passwordPolicyService;
+	CnfPasswordPolicyService passwordPolicyService;
 
 	@RequestMapping(value={"/passwordpolicy"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public Message<CnfPasswordPolicy> passwordpolicy(){
