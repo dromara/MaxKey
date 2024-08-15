@@ -1,22 +1,23 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 
 package org.dromara.maxkey.web.contorller;
 
+import java.awt.image.BufferedImage;
 import java.text.ParseException;
 import java.util.HashMap;
 import org.apache.commons.lang3.StringUtils;
@@ -28,14 +29,19 @@ import org.dromara.maxkey.authn.support.kerberos.KerberosService;
 import org.dromara.maxkey.authn.support.rememberme.AbstractRemeberMeManager;
 import org.dromara.maxkey.authn.support.rememberme.RemeberMe;
 import org.dromara.maxkey.authn.support.socialsignon.service.SocialSignOnProviderService;
+import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
+import org.dromara.maxkey.crypto.Base64Utils;
+import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.*;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.sms.SmsOtpAuthnService;
+import org.dromara.maxkey.persistence.service.ScanCodeService;
 import org.dromara.maxkey.persistence.service.SocialsAssociatesService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
+import org.dromara.maxkey.util.RQCodeUtils;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -56,6 +62,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import static org.reflections.Reflections.log;
+
 /**
  * @author Crystal.Sea
  *
@@ -65,13 +73,13 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping(value = "/login")
 public class LoginEntryPoint {
 	private static Logger logger = LoggerFactory.getLogger(LoginEntryPoint.class);
-		
+
 	@Autowired
 	AuthTokenService authTokenService;
-	
+
 	@Autowired
   	ApplicationConfig applicationConfig;
- 	
+
 	@Autowired
 	AbstractAuthenticationProvider authenticationProvider ;
 
@@ -80,24 +88,25 @@ public class LoginEntryPoint {
 
 	@Autowired
 	SocialsAssociatesService socialsAssociatesService;
-	
+
 	@Autowired
 	KerberosService kerberosService;
-	
+
 	@Autowired
 	UserInfoService userInfoService;
-	
+
 	@Autowired
     AbstractOtpAuthn tfaOtpAuthn;
-	
+
 	@Autowired
     SmsOtpAuthnService smsAuthnService;
-	
-	
-	
+
+	@Autowired
+	ScanCodeService scanCodeService;
+
 	@Autowired
 	AbstractRemeberMeManager remeberMeManager;
-	
+
 	/**
 	 * init login
 	 * @return
@@ -133,11 +142,11 @@ public class LoginEntryPoint {
 			model.put("otpType", tfaOtpAuthn.getOtpType());
 			model.put("otpInterval", tfaOtpAuthn.getInterval());
 		}
-		
+
 		if( applicationConfig.getLoginConfig().isKerberos()){
 			model.put("userDomainUrlJson", kerberosService.buildKerberosProxys());
 		}
-		
+
 		Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
 		model.put("inst", inst);
 		if(applicationConfig.getLoginConfig().isCaptcha()) {
@@ -146,10 +155,10 @@ public class LoginEntryPoint {
 		model.put("state", authTokenService.genRandomJwt());
 		//load Social Sign On Providers
 		model.put("socials", socialSignOnProviderService.loadSocials(inst.getId()));
-		
+
 		return new Message<HashMap<String , Object>>(model);
 	}
- 	
+
 
  	@RequestMapping(value={"/sendotp/{mobile}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public Message<AuthJwt> produceOtp(@PathVariable("mobile") String mobile) {
@@ -158,7 +167,7 @@ public class LoginEntryPoint {
         	smsAuthnService.getByInstId(WebContext.getInst().getId()).produce(userInfo);
         	return new Message<AuthJwt>(Message.SUCCESS);
         }
-        
+
         return new Message<AuthJwt>(Message.FAIL);
     }
 
@@ -202,7 +211,7 @@ public class LoginEntryPoint {
 		return new Message<AuthJwt>(Message.FAIL);
 	}
 
- 	
+
  	/**
  	 * normal
  	 * @param loginCredential
@@ -216,7 +225,7 @@ public class LoginEntryPoint {
  			String authType =  credential.getAuthType();
  			 logger.debug("Login AuthN Type  {}" , authType);
  	        if (StringUtils.isNotBlank(authType)){
-		 		Authentication  authentication = authenticationProvider.authenticate(credential);	 				
+		 		Authentication  authentication = authenticationProvider.authenticate(credential);
 		 		if(authentication != null) {
 		 			AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
 		 			if(StringUtils.isNotBlank(credential.getRemeberMe())
@@ -229,9 +238,9 @@ public class LoginEntryPoint {
 		 					(Integer)WebContext.getAttribute(WebConstants.CURRENT_USER_PASSWORD_SET_TYPE));
 		 			}
 		 			authJwtMessage = new Message<>(authJwt);
-		 			
+
 		 		}else {//fail
-	 				String errorMsg = WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE) == null ? 
+	 				String errorMsg = WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE) == null ?
 							  "" : WebContext.getAttribute(WebConstants.LOGIN_ERROR_SESSION_MESSAGE).toString();
 	 				authJwtMessage.setMessage(errorMsg);
 	 				logger.debug("login fail , message {}",errorMsg);
@@ -242,7 +251,7 @@ public class LoginEntryPoint {
  		}
  		return authJwtMessage;
  	}
- 	
+
  	/**
  	 * for congress
  	 * @param loginCredential
@@ -259,4 +268,20 @@ public class LoginEntryPoint {
  		return new Message<>(Message.FAIL);
  	}
 
+	 @Operation(summary = "生成登录扫描二维码", description = "生成登录扫描二维码", method = "GET")
+	 @GetMapping("/genScanCode")
+	 public Message<HashMap<String,String>> genScanCode() {
+		 log.debug("/genScanCode.");
+		 UserInfo userInfo = AuthorizationUtils.getUserInfo();
+		 Long ticket = scanCodeService.createTicket();
+		 String ticketString = userInfo == null ? ticket.toString() : ticket+","+userInfo.getId();
+		 log.debug("ticket string {}",ticketString);
+		 String encodeTicket = PasswordReciprocal.getInstance().encode(ticketString);
+		 BufferedImage bufferedImage  =  RQCodeUtils.write2BufferedImage(encodeTicket, "gif", 300, 300);
+		 String rqCode = Base64Utils.encodeImage(bufferedImage);
+		 HashMap<String,String> codeMap = new HashMap<>();
+		 codeMap.put("rqCode", rqCode);
+		 codeMap.put("ticket", encodeTicket);
+		 return new Message<>(Message.SUCCESS, codeMap);
+	 }
 }

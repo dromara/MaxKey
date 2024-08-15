@@ -1,19 +1,19 @@
 /*
  * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 
 package org.dromara.maxkey.persistence.repository;
 
@@ -24,13 +24,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsRoles;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.idm.Groups;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.util.StrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -57,28 +56,28 @@ public class LoginRepository {
     private static final String GROUPS_SELECT_STATEMENT = "select distinct g.id,g.groupcode,g.groupname from mxk_userinfo u,mxk_groups g,mxk_group_member gm where u.id = ?  and u.id=gm.memberid and gm.groupid=g.id ";
 
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT = "select * from  mxk_userinfo where username = ? ";
-    
+
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE = "select * from  mxk_userinfo where (username = ? or mobile = ?)";
-    
+
     private static final String DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL = "select * from  mxk_userinfo where (username = ? or mobile = ? or email = ?) ";
-    
+
     private static final String DEFAULT_MYAPPS_SELECT_STATEMENT = "select distinct app.id,app.appname from mxk_apps app,mxk_access gp,mxk_groups g  where app.id=gp.appid and app.status = 1 and gp.groupid=g.id and g.id in(%s)";
-    
+
     protected JdbcTemplate jdbcTemplate;
-    
+
     /**
      * 1 (USERNAME)  2 (USERNAME | MOBILE) 3 (USERNAME | MOBILE | EMAIL)
      */
     public  static  int LOGIN_ATTRIBUTE_TYPE = 2;
-    
+
     public LoginRepository(){
-        
+
     }
-    
+
     public LoginRepository(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate=jdbcTemplate;
     }
-    
+
     public UserInfo find(String username, String password) {
         List<UserInfo> listUserInfo = null ;
         if( LOGIN_ATTRIBUTE_TYPE == 1) {
@@ -89,37 +88,37 @@ public class LoginRepository {
         	 listUserInfo = findByUsernameOrMobileOrEmail(username,password);
         }
         _logger.debug("load UserInfo : {}" , listUserInfo);
-        return (CollectionUtils.isNotEmpty(listUserInfo))? listUserInfo.get(0) : null;
+        return (ObjectUtils.isNotEmpty(listUserInfo))? listUserInfo.get(0) : null;
     }
-    
+
     public List<UserInfo> findByUsername(String username, String password) {
     	return jdbcTemplate.query(
-    			DEFAULT_USERINFO_SELECT_STATEMENT, 
+    			DEFAULT_USERINFO_SELECT_STATEMENT,
     			new UserInfoRowMapper(),
     			username
     		);
     }
-    
+
     public List<UserInfo> findByUsernameOrMobile(String username, String password) {
     	return jdbcTemplate.query(
-			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE, 
+			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE,
     			new UserInfoRowMapper(),
     			username,username
     		);
     }
-    
+
     public List<UserInfo> findByUsernameOrMobileOrEmail(String username, String password) {
     	return jdbcTemplate.query(
-			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL, 
+			 	DEFAULT_USERINFO_SELECT_STATEMENT_USERNAME_MOBILE_EMAIL,
     			new UserInfoRowMapper(),
     			username,username,username
     		);
     }
-    
+
 
     /**
      * 閿佸畾鐢ㄦ埛锛歩slock锛�1 鐢ㄦ埛瑙ｉ攣 2 鐢ㄦ埛閿佸畾
-     * 
+     *
      * @param userInfo
      */
     public void updateLock(UserInfo userInfo) {
@@ -137,7 +136,7 @@ public class LoginRepository {
 
     /**
      * 閿佸畾鐢ㄦ埛锛歩slock锛�1 鐢ㄦ埛瑙ｉ攣 2 鐢ㄦ埛閿佸畾
-     * 
+     *
      * @param userInfo
      */
     public void updateUnlock(UserInfo userInfo) {
@@ -155,7 +154,7 @@ public class LoginRepository {
 
     /**
     * reset BadPasswordCount And Lockout
-     * 
+     *
      * @param userInfo
      */
     public void updateLockout(UserInfo userInfo) {
@@ -173,7 +172,7 @@ public class LoginRepository {
 
     /**
      * if login password is error ,BadPasswordCount++ and set bad date
-     * 
+     *
      * @param userInfo
      */
     public void updateBadPasswordCount(UserInfo userInfo) {
@@ -190,15 +189,15 @@ public class LoginRepository {
             _logger.error(e.getMessage());
         }
     }
-    
+
     public List<GrantedAuthority> queryAuthorizedApps(List<GrantedAuthority> grantedAuthoritys) {
         String grantedAuthorityString="'ROLE_ALL_USER'";
         for(GrantedAuthority grantedAuthority : grantedAuthoritys) {
             grantedAuthorityString += ",'"+ grantedAuthority.getAuthority()+"'";
         }
-        
+
         ArrayList<GrantedAuthority> listAuthorizedApps = (ArrayList<GrantedAuthority>) jdbcTemplate.query(
-                String.format(DEFAULT_MYAPPS_SELECT_STATEMENT, grantedAuthorityString), 
+                String.format(DEFAULT_MYAPPS_SELECT_STATEMENT, grantedAuthorityString),
                 new RowMapper<GrantedAuthority>() {
             public GrantedAuthority mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new SimpleGrantedAuthority(rs.getString("id"));
@@ -208,7 +207,7 @@ public class LoginRepository {
         _logger.debug("list Authorized Apps  {}" , listAuthorizedApps);
         return listAuthorizedApps;
     }
-    
+
     public List<Groups> queryGroups(UserInfo userInfo) {
         List<Groups> listRoles = jdbcTemplate.query(GROUPS_SELECT_STATEMENT, new RowMapper<Groups>() {
             public Groups mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -222,7 +221,7 @@ public class LoginRepository {
 
     /**
      * grant Authority by userinfo
-     * 
+     *
      * @param userInfo
      * @return ArrayList<GrantedAuthority>
      */
@@ -237,7 +236,7 @@ public class LoginRepository {
         grantedAuthority.add(ConstsRoles.ROLE_ORDINARY_USER);
         for (Groups group : listGroups) {
             grantedAuthority.add(new SimpleGrantedAuthority(group.getId()));
-            if(group.getGroupCode().startsWith("ROLE_") 
+            if(group.getGroupCode().startsWith("ROLE_")
             		&& !grantedAuthority.contains(new SimpleGrantedAuthority(group.getGroupCode()))) {
             	grantedAuthority.add(new SimpleGrantedAuthority(group.getGroupCode()));
             }
@@ -246,19 +245,19 @@ public class LoginRepository {
 
         return grantedAuthority;
     }
-    
-    
+
+
     public void updateLastLogin(UserInfo userInfo) {
         jdbcTemplate.update(LOGIN_USERINFO_UPDATE_STATEMENT,
-                new Object[] { 
-                				userInfo.getLastLoginTime(), 
-                				userInfo.getLastLoginIp(), 
-                				userInfo.getLoginCount() + 1, 
-                				userInfo.getId() 
+                new Object[] {
+                				userInfo.getLastLoginTime(),
+                				userInfo.getLastLoginIp(),
+                				userInfo.getLoginCount() + 1,
+                				userInfo.getId()
                 			},
                 new int[] { Types.TIMESTAMP, Types.VARCHAR, Types.INTEGER, Types.VARCHAR });
     }
-    
+
     public class UserInfoRowMapper implements RowMapper<UserInfo> {
         @Override
         public UserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -372,7 +371,7 @@ public class LoginRepository {
             if (userInfo.getTheme() == null || userInfo.getTheme().equalsIgnoreCase("")) {
                 userInfo.setTheme("default");
             }
-            
+
             return userInfo;
         }
     }
