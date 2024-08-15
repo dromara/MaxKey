@@ -83,9 +83,9 @@
     </nz-form-item>
   </div>
   <div nz-row *ngIf="loginType=='qrscan'">
-    <div class="qrcode" id="div_qrcodelogin" style="background: #fff;padding: 20px;"> </div>
+    <div class="qrcode" id="div_qrcodelogin" style="background: #fff;padding: 20px;"></div>
     <div id="qrexpire" *ngIf="qrexpire" style="width: 100%;text-align: center;background: #fff;padding-bottom: 20px;">
-      二维码过期 <a href="javascript:" (click)="getLoginQrCode()">刷新</a>
+      二维码过期 <a href="javascript:void(0);" (click)="getLoginQrCode()">刷新</a>
     </div>
   </div>
   <nz-form-item *ngIf="loginType == 'normal' || loginType == 'mobile'">
