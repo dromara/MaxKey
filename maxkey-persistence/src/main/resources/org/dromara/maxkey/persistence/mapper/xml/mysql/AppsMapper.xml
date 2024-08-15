@@ -180,7 +180,7 @@
         select distinct
             app.*
         from
-            mxk_apps app,mxk_group_permissions p,mxk_groups g
+            mxk_apps app,mxk_access p,mxk_groups g
         where
             app.id  =   p.appid
             and p.groupid = g.id
