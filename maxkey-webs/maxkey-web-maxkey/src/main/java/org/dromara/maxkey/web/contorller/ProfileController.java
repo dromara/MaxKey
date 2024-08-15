@@ -27,15 +27,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping(value = { "/config/profile" })
+@RestController
+@RequestMapping(value = { "/users/profile" })
 public class ProfileController {
     static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
 
@@ -45,11 +46,11 @@ public class ProfileController {
     @Autowired
 	FileUploadService fileUploadService;
 
-    @RequestMapping(value = { "/get" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public Message<?> get(@CurrentUser UserInfo currentUser) {
+    @GetMapping(value = { "/get" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<UserInfo> get(@CurrentUser UserInfo currentUser) {
         UserInfo userInfo = userInfoService.findByUsername(currentUser.getUsername());
 		userInfo.trans();
-        return new Message<UserInfo>(userInfo);
+        return new Message<>(userInfo);
     }
 
     /**
@@ -59,8 +60,7 @@ public class ProfileController {
      * @param result
      * @return
      */
-    @ResponseBody
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public Message<?> update(
 				@RequestBody  UserInfo userInfo,
 				@CurrentUser UserInfo currentUser,

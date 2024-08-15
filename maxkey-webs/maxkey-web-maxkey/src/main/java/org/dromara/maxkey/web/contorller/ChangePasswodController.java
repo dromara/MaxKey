@@ -37,7 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value={"/config"})
+@RequestMapping(value={"/users"})
 public class ChangePasswodController {
 	static final Logger logger = LoggerFactory.getLogger(ChangePasswodController.class);
 
