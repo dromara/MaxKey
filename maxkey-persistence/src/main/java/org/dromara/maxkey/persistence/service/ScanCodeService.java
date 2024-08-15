@@ -56,7 +56,7 @@ public class ScanCodeService {
     public Long createTicket() {
         Long ticket = 0L;
         ticket = Long.parseLong(idGenerator.generate());
-        momentaryService.put(getKey(ticket), "ORCode", Duration.ofSeconds(validitySeconds));
+        momentaryService.put(getKey(ticket), "", Duration.ofSeconds(validitySeconds));
         _logger.info("Ticket {} , Duration {}", ticket , Duration.ofSeconds(validitySeconds));
         return ticket;
     }

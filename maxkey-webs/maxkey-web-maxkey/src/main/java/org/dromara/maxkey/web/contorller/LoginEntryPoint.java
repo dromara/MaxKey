@@ -25,6 +25,8 @@ import org.dromara.maxkey.authn.LoginCredential;
 import org.dromara.maxkey.authn.jwt.AuthJwt;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
+import org.dromara.maxkey.authn.session.Session;
+import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.authn.support.kerberos.KerberosService;
 import org.dromara.maxkey.authn.support.rememberme.AbstractRemeberMeManager;
 import org.dromara.maxkey.authn.support.rememberme.RemeberMe;
@@ -106,6 +108,9 @@ public class LoginEntryPoint {
 
 	@Autowired
 	AbstractRemeberMeManager remeberMeManager;
+
+	@Autowired
+	SessionManager sessionManager;
 
 	/**
 	 * init login
@@ -214,7 +219,7 @@ public class LoginEntryPoint {
 
  	/**
  	 * normal
- 	 * @param loginCredential
+ 	 * @param credential
  	 * @return
  	 */
 	@Operation(summary = "登录接口", description = "登录接口",method="POST")
@@ -254,7 +259,7 @@ public class LoginEntryPoint {
 
  	/**
  	 * for congress
- 	 * @param loginCredential
+ 	 * @param credential
  	 * @return
  	 */
  	@PostMapping(value={"/congress"})

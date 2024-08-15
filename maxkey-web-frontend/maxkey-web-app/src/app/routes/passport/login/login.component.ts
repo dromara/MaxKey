@@ -299,12 +299,25 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   }
 
   getLoginQrCode() {
-    this.qrCodeService.getLoginQrCode().subscribe(res => {
-      if (res.code === 0) {
+    this.qrexpire = false;
 
+    this.qrCodeService.getLoginQrCode().subscribe(res => {
+      if (res.code === 0 && res.data.rqCode) { // 使用返回的 rqCode
+        const qrImageElement = document.getElementById('div_qrcodelogin');
+        if (qrImageElement) {
+          qrImageElement.innerHTML = `<img src="${res.data.rqCode}" alt="QR Code" style="width: 200px; height: 200px;">`;
+        }
+
+        // 设置三分钟后 qrexpire 为 false
+        setTimeout(() => {
+          this.qrexpire = true;
+          this.cdr.detectChanges(); // 更新视图
+        }, 3 * 60 * 1000); // 180000 毫秒 = 3 分钟
       }
-    })
+    });
   }
+
+
 
   getQrCode(): void {
     this.qrexpire = false;
