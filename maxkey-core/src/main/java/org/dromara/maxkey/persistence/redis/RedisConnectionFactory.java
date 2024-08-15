@@ -1,19 +1,19 @@
 /*
  * Copyright [2020] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 
 package org.dromara.maxkey.persistence.redis;
 
@@ -26,7 +26,7 @@ import redis.clients.jedis.JedisPoolConfig;
 
 public class RedisConnectionFactory {
 	private static final  Logger _logger = LoggerFactory.getLogger(RedisConnectionFactory.class);
-	
+
     public static class DEFAULT_CONFIG {
         /**
          * Redis默认服务器IP
@@ -95,7 +95,7 @@ public class RedisConnectionFactory {
                     timeOut = DEFAULT_CONFIG.DEFAULT_TIMEOUT;
                 }
 
-                if (this.password == null || this.password.equals("") || this.password.equalsIgnoreCase("password")) {
+                if (this.password == null || this.password.equals("")) {
                     this.password = null;
                 }
                 jedisPool = new JedisPool(poolConfig, hostName, port, timeOut, password);
@@ -120,7 +120,7 @@ public class RedisConnectionFactory {
     	Jedis jedis = jedisPool.getResource();
     	_logger.trace("return jedisPool Resource .");
         return jedis;
-        
+
     }
 
     public void close(Jedis conn) {
@@ -130,7 +130,7 @@ public class RedisConnectionFactory {
         _logger.trace("closed conn .");
     }
 
-   
+
     public String getHostName() {
         return hostName;
     }
@@ -170,5 +170,5 @@ public class RedisConnectionFactory {
     public JedisPoolConfig getPoolConfig() {
         return poolConfig;
     }
-    
+
 }

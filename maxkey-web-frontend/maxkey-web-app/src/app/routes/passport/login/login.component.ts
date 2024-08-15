@@ -29,6 +29,7 @@ import { finalize } from 'rxjs/operators';
 import { AuthnService } from '../../../service/authn.service';
 import { ImageCaptchaService } from '../../../service/image-captcha.service';
 import { SocialsProviderService } from '../../../service/socials-provider.service';
+import {QrCodeService} from "../../../service/QrCode.service";
 import { CONSTS } from '../../../shared/consts';
 
 import { stringify } from 'querystring';
@@ -68,6 +69,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
     private authnService: AuthnService,
     private socialsProviderService: SocialsProviderService,
     private imageCaptchaService: ImageCaptchaService,
+    private qrCodeService: QrCodeService,
     @Optional()
     @Inject(ReuseTabService)
     private reuseTabService: ReuseTabService,
@@ -294,6 +296,14 @@ export class UserLoginComponent implements OnInit, OnDestroy {
       //console.log(res.data);
       window.location.href = res.data;
     });
+  }
+
+  getLoginQrCode() {
+    this.qrCodeService.getLoginQrCode().subscribe(res => {
+      if (res.code === 0) {
+
+      }
+    })
   }
 
   getQrCode(): void {
