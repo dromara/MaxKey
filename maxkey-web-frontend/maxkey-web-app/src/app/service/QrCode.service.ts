@@ -15,7 +15,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { SettingsService, _HttpClient, User } from '@delon/theme';
+import { _HttpClient } from '@delon/theme';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +25,9 @@ export class QrCodeService {
 
   getLoginQrCode() {
     return this.http.get('/login/genScanCode');
+  }
+
+  loginByQrCode(authParam: any) {
+    return this.http.post('/login/sign/qrcode', authParam);
   }
 }

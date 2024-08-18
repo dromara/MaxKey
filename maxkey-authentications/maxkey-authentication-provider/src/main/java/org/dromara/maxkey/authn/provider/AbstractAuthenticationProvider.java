@@ -1,19 +1,19 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 
 package org.dromara.maxkey.authn.provider;
 
@@ -45,37 +45,41 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 /**
  * login Authentication abstract class.
- * 
+ *
  * @author Crystal.Sea
  *
  */
 public abstract class AbstractAuthenticationProvider {
-    private static final Logger _logger = 
+    private static final Logger _logger =
             LoggerFactory.getLogger(AbstractAuthenticationProvider.class);
 
     public static String PROVIDER_SUFFIX = "AuthenticationProvider";
-    
+
     public class AuthType{
     	public static final  String NORMAL 	= "normal";
     	public static final  String TFA 		= "tfa";
     	public static final  String MOBILE 	= "mobile";
     	public static final  String TRUSTED 	= "trusted";
+        /**
+         * 扫描认证
+         */
+        public static final  String SCAN_CODE 	= "scancode";
     }
-    
+
     protected ApplicationConfig applicationConfig;
 
     protected AbstractAuthenticationRealm authenticationRealm;
 
     protected AbstractOtpAuthn tfaOtpAuthn;
-    
+
     protected MailOtpAuthnService otpAuthnService;
 
     protected SessionManager sessionManager;
-    
+
     protected AuthTokenService authTokenService;
-    
+
     public static  ArrayList<GrantedAuthority> grantedAdministratorsAuthoritys = new ArrayList<GrantedAuthority>();
-    
+
     static {
         grantedAdministratorsAuthoritys.add(new SimpleGrantedAuthority("ROLE_ADMINISTRATORS"));
     }
@@ -83,7 +87,7 @@ public abstract class AbstractAuthenticationProvider {
     public abstract String getProviderName();
 
     public abstract Authentication doAuthenticate(LoginCredential authentication);
-    
+
     @SuppressWarnings("rawtypes")
     public boolean supports(Class authentication) {
         return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
@@ -92,13 +96,13 @@ public abstract class AbstractAuthenticationProvider {
     public Authentication authenticate(LoginCredential authentication){
     	return null;
     }
-    
+
     public Authentication authenticate(LoginCredential authentication,boolean trusted) {
     	return null;
     }
-    
+
     /**
-     * createOnlineSession 
+     * createOnlineSession
      * @param credential
      * @param userInfo
      * @return
@@ -112,7 +116,7 @@ public abstract class AbstractAuthenticationProvider {
 
         List<GrantedAuthority> grantedAuthoritys = authenticationRealm.grantAuthority(userInfo);
         principal.setAuthenticated(true);
-        
+
         for(GrantedAuthority administratorsAuthority : grantedAdministratorsAuthoritys) {
             if(grantedAuthoritys.contains(administratorsAuthority)) {
             	principal.setRoleAdministrators(true);
@@ -120,37 +124,37 @@ public abstract class AbstractAuthenticationProvider {
             }
         }
         _logger.debug("Granted Authority {}" , grantedAuthoritys);
-        
+
         principal.setGrantedAuthorityApps(authenticationRealm.queryAuthorizedApps(grantedAuthoritys));
-        
+
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
-                		principal, 
-                        "PASSWORD", 
+                		principal,
+                        "PASSWORD",
                         grantedAuthoritys
                 );
-        
+
         authenticationToken.setDetails(
                 new WebAuthenticationDetails(WebContext.getRequest()));
-        
+
         /*
          *  put Authentication to current session context
          */
         session.setAuthentication(authenticationToken);
-        
+
         //create session
         this.sessionManager.create(session.getId(), session);
-        
+
         //set Authentication to http session
         AuthorizationUtils.setAuthentication(authenticationToken);
-     
+
         return authenticationToken;
     }
-    
+
     /**
      * login user by j_username and j_cname first query user by j_cname if first
      * step userinfo is null,query user from system.
-     * 
+     *
      * @param username String
      * @param password String
      * @return
@@ -164,7 +168,7 @@ public abstract class AbstractAuthenticationProvider {
             } else {
                 _logger.debug("User Login. ");
             }
-            
+
         }
 
         return userInfo;
@@ -172,7 +176,7 @@ public abstract class AbstractAuthenticationProvider {
 
     /**
      * check input password empty.
-     * 
+     *
      * @param password String
      * @return
      */
@@ -185,7 +189,7 @@ public abstract class AbstractAuthenticationProvider {
 
     /**
      * check input username or password empty.
-     * 
+     *
      * @param email String
      * @return
      */
@@ -198,7 +202,7 @@ public abstract class AbstractAuthenticationProvider {
 
     /**
      * check input username empty.
-     * 
+     *
      * @param username String
      * @return
      */
@@ -219,8 +223,8 @@ public abstract class AbstractAuthenticationProvider {
             loginUser.setDisplayName("not exist");
             loginUser.setLoginCount(0);
             authenticationRealm.insertLoginHistory(
-            			loginUser, 
-            			ConstsLoginType.LOCAL, 
+            			loginUser,
+            			ConstsLoginType.LOCAL,
             			"",
             			i18nMessage,
             			WebConstants.LOGIN_RESULT.USER_NOT_EXIST);
@@ -228,22 +232,22 @@ public abstract class AbstractAuthenticationProvider {
         }
         return true;
     }
-    
+
     protected boolean statusValid(LoginCredential loginCredential , UserInfo userInfo) {
     	if(userInfo.getIsLocked()==ConstsStatus.LOCK) {
-    		authenticationRealm.insertLoginHistory( 
-    				userInfo, 
-                    loginCredential.getAuthType(), 
-                    loginCredential.getProvider(), 
-                    loginCredential.getCode(), 
+    		authenticationRealm.insertLoginHistory(
+    				userInfo,
+                    loginCredential.getAuthType(),
+                    loginCredential.getProvider(),
+                    loginCredential.getCode(),
                     WebConstants.LOGIN_RESULT.USER_LOCKED
                 );
     	}else if(userInfo.getStatus()!=ConstsStatus.ACTIVE) {
-    		authenticationRealm.insertLoginHistory( 
-    				userInfo, 
-                    loginCredential.getAuthType(), 
-                    loginCredential.getProvider(), 
-                    loginCredential.getCode(), 
+    		authenticationRealm.insertLoginHistory(
+    				userInfo,
+                    loginCredential.getAuthType(),
+                    loginCredential.getProvider(),
+                    loginCredential.getCode(),
                     WebConstants.LOGIN_RESULT.USER_INACTIVE
                 );
     	}

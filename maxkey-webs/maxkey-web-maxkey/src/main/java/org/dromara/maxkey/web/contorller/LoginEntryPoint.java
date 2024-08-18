@@ -20,8 +20,12 @@ package org.dromara.maxkey.web.contorller;
 import java.awt.image.BufferedImage;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.LoginCredential;
+import org.dromara.maxkey.authn.QrCodeCredentialDto;
+import org.dromara.maxkey.authn.ScanCode;
 import org.dromara.maxkey.authn.jwt.AuthJwt;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
@@ -38,9 +42,10 @@ import org.dromara.maxkey.crypto.Base64Utils;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.*;
 import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.maxkey.exception.BusinessException;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.sms.SmsOtpAuthnService;
-import org.dromara.maxkey.persistence.service.ScanCodeService;
+import org.dromara.maxkey.authn.provider.scancode.ScanCodeService;
 import org.dromara.maxkey.persistence.service.SocialsAssociatesService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.util.RQCodeUtils;
@@ -51,6 +56,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -277,11 +283,9 @@ public class LoginEntryPoint {
 	 @GetMapping("/genScanCode")
 	 public Message<HashMap<String,String>> genScanCode() {
 		 log.debug("/genScanCode.");
-		 UserInfo userInfo = AuthorizationUtils.getUserInfo();
-		 Long ticket = scanCodeService.createTicket();
-		 String ticketString = userInfo == null ? ticket.toString() : ticket+","+userInfo.getId();
-		 log.debug("ticket string {}",ticketString);
-		 String encodeTicket = PasswordReciprocal.getInstance().encode(ticketString);
+		 String ticket = scanCodeService.createTicket();
+		 log.debug("ticket: {}",ticket);
+		 String encodeTicket = PasswordReciprocal.getInstance().encode(ticket);
 		 BufferedImage bufferedImage  =  RQCodeUtils.write2BufferedImage(encodeTicket, "gif", 300, 300);
 		 String rqCode = Base64Utils.encodeImage(bufferedImage);
 		 HashMap<String,String> codeMap = new HashMap<>();
@@ -289,4 +293,53 @@ public class LoginEntryPoint {
 		 codeMap.put("ticket", encodeTicket);
 		 return new Message<>(Message.SUCCESS, codeMap);
 	 }
+
+	@Operation(summary = "web二维码登录", description = "web二维码登录", method = "POST")
+	@PostMapping("/sign/qrcode")
+	public Message<AuthJwt> signByQrcode( HttpServletRequest request,
+										  HttpServletResponse response,
+										  @Validated @RequestBody ScanCode scanCode) {
+		LoginCredential loginCredential = new LoginCredential();
+		loginCredential.setAuthType(scanCode.getAuthType());
+		loginCredential.setUsername(scanCode.getCode());
+
+		try {
+			Authentication authentication = authenticationProvider.authenticate(loginCredential);
+			if (Objects.nonNull(authentication)) {
+				//success
+				AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
+				return new Message<>(authJwt);
+			} else {
+				return new Message<>(Message.FAIL, "尚未扫码");
+			}
+		} catch (BusinessException businessException) {
+			return new Message<>(businessException.getCode(), businessException.getMessage());
+		}
+	}
+
+	@Operation(summary = "app扫描二维码", description = "扫描二维码登录", method = "POST")
+	@PostMapping("/scanCode")
+	public Message<String> scanCode(@Validated @RequestBody QrCodeCredentialDto credentialDto) throws ParseException {
+		log.debug("/scanCode.");
+		String jwtToken = credentialDto.getJwtToken();
+		String code = credentialDto.getCode();
+		try {
+			//获取登录会话
+			Session session = AuthorizationUtils.getSession(sessionManager, jwtToken);
+			if (Objects.isNull(session)) {
+				return new Message<>(Message.FAIL, "登录会话失效，请重新登录");
+			}
+			//查询二维码是否过期
+			String ticketString = PasswordReciprocal.getInstance().decoder(code);
+			boolean codeResult = scanCodeService.validateTicket(ticketString, session);
+			if (!codeResult) {
+				return new Message<>(Message.FAIL, "二维码已过期，请重新获取");
+			}
+
+		} catch (ParseException e) {
+			log.error("ParseException.",e);
+			return new Message<>(Message.FAIL, "token格式错误");
+		}
+		return new Message<>(Message.SUCCESS, "成功");
+	}
 }
