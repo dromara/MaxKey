@@ -36,18 +36,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AutoConfiguration
 public class MaxKeyOpenApiConfig{
     private static final  Logger logger = LoggerFactory.getLogger(MaxKeyOpenApiConfig.class);
-    
-	//authenticationRealm for MaxKeyMgtApplication
-	@Bean
-	public JdbcAuthenticationRealm authenticationRealm(
-				@Qualifier("passwordEncoder")
-				PasswordEncoder passwordEncoder,
-	    		PasswordPolicyValidator passwordPolicyValidator,
-	    		LoginRepository loginRepository,
-	    		LoginHistoryRepository loginHistoryRepository,
-	    		UserInfoService userInfoService,
-	    		IpLocationParser  ipLocationParser,
-             JdbcTemplate jdbcTemplate) {
+
+    //authenticationRealm for MaxKeyMgtApplication
+    @Bean
+    JdbcAuthenticationRealm authenticationRealm(
+                @Qualifier("passwordEncoder")
+                PasswordEncoder passwordEncoder,
+                PasswordPolicyValidator passwordPolicyValidator,
+                LoginRepository loginRepository,
+                LoginHistoryRepository loginHistoryRepository,
+                UserInfoService userInfoService,
+                IpLocationParser  ipLocationParser,
+                JdbcTemplate jdbcTemplate) {
 		
         JdbcAuthenticationRealm authenticationRealm = new JdbcAuthenticationRealm(
         		passwordEncoder,
@@ -62,8 +62,8 @@ public class MaxKeyOpenApiConfig{
         return authenticationRealm;
     }
 
-	@Bean
-    public AbstractOtpAuthn timeBasedOtpAuthn() {
+    @Bean
+    AbstractOtpAuthn timeBasedOtpAuthn() {
 		AbstractOtpAuthn tfaOtpAuthn = new TimeBasedOtpAuthn();
 	    logger.debug("TimeBasedOtpAuthn inited.");
         return tfaOtpAuthn;

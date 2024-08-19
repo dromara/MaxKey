@@ -121,7 +121,7 @@ public class IpLocationAutoConfiguration {
 	 * @throws Exception
 	 */
 	@Bean 
-	public IpLocationParser ipLocationParser(
+	IpLocationParser ipLocationParser(
 			@Value("${maxkey.login.iplocation:true}") boolean isIplocation,
 			@Value("${maxkey.login.iplocation.online.provider:none}") String onlineProvider,
 			@Value("${maxkey.login.iplocation.offline.provider:Ip2Region}") String offlineProvider) throws Exception {

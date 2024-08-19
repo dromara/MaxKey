@@ -33,7 +33,7 @@ public class SwaggerAutoConfiguration {
     boolean enable;
 
     @Bean
-    public GlobalOpenApiCustomizer orderGlobalOpenApiCustomizer() {
+    GlobalOpenApiCustomizer orderGlobalOpenApiCustomizer() {
         return openApi -> {
             if (openApi.getTags()!=null){
                 openApi.getTags().forEach(tag -> {
@@ -49,9 +49,9 @@ public class SwaggerAutoConfiguration {
 
         };
     }
-    
+
     @Bean
-    public GroupedOpenApi userApi(){
+    GroupedOpenApi userApi(){
         String[] paths = { 
         		"/login",
         		"/logout",
@@ -70,9 +70,9 @@ public class SwaggerAutoConfiguration {
                 .pathsToMatch(paths)
                 .packagesToScan(packagedToMatch).build();
     }
-    
-	@Bean
-	public OpenAPI docOpenAPI() {
+
+    @Bean
+    OpenAPI docOpenAPI() {
 		return new OpenAPI()
 				.info(
 					new Info()

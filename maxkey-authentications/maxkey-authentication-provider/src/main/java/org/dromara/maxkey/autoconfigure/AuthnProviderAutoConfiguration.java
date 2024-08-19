@@ -47,7 +47,7 @@ public class AuthnProviderAutoConfiguration {
     static final  Logger _logger = LoggerFactory.getLogger(AuthnProviderAutoConfiguration.class);
 
     @Bean
-    public AbstractAuthenticationProvider authenticationProvider(
+     AbstractAuthenticationProvider authenticationProvider(
     		NormalAuthenticationProvider normalAuthenticationProvider,
     		MobileAuthenticationProvider mobileAuthenticationProvider,
     		TrustedAuthenticationProvider trustedAuthenticationProvider,
@@ -63,7 +63,7 @@ public class AuthnProviderAutoConfiguration {
     }
 
     @Bean
-    public NormalAuthenticationProvider normalAuthenticationProvider(
+    NormalAuthenticationProvider normalAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    SessionManager sessionManager,

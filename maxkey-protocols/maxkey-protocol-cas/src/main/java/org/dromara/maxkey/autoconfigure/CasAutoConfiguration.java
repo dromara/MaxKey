@@ -37,7 +37,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 })
 public class CasAutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(CasAutoConfiguration.class);
-    
+
     /**
      * TicketServices. 
      * @param persistence int
@@ -45,7 +45,7 @@ public class CasAutoConfiguration implements InitializingBean {
      * @return casTicketServices
      */
     @Bean(name = "casTicketServices")
-    public TicketServices casTicketServices(
+    TicketServices casTicketServices(
             @Value("${maxkey.server.persistence}") int persistence,
             @Value("${maxkey.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,
@@ -53,7 +53,7 @@ public class CasAutoConfiguration implements InitializingBean {
     	_logger.debug("init casTicketServices.");
         return new TicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
     }
-   
+
     /**
      * TicketServices. 
      * @param persistence int
@@ -61,7 +61,7 @@ public class CasAutoConfiguration implements InitializingBean {
      * @return casTicketServices
      */
     @Bean(name = "casTicketGrantingTicketServices")
-    public TicketServices casTicketGrantingTicketServices(
+    TicketServices casTicketGrantingTicketServices(
             @Value("${maxkey.server.persistence}") int persistence,
             @Value("${maxkey.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,
@@ -69,9 +69,9 @@ public class CasAutoConfiguration implements InitializingBean {
     	_logger.debug("init casTicketGrantingTicketServices.");
         return new TicketGrantingTicketServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
     }
-    
+
     @Bean(name = "casProxyGrantingTicketServices")
-    public TicketServices casProxyGrantingTicketServices(
+    TicketServices casProxyGrantingTicketServices(
             @Value("${maxkey.server.persistence}") int persistence,
             @Value("${maxkey.login.remeberme.validity}") int validity,
             JdbcTemplate jdbcTemplate,

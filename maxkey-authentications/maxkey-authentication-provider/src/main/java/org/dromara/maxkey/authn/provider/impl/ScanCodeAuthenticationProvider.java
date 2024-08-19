@@ -12,7 +12,6 @@ import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.constants.ConstsLoginType;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.idm.UserInfo;
-;
 import org.dromara.maxkey.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

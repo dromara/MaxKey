@@ -73,14 +73,14 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
     
     @Value("${spring.jackson.date-format:yyyy-MM-dd HH:mm:ss}")
     private String pattern;
-    
+
     /**
      * 消息处理，可以直接使用properties的key值，返回的是对应的value值
      * messageSource .
      * @return messageSource
      */
-    @Bean (name = "messageSource")
-    public ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource(
+    @Bean(name = "messageSource")
+    ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource(
             @Value("${spring.messages.basename:classpath:messages/message}")
             String messagesBasename)  {
         _logger.debug("Basename {}" , messagesBasename);
@@ -91,48 +91,48 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         messageSource.setUseCodeAsDefaultMessage(false);
         return messageSource;
     }
-    
+
     /**
      * Locale Change Interceptor and Resolver definition .
      * @return localeChangeInterceptor
      */
     //@Primary
-    @Bean (name = "localeChangeInterceptor")
-    public LocaleChangeInterceptor localeChangeInterceptor()  {
+    @Bean(name = "localeChangeInterceptor")
+    LocaleChangeInterceptor localeChangeInterceptor()  {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("language");
         return localeChangeInterceptor;
     }
-    
+
     /**
      * handlerMapping .
      * @return handlerMapping
      */
-    @Bean (name = "handlerMapping")
-    public RequestMappingHandlerMapping requestMappingHandlerMapping(
+    @Bean(name = "handlerMapping")
+    RequestMappingHandlerMapping requestMappingHandlerMapping(
                                     LocaleChangeInterceptor localeChangeInterceptor) {
         RequestMappingHandlerMapping requestMappingHandlerMapping = new RequestMappingHandlerMapping();
         requestMappingHandlerMapping.setInterceptors(localeChangeInterceptor);
         return requestMappingHandlerMapping;
     }
-    
+
     /**
      * jaxb2Marshaller .
      * @return jaxb2Marshaller
      */
-    @Bean (name = "jaxb2Marshaller")
-    public Jaxb2Marshaller jaxb2Marshaller() {
+    @Bean(name = "jaxb2Marshaller")
+    Jaxb2Marshaller jaxb2Marshaller() {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
         jaxb2Marshaller.setClassesToBeBound(org.dromara.maxkey.entity.xml.UserInfoXML.class);;
         return jaxb2Marshaller;
     }
-    
+
     /**
      * marshallingHttpMessageConverter .
      * @return marshallingHttpMessageConverter
      */
-    @Bean (name = "marshallingHttpMessageConverter")
-    public MarshallingHttpMessageConverter marshallingHttpMessageConverter(
+    @Bean(name = "marshallingHttpMessageConverter")
+    MarshallingHttpMessageConverter marshallingHttpMessageConverter(
                                                 Jaxb2Marshaller jaxb2Marshaller) {
         MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
         marshallingHttpMessageConverter.setMarshaller(jaxb2Marshaller);
@@ -145,13 +145,13 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         marshallingHttpMessageConverter.setSupportedMediaTypes(mediaTypesList);
         return marshallingHttpMessageConverter;
     }
-    
+
     /**
      * mappingJacksonHttpMessageConverter .
      * @return mappingJacksonHttpMessageConverter
      */
-    @Bean (name = "mappingJacksonHttpMessageConverter")
-    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+    @Bean(name = "mappingJacksonHttpMessageConverter")
+    MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
         MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter = new MappingJackson2HttpMessageConverter();
         ArrayList<MediaType> mediaTypesList = new ArrayList<>();
         mediaTypesList.add(MediaType.APPLICATION_JSON);
@@ -169,32 +169,32 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         mappingJacksonHttpMessageConverter.setObjectMapper(objectMapper);
         return mappingJacksonHttpMessageConverter;
     }
-    
+
     /**
      * cookieLocaleResolver .
      * @return cookieLocaleResolver
      */
 
     @Bean(name = "cookieLocaleResolver")
-    public LocaleResolver cookieLocaleResolver(
+    LocaleResolver cookieLocaleResolver(
             @Value("${maxkey.server.domain:maxkey.top}")
             String domainName
-        ) {
+    ) {
         _logger.debug("DomainName {}" , domainName);
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver("mxk_locale");
         cookieLocaleResolver.setCookieDomain(domainName);
         cookieLocaleResolver.setCookieMaxAge(Duration.ofDays(14));
         return cookieLocaleResolver;
     }
-     
+
     /**
      * AnnotationMethodHandlerAdapter
      * requestMappingHandlerAdapter .
      * @return requestMappingHandlerAdapter
      */
-    @Bean (name = "addConverterRequestMappingHandlerAdapter")
-    public RequestMappingHandlerAdapter requestMappingHandlerAdapter(
-    		@Qualifier("mappingJacksonHttpMessageConverter")
+    @Bean(name = "addConverterRequestMappingHandlerAdapter")
+    RequestMappingHandlerAdapter requestMappingHandlerAdapter(
+            @Qualifier("mappingJacksonHttpMessageConverter")
             MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter,
             MarshallingHttpMessageConverter marshallingHttpMessageConverter,
             StringHttpMessageConverter stringHttpMessageConverter,
@@ -212,14 +212,14 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         requestMappingHandlerAdapter.setMessageConverters(httpMessageConverterList);
         return requestMappingHandlerAdapter;
     }
-    
+
     /**
      * restTemplate .
      * @return restTemplate
      */
-    @Bean (name = "restTemplate")
-    public RestTemplate restTemplate(
-    		@Qualifier("mappingJacksonHttpMessageConverter")
+    @Bean(name = "restTemplate")
+    RestTemplate restTemplate(
+            @Qualifier("mappingJacksonHttpMessageConverter")
             MappingJackson2HttpMessageConverter mappingJacksonHttpMessageConverter,
             MarshallingHttpMessageConverter marshallingHttpMessageConverter) {
         RestTemplate restTemplate = new RestTemplate();
@@ -236,7 +236,7 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
      * @return webServerFactoryCustomizer
      */
     @Bean
-    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
+    WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
         return new WebServerFactoryCustomizer<ConfigurableWebServerFactory>() {
             @Override
             public void customize(ConfigurableWebServerFactory factory) {
@@ -251,15 +251,15 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
             }
         };
     }
-    
+
     @Bean
-    public SecurityContextHolderAwareRequestFilter securityContextHolderAwareRequestFilter() {
+    SecurityContextHolderAwareRequestFilter securityContextHolderAwareRequestFilter() {
         _logger.debug("securityContextHolderAwareRequestFilter init ");
         return new SecurityContextHolderAwareRequestFilter();
     }
-    
+
     @Bean
-    public FilterRegistrationBean<CorsFilter> corsFilter() {
+    FilterRegistrationBean<CorsFilter> corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
@@ -273,9 +273,9 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         bean.addUrlPatterns("/*");
         return bean;
     }
-    
+
     @Bean
-    public FilterRegistrationBean<Filter> delegatingFilterProxy() {
+    FilterRegistrationBean<Filter> delegatingFilterProxy() {
         _logger.debug("delegatingFilterProxy init for /* ");
         FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new DelegatingFilterProxy("securityContextHolderAwareRequestFilter"));
@@ -286,9 +286,9 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         
         return registrationBean;
     }
-    
+
     @Bean
-    public FilterRegistrationBean<Filter> webXssRequestFilter() {
+    FilterRegistrationBean<Filter> webXssRequestFilter() {
         _logger.debug("webXssRequestFilter init for /* ");
         FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>(new WebXssRequestFilter());
         registrationBean.addUrlPatterns("/*");
@@ -296,11 +296,11 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
         registrationBean.setOrder(3);
         return registrationBean;
     }
-    
+
     @Bean
-    public FilterRegistrationBean<Filter> webInstRequestFilter(
-    											InstitutionsRepository institutionsRepository,
-    											ApplicationConfig applicationConfig) {
+    FilterRegistrationBean<Filter> webInstRequestFilter(
+                                                InstitutionsRepository institutionsRepository,
+                                                ApplicationConfig applicationConfig) {
         _logger.debug("WebInstRequestFilter init for /* ");
         FilterRegistrationBean<Filter> registrationBean = 
         		new FilterRegistrationBean<>(new WebInstRequestFilter(institutionsRepository,applicationConfig));

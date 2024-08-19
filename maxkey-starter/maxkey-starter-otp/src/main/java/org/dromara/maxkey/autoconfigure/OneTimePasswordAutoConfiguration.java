@@ -33,10 +33,10 @@ import org.springframework.context.annotation.Bean;
 public class OneTimePasswordAutoConfiguration {
     private static final  Logger _logger = 
             LoggerFactory.getLogger(OneTimePasswordAutoConfiguration.class);
-    
-  
+
+
     @Bean(name = "mailOtpAuthnService")
-    public MailOtpAuthnService mailOtpAuthnService(
+    MailOtpAuthnService mailOtpAuthnService(
             @Value("${maxkey.server.persistence}") int persistence,
             CnfEmailSendersService emailSendersService,
             RedisConnectionFactory redisConnFactory) {

@@ -40,7 +40,7 @@ public class MvcCurrentUserAutoConfiguration  implements WebMvcConfigurer {
     }
     
     @Bean
-    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
+    CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
         return new CurrentUserMethodArgumentResolver();
     }
     

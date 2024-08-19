@@ -40,11 +40,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @AutoConfiguration
 public class MaxKeyMgtListenerConfig  {
     private static final  Logger logger = LoggerFactory.getLogger(MaxKeyMgtListenerConfig.class);
- 
+
     @Bean
-    public String  sessionListenerAdapter(
-    		Scheduler scheduler,
-    		SessionManager sessionManager) throws SchedulerException {
+    String sessionListenerAdapter(
+            Scheduler scheduler,
+            SessionManager sessionManager) throws SchedulerException {
     	new ScheduleAdapterBuilder()
     		.setScheduler(scheduler)
     		.setCron("0 0/10 * * * ?")
@@ -54,11 +54,11 @@ public class MaxKeyMgtListenerConfig  {
         logger.debug("Session ListenerAdapter inited .");
     	return "sessionListenerAdapter";
     }
-    
+
     @Bean
-    public String  reorgDeptListenerAdapter(
-    		Scheduler scheduler,
-    		OrganizationsService organizationsService) throws SchedulerException {
+    String reorgDeptListenerAdapter(
+            Scheduler scheduler,
+            OrganizationsService organizationsService) throws SchedulerException {
     	new ScheduleAdapterBuilder()
 			.setScheduler(scheduler)
 			.setCron("0 0/30 * * * ?")
@@ -68,13 +68,13 @@ public class MaxKeyMgtListenerConfig  {
         logger.debug("ReorgDept ListenerAdapter inited .");
     	return "reorgDeptListenerAdapter";
     }
-    
+
     @Bean
-    public String  dynamicGroupsListenerAdapter(
-    		Scheduler scheduler,
+    String dynamicGroupsListenerAdapter(
+            Scheduler scheduler,
             GroupsService groupsService,
             @Value("${maxkey.job.cron.schedule}") String cronSchedule
-            ) throws SchedulerException {
+    ) throws SchedulerException {
     	new ScheduleAdapterBuilder()
 			.setScheduler(scheduler)
 			.setCron(cronSchedule)
@@ -85,13 +85,13 @@ public class MaxKeyMgtListenerConfig  {
         logger.debug("DynamicGroups ListenerAdapter inited .");
         return "dynamicGroupsListenerAdapter";
     }
-    
+
     @Bean
-    public String  provisioningRunnerThread(
-    		ConnectorsService connectorsService,
-    		JdbcTemplate jdbcTemplate,
-    		ApplicationConfig applicationConfig
-            ) {
+    String provisioningRunnerThread(
+            ConnectorsService connectorsService,
+            JdbcTemplate jdbcTemplate,
+            ApplicationConfig applicationConfig
+    ) {
         if(applicationConfig.isProvisionSupport()) {
 	    	ProvisioningRunner runner = new ProvisioningRunner(connectorsService,jdbcTemplate);
 	    	ProvisioningRunnerThread runnerThread = new ProvisioningRunnerThread(runner);

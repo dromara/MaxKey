@@ -47,13 +47,13 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 public class SynchronizerAutoConfiguration   implements InitializingBean {
 	private static final  Logger _logger = LoggerFactory.getLogger(SynchronizerAutoConfiguration.class);
 	public static final String SYNCHRONIZERS_SELECT_STATEMENT = "select * from mxk_synchronizers where status ='1'";
-	
-	 @Bean(name = "schedulerSynchronizerJobs")
-	public String schedulerSynchronizerJobs(
-				JdbcTemplate  jdbcTemplate,
-	            SchedulerFactoryBean schedulerFactoryBean,
-	            @Value("${maxkey.job.cron.enable}") boolean jobCronEnable
-	            ) throws SchedulerException {
+
+    @Bean(name = "schedulerSynchronizerJobs")
+    String schedulerSynchronizerJobs(
+                JdbcTemplate  jdbcTemplate,
+                SchedulerFactoryBean schedulerFactoryBean,
+                @Value("${maxkey.job.cron.enable}") boolean jobCronEnable
+    ) throws SchedulerException {
 		
 		 Scheduler scheduler = schedulerFactoryBean.getScheduler();
 		 if(jobCronEnable) {

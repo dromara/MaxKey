@@ -58,27 +58,27 @@ public class ApplicationAutoConfiguration {
     static final  Logger _logger = LoggerFactory.getLogger(ApplicationAutoConfiguration.class);
 
     @Bean
-    public PasswordReciprocal passwordReciprocal() {
+    PasswordReciprocal passwordReciprocal() {
         return new PasswordReciprocal();
     }
-    
+
     @Bean
-    public DataSourceTransactionManager transactionManager(DataSource dataSource) {
+    DataSourceTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
-    
+
     @Bean
-    public InstitutionsRepository institutionsRepository(JdbcTemplate jdbcTemplate) {
+    InstitutionsRepository institutionsRepository(JdbcTemplate jdbcTemplate) {
         return new InstitutionsRepository(jdbcTemplate);
     }
-    
+
     /**
      * Authentication Password Encoder .
      * @return
      */
     @Bean
-    public PasswordEncoder passwordEncoder(
-    		@Value("${maxkey.crypto.password.encoder:bcrypt}") String idForEncode) {
+    PasswordEncoder passwordEncoder(
+            @Value("${maxkey.crypto.password.encoder:bcrypt}") String idForEncode) {
     	Map<String ,PasswordEncoder > encoders = new HashMap<>();
         encoders.put("bcrypt", new BCryptPasswordEncoder());
         encoders.put("plain", NoOpPasswordEncoder.getInstance());
@@ -111,13 +111,13 @@ public class ApplicationAutoConfiguration {
         return passwordEncoder;
     }
 
-    
+
     /**
      * keyStoreLoader .
      * @return
      */
     @Bean
-    public KeyStoreLoader keyStoreLoader(
+    KeyStoreLoader keyStoreLoader(
             @Value("${maxkey.saml.v20.idp.issuing.entity.id}") String entityName,
             @Value("${maxkey.saml.v20.idp.keystore.password}") String keystorePassword,
             @Value("${maxkey.saml.v20.idp.keystore}") Resource keystoreFile) {
@@ -127,13 +127,13 @@ public class ApplicationAutoConfiguration {
         keyStoreLoader.setKeystoreFile(keystoreFile);
         return keyStoreLoader;
     }
-    
+
     /**
      * spKeyStoreLoader .
      * @return
      */
     @Bean
-    public KeyStoreLoader serviceProviderKeyStoreLoader(
+    KeyStoreLoader serviceProviderKeyStoreLoader(
             @Value("${maxkey.saml.v20.sp.issuing.entity.id}") String entityName,
             @Value("${maxkey.saml.v20.sp.keystore.password}") String keystorePassword,
             @Value("${maxkey.saml.v20.sp.keystore}") Resource keystoreFile) {
@@ -143,23 +143,23 @@ public class ApplicationAutoConfiguration {
         keyStoreLoader.setKeystoreFile(keystoreFile);
         return keyStoreLoader;
     }
-    
+
     /**
      * spKeyStoreLoader .
      * @return
      */
     @Bean
-    public String spIssuingEntityName(
+    String spIssuingEntityName(
             @Value("${maxkey.saml.v20.sp.issuing.entity.id}") String spIssuingEntityName) {
         return spIssuingEntityName;
     }
-    
+
     /**
      * Id Generator .
      * @return
      */
     @Bean
-    public IdGenerator idGenerator(
+    IdGenerator idGenerator(
             @Value("${maxkey.id.strategy:SnowFlake}") String strategy,
             @Value("${maxkey.id.datacenterId:0}") int datacenterId,
             @Value("${maxkey.id.machineId:0}") int machineId) {
@@ -170,11 +170,11 @@ public class ApplicationAutoConfiguration {
         return idGenerator;
     }
 
-    
+
     @Bean
-    public MomentaryService momentaryService(
-    		RedisConnectionFactory redisConnFactory,
-    		@Value("${maxkey.server.persistence}") int persistence) {
+    MomentaryService momentaryService(
+            RedisConnectionFactory redisConnFactory,
+            @Value("${maxkey.server.persistence}") int persistence) {
     	MomentaryService momentaryService;
     	if (persistence == ConstsPersistence.REDIS) {
     		momentaryService = new RedisMomentaryService(redisConnFactory);

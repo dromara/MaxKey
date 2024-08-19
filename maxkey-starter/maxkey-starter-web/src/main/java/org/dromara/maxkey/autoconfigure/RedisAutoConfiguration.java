@@ -28,7 +28,7 @@ import redis.clients.jedis.JedisPoolConfig;
 @AutoConfiguration
 public class RedisAutoConfiguration {
     static final  Logger _logger = LoggerFactory.getLogger(RedisAutoConfiguration.class);
-    
+
     /**
      * RedisConnectionFactory. 
      * @param host String
@@ -42,7 +42,7 @@ public class RedisAutoConfiguration {
      * @return RedisConnectionFactory
      */
     @Bean
-    public RedisConnectionFactory redisConnFactory(
+    RedisConnectionFactory redisConnFactory(
             @Value("${spring.redis.host}")
             String host,
             @Value("${spring.redis.port:6379}")

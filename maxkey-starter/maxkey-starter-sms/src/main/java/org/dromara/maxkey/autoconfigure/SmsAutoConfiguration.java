@@ -33,10 +33,10 @@ import org.springframework.context.annotation.Bean;
 @AutoConfiguration
 public class SmsAutoConfiguration  {
     private static final  Logger _logger = LoggerFactory.getLogger(SmsAutoConfiguration.class);
-    
-  
+
+
     @Bean(name = "smsOtpAuthnService")
-    public SmsOtpAuthnService smsOtpAuthnService(
+    SmsOtpAuthnService smsOtpAuthnService(
             @Value("${maxkey.server.persistence}") int persistence,
             CnfSmsProviderService smsProviderService,
             CnfEmailSendersService emailSendersService,
