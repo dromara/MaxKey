@@ -332,6 +332,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
       this.qrCodeService.loginByQrCode({
         authType: 'scancode',
         code: this.ticket,
+        state: this.state,
       }).subscribe(res => {
         if (res.code === 0) {
           this.qrexpire = true;

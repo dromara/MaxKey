@@ -15,6 +15,9 @@ public class ScanCode {
     @NotEmpty(message = "登录方式不能为空")
     String authType;
 
+    @NotEmpty(message = "state不能为空")
+    String state;
+
     public @NotEmpty(message = "二维码内容不能为空") String getCode() {
         return code;
     }
@@ -29,5 +32,13 @@ public class ScanCode {
 
     public void setAuthType(@NotEmpty(message = "登录方式不能为空") String authType) {
         this.authType = authType;
+    }
+
+    public @NotEmpty(message = "state不能为空") String getState() {
+        return state;
+    }
+
+    public void setState(@NotEmpty(message = "state不能为空") String state) {
+        this.state = state;
     }
 }
