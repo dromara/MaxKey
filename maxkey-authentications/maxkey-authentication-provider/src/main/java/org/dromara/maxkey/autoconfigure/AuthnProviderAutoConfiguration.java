@@ -20,10 +20,7 @@ package org.dromara.maxkey.autoconfigure;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.provider.AuthenticationProviderFactory;
-import org.dromara.maxkey.authn.provider.impl.MobileAuthenticationProvider;
-import org.dromara.maxkey.authn.provider.impl.NormalAuthenticationProvider;
-import org.dromara.maxkey.authn.provider.impl.ScanCodeAuthenticationProvider;
-import org.dromara.maxkey.authn.provider.impl.TrustedAuthenticationProvider;
+import org.dromara.maxkey.authn.provider.impl.*;
 import org.dromara.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.authn.support.rememberme.AbstractRemeberMeManager;
@@ -51,13 +48,15 @@ public class AuthnProviderAutoConfiguration {
     		NormalAuthenticationProvider normalAuthenticationProvider,
     		MobileAuthenticationProvider mobileAuthenticationProvider,
     		TrustedAuthenticationProvider trustedAuthenticationProvider,
-			ScanCodeAuthenticationProvider scanCodeAuthenticationProvider
+			ScanCodeAuthenticationProvider scanCodeAuthenticationProvider,
+			AppAuthenticationProvider appAuthenticationProvider
     		) {
     	AuthenticationProviderFactory authenticationProvider = new AuthenticationProviderFactory();
     	authenticationProvider.addAuthenticationProvider(normalAuthenticationProvider);
     	authenticationProvider.addAuthenticationProvider(mobileAuthenticationProvider);
     	authenticationProvider.addAuthenticationProvider(trustedAuthenticationProvider);
     	authenticationProvider.addAuthenticationProvider(scanCodeAuthenticationProvider);
+    	authenticationProvider.addAuthenticationProvider(appAuthenticationProvider);
 
     	return authenticationProvider;
     }
@@ -84,6 +83,17 @@ public class AuthnProviderAutoConfiguration {
 			SessionManager sessionManager
 	) {
 		return new ScanCodeAuthenticationProvider(
+				authenticationRealm,
+				sessionManager
+		);
+	}
+
+	@Bean
+	public AppAuthenticationProvider appAuthenticationProvider(
+			AbstractAuthenticationRealm authenticationRealm,
+			SessionManager sessionManager
+	) {
+		return new AppAuthenticationProvider(
 				authenticationRealm,
 				sessionManager
 		);
