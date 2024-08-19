@@ -14,29 +14,20 @@
  * limitations under the License.
  */
 
+import { Injectable } from '@angular/core';
+import { _HttpClient } from '@delon/theme';
 
-package org.dromara.maxkey.authn.session;
+@Injectable({
+  providedIn: 'root'
+})
+export class QrCodeService {
+  constructor(private http: _HttpClient) {}
 
-import java.time.LocalDateTime;
-import java.util.List;
+  getLoginQrCode() {
+    return this.http.get('/login/genScanCode');
+  }
 
-import org.dromara.maxkey.entity.history.HistoryLogin;
-
-public interface SessionManager {
-
-	public  void create(String sessionId, Session session);
-
-    public  Session remove(String sessionId);
-
-    public  Session get(String sessionId);
-
-    public Session refresh(String sessionId ,LocalDateTime refreshTime);
-
-    public Session refresh(String sessionId);
-
-    public List<HistoryLogin> querySessions();
-
-    public int getValiditySeconds();
-
-    public void terminate(String sessionId,String userId,String username);
+  loginByQrCode(authParam: any) {
+    return this.http.post('/login/sign/qrcode', authParam);
+  }
 }

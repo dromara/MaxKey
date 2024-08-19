@@ -127,6 +127,7 @@
   },
   "defaultProject": "ng-alain",
   "cli": {
+    "analytics": false,
     "packageManager": "yarn"
   }
 }
