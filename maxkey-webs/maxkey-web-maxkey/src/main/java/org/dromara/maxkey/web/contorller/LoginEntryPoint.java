@@ -296,25 +296,27 @@ public class LoginEntryPoint {
 
 	@Operation(summary = "web二维码登录", description = "web二维码登录", method = "POST")
 	@PostMapping("/sign/qrcode")
-	public Message<AuthJwt> signByQrcode( HttpServletRequest request,
-										  HttpServletResponse response,
-										  @Validated @RequestBody ScanCode scanCode) {
+	public Message<AuthJwt> signByQrcode(@Validated @RequestBody ScanCode scanCode) {
 		LoginCredential loginCredential = new LoginCredential();
 		loginCredential.setAuthType(scanCode.getAuthType());
 		loginCredential.setUsername(scanCode.getCode());
 
-		try {
-			Authentication authentication = authenticationProvider.authenticate(loginCredential);
-			if (Objects.nonNull(authentication)) {
-				//success
-				AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
-				return new Message<>(authJwt);
-			} else {
-				return new Message<>(Message.FAIL, "尚未扫码");
+		if(authTokenService.validateJwtToken(scanCode.getState())){
+			try {
+				Authentication authentication = authenticationProvider.authenticate(loginCredential);
+				if (Objects.nonNull(authentication)) {
+					//success
+					AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
+					return new Message<>(authJwt);
+				} else {
+					return new Message<>(Message.FAIL, "尚未扫码");
+				}
+			} catch (BusinessException businessException) {
+				return new Message<>(businessException.getCode(), businessException.getMessage());
 			}
-		} catch (BusinessException businessException) {
-			return new Message<>(businessException.getCode(), businessException.getMessage());
 		}
+
+		return new Message<>(Message.FAIL);
 	}
 
 	@Operation(summary = "app扫描二维码", description = "扫描二维码登录", method = "POST")
