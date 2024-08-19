@@ -64,6 +64,11 @@ public abstract class AbstractAuthenticationProvider {
          * 扫描认证
          */
         public static final  String SCAN_CODE 	= "scancode";
+
+        /**
+         * 手机端APP
+         */
+        public static final  String APP 		= "app";
     }
 
     protected ApplicationConfig applicationConfig;
