@@ -3,6 +3,6 @@
 
 ## MaxKey开源之夏项目
 
-- [ ] MaxKey APP客户端Flutter开发项目
+- [ ] MaxKey APP客户端Flutter开发项目（Flutter）
 
 - [ ] MaxKey同步功能增强，增加属性映射关系管理
