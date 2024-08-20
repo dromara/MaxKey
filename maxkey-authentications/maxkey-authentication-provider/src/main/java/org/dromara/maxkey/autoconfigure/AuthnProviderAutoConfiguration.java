@@ -91,11 +91,15 @@ public class AuthnProviderAutoConfiguration {
 	@Bean
 	public AppAuthenticationProvider appAuthenticationProvider(
 			AbstractAuthenticationRealm authenticationRealm,
-			SessionManager sessionManager
+			ApplicationConfig applicationConfig,
+			SessionManager sessionManager,
+			AuthTokenService authTokenService
 	) {
 		return new AppAuthenticationProvider(
 				authenticationRealm,
-				sessionManager
+				applicationConfig,
+				sessionManager,
+				authTokenService
 		);
 	}
 

@@ -1,15 +1,18 @@
 package org.dromara.maxkey.authn.provider.impl;
 
 import org.dromara.maxkey.authn.LoginCredential;
+import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.dromara.maxkey.authn.session.SessionManager;
+import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -28,9 +31,13 @@ public class AppAuthenticationProvider extends AbstractAuthenticationProvider {
 
     public AppAuthenticationProvider(
             AbstractAuthenticationRealm authenticationRealm,
-            SessionManager sessionManager) {
+            ApplicationConfig applicationConfig,
+            SessionManager sessionManager,
+            AuthTokenService authTokenService) {
         this.authenticationRealm = authenticationRealm;
+        this.applicationConfig = applicationConfig;
         this.sessionManager = sessionManager;
+        this.authTokenService = authTokenService;
     }
 
 
@@ -48,6 +55,9 @@ public class AppAuthenticationProvider extends AbstractAuthenticationProvider {
 
             _logger.debug("authentication {}", loginCredential);
 
+            if(this.applicationConfig.getLoginConfig().isCaptcha()) {
+                captchaValid(loginCredential.getState(),loginCredential.getCaptcha());
+            }
 
             emptyPasswordValid(loginCredential.getPassword());
 
@@ -92,5 +102,12 @@ public class AppAuthenticationProvider extends AbstractAuthenticationProvider {
         }
 
         return authenticationToken;
+    }
+
+    protected void captchaValid(String state ,String captcha) {
+        // for basic
+        if(!authTokenService.validateCaptcha(state,captcha)) {
+            throw new BadCredentialsException(WebContext.getI18nValue("login.error.captcha"));
+        }
     }
 }
