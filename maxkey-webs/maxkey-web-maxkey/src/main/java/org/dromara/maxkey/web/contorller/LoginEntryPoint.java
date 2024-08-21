@@ -314,9 +314,9 @@ public class LoginEntryPoint {
 			} catch (BusinessException businessException) {
 				return new Message<>(businessException.getCode(), businessException.getMessage());
 			}
+		} else {
+			return new Message<>(20005, "state失效重新获取");
 		}
-
-		return new Message<>(Message.FAIL);
 	}
 
 	@Operation(summary = "app扫描二维码", description = "扫描二维码登录", method = "POST")

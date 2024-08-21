@@ -102,6 +102,13 @@ export class UserLoginComponent implements OnInit, OnDestroy {
 
     //init socials,state
     this.authnService.clear();
+
+    this.get();
+
+    this.cdr.detectChanges();
+  }
+
+  get() {
     this.authnService
       .get({ remember_me: localStorage.getItem(CONSTS.REMEMBER) })
       .pipe(
@@ -141,7 +148,6 @@ export class UserLoginComponent implements OnInit, OnDestroy {
           }
         }
       });
-    this.cdr.detectChanges();
   }
 
   congressLogin(congress: string) {
@@ -343,6 +349,8 @@ export class UserLoginComponent implements OnInit, OnDestroy {
           this.authnService.navigate({});
         } else if (res.code === 20004) {
           this.qrexpire = true;
+        } else if (res.code === 20005) {
+          this.get()
         }
 
         // Handle response here
