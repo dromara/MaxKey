@@ -1,4 +1,17 @@
-﻿MaxKey v 4.1.0 GA 2024/07/19
+﻿MaxKey v 4.1.1 GA 2024/08/20
+    *(MAXKEY-240501) 构建方式优化
+    *(MAXKEY-240502) 修复jwks转义问题 @奇健陀螺王
+    *(MAXKEY-240503) 增加删除确认提醒
+    *(MAXKEY-240504) 批量删除按钮文字调整
+    *(MAXKEY-240505) 应用访问权限修复
+    *(MAXKEY-240506) 个人资料、密码修改优化
+    *(MAXKEY-240507) 扫码登录支持
+    *(MAXKEY-240508) 历史日志数量从100改为15
+    *(MAXKEY-240509) @Bean public to default
+	*(MAXKEY-240510) 大量框架代码的优化
+    *(MAXKEY-240511) 依赖项引用、更新和升级
+		
+MaxKey v 4.1.0 GA 2024/07/19
     *(MAXKEY-240401) 本地StringUtils 调整成 StrUtils ，取消org.apache.commons.lang3.StringUtils继承关系
     *(MAXKEY-240402) 功能模块化，调整通用模块为starter,包括模块captcha、ip2location、otp、sms、web
     *(MAXKEY-240403) 定时任务优化
