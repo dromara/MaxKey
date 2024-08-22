@@ -5,7 +5,7 @@
     *(MAXKEY-240504) 批量删除按钮文字调整
     *(MAXKEY-240505) 应用访问权限修复
     *(MAXKEY-240506) 个人资料、密码修改优化
-    *(MAXKEY-240507) 扫码登录支持
+    *(MAXKEY-240507) APP扫码登录支持
     *(MAXKEY-240508) 历史日志数量从100改为15
     *(MAXKEY-240509) @Bean public to default
 	*(MAXKEY-240510) 大量框架代码的优化
