@@ -17,7 +17,6 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import java.io.Serializable;
 import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -39,11 +38,7 @@ import org.springframework.stereotype.Repository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Repository
-public class GroupsService  extends JpaService<Groups> implements Serializable {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -4156671926199393550L;
+public class GroupsService  extends JpaService<Groups>{
     
     static final  Logger _logger = LoggerFactory.getLogger(GroupsService.class);
     @JsonIgnore
