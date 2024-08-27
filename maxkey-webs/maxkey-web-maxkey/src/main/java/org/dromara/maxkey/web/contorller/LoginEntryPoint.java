@@ -48,7 +48,7 @@ import org.dromara.maxkey.password.sms.SmsOtpAuthnService;
 import org.dromara.maxkey.authn.provider.scancode.ScanCodeService;
 import org.dromara.maxkey.persistence.service.SocialsAssociatesService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
-import org.dromara.maxkey.util.RQCodeUtils;
+import org.dromara.maxkey.util.QRCodeUtils;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -286,7 +286,7 @@ public class LoginEntryPoint {
 		 String ticket = scanCodeService.createTicket();
 		 log.debug("ticket: {}",ticket);
 		 String encodeTicket = PasswordReciprocal.getInstance().encode(ticket);
-		 BufferedImage bufferedImage  =  RQCodeUtils.write2BufferedImage(encodeTicket, "gif", 300, 300);
+		 BufferedImage bufferedImage  =  QRCodeUtils.write2BufferedImage(encodeTicket, "gif", 300, 300);
 		 String rqCode = Base64Utils.encodeImage(bufferedImage);
 		 HashMap<String,String> codeMap = new HashMap<>();
 		 codeMap.put("rqCode", rqCode);

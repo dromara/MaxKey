@@ -541,7 +541,7 @@
 			"username": "username",
 			"digits": "digits",
 			"period": "period",
-			"sharedSecret": "sharedSecret(BASE32)",
+			"sharedSecret": "sharedSecret",
 			"hexSharedSecret": "sharedSecret( HEX  )",
 			"rqCode": "RQCode",
       "one-timePassword": "One-Time Password"

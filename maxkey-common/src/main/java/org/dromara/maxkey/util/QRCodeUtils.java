@@ -25,7 +25,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 
-public class RQCodeUtils {
+public class QRCodeUtils {
 
 
 	public static void write2File(String path,String rqCodeText,String format,int width, int height ){

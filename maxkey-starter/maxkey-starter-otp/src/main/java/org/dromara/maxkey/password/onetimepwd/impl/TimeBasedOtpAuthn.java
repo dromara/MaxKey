@@ -51,10 +51,9 @@ public class TimeBasedOtpAuthn extends AbstractOtpAuthn {
 
     @Override
     public boolean validate(UserInfo userInfo, String token) {
-        _logger.debug("utcTime : " + dateFormat.format(new Date()));
+        _logger.debug("utcTime : {}" , dateFormat.format(new Date()));
         long currentTimeSeconds = System.currentTimeMillis() / 1000;
-        String sharedSecret = 
-                PasswordReciprocal.getInstance().decoder(userInfo.getSharedSecret());
+        String sharedSecret = PasswordReciprocal.getInstance().decoder(userInfo.getSharedSecret());
         byte[] byteSharedSecret = Base32Utils.decode(sharedSecret);
         String hexSharedSecret = Hex.encodeHexString(byteSharedSecret);
         String timeBasedToken = "";
@@ -74,8 +73,8 @@ public class TimeBasedOtpAuthn extends AbstractOtpAuthn {
                     Long.toHexString(currentTimeSeconds / interval).toUpperCase() + "", 
                     digits + "");
         }
-        _logger.debug("token : " + token);
-        _logger.debug("timeBasedToken : " + timeBasedToken);
+        _logger.debug("token : {}" , token);
+        _logger.debug("timeBasedToken {}: " , timeBasedToken);
         if (token.equalsIgnoreCase(timeBasedToken)) {
             return true;
         }

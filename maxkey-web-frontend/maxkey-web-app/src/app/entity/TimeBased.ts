@@ -24,7 +24,8 @@ export class TimeBased extends BaseEntity {
   digits!: String;
   period!: String;
   sharedSecret!: String;
+  formatSharedSecret!: String;
   hexSharedSecret!: String;
-  rqCode!: String;
-  otp!: string;
+  qrCode!: String;
+  otpCode!: string;
 }

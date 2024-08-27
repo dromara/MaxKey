@@ -27,18 +27,22 @@ import { BaseService } from './base.service';
 })
 export class TimeBasedService extends BaseService<TimeBased> {
   constructor(private _httpClient: HttpClient) {
-    super(_httpClient, '/config');
+    super(_httpClient, '/config/timebased');
   }
 
-  override get(id: String): Observable<Message<TimeBased>> {
-    return this.http.get<Message<TimeBased>>(`${this.server.urls.base}/timebased?generate=NO`);
+  view(id: String): Observable<Message<TimeBased>> {
+    return this.http.get<Message<TimeBased>>(`${this.server.urls.base}/view`);
+  }
+
+  generate(id: String): Observable<Message<TimeBased>> {
+    return this.http.get<Message<TimeBased>>(`${this.server.urls.base}/generate`);
   }
 
   override update(body: any): Observable<Message<TimeBased>> {
-    return this.http.get<Message<TimeBased>>(`${this.server.urls.base}/timebased?generate=YES`);
+    return this.http.put<Message<TimeBased>>(`${this.server.urls.base}/update`, body);
   }
 
-  verify(otp: string): Observable<Message<TimeBased>>{
-    return this.http.get<Message<TimeBased>>(`${this.server.urls.base}/verify?otp=` + otp);
+  verify(otp: string): Observable<Message<TimeBased>> {
+    return this.http.get<Message<TimeBased>>(`${this.server.urls.base}/verify?otpCode=${otp}`);
   }
 }
