@@ -13,6 +13,7 @@
     "homePageUserCardGreetingAfternoon": "Afternoon",
     "homePageUserCardGreetingEvening": "Evening",
     "homePageUserCardScanPage": "Scan to login",
+    "homePageUserCardScanSucceed": "Succeed",
 
     "loginPageSettingBtn": "Settings",
     "loginPageLoginViewUsername": "Username",

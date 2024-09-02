@@ -13,6 +13,7 @@
     "homePageUserCardGreetingAfternoon": "下午好",
     "homePageUserCardGreetingEvening": "晚上好",
     "homePageUserCardScanPage": "扫码登陆",
+    "homePageUserCardScanSucceed": "登陆成功",
 
     "loginPageSettingBtn": "设置",
     "loginPageLoginViewUsername": "用户名",

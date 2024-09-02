@@ -8,12 +8,16 @@ enum _TimeOfDay {
 
   const _TimeOfDay();
 
-  String greeting(BuildContext context) => switch(this) {
-    _TimeOfDay.morning => AppLocalizations.of(context)!.homePageUserCardGreetingMorning,
-    _TimeOfDay.noon => AppLocalizations.of(context)!.homePageUserCardGreetingNoon,
-    _TimeOfDay.afternoon => AppLocalizations.of(context)!.homePageUserCardGreetingAfternoon,
-    _TimeOfDay.evening => AppLocalizations.of(context)!.homePageUserCardGreetingEvening,
-  };
+  String greeting(BuildContext context) => switch (this) {
+        _TimeOfDay.morning =>
+          AppLocalizations.of(context)!.homePageUserCardGreetingMorning,
+        _TimeOfDay.noon =>
+          AppLocalizations.of(context)!.homePageUserCardGreetingNoon,
+        _TimeOfDay.afternoon =>
+          AppLocalizations.of(context)!.homePageUserCardGreetingAfternoon,
+        _TimeOfDay.evening =>
+          AppLocalizations.of(context)!.homePageUserCardGreetingEvening,
+      };
 
   static const _table = [
     evening,
@@ -88,7 +92,8 @@ class _UserCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(_TimeOfDay.fromDateTime(DateTime.now()).greeting(context)),
+                  Text(_TimeOfDay.fromDateTime(DateTime.now())
+                      .greeting(context)),
                   Text(
                     user.displayName,
                     style: const TextStyle(
@@ -103,12 +108,16 @@ class _UserCard extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.qr_code_scanner),
               onPressed: () async {
+                LOGGER.i("_UserCard: ");
                 final qrCodeValue = await context.push<String?>(
                   RoutePath.scanPage,
                   extra: AppLocalizations.of(context)!.homePageUserCardScanPage,
                 );
 
-                if (qrCodeValue == null) return;
+                if (qrCodeValue == null) {
+                  LOGGER.w("No QR code.");
+                  return;
+                }
 
                 await MaxKey.instance.authnService.scanCode(
                   expectedErrorHandler: (msg) {
@@ -118,6 +127,11 @@ class _UserCard extends StatelessWidget {
                   },
                   code: qrCodeValue,
                 );
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(AppLocalizations.of(context)!.homePageUserCardScanSucceed)),
+                  );
+                }
               },
             ),
             const SizedBox(width: 8),
