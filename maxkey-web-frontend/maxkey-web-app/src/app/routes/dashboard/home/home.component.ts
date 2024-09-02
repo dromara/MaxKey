@@ -118,12 +118,15 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  changeCategory(): void {
-    if (this.appCategoryService.list() === null || this.appCategoryService.list() === '') {
+  changeCategory(category: String): void {
+    //console.log(category);
+    if (this.appCategoryService.list() === null || this.appCategoryService.list() === '' || category === 'All') {
       this.appList = this.staticAppList;
     } else {
+      this.appList = [];
       for (let i = 0; i < this.staticAppList.length; i++) {
-        if (this.staticAppList[i].category === this.appCategoryService.list()) {
+        //console.log(this.staticAppList[i]);
+        if (this.staticAppList[i].category === this.appsCategory) {
           this.appList.push(this.staticAppList[i]);
         }
       }
