@@ -34,7 +34,7 @@ class UserPage extends StatelessWidget {
                     _UserCard(user: user!),
                     _UserPageButtonTile(
                       title: AppLocalizations.of(context)!.userPageUserInfoBtn,
-                      trailing: Icons.info,
+                      trailing: const Icon(Icons.info),
                       onTap: () async {
                         final userInfo = await MaxKey.instance.usersService
                             .getFullUserInfo();
@@ -55,26 +55,55 @@ class UserPage extends StatelessWidget {
             const SizedBox(height: 8.0),
             _UserPageButtonTile(
               title: AppLocalizations.of(context)!.userPageSettingsBtn,
-              trailing: Icons.settings,
+              trailing: const Icon(Icons.settings),
               onTap: () {
                 context.push(RoutePath.settingsPage);
               },
             ),
             const SizedBox(height: 8.0),
-            _UserPageButtonTile(
-              title: AppLocalizations.of(context)!.userPageLogoutBtn,
-              trailing: Icons.logout,
-              onTap: () async {
-                await MaxKey.instance.authnService.logout();
-
-                if (context.mounted) {
-                  context.pushReplacement(RoutePath.loginPage);
-                }
-              },
-            )
+            const _LogoutBtn(),
           ]),
         ),
       ),
+    );
+  }
+}
+
+class _LogoutBtn extends StatefulWidget {
+  const _LogoutBtn({super.key});
+
+  @override
+  State<_LogoutBtn> createState() => _LogoutBtnState();
+}
+
+class _LogoutBtnState extends State<_LogoutBtn> {
+  bool isLogouting = false;
+  @override
+  Widget build(BuildContext context) {
+    return _UserPageButtonTile(
+      title: AppLocalizations.of(context)!.userPageLogoutBtn,
+      trailing: isLogouting
+          ? const SizedBox(
+              width: 18,
+              height: 18,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            )
+          : const Icon(Icons.logout),
+      onTap: isLogouting
+          ? null
+          : () async {
+              setState(() {
+                isLogouting = true;
+              });
+              await MaxKey.instance.authnService.logout();
+              setState(() {
+                isLogouting = false;
+              });
+              if (context.mounted) {
+                Navigator.of(context).pop();
+                context.pushReplacement(RoutePath.loginPage);
+              }
+            },
     );
   }
 }
@@ -84,12 +113,12 @@ class _UserPageButtonTile extends StatelessWidget {
     super.key,
     required this.title,
     required this.trailing,
-    required this.onTap,
+    this.onTap,
   });
 
   final String title;
-  final IconData trailing;
-  final void Function() onTap;
+  final Widget trailing;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +129,7 @@ class _UserPageButtonTile extends StatelessWidget {
       ),
       tileColor: scheme.surfaceContainer,
       title: Text(title),
-      trailing: Icon(trailing),
+      trailing: trailing,
       onTap: onTap,
     );
   }

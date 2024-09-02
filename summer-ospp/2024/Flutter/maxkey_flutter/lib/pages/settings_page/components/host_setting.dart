@@ -11,6 +11,8 @@ class _SetHostDialogState extends State<_SetHostDialog> {
   final hostEditingController =
       TextEditingController(text: MaxKeyPersistent.instance.host);
 
+  bool isTesting = false;
+
   /// true: 连接成功；false：链接失败
   bool testResult = true;
   String? testDesc;
@@ -35,26 +37,41 @@ class _SetHostDialogState extends State<_SetHostDialog> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TextButton(
-              onPressed: () async {
-                final result = await MaxKey.instance
-                    .maxKeyNetworkTest(host: hostEditingController.text);
-                setState(() {
-                  testResult = result;
-                  testDesc = result
-                      ? AppLocalizations.of(context)!
-                          .settingsPageHostSettingDialogTestSucceed
-                      : AppLocalizations.of(context)!
-                          .settingsPageHostSettingDialogTestFail;
-                });
-              },
-              child: Text(AppLocalizations.of(context)!.settingsPageHostSettingDialogTestBtn),
+            TextButton.icon(
+              onPressed: isTesting
+                  ? null
+                  : () async {
+                      setState(() {
+                        isTesting = true;
+                      });
+                      final result = await MaxKey.instance
+                          .maxKeyNetworkTest(host: hostEditingController.text);
+                      setState(() {
+                        isTesting = false;
+                        testResult = result;
+                        testDesc = result
+                            ? AppLocalizations.of(context)!
+                                .settingsPageHostSettingDialogTestSucceed
+                            : AppLocalizations.of(context)!
+                                .settingsPageHostSettingDialogTestFail;
+                      });
+                    },
+              icon: isTesting
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : null,
+              label: Text(AppLocalizations.of(context)!
+                  .settingsPageHostSettingDialogTestBtn),
             ),
             Row(
               children: [
                 TextButton(
                   onPressed: Navigator.of(context).pop,
-                  child: Text(AppLocalizations.of(context)!.settingsPageHostSettingDialogCancleBtn),
+                  child: Text(AppLocalizations.of(context)!
+                      .settingsPageHostSettingDialogCancleBtn),
                 ),
                 const SizedBox(width: 8.0),
                 TextButton(
@@ -66,7 +83,8 @@ class _SetHostDialogState extends State<_SetHostDialog> {
                       Navigator.of(context).pop();
                     }
                   },
-                  child: Text(AppLocalizations.of(context)!.settingsPageHostSettingDialogConfirmBtn),
+                  child: Text(AppLocalizations.of(context)!
+                      .settingsPageHostSettingDialogConfirmBtn),
                 ),
               ],
             )
