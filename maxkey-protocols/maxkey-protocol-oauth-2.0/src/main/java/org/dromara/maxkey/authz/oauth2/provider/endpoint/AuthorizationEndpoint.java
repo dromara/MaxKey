@@ -50,12 +50,10 @@ import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
 import org.dromara.maxkey.entity.idm.UserInfo;
-import org.dromara.maxkey.util.HttpEncoder;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -64,9 +62,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
@@ -239,16 +236,11 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 	}
 
 	//approval must post
-	@PostMapping(value  = {OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE+"/approval"}, 
-					params = OAuth2Constants.PARAMETER.USER_OAUTH_APPROVAL)
-	public Message< Object> authorizeApproveOrDeny(
-	                @RequestParam Map<String, String> approvalParameters,
-	                @CurrentUser UserInfo currentUser,
-	                SessionStatus sessionStatus) {
-	    
+	@PostMapping(value  = {OAuth2Constants.ENDPOINT.ENDPOINT_AUTHORIZE+"/approval"}, params = OAuth2Constants.PARAMETER.USER_OAUTH_APPROVAL)
+	@ResponseBody
+	public Message< String> authorizeApproveOrDeny(@RequestParam Map<String, String> approvalParameters,@CurrentUser UserInfo currentUser) {
 		Principal principal = (Principal)AuthorizationUtils.getAuthentication();
 		if (!(principal instanceof Authentication)) {
-			sessionStatus.setComplete();
 			throw new InsufficientAuthenticationException(
 					"User must be authenticated with Spring Security before authorizing an access token.");
 		}
@@ -256,46 +248,35 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 		AuthorizationRequest authorizationRequest = (AuthorizationRequest) momentaryService.get(currentUser.getSessionId(), "authorizationRequest");
 
 		if (authorizationRequest == null) {
-			sessionStatus.setComplete();
 			throw new InvalidRequestException("Cannot approve uninitialized authorization request.");
 		}
 
-		try {
-			Set<String> responseTypes = authorizationRequest.getResponseTypes();
+		Set<String> responseTypes = authorizationRequest.getResponseTypes();
 
-			authorizationRequest.setApprovalParameters(approvalParameters);
-			authorizationRequest = userApprovalHandler.updateAfterApproval(authorizationRequest,
-					(Authentication) principal);
-			boolean approved = userApprovalHandler.isApproved(authorizationRequest, (Authentication) principal);
-			authorizationRequest.setApproved(approved);
+		authorizationRequest.setApprovalParameters(approvalParameters);
+		authorizationRequest = userApprovalHandler.updateAfterApproval(authorizationRequest,(Authentication) principal);
+		boolean approved = userApprovalHandler.isApproved(authorizationRequest, (Authentication) principal);
+		authorizationRequest.setApproved(approved);
 
-			if (authorizationRequest.getRedirectUri() == null) {
-				sessionStatus.setComplete();
-				throw new InvalidRequestException("Cannot approve request when no redirect URI is provided.");
-			}
-
-			if (!authorizationRequest.isApproved()) {
-				return new Message< Object>(Message.FAIL,(Object)
-						getUnsuccessfulRedirect(
-					            authorizationRequest,
-					            new UserDeniedAuthorizationException("User denied access"), 
-					            responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)
-					        )
-						);
-			}
-
-			if (responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)) {
-				return new Message< Object>((Object)
-						getImplicitGrantResponse(authorizationRequest));
-			}
-
-			return new Message< Object>((Object)
-					getAuthorizationCodeResponse(authorizationRequest, (Authentication) principal));
-		}
-		finally {
-			sessionStatus.setComplete();
+		if (authorizationRequest.getRedirectUri() == null) {
+			throw new InvalidRequestException("Cannot approve request when no redirect URI is provided.");
 		}
 
+		if (!authorizationRequest.isApproved()) {
+			return new Message<>(Message.FAIL,
+					getUnsuccessfulRedirect(
+				            authorizationRequest,
+				            new UserDeniedAuthorizationException("User denied access"), 
+				            responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)
+				        )
+					);
+		}
+
+		if (responseTypes.contains(OAuth2Constants.PARAMETER.TOKEN)) {
+			return new Message<>(getImplicitGrantResponse(authorizationRequest));
+		}
+
+		return new Message<>(getAuthorizationCodeResponse(authorizationRequest, (Authentication) principal));
 	}
 
 	// We need explicit approval from the user.

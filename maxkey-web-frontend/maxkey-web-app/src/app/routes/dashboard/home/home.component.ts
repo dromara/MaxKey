@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
         return;
       }
     }
-    window.open(`${this.baseUrl}/authz/${appId}`);
+    window.open(`${this.baseUrl}authz/${appId}`);
   }
   setAccount(appId: string): void {
     const modal = this.modal.create({
@@ -105,11 +105,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.appCategoryList = this.appCategoryService.list();
-    if (environment.api.baseUrl.endsWith('/')) {
-      this.baseUrl = environment.api.baseUrl.substring(0, environment.api.baseUrl.length - 1);
-    } else {
-      this.baseUrl = environment.api.baseUrl;
+    this.baseUrl = environment.api.baseUrl;
+    if (!this.baseUrl.endsWith('/')) {
+      this.baseUrl = `${this.baseUrl}/`;
     }
+    console.log(`baseUrl : ${this.baseUrl}`);
     this.appListService.appList().subscribe(res => {
       //console.log(res.data);
       this.appList = res.data;

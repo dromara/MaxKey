@@ -14,10 +14,10 @@
 				<td colspan='2'><@locale code="login.authz.refuse" /></td>
 			</tr>
 			<tr>
-				<td><img src="${model.iconBase64}"/></td><td>${model.appName}</td>
+				<td><img src="${model.iconBase64!}"/></td><td>${model.appName!}</td>
 			</tr>
 			<tr style="display:none">
-				<td>${model.id}</td>
+				<td>${model.id!}</td>
 			</tr>
 		</table>
 	</form>
