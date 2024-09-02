@@ -37,14 +37,15 @@ class MaxKey with ChangeNotifier {
         handler.next(response);
       },
       onError: (error, handler) {
+        LOGGER.e("InterceptorsWrapper.onError(): ");
         LOGGER.e(error.type);
         LOGGER.e(error.response);
         if (error.type == DioExceptionType.badResponse) {
           SCAFFOLD_MESSENGER_KEY.currentState?.showSnackBar(
             SnackBar(
-              content: const Text("Please login again."),
+              content: const Text("登陆状态过期。请重新登陆"),
               action: SnackBarAction(
-                label: "Login",
+                label: "重新登陆",
                 onPressed: () async {
                   _dio.options.headers.remove(HttpHeaders.authorizationHeader);
                   await MaxKeyPersistent.instance.clearToken();
@@ -62,6 +63,7 @@ class MaxKey with ChangeNotifier {
   }
 
   void updateBaseUrl() {
+    LOGGER.i("MaxKey.updateBaseUrl(): ");
     LOGGER.i("old baseUrl: ${_dio.options.baseUrl}");
     _dio.options.baseUrl = MaxKeyPersistent.instance.baseUrl;
     LOGGER.i("new baseUrl: ${_dio.options.baseUrl}");
@@ -72,16 +74,20 @@ class MaxKey with ChangeNotifier {
 
   Future<bool> maxKeyNetworkTest({String? host}) async {
     try {
+      LOGGER.i("MaxKey.maxKeyNetworkTest(): ");
       LOGGER.i(
         "[MaxKeyNetworkTest] GET: ${host == null ? MaxKeyPersistent.instance.baseUrl : "http://$host/sign"}",
       );
 
-      await _dio.get(
-        host == null ? MaxKeyPersistent.instance.baseUrl : "http://$host/sign",
-      );
+      await _dio
+          .get(host == null
+              ? MaxKeyPersistent.instance.baseUrl
+              : "http://$host/sign")
+          .timeout(const Duration(seconds: 5));
       LOGGER.i("MaxKeyNetworkTest: true");
       return true;
     } catch (err) {
+      LOGGER.e("MaxKey.maxKeyNetworkTest(): ");
       LOGGER.e(err);
     }
     LOGGER.i("MaxKeyNetworkTest: false");

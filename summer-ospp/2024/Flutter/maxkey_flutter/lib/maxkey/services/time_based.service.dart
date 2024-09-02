@@ -7,6 +7,7 @@ class TimeBasedService {
 
   Future<bool> verify({required String totpCode}) async {
     try {
+      LOGGER.i("TimeBasedService.verify(): ");
       LOGGER.i("GET: /config/verify?otp=$totpCode");
 
       final res = await _dio.get(
@@ -22,6 +23,7 @@ class TimeBasedService {
       LOGGER.i("验证成功");
       return true;
     } catch (err) {
+      LOGGER.e("TimeBasedService.verify(): ");
       LOGGER.e(err);
     }
     return false;

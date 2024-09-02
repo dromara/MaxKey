@@ -73,7 +73,9 @@ class _TotpListView extends StatelessWidget {
             listenable: controller,
             builder: (context, _) {
               if (controller.totps.isEmpty) {
-                return Center(child: Text(AppLocalizations.of(context)!.homePageTotpListViewNoTOTP));
+                return Center(
+                    child: Text(AppLocalizations.of(context)!
+                        .homePageTotpListViewNoTOTP));
               }
 
               return Column(
@@ -120,19 +122,22 @@ class _TotpListView extends StatelessWidget {
                           final confirm = await showDialog<bool>(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: Text(AppLocalizations.of(context)!.homePageTotpListViewConfirmDialog),
+                              title: Text(AppLocalizations.of(context)!
+                                  .homePageTotpListViewConfirmDialog),
                               actions: [
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop(false);
                                   },
-                                  child: Text(AppLocalizations.of(context)!.homePageTotpListViewConfirmDialogCancelBtn),
+                                  child: Text(AppLocalizations.of(context)!
+                                      .homePageTotpListViewConfirmDialogCancelBtn),
                                 ),
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop(true);
                                   },
-                                  child: Text(AppLocalizations.of(context)!.homePageTotpListViewConfirmDialogConfirmBtn),
+                                  child: Text(AppLocalizations.of(context)!
+                                      .homePageTotpListViewConfirmDialogConfirmBtn),
                                 ),
                               ],
                             ),
@@ -179,7 +184,8 @@ class _TotpCodeCardState extends State<_TotpCodeCard> {
 
   int getValidity() {
     final utc = DateTime.timestamp();
-    return widget.totp.interval - (utc.millisecondsSinceEpoch ~/ 1000 % 30);
+    return widget.totp.interval -
+        (utc.millisecondsSinceEpoch ~/ 1000 % widget.totp.interval);
   }
 
   @override
@@ -189,12 +195,10 @@ class _TotpCodeCardState extends State<_TotpCodeCard> {
     validity = getValidity();
 
     updater = Timer.periodic(const Duration(seconds: 1), (timer) {
-      validity = getValidity();
-
       setState(() {
         validity = getValidity();
         if (validity == widget.totp.interval) {
-          LOGGER.i(DateTime.now());
+          LOGGER.i("totp: ${DateTime.now()}");
           password = widget.totp.now;
         }
       });

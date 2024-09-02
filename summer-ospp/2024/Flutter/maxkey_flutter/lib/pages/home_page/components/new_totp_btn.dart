@@ -17,15 +17,20 @@ class _NewTotpBtn extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
         onTap: () async {
+          LOGGER.i("_NewTotpBtn: ");
           final qrCodeValue = await context.push<String?>(
             RoutePath.scanPage,
             extra: AppLocalizations.of(context)!.homePageNewTotpBtnScanPage,
           );
 
-          if (qrCodeValue == null) return;
+          if (qrCodeValue == null) {
+            LOGGER.w("No QR code.");
+            return;
+          }
 
           final newTotp = Totp.fromUri(qrCodeValue);
           if (newTotp == null) {
+            LOGGER.w("Unsupported QR code.");
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(AppLocalizations.of(context)!.homePagenewTotpBtnErr)),
@@ -39,6 +44,7 @@ class _NewTotpBtn extends StatelessWidget {
           await MaxKeyPersistent.instance.saveTotps(totps);
 
           controller.update();
+          LOGGER.i("TOTP added.");
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),

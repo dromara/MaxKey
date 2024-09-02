@@ -14,6 +14,7 @@ class AuthnService {
   /// 获取 state 类型
   Future<String?> get() async {
     try {
+      LOGGER.i("AuthnService.get(): ");
       LOGGER.i("GET: /login/get?_allow_anonymous=true");
 
       final res = await _dio.get(
@@ -22,6 +23,7 @@ class AuthnService {
       );
       return res.data["data"]["state"];
     } catch (err) {
+      LOGGER.e("AuthnService.get(): ");
       LOGGER.e(err);
     }
     return null;
@@ -33,6 +35,7 @@ class AuthnService {
     required String mobile,
   }) async {
     try {
+      LOGGER.i("AuthnService.produceOtp(): ");
       LOGGER.i("GET: /login/sendotp/$mobile?_allow_anonymous=true");
 
       final res = await _dio.get(
@@ -49,6 +52,7 @@ class AuthnService {
 
       return true;
     } catch (err) {
+      LOGGER.e("AuthnService.produceOtp(): ");
       LOGGER.e(err);
     }
     return false;
@@ -63,6 +67,7 @@ class AuthnService {
     required String captcha,
   }) async {
     try {
+      LOGGER.i("AuthnService.loginNormal(): ");
       LOGGER.i("POST: /login/signin?_allow_anonymous=true");
 
       final res = await _dio.post(
@@ -91,6 +96,7 @@ class AuthnService {
       );
       return true;
     } catch (err) {
+      LOGGER.e("AuthnService.loginNormal(): ");
       LOGGER.e(err);
     }
     return false;
@@ -100,8 +106,10 @@ class AuthnService {
     required ExpectedErrorHandler expectedErrorHandler,
     required String code,
   }) async {
+    LOGGER.i("AuthnService.scanCode(): ");
     final token = MaxKeyPersistent.instance.token;
     if (token == null) {
+      LOGGER.i("未登录");
       expectedErrorHandler("未登录");
       return false;
     }
@@ -122,6 +130,7 @@ class AuthnService {
 
       return true;
     } catch (err) {
+      LOGGER.e("AuthnService.scanCode(): ");
       LOGGER.e(err);
     }
     return false;
@@ -148,9 +157,11 @@ class AuthnService {
   /// 登出并清除本地缓存的 token
   Future<void> logout() async {
     try {
+      LOGGER.i("AuthnService.logout(): ");
       LOGGER.i("GET: /logout");
-      await _dio.get("/logout");
+      await _dio.get("/logout").timeout(const Duration(seconds: 5));
     } catch (err) {
+      LOGGER.e("AuthnService.logout(): ");
       LOGGER.e(err);
     }
 

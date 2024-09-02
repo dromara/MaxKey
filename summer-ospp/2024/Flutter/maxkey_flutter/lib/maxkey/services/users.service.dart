@@ -212,6 +212,7 @@ class UsersService {
 
   Future<MaxKeyUser?> getBasicUserInfo() async {
     try {
+      LOGGER.i("UsersService.getBasicUserInfo(): ");
       LOGGER.i("GET: /users/profile/get");
 
       final res = await _dio.get("/users/profile/get");
@@ -221,6 +222,7 @@ class UsersService {
       }
       return MaxKeyUser.fromMap(res.data);
     } catch (err) {
+      LOGGER.i("UsersService.getBasicUserInfo(): ");
       LOGGER.e(err);
     }
     return null;
@@ -228,6 +230,7 @@ class UsersService {
 
   Future<MaxKeyUserInfo?> getFullUserInfo() async {
     try {
+      LOGGER.i("UsersService.getFullUserInfo(): ");
       LOGGER.i("GET: /users/profile/get");
 
       final res = await _dio.get("/users/profile/get");
@@ -238,6 +241,7 @@ class UsersService {
 
       return MaxKeyUserInfo.fromMap(res.data["data"]);
     } catch (err) {
+      LOGGER.e("UsersService.getFullUserInfo(): ");
       LOGGER.e(err);
     }
     return null;
