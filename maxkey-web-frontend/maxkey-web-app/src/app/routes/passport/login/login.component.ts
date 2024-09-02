@@ -28,8 +28,8 @@ import { finalize } from 'rxjs/operators';
 
 import { AuthnService } from '../../../service/authn.service';
 import { ImageCaptchaService } from '../../../service/image-captcha.service';
+import { QrCodeService } from '../../../service/qr-code.service';
 import { SocialsProviderService } from '../../../service/socials-provider.service';
-import {QrCodeService} from "../../../service/QrCode.service";
 import { CONSTS } from '../../../shared/consts';
 
 import { stringify } from 'querystring';
@@ -313,14 +313,15 @@ export class UserLoginComponent implements OnInit, OnDestroy {
     this.qrexpire = false;
 
     this.qrCodeService.getLoginQrCode().subscribe(res => {
-      if (res.code === 0 && res.data.rqCode) { // 使用返回的 rqCode
+      if (res.code === 0 && res.data.rqCode) {
+        // 使用返回的 rqCode
         const qrImageElement = document.getElementById('div_qrcodelogin');
         this.ticket = res.data.ticket;
         if (qrImageElement) {
           qrImageElement.innerHTML = `<img src="${res.data.rqCode}" alt="QR Code" style="width: 200px; height: 200px;">`;
         }
 
-     /*   // 设置5分钟后 qrexpire 为 false
+        /*   // 设置5分钟后 qrexpire 为 false
         setTimeout(() => {
           this.qrexpire = true;
           this.cdr.detectChanges(); // 更新视图
@@ -335,38 +336,38 @@ export class UserLoginComponent implements OnInit, OnDestroy {
    */
   loginByQrCode() {
     const interval = setInterval(() => {
-      this.qrCodeService.loginByQrCode({
-        authType: 'scancode',
-        code: this.ticket,
-        state: this.state,
-      }).subscribe(res => {
-        if (res.code === 0) {
-          this.qrexpire = true;
-          // 清空路由复用信息
-          this.reuseTabService.clear();
-          // 设置用户Token信息
-          this.authnService.auth(res.data);
-          this.authnService.navigate({});
-        } else if (res.code === 20004) {
-          this.qrexpire = true;
-        } else if (res.code === 20005) {
-          this.get()
-        }
+      this.qrCodeService
+        .loginByQrCode({
+          authType: 'scancode',
+          code: this.ticket,
+          state: this.state
+        })
+        .subscribe(res => {
+          if (res.code === 0) {
+            this.qrexpire = true;
+            // 清空路由复用信息
+            this.reuseTabService.clear();
+            // 设置用户Token信息
+            this.authnService.auth(res.data);
+            this.authnService.navigate({});
+          } else if (res.code === 20004) {
+            this.qrexpire = true;
+          } else if (res.code === 20005) {
+            this.get();
+          }
 
-        // Handle response here
+          // Handle response here
 
-        // If you need to stop the interval after a certain condition is met,
-        // you can clear the interval like this:
-        if (this.qrexpire) {
-          clearInterval(interval);
-        }
+          // If you need to stop the interval after a certain condition is met,
+          // you can clear the interval like this:
+          if (this.qrexpire) {
+            clearInterval(interval);
+          }
 
-        this.cdr.detectChanges(); // 更新视图
-      });
+          this.cdr.detectChanges(); // 更新视图
+        });
     }, 5 * 1000); // 5 seconds
   }
-
-
 
   getQrCode(): void {
     this.qrexpire = false;
