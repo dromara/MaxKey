@@ -43,9 +43,9 @@ class MaxKey with ChangeNotifier {
         if (error.type == DioExceptionType.badResponse) {
           SCAFFOLD_MESSENGER_KEY.currentState?.showSnackBar(
             SnackBar(
-              content: const Text("登陆状态过期。请重新登陆"),
+              content: const Text("登录状态过期。请重新登录"),
               action: SnackBarAction(
-                label: "重新登陆",
+                label: "重新登录",
                 onPressed: () async {
                   _dio.options.headers.remove(HttpHeaders.authorizationHeader);
                   await MaxKeyPersistent.instance.clearToken();

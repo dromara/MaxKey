@@ -83,7 +83,7 @@ class AuthnService {
       );
 
       if (res.data["code"] != 0) {
-        final msg = res.data["message"] ?? "登陆失败";
+        final msg = res.data["message"] ?? "登录失败";
         expectedErrorHandler(msg);
         LOGGER.w(msg);
         return false;
@@ -122,7 +122,7 @@ class AuthnService {
       );
 
       if (res.data["code"] != 0) {
-        final msg = res.data["message"] ?? "扫码登陆失败";
+        final msg = res.data["message"] ?? "扫码登录失败";
         expectedErrorHandler(msg);
         LOGGER.w(msg);
         return false;

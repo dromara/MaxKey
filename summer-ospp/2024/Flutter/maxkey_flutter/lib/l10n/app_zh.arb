@@ -12,8 +12,8 @@
     "homePageUserCardGreetingNoon": "中午好",
     "homePageUserCardGreetingAfternoon": "下午好",
     "homePageUserCardGreetingEvening": "晚上好",
-    "homePageUserCardScanPage": "扫码登陆",
-    "homePageUserCardScanSucceed": "登陆成功",
+    "homePageUserCardScanPage": "扫码登录",
+    "homePageUserCardScanSucceed": "登录成功",
 
     "loginPageSettingBtn": "设置",
     "loginPageLoginViewUsername": "用户名",
@@ -39,7 +39,7 @@
 
     "userPageFullUserInfoDialogTitle": "详细信息",
     "userPageFullUserInfoDialogDisplayName": "姓名",
-    "userPageFullUserInfoDialogUsername": "登陆账号",
+    "userPageFullUserInfoDialogUsername": "登录账号",
     "userPageFullUserInfoDialogGender": "性别",
     "userPageFullUserInfoDialogEmployeeNumber": "员工编号",
     "userPageFullUserInfoDialogMobile": "手机号码",

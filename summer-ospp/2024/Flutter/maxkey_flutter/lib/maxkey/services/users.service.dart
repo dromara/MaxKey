@@ -22,7 +22,7 @@ class MaxKeyUserInfo {
     /// 姓名
     required this.displayName,
 
-    /// 登陆账号
+    /// 登录账号
     required this.username,
 
     /// 性别
@@ -146,7 +146,7 @@ class MaxKeyUserInfo {
   /// 姓名
   final String displayName;
 
-  /// 登陆账号
+  /// 登录账号
   final String username;
 
   /// 性别
