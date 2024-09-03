@@ -1,0 +1,33 @@
+name: maxkey_flutter
+description: "MaxKey Flutter project."
+publish_to: 'none'
+version: 1.0.0
+
+environment:
+  sdk: ^3.5.1
+
+dependencies:
+  dio: ^5.4.3+1
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  go_router: ^14.2.0
+  mobile_scanner: ^5.1.1
+  # permission_handler: ^11.3.1
+  shared_preferences: ^2.2.3
+  auth_totp: ^1.0.1
+  logger: ^2.4.0
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - assets/logo.jpg
+    - assets/logo_maxkey.png

@@ -1,0 +1,67 @@
+{
+    "homePageNewTotpBtnScanPage": "录入时间令牌",
+    "homePagenewTotpBtnErr": "不支持的二维码",
+    "homePagenewTotpBtn": "录入时间令牌",
+
+    "homePageTotpListViewNoTOTP": "没有时间令牌",
+    "homePageTotpListViewConfirmDialog": "删除选中的时间令牌？",
+    "homePageTotpListViewConfirmDialogCancelBtn": "取消",
+    "homePageTotpListViewConfirmDialogConfirmBtn": "确认",
+
+    "homePageUserCardGreetingMorning": "早上好",
+    "homePageUserCardGreetingNoon": "中午好",
+    "homePageUserCardGreetingAfternoon": "下午好",
+    "homePageUserCardGreetingEvening": "晚上好",
+    "homePageUserCardScanPage": "扫码登录",
+    "homePageUserCardScanSucceed": "登录成功",
+
+    "loginPageSettingBtn": "设置",
+    "loginPageLoginViewUsername": "用户名",
+    "loginPageLoginViewPassword": "密码",
+    "loginPageLoginViewCaptcha": "验证码",
+    "loginPageLoginViewLoginBtn": "登录",
+
+    "settingsPageTitle": "设置",
+    "settingsPageHostSettingDialog": "指定主机",
+    "settingsPageHostSettingDialogHost": "主机地址",
+    "settingsPageHostSettingDialogTestSucceed": "连接成功",
+    "settingsPageHostSettingDialogTestFail": "连接失败",
+    "settingsPageHostSettingDialogTestBtn": "验证",
+    "settingsPageHostSettingDialogCancleBtn": "取消",
+    "settingsPageHostSettingDialogConfirmBtn": "确认",
+    "settingsPageHostSettingTitle": "指定主机",
+    "settingsPageHostSettingDesc": "如果网络状态良好但 MaxKey 仍无法正常工作，可能需要修改此项设置",
+
+    "settingsPageShowLogBtnTitle": "查看日志",
+    "settingsPageLogDisplayPageTitle": "查看日志",
+
+    "settingsPageThemeModeSwitchTitle": "主题模式",
+
+    "userPageFullUserInfoDialogTitle": "详细信息",
+    "userPageFullUserInfoDialogDisplayName": "姓名",
+    "userPageFullUserInfoDialogUsername": "登录账号",
+    "userPageFullUserInfoDialogGender": "性别",
+    "userPageFullUserInfoDialogEmployeeNumber": "员工编号",
+    "userPageFullUserInfoDialogMobile": "手机号码",
+    "userPageFullUserInfoDialogEmail": "邮箱",
+    "userPageFullUserInfoDialogUserType": "用户类型",
+    "userPageFullUserInfoDialogUserState": "用户状态",
+    "userPageFullUserInfoDialogIdType": "证件类型",
+    "userPageFullUserInfoDialogIdCardNo": "证件号码",
+    "userPageFullUserInfoDialogMarried": "婚姻状态",
+    "userPageFullUserInfoDialogBirth": "出生日期",
+    "userPageFullUserInfoDialogOrganization": "所属组织",
+    "userPageFullUserInfoDialogDivision": "分支机构",
+    "userPageFullUserInfoDialogDepartmentId": "部门编号",
+    "userPageFullUserInfoDialogDepartment": "部门名称",
+    "userPageFullUserInfoDialogJobTitle": "职位",
+    "userPageFullUserInfoDialogJobLevel": "级别",
+    "userPageFullUserInfoDialogManager": "上级经理",
+
+    "userPageTitle": "用户",
+    "userPageUserInfoBtn": "详细信息",
+    "userPageSettingsBtn": "设置",
+    "userPageLogoutBtn": "退出账号",
+
+    "scanPagePermissionDeniedMsg": "未授予摄像头权限。\nMaxKey 需要摄像头权限以扫描二维码并获取时间令牌。"
+}
