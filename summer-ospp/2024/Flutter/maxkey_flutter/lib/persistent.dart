@@ -14,7 +14,7 @@ class MaxKeyPersistent {
 
   /// 不和用户绑定
   static const String _HOST_KEY = "Host";
-  static const String _DEFAULT_HOST = "192.168.1.66:9527";
+  static const String _DEFAULT_HOST = "192.168.1.66";
 
   /// 和用户绑定
   String get _TOTP_LIST_KEY => "$_currUser.TotpList";
