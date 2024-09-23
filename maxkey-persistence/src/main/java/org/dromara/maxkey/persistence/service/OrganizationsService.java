@@ -27,7 +27,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.persistence.mapper.OrganizationsMapper;
-import org.dromara.maxkey.provision.ProvisionAction;
+import org.dromara.maxkey.provision.ProvisionAct;
 import org.dromara.maxkey.provision.ProvisionService;
 import org.dromara.maxkey.provision.ProvisionTopic;
 import org.dromara.mybatis.jpa.JpaService;
@@ -61,7 +61,7 @@ public class OrganizationsService  extends JpaService<Organizations>{
 	 public boolean insert(Organizations organization) {
 	     if(super.insert(organization)){
 	    	 provisionService.send(
-                     ProvisionTopic.ORG_TOPIC, organization, ProvisionAction.CREATE_ACTION);
+                     ProvisionTopic.ORG_TOPIC, organization, ProvisionAct.CREATE);
              return true;
          }
          return false;
@@ -71,7 +71,7 @@ public class OrganizationsService  extends JpaService<Organizations>{
 	 public boolean update(Organizations organization) {
 	     if(super.update(organization)){
 	    	 provisionService.send(
-                     ProvisionTopic.ORG_TOPIC, organization, ProvisionAction.UPDATE_ACTION);
+                     ProvisionTopic.ORG_TOPIC, organization, ProvisionAct.UPDATE);
              return true;
          }
          return false;
@@ -95,7 +95,7 @@ public class OrganizationsService  extends JpaService<Organizations>{
 	 public boolean delete(Organizations organization) {
 	     if(super.delete(organization.getId())){
 	    	 provisionService.send(
-                     ProvisionTopic.ORG_TOPIC, organization, ProvisionAction.DELETE_ACTION);
+                     ProvisionTopic.ORG_TOPIC, organization, ProvisionAct.DELETE);
              return true;
          }
          return false;

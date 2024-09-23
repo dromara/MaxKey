@@ -27,7 +27,7 @@ import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.OrganizationsCast;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.AccountsMapper;
-import org.dromara.maxkey.provision.ProvisionAction;
+import org.dromara.maxkey.provision.ProvisionAct;
 import org.dromara.maxkey.provision.ProvisionService;
 import org.dromara.maxkey.provision.ProvisionTopic;
 import org.dromara.mybatis.jpa.JpaService;
@@ -81,7 +81,7 @@ public class AccountsService  extends JpaService<Accounts>{
                     provisionService.send(
 	                        ProvisionTopic.ACCOUNT_TOPIC, 
 	                        account,
-	                        ProvisionAction.CREATE_ACTION);
+	                        ProvisionAct.CREATE);
 	            }
 	            
 	            return true;
@@ -102,7 +102,7 @@ public class AccountsService  extends JpaService<Accounts>{
                     provisionService.send(
                             ProvisionTopic.ACCOUNT_TOPIC, 
                             account,
-                            ProvisionAction.UPDATE_ACTION);
+                            ProvisionAct.UPDATE);
                 }
                 
                 return true;
@@ -124,7 +124,7 @@ public class AccountsService  extends JpaService<Accounts>{
                   provisionService.send(
                           ProvisionTopic.ACCOUNT_TOPIC, 
                           account,
-                          ProvisionAction.DELETE_ACTION);
+                          ProvisionAct.DELETE);
               }
               
               return true;
@@ -188,17 +188,17 @@ public class AccountsService  extends JpaService<Accounts>{
    	String shortAccount = generateAccount(userInfo,accountsStrategy,true);
    	String account = generateAccount(userInfo,accountsStrategy,false);
    	String accountResult = shortAccount;
-   	List<Accounts> AccountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),shortAccount +accountsStrategy.getSuffixes());
-   	if(!AccountsList.isEmpty()) {
+   	List<Accounts> accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),shortAccount +accountsStrategy.getSuffixes());
+   	if(!accountsList.isEmpty()) {
    		if(accountsStrategy.getMapping().equalsIgnoreCase("email")) {
    			accountResult = account;
-   			AccountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),account + accountsStrategy.getSuffixes());
+   			accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),account + accountsStrategy.getSuffixes());
    		}
-   		if(!AccountsList.isEmpty()) {
+   		if(!accountsList.isEmpty()) {
 	    		for(int i =1 ;i < 100 ;i++) {
 	    			accountResult = account + i;
-	    			AccountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),accountResult + accountsStrategy.getSuffixes());
-	    			if(AccountsList.isEmpty()) {
+	    			accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),accountResult + accountsStrategy.getSuffixes());
+	    			if(accountsList.isEmpty()) {
 	    				break;
 	    			}
 	    		}

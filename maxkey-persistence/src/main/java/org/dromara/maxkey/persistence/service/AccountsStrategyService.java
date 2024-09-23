@@ -37,7 +37,6 @@ public class AccountsStrategyService  extends JpaService<AccountsStrategy> imple
     
     static final  Logger _logger = LoggerFactory.getLogger(AccountsStrategyService.class);
    /*
-    @JsonIgnore
     @Autowired
     @Qualifier("groupMemberService")
     GroupMemberService accountsStrategyService;

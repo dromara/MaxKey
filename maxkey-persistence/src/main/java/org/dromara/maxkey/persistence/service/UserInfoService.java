@@ -29,7 +29,7 @@ import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.UserInfoMapper;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
-import org.dromara.maxkey.provision.ProvisionAction;
+import org.dromara.maxkey.provision.ProvisionAct;
 import org.dromara.maxkey.provision.ProvisionService;
 import org.dromara.maxkey.provision.ProvisionTopic;
 import org.dromara.maxkey.web.WebContext;
@@ -81,7 +81,7 @@ public class UserInfoService extends JpaService<UserInfo> {
                 provisionService.send(
                         ProvisionTopic.USERINFO_TOPIC, 
                         loadUserInfo,
-                        ProvisionAction.CREATE_ACTION);
+                        ProvisionAct.CREATE);
             }
             
             return true;
@@ -100,7 +100,7 @@ public class UserInfoService extends JpaService<UserInfo> {
                 provisionService.send(
                         ProvisionTopic.USERINFO_TOPIC, 
                         loadUserInfo,
-                        ProvisionAction.CREATE_ACTION);
+                        ProvisionAct.CREATE);
             }
             
             return true;
@@ -119,7 +119,7 @@ public class UserInfoService extends JpaService<UserInfo> {
                 provisionService.send(
                         ProvisionTopic.USERINFO_TOPIC, 
                         loadUserInfo,
-                        ProvisionAction.UPDATE_ACTION);
+                        ProvisionAct.UPDATE);
             }
             if(userInfo.getPassword() != null) {
             	changePasswordProvisioning(changePassword);
@@ -139,7 +139,7 @@ public class UserInfoService extends JpaService<UserInfo> {
 			provisionService.send(
 		            ProvisionTopic.USERINFO_TOPIC, 
 		            loadUserInfo, 
-		            ProvisionAction.DELETE_ACTION);
+		            ProvisionAct.DELETE);
 			accountUpdate(loadUserInfo);
 			 return true;
 		}
@@ -336,7 +336,7 @@ public class UserInfoService extends JpaService<UserInfo> {
     	    provisionService.send(
                     ProvisionTopic.PASSWORD_TOPIC, 
                     changePassword, 
-                    ProvisionAction.PASSWORD_ACTION);
+                    ProvisionAct.PASSWORD);
 	    }
 	}
 	
