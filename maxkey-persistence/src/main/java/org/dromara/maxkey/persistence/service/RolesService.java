@@ -20,8 +20,6 @@
 package org.dromara.maxkey.persistence.service;
 
 import java.sql.Types;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,13 +34,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Repository
 public class RolesService  extends JpaService<Roles> {
     static final  Logger _logger = LoggerFactory.getLogger(RolesService.class);
     
-    @JsonIgnore
     @Autowired
     RoleMemberService roleMemberService;
     
@@ -75,24 +70,6 @@ public class RolesService  extends JpaService<Roles> {
 	
 	public void refreshDynamicRoles(Roles dynamicRole){
 	    if(dynamicRole.getCategory().equals(Roles.Category.DYNAMIC)) {
-	        boolean isDynamicTimeSupport = false;
-	        boolean isBetweenEffectiveTime = false;
-	        if(StringUtils.isNotBlank(dynamicRole.getResumeTime())
-	                &&StringUtils.isNotBlank(dynamicRole.getSuspendTime())
-	                &&!dynamicRole.getSuspendTime().equals("00:00")) {
-	            LocalTime currentTime = LocalDateTime.now().toLocalTime();
-	            LocalTime resumeTime = LocalTime.parse(dynamicRole.getResumeTime());
-	            LocalTime suspendTime = LocalTime.parse(dynamicRole.getSuspendTime());
-	            
-	            _logger.info("currentTime: {}  , resumeTime : {} , suspendTime: {}" , 
-	            		currentTime  , resumeTime , suspendTime);
-	            isDynamicTimeSupport = true;
-	            
-	            if(resumeTime.isBefore(currentTime) && currentTime.isBefore(suspendTime)) {
-	                isBetweenEffectiveTime = true;
-	            }
-	            
-	        }
 	        
 	        if(StringUtils.isNotBlank(dynamicRole.getOrgIdsList())) {
     	    	String []orgIds = dynamicRole.getOrgIdsList().split(",");
@@ -117,24 +94,16 @@ public class RolesService  extends JpaService<Roles> {
 	    			_logger.info("filters include SQL Injection Attack Risk.");
 	    			return;
 	    		}
-	    		filters = filters.replace("&", " AND ");
-	    		filters = filters.replaceAll("\\|", " OR ");
+	    		//replace & with AND, | with OR
+	    		filters = filters.replace("&", " AND ").replace("\\|", " OR ");
 	    	    
 	    		_logger.debug("set filters {}" , filters);
 	    	    dynamicRole.setFilters(filters);
     	    }
-    	    
-    	    if(isDynamicTimeSupport) {
-    	        if(isBetweenEffectiveTime) {
-    	        	roleMemberService.deleteDynamicRoleMember(dynamicRole);
-    	        	roleMemberService.addDynamicRoleMember(dynamicRole);
-    	        }else {
-    	        	roleMemberService.deleteDynamicRoleMember(dynamicRole);
-    	        }
-    	    }else{
-    	    	roleMemberService.deleteDynamicRoleMember(dynamicRole);
-    	    	roleMemberService.addDynamicRoleMember(dynamicRole);
-            }
+	    
+	    	roleMemberService.deleteDynamicRoleMember(dynamicRole);
+	    	roleMemberService.addDynamicRoleMember(dynamicRole);
+        
 	    }
     }
 	

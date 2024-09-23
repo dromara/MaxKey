@@ -20,11 +20,13 @@ package org.dromara.maxkey.autoconfigure;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.listener.DynamicGroupsListenerAdapter;
+import org.dromara.maxkey.listener.DynamicRolesListenerAdapter;
 import org.dromara.maxkey.listener.ReorgDeptListenerAdapter;
 import org.dromara.maxkey.listener.SessionListenerAdapter;
 import org.dromara.maxkey.persistence.service.ConnectorsService;
 import org.dromara.maxkey.persistence.service.GroupsService;
 import org.dromara.maxkey.persistence.service.OrganizationsService;
+import org.dromara.maxkey.persistence.service.RolesService;
 import org.dromara.maxkey.provision.thread.ProvisioningRunner;
 import org.dromara.maxkey.provision.thread.ProvisioningRunnerThread;
 import org.dromara.maxkey.schedule.ScheduleAdapterBuilder;
@@ -84,6 +86,23 @@ public class MaxKeyMgtListenerConfig  {
 
         logger.debug("DynamicGroups ListenerAdapter inited .");
         return "dynamicGroupsListenerAdapter";
+    }
+    
+    @Bean
+    String dynamicRolesListenerAdapter(
+            Scheduler scheduler,
+            RolesService rolesService,
+            @Value("${maxkey.job.cron.schedule}") String cronSchedule
+    ) throws SchedulerException {
+    	new ScheduleAdapterBuilder()
+			.setScheduler(scheduler)
+			.setCron(cronSchedule)
+			.setJobClass(DynamicRolesListenerAdapter.class)
+			.setJobData("rolesService",rolesService)
+			.build();
+
+        logger.debug("Dynamic Roles ListenerAdapter inited .");
+        return "dynamicRolesListenerAdapter";
     }
 
     @Bean

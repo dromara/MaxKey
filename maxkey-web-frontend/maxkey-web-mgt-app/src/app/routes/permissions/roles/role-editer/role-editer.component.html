@@ -4,8 +4,7 @@
     <nz-form-item class="d-none">
       <nz-form-label [nzMd]="6" nzRequired nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
-        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input
-          name="id" id="id" />
+        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -19,22 +18,26 @@
     <nz-form-item>
       <nz-form-label [nzMd]="6" nzRequired nzFor="roleCode">{{ 'mxk.text.id' | i18n }}</nz-form-label>
       <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid roleCode!">
-        <input [(ngModel)]="form.model.roleCode" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }"
-          nz-input name="roleCode" id="roleCode" />
+        <input
+          [(ngModel)]="form.model.roleCode"
+          disabled="{{ isEdit }}"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="roleCode"
+          id="roleCode"
+        />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid minLength!">
-        <input [(ngModel)]="form.model.roleName" [ngModelOptions]="{ standalone: true }" nz-input name="roleName"
-          id="roleName" />
+        <input [(ngModel)]="form.model.roleName" [ngModelOptions]="{ standalone: true }" nz-input name="roleName" id="roleName" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item style="display: none">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.roles.appId' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid minLength!">
-        <input [(ngModel)]="form.model.appId" [ngModelOptions]="{ standalone: true }" nz-input name="roleName"
-          id="roleName" />
+        <input [(ngModel)]="form.model.appId" [ngModelOptions]="{ standalone: true }" nz-input name="roleName" id="roleName" />
       </nz-form-control>
     </nz-form-item>
 
@@ -49,42 +52,55 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item *ngIf="form.model.category == 'dynamic'">
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resumeTime">{{ 'mxk.roles.resumeTime' | i18n }}</nz-form-label>
-      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid port!">
-        <nz-time-picker [(ngModel)]="form.model.picker_resumeTime" [ngModelOptions]="{ standalone: true }"
-          nzFormat="HH:mm" name="picker_resumeTime" id="picker_resumeTime"></nz-time-picker>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item *ngIf="form.model.category == 'dynamic'">
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="suspendTime">{{ 'mxk.roles.suspendTime' | i18n }}</nz-form-label>
-      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid suspendTime!">
-        <nz-time-picker [(ngModel)]="form.model.picker_suspendTime" [ngModelOptions]="{ standalone: true }"
-          nzFormat="HH:mm" name="picker_suspendTime" id="picker_suspendTime"></nz-time-picker>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item *ngIf="form.model.category == 'dynamic'">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="orgIdsList">{{ 'mxk.roles.orgIdsList' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid upperCase!">
-        <input type="hidden" [(ngModel)]="form.model.orgIdsList" [ngModelOptions]="{ standalone: true }" nz-input
-          name="orgIdsList" id="orgIdsList" />
-        <nz-tree-select nzVirtualHeight="300px" [nzMaxTagCount]="3" [(ngModel)]="selectValues"
-          [ngModelOptions]="{ standalone: true }" [nzNodes]="treeNodes.nodes" nzCheckable nzPlaceHolder="Please select"
-          [nzCheckStrictly]="true">
+        <input
+          type="hidden"
+          [(ngModel)]="form.model.orgIdsList"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="orgIdsList"
+          id="orgIdsList"
+        />
+        <nz-tree-select
+          nzVirtualHeight="300px"
+          [nzMaxTagCount]="3"
+          [(ngModel)]="selectValues"
+          [ngModelOptions]="{ standalone: true }"
+          [nzNodes]="treeNodes.nodes"
+          nzCheckable
+          nzPlaceHolder="Please select"
+          [nzCheckStrictly]="true"
+        >
         </nz-tree-select>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item *ngIf="form.model.category == 'dynamic'">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="filters">{{ 'mxk.roles.filters' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid filters!">
-        <textarea rows="4" nz-input [(ngModel)]="form.model.filters" [ngModelOptions]="{ standalone: true }" nz-input
-          name="filters" id="filters"></textarea>
+        <textarea
+          rows="4"
+          nz-input
+          [(ngModel)]="form.model.filters"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="filters"
+          id="filters"
+        ></textarea>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">{{ 'mxk.text.description' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid encoding!">
-        <textarea rows="4" nz-input [(ngModel)]="form.model.description" [ngModelOptions]="{ standalone: true }"
-          nz-input name="description" id="description"></textarea>
+        <textarea
+          rows="4"
+          nz-input
+          [(ngModel)]="form.model.description"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="description"
+          id="description"
+        ></textarea>
       </nz-form-control>
     </nz-form-item>
   </form>

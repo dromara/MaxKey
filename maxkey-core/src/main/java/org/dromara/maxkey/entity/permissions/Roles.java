@@ -64,10 +64,6 @@ public class Roles extends JpaEntity implements Serializable {
     
     @Column
     String orgIdsList;
-    @Column
-    String resumeTime; 
-    @Column
-    String suspendTime;
     
     @Column
     int isdefault;
@@ -230,22 +226,6 @@ public class Roles extends JpaEntity implements Serializable {
         this.orgIdsList = orgIdsList;
     }
 
-    public String getResumeTime() {
-        return resumeTime;
-    }
-
-    public void setResumeTime(String resumeTime) {
-        this.resumeTime = resumeTime;
-    }
-
-    public String getSuspendTime() {
-        return suspendTime;
-    }
-
-    public void setSuspendTime(String suspendTime) {
-        this.suspendTime = suspendTime;
-    }
-
     public String getAppId() {
 		return appId;
 	}
@@ -285,10 +265,6 @@ public class Roles extends JpaEntity implements Serializable {
 		builder.append(filters);
 		builder.append(", orgIdsList=");
 		builder.append(orgIdsList);
-		builder.append(", resumeTime=");
-		builder.append(resumeTime);
-		builder.append(", suspendTime=");
-		builder.append(suspendTime);
 		builder.append(", isdefault=");
 		builder.append(isdefault);
 		builder.append(", description=");
