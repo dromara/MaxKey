@@ -1,0 +1,112 @@
+<div *nzModalTitle> {{ isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-form-item class="d-none">
+      <nz-form-label [nzMd]="6" nzRequired nzFor="id">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.id" disabled="{{ isEdit }}" [ngModelOptions]="{ standalone: true }" nz-input name="id" id="id" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.roles.appName' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid appName!">
+        <nz-input-group>
+          <input [(ngModel)]="form.model.appName" [ngModelOptions]="{ standalone: true }" nz-input disabled />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzRequired nzFor="roleCode">{{ 'mxk.text.id' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid roleCode!">
+        <input
+          [(ngModel)]="form.model.roleCode"
+          disabled="{{ isEdit }}"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="roleCode"
+          id="roleCode"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.roles.name' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid minLength!">
+        <input [(ngModel)]="form.model.roleName" [ngModelOptions]="{ standalone: true }" nz-input name="roleName" id="roleName" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item style="display: none">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'mxk.roles.appId' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzMd]="18" [nzXs]="36" [nzXl]="48" nzErrorTip="The input is not valid minLength!">
+        <input [(ngModel)]="form.model.appId" [ngModelOptions]="{ standalone: true }" nz-input name="roleName" id="roleName" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="category">{{ 'mxk.roles.category' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid category!">
+        <nz-radio-group [(ngModel)]="form.model.category" [ngModelOptions]="{ standalone: true }" nzButtonStyle="solid">
+          <label nz-radio-button nzValue="static">{{ 'mxk.roles.category.static' | i18n }}</label>
+          <label nz-radio-button nzValue="dynamic">{{ 'mxk.roles.category.dynamic' | i18n }}</label>
+          <label nz-radio-button nzValue="app" nzDisabled>{{ 'mxk.roles.category.app' | i18n }}</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="form.model.category == 'dynamic'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="orgIdsList">{{ 'mxk.roles.orgIdsList' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid upperCase!">
+        <input
+          type="hidden"
+          [(ngModel)]="form.model.orgIdsList"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="orgIdsList"
+          id="orgIdsList"
+        />
+        <nz-tree-select
+          nzVirtualHeight="300px"
+          [nzMaxTagCount]="3"
+          [(ngModel)]="selectValues"
+          [ngModelOptions]="{ standalone: true }"
+          [nzNodes]="treeNodes.nodes"
+          nzCheckable
+          nzPlaceHolder="Please select"
+          [nzCheckStrictly]="true"
+        >
+        </nz-tree-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="form.model.category == 'dynamic'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="filters">{{ 'mxk.roles.filters' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid filters!">
+        <textarea
+          rows="4"
+          nz-input
+          [(ngModel)]="form.model.filters"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="filters"
+          id="filters"
+        ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">{{ 'mxk.text.description' | i18n }}</nz-form-label>
+      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid encoding!">
+        <textarea
+          rows="4"
+          nz-input
+          [(ngModel)]="form.model.description"
+          [ngModelOptions]="{ standalone: true }"
+          nz-input
+          name="description"
+          id="description"
+        ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

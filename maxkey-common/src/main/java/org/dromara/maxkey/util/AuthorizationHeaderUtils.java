@@ -17,6 +17,7 @@
 
 package org.dromara.maxkey.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.crypto.Base64Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -88,13 +89,7 @@ public class AuthorizationHeaderUtils {
     }
     
     static boolean isBearer(String bearer) {
-        if (bearer.toLowerCase().startsWith(AuthorizationHeader.Credential.BEARER.toLowerCase())) {
-            return true;
-        } else {
-            return false;
-        }
+        return (bearer.toLowerCase().startsWith(AuthorizationHeader.Credential.BEARER.toLowerCase()));
     }
     
-   
-
 }

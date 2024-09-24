@@ -17,7 +17,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { EmailSenders } from '../entity/EmailSenders';
+import { EmailSenders } from '../entity/CnfEmailSenders';
 import { BaseService } from './base.service';
 
 @Injectable({

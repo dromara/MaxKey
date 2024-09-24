@@ -22,47 +22,11 @@ defaultTasks "clean", "build"
 
 //Version define
 ext {
-    
+	
 }
 
-def libjarsmapper=[
-    'maxkey-authentication-captcha'         :'lib',
-    'maxkey-authentication-core'            :'lib',
-    'maxkey-authentication-ip2region'       :'lib',
-    'maxkey-authentication-otp'             :'lib',
-    'maxkey-authentication-provider'        :'lib',
-    'maxkey-authentication-sms'             :'lib',
-    'maxkey-common'                         :'lib',
-    'maxkey-core'                           :'lib',
-    'maxkey-persistence'                    :'lib',
-    'maxkey-protocol-authorize'             :'lib',
-    'maxkey-protocol-cas'                   :'lib',
-    'maxkey-protocol-desktop'               :'lib',
-    'maxkey-protocol-extendapi'             :'lib',
-    'maxkey-protocol-formbased'             :'lib',
-    'maxkey-protocol-jwt'                   :'lib',
-    'maxkey-protocol-oauth-2.0'             :'lib',
-    'maxkey-protocol-saml-2.0'              :'lib',
-    'maxkey-protocol-tokenbased'            :'lib',
-    'maxkey-web-resources'                  :'lib',
-    'maxkey-authentication-social'          :'maxkey',
-    'maxkey-web-maxkey'                     :'maxkey',
-    'maxkey-web-mgt'                        :'maxkey_mgt',
-    'maxkey-synchronizer'                   :'maxkey_mgt',
-    'maxkey-synchronizer-activedirectory'   :'maxkey_mgt',
-    'maxkey-synchronizer-common'            :'maxkey_mgt',
-    'maxkey-synchronizer-jdbc'              :'maxkey_mgt',
-    'maxkey-synchronizer-ldap'              :'maxkey_mgt',
-    'maxkey-synchronizer-dingtalk'          :'maxkey_mgt',
-    'maxkey-synchronizer-workweixin'        :'maxkey_mgt',
-    'maxkey-synchronizer-reorgdept'         :'maxkey_mgt',
-    'maxkey-web-openapi'                    :'maxkey_openapi',
-    'maxkey-web-api-rest'                   :'maxkey_openapi',
-    'maxkey-web-api-scim'                   :'maxkey_openapi',
-]
-
 configurations.all {
-    transitive = false// 为本依赖关闭依赖传递特性
+	transitive = false// 为本依赖关闭依赖传递特性
 }
 
 //add support for Java
@@ -74,14 +38,14 @@ allprojects {
     //apply plugin: "findbugs"
     //apply plugin: "jdepend"
     
-    configurations.all {
-        transitive = false// 为本依赖关闭依赖传递特性
-    }   
-    //java Version
-    sourceCompatibility = 17
-    targetCompatibility = 17
-    compileJava.options.encoding = 'UTF-8'
-    
+	configurations.all {
+		transitive = false// 为本依赖关闭依赖传递特性
+	}	
+	//java Version
+	sourceCompatibility = 17
+	targetCompatibility	= 17
+	compileJava.options.encoding = 'UTF-8'
+	
     eclipse {
         /*设置工程字符集*/
         jdt  {
@@ -91,7 +55,7 @@ allprojects {
                 prefs.append('encoding/<project>=UTF-8') //use UTF-8
             }
         }
-    }  
+    } 
 }
 
 buildscript {
@@ -105,28 +69,37 @@ repositories {
     // Use 'jcenter' for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     mavenCentral()
+    jcenter()
     
 }
 
-// In this section you declare the dependencies for your production and test code
-dependencies {
- 
-}
 
-subprojects {
-    processResources {
-        from ('src/main/resources') {
-            include 'src/main/resources/*.*'
-        }
-    }
-    sourceSets {
-        main {
-            java {
-                srcDir 'src/main/java' // 指定源码目录
-            }
-         }
-    }
-    repositories {  
+
+subprojects {  	
+	/*
+	eclipse {
+		第一次时请注释这段eclipse设置，可能报错，设置工程字符集
+		jdt  {
+		    File f = file('.settings/org.eclipse.core.resources.prefs')
+		    f.write('eclipse.preferences.version=1\n')
+		    f.append('encoding/<project>=UTF-8') //use UTF-8
+		}
+	}
+	*/
+	processResources {
+		from ('src/main/resources') {
+	    	include 'src/main/resources/*.*'
+	  	}
+	}
+	sourceSets {
+	    main {
+	        java {
+	            srcDir 'src/main/java' // 指定源码目录
+	        }
+	   	 }
+	}
+	
+	repositories {  
         mavenLocal()
         maven { url "https://maven.aliyun.com/repository/central"}
         maven { url "https://maven.aliyun.com/repository/public"}
@@ -143,8 +116,8 @@ subprojects {
         maven { url "https://repository.apache.org/content/repositories/releases" }
         mavenCentral()
     }  
-
-    //all dependencies
+	
+	//all dependencies
     dependencies {
          //for Test and Compile
          testImplementation group: 'junit', name: 'junit', version: "${junitVersion}"
@@ -447,92 +420,38 @@ subprojects {
     
     jar {  
 
-        def currentTime = java.time.ZonedDateTime.now()
-        manifest {
-            attributes(
-                        "Implementation-Title": project.name,
-                        "Implementation-Vendor": project.vendor,
-                        "Created-By": project.author,
-                        "Implementation-Date": currentTime,
-                        "Implementation-Version": project.version
-               )
-        }
-    }
-    
-    tasks.register("buildRelease",Copy) {
-        dependsOn   assemble
-        //项目名 项目所在的group version 版本号
-        println  "subproject " + project.name + ", group " + project.group +" , version " + project.version
-        
-        //copy
-        into "$rootDir/build/maxkey-jars/"
-        from "$buildDir/libs/"
-        include '*.jar'
-    }
-    
-    tasks.register("copyLibJars",Copy) {
-        if (libjarsmapper["${project.name}"] != null){
-              into "$rootDir/build/MaxKey-v${project.version}GA/"+libjarsmapper["${project.name}"]
-              from "$buildDir/libs/"
-              include '*.jar'
-        }
-    }
-    assemble.configure { finalizedBy buildRelease,copyLibJars }
-}
+	    def currentTime = java.time.ZonedDateTime.now()
+	    manifest {
+	        attributes(
+						"Implementation-Title": project.name,
+	                	"Implementation-Vendor": project.vendor,
+	                	"Created-By": project.author,
+	                	"Implementation-Date": currentTime,
+	                	"Implementation-Version": project.version
+	           )
+	    }
+	}
+	
+	task buildRelease()  {
+		dependsOn	assemble
+		//项目名
+		println  "subproject " + project.name + ", group " + project.group +" , version " + project.version
+	}
+	
+	assemble.configure { finalizedBy buildRelease }
 
-//copy Dep Jars to /build/maxkey-depjars,only maxkey-common deps
-project('maxkey-common')  {
-    task createReleaseDir(type: Copy){
-        def paths = ["$rootDir/build/MaxKey-v${project.version}GA",
-                     "$rootDir/build/MaxKey-v${project.version}GA/maxkey",
-                     "$rootDir/build/MaxKey-v${project.version}GA/maxkey_mgt",
-                     "$rootDir/build/MaxKey-v${project.version}GA/lib"];
-        //遍历数组，调用createDir闭包，创建目录
-        paths.forEach(){path->
-            File dir=new File(path);
-            if (!dir.exists()){
-                print("create "+path+"\n")
-                dir.mkdirs();
-            }
-        };
-    }
-    
-    task copyDepJars (type: Copy){
-        dependsOn   assemble
-        println  "copy Dep Jars to $rootDir/build/MaxKey-v${project.version}GA/lib"
-        //copy runtime
-        from configurations.runtimeClasspath
-        into "$rootDir/build/MaxKey-v${project.version}GA/lib";
-    }
-    
-    build.configure { finalizedBy copyDepJars }
 }
 
 tasks.register("buildRelease")  {
-    dependsOn 'copyShellScript','copyWindowsShellScript'
-    
     //项目名 项目所在的group version 版本号
     println  "Root project " + project.name + ", group " + project.group +" , version " + project.version
     //项目的绝对路径 to 项目的build文件绝对路径
     println "Root project projectDir " + project.projectDir +" to " + project.buildDir
 }
 
-tasks.register("copyShellScript",Copy) {
-    println  "project copyMaxKeyShellScript .";
-    
-    from "$rootDir/shellscript/"
-    into "$rootDir/build/MaxKey-v${project.version}GA/shellscript/";
-}
+build.configure { finalizedBy buildRelease }
 
-tasks.register("copyWindowsShellScript",Copy) {
-    println  "project copyMaxKeyWindowsShellScript .";
-    from "$rootDir/shellscript/windows"
-    into "$rootDir/build/MaxKey-v${project.version}GA/";
-}
-
-build.configure { 
-	finalizedBy buildRelease 
-	
-	println ""
-	println "Gradle version is ${GradleVersion.current().version}"
+// In this section you declare the dependencies for your production and test code
+dependencies {
+ 
 }

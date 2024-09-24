@@ -25,8 +25,8 @@ import org.dromara.maxkey.authz.saml.service.IDService;
 import org.dromara.maxkey.authz.saml.service.TimeService;
 import org.dromara.maxkey.authz.saml20.binding.BindingAdapter;
 import org.dromara.maxkey.authz.saml20.xml.IssuerGenerator;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebContext;
 import org.joda.time.DateTime;
 import org.opensaml.Configuration;
@@ -51,7 +51,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class AssertionGenerator {
-	private final static Logger logger = LoggerFactory.getLogger(AssertionGenerator.class);
+	private static final  Logger logger = LoggerFactory.getLogger(AssertionGenerator.class);
 
 	private final IssuerGenerator issuerGenerator;
 	private final SubjectGenerator subjectGenerator;

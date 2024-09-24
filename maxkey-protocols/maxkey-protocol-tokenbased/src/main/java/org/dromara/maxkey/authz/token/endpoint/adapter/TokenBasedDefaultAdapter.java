@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 public class TokenBasedDefaultAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(TokenBasedDefaultAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(TokenBasedDefaultAdapter.class);
 	String token = "";
 	
 	@Override

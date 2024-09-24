@@ -25,22 +25,21 @@ import org.dromara.maxkey.persistence.repository.InstitutionsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-@Controller
+@RestController
 @RequestMapping(value = "/inst")
 public class InstitutionEndpoint {
 	private static final  Logger _logger = LoggerFactory.getLogger(InstitutionEndpoint.class);
 	
-	public final static String  HEADER_HOST 		= "host";
+	public static final  String  HEADER_HOST 		= "host";
 	
-	public final static String  HEADER_HOSTNAME 	= "hostname";
+	public static final  String  HEADER_HOSTNAME 	= "hostname";
 	
 	@Autowired
 	InstitutionsRepository institutionsRepository;
@@ -48,8 +47,8 @@ public class InstitutionEndpoint {
 	@Autowired
 	ApplicationConfig applicationConfig;
 	
- 	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(
+ 	@GetMapping(value={"/get"})
+	public Message<Institutions> get(
 			HttpServletRequest request,
 			@RequestHeader(value = "Origin",required=false) String originURL,
 			@RequestHeader(value = HEADER_HOSTNAME,required=false) String headerHostName,
@@ -76,11 +75,11 @@ public class InstitutionEndpoint {
 		Institutions inst = institutionsRepository.get(host);
 		if(inst != null) {
 			_logger.debug("inst {}",inst);
-			return new Message<Institutions>(inst).buildResponse();
+			return new Message<>(inst);
 		}else {
 			Institutions defaultInst = institutionsRepository.get("1");
 			_logger.debug("default inst {}",inst);
-			return new Message<Institutions>(defaultInst).buildResponse();
+			return new Message<>(defaultInst);
 		}
  	}
 }

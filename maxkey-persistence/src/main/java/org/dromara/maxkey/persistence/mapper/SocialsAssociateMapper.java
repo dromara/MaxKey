@@ -19,7 +19,7 @@ package org.dromara.maxkey.persistence.mapper;
 import java.util.List;
 
 import org.dromara.maxkey.entity.SocialsAssociate;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 public interface SocialsAssociateMapper extends IJpaMapper<SocialsAssociate> {

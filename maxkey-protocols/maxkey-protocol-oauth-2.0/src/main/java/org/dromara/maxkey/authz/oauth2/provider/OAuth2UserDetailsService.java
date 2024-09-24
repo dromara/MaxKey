@@ -18,7 +18,7 @@ import java.util.List;
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.session.Session;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.web.WebConstants;
 import org.slf4j.Logger;

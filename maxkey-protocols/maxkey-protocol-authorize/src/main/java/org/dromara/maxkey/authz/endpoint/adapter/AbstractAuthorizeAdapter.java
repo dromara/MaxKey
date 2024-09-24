@@ -28,15 +28,15 @@ import org.dromara.maxkey.crypto.cert.CertSigner;
 import org.dromara.maxkey.crypto.keystore.KeyStoreLoader;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 public abstract class AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(AbstractAuthorizeAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(AbstractAuthorizeAdapter.class);
 	
 	protected Apps app;
 	

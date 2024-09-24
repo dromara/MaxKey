@@ -33,9 +33,9 @@ import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsBoolean;
 import org.dromara.maxkey.constants.ContentType;
 import org.dromara.maxkey.crypto.jose.keystore.JWKSetKeyStore;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.AppsJwtDetails;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsJwtDetailsService;
 import org.dromara.maxkey.util.Instance;
 import org.dromara.maxkey.web.WebConstants;
@@ -62,7 +62,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class JwtAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
-	final static Logger _logger = LoggerFactory.getLogger(JwtAuthorizeEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(JwtAuthorizeEndpoint.class);
 	
 	@Autowired
 	AppsJwtDetailsService jwtDetailsService;

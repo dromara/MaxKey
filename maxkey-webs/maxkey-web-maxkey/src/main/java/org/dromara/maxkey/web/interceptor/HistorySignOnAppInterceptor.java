@@ -17,11 +17,13 @@
 
 package org.dromara.maxkey.web.interceptor;
 
+import java.util.Date;
+
 import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.web.AuthorizationUtils;
-import org.dromara.maxkey.entity.HistoryLoginApps;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
+import org.dromara.maxkey.entity.history.HistoryLoginApps;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.persistence.service.HistoryLoginAppsService;
 import org.dromara.maxkey.web.WebConstants;
@@ -44,7 +46,7 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
     HistoryLoginAppsService historyLoginAppsService;
 
     @Autowired
-    protected AppsService appsService;
+    AppsService appsService;
 
     /**
      * postHandle .
@@ -73,6 +75,7 @@ public class HistorySignOnAppInterceptor  implements AsyncHandlerInterceptor  {
              historyLoginApps.setUsername(userInfo.getUsername());
              historyLoginApps.setDisplayName(userInfo.getDisplayName());
              historyLoginApps.setInstId(userInfo.getInstId());
+             historyLoginApps.setLoginTime(new Date());
              historyLoginAppsService.insert(historyLoginApps);
              WebContext.removeAttribute(WebConstants.CURRENT_SINGLESIGNON_URI);
              WebContext.removeAttribute(WebConstants.SINGLE_SIGN_ON_APP_ID);

@@ -29,9 +29,9 @@ import org.dromara.maxkey.authz.oauth2.provider.ClientDetailsService;
 import org.dromara.maxkey.authz.oauth2.provider.OAuth2Authentication;
 import org.dromara.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.dromara.maxkey.constants.ConstsBoolean;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.util.Instance;
@@ -54,7 +54,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class UserInfoEndpoint {
-	final static Logger _logger = LoggerFactory.getLogger(UserInfoEndpoint.class);	
+	static final  Logger _logger = LoggerFactory.getLogger(UserInfoEndpoint.class);	
 	@Autowired
 	@Qualifier("oauth20JdbcClientDetailsService")
 	private ClientDetailsService clientDetailsService;

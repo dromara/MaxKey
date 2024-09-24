@@ -17,11 +17,9 @@
 
 package org.dromara.maxkey.web.apis.identity.rest;
 
-import java.io.IOException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.Organizations;
+import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.persistence.service.OrganizationsService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
@@ -29,8 +27,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,13 +35,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Controller
+@RestController
 @RequestMapping(value={"/api/idm/Organization"})
 public class RestOrganizationController {
 	static final  Logger _logger = LoggerFactory.getLogger(RestOrganizationController.class);
@@ -53,20 +48,17 @@ public class RestOrganizationController {
     @Autowired
     OrganizationsService organizationsService;
     
-    @ResponseBody
     @GetMapping(value = "/{id}")
     public Organizations getUser(@PathVariable String id,
                                        @RequestParam(required = false) String attributes) {
     	_logger.debug("Organizations id {} , attributes {}", id , attributes);
-        Organizations org = organizationsService.get(id);
-        return org;
+        return organizationsService.get(id);
     }
 
-    @ResponseBody
     @PostMapping
     public Organizations create(@RequestBody  Organizations org,
                                                       @RequestParam(required = false) String attributes,
-                                                      UriComponentsBuilder builder) throws IOException {
+                                                      UriComponentsBuilder builder) {
     	_logger.debug("Organizations content {} , attributes {}", org , attributes);
         Organizations loadOrg = organizationsService.get(org.getId());
         if(loadOrg == null) {
@@ -77,12 +69,10 @@ public class RestOrganizationController {
         return org;
     }
 
-    @ResponseBody
     @PutMapping(value = "/{id}")
     public Organizations replace(@PathVariable String id,
                                                        @RequestBody Organizations org,
-                                                       @RequestParam(required = false) String attributes)
-            throws IOException {
+                                                       @RequestParam(required = false) String attributes) {
     	_logger.debug("Organizations id {} , content {} , attributes {}", id , org , attributes);
         Organizations loadOrg = organizationsService.get(id);
         if(loadOrg == null) {
@@ -98,19 +88,17 @@ public class RestOrganizationController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
     	_logger.debug("Organizations id {} ", id );
-        organizationsService.remove(id);
+        organizationsService.delete(id);
        
     }
     
     @GetMapping(value = { "/.search" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	@ResponseBody
-	public ResponseEntity<?> search(@ModelAttribute Organizations org) {
+	public Message<JpaPageResults<Organizations>> search(@ModelAttribute Organizations org) {
     	if(StringUtils.isBlank(org.getInstId())){
     		org.setInstId("1");
     	}
 		_logger.debug("Organizations {}" , org);
-		return new Message<JpaPageResults<Organizations>>(
-				organizationsService.fetchPageResults(org)).buildResponse();
+		return new Message<>(organizationsService.fetchPageResults(org));
 	}
 
 

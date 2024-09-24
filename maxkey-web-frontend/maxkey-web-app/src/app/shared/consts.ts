@@ -26,5 +26,5 @@ export const CONSTS = {
   REDIRECT_URI: 'redirect_uri',
   REMEMBER: 'remember_me',
   TOKEN: '_token',
-  VERSION: 'v4.0.5 GA'
+  VERSION: 'v4.1.1 GA'
 };

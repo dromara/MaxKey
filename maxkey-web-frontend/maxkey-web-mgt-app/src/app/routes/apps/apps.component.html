@@ -7,14 +7,8 @@
         <nz-form-item>
           <nz-form-label nzFor="appName">{{ 'mxk.apps.name' | i18n }}</nz-form-label>
           <nz-form-control>
-            <input
-              nz-input
-              [(ngModel)]="query.params.appName"
-              [ngModelOptions]="{ standalone: true }"
-              name="appName"
-              placeholder=""
-              id="appName"
-            />
+            <input nz-input [(ngModel)]="query.params.appName" [ngModelOptions]="{ standalone: true }" name="appName"
+              placeholder="" id="appName" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -40,11 +34,12 @@
       </div>
       <div nz-col [nzSpan]="query.expandForm ? 24 : 4" [class.text-right]="query.expandForm">
         <nz-form-item>
-          <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' | i18n }}</button>
-          <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' | i18n }}</button>
+          <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="query.submitLoading">{{ 'mxk.text.query' |
+            i18n }}</button>
+          <button nz-button type="reset" (click)="onReset()" class="mx-sm" style="display: none">{{ 'mxk.text.reset' |
+            i18n }}</button>
           <button nz-button (click)="query.expandForm = !query.expandForm" class="mx-sm" style="display: none">
-            {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button
-          >
+            {{ query.expandForm ? ('mxk.text.collapse' | i18n) : ('mxk.text.expand' | i18n) }}</button>
         </nz-form-item>
       </div>
     </div>
@@ -54,31 +49,21 @@
   <div nz-col [nzSpan]="24" class="table-list-toolbar">
     <button nz-button type="button" (click)="onAddSelectProtocol($event)" [nzType]="'primary'" class="mx-sm">{{
       'mxk.text.add' | i18n
-    }}</button>
+      }}</button>
 
-    <button nz-button type="button" (click)="onBatchDelete($event)" [nzType]="'primary'" nzDanger class="mx-sm">{{
-      'mxk.text.delete' | i18n
-    }}</button>
+    <button nz-button type="button" nz-popconfirm nzPopconfirmTitle="{{ 'mxk.text.delete.popconfirm.title' | i18n }}"
+      nzPopconfirmPlacement="left" [nzCancelText]="'mxk.text.delete.popconfirm.cancelText' | i18n"
+      [nzOkText]="'mxk.text.delete.popconfirm.okText' | i18n" (nzOnConfirm)="onBatchDelete()" [nzType]="'primary'"
+      nzDanger class="mx-sm">{{ 'mxk.text.batchDelete' | i18n }}</button>
   </div>
-  <nz-table
-    #dynamicTable
-    nzTableLayout="auto"
-    nzSize="small"
-    nzBordered
-    nzShowSizeChanger
-    [nzData]="query.results.rows"
-    [nzFrontPagination]="false"
-    [nzTotal]="query.results.records"
-    [nzPageSizeOptions]="query.params.pageSizeOptions"
-    [nzPageSize]="query.params.pageSize"
-    [nzPageIndex]="query.params.pageNumber"
-    [nzLoading]="this.query.tableLoading"
-    (nzQueryParams)="onQueryParamsChange($event)"
-    nzWidth="100%"
-  >
+  <nz-table #dynamicTable nzTableLayout="auto" nzSize="small" nzBordered nzShowSizeChanger [nzData]="query.results.rows"
+    [nzFrontPagination]="false" [nzTotal]="query.results.records" [nzPageSizeOptions]="query.params.pageSizeOptions"
+    [nzPageSize]="query.params.pageSize" [nzPageIndex]="query.params.pageNumber" [nzLoading]="this.query.tableLoading"
+    (nzQueryParams)="onQueryParamsChange($event)" nzWidth="100%">
     <thead>
       <tr>
-        <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate" (nzCheckedChange)="onTableAllChecked($event)"></th>
+        <th [nzChecked]="query.checked" [nzIndeterminate]="query.indeterminate"
+          (nzCheckedChange)="onTableAllChecked($event)"></th>
 
         <th nzAlign="center">{{ 'mxk.apps.icon' | i18n }}</th>
         <th nzAlign="center">{{ 'mxk.text.id' | i18n }}</th>
@@ -92,11 +77,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of query.results.rows">
-        <td
-          [nzChecked]="query.tableCheckedId.has(data.id)"
-          [nzDisabled]="data.disabled"
-          (nzCheckedChange)="onTableItemChecked(data.id, $event)"
-        ></td>
+        <td [nzChecked]="query.tableCheckedId.has(data.id)" [nzDisabled]="data.disabled"
+          (nzCheckedChange)="onTableItemChecked(data.id, $event)"></td>
 
         <td nzAlign="center"><img height="30" border="0px" src="{{ data.iconBase64 }}" /></td>
         <td nzAlign="left"> {{ data.id }} </td>
@@ -133,22 +115,15 @@
           <div *ngIf="data.category == '1912'">{{ 'mxk.apps.category.1912' | i18n }}</div>
         </td>
         <td nzAlign="left"> {{ data.sortIndex }}</td>
-        <td nzAlign="center"> <i *ngIf="data.status == 1" nz-icon nzType="check-circle" nzTheme="fill" style="color: green"></i></td>
+        <td nzAlign="center"> <i *ngIf="data.status == 1" nz-icon nzType="check-circle" nzTheme="fill"
+            style="color: green"></i></td>
         <td nzAlign="center" nzBreakWord="false">
           <div nz-col>
-            <button nz-button type="button" (click)="onEdit($event, data.id, data.protocol)">{{ 'mxk.text.edit' | i18n }}</button>
+            <button nz-button type="button" (click)="onEdit($event, data.id, data.protocol)">{{ 'mxk.text.edit' | i18n
+              }}</button>
 
-            <button nz-button nz-dropdown [nzDropdownMenu]="menuMoreAction">
-              {{ 'mxk.text.moreaction' | i18n }}
-              <i nz-icon nzType="down"></i>
-            </button>
-
-            <nz-dropdown-menu #menuMoreAction="nzDropdownMenu">
-              <ul nz-menu>
-                <li nz-menu-item (click)="onResourcesMgmt($event, data.id, data.appName)">{{ 'mxk.apps.resources' | i18n }}</li>
-                <li nz-menu-item (click)="onDelete($event, data.id)" nzDanger>{{ 'mxk.text.delete' | i18n }}</li>
-              </ul>
-            </nz-dropdown-menu>
+            <button nz-button type="button" (click)="onDelete($event, data.id)" nzDanger>{{ 'mxk.text.delete' | i18n
+              }}</button>
           </div>
         </td>
       </tr>

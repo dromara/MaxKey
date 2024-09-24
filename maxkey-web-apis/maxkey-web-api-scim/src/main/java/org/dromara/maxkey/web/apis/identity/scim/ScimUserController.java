@@ -20,13 +20,13 @@ package org.dromara.maxkey.web.apis.identity.scim;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.Groups;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.Groups;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.GroupsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
-import org.dromara.maxkey.util.DateUtils;
-import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimEnterprise;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimFormattedName;
 import org.dromara.maxkey.web.apis.identity.scim.resources.ScimGroupRef;
@@ -67,9 +67,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping(value = "/api/idm/SCIM/v2/Users")
 public class ScimUserController {
-	final static Logger _logger = LoggerFactory.getLogger(ScimUserController.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ScimUserController.class);
 	@Autowired
-	private UserInfoService userInfoService;
+	UserInfoService userInfoService;
 	
 	@Autowired
 	GroupsService groupsService;
@@ -108,7 +108,7 @@ public class ScimUserController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable final String id) {
     	_logger.debug("ScimUser id {} ", id );
-    	userInfoService.remove(id);
+    	userInfoService.delete(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)

@@ -37,7 +37,7 @@ import com.nimbusds.jose.jwk.JWK;
  * Builder Symmetric Signing Service
  */
 public class SymmetricSigningAndValidationServiceBuilder {
-	final static Logger _logger = LoggerFactory.getLogger(SymmetricSigningAndValidationServiceBuilder.class);
+	static final  Logger _logger = LoggerFactory.getLogger(SymmetricSigningAndValidationServiceBuilder.class);
 	public static final String SYMMETRIC_KEY = "SYMMETRIC-KEY";
 	/**
 	 * 

@@ -20,15 +20,12 @@ package org.dromara.maxkey.web.contorller;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.GetMapping;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -36,10 +33,10 @@ public class LogoutEndpoint {
 	private static Logger logger = LoggerFactory.getLogger(LogoutEndpoint.class);
 	
 	@Autowired
-    protected SessionManager sessionManager;
+    SessionManager sessionManager;
 	
- 	@RequestMapping(value={"/logout"}, produces = {MediaType.APPLICATION_JSON_VALUE})
- 	public  ResponseEntity<?> logout(HttpServletRequest request,@CurrentUser UserInfo currentUser){
+ 	@GetMapping(value={"/logout"})
+ 	public  Message<?> logout(HttpServletRequest request,@CurrentUser UserInfo currentUser){
  		sessionManager.terminate(
  				currentUser.getSessionId(), 
  				currentUser.getId(),
@@ -47,7 +44,7 @@ public class LogoutEndpoint {
  		//invalidate http session
 		logger.debug("/logout invalidate http Session id {}",request.getSession().getId());
  		request.getSession().invalidate();
- 		return new Message<String>().buildResponse();
+ 		return new Message<String>();
  	}
  	
 }

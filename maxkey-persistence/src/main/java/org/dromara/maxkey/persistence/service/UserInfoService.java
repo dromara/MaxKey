@@ -21,18 +21,17 @@ package org.dromara.maxkey.persistence.service;
 import java.sql.Types;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.ChangePassword;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.UserInfoMapper;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
-import org.dromara.maxkey.provision.ProvisionAction;
+import org.dromara.maxkey.provision.ProvisionAct;
 import org.dromara.maxkey.provision.ProvisionService;
 import org.dromara.maxkey.provision.ProvisionTopic;
-import org.dromara.maxkey.util.DateUtils;
-import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
@@ -48,7 +47,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UserInfoService extends JpaService<UserInfo> {
-	final static Logger _logger = LoggerFactory.getLogger(UserInfoService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(UserInfoService.class);
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -82,7 +81,7 @@ public class UserInfoService extends JpaService<UserInfo> {
                 provisionService.send(
                         ProvisionTopic.USERINFO_TOPIC, 
                         loadUserInfo,
-                        ProvisionAction.CREATE_ACTION);
+                        ProvisionAct.CREATE);
             }
             
             return true;
@@ -101,7 +100,7 @@ public class UserInfoService extends JpaService<UserInfo> {
                 provisionService.send(
                         ProvisionTopic.USERINFO_TOPIC, 
                         loadUserInfo,
-                        ProvisionAction.CREATE_ACTION);
+                        ProvisionAct.CREATE);
             }
             
             return true;
@@ -120,7 +119,7 @@ public class UserInfoService extends JpaService<UserInfo> {
                 provisionService.send(
                         ProvisionTopic.USERINFO_TOPIC, 
                         loadUserInfo,
-                        ProvisionAction.UPDATE_ACTION);
+                        ProvisionAct.UPDATE);
             }
             if(userInfo.getPassword() != null) {
             	changePasswordProvisioning(changePassword);
@@ -130,18 +129,17 @@ public class UserInfoService extends JpaService<UserInfo> {
         return false;
     }
 	
-    @Override
 	public boolean delete(UserInfo userInfo) {
 	    UserInfo loadUserInfo = null;
 	    if(provisionService.getApplicationConfig().isProvisionSupport()) {
 	        loadUserInfo = findUserRelated(userInfo.getId());
 	    }
 	    
-		if( super.delete(userInfo)){
+		if( super.delete(userInfo.getId())){
 			provisionService.send(
 		            ProvisionTopic.USERINFO_TOPIC, 
 		            loadUserInfo, 
-		            ProvisionAction.DELETE_ACTION);
+		            ProvisionAct.DELETE);
 			accountUpdate(loadUserInfo);
 			 return true;
 		}
@@ -338,7 +336,7 @@ public class UserInfoService extends JpaService<UserInfo> {
     	    provisionService.send(
                     ProvisionTopic.PASSWORD_TOPIC, 
                     changePassword, 
-                    ProvisionAction.PASSWORD_ACTION);
+                    ProvisionAct.PASSWORD);
 	    }
 	}
 	

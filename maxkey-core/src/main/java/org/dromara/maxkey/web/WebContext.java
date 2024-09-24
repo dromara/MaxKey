@@ -456,12 +456,9 @@ public final class WebContext {
      * @return
      */
     public static boolean captchaValid(String captcha) {
-        if (captcha == null || !captcha
-                .equals(WebContext.getSession().getAttribute(
-                        WebConstants.KAPTCHA_SESSION_KEY).toString())) {
-            return false;
-        }
-        return true;
+        return (captcha != null && 
+        		captcha.equals(WebContext.getSession().getAttribute(
+                        WebConstants.KAPTCHA_SESSION_KEY).toString()));
     }
 
     /**
@@ -493,7 +490,7 @@ public final class WebContext {
         String message = code;
         try { 
             message = getApplicationContext().getMessage(
-                code.toString(), 
+                code, 
                 filedValues,
                 getLocale());
         } catch (Exception e) {

@@ -17,35 +17,26 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import java.io.Serializable;
 import java.sql.Types;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.Groups;
 import org.dromara.maxkey.entity.Institutions;
-import org.dromara.maxkey.entity.Roles;
+import org.dromara.maxkey.entity.idm.Groups;
+import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.maxkey.persistence.mapper.GroupsMapper;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.util.StrUtils;
 import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Repository
-public class GroupsService  extends JpaService<Groups> implements Serializable {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -4156671926199393550L;
-    
-    final static Logger _logger = LoggerFactory.getLogger(GroupsService.class);
-    @JsonIgnore
+public class GroupsService  extends JpaService<Groups>{
+    static final  Logger _logger = LoggerFactory.getLogger(GroupsService.class);
+
     @Autowired
     GroupMemberService groupMemberService;
     
@@ -70,7 +61,7 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
 	}
 	
 	public boolean deleteById(String groupId) {
-	    this.remove(groupId);
+	    this.delete(groupId);
 	    groupMemberService.deleteByGroupId(groupId);
 	    return true;
 	}
@@ -81,26 +72,6 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
 	
 	public void refreshDynamicGroups(Groups dynamicGroup){
 	    if(dynamicGroup.getCategory().equals(Roles.Category.DYNAMIC)) {
-	        boolean isDynamicTimeSupport = false;
-	        boolean isBetweenEffectiveTime = false;
-	        if(StringUtils.isNotBlank(dynamicGroup.getResumeTime())
-	                &&StringUtils.isNotBlank(dynamicGroup.getSuspendTime())
-	                &&!dynamicGroup.getSuspendTime().equals("00:00")) {
-	            LocalTime currentTime = LocalDateTime.now().toLocalTime();
-	            LocalTime resumeTime = LocalTime.parse(dynamicGroup.getResumeTime());
-	            LocalTime suspendTime = LocalTime.parse(dynamicGroup.getSuspendTime());
-	            
-	            _logger.info("currentTime: {} , resumeTime : {} , suspendTime: {}" 
-	            		, currentTime 
-                        , resumeTime 
-                        , suspendTime);
-	            isDynamicTimeSupport = true;
-	            
-	            if(resumeTime.isBefore(currentTime) && currentTime.isBefore(suspendTime)) {
-	                isBetweenEffectiveTime = true;
-	            }
-	            
-	        }
 	        
 	        if(StringUtils.isNotBlank(dynamicGroup.getOrgIdsList())) {
     	    	String []orgIds = dynamicGroup.getOrgIdsList().split(",");
@@ -120,27 +91,19 @@ public class GroupsService  extends JpaService<Groups> implements Serializable {
 	        
     	    String filters = dynamicGroup.getFilters();
     	    if(StringUtils.isNotBlank(filters)) {
-	    		if(StringUtils.filtersSQLInjection(filters.toLowerCase())) {  
+	    		if(StrUtils.filtersSQLInjection(filters.toLowerCase())) {  
 	    			_logger.info("filters include SQL Injection Attack Risk.");
 	    			return;
 	    		}
-	    		filters = filters.replace("&", " AND ");
-	    	    filters = filters.replace("|", " OR ");
+	    		//replace & with AND, | with OR
+	    		filters = filters.replace("&", " AND ").replace("|", " OR ");
 	    	    
 	    	    dynamicGroup.setFilters(filters);
     	    }
-    	    
-    	    if(isDynamicTimeSupport) {
-    	        if(isBetweenEffectiveTime) {
-    	        	groupMemberService.deleteDynamicMember(dynamicGroup);
-    	        	groupMemberService.addDynamicMember(dynamicGroup);
-    	        }else {
-    	        	groupMemberService.deleteDynamicMember(dynamicGroup);
-    	        }
-    	    }else{
-    	    	groupMemberService.deleteDynamicMember(dynamicGroup);
-    	    	groupMemberService.addDynamicMember(dynamicGroup);
-            }
+	    
+	    	groupMemberService.deleteDynamicMember(dynamicGroup);
+	    	groupMemberService.addDynamicMember(dynamicGroup);
+            
 	    }
     }
 	

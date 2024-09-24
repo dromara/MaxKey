@@ -29,9 +29,10 @@ import javax.naming.directory.SearchResult;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.crypto.DigestUtils;
-import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.SynchroRelated;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.history.HistorySynchronizer;
+import org.dromara.maxkey.entity.idm.Organizations;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.ldap.LdapUtils;
 import org.dromara.maxkey.ldap.constants.InetOrgPerson;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
@@ -132,13 +133,13 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 			namePah = namePah + "/" + namePaths[i];
 		}
 			
-        //namePah = namePah.substring(0, namePah.length());
+        namePah = namePah.substring(0, namePah.length());
         String deptNamePath= namePah.substring(0, namePah.lastIndexOf("/"));
         _logger.info("deptNamePath  " + deptNamePath);
-		//和属性映射无关暂时注释
-/*        Organizations  deptOrg = orgsNamePathMap.get(deptNamePath);
+		
+       Organizations  deptOrg = orgsNamePathMap.get(deptNamePath);
         userInfo.setDepartment(deptOrg.getOrgName());
-        userInfo.setDepartmentId(deptOrg.getId());*/
+        userInfo.setDepartmentId(deptOrg.getId());
         
 		try {
 		    userInfo.setId(userInfo.generateId());
@@ -201,8 +202,8 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 			userInfo.setTimeZone("Asia/Shanghai");
 			userInfo.setStatus(1);
 			userInfo.setInstId(this.synchronizer.getInstId());
-			//和属性映射无关暂时注释
-/*            HistorySynchronizer historySynchronizer =new HistorySynchronizer();
+			
+           	HistorySynchronizer historySynchronizer =new HistorySynchronizer();
             historySynchronizer.setId(historySynchronizer.generateId());
             historySynchronizer.setSyncId(this.synchronizer.getId());
             historySynchronizer.setSyncName(this.synchronizer.getName());
@@ -211,7 +212,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
             historySynchronizer.setObjectType(Organizations.class.getSimpleName());
             historySynchronizer.setInstId(synchronizer.getInstId());
             historySynchronizer.setResult("success");
-            this.historySynchronizerService.insert(historySynchronizer);*/
+            this.historySynchronizerService.insert(historySynchronizer);
            
 		} catch (NamingException e) {
 			e.printStackTrace();
@@ -234,11 +235,11 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 			namePah = namePah + "/" + namePaths[i];
 		}
 
-		//namePah = namePah.substring(0, namePah.length());
+		namePah = namePah.substring(0, namePah.length());
 		String deptNamePath= namePah.substring(0, namePah.lastIndexOf("/"));
 		_logger.info("deptNamePath  " + deptNamePath);
-		//和属性映射无关暂时注释
-		/*Organizations  deptOrg = orgsNamePathMap.get(deptNamePath);*/
+		
+		Organizations  deptOrg = orgsNamePathMap.get(deptNamePath);
 
 		userInfo.setLdapDn(nameInNamespace);
 		userInfo.setId(userInfo.generateId());
@@ -253,14 +254,14 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 			String sourceAttr = entry.getValue();
 			String value = null;
 			try {
-				//暂时注释
-				/*if(!attributeMap.keySet().contains(sourceAttr.toLowerCase())){
+				
+				if(!attributeMap.keySet().contains(sourceAttr.toLowerCase())){
 					value = (String) getFieldValue(deptOrg, sourceAttr);
 					if(value!=null){
 						setFieldValue(userInfo,targetAttr,value);
 						continue;
 					}
-				}*/
+				}
 				value = LdapUtils.getAttributeStringValue(sourceAttr,attributeMap);
 				if(targetAttr.equals("formattedName")){
 					userInfo.setFormattedName(LdapUtils.getAttributeStringValue(InetOrgPerson.SN,attributeMap)+
@@ -309,7 +310,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 			}
 
 		}
-/*		HistorySynchronizer historySynchronizer =new HistorySynchronizer();
+		HistorySynchronizer historySynchronizer =new HistorySynchronizer();
 		historySynchronizer.setId(historySynchronizer.generateId());
 		historySynchronizer.setSyncId(this.synchronizer.getId());
 		historySynchronizer.setSyncName(this.synchronizer.getName());
@@ -318,7 +319,7 @@ public class LdapUsersService extends AbstractSynchronizerService  implements IS
 		historySynchronizer.setObjectType(Organizations.class.getSimpleName());
 		historySynchronizer.setInstId(synchronizer.getInstId());
 		historySynchronizer.setResult("success");
-		this.historySynchronizerService.insert(historySynchronizer);*/
+		this.historySynchronizerService.insert(historySynchronizer);
 
 		return userInfo;
 	}

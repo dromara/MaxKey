@@ -53,14 +53,16 @@ dependencies {
 	implementation project(":maxkey-core")
 	implementation project(":maxkey-persistence")
    	
+   	implementation project(":maxkey-starter:maxkey-starter-captcha")
+   	implementation project(":maxkey-starter:maxkey-starter-ip2location")
+	implementation project(":maxkey-starter:maxkey-starter-otp")
+	implementation project(":maxkey-starter:maxkey-starter-sms")
+	implementation project(":maxkey-starter:maxkey-starter-web")
+	
    	implementation project(":maxkey-authentications:maxkey-authentication-core")
    	implementation project(":maxkey-authentications:maxkey-authentication-social")
-   	implementation project(":maxkey-authentications:maxkey-authentication-captcha")
-	implementation project(":maxkey-authentications:maxkey-authentication-ip2location")
-   	implementation project(":maxkey-authentications:maxkey-authentication-otp")
 	implementation project(":maxkey-authentications:maxkey-authentication-provider")
-	implementation project(":maxkey-authentications:maxkey-authentication-sms")
-   	
+
    	implementation project(":maxkey-protocols:maxkey-protocol-authorize")
    	implementation project(":maxkey-protocols:maxkey-protocol-cas")
 	implementation project(":maxkey-protocols:maxkey-protocol-extendapi")

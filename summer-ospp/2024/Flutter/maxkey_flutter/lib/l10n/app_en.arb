@@ -1,0 +1,67 @@
+{
+    "homePageNewTotpBtnScanPage": "Scan TOTP",
+    "homePagenewTotpBtnErr": "Unsupported QR code",
+    "homePagenewTotpBtn": "Scan TOTP",
+
+    "homePageTotpListViewNoTOTP": "No TOTP",
+    "homePageTotpListViewConfirmDialog": "Confirm to delete",
+    "homePageTotpListViewConfirmDialogCancelBtn": "Cancel",
+    "homePageTotpListViewConfirmDialogConfirmBtn": "Confirm",
+
+    "homePageUserCardGreetingMorning": "Morning",
+    "homePageUserCardGreetingNoon": "Noon",
+    "homePageUserCardGreetingAfternoon": "Afternoon",
+    "homePageUserCardGreetingEvening": "Evening",
+    "homePageUserCardScanPage": "Scan to login",
+    "homePageUserCardScanSucceed": "Succeed",
+
+    "loginPageSettingBtn": "Settings",
+    "loginPageLoginViewUsername": "Username",
+    "loginPageLoginViewPassword": "Password",
+    "loginPageLoginViewCaptcha": "Captcha",
+    "loginPageLoginViewLoginBtn": "Login",
+
+    "settingsPageTitle": "Settings",
+    "settingsPageHostSettingDialog": "Specify host",
+    "settingsPageHostSettingDialogHost": "Host",
+    "settingsPageHostSettingDialogTestSucceed": "Succeed",
+    "settingsPageHostSettingDialogTestFail": "Fail",
+    "settingsPageHostSettingDialogTestBtn": "Test",
+    "settingsPageHostSettingDialogCancleBtn": "Cancle",
+    "settingsPageHostSettingDialogConfirmBtn": "Confirm",
+    "settingsPageHostSettingTitle": "Specify host",
+    "settingsPageHostSettingDesc": "If MaxKey is not working properly, you may need to change this",
+
+    "settingsPageShowLogBtnTitle": "Check log",
+    "settingsPageLogDisplayPageTitle": "Check log",
+
+    "settingsPageThemeModeSwitchTitle": "Theme",
+
+    "userPageFullUserInfoDialogTitle": "User info",
+    "userPageFullUserInfoDialogDisplayName": "Name",
+    "userPageFullUserInfoDialogUsername": "Username",
+    "userPageFullUserInfoDialogGender": "Gender",
+    "userPageFullUserInfoDialogEmployeeNumber": "Employee ID",
+    "userPageFullUserInfoDialogMobile": "Mobile",
+    "userPageFullUserInfoDialogEmail": "Email",
+    "userPageFullUserInfoDialogUserType": "User type",
+    "userPageFullUserInfoDialogUserState": "User state",
+    "userPageFullUserInfoDialogIdType": "ID type",
+    "userPageFullUserInfoDialogIdCardNo": "ID card Nunber",
+    "userPageFullUserInfoDialogMarried": "Married",
+    "userPageFullUserInfoDialogBirth": "Birth date",
+    "userPageFullUserInfoDialogOrganization": "Organization",
+    "userPageFullUserInfoDialogDivision": "Division",
+    "userPageFullUserInfoDialogDepartmentId": "Department ID",
+    "userPageFullUserInfoDialogDepartment": "Department",
+    "userPageFullUserInfoDialogJobTitle": "Job title",
+    "userPageFullUserInfoDialogJobLevel": "Job level",
+    "userPageFullUserInfoDialogManager": "Manager",
+
+    "userPageTitle": "User",
+    "userPageUserInfoBtn": "User info",
+    "userPageSettingsBtn": "Settings",
+    "userPageLogoutBtn": "Logout",
+
+    "scanPagePermissionDeniedMsg": "Camera permissions are not granted.MaxKey requires camera permissions to scan the QR code and obtain a TOTP."
+}

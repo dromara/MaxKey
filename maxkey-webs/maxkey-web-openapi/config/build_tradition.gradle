@@ -1,0 +1,27 @@
+description = "maxkey-web-openapi"
+
+//add support for Java
+apply plugin: 'java'
+
+dependencies {
+	implementation project(":maxkey-common")
+	implementation project(":maxkey-core")
+	implementation project(":maxkey-persistence")
+	
+	implementation project(":maxkey-starter:maxkey-starter-captcha")
+   	implementation project(":maxkey-starter:maxkey-starter-ip2location")
+	implementation project(":maxkey-starter:maxkey-starter-otp")
+	implementation project(":maxkey-starter:maxkey-starter-sms")
+	implementation project(":maxkey-starter:maxkey-starter-web")
+	
+	implementation project(":maxkey-authentications:maxkey-authentication-core")
+	implementation project(":maxkey-authentications:maxkey-authentication-provider")
+	
+   	implementation project(":maxkey-protocols:maxkey-protocol-oauth-2.0")
+   	implementation project(":maxkey-protocols:maxkey-protocol-saml-2.0")   
+   	
+   	//webapis
+   	implementation project(":maxkey-web-apis:maxkey-web-api-scim")   
+   	implementation project(":maxkey-web-apis:maxkey-web-api-rest")	
+
+}

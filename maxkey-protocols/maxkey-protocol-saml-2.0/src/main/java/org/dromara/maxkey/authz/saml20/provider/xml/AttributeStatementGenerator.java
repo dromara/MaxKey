@@ -27,8 +27,8 @@ import java.util.Map.Entry;
 import org.dromara.maxkey.constants.ConstsBoolean;
 import org.dromara.maxkey.entity.ExtraAttr;
 import org.dromara.maxkey.entity.ExtraAttrs;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.ldap.constants.ActiveDirectoryUser;
 import org.opensaml.Configuration;
 import org.opensaml.saml2.core.Attribute;
@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 
 public class AttributeStatementGenerator {
-	private final static Logger logger = LoggerFactory.getLogger(AttributeStatementGenerator.class);
+	private static final  Logger logger = LoggerFactory.getLogger(AttributeStatementGenerator.class);
 	
 	private final XMLObjectBuilderFactory builderFactory = Configuration.getBuilderFactory();
 

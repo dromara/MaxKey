@@ -25,7 +25,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 
-import { GroupsService } from '../../../service/Groups.service';
+import { GroupsService } from '../../../service/groups.service';
 import { set2String } from '../../../shared/index';
 import { GroupEditerComponent } from './group-editer/group-editer.component';
 
@@ -110,8 +110,7 @@ export class GroupsComponent implements OnInit {
 
   onReset(): void {}
 
-  onBatchDelete(e: MouseEvent): void {
-    e.preventDefault();
+  onBatchDelete(): void {
     this.groupsService.delete(set2String(this.query.tableCheckedId)).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
@@ -162,8 +161,7 @@ export class GroupsComponent implements OnInit {
     });
   }
 
-  onDelete(e: MouseEvent, deleteId: String): void {
-    e.preventDefault();
+  onDelete(deleteId: String): void {
     this.groupsService.delete(deleteId).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));

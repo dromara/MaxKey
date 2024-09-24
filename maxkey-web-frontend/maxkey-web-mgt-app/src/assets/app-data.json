@@ -20,7 +20,6 @@
         {
           "text": "身份管理",
           "i18n": "mxk.menu.identities",
-          "link": "/organizations",
           "icon": "anticon-user",
           "children": [
             {
@@ -64,7 +63,6 @@
         {
           "text": "访问控制",
           "i18n": "mxk.menu.access",
-          "link": "/access",
           "icon": "anticon-safety",
           "children": [
             {
@@ -86,29 +84,38 @@
         {
           "text": "权限管理",
           "i18n": "mxk.menu.permissions",
-          "link": "/permissions",
           "icon": "anticon-radar-chart",
           "children": [
             {
-              "text": "资源管理",
-              "i18n": "mxk.menu.permissions.resources",
-              "link": "/permissions/resources",
+              "text": "应用列表",
+              "i18n": "mxk.menu.permissions",
+              "link": "/permissions/apps",
               "icon": "anticon-read",
-              "children": []
-            },
-            {
-              "text": "权限管理",
-              "i18n": "mxk.menu.permissions.privileges",
-              "link": "/permissions/privileges",
-              "icon": "anticon-carry-out",
-              "children": []
+              "children": [
+                {
+                  "text": "资源管理",
+                  "i18n": "mxk.menu.permissions.resources",
+                  "link": "/permissions/resources",
+                  "icon": "anticon-read",
+                  "hide":true,
+                  "children": []
+                },
+                {
+                  "text": "权限管理",
+                  "i18n": "mxk.menu.permissions.privileges",
+                  "link": "/permissions/permission",
+                  "icon": "anticon-carry-out",
+                  "hide":true,
+                  "children": []
+                }
+              ]
             }
+            
           ]
         },
         {
           "text": "配置管理",
           "i18n": "mxk.menu.config",
-          "link": "/config",
           "icon": "anticon-setting",
           "children": [
             {
@@ -179,7 +186,6 @@
         {
           "text": "日志审计",
           "i18n": "mxk.menu.audit",
-          "link": "/audit",
           "icon": "anticon-history",
           "children": [
             {

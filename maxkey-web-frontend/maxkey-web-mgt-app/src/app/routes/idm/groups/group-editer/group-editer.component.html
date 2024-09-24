@@ -29,30 +29,6 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item *ngIf="form.model.category == 'dynamic'">
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="resumeTime">{{ 'mxk.groups.resumeTime' | i18n }}</nz-form-label>
-      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid port!">
-        <nz-time-picker
-          [(ngModel)]="form.model.picker_resumeTime"
-          [ngModelOptions]="{ standalone: true }"
-          nzFormat="HH:mm"
-          name="picker_resumeTime"
-          id="picker_resumeTime"
-        ></nz-time-picker>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item *ngIf="form.model.category == 'dynamic'">
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="suspendTime">{{ 'mxk.groups.suspendTime' | i18n }}</nz-form-label>
-      <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid suspendTime!">
-        <nz-time-picker
-          [(ngModel)]="form.model.picker_suspendTime"
-          [ngModelOptions]="{ standalone: true }"
-          nzFormat="HH:mm"
-          name="picker_suspendTime"
-          id="picker_suspendTime"
-        ></nz-time-picker>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item *ngIf="form.model.category == 'dynamic'">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="orgIdsList">{{ 'mxk.groups.orgIdsList' | i18n }}</nz-form-label>
       <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="The input is not valid upperCase!">
         <input

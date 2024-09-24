@@ -20,7 +20,7 @@ import { I18NService } from '@core';
 import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { SmsProvider } from '../../../entity/SmsProvider';
+import { SmsProvider } from '../../../entity/CnfSmsProvider';
 import { SmsProviderService } from '../../../service/sms-provider.service';
 
 @Component({
@@ -44,9 +44,9 @@ export class SmsProviderComponent implements OnInit {
     submitting: boolean;
     model: SmsProvider;
   } = {
-    submitting: false,
-    model: new SmsProvider()
-  };
+      submitting: false,
+      model: new SmsProvider()
+    };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -56,7 +56,7 @@ export class SmsProviderComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.smsProviderService.get('').subscribe(res => {

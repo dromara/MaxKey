@@ -54,7 +54,7 @@ public class FormBasedDetailsServiceTest {
 		service.insert(formBasedDetails);
 		
 		Thread.sleep(1000);
-		service.remove(formBasedDetails.getId());
+		service.delete(formBasedDetails.getId());
 		
 	}
 	
@@ -74,7 +74,7 @@ public class FormBasedDetailsServiceTest {
 		_logger.info("remove...");
 		AppsFormBasedDetails formBasedDetails=new AppsFormBasedDetails();
 		formBasedDetails.setId("921d3377-937a-4578-b1e2-92fb23b5e512");
-		service.remove(formBasedDetails.getId());
+		service.delete(formBasedDetails.getId());
 		
 	}
 	

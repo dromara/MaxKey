@@ -29,7 +29,7 @@ import org.dromara.maxkey.constants.ConstsLoginType;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.SocialsAssociate;
 import org.dromara.maxkey.entity.SocialsProvider;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.uuid.UUID;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -51,12 +51,12 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/logon/oauth20")
 public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
-	final static Logger _logger = LoggerFactory.getLogger(SocialSignOnEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(SocialSignOnEndpoint.class);
 
 	@RequestMapping(value={"/authorize/{provider}"}, method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<?> authorize( HttpServletRequest request,
-										@PathVariable String provider
+	public Message<Object> authorize( HttpServletRequest request,
+										@PathVariable("provider") String provider
 									) {
 		_logger.trace("SocialSignOn provider : " + provider);
 		String instId = WebContext.getInst().getId();
@@ -69,12 +69,12 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 				).authorize(authTokenService.genRandomJwt());
 
 		_logger.trace("authorize SocialSignOn : " + authorizationUrl);
-		return new Message<Object>((Object)authorizationUrl).buildResponse();
+		return new Message<Object>((Object)authorizationUrl);
 	}
 
 	@RequestMapping(value={"/scanqrcode/{provider}"}, method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<?> scanQRCode(HttpServletRequest request,
+	public Message<SocialsProvider> scanQRCode(HttpServletRequest request,
 										@PathVariable("provider") String provider) {
 		String instId = WebContext.getInst().getId();
 		String originURL =WebContext.getContextPath(request,false);
@@ -102,12 +102,12 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 			socialSignOnProviderService.setToken(state);
 		}
 		
-		return new Message<SocialsProvider>(scanQrProvider).buildResponse();
+		return new Message<SocialsProvider>(scanQrProvider);
 	}
 
 	
 	@RequestMapping(value={"/bind/{provider}"}, method = RequestMethod.GET)
-	public ResponseEntity<?> bind(@PathVariable String provider,
+	public Message<AuthJwt> bind(@PathVariable("provider") String provider,
 								  @CurrentUser UserInfo userInfo,
 								  HttpServletRequest request) {
 		 //auth call back may exception 
@@ -124,18 +124,18 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 			_logger.debug("Social Bind : "+socialsAssociate);
 			this.socialsAssociateService.delete(socialsAssociate);
 			this.socialsAssociateService.insert(socialsAssociate);
-			return new Message<AuthJwt>().buildResponse();
+			return new Message<AuthJwt>();
 	    }catch(Exception e) {
 	        _logger.error("callback Exception  ",e);
 	    }
 	    
-	    return new Message<AuthJwt>(Message.ERROR).buildResponse();
+	    return new Message<AuthJwt>(Message.ERROR);
 	}
 
 
 
 	@RequestMapping(value={"/callback/{provider}"}, method = RequestMethod.GET)
-	public ResponseEntity<?> callback(@PathVariable String provider,
+	public Message<AuthJwt> callback(@PathVariable("provider") String provider,
 									  HttpServletRequest request) {
 		 //auth call back may exception 
 	    try {
@@ -152,7 +152,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 				//如果存在第三方ID并且在数据库无法找到映射关系，则进行绑定逻辑
 				if (StringUtils.isNotEmpty(socialsAssociate.getSocialUserId())) {
 					//返回message为第三方用户标识
-					return new Message<AuthJwt>(Message.PROMPT,socialsAssociate.getSocialUserId()).buildResponse();
+					return new Message<AuthJwt>(Message.PROMPT,socialsAssociate.getSocialUserId());
 				}
 			}
 
@@ -171,10 +171,10 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	    	//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
 		
 	    	this.socialsAssociateService.update(socialsAssociate);
-	    	return new Message<AuthJwt>(authTokenService.genAuthJwt(authentication)).buildResponse();
+	    	return new Message<AuthJwt>(authTokenService.genAuthJwt(authentication));
 	    }catch(Exception e) {
 	    	 _logger.error("callback Exception  ",e);
-	    	 return new Message<AuthJwt>(Message.ERROR).buildResponse();
+	    	 return new Message<AuthJwt>(Message.ERROR);
 	    }
 	}
 
@@ -184,13 +184,13 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	 * @return
 	 */
 	@RequestMapping(value={"/workweixin/qr/auth/login"}, method = {RequestMethod.POST})
-	public ResponseEntity<?> qrAuthLogin(
+	public Message<AuthJwt> qrAuthLogin(
 			@RequestParam Map<String, String> param,
 			HttpServletRequest request) {
 
 		try {
 			if (null == param){
-				return new Message<AuthJwt>(Message.ERROR).buildResponse();
+				return new Message<AuthJwt>(Message.ERROR);
 			}
 			String token = param.get("token");
 			String username = param.get("username");
@@ -200,15 +200,15 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 				//设置token和用户绑定
 				boolean flag = this.socialSignOnProviderService.bindtoken(token,username);
 				if (flag) {
-					return new Message<AuthJwt>().buildResponse();
+					return new Message<AuthJwt>();
 				}
 			} else {
-				return new Message<AuthJwt>(Message.WARNING,"Invalid token").buildResponse();
+				return new Message<AuthJwt>(Message.WARNING,"Invalid token");
 			}
 		}catch(Exception e) {
 			_logger.error("qrAuthLogin Exception  ",e);
 		}
-		return new Message<AuthJwt>(Message.ERROR).buildResponse();
+		return new Message<AuthJwt>(Message.ERROR);
 	}
 
 
@@ -220,22 +220,22 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 	 * @return
 	 */
 	@RequestMapping(value={"/qrcallback/{provider}/{state}"}, method = RequestMethod.GET)
-	public ResponseEntity<?> qrcallback(@PathVariable String provider,@PathVariable String state,
+	public Message<AuthJwt> qrcallback(@PathVariable("provider") String provider,@PathVariable("state") String state,
 										HttpServletRequest request) {
 		try {
 			//判断只有maxkey扫码
 			if (!provider.equalsIgnoreCase(AuthMaxkeyRequest.KEY)) {
-				return new Message<AuthJwt>(Message.ERROR).buildResponse();
+				return new Message<AuthJwt>(Message.ERROR);
 			}
 
 			String loginName = socialSignOnProviderService.getToken(state);
 			if (StringUtils.isEmpty(loginName)) {
 				//二维码过期
-				return new Message<AuthJwt>(Message.PROMPT).buildResponse();
+				return new Message<AuthJwt>(Message.PROMPT);
 			}
 			if("-1".equalsIgnoreCase(loginName)){
 				//暂无用户扫码
-				return new Message<AuthJwt>(Message.WARNING).buildResponse();
+				return new Message<AuthJwt>(Message.WARNING);
 			}
 			String instId = WebContext.getInst().getId();
 
@@ -250,7 +250,7 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 			_logger.debug("qrcallback Loaded SocialSignOn Socials Associate : "+socialsAssociate);
 
 			if(null == socialsAssociate) {
-				return new Message<AuthJwt>(Message.ERROR).buildResponse();
+				return new Message<AuthJwt>(Message.ERROR);
 			}
 
 			_logger.debug("qrcallback Social Sign On from {} mapping to user {}", socialsAssociate.getProvider(),socialsAssociate.getUsername());
@@ -266,10 +266,10 @@ public class SocialSignOnEndpoint  extends AbstractSocialSignOnEndpoint{
 			//socialsAssociate.setExAttribute(JsonUtils.object2Json(accessToken.getResponseObject()));
 
 			this.socialsAssociateService.update(socialsAssociate);
-			return new Message<AuthJwt>(authTokenService.genAuthJwt(authentication)).buildResponse();
+			return new Message<AuthJwt>(authTokenService.genAuthJwt(authentication));
 		}catch(Exception e) {
 			_logger.error("qrcallback Exception  ",e);
-			return new Message<AuthJwt>(Message.ERROR).buildResponse();
+			return new Message<AuthJwt>(Message.ERROR);
 		}
 	}
 }

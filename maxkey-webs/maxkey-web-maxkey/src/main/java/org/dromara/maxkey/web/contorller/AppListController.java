@@ -24,9 +24,9 @@ import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.UserApps;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AccountsService;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
@@ -35,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +52,7 @@ public class AppListController {
     static final Logger logger = LoggerFactory.getLogger(AppListController.class);
     
     @Autowired
-    private UserInfoService userInfoService;
+    UserInfoService userInfoService;
 
     @Autowired
     AccountsService accountsService;
@@ -68,7 +67,7 @@ public class AppListController {
      */
     @RequestMapping(value = { "/appList" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> appList(
+	public Message<List<UserApps>> appList(
             @RequestParam(value = "gridList", required = false) String gridList,
             @CurrentUser UserInfo currentUser) {
         userInfoService.updateGridList(gridList,currentUser);
@@ -80,20 +79,20 @@ public class AppListController {
         	app.transIconBase64();
         }
         //AuthorizationUtils.setAuthentication(null);
-        return new Message<List<UserApps>>(appList).buildResponse();
+        return new Message<List<UserApps>>(appList);
     }
  
     
     @RequestMapping(value = { "/account/get" })
     @ResponseBody
-	public ResponseEntity<?> getAccount(
+	public Message<Accounts> getAccount(
     		@RequestParam("credential") String credential,
     		@RequestParam("appId") String appId,
     		@CurrentUser UserInfo currentUser) {
         Accounts account = null ;
         
         if (credential.equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)) {
-        	account = accountsService.load(Query.builder().eq("appId", appId).eq("userid", currentUser.getId()));
+        	account = accountsService.get(Query.builder().eq("appId", appId).eq("userid", currentUser.getId()));
         	account.setRelatedPassword(
         			PasswordReciprocal.getInstance().decoder(
         					account.getRelatedPassword()));
@@ -104,19 +103,19 @@ public class AppListController {
         	account.setUsername(currentUser.getUsername());
         	account.setDisplayName(currentUser.getDisplayName());
         }
-        return new Message<Accounts>(account).buildResponse();
+        return new Message<>(account);
 
     }
 
     @RequestMapping(value = { "/account/update" })
     @ResponseBody
-	public ResponseEntity<?> updateAccount(
+	public Message<Accounts> updateAccount(
     		@RequestParam("credential") String credential,
     		@ModelAttribute Accounts account,
             @CurrentUser UserInfo currentUser) {
         Accounts appUsers = new Accounts();
         if (credential.equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)) {
-            appUsers = accountsService.load(Query.builder().eq("appId", account.getAppId()).eq("userid", currentUser.getId()));
+            appUsers = accountsService.get(Query.builder().eq("appId", account.getAppId()).eq("userid", currentUser.getId()));
             if (appUsers == null) {
                 appUsers = new Accounts();
                 appUsers.setId(appUsers.generateId());
@@ -137,6 +136,6 @@ public class AppListController {
             }
         }
 
-        return new Message<Accounts>().buildResponse();
+        return new Message<>();
     }
 }

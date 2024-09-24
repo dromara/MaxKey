@@ -1,0 +1,14 @@
+
+description = "maxkey-starter-sms"
+
+
+dependencies {
+	//local jars
+	implementation fileTree(dir: '../maxkey-lib/', include: '*/*.jar')
+	
+	implementation project(":maxkey-common")
+	implementation project(":maxkey-core")
+	implementation project(":maxkey-persistence")
+	implementation project(":maxkey-starter:maxkey-starter-otp")
+   
+}

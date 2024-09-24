@@ -18,13 +18,14 @@ package org.dromara.maxkey.listener;
 import java.io.Serializable;
 
 import org.dromara.maxkey.persistence.service.OrganizationsService;
+import org.dromara.maxkey.schedule.ScheduleAdapter;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReorgDeptListenerAdapter extends ListenerAdapter   implements Job , Serializable {
+public class ReorgDeptListenerAdapter extends ScheduleAdapter   implements Job , Serializable {
 	static final  Logger _logger = LoggerFactory.getLogger(ReorgDeptListenerAdapter.class);
 	
 	private static final long serialVersionUID = 4782358765969474833L;

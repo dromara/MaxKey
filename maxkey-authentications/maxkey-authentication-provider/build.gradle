@@ -9,9 +9,11 @@ dependencies {
 	implementation project(":maxkey-common")
 	implementation project(":maxkey-core")
 	implementation project(":maxkey-persistence")
+	
+	implementation project(":maxkey-starter:maxkey-starter-ip2location")
+	implementation project(":maxkey-starter:maxkey-starter-otp")
+	implementation project(":maxkey-starter:maxkey-starter-sms")
+	
 	implementation project(":maxkey-authentications:maxkey-authentication-core")
-	implementation project(":maxkey-authentications:maxkey-authentication-ip2location")
-	implementation project(":maxkey-authentications:maxkey-authentication-otp")
-	implementation project(":maxkey-authentications:maxkey-authentication-sms")
    
 }

@@ -27,7 +27,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.AccountsStrategy;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**

@@ -20,7 +20,7 @@
  */
 package org.dromara.maxkey.persistence.mapper;
 
-import org.dromara.maxkey.entity.HistorySystemLogs;
+import org.dromara.maxkey.entity.history.HistorySystemLogs;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**

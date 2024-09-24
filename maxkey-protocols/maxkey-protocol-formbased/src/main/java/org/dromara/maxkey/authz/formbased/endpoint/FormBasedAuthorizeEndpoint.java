@@ -27,9 +27,9 @@ import org.dromara.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.dromara.maxkey.authz.formbased.endpoint.adapter.FormBasedDefaultAdapter;
 import org.dromara.maxkey.constants.ConstsBoolean;
 import org.dromara.maxkey.entity.Accounts;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.AppsFormBasedDetails;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsFormBasedDetailsService;
 import org.dromara.maxkey.util.Instance;
 import org.slf4j.Logger;
@@ -51,7 +51,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Tag(name = "2-7-FormBased接口文档模块")
 @Controller
 public class FormBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
-	final static Logger _logger = LoggerFactory.getLogger(FormBasedAuthorizeEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(FormBasedAuthorizeEndpoint.class);
 	
 	@Autowired
 	AppsFormBasedDetailsService formBasedDetailsService;

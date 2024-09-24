@@ -20,12 +20,12 @@
  */
 package org.dromara.maxkey.web.apps.contorller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.persistence.service.FileUploadService;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
-import org.dromara.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ public class BaseAppContorller {
 		 */
 		if(StringUtils.isNotBlank(application.getIconId())){
 			application.setIcon(fileUploadService.get(application.getIconId()).getUploaded());
-			fileUploadService.remove(application.getIconId());
+			fileUploadService.delete(application.getIconId());
 		}
 		
 	}

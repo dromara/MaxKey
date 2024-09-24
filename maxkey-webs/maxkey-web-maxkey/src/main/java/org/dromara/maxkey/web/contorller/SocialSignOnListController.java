@@ -22,8 +22,8 @@ import java.util.List;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.entity.SocialsAssociate;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.SocialsAssociatesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,26 +42,26 @@ public class SocialSignOnListController {
 	static final Logger logger = LoggerFactory.getLogger(SocialSignOnListController.class);
 	
 	@Autowired
-	protected SocialsAssociatesService socialsAssociatesService;
+	SocialsAssociatesService socialsAssociatesService;
 	
 	@RequestMapping(value={"/fetch"})
 	@ResponseBody
-	public ResponseEntity<?> fetch(@CurrentUser UserInfo currentUser){
+	public Message<?> fetch(@CurrentUser UserInfo currentUser){
 		
 		List<SocialsAssociate>  listSocialsAssociate= 
 				socialsAssociatesService.queryByUser(currentUser);
 		
-		return new Message<List<SocialsAssociate>>(listSocialsAssociate).buildResponse();
+		return new Message<List<SocialsAssociate>>(listSocialsAssociate);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (socialsAssociatesService.deleteBatch(ids)) {
-			 return new Message<Apps>(Message.SUCCESS).buildResponse();
+			 return new Message<Apps>(Message.SUCCESS);
 		} else {
-			return new Message<Apps>(Message.FAIL).buildResponse();
+			return new Message<Apps>(Message.FAIL);
 		}
 	}
 	

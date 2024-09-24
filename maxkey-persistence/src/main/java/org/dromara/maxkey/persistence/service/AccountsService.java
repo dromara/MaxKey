@@ -19,17 +19,17 @@ package org.dromara.maxkey.persistence.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.AccountsStrategy;
 import org.dromara.maxkey.entity.OrganizationsCast;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.AccountsMapper;
-import org.dromara.maxkey.provision.ProvisionAction;
+import org.dromara.maxkey.provision.ProvisionAct;
 import org.dromara.maxkey.provision.ProvisionService;
 import org.dromara.maxkey.provision.ProvisionTopic;
-import org.dromara.maxkey.util.StringUtils;
 import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -81,7 +81,7 @@ public class AccountsService  extends JpaService<Accounts>{
                     provisionService.send(
 	                        ProvisionTopic.ACCOUNT_TOPIC, 
 	                        account,
-	                        ProvisionAction.CREATE_ACTION);
+	                        ProvisionAct.CREATE);
 	            }
 	            
 	            return true;
@@ -102,7 +102,7 @@ public class AccountsService  extends JpaService<Accounts>{
                     provisionService.send(
                             ProvisionTopic.ACCOUNT_TOPIC, 
                             account,
-                            ProvisionAction.UPDATE_ACTION);
+                            ProvisionAct.UPDATE);
                 }
                 
                 return true;
@@ -114,10 +114,9 @@ public class AccountsService  extends JpaService<Accounts>{
 	   return this.getMapper().updateStatus(accounts) > 0;
    }
    
-   @Override
    public boolean remove(String id) {
        Accounts account = this.get(id);
-       if (super.remove(id)) {
+       if (super.delete(id)) {
               UserInfo loadUserInfo = null;
               if(provisionService.getApplicationConfig().isProvisionSupport()) {
                   loadUserInfo = userInfoService.findUserRelated(account.getUserId());
@@ -125,7 +124,7 @@ public class AccountsService  extends JpaService<Accounts>{
                   provisionService.send(
                           ProvisionTopic.ACCOUNT_TOPIC, 
                           account,
-                          ProvisionAction.DELETE_ACTION);
+                          ProvisionAct.DELETE);
               }
               
               return true;
@@ -189,17 +188,17 @@ public class AccountsService  extends JpaService<Accounts>{
    	String shortAccount = generateAccount(userInfo,accountsStrategy,true);
    	String account = generateAccount(userInfo,accountsStrategy,false);
    	String accountResult = shortAccount;
-   	List<Accounts> AccountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),shortAccount +accountsStrategy.getSuffixes());
-   	if(!AccountsList.isEmpty()) {
+   	List<Accounts> accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),shortAccount +accountsStrategy.getSuffixes());
+   	if(!accountsList.isEmpty()) {
    		if(accountsStrategy.getMapping().equalsIgnoreCase("email")) {
    			accountResult = account;
-   			AccountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),account + accountsStrategy.getSuffixes());
+   			accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),account + accountsStrategy.getSuffixes());
    		}
-   		if(!AccountsList.isEmpty()) {
+   		if(!accountsList.isEmpty()) {
 	    		for(int i =1 ;i < 100 ;i++) {
 	    			accountResult = account + i;
-	    			AccountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),accountResult + accountsStrategy.getSuffixes());
-	    			if(AccountsList.isEmpty()) {
+	    			accountsList =getMapper().queryByAppIdAndAccount(accountsStrategy.getAppId(),accountResult + accountsStrategy.getSuffixes());
+	    			if(accountsList.isEmpty()) {
 	    				break;
 	    			}
 	    		}

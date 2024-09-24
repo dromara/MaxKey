@@ -21,8 +21,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.DbTableMetaData;
-import org.dromara.maxkey.entity.HistorySynchronizer;
-import org.dromara.maxkey.entity.Organizations;
+import org.dromara.maxkey.entity.history.HistorySynchronizer;
+import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.entity.SyncJobConfigField;
@@ -47,7 +47,7 @@ import static org.dromara.maxkey.synchronizer.utils.FieldUtil.setFieldValue;
 
 @Service
 public class JdbcOrganizationService extends AbstractSynchronizerService implements ISynchronizerService {
-    final static Logger _logger = LoggerFactory.getLogger(JdbcOrganizationService.class);
+    static final  Logger _logger = LoggerFactory.getLogger(JdbcOrganizationService.class);
     static ArrayList<ColumnFieldMapper> mapperList = new ArrayList<>();
     @Autowired
     private SyncJobConfigFieldService syncJobConfigFieldService;

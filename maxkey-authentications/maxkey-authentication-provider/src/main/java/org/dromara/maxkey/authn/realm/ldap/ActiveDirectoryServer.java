@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public final class ActiveDirectoryServer implements IAuthenticationServer {
-	private final static Logger _logger = LoggerFactory.getLogger(ActiveDirectoryServer.class);
+	private static final  Logger _logger = LoggerFactory.getLogger(ActiveDirectoryServer.class);
 
 	ActiveDirectoryUtils activeDirectoryUtils;
 

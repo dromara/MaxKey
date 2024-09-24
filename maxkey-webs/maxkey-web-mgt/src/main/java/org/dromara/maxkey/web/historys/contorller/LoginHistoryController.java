@@ -20,9 +20,9 @@ package org.dromara.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
-import org.dromara.maxkey.entity.HistoryLogin;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.history.HistoryLogin;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.HistoryLoginService;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
@@ -30,13 +30,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 登录日志查询
@@ -45,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 
-@Controller
+@RestController
 @RequestMapping(value={"/historys"})
 public class LoginHistoryController {
 	static final Logger logger = LoggerFactory.getLogger(LoginHistoryController.class);
@@ -57,9 +52,9 @@ public class LoginHistoryController {
 	 * @param HistoryLogin
 	 * @return
 	 */
-	@RequestMapping(value={"/loginHistory/fetch"})
+	@GetMapping({"/loginHistory/fetch"})
 	@ResponseBody
-	public ResponseEntity<?> fetch(
+	public Message<?> fetch(
 				@ModelAttribute("historyLogin") HistoryLogin historyLogin,
 				@CurrentUser UserInfo currentUser
 			){
@@ -67,7 +62,7 @@ public class LoginHistoryController {
 		historyLogin.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<HistoryLogin>>(
 					loginHistoryService.fetchPageResults(historyLogin)
-				).buildResponse();
+				);
 	}
 	
 	@InitBinder

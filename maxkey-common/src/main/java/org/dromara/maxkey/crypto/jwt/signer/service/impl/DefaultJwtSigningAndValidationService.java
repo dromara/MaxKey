@@ -46,7 +46,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jwt.SignedJWT;
 
 public class DefaultJwtSigningAndValidationService implements JwtSigningAndValidationService {
-	final static Logger _logger = LoggerFactory.getLogger(DefaultJwtSigningAndValidationService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(DefaultJwtSigningAndValidationService.class);
 	
 	// map of identifier to signer
 	private Map<String, JWSSigner> signers = new HashMap<String, JWSSigner>();

@@ -25,10 +25,10 @@ import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.Connectors;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.Organizations;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.Organizations;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.ConnectorsService;
-import org.dromara.maxkey.provision.ProvisionAction;
+import org.dromara.maxkey.provision.ProvisionAct;
 import org.dromara.maxkey.provision.ProvisionMessage;
 import org.dromara.maxkey.provision.ProvisionTopic;
 import org.dromara.maxkey.util.DateUtils;
@@ -160,11 +160,11 @@ public class ProvisioningRunner {
 	}
 	
 	public String getActionType(String actionType) {
-		if(actionType.equalsIgnoreCase(ProvisionAction.CREATE_ACTION)) {
+		if(actionType.equalsIgnoreCase(ProvisionAct.CREATE)) {
 			return "create";
-		}else if(actionType.equalsIgnoreCase(ProvisionAction.UPDATE_ACTION)) {
+		}else if(actionType.equalsIgnoreCase(ProvisionAct.UPDATE)) {
 			return "update";
-		}else if(actionType.equalsIgnoreCase(ProvisionAction.DELETE_ACTION)) {
+		}else if(actionType.equalsIgnoreCase(ProvisionAct.DELETE)) {
 			return "delete";
 		}
 		return "";

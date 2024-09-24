@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CasServiceResponse {
-	final static Logger _logger = LoggerFactory.getLogger(CasServiceResponse.class);
+	static final  Logger _logger = LoggerFactory.getLogger(CasServiceResponse.class);
 
 	protected String code;
 	protected String description;

@@ -37,7 +37,7 @@ import com.nimbusds.jose.jwk.JWKSet;
  *
  */
 public class RecipientJwtEncryptionAndDecryptionServiceBuilder {
-	final static Logger _logger = LoggerFactory.getLogger(RecipientJwtEncryptionAndDecryptionServiceBuilder.class);
+	static final  Logger _logger = LoggerFactory.getLogger(RecipientJwtEncryptionAndDecryptionServiceBuilder.class);
 	
 	//private HttpClient httpClient = HttpClientBuilder.create().useSystemProperties().build();
 	//private HttpComponentsClientHttpRequestFactory httpFactory = new HttpComponentsClientHttpRequestFactory(httpClient);

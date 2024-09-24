@@ -1,19 +1,18 @@
 /*
  * Copyright [2024] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 import { ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -109,8 +108,7 @@ export class ConnectorsComponent implements OnInit {
 
   onReset(): void {}
 
-  onBatchDelete(e: MouseEvent): void {
-    e.preventDefault();
+  onBatchDelete(): void {
     this.connectorsService.delete(set2String(this.query.tableCheckedId)).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
@@ -160,8 +158,7 @@ export class ConnectorsComponent implements OnInit {
     });
   }
 
-  onDelete(e: MouseEvent, deleteId: String): void {
-    e.preventDefault();
+  onDelete(deleteId: String): void {
     this.connectorsService.delete(deleteId).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));

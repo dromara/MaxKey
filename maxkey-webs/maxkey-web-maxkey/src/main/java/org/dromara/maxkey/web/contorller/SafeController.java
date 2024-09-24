@@ -20,7 +20,7 @@ package org.dromara.maxkey.web.contorller;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsTimeInterval;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
@@ -43,7 +43,7 @@ public class SafeController {
 	static final Logger logger = LoggerFactory.getLogger(SafeController.class);
 	
 	@Autowired
-	private UserInfoService userInfoService;
+	UserInfoService userInfoService;
 	
 	@RequestMapping(value="/forward/setting") 
 	public ModelAndView fowardSetting(@CurrentUser UserInfo currentUser) {
@@ -54,7 +54,7 @@ public class SafeController {
 	
 	@ResponseBody
 	@RequestMapping(value="/setting") 
-	public ResponseEntity<?> setting(
+	public Message<?> setting(
 	        HttpServletRequest request,
             HttpServletResponse response,
 			@RequestParam("authnType") String authnType,
@@ -78,7 +78,7 @@ public class SafeController {
 		userInfoService.updateEmail(currentUser);
 		
 		
-		return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+		return new Message<UserInfo>(Message.SUCCESS);
 		
 	}
 	

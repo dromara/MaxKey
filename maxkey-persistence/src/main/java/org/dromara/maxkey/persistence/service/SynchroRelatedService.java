@@ -21,9 +21,9 @@ import java.sql.Types;
 import java.util.Date;
 import java.util.List;
 
-import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.Synchronizers;
+import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.persistence.mapper.SynchroRelatedMapper;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.mybatis.jpa.JpaService;

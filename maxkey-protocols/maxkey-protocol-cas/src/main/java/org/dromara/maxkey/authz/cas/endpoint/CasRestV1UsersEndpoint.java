@@ -27,7 +27,7 @@ import org.dromara.maxkey.authn.web.AuthorizationUtils;
 import org.dromara.maxkey.authz.cas.endpoint.response.ServiceResponseBuilder;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.CasConstants;
 import org.dromara.maxkey.authz.cas.endpoint.ticket.TicketGrantingTicketImpl;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.HttpResponseConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

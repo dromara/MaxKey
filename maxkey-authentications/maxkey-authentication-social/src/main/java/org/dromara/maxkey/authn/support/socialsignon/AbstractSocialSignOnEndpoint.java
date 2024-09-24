@@ -42,7 +42,7 @@ import me.zhyd.oauth.request.AuthRequest;
  *
  */
 public class AbstractSocialSignOnEndpoint {
-	final static Logger _logger = LoggerFactory.getLogger(AbstractSocialSignOnEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(AbstractSocialSignOnEndpoint.class);
 	
 	protected AuthRequest authRequest;
 	

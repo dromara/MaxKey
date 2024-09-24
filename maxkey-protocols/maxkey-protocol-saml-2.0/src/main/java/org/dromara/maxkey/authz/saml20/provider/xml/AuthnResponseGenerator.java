@@ -26,8 +26,8 @@ import org.dromara.maxkey.authz.saml.service.TimeService;
 import org.dromara.maxkey.authz.saml20.binding.BindingAdapter;
 import org.dromara.maxkey.authz.saml20.xml.IssuerGenerator;
 import org.dromara.maxkey.constants.ConstsBoolean;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.opensaml.Configuration;
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.EncryptedAssertion;
@@ -44,7 +44,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AuthnResponseGenerator {
-	private final static Logger logger = LoggerFactory.getLogger(AuthnResponseGenerator.class);
+	private static final  Logger logger = LoggerFactory.getLogger(AuthnResponseGenerator.class);
 	private  String issuerName;
 	private  IDService idService;
 	private  TimeService timeService;

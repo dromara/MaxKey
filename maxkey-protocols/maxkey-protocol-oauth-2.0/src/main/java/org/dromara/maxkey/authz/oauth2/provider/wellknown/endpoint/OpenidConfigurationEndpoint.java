@@ -38,7 +38,7 @@ import java.util.Set;
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class OpenidConfigurationEndpoint extends AbstractEndpoint {
-	final static Logger _logger = LoggerFactory.getLogger(OpenidConfigurationEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(OpenidConfigurationEndpoint.class);
 	
 
 	@Operation(summary = "OpenID Connect metadata 元数据接口", description = "参数client_id",method="GET,POST")

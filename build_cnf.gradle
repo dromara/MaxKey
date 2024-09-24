@@ -33,30 +33,30 @@ task clearBuild(){
 	delete "$rootDir/maxkey-webs/maxkey-web-openapi/build.gradle"	
 }
 
-task configStd(dependsOn:['clearBuild']) {
+task configTradition(dependsOn:['clearBuild']) {
 	doLast {
 		copy {
-			from "$rootDir/maxkey-webs/maxkey-web-openapi/config/build_standard.gradle"
+			from "$rootDir/maxkey-webs/maxkey-web-openapi/config/build_tradition.gradle"
 			into "$rootDir/maxkey-webs/maxkey-web-openapi/"
 			rename { String fileName -> 'build.gradle' }
 		}
 		copy {
-			from "$rootDir/maxkey-webs/maxkey-web-mgt/config/build_standard.gradle"
+			from "$rootDir/maxkey-webs/maxkey-web-mgt/config/build_tradition.gradle"
 			into "$rootDir/maxkey-webs/maxkey-web-mgt/"
 			rename { String fileName -> 'build.gradle' }
 		}
 		copy {
-			from "$rootDir/maxkey-webs/maxkey-web-maxkey/config/build_standard.gradle"
+			from "$rootDir/maxkey-webs/maxkey-web-maxkey/config/build_tradition.gradle"
 			into "$rootDir/maxkey-webs/maxkey-web-maxkey/"
 			rename { String fileName -> 'build.gradle' }
 		}
 		copy {
-			from "$rootDir/config/build_standard.gradle"
+			from "$rootDir/config/build_tradition.gradle"
 			into "$rootDir/"
 			rename { String fileName -> 'build.gradle' }
 		}
 		
-		println 'Standard Build MaxKey .'
+		println 'Tradition Build MaxKey .'
 	}
 }
 
@@ -91,32 +91,32 @@ task configDocker(dependsOn:['clearBuild']) {
 
 
 
-task configJar(dependsOn:['clearBuild']) {
+task configStandard(dependsOn:['clearBuild']) {
 	doLast {
 		copy {
-			from "$rootDir/maxkey-webs/maxkey-web-openapi/config/build_jar.gradle"
+			from "$rootDir/maxkey-webs/maxkey-web-openapi/config/build_standard.gradle"
 			into "$rootDir/maxkey-webs/maxkey-web-openapi/"
 			rename { String fileName -> 'build.gradle' }
 		}
 		copy {
-			from "$rootDir/maxkey-webs/maxkey-web-mgt/config/build_jar.gradle"
+			from "$rootDir/maxkey-webs/maxkey-web-mgt/config/build_standard.gradle"
 			into "$rootDir/maxkey-webs/maxkey-web-mgt/"
 			rename { String fileName -> 'build.gradle' }
 		}
 		
 		copy {
-			from "$rootDir/maxkey-webs/maxkey-web-maxkey/config/build_jar.gradle"
+			from "$rootDir/maxkey-webs/maxkey-web-maxkey/config/build_standard.gradle"
 			into "$rootDir/maxkey-webs/maxkey-web-maxkey/"
 			rename { String fileName -> 'build.gradle' }
 		}
 		
 		copy {
-			from "$rootDir/config/build_jar.gradle"
+			from "$rootDir/config/build_standard.gradle"
 			into "$rootDir/"
 			rename { String fileName -> 'build.gradle' }
 		}
 
-		println 'Java Jar Build MaxKey .'
+		println 'Standard Build MaxKey .'
 	}
 }
 

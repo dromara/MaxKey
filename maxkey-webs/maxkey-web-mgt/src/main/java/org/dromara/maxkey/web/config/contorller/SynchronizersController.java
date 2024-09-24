@@ -17,26 +17,33 @@
 
 package org.dromara.maxkey.web.config.contorller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.*;
 import org.dromara.maxkey.persistence.service.SynchronizersService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.entity.Connectors;
+import org.dromara.maxkey.entity.Message;
+import org.dromara.maxkey.entity.Synchronizers;
+import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.maxkey.persistence.service.SynchronizersService;
+import org.dromara.maxkey.synchronizer.ISynchronizerService;
+import org.dromara.maxkey.util.StrUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = {"/config/synchronizers"})
 public class SynchronizersController {
     static final Logger logger = LoggerFactory.getLogger(SynchronizersController.class);
@@ -49,65 +56,65 @@ public class SynchronizersController {
 
     @RequestMapping(value = {"/fetch"}, produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
-    public ResponseEntity<?> fetch(Synchronizers synchronizers, @CurrentUser UserInfo currentUser) {
+    public Message<?> fetch(Synchronizers synchronizers, @CurrentUser UserInfo currentUser) {
         logger.debug("fetch {}", synchronizers);
         synchronizers.setInstId(currentUser.getInstId());
         return new Message<>(
-                synchronizersService.fetchPageResults(synchronizers)).buildResponse();
+                synchronizersService.fetchPageResults(synchronizers));
     }
 
     @RequestMapping(value = {"/get/{id}"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> get(@PathVariable("id") String id) {
+    public Message<?> get(@PathVariable("id") String id) {
         Synchronizers synchronizers = synchronizersService.get(id);
         synchronizers.setCredentials(PasswordReciprocal.getInstance().decoder(synchronizers.getCredentials()));
-        return new Message<>(synchronizers).buildResponse();
+        return new Message<>(synchronizers);
     }
 
     @ResponseBody
     @RequestMapping(value = {"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> add(@RequestBody Synchronizers synchronizers, @CurrentUser UserInfo currentUser) {
+    public Message<?> add(@RequestBody Synchronizers synchronizers, @CurrentUser UserInfo currentUser) {
         logger.debug("-add  : {}", synchronizers);
         synchronizers.setInstId(currentUser.getInstId());
         if (StringUtils.isNotBlank(synchronizers.getCredentials())) {
             synchronizers.setCredentials(PasswordReciprocal.getInstance().encode(synchronizers.getCredentials()));
         }
         if (synchronizersService.insert(synchronizers)) {
-            return new Message<Synchronizers>(Message.SUCCESS).buildResponse();
+            return new Message<Synchronizers>(Message.SUCCESS);
         } else {
-            return new Message<Synchronizers>(Message.FAIL).buildResponse();
+            return new Message<Synchronizers>(Message.FAIL);
         }
     }
 
     @ResponseBody
     @RequestMapping(value = {"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> update(@RequestBody Synchronizers synchronizers, @CurrentUser UserInfo currentUser) {
+    public Message<?> update(@RequestBody Synchronizers synchronizers, @CurrentUser UserInfo currentUser) {
         logger.debug("-update  : {}", synchronizers);
         synchronizers.setInstId(currentUser.getInstId());
         synchronizers.setCredentials(PasswordReciprocal.getInstance().encode(synchronizers.getCredentials()));
         if (synchronizersService.update(synchronizers)) {
-            return new Message<Synchronizers>(Message.SUCCESS).buildResponse();
+            return new Message<Synchronizers>(Message.SUCCESS);
         } else {
-            return new Message<Synchronizers>(Message.FAIL).buildResponse();
+            return new Message<Synchronizers>(Message.FAIL);
         }
     }
 
     @ResponseBody
     @RequestMapping(value = {"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> delete(@RequestParam("ids") String ids) {
+    public Message<?> delete(@RequestParam("ids") List<String> ids) {
         logger.debug("-delete  ids : {} ", ids);
         if (synchronizersService.deleteBatch(ids)) {
-            return new Message<Connectors>(Message.SUCCESS).buildResponse();
+            return new Message<Connectors>(Message.SUCCESS);
         } else {
-            return new Message<Connectors>(Message.FAIL).buildResponse();
+            return new Message<Connectors>(Message.FAIL);
         }
     }
 
     @ResponseBody
     @RequestMapping(value = {"/synchr"})
-    public ResponseEntity<?> synchr(@RequestParam("id") String id) {
+    public Message<?> synchr(@RequestParam("id") String id) {
         logger.debug("-sync ids : {}", id);
 
-        List<String> ids = StringUtils.string2List(id, ",");
+        List<String> ids = StrUtils.string2List(id, ",");
         try {
             for (String sysId : ids) {
                 Synchronizers synchronizer = synchronizersService.get(sysId);
@@ -123,10 +130,10 @@ public class SynchronizersController {
             }
         } catch (Exception e) {
             logger.error("synchronizer Exception ", e);
-            return new Message<Synchronizers>(Message.FAIL).buildResponse();
+            return new Message<Synchronizers>(Message.FAIL);
 
         }
-        return new Message<Synchronizers>(Message.SUCCESS).buildResponse();
+        return new Message<Synchronizers>(Message.SUCCESS);
     }
 
 

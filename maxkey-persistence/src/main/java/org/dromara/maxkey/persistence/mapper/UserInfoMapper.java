@@ -23,8 +23,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.ChangePassword;
-import org.dromara.maxkey.entity.Organizations;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.Organizations;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 

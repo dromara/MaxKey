@@ -24,7 +24,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 import { Groups } from '../../../../entity/Groups';
 import { TreeNodes } from '../../../../entity/TreeNodes';
-import { GroupsService } from '../../../../service/Groups.service';
+import { GroupsService } from '../../../../service/groups.service';
 import { OrganizationsService } from '../../../../service/organizations.service';
 
 @Component({
@@ -47,9 +47,9 @@ export class GroupEditerComponent implements OnInit {
     submitting: boolean;
     model: Groups;
   } = {
-    submitting: false,
-    model: new Groups()
-  };
+      submitting: false,
+      model: new Groups()
+    };
 
   // TreeNodes
   treeNodes = new TreeNodes(false);
@@ -66,7 +66,7 @@ export class GroupEditerComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.tree();

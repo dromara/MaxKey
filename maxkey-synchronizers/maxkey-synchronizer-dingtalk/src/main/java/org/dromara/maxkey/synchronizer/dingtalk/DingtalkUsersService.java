@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.SynchroRelated;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.entity.SyncJobConfigField;
@@ -46,7 +46,7 @@ import static org.dromara.maxkey.synchronizer.utils.FieldUtil.*;
 
 @Service
 public class DingtalkUsersService  extends AbstractSynchronizerService implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(DingtalkUsersService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(DingtalkUsersService.class);
 	
 	String access_token;
 

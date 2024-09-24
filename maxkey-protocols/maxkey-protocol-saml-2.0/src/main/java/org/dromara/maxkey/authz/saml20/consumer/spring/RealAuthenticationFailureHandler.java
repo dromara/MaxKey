@@ -50,7 +50,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class RealAuthenticationFailureHandler implements
 		AuthenticationFailureHandler {
 
-	private final static Logger logger = LoggerFactory
+	private static final  Logger logger = LoggerFactory
 	.getLogger(RealAuthenticationFailureHandler.class);
 
 	private final RequestCache requestCache;

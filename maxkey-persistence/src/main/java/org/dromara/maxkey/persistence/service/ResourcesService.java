@@ -19,7 +19,7 @@ package org.dromara.maxkey.persistence.service;
 
 import java.util.List;
 
-import org.dromara.maxkey.entity.Resources;
+import org.dromara.maxkey.entity.permissions.Resources;
 import org.dromara.maxkey.persistence.mapper.ResourcesMapper;
 import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;

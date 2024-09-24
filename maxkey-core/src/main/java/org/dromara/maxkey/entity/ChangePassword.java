@@ -19,6 +19,7 @@ package org.dromara.maxkey.entity;
 
 import java.util.Date;
 
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.mybatis.jpa.entity.JpaEntity;
 
 public class ChangePassword extends JpaEntity{

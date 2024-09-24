@@ -41,7 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 public class ExtendApiTimestampSignAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(ExtendApiTimestampSignAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ExtendApiTimestampSignAdapter.class);
 	
 	Accounts account;
 	

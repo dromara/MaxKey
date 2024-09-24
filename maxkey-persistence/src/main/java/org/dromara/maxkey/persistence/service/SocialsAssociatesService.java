@@ -20,7 +20,7 @@ package org.dromara.maxkey.persistence.service;
 import java.util.List;
 
 import org.dromara.maxkey.entity.SocialsAssociate;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.mapper.SocialsAssociateMapper;
 import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Repository;

@@ -27,7 +27,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 
-import org.dromara.maxkey.persistence.repository.LocalizationRepository;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,9 +50,6 @@ public class LocaleTagDirective implements TemplateDirectiveModel {
     @Autowired
     private HttpServletRequest request;
     
-    @Autowired
-    LocalizationRepository localizationService;
-
     @SuppressWarnings("rawtypes")
     @Override
     public void execute(Environment env, 

@@ -25,8 +25,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.dromara.maxkey.constants.ConstsPersistence;
-import org.dromara.maxkey.entity.HistoryLogin;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.history.HistoryLogin;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.dromara.maxkey.util.DateUtils;
 import org.slf4j.Logger;

@@ -108,8 +108,7 @@ export class AccountsStrategyComponent implements OnInit {
 
   onReset(): void {}
 
-  onBatchDelete(e: MouseEvent): void {
-    e.preventDefault();
+  onBatchDelete(): void {
     this.accountsStrategyService.delete(set2String(this.query.tableCheckedId)).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
@@ -160,8 +159,7 @@ export class AccountsStrategyComponent implements OnInit {
     });
   }
 
-  onDelete(e: MouseEvent, deleteId: String): void {
-    e.preventDefault();
+  onDelete(deleteId: String): void {
     this.accountsStrategyService.delete(deleteId).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));

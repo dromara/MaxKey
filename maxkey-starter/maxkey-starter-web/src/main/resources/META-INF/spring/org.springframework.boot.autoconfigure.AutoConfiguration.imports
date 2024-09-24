@@ -1,0 +1,5 @@
+org.dromara.maxkey.autoconfigure.ApplicationAutoConfiguration
+org.dromara.maxkey.autoconfigure.MvcAutoConfiguration
+org.dromara.maxkey.autoconfigure.MvcResourceAutoConfiguration
+org.dromara.maxkey.autoconfigure.RedisAutoConfiguration
+org.dromara.maxkey.autoconfigure.SwaggerAutoConfiguration

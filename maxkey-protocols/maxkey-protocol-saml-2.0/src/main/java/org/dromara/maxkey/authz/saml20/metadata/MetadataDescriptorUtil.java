@@ -56,7 +56,7 @@ import org.w3c.dom.Element;
  * 
  */
 public class MetadataDescriptorUtil {
-	private final static Logger logger = LoggerFactory.getLogger(MetadataDescriptorUtil.class);
+	private static final  Logger logger = LoggerFactory.getLogger(MetadataDescriptorUtil.class);
 	
 	private static MetadataDescriptorUtil instance = null;
 	

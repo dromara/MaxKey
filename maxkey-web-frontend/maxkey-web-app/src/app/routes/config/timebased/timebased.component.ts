@@ -28,16 +28,16 @@ import { Console } from 'console';
 @Component({
   selector: 'app-timebased',
   templateUrl: './timebased.component.html',
-  styleUrls: ['./timebased.component.less'],
+  styleUrls: ['./timebased.component.less']
 })
 export class TimebasedComponent implements OnInit {
   form: {
     submitting: boolean;
     model: TimeBased;
   } = {
-    submitting: false,
-    model: new TimeBased()
-  };
+      submitting: false,
+      model: new TimeBased()
+    };
 
   isDisabled = true;
 
@@ -48,7 +48,7 @@ export class TimebasedComponent implements OnInit {
     private timeBasedService: TimeBasedService,
     private msg: NzMessageService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     /*this.form = this.fb.group({
@@ -62,7 +62,7 @@ export class TimebasedComponent implements OnInit {
   public: [1, [Validators.min(1), Validators.max(3)]],
   publicUsers: [null, []]
 });*/
-    this.timeBasedService.get('').subscribe(res => {
+    this.timeBasedService.view('').subscribe(res => {
       this.form.model.init(res.data);
       this.formatSecret();
       this.cdr.detectChanges();
@@ -70,17 +70,31 @@ export class TimebasedComponent implements OnInit {
   }
 
   formatSecret(): void {
-    this.form.model.sharedSecret = concatArrayString(splitString(this.form.model.sharedSecret, 4), ' ');
-    this.form.model.hexSharedSecret = concatArrayString(splitString(this.form.model.hexSharedSecret, 4), ' ');
+    this.form.model.formatSharedSecret = concatArrayString(splitString(this.form.model.sharedSecret, 4), ' ');
+    //this.form.model.hexSharedSecret = concatArrayString(splitString(this.form.model.hexSharedSecret, 4), ' ');
+  }
+
+  generate(): void {
+    this.form.submitting = true;
+    this.form.model.trans();
+    this.timeBasedService.generate('').subscribe(res => {
+      if (res.code == 0) {
+        this.form.model.init(res.data);
+        this.formatSecret();
+        //this.msg.success(`提交成功`);
+      } else {
+        //this.msg.success(`提交失败`);
+      }
+      this.form.submitting = false;
+      this.cdr.detectChanges();
+    });
   }
 
   onSubmit(): void {
     this.form.submitting = true;
-    this.form.model.trans();
+    //this.form.model.trans();
     this.timeBasedService.update(this.form.model).subscribe(res => {
       if (res.code == 0) {
-        this.form.model.init(res.data);
-        this.formatSecret();
         this.msg.success(`提交成功`);
       } else {
         this.msg.success(`提交失败`);
@@ -98,7 +112,7 @@ export class TimebasedComponent implements OnInit {
       } else {
         this.msg.error('验证失败');
       }
-    })
+    });
     // this.timeBasedService.verify(otp)
   }
 

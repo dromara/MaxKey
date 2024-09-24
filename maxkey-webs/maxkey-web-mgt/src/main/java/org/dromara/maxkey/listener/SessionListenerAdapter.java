@@ -20,7 +20,8 @@ import java.util.Date;
 
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.authn.session.SessionManager;
-import org.dromara.maxkey.entity.HistoryLogin;
+import org.dromara.maxkey.entity.history.HistoryLogin;
+import org.dromara.maxkey.schedule.ScheduleAdapter;
 import org.dromara.maxkey.util.DateUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -28,7 +29,7 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SessionListenerAdapter extends ListenerAdapter   implements Job , Serializable {
+public class SessionListenerAdapter extends ScheduleAdapter   implements Job , Serializable {
 	static final Logger logger = LoggerFactory.getLogger(SessionListenerAdapter.class);
 	
 	private static final long serialVersionUID = 4782358765969474833L;
@@ -81,7 +82,7 @@ public class SessionListenerAdapter extends ListenerAdapter   implements Job , S
 	}
 
 	 @Override
-    void init(JobExecutionContext context){
+	protected void init(JobExecutionContext context){
 		 super.init(context);
     	if(sessionManager == null) {
     		sessionManager = getParameter("sessionManager",SessionManager.class);

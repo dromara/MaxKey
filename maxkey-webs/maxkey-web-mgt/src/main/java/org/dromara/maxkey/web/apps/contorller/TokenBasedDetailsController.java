@@ -17,28 +17,29 @@
 
 package org.dromara.maxkey.web.apps.contorller;
 
+import java.util.List;
+
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsProtocols;
 import org.dromara.maxkey.crypto.ReciprocalUtils;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.AppsJwtDetails;
 import org.dromara.maxkey.entity.apps.AppsTokenBasedDetails;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsTokenBasedDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequestMapping(value={"/apps/tokenbased"})
 public class TokenBasedDetailsController  extends BaseAppContorller {
 	static final  Logger logger = LoggerFactory.getLogger(TokenBasedDetailsController.class);
@@ -47,29 +48,29 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 	AppsTokenBasedDetailsService tokenBasedDetailsService;
 	
 	@RequestMapping(value = { "/init" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> init() {
+	public Message<?> init() {
 		AppsTokenBasedDetails tokenBasedDetails =new AppsTokenBasedDetails();
 		tokenBasedDetails.setId(tokenBasedDetails.generateId());
 		tokenBasedDetails.setProtocol(ConstsProtocols.TOKENBASED);
 		tokenBasedDetails.setSecret(ReciprocalUtils.generateKey(ReciprocalUtils.Algorithm.AES));
 		tokenBasedDetails.setAlgorithmKey(tokenBasedDetails.getSecret());
 		tokenBasedDetails.setUserPropertys("userPropertys");
-		return new Message<AppsTokenBasedDetails>(tokenBasedDetails).buildResponse();
+		return new Message<AppsTokenBasedDetails>(tokenBasedDetails);
 	}
 	
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@PathVariable("id") String id) {
+	public Message<?> get(@PathVariable("id") String id) {
 		AppsTokenBasedDetails tokenBasedDetails=tokenBasedDetailsService.getAppDetails(id , false);
 		decoderSecret(tokenBasedDetails);
 		String algorithmKey=passwordReciprocal.decoder(tokenBasedDetails.getAlgorithmKey());
 		tokenBasedDetails.setAlgorithmKey(algorithmKey);
 		tokenBasedDetails.transIconBase64();
-		return new Message<AppsTokenBasedDetails>(tokenBasedDetails).buildResponse();
+		return new Message<AppsTokenBasedDetails>(tokenBasedDetails);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> add(
+	public Message<?> add(
 			@RequestBody AppsTokenBasedDetails tokenBasedDetails,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  : {}" , tokenBasedDetails);
@@ -80,15 +81,15 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		tokenBasedDetails.setInstId(currentUser.getInstId());
 		if (tokenBasedDetailsService.insert(tokenBasedDetails)
 				&&appsService.insertApp(tokenBasedDetails)) {
-			return new Message<AppsJwtDetails>(Message.SUCCESS).buildResponse();
+			return new Message<AppsJwtDetails>(Message.SUCCESS);
 		} else {
-			return new Message<AppsJwtDetails>(Message.FAIL).buildResponse();
+			return new Message<AppsJwtDetails>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(
+	public Message<?> update(
 			@RequestBody AppsTokenBasedDetails tokenBasedDetails,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  : {}" , tokenBasedDetails);
@@ -97,22 +98,22 @@ public class TokenBasedDetailsController  extends BaseAppContorller {
 		tokenBasedDetails.setInstId(currentUser.getInstId());
 		if (tokenBasedDetailsService.update(tokenBasedDetails)
 				&&appsService.updateApp(tokenBasedDetails)) {
-		    return new Message<AppsJwtDetails>(Message.SUCCESS).buildResponse();
+		    return new Message<AppsJwtDetails>(Message.SUCCESS);
 		} else {
-			return new Message<AppsJwtDetails>(Message.FAIL).buildResponse();
+			return new Message<AppsJwtDetails>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(
-			@RequestParam("ids") String ids,
+	public Message<?> delete(
+			@RequestParam("ids") List<String> ids,
 			@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (tokenBasedDetailsService.deleteBatch(ids)&&appsService.deleteBatch(ids)) {
-			 return new Message<AppsJwtDetails>(Message.SUCCESS).buildResponse();
+			 return new Message<AppsJwtDetails>(Message.SUCCESS);
 		} else {
-			return new Message<AppsJwtDetails>(Message.FAIL).buildResponse();
+			return new Message<AppsJwtDetails>(Message.FAIL);
 		}
 	}
 	

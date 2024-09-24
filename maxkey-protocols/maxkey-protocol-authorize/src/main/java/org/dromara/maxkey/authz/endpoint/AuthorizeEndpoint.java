@@ -45,7 +45,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Tag(name = "1-2认证总地址文档模块")
 @Controller
 public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
-	final static Logger _logger = LoggerFactory.getLogger(AuthorizeEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(AuthorizeEndpoint.class);
 	
 	@Autowired
 	AppsCasDetailsService casDetailsService;
@@ -91,7 +91,9 @@ public class AuthorizeEndpoint extends AuthorizeBaseEndpoint{
 	public ModelAndView refused(){
 		ModelAndView modelAndView = new ModelAndView("authorize/authorize_refused");
 		Apps app = (Apps)WebContext.getAttribute(WebConstants.AUTHORIZE_SIGN_ON_APP);
-		app.transIconBase64();
+		if(app != null) {
+			app.transIconBase64();
+		}
 		modelAndView.addObject("model", app);
 		return modelAndView;
 	}

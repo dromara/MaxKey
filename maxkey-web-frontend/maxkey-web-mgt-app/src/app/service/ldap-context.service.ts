@@ -17,7 +17,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { LdapContext } from '../entity/LdapContext';
+import { LdapContext } from '../entity/CnfLdapContext';
 import { BaseService } from './base.service';
 
 @Injectable({

@@ -24,49 +24,42 @@ import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.constants.ConstsPasswordSetType;
 import org.dromara.maxkey.entity.ChangePassword;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.PasswordPolicy;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
-import org.dromara.maxkey.persistence.service.PasswordPolicyService;
+import org.dromara.maxkey.persistence.service.CnfPasswordPolicyService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping(value={"/config"})
+@RestController
+@RequestMapping(value={"/users"})
 public class ChangePasswodController {
 	static final Logger logger = LoggerFactory.getLogger(ChangePasswodController.class);
 
 	@Autowired
-	private UserInfoService userInfoService;
+	UserInfoService userInfoService;
 
 	@Autowired
 	HistorySystemLogsService systemLog;
 
 	@Autowired
-	private PasswordPolicyService passwordPolicyService;
+	CnfPasswordPolicyService passwordPolicyService;
 
-	@RequestMapping(value={"/passwordpolicy"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> passwordpolicy(@CurrentUser UserInfo currentUser){
-		PasswordPolicy passwordPolicy = passwordPolicyService.get(currentUser.getInstId());
+	@GetMapping(value={"/passwordpolicy"})
+	public Message<CnfPasswordPolicy> passwordpolicy(@CurrentUser UserInfo currentUser){
+		CnfPasswordPolicy passwordPolicy = passwordPolicyService.get(currentUser.getInstId());
 		//构建密码强度说明
 		passwordPolicy.buildMessage();
-		return new Message<PasswordPolicy>(passwordPolicy).buildResponse();
+		return new Message<>(passwordPolicy);
 	}
 
-
-	@ResponseBody
-	@RequestMapping(value = { "/changePassword" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> changePasswod(
+	@PostMapping(value = { "/changePassword" })
+	public Message<ChangePassword> changePasswod(
 			@RequestBody ChangePassword changePassword,
 			@CurrentUser UserInfo currentUser) {
 		if(!currentUser.getId().equals(changePassword.getId())){
@@ -83,11 +76,11 @@ public class ChangePasswodController {
 					ConstsAct.CHANGE_PASSWORD,
 					ConstsActResult.SUCCESS,
 					currentUser);
-			return new Message<ChangePassword>().buildResponse();
+			return new Message<>();
 		}else {
 			String message = (String) WebContext.getAttribute(PasswordPolicyValidator.PASSWORD_POLICY_VALIDATE_RESULT);
 			logger.info("-message: {}",message);
-			return new Message<ChangePassword>(Message.ERROR,message).buildResponse();
+			return new Message<>(Message.ERROR,message);
 		}
 	}
 

@@ -17,27 +17,28 @@
 
 package org.dromara.maxkey.authn.web;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.jwt.AuthJwt;
 import org.dromara.maxkey.authn.jwt.AuthRefreshTokenService;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.session.Session;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-@Controller
+@RestController
 @RequestMapping(value = "/auth")
 public class AuthTokenRefreshPoint {
 	private static final  Logger _logger = LoggerFactory.getLogger(AuthTokenRefreshPoint.class);
@@ -51,7 +52,13 @@ public class AuthTokenRefreshPoint {
 	@Autowired
 	SessionManager sessionManager;
 	
- 	@RequestMapping(value={"/token/refresh"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(value={"/token/refresh"})
+	public ResponseEntity<?> refreshGet(HttpServletRequest request,
+			@RequestParam(name = "refresh_token", required = false) String refreshToken) {
+		return refresh(request,refreshToken);
+	}
+	
+ 	@PostMapping(value={"/token/refresh"})
 	public ResponseEntity<?> refresh(HttpServletRequest request,
 			@RequestParam(name = "refresh_token", required = false) String refreshToken) {
  		_logger.debug("try to refresh token " );

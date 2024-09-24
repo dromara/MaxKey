@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 
 public class WsFederationServiceImpl implements   WsFederationService{
-	final static Logger _logger = LoggerFactory.getLogger(WsFederationServiceImpl.class);
+	static final  Logger _logger = LoggerFactory.getLogger(WsFederationServiceImpl.class);
 	
 	private WsFederationConfiguration wsFederationConfiguration;
 

@@ -32,11 +32,11 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 @Repository
 public class AppsService extends JpaService<Apps>{
 	//maxkey-mgt
-	public final static 	String MGT_APP_ID 		= "622076759805923328";
+	public static final  	String MGT_APP_ID 		= "622076759805923328";
 	
-	public final static 	String DETAIL_SUFFIX	=	"_detail";
+	public static final  	String DETAIL_SUFFIX	=	"_detail";
 	
-	protected final static  Cache<String, Apps> detailsCacheStore = 
+	protected static final   Cache<String, Apps> detailsCacheStore = 
 										Caffeine.newBuilder()
 							                .expireAfterWrite(30, TimeUnit.MINUTES)
 							                .build();

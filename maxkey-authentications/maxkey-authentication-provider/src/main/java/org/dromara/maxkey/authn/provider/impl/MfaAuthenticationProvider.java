@@ -25,7 +25,7 @@ import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
 import org.dromara.maxkey.entity.Institutions;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebConstants;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
@@ -72,10 +72,8 @@ public class MfaAuthenticationProvider extends AbstractAuthenticationProvider {
                 loginCredential.getPrincipal(), getProviderName());
         try {
         	
-	        _logger.debug("authentication " + loginCredential);
-	        
-	        Institutions inst = (Institutions)WebContext.getAttribute(WebConstants.CURRENT_INST);
-
+	        _logger.debug("authentication {}" , loginCredential);
+	       
 	        emptyPasswordValid(loginCredential.getPassword());
 	
 	        UserInfo userInfo = null;

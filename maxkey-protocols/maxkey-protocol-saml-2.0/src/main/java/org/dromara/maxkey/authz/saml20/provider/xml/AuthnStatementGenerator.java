@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AuthnStatementGenerator {
-	private final static Logger logger = LoggerFactory.getLogger(AuthnStatementGenerator.class);
+	private static final  Logger logger = LoggerFactory.getLogger(AuthnStatementGenerator.class);
 	
 	public AuthnStatement generateAuthnStatement(DateTime authnInstant) {
 		//Response/Assertion/AuthnStatement/AuthContext/AuthContextClassRef

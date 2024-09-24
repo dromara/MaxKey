@@ -20,17 +20,18 @@
  */
 package org.dromara.maxkey.authz.endpoint;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,13 +40,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Crystal.Sea
  *
  */
-@Controller
+@RestController
 @RequestMapping(value = { "/authz/credential" })
 public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 
 	@RequestMapping("/get/{appId}")
-	@ResponseBody
-	public ResponseEntity<?>  get(
+	public Message<Accounts>  get(
 			@PathVariable("appId") String appId,
 			@CurrentUser UserInfo currentUser){
 		Apps app = getApp(appId);
@@ -64,11 +64,11 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 			account.setCreateType("manual");
 			account.setStatus(ConstsStatus.ACTIVE);
 		}
-		return new Message<Accounts>(account).buildResponse();
+		return new Message<Accounts>(account);
 	}
 	
 	@RequestMapping("/update")
-	public ResponseEntity<?>  update(
+	public Message<Accounts>  update(
 			@RequestBody  Accounts account,
 			@CurrentUser UserInfo currentUser){
 		if(StringUtils.isNotEmpty(account.getRelatedPassword())
@@ -78,16 +78,16 @@ public class AuthorizeCredentialEndpoint extends AuthorizeBaseEndpoint{
 					PasswordReciprocal.getInstance().encode(account.getRelatedPassword()));
 			if(accountsService.get(account.getId()) == null) {
 				if(accountsService.insert(account)){
-					return new Message<Accounts>().buildResponse();
+					return new Message<Accounts>();
 				}
 			}else {
 				if(accountsService.update(account)){
-					return new Message<Accounts>().buildResponse();
+					return new Message<Accounts>();
 				}
 			}
 		}
 		
-		return new Message<Accounts>(Message.FAIL).buildResponse();
+		return new Message<Accounts>(Message.FAIL);
 	}
 			
 }

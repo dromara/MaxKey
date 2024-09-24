@@ -28,13 +28,13 @@ import { BaseService } from './base.service';
 })
 export class PasswordService extends BaseService<ChangePassword> {
   constructor(private _httpClient: HttpClient) {
-    super(_httpClient, '/config');
+    super(_httpClient, '/users');
   }
 
   public changePassword(body: NzSafeAny): Observable<Message<ChangePassword>> {
-    return this.http.put<Message<ChangePassword>>('/config/changePassword', body);
+    return this.http.put<Message<ChangePassword>>('/users/changePassword', body);
   }
   public passwordpolicy(): Observable<Message<ChangePassword>> {
-    return this.http.put<Message<ChangePassword>>('/config/passwordpolicy',null);
+    return this.http.get<Message<ChangePassword>>('/users/passwordpolicy', {});
   }
 }

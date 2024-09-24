@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.dromara.maxkey.entity.AccountsStrategy;
-import org.dromara.maxkey.entity.Roles;
+import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.maxkey.persistence.mapper.AccountsStrategyMapper;
 import org.dromara.mybatis.jpa.JpaService;
 import org.slf4j.Logger;
@@ -35,9 +35,8 @@ public class AccountsStrategyService  extends JpaService<AccountsStrategy> imple
      */
     private static final long serialVersionUID = -921086134545225302L;
     
-    final static Logger _logger = LoggerFactory.getLogger(AccountsStrategyService.class);
+    static final  Logger _logger = LoggerFactory.getLogger(AccountsStrategyService.class);
    /*
-    @JsonIgnore
     @Autowired
     @Qualifier("groupMemberService")
     GroupMemberService accountsStrategyService;
@@ -60,7 +59,7 @@ public class AccountsStrategyService  extends JpaService<AccountsStrategy> imple
 	}
 	
 	public boolean deleteById(String groupId) {
-	    this.remove(groupId);
+	    this.delete(groupId);
 	    //groupMemberService.deleteByGroupId(groupId);
 	    return true;
 	}

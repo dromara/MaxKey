@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 public class CasPlainAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(CasPlainAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(CasPlainAdapter.class);
 
 	ServiceResponseBuilder serviceResponseBuilder;
 	

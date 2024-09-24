@@ -21,29 +21,28 @@ import java.util.HashMap;
 
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  * Index
  * @author Crystal.Sea
  *
  */
-@Controller
+@RestController
 public class DashboardController {
 	
 	private static Logger logger = LoggerFactory.getLogger(DashboardController.class);
 	@Autowired
 	ReportService reportService;
 
-	@RequestMapping(value={"/dashboard"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> dashboard(@CurrentUser UserInfo currentUser) {
+	@GetMapping(value={"/dashboard"})
+	public Message<?> dashboard(@CurrentUser UserInfo currentUser) {
 		logger.debug("dashboard . ");
 		HashMap<String,Object> reportParameter = new HashMap<String,Object>();
 		reportParameter.put("instId", currentUser.getInstId());
@@ -59,7 +58,7 @@ public class DashboardController {
 		
 		reportParameter.put("reportBrowser", reportService.analysisBrowser(reportParameter));
 		reportParameter.put("reportApp", reportService.analysisApp(reportParameter));
-		return new Message<HashMap<?,?>>(reportParameter).buildResponse();
+		return new Message<HashMap<?,?>>(reportParameter);
 	}
 
 }

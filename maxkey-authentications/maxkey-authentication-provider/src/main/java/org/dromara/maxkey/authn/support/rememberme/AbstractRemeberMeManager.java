@@ -24,7 +24,7 @@ import org.dromara.maxkey.authn.SignPrincipal;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.crypto.jwt.HMAC512Service;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.joda.time.DateTime;

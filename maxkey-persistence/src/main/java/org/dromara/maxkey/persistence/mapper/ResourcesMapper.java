@@ -20,7 +20,7 @@
  */
 package org.dromara.maxkey.persistence.mapper;
 
-import org.dromara.maxkey.entity.Resources;
+import org.dromara.maxkey.entity.permissions.Resources;
 import org.dromara.mybatis.jpa.IJpaMapper;
 
 /**

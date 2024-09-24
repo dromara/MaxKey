@@ -58,7 +58,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping(value = { "/metadata/saml20/" })
 public class SamlMetadataEndpoint {
-	private final static Logger logger = LoggerFactory
+	private static final  Logger logger = LoggerFactory
 			.getLogger(SamlMetadataEndpoint.class);
 
 	@Autowired

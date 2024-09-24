@@ -38,10 +38,10 @@ export class UsersService extends BaseService<Users> {
   }
 
   getProfile(): Observable<Message<Users>> {
-    return this.http.get<Message<Users>>('/config/profile/get', {});
+    return this.http.get<Message<Users>>('/users/profile/get', {});
   }
 
   updateProfile(body: any): Observable<Message<Users>> {
-    return this.http.put<Message<Users>>('/config/profile/update', body);
+    return this.http.put<Message<Users>>('/users/profile/update', body);
   }
 }

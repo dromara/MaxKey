@@ -27,9 +27,9 @@ import org.dromara.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.dromara.maxkey.authz.token.endpoint.adapter.TokenBasedDefaultAdapter;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsBoolean;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
 import org.dromara.maxkey.entity.apps.AppsTokenBasedDetails;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsTokenBasedDetailsService;
 import org.dromara.maxkey.util.Instance;
 import org.dromara.maxkey.web.WebContext;
@@ -55,7 +55,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class TokenBasedAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
 
-	final static Logger _logger = LoggerFactory.getLogger(TokenBasedAuthorizeEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(TokenBasedAuthorizeEndpoint.class);
 	@Autowired
 	AppsTokenBasedDetailsService tokenBasedDetailsService;
 

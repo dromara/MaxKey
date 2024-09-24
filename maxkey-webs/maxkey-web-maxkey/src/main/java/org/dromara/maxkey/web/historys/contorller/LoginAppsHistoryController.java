@@ -20,9 +20,9 @@ package org.dromara.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
-import org.dromara.maxkey.entity.HistoryLoginApps;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.history.HistoryLoginApps;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.HistoryLoginAppsService;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
@@ -51,7 +51,7 @@ public class LoginAppsHistoryController {
 	static final Logger logger = LoggerFactory.getLogger(LoginAppsHistoryController.class);
 	
 	@Autowired
-  	protected HistoryLoginAppsService historyLoginAppsService;
+  	HistoryLoginAppsService historyLoginAppsService;
 	
 	/**
 	 * @param loginAppsHistory
@@ -59,7 +59,7 @@ public class LoginAppsHistoryController {
 	 */
 	@RequestMapping(value={"/loginAppsHistory/fetch"})
 	@ResponseBody
-	public ResponseEntity<?> fetch(
+	public Message<?> fetch(
 				@ModelAttribute("historyLoginApp") HistoryLoginApps historyLoginApp,
 				@CurrentUser UserInfo currentUser){
 		logger.debug("historys/loginAppsHistory/fetch/  {}",historyLoginApp);
@@ -68,7 +68,7 @@ public class LoginAppsHistoryController {
 		historyLoginApp.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<HistoryLoginApps>>(
 					historyLoginAppsService.fetchPageResults(historyLoginApp)
-				).buildResponse();
+				);
 	}
 
 	@InitBinder

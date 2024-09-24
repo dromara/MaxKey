@@ -1,28 +1,26 @@
 /*
  * Copyright [2022] [MaxKey of copyright http://www.maxkey.top]
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 
 package org.dromara.maxkey.autoconfigure;
 
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.authn.provider.AuthenticationProviderFactory;
-import org.dromara.maxkey.authn.provider.impl.MobileAuthenticationProvider;
-import org.dromara.maxkey.authn.provider.impl.NormalAuthenticationProvider;
-import org.dromara.maxkey.authn.provider.impl.TrustedAuthenticationProvider;
+import org.dromara.maxkey.authn.provider.impl.*;
 import org.dromara.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.dromara.maxkey.authn.session.SessionManager;
 import org.dromara.maxkey.authn.support.rememberme.AbstractRemeberMeManager;
@@ -44,23 +42,27 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @AutoConfiguration
 public class AuthnProviderAutoConfiguration {
     static final  Logger _logger = LoggerFactory.getLogger(AuthnProviderAutoConfiguration.class);
-    
+
     @Bean
-    public AbstractAuthenticationProvider authenticationProvider(
+     AbstractAuthenticationProvider authenticationProvider(
     		NormalAuthenticationProvider normalAuthenticationProvider,
     		MobileAuthenticationProvider mobileAuthenticationProvider,
-    		TrustedAuthenticationProvider trustedAuthenticationProvider
+    		TrustedAuthenticationProvider trustedAuthenticationProvider,
+			ScanCodeAuthenticationProvider scanCodeAuthenticationProvider,
+			AppAuthenticationProvider appAuthenticationProvider
     		) {
     	AuthenticationProviderFactory authenticationProvider = new AuthenticationProviderFactory();
     	authenticationProvider.addAuthenticationProvider(normalAuthenticationProvider);
     	authenticationProvider.addAuthenticationProvider(mobileAuthenticationProvider);
     	authenticationProvider.addAuthenticationProvider(trustedAuthenticationProvider);
-    	
+    	authenticationProvider.addAuthenticationProvider(scanCodeAuthenticationProvider);
+    	authenticationProvider.addAuthenticationProvider(appAuthenticationProvider);
+
     	return authenticationProvider;
     }
-    		
+
     @Bean
-    public NormalAuthenticationProvider normalAuthenticationProvider(
+    NormalAuthenticationProvider normalAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
     		ApplicationConfig applicationConfig,
     	    SessionManager sessionManager,
@@ -74,7 +76,33 @@ public class AuthnProviderAutoConfiguration {
         		authTokenService
         	);
     }
-    
+
+	@Bean
+	public ScanCodeAuthenticationProvider scanCodeAuthenticationProvider(
+			AbstractAuthenticationRealm authenticationRealm,
+			SessionManager sessionManager
+	) {
+		return new ScanCodeAuthenticationProvider(
+				authenticationRealm,
+				sessionManager
+		);
+	}
+
+	@Bean
+	public AppAuthenticationProvider appAuthenticationProvider(
+			AbstractAuthenticationRealm authenticationRealm,
+			ApplicationConfig applicationConfig,
+			SessionManager sessionManager,
+			AuthTokenService authTokenService
+	) {
+		return new AppAuthenticationProvider(
+				authenticationRealm,
+				applicationConfig,
+				sessionManager,
+				authTokenService
+		);
+	}
+
     @Bean
     public MobileAuthenticationProvider mobileAuthenticationProvider(
     		AbstractAuthenticationRealm authenticationRealm,
@@ -104,22 +132,22 @@ public class AuthnProviderAutoConfiguration {
         		sessionManager
         	);
     }
-    
+
     @Bean
     public PasswordPolicyValidator passwordPolicyValidator(JdbcTemplate jdbcTemplate,MessageSource messageSource) {
         return new PasswordPolicyValidator(jdbcTemplate,messageSource);
     }
-    
+
     @Bean
     public LoginRepository loginRepository(JdbcTemplate jdbcTemplate) {
         return new LoginRepository(jdbcTemplate);
     }
-    
+
     @Bean
     public LoginHistoryRepository loginHistoryRepository(JdbcTemplate jdbcTemplate) {
         return new LoginHistoryRepository(jdbcTemplate);
     }
-    
+
     /**
      * remeberMeService .
      * @return
@@ -135,5 +163,5 @@ public class AuthnProviderAutoConfiguration {
         return new  JdbcRemeberMeManager(
         		jdbcTemplate,applicationConfig,authTokenService,validity);
     }
-    
+
 }

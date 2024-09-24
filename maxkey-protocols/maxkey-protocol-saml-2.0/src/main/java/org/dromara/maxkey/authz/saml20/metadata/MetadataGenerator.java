@@ -95,7 +95,7 @@ import org.springframework.core.io.FileSystemResource;
 import java.security.KeyStore;
 
 public class MetadataGenerator {
-	private final static Logger logger = LoggerFactory.getLogger(MetadataGenerator.class);
+	private static final  Logger logger = LoggerFactory.getLogger(MetadataGenerator.class);
 
 	/** Parser manager used to parse XML. */
 	protected static BasicParserPool parser;

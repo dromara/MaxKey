@@ -35,7 +35,7 @@ public class EthernetAddress
     
     private static final long serialVersionUID = 1L;
 
-    private final static char[] HEX_CHARS = "0123456789abcdefABCDEF".toCharArray();
+    private static final  char[] HEX_CHARS = "0123456789abcdefABCDEF".toCharArray();
 
     /**
      * We may need a random number generator, for creating dummy ethernet

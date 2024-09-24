@@ -74,9 +74,9 @@ import jakarta.servlet.Filter;
 })
 public class Oauth20AutoConfiguration implements InitializingBean {
     private static final  Logger _logger = LoggerFactory.getLogger(Oauth20AutoConfiguration.class);
-    
+
     @Bean
-    public FilterRegistrationBean<Filter> tokenEndpointAuthenticationFilter() {
+    FilterRegistrationBean<Filter> tokenEndpointAuthenticationFilter() {
         _logger.debug("TokenEndpointAuthenticationFilter init ");
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new TokenEndpointAuthenticationFilter());
@@ -87,14 +87,14 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         registration.setOrder(1);
         return registration;
     }
-    
+
     /**
      * OIDCProviderMetadataDetails. 
      * Self-issued Provider Metadata
      * http://openid.net/specs/openid-connect-core-1_0.html#SelfIssued 
      */
     @Bean(name = "oidcProviderMetadata")
-    public OIDCProviderMetadataDetails oidcProviderMetadata(
+    OIDCProviderMetadataDetails oidcProviderMetadata(
             @Value("${maxkey.oidc.metadata.issuer}")
             String issuer,
             @Value("${maxkey.oidc.metadata.authorizationEndpoint}")
@@ -117,14 +117,14 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      * @return
      */
     @Bean(name = "jwkSetKeyStore")
-    public JWKSetKeyStore jwkSetKeyStore() {
+    JWKSetKeyStore jwkSetKeyStore() {
         JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore();
         ClassPathResource classPathResource = new ClassPathResource("/config/keystore.jwks");
         jwkSetKeyStore.setLocation(classPathResource);
         _logger.debug("JWKSet KeyStore init.");
         return jwkSetKeyStore;
     }
-    
+
     /**
      * jwtSetKeyStore.
      * @return
@@ -133,10 +133,10 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      * @throws NoSuchAlgorithmException 
      */
     @Bean(name = "jwtSignerValidationService")
-    public DefaultJwtSigningAndValidationService jwtSignerValidationService(
-    		@Qualifier("jwkSetKeyStore")
-            JWKSetKeyStore jwkSetKeyStore) 
-                    throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
+    DefaultJwtSigningAndValidationService jwtSignerValidationService(
+            @Qualifier("jwkSetKeyStore")
+            JWKSetKeyStore jwkSetKeyStore)
+            throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
         DefaultJwtSigningAndValidationService jwtSignerValidationService = 
                 new DefaultJwtSigningAndValidationService(jwkSetKeyStore);
         jwtSignerValidationService.setDefaultSignerKeyId("maxkey_rsa");
@@ -144,7 +144,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         _logger.debug("JWT Signer and Validation Service init.");
         return jwtSignerValidationService;
     }
-    
+
     /**
      * jwtSetKeyStore.
      * @return
@@ -153,10 +153,10 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      * @throws NoSuchAlgorithmException 
      */
     @Bean(name = "jwtEncryptionService")
-    public DefaultJwtEncryptionAndDecryptionService jwtEncryptionService(
-    		@Qualifier("jwkSetKeyStore")
-            JWKSetKeyStore jwkSetKeyStore) 
-                    throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
+    DefaultJwtEncryptionAndDecryptionService jwtEncryptionService(
+            @Qualifier("jwkSetKeyStore")
+            JWKSetKeyStore jwkSetKeyStore)
+            throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
         DefaultJwtEncryptionAndDecryptionService jwtEncryptionService = 
                 new DefaultJwtEncryptionAndDecryptionService(jwkSetKeyStore);
         jwtEncryptionService.setDefaultAlgorithm(JWEAlgorithm.RSA_OAEP_256);//RSA1_5
@@ -165,13 +165,13 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         _logger.debug("JWT Encryption and Decryption Service init.");
         return jwtEncryptionService;
     }
-    
+
     /**
      * tokenEnhancer.
      * @return
      */
     @Bean(name = "tokenEnhancer")
-    public OIDCIdTokenEnhancer tokenEnhancer(
+    OIDCIdTokenEnhancer tokenEnhancer(
             OIDCProviderMetadataDetails oidcProviderMetadata,
             ClientDetailsService oauth20JdbcClientDetailsService) {
         OIDCIdTokenEnhancer tokenEnhancer = new OIDCIdTokenEnhancer();
@@ -180,6 +180,7 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         _logger.debug("OIDC IdToken Enhancer init.");
         return tokenEnhancer;
     }
+
     //以上部分为了支持OpenID Connect 1.0
     
     
@@ -189,57 +190,57 @@ public class Oauth20AutoConfiguration implements InitializingBean {
      * @return oauth20AuthorizationCodeServices
      */
     @Bean(name = "oauth20AuthorizationCodeServices")
-    public AuthorizationCodeServices oauth20AuthorizationCodeServices(
+    AuthorizationCodeServices oauth20AuthorizationCodeServices(
             @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {  
         _logger.debug("OAuth 2 Authorization Code Services init.");
         return new AuthorizationCodeServicesFactory().getService(persistence, jdbcTemplate, redisConnFactory);
     }
-    
+
     /**
      * TokenStore. 
      * @param persistence int
      * @return oauth20TokenStore
      */
     @Bean(name = "oauth20TokenStore")
-    public TokenStore oauth20TokenStore(
+    TokenStore oauth20TokenStore(
             @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory) {
         _logger.debug("OAuth 2 TokenStore init.");
         return new TokenStoreFactory().getTokenStore(persistence, jdbcTemplate, redisConnFactory);
     }
-    
+
     /**
      * jwtAccessTokenConverter. 
      * @return converter
      */
     @Bean(name = "converter")
-    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+    JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
         _logger.debug("OAuth 2 Jwt AccessToken Converter init.");
         return jwtAccessTokenConverter;
     }
-    
+
     /**
      * clientDetailsService. 
      * @return oauth20JdbcClientDetailsService
      */
     @Bean(name = "oauth20JdbcClientDetailsService")
-    public JdbcClientDetailsService jdbcClientDetailsService(DataSource dataSource,@Qualifier("passwordReciprocal") PasswordEncoder passwordReciprocal) {
+    JdbcClientDetailsService jdbcClientDetailsService(DataSource dataSource, @Qualifier("passwordReciprocal") PasswordEncoder passwordReciprocal) {
         JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
         //clientDetailsService.setPasswordEncoder(passwordReciprocal);
         _logger.debug("OAuth 2 Jdbc ClientDetails Service init.");
         return clientDetailsService;
-    }    
-    
+    }
+
     /**
      * clientDetailsUserDetailsService. 
      * @return oauth20TokenServices
      */
     @Bean(name = "oauth20TokenServices")
-    public DefaultTokenServices defaultTokenServices(
+    DefaultTokenServices defaultTokenServices(
             JdbcClientDetailsService oauth20JdbcClientDetailsService,
             TokenStore oauth20TokenStore,
             OIDCIdTokenEnhancer tokenEnhancer) {
@@ -251,45 +252,45 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         _logger.debug("OAuth 2 Token Services init.");
         return tokenServices;
     }
-    
-    
+
+
     /**
      * TokenApprovalStore. 
      * @return oauth20ApprovalStore
      */
     @Bean(name = "oauth20ApprovalStore")
-    public TokenApprovalStore tokenApprovalStore(
+    TokenApprovalStore tokenApprovalStore(
             TokenStore oauth20TokenStore) {
         TokenApprovalStore tokenApprovalStore = new TokenApprovalStore();
         tokenApprovalStore.setTokenStore(oauth20TokenStore);
         _logger.debug("OAuth 2 Approval Store init.");
         return tokenApprovalStore;
     }
-    
-    
+
+
     /**
      * OAuth2RequestFactory. 
      * @return oAuth2RequestFactory
      */
     @Bean(name = "oAuth2RequestFactory")
-    public DefaultOAuth2RequestFactory oauth2RequestFactory(
+    DefaultOAuth2RequestFactory oauth2RequestFactory(
             JdbcClientDetailsService oauth20JdbcClientDetailsService) {
         DefaultOAuth2RequestFactory oauth2RequestFactory = 
                 new DefaultOAuth2RequestFactory(oauth20JdbcClientDetailsService);
         _logger.debug("OAuth 2 Request Factory init.");
         return oauth2RequestFactory;
     }
-    
+
     /**
      * OAuth20UserApprovalHandler. 
      * @return oauth20UserApprovalHandler
      */
     @Bean(name = "oauth20UserApprovalHandler")
-    public OAuth20UserApprovalHandler oauth20UserApprovalHandler(
+    OAuth20UserApprovalHandler oauth20UserApprovalHandler(
             JdbcClientDetailsService oauth20JdbcClientDetailsService,
             DefaultOAuth2RequestFactory oAuth2RequestFactory,
             TokenApprovalStore oauth20ApprovalStore
-            ) {
+    ) {
         OAuth20UserApprovalHandler userApprovalHandler = new OAuth20UserApprovalHandler();
         userApprovalHandler.setApprovalStore(oauth20ApprovalStore);
         userApprovalHandler.setRequestFactory(oAuth2RequestFactory);
@@ -297,17 +298,17 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         _logger.debug("OAuth 2 User Approval Handler init.");
         return userApprovalHandler;
     }
-    
+
     /**
      * ProviderManager. 
      * @return oauth20UserAuthenticationManager
      */
     @Bean(name = "oauth20UserAuthenticationManager")
-    public ProviderManager oauth20UserAuthenticationManager(
-    		@Qualifier("passwordEncoder") 
+    ProviderManager oauth20UserAuthenticationManager(
+            @Qualifier("passwordEncoder")
             PasswordEncoder passwordEncoder,
             LoginRepository loginRepository
-            ) {
+    ) {
         
         OAuth2UserDetailsService userDetailsService =new OAuth2UserDetailsService();
         userDetailsService.setLoginRepository(loginRepository);
@@ -319,17 +320,17 @@ public class Oauth20AutoConfiguration implements InitializingBean {
         _logger.debug("OAuth 2 User Authentication Manager init.");
         return authenticationManager;
     }
-    
+
     /**
      * ProviderManager. 
      * @return oauth20ClientAuthenticationManager
      */
     @Bean(name = "oauth20ClientAuthenticationManager")
-    public ProviderManager oauth20ClientAuthenticationManager(
+    ProviderManager oauth20ClientAuthenticationManager(
             JdbcClientDetailsService oauth20JdbcClientDetailsService,
-            @Qualifier("passwordReciprocal") 
+            @Qualifier("passwordReciprocal")
             PasswordEncoder passwordReciprocal
-            ) {
+    ) {
         
         ClientDetailsUserDetailsService cientDetailsUserDetailsService = 
                 new ClientDetailsUserDetailsService(oauth20JdbcClientDetailsService);

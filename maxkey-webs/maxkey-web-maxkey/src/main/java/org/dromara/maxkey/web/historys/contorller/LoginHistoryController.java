@@ -20,9 +20,9 @@ package org.dromara.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
-import org.dromara.maxkey.entity.HistoryLogin;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.history.HistoryLogin;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.HistoryLoginService;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
@@ -59,7 +59,7 @@ public class LoginHistoryController {
 	 */
 	@RequestMapping(value={"/loginHistory/fetch"})
 	@ResponseBody
-	public ResponseEntity<?> fetch(
+	public Message<?> fetch(
 				@ModelAttribute("historyLogin") HistoryLogin historyLogin,
 				@CurrentUser UserInfo currentUser
 			){
@@ -68,7 +68,7 @@ public class LoginHistoryController {
 		historyLogin.setUserId(currentUser.getId());
 		return new Message<JpaPageResults<HistoryLogin>>(
 					loginHistoryService.fetchPageResults(historyLogin)
-				).buildResponse();
+				);
 	}
 	
 	@InitBinder

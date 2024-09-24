@@ -527,7 +527,7 @@
 			"username": "賬號",
 			"digits": "長度",
 			"period": "週期",
-			"sharedSecret": "共享密鑰(BASE32)",
+			"sharedSecret": "共享密鑰",
 			"hexSharedSecret": "共享密鑰( HEX  )",
 			"rqCode": "二維碼",
       "one-timePassword": "一次性密碼"

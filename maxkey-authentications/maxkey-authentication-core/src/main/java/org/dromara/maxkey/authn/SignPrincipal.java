@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.dromara.maxkey.authn.session.Session;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

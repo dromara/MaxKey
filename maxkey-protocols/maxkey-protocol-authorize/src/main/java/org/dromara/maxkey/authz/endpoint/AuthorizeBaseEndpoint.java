@@ -25,8 +25,8 @@ import org.dromara.maxkey.authz.endpoint.adapter.AbstractAuthorizeAdapter;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Accounts;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.Apps;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AccountsService;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.web.WebConstants;
@@ -42,7 +42,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 public class AuthorizeBaseEndpoint {
-	final static Logger _logger = LoggerFactory.getLogger(AuthorizeBaseEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(AuthorizeBaseEndpoint.class);
 	
 	@Autowired 
     protected ApplicationConfig applicationConfig;
@@ -78,7 +78,7 @@ public class AuthorizeBaseEndpoint {
 		account.setAppName(app.getAppName());
 		
 		if(loadApp.getCredential().equalsIgnoreCase(Apps.CREDENTIALS.USER_DEFINED)){
-			account = accountsService.load( Query.builder().eq("appId", loadApp.getId()).eq("userid", userInfo.getId()));
+			account = accountsService.get( Query.builder().eq("appId", loadApp.getId()).eq("userid", userInfo.getId()));
 			if(account != null){
 				account.setRelatedPassword(
 						PasswordReciprocal.getInstance().decoder(account.getRelatedPassword()));

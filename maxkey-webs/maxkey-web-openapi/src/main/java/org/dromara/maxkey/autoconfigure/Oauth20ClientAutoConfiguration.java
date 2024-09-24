@@ -45,23 +45,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AutoConfiguration
 public class Oauth20ClientAutoConfiguration {
     private static final  Logger logger = LoggerFactory.getLogger(Oauth20ClientAutoConfiguration.class);
-    
+
     @Bean
-    public JdbcClientDetailsService oauth20JdbcClientDetailsService(
+    JdbcClientDetailsService oauth20JdbcClientDetailsService(
                 DataSource dataSource, @Qualifier("passwordReciprocal") PasswordEncoder passwordReciprocal) {
 	    JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
 	    //clientDetailsService.setPasswordEncoder(passwordReciprocal);
 	    logger.debug("JdbcClientDetailsService inited.");
         return clientDetailsService;
     }
-	
+
     /**
      * TokenStore. 
      * @param persistence int
      * @return oauth20TokenStore
      */
     @Bean
-    public TokenStore oauth20TokenStore(
+    TokenStore oauth20TokenStore(
             @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory jedisConnectionFactory) {
@@ -76,13 +76,13 @@ public class Oauth20ClientAutoConfiguration {
         
         return tokenStore;
     }
-    
+
     /**
      * clientDetailsUserDetailsService. 
      * @return oauth20TokenServices
      */
     @Bean
-    public DefaultTokenServices oauth20TokenServices(
+    DefaultTokenServices oauth20TokenServices(
             JdbcClientDetailsService oauth20JdbcClientDetailsService,
             TokenStore oauth20TokenStore) {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
@@ -91,17 +91,17 @@ public class Oauth20ClientAutoConfiguration {
         tokenServices.setSupportRefreshToken(true);
         return tokenServices;
     }
-    
+
     /**
      * ProviderManager. 
      * @return oauth20ClientAuthenticationManager
      */
     @Bean
-    public ProviderManager oauth20ClientAuthenticationManager(
+    ProviderManager oauth20ClientAuthenticationManager(
             JdbcClientDetailsService oauth20JdbcClientDetailsService,
             @Qualifier("passwordReciprocal")
             PasswordEncoder passwordReciprocal
-            ) {
+    ) {
         
         ClientDetailsUserDetailsService cientDetailsUserDetailsService = 
                 new ClientDetailsUserDetailsService(oauth20JdbcClientDetailsService);

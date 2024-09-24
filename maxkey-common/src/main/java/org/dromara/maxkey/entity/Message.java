@@ -21,12 +21,12 @@ import org.springframework.http.ResponseEntity;
 
 public class Message<T> {
 	
-	public final static int SUCCESS	= 0;	//成功
-	public final static int ERROR	= 1;	//错误
-	public final static int FAIL	= 2;	//失败
-	public final static int INFO	= 101;	//信息
-	public final static int PROMPT	= 102;	//提示
-	public final static int WARNING	= 103;	//警告
+	public static final  int SUCCESS	= 0;	//成功
+	public static final  int ERROR		= 1;	//错误
+	public static final  int FAIL		= 2;	//失败
+	public static final  int INFO		= 101;	//信息
+	public static final  int PROMPT		= 102;	//提示
+	public static final  int WARNING	= 103;	//警告
 	
 	int code;
 	
@@ -89,7 +89,7 @@ public class Message<T> {
 	public void setData(T data) {
 		this.data = data;
 	}
-
+	
 	public ResponseEntity<?>  buildResponse() {
 		return ResponseEntity.ok(this);
 	}

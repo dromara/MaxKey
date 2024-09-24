@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class EndpointGenerator {
-	private final static Logger logger = LoggerFactory.getLogger(EndpointGenerator.class);
+	private static final  Logger logger = LoggerFactory.getLogger(EndpointGenerator.class);
 	
 	public Endpoint generateEndpoint( String location) {
 		logger.debug("end point location: {}", location);

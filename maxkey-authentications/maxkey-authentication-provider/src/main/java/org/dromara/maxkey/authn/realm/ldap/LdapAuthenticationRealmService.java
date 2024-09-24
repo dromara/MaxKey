@@ -22,10 +22,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.dromara.maxkey.authn.realm.IAuthenticationServer;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
-import org.dromara.maxkey.entity.LdapContext;
+import org.dromara.maxkey.entity.cnf.CnfLdapContext;
 import org.dromara.maxkey.ldap.ActiveDirectoryUtils;
 import org.dromara.maxkey.ldap.LdapUtils;
-import org.dromara.maxkey.persistence.service.LdapContextService;
+import org.dromara.maxkey.persistence.service.CnfLdapContextService;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -36,23 +36,23 @@ public class LdapAuthenticationRealmService {
                 .expireAfterWrite(60, TimeUnit.MINUTES)
                 .build();
     
-    LdapContextService ldapContextService;
+    CnfLdapContextService ldapContextService;
     
     
-    public LdapAuthenticationRealmService(LdapContextService ldapContextService) {
+    public LdapAuthenticationRealmService(CnfLdapContextService ldapContextService) {
 		this.ldapContextService = ldapContextService;
 	}
 
 	public LdapAuthenticationRealm getByInstId(String instId) {
 		LdapAuthenticationRealm authenticationRealm = ldapRealmStore.getIfPresent(instId);
 		if(authenticationRealm == null) {
-			List<LdapContext> ldapContexts = 
+			List<CnfLdapContext> ldapContexts = 
 					ldapContextService.find("where instid = ? and status = 1 ", new Object[]{instId}, new int[]{Types.VARCHAR});
 			authenticationRealm = new LdapAuthenticationRealm(false);
 			if(ldapContexts != null && ldapContexts.size()>0) {
 				authenticationRealm.setLdapSupport(true);
 				List<IAuthenticationServer> ldapAuthenticationServers = new ArrayList<IAuthenticationServer>();
-				for(LdapContext ldapContext : ldapContexts) { 
+				for(CnfLdapContext ldapContext : ldapContexts) { 
 					if(ldapContext.getProduct().equalsIgnoreCase("ActiveDirectory")) {
 						ActiveDirectoryServer ldapServer = new ActiveDirectoryServer();
 			            ActiveDirectoryUtils  ldapUtils  = new ActiveDirectoryUtils(

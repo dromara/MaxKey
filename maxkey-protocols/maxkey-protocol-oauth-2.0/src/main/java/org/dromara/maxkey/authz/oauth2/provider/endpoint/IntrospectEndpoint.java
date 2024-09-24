@@ -45,7 +45,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class IntrospectEndpoint {
-	final static Logger _logger = LoggerFactory.getLogger(IntrospectEndpoint.class);	
+	static final  Logger _logger = LoggerFactory.getLogger(IntrospectEndpoint.class);	
 	@Autowired
 	@Qualifier("oauth20JdbcClientDetailsService")
 	private ClientDetailsService clientDetailsService;

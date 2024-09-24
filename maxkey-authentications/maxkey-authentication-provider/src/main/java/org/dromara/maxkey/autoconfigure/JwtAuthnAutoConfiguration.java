@@ -42,14 +42,14 @@ public class JwtAuthnAutoConfiguration  {
      * @return
      */
     @Bean
-    public JWKSetKeyStore jwtLoginJwkSetKeyStore() {
+    JWKSetKeyStore jwtLoginJwkSetKeyStore() {
         JWKSetKeyStore jwkSetKeyStore = new JWKSetKeyStore();
         ClassPathResource classPathResource = new ClassPathResource("/config/loginjwkkeystore.jwks");
         jwkSetKeyStore.setLocation(classPathResource);
         _logger.debug("JWT Login JwkSet KeyStore init.");
         return jwkSetKeyStore;
     }
-    
+
     /**
      * jwt Login ValidationService.
      * @return
@@ -58,9 +58,9 @@ public class JwtAuthnAutoConfiguration  {
      * @throws NoSuchAlgorithmException 
      */
     @Bean
-    public DefaultJwtSigningAndValidationService jwtLoginValidationService(
-    		@Qualifier("jwtLoginJwkSetKeyStore") JWKSetKeyStore jwtLoginJwkSetKeyStore) 
-                    throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
+    DefaultJwtSigningAndValidationService jwtLoginValidationService(
+            @Qualifier("jwtLoginJwkSetKeyStore") JWKSetKeyStore jwtLoginJwkSetKeyStore)
+            throws NoSuchAlgorithmException, InvalidKeySpecException, JOSEException {
         DefaultJwtSigningAndValidationService jwtSignerValidationService = 
                 new DefaultJwtSigningAndValidationService(jwtLoginJwkSetKeyStore);
         jwtSignerValidationService.setDefaultSignerKeyId("maxkey_rsa");
@@ -74,7 +74,7 @@ public class JwtAuthnAutoConfiguration  {
      * @return
      */
     @Bean
-    public JwtLoginService jwtLoginService(
+    JwtLoginService jwtLoginService(
             @Value("${maxkey.login.jwt.issuer}")
             String issuer,
             @Qualifier("jwtLoginValidationService")

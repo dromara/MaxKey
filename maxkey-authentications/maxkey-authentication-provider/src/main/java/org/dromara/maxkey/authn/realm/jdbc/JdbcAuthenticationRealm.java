@@ -23,8 +23,8 @@ import org.dromara.maxkey.authn.realm.ldap.LdapAuthenticationRealmService;
 import org.dromara.maxkey.constants.ConstsLoginType;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.ChangePassword;
-import org.dromara.maxkey.entity.PasswordPolicy;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.cnf.CnfPasswordPolicy;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.ip2location.IpLocationParser;
 import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
@@ -128,7 +128,7 @@ public class JdbcAuthenticationRealm extends AbstractAuthenticationRealm {
         if (!passwordMatches) {
             passwordPolicyValidator.plusBadPasswordCount(userInfo);
             insertLoginHistory(userInfo, ConstsLoginType.LOCAL, "", "xe00000004", WebConstants.LOGIN_RESULT.PASSWORD_ERROE);
-            PasswordPolicy passwordPolicy = passwordPolicyValidator.getPasswordPolicyRepository().getPasswordPolicy();
+            CnfPasswordPolicy passwordPolicy = passwordPolicyValidator.getPasswordPolicyRepository().getPasswordPolicy();
             if(userInfo.getBadPasswordCount()>=(passwordPolicy.getAttempts()/2)) {
                 throw new BadCredentialsException(
                         WebContext.getI18nValue("login.error.password.attempts",

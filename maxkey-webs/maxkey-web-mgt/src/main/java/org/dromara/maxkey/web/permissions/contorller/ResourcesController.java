@@ -24,8 +24,8 @@ import org.dromara.maxkey.constants.ConstsEntryType;
 import org.dromara.maxkey.constants.ConstsAct;
 import org.dromara.maxkey.constants.ConstsActResult;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.Resources;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.maxkey.entity.permissions.Resources;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.persistence.service.ResourcesService;
 import org.dromara.maxkey.web.component.TreeAttributes;
@@ -36,20 +36,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequestMapping(value={"/permissions/resources"})
 public class ResourcesController {
-	final static Logger logger = LoggerFactory.getLogger(ResourcesController.class);
+	static final  Logger logger = LoggerFactory.getLogger(ResourcesController.class);
 	
 	@Autowired
 	ResourcesService resourcesService;
@@ -59,35 +58,35 @@ public class ResourcesController {
 
 	@RequestMapping(value = { "/fetch" }, produces = {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
-	public ResponseEntity<?> fetch(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
+	public Message<?> fetch(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
 		logger.debug("fetch {}" , resource);
 		resource.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<Resources>>(
-				resourcesService.fetchPageResults(resource)).buildResponse();
+				resourcesService.fetchPageResults(resource));
 	}
 
 	@ResponseBody
 	@RequestMapping(value={"/query"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> query(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
+	public Message<?> query(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
 		logger.debug("-query  {}" , resource);
 		resource.setInstId(currentUser.getInstId());
 		List<Resources>  resourceList = resourcesService.query(resource);
 		if (resourceList != null) {
-			 return new Message<List<Resources>>(Message.SUCCESS,resourceList).buildResponse();
+			 return new Message<List<Resources>>(Message.SUCCESS,resourceList);
 		} else {
-			 return new Message<List<Resources>>(Message.FAIL).buildResponse();
+			 return new Message<List<Resources>>(Message.FAIL);
 		}
 	}
 	
 	@RequestMapping(value = { "/get/{id}" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@PathVariable("id") String id) {
+	public Message<?> get(@PathVariable("id") String id) {
 		Resources resource=resourcesService.get(id);
-		return new Message<Resources>(resource).buildResponse();
+		return new Message<Resources>(resource);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/add"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> insert(@RequestBody Resources resource,@CurrentUser UserInfo currentUser) {
+	public Message<?> insert(@RequestBody Resources resource,@CurrentUser UserInfo currentUser) {
 		logger.debug("-Add  :" + resource);
 		resource.setInstId(currentUser.getInstId());
 		if (resourcesService.insert(resource)) {
@@ -97,15 +96,15 @@ public class ResourcesController {
 					ConstsAct.CREATE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-			return new Message<Resources>(Message.SUCCESS).buildResponse();
+			return new Message<Resources>(Message.SUCCESS);
 		} else {
-			return new Message<Resources>(Message.FAIL).buildResponse();
+			return new Message<Resources>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(@RequestBody  Resources resource,@CurrentUser UserInfo currentUser) {
+	public Message<?> update(@RequestBody  Resources resource,@CurrentUser UserInfo currentUser) {
 		logger.debug("-update  :" + resource);
 		resource.setInstId(currentUser.getInstId());
 		if (resourcesService.update(resource)) {
@@ -115,15 +114,15 @@ public class ResourcesController {
 					ConstsAct.UPDATE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-		    return new Message<Resources>(Message.SUCCESS).buildResponse();
+		    return new Message<Resources>(Message.SUCCESS);
 		} else {
-			return new Message<Resources>(Message.FAIL).buildResponse();
+			return new Message<Resources>(Message.FAIL);
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value={"/delete"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> delete(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+	public Message<?> delete(@RequestParam("ids") List<String> ids,@CurrentUser UserInfo currentUser) {
 		logger.debug("-delete  ids : {} " , ids);
 		if (resourcesService.deleteBatch(ids)) {
 			systemLog.insert(
@@ -132,16 +131,16 @@ public class ResourcesController {
 					ConstsAct.DELETE, 
 					ConstsActResult.SUCCESS, 
 					currentUser);
-			 return new Message<Resources>(Message.SUCCESS).buildResponse();
+			 return new Message<Resources>(Message.SUCCESS);
 		} else {
-			return new Message<Resources>(Message.FAIL).buildResponse();
+			return new Message<Resources>(Message.FAIL);
 		}
 	}
   
   
 	@ResponseBody
 	@RequestMapping(value={"/tree"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> tree(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
+	public Message<?> tree(@ModelAttribute Resources resource,@CurrentUser UserInfo currentUser) {
 		logger.debug("-tree  {}" , resource);
 		List<Resources>  resourceList = resourcesService.query(Query.builder().eq("instid", currentUser.getInstId()));
 		if (resourceList != null) {
@@ -169,9 +168,9 @@ public class ResourcesController {
 			treeAttributes.setRootNode(rootNode);
 			
 			treeAttributes.setNodeCount(nodeCount);
-			 return new Message<TreeAttributes>(Message.SUCCESS,treeAttributes).buildResponse();
+			 return new Message<TreeAttributes>(Message.SUCCESS,treeAttributes);
 		} else {
-			 return new Message<TreeAttributes>(Message.FAIL).buildResponse();
+			 return new Message<TreeAttributes>(Message.FAIL);
 		}
 	}
 	

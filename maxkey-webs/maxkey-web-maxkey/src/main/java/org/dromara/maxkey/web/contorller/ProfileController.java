@@ -17,39 +17,40 @@
 
 package org.dromara.maxkey.web.contorller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.FileUploadService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
-import org.dromara.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping(value = { "/config/profile" })
+@RestController
+@RequestMapping(value = { "/users/profile" })
 public class ProfileController {
     static final Logger logger = LoggerFactory.getLogger(ProfileController.class);
 
     @Autowired
-    private UserInfoService userInfoService;
+    UserInfoService userInfoService;
     
     @Autowired
 	FileUploadService fileUploadService;
 
-    @RequestMapping(value = { "/get" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get(@CurrentUser UserInfo currentUser) {
+    @GetMapping(value = { "/get" }, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<UserInfo> get(@CurrentUser UserInfo currentUser) {
         UserInfo userInfo = userInfoService.findByUsername(currentUser.getUsername());
 		userInfo.trans();
-        return new Message<UserInfo>(userInfo).buildResponse();
+        return new Message<>(userInfo);
     }
 
     /**
@@ -59,9 +60,8 @@ public class ProfileController {
      * @param result
      * @return
      */
-    @ResponseBody
-	@RequestMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> update(
+	@PutMapping(value={"/update"}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Message<?> update(
 				@RequestBody  UserInfo userInfo,
 				@CurrentUser UserInfo currentUser,
                 BindingResult result) {
@@ -81,14 +81,14 @@ public class ProfileController {
 //		}
         if(StringUtils.isNotBlank(userInfo.getPictureId())) {
 			userInfo.setPicture(fileUploadService.get(userInfo.getPictureId()).getUploaded());
-			fileUploadService.remove(userInfo.getPictureId());
+			fileUploadService.delete(userInfo.getPictureId());
 		}
         
         if (userInfoService.updateProfile(userInfo) > 0) {
-        	return new Message<UserInfo>(Message.SUCCESS).buildResponse();
+        	return new Message<UserInfo>(Message.SUCCESS);
         } 
         
-        return new Message<UserInfo>(Message.FAIL).buildResponse();
+        return new Message<UserInfo>(Message.FAIL);
         
     }
 

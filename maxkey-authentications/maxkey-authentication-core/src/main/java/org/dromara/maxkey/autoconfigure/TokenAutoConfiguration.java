@@ -40,7 +40,7 @@ public class TokenAutoConfiguration{
             LoggerFactory.getLogger(TokenAutoConfiguration.class);
     
     @Bean
-    public AuthTokenService authTokenService(
+    AuthTokenService authTokenService(
     		AuthJwkConfig authJwkConfig,
     		RedisConnectionFactory redisConnFactory,
     		MomentaryService  momentaryService,
@@ -63,7 +63,7 @@ public class TokenAutoConfiguration{
     }
     
     @Bean
-    public AuthRefreshTokenService refreshTokenService(AuthJwkConfig authJwkConfig) throws JOSEException {
+    AuthRefreshTokenService refreshTokenService(AuthJwkConfig authJwkConfig) throws JOSEException {
     	return new AuthRefreshTokenService(authJwkConfig);
     }
     

@@ -118,8 +118,7 @@ export class UsersComponent implements OnInit {
 
   onReset(): void {}
 
-  onBatchDelete(e: MouseEvent): void {
-    e.preventDefault();
+  onBatchDelete(): void {
     this.usersService.delete(set2String(this.query.tableCheckedId)).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
@@ -239,8 +238,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  onDelete(e: MouseEvent, deleteId: String): void {
-    e.preventDefault();
+  onDelete(deleteId: String): void {
     this.usersService.delete(deleteId).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.operate.success'));

@@ -22,6 +22,7 @@ import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.authn.provider.AbstractAuthenticationProvider;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsLoginType;
+import org.dromara.maxkey.entity.Institutions;
 import org.dromara.maxkey.entity.Message;
 import org.dromara.maxkey.web.WebConstants;
 import org.slf4j.Logger;
@@ -54,7 +55,7 @@ public class HttpJwtEntryPoint {
 	JwtLoginService jwtLoginService;
 	
 	@RequestMapping(value={"/jwt"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> jwt(@RequestParam(value = WebConstants.JWT_TOKEN_PARAMETER, required = true) String jwt) {
+	public Message<AuthJwt> jwt(@RequestParam(value = WebConstants.JWT_TOKEN_PARAMETER, required = true) String jwt) {
 		try {
 			//for jwt Login
 			 _logger.debug("jwt : " + jwt);
@@ -67,13 +68,13 @@ public class HttpJwtEntryPoint {
 				 Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
 				 _logger.debug("JWT Logined in , username " + username);
 				 AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
-		 		 return new Message<AuthJwt>(authJwt).buildResponse();
+		 		 return new Message<AuthJwt>(authJwt);
 			 }
 		}catch(Exception e) {
 			_logger.error("Exception ",e);
 		}
 		
-		 return new Message<AuthJwt>(Message.FAIL).buildResponse();
+		 return new Message<AuthJwt>(Message.FAIL);
 	}
 	
 	/**
@@ -82,7 +83,7 @@ public class HttpJwtEntryPoint {
 	 * @return
 	 */
 	@RequestMapping(value={"/jwt/trust"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> jwtTrust(@RequestParam(value = WebConstants.JWT_TOKEN_PARAMETER, required = true) String jwt) {
+	public Message<AuthJwt> jwtTrust(@RequestParam(value = WebConstants.JWT_TOKEN_PARAMETER, required = true) String jwt) {
 		try {
 			//for jwt Login
 			 _logger.debug("jwt : " + jwt);
@@ -93,13 +94,13 @@ public class HttpJwtEntryPoint {
 				 Authentication  authentication = authenticationProvider.authenticate(loginCredential,true);
 				 _logger.debug("JWT Logined in , username " + username);
 				 AuthJwt authJwt = authTokenService.genAuthJwt(authentication);
-		 		 return new Message<AuthJwt>(authJwt).buildResponse();
+		 		 return new Message<AuthJwt>(authJwt);
 			 }
 		}catch(Exception e) {
 			_logger.error("Exception ",e);
 		}
 		
-		 return new Message<AuthJwt>(Message.FAIL).buildResponse();
+		 return new Message<AuthJwt>(Message.FAIL);
 	}
 
 

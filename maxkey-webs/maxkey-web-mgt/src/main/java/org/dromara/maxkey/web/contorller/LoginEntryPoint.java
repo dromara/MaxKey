@@ -31,11 +31,10 @@ import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 
 
@@ -43,7 +42,7 @@ import org.springframework.http.MediaType;
  * @author Crystal.Sea
  *
  */
-@Controller
+@RestController
 @RequestMapping(value = "/login")
 public class LoginEntryPoint {
 	private static Logger logger = LoggerFactory.getLogger(LoginEntryPoint.class);
@@ -52,7 +51,7 @@ public class LoginEntryPoint {
 	AuthTokenService authTokenService;
 	
 	@Autowired
-  	protected ApplicationConfig applicationConfig;
+  	ApplicationConfig applicationConfig;
  	
 	@Autowired
 	AbstractAuthenticationProvider authenticationProvider ;
@@ -62,7 +61,7 @@ public class LoginEntryPoint {
 	 * @return
 	 */
  	@RequestMapping(value={"/get"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> get() {
+	public Message<?> get() {
 		logger.debug("/login.");
 		
 		HashMap<String , Object> model = new HashMap<String , Object>();
@@ -71,15 +70,13 @@ public class LoginEntryPoint {
 		model.put("inst", inst);
 		if(applicationConfig.getLoginConfig().isCaptcha()) {
 			model.put("captcha", "true");
-		}else {
-			model.put("captcha", inst.getCaptcha());
 		}
 		model.put("state", authTokenService.genRandomJwt());
-		return new Message<HashMap<String , Object>>(model).buildResponse();
+		return new Message<HashMap<String , Object>>(model);
 	}
  	
  	@RequestMapping(value={"/signin"}, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> signin( @RequestBody LoginCredential loginCredential) {
+	public Message<?> signin( @RequestBody LoginCredential loginCredential) {
  		Message<AuthJwt> authJwtMessage = new Message<AuthJwt>(Message.FAIL);
  		if(authTokenService.validateJwtToken(loginCredential.getState())){
 	 		Authentication  authentication  = authenticationProvider.authenticate(loginCredential);
@@ -93,7 +90,7 @@ public class LoginEntryPoint {
 				logger.debug("login fail , message {}",errorMsg);
 	 		}
  		}
- 		return authJwtMessage.buildResponse();
+ 		return authJwtMessage;
  	}
  	
 }

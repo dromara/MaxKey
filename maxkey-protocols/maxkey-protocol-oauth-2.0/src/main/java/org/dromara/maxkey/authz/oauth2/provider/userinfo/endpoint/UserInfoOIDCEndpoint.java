@@ -36,8 +36,8 @@ import org.dromara.maxkey.authz.oauth2.provider.token.DefaultTokenServices;
 import org.dromara.maxkey.constants.ContentType;
 import org.dromara.maxkey.crypto.jwt.encryption.service.impl.DefaultJwtEncryptionAndDecryptionService;
 import org.dromara.maxkey.crypto.jwt.signer.service.impl.DefaultJwtSigningAndValidationService;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.oauth2.provider.ClientDetails;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.AppsService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.dromara.maxkey.util.JsonUtils;
@@ -74,7 +74,7 @@ import com.nimbusds.jwt.SignedJWT;
 @Tag(name = "2-1-OAuth v2.0 API文档模块")
 @Controller
 public class UserInfoOIDCEndpoint {
-	final static Logger _logger = LoggerFactory.getLogger(UserInfoOIDCEndpoint.class);	
+	static final  Logger _logger = LoggerFactory.getLogger(UserInfoOIDCEndpoint.class);	
 	@Autowired
 	@Qualifier("oauth20JdbcClientDetailsService")
 	private ClientDetailsService clientDetailsService;

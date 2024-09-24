@@ -20,9 +20,9 @@ package org.dromara.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
-import org.dromara.maxkey.entity.HistoryLoginApps;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.history.HistoryLoginApps;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.HistoryLoginAppsService;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
@@ -30,13 +30,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 单点登录日志查询
@@ -45,21 +40,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 
-@Controller
+@RestController
 @RequestMapping(value={"/historys"})
 public class LoginAppsHistoryController {
 	static final Logger logger = LoggerFactory.getLogger(LoginAppsHistoryController.class);
 	
 	@Autowired
-  	protected HistoryLoginAppsService historyLoginAppsService;
+  	HistoryLoginAppsService historyLoginAppsService;
 	
 	/**
 	 * @param loginAppsHistory
 	 * @return
 	 */
-	@RequestMapping(value={"/loginAppsHistory/fetch"})
+	@GetMapping({"/loginAppsHistory/fetch"})
 	@ResponseBody
-	public ResponseEntity<?> fetch(
+	public Message<?> fetch(
 				@ModelAttribute("historyLoginApp") HistoryLoginApps historyLoginApp,
 				@CurrentUser UserInfo currentUser){
 		logger.debug("historys/loginAppsHistory/fetch/  {}",historyLoginApp);
@@ -67,7 +62,7 @@ public class LoginAppsHistoryController {
 		historyLoginApp.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<HistoryLoginApps>>(
 					historyLoginAppsService.fetchPageResults(historyLoginApp)
-				).buildResponse();
+				);
 	}
 
 	@InitBinder

@@ -20,12 +20,13 @@ package org.dromara.maxkey.listener;
 import java.io.Serializable;
 
 import org.dromara.maxkey.persistence.service.GroupsService;
+import org.dromara.maxkey.schedule.ScheduleAdapter;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DynamicGroupsListenerAdapter extends ListenerAdapter  implements Job , Serializable {
+public class DynamicGroupsListenerAdapter extends ScheduleAdapter  implements Job , Serializable {
 	static final  Logger logger = LoggerFactory.getLogger(DynamicGroupsListenerAdapter.class);
     
     private static final long serialVersionUID = 8831626240807856084L;
@@ -54,7 +55,7 @@ public class DynamicGroupsListenerAdapter extends ListenerAdapter  implements Jo
     }
 
     @Override
-    void init(JobExecutionContext context){
+	protected void init(JobExecutionContext context){
     	super.init(context);
     	if(groupsService == null) {
     		groupsService = getParameter("groupsService",GroupsService.class);

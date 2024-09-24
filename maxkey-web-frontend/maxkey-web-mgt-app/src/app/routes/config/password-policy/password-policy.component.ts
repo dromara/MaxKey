@@ -20,7 +20,7 @@ import { I18NService } from '@core';
 import { _HttpClient, ALAIN_I18N_TOKEN, SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { PasswordPolicy } from '../../../entity/PasswordPolicy';
+import { PasswordPolicy } from '../../../entity/CnfPasswordPolicy';
 import { PasswordPolicyService } from '../../../service/password-policy.service';
 
 @Component({
@@ -45,9 +45,9 @@ export class PasswordPolicyComponent implements OnInit {
     submitting: boolean;
     model: PasswordPolicy;
   } = {
-    submitting: false,
-    model: new PasswordPolicy()
-  };
+      submitting: false,
+      model: new PasswordPolicy()
+    };
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -57,7 +57,7 @@ export class PasswordPolicyComponent implements OnInit {
     private msg: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     /*this.form = this.fb.group({

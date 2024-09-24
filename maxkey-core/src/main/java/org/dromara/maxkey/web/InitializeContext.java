@@ -28,10 +28,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.env.StandardEnvironment;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 
 import java.sql.Connection;
@@ -47,11 +43,13 @@ import java.util.Iterator;
 public class InitializeContext extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(InitializeContext.class);
     private static final long serialVersionUID = -797399138268601444L;
+    private static final String LOCALE_RESOLVER_BEAN= "localeResolver";
+    private static final String COOKIE_LOCALE_RESOLVER_BEAN = "cookieLocaleResolver";
     
-    ApplicationContext applicationContext;
+    final ApplicationContext applicationContext;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init() {
         
         WebContext.init(applicationContext);
         
@@ -69,18 +67,13 @@ public class InitializeContext extends HttpServlet {
     /**
     * InitApplicationContext.
     */
-    public InitializeContext() {
-        this.applicationContext = 
-                WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
-    }
-
     public InitializeContext(ConfigurableApplicationContext applicationContext) {
-        if(applicationContext.containsBean("localeResolver") &&
-                applicationContext.containsBean("cookieLocaleResolver")) {
+        if(applicationContext.containsBean(LOCALE_RESOLVER_BEAN) &&
+                applicationContext.containsBean(COOKIE_LOCALE_RESOLVER_BEAN)) {
             BeanDefinitionRegistry beanFactory = (BeanDefinitionRegistry)applicationContext.getBeanFactory();
-            beanFactory.removeBeanDefinition("localeResolver");
-            beanFactory.registerBeanDefinition("localeResolver", 
-                    beanFactory.getBeanDefinition("cookieLocaleResolver"));
+            beanFactory.removeBeanDefinition(LOCALE_RESOLVER_BEAN);
+            beanFactory.registerBeanDefinition(LOCALE_RESOLVER_BEAN, 
+                    beanFactory.getBeanDefinition(COOKIE_LOCALE_RESOLVER_BEAN));
             logger.debug("cookieLocaleResolver replaced localeResolver.");
         }
         this.applicationContext = applicationContext;
@@ -98,8 +91,8 @@ public class InitializeContext extends HttpServlet {
             DatabaseMetaData databaseMetaData = connection.getMetaData();
             ApplicationConfig.setDatabaseProduct(databaseMetaData.getDatabaseProductName());
             
-            logger.info("DatabaseProductName   :   {}", databaseMetaData.getDatabaseProductName());
-            logger.info("DatabaseProductVersion:   {}" ,databaseMetaData.getDatabaseProductVersion());
+            logger.info("DatabaseProductName    :   {}", databaseMetaData.getDatabaseProductName());
+            logger.info("DatabaseProductVersion :   {}" ,databaseMetaData.getDatabaseProductVersion());
             logger.trace("DatabaseMajorVersion  :   {}" , databaseMetaData.getDatabaseMajorVersion());
             logger.trace("DatabaseMinorVersion  :   {}" ,databaseMetaData.getDatabaseMinorVersion());
             logger.trace("supportsTransactions  :   {}" , databaseMetaData.supportsTransactions());
@@ -111,8 +104,8 @@ public class InitializeContext extends HttpServlet {
             logger.trace("DriverName            :   {}" ,databaseMetaData.getDriverName());
             logger.trace("DriverVersion         :   {}" ,databaseMetaData.getDriverVersion());
             logger.info("");
-            logger.info("DBMS  URL             :   {}" ,databaseMetaData.getURL());
-            logger.info("UserName              :   {}" ,databaseMetaData.getUserName());
+            logger.info("DBMS  URL              :   {}" ,databaseMetaData.getURL());
+            logger.info("UserName               :   {}" ,databaseMetaData.getUserName());
             logger.info(WebConstants.DELIMITER);
             
         } catch (SQLException e) {

@@ -22,15 +22,14 @@ import java.io.IOException;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.entity.FileUpload;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.FileUploadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,9 +43,9 @@ public class FileUploadEndpoint {
 	@Autowired
 	FileUploadService fileUploadService;
 	
- 	@RequestMapping(value={"/file/upload/"})
+ 	@PostMapping({"/file/upload/"})
  	@ResponseBody
- 	public ResponseEntity<?> upload( HttpServletRequest request, 
+ 	public Message<Object> upload( HttpServletRequest request, 
  	                            HttpServletResponse response,
  	                           @ModelAttribute FileUpload fileUpload,
  	                           @CurrentUser UserInfo currentUser){
@@ -68,7 +67,7 @@ public class FileUploadEndpoint {
 				_logger.error("FileUpload IOException",e);
 			}
 		}
- 		return new Message<Object>(Message.SUCCESS,(Object)fileUpload.getId()).buildResponse();
+ 		return new Message<Object>(Message.SUCCESS,(Object)fileUpload.getId());
  	}
  	
 }

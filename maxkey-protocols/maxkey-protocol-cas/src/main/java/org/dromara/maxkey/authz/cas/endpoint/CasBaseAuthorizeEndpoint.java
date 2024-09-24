@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 public class CasBaseAuthorizeEndpoint  extends AuthorizeBaseEndpoint{
-    final static Logger _logger = LoggerFactory.getLogger(CasBaseAuthorizeEndpoint.class);
+    static final  Logger _logger = LoggerFactory.getLogger(CasBaseAuthorizeEndpoint.class);
     
     @Autowired
     protected AppsCasDetailsService casDetailsService;

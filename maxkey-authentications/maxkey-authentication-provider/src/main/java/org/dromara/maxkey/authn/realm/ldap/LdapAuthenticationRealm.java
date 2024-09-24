@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.dromara.maxkey.authn.realm.AbstractAuthenticationRealm;
 import org.dromara.maxkey.authn.realm.IAuthenticationServer;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,7 +30,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class LdapAuthenticationRealm  extends AbstractAuthenticationRealm{
-	private final static Logger _logger = LoggerFactory.getLogger(LdapAuthenticationRealm.class);
+	private static final  Logger _logger = LoggerFactory.getLogger(LdapAuthenticationRealm.class);
 	
 	@NotNull
     @Size(min=1)

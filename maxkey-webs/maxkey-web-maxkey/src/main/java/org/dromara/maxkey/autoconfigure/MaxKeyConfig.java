@@ -41,7 +41,7 @@ import org.dromara.maxkey.persistence.redis.RedisConnectionFactory;
 import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
-import org.dromara.maxkey.persistence.service.LdapContextService;
+import org.dromara.maxkey.persistence.service.CnfLdapContextService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,10 +76,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 })
 public class MaxKeyConfig  {
     private static final  Logger logger = LoggerFactory.getLogger(MaxKeyConfig.class);
-    
+
 
     @Bean
-    public OtpKeyUriFormat otpKeyUriFormat(
+    OtpKeyUriFormat otpKeyUriFormat(
                 @Value("${maxkey.otp.policy.type:totp}")
                 String type,
                 @Value("${maxkey.otp.policy.domain:MaxKey.top}")
@@ -95,19 +95,19 @@ public class MaxKeyConfig  {
         logger.debug("OTP KeyUri Format {}" , otpKeyUriFormat);
         return otpKeyUriFormat;
     }
-    
+
     //可以在此实现其他的登陆认证方式，请实现AbstractAuthenticationRealm
     @Bean
-    public JdbcAuthenticationRealm authenticationRealm(
-    			@Qualifier("passwordEncoder") PasswordEncoder passwordEncoder,
-	    		PasswordPolicyValidator passwordPolicyValidator,
-	    		LoginRepository loginService,
-	    		LoginHistoryRepository loginHistoryService,
-	    		UserInfoService userInfoService,
-	    		IpLocationParser  ipLocationParser,
+    JdbcAuthenticationRealm authenticationRealm(
+                @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder,
+                PasswordPolicyValidator passwordPolicyValidator,
+                LoginRepository loginService,
+                LoginHistoryRepository loginHistoryService,
+                UserInfoService userInfoService,
+                IpLocationParser  ipLocationParser,
                 JdbcTemplate jdbcTemplate,
                 MailOtpAuthnService otpAuthnService,
-                LdapContextService ldapContextService) {
+                CnfLdapContextService ldapContextService) {
     	LdapAuthenticationRealmService ldapRealmService = new LdapAuthenticationRealmService(ldapContextService);
         return new JdbcAuthenticationRealm(
         		passwordEncoder,
@@ -120,9 +120,9 @@ public class MaxKeyConfig  {
         		ldapRealmService
         	);
     }
-    
-	@Bean
-    public TimeBasedOtpAuthn timeBasedOtpAuthn(
+
+    @Bean
+    TimeBasedOtpAuthn timeBasedOtpAuthn(
                 @Value("${maxkey.otp.policy.digits:6}")
                 int digits,
                 @Value("${maxkey.otp.policy.period:30}")
@@ -131,10 +131,10 @@ public class MaxKeyConfig  {
 	    logger.debug("TimeBasedOtpAuthn inited.");
         return tfaOtpAuthn;
     }
-    
+
     @Bean
-    public AbstractOtpAuthn tfaOtpAuthn(
-                @Value("${maxkey.login.mfa.type}")String mfaType,
+    AbstractOtpAuthn tfaOtpAuthn(
+                @Value("${maxkey.login.mfa.type}") String mfaType,
                 @Value("${maxkey.otp.policy.digits:6}")
                 int digits,
                 @Value("${maxkey.otp.policy.period:30}")
@@ -152,9 +152,9 @@ public class MaxKeyConfig  {
         tfaOtpAuthn.initPropertys();
         return tfaOtpAuthn;
     }
-    
+
     @Bean
-    public MailOtpAuthn mailOtpAuthn(
+    MailOtpAuthn mailOtpAuthn(
             EmailConfig emailConfig,
             @Value("${spring.mail.properties.mailotp.message.subject}")
             String messageSubject,
@@ -164,7 +164,7 @@ public class MaxKeyConfig  {
             int messageValidity,
             @Value("${spring.mail.properties.mailotp.message.type}")
             String messageType
-            ) {
+    ) {
         if(messageType!= null && messageType.equalsIgnoreCase("html")) {
             Resource resource = new ClassPathResource("messages/email/forgotpassword.html");
             try {
@@ -184,10 +184,10 @@ public class MaxKeyConfig  {
         logger.debug("MailOtpAuthn inited.");
         return mailOtpAuthn;
     }
-    
-    
+
+
     @Bean
-    public RemoteKerberosService kerberosService(
+    RemoteKerberosService kerberosService(
             @Value("${maxkey.login.kerberos.default.userdomain}")
             String userDomain,
             @Value("${maxkey.login.kerberos.default.fulluserdomain}")
@@ -196,7 +196,7 @@ public class MaxKeyConfig  {
             String crypto,
             @Value("${maxkey.login.kerberos.default.redirecturi}")
             String redirectUri
-            ) {
+    ) {
         RemoteKerberosService kerberosService = new RemoteKerberosService();
         KerberosProxy kerberosProxy = new KerberosProxy();
         

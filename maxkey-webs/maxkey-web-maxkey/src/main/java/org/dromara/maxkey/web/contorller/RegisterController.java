@@ -20,17 +20,16 @@ package org.dromara.maxkey.web.contorller;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.authn.jwt.AuthTokenService;
 import org.dromara.maxkey.configuration.ApplicationConfig;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.password.PasswordReciprocal;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.password.onetimepwd.AbstractOtpAuthn;
 import org.dromara.maxkey.password.sms.SmsOtpAuthnService;
 import org.dromara.maxkey.persistence.service.UserInfoService;
-import org.dromara.maxkey.util.StringUtils;
 import org.dromara.maxkey.web.WebContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,20 +57,20 @@ public class RegisterController {
 	AuthTokenService authTokenService;
 	
 	@Autowired 
-  	protected ApplicationConfig applicationConfig;
+  	ApplicationConfig applicationConfig;
 	
 	@Autowired
-	private UserInfoService userInfoService;
+	UserInfoService userInfoService;
 	
 	@Autowired
     SmsOtpAuthnService smsOtpAuthnService;
 	
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder;
  	
 	@ResponseBody
 	@RequestMapping(value = { "/produceOtp" }, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> produceOtp(
+	public Message<?> produceOtp(
 	    			@RequestParam String mobile) {
         logger.debug("/signup/produceOtp Mobile {}: " ,mobile);
  
@@ -82,16 +81,16 @@ public class RegisterController {
     		userInfo.setMobile(mobile);
         	AbstractOtpAuthn smsOtpAuthn = smsOtpAuthnService.getByInstId(WebContext.getInst().getId());
         	smsOtpAuthn.produce(userInfo);
-        	return new Message<UserInfo>(userInfo).buildResponse();
+        	return new Message<UserInfo>(userInfo);
         }
             
-        return new Message<UserInfo>(Message.FAIL).buildResponse();
+        return new Message<UserInfo>(Message.FAIL);
     }
 	  
 	//直接注册
  	@RequestMapping(value={"/register"})
  	@ResponseBody
-	public ResponseEntity<?> register(
+	public Message<?> register(
 				@ModelAttribute UserInfo userInfo,
 				@RequestParam String captcha) throws ServletException, IOException {
  		UserInfo validateUserInfo = new UserInfo();
@@ -103,12 +102,12 @@ public class RegisterController {
 	 		UserInfo temp = userInfoService.findByEmailMobile(userInfo.getEmail());
 	 		
 	 		if(temp != null) {
-	 			return new Message<UserInfo>(Message.FAIL).buildResponse();
+	 			return new Message<UserInfo>(Message.FAIL);
 	 		}
 	 		
 	 		temp = userInfoService.findByUsername(userInfo.getUsername());
 	 		if(temp != null) {
-	 			return new Message<UserInfo>(Message.FAIL).buildResponse();
+	 			return new Message<UserInfo>(Message.FAIL);
 	 		}
 	 		
 	 		//default InstId
@@ -122,10 +121,10 @@ public class RegisterController {
 	 		userInfo.setStatus(ConstsStatus.INACTIVE);
 	 		
 	 		if(userInfoService.insert(userInfo)) {
-	 			return new Message<UserInfo>().buildResponse();
+	 			return new Message<UserInfo>();
 	 		}
  		}
- 		return new Message<UserInfo>(Message.FAIL).buildResponse();
+ 		return new Message<UserInfo>(Message.FAIL);
  	}
 
 }

@@ -274,6 +274,8 @@
 			"tab.custom": "Custom",
 			"extendapi.tab": "API",
 			"resources":"Resources",
+			"permission":"Permission",
+			"role":"Roles",
 			"id": "App Id",
 			"name": "App Name",
 			"icon": "Icon",
@@ -735,6 +737,12 @@
 			"add": "Add",
 			"edit": "Edit",
 			"delete": "Delete",
+			"batchDelete": "Batch Delete",
+			"delete.popconfirm":{
+				"title":"Are you sure you want to delete it?",
+				"cancelText":"Cancel",
+				"okText":"Confirm"
+			},
 			"test": "Test",
 			"select": "Select",
 			"confirm": "Confirm",
@@ -936,9 +944,9 @@
 	"validation.date.required": "Please select the start and end date",
 	"validation.goal.required": "Please enter a description of the goal",
 	"validation.standard.required": "Please enter a metric",
-  "mxk.text.mapping": "Feild Mapping",
-  "mxk.job.mapping.targetField": "TargetField",
-  "mxk.job.mapping.sourceField": "SourceField",
-  "mxk.job.mapping.objectType": "ObjectType",
-  "mxk.job.mapping.description": "Description"
+  	"mxk.text.mapping": "Feild Mapping",
+  	"mxk.job.mapping.targetField": "TargetField",
+  	"mxk.job.mapping.sourceField": "SourceField",
+  	"mxk.job.mapping.objectType": "ObjectType",
+  	"mxk.job.mapping.description": "Description"
 }

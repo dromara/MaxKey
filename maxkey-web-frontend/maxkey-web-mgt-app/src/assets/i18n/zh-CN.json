@@ -275,6 +275,8 @@
 			"tab.custom": "自定义属性",
 			"extendapi.tab": "API配置",
 			"resources":"资源",
+			"permission":"权限",
+			"role":"角色",
 			"id": "应用编码",
 			"name": "应用名称",
 			"icon": "图标",
@@ -732,6 +734,12 @@
 			"add": "新增",
 			"edit": "编辑",
 			"delete": "删除",
+			"batchDelete": "批量删除",
+			"delete.popconfirm":{
+				"title":"请确定要删除吗？",
+				"cancelText":"取消",
+				"okText":"确定"
+			},
 			"test": "测试",
 			"select": "选择",
 			"confirm": "确定",
@@ -928,11 +936,11 @@
 	"validation.date.required": "请选择起止日期",
 	"validation.goal.required": "请输入目标描述",
 	"validation.standard.required": "请输入衡量标准",
-  "mxk.text.mapping": "属性映射",
-  "mxk.job.mapping.targetField": "目标字段",
-  "mxk.job.mapping.sourceField": "来源字段",
-  "mxk.job.mapping.objectType": "映射类型",
-  "mxk.job.mapping.description": "规则说明"
+  	"mxk.text.mapping": "属性映射",
+  	"mxk.job.mapping.targetField": "目标字段",
+  	"mxk.job.mapping.sourceField": "来源字段",
+  	"mxk.job.mapping.objectType": "映射类型",
+  	"mxk.job.mapping.description": "规则说明"
 
 
 }

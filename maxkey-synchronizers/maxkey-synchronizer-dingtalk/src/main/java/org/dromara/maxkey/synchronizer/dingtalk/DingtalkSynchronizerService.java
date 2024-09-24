@@ -28,7 +28,7 @@ import com.taobao.api.ApiException;
 
 @Service
 public class DingtalkSynchronizerService  implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(DingtalkSynchronizerService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(DingtalkSynchronizerService.class);
 	Synchronizers synchronizer;
 	
 	@Autowired

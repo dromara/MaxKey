@@ -17,7 +17,7 @@
 
 package org.dromara.maxkey.persistence.service;
 
-import org.dromara.maxkey.entity.HistoryLogin;
+import org.dromara.maxkey.entity.history.HistoryLogin;
 import org.dromara.maxkey.persistence.mapper.HistoryLoginMapper;
 import org.dromara.mybatis.jpa.JpaService;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;

@@ -20,9 +20,9 @@ package org.dromara.maxkey.web.historys.contorller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
-import org.dromara.maxkey.entity.HistorySystemLogs;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.history.HistorySystemLogs;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.util.DateUtils;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
@@ -30,13 +30,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 系统操作日志查询
@@ -45,7 +41,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 
-@Controller
+@RestController
 @RequestMapping(value={"/historys"})
 public class SystemLogsController {
 	static final Logger logger = LoggerFactory.getLogger(SystemLogsController.class);
@@ -58,15 +54,15 @@ public class SystemLogsController {
 	 * @param logs
 	 * @return
 	 */
-	@RequestMapping(value={"/systemLogs/fetch"})
+	@GetMapping({"/systemLogs/fetch"})
 	@ResponseBody
-	public ResponseEntity<?> fetch(@ModelAttribute("historyLog") HistorySystemLogs historyLog,
+	public Message<?> fetch(@ModelAttribute("historyLog") HistorySystemLogs historyLog,
 			@CurrentUser UserInfo currentUser){
 		logger.debug("historys/historyLog/fetch {} ",historyLog);
 		historyLog.setInstId(currentUser.getInstId());
 		return new Message<JpaPageResults<HistorySystemLogs>>(
 				 	historySystemLogsService.fetchPageResults(historyLog)
-				).buildResponse();
+				);
 	}
 	
 	@InitBinder

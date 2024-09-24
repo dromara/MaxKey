@@ -48,7 +48,7 @@ import org.springframework.beans.factory.InitializingBean;
 */
 public class SignatureSecurityPolicyRule  implements InitializingBean, SecurityPolicyRule {
 
-	private final static Logger logger = LoggerFactory.getLogger(SignatureSecurityPolicyRule.class);
+	private static final  Logger logger = LoggerFactory.getLogger(SignatureSecurityPolicyRule.class);
 	
 	private final CredentialResolver credentialResolver;	
 	private final SAMLSignatureProfileValidator samlSignatureProfileValidator;

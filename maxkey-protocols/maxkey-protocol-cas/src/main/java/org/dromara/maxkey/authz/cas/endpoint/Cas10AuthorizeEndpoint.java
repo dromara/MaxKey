@@ -45,7 +45,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class Cas10AuthorizeEndpoint   extends CasBaseAuthorizeEndpoint{
 
-	final static Logger _logger = LoggerFactory.getLogger(Cas10AuthorizeEndpoint.class);
+	static final  Logger _logger = LoggerFactory.getLogger(Cas10AuthorizeEndpoint.class);
 	
 	/**
 	 * @param request

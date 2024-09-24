@@ -98,6 +98,7 @@ public class MaxKeyMvcConfig implements WebMvcConfigurer {
         //for frontend
         registry.addInterceptor(permissionInterceptor)
                 .addPathPatterns("/config/**")
+                .addPathPatterns("/users/**")
                 .addPathPatterns("/historys/**")
                 .addPathPatterns("/access/session/**")
                 .addPathPatterns("/access/session/**/**")

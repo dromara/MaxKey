@@ -18,17 +18,17 @@
 package org.dromara.maxkey.synchronizer.jdbc;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.DbTableMetaData;
-import org.dromara.maxkey.entity.HistorySynchronizer;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.history.HistorySynchronizer;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.entity.SyncJobConfigField;
 import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.dromara.maxkey.synchronizer.utils.MyResultSet;
 import org.dromara.maxkey.util.JdbcUtils;
-import org.dromara.maxkey.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,65 +106,7 @@ public class JdbcUsersService extends AbstractSynchronizerService implements ISy
         }
     }
 
-    public UserInfo buildUserInfoTemp(MyResultSet rs) throws SQLException {
-        //DbTableMetaData meta = JdbcUtils.getMetaData(rs);
-        UserInfo user = new UserInfo();
-        //basic
-        for (ColumnFieldMapper mapper : mapperList) {
-            if (rs.getColumnNames().contains(mapper.getColumn())) {
-                Object value = null;
-                if (mapper.getType().equalsIgnoreCase("String")) {
-                    value = rs.getString(mapper.getColumn());
-                } else {
-                    value = rs.getInt(mapper.getColumn());
-                }
-                if (value != null) {
-                    try {
-                        PropertyUtils.setSimpleProperty(user, mapper.getField(), value);
-                    } catch (Exception e) {
-                        _logger.error("setSimpleProperty {}", e);
-                    }
-                }
-            }
-        }
-
-        if (rs.getColumnNames().contains("status")) {
-            user.setStatus(rs.getInt("status"));
-        } else {
-            user.setStatus(ConstsStatus.ACTIVE);
-        }
-        user.setInstId(synchronizer.getInstId());
-
-        //password
-        if (rs.getColumnNames().contains("password")) {
-            user.setPassword(rs.getString("password"));
-        } else {
-            //后4位
-            String last4Char = "6666";
-            if (StringUtils.isNotBlank(user.getIdCardNo())) {
-                last4Char = user.getIdCardNo().substring(user.getIdCardNo().length() - 4);
-            } else if (StringUtils.isNotBlank(user.getMobile())) {
-                last4Char = user.getMobile().substring(user.getMobile().length() - 4);
-            } else if (StringUtils.isNotBlank(user.getEmployeeNumber())) {
-                last4Char = user.getEmployeeNumber().substring(user.getEmployeeNumber().length() - 4);
-            }
-            user.setPassword(user.getUsername() + "@M" + last4Char);
-        }
-
-        /*HistorySynchronizer historySynchronizer = new HistorySynchronizer();
-        historySynchronizer.setId(historySynchronizer.generateId());
-        historySynchronizer.setSyncId(synchronizer.getId());
-        historySynchronizer.setSyncName(synchronizer.getName());
-        historySynchronizer.setObjectId(user.getId());
-        historySynchronizer.setObjectName(user.getUsername());
-        historySynchronizer.setObjectType(UserInfo.class.getSimpleName());
-        historySynchronizer.setInstId(synchronizer.getInstId());
-        historySynchronizer.setResult("success");
-        historySynchronizerService.insert(historySynchronizer);*/
-        _logger.debug("User {} ", user);
-
-        return user;
-    }
+    
     public UserInfo buildUserInfo(ResultSet rs) throws SQLException {
         DbTableMetaData meta = JdbcUtils.getMetaData(rs);
         UserInfo user = new UserInfo();
@@ -226,58 +168,7 @@ public class JdbcUsersService extends AbstractSynchronizerService implements ISy
     }
 
 
-    public UserInfo buildUserInfoByFieldMapTemp(MyResultSet rs) throws SQLException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        //DbTableMetaData meta = JdbcUtils.getMetaData(rs);
-        UserInfo user = new UserInfo();
-        Map<String, String> fieldMap = getFieldMap(Long.parseLong(synchronizer.getId()));
-        for(Map.Entry<String,String> entry: fieldMap.entrySet()){
-            String column = entry.getValue();
-            String field = entry.getKey();
-            Object value = null;
-            if(rs.getColumnNames().contains(column) && !field.equals("status") && !field.equals("password")){
-                value = rs.getObject(column);
-                if(value!=null){
-                    setFieldValue(user,field,value);
-                }
-            }
-
-        }
-        //password的获取和user的其他属性相关，如果在遍历过程中进行属性映射，需要在password映射之前，先完成其他属性的映射
-        if (rs.getColumnNames().contains("status")) {
-            user.setStatus(rs.getInt("status"));
-        } else {
-            user.setStatus(ConstsStatus.ACTIVE);
-        }
-        user.setInstId(synchronizer.getInstId());
-        // password
-        if (rs.getColumnNames().contains("password")) {
-            user.setPassword(rs.getString("password"));
-        } else {
-            String last4Char = "6666";
-            if (StringUtils.isNotBlank(user.getIdCardNo())) {
-                last4Char = user.getIdCardNo().substring(user.getIdCardNo().length() - 4);
-            } else if (StringUtils.isNotBlank(user.getMobile())) {
-                last4Char = user.getMobile().substring(user.getMobile().length() - 4);
-            } else if (StringUtils.isNotBlank(user.getEmployeeNumber())) {
-                last4Char = user.getEmployeeNumber().substring(user.getEmployeeNumber().length() - 4);
-            }
-            user.setPassword(user.getUsername() + "@M" + last4Char);
-        }
-
-        /*HistorySynchronizer historySynchronizer = new HistorySynchronizer();
-        historySynchronizer.setId(historySynchronizer.generateId());
-        historySynchronizer.setSyncId(synchronizer.getId());
-        historySynchronizer.setSyncName(synchronizer.getName());
-        historySynchronizer.setObjectId(user.getId());
-        historySynchronizer.setObjectName(user.getUsername());
-        historySynchronizer.setObjectType(UserInfo.class.getSimpleName());
-        historySynchronizer.setInstId(synchronizer.getInstId());
-        historySynchronizer.setResult("success");
-        historySynchronizerService.insert(historySynchronizer);
-        _logger.debug("User {} ", user);*/
-
-        return user;
-    }
+    
 
     public UserInfo buildUserInfoByFieldMap(ResultSet rs) throws SQLException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         DbTableMetaData meta = JdbcUtils.getMetaData(rs);

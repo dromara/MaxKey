@@ -37,13 +37,13 @@ public class SessionAutoConfiguration  {
     
     
     @Bean(name = "savedRequestSuccessHandler")
-    public SavedRequestAwareAuthenticationSuccessHandler 
+    SavedRequestAwareAuthenticationSuccessHandler 
             savedRequestAwareAuthenticationSuccessHandler() {
         return new SavedRequestAwareAuthenticationSuccessHandler();
     }
     
     @Bean
-    public SessionManager sessionManager(
+    SessionManager sessionManager(
             @Value("${maxkey.server.persistence}") int persistence,
             JdbcTemplate jdbcTemplate,
             RedisConnectionFactory redisConnFactory,
@@ -55,7 +55,7 @@ public class SessionAutoConfiguration  {
     }
 
     @Bean
-    public HttpSessionListenerAdapter httpSessionListenerAdapter() {
+    HttpSessionListenerAdapter httpSessionListenerAdapter() {
         return new HttpSessionListenerAdapter();
     }
     

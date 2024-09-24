@@ -27,7 +27,7 @@ import com.dingtalk.api.response.OapiGettokenResponse;
 import com.taobao.api.ApiException;
 
 public class DingtalkAccessTokenService {
-	final static Logger _logger = LoggerFactory.getLogger(DingtalkAccessTokenService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(DingtalkAccessTokenService.class);
 	
 	String appkey;
 	

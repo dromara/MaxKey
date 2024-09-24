@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FeishuAccessTokenService {
-	final static Logger _logger = LoggerFactory.getLogger(FeishuAccessTokenService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(FeishuAccessTokenService.class);
 	
 	String appId;
 	

@@ -26,8 +26,8 @@ import org.dromara.maxkey.authz.saml.common.AuthnRequestInfo;
 import org.dromara.maxkey.authz.saml.common.EndpointGenerator;
 import org.dromara.maxkey.authz.saml20.binding.BindingAdapter;
 import org.dromara.maxkey.authz.saml20.provider.xml.AuthnResponseGenerator;
-import org.dromara.maxkey.entity.UserInfo;
 import org.dromara.maxkey.entity.apps.AppsSAML20Details;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.web.WebConstants;
 import org.opensaml.saml2.core.Response;
 import org.opensaml.saml2.metadata.Endpoint;
@@ -46,7 +46,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class AssertionEndpoint {
-	private final static Logger logger = LoggerFactory.getLogger(AssertionEndpoint.class);
+	private static final  Logger logger = LoggerFactory.getLogger(AssertionEndpoint.class);
 	
 	private BindingAdapter bindingAdapter;
 

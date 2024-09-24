@@ -62,9 +62,9 @@ import com.nimbusds.jwt.SignedJWT;
  *
  */
 public class OIDCIdTokenEnhancer implements TokenEnhancer {
-	private final static Logger _logger = LoggerFactory.getLogger(OIDCIdTokenEnhancer.class);
+	private static final  Logger _logger = LoggerFactory.getLogger(OIDCIdTokenEnhancer.class);
 	
-	public  final static String ID_TOKEN_SCOPE="openid";
+	public  static final  String ID_TOKEN_SCOPE="openid";
 
 	private OIDCProviderMetadata providerMetadata;
 	

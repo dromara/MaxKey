@@ -52,7 +52,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Tag(name = "2-2-SAML v2.0 API文档模块")
 @Controller
 public class IdpInitEndpoint {
-	private final static Logger logger = LoggerFactory.getLogger(IdpInitEndpoint.class);
+	private static final  Logger logger = LoggerFactory.getLogger(IdpInitEndpoint.class);
 
 	private BindingAdapter bindingAdapter;
 	

@@ -35,7 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 public class ExtendApiNeteaseQiyeMailAdapter extends AbstractAuthorizeAdapter {
-	final static Logger _logger = LoggerFactory.getLogger(ExtendApiNeteaseQiyeMailAdapter.class);
+	static final  Logger _logger = LoggerFactory.getLogger(ExtendApiNeteaseQiyeMailAdapter.class);
 	//https://entryhz.qiye.163.com
 	static String REDIRECT_PARAMETER	= "domain=%s&account_name=%s&time=%s&enc=%s&lang=%s";
 	

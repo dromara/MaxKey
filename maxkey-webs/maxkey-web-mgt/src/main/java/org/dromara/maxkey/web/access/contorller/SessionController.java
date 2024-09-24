@@ -21,26 +21,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.dromara.maxkey.authn.annotation.CurrentUser;
 import org.dromara.maxkey.authn.session.SessionManager;
-import org.dromara.maxkey.entity.HistoryLogin;
 import org.dromara.maxkey.entity.Message;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.history.HistoryLogin;
+import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.persistence.service.HistoryLoginService;
 import org.dromara.maxkey.persistence.service.HistorySystemLogsService;
 import org.dromara.maxkey.util.DateUtils;
-import org.dromara.maxkey.util.StringUtils;
+import org.dromara.maxkey.util.StrUtils;
 import org.dromara.mybatis.jpa.entity.JpaPageResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 登录会话管理.
@@ -49,7 +48,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 
-@Controller
+@RestController
 @RequestMapping(value = { "/access/session" })
 public class SessionController {
     static final Logger logger = LoggerFactory.getLogger(SessionController.class);
@@ -71,25 +70,25 @@ public class SessionController {
      */
     @RequestMapping(value = { "/fetch" })
     @ResponseBody
-    public ResponseEntity<?> fetch(
+    public Message<?> fetch(
     			@ModelAttribute("historyLogin") HistoryLogin historyLogin,
     			@CurrentUser UserInfo currentUser) {
         logger.debug("history/session/fetch {}" , historyLogin);
         historyLogin.setInstId(currentUser.getInstId());
         return new Message<JpaPageResults<HistoryLogin>>(
         			historyLoginService.queryOnlineSession(historyLogin)
-        		).buildResponse();
+        		);
     }
 
 
     
     @ResponseBody
     @RequestMapping(value="/terminate")  
-    public ResponseEntity<?> terminate(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
+    public Message<?> terminate(@RequestParam("ids") String ids,@CurrentUser UserInfo currentUser) {
         logger.debug(ids);
         boolean isTerminated = false;
         try {
-            for(String sessionId : StringUtils.string2List(ids, ",")) {
+            for(String sessionId : StrUtils.string2List(ids, ",")) {
                 logger.trace("terminate session Id {} ",sessionId);
                 if(currentUser.getSessionId().contains(sessionId)) {
                     continue;//skip current session
@@ -102,9 +101,9 @@ public class SessionController {
         }
         
         if(isTerminated) {
-        	return new Message<HistoryLogin>(Message.SUCCESS).buildResponse();
+        	return new Message<HistoryLogin>(Message.SUCCESS);
         } else {
-        	return new Message<HistoryLogin>(Message.ERROR).buildResponse();
+        	return new Message<HistoryLogin>(Message.ERROR);
         }
     }
     

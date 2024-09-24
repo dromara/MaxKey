@@ -3,5 +3,6 @@ description = "maxkey-common"
 dependencies {
 	//local jars
 	implementation fileTree(dir: '../maxkey-lib/', include: '*/*.jar')
-	
+
+
 }

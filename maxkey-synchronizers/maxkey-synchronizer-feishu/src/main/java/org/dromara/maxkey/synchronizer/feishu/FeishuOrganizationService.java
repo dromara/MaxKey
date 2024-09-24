@@ -25,8 +25,8 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.dromara.maxkey.constants.ConstsStatus;
-import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.SynchroRelated;
+import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
 import org.dromara.maxkey.entity.SyncJobConfigField;
@@ -45,7 +45,7 @@ import static org.dromara.maxkey.synchronizer.utils.FieldUtil.*;
 
 @Service
 public class FeishuOrganizationService extends AbstractSynchronizerService implements ISynchronizerService{
-	final static Logger _logger = LoggerFactory.getLogger(FeishuOrganizationService.class);
+	static final  Logger _logger = LoggerFactory.getLogger(FeishuOrganizationService.class);
 	
 	String access_token;
 	private static final Integer ORG_TYPE = 2;

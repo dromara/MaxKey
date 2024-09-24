@@ -19,16 +19,19 @@ package org.dromara.maxkey.persistence.service;
 
 import org.dromara.maxkey.entity.Accounts;
 import org.dromara.maxkey.entity.ChangePassword;
-import org.dromara.maxkey.entity.HistorySystemLogs;
-import org.dromara.maxkey.entity.Organizations;
-import org.dromara.maxkey.entity.Resources;
-import org.dromara.maxkey.entity.RoleMember;
-import org.dromara.maxkey.entity.GroupPermissions;
-import org.dromara.maxkey.entity.GroupPrivileges;
-import org.dromara.maxkey.entity.Roles;
+
+import java.util.Date;
+
+import org.dromara.maxkey.entity.Access;
 import org.dromara.maxkey.entity.SocialsProvider;
 import org.dromara.maxkey.entity.Synchronizers;
-import org.dromara.maxkey.entity.UserInfo;
+import org.dromara.maxkey.entity.history.HistorySystemLogs;
+import org.dromara.maxkey.entity.idm.Organizations;
+import org.dromara.maxkey.entity.idm.UserInfo;
+import org.dromara.maxkey.entity.permissions.Permission;
+import org.dromara.maxkey.entity.permissions.Resources;
+import org.dromara.maxkey.entity.permissions.RoleMember;
+import org.dromara.maxkey.entity.permissions.Roles;
 import org.dromara.maxkey.persistence.mapper.HistorySystemLogsMapper;
 import org.dromara.maxkey.util.JsonUtils;
 import org.dromara.mybatis.jpa.JpaService;
@@ -38,16 +41,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class HistorySystemLogsService  extends JpaService<HistorySystemLogs>{
-	final static Logger _logger = LoggerFactory.getLogger(HistorySystemLogsService.class);
+	static final Logger _logger = LoggerFactory.getLogger(HistorySystemLogsService.class);
 	
 	public HistorySystemLogsService() {
 		super(HistorySystemLogsMapper.class);
 		
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.connsec.db.service.BaseService#getMapper()
-	 */
+
 	@Override
 	public HistorySystemLogsMapper getMapper() {
 		return (HistorySystemLogsMapper)super.getMapper();
@@ -56,28 +56,28 @@ public class HistorySystemLogsService  extends JpaService<HistorySystemLogs>{
 	public void insert(String topic,Object entity,String action,String result,UserInfo operator) {
 		String message = "";
 		if(entity != null) {
-			if(entity instanceof UserInfo) {
-				message = buildMsg((UserInfo)entity);
-			}else if(entity instanceof Organizations) {
-				message = buildMsg((Organizations)entity);
-			}else if(entity instanceof ChangePassword) {
-				message = buildMsg((ChangePassword)entity);
-			}else if(entity instanceof Accounts) {
-				message = buildMsg((Accounts)entity);
-			}else if(entity instanceof Roles) {
-				message = buildMsg((Roles)entity);
-			}else if(entity instanceof RoleMember) {
-				message = buildMsg((RoleMember)entity);
-			}else if(entity instanceof GroupPermissions) {
-				message = buildMsg((GroupPermissions)entity);
-			}else if(entity instanceof Resources) {
-				message = buildMsg((Resources)entity);
-			}else if(entity instanceof Synchronizers) {
-				message = buildMsg((Synchronizers)entity);
-			}else if(entity instanceof SocialsProvider) {
-				message = buildMsg((SocialsProvider)entity);
-			}else if(entity instanceof GroupPrivileges) {
-				message = buildMsg((GroupPrivileges)entity);
+			if(entity instanceof UserInfo userInfo) {
+				message = buildMsg(userInfo);
+			}else if(entity instanceof Organizations organization) {
+				message = buildMsg(organization);
+			}else if(entity instanceof ChangePassword changePassword) {
+				message = buildMsg(changePassword);
+			}else if(entity instanceof Accounts account) {
+				message = buildMsg(account);
+			}else if(entity instanceof Roles role) {
+				message = buildMsg(role);
+			}else if(entity instanceof RoleMember roleMember) {
+				message = buildMsg(roleMember);
+			}else if(entity instanceof Access access) {
+				message = buildMsg(access);
+			}else if(entity instanceof Resources resource) {
+				message = buildMsg(resource);
+			}else if(entity instanceof Synchronizers synchronizer) {
+				message = buildMsg(synchronizer);
+			}else if(entity instanceof SocialsProvider socialsProvider) {
+				message = buildMsg(socialsProvider);
+			}else if(entity instanceof Permission permission) {
+				message = buildMsg(permission);
 			}else if(entity instanceof String) {
 				message = entity.toString();
 			}
@@ -99,6 +99,7 @@ public class HistorySystemLogsService  extends JpaService<HistorySystemLogs>{
 		systemLog.setDisplayName(operator.getDisplayName());
 		systemLog.setInstId(operator.getInstId());
 		systemLog.setJsonCotent(JsonUtils.gsonToString(entity));
+		systemLog.setExecuteTime(new Date());
 		_logger.trace("System Log {}" ,systemLog);
 		getMapper().insert(systemLog);
 	}
@@ -157,7 +158,7 @@ public class HistorySystemLogsService  extends JpaService<HistorySystemLogs>{
 				.toString();
 	}
 	
-	public String buildMsg(GroupPermissions permission) {
+	public String buildMsg(Access permission) {
 		return new StringBuilder()
 				.append(permission.getGroupName())
 				.append("[")
@@ -166,7 +167,7 @@ public class HistorySystemLogsService  extends JpaService<HistorySystemLogs>{
 				.toString();
 	}
 	
-	public String buildMsg(GroupPrivileges privilege) {
+	public String buildMsg(Permission privilege) {
 		return new StringBuilder()
 				.append(privilege.getGroupId())
 				.append("[")
