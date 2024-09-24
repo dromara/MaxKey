@@ -17,7 +17,10 @@
 
 package org.dromara.maxkey.synchronizer.activedirectory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -27,7 +30,6 @@ import javax.naming.directory.SearchResult;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.crypto.DigestUtils;
-import org.dromara.maxkey.entity.HistorySynchronizer;
 import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.UserInfo;
@@ -36,14 +38,22 @@ import org.dromara.maxkey.ldap.LdapUtils;
 import org.dromara.maxkey.ldap.constants.ActiveDirectoryUser;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
+import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static org.dromara.maxkey.synchronizer.utils.FieldUtil.setFieldValue;
 
 @Service
 public class ActiveDirectoryUsersService extends AbstractSynchronizerService    implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(ActiveDirectoryUsersService.class);
+	@Autowired
+	private SyncJobConfigFieldService syncJobConfigFieldService;
 
+	private static final Integer USER_TYPE = 1;
 	ActiveDirectoryUtils ldapUtils;
 	
 	public void sync() {
@@ -133,13 +143,14 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
         //namePah = namePah.substring(0, namePah.length());
         String deptNamePath= namePah.substring(0, namePah.lastIndexOf("/"));
         _logger.info("deptNamePath  " + deptNamePath);
-        Organizations  deptOrg = orgsNamePathMap.get(deptNamePath);
+		//暂时注释
+        /*Organizations  deptOrg = orgsNamePathMap.get(deptNamePath);
         if(deptOrg == null ) {
         	deptOrg = rootOrganization;
 		}
-        
+
         userInfo.setDepartment(deptOrg.getOrgName());
-        userInfo.setDepartmentId(deptOrg.getId());
+        userInfo.setDepartmentId(deptOrg.getId());*/
 		try {
 		    userInfo.setId(userInfo.generateId());
 			userInfo.setFormattedName(LdapUtils.getAttributeStringValue(ActiveDirectoryUser.CN,attributeMap));//cn
@@ -185,8 +196,8 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 			userInfo.setTimeZone("Asia/Shanghai");
 			userInfo.setStatus(ConstsStatus.ACTIVE);
 			userInfo.setInstId(this.synchronizer.getInstId());
-
-		    HistorySynchronizer historySynchronizer =new HistorySynchronizer();
+			//暂时注释
+		    /*HistorySynchronizer historySynchronizer =new HistorySynchronizer();
             historySynchronizer.setId(historySynchronizer.generateId());
             historySynchronizer.setSyncId(this.synchronizer.getId());
             historySynchronizer.setSyncName(this.synchronizer.getName());
@@ -195,12 +206,108 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
             historySynchronizer.setObjectType(Organizations.class.getSimpleName());
             historySynchronizer.setInstId(synchronizer.getInstId());
             historySynchronizer.setResult("success");
-            this.historySynchronizerService.insert(historySynchronizer);
+            this.historySynchronizerService.insert(historySynchronizer);*/
 
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 		return userInfo;
+	}
+
+	public UserInfo buildUserInfoByFieldMap(HashMap<String,Attribute> attributeMap,String name,String nameInNamespace){
+		UserInfo userInfo = new  UserInfo();
+		userInfo.setLdapDn(nameInNamespace);
+		userInfo.setId(userInfo.generateId());
+		String []namePaths = name.replaceAll(",OU=" , "/")
+				.replaceAll("OU="  , "/")
+				.replaceAll(",ou=" , "/")
+				.replaceAll("ou="  , "/")
+				.split("/");
+
+		String namePah= "/"+rootOrganization.getOrgName();
+		for(int i = namePaths.length -1 ; i >= 0 ; i --) {
+			namePah = namePah + "/" + namePaths[i];
+		}
+
+		//namePah = namePah.substring(0, namePah.length());
+		String deptNamePath= namePah.substring(0, namePah.lastIndexOf("/"));
+		_logger.info("deptNamePath  " + deptNamePath);
+		//暂时注释
+		/*Organizations  deptOrg = orgsNamePathMap.get(deptNamePath);
+		if(deptOrg == null ) {
+			deptOrg = rootOrganization;
+		}*/
+		Map<String, String> fieldMap = getFieldMap(Long.parseLong(synchronizer.getId()));
+		for (Map.Entry<String, String> entry : fieldMap.entrySet()) {
+			String userInfoProperty = entry.getKey();
+			String sourceProperty = entry.getValue();
+			try {
+				//暂时注释
+				/*if(sourceProperty.equals("orgName")){
+					userInfo.setDepartment(deptOrg.getOrgName());
+					continue;
+				}
+				if(sourceProperty.equals("id")){
+					userInfo.setDepartmentId(deptOrg.getId());
+					continue;
+				}*/
+				if(sourceProperty.equals("mobile")){
+					userInfo.setMobile(LdapUtils.getAttributeStringValue(sourceProperty, attributeMap).equals("")?
+							userInfo.getId():LdapUtils.getAttributeStringValue(sourceProperty,attributeMap));
+					continue;
+				}
+				// 获取源属性的值
+				Object sourceValue = LdapUtils.getAttributeStringValue(sourceProperty, attributeMap);
+				// 设置到 UserInfo 对象
+				if (sourceValue != null) {
+					setFieldValue(userInfo, userInfoProperty, sourceValue);
+				}
+			} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			userInfo.setLdapDn(nameInNamespace);
+			userInfo.setUserState("RESIDENT");
+			userInfo.setUserType("EMPLOYEE");
+			userInfo.setTimeZone("Asia/Shanghai");
+			userInfo.setStatus(ConstsStatus.ACTIVE);
+			userInfo.setInstId(this.synchronizer.getInstId());
+
+			//暂时注释
+			/*HistorySynchronizer historySynchronizer =new HistorySynchronizer();
+			historySynchronizer.setId(historySynchronizer.generateId());
+			historySynchronizer.setSyncId(this.synchronizer.getId());
+			historySynchronizer.setSyncName(this.synchronizer.getName());
+			historySynchronizer.setObjectId(userInfo.getId());
+			historySynchronizer.setObjectName(userInfo.getUsername());
+			historySynchronizer.setObjectType(Organizations.class.getSimpleName());
+			historySynchronizer.setInstId(synchronizer.getInstId());
+			historySynchronizer.setResult("success");
+			this.historySynchronizerService.insert(historySynchronizer);*/
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+
+		return userInfo;
+	}
+
+	public Map<String,String> getFieldMap(Long jobId){
+		Map<String,String> fieldMap = new HashMap<>();
+		//根据job id查询属性映射表
+		List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+		//获取用户属性映射
+		for(SyncJobConfigField element:syncJobConfigFieldList){
+			if(Integer.parseInt(element.getObjectType()) == USER_TYPE.intValue()){
+				fieldMap.put(element.getTargetField(), element.getSourceField());
+			}
+		}
+		return fieldMap;
 	}
 
 	public ActiveDirectoryUtils getLdapUtils() {
@@ -210,5 +317,12 @@ public class ActiveDirectoryUsersService extends AbstractSynchronizerService    
 	public void setLdapUtils(ActiveDirectoryUtils ldapUtils) {
 		this.ldapUtils = ldapUtils;
 	}
-	
+
+	public SyncJobConfigFieldService getSyncJobConfigFieldService() {
+		return syncJobConfigFieldService;
+	}
+
+	public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
+		this.syncJobConfigFieldService = syncJobConfigFieldService;
+	}
 }

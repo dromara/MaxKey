@@ -17,8 +17,11 @@
 
 package org.dromara.maxkey.synchronizer.ldap;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -35,14 +38,23 @@ import org.dromara.maxkey.ldap.LdapUtils;
 import org.dromara.maxkey.ldap.constants.OrganizationalUnit;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
+import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static org.dromara.maxkey.synchronizer.utils.FieldUtil.getFieldValue;
+import static org.dromara.maxkey.synchronizer.utils.FieldUtil.setFieldValue;
 
 @Service
 public class LdapOrganizationService extends AbstractSynchronizerService  implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(LdapOrganizationService.class);
+	@Autowired
+	private SyncJobConfigFieldService syncJobConfigFieldService;
 
+	private static final Integer ORG_TYPE = 2;
 	LdapUtils ldapUtils;
 	
 	public void sync() {
@@ -212,6 +224,70 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 		}
 		return null;
 	}
+
+
+	public Organizations buildOrgByFieldMap(HashMap<String,Attribute> attributeMap,String name,String nameInNamespace){
+		Organizations org = new Organizations();
+		String []namePaths = name.replaceAll(",OU=" , "/")
+				.replaceAll("OU="  , "/")
+				.replaceAll(",ou=" , "/")
+				.replaceAll("ou="  , "/")
+				.split("/");
+
+		String namePah= "/"+rootOrganization.getOrgName();
+		for(int i = namePaths.length -1 ; i >= 0 ; i --) {
+			namePah = namePah + "/" + namePaths[i];
+		}
+
+		namePah = namePah.substring(0, namePah.length() - 1);
+		org.setLdapDn(nameInNamespace);
+		org.setId(org.generateId());
+		org.setNamePath(namePah);
+		org.setLevel(namePaths.length);
+		org.setType("department");
+
+		Map<String, String> fieldMap = getFieldMap(Long.parseLong(synchronizer.getId()));
+		for(Map.Entry<String,String> entry:fieldMap.entrySet()){
+			String orgProperty = entry.getKey();
+			String sourceProperty = entry.getValue();
+			try {
+				String fieldValue = null;
+				if(!attributeMap.keySet().contains(sourceProperty.toLowerCase())){
+					fieldValue = (String) getFieldValue(org, sourceProperty);
+				}else {
+					fieldValue = LdapUtils.getAttributeStringValue(sourceProperty,attributeMap);
+				}
+				if(fieldValue!=null){
+					setFieldValue(org,orgProperty,fieldValue);
+				}
+			} catch (InvocationTargetException e) {
+				throw new RuntimeException(e);
+			} catch (NoSuchMethodException e) {
+				throw new RuntimeException(e);
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException(e);
+			} catch (NamingException e) {
+				throw new RuntimeException(e);
+			}
+			org.setInstId(this.synchronizer.getInstId());
+			org.setStatus(ConstsStatus.ACTIVE);
+
+		}
+		return org;
+	}
+
+	public Map<String,String> getFieldMap(Long jobId){
+		Map<String,String> userFiledMap = new HashMap<>();
+		//根据job id查询属性映射表
+		List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+		//获取用户属性映射
+		for(SyncJobConfigField element:syncJobConfigFieldList){
+			if(Integer.parseInt(element.getObjectType()) == ORG_TYPE.intValue()){
+				userFiledMap.put(element.getTargetField(), element.getSourceField());
+			}
+		}
+		return userFiledMap;
+	}
 	
 
 	public LdapUtils getLdapUtils() {
@@ -221,6 +297,12 @@ public class LdapOrganizationService extends AbstractSynchronizerService  implem
 	public void setLdapUtils(LdapUtils ldapUtils) {
 		this.ldapUtils = ldapUtils;
 	}
-	
-	
+
+	public SyncJobConfigFieldService getSyncJobConfigFieldService() {
+		return syncJobConfigFieldService;
+	}
+
+	public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
+		this.syncJobConfigFieldService = syncJobConfigFieldService;
+	}
 }

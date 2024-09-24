@@ -1,0 +1,41 @@
+<div *nzModalTitle> {{ ('mxk.text.mapping' | i18n) }} </div>
+<div>
+
+  <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+    <div nz-col [nzSpan]="24" class="table-list-toolbar">
+      <button nz-button type="button" [nzType]="'primary'" (click)="onAdd($event)">{{ 'mxk.text.add' | i18n }}</button>
+    </div>
+    <div nz-col nzMd="24" nzSm="24">
+      <nz-table [nzShowPagination]="false" [nzData]="form.rows">
+        <thead>
+        <tr>
+          <th nzAlign="center">{{ 'mxk.job.mapping.sourceField' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.job.mapping.targetField' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.job.mapping.description' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.job.mapping.objectType' | i18n }}</th>
+          <th nzAlign="center">{{ 'mxk.text.action' | i18n }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of form.rows">
+          <td nzAlign="left">{{ data.sourceField }} </td>
+          <td nzAlign="left">{{ data.targetField }} </td>
+          <td nzAlign="left">{{ data.description }} </td>
+          <td nzAlign="center">
+           {{ data.objectType == '1' ? ('mxk.menu.identities.users' | i18n) : ('mxk.menu.identities.organizations' | i18n) }}
+          </td>
+          <td nzAlign="center">
+            <button nz-button type="button" (click)="onEdit($event, data.id)">{{ 'mxk.text.edit' | i18n }}</button>
+            <button nz-button type="button" nzDanger (click)="onDelete($event, data.id)">{{ 'mxk.text.delete' | i18n }}</button>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

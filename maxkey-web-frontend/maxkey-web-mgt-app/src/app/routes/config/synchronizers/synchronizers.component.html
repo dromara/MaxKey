@@ -43,7 +43,7 @@
       <th nzAlign="center">{{ 'mxk.synchronizers.name' | i18n }}</th>
       <th nzAlign="center">{{ 'mxk.synchronizers.scheduler' | i18n }}</th>
       <th nzAlign="center">{{ 'mxk.text.status' | i18n }}</th>
-      <th nzAlign="center" class="table_cell_action_3">{{ 'mxk.text.action' | i18n }}</th>
+      <th nzAlign="center" class="table_cell_action_5">{{ 'mxk.text.action' | i18n }}</th>
     </tr>
     </thead>
     <tbody>
@@ -62,10 +62,14 @@
         <div nz-col>
           <button nz-button type="button" (click)="onSynchr($event, data.id)">{{ 'mxk.text.synchr'
             | i18n }}</button>
+          <button nz-button type="button" (click)="onConfigFeild($event, data.id)">{{ 'mxk.text.mapping'
+            | i18n }}</button>
           <button nz-button type="button" (click)="onEdit($event, data.id)">{{ 'mxk.text.edit' |
             i18n }}</button>
           <button nz-button type="button" (click)="onDelete($event, data.id)" nzDanger>{{ 'mxk.text.delete' | i18n
             }}</button>
+
+
         </div>
       </td>
     </tr>

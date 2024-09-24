@@ -45,6 +45,10 @@ import { SocialsProviderEditerComponent } from './socials-provider/socials-provi
 import { SocialsProviderComponent } from './socials-provider/socials-provider.component';
 import { SynchronizerEditerComponent } from './synchronizers/synchronizer-editer/synchronizer-editer.component';
 import { SynchronizersComponent } from './synchronizers/synchronizers.component';
+import { SynchronizerConfigFieldComponent } from './synchronizers/synchronizer-config-field/synchronizer-config-field.component';
+import {
+  SynchronizerConfigFieldEditComponent
+} from "./synchronizers/synchronizer-config-field/editer/synchronizer-config-field-edit.component";
 
 const routes: Routes = [
   {
@@ -115,7 +119,9 @@ const COMPONENTS = [PasswordPolicyComponent, EmailSendersComponent, LdapContextC
     SelectAccountsStrategyComponent,
     SelectAdaptersComponent,
     ConnectorsComponent,
-    ConnectorEditerComponent
+    ConnectorEditerComponent,
+    SynchronizerConfigFieldComponent,
+    SynchronizerConfigFieldEditComponent
   ],
   imports: [SharedModule, CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]

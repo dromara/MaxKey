@@ -17,6 +17,10 @@
 
 package org.dromara.maxkey.synchronizer.dingtalk;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -25,8 +29,11 @@ import org.dromara.maxkey.entity.Organizations;
 import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
+import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
@@ -37,9 +44,15 @@ import com.dingtalk.api.response.OapiV2DepartmentListsubResponse;
 import com.dingtalk.api.response.OapiV2DepartmentListsubResponse.DeptBaseResponse;
 import com.taobao.api.ApiException;
 
+import static org.dromara.maxkey.synchronizer.utils.FieldUtil.*;
+
 @Service
 public class DingtalkOrganizationService  extends AbstractSynchronizerService implements ISynchronizerService{
 	final static Logger _logger = LoggerFactory.getLogger(DingtalkOrganizationService.class);
+
+	@Autowired
+	private SyncJobConfigFieldService syncJobConfigFieldService;
+	private static final Integer ORG_TYPE = 2;
 	
 	static Long ROOT_DEPT_ID = 1L;
 	
@@ -55,7 +68,7 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
 			OapiV2DepartmentGetResponse rootDeptRsp = requestDepartment(access_token,ROOT_DEPT_ID);
 			_logger.debug("root dept   deptId {} , name {} ,  parentId {}" 
 							,rootDeptRsp.getResult().getDeptId(), 
-							rootDeptRsp.getResult().getName(), 
+							rootDeptRsp.getResult().getName(),
 							rootDeptRsp.getResult().getParentId());
 			//root
 			SynchroRelated rootSynchroRelated = buildSynchroRelated(rootOrganization,
@@ -81,8 +94,11 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
 					SynchroRelated synchroRelated = 
 							synchroRelatedService.findByOriginId(
 									this.synchronizer,dept.getDeptId() + "",Organizations.CLASS_TYPE );
-					
-					Organizations organization = buildOrganization(dept);
+					//Parent
+					SynchroRelated synchroRelatedParent =
+							synchroRelatedService.findByOriginId(
+									this.synchronizer,dept.getParentId() + "",Organizations.CLASS_TYPE);
+					Organizations organization = buildOrgByFieldMap(dept,synchroRelatedParent);
 					if(synchroRelated == null) {
 						organization.setId(organization.generateId());
 						organizationsService.insert(organization);
@@ -147,11 +163,8 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
 				synchronizer.getInstId());
 	}
 	
-	public Organizations buildOrganization(DeptBaseResponse dept) {
-		//Parent
-		SynchroRelated synchroRelatedParent = 
-				synchroRelatedService.findByOriginId(
-				this.synchronizer,dept.getParentId() + "",Organizations.CLASS_TYPE);
+	public Organizations buildOrganization(DeptBaseResponse dept,SynchroRelated synchroRelatedParent) {
+
 		Organizations org = new Organizations();
 		org.setId(dept.getDeptId()+"");
 		org.setOrgCode(dept.getDeptId()+"");
@@ -167,6 +180,51 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
 		return org;
 	}
 
+	public Organizations buildOrgByFieldMap(DeptBaseResponse dept,SynchroRelated synchroRelatedParent){
+		Organizations org = new Organizations();
+		Map<String, String> fieldMap = getFieldMap(Long.parseLong(synchronizer.getId()));
+
+		for (Map.Entry<String, String> entry : fieldMap.entrySet()) {
+			String orgProperty = entry.getKey();
+			String sourceProperty = entry.getValue();
+			try {
+				Object sourceValue = null;
+
+				if (hasField(DeptBaseResponse.class, sourceProperty)) {
+					sourceValue = getFieldValue(dept, sourceProperty);
+				}
+				else if (synchroRelatedParent != null && hasField(SynchroRelated.class, sourceProperty)) {
+					sourceValue = getFieldValue(synchroRelatedParent, sourceProperty);
+				}
+				if (sourceValue != null) {
+					setFieldValue(org, orgProperty, sourceValue);
+				}
+			} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+		org.setType("department");
+		org.setInstId(this.synchronizer.getInstId());
+		org.setStatus(ConstsStatus.ACTIVE);
+		org.setDescription("dingtalk");
+		return org;
+	}
+
+
+
+	public Map<String,String> getFieldMap(Long jobId){
+		Map<String,String> FieldMap = new HashMap<>();
+		//根据job id查询属性映射表
+		List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+		//获取用户属性映射
+		for(SyncJobConfigField element:syncJobConfigFieldList){
+			if(Integer.parseInt(element.getObjectType()) == ORG_TYPE.intValue()){
+				FieldMap.put(element.getTargetField(), element.getSourceField());
+			}
+		}
+		return FieldMap;
+	}
+
 
 
 	public String getAccess_token() {
@@ -175,6 +233,14 @@ public class DingtalkOrganizationService  extends AbstractSynchronizerService im
 
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
+	}
+
+	public SyncJobConfigFieldService getSyncJobConfigFieldService() {
+		return syncJobConfigFieldService;
+	}
+
+	public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
+		this.syncJobConfigFieldService = syncJobConfigFieldService;
 	}
 	
 }
