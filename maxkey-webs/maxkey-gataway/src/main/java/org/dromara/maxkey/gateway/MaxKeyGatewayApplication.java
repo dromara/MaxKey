@@ -23,13 +23,9 @@ import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
-
-
 @SpringBootApplication(
         exclude={
                 RedisAutoConfiguration.class,
-                DruidDataSourceAutoConfigure.class,
                 DataSourceAutoConfiguration.class
 })
 @EnableDiscoveryClient
