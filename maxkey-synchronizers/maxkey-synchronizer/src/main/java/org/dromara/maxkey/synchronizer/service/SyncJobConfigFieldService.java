@@ -1,12 +1,13 @@
 package org.dromara.maxkey.synchronizer.service;
 
 import org.dromara.maxkey.entity.SyncJobConfigField;
-import org.dromara.maxkey.entity.UserInfo;
+
 import org.dromara.maxkey.persistence.mapper.SyncJobConfigFieldMapper;
 import org.dromara.mybatis.jpa.JpaService;
 import org.springframework.stereotype.Service;
 
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,7 +26,9 @@ public class SyncJobConfigFieldService extends JpaService<SyncJobConfigField> {
     }
 
     public void deleteFieldMapById(Long id){
-       super.deleteBatch(String.valueOf(id));
+        ArrayList<String> ids = new ArrayList<>();
+        ids.add(String.valueOf(id));
+        super.deleteBatch(ids);
     }
 
     public List<SyncJobConfigField> findByJobId(Long jobId) {

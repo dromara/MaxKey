@@ -191,7 +191,7 @@ export class SynchronizersComponent implements OnInit {
   }
 
 
-  onDelete(deleteId: String): void {
+  onDelete( deleteId: String): void {
     this.synchronizersService.delete(deleteId).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));
