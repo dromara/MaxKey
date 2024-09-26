@@ -66,6 +66,7 @@
     "ngx-cookie-service": "^13.2.0",
     "ngx-tinymce": "^13.0.0",
     "ngx-ueditor": "^13.0.0",
+    "npm": "^8.5.5",
     "rxjs": "~7.5.0",
     "screenfull": "^6.0.1",
     "tslib": "^2.3.0",

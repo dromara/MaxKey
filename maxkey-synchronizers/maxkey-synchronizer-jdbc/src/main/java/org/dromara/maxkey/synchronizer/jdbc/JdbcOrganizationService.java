@@ -25,9 +25,13 @@ import org.dromara.maxkey.entity.history.HistorySynchronizer;
 import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
+import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
+import org.dromara.maxkey.synchronizer.utils.MyResultSet;
 import org.dromara.maxkey.util.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -35,11 +39,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.dromara.maxkey.synchronizer.utils.FieldUtil.setFieldValue;
 
 @Service
 public class JdbcOrganizationService extends AbstractSynchronizerService implements ISynchronizerService {
     static final  Logger _logger = LoggerFactory.getLogger(JdbcOrganizationService.class);
     static ArrayList<ColumnFieldMapper> mapperList = new ArrayList<>();
+    @Autowired
+    private SyncJobConfigFieldService syncJobConfigFieldService;
+
+    private static final Integer ORG_TYPE = 2;
 
     @Override
     public void sync() {
@@ -72,6 +85,87 @@ public class JdbcOrganizationService extends AbstractSynchronizerService impleme
         } finally {
             JdbcUtils.release(conn, stmt, rs);
         }
+    }
+
+    public Organizations buildOrgByFieldMap(ResultSet rs) throws SQLException{
+        Organizations org = new Organizations();
+        DbTableMetaData meta = JdbcUtils.getMetaData(rs);
+        Map<String, String> fieldMap = getFieldMap(Long.parseLong(synchronizer.getId()));
+        for (Map.Entry<String, String> entry : fieldMap.entrySet()) {
+            String column = entry.getValue();
+            String field = entry.getKey();
+            Object value = rs.getObject(column);
+
+            if (value != null) {
+                try {
+                    setFieldValue(org,field,value);
+                } catch (Exception e) {
+                    _logger.error("setProperty {}", e);
+                }
+            }
+        }
+        org.setType("department");
+        org.setId(org.generateId());
+        org.setInstId(synchronizer.getInstId());
+        if (meta.getColumnsMap().containsKey("status")) {
+            org.setStatus(rs.getInt("status"));
+        } else {
+            org.setStatus(ConstsStatus.ACTIVE);
+        }
+        _logger.debug("Organization {}", org);
+
+        HistorySynchronizer historySynchronizer = new HistorySynchronizer();
+        historySynchronizer.setId(historySynchronizer.generateId());
+        historySynchronizer.setSyncId(synchronizer.getId());
+        historySynchronizer.setSyncName(synchronizer.getName());
+        historySynchronizer.setObjectId(org.getId());
+        historySynchronizer.setObjectName(org.getOrgName());
+        historySynchronizer.setObjectType(Organizations.class.getSimpleName());
+        historySynchronizer.setInstId(synchronizer.getInstId());
+        historySynchronizer.setResult("success");
+        historySynchronizerService.insert(historySynchronizer);
+
+        return org;
+    }
+
+    public Organizations buildOrgByFieldMapTemp(MyResultSet rs) throws SQLException{
+        Organizations org = new Organizations();
+        //DbTableMetaData meta = JdbcUtils.getMetaData(rs);
+        Map<String, String> fieldMap = getFieldMap(Long.parseLong(synchronizer.getId()));
+        for (Map.Entry<String, String> entry : fieldMap.entrySet()) {
+            String column = entry.getValue();
+            String field = entry.getKey();
+            Object value = rs.getObject(column);
+
+            if (value != null) {
+                try {
+                    setFieldValue(org,field,value);
+                } catch (Exception e) {
+                    _logger.error("setProperty {}", e);
+                }
+            }
+        }
+        org.setId(org.generateId());
+        org.setInstId(synchronizer.getInstId());
+        if (rs.getColumnNames().contains("status")) {
+            org.setStatus(rs.getInt("status"));
+        } else {
+            org.setStatus(ConstsStatus.ACTIVE);
+        }
+        _logger.debug("Organization {}", org);
+
+        /*HistorySynchronizer historySynchronizer = new HistorySynchronizer();
+        historySynchronizer.setId(historySynchronizer.generateId());
+        historySynchronizer.setSyncId(synchronizer.getId());
+        historySynchronizer.setSyncName(synchronizer.getName());
+        historySynchronizer.setObjectId(org.getId());
+        historySynchronizer.setObjectName(org.getOrgName());
+        historySynchronizer.setObjectType(Organizations.class.getSimpleName());
+        historySynchronizer.setInstId(synchronizer.getInstId());
+        historySynchronizer.setResult("success");
+        historySynchronizerService.insert(historySynchronizer);*/
+
+        return org;
     }
 
 
@@ -121,6 +215,72 @@ public class JdbcOrganizationService extends AbstractSynchronizerService impleme
 
     }
 
+    public Organizations buildOrganizationTemp(MyResultSet rs) throws SQLException {
+        //DbTableMetaData meta = JdbcUtils.getMetaData(rs);
+        Organizations org = new Organizations();
+
+        for (ColumnFieldMapper mapper : mapperList) {
+            if (rs.getColumnNames().contains(mapper.getColumn())) {
+                Object value = null;
+                if (mapper.getType().equalsIgnoreCase("String")) {
+                    value = rs.getString(mapper.getColumn());
+                } else {
+                    value = rs.getInt(mapper.getColumn());
+                }
+                if (value != null) {
+                    try {
+                        PropertyUtils.setSimpleProperty(org, mapper.getField(), value);
+                    } catch (Exception e) {
+                        _logger.error("setSimpleProperty {}", e);
+                    }
+                }
+            }
+        }
+
+        org.setId(org.generateId());
+        org.setInstId(synchronizer.getInstId());
+        if (rs.getColumnNames().contains("status")) {
+            org.setStatus(rs.getInt("status"));
+        } else {
+            org.setStatus(ConstsStatus.ACTIVE);
+        }
+        _logger.debug("Organization {}", org);
+
+        /*HistorySynchronizer historySynchronizer = new HistorySynchronizer();
+        historySynchronizer.setId(historySynchronizer.generateId());
+        historySynchronizer.setSyncId(synchronizer.getId());
+        historySynchronizer.setSyncName(synchronizer.getName());
+        historySynchronizer.setObjectId(org.getId());
+        historySynchronizer.setObjectName(org.getOrgName());
+        historySynchronizer.setObjectType(Organizations.class.getSimpleName());
+        historySynchronizer.setInstId(synchronizer.getInstId());
+        historySynchronizer.setResult("success");
+        historySynchronizerService.insert(historySynchronizer);*/
+
+        return org;
+
+    }
+
+    public Map<String,String> getFieldMap(Long jobId){
+        Map<String,String> filedMap = new HashMap<>();
+        //根据job id查询属性映射表
+        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        //获取用户属性映射
+        for(SyncJobConfigField element:syncJobConfigFieldList){
+            if(Integer.parseInt(element.getObjectType()) == ORG_TYPE.intValue()){
+                filedMap.put(element.getTargetField(), element.getSourceField());
+            }
+        }
+        return filedMap;
+    }
+
+    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
+        return syncJobConfigFieldService;
+    }
+
+    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
+        this.syncJobConfigFieldService = syncJobConfigFieldService;
+    }
 
     static {
         mapperList.add(new ColumnFieldMapper("id", "id", "String"));
@@ -129,7 +289,7 @@ public class JdbcOrganizationService extends AbstractSynchronizerService impleme
         mapperList.add(new ColumnFieldMapper("fullname", "fullName", "String"));
         mapperList.add(new ColumnFieldMapper("parentid", "parentId", "String"));
         mapperList.add(new ColumnFieldMapper("parentcode", "parentCode", "String"));
-        mapperList.add(new ColumnFieldMapper("parentname", "parentName", "String"));
+        mapperList.add(new ColumnFieldMapper(" ", "parentName", "String"));
 
         mapperList.add(new ColumnFieldMapper("type", "type", "String"));
         mapperList.add(new ColumnFieldMapper("codepath", "codePath", "String"));

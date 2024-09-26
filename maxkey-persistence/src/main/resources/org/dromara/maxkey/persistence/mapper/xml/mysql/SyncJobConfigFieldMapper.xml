@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace对应接口全类名-->
+<!--
+多行注释快捷键：ctrl + shift + /
+-->
+<mapper namespace="org.dromara.maxkey.persistence.mapper.SyncJobConfigFieldMapper">
+
+    <!--    id要和方法名相同-->
+    <insert id="insertUser">
+
+    </insert>
+
+    <update id="updateUser">
+
+    </update>
+
+
+    <delete id="deleteUser">
+
+    </delete>
+    <delete id="deleteFieldMapById">
+        DELETE FROM sync_job_config_field s WHERE s.id = #{id}
+    </delete>
+
+    <delete id="deleteFiledMapByjobId">
+        DELETE FROM sync_job_config_field s WHERE s.job_id = #{jobId}
+    </delete>
+    <delete id="deleteByJobIdAndObjectType">
+        DELETE FROM sync_job_config_field WHERE job_id = #{jobId} AND object_type = #{objectType}
+    </delete>
+
+
+    <!--多对一映射-->
+    <!--
+    type:处理映射关系的实体类的类型常用的标签
+    id:处理主键和实体类中属性的映射关系
+    result: 处理普通字段和实体类中属性的映射关系
+    column: 设置映射关系中的字段名，必须是sql查询出的某个字段
+    property: 设置映射关系中的属性的属性名，必须是处理的实体类类型中的属性名
+    -->
+    <!--
+    resultMap + association 处理多对一映射
+    association: 处理多对一的映射关系(处理实体类类型的属性)
+    property: 设置需要处理映射关系的属性的属性名
+    javaType:设置要处理的属性的类型
+    -->
+    <resultMap id="FieldMap" type="org.dromara.maxkey.entity.SyncJobConfigField">
+        <id column="id" property="id"></id>
+        <result column="jobid" property="jobId"></result>
+        <result column="name" property="name"></result>
+        <result column="objecttype" property="objectType"></result>
+        <result column="targetfield" property="targetField"></result>
+        <result column="targetfield_name" property="targetFieldName"></result>
+        <result column="sourcefield" property="sourceField"></result>
+        <result column="sourcefieldname" property="sourceFieldName"></result>
+        <result column="description" property="description"></result>
+        <result column="createuser" property="createUser"></result>
+        <result column="createtime" property="createTime"></result>
+        <result column="updateuser" property="updateUser"></result>
+        <result column="updatetime" property="updateTime"></result>
+    </resultMap>
+
+    <select id="findByJobIdAndObjectType" resultMap="FieldMap" parameterType="map">
+        SELECT * FROM sync_job_config_field WHERE jobid = #{jobId} AND objecttype = #{objectType}
+    </select>
+
+    <select id="findByJobId" resultMap="FieldMap" parameterType="map">
+        SELECT * FROM sync_job_config_field WHERE job_id = #{jobId}
+    </select>
+
+<!--    &lt;!&ndash;
+    resultMap + 分步查询实现一对多映射
+    property: 设置需要处理映射关系的属性的属性名
+    select: 设置分步查询的sgl的唯一标识
+    column:将查询出的某个字段作为分步查询的sql的条件
+    &ndash;&gt;
+    <resultMap id="" type="">
+        <id column="" property=""></id>
+        <result column="" property=""></result>
+        <result column="" property=""></result>
+        <result column="" property=""></result>
+        <association property=""
+                     select=""
+                     column="">
+        </association>
+    </resultMap>
+    <select id="" resultMap="">
+
+    </select>
+
+
+    &lt;!&ndash;处理一对多映射&ndash;&gt;
+    &lt;!&ndash;
+    方法一：resultMap + collection
+    &ndash;&gt;
+    <resultMap id="" type="">
+        <id column="" property=""></id>
+        <result column="" property=""></result>
+        <collection property="" ofType="">
+            <id column="" property=""></id>
+            <result column="" property=""></result>
+            <result column="" property=""></result>
+            <result column="" property=""></result>
+        </collection>
+    </resultMap>
+    <select id="" resultMap="">
+
+    </select>
+
+    &lt;!&ndash;
+    方法二：collection分步查询
+    &ndash;&gt;
+    <resultMap id="" type="">
+        <id column="" property=""></id>
+        <result column="" property=""></result>
+        <collection property=""
+                    select=""
+                    column="">
+        </collection>
+    </resultMap>
+    <select id="" resultMap="">
+
+    </select>-->
+</mapper>

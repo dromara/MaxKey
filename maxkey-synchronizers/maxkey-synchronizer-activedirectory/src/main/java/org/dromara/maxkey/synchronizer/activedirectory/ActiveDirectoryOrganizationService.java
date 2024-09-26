@@ -17,8 +17,11 @@
 
 package org.dromara.maxkey.synchronizer.activedirectory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -35,14 +38,23 @@ import org.dromara.maxkey.ldap.LdapUtils;
 import org.dromara.maxkey.ldap.constants.OrganizationalUnit;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
+import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static org.dromara.maxkey.synchronizer.utils.FieldUtil.getFieldValue;
+import static org.dromara.maxkey.synchronizer.utils.FieldUtil.setFieldValue;
 
 @Service
 public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerService  implements ISynchronizerService{
 	static final  Logger _logger = LoggerFactory.getLogger(ActiveDirectoryOrganizationService.class);
 
+	@Autowired
+	private SyncJobConfigFieldService syncJobConfigFieldService;
+	private static final Integer ORG_TYPE = 2;
 	ActiveDirectoryUtils ldapUtils;
 	
 	public void sync() {
@@ -214,6 +226,65 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 		}
 		return null;
 	}
+
+	public Organizations buildOrgByFiledMap(HashMap<String,Attribute> attributeMap,String name,String nameInNamespace){
+		Organizations org = new Organizations();
+		Map<String, String> filedMap = getFiledMap(Long.parseLong(synchronizer.getId()));
+		String []namePaths = name.replaceAll(",OU=" , "/")
+				.replaceAll("OU="  , "/")
+				.replaceAll(",ou=" , "/")
+				.replaceAll("ou="  , "/")
+				.split("/");
+		String namePah= "/"+rootOrganization.getOrgName();
+		for(int i = namePaths.length -1 ; i >= 0 ; i --) {
+			namePah = namePah + "/" + namePaths[i];
+		}
+		namePah = namePah.substring(0, namePah.length() - 1);
+
+		org.setLdapDn(nameInNamespace);
+		org.setNamePath(namePah);
+		org.setId(org.generateId());
+		org.setLevel(namePaths.length);
+		org.setType("department");
+		org.setInstId(this.synchronizer.getInstId());
+		org.setStatus(ConstsStatus.ACTIVE);
+
+		for (Map.Entry<String, String> entry : filedMap.entrySet()) {
+			String orgProperty = entry.getKey();
+			String sourceProperty = entry.getValue();
+			try {
+				Object sourceValue = null;
+				if(attributeMap.keySet().contains(sourceProperty.toLowerCase())){
+					sourceValue = LdapUtils.getAttributeStringValue(sourceProperty, attributeMap);
+				}else{
+					sourceValue = getFieldValue(org, sourceProperty);
+				}
+				if (sourceValue != null) {
+					setFieldValue(org, orgProperty, sourceValue);
+				}
+			} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | NamingException e) {
+				e.printStackTrace();
+			}
+		}
+		org.setOrgCode(org.getId());
+
+
+
+		return org;
+	}
+
+	public Map<String,String> getFiledMap(Long jobId){
+		Map<String,String> filedMap = new HashMap<>();
+		//根据job id查询属性映射表
+		List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+		//获取用户属性映射
+		for(SyncJobConfigField element:syncJobConfigFieldList){
+			if(Integer.parseInt(element.getObjectType()) == ORG_TYPE.intValue()){
+				filedMap.put(element.getTargetField(),element.getSourceField());
+			}
+		}
+		return filedMap;
+	}
 	
 	
 
@@ -225,5 +296,11 @@ public class ActiveDirectoryOrganizationService  extends AbstractSynchronizerSer
 		this.ldapUtils = ldapUtils;
 	}
 
+	public SyncJobConfigFieldService getSyncJobConfigFieldService() {
+		return syncJobConfigFieldService;
+	}
 
+	public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
+		this.syncJobConfigFieldService = syncJobConfigFieldService;
+	}
 }

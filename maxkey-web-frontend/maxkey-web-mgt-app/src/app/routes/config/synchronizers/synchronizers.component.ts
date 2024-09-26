@@ -27,6 +27,7 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { SynchronizersService } from '../../../service/synchronizers.service';
 import { set2String } from '../../../shared/index';
 import { SynchronizerEditerComponent } from './synchronizer-editer/synchronizer-editer.component';
+import { SynchronizerConfigFieldComponent } from './synchronizer-config-field/synchronizer-config-field.component';
 @Component({
   selector: 'app-synchronizers',
   templateUrl: './synchronizers.component.html',
@@ -149,6 +150,7 @@ export class SynchronizersComponent implements OnInit {
     });
   }
 
+
   onEdit(e: MouseEvent, editId: String): void {
     e.preventDefault();
     const modal = this.modalService.create({
@@ -158,6 +160,26 @@ export class SynchronizersComponent implements OnInit {
         isEdit: true,
         id: editId
       },
+
+      nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
+    });
+    // Return a result when closed
+    modal.afterClose.subscribe(result => {
+      if (result.refresh) {
+        this.fetch();
+      }
+    });
+  }
+  onConfigFeild(e: MouseEvent, jobId: String): void {
+    e.preventDefault();
+    const modal = this.modalService.create({
+      nzContent: SynchronizerConfigFieldComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams: {
+        isEdit: true,
+        jobId: jobId
+      },
+      nzWidth: 1200,
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000))
     });
     // Return a result when closed
@@ -168,7 +190,8 @@ export class SynchronizersComponent implements OnInit {
     });
   }
 
-  onDelete(deleteId: String): void {
+
+  onDelete( deleteId: String): void {
     this.synchronizersService.delete(deleteId).subscribe(res => {
       if (res.code == 0) {
         this.msg.success(this.i18n.fanyi('mxk.alert.delete.success'));

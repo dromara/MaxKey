@@ -25,6 +25,8 @@ import org.dromara.maxkey.persistence.repository.LoginHistoryRepository;
 import org.dromara.maxkey.persistence.repository.LoginRepository;
 import org.dromara.maxkey.persistence.repository.PasswordPolicyValidator;
 import org.dromara.maxkey.persistence.service.UserInfoService;
+import org.dromara.maxkey.synchronizer.ISynchronizerService;
+import org.dromara.maxkey.synchronizer.ldap.LdapSynchronizerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -68,5 +70,13 @@ public class MaxKeyMgtConfig  {
 	    logger.debug("TimeBasedOtpAuthn inited.");
         return tfaOtpAuthn;
     }
+
+	/*@Bean
+	public ISynchronizerService ldapSynchronizerService() {
+		LdapSynchronizerService ldapSynchronizerService = new LdapSynchronizerService();
+		ldapSynchronizerService.setId("LDAP_11122");
+		ldapSynchronizerService.syncOrg();
+		return ldapSynchronizerService;
+	}*/
 
 }

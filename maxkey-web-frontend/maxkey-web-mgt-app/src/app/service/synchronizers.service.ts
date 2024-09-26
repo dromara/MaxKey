@@ -22,6 +22,7 @@ import { Observable } from 'rxjs';
 import { Message } from '../entity/Message';
 import { Synchronizers } from '../entity/Synchronizers';
 import { BaseService } from './base.service';
+import {JobConfigFeild} from "../entity/JobConfigFeild";
 
 @Injectable({
   providedIn: 'root'
@@ -34,4 +35,24 @@ export class SynchronizersService extends BaseService<Synchronizers> {
   synchr(synchrId: String): Observable<Message<Synchronizers>> {
     return this.http.get<Message<Synchronizers>>(`${`${this.server.urls.base}/synchr`}?id=${synchrId}`);
   }
+  getMapping(synchrId: String): Observable<Message<Synchronizers>> {
+    return this.http.get<Message<JobConfigFeild>>(`${`${this.server.urls.base}/mapping-list`}/${synchrId}`);
+  }
+
+  getField(id: String): Observable<Message<Synchronizers>> {
+    return this.http.get<Message<JobConfigFeild>>(`${`${this.server.urls.base}/mapping-get`}/${id}`);
+  }
+
+  mappingAdd(body: any): Observable<Message<JobConfigFeild>> {
+    return this.http.post<Message<JobConfigFeild>>(`${this.server.urls.base}/mapping-add`, body);
+  }
+
+  mappingUpdate(body: any): Observable<Message<JobConfigFeild>> {
+    return this.http.put<Message<JobConfigFeild>>(`${this.server.urls.base}/mapping-update`, body);
+  }
+
+  deleteMapping(id: String): Observable<Message<JobConfigFeild>> {
+    return this.http.get<Message<JobConfigFeild>>(`${`${this.server.urls.base}/mapping-delete`}/${id}`);
+  }
+
 }

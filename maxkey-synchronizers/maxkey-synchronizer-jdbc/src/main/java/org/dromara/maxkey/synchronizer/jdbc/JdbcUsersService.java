@@ -25,21 +25,34 @@ import org.dromara.maxkey.entity.history.HistorySynchronizer;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
+import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
+import org.dromara.maxkey.synchronizer.utils.MyResultSet;
 import org.dromara.maxkey.util.JdbcUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.dromara.maxkey.synchronizer.utils.FieldUtil.setFieldValue;
 
 @Service
 public class JdbcUsersService extends AbstractSynchronizerService implements ISynchronizerService {
-    static final  Logger _logger = LoggerFactory.getLogger(JdbcUsersService.class);
+    final static Logger _logger = LoggerFactory.getLogger(JdbcUsersService.class);
+    @Autowired
+    public SyncJobConfigFieldService syncJobConfigFieldService;
 
+    private static final Integer USER_TYPE = 1;
     static ArrayList<ColumnFieldMapper> mapperList = new ArrayList<>();
 
     @Override
@@ -93,6 +106,7 @@ public class JdbcUsersService extends AbstractSynchronizerService implements ISy
         }
     }
 
+    
     public UserInfo buildUserInfo(ResultSet rs) throws SQLException {
         DbTableMetaData meta = JdbcUtils.getMetaData(rs);
         UserInfo user = new UserInfo();
@@ -153,6 +167,86 @@ public class JdbcUsersService extends AbstractSynchronizerService implements ISy
         return user;
     }
 
+
+    
+
+    public UserInfo buildUserInfoByFieldMap(ResultSet rs) throws SQLException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        DbTableMetaData meta = JdbcUtils.getMetaData(rs);
+        UserInfo user = new UserInfo();
+        Map<String, String> fieldMap = getFieldMap(Long.parseLong(synchronizer.getId()));
+        for(Map.Entry<String,String> entry: fieldMap.entrySet()){
+
+            String column = entry.getValue();
+            String field = entry.getKey();
+            Object value = null;
+            if(meta.getColumnsMap().containsKey(column) && !field.equals("status") && !field.equals("password")){
+                value = rs.getObject(column);
+                if(value!=null){
+                    setFieldValue(user,field,value);
+                }
+            }
+
+        }
+        user.setUserType("EMPLOYEE");
+        user.setUserState("RESIDENT");
+        //password的获取和user的其他属性相关，如果在遍历过程中进行属性映射，需要在password映射之前，先完成其他属性的映射
+        if (meta.getColumnsMap().containsKey("status")) {
+            user.setStatus(rs.getInt("status"));
+        } else {
+            user.setStatus(ConstsStatus.ACTIVE);
+        }
+        user.setInstId(synchronizer.getInstId());
+        // password
+        if (meta.getColumnsMap().containsKey("password")) {
+            user.setPassword(rs.getString("password"));
+        } else {
+            String last4Char = "6666";
+            if (StringUtils.isNotBlank(user.getIdCardNo())) {
+                last4Char = user.getIdCardNo().substring(user.getIdCardNo().length() - 4);
+            } else if (StringUtils.isNotBlank(user.getMobile())) {
+                last4Char = user.getMobile().substring(user.getMobile().length() - 4);
+            } else if (StringUtils.isNotBlank(user.getEmployeeNumber())) {
+                last4Char = user.getEmployeeNumber().substring(user.getEmployeeNumber().length() - 4);
+            }
+            user.setPassword(user.getUsername() + "@M" + last4Char);
+        }
+
+        HistorySynchronizer historySynchronizer = new HistorySynchronizer();
+        historySynchronizer.setId(historySynchronizer.generateId());
+        historySynchronizer.setSyncId(synchronizer.getId());
+        historySynchronizer.setSyncName(synchronizer.getName());
+        historySynchronizer.setObjectId(user.getId());
+        historySynchronizer.setObjectName(user.getUsername());
+        historySynchronizer.setObjectType(UserInfo.class.getSimpleName());
+        historySynchronizer.setInstId(synchronizer.getInstId());
+        historySynchronizer.setResult("success");
+        historySynchronizerService.insert(historySynchronizer);
+        _logger.debug("User {} ", user);
+
+        return user;
+    }
+
+    public Map<String,String> getFieldMap(Long jobId){
+        Map<String,String> fieldMap = new HashMap<>();
+        //根据job id查询属性映射表
+        List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+        //获取用户属性映射
+        for(SyncJobConfigField element:syncJobConfigFieldList){
+            if(Integer.parseInt(element.getObjectType()) == USER_TYPE.intValue()){
+                fieldMap.put(element.getTargetField(), element.getSourceField());
+            }
+        }
+        return fieldMap;
+    }
+
+    public SyncJobConfigFieldService getSyncJobConfigFieldService() {
+        return syncJobConfigFieldService;
+    }
+
+    public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
+        this.syncJobConfigFieldService = syncJobConfigFieldService;
+    }
+
     static {
         mapperList.add(new ColumnFieldMapper("id", "id", "String"));
         mapperList.add(new ColumnFieldMapper("username", "username", "String"));
@@ -191,7 +285,7 @@ public class JdbcUsersService extends AbstractSynchronizerService implements ISy
         mapperList.add(new ColumnFieldMapper("homestreetaddress", "homeStreetAddress", "String"));
         mapperList.add(new ColumnFieldMapper("homeaddressformatted", "homeAddressFormatted", "String"));
         mapperList.add(new ColumnFieldMapper("homeemail", "homeEmail", "String"));
-        mapperList.add(new ColumnFieldMapper("homephonenumber", "homePhonenumber", "String"));
+        mapperList.add(new ColumnFieldMapper("homephoneNumber", "homePhonenumber", "String"));
         mapperList.add(new ColumnFieldMapper("homepostalcode", "homePostalCode", "String"));
         mapperList.add(new ColumnFieldMapper("homefax", "homeFax", "String"));
         //company
@@ -207,8 +301,8 @@ public class JdbcUsersService extends AbstractSynchronizerService implements ISy
         mapperList.add(new ColumnFieldMapper("manager", "manager", "String"));
         mapperList.add(new ColumnFieldMapper("assistantid", "assistantId", "String"));
         mapperList.add(new ColumnFieldMapper("assistant", "assistant", "String"));
-        mapperList.add(new ColumnFieldMapper("entrydate", "entrydate", "String"));
-        mapperList.add(new ColumnFieldMapper("quitdate", "quitdate", "String"));
+        mapperList.add(new ColumnFieldMapper("entryDate", "entrydate", "String"));
+        mapperList.add(new ColumnFieldMapper("quitDate", "quitdate", "String"));
         mapperList.add(new ColumnFieldMapper("ldapdn", "ldapDn", "String"));
 
         mapperList.add(new ColumnFieldMapper("description", "description", "String"));
