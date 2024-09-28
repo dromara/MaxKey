@@ -1,0 +1,41 @@
+<div *nzModalTitle> {{ isEdit ? ('mxk.text.edit' | i18n) : ('mxk.text.add' | i18n) }} </div>
+<div>
+  <form nz-form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)" se-container="1">
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzFor="sourceField">{{ 'mxk.job.mapping.sourceField' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.sourceField" [ngModelOptions]="{ standalone: true }" nz-input
+               name="sourceField" id="sourceField" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzFor="targetField">{{ 'mxk.job.mapping.targetField' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.targetField" [ngModelOptions]="{ standalone: true }" nz-input
+               name="targetField" id="targetField" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzFor="description">{{ 'mxk.job.mapping.description' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <input [(ngModel)]="form.model.description" [ngModelOptions]="{ standalone: true }" nz-input
+               name="description" id="description" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzMd]="6" nzFor="objectType">{{ 'mxk.job.mapping.objectType' | i18n }}</nz-form-label>
+      <nz-form-control [nzMd]="18" nzErrorTip="The input is not valid id!">
+        <nz-select [(ngModel)]="form.model.objectType" [ngModelOptions]="{ standalone: true }" name="objectType" id="objectType">
+          <nz-option nzValue="1" nzLabel="{{ 'mxk.menu.identities.users' | i18n }}"></nz-option>
+          <nz-option nzValue="2" nzLabel="{{ 'mxk.menu.identities.organizations' | i18n }}"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="onClose($event)">{{ 'mxk.text.close' | i18n }}</button>
+  <button nz-button nzType="primary" (click)="onSubmit($event)">{{ 'mxk.text.submit' | i18n }}</button>
+</div>

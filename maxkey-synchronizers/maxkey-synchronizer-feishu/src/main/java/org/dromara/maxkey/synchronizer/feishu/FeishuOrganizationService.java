@@ -17,7 +17,10 @@
 
 package org.dromara.maxkey.synchronizer.feishu;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -26,20 +29,31 @@ import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.idm.Organizations;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
+import org.dromara.maxkey.entity.SyncJobConfigField;
 import org.dromara.maxkey.synchronizer.feishu.entity.FeishuDepts;
 import org.dromara.maxkey.synchronizer.feishu.entity.FeishuDeptsResponse;
+import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.dromara.maxkey.util.AuthorizationHeaderUtils;
 import org.dromara.maxkey.util.JsonUtils;
 import org.dromara.maxkey.web.HttpRequestAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static org.dromara.maxkey.synchronizer.utils.FieldUtil.*;
 
 @Service
 public class FeishuOrganizationService extends AbstractSynchronizerService implements ISynchronizerService{
 	static final  Logger _logger = LoggerFactory.getLogger(FeishuOrganizationService.class);
 	
 	String access_token;
+	private static final Integer ORG_TYPE = 2;
+
+
+
+	@Autowired
+	private SyncJobConfigFieldService syncJobConfigFieldService;
 	
 	static String DEPTS_URL = "https://open.feishu.cn/open-apis/contact/v3/departments/%s/children?page_size=50";
 	static String ROOT_DEPT_URL = "https://open.feishu.cn/open-apis/contact/v3/departments/%s";
@@ -75,7 +89,11 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
 						SynchroRelated synchroRelated = 
 								synchroRelatedService.findByOriginId(
 										this.synchronizer,dept.getOpen_department_id(),Organizations.CLASS_TYPE );
-						Organizations organization = buildOrganization(dept);
+						//Parent
+						SynchroRelated synchroRelatedParent =
+								synchroRelatedService.findByOriginId(
+										this.synchronizer,dept.getParent_department_id(),Organizations.CLASS_TYPE);
+						Organizations organization = buildOrganizationByFieldMap(dept,synchroRelatedParent);
 						if(synchroRelated == null) {
 							organization.setId(organization.generateId());
 							organizationsService.insert(organization);
@@ -138,11 +156,8 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
 				synchronizer.getInstId());
 	}
 	
-	public Organizations buildOrganization(FeishuDepts dept) {
-		//Parent
-		SynchroRelated synchroRelatedParent = 
-				synchroRelatedService.findByOriginId(
-				this.synchronizer,dept.getParent_department_id(),Organizations.CLASS_TYPE);
+	public Organizations buildOrganization(FeishuDepts dept,SynchroRelated synchroRelatedParent) {
+
 		
 		Organizations org = new Organizations();
 		org.setOrgCode(dept.getDepartment_id()+"");
@@ -157,12 +172,73 @@ public class FeishuOrganizationService extends AbstractSynchronizerService imple
 		return org;
 	}
 
+	public Organizations buildOrganizationByFieldMap(FeishuDepts dept,SynchroRelated synchroRelatedParent){
+		Map<String, String> fieldMap = getFiledMap(Long.parseLong(synchronizer.getId()));
+		Organizations org = new Organizations();
+		for (Map.Entry<String, String> entry : fieldMap.entrySet()) {
+			String   orgProperty = entry.getKey();
+			String sourceProperty = entry.getValue();
+			try {
+				Object sourceValue = null;
+
+				if (hasField(dept.getClass(), sourceProperty)) {
+					sourceValue = getFieldValue(dept, sourceProperty);
+				}
+				else if (synchroRelatedParent != null && hasField(SynchroRelated.class, sourceProperty)) {
+					sourceValue = getFieldValue(synchroRelatedParent, sourceProperty);
+				}
+				if (sourceValue != null) {
+					setFieldValue(org, orgProperty, sourceValue);
+				}
+			} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// 额外处理特定逻辑:意味着这些属性不能出现在属性映射表中
+		try {
+            /*if (synchroRelatedParent != null) {
+                setFieldValue(org, "parentId", synchroRelatedParent.getObjectId());
+                setFieldValue(org, "parentName", synchroRelatedParent.getObjectName());
+            }*/
+			setFieldValue(org, "instId", this.synchronizer.getInstId());
+			setFieldValue(org, "status", ConstsStatus.ACTIVE);
+			setFieldValue(org, "description", "Feishu");
+			org.setType("department");
+		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return org;
+	}
+
+	public Map<String,String> getFiledMap(Long jobId){
+		//key是maxkey的属性，value是其他应用的属性
+		Map<String,String> filedMap = new HashMap<>();
+		//根据job id查询属性映射表
+		List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+		//获取组织属性映射
+		for(SyncJobConfigField element:syncJobConfigFieldList){
+			if(Integer.parseInt(element.getObjectType()) == ORG_TYPE.intValue()){
+				filedMap.put(element.getTargetField(), element.getSourceField());
+			}
+		}
+		return filedMap;
+	}
+
 	public String getAccess_token() {
 		return access_token;
 	}
 
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
+	}
+
+	public SyncJobConfigFieldService getSyncJobConfigFieldService() {
+		return syncJobConfigFieldService;
+	}
+
+	public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
+		this.syncJobConfigFieldService = syncJobConfigFieldService;
 	}
 
 }

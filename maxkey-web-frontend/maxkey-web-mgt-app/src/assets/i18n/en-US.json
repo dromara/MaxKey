@@ -943,5 +943,10 @@
 	"validation.title.required": "Please enter a title",
 	"validation.date.required": "Please select the start and end date",
 	"validation.goal.required": "Please enter a description of the goal",
-	"validation.standard.required": "Please enter a metric"
+	"validation.standard.required": "Please enter a metric",
+  	"mxk.text.mapping": "Feild Mapping",
+  	"mxk.job.mapping.targetField": "TargetField",
+  	"mxk.job.mapping.sourceField": "SourceField",
+  	"mxk.job.mapping.objectType": "ObjectType",
+  	"mxk.job.mapping.description": "Description"
 }

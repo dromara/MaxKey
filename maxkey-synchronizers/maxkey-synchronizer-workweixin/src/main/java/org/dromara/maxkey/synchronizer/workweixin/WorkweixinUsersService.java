@@ -17,25 +17,36 @@
 
 package org.dromara.maxkey.synchronizer.workweixin;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.dromara.maxkey.constants.ConstsStatus;
 import org.dromara.maxkey.entity.SynchroRelated;
 import org.dromara.maxkey.entity.idm.UserInfo;
 import org.dromara.maxkey.synchronizer.AbstractSynchronizerService;
 import org.dromara.maxkey.synchronizer.ISynchronizerService;
+import org.dromara.maxkey.entity.SyncJobConfigField;
+import org.dromara.maxkey.synchronizer.service.SyncJobConfigFieldService;
 import org.dromara.maxkey.synchronizer.workweixin.entity.WorkWeixinUsers;
 import org.dromara.maxkey.synchronizer.workweixin.entity.WorkWeixinUsersResponse;
 import org.dromara.maxkey.util.JsonUtils;
 import org.dromara.maxkey.web.HttpRequestAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static org.dromara.maxkey.synchronizer.utils.FieldUtil.*;
 
 @Service
 public class WorkweixinUsersService extends AbstractSynchronizerService implements ISynchronizerService{
-	static final  Logger _logger = LoggerFactory.getLogger(WorkweixinUsersService.class);
-	
+	final static Logger _logger = LoggerFactory.getLogger(WorkweixinUsersService.class);
+
+	@Autowired
+	public SyncJobConfigFieldService syncJobConfigFieldService;
+	private static final Integer USER_TYPE = 1;
 	String access_token;
 	
 	static String USERS_URL="https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token=%s&department_id=%s&fetch_child=0";
@@ -53,7 +64,7 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 				_logger.trace("response : " + responseBody);
 				
 				for(WorkWeixinUsers user : usersResponse.getUserlist()) {
-					UserInfo userInfo  = buildUserInfo(user);
+					UserInfo userInfo  = buildUserInfoByFiledMap(user);
 					_logger.debug("userInfo : " + userInfo);
 					userInfo.setPassword(userInfo.getUsername() + UserInfo.DEFAULT_PASSWORD_SUFFIX);
 					userInfoService.saveOrUpdate(userInfo);
@@ -113,7 +124,59 @@ public class WorkweixinUsersService extends AbstractSynchronizerService implemen
 		return userInfo;
 	}
 
+	public UserInfo buildUserInfoByFiledMap(WorkWeixinUsers user){
+		UserInfo userInfo = new UserInfo();
+		Map<String, String> fieldMap = getFieldMap(Long.parseLong(synchronizer.getId()));
+		for (Map.Entry<String, String> entry : fieldMap.entrySet()) {
+
+			String userInfoProperty = entry.getKey();
+			String sourceProperty = entry.getValue();
+
+			try {
+				Object sourceValue = null;
+				if(sourceProperty.equals("status")){
+					userInfo.setStatus(user.getStatus() == 1?ConstsStatus.ACTIVE:ConstsStatus.INACTIVE);
+					continue;
+				}
+				if (hasField(user.getClass(), sourceProperty)) {
+					sourceValue = getFieldValue(user, sourceProperty);
+				}
+				if (sourceValue != null) {
+					setFieldValue(userInfo, userInfoProperty, sourceValue);
+				}
+
+			} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+
+		userInfo.setUserType("EMPLOYEE");
+		userInfo.setUserState("RESIDENT");
+		userInfo.setInstId(this.synchronizer.getInstId());
+		return userInfo;
+	}
+
+	public Map<String,String> getFieldMap(Long jobId){
+		Map<String,String> userFieldMap = new HashMap<>();
+		//根据job id查询属性映射表
+		List<SyncJobConfigField> syncJobConfigFieldList = syncJobConfigFieldService.findByJobId(jobId);
+		//获取用户属性映射
+		for(SyncJobConfigField element:syncJobConfigFieldList){
+			if(Integer.parseInt(element.getObjectType()) == USER_TYPE.intValue()){
+				userFieldMap.put(element.getTargetField(), element.getSourceField());
+			}
+		}
+		return userFieldMap;
+	}
+
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
+	}
+	public SyncJobConfigFieldService getSyncJobConfigFieldService() {
+		return syncJobConfigFieldService;
+	}
+
+	public void setSyncJobConfigFieldService(SyncJobConfigFieldService syncJobConfigFieldService) {
+		this.syncJobConfigFieldService = syncJobConfigFieldService;
 	}
 }

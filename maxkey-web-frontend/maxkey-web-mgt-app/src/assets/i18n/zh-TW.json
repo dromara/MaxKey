@@ -936,5 +936,10 @@
 	"validation.title.required": "請輸入標題",
 	"validation.date.required": "請選擇起止日期",
 	"validation.goal.required": "請輸入目標描述",
-	"validation.standard.required": "請輸入衡量標準"
+	"validation.standard.required": "請輸入衡量標準",
+  	"mxk.text.mapping": "属性映射",
+  	"mxk.job.mapping.targetField": "目标字段",
+  	"mxk.job.mapping.sourceField": "来源字段",
+  	"mxk.job.mapping.objectType": "映射类型",
+  	"mxk.job.mapping.description": "规则说明"
 }
